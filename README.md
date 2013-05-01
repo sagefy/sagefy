@@ -14,3 +14,5 @@ _Paradigm shift in learning._
 [Facebook]: http://facebook.com/descovrir
 [Twitter]: http://twitter.com/descovrirorg
 [Google+]: https://plus.google.com/u/102422704401628739470/102422704401628739470
+
+Currently in research and planning phase. [See the wiki](https://github.com/heiskr/Descovrir/wiki).
