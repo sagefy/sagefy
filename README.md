@@ -20,7 +20,7 @@ Currently in research and planning phase. [See the wiki](https://github.com/heis
 
 All contents in this project, including the Wiki, are licensed under AGPLv3.
 
-    Descovrir, algorithmic user generated adaptive
+    Descovrir, algorithmic user generated adaptive learning.
     Copyright (C) 2013  Kevin Heis and associates
 
     This program is free software: you can redistribute it and/or modify
