@@ -1,11 +1,10 @@
 # descovrir
-_Paradigm shift in learning._
+_Learner-generated algorithmic adaptive learning._
 
-- Algorithmic adaptive learning.
 - Based on learning psychology and neuroscience research.
 - Synthesis of human and machine learning.
-- Learner generated modules and assessments.
-- Open source.
+- Learner-generated modules and assessments.
+- Open-source.
 - [Site], [Blog], [Facebook], [Twitter], [Google+]
 
 [Site]: http://descovrir.org
@@ -14,13 +13,15 @@ _Paradigm shift in learning._
 [Twitter]: http://twitter.com/descovrirorg
 [Google+]: https://plus.google.com/u/102422704401628739470/102422704401628739470
 
+* * *
+
 Currently in research and planning phase. [See the wiki](https://github.com/heiskr/Descovrir/wiki).
 
-
+* * *
 
 All contents in this project, including the Wiki, are licensed under AGPLv3.
 
-    descovrir, algorithmic user generated adaptive learning.
+    descovrir, learner-generated algorithmic adaptive learning.
     Copyright (C) 2013  Kevin Heis and associates
 
     This program is free software: you can redistribute it and/or modify
