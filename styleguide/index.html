@@ -576,6 +576,7 @@
         </p>
 
         <table>
+            <caption>An example table with a header row and a caption</caption>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -678,65 +679,399 @@
 
             <!-- Include validation states and copy, disabled states -->
 
+            <p>
+                Forms are perhaps the most complicated part of any web design. The Descovrir style guide provides a usable, consistent, comprehensive approach to form elements.
+            </p>
+
+            <form>
+                <h3>
+                    A basic form
+                </h3>
+                <div class="form-description">
+                    A description of a basic form.
+                </div>
+                <div class="form-field form-field-text">
+                    <label for="name">Name</label>
+                    <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
+                    <p class="form-field-description">
+                        Your name belongs in the box
+                    </p>
+                </div>
+                <div class="form-field form-field-boolean">
+                    <label for="spam">
+                        <input name="spam" id="spam" type="checkbox" value="y">
+                        Send me spam
+                    </label>
+                </div>
+                <div class="form-field form-field-textarea">
+                    <label for="thoughts">My thoughts on spam</label>
+                    <textarea cols="40" id="thoughts" name="thoughts" rows="4"></textarea>
+                </div>
+                <button type="submit">
+                    <i class="icon-ok"></i>
+                    Send
+                </button>
+            </form>
+
+            <p>
+                Most standard forms start with a title and short description of the form.
+            </p>
+
+            <p>
+                Form fields are wrapped in a class of <code>form-field</code> and the type of the form field, such as <code>form-field-text</code>. Forms will typically have labels above the field and descriptions below the field, validation messages to the right of the field, and only a single column of fields. Most forms terminate with one, and only one, primary action button and several possible secondary actions. Form fields may have the following elements:
+            </p>
+
+            <ul>
+                <li>Hover, focus, active, success, information, warning, error, and disabled states and messaging</li>
+                <li>Icons prepended or appended to the field</li>
+                <li>Field labels</li>
+                <li>Required or optional labels</li>
+                <li>Field descriptions</li>
+                <li>Placeholder attribute</li>
+            </ul>
+
             <h4>7.1.1 Text Inputs</h4>
+
+                <input type="text" placeholder="Example text input" />
+
+                <p>
+                    Special types of input fields will automatically prepend an appropriate icon.
+                </p>
 
                 <h5>7.1.1.1 Email Inputs</h5>
 
+                    <input type="email" placeholder="e.g. alice@example.com" />
+
                 <h5>7.1.1.2 Number Inputs</h5>
+
+                    <input type="number" placeholder="0" />
 
                 <h5>7.1.1.3 URL Inputs</h5>
 
+                    <input type="url" placeholder="e.g. http://google.com" />
+
                 <h5>7.1.1.4 Date and Time Inputs</h5>
+
+                    <input type="time" step="1" />
 
                 <h5>7.1.1.5 Search Inputs</h5>
 
+                    <input type="search" placeholder="Search" />
+
                     <h6>7.1.1.5.1 Search Suggestion Inputs</h6>
+
+                        <input type="search" placeholder="Search" autocomplete="off" />
 
                 <h5>7.1.1.6 Telephone Inputs</h5>
 
+                    <input type="tel" placeholder="e.g. 515-481-9182" />
+
                 <h5>7.1.1.7 Password Inputs</h5>
+
+                    <input type="password" />
 
                 <h5>7.1.1.8 Range Inputs</h5>
 
+                    <p>
+                        Range elements do not use sliders. Instead, ranges should be input as two text fields.
+                    </p>
+
+                    <input type="number" placeholder="Min" />
+                    <input type="number" placeholder="Max" />
+
             <h4>7.1.2 Textareas</h4>
+
+                <textarea cols="40" id="thoughts" name="thoughts" rows="4"></textarea>
 
             <h4>7.1.3 Selections</h4>
 
                 <h5>7.1.3.1 Checkboxes</h5>
 
+                    <h6>7.1.3.1.1 List of Checkboxes</h6>
+
+                        <ul>
+                            <li>
+                                <label class="checkbox">
+                                    <input type="checkbox" value="option1"> Option 1
+                                </label>
+                            </li>
+                            <li>
+                                <label class="checkbox">
+                                    <input type="checkbox" value="option1"> Option 2
+                                </label>
+                            </li>
+                            <li>
+                                <label class="checkbox">
+                                    <input type="checkbox" value="option1"> Option 3
+                                </label>
+                            </li>
+                        </ul>
+
+                    <h6>7.1.3.1.2 Single Checkbox</h6>
+
+                        <label class="checkbox">
+                            <input type="checkbox" value="option1"> Option 1
+                        </label>
+
+                    <h6>7.1.3.1.2 Toggle</h6>
+
+                        <label class="toggle">
+                            <input type="checkbox" value="option1"> Option 1
+                        </label>
+
                 <h5>7.1.3.2 Radios</h5>
+
+                        <ul>
+                            <li>
+                                <label class="radio">
+                                    <input type="radio" name="radio" value="option1"> Option 1
+                                </label>
+                            </li>
+                            <li>
+                                <label class="radio">
+                                    <input type="radio" name="radio" value="option1"> Option 2
+                                </label>
+                            </li>
+                            <li>
+                                <label class="radio">
+                                    <input type="radio" name="radio" value="option1"> Option 3
+                                </label>
+                            </li>
+                        </ul>
 
                 <h5>7.1.3.3 Selection Menu</h5>
 
+                        <select>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+
             <h4>7.1.4 Grouped Inputs</h4>
 
-        <h3>7.2 Inline Forms</h3>
+                <div class="form-field form-field-text">
+                    <label for="given-name">Given Name</label>
+                    <input id="given-name" name="given-name" placeholder="" size="50" type="text" />
+                    <label for="family-name">Family Name</label>
+                    <input id="family-name" name="family-name" placeholder="" size="50" type="text" />
+                </div>
+
+        <h3>7.2 Horizontal Forms</h3>
+
+            <form>
+                <div class="form-field form-field-search">
+                    <input id="name" name="name" placeholder="Search" size="50" type="search" />
+                </div>
+                <div class="form-field form-field-boolean">
+                    <label for="spam">
+                        <input name="spam" id="spam" type="checkbox" value="y">
+                        Include all types
+                    </label>
+                </div>
+                <button type="submit">
+                    <i class="icon-search"></i>
+                    Search
+                </button>
+            </form>
 
         <h3>7.3 Form Field Labels and Descriptions</h3>
 
-            <h4>7.3.1 Optional and Required Fields</h4>
+            <h4>7.3.1 Field labels</h4>
 
-            <h4>7.3.2 Field Descriptions</h4>
+                <p>
+                    Every field that is not in a horizontal form has a label. The label should click to focus on the related form element.
+                </p>
+
+                <form>
+                    <div class="form-field form-field-text">
+                        <label for="name">Name</label>
+                        <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
+                    </div>
+                </form>
+
+            <h4>7.3.2 Optional and Required Fields</h4>
+
+                <p>
+                    The label may contain a <code>span</code> with either <code>optional</code> or <code>required</code> as the class and copy to indicate the field is either required or optional. More useful for forms with more than three fields or several sections.
+                </p>
+
+                <form>
+                    <div class="form-field form-field-text">
+                        <label for="name">Name <span class="required">required</span></label>
+                        <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
+                    </div>
+                </form>
+
+            <h4>7.3.3 Field Descriptions</h4>
+
+                <p>
+                    In the standard vertical layout, each form field may have a short description below the field. These descriptions are particularly useful when the user may not understand the expected input, or has reservations about why the field is necessary or benefitial.
+                </p>
+
+                <form>
+                    <div class="form-field form-field-text">
+                        <label for="name">Name</label>
+                        <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
+                        <p class="form-field-description">
+                            We need a name to identify you to other users.
+                        </p>
+                    </div>
+                </form>
+
+            <h4>7.3.4 Fields with Icons</h4>
+
+                <p>
+                    Icons can be prepended (default) or appended to fields. Icons can be useful particularly in situations where the placeholder will be blocked.
+                </p>
 
         <h3>7.4 Fieldsets and Legends</h3>
 
+            <p>
+                Many users have difficult with forms with more than three fields. In such situations, it is useful to group the fields into fieldsets and legends to segment the field. These fieldsets can also be constructed as a step-by-step wizard.
+            </p>
+
+            <form>
+                <div class="form-field form-field-text">
+                    <label for="name">Name</label>
+                    <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
+                    <p class="form-field-description">
+                        Your name belongs in the box
+                    </p>
+                </div>
+                <fieldset>
+                    <legend>Spam Fields</legend>
+                    <div class="form-field form-field-boolean">
+                        <label for="spam">
+                            <input name="spam" id="spam" type="checkbox" value="y">
+                            Send me spam
+                        </label>
+                    </div>
+                    <div class="form-field form-field-textarea">
+                        <label for="thoughts">My thoughts on spam</label>
+                        <textarea cols="40" id="thoughts" name="thoughts" rows="4"></textarea>
+                    </div>
+                </fieldset>
+                <button type="submit">
+                    <i class="icon-ok"></i>
+                    Send
+                </button>
+            </form>
+
     <h2>8. Buttons</h2>
 
-        <h3>8.1 Button Styles and Sizes</h3>
+        <h3>8.1 Buttons by Role</h3>
 
-            <h4>8.1.1 Primary, Secondary, Danger, Cancel, Unspecified</h4>
+            <ul>
+                <li>
+                    <button class="button-primary">
+                        Primary
+                    </button>
 
-                <!-- Include Disabled States -->
+                    Primary, Success, Accept, Next
+                </li>
+                <li>
+                    <button class="button-secondary">
+                        Secondary
+                    </button>
 
-            <h4>8.1.2 Normal size, Small size, Large size, Epic size</h4>
+                    Secondary, Navigation, Information, Back
+                </li>
+                <li>
+                    <button class="button-danger">
+                        Danger
+                    </button>
 
-            <h4>8.1.3 Buttons with Icons</h4>
+                    Error, Delete
+                </li>
+                <li>
+                    <button class="button-cancel">
+                        Cancel
+                    </button>
 
-        <h3>8.2 Button collections</h3>
+                    Escape, Previous
+                </li>
+                <li>
+                    <button class="button-disabled">
+                        Disabled
+                    </button>
+                </li>
+            </ul>
 
-            <h4>8.2.1 Button groups</h4>
+        <h3>8.2 Normal size, Small size, Large size, Epic size</h3>
 
-            <h4>8.2.2 Toggles</h4>
+            <ul>
+                <li>
+                    <button class="button-primary">
+                        Normal
+                    </button>
+                </li>
+                <li>
+                    <button class="button-primary button-small">
+                        Small
+                    </button>
+                </li>
+                <li>
+                    <button class="button-primary button-large">
+                        Large
+                    </button>
+                </li>
+                <li>
+                    <button class="button-primary button-epic">
+                        Epic
+                    </button>
+                </li>
+            </ul>
+
+        <h3>8.3 Buttons with Icons</h3>
+
+            <ul>
+                <li>
+                    <button class="button-primary">
+                        <i class="icon-"></i>
+                        Next Page
+                    </button>
+                </li>
+                <li>
+                    <button class="button-secondary">
+                        <i class="icon-"></i>
+                        Edit
+                    </button>
+                </li>
+                <li>
+                    <button class="button-danger">
+                        <i class="icon-"></i>
+                        Delete
+                    </button>
+                </li>
+                <li>
+                    <button class="button-cancel">
+                        <i class="icon-"></i>
+                        Cancel
+                    </button>
+                </li>
+                <li>
+                    <button class="button-disabled">
+                        <i class="icon-"></i>
+                        Resume
+                    </button>
+                </li>
+            </ul>
+
+        <h3>8.4 Button groups</h3>
+
+            <div class="button-group">
+                <button class="button-primary">
+                    Primary
+                </button>
+                <button class="button-secondary">
+                    Secondary
+                </button>
+                <button class="button-cancel">
+                    Cancel
+                </button>
+            </div>
 
     <h2>9. Navigation</h2>
 
