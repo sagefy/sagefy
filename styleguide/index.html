@@ -1,0 +1,813 @@
+<!doctype html>
+<html>
+<head>
+    <title>Descovrir Style Guide and Component Library</title>
+    <style> body { width: 888px; margin: 0 auto; font-family: Palatino; line-height: 1.5; color:#343115; background:#fcfcfa; } .leading {font-size:18px;}</style>
+</head>
+<body>
+
+<h1>Descovrir Style Guide &amp; Component Library</h1>
+
+    <p class="leading">
+        Welcome to the Descovrir Style Guide. This page covers the styling and conventions of Descovrir  user interfaces. This guide also include commonly used components. Suggestions are welcome via pull requests.
+    </p>
+
+    <!-- Show an example, and then markup and relevant classes, then notes -->
+
+    <h2>1. Layout, Grid, and Rhythm</h2>
+
+            <p>
+                The Descovrir layout system is derived from the <a href="http://framelessgrid.com/">Frameless Grid</a> system. Some naming conventions and niceties are borrowed from the <a href="http://getbootstrap.com/">Twitter Bootstrap</a>.
+            </p>
+
+            <p>
+                Descovrir uses a larger than typical default metric system. The base font size is 16px, with a line-height of 24px. The basic grid rhythm is established at 12px. Columns default to 48px, and gutters default to 24px. Because of Descovrir's large metrics, a great deal of focus and minimalism will be required.
+            </p>
+
+            <p>
+                Different screen sizes will alter the number of columns present. The smallest size is 4 columns with 5 gutters, which is 312px. The next size is then 6 (456px), then 8 (600px), then 12 (888px), and the largest size is at 16 columns (1176px). Rows are simply given the class <code>row</code>. Columns are classed as <code>col-n</code>, where n is the number of columns.
+            </p>
+
+            <div class="row">
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+                <span class="col-1"></span>
+            </div>
+
+            <p>
+                Columns in groups of two are preferred to one or odd numbers of columns.
+            </p>
+
+            <div class="row">
+                <span class="col-12"></span>
+                <span class="col-4"></span>
+            </div>
+
+            <p>
+                Buckets can be targeted towards width of 4, 6, 8, 12, and 16 specifically. It uses the name <code>col-tm-n</code>, where t is literal, m is the target width, and n is the number of columns. The target will apply to all smaller sizes until specified. Columns can be nested by nesting rows. Columns may be offset using the name <code>col-offset-n</code>, where n is the number of columns to offset.
+            </p>
+
+    <h2>2. Colors, Icons, Images</h2>
+
+        <h3>2.1 Colors</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>20%</th>
+                        <th>43%</th>
+                        <th>66%</th>
+                        <th>90%</th>
+                        <th>95%</th>
+                        <th>99%</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>0&deg; 0%</td>
+                    <td style="background:#333030"></td>
+                    <td style="background:#6a6464"></td>
+                    <td style="background:#a79e9f"></td>
+                    <td style="background:#e5e1e2"></td>
+                    <td style="background:#f2f0f0"></td>
+                    <td style="background:#fcfcfc"></td>
+                </tr>
+                <tr>
+                    <td>9&deg; 100%</td>
+                    <td style="background:#44292a"></td>
+                    <td style="background:#8b585b"></td>
+                    <td style="background:#d98b90"></td>
+                    <td style="background:#fedadb"></td>
+                    <td style="background:#ffeced"></td>
+                    <td style="background:#fffbfb"></td>
+                </tr>
+                <tr>
+                    <td>81&deg; 100%</td>
+                    <td style="background:#343115"></td>
+                    <td style="background:#6c6733"></td>
+                    <td style="background:#aaa354"></td>
+                    <td style="background:#e7e3c7"></td>
+                    <td style="background:#f3f1e4"></td>
+                    <td style="background:#fcfcfa"></td>
+                </tr>
+                <tr>
+                    <td>153&deg; 100%</td>
+                    <td style="background:#0f3728"></td>
+                    <td style="background:#287256"></td>
+                    <td style="background:#44b389"></td>
+                    <td style="background:#c5ebd9"></td>
+                    <td style="background:#e3f5ec"></td>
+                    <td style="background:#f9fdfb"></td>
+                </tr>
+                <tr>
+                    <td>225&deg; 100%</td>
+                    <td style="background:#143440"></td>
+                    <td style="background:#316d83"></td>
+                    <td style="background:#51abcd"></td>
+                    <td style="background:#cae7f6"></td>
+                    <td style="background:#e6f3fa"></td>
+                    <td style="background:#fafcfe"></td>
+                </tr>
+                <tr>
+                    <td>297&deg; 100%</td>
+                    <td style="background:#3c2a42"></td>
+                    <td style="background:#7b5a86"></td>
+                    <td style="background:#c18ed1"></td>
+                    <td style="background:#f0dcf8"></td>
+                    <td style="background:#f7edfb"></td>
+                    <td style="background:#fdfbfe"></td>
+                </tr>
+            </table>
+
+            <p>
+                Descovrir uses a color scheme derived from <a href="http://boronine.com/husl/">HUSLp</a>, which corrects issues with HSL, CIE-based color schemes, and HUSL itself at the price of highly saturated colors.
+            </p>
+
+            <p>
+                <strong>Hue</strong>. 5 primary hues are used by Descovrir.
+            </p>
+
+            <ul>
+                <li>
+                    9&deg; &ndash; Red. Reserved for errors, danger, major issues, or to provide warmth.
+                </li>
+                <li>
+                    81&deg; &ndash; Gold. Serves as the base hue. Useful for warning states. Where possible use this hue over red.
+                </li>
+                <li>
+                    153&deg; &ndash; Green. Useful for success and acceptance states.
+                </li>
+                <li>
+                    225&deg; &ndash; Blue. Indicates a clickable element or navigation element. Also an accent color when no other is applicable.
+                </li>
+                <li>
+                    297&deg; &ndash; Purple. Represents authority and acceptance.
+                </li>
+            </ul>
+
+            <p>
+                Other hues can be used, particularly when hue is a linear function, such as a progress bar color.
+            </p>
+
+            <p>
+                <strong>Saturation</strong>. Descovrir defaults to using the full saturation available (100%) at any particular hue. Desaturation is available particularly at disabled states, and multiple of 20% are preferred for such states.
+            </p>
+
+            <p>
+                <strong>Lightness</strong>. Any lightness values may be used. Descovrir recommends against values darker than 20%. Default to 20%, 43%, 66%, 90%, 95%, and 99% where applicable.
+            </p>
+
+        <h3>2.2 Icons</h3>
+
+            <h4>2.2.1 Icon font</h4>
+
+                <p>
+                    Descovrir will use <a href="http://fortawesome.github.io/Font-Awesome/">FontAwesome</a> where applicable. Use the <code>i</code> tag for icons, not italics.
+                </p>
+
+                <ul class="inline">
+                    <li><i class="icon-compass"></i></li>
+                    <li><i class="icon-quote-right"></i></li>
+                    <li><i class="icon-remove-sign"></i></li>
+                    <li><i class="icon-rocket"></i></li>
+                    <li><i class="icon-search"></i></li>
+                    <li><i class="icon-refresh"></i></li>
+                    <li><i class="icon-group"></i></li>
+                </ul>
+
+            <h4>2.2.2 Region flags</h4>
+
+                <p>
+                    Where applicable, we will use <a href="https://github.com/koppi/iso-country-flags-svg-collection">this collection</a> of flags for countries and regions.
+                </p>
+
+        <h3>2.3 Images</h3>
+
+            <p>
+                Alt tags, title tags, and captions for images are recommended where possible.
+            </p>
+
+            <h4>2.3.1 Image sizes</h4>
+
+                <p>
+                    Images subscribe to the basic grid of 12px as much as possible, more so on the width. Additionally, widths that match the grid system, <code>48n + 24(n-1)</code>, are preferable.
+                </p>
+
+                <img src="http://placehold.it/12x12" title="12x12" />
+                <img src="http://placehold.it/24x24" title="24x24" />
+                <img src="http://placehold.it/36x36" title="36x36" />
+                <img src="http://placehold.it/48x48" title="48x48" />
+                <img src="http://placehold.it/72x72" title="72x72" />
+                <img src="http://placehold.it/120x120" title="120x120" />
+                <img src="http://placehold.it/192x192" title="192x192" />
+                <img src="http://placehold.it/264x264" title="264x264" />
+
+            <h4>2.3.2 Image captions</h4>
+
+                <p>
+                    Images can be framed by wrapping them in a <code>figure</code> tag. Be sure to subtract 24px to account for padding incurred.
+                </p>
+
+                <figure>
+                    <img src="http://placehold.it/72x72" title="72x72" />
+                </figure>
+
+                <p>
+                    The <code>figcaption</code> tag can be used inside of a <code>figure</code> tag to add a caption. This prodecure is useful but not limited to images.
+                </p>
+
+                <figure>
+                    <img src="http://placehold.it/192x192" title="192x192" />
+                    <figcaption>Figcaptions are not limited to images, but images are an excellent example.</figcaption>
+                </figure>
+
+
+            <h4>2.3.2 Avatars</h4>
+
+                <p>
+                    Avatars will simply use the <a href="https://en.gravatar.com/">Gravatar</a> system. Sizes  match the image sizes stated above. Avatars are not be captioned.
+                </p>
+
+            <h4>2.3.2 Logos and Branding</h4>
+
+                <p>
+                    The Descovrir logo is a mariner's astrolabe. It is presented on all pages, and clicking it either returns to a home page or presents an overlayed menu of options.
+                </p>
+
+                <p>
+                    The Descovrir name, when used independently, is lowercase, normal weight Palatino in color <code>#343115</code>. It is not required to accompany the logo. When used in a sentence or title, Descovrir is capitalized.
+                </p>
+
+    <h2>3. Typography</h2>
+
+        <h3>3.1 Font stacks</h3>
+
+            <p>
+                Descovrir's primary typeface is Palatino. Monospaced typography uses DejaVu Sans Mono derivatives. When necessary, Lucida can be used as a san-serif typeface. Note Lucida does not support true italics on several operating systems.
+            </p>
+
+            <ul>
+                <li><strong>Base</strong>: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", serif</li>
+                <li class="monospace"><strong>Monospace</strong>: menlo, "dejavu sans mono", consolas, "lucida console", monaco, monospace</li>
+                <li class="sans-serif"><strong>Sans-serif</strong>: "lucida grande", "lucida sans unicode", "lucida sans", geneva, sans-serif</li>
+            </ul>
+
+            <p>
+                The classes <code>base-font</code>, <code>monospace</code>, and <code>sans-serif</code> can be used to alter the typeface.
+            </p>
+
+        <h3>3.2 Headings, Subheadings, and Header Groups</h3>
+
+            <p>
+                All elements <code>h1</code> through <code>h6</code> are styled.
+            </p>
+
+            <figure>
+
+                <h1>h1. A Page Level Heading</h1>
+
+                <h2>h2. A Section Level Heading</h2>
+
+                <h3>h3. A Subsection Level Heading</h3>
+
+                <h4>h4. A Division Level Heading</h4>
+
+                <h5>h5. Additional Level Heading</h5>
+
+                <h6>h6. Small Level Heading</h6>
+
+            </figure>
+
+            <p>
+                Sub-headers use the class <code>subheader</code> when used directly below a higher order header. An <code>hgroup</code> will collapse the margins between the headers.
+            </p>
+
+            <figure>
+
+                <hgroup>
+                    <h1>h1. A Page Level Heading</h1>
+                    <h2 class="subheader">h2. A subtitle of h1</h2>
+                    <h3 class="subheader">h3. And a third level title</h3>
+                </hgroup>
+
+            </figure>
+
+            <h4>3.2.1 Small inline elements with headers</h4>
+
+                <p>
+                    Optionally, elements can float along with the header. The most easy way to accomplish this is to wrap the header in an <code>hgroup</code> and add the class <code>inline-block</code> to the header tag.
+                </p>
+
+                <figure>
+                    <hgroup>
+                        <h1 class="inline-block">h1. A Page Level Heading</h1>
+                        <a href="#"><i class="icon-heart"></i>An additional link</a>
+                    </hgroup>
+                </figure>
+
+    <h2>4. Inline-level tags</h2>
+
+        <h3>4.1 Links</h3>
+
+            <p>
+                Links are simply blue in color, and like other states, <em>lighten</em> on hover and focus, and <em>darken</em> on active (clicked) or selected. Icons can be optionally included in links. Links stay underlined to support the color. Visited links receive no extraordinary treatment.
+            </p>
+
+            <ul>
+                <li><a href="#">Normal link</a></li>
+                <li><a href="#" class="hover">Hovered or focused link</a></li>
+                <li><a href="#" class="selected">Active or selected link</a></li>
+            </ul>
+
+        <h3>4.2 Small, Strong, Emphasis, Deletion, Insertion, Mark, Subscript, Superscript, Abbreviations, and Code</h3>
+
+            <p>
+                All normal tag operations are supported and provide expected results. Note that <code>b</code>, <code>s</code>, and <code>u</code> tags are not supported, and <code>i</code> tags are reserved for icons, not italics.
+            </p>
+
+            <ul>
+                <li><strong>A strong element</strong></li>
+                <li><em>An emphasized element</em></li>
+                <li><small>A small element</small></li>
+                <li><del>A deleted element</del></li>
+                <li><ins>An inserted element</ins></li>
+                <li><mark>A marked element</mark></li>
+                <li><sub>A subscript element</sub> and a normal element</li>
+                <li><sup>A superscript element</sup> and a normal element</li>
+                <li>An example abbreviation: <abbr title="Hypertext Transfer Protocol">HTTP</abbr></li>
+                <li><code>Inline code element</code></li>
+            </ul>
+
+            <p>
+                Other elements, such as <code>var</code>, <code>samp</code>, and <code>kbd</code>, are styled but non-effectively.
+            </p>
+
+        <h3>4.3 Defintion</h3>
+
+            <p>
+                The <code>dfn</code> element can be used on the defining instance of a term. It is often used with a title attribute with a defintion of the term.
+            </p>
+
+            <figure>
+                An example definition of <dfn title="The perception of fluctuations of air pressure.">sound</dfn>.
+            </figure>
+
+        <h3>4.3 Time and Dates</h3>
+
+            <p>
+                The <code>time</code> tag is used to describe specific dates and times. It does not indicate durations. The <code>datetime</code> attribute is optional.
+            </p>
+
+        <h3>4.4 Inline Quotations and Citations</h3>
+
+            <p>
+                The <code>q</code> and <code>cite</code> tags are used together to indicate a quote and a citation. All quotes are cited. No quote marks are included when using the <code>q</code> tag.
+            </p>
+
+            <p>
+                <q>Prior knowledge has a large influence on student performance, explaining up to 81 percent of the variance in post-test scores.</q> <cite>Dochy, Segers, and Buehl</cite>
+            </p>
+
+        <h3>4.5 Inline Labels and Badges</h3>
+
+            <p>
+                Labels and badges are available in each of the basic hues.
+            </p>
+
+            <ul>
+                <li>Default: <span class="label-default">label<span> and badge: <span class="badge-default">100</span></li>
+                <li>Error or Danger: <span class="label-error">label<span> and badge: <span class="badge-error">100</span></li>
+                <li>Base or Warn: <span class="label-warn">label<span> and badge: <span class="badge-warn">100</span></li>
+                <li>Success or Accept: <span class="label-accept">label<span> and badge: <span class="badge-accept">100</span></li>
+                <li>Accent or Info: <span class="label-info">label<span> and badge: <span class="badge-info">100</span></li>
+                <li>Official or Admin: <span class="label-official">label<span> and badge: <span class="badge-official">100</span></li>
+            </ul>
+
+    <h2>5. Block-level tags</h2>
+
+        <h3>5.1 Paragraphs</h3>
+
+            <p>
+                Paragraphs follow standard conventions. Paragraphs have a default maximum width to improve readability. This can be overwritten using the <code>full-width</code> class.
+            </p>
+
+            <h4>5.1.1 Leading Paragraphs</h4>
+
+            <p>
+                Leading paragraphs, commonly used after the page title, emphasis a block of text. Often leading paragraphs are used to describe the page contents.
+            </p>
+
+        <h3>5.2 Lists</h3>
+
+            <h4>5.2.1 Unordered Lists</h4>
+
+                <p>
+                    Unordered lists follow standard conventions. Line items do not hold extra margins. Only root-level unordered lists have a bottom margin.
+                </p>
+
+                <ul>
+                    <li>Item 1
+                        <ul>
+                            <li>Item 1.1</li>
+                            <li>Item 1.2</li>
+                            <li>Item 1.3</li>
+                        </ul>
+                    </li>
+                    <li>Item 2</li>
+                    <li>Item 3</li>
+                </ul>
+
+            <h4>5.2.2 Ordered Lists</h4>
+
+                <p>
+                    Ordered lists follow the standard conventions as well.
+                </p>
+
+                <ol>
+                    <li>Item 1
+                        <ul>
+                            <li>Item 1.1</li>
+                            <li>Item 1.2</li>
+                            <li>Item 1.3</li>
+                        </ul>
+                    </li>
+                    <li>Item 2</li>
+                    <li>Item 3</li>
+                </ol>
+
+            <h4>5.2.3 Unstyled Lists</h4>
+
+                <p>
+                    Lists can be unstyled using the <code>unstyled</code> class. Margins still count on lower level lists.
+                </p>
+
+                <ul class="unstyled">
+                    <li>Item 1
+                        <ul>
+                            <li>Item 1.1</li>
+                            <li>Item 1.2</li>
+                            <li>Item 1.3</li>
+                        </ul>
+                    </li>
+                    <li>Item 2</li>
+                    <li>Item 3</li>
+                </ul>
+
+            <h4>5.2.4 Horizontal Lists</h4>
+
+                <p>
+                    Horizontal, or inline, lists are also supported. Often used as simple navigational menus. Subitems will not appear.
+                </p>
+
+                <ul class="horizontal">
+                    <li>Item 1</li>
+                    <li>Item 2</li>
+                    <li>Item 3</li>
+                </ul>
+
+            <h4>5.2.5 Definition Lists</h4>
+
+                <p>
+                    Defintion lists are useful for glossaries, dictionaries, and outlines. The tags <code>dl</code>, <code>dt</code>, and <code>dd</code> are used together to form the definition list. Defition lists are also used for marking up metdata.
+                </p>
+
+                <dl>
+                    <dt>RSS</dt>
+                    <dd>An XML format for aggregating information from websites whose
+                    content is frequently updated.</dd>
+                    <dt>Weblog</dt>
+                    <dd>Contraction of the term "web log", a weblog is a
+                    website that is periodically updated, like a journal</dd>
+                </dl>
+
+            <h4>5.2.6 Lists with Thumbnails</h4>
+
+                <p>
+                    A very common on the internet is a list featuring thumbnails. These lists are zebra-striped and can be marked up either as actual lists, or for convienence, tables. Lists with thumbnails use the <code>with-thumbnails</code> class.
+                </p>
+
+                <table class="with-thumbnails">
+                    <tr>
+                        <td>
+                            <img src="http://placehold.it/48x48" title="48x48" />
+                        </td>
+                        <td>
+                            <h4>List Item 1</h4>
+                            <p>A description of list item 1.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="http://placehold.it/48x48" title="48x48" />
+                        </td>
+                        <td>
+                            <h4>List Item 1</h4>
+                            <p>A description of list item 1.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="http://placehold.it/48x48" title="48x48" />
+                        </td>
+                        <td>
+                            <h4>List Item 1</h4>
+                            <p>A description of list item 1.</p>
+                        </td>
+                    </tr>
+                </table>
+
+        <h3>5.3 Quotes and Citations</h3>
+
+            <p>
+                In addition to inline quotations, blockquotes can be used to pull a quote out of inline copy. The <code>q</code> and <code>cite</code> tags are used inside the <code>blockquote</code> tag.
+            </p>
+
+            <blockquote>
+                <q>Prior knowledge has a large influence on student performance, explaining up to 81 percent of the variance in post-test scores.</q>
+                <cite>Dochy, Segers, and Buehl</cite>
+            </blockquote>
+
+        <h3>5.4 Horizontal Rules</h3>
+
+            <p>
+                Horizontal rules are avoided as Descovrir prefers whitespace over lines. Rules are useful in certain situations, however.
+            </p>
+
+            <hr />
+
+        <h3>5.5 Addresses, Header, Footer, Aside, Section, Article, Nav</h3>
+
+            <p>
+                Addresses are commonly misunderstood elements. The <code>address</code> tag is used to indicate who to contact for a particular document. The tag is not used for arbitrary postal addresses and email address. Descovrir does not style the <code>address</code> tag.
+            </p>
+
+            <p>
+                Other block tags such as header and footer are used for semantic representation, but receive no special styling.
+            </p>
+
+        <h3>5.6 Programming Code and Preformmated Elements</h3>
+
+            <p>
+                Preformmated element will default to use monospaced fonts. Computer code is syntax highlighted based on language.
+            </p>
+
+            http://alexgorbatchev.com/SyntaxHighlighter/
+            http://craig.is/making/rainbows
+            http://softwaremaniacs.org/soft/highlight/en/
+            http://prismjs.com/
+
+    <h2>6. Tables</h2>
+
+        <p>
+            Tables are zebra-striped, and common elements such as header and footer rows are available. Rows classes are available for each hue. Supplimental tags, such as <code>tbody</code> are recommended.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Marissa</td>
+                    <td>marissa@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Edward</td>
+                    <td>edward@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Theo</td>
+                    <td>theo@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Jasmine</td>
+                    <td>jasmine@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr class="row-accept">
+                    <td>5</td>
+                    <td>Jacob</td>
+                    <td>jacob@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr class="row-accept">
+                    <td>6</td>
+                    <td>Alexander</td>
+                    <td>alexander@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr class="row-accent">
+                    <td>7</td>
+                    <td>Cornelia</td>
+                    <td>cornelia@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr class="row-accent">
+                    <td>8</td>
+                    <td>Sophie</td>
+                    <td>sophie@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr class="row-error">
+                    <td>9</td>
+                    <td>Kadri</td>
+                    <td>kadri@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr class="row-error">
+                    <td>10</td>
+                    <td>Dalton</td>
+                    <td>dalton@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr class="row-admin">
+                    <td>11</td>
+                    <td>Seiji</td>
+                    <td>seiji@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr class="row-admin">
+                    <td>12</td>
+                    <td>Sanjay</td>
+                    <td>sanjay@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr class="row-warn">
+                    <td>13</td>
+                    <td>Iris</td>
+                    <td>iris@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+                <tr class="row-warn">
+                    <td>14</td>
+                    <td>Frederico</td>
+                    <td>frederico@example.com</td>
+                    <td><a href="#">Contact</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+    <h2>7. Forms</h2>
+
+        <h3>7.1 Basic Forms</h3>
+
+            <!-- Include validation states and copy, disabled states -->
+
+            <h4>7.1.1 Text Inputs</h4>
+
+                <h5>7.1.1.1 Email Inputs</h5>
+
+                <h5>7.1.1.2 Number Inputs</h5>
+
+                <h5>7.1.1.3 URL Inputs</h5>
+
+                <h5>7.1.1.4 Date and Time Inputs</h5>
+
+                <h5>7.1.1.5 Search Inputs</h5>
+
+                    <h6>7.1.1.5.1 Search Suggestion Inputs</h6>
+
+                <h5>7.1.1.6 Telephone Inputs</h5>
+
+                <h5>7.1.1.7 Password Inputs</h5>
+
+                <h5>7.1.1.8 Range Inputs</h5>
+
+            <h4>7.1.2 Textareas</h4>
+
+            <h4>7.1.3 Selections</h4>
+
+                <h5>7.1.3.1 Checkboxes</h5>
+
+                <h5>7.1.3.2 Radios</h5>
+
+                <h5>7.1.3.3 Selection Menu</h5>
+
+            <h4>7.1.4 Grouped Inputs</h4>
+
+        <h3>7.2 Inline Forms</h3>
+
+        <h3>7.3 Form Field Labels and Descriptions</h3>
+
+            <h4>7.3.1 Optional and Required Fields</h4>
+
+            <h4>7.3.2 Field Descriptions</h4>
+
+        <h3>7.4 Fieldsets and Legends</h3>
+
+    <h2>8. Buttons</h2>
+
+        <h3>8.1 Button Styles and Sizes</h3>
+
+            <h4>8.1.1 Primary, Secondary, Danger, Cancel, Unspecified</h4>
+
+                <!-- Include Disabled States -->
+
+            <h4>8.1.2 Normal size, Small size, Large size, Epic size</h4>
+
+            <h4>8.1.3 Buttons with Icons</h4>
+
+        <h3>8.2 Button collections</h3>
+
+            <h4>8.2.1 Button groups</h4>
+
+            <h4>8.2.2 Toggles</h4>
+
+    <h2>9. Navigation</h2>
+
+        <!-- Include responsive management -->
+
+        <h3>9.1 Horizonal Navigation</h3>
+
+        <h3>9.2 Vertical Navigation</h3>
+
+        <h3>9.3 Horizontal Tabs</h3>
+
+        <h3>9.4 Vertical Tabs</h3>
+
+        <h3>9.5 Breadcrumbs</h3>
+
+        <h3>9.6 Pagination</h3>
+
+    <h2>10. Elements</h2>
+
+        <h3>10.1 Tooltips</h3>
+
+        <h3>10.2 Tags and Keywords</h3>
+
+        <h3>10.3 Alerts</h3>
+
+        <h3>10.4 Discussion</h3>
+
+        <h3>10.5 Notifications</h3>
+
+        <h3>10.6 Audio, Video, and Embedded Objects</h3>
+
+        <h3>10.7 Galleries</h3>
+
+        <h3>10.8 Modals</h3>
+
+        <h3>10.9 Progressbars and Spinners</h3>
+
+        <h3>10.10 Hero</h3>
+
+        <h3>10.11 Tutorials</h3>
+
+        <h3>10.12 Step-by-step</h3>
+
+        <h3>10.13 Accordions</h3>
+
+        <h3>10.14 Statistics</h3>
+
+    <h2>11. Extentions and Additions</h2>
+
+        <h3>11.1 Extending with BEM</h3>
+
+            <p>
+                Non-tag elements in the Descovrir ecosystem use the <a href="http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/">BEM syntax</a>.
+            </p>
+
+        <h3>11.2 JavaScript and CSS classes</h3>
+
+            <p>
+                Classes and IDs used only for JavaScript are prepended by <code>js-</code>. Style-based classes, other than for forms, navigation, and elements should not be used in JavaScript.
+            </p>
+
+        <h3>11.3 Additions</h3>
+
+            <p>
+                Prefer to add components to the general styleguide than inventing new components for specific interfaces. Reuse will ensure code maintainability and efficiency.
+            </p>
+
+        <h3>11.4 Browser support</h3>
+
+            <p>
+                At this time, Descovrir will support the major browsers at their current version, and one previous version.
+            </p>
+</body>
+</html>
