@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Descovrir Style Guide and Component Library</title>
-    <style> body { width: 888px; margin: 0 auto; font-family: Palatino; line-height: 1.5; color:#343115; background:#fcfcfa; } .leading {font-size:18px;}</style>
+    <link rel="stylesheet" href="stylesheets/styleguide.css" />
 </head>
 <body>
 
@@ -77,24 +77,6 @@
                     </tr>
                 </thead>
                 <tr>
-                    <td>0&deg; 0%</td>
-                    <td style="background:#333030"></td>
-                    <td style="background:#6a6464"></td>
-                    <td style="background:#a79e9f"></td>
-                    <td style="background:#e5e1e2"></td>
-                    <td style="background:#f2f0f0"></td>
-                    <td style="background:#fcfcfc"></td>
-                </tr>
-                <tr>
-                    <td>9&deg; 100%</td>
-                    <td style="background:#44292a"></td>
-                    <td style="background:#8b585b"></td>
-                    <td style="background:#d98b90"></td>
-                    <td style="background:#fedadb"></td>
-                    <td style="background:#ffeced"></td>
-                    <td style="background:#fffbfb"></td>
-                </tr>
-                <tr>
                     <td>81&deg; 100%</td>
                     <td style="background:#343115"></td>
                     <td style="background:#6c6733"></td>
@@ -102,6 +84,15 @@
                     <td style="background:#e7e3c7"></td>
                     <td style="background:#f3f1e4"></td>
                     <td style="background:#fcfcfa"></td>
+                </tr>
+                <tr>
+                    <td>225&deg; 100%</td>
+                    <td style="background:#143440"></td>
+                    <td style="background:#316d83"></td>
+                    <td style="background:#51abcd"></td>
+                    <td style="background:#cae7f6"></td>
+                    <td style="background:#e6f3fa"></td>
+                    <td style="background:#fafcfe"></td>
                 </tr>
                 <tr>
                     <td>153&deg; 100%</td>
@@ -113,13 +104,12 @@
                     <td style="background:#f9fdfb"></td>
                 </tr>
                 <tr>
-                    <td>225&deg; 100%</td>
-                    <td style="background:#143440"></td>
-                    <td style="background:#316d83"></td>
-                    <td style="background:#51abcd"></td>
-                    <td style="background:#cae7f6"></td>
-                    <td style="background:#e6f3fa"></td>
-                    <td style="background:#fafcfe"></td>
+                    <td>9&deg; 100%</td>
+                    <td style="background:#44292a"></td>
+                    <td style="background:#8b585b"></td>
+                    <td style="background:#d98b90"></td>
+                    <td style="background:#fedadb"></td>
+                    <td style="background:#fffbfb"></td>
                 </tr>
                 <tr>
                     <td>297&deg; 100%</td>
@@ -388,12 +378,12 @@
             </p>
 
             <ul>
-                <li>Default: <span class="label-default">label<span> and badge: <span class="badge-default">100</span></li>
-                <li>Error or Danger: <span class="label-error">label<span> and badge: <span class="badge-error">100</span></li>
-                <li>Base or Warn: <span class="label-warn">label<span> and badge: <span class="badge-warn">100</span></li>
-                <li>Success or Accept: <span class="label-accept">label<span> and badge: <span class="badge-accept">100</span></li>
-                <li>Accent or Info: <span class="label-info">label<span> and badge: <span class="badge-info">100</span></li>
-                <li>Official or Admin: <span class="label-official">label<span> and badge: <span class="badge-official">100</span></li>
+                <li>Default: <span class="label--default">label<span> and badge: <span class="badge--default">100</span></li>
+                <li>Error or Danger: <span class="label--error">label<span> and badge: <span class="badge--error">100</span></li>
+                <li>Base or Warn: <span class="label--warn">label<span> and badge: <span class="badge--warn">100</span></li>
+                <li>Success or Accept: <span class="label--accept">label<span> and badge: <span class="badge--accept">100</span></li>
+                <li>Accent or Info: <span class="label--info">label<span> and badge: <span class="badge--info">100</span></li>
+                <li>Official or Admin: <span class="label--official">label<span> and badge: <span class="badge--official">100</span></li>
             </ul>
 
     <h2>5. Block-level tags</h2>
@@ -499,7 +489,7 @@
                     A very common on the internet is a list featuring thumbnails. These lists are zebra-striped and can be marked up either as actual lists, or for convienence, tables. Lists with thumbnails use the <code>with-thumbnails</code> class.
                 </p>
 
-                <table class="with-thumbnails">
+                <table class="list--with-thumbnails">
                     <tr>
                         <td>
                             <img src="http://placehold.it/48x48" title="48x48" />
@@ -610,61 +600,61 @@
                     <td>jasmine@example.com</td>
                     <td><a href="#">Contact</a></td>
                 </tr>
-                <tr class="row-accept">
+                <tr class="row--accept">
                     <td>5</td>
                     <td>Jacob</td>
                     <td>jacob@example.com</td>
                     <td><a href="#">Contact</a></td>
                 </tr>
-                <tr class="row-accept">
+                <tr class="row--accept">
                     <td>6</td>
                     <td>Alexander</td>
                     <td>alexander@example.com</td>
                     <td><a href="#">Contact</a></td>
                 </tr>
-                <tr class="row-accent">
+                <tr class="row--accent">
                     <td>7</td>
                     <td>Cornelia</td>
                     <td>cornelia@example.com</td>
                     <td><a href="#">Contact</a></td>
                 </tr>
-                <tr class="row-accent">
+                <tr class="row--accent">
                     <td>8</td>
                     <td>Sophie</td>
                     <td>sophie@example.com</td>
                     <td><a href="#">Contact</a></td>
                 </tr>
-                <tr class="row-error">
+                <tr class="row--error">
                     <td>9</td>
                     <td>Kadri</td>
                     <td>kadri@example.com</td>
                     <td><a href="#">Contact</a></td>
                 </tr>
-                <tr class="row-error">
+                <tr class="row--error">
                     <td>10</td>
                     <td>Dalton</td>
                     <td>dalton@example.com</td>
                     <td><a href="#">Contact</a></td>
                 </tr>
-                <tr class="row-admin">
+                <tr class="row--admin">
                     <td>11</td>
                     <td>Seiji</td>
                     <td>seiji@example.com</td>
                     <td><a href="#">Contact</a></td>
                 </tr>
-                <tr class="row-admin">
+                <tr class="row--admin">
                     <td>12</td>
                     <td>Sanjay</td>
                     <td>sanjay@example.com</td>
                     <td><a href="#">Contact</a></td>
                 </tr>
-                <tr class="row-warn">
+                <tr class="row--warn">
                     <td>13</td>
                     <td>Iris</td>
                     <td>iris@example.com</td>
                     <td><a href="#">Contact</a></td>
                 </tr>
-                <tr class="row-warn">
+                <tr class="row--warn">
                     <td>14</td>
                     <td>Frederico</td>
                     <td>frederico@example.com</td>
@@ -690,20 +680,20 @@
                 <div class="form-description">
                     A description of a basic form.
                 </div>
-                <div class="form-field form-field-text">
+                <div class="form-field form-field--text">
                     <label for="name">Name</label>
                     <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
-                    <p class="form-field-description">
+                    <p class="form-field__description">
                         Your name belongs in the box
                     </p>
                 </div>
-                <div class="form-field form-field-boolean">
+                <div class="form-field form-field--boolean">
                     <label for="spam">
                         <input name="spam" id="spam" type="checkbox" value="y">
                         Send me spam
                     </label>
                 </div>
-                <div class="form-field form-field-textarea">
+                <div class="form-field form-field--textarea">
                     <label for="thoughts">My thoughts on spam</label>
                     <textarea cols="40" id="thoughts" name="thoughts" rows="4"></textarea>
                 </div>
@@ -718,7 +708,7 @@
             </p>
 
             <p>
-                Form fields are wrapped in a class of <code>form-field</code> and the type of the form field, such as <code>form-field-text</code>. Forms will typically have labels above the field and descriptions below the field, validation messages to the right of the field, and only a single column of fields. Most forms terminate with one, and only one, primary action button and several possible secondary actions. Form fields may have the following elements:
+                Form fields are wrapped in a class of <code>form-field</code> and the type of the form field, such as <code>form-field--text</code>. Forms will typically have labels above the field and descriptions below the field, validation messages to the right of the field, and only a single column of fields. Most forms terminate with one, and only one, primary action button and several possible secondary actions. Form fields may have the following elements:
             </p>
 
             <ul>
@@ -851,7 +841,7 @@
 
             <h4>7.1.4 Grouped Inputs</h4>
 
-                <div class="form-field form-field-text">
+                <div class="form-field form-field--text">
                     <label for="given-name">Given Name</label>
                     <input id="given-name" name="given-name" placeholder="" size="50" type="text" />
                     <label for="family-name">Family Name</label>
@@ -861,10 +851,10 @@
         <h3>7.2 Horizontal Forms</h3>
 
             <form>
-                <div class="form-field form-field-search">
+                <div class="form-field form-field--search">
                     <input id="name" name="name" placeholder="Search" size="50" type="search" />
                 </div>
-                <div class="form-field form-field-boolean">
+                <div class="form-field form-field--boolean">
                     <label for="spam">
                         <input name="spam" id="spam" type="checkbox" value="y">
                         Include all types
@@ -885,7 +875,7 @@
                 </p>
 
                 <form>
-                    <div class="form-field form-field-text">
+                    <div class="form-field form-field--text">
                         <label for="name">Name</label>
                         <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
                     </div>
@@ -898,7 +888,7 @@
                 </p>
 
                 <form>
-                    <div class="form-field form-field-text">
+                    <div class="form-field form-field--text">
                         <label for="name">Name <span class="required">required</span></label>
                         <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
                     </div>
@@ -911,10 +901,10 @@
                 </p>
 
                 <form>
-                    <div class="form-field form-field-text">
+                    <div class="form-field form-field--text">
                         <label for="name">Name</label>
                         <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
-                        <p class="form-field-description">
+                        <p class="form-field__description">
                             We need a name to identify you to other users.
                         </p>
                     </div>
@@ -933,22 +923,22 @@
             </p>
 
             <form>
-                <div class="form-field form-field-text">
+                <div class="form-field form-field--text">
                     <label for="name">Name</label>
                     <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
-                    <p class="form-field-description">
+                    <p class="form-field__description">
                         Your name belongs in the box
                     </p>
                 </div>
                 <fieldset>
                     <legend>Spam Fields</legend>
-                    <div class="form-field form-field-boolean">
+                    <div class="form-field form-field--boolean">
                         <label for="spam">
                             <input name="spam" id="spam" type="checkbox" value="y">
                             Send me spam
                         </label>
                     </div>
-                    <div class="form-field form-field-textarea">
+                    <div class="form-field form-field--textarea">
                         <label for="thoughts">My thoughts on spam</label>
                         <textarea cols="40" id="thoughts" name="thoughts" rows="4"></textarea>
                     </div>
@@ -965,35 +955,35 @@
 
             <ul>
                 <li>
-                    <button class="button-primary">
+                    <button class="button--primary">
                         Primary
                     </button>
 
                     Primary, Success, Accept, Next
                 </li>
                 <li>
-                    <button class="button-secondary">
+                    <button class="button--secondary">
                         Secondary
                     </button>
 
                     Secondary, Navigation, Information, Back
                 </li>
                 <li>
-                    <button class="button-danger">
+                    <button class="button--danger">
                         Danger
                     </button>
 
                     Error, Delete
                 </li>
                 <li>
-                    <button class="button-cancel">
+                    <button class="button--cancel">
                         Cancel
                     </button>
 
                     Escape, Previous
                 </li>
                 <li>
-                    <button class="button-disabled">
+                    <button class="button--disabled">
                         Disabled
                     </button>
                 </li>
@@ -1003,22 +993,22 @@
 
             <ul>
                 <li>
-                    <button class="button-primary">
+                    <button class="button--primary">
                         Normal
                     </button>
                 </li>
                 <li>
-                    <button class="button-primary button-small">
+                    <button class="button--primary button--small">
                         Small
                     </button>
                 </li>
                 <li>
-                    <button class="button-primary button-large">
+                    <button class="button--primary button--large">
                         Large
                     </button>
                 </li>
                 <li>
-                    <button class="button-primary button-epic">
+                    <button class="button--primary button--epic">
                         Epic
                     </button>
                 </li>
@@ -1028,31 +1018,31 @@
 
             <ul>
                 <li>
-                    <button class="button-primary">
+                    <button class="button--primary">
                         <i class="icon-"></i>
                         Next Page
                     </button>
                 </li>
                 <li>
-                    <button class="button-secondary">
+                    <button class="button--secondary">
                         <i class="icon-"></i>
                         Edit
                     </button>
                 </li>
                 <li>
-                    <button class="button-danger">
+                    <button class="button--danger">
                         <i class="icon-"></i>
                         Delete
                     </button>
                 </li>
                 <li>
-                    <button class="button-cancel">
+                    <button class="button--cancel">
                         <i class="icon-"></i>
                         Cancel
                     </button>
                 </li>
                 <li>
-                    <button class="button-disabled">
+                    <button class="button--disabled">
                         <i class="icon-"></i>
                         Resume
                     </button>
@@ -1061,14 +1051,14 @@
 
         <h3>8.4 Button groups</h3>
 
-            <div class="button-group">
-                <button class="button-primary">
+            <div class="button--group">
+                <button class="button--primary">
                     Primary
                 </button>
-                <button class="button-secondary">
+                <button class="button--secondary">
                     Secondary
                 </button>
-                <button class="button-cancel">
+                <button class="button--cancel">
                     Cancel
                 </button>
             </div>
@@ -1079,45 +1069,354 @@
 
         <h3>9.1 Horizonal Navigation</h3>
 
+            <nav class="navigation">
+                <ul>
+                    <li>
+                        <a href="#">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Learn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Propose
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Analyze
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
         <h3>9.2 Vertical Navigation</h3>
+
+            <nav class="navigation--vertical">
+                <ul>
+                    <li>
+                        <a href="#">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Learn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Propose
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Analyze
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
         <h3>9.3 Horizontal Tabs</h3>
 
+            <div class="tabs">
+                <ul class="tabs__nav">
+                    <li>
+                        <a href="#">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Learn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Propose
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Analyze
+                        </a>
+                    </li>
+                </ul>
+                <div class="tabs__pages">
+                    <div class="tabs__page">Home Page</div>
+                    <div class="tabs__page">Learn Page</div>
+                    <div class="tabs__page">Propose Page</div>
+                    <div class="tabs__page">Analyze Page</div>
+                </div>
+            </div>
+
         <h3>9.4 Vertical Tabs</h3>
+
+            <div class="tabs--vertical">
+                <ul class="tabs__nav">
+                    <li>
+                        <a href="#">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Learn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Propose
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Analyze
+                        </a>
+                    </li>
+                </ul>
+                <div class="tabs__pages">
+                    <div class="tabs__page">Home Page</div>
+                    <div class="tabs__page">Learn Page</div>
+                    <div class="tabs__page">Propose Page</div>
+                    <div class="tabs__page">Analyze Page</div>
+                </div>
+            </div>
 
         <h3>9.5 Breadcrumbs</h3>
 
-        <h3>9.6 Pagination</h3>
+            <nav class="breadcrumbs">
+                <ul>
+                    <li>
+                        <a href="#">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Learn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Propose
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Analyze
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        <h3>9.6 Step-by-step</h3>
+
+            <nav class="step-by-step">
+                <ol>
+                    <li>
+                        <a href="#">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Learn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Propose
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Analyze
+                        </a>
+                    </li>
+                </ol>
+            </nav>
+
+
+        <h3>9.7 Pagination</h3>
+
+            <div class="pagination">
+                <div class="pagination__location">
+                    Page 1 of 12
+                </div>
+                <ul>
+                    <li>
+                        <a href="#">Back</a>
+                    </li>
+                    <li>
+                        <a href="#" class="pagination__number--selected">1</a>
+                    </li>
+                    <li>
+                        <a href="#">2</a>
+                    </li>
+                    <li class="pagination__separator">&ellip;</li>
+                    <li>
+                        <a href="#">11</a>
+                    </li>
+                    <li>
+                        <a href="#">12</a>
+                    </li>
+                    <li>
+                        <a href="#">Next</a>
+                    </li>
+                </ul>
+            </div>
 
     <h2>10. Elements</h2>
 
         <h3>10.1 Tooltips</h3>
 
+            <p>
+                Simply using the <code>title</code> attribute will create a tooltip over an element.
+            </p>
+
+            <p>
+                <a href="#" title="Auto tooltip">An example</a> of a tooltip
+            </p>
+
         <h3>10.2 Tags and Keywords</h3>
+
+            <p>
+                Tag clouds are fun. They can also be a useful representation to compare between quickly.
+            </p>
+
+            <ul class="tags">
+                <li class="tags__tag--weight-5"><a href="#">Enroll</a></li>
+                <li class="tags__tag--weight-1"><a href="#">Get</a></li>
+                <li class="tags__tag--weight-2"><a href="#">Read</a></li>
+                <li class="tags__tag--weight-3"><a href="#">Study</a></li>
+                <li class="tags__tag--weight-8"><a href="#">Learn</a></li>
+                <li class="tags__tag--weight-5"><a href="#">Pick up</a></li>
+                <li class="tags__tag--weight-4"><a href="#">Gain</a></li>
+                <li class="tags__tag--weight-9"><a href="#">Determine</a></li>
+                <li class="tags__tag--weight-1"><a href="#">Grasp</a></li>
+                <li class="tags__tag--weight-2"><a href="#">Attain</a></li>
+            </ul>
 
         <h3>10.3 Alerts</h3>
 
-        <h3>10.4 Discussion</h3>
+            <p>
+                Systemic-alerts are often used when an error has occured, or the user should be alerted.
+                Alerts are fixed to the page until a user chooses to close them.
+            </p>
+
+            <div class="alert--error">
+                We are sorry, but an error has occurred. Please reload the page.
+                <a href="#">Close</a>
+            </div>
+
+        <h3>10.4 Modals</h3>
+
+            <p>
+                Modals should be used only in extraordinary cases. Prefer to append inline over using a modal.
+            </p>
+
+            <figure>
+                <div class="modal">
+                    <div class="modal__overlay"></div>
+                    <div class="modal__container">
+                        <div class="modal__header">
+                            <h3>Some header text</h3>
+                            <a href="#" class="modal__close">&times;</a>
+                        </div>
+                        <div class="modal__body">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </div>
+                        <div class="modal_footer">
+                            <button class="button--secondary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </figure>
 
         <h3>10.5 Notifications</h3>
 
-        <h3>10.6 Audio, Video, and Embedded Objects</h3>
+            <p>
+                TBD
+            </p>
 
-        <h3>10.7 Galleries</h3>
+        <h3>10.6 Discussion</h3>
 
-        <h3>10.8 Modals</h3>
+            <p>
+                Discussions are common on just about any social site. A default layout helps to bring consistency to these discussions.
+                Discussions can also be modified to achieve the goal of the widget.
+            </p>
 
-        <h3>10.9 Progressbars and Spinners</h3>
+            <ul class="discussion">
+                <li>
+                    <img src="http://placehold.it/48" title="username" class="discussion__avatar" />
+                    <div class="discussion__message">
+                        <div class="discussion__user__name">
+                            username
+                        </div>
+                        <div class="discussion__when">
+                            52 minutes ago
+                        </div>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+                        </p>
+                        <div class="discussion__footer">
+                            <a href="#">Edit</a>
+                            <a href="#">Share</a>
+                            <a href="#">Flag</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
 
-        <h3>10.10 Hero</h3>
+            <h4>10.6.1 Discussion &ndash; List of Subjects</h4>
 
-        <h3>10.11 Tutorials</h3>
+                <table class="discussion-list">
+                    <thead>
+                        <tr>
+                            <th>Topic</th>
+                            <th>Category</th>
+                            <th>Posts</th>
+                            <th>Views</th>
+                            <th>Last Modified</th>
+                        </tr>
+                    </thead>
+                </table>
 
-        <h3>10.12 Step-by-step</h3>
+        <h3>10.7 Audio, Video, and Embedded Objects</h3>
 
-        <h3>10.13 Accordions</h3>
+            <p>
+                Descovir uses YouTube, Vimeo, Soundcloud, Slideshare, and third party
+                resources to render media elements. These elements should be embedded by a simple
+                <code>iframe</code> tag, with no customization other than size.
+            </p>
 
-        <h3>10.14 Statistics</h3>
+            <iframe width="420" height="315" src="http://www.youtube.com/embed/z3U0udLH974" frameborder="0" allowfullscreen></iframe>
+
+        <h3>10.8 Progressbars and Spinners</h3>
+
+            <p>
+                Descovrir uses <a href="http://fgnass.github.io/spin.js/">Spin.js</a> for spinners.
+            </p>
+
+            <div class="spinner"></div>
+
+            <p>
+                For progress bars, use the <code>progress</code> tag.
+            </p>
+
+            <progress max="70"><span>0</span>%</progress>
 
     <h2>11. Extentions and Additions</h2>
 
