@@ -1,1 +1,22 @@
 @import "base"
+
+@import "components/tooltips"
+@import "components/labels"
+
+.color-table
+    td, th
+        min-height $column
+        min-width $column
+        padding $unit
+
+    th
+        font-weight normal
+
+    td
+        text-align right
+
+#logo
+    @extend .font-size-150
+
+    img
+        vertical-align bottom

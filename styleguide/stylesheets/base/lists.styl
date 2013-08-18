@@ -1,0 +1,38 @@
+ul, ol
+    padding-left $gutter
+
+    &.inline, &.horizontal
+        padding-left 0
+
+        li
+            display inline-block
+            margin-right $unit
+
+    &.unstyled
+
+        list-style none
+        padding 0
+
+        ul, ol
+
+            list-style none
+            padding-left $gutter
+
+dt
+    font-weight bold
+
+dd
+    margin 0
+    padding-left $gutter
+
+ul, ol, table
+    &.list--with-thumbnails
+
+        td:first-child, .list__thumbnail
+            padding-right $gutter
+
+        h4
+            margin-bottom 0
+
+        h4 + p
+            margin-top 0

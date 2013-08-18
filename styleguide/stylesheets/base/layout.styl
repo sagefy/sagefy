@@ -1,3 +1,19 @@
+$unit = 12px
+$gutter = $unit * 2
+$column = $gutter * 2
+$font-size = 100%
+$em = $font-size / 1em
+$border-radius = 2px
+
+*, *:before, *:after
+    box-sizing border-box
+
 body
-    width 888px
+    width $column * 8 + $gutter * 9
     margin 0 auto
+
+.inline-block
+    display inline-block
+
+.push-right
+    margin-right $unit

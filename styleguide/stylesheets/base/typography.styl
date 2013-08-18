@@ -2,54 +2,149 @@ html, body, input, textarea, select
     font-family $base-font-family
 
 body
-    color #343115
-    background #fcfcfc
+    color $gold-20
+    background $gold-99
     font-size 100%
     line-height 1.5
 
 a
-    color #51abcd
+    color $blue-66
+    transition color 0.2s
 
-    &:hover
-        color #cae7f6
+    &:hover, &.hover, &:focus, &.focus
+        color $blue-78
 
-h1
+    &:active, &.active, &.selected
+        color $blue-20
+
+.font-size-200
     font-size 200%
     line-height 1.5
     margin 0.375em 0
 
-h2
+.font-size-150
     font-size 150%
     line-height 2
     margin 0.5em 0
 
-h3
+.font-size-137
     font-size 137.5%
     line-height 1.0909
     margin 0.5454em 0
 
-h4
+.font-size-112
     font-size 112.5%
     line-height 1.3333
     margin 0.6667em 0
 
-h5
-    color #6c6733
-    font-size 112.5%
-    line-height 1.3333
-    margin 0.6667em 0
-
-h6
-    color #6c6733
+.font-size-100
     font-size 100%
     line-height 1.5
     margin 1em 0
+
+.width-limit
+    max-width $column * 8 + $gutter * 9
+
+    &.full-width
+        max-width auto
+
+h1, h2, h3, h4, h5, h6
+    font-style italic
+
+    em
+        font-style normal
+
+    strong
+        background-color $gold-95
+        border-radius $border-radius
+
+    &.subheader
+        font-weight normal
+        color $gold-43
+
+hgroup
+    :not(:first-child)
+        margin-top 0
+    :not(:last-child)
+        margin-bottom 0
+
+h1
+    @extend .font-size-200
+
+h2
+    @extend .font-size-150
+
+h3
+    @extend .font-size-137
+
+h4
+    @extend .font-size-112
+
+h5
+    color $gold-43
+    @extend .font-size-112
+
+h6
+    color $gold-66
+    @extend .font-size-100
+
+    &.subheader
+        color $gold-66
+
+p
+    @extend .width-limit
 
 .leading
     font-size 112.5%
     line-height 1.3333
     margin 0.6667em 0
-    color #6c6733
+    color $gold-43
+
+del
+    color $gold-66
+
+ins
+    text-decoration none
+    background $white
+    border-radius $border-radius
+
+mark
+    background $gold-95
+    border-radius $border-radius
+
+
+abbr
+    border-bottom 1px dotted $gold-66
 
 pre, samp, code, kbd
-    font-family $monospace-font-family
+    @extend .monospace
+
+q
+    font-style italic
+
+cite
+    font-style normal
+    font-variant small-caps
+    color $gold-43
+
+    &:before
+        color $gold-90
+        content "\2022  "
+
+blockquote
+    border-left 2px solid $gold-90
+    padding-left $unit
+    margin-left $unit
+
+    q
+        @extend .font-size-112
+        margin-bottom: 0
+
+    q, cite
+        display block
+
+hr
+    border 0
+    background $gold-90
+    height 2px
+    margin 1em 0
