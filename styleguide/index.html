@@ -589,11 +589,11 @@
     <h2>6. Tables</h2>
 
         <p>
-            Tables are zebra-striped, and common elements such as header and footer rows are available. Rows classes are available for each hue. Supplimental tags, such as <code>tbody</code> are recommended.
+            Tables are zebra-striped, and common elements such as header and footer rows are available. Rows classes are available for each hue; as they only change hue, another indicator needs to be used to differentiate row types. Supplimental tags, such as <code>tbody</code> are recommended.
         </p>
 
         <table>
-            <caption>An example table with a header row and a caption</caption>
+            <caption>An example table with a header row and a caption.</caption>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -1483,6 +1483,7 @@
     <script>
         $(function() {
             $('a[href="#"]').click(function() { return false; });
+            $('a[href*="//"]').click(function() { this.target = "_blank"; });
         });
     </script>
 </body>

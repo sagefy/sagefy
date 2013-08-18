@@ -247,17 +247,21 @@ a {
   -ms-transition: color 0.2s;
   -o-transition: color 0.2s;
   transition: color 0.2s;
+  text-decoration: none;
+  border-bottom: 1px dashed #51abcd;
 }
 a:hover,
 a.hover,
 a:focus,
 a.focus {
   color: #75ccef;
+  border-color: #75ccef;
 }
 a:active,
 a.active,
 a.selected {
-  color: #143440;
+  color: #316d83;
+  border-color: #316d83;
 }
 .font-size-200,
 h1 {
@@ -380,7 +384,7 @@ mark {
   border-radius: 2px;
 }
 abbr {
-  border-bottom: 1px dotted #aaa354;
+  border-bottom: 1px dashed #aaa354;
 }
 q {
   font-style: italic;
@@ -485,6 +489,58 @@ ul.list--with-thumbnails h4 + p,
 ol.list--with-thumbnails h4 + p,
 table.list--with-thumbnails h4 + p {
   margin-top: 0;
+}
+table th,
+table td {
+  padding: 0 6px;
+}
+table caption {
+  font-style: italic;
+}
+table thead {
+  background: #aaa354;
+  color: #fcfcfa;
+}
+table tbody tr {
+  background: #f3f1e4;
+}
+table tbody tr.row--accept {
+  background: #e3f5ec;
+  color: #0f3728;
+}
+table tbody tr.row--accent {
+  background: #e6f3fa;
+  color: #143440;
+}
+table tbody tr.row--error {
+  background: #ffeced;
+  color: #44292a;
+}
+table tbody tr.row--admin {
+  background: #f7edfb;
+  color: #3c2a42;
+}
+table tbody tr.row--warn {
+  background: #f3f1e4;
+  color: #343115;
+}
+table tbody tr:nth-child(2n+2) {
+  background: #e7e3c7;
+}
+table tbody tr:nth-child(2n+2).row--accept {
+  background: #c5ebd9;
+}
+table tbody tr:nth-child(2n+2).row--accent {
+  background: #cae7f6;
+}
+table tbody tr:nth-child(2n+2).row--error {
+  background: #fedadb;
+}
+table tbody tr:nth-child(2n+2).row--admin {
+  background: #f0dcf8;
+}
+table tbody tr:nth-child(2n+2).row--warn {
+  background: #e7e3c7;
 }
 [data-title] {
   position: relative;

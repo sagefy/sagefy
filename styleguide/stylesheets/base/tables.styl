@@ -1,0 +1,51 @@
+table
+    th, td
+        padding 0 ($unit / 2)
+
+    caption
+        font-style italic
+
+    thead
+        background $gold-66
+        color $gold-99
+
+    tbody tr
+        background $gold-95
+
+        &.row--accept
+            background $green-95
+            color $green-20
+
+        &.row--accent
+            background $blue-95
+            color $blue-20
+
+        &.row--error
+            background $red-95
+            color $red-20
+
+        &.row--admin
+            background $purple-95
+            color $purple-20
+
+        &.row--warn
+            background $gold-95
+            color $gold-20
+
+        &:nth-child(2n+2)
+            background $gold-90
+
+            &.row--accept
+                background $green-90
+
+            &.row--accent
+                background $blue-90
+
+            &.row--error
+                background $red-90
+
+            &.row--admin
+                background $purple-90
+
+            &.row--warn
+                background $gold-90
