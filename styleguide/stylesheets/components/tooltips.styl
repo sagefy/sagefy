@@ -1,0 +1,23 @@
+[data-title]
+    position relative
+    cursor help
+
+    &:after
+        background $gold-43
+        color $gold-99
+        @extend .base-font
+        position absolute
+        opacity 0
+        pointer-events none
+        content attr(data-title)
+        padding 0 ($unit / 2)
+        white-space nowrap
+        z-index 2
+        top 100%
+        min-width 100%
+        left 0
+        border-radius $border-radius
+        transition opacity 0.2s
+
+    &:hover:after
+        opacity 0.8

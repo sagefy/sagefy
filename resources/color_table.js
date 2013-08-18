@@ -1,11 +1,6 @@
 (function() {
 
-    var table = [[], [], [], [], [], []], i = 1, j = 0, str = "";
-
-    [20, 43, 66, 90, 95, 99].forEach(function(light) {
-        table[0][j] = $.husl.p.toHex(9, 10, light);
-        j++;
-    });
+    var table = [[], [], [], [], []], i = 0, j = 0, str = "";
 
     [9, 81, 153, 225, 297].forEach(function(hue) {
         j = 0;
@@ -17,10 +12,11 @@
     });
 
     table.forEach(function(hue) {
+        str += "<tr>\n<td> X &deg;</td>\n";
         hue.forEach(function(hex) {
-            str += hex + ",";
+            str += "<td style=\"background:" + hex + "\"></td>\n";
         });
-        str += "\n";
+        str += "</tr>\n";
     });
 
     return str;
