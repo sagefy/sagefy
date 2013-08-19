@@ -5,7 +5,7 @@ button, .button,
 .button--cancel,
 .button--disabled
     border-radius $border-radius
-    padding ($unit / 2) $unit
+    padding ($unit / 4) ($unit / 2)
     margin 0 auto
     display inline-block
     margin 0.75em 0
@@ -81,7 +81,7 @@ button[type="submit"], .button--primary
     cursor not-allowed
 
 .button--large
-    padding $unit $unit * 2
+    padding ($unit / 2) $unit
 
 .button--epic
     @extend .font-size-150

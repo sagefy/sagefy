@@ -503,7 +503,7 @@ button,
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px;
-  padding: 6px 12px;
+  padding: 3px 6px;
   margin: 0 auto;
   display: inline-block;
   margin: 0.75em 0;
@@ -609,7 +609,7 @@ button[type="submit"].selected,
   cursor: not-allowed;
 }
 .button--large {
-  padding: 12px 24px;
+  padding: 6px 12px;
 }
 .button--epic {
   padding: 0 24px;
