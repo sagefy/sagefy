@@ -514,13 +514,29 @@ button,
   -o-transition: all 0.2s;
   transition: all 0.2s;
 }
+button:focus,
+.button:focus,
+.button--primary:focus,
+.button--secondary:focus,
+.button--danger:focus,
+.button--cancel:focus,
+.button--disabled:focus,
+button.focus,
+.button.focus,
+.button--primary.focus,
+.button--secondary.focus,
+.button--danger.focus,
+.button--cancel.focus,
+.button--disabled.focus {
+  outline: 0;
+}
 button[type="submit"],
 .button--primary {
   border: 1px solid #51abcd;
   background: #51abcd;
   background-image: linear-gradient(#65b5d3, #3da1c7);
   color: #fafcfe;
-  box-shadow: inset 0 1px 0 #75ccef, inset 0 -1px 2px #316d83;
+  box-shadow: inset 0 1px 0 #75ccef, inset 0 -1px 0 #316d83;
   text-shadow: 0 -1px 0 #316d83;
 }
 button[type="submit"]:hover,
@@ -532,7 +548,7 @@ button[type="submit"].hover,
 button[type="submit"].focus,
 .button--primary.focus {
   color: #fff;
-  box-shadow: inset 0 1px 0 #cae7f6, inset 0 -1px 2px #143440;
+  box-shadow: inset 0 1px 0 #cae7f6, inset 0 -1px 0 #143440;
 }
 button[type="submit"]:active,
 .button--primary:active,
@@ -540,67 +556,67 @@ button[type="submit"].active,
 .button--primary.active,
 button[type="submit"].selected,
 .button--primary.selected {
-  box-shadow: inset 0 1px 0 #316d83, inset 0 -1px 2px #75ccef;
+  box-shadow: inset 0 1px 0 #316d83, inset 0 -1px 0 #75ccef;
 }
 .button--secondary {
   border: 1px solid #68d5a9;
   background: #c5ebd9;
   background-image: linear-gradient(#d8f2e5, #b2e4cd);
   color: #287256;
-  box-shadow: inset 0 1px 0 #e3f5ec, inset 0 -1px 2px #68d5a9;
-  text-shadow: 0 -1px 0 #e3f5ec;
+  box-shadow: inset 0 1px 0 #f9fdfb, inset 0 -1px 0 #68d5a9;
+  text-shadow: 0 -1px 0 #f9fdfb;
 }
 .button--secondary:hover,
 .button--secondary:focus,
 .button--secondary.hover,
 .button--secondary.focus {
   color: #0f3728;
-  box-shadow: inset 0 1px 0 #f9fdfb, inset 0 -1px 2px #44b389;
+  box-shadow: inset 0 1px 0 #f9fdfb, inset 0 -1px 0 #44b389;
 }
 .button--secondary:active,
 .button--secondary.active,
 .button--secondary.selected {
-  box-shadow: inset 0 1px 0 #68d5a9, inset 0 -1px 2px #e3f5ec;
+  box-shadow: inset 0 1px 0 #68d5a9, inset 0 -1px 0 #e3f5ec;
 }
 .button--danger {
   border: 1px solid #fdabb0;
   background: #fedadb;
-  background-image: linear-gradient(#fff3f3, #fdc1c3);
+  background-image: linear-gradient(#fee9e9, #fed0d1);
   color: #8b585b;
-  box-shadow: inset 0 1px 0 #ffeced, inset 0 -1px 2px #fdabb0;
-  text-shadow: 0 -1px 0 #ffeced;
+  box-shadow: inset 0 1px 0 #fffbfb, inset 0 -1px 0 #fdabb0;
+  text-shadow: 0 -1px 0 #fffbfb;
 }
 .button--danger:hover,
 .button--danger:focus,
 .button--danger.hover,
 .button--danger.focus {
   color: #44292a;
-  box-shadow: inset 0 1px 0 #fffbfb, inset 0 -1px 2px #d98b90;
+  box-shadow: inset 0 1px 0 #fffbfb, inset 0 -1px 0 #d98b90;
 }
 .button--danger:active,
 .button--danger.active,
 .button--danger.selected {
-  box-shadow: inset 0 1px 0 #fdabb0, inset 0 -1px 2px #ffeced;
+  box-shadow: inset 0 1px 0 #fdabb0, inset 0 -1px 0 #ffeced;
 }
 .button--cancel {
   border: 1px solid #cbc475;
   background: #e7e3c7;
   background-image: linear-gradient(#efecd9, #dfdab5);
   color: #6c6733;
-  box-shadow: inset 0 1px 0 #f3f1e4, inset 0 -1px 2px #cbc475;
-  text-shadow: 0 -1px 0 #f3f1e4;
+  box-shadow: inset 0 1px 0 #fcfcfa, inset 0 -1px 0 #cbc475;
+  text-shadow: 0 -1px 0 #fcfcfa;
 }
 .button--cancel:hover,
 .button--cancel:focus,
 .button--cancel.hover,
 .button--cancel.focus {
   color: #343115;
-  box-shadow: inset 0 1px 0 #fcfcfa, inset 0 -1px 2px #aaa354;
+  box-shadow: inset 0 1px 0 #fcfcfa, inset 0 -1px 0 #aaa354;
 }
 .button--cancel:active,
 .button--cancel.active,
 .button--cancel.selected {
-  box-shadow: inset 0 1px 0 #cbc475, inset 0 -1px 2px #f3f1e4;
+  box-shadow: inset 0 1px 0 #cbc475, inset 0 -1px 0 #f3f1e4;
 }
 .button--disabled {
   border: 1px solid #cbc475;
@@ -702,7 +718,7 @@ input[type="time"].focus,
 input[type="search"].focus,
 input[type="tel"].focus,
 textarea.focus {
-  box-shadow: inset 0 1px 2px #f3f1e4, 0 0 6px #51abcd;
+  box-shadow: inset 0 1px 2px #f3f1e4, 0 0 1px 1px #cbc475;
 }
 input[type="text"],
 input[type="password"],
@@ -741,6 +757,13 @@ input[type="radio"]:checked::before {
   border: 1px solid #fff;
   width: 100%;
   height: 100%;
+}
+input[type="checkbox"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"].focus,
+input[type="radio"].focus {
+  outline: 0;
+  box-shadow: inset 0 1px 2px #f3f1e4, 0 0 1px 1px #cbc475;
 }
 input[type="checkbox"] {
   -webkit-border-radius: 2px;
