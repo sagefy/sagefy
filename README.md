@@ -1,8 +1,8 @@
 # descovrir
 _Learner-generated algorithmic adaptive learning._
 
-- Based on learning psychology and neuroscience research.
-- Synthesis of human and machine learning.
+- Based on learning science research.
+- A synthesis of human and machine learning.
 - Learner-generated modules and assessments.
 - Open-source.
 - [Site], [Blog], [Facebook], [Twitter], [Google+]
