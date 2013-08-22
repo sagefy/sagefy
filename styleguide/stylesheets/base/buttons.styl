@@ -1,9 +1,21 @@
-button, .button,
-.button--primary,
-.button--secondary,
-.button--danger,
+.button,
+button,
+input[type="button"],
 .button--cancel,
-.button--disabled
+.button--escape,
+.button--prev,
+.button--back,
+.button--info,
+button[type="submit"],
+.button--primary,
+.button--navigation,
+.button--next,
+.button--secondary,
+.button--success,
+.button--accept,
+.button--danger,
+.button--error,
+.button--delete
     border-radius $border-radius
     padding ($unit / 4) ($unit / 2)
     margin 0 auto
@@ -15,73 +27,9 @@ button, .button,
     &:focus, &.focus
         outline 0
 
-
-button[type="submit"], .button--primary
-    border 1px solid $blue-66
-    background $blue-66
-    background-image linear-gradient(lighten($blue-66, 5), darken($blue-66, 5))
-    color $blue-99
-    box-shadow inset 0 1px 0 $blue-78, inset 0 -1px 0 $blue-43
-    text-shadow 0 -1px 0 $blue-43
-
-    &:hover, &:focus, &.hover, &.focus
-        color $white
-        box-shadow inset 0 1px 0 $blue-90, inset 0 -1px 0 $blue-20
-
-    &:active, &.active, &.selected
-        box-shadow inset 0 1px 0 $blue-43, inset 0 -1px 0 $blue-78
-
-
-.button--secondary
-    border 1px solid $green-78
-    background $green-90
-    background-image linear-gradient(lighten($green-90, 5), darken($green-90, 5))
-    color $green-43
-    box-shadow inset 0 1px 0 $green-99, inset 0 -1px 0 $green-78
-    text-shadow 0 -1px 0 $green-99
-
-    &:hover, &:focus, &.hover, &.focus
-        color $green-20
-        box-shadow inset 0 1px 0 $green-99, inset 0 -1px 0 $green-66
-
-    &:active, &.active, &.selected
-        box-shadow inset 0 1px 0 $green-78, inset 0 -1px 0 $green-95
-
-.button--danger
-    border 1px solid $red-78
-    background $red-90
-    background-image linear-gradient(lighten($red-90, 3), darken($red-90, 2))
-    color $red-43
-    box-shadow inset 0 1px 0 $red-99, inset 0 -1px 0 $red-78
-    text-shadow 0 -1px 0 $red-99
-
-    &:hover, &:focus, &.hover, &.focus
-        color $red-20
-        box-shadow inset 0 1px 0 $red-99, inset 0 -1px 0 $red-66
-
-    &:active, &.active, &.selected
-        box-shadow inset 0 1px 0 $red-78, inset 0 -1px 0 $red-95
-
-.button--cancel
-    border 1px solid $gold-78
-    background $gold-90
-    background-image linear-gradient(lighten($gold-90, 5), darken($gold-90, 5))
-    color $gold-43
-    box-shadow inset 0 1px 0 $gold-99, inset 0 -1px 0 $gold-78
-    text-shadow 0 -1px 0 $gold-99
-
-    &:hover, &:focus, &.hover, &.focus
-        color $gold-20
-        box-shadow inset 0 1px 0 $gold-99, inset 0 -1px 0 $gold-66
-
-    &:active, &.active, &.selected
-        box-shadow inset 0 1px 0 $gold-78, inset 0 -1px 0 $gold-95
-
-.button--disabled
-    border 1px solid $gold-78
-    background $gold-99
-    color $gold-78
-    cursor not-allowed
+    &[disabled], &.button--disabled
+        background transparent
+        cursor not-allowed
 
 .button--large
     padding ($unit / 2) $unit
@@ -89,3 +37,98 @@ button[type="submit"], .button--primary
 .button--epic
     @extend .font-size-150
     padding 0 $unit * 2
+
+.button,
+button,
+input[type="button"],
+.button--cancel,
+.button--escape,
+.button--prev,
+.button--back,
+.button--info
+    border 1px solid $gold-90
+    background $gold-90
+    background-image linear-gradient(lighten($gold-90, 5), darken($gold-90, 5))
+    color $gold-43
+
+    &:hover, &:focus, &.hover, &.focus
+        color $gold-20
+        border 1px solid $gold-78
+        background $gold-95
+        background-image linear-gradient(lighten($gold-95, 5), darken($gold-95, 5))
+
+    &:active, &.active, &.selected
+        border 1px solid $gold-66
+        background $gold-78
+        background-image linear-gradient(darken($gold-78, 5), lighten($gold-78, 5))
+
+    &[disabled], &.button--disabled
+        color $gold-78
+
+button[type="submit"],
+.button--primary,
+.button--navigation,
+.button--next
+    border 1px solid $blue-66
+    background $blue-66
+    background-image linear-gradient(lighten($blue-66, 5), darken($blue-66, 5))
+    color $blue-99
+
+    &:hover, &:focus, &.hover, &.focus
+        color $white
+        border 1px solid $blue-43
+        background $blue-78
+        background-image linear-gradient(lighten($blue-78, 5), darken($blue-78, 5))
+
+    &:active, &.active, &.selected
+        color $blue-95
+        border 1px solid $blue-20
+        background $blue-43
+        background-image linear-gradient(darken($blue-43, 5), lighten($blue-43, 5))
+
+    &[disabled], &.button--disabled
+        color $blue-78
+
+.button--secondary,
+.button--success,
+.button--accept
+    border 1px solid $green-90
+    background $green-90
+    background-image linear-gradient(lighten($green-90, 5), darken($green-90, 5))
+    color $green-43
+
+    &:hover, &:focus, &.hover, &.focus
+        color $green-20
+        border 1px solid $green-78
+        background $green-95
+        background-image linear-gradient(lighten($green-95, 5), darken($green-95, 5))
+
+    &:active, &.active, &.selected
+        border 1px solid $green-66
+        background $green-78
+        background-image linear-gradient(darken($green-78, 5), lighten($green-78, 5))
+
+    &[disabled], &.button--disabled
+        color $green-78
+
+.button--danger,
+.button--error,
+.button--delete
+    border 1px solid $red-90
+    background $red-90
+    background-image linear-gradient(lighten($red-90, 3), darken($red-90, 2))
+    color $red-43
+
+    &:hover, &:focus, &.hover, &.focus
+        color $red-20
+        border 1px solid $red-78
+        background $red-95
+        background-image linear-gradient(lighten($red-95, 3), darken($red-95, 2))
+
+    &:active, &.active, &.selected
+        border 1px solid $red-66
+        background $red-78
+        background-image linear-gradient(darken($red-78, 3), lighten($red-78, 3))
+
+    &[disabled], &.button--disabled
+        color $red-78
