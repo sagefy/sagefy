@@ -26,6 +26,8 @@
 
     <h2>1. Layout, Grid, and Rhythm</h2>
 
+        <h3>1.1 The Grid</h3>
+
             <p>
                 The Descovrir layout system is derived from the <a href="http://framelessgrid.com/">Frameless Grid</a> system. Some naming conventions and niceties are borrowed from the <a href="http://getbootstrap.com/">Twitter Bootstrap</a>.
             </p>
@@ -69,6 +71,8 @@
             <p>
                 Buckets can be targeted towards width of 4, 6, 8, 12, and 16 specifically. It uses the name <code>col-tm-n</code>, where t is literal, m is the target width, and n is the number of columns. The target applies to all smaller sizes until specified. Columns can be nested by nesting rows. Columns may be offset using the name <code>col-offset-n</code>, where n is the number of columns to offset.
             </p>
+
+        <h3>1.2 Retina and Responsive Management</h3>
 
     <h2>2. Colors, Icons, Images</h2>
 
@@ -586,6 +590,16 @@
                 <li><a href="http://prismjs.com/">PrismJS</a></li>
             </ul>
 
+        <h3>5.7 Scrollbars</h3>
+
+            <p>
+                Scrollbars receive some custom styling in Chrome and Safari.
+            </p>
+
+            <div style="overflow-y:scroll; height:200px">
+                <div style="height:1000px"></div>
+            </div>
+
     <h2>6. Tables</h2>
 
         <p>
@@ -986,14 +1000,14 @@
                         Primary
                     </button>
 
-                    Primary, Navigation, Next
+                    Navigation, Next
                 </li>
                 <li>
                     <button class="button--secondary">
                         Secondary
                     </button>
 
-                    Secondary, Success, Accept
+                    Success, Accept
                 </li>
                 <li>
                     <button class="button--danger">
@@ -1293,6 +1307,12 @@
                 </ul>
             </div>
 
+        <h3>9.8 Menu Navigation</h3>
+
+            <p>
+                Descovrir's most common navigational element is a simple menu. The user clicks on the Descovrir icon, and a pane of menu options, similar to the iOS home screen, can provide the user with more functionality. This helps to prevent cognitive overload.
+            </p>
+
     <h2>10. Elements</h2>
 
         <h3>10.1 Tooltips</h3>
@@ -1324,7 +1344,7 @@
                 <li class="tags__tag--weight-2"><a href="#">Attain</a></li>
             </ul>
 
-        <h3>10.3 Alerts</h3>
+        <h3>10.3 Alerts and Errors</h3>
 
             <p>
                 Systemic-alerts are often used when an error has occured.
@@ -1336,7 +1356,11 @@
                 <a href="#">Close</a>
             </div>
 
-        <h3>10.4 Modals</h3>
+            <p>
+                Very serious alerts can force the user to reload the page. This situation calls for a modal.
+            </p>
+
+        <h3>10.4 Overlays and Modals</h3>
 
             <p>
                 Modals are only used in extraordinary cases. Prefer to append inline over using a modal.
@@ -1442,33 +1466,73 @@
 
         <h3>10.8 Badges, Trophies & Awards</h3>
 
+        <h3>10.9 Inline Editing</h3>
+
+        <h3>10.10 Tips, Suggestions & Inline Help</h3>
+
+        <h3>10.11 Dropdowns</h3>
+
+        <h3>10.12 Default Animations</h3>
+
+        <h3>10.13 Uploading Images</h3>
+
+        <h3>10.14 Embedding Media</h3>
+
         <hr />
 
         <p>
             More elements to come: galleries, heros, accordions, statistics...
         </p>
 
-    <h2>11. Extentions and Additions</h2>
+    <h2>11. Page layouts</h2>
 
-        <h3>11.1 Extending with BEM</h3>
+        <h3>11.1 Basic Page Layout</h3>
+
+            <p>
+                Most pages on Descovrir are limited to a menu icon, a title, body contents, and end in linear navigation. This simplicity forces focus on the task at hand.
+            </p>
+
+        <h3>11.2 Navigated Page Layout</h3>
+
+            <p>
+                A page that has been intentionally navigated to includes breadcrumbs or other navigational feature where applicable.
+            </p>
+
+        <h3>11.3 Object Representation</h3>
+
+            <p>
+                An object could be a user, a component, a practice question, etc. and the purpose of these object representations is to provide an overview of information about the object. Examples are a user profile, component statistics, or a history of changes.
+            </p>
+
+        <h3>11.4 Settings and Cross-Section Forms</h3>
+
+            <p>
+                Some views transverse Descovrir's sections (Learn, Contribute, Mentor...).
+            </p>
+
+        <h3>11.5 Search with Filters</h3>
+
+    <h2>12. Extentions and Additions</h2>
+
+        <h3>12.1 Extending with BEM</h3>
 
             <p>
                 Non-tag elements in the Descovrir ecosystem use the <a href="http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/">BEM syntax</a>.
             </p>
 
-        <h3>11.2 JavaScript and CSS classes</h3>
+        <h3>12.2 JavaScript and CSS classes</h3>
 
             <p>
                 Classes and IDs used only for JavaScript are prepended by <code>js-</code>. Style-based classes, other than for forms, navigation, and elements are not used in JavaScript.
             </p>
 
-        <h3>11.3 Additions</h3>
+        <h3>12.3 Additions</h3>
 
             <p>
                 Prefer to add components to the general styleguide than inventing new components for specific interfaces. Reuse ensures code maintainability and efficiency.
             </p>
 
-        <h3>11.4 Browser support</h3>
+        <h3>12.4 Browser support</h3>
 
             <p>
                 At this time, Descovrir supports the major browsers at their current version and one previous version.

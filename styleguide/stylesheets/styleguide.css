@@ -491,13 +491,24 @@ ol.list--with-thumbnails h4 + p,
 table.list--with-thumbnails h4 + p {
   margin-top: 0;
 }
-button,
 .button,
-.button--primary,
-.button--secondary,
-.button--danger,
+button,
+input[type="button"],
 .button--cancel,
-.button--disabled {
+.button--escape,
+.button--prev,
+.button--back,
+.button--info,
+button[type="submit"],
+.button--primary,
+.button--navigation,
+.button--next,
+.button--secondary,
+.button--success,
+.button--accept,
+.button--danger,
+.button--error,
+.button--delete {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
@@ -514,114 +525,81 @@ button,
   -o-transition: all 0.2s;
   transition: all 0.2s;
 }
-button:focus,
 .button:focus,
-.button--primary:focus,
-.button--secondary:focus,
-.button--danger:focus,
+button:focus,
+input[type="button"]:focus,
 .button--cancel:focus,
-.button--disabled:focus,
-button.focus,
-.button.focus,
-.button--primary.focus,
-.button--secondary.focus,
-.button--danger.focus,
-.button--cancel.focus,
-.button--disabled.focus {
-  outline: 0;
-}
-button[type="submit"],
-.button--primary {
-  border: 1px solid #51abcd;
-  background: #51abcd;
-  background-image: linear-gradient(#65b5d3, #3da1c7);
-  color: #fafcfe;
-  box-shadow: inset 0 1px 0 #75ccef, inset 0 -1px 0 #316d83;
-  text-shadow: 0 -1px 0 #316d83;
-}
-button[type="submit"]:hover,
-.button--primary:hover,
+.button--escape:focus,
+.button--prev:focus,
+.button--back:focus,
+.button--info:focus,
 button[type="submit"]:focus,
 .button--primary:focus,
-button[type="submit"].hover,
-.button--primary.hover,
-button[type="submit"].focus,
-.button--primary.focus {
-  color: #fff;
-  box-shadow: inset 0 1px 0 #cae7f6, inset 0 -1px 0 #143440;
-}
-button[type="submit"]:active,
-.button--primary:active,
-button[type="submit"].active,
-.button--primary.active,
-button[type="submit"].selected,
-.button--primary.selected {
-  box-shadow: inset 0 1px 0 #316d83, inset 0 -1px 0 #75ccef;
-}
-.button--secondary {
-  border: 1px solid #68d5a9;
-  background: #c5ebd9;
-  background-image: linear-gradient(#d8f2e5, #b2e4cd);
-  color: #287256;
-  box-shadow: inset 0 1px 0 #f9fdfb, inset 0 -1px 0 #68d5a9;
-  text-shadow: 0 -1px 0 #f9fdfb;
-}
-.button--secondary:hover,
+.button--navigation:focus,
+.button--next:focus,
 .button--secondary:focus,
-.button--secondary.hover,
-.button--secondary.focus {
-  color: #0f3728;
-  box-shadow: inset 0 1px 0 #f9fdfb, inset 0 -1px 0 #44b389;
-}
-.button--secondary:active,
-.button--secondary.active,
-.button--secondary.selected {
-  box-shadow: inset 0 1px 0 #68d5a9, inset 0 -1px 0 #e3f5ec;
-}
-.button--danger {
-  border: 1px solid #fdabb0;
-  background: #fedadb;
-  background-image: linear-gradient(#fee9e9, #fed0d1);
-  color: #8b585b;
-  box-shadow: inset 0 1px 0 #fffbfb, inset 0 -1px 0 #fdabb0;
-  text-shadow: 0 -1px 0 #fffbfb;
-}
-.button--danger:hover,
+.button--success:focus,
+.button--accept:focus,
 .button--danger:focus,
-.button--danger.hover,
-.button--danger.focus {
-  color: #44292a;
-  box-shadow: inset 0 1px 0 #fffbfb, inset 0 -1px 0 #d98b90;
+.button--error:focus,
+.button--delete:focus,
+.button.focus,
+button.focus,
+input[type="button"].focus,
+.button--cancel.focus,
+.button--escape.focus,
+.button--prev.focus,
+.button--back.focus,
+.button--info.focus,
+button[type="submit"].focus,
+.button--primary.focus,
+.button--navigation.focus,
+.button--next.focus,
+.button--secondary.focus,
+.button--success.focus,
+.button--accept.focus,
+.button--danger.focus,
+.button--error.focus,
+.button--delete.focus {
+  outline: 0;
 }
-.button--danger:active,
-.button--danger.active,
-.button--danger.selected {
-  box-shadow: inset 0 1px 0 #fdabb0, inset 0 -1px 0 #ffeced;
-}
-.button--cancel {
-  border: 1px solid #cbc475;
-  background: #e7e3c7;
-  background-image: linear-gradient(#efecd9, #dfdab5);
-  color: #6c6733;
-  box-shadow: inset 0 1px 0 #fcfcfa, inset 0 -1px 0 #cbc475;
-  text-shadow: 0 -1px 0 #fcfcfa;
-}
-.button--cancel:hover,
-.button--cancel:focus,
-.button--cancel.hover,
-.button--cancel.focus {
-  color: #343115;
-  box-shadow: inset 0 1px 0 #fcfcfa, inset 0 -1px 0 #aaa354;
-}
-.button--cancel:active,
-.button--cancel.active,
-.button--cancel.selected {
-  box-shadow: inset 0 1px 0 #cbc475, inset 0 -1px 0 #f3f1e4;
-}
-.button--disabled {
-  border: 1px solid #cbc475;
-  background: #fcfcfa;
-  color: #cbc475;
+.button[disabled],
+button[disabled],
+input[type="button"][disabled],
+.button--cancel[disabled],
+.button--escape[disabled],
+.button--prev[disabled],
+.button--back[disabled],
+.button--info[disabled],
+button[type="submit"][disabled],
+.button--primary[disabled],
+.button--navigation[disabled],
+.button--next[disabled],
+.button--secondary[disabled],
+.button--success[disabled],
+.button--accept[disabled],
+.button--danger[disabled],
+.button--error[disabled],
+.button--delete[disabled],
+.button.button--disabled,
+button.button--disabled,
+input[type="button"].button--disabled,
+.button--cancel.button--disabled,
+.button--escape.button--disabled,
+.button--prev.button--disabled,
+.button--back.button--disabled,
+.button--info.button--disabled,
+button[type="submit"].button--disabled,
+.button--primary.button--disabled,
+.button--navigation.button--disabled,
+.button--next.button--disabled,
+.button--secondary.button--disabled,
+.button--success.button--disabled,
+.button--accept.button--disabled,
+.button--danger.button--disabled,
+.button--error.button--disabled,
+.button--delete.button--disabled {
+  background: transparent;
   cursor: not-allowed;
 }
 .button--large {
@@ -629,6 +607,251 @@ button[type="submit"].selected,
 }
 .button--epic {
   padding: 0 24px;
+}
+.button,
+button,
+input[type="button"],
+.button--cancel,
+.button--escape,
+.button--prev,
+.button--back,
+.button--info {
+  border: 1px solid #e7e3c7;
+  background: #e7e3c7;
+  background-image: linear-gradient(#efecd9, #dfdab5);
+  color: #6c6733;
+}
+.button:hover,
+button:hover,
+input[type="button"]:hover,
+.button--cancel:hover,
+.button--escape:hover,
+.button--prev:hover,
+.button--back:hover,
+.button--info:hover,
+.button:focus,
+button:focus,
+input[type="button"]:focus,
+.button--cancel:focus,
+.button--escape:focus,
+.button--prev:focus,
+.button--back:focus,
+.button--info:focus,
+.button.hover,
+button.hover,
+input[type="button"].hover,
+.button--cancel.hover,
+.button--escape.hover,
+.button--prev.hover,
+.button--back.hover,
+.button--info.hover,
+.button.focus,
+button.focus,
+input[type="button"].focus,
+.button--cancel.focus,
+.button--escape.focus,
+.button--prev.focus,
+.button--back.focus,
+.button--info.focus {
+  color: #343115;
+  border: 1px solid #cbc475;
+  background: #f3f1e4;
+  background-image: linear-gradient(#fbfaf6, #ebe8d2);
+}
+.button:active,
+button:active,
+input[type="button"]:active,
+.button--cancel:active,
+.button--escape:active,
+.button--prev:active,
+.button--back:active,
+.button--info:active,
+.button.active,
+button.active,
+input[type="button"].active,
+.button--cancel.active,
+.button--escape.active,
+.button--prev.active,
+.button--back.active,
+.button--info.active,
+.button.selected,
+button.selected,
+input[type="button"].selected,
+.button--cancel.selected,
+.button--escape.selected,
+.button--prev.selected,
+.button--back.selected,
+.button--info.selected {
+  border: 1px solid #aaa354;
+  background: #cbc475;
+  background-image: linear-gradient(#c4bc62, #d2cc88);
+}
+.button[disabled],
+button[disabled],
+input[type="button"][disabled],
+.button--cancel[disabled],
+.button--escape[disabled],
+.button--prev[disabled],
+.button--back[disabled],
+.button--info[disabled],
+.button.button--disabled,
+button.button--disabled,
+input[type="button"].button--disabled,
+.button--cancel.button--disabled,
+.button--escape.button--disabled,
+.button--prev.button--disabled,
+.button--back.button--disabled,
+.button--info.button--disabled {
+  color: #cbc475;
+}
+button[type="submit"],
+.button--primary,
+.button--navigation,
+.button--next {
+  border: 1px solid #51abcd;
+  background: #51abcd;
+  background-image: linear-gradient(#65b5d3, #3da1c7);
+  color: #fafcfe;
+}
+button[type="submit"]:hover,
+.button--primary:hover,
+.button--navigation:hover,
+.button--next:hover,
+button[type="submit"]:focus,
+.button--primary:focus,
+.button--navigation:focus,
+.button--next:focus,
+button[type="submit"].hover,
+.button--primary.hover,
+.button--navigation.hover,
+.button--next.hover,
+button[type="submit"].focus,
+.button--primary.focus,
+.button--navigation.focus,
+.button--next.focus {
+  color: #fff;
+  border: 1px solid #316d83;
+  background: #75ccef;
+  background-image: linear-gradient(#8cd4f2, #5ec4ec);
+}
+button[type="submit"]:active,
+.button--primary:active,
+.button--navigation:active,
+.button--next:active,
+button[type="submit"].active,
+.button--primary.active,
+.button--navigation.active,
+.button--next.active,
+button[type="submit"].selected,
+.button--primary.selected,
+.button--navigation.selected,
+.button--next.selected {
+  color: #e6f3fa;
+  border: 1px solid #143440;
+  background: #316d83;
+  background-image: linear-gradient(#2a5e70, #387c96);
+}
+button[type="submit"][disabled],
+.button--primary[disabled],
+.button--navigation[disabled],
+.button--next[disabled],
+button[type="submit"].button--disabled,
+.button--primary.button--disabled,
+.button--navigation.button--disabled,
+.button--next.button--disabled {
+  color: #75ccef;
+}
+.button--secondary,
+.button--success,
+.button--accept {
+  border: 1px solid #c5ebd9;
+  background: #c5ebd9;
+  background-image: linear-gradient(#d8f2e5, #b2e4cd);
+  color: #287256;
+}
+.button--secondary:hover,
+.button--success:hover,
+.button--accept:hover,
+.button--secondary:focus,
+.button--success:focus,
+.button--accept:focus,
+.button--secondary.hover,
+.button--success.hover,
+.button--accept.hover,
+.button--secondary.focus,
+.button--success.focus,
+.button--accept.focus {
+  color: #0f3728;
+  border: 1px solid #68d5a9;
+  background: #e3f5ec;
+  background-image: linear-gradient(#f6fcf9, #d0eedf);
+}
+.button--secondary:active,
+.button--success:active,
+.button--accept:active,
+.button--secondary.active,
+.button--success.active,
+.button--accept.active,
+.button--secondary.selected,
+.button--success.selected,
+.button--accept.selected {
+  border: 1px solid #44b389;
+  background: #68d5a9;
+  background-image: linear-gradient(#54cf9e, #7cdbb4);
+}
+.button--secondary[disabled],
+.button--success[disabled],
+.button--accept[disabled],
+.button--secondary.button--disabled,
+.button--success.button--disabled,
+.button--accept.button--disabled {
+  color: #68d5a9;
+}
+.button--danger,
+.button--error,
+.button--delete {
+  border: 1px solid #fedadb;
+  background: #fedadb;
+  background-image: linear-gradient(#fee9e9, #fed0d1);
+  color: #8b585b;
+}
+.button--danger:hover,
+.button--error:hover,
+.button--delete:hover,
+.button--danger:focus,
+.button--error:focus,
+.button--delete:focus,
+.button--danger.hover,
+.button--error.hover,
+.button--delete.hover,
+.button--danger.focus,
+.button--error.focus,
+.button--delete.focus {
+  color: #44292a;
+  border: 1px solid #fdabb0;
+  background: #ffeced;
+  background-image: linear-gradient(#fffbfb, #ffe2e3);
+}
+.button--danger:active,
+.button--error:active,
+.button--delete:active,
+.button--danger.active,
+.button--error.active,
+.button--delete.active,
+.button--danger.selected,
+.button--error.selected,
+.button--delete.selected {
+  border: 1px solid #d98b90;
+  background: #fdabb0;
+  background-image: linear-gradient(#fd9ca2, #fdbabe);
+}
+.button--danger[disabled],
+.button--error[disabled],
+.button--delete[disabled],
+.button--danger.button--disabled,
+.button--error.button--disabled,
+.button--delete.button--disabled {
+  color: #fdabb0;
 }
 ::-webkit-input-placeholder {
   color: #e7e3c7;
