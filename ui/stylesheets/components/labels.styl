@@ -1,25 +1,30 @@
-[class^="label"]
+.label
     border-radius $unit
     display inline-block
     padding 0 ($unit / 2)
     font-weight bold
 
 .label--error, .label--danger
+    @extend .label
     background $red-66
     color $red-99
 
 .label, .label--default, .label--base, .label--warn
+    @extend .label
     background $gold-66
     color $gold-99
 
 .label--success, .label--accept
+    @extend .label
     background $green-66
     color $green-99
 
 .label--accent, .label--info
+    @extend .label
     background $blue-66
     color $blue-99
 
 .label--official, .label--admin
+    @extend .label
     background $purple-66
     color $purple-99
