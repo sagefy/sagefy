@@ -9,6 +9,12 @@ $border-radius = 2px
 
 /*** Utility classes ***/
 
+*, *:before, *:after
+    box-sizing border-box
+
+.clearfix
+    overflow auto
+
 .block
     display block
 
@@ -17,12 +23,6 @@ $border-radius = 2px
 
 .inline
     display inline
-
-*, *:before, *:after
-    box-sizing border-box
-
-.clearfix
-    overflow auto
 
 .pull-left
     float left

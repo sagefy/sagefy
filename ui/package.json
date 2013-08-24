@@ -1,12 +1,27 @@
 {
-    "name": "descovrir",
-    "version": "0.0.0",
-    "dependencies": {},
-    "devDependencies": {
-        "grunt": "~0.4.1",
-        "grunt-bower": "~0.5.1"
-    },
-    "engines": {
-        "node": ">=0.8.0"
-    }
+  "name": "descovrir",
+  "version": "0.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "connect-livereload": "latest",
+    "grunt": "latest",
+    "grunt-bower-requirejs": "latest",
+    "grunt-concurrent": "latest",
+    "grunt-contrib-clean": "latest",
+    "grunt-contrib-coffee": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-connect": "latest",
+    "grunt-contrib-copy": "latest",
+    "grunt-contrib-handlebars": "latest",
+    "grunt-contrib-livereload": "latest",
+    "grunt-contrib-requirejs": "latest",
+    "grunt-contrib-stylus": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-open": "latest",
+    "load-grunt-tasks": "latest"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
 }

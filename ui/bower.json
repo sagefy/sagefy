@@ -1,8 +1,13 @@
 {
-    "name": "descovrir",
-    "version": "0.0.0",
-    "dependencies": {
-        "jquery": "latest"
-    },
-    "devDependencies": {}
+  "name": "descovrir",
+  "version": "0.0.0",
+  "dependencies": {
+    "jquery": "latest",
+    "backbone": "latest",
+    "modernizr": "latest",
+    "d3": "latest",
+    "select2": "latest",
+    "moment": "latest"
+  },
+  "devDependencies": {}
 }
