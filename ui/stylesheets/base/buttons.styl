@@ -1,21 +1,4 @@
-.button,
-button,
-input[type="button"],
-.button--cancel,
-.button--escape,
-.button--prev,
-.button--back,
-.button--info,
-button[type="submit"],
-.button--primary,
-.button--navigation,
-.button--next,
-.button--secondary,
-.button--success,
-.button--accept,
-.button--danger,
-.button--error,
-.button--delete
+.base-button
     border-radius $border-radius
     padding ($unit / 4) ($unit / 2)
     margin 0 auto
@@ -46,6 +29,8 @@ input[type="button"],
 .button--prev,
 .button--back,
 .button--info
+    @extend .base-button
+
     border 1px solid $gold-90
     background $gold-90
     background-image linear-gradient(lighten($gold-90, 5), darken($gold-90, 5))
@@ -65,10 +50,17 @@ input[type="button"],
     &[disabled], &.button--disabled
         color $gold-78
 
+        &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
+            color $gold-78
+            border 1px solid $gold-90
+            background transparent
+
 button[type="submit"],
 .button--primary,
 .button--navigation,
 .button--next
+    @extend .base-button
+
     border 1px solid $blue-66
     background $blue-66
     background-image linear-gradient(lighten($blue-66, 5), darken($blue-66, 5))
@@ -88,10 +80,18 @@ button[type="submit"],
 
     &[disabled], &.button--disabled
         color $blue-78
+        border 1px solid $blue-90
+
+        &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
+            color $blue-78
+            border 1px solid $blue-90
+            background transparent
 
 .button--secondary,
 .button--success,
 .button--accept
+    @extend .base-button
+
     border 1px solid $green-90
     background $green-90
     background-image linear-gradient(lighten($green-90, 5), darken($green-90, 5))
@@ -111,9 +111,16 @@ button[type="submit"],
     &[disabled], &.button--disabled
         color $green-78
 
+        &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
+            color $green-78
+            border 1px solid $green-90
+            background transparent
+
 .button--danger,
 .button--error,
 .button--delete
+    @extend .base-button
+
     border 1px solid $red-90
     background $red-90
     background-image linear-gradient(lighten($red-90, 3), darken($red-90, 2))
@@ -132,3 +139,26 @@ button[type="submit"],
 
     &[disabled], &.button--disabled
         color $red-78
+
+        &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
+            color $red-78
+            border 1px solid $red-90
+            background transparent
+
+.button-group
+    @extend .inline-block
+    vertical-align middle
+
+    > *
+        float left
+
+        &:first-child:not(:last-child)
+            border-top-right-radius 0
+            border-bottom-right-radius 0
+
+        &:last-child:not(:first-child)
+            border-top-left-radius 0
+            border-bottom-left-radius 0
+
+        &:not(:first-child):not(:last-child)
+            border-radius 0
