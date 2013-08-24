@@ -85,7 +85,40 @@ input[type="radio"]
     &:checked::before
         border-radius 100%
 
-
 form
     label
         display block
+        font-style italic
+
+        .required, .optional
+            border-radius $border-radius
+            margin-left $gutter
+            padding 0 ($unit / 4)
+
+        .required
+            color $red-43
+            background $red-95
+
+        .optional
+            color $gold-66
+
+fieldset
+    border 1px dashed $gold-78
+    margin 0
+    padding 0 1em
+    border-radius $border-radius
+
+legend
+    color $gold-43
+
+.form-description
+    @extend .font-size-112
+    color $gold-43
+
+.form-field
+    margin 1em 0
+
+.form-field__description
+    margin 0
+    color $gold-43
+    font-style italic

@@ -286,7 +286,8 @@ h3 {
 .font-size-112,
 h4,
 h5,
-blockquote q {
+blockquote q,
+.form-description {
   font-size: 112.5%;
   line-height: 1.3333;
   margin: 0.6667em 0;
@@ -387,6 +388,17 @@ mark {
 abbr {
   border-bottom: 1px dashed #aaa354;
 }
+pre,
+samp,
+code,
+kbd {
+  font-size: 87.5%;
+  line-height: 1.7143;
+  margin: 1.1429 0;
+}
+code {
+  color: #6c6733;
+}
 q {
   font-style: italic;
 }
@@ -416,6 +428,25 @@ hr {
   background: #e7e3c7;
   height: 2px;
   margin: 1em 0;
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: #f3f1e4;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbc475;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
 }
 figure {
   display: inline-block;
@@ -517,7 +548,7 @@ button[type="submit"],
   padding: 3px 6px;
   margin: 0 auto;
   display: inline-block;
-  margin: 0.75em 0;
+  margin: 1em 0;
   cursor: pointer;
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
@@ -1018,6 +1049,48 @@ input[type="radio"]:checked::before {
 }
 form label {
   display: block;
+  font-style: italic;
+}
+form label .required,
+form label .optional {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  margin-left: 24px;
+  padding: 0 3px;
+}
+form label .required {
+  color: #8b585b;
+  background: #ffeced;
+}
+form label .optional {
+  color: #aaa354;
+}
+fieldset {
+  border: 1px dashed #cbc475;
+  margin: 0;
+  padding: 0 1em;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+}
+legend {
+  color: #6c6733;
+}
+.form-description {
+  color: #6c6733;
+}
+.form-field {
+  margin: 1em 0;
+}
+.form-field__description {
+  margin: 0;
+  color: #6c6733;
+  font-style: italic;
 }
 table th,
 table td {
@@ -1027,8 +1100,8 @@ table caption {
   font-style: italic;
 }
 table thead {
-  background: #aaa354;
-  color: #fcfcfa;
+  background: #e7e3c7;
+  border-bottom: 1px solid #cbc475;
 }
 table tbody tr.row--accept {
   background: #e3f5ec;
