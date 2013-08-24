@@ -1,0 +1,12 @@
+{
+    "name": "descovrir",
+    "version": "0.0.0",
+    "dependencies": {},
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-bower": "~0.5.1"
+    },
+    "engines": {
+        "node": ">=0.8.0"
+    }
+}

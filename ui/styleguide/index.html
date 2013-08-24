@@ -4,12 +4,14 @@
     <title>Descovrir Style Guide and Component Library</title>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" />
     <link rel="stylesheet" href="styleguide.css" />
-    <link rel="stylesheet" href="http://basehold.it/24">
+    <!-- link rel="stylesheet" href="http://basehold.it/24" /-->
 </head>
 <body>
 
+<div class="max-width-10">
+
 <div id="logo">
-    <img src="http://www.descovrir.org/static/astrolabe.svg" height="60" />
+    <img src="http://www.descovrir.org/static/astrolabe.svg" height="72" />
     descovrir
 </div>
 
@@ -25,53 +27,116 @@
 
     <h2>1. Layout, Grid, and Rhythm</h2>
 
-        <h3>1.1 The Grid</h3>
+        <h3>1.1 Metrics</h3>
 
             <p>
-                The Descovrir layout system is derived from the <a href="http://framelessgrid.com/">Frameless Grid</a> system. Some naming conventions and niceties are borrowed from the <a href="http://getbootstrap.com/">Twitter Bootstrap</a>.
+                Descovrir uses a larger than typical default metric system. The base font size is 16px, with a line-height of 24px. The basic grid rhythm is established at 12px both vertically and horizontally. Columns default to 48px, and gutters default to 24px. Because of Descovrir's large metrics, a great deal of focus and minimalism is required.
             </p>
 
             <p>
-                Descovrir uses a larger than typical default metric system. The base font size is 16px, with a line-height of 24px. The basic grid rhythm is established at 12px. Columns default to 48px, and gutters default to 24px. Because of Descovrir's large metrics, a great deal of focus and minimalism is required.
+                Different screen sizes alter the number of columns present. While Descovrir is not considered <a href="http://alistapart.com/article/responsive-web-design">responsive web design</a>, it does adjust to available width. Ideas are borrowed from <a href="http://framelessgrid.com/">Frameless Grid</a>, <a href="http://getbootstrap.com/">Twitter Bootstrap</a>, and <a href="http://foundation.zurb.com/">Foundation</a>.
+            </p>
+
+            <table class="size-table">
+                <thead>
+                    <tr>
+                        <th>Columns</th>
+                        <th>Inside</th>
+                        <th>Outside</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>4</td>
+                        <td>264px</td>
+                        <td>312px</td>
+
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>408px</td>
+                        <td>456px</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>552px</td>
+                        <td>600px</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>696px</td>
+                        <td>744px</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>840px</td>
+                        <td>888px</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>984px</td>
+                        <td>1032px</td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td>1128px</td>
+                        <td>1176px</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        <h3>1.2 Layouts</h3>
+
+            <p>
+                Descovrir takes a layout-specified approach rather than a column-specified approach. There are essentially <strong>five types of layouts</strong> present in most web designs. Layouts can be nested within each other.
             </p>
 
             <p>
-                Different screen sizes alter the number of columns present. The smallest size is 4 columns with 5 gutters, which is 312px. The next size is then 6 (456px), then 8 (600px), then 12 (888px), and the largest size is at 16 columns (1176px). Rows are simply given the class <code>row</code>. Columns are classed as <code>col-n</code>, where n is the number of columns.
+                Any element may be set to a specific number of columns, using the class <code>col-n</code>. Any element with set columns larger than the available screen will be reduced to the maximum width.
             </p>
 
-            <div class="row">
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-                <span class="col-1"></span>
-            </div>
+            <h3>1.2.1 Full Width Layout</h3>
 
-            <p>
-                Columns in groups of two are preferred to one or odd numbers of columns.
-            </p>
+                <p>
+                    A full-width element assumes the width of its parent. Full-width is native to block level elements, but can be manually set by <code>full-width</code>.
+                </p>
 
-            <div class="row">
-                <span class="col-12"></span>
-                <span class="col-4"></span>
-            </div>
 
-            <p>
-                Buckets can be targeted towards width of 4, 6, 8, 12, and 16 specifically. It uses the name <code>col-tm-n</code>, where t is literal, m is the target width, and n is the number of columns. The target applies to all smaller sizes until specified. Columns can be nested by nesting rows. Columns may be offset using the name <code>col-offset-n</code>, where n is the number of columns to offset.
-            </p>
+            <h3>1.2.2 Max Width Layout</h3>
 
-        <h3>1.2 Retina and Responsive Management</h3>
+                <p>
+                    A max-width element will assume the width of its parent up to a specified number of columns. Max width is set by the class <code>max-width-n</code>. Prefer max-widths set in two, four, six...
+                </p>
+
+            <h3>1.2.3 Serial Layout</h3>
+
+                <p>
+                    A serial layout consists of a set of even-width elements. Serial layouts specify a maximum number of columns per element.
+                </p>
+
+                <p>
+                    Wrap the elements in a <code>div</code> of <code>serial-n</code>, where <var>n</var> is the number of columns from one to eight, not the number of elements.
+                </p>
+
+            <h3>1.2.4 Aside Layout</h3>
+
+                <p>
+                    An aside, either on the left or right side, of one to six columns. The main element will take the rest of the parent's width. When the main is less than 60% of the parent, the aside appears below the main element, both in full width. For a two-in-one aside, use the serial layout inside the aside.
+                </p>
+
+                <p>
+                    Wrap both <code>main</code> and <code>aside</code> in a <code>div</code> with the class <code>aside-d-n</code>, where <var>d</var> is either <em>left</em> or <em>right</em>, and <var>n</var> is the number of columns of the aside.
+                </p>
+
+            <h3>1.2.5 Double Aside Layout</h3>
+
+                <p>
+                    Two asides appear with the main content, one on the left and one on the right. Each aside is one to six columns. The main element takes the remaining space. If the main element is less than 60% of the parent, both asides are below the main element, and all three are in full width.
+                </p>
+
+                <p>
+                    Create container <code>aside-left-dl-right-dr</code>, where <var>dl</var> is the number of left columns and <var>dr</var> is the number of right columns. Create an <code>aside</code>, <code>main</code>, and <code>aside</code> elements within the container.
+                </p>
 
     <h2>2. Colors, Icons, Images</h2>
 
@@ -1584,6 +1649,10 @@ $ ->
 
         <h3>11.5 Search with Filters</h3>
 
+            <p>
+                The search with filters layout is based on a simple aside layout.
+            </p>
+
     <h2>12. Extentions and Additions</h2>
 
         <h3>12.1 Extending with BEM</h3>
@@ -1610,12 +1679,15 @@ $ ->
                 At this time, Descovrir supports the major browsers at their current version and one previous version.
             </p>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>
-        $(function() {
-            $('a[href="#"]').click(function() { return false; });
-            $('a[href*="//"]').click(function() { this.target = "_blank"; });
-        });
-    </script>
+</div> <!-- END .max-width-8 -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+    $(function() {
+        $('a[href="#"]').click(function() { return false; });
+        $('a[href*="//"]').click(function() { this.target = "_blank"; });
+    });
+</script>
+
 </body>
 </html>
