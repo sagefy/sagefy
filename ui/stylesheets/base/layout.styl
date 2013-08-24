@@ -1,3 +1,5 @@
+/*** Metrics ***/
+
 $unit = 12px
 $gutter = $unit * 2
 $column = $gutter * 2
@@ -5,15 +7,150 @@ $font-size = 100%
 $em = $font-size / 1em
 $border-radius = 2px
 
-*, *:before, *:after
-    box-sizing border-box
+/*** Utility classes ***/
 
-body
-    width $column * 8 + $gutter * 9
-    margin 0 auto
+.block
+    display block
 
 .inline-block
     display inline-block
 
+.inline
+    display inline
+
+*, *:before, *:after
+    box-sizing border-box
+
+.clearfix
+    overflow auto
+
+.pull-left
+    float left
+
+.pull-right
+    float right
+
+.push-left
+    margin-left $unit
+
+.push-left-gutter
+    margin-left $gutter
+
 .push-right
     margin-right $unit
+
+.push-right-gutter
+    margin-right $gutter
+
+/*** Body layout ***/
+
+cols(n)
+    n * $column + (n - 1) * $gutter
+
+body-cols(n)
+    n * $column + (n + 1) * $gutter
+
+$4-columns =  "screen and (min-width: " + (body-cols(4)  + $unit) + ")"
+$6-columns =  "screen and (min-width: " + (body-cols(6)  + $unit) + ")"
+$8-columns =  "screen and (min-width: " + (body-cols(8)  + $unit) + ")"
+$10-columns = "screen and (min-width: " + (body-cols(10) + $unit) + ")"
+$12-columns = "screen and (min-width: " + (body-cols(12) + $unit) + ")"
+$14-columns = "screen and (min-width: " + (body-cols(14) + $unit) + ")"
+$16-columns = "screen and (min-width: " + (body-cols(16) + $unit) + ")"
+
+html, body
+    margin 0 auto
+
+body
+    padding 0 $gutter
+    overflow-y scroll
+    overflow-x hidden
+
+    @media $4-columns
+        width body-cols(4)
+
+    @media $6-columns
+        width body-cols(6)
+
+    @media $8-columns
+        width body-cols(8)
+
+    @media $10-columns
+        width body-cols(10)
+
+    @media $12-columns
+        width body-cols(12)
+
+    @media $14-columns
+        width body-cols(14)
+
+    @media $16-columns
+        width body-cols(16)
+
+/*** Layouts ***/
+
+for i in (1..16)
+    .col-{i}
+        max-width cols(i)
+
+// ß 1.2.1 Full Width Layout
+.full-width
+    max-width 100%
+
+// ß 1.2.2 Max Width Layout
+.max-width
+    margin-left auto
+    margin-right auto
+
+for i in (1..16)
+    .max-width-{i}
+        @extend .max-width
+        max-width cols(i)
+
+// ß 1.2.3 Serial Layout
+.serial
+    margin-left -1 * $gutter
+    margin-right -1 * $gutter
+
+    > *
+        margin-left $gutter
+        margin-right $gutter
+        display inline-block
+
+for i in (1..8)
+    .serial-{i}
+        @extend .serial
+
+        > *
+            max-width cols(i)
+
+// ß 1.2.4 Aside Layout
+// TODO: If main < 60% parent width, drop margin and float. Element queries?
+for d in left right
+    for i in (1..6)
+        .aside-{d}-{i}
+            @extend .clearfix
+
+            > main
+                margin-{d} (cols(i) + $gutter)
+
+            > aside
+                max-width cols(i)
+                float d
+
+// ß 1.2.5 Double Aside Layout
+// TODO: If main < 60% parent width, drop margin and float. Element queries?
+for l in (1..8)
+    for r in (1..8)
+        .aside-left-{l}-right-{r}
+            > main
+                margin-left (cols(l) + $gutter)
+                margin-right (cols(r) + $gutter)
+
+            > aside:first-child
+                float left
+                max-width cols(l)
+
+            > aside:last-child
+                float right
+                max-width cols(r)
