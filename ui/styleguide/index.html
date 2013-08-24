@@ -3,11 +3,10 @@
 <head>
     <title>Descovrir Style Guide and Component Library</title>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" />
-    <link rel="stylesheet" href="stylesheets/styleguide.css" />
+    <link rel="stylesheet" href="styleguide.css" />
+    <link rel="stylesheet" href="http://basehold.it/24">
 </head>
 <body>
-
-
 
 <div id="logo">
     <img src="http://www.descovrir.org/static/astrolabe.svg" height="60" />
@@ -219,14 +218,13 @@
                     Images subscribe to the basic grid of 12px as much as possible, more so on the width. Additionally, widths that match the grid system, <code>48n + 24(n-1)</code>, are preferable.
                 </p>
 
-                <img src="http://placehold.it/12x12" />
-                <img src="http://placehold.it/24x24" />
-                <img src="http://placehold.it/36x36" />
-                <img src="http://placehold.it/48x48" />
-                <img src="http://placehold.it/72x72" />
-                <img src="http://placehold.it/120x120" />
-                <img src="http://placehold.it/192x192" />
-                <img src="http://placehold.it/264x264" />
+                <img src="http://placehold.it/12x12/e7e3c7/aaa354" />
+                <img src="http://placehold.it/24x24/e7e3c7/aaa354" />
+                <img src="http://placehold.it/36x36/e7e3c7/aaa354" />
+                <img src="http://placehold.it/48x48/e7e3c7/aaa354" />
+                <img src="http://placehold.it/72x72/e7e3c7/aaa354" />
+                <img src="http://placehold.it/120x120/e7e3c7/aaa354" />
+                <img src="http://placehold.it/192x192/e7e3c7/aaa354" />
 
             <h4>2.3.2 Image captions</h4>
 
@@ -235,7 +233,7 @@
                 </p>
 
                 <figure>
-                    <img src="http://placehold.it/72x72" />
+                    <img src="http://placehold.it/72x72/e7e3c7/aaa354" />
                 </figure>
 
                 <p>
@@ -243,7 +241,7 @@
                 </p>
 
                 <figure>
-                    <img src="http://placehold.it/192x192" />
+                    <img src="http://placehold.it/192x192/e7e3c7/aaa354" />
                     <figcaption>Figcaptions are not limited to images, but images are an excellent example.</figcaption>
                 </figure>
 
@@ -500,7 +498,7 @@
             <h4>5.2.5 Definition Lists</h4>
 
                 <p>
-                    Defintion lists are useful for glossaries, dictionaries, and outlines. The tags <code>dl</code>, <code>dt</code>, and <code>dd</code> are used together to form the definition list. Defition lists are also used for marking up metdata.
+                    Definition lists are useful for glossaries, dictionaries, and outlines. The tags <code>dl</code>, <code>dt</code>, and <code>dd</code> are used together to form the definition list. Definition lists are also used for marking up metadata.
                 </p>
 
                 <dl>
@@ -521,7 +519,7 @@
                 <table class="list--with-thumbnails">
                     <tr>
                         <td>
-                            <img src="http://placehold.it/48x48" data-title="48x48" />
+                            <img src="http://placehold.it/48x48/e7e3c7/aaa354" data-title="48x48" />
                         </td>
                         <td>
                             <h4>List Item 1</h4>
@@ -530,7 +528,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <img src="http://placehold.it/48x48" data-title="48x48" />
+                            <img src="http://placehold.it/48x48/e7e3c7/aaa354" data-title="48x48" />
                         </td>
                         <td>
                             <h4>List Item 1</h4>
@@ -539,7 +537,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <img src="http://placehold.it/48x48" data-title="48x48" />
+                            <img src="http://placehold.it/48x48/e7e3c7/aaa354" data-title="48x48" />
                         </td>
                         <td>
                             <h4>List Item 1</h4>
@@ -590,6 +588,14 @@
                 <li><a href="http://prismjs.com/">PrismJS</a></li>
             </ul>
 
+            <pre>
+$ ->
+    $anchor = $ 'a[href*="\\"]'
+    $anchor.click ->
+        $(this).attr "target", "_blank"
+        true
+            </pre>
+
         <h3>5.7 Scrollbars</h3>
 
             <p>
@@ -597,7 +603,64 @@
             </p>
 
             <div style="overflow-y:scroll; height:200px">
-                <div style="height:1000px"></div>
+                <div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                </div>
             </div>
 
     <h2>6. Tables</h2>
@@ -871,6 +934,11 @@
                         </ul>
 
                 <h5>7.1.3.3 Selection Menu</h5>
+
+                    <p>
+                        To resolve common issues with <code>select</code> elements,
+                        Descovrir uses <a href="http://ivaynberg.github.io/select2/">Select2</a>.
+                    </p>
 
                         <select>
                             <option>1</option>
@@ -1404,7 +1472,7 @@
 
             <ul class="discussion">
                 <li>
-                    <img src="http://placehold.it/48" data-title="username" class="discussion__avatar" />
+                    <img src="http://placehold.it/48/e7e3c7/aaa354" data-title="username" class="discussion__avatar" />
                     <div class="discussion__message">
                         <div class="discussion__user__name">
                             username
@@ -1465,6 +1533,10 @@
             <progress max="70"><span>0</span>%</progress>
 
         <h3>10.8 Badges, Trophies & Awards</h3>
+
+            <i class="icon-star"></i>
+            <i class="icon-shield"></i>
+            <i class="icon-trophy"></i>
 
         <h3>10.9 Inline Editing</h3>
 
