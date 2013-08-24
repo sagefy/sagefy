@@ -487,6 +487,68 @@ body {
 .serial-8 > * {
   max-width: 552px;
 }
+.reset-aside > main,
+*[max-width~="192px"] .aside-left-1 > main,
+*[max-width~="336px"] .aside-left-2 > main,
+*[max-width~="552px"] .aside-left-3 > main,
+*[max-width~="696px"] .aside-left-4 > main,
+*[max-width~="912px"] .aside-left-5 > main,
+*[max-width~="1056px"] .aside-left-6 > main,
+*[max-width~="192px"] .aside-right-1 > main,
+*[max-width~="336px"] .aside-right-2 > main,
+*[max-width~="552px"] .aside-right-3 > main,
+*[max-width~="696px"] .aside-right-4 > main,
+*[max-width~="912px"] .aside-right-5 > main,
+*[max-width~="1056px"] .aside-right-6 > main,
+*[max-width~="336px"] .aside-left-1-right-1 > main,
+*[max-width~="552px"] .aside-left-1-right-2 > main,
+*[max-width~="696px"] .aside-left-1-right-3 > main,
+*[max-width~="912px"] .aside-left-1-right-4 > main,
+*[max-width~="1056px"] .aside-left-1-right-5 > main,
+*[max-width~="552px"] .aside-left-2-right-1 > main,
+*[max-width~="696px"] .aside-left-2-right-2 > main,
+*[max-width~="912px"] .aside-left-2-right-3 > main,
+*[max-width~="1056px"] .aside-left-2-right-4 > main,
+*[max-width~="696px"] .aside-left-3-right-1 > main,
+*[max-width~="912px"] .aside-left-3-right-2 > main,
+*[max-width~="1056px"] .aside-left-3-right-3 > main,
+*[max-width~="912px"] .aside-left-4-right-1 > main,
+*[max-width~="1056px"] .aside-left-4-right-2 > main,
+*[max-width~="1056px"] .aside-left-5-right-1 > main {
+  margin-left: 0;
+  margin-right: 0;
+}
+.reset-aside > aside,
+*[max-width~="192px"] .aside-left-1 > aside,
+*[max-width~="336px"] .aside-left-2 > aside,
+*[max-width~="552px"] .aside-left-3 > aside,
+*[max-width~="696px"] .aside-left-4 > aside,
+*[max-width~="912px"] .aside-left-5 > aside,
+*[max-width~="1056px"] .aside-left-6 > aside,
+*[max-width~="192px"] .aside-right-1 > aside,
+*[max-width~="336px"] .aside-right-2 > aside,
+*[max-width~="552px"] .aside-right-3 > aside,
+*[max-width~="696px"] .aside-right-4 > aside,
+*[max-width~="912px"] .aside-right-5 > aside,
+*[max-width~="1056px"] .aside-right-6 > aside,
+*[max-width~="336px"] .aside-left-1-right-1 > aside,
+*[max-width~="552px"] .aside-left-1-right-2 > aside,
+*[max-width~="696px"] .aside-left-1-right-3 > aside,
+*[max-width~="912px"] .aside-left-1-right-4 > aside,
+*[max-width~="1056px"] .aside-left-1-right-5 > aside,
+*[max-width~="552px"] .aside-left-2-right-1 > aside,
+*[max-width~="696px"] .aside-left-2-right-2 > aside,
+*[max-width~="912px"] .aside-left-2-right-3 > aside,
+*[max-width~="1056px"] .aside-left-2-right-4 > aside,
+*[max-width~="696px"] .aside-left-3-right-1 > aside,
+*[max-width~="912px"] .aside-left-3-right-2 > aside,
+*[max-width~="1056px"] .aside-left-3-right-3 > aside,
+*[max-width~="912px"] .aside-left-4-right-1 > aside,
+*[max-width~="1056px"] .aside-left-4-right-2 > aside,
+*[max-width~="1056px"] .aside-left-5-right-1 > aside {
+  float: none;
+  max-width: auto;
+}
 .aside-left-1 > main {
   margin-left: 72px;
 }
