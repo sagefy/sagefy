@@ -6,9 +6,7 @@
     <link rel="stylesheet" href="styleguide.css" />
     <!-- link rel="stylesheet" href="http://basehold.it/24" /-->
 </head>
-<body>
-
-<div class="max-width-10">
+<body class="max-width-10">
 
 <div id="logo">
     <img src="http://www.descovrir.org/static/astrolabe.svg" height="72" />
@@ -30,7 +28,7 @@
         <h3>1.1 Metrics</h3>
 
             <p>
-                Descovrir uses a larger than typical default metric system. The base font size is 16px, with a line-height of 24px. The basic grid rhythm is established at 12px both vertically and horizontally. Columns default to 48px, and gutters default to 24px. Because of Descovrir's large metrics, a great deal of focus and minimalism is required.
+                Descovrir uses a larger-than-typical metric system. The rhythm is 24px both vertically and horizontally. The base font size is 16px with a line-height of 24px. Columns are 48px and gutters are 24px. Because of Descovrir's large metrics, a great deal of focus and minimalism is required.
             </p>
 
             <p>
@@ -95,6 +93,10 @@
                 Any element may be set to a specific number of columns, using the class <code>col-n</code>. Any element with set columns larger than the available screen will be reduced to the maximum width.
             </p>
 
+            <p>
+                <em>&sect;11 Page Layouts</em> describes some common use cases of layout combinations.
+            </p>
+
             <h3>1.2.1 Full Width Layout</h3>
 
                 <p>
@@ -131,7 +133,7 @@
             <h3>1.2.5 Double Aside Layout</h3>
 
                 <p>
-                    Two asides appear with the main content, one on the left and one on the right. Each aside is one to six columns. The main element takes the remaining space. If the main element is less than 60% of the parent, both asides are below the main element, and all three are in full width.
+                    Two asides appear with the main content, one on the left and one on the right. Each aside is one to five columns. The main element takes the remaining space. If the main element is less than 60% of the parent, both asides are below the main element, and all three are in full width. The sum of the aside columns must be six or less.
                 </p>
 
                 <p>
@@ -1127,7 +1129,7 @@ $ ->
 
         <h3>8.1 Buttons by Role</h3>
 
-            <ul>
+            <ul class="unstyled">
                 <li>
                     <button class="button--primary">
                         Primary
@@ -1156,16 +1158,11 @@ $ ->
 
                     Escape, Previous, Back, Information
                 </li>
-                <li>
-                    <button class="button--disabled">
-                        Disabled
-                    </button>
-                </li>
             </ul>
 
         <h3>8.2 Normal size, Large size, Epic size</h3>
 
-            <ul>
+            <ul class="inline">
                 <li>
                     <button class="button--primary">
                         Normal
@@ -1185,7 +1182,7 @@ $ ->
 
         <h3>8.3 Buttons with Icons</h3>
 
-            <ul>
+            <ul class="inline">
                 <li>
                     <button class="button--primary">
                         Next Page
@@ -1206,29 +1203,55 @@ $ ->
                 </li>
                 <li>
                     <button class="button--cancel">
-                        <i class="icon-ban-circle"></i>
-                        Cancel
-                    </button>
-                </li>
-                <li>
-                    <button class="button--disabled">
                         <i class="icon-refresh"></i>
                         Resume
                     </button>
                 </li>
             </ul>
 
-        <h3>8.4 Button groups</h3>
+        <h3>8.4 Disabled Buttons</h3>
 
-            <div class="button--group">
+            <ul class="inline">
+                <li>
+                    <button class="button--primary" disabled>
+                        Next Page
+                        <i class="icon-chevron-right"></i>
+                    </button>
+                </li>
+                <li>
+                    <button class="button--secondary" disabled>
+                        <i class="icon-edit"></i>
+                        Edit
+                    </button>
+                </li>
+                <li>
+                    <button class="button--danger" disabled>
+                        <i class="icon-trash"></i>
+                        Delete
+                    </button>
+                </li>
+                <li>
+                    <button class="button--cancel" disabled>
+                        <i class="icon-refresh"></i>
+                        Resume
+                    </button>
+                </li>
+            </ul>
+
+        <h3>8.5 Button groups</h3>
+
+            <div class="button-group">
                 <button class="button--primary">
-                    Primary
+                    <i class="icon-heart"></i> Primary
                 </button>
                 <button class="button--secondary">
-                    Secondary
+                    <i class="icon-star"></i> Secondary
+                </button>
+                <button class="button">
+                    <i class="icon-refresh"></i> Refresh
                 </button>
                 <button class="button--cancel">
-                    Cancel
+                    <i class="icon-ban-circle"></i> Cancel
                 </button>
             </div>
 
@@ -1246,7 +1269,7 @@ $ ->
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" class="selected">
                             Learn
                         </a>
                     </li>
@@ -1273,7 +1296,7 @@ $ ->
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" class="selected">
                             Learn
                         </a>
                     </li>
@@ -1300,7 +1323,7 @@ $ ->
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" class="selected">
                             Learn
                         </a>
                     </li>
@@ -1333,7 +1356,7 @@ $ ->
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" class="selected">
                             Learn
                         </a>
                     </li>
@@ -1383,9 +1406,9 @@ $ ->
                 </ul>
             </nav>
 
-        <h3>9.6 Step-by-step</h3>
+        <h3>9.6 Wizard</h3>
 
-            <nav class="step-by-step">
+            <nav class="wizard">
                 <ol>
                     <li>
                         <a href="#">
@@ -1393,7 +1416,7 @@ $ ->
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" class="selected">
                             Learn
                         </a>
                     </li>
@@ -1422,7 +1445,7 @@ $ ->
                         <a href="#">Back</a>
                     </li>
                     <li>
-                        <a href="#" class="pagination__number--selected">1</a>
+                        <a href="#" class="selected">1</a>
                     </li>
                     <li>
                         <a href="#">2</a>
@@ -1458,7 +1481,7 @@ $ ->
                 <a href="#" data-title="Auto tooltip">An example</a> of a tooltip
             </p>
 
-        <h3>10.2 Tags and Keywords</h3>
+        <h3>10.2 Tags &amp; Keywords</h3>
 
             <p>
                 Tag clouds are fun. They can also be a useful representation to compare between quickly.
@@ -1477,7 +1500,7 @@ $ ->
                 <li class="tags__tag--weight-2"><a href="#">Attain</a></li>
             </ul>
 
-        <h3>10.3 Alerts and Errors</h3>
+        <h3>10.3 Alerts &amp; Errors</h3>
 
             <p>
                 Systemic-alerts are often used when an error has occured.
@@ -1493,7 +1516,7 @@ $ ->
                 Very serious alerts can force the user to reload the page. This situation calls for a modal.
             </p>
 
-        <h3>10.4 Overlays and Modals</h3>
+        <h3>10.4 Overlays &amp; Modals</h3>
 
             <p>
                 Modals are only used in extraordinary cases. Prefer to append inline over using a modal.
@@ -1573,7 +1596,7 @@ $ ->
                     </thead>
                 </table>
 
-        <h3>10.7 Audio, Video, and Embedded Objects</h3>
+        <h3>10.7 Audio, Video, &amp; Embedded Objects</h3>
 
             <p>
                 Descovir uses YouTube, Vimeo, Soundcloud, Slideshare, and third party
@@ -1583,7 +1606,7 @@ $ ->
 
             <iframe width="420" height="315" src="http://www.youtube.com/embed/z3U0udLH974" frameborder="0" allowfullscreen></iframe>
 
-        <h3>10.8 Progressbars and Spinners</h3>
+        <h3>10.8 Progressbars &amp; Spinners</h3>
 
             <p>
                 Descovrir uses <a href="http://fgnass.github.io/spin.js/">Spin.js</a> for spinners.
@@ -1597,7 +1620,7 @@ $ ->
 
             <progress max="70"><span>0</span>%</progress>
 
-        <h3>10.8 Badges, Trophies & Awards</h3>
+        <h3>10.8 Badges, Trophies &amp; Awards</h3>
 
             <i class="icon-star"></i>
             <i class="icon-shield"></i>
@@ -1605,7 +1628,7 @@ $ ->
 
         <h3>10.9 Inline Editing</h3>
 
-        <h3>10.10 Tips, Suggestions & Inline Help</h3>
+        <h3>10.10 Tips, Suggestions &amp; Inline Help</h3>
 
         <h3>10.11 Dropdowns</h3>
 
@@ -1613,20 +1636,22 @@ $ ->
 
         <h3>10.13 Uploading Images</h3>
 
-        <h3>10.14 Embedding Media</h3>
-
         <hr />
 
         <p>
             More elements to come: galleries, heros, accordions, statistics...
         </p>
 
-    <h2>11. Page layouts</h2>
+    <h2>11. Page Layouts</h2>
 
         <h3>11.1 Basic Page Layout</h3>
 
             <p>
                 Most pages on Descovrir are limited to a menu icon, a title, body contents, and end in linear navigation. This simplicity forces focus on the task at hand.
+            </p>
+
+            <p>
+                Set the body to <code>max-width-10</code>. Use an <code>h1</code> at the top. End with linear navigation and a menu element.
             </p>
 
         <h3>11.2 Navigated Page Layout</h3>
@@ -1635,25 +1660,41 @@ $ ->
                 A page that has been intentionally navigated to includes breadcrumbs or other navigational feature where applicable.
             </p>
 
+            <p>
+                Before the <code>h1</code> of &sect;11.1, include breadcrumbs navigation. Alternatively, set the body to <code>aside-right-3</code>, and use vertical navigation in the <code>aside</code>.
+            </p>
+
         <h3>11.3 Object Representation</h3>
 
             <p>
-                An object could be a user, a component, a practice question, etc. and the purpose of these object representations is to provide an overview of information about the object. Examples are a user profile, component statistics, or a history of changes.
+                Provide an overview of information about an object. Examples are a user profile, component statistics, or a history of changes.
             </p>
 
-        <h3>11.4 Settings and Cross-Section Forms</h3>
+            <p>
+                Start with <code>aside-left-4</code>. Include a <var>264x264</var> image at top top of the <code>aside</code>. The <code>main</code> element starts with an <code>h1</code>. Delegate concise, vital statistics and information to the <code>aside</code>, and primary content to the <code>main</code>.
+            </p>
+
+        <h3>11.4 Settings</h3>
 
             <p>
                 Some views transverse Descovrir's sections (Learn, Contribute, Mentor...).
             </p>
 
-        <h3>11.5 Search with Filters</h3>
+            <p>
+                Borrowing the &sect;11.1 Basic Page Layout, and add horizontal tabs across the top. Alternatively, set the body to <code>aside-right-3</code>, and use vertical navigation in the <code>aside</code>. Keep to a single column form.
+            </p>
+
+        <h3>11.5 Search, Sort, &amp; Filter</h3>
 
             <p>
                 The search with filters layout is based on a simple aside layout.
             </p>
 
-    <h2>12. Extentions and Additions</h2>
+            <p>
+                Set the body to <code>aside-right-3</code>, and use vertical navigation for filters in the <code>aside</code>. Include sorting options in the aside. Start the <code>main</code> element with an <code>h1</code> and possibly breadcrumbs. Then include a large search bar. Show a list with thumbnails in infinite scroll below the search bar. Manage empty states.
+            </p>
+
+    <h2>12. Concluding Remarks</h2>
 
         <h3>12.1 Extending with BEM</h3>
 
@@ -1676,18 +1717,23 @@ $ ->
         <h3>12.4 Browser support</h3>
 
             <p>
-                At this time, Descovrir supports the major browsers at their current version and one previous version.
+                At this time, Descovrir supports the major browsers, Chrome, Safari, Firefox, &amp; Internet Explorer, at the latest consumer version and the latest immediately-previous major consumer version. As of <time>2013 August 24</time>:
             </p>
 
-</div> <!-- END .max-width-8 -->
+            <ul>
+                <li><strong>Chrome</strong>: 29, 28</li>
+                <li><strong>Safari</strong>: 6, 5.1</li>
+                <li><strong>Firefox</strong>: 23, 22</li>
+                <li><strong>Internet Explorer</strong>: 10, 9</li>
+            </ul>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script>
-    $(function() {
-        $('a[href="#"]').click(function() { return false; });
-        $('a[href*="//"]').click(function() { this.target = "_blank"; });
-    });
-</script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $(function() {
+            $('a[href="#"]').click(function() { return false; });
+            $('a[href*="//"]').click(function() { this.target = "_blank"; });
+        });
+    </script>
 
 </body>
 </html>

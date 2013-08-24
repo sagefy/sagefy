@@ -211,7 +211,8 @@ table {
 .block {
   display: block;
 }
-.inline-block {
+.inline-block,
+.button-group {
   display: inline-block;
 }
 .inline {
@@ -238,7 +239,22 @@ table {
 .aside-right-3,
 .aside-right-4,
 .aside-right-5,
-.aside-right-6 {
+.aside-right-6,
+.aside-left-1-right-1,
+.aside-left-1-right-2,
+.aside-left-1-right-3,
+.aside-left-1-right-4,
+.aside-left-1-right-5,
+.aside-left-2-right-1,
+.aside-left-2-right-2,
+.aside-left-2-right-3,
+.aside-left-2-right-4,
+.aside-left-3-right-1,
+.aside-left-3-right-2,
+.aside-left-3-right-3,
+.aside-left-4-right-1,
+.aside-left-4-right-2,
+.aside-left-5-right-1 {
   overflow: auto;
 }
 .pull-left {
@@ -615,42 +631,6 @@ body {
   float: right;
   max-width: 336px;
 }
-.aside-left-1-right-6 > main {
-  margin-left: 72px;
-  margin-right: 432px;
-}
-.aside-left-1-right-6 > aside:first-child {
-  float: left;
-  max-width: 48px;
-}
-.aside-left-1-right-6 > aside:last-child {
-  float: right;
-  max-width: 408px;
-}
-.aside-left-1-right-7 > main {
-  margin-left: 72px;
-  margin-right: 504px;
-}
-.aside-left-1-right-7 > aside:first-child {
-  float: left;
-  max-width: 48px;
-}
-.aside-left-1-right-7 > aside:last-child {
-  float: right;
-  max-width: 480px;
-}
-.aside-left-1-right-8 > main {
-  margin-left: 72px;
-  margin-right: 576px;
-}
-.aside-left-1-right-8 > aside:first-child {
-  float: left;
-  max-width: 48px;
-}
-.aside-left-1-right-8 > aside:last-child {
-  float: right;
-  max-width: 552px;
-}
 .aside-left-2-right-1 > main {
   margin-left: 144px;
   margin-right: 72px;
@@ -699,54 +679,6 @@ body {
   float: right;
   max-width: 264px;
 }
-.aside-left-2-right-5 > main {
-  margin-left: 144px;
-  margin-right: 360px;
-}
-.aside-left-2-right-5 > aside:first-child {
-  float: left;
-  max-width: 120px;
-}
-.aside-left-2-right-5 > aside:last-child {
-  float: right;
-  max-width: 336px;
-}
-.aside-left-2-right-6 > main {
-  margin-left: 144px;
-  margin-right: 432px;
-}
-.aside-left-2-right-6 > aside:first-child {
-  float: left;
-  max-width: 120px;
-}
-.aside-left-2-right-6 > aside:last-child {
-  float: right;
-  max-width: 408px;
-}
-.aside-left-2-right-7 > main {
-  margin-left: 144px;
-  margin-right: 504px;
-}
-.aside-left-2-right-7 > aside:first-child {
-  float: left;
-  max-width: 120px;
-}
-.aside-left-2-right-7 > aside:last-child {
-  float: right;
-  max-width: 480px;
-}
-.aside-left-2-right-8 > main {
-  margin-left: 144px;
-  margin-right: 576px;
-}
-.aside-left-2-right-8 > aside:first-child {
-  float: left;
-  max-width: 120px;
-}
-.aside-left-2-right-8 > aside:last-child {
-  float: right;
-  max-width: 552px;
-}
 .aside-left-3-right-1 > main {
   margin-left: 216px;
   margin-right: 72px;
@@ -783,66 +715,6 @@ body {
   float: right;
   max-width: 192px;
 }
-.aside-left-3-right-4 > main {
-  margin-left: 216px;
-  margin-right: 288px;
-}
-.aside-left-3-right-4 > aside:first-child {
-  float: left;
-  max-width: 192px;
-}
-.aside-left-3-right-4 > aside:last-child {
-  float: right;
-  max-width: 264px;
-}
-.aside-left-3-right-5 > main {
-  margin-left: 216px;
-  margin-right: 360px;
-}
-.aside-left-3-right-5 > aside:first-child {
-  float: left;
-  max-width: 192px;
-}
-.aside-left-3-right-5 > aside:last-child {
-  float: right;
-  max-width: 336px;
-}
-.aside-left-3-right-6 > main {
-  margin-left: 216px;
-  margin-right: 432px;
-}
-.aside-left-3-right-6 > aside:first-child {
-  float: left;
-  max-width: 192px;
-}
-.aside-left-3-right-6 > aside:last-child {
-  float: right;
-  max-width: 408px;
-}
-.aside-left-3-right-7 > main {
-  margin-left: 216px;
-  margin-right: 504px;
-}
-.aside-left-3-right-7 > aside:first-child {
-  float: left;
-  max-width: 192px;
-}
-.aside-left-3-right-7 > aside:last-child {
-  float: right;
-  max-width: 480px;
-}
-.aside-left-3-right-8 > main {
-  margin-left: 216px;
-  margin-right: 576px;
-}
-.aside-left-3-right-8 > aside:first-child {
-  float: left;
-  max-width: 192px;
-}
-.aside-left-3-right-8 > aside:last-child {
-  float: right;
-  max-width: 552px;
-}
 .aside-left-4-right-1 > main {
   margin-left: 288px;
   margin-right: 72px;
@@ -867,78 +739,6 @@ body {
   float: right;
   max-width: 120px;
 }
-.aside-left-4-right-3 > main {
-  margin-left: 288px;
-  margin-right: 216px;
-}
-.aside-left-4-right-3 > aside:first-child {
-  float: left;
-  max-width: 264px;
-}
-.aside-left-4-right-3 > aside:last-child {
-  float: right;
-  max-width: 192px;
-}
-.aside-left-4-right-4 > main {
-  margin-left: 288px;
-  margin-right: 288px;
-}
-.aside-left-4-right-4 > aside:first-child {
-  float: left;
-  max-width: 264px;
-}
-.aside-left-4-right-4 > aside:last-child {
-  float: right;
-  max-width: 264px;
-}
-.aside-left-4-right-5 > main {
-  margin-left: 288px;
-  margin-right: 360px;
-}
-.aside-left-4-right-5 > aside:first-child {
-  float: left;
-  max-width: 264px;
-}
-.aside-left-4-right-5 > aside:last-child {
-  float: right;
-  max-width: 336px;
-}
-.aside-left-4-right-6 > main {
-  margin-left: 288px;
-  margin-right: 432px;
-}
-.aside-left-4-right-6 > aside:first-child {
-  float: left;
-  max-width: 264px;
-}
-.aside-left-4-right-6 > aside:last-child {
-  float: right;
-  max-width: 408px;
-}
-.aside-left-4-right-7 > main {
-  margin-left: 288px;
-  margin-right: 504px;
-}
-.aside-left-4-right-7 > aside:first-child {
-  float: left;
-  max-width: 264px;
-}
-.aside-left-4-right-7 > aside:last-child {
-  float: right;
-  max-width: 480px;
-}
-.aside-left-4-right-8 > main {
-  margin-left: 288px;
-  margin-right: 576px;
-}
-.aside-left-4-right-8 > aside:first-child {
-  float: left;
-  max-width: 264px;
-}
-.aside-left-4-right-8 > aside:last-child {
-  float: right;
-  max-width: 552px;
-}
 .aside-left-5-right-1 > main {
   margin-left: 360px;
   margin-right: 72px;
@@ -950,378 +750,6 @@ body {
 .aside-left-5-right-1 > aside:last-child {
   float: right;
   max-width: 48px;
-}
-.aside-left-5-right-2 > main {
-  margin-left: 360px;
-  margin-right: 144px;
-}
-.aside-left-5-right-2 > aside:first-child {
-  float: left;
-  max-width: 336px;
-}
-.aside-left-5-right-2 > aside:last-child {
-  float: right;
-  max-width: 120px;
-}
-.aside-left-5-right-3 > main {
-  margin-left: 360px;
-  margin-right: 216px;
-}
-.aside-left-5-right-3 > aside:first-child {
-  float: left;
-  max-width: 336px;
-}
-.aside-left-5-right-3 > aside:last-child {
-  float: right;
-  max-width: 192px;
-}
-.aside-left-5-right-4 > main {
-  margin-left: 360px;
-  margin-right: 288px;
-}
-.aside-left-5-right-4 > aside:first-child {
-  float: left;
-  max-width: 336px;
-}
-.aside-left-5-right-4 > aside:last-child {
-  float: right;
-  max-width: 264px;
-}
-.aside-left-5-right-5 > main {
-  margin-left: 360px;
-  margin-right: 360px;
-}
-.aside-left-5-right-5 > aside:first-child {
-  float: left;
-  max-width: 336px;
-}
-.aside-left-5-right-5 > aside:last-child {
-  float: right;
-  max-width: 336px;
-}
-.aside-left-5-right-6 > main {
-  margin-left: 360px;
-  margin-right: 432px;
-}
-.aside-left-5-right-6 > aside:first-child {
-  float: left;
-  max-width: 336px;
-}
-.aside-left-5-right-6 > aside:last-child {
-  float: right;
-  max-width: 408px;
-}
-.aside-left-5-right-7 > main {
-  margin-left: 360px;
-  margin-right: 504px;
-}
-.aside-left-5-right-7 > aside:first-child {
-  float: left;
-  max-width: 336px;
-}
-.aside-left-5-right-7 > aside:last-child {
-  float: right;
-  max-width: 480px;
-}
-.aside-left-5-right-8 > main {
-  margin-left: 360px;
-  margin-right: 576px;
-}
-.aside-left-5-right-8 > aside:first-child {
-  float: left;
-  max-width: 336px;
-}
-.aside-left-5-right-8 > aside:last-child {
-  float: right;
-  max-width: 552px;
-}
-.aside-left-6-right-1 > main {
-  margin-left: 432px;
-  margin-right: 72px;
-}
-.aside-left-6-right-1 > aside:first-child {
-  float: left;
-  max-width: 408px;
-}
-.aside-left-6-right-1 > aside:last-child {
-  float: right;
-  max-width: 48px;
-}
-.aside-left-6-right-2 > main {
-  margin-left: 432px;
-  margin-right: 144px;
-}
-.aside-left-6-right-2 > aside:first-child {
-  float: left;
-  max-width: 408px;
-}
-.aside-left-6-right-2 > aside:last-child {
-  float: right;
-  max-width: 120px;
-}
-.aside-left-6-right-3 > main {
-  margin-left: 432px;
-  margin-right: 216px;
-}
-.aside-left-6-right-3 > aside:first-child {
-  float: left;
-  max-width: 408px;
-}
-.aside-left-6-right-3 > aside:last-child {
-  float: right;
-  max-width: 192px;
-}
-.aside-left-6-right-4 > main {
-  margin-left: 432px;
-  margin-right: 288px;
-}
-.aside-left-6-right-4 > aside:first-child {
-  float: left;
-  max-width: 408px;
-}
-.aside-left-6-right-4 > aside:last-child {
-  float: right;
-  max-width: 264px;
-}
-.aside-left-6-right-5 > main {
-  margin-left: 432px;
-  margin-right: 360px;
-}
-.aside-left-6-right-5 > aside:first-child {
-  float: left;
-  max-width: 408px;
-}
-.aside-left-6-right-5 > aside:last-child {
-  float: right;
-  max-width: 336px;
-}
-.aside-left-6-right-6 > main {
-  margin-left: 432px;
-  margin-right: 432px;
-}
-.aside-left-6-right-6 > aside:first-child {
-  float: left;
-  max-width: 408px;
-}
-.aside-left-6-right-6 > aside:last-child {
-  float: right;
-  max-width: 408px;
-}
-.aside-left-6-right-7 > main {
-  margin-left: 432px;
-  margin-right: 504px;
-}
-.aside-left-6-right-7 > aside:first-child {
-  float: left;
-  max-width: 408px;
-}
-.aside-left-6-right-7 > aside:last-child {
-  float: right;
-  max-width: 480px;
-}
-.aside-left-6-right-8 > main {
-  margin-left: 432px;
-  margin-right: 576px;
-}
-.aside-left-6-right-8 > aside:first-child {
-  float: left;
-  max-width: 408px;
-}
-.aside-left-6-right-8 > aside:last-child {
-  float: right;
-  max-width: 552px;
-}
-.aside-left-7-right-1 > main {
-  margin-left: 504px;
-  margin-right: 72px;
-}
-.aside-left-7-right-1 > aside:first-child {
-  float: left;
-  max-width: 480px;
-}
-.aside-left-7-right-1 > aside:last-child {
-  float: right;
-  max-width: 48px;
-}
-.aside-left-7-right-2 > main {
-  margin-left: 504px;
-  margin-right: 144px;
-}
-.aside-left-7-right-2 > aside:first-child {
-  float: left;
-  max-width: 480px;
-}
-.aside-left-7-right-2 > aside:last-child {
-  float: right;
-  max-width: 120px;
-}
-.aside-left-7-right-3 > main {
-  margin-left: 504px;
-  margin-right: 216px;
-}
-.aside-left-7-right-3 > aside:first-child {
-  float: left;
-  max-width: 480px;
-}
-.aside-left-7-right-3 > aside:last-child {
-  float: right;
-  max-width: 192px;
-}
-.aside-left-7-right-4 > main {
-  margin-left: 504px;
-  margin-right: 288px;
-}
-.aside-left-7-right-4 > aside:first-child {
-  float: left;
-  max-width: 480px;
-}
-.aside-left-7-right-4 > aside:last-child {
-  float: right;
-  max-width: 264px;
-}
-.aside-left-7-right-5 > main {
-  margin-left: 504px;
-  margin-right: 360px;
-}
-.aside-left-7-right-5 > aside:first-child {
-  float: left;
-  max-width: 480px;
-}
-.aside-left-7-right-5 > aside:last-child {
-  float: right;
-  max-width: 336px;
-}
-.aside-left-7-right-6 > main {
-  margin-left: 504px;
-  margin-right: 432px;
-}
-.aside-left-7-right-6 > aside:first-child {
-  float: left;
-  max-width: 480px;
-}
-.aside-left-7-right-6 > aside:last-child {
-  float: right;
-  max-width: 408px;
-}
-.aside-left-7-right-7 > main {
-  margin-left: 504px;
-  margin-right: 504px;
-}
-.aside-left-7-right-7 > aside:first-child {
-  float: left;
-  max-width: 480px;
-}
-.aside-left-7-right-7 > aside:last-child {
-  float: right;
-  max-width: 480px;
-}
-.aside-left-7-right-8 > main {
-  margin-left: 504px;
-  margin-right: 576px;
-}
-.aside-left-7-right-8 > aside:first-child {
-  float: left;
-  max-width: 480px;
-}
-.aside-left-7-right-8 > aside:last-child {
-  float: right;
-  max-width: 552px;
-}
-.aside-left-8-right-1 > main {
-  margin-left: 576px;
-  margin-right: 72px;
-}
-.aside-left-8-right-1 > aside:first-child {
-  float: left;
-  max-width: 552px;
-}
-.aside-left-8-right-1 > aside:last-child {
-  float: right;
-  max-width: 48px;
-}
-.aside-left-8-right-2 > main {
-  margin-left: 576px;
-  margin-right: 144px;
-}
-.aside-left-8-right-2 > aside:first-child {
-  float: left;
-  max-width: 552px;
-}
-.aside-left-8-right-2 > aside:last-child {
-  float: right;
-  max-width: 120px;
-}
-.aside-left-8-right-3 > main {
-  margin-left: 576px;
-  margin-right: 216px;
-}
-.aside-left-8-right-3 > aside:first-child {
-  float: left;
-  max-width: 552px;
-}
-.aside-left-8-right-3 > aside:last-child {
-  float: right;
-  max-width: 192px;
-}
-.aside-left-8-right-4 > main {
-  margin-left: 576px;
-  margin-right: 288px;
-}
-.aside-left-8-right-4 > aside:first-child {
-  float: left;
-  max-width: 552px;
-}
-.aside-left-8-right-4 > aside:last-child {
-  float: right;
-  max-width: 264px;
-}
-.aside-left-8-right-5 > main {
-  margin-left: 576px;
-  margin-right: 360px;
-}
-.aside-left-8-right-5 > aside:first-child {
-  float: left;
-  max-width: 552px;
-}
-.aside-left-8-right-5 > aside:last-child {
-  float: right;
-  max-width: 336px;
-}
-.aside-left-8-right-6 > main {
-  margin-left: 576px;
-  margin-right: 432px;
-}
-.aside-left-8-right-6 > aside:first-child {
-  float: left;
-  max-width: 552px;
-}
-.aside-left-8-right-6 > aside:last-child {
-  float: right;
-  max-width: 408px;
-}
-.aside-left-8-right-7 > main {
-  margin-left: 576px;
-  margin-right: 504px;
-}
-.aside-left-8-right-7 > aside:first-child {
-  float: left;
-  max-width: 552px;
-}
-.aside-left-8-right-7 > aside:last-child {
-  float: right;
-  max-width: 480px;
-}
-.aside-left-8-right-8 > main {
-  margin-left: 576px;
-  margin-right: 576px;
-}
-.aside-left-8-right-8 > aside:first-child {
-  float: left;
-  max-width: 552px;
-}
-.aside-left-8-right-8 > aside:last-child {
-  float: right;
-  max-width: 552px;
 }
 html,
 body,
@@ -1618,6 +1046,7 @@ ol.list--with-thumbnails h4 + p,
 table.list--with-thumbnails h4 + p {
   margin-top: 0;
 }
+.base-button,
 .button,
 button,
 input[type="button"],
@@ -1652,6 +1081,7 @@ button[type="submit"],
   -o-transition: all 0.2s;
   transition: all 0.2s;
 }
+.base-button:focus,
 .button:focus,
 button:focus,
 input[type="button"]:focus,
@@ -1670,6 +1100,7 @@ button[type="submit"]:focus,
 .button--danger:focus,
 .button--error:focus,
 .button--delete:focus,
+.base-button.focus,
 .button.focus,
 button.focus,
 input[type="button"].focus,
@@ -1690,6 +1121,7 @@ button[type="submit"].focus,
 .button--delete.focus {
   outline: 0;
 }
+.base-button[disabled],
 .button[disabled],
 button[disabled],
 input[type="button"][disabled],
@@ -1708,6 +1140,7 @@ button[type="submit"][disabled],
 .button--danger[disabled],
 .button--error[disabled],
 .button--delete[disabled],
+.base-button.button--disabled,
 .button.button--disabled,
 button.button--disabled,
 input[type="button"].button--disabled,
@@ -1831,6 +1264,122 @@ input[type="button"].button--disabled,
 .button--info.button--disabled {
   color: #cbc475;
 }
+.button[disabled]:hover,
+button[disabled]:hover,
+input[type="button"][disabled]:hover,
+.button--cancel[disabled]:hover,
+.button--escape[disabled]:hover,
+.button--prev[disabled]:hover,
+.button--back[disabled]:hover,
+.button--info[disabled]:hover,
+.button.button--disabled:hover,
+button.button--disabled:hover,
+input[type="button"].button--disabled:hover,
+.button--cancel.button--disabled:hover,
+.button--escape.button--disabled:hover,
+.button--prev.button--disabled:hover,
+.button--back.button--disabled:hover,
+.button--info.button--disabled:hover,
+.button[disabled]:focus,
+button[disabled]:focus,
+input[type="button"][disabled]:focus,
+.button--cancel[disabled]:focus,
+.button--escape[disabled]:focus,
+.button--prev[disabled]:focus,
+.button--back[disabled]:focus,
+.button--info[disabled]:focus,
+.button.button--disabled:focus,
+button.button--disabled:focus,
+input[type="button"].button--disabled:focus,
+.button--cancel.button--disabled:focus,
+.button--escape.button--disabled:focus,
+.button--prev.button--disabled:focus,
+.button--back.button--disabled:focus,
+.button--info.button--disabled:focus,
+.button[disabled].hover,
+button[disabled].hover,
+input[type="button"][disabled].hover,
+.button--cancel[disabled].hover,
+.button--escape[disabled].hover,
+.button--prev[disabled].hover,
+.button--back[disabled].hover,
+.button--info[disabled].hover,
+.button.button--disabled.hover,
+button.button--disabled.hover,
+input[type="button"].button--disabled.hover,
+.button--cancel.button--disabled.hover,
+.button--escape.button--disabled.hover,
+.button--prev.button--disabled.hover,
+.button--back.button--disabled.hover,
+.button--info.button--disabled.hover,
+.button[disabled].focus,
+button[disabled].focus,
+input[type="button"][disabled].focus,
+.button--cancel[disabled].focus,
+.button--escape[disabled].focus,
+.button--prev[disabled].focus,
+.button--back[disabled].focus,
+.button--info[disabled].focus,
+.button.button--disabled.focus,
+button.button--disabled.focus,
+input[type="button"].button--disabled.focus,
+.button--cancel.button--disabled.focus,
+.button--escape.button--disabled.focus,
+.button--prev.button--disabled.focus,
+.button--back.button--disabled.focus,
+.button--info.button--disabled.focus,
+.button[disabled]:active,
+button[disabled]:active,
+input[type="button"][disabled]:active,
+.button--cancel[disabled]:active,
+.button--escape[disabled]:active,
+.button--prev[disabled]:active,
+.button--back[disabled]:active,
+.button--info[disabled]:active,
+.button.button--disabled:active,
+button.button--disabled:active,
+input[type="button"].button--disabled:active,
+.button--cancel.button--disabled:active,
+.button--escape.button--disabled:active,
+.button--prev.button--disabled:active,
+.button--back.button--disabled:active,
+.button--info.button--disabled:active,
+.button[disabled].active,
+button[disabled].active,
+input[type="button"][disabled].active,
+.button--cancel[disabled].active,
+.button--escape[disabled].active,
+.button--prev[disabled].active,
+.button--back[disabled].active,
+.button--info[disabled].active,
+.button.button--disabled.active,
+button.button--disabled.active,
+input[type="button"].button--disabled.active,
+.button--cancel.button--disabled.active,
+.button--escape.button--disabled.active,
+.button--prev.button--disabled.active,
+.button--back.button--disabled.active,
+.button--info.button--disabled.active,
+.button[disabled].selected,
+button[disabled].selected,
+input[type="button"][disabled].selected,
+.button--cancel[disabled].selected,
+.button--escape[disabled].selected,
+.button--prev[disabled].selected,
+.button--back[disabled].selected,
+.button--info[disabled].selected,
+.button.button--disabled.selected,
+button.button--disabled.selected,
+input[type="button"].button--disabled.selected,
+.button--cancel.button--disabled.selected,
+.button--escape.button--disabled.selected,
+.button--prev.button--disabled.selected,
+.button--back.button--disabled.selected,
+.button--info.button--disabled.selected {
+  color: #cbc475;
+  border: 1px solid #e7e3c7;
+  background: transparent;
+}
 button[type="submit"],
 .button--primary,
 .button--navigation,
@@ -1887,6 +1436,67 @@ button[type="submit"].button--disabled,
 .button--navigation.button--disabled,
 .button--next.button--disabled {
   color: #75ccef;
+  border: 1px solid #cae7f6;
+}
+button[type="submit"][disabled]:hover,
+.button--primary[disabled]:hover,
+.button--navigation[disabled]:hover,
+.button--next[disabled]:hover,
+button[type="submit"].button--disabled:hover,
+.button--primary.button--disabled:hover,
+.button--navigation.button--disabled:hover,
+.button--next.button--disabled:hover,
+button[type="submit"][disabled]:focus,
+.button--primary[disabled]:focus,
+.button--navigation[disabled]:focus,
+.button--next[disabled]:focus,
+button[type="submit"].button--disabled:focus,
+.button--primary.button--disabled:focus,
+.button--navigation.button--disabled:focus,
+.button--next.button--disabled:focus,
+button[type="submit"][disabled].hover,
+.button--primary[disabled].hover,
+.button--navigation[disabled].hover,
+.button--next[disabled].hover,
+button[type="submit"].button--disabled.hover,
+.button--primary.button--disabled.hover,
+.button--navigation.button--disabled.hover,
+.button--next.button--disabled.hover,
+button[type="submit"][disabled].focus,
+.button--primary[disabled].focus,
+.button--navigation[disabled].focus,
+.button--next[disabled].focus,
+button[type="submit"].button--disabled.focus,
+.button--primary.button--disabled.focus,
+.button--navigation.button--disabled.focus,
+.button--next.button--disabled.focus,
+button[type="submit"][disabled]:active,
+.button--primary[disabled]:active,
+.button--navigation[disabled]:active,
+.button--next[disabled]:active,
+button[type="submit"].button--disabled:active,
+.button--primary.button--disabled:active,
+.button--navigation.button--disabled:active,
+.button--next.button--disabled:active,
+button[type="submit"][disabled].active,
+.button--primary[disabled].active,
+.button--navigation[disabled].active,
+.button--next[disabled].active,
+button[type="submit"].button--disabled.active,
+.button--primary.button--disabled.active,
+.button--navigation.button--disabled.active,
+.button--next.button--disabled.active,
+button[type="submit"][disabled].selected,
+.button--primary[disabled].selected,
+.button--navigation[disabled].selected,
+.button--next[disabled].selected,
+button[type="submit"].button--disabled.selected,
+.button--primary.button--disabled.selected,
+.button--navigation.button--disabled.selected,
+.button--next.button--disabled.selected {
+  color: #75ccef;
+  border: 1px solid #cae7f6;
+  background: transparent;
 }
 .button--secondary,
 .button--success,
@@ -1934,6 +1544,52 @@ button[type="submit"].button--disabled,
 .button--accept.button--disabled {
   color: #68d5a9;
 }
+.button--secondary[disabled]:hover,
+.button--success[disabled]:hover,
+.button--accept[disabled]:hover,
+.button--secondary.button--disabled:hover,
+.button--success.button--disabled:hover,
+.button--accept.button--disabled:hover,
+.button--secondary[disabled]:focus,
+.button--success[disabled]:focus,
+.button--accept[disabled]:focus,
+.button--secondary.button--disabled:focus,
+.button--success.button--disabled:focus,
+.button--accept.button--disabled:focus,
+.button--secondary[disabled].hover,
+.button--success[disabled].hover,
+.button--accept[disabled].hover,
+.button--secondary.button--disabled.hover,
+.button--success.button--disabled.hover,
+.button--accept.button--disabled.hover,
+.button--secondary[disabled].focus,
+.button--success[disabled].focus,
+.button--accept[disabled].focus,
+.button--secondary.button--disabled.focus,
+.button--success.button--disabled.focus,
+.button--accept.button--disabled.focus,
+.button--secondary[disabled]:active,
+.button--success[disabled]:active,
+.button--accept[disabled]:active,
+.button--secondary.button--disabled:active,
+.button--success.button--disabled:active,
+.button--accept.button--disabled:active,
+.button--secondary[disabled].active,
+.button--success[disabled].active,
+.button--accept[disabled].active,
+.button--secondary.button--disabled.active,
+.button--success.button--disabled.active,
+.button--accept.button--disabled.active,
+.button--secondary[disabled].selected,
+.button--success[disabled].selected,
+.button--accept[disabled].selected,
+.button--secondary.button--disabled.selected,
+.button--success.button--disabled.selected,
+.button--accept.button--disabled.selected {
+  color: #68d5a9;
+  border: 1px solid #c5ebd9;
+  background: transparent;
+}
 .button--danger,
 .button--error,
 .button--delete {
@@ -1979,6 +1635,73 @@ button[type="submit"].button--disabled,
 .button--error.button--disabled,
 .button--delete.button--disabled {
   color: #fdabb0;
+}
+.button--danger[disabled]:hover,
+.button--error[disabled]:hover,
+.button--delete[disabled]:hover,
+.button--danger.button--disabled:hover,
+.button--error.button--disabled:hover,
+.button--delete.button--disabled:hover,
+.button--danger[disabled]:focus,
+.button--error[disabled]:focus,
+.button--delete[disabled]:focus,
+.button--danger.button--disabled:focus,
+.button--error.button--disabled:focus,
+.button--delete.button--disabled:focus,
+.button--danger[disabled].hover,
+.button--error[disabled].hover,
+.button--delete[disabled].hover,
+.button--danger.button--disabled.hover,
+.button--error.button--disabled.hover,
+.button--delete.button--disabled.hover,
+.button--danger[disabled].focus,
+.button--error[disabled].focus,
+.button--delete[disabled].focus,
+.button--danger.button--disabled.focus,
+.button--error.button--disabled.focus,
+.button--delete.button--disabled.focus,
+.button--danger[disabled]:active,
+.button--error[disabled]:active,
+.button--delete[disabled]:active,
+.button--danger.button--disabled:active,
+.button--error.button--disabled:active,
+.button--delete.button--disabled:active,
+.button--danger[disabled].active,
+.button--error[disabled].active,
+.button--delete[disabled].active,
+.button--danger.button--disabled.active,
+.button--error.button--disabled.active,
+.button--delete.button--disabled.active,
+.button--danger[disabled].selected,
+.button--error[disabled].selected,
+.button--delete[disabled].selected,
+.button--danger.button--disabled.selected,
+.button--error.button--disabled.selected,
+.button--delete.button--disabled.selected {
+  color: #fdabb0;
+  border: 1px solid #fedadb;
+  background: transparent;
+}
+.button-group {
+  vertical-align: middle;
+}
+.button-group > * {
+  float: left;
+}
+.button-group > *:first-child:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.button-group > *:last-child:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.button-group > *:not(:first-child):not(:last-child) {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
 }
 ::-webkit-input-placeholder {
   color: #e7e3c7;

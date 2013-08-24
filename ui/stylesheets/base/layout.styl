@@ -50,9 +50,9 @@ cols(n)
 body-cols(n)
     n * $column + (n + 1) * $gutter
 
-$4-columns =  "screen and (min-width: " + (body-cols(4)  + $unit) + ")"
-$6-columns =  "screen and (min-width: " + (body-cols(6)  + $unit) + ")"
-$8-columns =  "screen and (min-width: " + (body-cols(8)  + $unit) + ")"
+$4-columns  = "screen and (min-width: " + (body-cols(4)  + $unit) + ")"
+$6-columns  = "screen and (min-width: " + (body-cols(6)  + $unit) + ")"
+$8-columns  = "screen and (min-width: " + (body-cols(8)  + $unit) + ")"
 $10-columns = "screen and (min-width: " + (body-cols(10) + $unit) + ")"
 $12-columns = "screen and (min-width: " + (body-cols(12) + $unit) + ")"
 $14-columns = "screen and (min-width: " + (body-cols(14) + $unit) + ")"
@@ -140,17 +140,20 @@ for d in left right
 
 // ß 1.2.5 Double Aside Layout
 // TODO: If main < 60% parent width, drop margin and float. Element queries?
-for l in (1..8)
-    for r in (1..8)
-        .aside-left-{l}-right-{r}
-            > main
-                margin-left (cols(l) + $gutter)
-                margin-right (cols(r) + $gutter)
+for l in (1..5)
+    for r in (1..5)
+        if l + r <= 6
+            .aside-left-{l}-right-{r}
+                @extend .clearfix
 
-            > aside:first-child
-                float left
-                max-width cols(l)
+                > main
+                    margin-left (cols(l) + $gutter)
+                    margin-right (cols(r) + $gutter)
 
-            > aside:last-child
-                float right
-                max-width cols(r)
+                > aside:first-child
+                    float left
+                    max-width cols(l)
+
+                > aside:last-child
+                    float right
+                    max-width cols(r)
