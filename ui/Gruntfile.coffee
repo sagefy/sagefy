@@ -1,5 +1,5 @@
 LIVERELOAD_PORT = 35729
-lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT})
+lrSnippet = require('connect-livereload')(port: LIVERELOAD_PORT)
 
 mountFolder = (connect, dir) ->
     connect.static(require('path').resolve(dir))
@@ -13,6 +13,9 @@ module.exports = (grunt) ->
             coffee:
                 files: ['coffeescripts/**.coffee']
                 tasks: ['coffee:main']
+            handlebars:
+                files: ['templates/**.hbs']
+                tasks: ['handlebars:main']
             ###
             tests:
                 files: ['tests/**.coffee']
@@ -28,6 +31,7 @@ module.exports = (grunt) ->
                         '*.html'
                         'coffeescripts/**.coffee'
                         'stylesheets/**.styl'
+                        'templates/**.hbs'
                         'images/**.{png,jpg,jepg,gif,webp,svg}'
                     ]
         connect:
@@ -40,7 +44,7 @@ module.exports = (grunt) ->
                         [
                             lrSnippet
                             mountFolder(connect, '.tmp')
-                            mountFolder(connect, '.')
+                            mountFolder(connect, 'distribution')
                         ]
             ###
             test:
@@ -48,22 +52,19 @@ module.exports = (grunt) ->
                     middleware: (connect) ->
                         [
                             mountFolder(connect, '.tmp')
-                            mountFolder(connect, 'test')
-                            mountFolder(connect, '.')
+                            mountFolder(connect, 'distribution')
                         ]
             ###
         open:
             server:
                 path: 'http://localhost:<%= connect.options.port %>'
-        ###
         clean:
             main:
                 files:
                     src: [
-                        # '.tmp',
-                        # '*'
+                        '.tmp'
+                        'distribution'
                     ]
-        ###
         coffee:
             main:
                 files: [
@@ -129,6 +130,12 @@ module.exports = (grunt) ->
                 'copy:main'
             ]
             ###
+        handlebars:
+            main:
+                options:
+                    namespace: 'T'
+                files:
+                    'handlebars.js': 'templates/**.hbs'
 
     grunt.registerTask 'run', (target) ->
         if target == 'main'
@@ -149,7 +156,6 @@ module.exports = (grunt) ->
         'mocha'
     ]
 
-    ###
     grunt.registerTask 'build', [
         'clean'
         'concurrent:build'
@@ -159,6 +165,5 @@ module.exports = (grunt) ->
         'uglify'
         'copy:main'
     ]
-    ###
 
     grunt.registerTask 'default', ['run']

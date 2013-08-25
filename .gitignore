@@ -35,3 +35,11 @@ nosetests.xml
 .pydevproject
 
 .DS_Store
+
+# UI
+ui/connection
+ui/node_modules
+ui/bower_components
+ui/temp
+ui/.tmp/
+ui/npm-debug.log
