@@ -36,3 +36,5 @@ All contents in this project, including the Wiki, are licensed under [AGPLv3](ht
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+[![Build Status](https://travis-ci.org/heiskr/descovrir.png?branch=master)](https://travis-ci.org/heiskr/descovrir)
