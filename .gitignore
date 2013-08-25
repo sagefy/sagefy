@@ -37,9 +37,7 @@ nosetests.xml
 .DS_Store
 
 # UI
-ui/connection
+ui/tmp
 ui/node_modules
 ui/bower_components
-ui/temp
-ui/.tmp/
 ui/npm-debug.log

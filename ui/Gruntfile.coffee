@@ -4,36 +4,102 @@ lrSnippet = require('connect-livereload')(port: LIVERELOAD_PORT)
 mountFolder = (connect, dir) ->
     connect.static(require('path').resolve(dir))
 
+###
+TODOS:
+[ ] Add testing
+[ ] Improve requires for development
+[ ] Build
+###
+
 module.exports = (grunt) ->
 
     require('load-grunt-tasks')(grunt)
 
     grunt.initConfig
-        watch:
-            coffee:
-                files: ['coffeescripts/**.coffee']
-                tasks: ['coffee:main']
-            handlebars:
-                files: ['templates/**.hbs']
-                tasks: ['handlebars:main']
-            ###
-            tests:
-                files: ['tests/**.coffee']
-                tasks: ['coffee:test']
-            ###
-            stylus:
-                files: ['stylesheets/**.styl']
-                tasks: ['stylus:main']
-            livereload:
-                options:
-                    livereload: LIVERELOAD_PORT
-                    files: [
-                        '*.html'
-                        'coffeescripts/**.coffee'
-                        'stylesheets/**.styl'
-                        'templates/**.hbs'
-                        'images/**.{png,jpg,jepg,gif,webp,svg}'
+        clean:
+            main:
+                files:
+                    src: ['tmp/']
+            build:
+                files:
+                    src: ['distribution/']
+        concurrent:
+            main: [
+                'copy:main'
+                'handlebars:main'
+                'stylus:main'
+                'coffee:main'
+            ]
+            build: [
+                'copy:build'
+                'handlebars:build'
+                'stylus:build'
+                'coffee:build'
+            ]
+        copy:
+            main:
+                files: [
+                    expand: true
+                    flatten: true
+                    dest: 'tmp'
+                    src: [
+                        'images/**'
+                        'statics/**'
                     ]
+                ]
+            build:
+                files: [
+                    expand: true
+                    flatten: true
+                    dest: 'distribution/'
+                    src: [
+                        'images'
+                        'statics'
+                    ]
+                ]
+        handlebars:
+            options:
+                namespace: 'HBS'
+                processName: (file) ->
+                    file.replace('templates/', '').replace('.hbs', '')
+                partialsUseNamespace: true
+                partialRegex: /^_/
+                processPartialName: (file) ->
+                    file.replace('templates/', '').replace('.hbs', '')
+            main:
+                files:
+                    'tmp/templates.js': 'templates/**/*.hbs'
+            build:
+                files:
+                    'distribution/templates.js': 'templates/**/*.hbs'
+        stylus:
+            main:
+                options:
+                    compress: false
+                files:
+                    'tmp/app.css': 'stylesheets/app.styl'
+            build:
+                options:
+                    compress: true
+                files:
+                    'distribution/app.css': 'stylesheets/app.styl'
+        coffee:
+            main:
+                files: [
+                    expand: true
+                    cwd: 'scripts/'
+                    src: ['*.coffee', '**/*.coffee']
+                    dest: 'tmp'
+                    ext: '.js'
+                ]
+            build:
+                files: [
+                    expand: true
+                    cwd: 'scripts/'
+                    src: ['*.coffee', '**/*.coffee']
+                    dest: 'distribution'
+                    ext: '.js'
+                ]
         connect:
             options:
                 port: 9000
@@ -43,127 +109,80 @@ module.exports = (grunt) ->
                     middleware: (connect) ->
                         [
                             lrSnippet
-                            mountFolder(connect, '.tmp')
-                            mountFolder(connect, 'distribution')
+                            mountFolder(connect, 'bower_components')
+                            mountFolder(connect, 'tmp')
                         ]
-            ###
-            test:
-                options:
-                    middleware: (connect) ->
-                        [
-                            mountFolder(connect, '.tmp')
-                            mountFolder(connect, 'distribution')
-                        ]
-            ###
         open:
             server:
                 path: 'http://localhost:<%= connect.options.port %>'
-        clean:
-            main:
-                files:
-                    src: [
-                        '.tmp'
-                        'distribution'
-                    ]
-        coffee:
-            main:
+        watch:
+            coffee:
+                files: ['scripts/*.coffee', 'scripts/**/*.coffee']
+                tasks: ['coffee:main']
+            handlebars:
+                files: ['templates/**/*.hbs']
+                tasks: ['handlebars:main']
+            stylus:
+                files: ['stylesheets/*.styl', 'stylesheets/**/*.styl']
+                tasks: ['stylus:main']
+            copy:
                 files: [
-                    expand: true
-                    cwd: '/coffeescripts'
-                    src: '**.coffee'
-                    # dest: '.tmp/coffee'
-                    # ext: '.js'
+                    'images/*'
+                    'images/**/*'
+                    'statics/*'
+                    'statics/**/*'
                 ]
-            ###
-            test:
-                files: [
-                    expand: true
-                    cwd: '/tests'
-                    src: '**.coffee'
-                    dest: '.tmp/tests'
-                    ext: '.js'
-                ]
-            ###
-        stylus:
-            main:
+                tasks: ['copy:main']
+            livereload:
                 options:
-                    compress: false
-                    # use: [require('husl')]
-                files:
-                    'distribution/styleguide.css': 'stylesheets/styleguide.styl'
+                    livereload: LIVERELOAD_PORT
+                files: [
+                    'scripts/*.coffee'
+                    'scripts/**/*.coffee'
+                    'stylesheets/*.styl'
+                    'stylesheets/**/*.styl'
+                    'templates/*.hbs'
+                    'templates/**/*.hbs'
+                    'images/*'
+                    'images/**/*'
+                    'statics/*'
+                    'statics/**/*'
+                ]
         requirejs:
-            main:
+            build:
                 options:
-                    baseUrl: '/coffeescripts'
+                    baseUrl: '/distribution'
                     optimize: 'none'
                     preserveLicenseComments: 'true'
                     useStrict: true
                     wrap: true
-        ###
-        copy:
-            main:
-                files: [
-                    expand: true
-                    dot: true
-                    cwd: '.',
-                    dest: 'distribution',
-                    src: [
-                        '*.{ico.png,txt}'
-                    ]
-                ]
-        ###
-        concurrent:
-            main: [
-                'stylus:main'
-                'coffee:main'
-                # 'copy:main'
-            ]
-            ###
-            test: [
-                'stylus:main'
-                'coffee:main'
-                'copy:main'
-            ]
-            build: [
-                'stylus:main'
-                'coffee:main'
-                'copy:main'
-            ]
-            ###
-        handlebars:
-            main:
-                options:
-                    namespace: 'T'
+                    out: '/distribution'
+        uglify:
+            build:
                 files:
-                    'handlebars.js': 'templates/**.hbs'
+                    'distribution/app.js': ['distribution/app.js']
 
-    grunt.registerTask 'run', (target) ->
-        if target == 'main'
-            grunt.task.run ['build', 'open', 'connect:main:keepalive']
-
-        grunt.task.run [
-            'clean:main'
-            'concurrent:main'
-            'connect:livereload'
-            'open'
-            'watch'
-        ]
+    grunt.registerTask 'run', [
+        'clean:main'
+        'concurrent:main'
+        'connect:livereload'
+        'open'
+        'watch'
+    ]
 
     grunt.registerTask 'test', [
         'clean:main'
         'concurrent:main'
         'connect:livereload'
-        'mocha'
+        # TODO: run test suites
     ]
 
     grunt.registerTask 'build', [
-        'clean'
+        'clean:build'
         'concurrent:build'
-        'requirejs'
-        'concat'
-        'cssmin'
-        'uglify'
-        'copy:main'
+        'requirejs:build'
+        'uglify:build'
     ]
 
     grunt.registerTask 'default', ['run']
+
