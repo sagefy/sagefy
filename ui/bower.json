@@ -7,7 +7,7 @@
     "modernizr": "latest",
     "d3": "latest",
     "select2": "latest",
-    "moment": "latest"
-  },
-  "devDependencies": {}
+    "moment": "latest",
+    "handlebars": "*"
+  }
 }
