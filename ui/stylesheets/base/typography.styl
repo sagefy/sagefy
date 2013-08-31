@@ -4,7 +4,7 @@ html, body, input, textarea, select
 body
     color $gold-20
     background $gold-99
-    font-size 100%
+    font-size 16px
     line-height 1.5
 
 a
@@ -21,30 +21,14 @@ a
         color $blue-43
         border-color $blue-43
 
-.font-size-200
-    font-size 200%
-    line-height 1.5
-    margin 0.375em 0
 
-.font-size-150
-    font-size 150%
-    line-height 2
-    margin 0.5em 0
-
-.font-size-137
-    font-size 137.5%
-    line-height 1.0909
-    margin 0.5454em 0
-
-.font-size-112
-    font-size 112.5%
-    line-height 1.3333
-    margin 0.6667em 0
-
-.font-size-100
-    font-size 100%
-    line-height 1.5
-    margin 1em 0
+for i in 16 18 20 26 28 32 // 22 + 24 are awkward
+    .font-size-{i}
+        font-size (i / 16 * 100%)
+        if i > 20
+            line-height (3 * unit($unit, "") / i)
+        else
+            line-height (2 * unit($unit, "") / i)
 
 .width-limit
     max-width cols(10)
@@ -52,8 +36,12 @@ a
     &.full-width
         max-width auto
 
+h1, h2, h3, h4, h5, h6, p, ul, ol, pre, blockquote, hr
+    margin $unit 0
+
 h1, h2, h3, h4, h5, h6
     font-style italic
+    margin $unit 0
 
     em
         font-style normal
@@ -66,6 +54,9 @@ h1, h2, h3, h4, h5, h6
         font-weight normal
         color $gold-43
 
+h3, h4, h5, h6
+    color $gold-43
+
 hgroup
     :not(:first-child)
         margin-top 0
@@ -73,35 +64,28 @@ hgroup
         margin-bottom 0
 
 h1
-    @extend .font-size-200
+    @extend .font-size-32
 
 h2
-    @extend .font-size-150
+    @extend .font-size-28
 
 h3
-    @extend .font-size-137
+    @extend .font-size-20
 
 h4
-    @extend .font-size-112
+    @extend .font-size-18
 
 h5
-    color $gold-43
-    @extend .font-size-112
+    @extend .font-size-16
 
 h6
-    color $gold-66
-    @extend .font-size-100
-
-    &.subheader
-        color $gold-66
+    @extend .font-size-16
 
 p
     @extend .width-limit
 
 .leading
-    font-size 112.5%
-    line-height 1.3333
-    margin 0.6667em 0
+    @extend .font-size-18
     color $gold-43
 
 del
@@ -146,7 +130,7 @@ blockquote
     margin-left $unit
 
     q
-        @extend .font-size-112
+        @extend .font-size-18
         margin-bottom: 0
 
     q, cite

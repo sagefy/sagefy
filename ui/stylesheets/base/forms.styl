@@ -32,6 +32,13 @@ textarea
     &:focus, &.focus
         box-shadow inset 0 1px 2px $gold-95, 0 0 1px 1px $gold-78
 
+    &[disabled], &.disabled
+        background none
+
+        &:hover, &:focus, &.hover, &.focus, &:focus, &.focus
+            border-color $gold-78
+            box-shadow none
+
 input[type="text"],
 input[type="password"],
 input[type="number"],
@@ -73,6 +80,12 @@ input[type="radio"]
         outline 0
         box-shadow inset 0 1px 2px $gold-95, 0 0 1px 1px $gold-78
 
+    &[disabled], &.disabled
+        background none
+
+        &:focus, &.focus
+            box-shadow none
+
 input[type="checkbox"]
     border-radius $border-radius
 
@@ -88,7 +101,6 @@ input[type="radio"]
 form
     label
         display block
-        font-style italic
 
         .required, .optional
             border-radius $border-radius
@@ -111,8 +123,24 @@ fieldset
 legend
     color $gold-43
 
+select
+    height $unit * 2
+    padding ($unit / 2) $unit
+    font-size 100%
+    line-height 1.5
+    color $gold-20
+    vertical-align middle
+    background-color $gold-99
+    border 1px solid $gold-78
+    border-radius $border-radius
+
+select[multiple]
+    font-size 32px
+    color $red-43
+    background $red-90
+
 .form-description
-    @extend .font-size-112
+    @extend .font-size-18
     color $gold-43
 
 .form-field
@@ -122,3 +150,87 @@ legend
     margin 0
     color $gold-43
     font-style italic
+
+.form-field--grouped
+    .form-field
+        display inline-block
+
+.form--horizontal
+    > *
+        display inline-block
+        @extend .push-right
+
+.form-field__feedback
+    display inline-block
+    border-radius $border-radius
+    padding 0 ($unit / 2)
+
+.form-field--disabled
+    label
+        color $gold-66
+
+.form-field--success
+    label
+        color $green-66
+
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    input[type="time"],
+    input[type="search"],
+    input[type="tel"],
+    textarea,
+    input[type="checkbox"],
+    input[type="radio"]
+        color $green-66
+        border-color $green-66
+
+    .form-field__feedback
+        background $green-95
+        color $green-66
+
+.form-field--error
+    label
+        color $red-66
+
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    input[type="time"],
+    input[type="search"],
+    input[type="tel"],
+    textarea,
+    input[type="checkbox"],
+    input[type="radio"]
+        color $red-66
+        border-color $red-66
+
+    .form-field__feedback
+        background $red-95
+        color $red-66
+
+.form-field--warning
+    label
+        color $gold-66
+
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    input[type="time"],
+    input[type="search"],
+    input[type="tel"],
+    textarea,
+    input[type="checkbox"],
+    input[type="radio"]
+        color $gold-66
+        border-color $gold-66
+
+    .form-field__feedback
+        background $gold-95
+        color $gold-66

@@ -3,12 +3,12 @@ require.config
         jquery: 'jquery/jquery'
         handlebars: 'handlebars/handlebars.runtime'
         templates: 'templates'
+        _: 'underscore/underscore'
         backbone: 'backbone/backbone'
 
 require [
     'handlebars'
     'templates'
-    'backbone'
     'sections/styleguide'
 ], ->
     true
