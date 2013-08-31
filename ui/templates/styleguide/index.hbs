@@ -1,8 +1,5 @@
 
-<div id="logo">
-    <img src="http://www.descovrir.org/static/astrolabe.svg" height="72" />
-    descovrir
-</div>
+<img src="http://www.descovrir.org/static/astrolabe.svg" id="logo" />
 
 <h1>
     Style Guide &amp; Component Library
@@ -874,7 +871,7 @@ $ ->
             </p>
 
             <ul>
-                <li>Hover, focus, active, success, information, warning, error, and disabled states and messaging</li>
+                <li>Hover, focus, active, success, warning, error, and disabled states and messaging</li>
                 <li>Icons prepended or appended to the field</li>
                 <li>Field labels</li>
                 <li>Required or optional labels</li>
@@ -884,11 +881,43 @@ $ ->
 
             <h4>7.1.1 Text Inputs</h4>
 
-                <input type="text" placeholder="Example text input" />
+                <form>
+                    <div class="form-field form-field--text">
+                        <input type="text" placeholder="Example text input" />
+                    </div>
 
-                <p>
-                    Special types of input fields automatically prepend an appropriate icon.
-                </p>
+                    <div class="form-field form-field--text form-field--disabled">
+                        <label>Disabled</label>
+                        <input type="text" placeholder="Example disabled" disabled="disabled" />
+                    </div>
+
+                    <div class="form-field form-field--text form-field--success">
+                        <label>Success</label>
+                        <input type="text" placeholder="Example success" />
+                        <span class="form-field__feedback">
+                            <i class="icon-check"></i>
+                            This is a succes
+                        </span>
+                    </div>
+
+                    <div class="form-field form-field--text form-field--warning">
+                        <label>Warning</label>
+                        <input type="text" placeholder="Example warning" />
+                        <span class="form-field__feedback">
+                            <i class="icon-exclamation"></i>
+                            This is a warning
+                        </span>
+                    </div>
+
+                    <div class="form-field form-field--text form-field--error">
+                        <label>Error</label>
+                        <input type="text" placeholder="Example error" />
+                        <span class="form-field__feedback">
+                            <i class="icon-ban-circle"></i>
+                            This is a error
+                        </span>
+                    </div>
+                </form>
 
                 <h5>7.1.1.1 Email Inputs</h5>
 
@@ -994,32 +1023,41 @@ $ ->
                 <h5>7.1.3.3 Selection Menu</h5>
 
                     <p>
-                        To resolve common issues with <code>select</code> elements,
-                        Descovrir uses <a href="http://ivaynberg.github.io/select2/">Select2</a>.
+                        Prefer to use a list of radios over a select element. Do not use the multiple select element.
                     </p>
 
-                        <select>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
+                    <select>
+                        <option>First option 1</option>
+                        <option>Second option 2</option>
+                        <option>Third option 3</option>
+                        <option>Fourth option 4</option>
+                        <option>Fifth option 5</option>
+                    </select>
+
+                    <p>
+                        When there are more than 20 items, use a typeahead feature instead of a simple select.
+                    </p>
 
             <h4>7.1.4 Grouped Inputs</h4>
 
-                <div class="form-field form-field--text">
-                    <label for="given-name">Given Name</label>
-                    <input id="given-name" name="given-name" placeholder="" size="50" type="text" />
-                    <label for="family-name">Family Name</label>
-                    <input id="family-name" name="family-name" placeholder="" size="50" type="text" />
-                </div>
+                <form>
+                    <div class="form-field--grouped">
+                        <div class="form-field form-field--text">
+                            <label for="given-name">Given Name</label>
+                            <input id="given-name" name="given-name" placeholder="" size="20" type="text" />
+                        </div>
+                        <div class="form-field form-field--text">
+                            <label for="family-name">Family Name</label>
+                            <input id="family-name" name="family-name" placeholder="" size="20" type="text" />
+                        </div>
+                    </div>
+                </form>
 
         <h3>7.2 Horizontal Forms</h3>
 
-            <form>
+            <form class="form--horizontal">
                 <div class="form-field form-field--search">
-                    <input id="name" name="name" placeholder="Search" size="50" type="search" />
+                    <input id="name" name="name" placeholder="Search" size="20" type="search" />
                 </div>
                 <div class="form-field form-field--boolean">
                     <label for="spam">
@@ -1076,12 +1114,6 @@ $ ->
                         </p>
                     </div>
                 </form>
-
-            <h4>7.3.4 Fields with Icons</h4>
-
-                <p>
-                    Icons can be prepended (default) or appended to fields. Icons can be useful particularly in situations where the placeholder are blocked.
-                </p>
 
         <h3>7.4 Fieldsets and Legends</h3>
 

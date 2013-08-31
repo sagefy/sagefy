@@ -6,8 +6,8 @@
     "backbone": "latest",
     "modernizr": "latest",
     "d3": "latest",
-    "select2": "latest",
     "moment": "latest",
+    "underscore": "latest",
     "handlebars": "*"
   }
 }

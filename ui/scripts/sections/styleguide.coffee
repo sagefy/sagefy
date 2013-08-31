@@ -1,4 +1,6 @@
-require ['jquery'], ($) ->
+require [
+    'jquery'
+], ($) ->
     $ ->
         # if window.location.pathname != '/styleguide':
         #     return
