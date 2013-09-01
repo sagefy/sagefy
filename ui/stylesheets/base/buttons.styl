@@ -1,3 +1,13 @@
+button-background($color, $raise = 5, $reduce = 5)
+    background-color $color
+    background-image -webkit-linear-gradient(lighten($color, $raise), darken($color, $reduce))
+    background-image linear-gradient(lighten($color, $raise), darken($color, $reduce))
+
+button-background-inv($color, $raise = 5, $reduce = 5)
+    background-color $color
+    background-image -webkit-linear-gradient(darken($color, $reduce), lighten($color, $raise))
+    background-image linear-gradient(darken($color, $reduce), lighten($color, $raise))
+
 .base-button
     border-radius $border-radius
     padding ($unit / 4) ($unit / 2)
@@ -32,20 +42,17 @@ input[type="button"],
     @extend .base-button
 
     border 1px solid $gold-90
-    background $gold-90
-    background-image linear-gradient(lighten($gold-90, 5), darken($gold-90, 5))
+    button-background $gold-90
     color $gold-43
 
     &:hover, &:focus, &.hover, &.focus
         color $gold-20
         border 1px solid $gold-78
-        background $gold-95
-        background-image linear-gradient(lighten($gold-95, 5), darken($gold-95, 5))
+        button-background $gold-95
 
     &:active, &.active, &.selected
         border 1px solid $gold-66
-        background $gold-78
-        background-image linear-gradient(darken($gold-78, 5), lighten($gold-78, 5))
+        button-background-inv $gold-78
 
     &[disabled], &.button--disabled
         color $gold-78
@@ -62,21 +69,18 @@ button[type="submit"],
     @extend .base-button
 
     border 1px solid $blue-66
-    background $blue-66
-    background-image linear-gradient(lighten($blue-66, 5), darken($blue-66, 5))
+    button-background $blue-66
     color $blue-99
 
     &:hover, &:focus, &.hover, &.focus
         color $white
         border 1px solid $blue-43
-        background $blue-78
-        background-image linear-gradient(lighten($blue-78, 5), darken($blue-78, 5))
+        button-background $blue-78
 
     &:active, &.active, &.selected
         color $blue-95
         border 1px solid $blue-20
-        background $blue-43
-        background-image linear-gradient(darken($blue-43, 5), lighten($blue-43, 5))
+        button-background-inv $blue-43
 
     &[disabled], &.button--disabled
         color $blue-78
@@ -93,20 +97,17 @@ button[type="submit"],
     @extend .base-button
 
     border 1px solid $green-90
-    background $green-90
-    background-image linear-gradient(lighten($green-90, 5), darken($green-90, 5))
+    button-background $green-90
     color $green-43
 
     &:hover, &:focus, &.hover, &.focus
         color $green-20
         border 1px solid $green-78
-        background $green-95
-        background-image linear-gradient(lighten($green-95, 5), darken($green-95, 5))
+        button-background $green-95
 
     &:active, &.active, &.selected
         border 1px solid $green-66
-        background $green-78
-        background-image linear-gradient(darken($green-78, 5), lighten($green-78, 5))
+        button-background-inv $green-78
 
     &[disabled], &.button--disabled
         color $green-78
@@ -122,20 +123,17 @@ button[type="submit"],
     @extend .base-button
 
     border 1px solid $red-90
-    background $red-90
-    background-image linear-gradient(lighten($red-90, 3), darken($red-90, 2))
+    button-background $red-90, 3, 2
     color $red-43
 
     &:hover, &:focus, &.hover, &.focus
         color $red-20
         border 1px solid $red-78
-        background $red-95
-        background-image linear-gradient(lighten($red-95, 3), darken($red-95, 2))
+        button-background $red-95, 3, 2
 
     &:active, &.active, &.selected
         border 1px solid $red-66
-        background $red-78
-        background-image linear-gradient(darken($red-78, 3), lighten($red-78, 3))
+        button-background-inv $red-78, 3, 2
 
     &[disabled], &.button--disabled
         color $red-78
