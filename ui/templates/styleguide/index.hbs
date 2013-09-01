@@ -9,8 +9,6 @@
         Welcome to the Descovrir Style Guide. This page covers the styling and conventions of Descovrir  user interfaces. This guide also include commonly used components. Suggestions are welcome via pull requests.
     </p>
 
-    <!-- Show an example, and then markup and relevant classes, then notes -->
-
     <h2>1. Layout, Grid, and Rhythm</h2>
 
         <h3>1.1 Metrics</h3>
@@ -254,6 +252,10 @@
                     <li><i class="icon-refresh"></i></li>
                     <li><i class="icon-group"></i></li>
                 </ul>
+
+                <p>
+                    When presenting icons, label the icon. If you must choose between an icon and text, prefer text.
+                </p>
 
             <h4>2.2.2 Region flags</h4>
 
@@ -826,8 +828,6 @@ $ ->
 
         <h3>7.1 Basic Forms</h3>
 
-            <!-- Include validation states and copy, disabled states -->
-
             <p>
                 Forms are perhaps the most complicated part of any web design. The Descovrir style guide provides a usable, consistent, comprehensive approach to form elements.
             </p>
@@ -1280,19 +1280,17 @@ $ ->
 
     <h2>9. Navigation</h2>
 
-        <!-- Include responsive management -->
-
         <h3>9.1 Horizonal Navigation</h3>
 
-            <nav class="navigation">
+            <nav class="navigation--horizontal">
                 <ul>
                     <li>
                         <a href="#">
                             Home
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="selected">
+                    <li class="selected">
+                        <a href="#">
                             Learn
                         </a>
                     </li>
@@ -1318,8 +1316,8 @@ $ ->
                             Home
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="selected">
+                    <li class="selected">
+                        <a href="#">
                             Learn
                         </a>
                     </li>
@@ -1338,15 +1336,15 @@ $ ->
 
         <h3>9.3 Horizontal Tabs</h3>
 
-            <div class="tabs">
+            <div class="tabs--horizontal">
                 <ul class="tabs__nav">
                     <li>
                         <a href="#">
                             Home
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="selected">
+                    <li class="selected">
+                        <a href="#">
                             Learn
                         </a>
                     </li>
@@ -1363,7 +1361,7 @@ $ ->
                 </ul>
                 <div class="tabs__pages">
                     <div class="tabs__page">Home Page</div>
-                    <div class="tabs__page">Learn Page</div>
+                    <div class="tabs__page selected">Learn Page</div>
                     <div class="tabs__page">Propose Page</div>
                     <div class="tabs__page">Analyze Page</div>
                 </div>
@@ -1378,8 +1376,8 @@ $ ->
                             Home
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="selected">
+                    <li class="selected">
+                        <a href="#">
                             Learn
                         </a>
                     </li>
@@ -1396,7 +1394,7 @@ $ ->
                 </ul>
                 <div class="tabs__pages">
                     <div class="tabs__page">Home Page</div>
-                    <div class="tabs__page">Learn Page</div>
+                    <div class="tabs__page selected">Learn Page</div>
                     <div class="tabs__page">Propose Page</div>
                     <div class="tabs__page">Analyze Page</div>
                 </div>
@@ -1405,23 +1403,26 @@ $ ->
         <h3>9.5 Breadcrumbs</h3>
 
             <nav class="breadcrumbs">
-                <ul>
+                <ol>
                     <li>
                         <a href="#">
                             Home
                         </a>
                     </li>
+                    <li><i class="icon-chevron-right"></i></li>
                     <li>
                         <a href="#">
                             Learn
                         </a>
                     </li>
+                    <li><i class="icon-chevron-right"></i></li>
                     <li>
                         <a href="#">
                             Propose
                         </a>
                     </li>
-                    <li>
+                    <li><i class="icon-chevron-right"></i></li>
+                    <li class="selected">
                         <a href="#">
                             Analyze
                         </a>
@@ -1435,21 +1436,34 @@ $ ->
                 <ol>
                     <li>
                         <a href="#">
+                            1.
                             Home
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="selected">
+                        <i class="icon-chevron-right"></i>
+                    </li>
+                    <li class="selected">
+                        <a href="#">
+                            2.
                             Learn
                         </a>
                     </li>
-                    <li>
+                    <li class="disabled">
+                        <i class="icon-chevron-right"></i>
+                    </li>
+                    <li class="disabled">
                         <a href="#">
+                            3.
                             Propose
                         </a>
                     </li>
-                    <li>
+                    <li class="disabled">
+                        <i class="icon-chevron-right"></i>
+                    </li>
+                    <li class="disabled">
                         <a href="#">
+                            4.
                             Analyze
                         </a>
                     </li>
@@ -1459,21 +1473,21 @@ $ ->
 
         <h3>9.7 Pagination</h3>
 
-            <div class="pagination">
-                <div class="pagination__location">
-                    Page 1 of 12
-                </div>
+            <nav class="pagination">
                 <ul>
                     <li>
-                        <a href="#">Back</a>
+                        <a href="#">
+                            <i class="icon-chevron-left"></i>
+                            Back
+                        </a>
                     </li>
-                    <li>
-                        <a href="#" class="selected">1</a>
+                    <li class="selected">
+                        <a href="#">1</a>
                     </li>
                     <li>
                         <a href="#">2</a>
                     </li>
-                    <li class="pagination__separator">&ellip;</li>
+                    <li class="pagination__separator">&hellip;</li>
                     <li>
                         <a href="#">11</a>
                     </li>
@@ -1481,15 +1495,18 @@ $ ->
                         <a href="#">12</a>
                     </li>
                     <li>
-                        <a href="#">Next</a>
+                        <a href="#">
+                            Next
+                            <i class="icon-chevron-right"></i>
+                        </a>
                     </li>
                 </ul>
-            </div>
+            </nav>
 
         <h3>9.8 Menu Navigation</h3>
 
             <p>
-                Descovrir's most common navigational element is a simple menu. The user clicks on the Descovrir icon, and a pane of menu options, similar to the iOS home screen, can provide the user with more functionality. This helps to prevent cognitive overload.
+                Descovrir's most common navigational element is a simple menu. The user clicks on the Descovrir icon, and a pane of menu options provides the user with more functionality. This helps to prevent cognitive overload.
             </p>
 
     <h2>10. Elements</h2>
@@ -1532,7 +1549,27 @@ $ ->
 
             <div class="alert--error">
                 We are sorry, but an error has occurred. Please reload the page.
-                <a href="#">Close</a>
+                <a href="#" class="alert__close">Close</a>
+            </div>
+
+            <div class="alert--default">
+                We are sorry, but an error has occurred. Please reload the page.
+                <a href="#" class="alert__close">Close</a>
+            </div>
+
+            <div class="alert--accept">
+                We are sorry, but an error has occurred. Please reload the page.
+                <a href="#" class="alert__close">Close</a>
+            </div>
+
+            <div class="alert--accent">
+                We are sorry, but an error has occurred. Please reload the page.
+                <a href="#" class="alert__close">Close</a>
+            </div>
+
+            <div class="alert--official">
+                We are sorry, but an error has occurred. Please reload the page.
+                <a href="#" class="alert__close">Close</a>
             </div>
 
             <p>
@@ -1643,26 +1680,25 @@ $ ->
 
             <progress max="70"><span>0</span>%</progress>
 
-        <h3>10.8 Badges, Trophies &amp; Awards</h3>
+        <h3>10.9 Badges, Trophies &amp; Awards</h3>
 
             <i class="icon-star"></i>
             <i class="icon-shield"></i>
             <i class="icon-trophy"></i>
 
-        <h3>10.9 Inline Editing</h3>
-
         <h3>10.10 Tips, Suggestions &amp; Inline Help</h3>
 
-        <h3>10.11 Dropdowns</h3>
 
-        <h3>10.12 Default Animations</h3>
+        <h3>10.11 Default Animations</h3>
 
-        <h3>10.13 Uploading Images</h3>
+        <p>
+            The primary animation is Descovrir is 200 millisecond linear fade. Animations are limited to transitioning state and representing relationships between elements. User interface animations never exceed 500 milliseconds. Where possible, use CSS for animations over JavaScript.
+        </p>
 
         <hr />
 
         <p>
-            More elements to come: galleries, heros, accordions, statistics...
+            More elements to come: galleries, heros, accordions, statistics, inline editing, dropdowns, uploading images...
         </p>
 
     <h2>11. Page Layouts</h2>

@@ -1,0 +1,59 @@
+.tabs__nav
+    list-style none
+    padding-left 0
+
+    li.selected
+        background $gold-95
+
+        a
+            color $blue-43
+            border-color $blue-43
+
+    a
+        display block
+        padding 0 ($unit / 2)
+        border-bottom 0
+
+.tabs__page
+    display none
+    opacity 0
+    transition opacity 0.2s
+
+    &.selected
+        display block
+        opacity 1
+
+.tabs--horizontal
+    .tabs__nav
+        border-bottom 1px solid $gold-78
+
+        li
+            display inline-block
+            margin-right $unit
+
+            &.selected
+                margin-bottom -1px
+
+                a
+                    border-left 1px solid $gold-78
+                    border-right 1px solid $gold-78
+                    border-bottom 1px solid $gold-95
+
+.tabs--vertical
+    @extend .clearfix
+
+    .tabs__nav
+        width cols(2)
+        float left
+        border-right 1px solid $gold-78
+
+        li.selected
+            margin-right -1px
+
+            a
+                border-top 1px solid $gold-78
+                border-bottom 1px solid $gold-78
+                border-right 1px solid $gold-95
+
+    .tabs__pages
+        margin $unit 0 $unit (cols(2) + $gutter)
