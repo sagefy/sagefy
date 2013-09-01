@@ -1,0 +1,58 @@
+.alert
+    border-radius $border-radius
+    display block
+    padding 0 ($unit / 2)
+    margin $unit 0
+
+    .alert__close
+        float right
+
+.alert--error,
+.alert--danger
+    @extend .alert
+    background $red-90
+    color $red-43
+
+    .alert__close
+        color $red-43
+        border-color $red-43
+
+.alert--success,
+.alert--accept
+    @extend .alert
+    background $green-90
+    color $green-43
+
+    .alert__close
+        color $green-43
+        border-color $green-43
+
+.alert--default,
+.alert--warn
+    @extend .alert
+    background $gold-90
+    color $gold-43
+
+    .alert__close
+        color $gold-43
+        border-color $gold-43
+
+.alert--info,
+.alert--accent
+    @extend .alert
+    background $blue-90
+    color $blue-43
+
+    .alert__close
+        color $blue-43
+        border-color $blue-43
+
+.alert--admin,
+.alert--official
+    @extend .alert
+    background $purple-90
+    color $purple-43
+
+    .alert__close
+        color $purple-43
+        border-color $purple-43

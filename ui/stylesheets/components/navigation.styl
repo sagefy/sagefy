@@ -1,0 +1,23 @@
+.navigation--vertical,
+.navigation--horizontal
+    ul, ol
+        list-style none
+        padding-left 0
+
+    li.selected
+        background $gold-95
+        border-radius $border-radius
+
+        a
+            color $blue-43
+            border-color $blue-43
+            border-radius $border-radius
+
+    a
+        display block
+        padding 0 ($unit / 2)
+
+.navigation--horizontal
+    li
+        display inline-block
+        margin-right $unit
