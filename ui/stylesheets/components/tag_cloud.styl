@@ -1,0 +1,14 @@
+.tags
+    @extend .clearfix
+    list-style none
+    padding 0
+    text-align center
+
+    li
+        display inline-block
+        line-height $unit * 2
+        margin ($unit / 2) ($unit / 4)
+
+    for i in 1 2 3 4 5 6 7 8 9 10
+        .tags__tag--weight-{i}
+            font-size unit(12 + i, "px")
