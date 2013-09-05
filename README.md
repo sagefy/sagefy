@@ -17,7 +17,7 @@ _Learner-generated algorithmic adaptive learning._
 
 Currently in research and planning phase. [See the wiki](https://github.com/heiskr/Descovrir/wiki).
 
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Q7C69Z2QYYVRC)
+[![Donate](https://dl.dropboxusercontent.com/u/178965380/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Q7C69Z2QYYVRC) 
 
 * * *
 
