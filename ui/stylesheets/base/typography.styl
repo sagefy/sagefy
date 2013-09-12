@@ -4,8 +4,8 @@ html, body, input, textarea, select
 body
     color $gold-20
     background $gold-99 url('fcfcfa.png')
-    font-size 16px
-    line-height 1.5
+    font-size $font-size
+    line-height unit(($unit * 2) / $font-size, "")
 
 a
     color $blue-66
@@ -21,14 +21,10 @@ a
         color $blue-43
         border-color $blue-43
 
-
-for i in 16 18 20 26 28 32 // 22 + 24 are awkward
-    .font-size-{i}
-        font-size (i / 16 * 100%)
-        if i > 20
-            line-height (3 * unit($unit, "") / i)
-        else
-            line-height (2 * unit($unit, "") / i)
+for set in (small 12 20/12) (normal 14 20/14) (accent 16 1.25) (large 20 1.5) (big 24 1.25) (epic 32 1.25)
+    .font-size-{set[0]}
+        font-size unit(set[1], "px")
+        line-height set[2]
 
 .width-limit
     max-width cols(10)
@@ -63,28 +59,28 @@ hgroup
         margin-bottom 0
 
 h1
-    @extend .font-size-32
+    @extend .font-size-epic
 
 h2
-    @extend .font-size-28
+    @extend .font-size-big
 
 h3
-    @extend .font-size-20
+    @extend .font-size-large
 
 h4
-    @extend .font-size-18
+    @extend .font-size-accent
 
 h5
-    @extend .font-size-16
+    @extend .font-size-normal
 
 h6
-    @extend .font-size-16
+    @extend .font-size-normal
 
 p
     @extend .width-limit
 
 .leading
-    @extend .font-size-18
+    @extend .font-size-accent
     color $gold-43
 
 del
@@ -104,9 +100,10 @@ abbr
 
 pre, samp, code, kbd
     @extend .monospace
-    font-size 87.5%
-    line-height 1.7143
-    margin 1.1429 0
+    @extend .font-size-small
+
+small
+    @extend .font-size-small
 
 code
     color $gold-43
@@ -129,7 +126,7 @@ blockquote
     margin-left $unit
 
     q
-        @extend .font-size-18
+        @extend .font-size-accent
         margin-bottom: 0
 
     q, cite
