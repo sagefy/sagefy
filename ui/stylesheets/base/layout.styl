@@ -1,9 +1,9 @@
 /*** Metrics ***/
 
-$unit = 12px
+$unit = 10px
 $gutter = $unit * 2
 $column = $gutter * 2
-$font-size = 100%
+$font-size = 14px
 $border-radius = 2px
 
 /*** Utility classes ***/
@@ -56,6 +56,8 @@ $10-columns = "screen and (min-width: " + (body-cols(10) + $unit) + ")"
 $12-columns = "screen and (min-width: " + (body-cols(12) + $unit) + ")"
 $14-columns = "screen and (min-width: " + (body-cols(14) + $unit) + ")"
 $16-columns = "screen and (min-width: " + (body-cols(16) + $unit) + ")"
+$18-columns = "screen and (min-width: " + (body-cols(18) + $unit) + ")"
+$20-columns = "screen and (min-width: " + (body-cols(20) + $unit) + ")"
 
 html, body
     margin 0 auto
@@ -86,9 +88,15 @@ body
     @media $16-columns
         width body-cols(16)
 
+    @media $18-columns
+        width body-cols(18)
+
+    @media $20-columns
+        width body-cols(20)
+
 /*** Layouts ***/
 
-for i in (1..16)
+for i in (1..20)
     .col-{i}
         max-width cols(i)
 
@@ -101,7 +109,7 @@ for i in (1..16)
     margin-left auto
     margin-right auto
 
-for i in (1..16)
+for i in (1..20)
     .max-width-{i}
         @extend .max-width
         max-width cols(i)
@@ -116,7 +124,7 @@ for i in (1..16)
         margin-right $gutter
         display inline-block
 
-for i in (1..8)
+for i in (1..10)
     .serial-{i}
         @extend .serial
 
@@ -134,7 +142,7 @@ for i in (1..8)
         max-width auto
 
 for d in left right
-    for i in (1..6)
+    for i in (1..8)
         .aside-{d}-{i}
             @extend .clearfix
 
@@ -150,9 +158,9 @@ for d in left right
                 @extend .reset-aside
 
 // ß 1.2.5 Double Aside Layout
-for l in (1..5)
-    for r in (1..5)
-        if l + r <= 6
+for l in (1..7)
+    for r in (1..7)
+        if l + r <= 8
             .aside-left-{l}-right-{r}
                 @extend .clearfix
 
