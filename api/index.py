@@ -1,9 +1,7 @@
-from flask import flask
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return 'Welcome to Descovrir!'
+from app import app
+import controllers.user
+import controllers.notification
+import controllers.message
 
 if __name__ == '__main__':
     app.run()
