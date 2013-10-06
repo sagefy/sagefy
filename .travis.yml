@@ -1,4 +1,13 @@
+language: python
 python:
-  - "2.7"
+    - "2.7"
+before_install:
+    - "cd api"
+install: pip install -r requirements.txt --use-mirrors
+script:
+
+language: node_js
 node_js:
-  - "0.4"
+    - "0.10"
+before_install:
+    - "cd ui"
