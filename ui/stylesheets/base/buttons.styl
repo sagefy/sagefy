@@ -10,7 +10,7 @@ button-background-inv($color, $raise = 5, $reduce = 5)
 
 .base-button
     border-radius $border-radius
-    padding ($unit / 4) ($unit / 2)
+    padding ($unit / 2) $unit
     margin 0 auto
     display inline-block
     margin $unit 0
@@ -26,11 +26,11 @@ button-background-inv($color, $raise = 5, $reduce = 5)
         cursor not-allowed
 
 .button--large
-    padding ($unit / 2) $unit
+    padding $unit $unit * 2
 
 .button--big
     @extend .font-size-big
-    padding ($unit / 2) $unit * 2
+    padding $unit $unit * 2
 
 .button,
 button,
