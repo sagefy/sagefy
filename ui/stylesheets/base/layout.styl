@@ -1,10 +1,11 @@
 /*** Metrics ***/
 
-$unit = 10px
+$unit = 12px
 $gutter = $unit * 2
 $column = $gutter * 2
-$font-size = 14px
+$font-size = 16px
 $border-radius = 2px
+$max-columns = 20
 
 /*** Utility classes ***/
 
@@ -96,7 +97,7 @@ body
 
 /*** Layouts ***/
 
-for i in (1..20)
+for i in (1..$max-columns)
     .col-{i}
         max-width cols(i)
 
@@ -109,7 +110,7 @@ for i in (1..20)
     margin-left auto
     margin-right auto
 
-for i in (1..20)
+for i in (1..$max-columns)
     .max-width-{i}
         @extend .max-width
         max-width cols(i)
@@ -124,7 +125,7 @@ for i in (1..20)
         margin-right $gutter
         display inline-block
 
-for i in (1..10)
+for i in (1..($max-columns / 2))
     .serial-{i}
         @extend .serial
 
@@ -142,7 +143,7 @@ for i in (1..10)
         max-width auto
 
 for d in left right
-    for i in (1..8)
+    for i in (1..($max-columns / 2 - 2))
         .aside-{d}-{i}
             @extend .clearfix
 
@@ -158,9 +159,9 @@ for d in left right
                 @extend .reset-aside
 
 // ß 1.2.5 Double Aside Layout
-for l in (1..7)
-    for r in (1..7)
-        if l + r <= 8
+for l in (1..($max-columns / 2 - 3))
+    for r in (1..($max-columns / 2 - 3))
+        if l + r <= ($max-columns / 2 - 2)
             .aside-left-{l}-right-{r}
                 @extend .clearfix
 
