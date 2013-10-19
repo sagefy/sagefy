@@ -1,5 +1,5 @@
 # descovrir
-_Learner-generated algorithmic adaptive learning._
+_Adaptive, collaborative, and open learning platform._
 
 - Based on learning science research.
 - A synthesis of human and machine learning.
