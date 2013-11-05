@@ -1,7 +1,7 @@
 # descovrir
 _Adaptive, collaborative, and open learning platform._
 
-- Based on learning science research.
+- Based on learning research.
 - A synthesis of human and machine learning.
 - Learner-generated modules and assessments.
 - Open-source.
