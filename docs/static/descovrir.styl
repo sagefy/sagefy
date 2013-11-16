@@ -21,40 +21,6 @@ body-cols(n)
 *, *:before, *:after
     box-sizing border-box
 
-html, body
-    margin 0 auto
-
-body
-    width cols(14)
-    padding $gutter
-
-#index
-    text-align center
-
-    form label
-        display inline
-
-    h1, h3
-        font-weight normal
-
-    h3
-        font-style italic
-
-    ul
-        list-style none
-
-footer
-    text-align center
-    padding $unit 0
-    font-size 12px
-
-main
-    margin-right cols(4) + $gutter
-
-aside
-    width cols(4)
-    float right
-
 .inline-block
     display inline-block
 
@@ -68,3 +34,35 @@ aside
 @import "../../ui/stylesheets/base/buttons"
 @import "../../ui/stylesheets/base/forms"
 @import "../../ui/stylesheets/base/tables"
+
+html, body
+    margin 0 auto
+
+body
+    width cols(14)
+    padding $gutter
+
+main
+    margin-right cols(4) + $gutter
+
+aside
+    width cols(4)
+    float right
+
+header
+    overflow auto
+    margin-bottom $unit
+
+    img
+        float left
+
+    hgroup
+        margin-left $unit * 6
+
+    .title
+        margin-top $unit
+        @extend .font-size-big
+
+    .description
+        font-style italic
+        color $gold-43
