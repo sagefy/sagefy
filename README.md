@@ -21,7 +21,7 @@ Currently in research and planning phase. [See the documentation](https://descov
 
 * * *
 
-All contents in this project, including the Wiki, are licensed under [AGPLv3](https://raw.github.com/heiskr/descovrir/master/license.txt).
+All contents in this project are licensed under [AGPLv3](https://raw.github.com/heiskr/descovrir/master/license.txt).
 
     descovrir, learner-generated algorithmic adaptive learning.
     Copyright (C) 2013  Kevin Heis and associates
