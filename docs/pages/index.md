@@ -12,7 +12,7 @@
         <li>Learner-generated modules and assessments.</li>
         <li>Open-source.</li>
     </ul>
-    <form action="http://descovrir.us3.list-manage.com/subscribe/post?u=3fc3d9b161e568d1a8e5f3a86&amp;id=9682db0aef" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <form action="http://descovrir.us3.list-manage.com/subscribe/post?u=3fc3d9b161e568d1a8e5f3a86&amp;id=42a167885c" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
         <fieldset>
             <legend>
                 Keep in the loop.
