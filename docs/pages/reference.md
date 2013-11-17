@@ -44,26 +44,39 @@
 - [Online Marketing Tips for Nonprofits - Moz](http://moz.com/blog/online-marketing-tips-for-nonprofits)
 
 ## Learning platforms
-- Wikipedia
-- Khan Academy
-- EdX
-- Coursera
-- Udacity
-- Knewton
+
+### Adaptive
+- [Knewton](http://knewton.com)
+- [ALEKS](http://www.aleks.com)
+- [AutoTutor](http://www.autotutor.org)
 - [ScootPad](https://scootpad.com/)
-- Duolingo
 - Cerego
 - Memrise
 - Quizlet
-- Quora
-- Udemy
-- SnapWiz
-- SmartSparrow
 - Membean
 - Lingualia
+- SmartSparrow
+
+### Open content
+- [Wikipedia](http://wikipedia.org)
+- Quora
+
+### MOOC
+- [Khan Academy](https://www.khanacademy.org)
+- [EdX](https://www.edx.org/)
+- [Coursera](https://www.coursera.org/)
+- [Udacity](https://www.udacity.com/)
+- [Duolingo](http://duolingo.com)
+- Udemy
+
+### LMS
+- [List of LMS software](http://lms.findthebest.com/)
 - Desire2Learn
 - TalentLMS
 - CanvasLMS
+- [TopXY](http://interactyx.com/)
+- SnapWiz
+
+### Instructional design
 - Articulate Storyline
 - Captivate
-- [TopXY](http://interactyx.com/)
