@@ -1,10 +1,12 @@
-# Survey of Learning Research
+Survey of Learning Research
+===========================
 
 This guide is intended as a reference of learning science research as relevant to Descovrir. It does not serve as a guide to learning instructional design. It does not answer every possible question or aspect.
 
-Contributions are welcome! Please use the issues tab to report any suggestions.
+Contributions are welcome! Please make a pull request to our [Github repository](http://github.com/heiskr/descovrir) or report on the [issues tab](https://github.com/heiskr/descovrir/issues).
 
-## Outline
+Outline
+-------
 
 - Learning Objectives
 - Information
@@ -16,6 +18,7 @@ Contributions are welcome! Please use the issues tab to report any suggestions.
     - Feedback
     - Sets
     - Review and Spaced Learning
+    - Games
 - Application
     - Individual v group work
     - Process
@@ -40,7 +43,8 @@ Key to source legend:
 
 * * *
 
-## Background
+Background
+----------
 
 **Question**: _What is learning?_
 
@@ -60,9 +64,7 @@ Key to source legend:
 - SB 21-23: Describes three views of learning: 1) absorptive, 2) behavioral, and 3) constructive. Most courses orient towards the absorptive view due to constraints and ease of development. Constructive-based courses are the least common. The three views support four "architectures": receptive, directive, guided discovery, and exploratory.
     - Cites Mayer 2001
 
-
 _File_
-
 
 - SB 50-52: There are essentially two major types of memory: working (short-term), and long-term. Working memory focuses on the task at hand, and is limited by a small number of items. Because working memory is limited, there is a requirement for a great deal of focus and removing cognitive load for effective learning.
 - SB 52-53: What's stored in long-term memory will greatly impact the amount of information that can reside in working memory at one time. There are two major types of long-term memories: declarative (factual) and procedural (how). The ways these types of memories are connected, or schemas, have a profound impact on being able to use in working memory. Transfer from working memory to long-term memory is the goal of transfer, and several strategies exist to promote transfer.
@@ -153,9 +155,8 @@ _File_
 - SB 352-353: Intrinsic goals lead to better commitment to the goal.
     - Cites Greene & Azevedo, 2007; Vansteenkiste, Simons, Lens, Soenens, Matos, and Lacante (2004)
 
-
-
-## Learning Objectives
+Learning Objectives
+-------------------
 
 **Question**: _What types of learning objectives are effective?_
 
@@ -205,12 +206,8 @@ _File_
 
 - _Need research_
 
-
-
-
-
-
-## Information
+Information
+-----------
 
 - SB 35-40, 45: Instructional design techniques are often bound by context; there are few absolute rules. Some of the most important factors that vary the context include a) learner prior knowledge, b) learner motivation, c) the goal of transfer (near/far), and  d) the types of tasks involved. Often, one experiment will not provide enough data, requires a meta analysis of multiple experiments to find these contextual factors.
     - Cites Clark and Mayer, 2008; Mayer and Gallini, 1990
@@ -319,9 +316,7 @@ _File_
     - Cites DeGroot 1965; Gobet & Charness, 2006; Chase & Simon, 1973a, 1973b
 - SH 59: Before creating your course or lecture, develop a concept map of your own knowledge on the subject. This will force you to overcome your bias towards deeper organization and teach your own organization with the factual knowledge.
 
-
 _File_
-
 
 - SE 77: Graphics can serve as "topic organizers", essentially acting as a way of showing the relationship between learning objectives.
 - SB 75: Experts often overload learners who do not have developed schemas, and therefore the difference in working memory capacity is greater.
@@ -454,9 +449,6 @@ _File_
     - Cites Clark & Mayer, 2008; Sadoski, Goetz, & Rodriguez, 2000; Schraw & Lehman, 2001
 - SB 362: To support self-confidence, include learning agents that describe their strategies.
 
-
-
-
 ### Information: Analogies and Examples
 
 **Question**: _How can analogies and examples activate prior knowledge?_
@@ -523,7 +515,6 @@ _File_
 - SH 110: Structured comparisions promote transfer of knowledge to various contexts.
     - Cites Loewenstein, Thompson, and Gentner 2003; Gentner, Holyoak, & Kokinov, 2001; Catrambone & Holyoak, 1989; Holyoak & Koh, 1987; Klahr & Carver, 1988; Biederman & Shiffrar, 1987; Brown & Kane, 1988
 - SH 118: Use comparisons to help learners transfer knowledge to appriopriate contexts.
-
 
 ### Information: Formats
 
@@ -615,9 +606,6 @@ _File_
 - SE 137: Learning styles have no evidence to support altering instructional formats despite their popularity.
     - Cites Pashler, McDaniel, Rohrer, and Bjork (2008)
 
-
-
-
 ### Information: Neutral point of view
 
 **Question**: _When is a neutral point of view effective for learning?_
@@ -628,10 +616,8 @@ _File_
 
 - _Needs research_
 
-
-
-
-## Practice
+Practice
+--------
 
 **Question**: _Can humans learn effectively just by observing?_
 
@@ -813,11 +799,6 @@ _File_
     - Cites Schunk and Zimmerman (2006)
 - SB 360: To support self-confidence, provide tasks at the right challenge.
 
-
-
-
-
-
 ### Practice: Formats
 
 **Question**: _Should the question be presented as text, image, audio, video, or an interactive game or simulation? When?_
@@ -840,10 +821,7 @@ _File_
 
 **Question**: _When should we assess using interactive games and simulations?_
 
-
-
 _File_
-
 
 - SB 35-40: Graphics can greatly improve learning, 1) especially for novice learners, and 2) when the graphic directly supports the learning objective.
     - Cites Clark and Mayer, 2008; Mayer and Gallini, 1990
@@ -886,11 +864,6 @@ _File_
 - SH 127-128: Deliberate practice is far more effective than general practice. Deliberate practice focuses on area of weakness while receiving observation and feedback. Deliberate practice is the defining difference between experts.
     - Cites Ericsson, Krampe, & Tescher-Romer, 2003; Ericsson & Lehmann, 1996; Ericsson & Charness, 1994
 
-
-
-
-
-
 ### Practice: Feedback
 
 **Question**: _How do patterns of error impact course design?_
@@ -920,9 +893,7 @@ _File_
 
 **Question**: _How many attempts should learners be given?_
 
-
 _File_
-
 
 - SE 97-98: Keep feedback together with both the question and the responses. Explain the correct answer rather than simply stating which answer is correct.
 - SH 128: Targeted feedback helps learners to focus and greatly improves learning outcomes.
@@ -982,7 +953,6 @@ _File_
 - SH 33: Asking a learner to predict the outcome of a new context based on their existing prior knowledge can improve recall of the new information.
 - SH 44: Getting the right answer is often not as critical as using existing knowledge to organize and predict answers. Beginners often focus on the right answer over the reasoned answer; experts are the opposite.
 
-
 _File_
 
 - SB 101-102: To reduce cognitive load, segment lessons into short chunks; and let learners be in control of the pace of the segments.
@@ -1023,10 +993,6 @@ _File_
     - Cites Mayer & Wittrock, 2006
 - SB 260-262: To promote moderate transfer, teach how it works at the steps of the procedure.
     - Cites Kieras and Bovair 1984
-
-
-
-
 
 ### Practice: Review and Spaced Learning
 
@@ -1072,11 +1038,32 @@ _File_
     - Cites Rohrer and Taylor 2006
 - SH 146: Find opportunities to build more, and smaller scale, practice into the course.
 
+### Practice: Games
 
+**Question**: _Can games be more effective for learning? How?_
 
+- SE 373: Games are very popular in online learning.
+    - Cites Issenberg, McGaghie, Petrusa, Gordon, & Scalese, 2005; Anderson and Lawton (2009); Carson (2009)
+- SE 379: Games and simulations in online learning often do not support learning objectives.
+    - Cites Rieber (2005)
+- SE 394: When using games for online learning, keep the game relevant to the objective.
+    - Cites Malone & Lepper, 1987
+- SE 382: When gaming to learn, make learning required to play the game.
+    - Cites Belanich, Sibley, and Orvis (2004)
 
+**Question**: _What tips are there for learning games?_
 
-## Application
+- SE 381: The type of game (shooter, adventure, racing etc) should match the learning objective.
+    - Cites Van Eck (2007)
+- SE 383: When using game for online learning, use the same principles to other forms of online learning; such as explanatory feedback and ask learners to explain results.
+    - Cites Belanich, Sibley, and Orvis, 2004; Issenberg, McGaghie, Petrusa, Gordon, & Scalese, 2005; Moreno (2004); Moreno and Mayer (2005); Mayer and Johnson (2010)
+- SE 386: When using games for online learning, avoid open architectures, and instead direct the learner.
+    - Cites (Mayer, 2004); De Jong (2011); Mayer, Mautone, and Prothero (2002); Rieber, Tzeng, and Tribble (2004)
+- SE 390-393: When using games for online learning, prefer simple games to manage cognitive load. Slowly add new features, adapt to prior knowledge, keep a good pacing, and conduct usability testing.
+    - Cites Carson (2009); Carroll (2000); Ju & Wagner, 1997; Mayer and Jackson (2005; Mayer and Johnson (2010; Holzinger, Kickmeier-Rust, Wassentheurer, and Hessinger (2009); Lazonder, Hagemans, and De Jong (2010); Lee, Plass, and Homer (2006)
+
+Application
+-----------
 
 **Question**: _Do real world tasks promote learning?_
 
@@ -1099,9 +1086,7 @@ _File_
 
 **Question**: _Is self assessment effective in project work? What strategies can be used?_
 
-
 _File_
-
 
 - SB 89-90: Aids, or small notes or reference cards, can help to manage cognitive load.
 - SB 90-91: When a reference is necessary to complete a task, train using the reference to help reduce cognitive load.
@@ -1209,9 +1194,6 @@ _File_
 - SB 300: Low complexity problem-based learning can be more practical and still effective.
 - SB 301: Other examples of problem based learning: cognitive task analysis (Cites Feldon 2007), simulation (cites Ericsson 2006), focusing on problem-solving processes.
 
-
-
-
 ### Application: Individual versus group work
 
 **Question**: _How many group members can be effective for learning?_
@@ -1221,7 +1203,6 @@ _File_
 **Question**: _How do you ensure all members of a group participate?_
 
 _File_
-
 
 - SE 293: Group learning is more suitable when there is no single correct answer.
     - Cites Jonassen, Lee, Yang, and Laffey (2005); Uribe, Klein, and Sullivan (2003)
@@ -1312,9 +1293,7 @@ _File_
 
 - SH 89: Provide moments for learners to reflect on their experiences to keep them motivated. Ask questions such as "What did you learn from this project?" and "What was the most valuable part of this assignment?" "How would you approach this differently in the future?"
 
-
 _File_
-
 
 - SB 118: Asking frequent questions can sustain learner attention and focus.
 - SE 99: Keep the directions and the exercise together. Do not separate them into two different screens.
@@ -1383,58 +1362,50 @@ _File_
 - SH 206: Give learners opportunities in the course to evaluate themselves.
 - SH 212: Directly intervene on student's beliefs about their own learning to support the idea that they are in control of their learning.
 
-
-
 ### Application: Peer review, rubrics, and scoring
 
-**Question**: _Is peer review effective?_
+**Question**: _Is peer review effective? When and how?_
 
-**Question**: _When and how?_
+- SH 142 The most effective feedback tends to happen immediately; frequency is not as important as timeliness.
+    - Cites Hattie & Timperley, 2007; Traxler & Gernsbacher, 1992; Mathan & Koedinger, 2005
+- SH 150: Design for frequent feedback opportunities.
+- SB 214-215: Use explanatory feedback to help support building correct mental models.
+    - Cites Moreno 2004
+- SH 151: Use peer feedback with very explicit guidelines and criteria.
 
 **Question**: _Is it effective to ask learners to evaluate their own work against the work of others?_
 
+- SH 209-210: Have learners evaluate peer work to support their own metacognitive development. Ensure there is specific criteria for evaluation.
+
 **Question**: _What is the best method to set performance expectations?_
+
+- SH 129-130: Teachers can help target feedback more clearly by using a rubric, which supports deliberate practice.
+    - Cites Goodrich Andrade 2001; Nelson 1990
+- SH 205: Include performance criteria with assignments to support metacognitive development.
 
 **Question**: _How can rubrics be used effectively? Where is evidence effective?_
 
 - SH 87: Providing rubrics can help learners plan the task and set positive expectations of their own performance, motivating them to complete the task.
-
-**Question**: _Can heuristics be effective? Can self-assessment with heuristics be effective?_
-
-
-_File_
-
-
 - SE 97-98: Keep feedback together with both the question and the responses. Explain the correct answer rather than simply stating which answer is correct.
 - SH 128: Targeted feedback helps learners to focus and greatly improves learning outcomes.
     - Cites Rothkopf and Billington 1979
-- SH 129-130: Teachers can help target feedback more clearly by using a rubric, which supports deliberate practice.
-    - Cites Goodrich Andrade 2001; Nelson 1990
-- SH 137-138: Targeted and goal-directed feedback provides learners with a map.
 - SH 139-140: Feedback is more effective when it is specific rather than general.
     - Cites Black & William, 1998; Cardelle & Corno, 1981; Balzer et al., 1989; McKendree, 1990
+- SH 137-138: Targeted and goal-directed feedback provides learners with a map.
 - SH 140-141: Too much feedback can impose cognitive overload and hinder learning.
     - Cites Lamburg, 1980; Shuman, 1979
-- SH 142 The most effective feedback tends to happen immediately; frequency is not as important as timeliness.
-    - Cites Hattie & Timperley, 2007; Traxler & Gernsbacher, 1992; Mathan & Koedinger, 2005
 - SH 145: Making goals explicit can help support deliberate practice via targeted feedback.
 - SH 149: Prioritize feedback to not overwhelm learners.
-- SH 150: Design for frequent feedback opportunities.
-- SH 151: Use peer feedback with very explicit guidelines and criteria.
-- SH 151: Require learners to use their prior feedback and explain how they used it in future work.
-- SB 214-215: Use explanatory feedback to help support building correct mental models.
-    - Cites Moreno 2004
 - SB 215-217: Support intrinsic (question specific) feedback with instructional feedback (why the outcome occurred).
 - SH 146: Rubrics can help support deliberate practice by showing learners where to focus.
 - SH 232: Rubrics > Read Stevens and Levi (2005)
 - SB 365: To support mastery-based goals, assess both process and outcomes.
-- SH 205: Include performance criteria with assignments to support metacognitive development.
 - SH 147: When there is a pattern of misinterpretation of the goals, explicitly show what you do not want.
 - SH 204: Be very explicit with assignments including the goals of the assignment.
-- SH 209-210: Have learners evaluate peer work to support their own metacognitive development. Ensure there is specific criteria for evaluation.
 
+**Question**: _Can heuristics be effective? Can self-assessment with heuristics be effective?_
 
-
+- SH 151: Require learners to use their prior feedback and explain how they used it in future work.
 
 ### Application: Learning by teaching
 
@@ -1446,9 +1417,8 @@ _File_
 
 - _Needs research_
 
-
-
-## Modules, Organization, and Integration
+Modules, Organization, and Integration
+--------------------------------------
 
 **Question**: _How effective are concept maps?_
 
@@ -1500,10 +1470,7 @@ _File_
 
 - SH 89: Give learners flexibility and small choices throughout the course to lead the learners to believe they are in control of their own learning.
 
-
-
 _File_
-
 
 - SB 116: To sustain learner attention, manage their fatigue. Alter between types of activities and build in regular breaks.
 - SB 119-120: Material pacing is critical to sustaining learner attention. A "relatively rapid pace" sustains attention.
@@ -1556,13 +1523,7 @@ _File_
     - Cites Mayer & Wittrock, 2006
 - SB 362: To support self-confidence, provide specific prerequisites.
 
-
-
-
-
 ### Modules: Diagnostic assessment and knowledge spaces
-
-
 
 **Question**: _How important is prior knowledge to learning?_
 
@@ -1575,6 +1536,7 @@ _File_
         - Cites Vygotsky, 1978; National Research Council, 2000; Bransford & Johnson, 1972; Resnick, 1983.
 - SL 89-90: "Memory Is Better for Information That Relates to Prior Knowledge".
     - Cites Bransford & Johnson, 1972 and Bekerian & Baddeley, 1980.
+- SH 108: Learner can fail to apply knowledge when their do not have a sufficient knowledge of the component skills.
 
 **Question**: _How effective are diagnostic assessments?_
 
@@ -1584,6 +1546,7 @@ _File_
 - SH 28: Diagnostic assessment effectively identifies areas of missing or inappropriate prior knowledge. Authors also suggest concept inventory type of questions during diagnostic assessment.
 - SH 86: Keep the level of challenge appriopriate to the learner to keep learners motivated. Preassessment can help identify the correct level of challenge.
 - SH 28: Diagnostic assessment can help to channel and activate existing prior knowledge, find areas of weaknesses, and to identity inappropriate and inaccurate existing knowledge.
+- SH 145: A diagnostic assessment helps to support deliberate practice by providing the right level of challenge.
 
 **Question**: _What are the best types of diagnostic assessments?_
 
@@ -1591,6 +1554,7 @@ _File_
     - 321-322: Provides an example of this sort of diagnostic assessment.
 - SH 30: A concept map strategy can speed up diagnostic assessment by helping to identify missing and misconnected knowledge.
 - SH 29: In diagnostic assessment, ask students if they are a) familiar, b) know the facts, c) can explain it, and d) can apply the information.
+- SB 364: To support mastery-based goals, measure learners against the learning objectives rather than each other.
 
 **Question**: _How accurate is self-assessment of prior knowledge?_
 
@@ -1600,6 +1564,12 @@ _File_
 - SH 29: If you ask learners to assess their own prior knowledge, be sure to know if they are a) just familiar, b) factual, c) conceptual, d) able to apply to various contexts.
 - SH 18: Declarative knowledge (what), and procedural knowledge (how) are very different, and often assumed to be the same. Often learners confident in declarative knowledge will assume procedural knowledge they don't have.
     - Cites Clement 1982
+- SB 318: Most of us are very poor at self-assessment, which hurts developing metacognitive skills.
+    - Cites Stone, 2000; Glenberg, Sanocki, Epstein, and Morris (1987); Eva, Cunnington, Reiter, Keane, and Norman (2004); Glenberg (1992); Violato and Luckyer (2006)
+- SB 319: Learners are poor at assessing the style that best suits them.
+    - Cites Schnackenberg, Sullivan, Leader, and Jones (1998)
+- SH 195: People are generally weak at evaluating their own strengths and weaknesses. Novice learners are more likely to evaluate themselves poorly than experts. This interferes with metacognitive processes.
+    - Cites Dunning, 2007; Hacker et al., 2000
 
 **Question**: _Is remediation effective to improving learning outcomes?_
 
@@ -1607,30 +1577,15 @@ _File_
 - SB 154: "Expository organizers" can greatly improve score for unfamiliar learners.
    - Cites Mayer, Mathias, and Wetzell 2002.
 - SH 34: Identifying required prior knowledge and remediating where appropriate can greatly improve performance. This required knowledge may include conceptual, procedural, and application knowledge in addition to factual knowledge.
-
+- SH 114: Diagnosing and correctly weak component skills will help learners to develop mastery.
 
 **Question**: _What methods can be used to assess learner organizational knowledge?_
 
+- _Needs research_
 
 **Question**: _What do we know about knowledge spaces and learning outcomes?_
 
-
-
-
-_File_
-
-- SB 364: To support mastery-based goals, measure learners against the learning objectives rather than each other.
-- SH 145: A diagnostic assessment helps to support deliberate practice by providing the right level of challenge.
-- SH 114: Diagnosing and correctly weak component skills will help learners to develop mastery.
-- SB 318: Most of us are very poor at self-assessment, which hurts developing metacognitive skills.
-    - Cites Stone, 2000; Glenberg, Sanocki, Epstein, and Morris (1987); Eva, Cunnington, Reiter, Keane, and Norman (2004); Glenberg (1992); Violato and Luckyer (2006)
-- SB 319: Learners are poor at assessing the style that best suits them.
-    - Cites Schnackenberg, Sullivan, Leader, and Jones (1998)
-- SH 108: Learner can fail to apply knowledge when their do not have a sufficient knowledge of the component skills.
-- SH 195: People are generally weak at evaluating their own strengths and weaknesses. Novice learners are more likely to evaluate themselves poorly than experts. This interferes with metacognitive processes.
-    - Cites Dunning, 2007; Hacker et al., 2000
-
-
+- _Needs research_
 
 ### Modules: Terminal assessment
 
@@ -1649,11 +1604,8 @@ _File_
 
 - _Needs research_
 
-
-
-
-
-## Community and Discussion
+Community and Discussion
+------------------------
 
 **Question**: _Do learners learn more in a community or individually?_
 
@@ -1718,7 +1670,6 @@ _File_
 
 - _Needs research_
 
-
 ### Community and Discussion: Mentoring
 
 **Question**: _Is mentoring effective for learning outcomes?_
@@ -1740,10 +1691,7 @@ _File_
     - Cites Beck, McKeown, Sandora, Kucan, & Worthy, 1996; Mayer, 2005d; Moreno and Mayer 2000b, Moreno and Mayer 2004; Mayer, Fennell, Farmer, & Campbell 2004; Kartel 2010
 - SH 131: One-on-one tutoring can greatly help teachers to identify a correct level of challenge for the learner.
     - Cites Anderson, Corbett, Koedinger, & Pelletier, 1995; Bloom, 1984; Merrill, Reiser, Ranney, & Trafton, 1992
-
-
-
-
+    
 ### Community and Discussion: Consensus and validity
 
 **Question**: _Are decisions based on authority, majority-vote, or consensus most effective? What are the advantages and disadvantages of each?_
@@ -1762,10 +1710,8 @@ _File_
 
 - _Needs research_
 
-
-
-
-## Analytics
+Analytics
+---------
 
 **Question**: _What methods can be used to determine learning outcomes of information?_
 
@@ -1782,26 +1728,3 @@ _File_
 **Question**: _How do we know when a unit is effective or needs work?_
 
 - _Needs research_
-
-
-## Games
-
-_File_
-
-
-- SE 373: Games are very popular in online learning.
-    - Cites Issenberg, McGaghie, Petrusa, Gordon, & Scalese, 2005; Anderson and Lawton (2009); Carson (2009)
-- SE 379: Games and simulations in online learning often do not support learning objectives.
-    - Cites Rieber (2005)
-- SE 381: The type of game (shooter, adventure, racing etc) should match the learning objective.
-    - Cites Van Eck (2007)
-- SE 382: When gaming to learn, make learning required to play the game.
-    - Cites Belanich, Sibley, and Orvis (2004)
-- SE 383: When using game for online learning, use the same principles to other forms of online learning; such as explanatory feedback and ask learners to explain results.
-    - Cites Belanich, Sibley, and Orvis, 2004; Issenberg, McGaghie, Petrusa, Gordon, & Scalese, 2005; Moreno (2004); Moreno and Mayer (2005); Mayer and Johnson (2010)
-- SE 386: When using games for online learning, avoid open architectures, and instead direct the learner.
-    - Cites (Mayer, 2004); De Jong (2011); Mayer, Mautone, and Prothero (2002); Rieber, Tzeng, and Tribble (2004)
-- SE 390-393: When using games for online learning, prefer simple games to manage cognitive load. Slowly add new features, adapt to prior knowledge, keep a good pacing, and conduct usability testing.
-    - Cites Carson (2009); Carroll (2000); Ju & Wagner, 1997; Mayer and Jackson (2005; Mayer and Johnson (2010; Holzinger, Kickmeier-Rust, Wassentheurer, and Hessinger (2009); Lazonder, Hagemans, and De Jong (2010); Lee, Plass, and Homer (2006)
-- SE 394: When using games for online learning, keep the game relevant to the objective.
-    - Cites Malone & Lepper, 1987

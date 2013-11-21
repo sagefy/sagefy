@@ -1,6 +1,10 @@
-# Overview
+Overview
+========
 
-## What descovrir is
+This document provides a brief overview of Descovrir for interested parties.
+
+What is Descovrir?
+------------------
 
 - Open-source and freely available.
 - Learner-generated modules and assessments.
@@ -11,7 +15,8 @@
 - Based on learning science and neuroscience research.
 - Discussion oriented.
 
-## What descovrir is not
+What is Descovrir not?
+----------------------
 
 - A learning management system.
 - A courseware system.
@@ -24,7 +29,8 @@
 - Suitable for every subject.
 - Designed to exist in isolation.
 
-## Guiding principles
+Guiding principles
+------------------
 
 - Learning should be accessible to everyone at every level.
 - Comprehension is only the beginning of learning; it takes more work to fully learn an idea than most people expect.
@@ -42,7 +48,8 @@
 - That said, humans are only effective at doing one thing at a time.
 - There's some truth in everything.
 
-## Who will use it?
+Who will use it?
+----------------
 
 - **Learners**
     - Pick a subject

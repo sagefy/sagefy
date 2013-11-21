@@ -1,6 +1,10 @@
-# Development Plan
+Development Plan
+================
 
-## Ordering
+This document covers a rough list in the order of which things will be built. It updates frequently.
+
+Ordering
+--------
 
 - √ Initial educational research
     - [ ] Finish first draft of [Survey of learning research](/docs/survey_of_learning_research)

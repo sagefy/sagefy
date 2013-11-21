@@ -1,8 +1,11 @@
-# Contributor Planning
+Contributor Planning
+====================
 
 At first, there will only be video information with multiple choice questions with textual questions, answers, and feedback. Later stages will add more formats.
 
-## Contributor Screens
+Contributor Screens
+-------------------
+
 - Section Selector
 - Contributor Home
 - Contributor Search (Modules, Components, Information...)
@@ -16,7 +19,9 @@ At first, there will only be video information with multiple choice questions wi
     - Amend
     - Agree, Consent, Discuss, Dissent...
 
-## Contributor Models
+Contributor Models
+------------------
+
 - _Versioning_
 - _Internationalization and Translation_
 - _Notifications_
@@ -159,7 +164,8 @@ At first, there will only be video information with multiple choice questions wi
 - reply_to (message_id)
 - thread_id
 
-## Contributor Screen Requirements
+Contributor Screen Requirements
+-------------------------------
 
 ### Section Selector
 - Logo
@@ -183,7 +189,6 @@ At first, there will only be video information with multiple choice questions wi
     - Allow subjectives
     - Reordering
 
-
 ### View Proposal
 - Agree, Consent, Discuss, Dissent...
 
@@ -191,4 +196,5 @@ At first, there will only be video information with multiple choice questions wi
 
 ### Amend Proposal
 
-## Contributor Wireframes
+Contributor Wireframes
+----------------------

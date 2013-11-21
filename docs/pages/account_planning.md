@@ -1,6 +1,11 @@
-# Account Planning
+Account Planning
+================
 
-## Account Screens
+This document covers very early planning for the ability for users to create and manage accounts in Descovrir.
+
+Account Screens
+---------------
+
 - Home Screen
 - Menu
 - Login
@@ -12,7 +17,8 @@
 - Notifications
 - Messages
 
-## Models
+Models
+------
 
 ### User
 - id
@@ -53,7 +59,8 @@
 - body
 - read
 
-## Screen Requirements
+Screen Requirements
+-------------------
 
 ### Home Screen
 - Logo and Title
@@ -153,7 +160,8 @@
     - Body
     - Send
 
-## Wireframes
+Wireframes
+----------
 
 ### Home
 ![Home](https://dl.dropboxusercontent.com/u/178965380/wireframes/home.png)

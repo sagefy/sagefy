@@ -1,3 +1,4 @@
-# Learner Planning
+Learner Planning
+================
 
-Sequencer, Progress
+Sequencer, Progress Management

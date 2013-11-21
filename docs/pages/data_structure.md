@@ -1,8 +1,12 @@
-# Data Structure
+Data Structure
+==============
+
+This document covers the overall architecture of Descovrir's data storage. This data structure allows Descovrir to be both open-content as well as highly adaptive and flexible while maintaining practicality.
 
 ![data structure](https://dl.dropboxusercontent.com/u/178965380/data_structure.png)
 
-## Overview
+Overview
+--------
 
 - Component
     - Objectives
@@ -19,7 +23,9 @@
     - Composition
     - Application
 
-## Components
+Components
+----------
+
 - A small learning lesson, may contain about five to eight minutes of information and 30-60 minutes of practice to gain proficiency
 - **Learning objectives**
     - Three to five statements that indicate information, practice, and assessment to include.
@@ -114,7 +120,9 @@
         - Prefer specificity in prerequisites over shotgun approaches: what does the learner really need to know to begin this specific component?
         - AND and OR operators on prerequisites?
 
-## Integrations
+Integrations
+------------
+
 - Defined as a relationship between
     - Two components
     - A component and an integration
@@ -122,7 +130,9 @@
 - Contains information, practice, and application
 - Does **not** contain new learning objectives.
 
-## Modules
+Modules
+-------
+
 - Defined by a set of components and other modules
 - Describes larger sets of goals and objectives, such as American Sign Language or Japanese Art History
 - May contain own application units that would require most or all of the components in the set.
@@ -133,7 +143,8 @@
 
 * * *
 
-## User-based Requirements
+User-based Requirements
+-----------------------
 
 - **Learning Objectives**
     - _Learners_

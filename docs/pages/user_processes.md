@@ -1,6 +1,10 @@
-# User Processes
+User Processes
+==============
 
-## Learners
+This document gives an overview of the Descovrir vision by storytelling from users perspectives. This document does not assert to be correct for the subject matters specified, but provides a high level view of desired functionality.
+
+Learners
+--------
 
 Learners follow a somewhat linear workflow. That said, there are many opportunities presented for divergence from the path, and a moderate level of choice is presented throughout the experience.
 
@@ -226,7 +230,8 @@ Dalton wants to learn a little American Sign Language. He's not sure if he wants
     - He is asked to contribute instructions, practice, and applications.
     - Dalton is also asked to mentor; to help answer questions and talk with learners who are working on the module.
 
-## Contributors
+Contributors
+------------
 
 From a high level perspective, these are the various types of objects that contributor can take actions on (from the Data Structure page). While learners will tend to work in a more linear approach, contributors will only occasionally take a linear approach.
 
@@ -341,7 +346,8 @@ Doris is a student of statistics. She's taken a few courses in basic statistics,
 - Doris gives a short informal presentation at the conference of her experience working with Seiji and Stella. She invites the conference participants to contribute to the project.
 - Doris continues to review analytics and discussions on the component; she make updates and proposals to the module based on the learner performance and discussion to improve points where learners have more difficulty, and to simplify portions where learners move through quickly.
 
-## Mentors
+Mentors
+-------
 
 - Find and select modules to be a mentor
 - Find learners looking for a mentor within module
@@ -350,7 +356,8 @@ Doris is a student of statistics. She's taken a few courses in basic statistics,
 - Verify expertise via module completion, contribution, assessment, or third-party (school, organization, etc)
 - Easily transition to analytics or contribution sections
 
-## Moderators
+Moderators
+----------
 
 - Primary role is dispute or conflict resolution
     - Contribution actions
@@ -381,7 +388,8 @@ Doris is a student of statistics. She's taken a few courses in basic statistics,
     - Vandalism
     - ...
 
-## Analytics needs
+Analytics needs
+---------------
 
 ### Learners
 

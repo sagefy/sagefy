@@ -1,6 +1,11 @@
-# Technology
+Technology
+==========
 
-## Infrastructure
+This document lists technology that Descovrir uses and intends to use.
+
+Infrastructure
+--------------
+
 - **Server**: [Chef](https://github.com/opscode/chef) with [Vagrant](http://www.vagrantup.com/)
     - **CDN**: [CloudFlare](https://www.cloudflare.com/)
         - Only the Core runs on a web-server, rest are just static to end users
@@ -8,6 +13,7 @@
     - Deployment
     - Local development
         - Development test data
+    - Researching alternatives for a more PaaS-style development and deployment
 - **Language**: [Python 2.7](http://docs.python.org/2.7/)
 - **Web framework**: [Flask](http://flask.pocoo.org/)
 - **User & Content Database**: [PostgreSQL](http://www.postgresql.org/docs/9.1/interactive/index.html)
@@ -115,9 +121,11 @@
     - Answer learner questions on given topic
     - Suggest content changes by learner issues
 
-## Routing
+Routing
+-------
 
-**ui/index.html**
+#### ui/index.html
+
 - /, /login, /settings, /logout, /terms, /contact ...
 - /learn, /learn/*
 - /contribute, /contribute/*
@@ -125,8 +133,10 @@
 - /moderate, /moderate/*
 - /mentor, /mentor/*
 
-**api/index.py**
+#### api/index.py
+
 - /api/*
 
-**External applications**
+#### External applications
+
 - /blog, /support, /questions, /feedback, /docs, /api/docs ...
