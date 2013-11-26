@@ -1193,6 +1193,10 @@ _File_
 - SB 299: Sherlock > Read Gott & Lesgold, 2000
 - SB 300: Low complexity problem-based learning can be more practical and still effective.
 - SB 301: Other examples of problem based learning: cognitive task analysis (Cites Feldon 2007), simulation (cites Ericsson 2006), focusing on problem-solving processes.
+- SB 283: A problem-centered design meets the following criteria:
+    - A problem is presented in the intro
+    - Authentic tasks specific to the domain
+    - Problem is the "focal point" of teaching
 
 ### Application: Individual versus group work
 
@@ -1422,7 +1426,17 @@ Modules, Organization, and Integration
 
 **Question**: _How effective are concept maps?_
 
+- SE 330: Provide maps of the site and course. Use a simple hierarchical structure.
+    - Cites Nilsson and Mayer (2002); Potelle and Rouet, 2003; Neiderhauser, Reynolds, Salmen, and Skolmoski (2000); Shapiro (2005, 2008)
+- SH 149: Let learners also see their areas of strength and improvement to support motivation; learners are often unaware of their own progress.
+
 **Question**: _Does identifying prerequisite knowledge improve learning?_
+
+- SH 100: Novices tend to have lower performance in part of lacking all the component skills.
+    - Cites Resnick, 1976; Lovett 2001
+- SH 108: Learner can fail to apply knowledge when their do not have a sufficient knowledge of the component skills.
+- SH 114: Review existing educational materials to discover ways to decompose tasks.
+- SB 362: To support self-confidence, provide specific prerequisites.
 
 **Question**: _Does presenting module organization improve learning?_
 
@@ -1436,6 +1450,7 @@ Modules, Organization, and Integration
 
 - SH 77: Learners must be able to expect a positive outcome from their learning.
     - Cites Carver & Scheier, 1998
+- SH 213: Help learners to set realistic expectations of themselves to support motivation and metacognition.
 
 **Question**: _Does asking learners their goals at the beginning of a course improve outcomes?_
 
@@ -1456,36 +1471,21 @@ Modules, Organization, and Integration
 - SH 76: Learner goals change over the period of a course. Learners can transition from extrinsic and attainment goals to intrinsic goals.
     - Cites Hidi & Renninger, 2006
 
-**Question**: _Do learners automatically integrate knowledge?_
+**Question**: _How important is integrating knowledge to developing expertise? What strategies are effective to integrating knowledge?_
 
-**Question**: _How important is integrating knowledge to developing expertise?_
+- SH 95: "To develop mastery, students must acquire component skills, practice integrating them, and know when to apply what they have learned."
+- SH 117: Performance criteria should explicitly require component integration to promote transfer.
+- SB 243: Transfer is not hopeless. If learning are asked to explain reasoning, given good organizational knowledge, and shown multiple contexts, transfer is much more likely to happen.
+    - Cites Mayer & Wittrock, 2006
 
-**Question**: _What strategies are effective to integrating knowledge?_
+**Question**: _Is comparison exercises effective to knowledge integration? When and how?_
 
-**Question**: _Is compare and contrast effective to knowledge integration? When and how?_
+- _Needs research_
 
-**Question**: _Is learner or program control more effective? When?_
+**Question**: _Is learner or program control more effective? When? Do choices improve or hinder learning?_
 
-**Question**: _Do choices improve or hinder learning?_
-
-- SH 89: Give learners flexibility and small choices throughout the course to lead the learners to believe they are in control of their own learning.
-
-_File_
-
-- SB 116: To sustain learner attention, manage their fatigue. Alter between types of activities and build in regular breaks.
-- SB 119-120: Material pacing is critical to sustaining learner attention. A "relatively rapid pace" sustains attention.
-    - Cites Anderson & Torrey, 1995 and Brophy and Good, 1986
-- SH 213: Help learners to set realistic expectations of themselves to support motivation and metacognition.
-- SB 283: A problem-centered design meets the following criteria:
-    - A problem is presented in the intro
-    - Authentic tasks specific to the domain
-    - Problem is the "focal point" of teaching
 - SE 316, 318: Our low ability to self-assessment impacts our ability to make effective learning decisions
     - Cites Stone, 2000; Glenberg, Sanocki, Epstein, and Morris (1987); Eva, Cunnington, Reiter, Keane, and Norman (2004); Violato and Lockyer (2006); Moos and Azevedo (2008)
-- SE 322-323: Make defaults available to learners when they are presented with choices.
-    - Cites Schnackenberg and Sullivan (2000)
-- SE 317: Learner satistifaction has a low correlation with learning outcomes.
-    - Cites Sitzmann, Brown, Casper, Ely, and Zimmerman (2008); Schnackenberg, Sullivan, Leader, and Jones (1998)
 - SE 311-313: In elearning, learners can be completely in control of their learning. There are three basic types:
     - Content sequencing
     - Pacing
@@ -1497,6 +1497,9 @@ _File_
     - Linear navigation (back, next, pause, play, quit)
     - Guided tours
     - Linked objects
+- SH 89: Give learners flexibility and small choices throughout the course to lead the learners to believe they are in control of their own learning.
+- SE 322-323: Make defaults available to learners when they are presented with choices.
+    - Cites Schnackenberg and Sullivan (2000)
 - SE 319-322: Learners with experience should be given more control over their learning. Novices should be more directed.
     - Cites Steinberg, 1989; Gay (1986); Young (1996); Lee and Lee (1991)
 - SE 323-327: Make learning control adaptive to the skill level of the learner.
@@ -1505,23 +1508,23 @@ _File_
     - Cites Mayer and Chandler (2001), Mayer, Dow, and Mayer (2003), and Mayer and Jackson (2005); Tabbers and de Koeijer (2010)
 - SB 324: Learner control depends on their metacognitive skills. Novices should be provided with a recommended path and provide a default path early on.
     - Cites Clark & Mayer, 2008; Schnackenberg and Sullivan (2000)
-- SH 95: "To develop mastery, students must acquire component skills, practice integrating them, and know when to apply what they have learned."
-- SH 100: Novices tend to have lower performance in part of lacking all the component skills.
-    - Cites Resnick, 1976; Lovett 2001
-- SH 108: Learner can fail to apply knowledge when their do not have a sufficient knowledge of the component skills.
 - SE 190: Polite wording improves learning, such as asking to continue instead of demanding it.
     - Cites Brown and Levinson 1987; Mayer, Johnson, Shaw, and Sandhu 2006;  Wang, Johnson, Mayer, Rizzo, Shaw, and Collins 2008; McLaren, DeLeeuw, and Mayer 2011
-- SE 330: Provide maps of the site and course. Use a simple hierarchical structure.
-    - Cites Nilsson and Mayer (2002); Potelle and Rouet, 2003; Neiderhauser, Reynolds, Salmen, and Skolmoski (2000); Shapiro (2005, 2008)
 - SB 360-361: To support self-confidence, match the learning architecture (e.g. directed, guided discovery) to the learner's background.
     - Cites Kalyuga 2007
-- SH 114: Review existing educational materials to discover ways to decompose tasks.
-- SH 117: Performance criteria should explicitly require component integration to promote transfer.
 - SH 147: Adjust the goals and criteria over the period of the course to the learners.
+
+**Question**: _How do we manage learner fatigue?_
+
+- SB 116: To sustain learner attention, manage their fatigue. Alter between types of activities and build in regular breaks.
+- SB 119-120: Material pacing is critical to sustaining learner attention. A "relatively rapid pace" sustains attention.
+    - Cites Anderson & Torrey, 1995 and Brophy and Good, 1986
+
+**Question**: _Does asking learners their satisfaction support learning?_
+
+- SE 317: Learner satistifaction has a low correlation with learning outcomes.
+    - Cites Sitzmann, Brown, Casper, Ely, and Zimmerman (2008); Schnackenberg, Sullivan, Leader, and Jones (1998)
 - SH 149: Let learners also see their areas of strength and improvement to support motivation; learners are often unaware of their own progress.
-- SB 243: Transfer is not hopeless. If learning are asked to explain reasoning, given good organizational knowledge, and shown multiple contexts, transfer is much more likely to happen.
-    - Cites Mayer & Wittrock, 2006
-- SB 362: To support self-confidence, provide specific prerequisites.
 
 ### Modules: Diagnostic assessment and knowledge spaces
 
@@ -1570,6 +1573,8 @@ _File_
     - Cites Schnackenberg, Sullivan, Leader, and Jones (1998)
 - SH 195: People are generally weak at evaluating their own strengths and weaknesses. Novice learners are more likely to evaluate themselves poorly than experts. This interferes with metacognitive processes.
     - Cites Dunning, 2007; Hacker et al., 2000
+- SE 316, 318: Our low ability to self-assessment impacts our ability to make effective learning decisions
+    - Cites Stone, 2000; Glenberg, Sanocki, Epstein, and Morris (1987); Eva, Cunnington, Reiter, Keane, and Norman (2004); Violato and Lockyer (2006); Moos and Azevedo (2008)
 
 **Question**: _Is remediation effective to improving learning outcomes?_
 
