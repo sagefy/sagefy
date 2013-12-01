@@ -32,6 +32,7 @@ Components
     - Can be reordered.
     - Subobjectives are allowed.
     - Displayed to the learner at the beginning of the component, can be reviewed at any time.
+    - Translated into the learner's language, does not change contents however.
 - **Information**
     - Formatting:
         - Text
@@ -43,6 +44,7 @@ Components
         - Timeline
     - Question interjection in each format to assess comprehension
     - Multiple per component: languages, formats, approaches
+    - Language and geographically tagged.
     - Additional types of information presentation:
         - Worked examples
         - Application examples
@@ -51,6 +53,7 @@ Components
 - **Practice**
     - Contains question, answer, and feedback
     - Can be tied to a learning objective.
+    - Language and geographically tagged.
     - Question
         - Text
         - Image
@@ -102,23 +105,23 @@ Components
 - **Application** (Projects)
     - Individual, collaborative, or team.
     - Basic layout:
-        - **Propose**: Provide the learner with a description of the task.
+        - **Accept**: Provide the learner with a description of the task.
         - **Assess**: Assess the learner's understanding of the task.
-        - **Plan**: Ask the learner to evaluate the task, break it into parts, and form a plan.
-        - **Action**: Have learner implement their plan.
-        - **Review**: Have the learner evaluate other's work on the same task.
-        - **Result**: Invite learner to review own work against peer reviews.
-        - **Reflect**: Invite learner to reflection on project experience and discuss and rate application project quality.
+        - **Plan**: Ask the learner to evaluate and analyze the task, break it into parts, and form a plan.
+        - **Act**: Have learner implement their plan.
+        - **Peer Review**: Have the learner evaluate other's work on the same task.
+        - **Self Review**: Invite learner to review evaluations of the learner's work.
+        - **Reflect**: Invite learner to reflection on project experience; discuss and rate application project quality.
     - Not all steps are required.
-    - Proposal, analysis, evaluation, review, and reflection can all use practice question formats.
+    - Assess, plan, act, peer review, and reflect can all use practice question formats.
     - Action can also use practice question formats.
     - Rubrics system: provide a systematic means of evaluation.
-    - Encourage creation of both short and longer application projects. (10 minutes - 2-3 hours)
+    - Encourage creation of both short and longer application projects. (10 minutes to 3 hours)
+    - Language and geographically tagged.
 - **Relationships**
     - Prerequisites
         - Can list components or modules that are required before addressing component
         - Prefer specificity in prerequisites over shotgun approaches: what does the learner really need to know to begin this specific component?
-        - AND and OR operators on prerequisites?
 
 Integrations
 ------------
@@ -136,10 +139,6 @@ Modules
 - Defined by a set of components and other modules
 - Describes larger sets of goals and objectives, such as American Sign Language or Japanese Art History
 - May contain own application units that would require most or all of the components in the set.
-
-*More notes*
-- Add language and geographic tags to information, practice, etc
-- Add translations for learning objectives
 
 * * *
 

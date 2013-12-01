@@ -1,23 +1,22 @@
 # descovrir
 _Adaptive, collaborative, and open learning platform._
 
+- Synthesis of human and machine learning.
 - Based on learning research.
-- A synthesis of human and machine learning.
 - Learner-generated modules and assessments.
-- Open-source.
-- [Site], [Blog], [Facebook], [Twitter], [Google+]
+- Community-driven and generated.
+- Open-source and freely available.
+- [Site], [Docs], [Twitter]
 
 [Site]: http://descovrir.org
-[Blog]: http://descovrirorg.wordpress.com/
-[Facebook]: http://facebook.com/descovrir
 [Twitter]: http://twitter.com/descovrirorg
-[Google+]: https://plus.google.com/u/102422704401628739470/102422704401628739470
+[Docs]: http://descovrir.org/docs/overview
 
 * * *
 
 Currently in research and planning phase. [See the documentation](http://descovrir.org).
 
-[![Donate](https://dl.dropboxusercontent.com/u/178965380/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Q7C69Z2QYYVRC) 
+[![Donate](https://dl.dropboxusercontent.com/u/178965380/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Q7C69Z2QYYVRC)
 
 * * *
 
@@ -38,5 +37,7 @@ All contents in this project are licensed under [AGPLv3](https://raw.github.com/
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+* * *
 
 [![Build Status](https://travis-ci.org/heiskr/descovrir.png?branch=master)](https://travis-ci.org/heiskr/descovrir)
