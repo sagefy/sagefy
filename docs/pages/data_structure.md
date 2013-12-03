@@ -107,7 +107,8 @@ Components
     - Basic layout:
         - **Accept**: Provide the learner with a description of the task.
         - **Assess**: Assess the learner's understanding of the task.
-        - **Plan**: Ask the learner to evaluate and analyze the task, break it into parts, and form a plan.
+        - **Analyze**: Analyze the problem and the context. Brainstorm strategies and pros and cons.
+        - **Plan**: Ask the learner to evaluate the task, break it into parts, and form a plan.
         - **Act**: Have learner implement their plan.
         - **Peer Review**: Have the learner evaluate other's work on the same task.
         - **Self Review**: Invite learner to review evaluations of the learner's work.
