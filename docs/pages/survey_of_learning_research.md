@@ -1200,16 +1200,15 @@ _File_
 
 ### Application: Individual versus group work
 
+**Question**: _What tools are available for group work?_
+
+- SE 284-287: Computer-supported collaborative learning supports learner collaboration via: blogs, social media, breakout rooms, chats, email, message board, conferencing, and wikis.
+    - Cites Clark and Kwinn, 2007
+- SE 303: There is still a huge need for research in online group learning.
+    - Cites 2005 Jonassen, Lee, Yang, and Laffey
+
 **Question**: _How many group members can be effective for learning?_
 
-**Question**: _When is group work more effective than individual work? Vice versa?_
-
-**Question**: _How do you ensure all members of a group participate?_
-
-_File_
-
-- SE 293: Group learning is more suitable when there is no single correct answer.
-    - Cites Jonassen, Lee, Yang, and Laffey (2005); Uribe, Klein, and Sullivan (2003)
 - SB 223-224: In some conditions, learners can learn more effectively in small groups.
     - Cites Cohen, 1994; Johnson, Johnson, & Smith, 2007; Lou, Abrami, & d’Apollonia, 2001; Qin, Johnson, & Johnson, 1995; Springer, Stanne, & Donovan, 1999
     - The following requirements apply to effective group learning:
@@ -1218,6 +1217,11 @@ _File_
         - c) Heterogenous groups
         - d) Require input from each member
         - e) Outcome is based on the group as well as individual contribution
+
+**Question**: _When is group work more effective than individual work? Vice versa?_
+
+- SE 293: Group learning is more suitable when there is no single correct answer.
+    - Cites Jonassen, Lee, Yang, and Laffey (2005); Uribe, Klein, and Sullivan (2003)
 - SB 142-144: Presenting a relevant problem, and discussing it as a group, effectively activates prior knowledge.
     - Cites Schmidy and Moust 2000
 - SE 293-295: The difference between in-person group learning and online group learning is a draw. Virtual produces better projects, face-to-face test scores.
@@ -1226,10 +1230,6 @@ _File_
     - Cites Campbell and Stasser (2006)
 - SE 296-298: The difference between social tools for group learning makes little difference.
     - Cites Suthers, Vatrapu, Medina, Joseph, and Dwyer (2008)
-- SE 298-300: Online discussion are more effective with student moderates rather than instructor moderators.
-    - Cites De Wever, Van Winckel, and Valcke (2006)
-- SE 300: Online group learning needs structure. One such structure is structured controversy; where a pro team and con team are formed, and then a synthesis happens at the end.
-    - Cites Johnson and Johnson (1992)
 - SE 281: Cooperative learning under very specific circumstances can improve learning outcomes.
     - Cites Slavin 2011, Johnson Johnson and Smith 2007, Hattie 2009
 - SE 281: Individual learning more often trumps cooperative learning.
@@ -1241,8 +1241,6 @@ _File_
         - Cites Lou, Abrami, and d’Apollonia (2001); Tutty and Klein (2008) and by Krause, Stark, and Mandl (2009)
     - c) All members forced to make contributions and dialog
         - Cites Fonseca and Chi (2011)
-- SE 284-287: Computer-supported collaborative learning supports learner collaboration via: blogs, social media, breakout rooms, chats, email, message board, conferencing, and wikis.
-    - Cites Clark and Kwinn, 2007
 - SE 288-289: Computer-supported collaborative learning is difficult to research. There are a few suggestions:
     - Have an incentive for mutual support
         - Cites Resta and Laferriere (2007)
@@ -1273,13 +1271,16 @@ _File_
         - Cites Uribe, Klein, & Sullivan (2003)
     - Incentives
         - Cites Mayer (2007); Slavin, Hurley, & Chamberlain (2003)
-- SE 303: There is still a huge need for research in online group learning.
-    - Cites 2005 Jonassen, Lee, Yang, and Laffey
-- SH 250: Discussion ground rules > Read Brookfield & Preskill (2005)
 - SH 131: Teachers who regularly adjust the challenge level at the group level improve learning outcomes.
     - Cites Clarke, Ayres, and Sweller 2005
 
+**Question**: _How do you ensure all members of a group participate?_
 
+- SE 298-300: Online discussion are more effective with student moderates rather than instructor moderators.
+    - Cites De Wever, Van Winckel, and Valcke (2006)
+- SE 300: Online group learning needs structure. One such structure is structured controversy; where a pro team and con team are formed, and then a synthesis happens at the end.
+    - Cites Johnson and Johnson (1992)
+- SH 250: Discussion ground rules > Read Brookfield & Preskill (2005)
 
 ### Application: Process
 
