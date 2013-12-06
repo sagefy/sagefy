@@ -1,6 +1,6 @@
 # This is for Google App Engine ... the docs directory
 
-application: descovrirorg
+application: sagefyorg
 version: 2
 runtime: python27
 api_version: 1

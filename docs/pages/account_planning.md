@@ -1,7 +1,7 @@
 Account Planning
 ================
 
-This document covers very early planning for the ability for users to create and manage accounts in Descovrir.
+This document covers very early planning for the ability for users to create and manage accounts in Sagefy.
 
 Account Screens
 ---------------

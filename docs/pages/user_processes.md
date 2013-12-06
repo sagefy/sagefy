@@ -1,7 +1,7 @@
 User Processes
 ==============
 
-This document gives an overview of the Descovrir vision by storytelling from users perspectives. This document does not assert to be correct for the subject matters specified, but provides a high level view of desired functionality.
+This document gives an overview of the Sagefy vision by storytelling from users perspectives. This document does not assert to be correct for the subject matters specified, but provides a high level view of desired functionality.
 
 Learners
 --------
@@ -42,19 +42,19 @@ Learners follow a somewhat linear workflow. That said, there are many opportunit
 ### Example of a short course
 _Short Introduction to American Sign Language_
 
-We'll be going over his journey to demonstrate the process of using Descovrir from the learner's perspective. This is not exact, but a vision that will update as development ensues. The example subject, American Sign Language, may not be reflective of a real learner experience or the curriculum required to learn the subject; it merely serves as an example.
+We'll be going over his journey to demonstrate the process of using Sagefy from the learner's perspective. This is not exact, but a vision that will update as development ensues. The example subject, American Sign Language, may not be reflective of a real learner experience or the curriculum required to learn the subject; it merely serves as an example.
 
 Dalton wants to learn a little American Sign Language. He's not sure if he wants to commit all the way, so he first wants to start with a learning module that lasts a few days. This course will involve a basic overview of ASL, sign parameters, fingerspelling letters and numbers, and a few basic greetings. He plans to spend about two to three hours a day over the course of one week.
 
 #### Day 1, Monday
 
-- _Dalton shows up at Descovrir_, having a vague idea of what he is looking for: a short, basic introduction to ASL.
-- Dalton _signs up_ for an account with Descovrir. He receives an introduction email. (5 minutes)
-    - If Dalton doesn't start engaging with the site within a few days, he starts to receive emails about the benefits of using Descovrir, and some popular modules.
-- Dalton, a new Descovrir user, elects to take a _short introduction to using Descovrir_. (20 minutes)
+- _Dalton shows up at Sagefy_, having a vague idea of what he is looking for: a short, basic introduction to ASL.
+- Dalton _signs up_ for an account with Sagefy. He receives an introduction email. (5 minutes)
+    - If Dalton doesn't start engaging with the site within a few days, he starts to receive emails about the benefits of using Sagefy, and some popular modules.
+- Dalton, a new Sagefy user, elects to take a _short introduction to using Sagefy_. (20 minutes)
     - Dalton is first presented with empty courses page, and a message inviting him to either find a course or take a walk through.
     - The introduction covers:
-        - The data structure and organization of Descovrir.
+        - The data structure and organization of Sagefy.
         - Various principles of the platform (learner generated, artificially intelligent).
         - Types of presentations, practice questions, and application projects.
         - A walkthrough of various interface components.
@@ -62,7 +62,7 @@ Dalton wants to learn a little American Sign Language. He's not sure if he wants
     - Dalton is then presented with a various types of presentations: videos, text, and slideshows with audio.
     - As Dalton takes the introduction, he is asked questions throughout to confirm his understanding of the way the platform works.
     - At the end, Dalton takes a short assessment, and passes gloriously.
-    - Dalton receives a trophy for completing the introduction to Descovrir, which shows up on his achievements page.
+    - Dalton receives a trophy for completing the introduction to Sagefy, which shows up on his achievements page.
     - Dalton is then returned to his courses page, which shows a message encouraging him to find a course to get started.
 - _Dalton finds a suitable learning module_. (10 minutes)
     - First, he uses the module search tool to find his course.
@@ -93,7 +93,7 @@ Dalton wants to learn a little American Sign Language. He's not sure if he wants
         - Dalton can pull up the learning objectives at any time while working on this component.
     - Dalton then watches a video covering what ASL is, a definition of the term.
     - Dalton then receives three practice questions to check his understanding of the definition of ASL.
-    - Descovrir automatically adjusts the questions based on his performance and past performance of other learners to keep the course moving at just the right rate.
+    - Sagefy automatically adjusts the questions based on his performance and past performance of other learners to keep the course moving at just the right rate.
     - As Dalton answers incorrectly, he receives feedback explaining the right answer.
     - Dalton continues to receive information and practice for the other learning objectives.
     - Dalton can ask questions at any time about the instruction, practice, or the component, or even the entire module. He can connect with others who are working on the same things as him and he can even talk to learners who completed the module already.
@@ -101,11 +101,11 @@ Dalton wants to learn a little American Sign Language. He's not sure if he wants
     - Near the end of his practice, he receives a short writing assignment. He receives a rubric of what to include in the writing. Once he completes this assignment, he is asked to review three other learner's response to the same question.
         - Once his own writing has been graded, he receives his score and comments from other learners.
     - After thirty minutes, Dalton has demonstrated proficiency with the component. He receives a bronze badge on the component, which will be upgraded after successful review sessions in the future.
-    - Dalton ends his experience with Descovrir for today.
+    - Dalton ends his experience with Sagefy for today.
 
 #### Day 2, Tuesday
 
-- Dalton logs into Descovrir.
+- Dalton logs into Sagefy.
     - Dalton first sees his my courses page. From here, he can see an estimate of his progress on his goal. He can also see his accomplishments, and review the schema for the module.
     - The "Short Intro to ASL" module notes that the next step is to review.
 - Dalton _reviews_ the introducing ASL module. (10 minutes)
@@ -127,11 +127,11 @@ Dalton wants to learn a little American Sign Language. He's not sure if he wants
     - As with earlier components, there is learning objectives, instructions, practice questions, and application near receiving the bronze badge. He can discuss, view his progress, and what is presented to him is adjusted as he practices with the component.
     - Once receiving the bronze badge for this component, he is then given the option of continuing with Intro to ASL III, Sign Parameters, or Basic Greetings I.
 - Dalton continues Intro to ASL III: Organization. (30 minutes)
-    - Once Dalton has received the bronze badge for the component, he decides to end his session with Descovrir today.
+    - Once Dalton has received the bronze badge for the component, he decides to end his session with Sagefy today.
 
 #### Day 3, Wednesday
 
-- Dalton comes back to Descovrir, and continues his progress.
+- Dalton comes back to Sagefy, and continues his progress.
 - Dalton reviews his earlier components. (30 minutes)
     - Once Dalton demonstrates good proficiency with the Intro to ASL I component, he is upgraded to the silver badge. This component will now take less time during his review sessions.
     - Dalton receives more instruction, practice, and possibly even application projects on his prior components: American Greetings, Intro to ASL II and Intro to ASL III.
@@ -169,7 +169,7 @@ Dalton wants to learn a little American Sign Language. He's not sure if he wants
     - Dalton is then presented with choosing between Integration Fingerspelling I-IV or Basic Greetings I. This time, he chooses to continue to with Basic Greetings I.
 - Dalton takes and completes Basic Greetings I. (20 minutes)
 - Dalton is asked to create a practice question for Fingerspelling I. (15 minutes)
-    - Descovrir asks him for a unique application project: to design a practice question or exercise for Fingerspelling I.
+    - Sagefy asks him for a unique application project: to design a practice question or exercise for Fingerspelling I.
     - First, he is asked to assess and evaluate a few existing practice questions.
     - Then, Dalton is asked to plan out his practice question.
     - Dalton then submits his practice question for Fingerspelling I. It isn't available immediately as it needs review.
@@ -279,8 +279,8 @@ Doris is a student of statistics. She's taken a few courses in basic statistics,
 
 #### Day 1, Wednesday
 - First Doris posts a module in basic statistics. (10 minutes)
-    - Doris is a Descovrir user and already has an account. She logs in to the contributor interface.
-    - As Doris is a regular contributor to Descovrir and this is a new module, the change goes through immediately.
+    - Doris is a Sagefy user and already has an account. She logs in to the contributor interface.
+    - As Doris is a regular contributor to Sagefy and this is a new module, the change goes through immediately.
     - Initially, the module has no components which define it. She enters in the name of the module, a short description of the module, and a longer description of the module.
     - Doris shares a link to the module to Stella and Seiji. They decide to have a virtual meeting to figure out their learning objectives for the module.
 - The team creates an outline of the module composition. (3 hours)
@@ -330,9 +330,9 @@ Doris is a student of statistics. She's taken a few courses in basic statistics,
     - Doris uses images with multiple choice questions for the Interpreting Graphs component and the corresponding integration unit. She provides feedback for each of the answer choices. One of the questions has a textarea answer, and she indicates this should be peer reviewed.
     - Seiji uses text questions and short text answers for the Terms components and integration. He indicates users should get three tries per question.
     - Stella makes video questions with multiple choice answers for the Methods components and integration. One question, she does multiple short text.
-    - Seiji makes interactive questions and answers in JavaScript for the Distributions component. He writes custom feedback based on the answer of the user. Seiji's code communicates with the Descovrir API to provide the answers.
+    - Seiji makes interactive questions and answers in JavaScript for the Distributions component. He writes custom feedback based on the answer of the user. Seiji's code communicates with the Sagefy API to provide the answers.
     - Doris makes text questions with numeric answers for the t-, f-, and chi- tests components. She indicates to the user how the answers should be formatted. Doris indicates range to account for rounding issues. Some of the answers are formatted as matrixes, asking the user to find various statistics for a given sample data set. Some of the questions also appear as problem sets, which walk the user through each of the tests.
-    - Stella asks learners to use spreadsheet software to generate a CSV file in the Regression components, which they can then upload to check the answer. The answer can be tested via the Descovrir API or by peer review.
+    - Stella asks learners to use spreadsheet software to generate a CSV file in the Regression components, which they can then upload to check the answer. The answer can be tested via the Sagefy API or by peer review.
     - As before; the team reviews each other's work, make proposals and amendments. Once they have a basic set of practice questions, they plan for the next day. Doris's conference starts on Monday, so they still have work ahead of them before completing the course. That said, learners have already started to take notice of the course, and a few fellow contributors have already started making their own instructions and practice questions and proposals for modifications.
 
 #### Day 5, Sunday
@@ -364,7 +364,7 @@ Moderators
     - Learner/Mentor discussion
     - Review flagged content for edit or deletion
     - Receive updates on objects, discussion, flags within selected modules
-- Verify high contribution, activity, and expertise within Descovrir and within modules to gain roles, permissions
+- Verify high contribution, activity, and expertise within Sagefy and within modules to gain roles, permissions
 - Subscribe to particular modules
 - Easily transition to mentor, analytics, or contribution sections
 

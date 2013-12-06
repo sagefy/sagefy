@@ -1,7 +1,7 @@
 Machine Learning Application
 ============================
 
-This document covers the algorithms and strategies that will be applied to Descovrir to support its functional objectives.
+This document covers the algorithms and strategies that will be applied to Sagefy to support its functional objectives.
 
 Data structure
 --------------
