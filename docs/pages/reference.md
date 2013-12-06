@@ -1,7 +1,7 @@
 Reference
 =========
 
-This document is a list of organized, curated links to support the development of Descovrir.
+This document is a list of organized, curated links to support the development of Sagefy.
 
 User Research and Experience
 ----------------------------

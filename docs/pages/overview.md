@@ -1,9 +1,9 @@
 Overview
 ========
 
-This document provides a brief overview of Descovrir for interested parties.
+This document provides a brief overview of Sagefy for interested parties.
 
-What is Descovrir?
+What is Sagefy?
 ------------------
 
 - Open-source and freely available.
@@ -15,7 +15,7 @@ What is Descovrir?
 - Based on learning science and neuroscience research.
 - Discussion oriented.
 
-What is Descovrir not?
+What is Sagefy not?
 ----------------------
 
 - A learning management system.

@@ -1,14 +1,14 @@
 <header>
     <img src="/docs/static/astrolabe.svg" alt="astrolabe" height="84" class="large" />
     <hgroup>
-        <div class="title">descovrir</div>
+        <div class="title">Sagefy</div>
         <div class="description">Adaptive, collaborative, and open learning platform.</div>
     </hgroup>
 </header>
 
 - [Home](/)
-- [Github](http://github.com/heiskr/descovrir)
-- [Twitter](http://twitter.com/descovrirorg)
+- [Github](http://github.com/heiskr/sagefy)
+- [Twitter](http://twitter.com/sagefyorg)
 
 ---
 
@@ -37,5 +37,5 @@
 
 ---
 
-<small>&copy; Copyright Descovrir 2013. All contents are licensed under [AGPLv3](https://raw.github.com/heiskr/descovrir/master/license.txt).</small>
+<small>&copy; Copyright Sagefy 2013. All contents are licensed under [AGPLv3](https://raw.github.com/heiskr/sagefy/master/license.txt).</small>
 

@@ -1,9 +1,9 @@
 Survey of Learning Research
 ===========================
 
-This guide is intended as a reference of learning science research as relevant to Descovrir. It does not serve as a guide to learning instructional design. It does not answer every possible question or aspect.
+This guide is intended as a reference of learning science research as relevant to Sagefy. It does not serve as a guide to learning instructional design. It does not answer every possible question or aspect.
 
-Contributions are welcome! Please make a pull request to our [Github repository](http://github.com/heiskr/descovrir) or report on the [issues tab](https://github.com/heiskr/descovrir/issues).
+Contributions are welcome! Please make a pull request to our [Github repository](http://github.com/heiskr/sagefy) or report on the [issues tab](https://github.com/heiskr/sagefy/issues).
 
 Outline
 -------

@@ -5,7 +5,7 @@ require [
         # if window.location.pathname != '/styleguide':
         #     return
 
-        document.title = 'Descovrir Style Guide and Component Library'
+        document.title = 'Sagefy Style Guide and Component Library'
 
         $body = $ 'body'
         $body.addClass 'max-width-10'

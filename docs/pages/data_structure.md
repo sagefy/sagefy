@@ -1,7 +1,7 @@
 Data Structure
 ==============
 
-This document covers the overall architecture of Descovrir's data storage. This data structure allows Descovrir to be both open-content as well as highly adaptive and flexible while maintaining practicality.
+This document covers the overall architecture of Sagefy's data storage. This data structure allows Sagefy to be both open-content as well as highly adaptive and flexible while maintaining practicality.
 
 ![data structure](https://dl.dropboxusercontent.com/u/178965380/data_structure.png)
 

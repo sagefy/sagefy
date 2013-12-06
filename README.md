@@ -1,4 +1,4 @@
-# descovrir
+# Sagefy
 _Adaptive, collaborative, and open learning platform._
 
 - Synthesis of human and machine learning.
@@ -8,21 +8,21 @@ _Adaptive, collaborative, and open learning platform._
 - Open-source and freely available.
 - [Site], [Docs], [Twitter]
 
-[Site]: http://descovrir.org
-[Twitter]: http://twitter.com/descovrirorg
-[Docs]: http://descovrir.org/docs/overview
+[Site]: http://sagefy.org
+[Twitter]: http://twitter.com/sagefyorg
+[Docs]: http://sagefy.org/docs/overview
 
 * * *
 
-Currently in research and planning phase. [See the documentation](http://descovrir.org).
+Currently in research and planning phase. [See the documentation](http://sagefy.org/docs/overview).
 
 [![Donate](https://dl.dropboxusercontent.com/u/178965380/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Q7C69Z2QYYVRC)
 
 * * *
 
-All contents in this project are licensed under [AGPLv3](https://raw.github.com/heiskr/descovrir/master/license.txt).
+All contents in this project are licensed under [AGPLv3](https://raw.github.com/heiskr/sagefy/master/license.txt).
 
-    descovrir, learner-generated algorithmic adaptive learning.
+    Sagefy, learner-generated algorithmic adaptive learning.
     Copyright (C) 2013  Kevin Heis and associates
 
     This program is free software: you can redistribute it and/or modify
@@ -40,4 +40,4 @@ All contents in this project are licensed under [AGPLv3](https://raw.github.com/
 
 * * *
 
-[![Build Status](https://travis-ci.org/heiskr/descovrir.png?branch=master)](https://travis-ci.org/heiskr/descovrir)
+[![Build Status](https://travis-ci.org/heiskr/sagefy.png?branch=master)](https://travis-ci.org/heiskr/sagefy)

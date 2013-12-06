@@ -17,7 +17,7 @@ CREATE TABLE users (
     status      varchar(64),
     avatar      varchar(128)
 );
-GRANT ALL PRIVILEGES ON TABLE users TO descovrir;
+GRANT ALL PRIVILEGES ON TABLE users TO sagefy;
 
 
 DROP TABLE IF EXISTS notifications CASCADE;
@@ -33,7 +33,7 @@ CREATE TABLE notifications (
     body                text,
     read                boolean DEFAULT FALSE
 );
-GRANT ALL PRIVILEGES ON TABLE notifications TO descovrir;
+GRANT ALL PRIVILEGES ON TABLE notifications TO sagefy;
 
 
 DROP TABLE IF EXISTS messages CASCADE;
@@ -52,7 +52,7 @@ CREATE TABLE messages (
     seen            boolean DEFAULT FALSE
 
 );
-GRANT ALL PRIVILEGES ON TABLE messages TO descovrir;
+GRANT ALL PRIVILEGES ON TABLE messages TO sagefy;
 
 
 DROP FUNCTION IF EXISTS update_modified_column() CASCADE;

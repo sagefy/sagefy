@@ -1,7 +1,7 @@
 Technology
 ==========
 
-This document lists technology that Descovrir uses and intends to use.
+This document lists technology that Sagefy uses and intends to use.
 
 Infrastructure
 --------------
@@ -30,7 +30,7 @@ Infrastructure
 - **Blogging**: [Wordpress.com](http://wordpress.com)
 - **Feedback**: Github Issues, [StackOverflow](http://stackoverflow.com), [UserVoice](http://uservoice.com)
 - **Media page**: [Totemapp](http://totemapp.com)
-- **Social**: [Twitter](http://twitter.com/descovrirorg), [Facebook](https://www.facebook.com/descovrir), [Google+](https://plus.google.com/102422704401628739470/posts), Github, [Wordpress](http://descovrirorg.wordpress.com/)
+- **Social**: [Twitter](http://twitter.com/sagefyorg), [Facebook](https://www.facebook.com/sagefy), [Google+](https://plus.google.com/102422704401628739470/posts), Github, [Wordpress](http://sagefy.wordpress.com/)
 - **Analytics**: [Google Analytics](http://google.com/analytics) & in-house
 - **Email accounts**: [Google Apps](http://apps.google.com)
 - **Cloud storage**: [Google Drive](http://drive.google.com), [Dropbox](http://dropbox.com)
