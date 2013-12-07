@@ -49,17 +49,20 @@ API Development
 - [Knewton Tech Blog](http://www.knewton.com/tech/blog/)
 - [Best Practices for Designing a Pragmatic RESTful API](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api) by Vinay Sahni
 - [Implementing a RESTful Web API with Python & Flask](http://blog.luisrei.com/articles/flaskrest.html) by Luis Rei
+- [The Twelve-Factor App](http://12factor.net/)
 
 Web UI development
 ------------------
 
 - [W3C CSS2 documentation](http://www.w3.org/TR/CSS2/cover.html#minitoc)
 - [Responsive Elements](http://kumailht.com/responsive-elements/)
+- [Pattern Lab](http://pattern-lab.info/)
 
 Marketing
 ---------
 
 - [Online Marketing Tips for Nonprofits - Moz](http://moz.com/blog/online-marketing-tips-for-nonprofits)
+- [OPEN SOURCE: Marketing for Developers](http://mbleigh.github.io/open-source-marketing)
 
 Learning platforms
 ------------------
