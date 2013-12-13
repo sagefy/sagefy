@@ -64,7 +64,7 @@ Background
 - SB 21-23: Describes three views of learning: 1) absorptive, 2) behavioral, and 3) constructive. Most courses orient towards the absorptive view due to constraints and ease of development. Constructive-based courses are the least common. The three views support four "architectures": receptive, directive, guided discovery, and exploratory.
     - Cites Mayer 2001
 
-_File_
+**Question**: _How does memory work?_
 
 - SB 50-52: There are essentially two major types of memory: working (short-term), and long-term. Working memory focuses on the task at hand, and is limited by a small number of items. Because working memory is limited, there is a requirement for a great deal of focus and removing cognitive load for effective learning.
 - SB 52-53: What's stored in long-term memory will greatly impact the amount of information that can reside in working memory at one time. There are two major types of long-term memories: declarative (factual) and procedural (how). The ways these types of memories are connected, or schemas, have a profound impact on being able to use in working memory. Transfer from working memory to long-term memory is the goal of transfer, and several strategies exist to promote transfer.
@@ -76,6 +76,11 @@ _File_
 - SB 74: Seven +- two from the Miller study has since been corrected, more so to two to four elements.
     - Cites Miller, 1956 and Sweller, 2005
 - SB 85: "Instructional designs that ignore working memory limitations are likely to be random in their effectiveness." - John Sweller, "Implications of Cognitive Load Theory,” 2005
+- SB 165: Mental models, or schemas, are long-term memories that serve as the root of all expertise.
+- SB 167: Mental models are built by integrating new information in working memory into existing knowledge in long-term memory.
+
+**Question**: _What is cognitive load? How do we manage it?_
+
 - SB 86-87: The four factors that determine cognitive load are a) complexity, b) prior knowledge, c) presentation rate and control, and d) instructional modes and methods.
 - SB 112: "Manage attention in the design of instructional environments in ways that (1) optimize attention capacity, (2) direct attention to important instructional content, and (3) minimize divided attention in order to devote limited cognitive resources to learning."
 - SB 115: "Attention during learning is influenced by (1) layout and features of the instructional materials and learning environment, (2) learner background knowledge, goals, and metacognitive skills, and (3) assignments during learning, such as questions."
@@ -88,20 +93,30 @@ _File_
     - Cites Cerpa, Chandler, and Sweller (1996)
 - SH 103: Humans can't multitask, the performance degrades when a learner is asked to do more than one thing at a time. Experts at skills are more likely to be able to perform multiple tasks at a time.
     - Cites Kahnemann, 1973; Navon & Gopher, 1979; Wickens, 1991; Strayer and Johnston 2001; Smith & Chamberlin, 1992; Lansdown, 2002; Beilock, Wierenga, & Carr, 2002
+
+**Question**: _How do we learn to apply knowledge?_
+
 - SB 240: To be able to transfer knowledge to other contexts, you must be able to explain why something is the way it is, not just what it is or how to do it.
     - Cites Kieras & Bovair, 1984
-- SH 200: Learner's beliefs about themselves will change their learning outcomes. If learners believe they are in control of their intelligence, self-efficacy, motivation, strategies, and behaviors, they are more likely to succeed.
-    - Cites Schommer, 1994; Henderson & Dweck, 1990; Aronson, Fried, & Good, 2002
+- SB 233-234: Transfer of learning is rare.
+    - Cites Haskell 2001
+- SB 238-239: The environment of the expected performance must support transfer of learning.
+    - Cites Haskell 2001; Independent Commission Report, 1991
+- SB 239-240, 242: General problem solving activities do not improve problem solving in other contexts.
+    - Cites Mayer, 1999, 2004; Mayer and Wittrock 1996
+- SB 243-247: Transfer exists at a variety of levels. There can be no transfer, near transfer (near-identical), moderate transfer (routine), and far transfer (adaptive).
+    - Cites Bransford et al 2006, Weisberg 2006
+- SB 248-249: Transfer is highly dependent on expertise; intelligence and talent are not significant factors.
+    - Cites Schraw, 2006; Cattell 1943; Neitfeld, Finney, Schraw, & McCrudden, 2007
+
+**Question**: _How do learners develop over time?_
+
 - SH 96: There is a four-stage development cycle to mastery:
     - a) unconscious incompetence
     - b) conscious incompetence
     - c) conscious competence
     - d) unconscious competence
     - Cites Sprague and Stuart 2000
-- SB 165: Mental models, or schemas, are long-term memories that serve as the root of all expertise.
-- SB 167: Mental models are built by integrating new information in working memory into existing knowledge in long-term memory.
-- SE 363: "Through the cognitive task analysis, you define: (1) scenarios to serve as learning cases, (2) criteria that distinguish scenarios of more or less complexity, (3) the normal tools and resources available to the worker, and (4) alternative solution paths and rationale."
-    - Cites Lajoie, Azevedo, and Fleiszer (1998); Van Gog, Sluijsmans, Joosten-ten Brinke, and Prins (2010)
 - SE 342: There are three types of thinking in terms of learning: creative, critical, metacognitive.
 - SB 340: There are five theories about motivation:
     - a) Expectations of likelihood of success and value of success.
@@ -129,17 +144,11 @@ _File_
     - c) Stage three: Not all opinions are equal, some are more developed than others
     - d) Stage four: Commitment to a foundation, informed and nuanced
     - Cites Perry (1968); Belenky et al., 1986; Baxter-Magolda, 1992; Kohlberg (1976) and Gilligan (1977
-- SB 233-234: Transfer of learning is rare.
-    - Cites Haskell 2001
-- SB 238-239: The environment of the expected performance must support transfer of learning.
-    - Cites Haskell 2001; Independent Commission Report, 1991
-- SB 239-240, 242: General problem solving activities do not improve problem solving in other contexts.
-    - Cites Mayer, 1999, 2004; Mayer and Wittrock 1996
-- SB 243-247: Transfer exists at a variety of levels. There can be no transfer, near transfer (near-identical), moderate transfer (routine), and far transfer (adaptive).
-    - Cites Bransford et al 2006, Weisberg 2006
-- SB 248-249: Transfer is highly dependent on expertise; intelligence and talent are not significant factors.
-    - Cites Schraw, 2006; Cattell 1943; Neitfeld, Finney, Schraw, & McCrudden, 2007
-- SH 181-182: Examine your own assumptions about learners.
+    
+**Question**: _What do we know about learn motivation?_
+
+- SH 200: Learner's beliefs about themselves will change their learning outcomes. If learners believe they are in control of their intelligence, self-efficacy, motivation, strategies, and behaviors, they are more likely to succeed.
+    - Cites Schommer, 1994; Henderson & Dweck, 1990; Aronson, Fried, & Good, 2002
 - SH 191: One of the greatest challenges of learning is managing one's own learning.
     - Cites Pascarella & Terenzini, 2005
 - SH 192: Many models exist to describe metacognitive learning. All of which describe processes to monitor and control learning.
@@ -679,11 +688,7 @@ Practice
 
 **Question**: _Can classical conditioning or instrumental conditioning be used effectively in an online environment?_
 
-
-
 _File_
-
-
 
 - SE 99: Keep the directions and the exercise together. Do not separate them into two different screens.
 - SB 89-90: Aids, or small notes or reference cards, can help to manage cognitive load.
@@ -803,26 +808,6 @@ _File_
 
 **Question**: _Should the question be presented as text, image, audio, video, or an interactive game or simulation? When?_
 
-**Question**: _Are true or false questions effective? When?_
-
-**Question**: _Are multiple choice questions effective? When?_
-
-**Question**: _When should numeric input be used?_
-
-**Question**: _When are matching exercises effective?_
-
-**Question**: _When would a matrix of input be necessary?_
-
-**Question**: _How do we assess essay style questions? What strategies are effective for a massive, teacher-less system?_
-
-**Question**: _How do we assess file upload based questions, such as audio, video, images, and documents?_
-
-**Question**: _Are simulations and games effective for practice? Are they worth the development expense?_
-
-**Question**: _When should we assess using interactive games and simulations?_
-
-_File_
-
 - SB 35-40: Graphics can greatly improve learning, 1) especially for novice learners, and 2) when the graphic directly supports the learning objective.
     - Cites Clark and Mayer, 2008; Mayer and Gallini, 1990
 - SE 67: Include both words and graphics.
@@ -863,6 +848,42 @@ _File_
     - Cites Knez & Hugge, 2002; Plant, Ericsson, Hill, & Asberg, 2005
 - SH 127-128: Deliberate practice is far more effective than general practice. Deliberate practice focuses on area of weakness while receiving observation and feedback. Deliberate practice is the defining difference between experts.
     - Cites Ericsson, Krampe, & Tescher-Romer, 2003; Ericsson & Lehmann, 1996; Ericsson & Charness, 1994
+
+**Question**: _Are true or false questions effective? When?_
+
+- _Needs research_
+
+**Question**: _Are multiple choice questions effective? When?_
+
+- _Needs research_
+
+**Question**: _When should numeric input be used?_
+
+- _Needs research_
+
+**Question**: _When are matching exercises effective?_
+
+- _Needs research_
+
+**Question**: _When would a matrix of input be necessary?_
+
+- _Needs research_
+
+**Question**: _How do we assess essay style questions? What strategies are effective for a massive, teacher-less system?_
+
+- _Needs research_
+
+**Question**: _How do we assess file upload based questions, such as audio, video, images, and documents?_
+
+- _Needs research_
+
+**Question**: _Are simulations and games effective for practice? Are they worth the development expense?_
+
+- _Needs research_
+
+**Question**: _When should we assess using interactive games and simulations?_
+
+- _Needs research_
 
 ### Practice: Feedback
 
@@ -941,20 +962,6 @@ _File_
 
 **Question**: _When is a series of questions more effective than single questions?_
 
-**Question**: _How many questions should go in a single set?_
-
-**Question**: _Is asking learner to explain their reasoning for their answers effective? Is it more effective to ask learners to explain the correct answer?_
-
-- SH 19: Learners often perform procedures without understanding the ideas behind them.
-    - Cites Berry & Broadbent, 1988; Reber & Kotovsky, 1997; Sun, Merrill, & Peterson, 2001
-
-**Question**: _Are learner predictions effective?_
-
-- SH 33: Asking a learner to predict the outcome of a new context based on their existing prior knowledge can improve recall of the new information.
-- SH 44: Getting the right answer is often not as critical as using existing knowledge to organize and predict answers. Beginners often focus on the right answer over the reasoned answer; experts are the opposite.
-
-_File_
-
 - SB 101-102: To reduce cognitive load, segment lessons into short chunks; and let learners be in control of the pace of the segments.
     - Cites Mayer and Chandler (2001)
 - SE 266: Provide step by step feedback for processes.
@@ -965,8 +972,6 @@ _File_
     - Cites Moreno and Mayer 2005
 - SB 273-275: Guided discovery is more effective than open discovery, which cause too much cognitive overload. Start with a simple simulation, give explanatory feedback, optimize the pacing, and keep the interface simple.
     - Cites Mayer, 2004; Clark & Mayer, 2008; Lee, Plass, and Homer, 2006; Moreno (2004); Moreno and Mayer (2005); Van Merrienboer and Kester (2005)
-- SH 151: Require learners to use their prior feedback and explain how they used it in future work.
-- SB 365: To support mastery-based goals, assess both process and outcomes.
 - SE 345-355: A strategy to develop metacognitive skills is whole-task design, where a problem is given, and then broken into tasks to be reintegrated.
     - Cites Schmidt and Moust, 2000; Lajoie, 2009; Schmidt, Van der Molen, te Winkel, and Wijnen (2009); Albanese (2010); Lim, Reiser, and Olina (2009)
 - SH 102: Whole-task practice is preferable to componetization if the task is either simple or if the task can't be broken down.
@@ -993,6 +998,19 @@ _File_
     - Cites Mayer & Wittrock, 2006
 - SB 260-262: To promote moderate transfer, teach how it works at the steps of the procedure.
     - Cites Kieras and Bovair 1984
+
+**Question**: _How many questions should go in a single set?_
+
+- _Needs research_
+
+**Question**: _Is asking learner to explain their reasoning for their answers effective? Is it more effective to ask learners to explain the correct answer? Are learner predictions effective?_
+
+- SH 19: Learners often perform procedures without understanding the ideas behind them.
+    - Cites Berry & Broadbent, 1988; Reber & Kotovsky, 1997; Sun, Merrill, & Peterson, 2001
+- SH 151: Require learners to use their prior feedback and explain how they used it in future work.
+- SH 33: Asking a learner to predict the outcome of a new context based on their existing prior knowledge can improve recall of the new information.
+- SH 44: Getting the right answer is often not as critical as using existing knowledge to organize and predict answers. Beginners often focus on the right answer over the reasoned answer; experts are the opposite.
+- SB 365: To support mastery-based goals, assess both process and outcomes.
 
 ### Practice: Review and Spaced Learning
 
@@ -1113,6 +1131,8 @@ _File_
     - Cites Gick & Holyoak, 1980; Perfetto et al., 1983; Klahr & Carver, 1988; Bassok, 1990
 - SB 366: Avoid creating emotional interest; instead focus on building situational interest. Use simple, minimal content; use vivid language and examples; and make things human and personal.
     - Cites Sadoski, Goetz, & Fritz, 1993; Strun and White 2000; Moreno and Mayer (2000b); Clark and Mayer (2008)
+- SE 363: "Through the cognitive task analysis, you define: (1) scenarios to serve as learning cases, (2) criteria that distinguish scenarios of more or less complexity, (3) the normal tools and resources available to the worker, and (4) alternative solution paths and rationale."
+    - Cites Lajoie, Azevedo, and Fleiszer (1998); Van Gog, Sluijsmans, Joosten-ten Brinke, and Prins (2010)
 - SB 218: Wait at least three seconds after asking a question before going for the answer to promote building mental models.
     - Cites Tobin 1987.
 - SB 209: Ask learners to take a position on a topic or controversy to promote building mental models.
@@ -1284,30 +1304,13 @@ _File_
 
 ### Application: Process
 
-**Question**: _Can project work aid intellectual development? How?_
-
-**Question**: _How do we ensure learners understand the task?_
-
-**Question**: _How can one learn effective planning strategies?_
-
-- SH 88: Provide learners with study strategies early in the course so they will stay motivated throughout the course.
-
-**Question**: _Is it effective to see a comparison of an expert strategy versus a self devised strategy?_
-
-**Question**: _Is required reflection effective? What strategies are effective for reflection activities?_
-
-- SH 89: Provide moments for learners to reflect on their experiences to keep them motivated. Ask questions such as "What did you learn from this project?" and "What was the most valuable part of this assignment?" "How would you approach this differently in the future?"
-
-_File_
+**Question**: _Is it effective to guide learners through the project process?_
 
 - SB 118: Asking frequent questions can sustain learner attention and focus.
-- SE 99: Keep the directions and the exercise together. Do not separate them into two different screens.
 - SE 266: Provide step by step feedback for processes.
     - Cites Corbalan, Paas, and Cuypers (2010); Shute, 2008
 - SB 222: Ask learners about specific steps of a process, and which concepts apply to that step.
     - Cites Atkinson, Renkl, and Merrill, 2003
-- SH 194: Learners often fail to assess the task at hand, instead relying own their previous experiences. Learners often need assistance knowing how to assess tasks, and need feedback on task assessment.
-    - Cites Carey, Flower, Hayes, and others (1989)
 - SH 191: "To become self-directed learners, students must learn to assess the demands of the task, evaluate their own knowledge and skills, plan their approach, monitor their progress, and adjust their strategies as needed."
 - SH 192-193: There are essentially five cyclical steps to metacognition:
     - a) Assess the task
@@ -1315,9 +1318,36 @@ _File_
     - c) Plan
     - d) Apply and monitor
     - e) Reflect
+- SH 215: Scaffold learners in their metacognitive processes by starting with a ton of aids, and gradually weaning them off.
+- SB 330-331: Ask learners questions as they practice to develop their self-monitoring skills.
+
+**Question**: _Can project work aid intellectual development? How?_
+
+- SB 364-365: To support mastery-based goals, encourage learners to attribute success and failure to things within their control.
+- SB 320: Metacognitive skills are not hopeless.
+    - Cites Hacker, Bol, Horgan, and Rakow (2000)
+- SB 324: Supporting metacognitive skills improves transfer.
+    - Cites Azevedo and Cromley, 2004
+- SB 327-328: Metacognitive skills are highly domain-specific.
+    - Cites Perkins & Saloman, 1989; Gott & Lesgold, 2000
+- SB 331-332: To support metacognitive development, create an environment where mistakes are okay.
+    - Cites Gott & Lesgold, 2000
+- SB 316: Defines four components of metacognitive skills: a) setting goals, b) planning, 3) monitoring, and 4) making adjustments.
+    - Cites Greene and Azevedo (2007)
+
+**Question**: _How do we ensure learners understand the task?_
+
+- SH 194: Learners often fail to assess the task at hand, instead relying own their previous experiences. Learners often need assistance knowing how to assess tasks, and need feedback on task assessment.
+    - Cites Carey, Flower, Hayes, and others (1989)
 - SH 205: Assess the learner's understand of the task first.
 - SB 318: Most of us are very poor at self-assessment, which hurts developing metacognitive skills.
     - Cites Stone, 2000; Glenberg, Sanocki, Epstein, and Morris (1987); Eva, Cunnington, Reiter, Keane, and Norman (2004); Glenberg (1992); Violato and Luckyer (2006)
+- SH 195: People are generally weak at evaluating their own strengths and weaknesses. Novice learners are more likely to evaluate themselves poorly than experts. This interferes with metacognitive processes.
+    - Cites Dunning, 2007; Hacker et al., 2000
+
+**Question**: _How can one learn effective planning strategies?_
+
+- SH 88: Provide learners with study strategies early in the course so they will stay motivated throughout the course.
 - SB 321: Provide learners with explicit opportunities to practice their metacognitive skills.
     - a) Ask learners to assess themselves
     - b) Provide support during training
@@ -1330,32 +1360,6 @@ _File_
     - Critical decision method (learner interviews expert)
     - Structured expert interview
 - SE 360: To help learners develop metacognitive skills, ask them to reflect on their experiences.
-- SH 209: Require learners to reflect on their experiences and keep a log of their work to help support development of strategies. Such questions as
-    - What did you learn?
-    - What do you need to wkro on?
-    - What would you do differently?
-    - How have you progressed?
-- SH 215: Scaffold learners in their metacognitive processes by starting with a ton of aids, and gradually weaning them off.
-- SH 210-211: Ask learners to complete a "exam wrapper" to evaluate their own study skills. Ask learners:
-    - What type of errors do you make?
-    - How did you study?
-    - What would you do differently?
-- SB 364-365: To support mastery-based goals, encourage learners to attribute success and failure to things within their control.
-- SB 320: Metacognitive skills are not hopeless.
-    - Cites Hacker, Bol, Horgan, and Rakow (2000)
-- SB 324: Supporting metacognitive skills improves transfer.
-    - Cites Azevedo and Cromley, 2004
-- SB 327-328: Metacognitive skills are highly domain-specific.
-    - Cites Perkins & Saloman, 1989; Gott & Lesgold, 2000
-- SB 328: Experts vary greatly in their metacogntive processes; experts spend more time on analysis, planning, and verification whereas novices focus on exploring.
-    - Cites Schoenfeld, 1987
-- SB 330-331: Ask learners questions as they practice to develop their self-monitoring skills.
-- SB 331-332: To support metacognitive development, create an environment where mistakes are okay.
-    - Cites Gott & Lesgold, 2000
-- SB 316: Defines four components of metacognitive skills: a) setting goals, b) planning, 3) monitoring, and 4) making adjustments.
-    - Cites Greene and Azevedo (2007)
-- SH 195: People are generally weak at evaluating their own strengths and weaknesses. Novice learners are more likely to evaluate themselves poorly than experts. This interferes with metacognitive processes.
-    - Cites Dunning, 2007; Hacker et al., 2000
 - SH 196: Learners are just as likely to plan incorrectly as we are to underplan.
     - Cites Chi et al., 1989; Hayes & Flower, 1986; Schoenfeld, 1987; Carey et al., 1989
 - SH 197-198: Learners should be prompted regularly, either by themselves or externally, "Is this plan working, or would something else work better?" This greatly supports metacognitive processes.
@@ -1366,6 +1370,28 @@ _File_
     - Cites Fu & Gray, 2004
 - SH 206: Give learners opportunities in the course to evaluate themselves.
 - SH 212: Directly intervene on student's beliefs about their own learning to support the idea that they are in control of their learning.
+
+**Question**: _Is it effective to see a comparison of an expert strategy versus a self devised strategy?_
+
+- SB 328: Experts vary greatly in their metacogntive processes; experts spend more time on analysis, planning, and verification whereas novices focus on exploring.
+    - Cites Schoenfeld, 1987
+
+**Question**: _Is required reflection effective? What strategies are effective for reflection activities?_
+
+- SH 89: Provide moments for learners to reflect on their experiences to keep them motivated. Ask questions such as "What did you learn from this project?" and "What was the most valuable part of this assignment?" "How would you approach this differently in the future?"
+- SH 209: Require learners to reflect on their experiences and keep a log of their work to help support development of strategies. Such questions as
+    - What did you learn?
+    - What do you need to wkro on?
+    - What would you do differently?
+    - How have you progressed?
+- SH 210-211: Ask learners to complete a "exam wrapper" to evaluate their own study skills. Ask learners:
+    - What type of errors do you make?
+    - How did you study?
+    - What would you do differently?
+
+**Questions**: _How can we reduce cognitive load in learning projects?_
+
+- SE 99: Keep the directions and the exercise together. Do not separate them into two different screens.
 
 ### Application: Peer review, rubrics, and scoring
 
