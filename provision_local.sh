@@ -34,6 +34,7 @@ echo 'export NODE_PATH=/usr/local/lib/node_modules' >> ~/.bashrc
 
 cd /var/www
 sudo apt-get -y install nginx
+sudo apt-get -y install uwsgi
 sudo uwsgi  --http :8652 \
             --pythonpath /vagrant/api \
             --wsgi index:app \
