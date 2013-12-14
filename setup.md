@@ -1,6 +1,8 @@
 Local Development Setup
 =======================
 
+These instructions assume you are using Mac OS X.
+
 Get Vagrant Running
 -------------------
 
@@ -23,7 +25,8 @@ Get Vagrant Running
 View Local Development
 ----------------------
 
-- In your browser, visit `http://localhost:5656`
+- `sudo nano /etc/hosts`, and add `192.168.122.114  doris`
+- In your browser, visit `http://doris/`
 
 Shut down Vagrant
 -----------------
