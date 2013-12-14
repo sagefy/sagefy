@@ -16,7 +16,7 @@ _Adaptive, collaborative, and open learning platform._
 
 Currently in research and planning phase. [See the documentation](http://sagefy.org/docs/overview).
 
-[![Donate](https://dl.dropboxusercontent.com/u/178965380/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Q7C69Z2QYYVRC)
+[![Donate](https://dl.dropboxusercontent.com/u/178965380/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PXGYRLUR53MBJ)
 
 * * *
 
