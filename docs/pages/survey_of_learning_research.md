@@ -144,7 +144,7 @@ Background
     - c) Stage three: Not all opinions are equal, some are more developed than others
     - d) Stage four: Commitment to a foundation, informed and nuanced
     - Cites Perry (1968); Belenky et al., 1986; Baxter-Magolda, 1992; Kohlberg (1976) and Gilligan (1977
-    
+
 **Question**: _What do we know about learn motivation?_
 
 - SH 200: Learner's beliefs about themselves will change their learning outcomes. If learners believe they are in control of their intelligence, self-efficacy, motivation, strategies, and behaviors, they are more likely to succeed.
@@ -218,9 +218,6 @@ Learning Objectives
 Information
 -----------
 
-- SB 35-40, 45: Instructional design techniques are often bound by context; there are few absolute rules. Some of the most important factors that vary the context include a) learner prior knowledge, b) learner motivation, c) the goal of transfer (near/far), and  d) the types of tasks involved. Often, one experiment will not provide enough data, requires a meta analysis of multiple experiments to find these contextual factors.
-    - Cites Clark and Mayer, 2008; Mayer and Gallini, 1990
-
 **Question**: _How important is promoting organizational knowledge? What strategies are effective to promoting learner organization through presentation?_
 
 - SH 50: Learners tend to make simple and linear relationships in knowledge, which is vastly slower than a strongly connected network.
@@ -242,41 +239,152 @@ Information
 - SH 59-60: When planning practice and application exercises, identify tasks that will help build knowledge organization in addition to factual knowledge.
 - SH 58: Learners who are presented with compare and contrast scenarios are better "prepared to learn from a lecture or reading assignment"
     - Cites Schwartz & Bransford, 1998
+- SB 153-155: An "expository advance organize" outlines relevant prior knowledge at the beginning of a lesson.
+    - Cites Mayer, Mathias, and Wetzell 2002; Clark and Mayer 2007; Shapiro 2005
+- SB 145-148: Use "comparative advance organizers" to activate prior knowledge. This is a presentation that relates new information to existing information. An effective organizer explicitly links concepts.
+    - Cites Ausubel & Youssef, 1963; Mayer and Wittrock 2006; Mayer, 1983; Kloster and Winne 1989
+- SH 98: Experts organize information "into large, conceptual chucks" with aids with applying the knowledge flexibly; experts more quickly recognize patterns; experts are more likely to be able to traverse contexts
+    - Cites Chase & Simon, 1973b; Chase & Ericsson, 1982; Koedinger & Anderson, 1990; DeGroot, 1965; Anderson, 1992; Chase & Simon, 1973a; Koedinger & Anderson, 1990; Blessing & Anderson, 1996; Smith & Chamberlin, 1992; Lansdown, 2002; Beilock, Wierenga, & Carr, 2002; Chi, Feltovich, & Glaser, 1981; Larkin et al., 1980; Boster & Johnson, 1989
+- SE 77: Graphics can serve as "topic organizers", essentially acting as a way of showing the relationship between learning objectives.
+- SH 230: Concept Maps > Read Novak (1998)
+- SE 329: Use on screen navigational elements such as headers. Use links sparingly.
+    - Cites Lorch, Lorch, Ritchey, McGovern, and Coleman (2001); Mayer (2005b); Neiderhauser, Reynolds, Salmen, and Skolmoski (2000); Shapiro (2008)
 
 **Question**: _How can the information be made relevant to the learner?_
 
 - SH 84: Identify your own values early in the course to encourage learners to understand those values and increase their motivation.
+- SB 371: Add situational interest to support motivation.
+    - Cites Means, Jonassen, and Dwyer (1997); Hidi and Renninger (2006); Means, Jonassen, and Dwyer,1997
+- SB 370: To support motivation, present new ideas in familiar terms.
+    - Cites Stepich & Newby, 1988
+- SB 141: "Be sure there is a knowledge base in working memory for integrating new content by: (1) activating appropriate prior knowledge, (2) compensating for missing prior knowledge, and (3) mini- mizing the activation of irrelevant prior knowledge."
+- SB 150-153: A pre-lesson case analysis ask learners to read about a cases before presenting new information. This can help to activate prior knowledge. Using multiple cases can show different perspectives.
+    - Cites Bransford, Barron, Pea, Meltzoff, Kuhl, Bell, Stevens, Schwartz, Vye, Reeves, Roschelle, & Sabelli, 2006; Schwartz & Bransford, 1998
+- SB 144-145: Asking and answering questions about relevant prior knowledge will activate it. You can also ask learners to form their own questions. Particularly, rendering the relationships between prior knowledge is effective (concept maps).
+    - Cites Pressley, Wood, Woloshyn, Martin, King, & Menke, 1992; Gurlitt, Renkl, Motes, and Hauser 2006
+- SB 158: If the learners already have the prior knowledge, activating it might not be necessary.
+    - Clark, Nguyen, & Sweller, 2006
 
-**Question**: _Is it effective to focus student attention?_
+**Question**: _Is it effective to focus student attention? How can learner's know what information to value or specifically target? When is focusing student attention during presentation effective?_
 
 - SB 10: Expertise is domain specific and narrow; built on concrete and specific memory.
     - Cites Simon & Gilmartin, 1973.
-
-**Question**: _How can learner's know what information to value or specifically target?_
-
-**Question**: _When is focusing student attention during presentation effective?_
+- SB 117: To support learner attention, find the right balance of demands. Too much can be paralyzing, too little and there's no effort.
+- SB 118: Asking frequent questions can sustain learner attention and focus.
+- SB 121-124: Cueing, or signaling, can help to focus learner attention on critical aspects. Examples are arrows, bolding text, emphasizing spoken words...
+    - Cites de Koning et al 2007, Mautone and Mayer 2001, Brophy and Good 1986; Rickards, Fajen, Sullivan, & Gillespie, 1997
+- SB 128-129: Include the learning objectives to help learners focus their attention. Reiterate the learning objectives in information, practice, and assignments.
+    - Cites Rothkopf & Billington, 1979; Cavalier & Klein, 1998
+- SB 124-128: Insert questions into information, presentation, or instruction. This helps to focus learner attention.
+    - Cites Van den Broek, Risden, Tzeng, Trabasso, and Brasche 2001; McCrudden and colleagues 2005
 
 **Question**: _How can teacher expertise hinder creating effective information? What strategies can overcome it?_
 
 - SH 36: Explicitly show discipline-specific conventions. Conventions from other disciplines can interfere with the recall of new information.
+- SH 99: The "expert blind spot" is when experts are "blind" to what learners fully need to know. Often seemingly simple skills are the combination of other skills.
+    - Cites Nickerson, 1999; Hinds, 1999; Nathan & Koedinger, 2000; Nathan & Petrosino, 2003
+- SH 113: Get help from an intermediate level learner, or someone outside your own discipline, to help decompose your expert knowledge.
+- SB 191-192: Experts often do not need the cognitive support to build mental models that novices require.
+    - Cites Mayer and Gallini 1990; Kalyuga, Ayers, Chandler, and Sweller 2003
+- SB 75: Experts often overload learners who do not have developed schemas, and therefore the difference in working memory capacity is greater.
+- SH 100: Experts must be able to decompose their knowledge and complex tasks so learners can practice the individual component skills. Computer-based programs that strengthen weak component skills have been shown to greatly improve their performance.
+    - Cites Koedinger and Anderson 1990; Koedinger & Anderson, 1993; Lovett 2001; Anderson et al., 1995; Singley, 1995; Ritter et al., 2007; Anderson, Conrad, & Corbett, 1989
+- SB 77: Automaticity, or automated response, occurs when schemas are highly developed; this bypasses working memory. The price is that experts are no longer able to explain these processes because they are not in working memory.
+    - Cites Chao & Salvendy, 1994; Feldon 2007
 
-**Question**: _How much information can one person process at a time?_
+**Question**: _How much information can one person process at a time? What strategies are effective to managing cognitive load?_
 
-**Question**: _What strategies are effective to managing cognitive load?_
+- SB 79-80  Working memory has both visual and auditory components as well as an executive component. Elderly and disabled people are less able to use both at the same time.
+    - Cites Baddeley & Logie, 1999
+- SB 75-77: When working memory is overloaded, the rate of processing new information declines dramatically.
+    - Cites Hamilton and others 1977
+- SB 89-90: Aids, or small notes or reference cards, can help to manage cognitive load.
+- SB 92: Embed instructional aids and reference into the user interface early on.
+- SB 94: To manage cognitive load, minimize the content. Write concisely. Omit details.
+    - Cites Mayer, Bove, Bryman, Mars, and Tapangco (1996); Clark and Mayer, 2008; Mayer and Jackson (2005)
+- SB 95-96: To reduce cognitive load, remove sound effects and all background music.
+    - Cites Moreno & Mayer, 2000; Gibbons, 2007; Kenz and Hugge (2002); Gilroy (2001)
+- SB 97-98: To reduce cognitive load, do not duplicate content between modes (audio and visual). Either have text or narration, not both.
+    - Cites Clark & Mayer, 2008
+- SB 100-101: To reduce cognitive load, start the lesson by teaching concepts first,  then start doing practice exercises.
+    - Cites Mayer, Mathias, and Wetzell (2002)
+- SH 106: Not all reductions to cognitive load promote learning; learners need to fully use their cognitive capacity on the task at hand rather than being distracted.
+    - Cites Paas, Renkl, & Sweller, 2003, 2004
 
-**Question**: _Is it more effective to add interesting information, or stick to the basics?_
+**Question**: _Is it more effective to add interesting information, or stick to the basics? Do emotional appeals help or hinder learning?_
+
+- SH 85: Show passion and enthusiasm for the subject, which will make the students more curious about the subject.
+- SB 97: To reduce cognitive load, remove seductive details and tangential stories.
+    - Cites Mayer (2005)
+- SB 366: Avoid creating emotional interest; instead focus on building situational interest. Use simple, minimal content; use vivid language and examples; and make things human and personal.
+    - Cites Sadoski, Goetz, & Fritz, 1993; Strun and White 2000; Moreno and Mayer (2000b); Clark and Mayer (2008)
+- SB 345: Highly emotional appeals tend to not motivate learners, or can distract them.
+    - Cites Clark & Mayer, 2008; Sadoski, Goetz, & Rodriguez, 2000; Schraw & Lehman, 2001
+- SE 151-154: Keep to the learning objectives; do not add material that does not support learning objectives.
+    - Cites Mayer and Moreno 2003; Garner, Gillingham, & White, 1989; Bishop, Amankwaita, and Cates (2008); Mayer & Johnson, 2010; Svetcov, 2000; Dewey 1913; Moreno and Mayer 2000a; Knez and Hygge 2002; Ransdell and Gilroy 2001; Mayer, 1993; Mayer, Sims, & Tajika, 1995; Dewey, 1913; Harp and Mayer 1998; Harp and Mayer 1998; Mayer, Heiser, and Lonn 2001; Sanchez and Wiley 2006; Butcher 2006; Scheiter, Gerjets, Huk, Imhof, and Kammerer 2009; Mayer, Hegarty, Mayer, and Campbell 2005
+- SE 159-164: Do not add graphics that do not support the learning objectives. They can distract, disrupt, and seduce the learner and add cognitive load.
+    - Cites Mayer, 1993; Mayer, Sims, & Tajika, 1995; Dewey, 1913; Harp and Mayer 1998; Harp and Mayer 1998; Mayer, Heiser, and Lonn 2001; Sanchez and Wiley 2006
+- SE 166-172: Do not add words to the lesson, either visually or graphically, that do not support learning objectives. An example is motivational stories.
+    - Cites Mayer, Heiser, and Lonn 2001; Lehman, Schraw, McCrudden, and Hartley 2007; Mayer, Griffith, Jurkowitz, and Rothman, 2008; Mayer, Bove, Bryman, Mars, & Tapangco, 1996; Mayer, 2001a; Mayer, Deleeuw, and Ayres 2007; Mayer and Jackson 2005
+- SE 141-144: Some situations call for on screen text even when there is audio.
+    - a) If there is nothing visual to display.
+    - b) If the pacing is very slow
+    - c) Non-native speakers
+    - d) Learning disabilities
+    - e) New keywords
+    - f) Signaling the learner's attention
+    - Cites Mayer, 2005b, 2009
 
 **Question**: _Should learners be in control of the pacing of the presentation?_
 
-**Question**: _Is note taking effective for learning?_
+- SB 101-102: To reduce cognitive load, segment lessons into short chunks; and let learners be in control of the pace of the segments.
+    - Cites Mayer and Chandler (2001)
 
-**Question**: _Can physical engagement improvement learning?_
+**Question**: _Is note taking effective for learning? Can physical engagement improvement learning?_
+
+- SB 226-227: Note taking, and other purely behavioral activities, often removes focus from the learning event, and should be minimized. Instead, offer notes at the end of the lecture. Encourage elaborate rehearsal after lecture instead of route memorization.
+    - Cites Kiewra, 1989; Kobayashi, 2005; Benton, Kiewra, Whitefill, and Dennison 1993
 
 **Question**: _Is it better to teach information as part of a process, or before teaching a process?_
 
-**Question**: _Is formal or casual language more effective during presentation?_
+- SE 212-218: Before presenting processes, present the key concepts of the lesson first.
+    - Cites Clark and Kwinn, 2007; Mayer, Mathias, and Wetzell, 2002; Kester, Kirshner, & van Merrienboer, 2006; Pollock, Chandler, & Sweller, 2002
+- SB 189-191: Show how processes work to help build mental models.
+    - Cites Kieras and Bovair, 1984
+- SB 260-262: To promote moderate transfer, teach how it works at the steps of the procedure.
+    - Cites Kieras and Bovair 1984
+- SB 268-269: To promote far transfer, integrate why's and how's into the training.
+    - Cites Van Gog, Paas, and van Merrienboer 2004
+- SH 214: Show learners your own metacognitive processes.
+- SH 211: Show learners multiple strategies to the same issue to support metacogntive development.
+- SB 255: When teaching procedures, mimic the context of application.
+- SB 260: To promote moderate transfer, show how the specifics of the procedure can be generalized.
+    - Cites Mayer 2002
 
-**Question**: _Is it better to speak fully in third-person, or to use first- and second-person?_
+**Question**: _Is formal or casual language more effective during presentation? Is it better to speak fully in third-person, or to use first- and second-person?_
+
+- SE 188: A casual tone does not have to be overly personal, it only has to be conversational.
+- SE 184-188: A formal tone does not indicate the seriousness of the subject. Learners are more effective when they feel they are in a conversation with a partner. Social presence engages deeper cognitive processes.
+    - Cites Beck, McKeown, Sandora, Kucan, & Worthy, 1996; Mayer, 2005d; Moreno and Mayer 2000b, Moreno and Mayer 2004; Mayer, Fennell, Farmer, & Campbell 2004; Kartel 2010
+- SB 178-181: Use a conversational language and learning agent to support building mental models.
+    - Cites Clark and Mayer 2008; Moreno and Mayer 2000b, 2004
+- SE 195: Learning agents do not need to be realistic; their behaviors are important however.
+    - Cites Moreno, Mayer, Spires, & Lester, 2001; Craig, Gholson, & Driscoll, 2002; Lusk and Atkinson 2007; Louwerse, Graesser, McNamara, and Lu 2009
+- SE 195-196: Learning agents need a realistic voice.
+    - Cites Moreno, Mayer, Spires, & Lester, 2001; Moreno & Mayer, 2004; Moreno and Mayer, 2000b; Atkinson, 2002; Atkinson, Mayer, and Merrill, 2005
+- SE 197-201: Make the author of the content visible to the learner. This aids learner motivation.
+    - Cites Nolen, 1995; Paxton, 2002; Beck, McKeown, Sandora, Kucan, and Worthy, 1996; Inglese, Mayer, & Rigotti, 2007
+- SE 207-212: Break up large blocks of content into small, learner-controlled segments. Continuous presentation leads to cognitive overload.
+    - Cites Moreno and Mayer, 1999a; Mayer and Chandler 2001; Moreno, 2007; Mayer, Dow, & Mayer, 2003; Schar and Zimmermann 2007
+- SB 181-182: Learning agents do not have to be realistic to be effective.
+    - Cites Moreno, Mayer, Spires, & Lester, 2001
+- SE 191-194: Teaching agents improve learning outcomes.
+    - Cites Cassell, Sullivan, Prevost, & Churchill, 2000; Graesser, Jeon, & Duffy, 2008; Moreno, 2005; Moreno, Mayer, Spires, & Lester, 2001; Atkinson, 2002; Atkinson, Mayer, & Merrill, 2005; Rickel & Johnson, 2000; Lester, Towns, Callaway, Voerman, & Fitzgerald, 2000; Atkinson, 2002; Graesser, Jeon, & Duffy, 2008; Moreno, 2005; Moreno & Mayer, 2000b; Moreno, Mayer, Spires, & Lester, 2001; Wouters, Paas, & van Merrienboer, 2008
+- SE 196: Learners do not need a choice of learning agents.
+    - Cites Moreno and Flowerday 2006
+- SB 362: To support self-confidence, include learning agents that describe their strategies.
+- SB 183-184: Learning agents should engage the learner in "deep-level questions and answers". In fact, emulating a dialog can be as effective, if not more so, than actual interaction.
+    - Cites Gholson and Craig 2006; Craig, Sullings, Witherspoon, and Gholson 2006
 
 **Question**: _How can inappropriate prior knowledge hinder learning?_
 
@@ -292,6 +400,8 @@ Information
     - Cites Brown, 1983; Kaiser, McCloskey, & Proffitt, 1986; McCloskey, 1983; Taylor & Kowalski, 2004
 - SH 25: Wrong concepts and models are difficult to overcome because we are drawn to simplification and categorization.
     - Cites Allport, 1954; Brewer, 1988; Fiske & Taylor, 1991
+- SB 155-158: Avoid activating inappropropriate prior knowledge, such as seductive details. They can severely hinder learning.
+    - Cites Garner, Gillingham, & White, 1989; Mayer 2005; Clark & Mayer, 2008; Harp and Mayer 1998
 
 **Question**: _What strategies are effective for dealing with inappropriate prior knowledge?_
 
@@ -310,11 +420,11 @@ Information
 
 **Question**: _Are people more likely to remember facts or stories?_
 
+- _Needs research_
+
 **Question**: _What are the limitations of working memory?_
 
-**Question**: _Do emotional appeals help or hinder learning?_
-
-- SH 85: Show passion and enthusiasm for the subject, which will make the students more curious about the subject.
+- _Needs research_
 
 **Question**: _Can expertise in the subject hinder teaching?_
 
@@ -324,139 +434,28 @@ Information
 - SH 55: Experts are much more likely to be able to classify information in more useful patterns, and are often unaware they are using these schemas.
     - Cites DeGroot 1965; Gobet & Charness, 2006; Chase & Simon, 1973a, 1973b
 - SH 59: Before creating your course or lecture, develop a concept map of your own knowledge on the subject. This will force you to overcome your bias towards deeper organization and teach your own organization with the factual knowledge.
+- SH 182: Avoid messages that suggest low-ability of the learner.
 
-_File_
 
-- SE 77: Graphics can serve as "topic organizers", essentially acting as a way of showing the relationship between learning objectives.
-- SB 75: Experts often overload learners who do not have developed schemas, and therefore the difference in working memory capacity is greater.
-- SB 75-77: When working memory is overloaded, the rate of processing new information declines dramatically.
-    - Cites Hamilton and others 1977
-- SB 77: Automaticity, or automated response, occurs when schemas are highly developed; this bypasses working memory. The price is that experts are no longer able to explain these processes because they are not in working memory.
-    - Cites Chao & Salvendy, 1994; Feldon 2007
-- SB 79-80 : Working memory has both visual and auditory components as well as an executive component. Elderly and disabled people are less able to use both at the same time.
-    - Cites Baddeley & Logie, 1999
-- SB 89-90: Aids, or small notes or reference cards, can help to manage cognitive load.
-- SB 92: Embed instructional aids and reference into the user interface early on.
-- SB 94: To manage cognitive load, minimize the content. Write concisely. Omit details.
-    - Cites Mayer, Bove, Bryman, Mars, and Tapangco (1996); Clark and Mayer, 2008; Mayer and Jackson (2005)
-- SB 95-96: To reduce cognitive load, remove sound effects and all background music.
-    - Cites Moreno & Mayer, 2000; Gibbons, 2007; Kenz and Hugge (2002); Gilroy (2001)
-- SB 97: To reduce cognitive load, remove seductive details and tangential stories.
-    - Cites Mayer (2005)
-- SB 97-98: To reduce cognitive load, do not duplicate content between modes (audio and visual). Either have text or narration, not both.
-    - Cites Clark & Mayer, 2008
-- SB 100-101: To reduce cognitive load, start the lesson by teaching concepts first,  then start doing practice exercises.
-    - Cites Mayer, Mathias, and Wetzell (2002)
-- SB 101-102: To reduce cognitive load, segment lessons into short chunks; and let learners be in control of the pace of the segments.
-    - Cites Mayer and Chandler (2001)
-- SB 117: To support learner attention, find the right balance of demands. Too much can be paralyzing, too little and there's no effort.
-- SB 118: Asking frequent questions can sustain learner attention and focus.
-- SB 121-124: Cueing, or signaling, can help to focus learner attention on critical aspects. Examples are arrows, bolding text, emphasizing spoken words...
-    - Cites de Koning et al 2007, Mautone and Mayer 2001, Brophy and Good 1986; Rickards, Fajen, Sullivan, & Gillespie, 1997
-- SB 128-129: Include the learning objectives to help learners focus their attention. Reiterate the learning objectives in information, practice, and assignments.
-    - Cites Rothkopf & Billington, 1979; Cavalier & Klein, 1998
-- SB 124-128: Insert questions into information, presentation, or instruction. This helps to focus learner attention.
-    - Cites Van den Broek, Risden, Tzeng, Trabasso, and Brasche 2001; McCrudden and colleagues 2005
-- SB 141: "Be sure there is a knowledge base in working memory for integrating new content by: (1) activating appropriate prior knowledge, (2) compensating for missing prior knowledge, and (3) mini- mizing the activation of irrelevant prior knowledge."
-- SB 153-155: An "expository advance organize" outlines relevant prior knowledge at the beginning of a lesson.
-    - Cites Mayer, Mathias, and Wetzell 2002; Clark and Mayer 2007; Shapiro 2005
+**Question**: _How does culture impact learning during information?_
+
 - SH 178-180: Course content can impact the learning environment. If only the majority view is shown, or the majority view dominates, this can adversely impact outcomes.
     - Cites Marchesani and Adams (1992); Seymour and Hewitt (1997); Astin 1993
-- SE 184-188: A formal tone does not indicate the seriousness of the subject. Learners are more effective when they feel they are in a conversation with a partner. Social presence engages deeper cognitive processes.
-    - Cites Beck, McKeown, Sandora, Kucan, & Worthy, 1996; Mayer, 2005d; Moreno and Mayer 2000b, Moreno and Mayer 2004; Mayer, Fennell, Farmer, & Campbell 2004; Kartel 2010
-- SB 366: Avoid creating emotional interest; instead focus on building situational interest. Use simple, minimal content; use vivid language and examples; and make things human and personal.
-    - Cites Sadoski, Goetz, & Fritz, 1993; Strun and White 2000; Moreno and Mayer (2000b); Clark and Mayer (2008)
-- SB 218: Wait at least three seconds after asking a question before going for the answer to promote building mental models.
-    - Cites Tobin 1987.
-- SB 150-153: A pre-lesson case analysis ask learners to read about a cases before presenting new information. This can help to activate prior knowledge. Using multiple cases can show different perspectives.
-    - Cites Bransford, Barron, Pea, Meltzoff, Kuhl, Bell, Stevens, Schwartz, Vye, Reeves, Roschelle, & Sabelli, 2006; Schwartz & Bransford, 1998
 - SH 174-176: Stereotypes can be very damaging to the learning environment.
     - Cites Steele & Aronson, 1995; Gonzales, Blanton, & Williams, 2002; Shih et al., 1999; Inzlicht & Ben-Zeev, 2000; Levy, 1996; Croizet & Claire, 1998; Major et al., 1998
-- SB 183-184: Learning agents should engage the learner in "deep-level questions and answers". In fact, emulating a dialog can be as effective, if not more so, than actual interaction.
-    - Cites Gholson and Craig 2006; Craig, Sullings, Witherspoon, and Gholson 2006
 - SE 188-189: People learner better from speakers without accents.
     - Cites Mayer, Sobko, & Mautone, 2003
-- SE 151-154: Keep to the learning objectives; do not add material that does not support learning objectives.
-    - Cites Mayer and Moreno 2003; Garner, Gillingham, & White, 1989; Bishop, Amankwaita, and Cates (2008); Mayer & Johnson, 2010; Svetcov, 2000; Dewey 1913; Moreno and Mayer 2000a; Knez and Hygge 2002; Ransdell and Gilroy 2001; Mayer, 1993; Mayer, Sims, & Tajika, 1995; Dewey, 1913; Harp and Mayer 1998; Harp and Mayer 1998; Mayer, Heiser, and Lonn 2001; Sanchez and Wiley 2006; Butcher 2006; Scheiter, Gerjets, Huk, Imhof, and Kammerer 2009; Mayer, Hegarty, Mayer, and Campbell 2005
-- SE 166-172: Do not add words to the lesson, either visually or graphically, that do not support learning objectives. An example is motivational stories.
-    - Cites Mayer, Heiser, and Lonn 2001; Lehman, Schraw, McCrudden, and Hartley 2007; Mayer, Griffith, Jurkowitz, and Rothman, 2008; Mayer, Bove, Bryman, Mars, & Tapangco, 1996; Mayer, 2001a; Mayer, Deleeuw, and Ayres 2007; Mayer and Jackson 2005
-- SB 326: Include how to study the content in the learning object; and include forced monitoring of progress in the course.
-- SE 159-164: Do not add graphics that do not support the learning objectives. They can distract, disrupt, and seduce the learner and add cognitive load.
-    - Cites Mayer, 1993; Mayer, Sims, & Tajika, 1995; Dewey, 1913; Harp and Mayer 1998; Harp and Mayer 1998; Mayer, Heiser, and Lonn 2001; Sanchez and Wiley 2006
-- SE 141-144: Some situations call for on screen text even when there is audio.
-    - a) If there is nothing visual to display.
-    - b) If the pacing is very slow
-    - c) Non-native speakers
-    - d) Learning disabilities
-    - e) New keywords
-    - f) Signaling the learner's attention
-    - Cites Mayer, 2005b, 2009
-- SH 99: The "expert blind spot" is when experts are "blind" to what learners fully need to know. Often seemingly simple skills are the combination of other skills.
-    - Cites Nickerson, 1999; Hinds, 1999; Nathan & Koedinger, 2000; Nathan & Petrosino, 2003
-- SE 196: Learners do not need a choice of learning agents.
-    - Cites Moreno and Flowerday 2006
-- SH 98: Experts organize information "into large, conceptual chucks" with aids with applying the knowledge flexibly; experts more quickly recognize patterns; experts are more likely to be able to traverse contexts
-    - Cites Chase & Simon, 1973b; Chase & Ericsson, 1982; Koedinger & Anderson, 1990; DeGroot, 1965; Anderson, 1992; Chase & Simon, 1973a; Koedinger & Anderson, 1990; Blessing & Anderson, 1996; Smith & Chamberlin, 1992; Lansdown, 2002; Beilock, Wierenga, & Carr, 2002; Chi, Feltovich, & Glaser, 1981; Larkin et al., 1980; Boster & Johnson, 1989
-- SH 100: Experts must be able to decompose their knowledge and complex tasks so learners can practice the individual component skills. Computer-based programs that strengthen weak component skills have been shown to greatly improve their performance.
-    - Cites Koedinger and Anderson 1990; Koedinger & Anderson, 1993; Lovett 2001; Anderson et al., 1995; Singley, 1995; Ritter et al., 2007; Anderson, Conrad, & Corbett, 1989
-- SH 113: Get help from an intermediate level learner, or someone outside your own discipline, to help decompose your expert knowledge.
-- SB 371: Add situational interest to support motivation.
-    - Cites Means, Jonassen, and Dwyer (1997); Hidi and Renninger (2006); Means, Jonassen, and Dwyer,1997
-- SB 370: To support motivation, present new ideas in familiar terms.
-    - Cites Stepich & Newby, 1988
-- SE 329: Use on screen navigational elements such as headers. Use links sparingly.
-    - Cites Lorch, Lorch, Ritchey, McGovern, and Coleman (2001); Mayer (2005b); Neiderhauser, Reynolds, Salmen, and Skolmoski (2000); Shapiro (2008)
-- SB 144-145: Asking and answering questions about relevant prior knowledge will activate it. You can also ask learners to form their own questions. Particularly, rendering the relationships between prior knowledge is effective (concept maps).
-    - Cites Pressley, Wood, Woloshyn, Martin, King, & Menke, 1992; Gurlitt, Renkl, Motes, and Hauser 2006
-- SB 145-148: Use "comparative advance organizers" to activate prior knowledge. This is a presentation that relates new information to existing information. An effective organizer explicitly links concepts.
-    - Cites Ausubel & Youssef, 1963; Mayer and Wittrock 2006; Mayer, 1983; Kloster and Winne 1989
-- SB 155-158: Avoid activating inappropropriate prior knowledge, such as seductive details. They can severely hinder learning.
-    - Cites Garner, Gillingham, & White, 1989; Mayer 2005; Clark & Mayer, 2008; Harp and Mayer 1998
-- SB 158: If the learners already have the prior knowledge, activating it might not be necessary.
-    - Clark, Nguyen, & Sweller, 2006
-- SH 106: Not all reductions to cognitive load promote learning; learners need to fully use their cognitive capacity on the task at hand rather than being distracted.
-    - Cites Paas, Renkl, & Sweller, 2003, 2004
-- SE 191-194: Teaching agents improve learning outcomes.
-    - Cites Cassell, Sullivan, Prevost, & Churchill, 2000; Graesser, Jeon, & Duffy, 2008; Moreno, 2005; Moreno, Mayer, Spires, & Lester, 2001; Atkinson, 2002; Atkinson, Mayer, & Merrill, 2005; Rickel & Johnson, 2000; Lester, Towns, Callaway, Voerman, & Fitzgerald, 2000; Atkinson, 2002; Graesser, Jeon, & Duffy, 2008; Moreno, 2005; Moreno & Mayer, 2000b; Moreno, Mayer, Spires, & Lester, 2001; Wouters, Paas, & van Merrienboer, 2008
 - SE 189: Learners tend to learn better from male or female voices based on the stereotype of the subject (tech, relationships...); some contradictory evidence exists.
     - Cites Nass & Brave, 2005;  Linek, Gerjets, and Scheiter 2010
 - SE 188: People interact with computers as if they are human. Human voices do better than machine voices.
     - Cites Reeves and Nass 1996; Mayer, Sobko, and Mautone 2003; Atkinson, Mayer, and Merrill 2005; Nass and Brave 2005
-- SE 212-218: Before presenting processes, present the key concepts of the lesson first.
-    - Cites Clark and Kwinn, 2007; Mayer, Mathias, and Wetzell, 2002; Kester, Kirshner, & van Merrienboer, 2006; Pollock, Chandler, & Sweller, 2002
-- SE 188: A casual tone does not have to be overly personal, it only has to be conversational.
-- SE 195: Learning agents do not need to be realistic; their behaviors are important however.
-    - Cites Moreno, Mayer, Spires, & Lester, 2001; Craig, Gholson, & Driscoll, 2002; Lusk and Atkinson 2007; Louwerse, Graesser, McNamara, and Lu 2009
-- SE 195-196: Learning agents need a realistic voice.
-    - Cites Moreno, Mayer, Spires, & Lester, 2001; Moreno & Mayer, 2004; Moreno and Mayer, 2000b; Atkinson, 2002; Atkinson, Mayer, and Merrill, 2005
-- SE 197-201: Make the author of the content visible to the learner. This aids learner motivation.
-    - Cites Nolen, 1995; Paxton, 2002; Beck, McKeown, Sandora, Kucan, and Worthy, 1996; Inglese, Mayer, & Rigotti, 2007
-- SE 207-212: Break up large blocks of content into small, learner-controlled segments. Continuous presentation leads to cognitive overload.
-    - Cites Moreno and Mayer, 1999a; Mayer and Chandler 2001; Moreno, 2007; Mayer, Dow, & Mayer, 2003; Schar and Zimmermann 2007
-- SB 178-181: Use a conversational language and learning agent to support building mental models.
-    - Cites Clark and Mayer 2008; Moreno and Mayer 2000b, 2004
-- SB 181-182: Learning agents do not have to be realistic to be effective.
-    - Cites Moreno, Mayer, Spires, & Lester, 2001
-- SB 189-191: Show how processes work to help build mental models.
-    - Cites Kieras and Bovair, 1984
-- SB 191-192: Experts often do not need the cognitive support to build mental models that novices require.
-    - Cites Mayer and Gallini 1990; Kalyuga, Ayers, Chandler, and Sweller 2003
-- SB 226-227: Note taking, and other purely behavioral activities, often removes focus from the learning event, and should be minimized. Instead, offer notes at the end of the lecture. Encourage elaborate rehearsal after lecture instead of route memorization.
-    - Cites Kiewra, 1989; Kobayashi, 2005; Benton, Kiewra, Whitefill, and Dennison 1993
-- SB 255: When teaching procedures, mimic the context of application.
-- SB 260: To promote moderate transfer, show how the specifics of the procedure can be generalized.
-    - Cites Mayer 2002
-- SB 260-262: To promote moderate transfer, teach how it works at the steps of the procedure.
-    - Cites Kieras and Bovair 1984
-- SB 268-269: To promote far transfer, integrate why's and how's into the training.
-    - Cites Van Gog, Paas, and van Merrienboer 2004
-- SH 182: Avoid messages that suggest low-ability of the learner.
-- SH 211: Show learners multiple strategies to the same issue to support metacogntive development.
-- SH 214: Show learners your own metacognitive processes.
-- SH 230: Concept Maps > Read Novak (1998)
-- SB 345: Highly emotional appeals tend to not motivate learners, or can distract them.
-    - Cites Clark & Mayer, 2008; Sadoski, Goetz, & Rodriguez, 2000; Schraw & Lehman, 2001
-- SB 362: To support self-confidence, include learning agents that describe their strategies.
+
+* * *
+
+- SB 35-40, 45: Instructional design techniques are often bound by context; there are few absolute rules. Some of the most important factors that vary the context include a) learner prior knowledge, b) learner motivation, c) the goal of transfer (near/far), and  d) the types of tasks involved. Often, one experiment will not provide enough data, requires a meta analysis of multiple experiments to find these contextual factors.
+    - Cites Clark and Mayer, 2008; Mayer and Gallini, 1990
+- SB 326: Include how to study the content in the learning object; and include forced monitoring of progress in the course.
+
 
 ### Information: Analogies and Examples
 
@@ -642,6 +641,11 @@ Practice
 
 **Question**: _When does practice stop being effective?_
 
+- SE 259: There is a power law to practice, the benefits diminish with more practice.
+    - Cites Crossman, 1959; Rosenbaum, Carlson, & Gilmore, 2001
+- SE 260-261: The amount of practice needs to reflect how critical the task is.
+    - Cites Schnackenberg, Sullivan, Leader, & Jones, 1998; Schnackenberg & Sullivan, 2000
+
 **Question**: _How should practice be paced?_
 
 **Question**: _What strategies are effective to promoting learner organization through practice?_
@@ -652,9 +656,19 @@ Practice
 
 **Question**: _How can learner's know what is most relevant in practice?_
 
+- SE 151-154: Keep to the learning objectives; do not add material that does not support learning objectives.
+    - Cites Mayer and Moreno 2003; Garner, Gillingham, & White, 1989; Bishop, Amankwaita, and Cates (2008); Mayer & Johnson, 2010; Svetcov, 2000; Dewey 1913; Moreno and Mayer 2000a; Knez and Hygge 2002; Ransdell and Gilroy 2001; Mayer, 1993; Mayer, Sims, & Tajika, 1995; Dewey, 1913; Harp and Mayer 1998; Harp and Mayer 1998; Mayer, Heiser, and Lonn 2001; Sanchez and Wiley 2006; Butcher 2006; Scheiter, Gerjets, Huk, Imhof, and Kammerer 2009; Mayer, Hegarty, Mayer, and Campbell 2005
+- SE 166-172: Do not add words to the lesson, either visually or graphically, that do not support learning objectives. An example is motivational stories.
+    - Cites Mayer, Heiser, and Lonn 2001; Lehman, Schraw, McCrudden, and Hartley 2007; Mayer, Griffith, Jurkowitz, and Rothman, 2008; Mayer, Bove, Bryman, Mars, & Tapangco, 1996; Mayer, 2001a; Mayer, Deleeuw, and Ayres 2007; Mayer and Jackson 2005
+- SE 159-164: Do not add graphics that do not support the learning objectives. They can distract, disrupt, and seduce the learner and add cognitive load.
+    - Cites Mayer, 1993; Mayer, Sims, & Tajika, 1995; Dewey, 1913; Harp and Mayer 1998; Harp and Mayer 1998; Mayer, Heiser, and Lonn 2001; Sanchez and Wiley 2006
+
 **Question**: _How does the challenge level impact learning?_
 
 **Question**: _What is the best way to choose an appropriate challenge level?_
+
+- SB 350: Finding the right level of challenge for the learner's goal is critical to motivation.
+    - Cites Locke and Latham’s (2002); (Malone & Lepper, 1987)
 
 **Question**: _What strategies can be used to keep learners engaged and motivated?_
 
@@ -663,7 +677,30 @@ Practice
 
 **Question**: _Is it effective to focus student attention? When is focusing student attention during practice effective?_
 
+- SB 118: Asking frequent questions can sustain learner attention and focus.
+- SB 121-124: Cueing, or signaling, can help to focus learner attention on critical aspects. Examples are arrows, bolding text, emphasizing spoken words...
+    - Cites de Koning et al 2007, Mautone and Mayer 2001, Brophy and Good 1986; Rickards, Fajen, Sullivan, & Gillespie, 1997
+- SB 128-129: Include the learning objectives to help learners focus their attention. Reiterate the learning objectives in information, practice, and assignments.
+    - Cites Rothkopf & Billington, 1979; Cavalier & Klein, 1998
+
 **Question**: _Is it more effective to try to cover all material equally, or target areas of weakness during practice?_
+
+- SE 256: There are five major elements to deliberate practice:
+    - a) Effort
+    - b) Intrinsic motivation
+    - c) Focus on areas of weakness
+    - d) Explanatory feedback
+    - e) Repetition
+    - Cites Kellogg & Whiteford, 2009
+- SB 202-203: Deliberate practice, focusing on areas of weakness strategically, is much more effective than route practice.
+    - Cites Ericsson 2006; Simon & Gilmartin, 1973
+- SH 206: Give learners early assessments so they are more effectively able to evaluate their own strengths and weaknesses.
+- SB 209-211: While performance increases with practice, the returns of practice diminish over time. Deliberate practice helps to overcome the diminishing return.
+    - Cites Crossman, 1959; Keehner, Lippa, Montello, Tendick, & Hegary, 2006; Rosenbaum, Carlson, & Gilmore, 2001; Ericsson, 1990; Schnackenberg, Sullivan, Leader, and Jones, 1998
+- SE 254-256: Avoid regurgitative practice questions. The amount of practice has a strong correspondence with performance; deliberate practice has an even more profound impact.
+    - Cites Sloboda, Davidson, Howe, and Moore 1996; Tuffiash, Roring, & Ericsson, 2007; Ericsson 2006
+- SB 332-333: To support metacognitive developer, teach learners deliberate practice.
+    - Cites Ericsson, 2006; Zimmerman (2006)
 
 **Question**: _What types of practice lead to far-transfer and expertise development?_
 
@@ -676,6 +713,17 @@ Practice
 
 **Question**: _Is scaffolding an effective strategy? When does it work?_
 
+- SH 105: Scaffolding, or letting learners focus on one task at a time before integrating skills, is highly effective. Worked examples are an example of scaffolding.
+    - Cites Clarke, Ayres, and Sweller 2005, Sweller & Cooper, 1985; Cooper & Sweller, 1987; Paas & van Merrienboer, 1994
+- SH 132: Instructional scaffolding helps learners to target skills at the right challenge level. Scaffolding adds structure and support to the challenge, and slowly removes the support over time.
+    - Cites Palincsar and Brown 1984
+- SH 132-133: Scaffolds can be simple textual or diagram prompts; they do not necessarily need to be from a person directly.
+    - Cites Bereiter & Scardamalia, 1987
+- SH 133: Scaffolding supports learner motiviation.
+    - Cites Csikszentmihalyi, 1991
+- SH 146-147: Add scaffolding to practice and application to support the appropriate level of challenge.
+- SH 215: Scaffold learners in their metacognitive processes by starting with a ton of aids, and gradually weaning them off.
+
 **Question**: _When is automatic response needed? How do we train an automatic response?_
 
 **Question**: _Should learners only be asked what they have been literally presented?_
@@ -686,10 +734,26 @@ Practice
 
 **Question**: _How can we promote knowledge transfer to real situations?_
 
+- SH 111: Focusing learner attention during study and application questions and projects can also help promote far-transfer.
+    - Cites Gick & Holyoak, 1980; Perfetto et al., 1983; Klahr & Carver, 1988; Bassok, 1990
+- SH 115-116: Scaffolding, or isolated practice, can help learners be more ready to transfer knowledge to other contexts.
+- SB 257-258: Use learning aids, such as scaffolding or training wheels, to promote transfer without causing cognitive overload. Also try drilling on specific parts of the procedure before integrating them together.
+    - Cites Carroll 1992
+- SH 107: Asking learners to apply their knowledge promotes near- and far-transfer. Transfer, by human nature, is not automatic and less likely to work when the contexts vary more.
+    - Cites Singley & Anderson, 1989; McKeough, Lupart, & Marini, 1995; Thorndike & Woodworth, 1901; Reed, Ernst, & Banerji, 1974; Singley, 1995; Cognition and Technology Group at Vanderbilt, 1994; Singley & Anderson, 1989; Holyoak & Koh, 1987
+- SH 109: Learners are more capable of applying knowledge when they can "combine concrete experience within particular contexts and abstract knowledge that crosscuts contexts". Practicing knowledge in multiple contexts promotes application and far-transfer.
+    - Cites Schwartz et al., 1999; Judd, 1908; Gick & Holyoak, 1983
+- SB 263-265: To promote far transfer, practice in a variety of contexts.
+    - Cites Paas and van Merrienboer 1996; Quilici and Mayer 1996
+
 **Question**: _Can classical conditioning or instrumental conditioning be used effectively in an online environment?_
+
+- _Needs research_
 
 _File_
 
+- SB 218: Wait at least three seconds after asking a question before going for the answer to promote building mental models.
+    - Cites Tobin 1987.
 - SE 99: Keep the directions and the exercise together. Do not separate them into two different screens.
 - SB 89-90: Aids, or small notes or reference cards, can help to manage cognitive load.
 - SB 90-91: When a reference is necessary to complete a task, train using the reference to help reduce cognitive load.
@@ -700,53 +764,22 @@ _File_
 - SB 100-101: To reduce cognitive load, start the lesson by teaching concepts first,  then start doing practice exercises.
     - Cites Mayer, Mathias, and Wetzell (2002)
 - SB 117: To support learner attention, find the right balance of demands. Too much can be paralyzing, too little and there's no effort.
-- SB 118: Asking frequent questions can sustain learner attention and focus.
-- SB 121-124: Cueing, or signaling, can help to focus learner attention on critical aspects. Examples are arrows, bolding text, emphasizing spoken words...
-    - Cites de Koning et al 2007, Mautone and Mayer 2001, Brophy and Good 1986; Rickards, Fajen, Sullivan, & Gillespie, 1997
-- SB 128-129: Include the learning objectives to help learners focus their attention. Reiterate the learning objectives in information, practice, and assignments.
-    - Cites Rothkopf & Billington, 1979; Cavalier & Klein, 1998
 - SE 184-188: A formal tone does not indicate the seriousness of the subject. Learners are more effective when they feel they are in a conversation with a partner. Social presence engages deeper cognitive processes.
     - Cites Beck, McKeown, Sandora, Kucan, & Worthy, 1996; Mayer, 2005d; Moreno and Mayer 2000b, Moreno and Mayer 2004; Mayer, Fennell, Farmer, & Campbell 2004; Kartel 2010
-- SE 256: There are five major elements to deliberate practice:
-    - a) Effort
-    - b) Intrinsic motivation
-    - c) Focus on areas of weakness
-    - d) Explanatory feedback
-    - e) Repetition
-    - Cites Kellogg & Whiteford, 2009
-- SH 111: Focusing learner attention during study and application questions and projects can also help promote far-transfer.
-    - Cites Gick & Holyoak, 1980; Perfetto et al., 1983; Klahr & Carver, 1988; Bassok, 1990
-- SB 218: Wait at least three seconds after asking a question before going for the answer to promote building mental models.
-    - Cites Tobin 1987.
 - SB 199-198: Activity isn't necessarily always more effective than didactic learning.
     - Cites Haidet, Morgan, O’Malley, Moran, and Richards, 2004
-- SB 209-211: While performance increases with practice, the returns of practice diminish over time. Deliberate practice helps to overcome the diminishing return.
-    - Cites Crossman, 1959; Keehner, Lippa, Montello, Tendick, & Hegary, 2006; Rosenbaum, Carlson, & Gilmore, 2001; Ericsson, 1990; Schnackenberg, Sullivan, Leader, and Jones, 1998
 - SB 222: Ask learners about specific steps of a process, and which concepts apply to that step.
     - Cites Atkinson, Renkl, and Merrill, 2003
-- SE 151-154: Keep to the learning objectives; do not add material that does not support learning objectives.
-    - Cites Mayer and Moreno 2003; Garner, Gillingham, & White, 1989; Bishop, Amankwaita, and Cates (2008); Mayer & Johnson, 2010; Svetcov, 2000; Dewey 1913; Moreno and Mayer 2000a; Knez and Hygge 2002; Ransdell and Gilroy 2001; Mayer, 1993; Mayer, Sims, & Tajika, 1995; Dewey, 1913; Harp and Mayer 1998; Harp and Mayer 1998; Mayer, Heiser, and Lonn 2001; Sanchez and Wiley 2006; Butcher 2006; Scheiter, Gerjets, Huk, Imhof, and Kammerer 2009; Mayer, Hegarty, Mayer, and Campbell 2005
 - SE 269-271: Mix up practice questions, do not block practice. It will lead to lower immediate performance, but higher long term performance.
 - SE 272: Keep practice questions in text for reference. Do not narrate practice questions, answers, responses, or feedback.
 - SE 173: "Signaling includes using headings, bold, italics, underlining, capital letters, larger font, color, white space, arrows, and related techniques to draw the learner’s attention to specific parts of the display or page."
     - Cites de Koning, Tabbers, Rikers, & Paas, 2010; Harp & Mayer, 1997; Mautone & Mayer, 2001; Mautone & Mayer, 2001; Mayer, 2005b; Mayer & Moreno, 2003
-- SE 166-172: Do not add words to the lesson, either visually or graphically, that do not support learning objectives. An example is motivational stories.
-    - Cites Mayer, Heiser, and Lonn 2001; Lehman, Schraw, McCrudden, and Hartley 2007; Mayer, Griffith, Jurkowitz, and Rothman, 2008; Mayer, Bove, Bryman, Mars, & Tapangco, 1996; Mayer, 2001a; Mayer, Deleeuw, and Ayres 2007; Mayer and Jackson 2005
 - SB 326: Include how to study the content in the learning object; and include forced monitoring of progress in the course.
 - SB 364: To support mastery-based goals, measure learners against the learning objectives rather than each other.
-- SE 159-164: Do not add graphics that do not support the learning objectives. They can distract, disrupt, and seduce the learner and add cognitive load.
-    - Cites Mayer, 1993; Mayer, Sims, & Tajika, 1995; Dewey, 1913; Harp and Mayer 1998; Harp and Mayer 1998; Mayer, Heiser, and Lonn 2001; Sanchez and Wiley 2006
 - SE 257-262: Ensure there is enough practice with the learning object to acheive the objective.
     - Cites Moreno and Mayer 2005, 2007
-- SE 254-256: Avoid regurgitative practice questions. The amount of practice has a strong correspondence with performance; deliberate practice has an even more profound impact.
-    - Cites Sloboda, Davidson, Howe, and Moore 1996; Tuffiash, Roring, & Ericsson, 2007; Ericsson 2006
-- SB 332-333: To support metacognitive developer, teach learners deliberate practice.
-    - Cites Ericsson, 2006; Zimmerman (2006)
-- SB 202-203: Deliberate practice, focusing on areas of weakness strategically, is much more effective than route practice.
-    - Cites Ericsson 2006; Simon & Gilmartin, 1973
 - SB 205-209: Maintence rehearsal simply maintains the current memory; elaborate rehearsal practices integrating new information with prior knowledge. Assign elaborate rehearsal to support longer term retention.
     - Cites Taylor & Chi, 2006
-- SH 206: Give learners early assessments so they are more effectively able to evaluate their own strengths and weaknesses.
 - SE 317: Adding questions can help learners to better self-assess their own knowledge.
     - Cites Walczyk and Hall (1989)
 - SE 341, 343: Trying to teach general thinking skills only has a mild effect.
@@ -756,27 +789,10 @@ _File_
 - SE 262-263: Practice should mirror the context to which it is applied.
 - SE 272-273: Keep practice question content grouped logically and conveniently on the page.
     - Cites Rey (2011)
-- SH 105: Scaffolding, or letting learners focus on one task at a time before integrating skills, is highly effective. Worked examples are an example of scaffolding.
-    - Cites Clarke, Ayres, and Sweller 2005, Sweller & Cooper, 1985; Cooper & Sweller, 1987; Paas & van Merrienboer, 1994
-- SH 115-116: Scaffolding, or isolated practice, can help learners be more ready to transfer knowledge to other contexts.
-- SH 132: Instructional scaffolding helps learners to target skills at the right challenge level. Scaffolding adds structure and support to the challenge, and slowly removes the support over time.
-    - Cites Palincsar and Brown 1984
-- SH 132-133: Scaffolds can be simple textual or diagram prompts; they do not necessarily need to be from a person directly.
-    - Cites Bereiter & Scardamalia, 1987
-- SH 133: Scaffolding supports learner motiviation.
-    - Cites Csikszentmihalyi, 1991
-- SH 146-147: Add scaffolding to practice and application to support the appropriate level of challenge.
-- SB 257-258: Use learning aids, such as scaffolding or training wheels, to promote transfer without causing cognitive overload. Also try drilling on specific parts of the procedure before integrating them together.
-    - Cites Carroll 1992
-- SH 215: Scaffold learners in their metacognitive processes by starting with a ton of aids, and gradually weaning them off.
 - SH 106: Not all reductions to cognitive load promote learning; learners need to fully use their cognitive capacity on the task at hand rather than being distracted.
     - Cites Paas, Renkl, & Sweller, 2003, 2004
-- SH 107: Asking learners to apply their knowledge promotes near- and far-transfer. Transfer, by human nature, is not automatic and less likely to work when the contexts vary more.
-    - Cites Singley & Anderson, 1989; McKeough, Lupart, & Marini, 1995; Thorndike & Woodworth, 1901; Reed, Ernst, & Banerji, 1974; Singley, 1995; Cognition and Technology Group at Vanderbilt, 1994; Singley & Anderson, 1989; Holyoak & Koh, 1987
 - SH 107: Learners often fail to apply knowledge to contexts due to context dependence of their knowledge.
     - Cites Mason Spencer & Weisberg, 1986; Perfetto, Bransford, & Franks, 1983
-- SH 109: Learners are more capable of applying knowledge when they can "combine concrete experience within particular contexts and abstract knowledge that crosscuts contexts". Practicing knowledge in multiple contexts promotes application and far-transfer.
-    - Cites Schwartz et al., 1999; Judd, 1908; Gick & Holyoak, 1983
 - SH 147: Set expectations for how much practice is necessary to achieve the goal.
 - SH 115: Practice to the point of fluency is required before attempting application of knowledge.
 - SH 119: "Specify Context and Ask Students to Identify Relevant Skills or Knowledge" and "Specify Skills or Knowledge and Ask Students to Identify Contexts in Which They Apply"
@@ -792,14 +808,6 @@ _File_
     - Cites Gall & Artero-Bonare, 1995
 - SB 220-221: Ask learners to explicitly explain the concepts in their own words.
     - Cites De Bruin, Rikers, and Schmidt 2007
-- SB 263-265: To promote far transfer, practice in a variety of contexts.
-    - Cites Paas and van Merrienboer 1996; Quilici and Mayer 1996
-- SE 259: There is a power law to practice, the benefits diminish with more practice.
-    - Cites Crossman, 1959; Rosenbaum, Carlson, & Gilmore, 2001
-- SE 260-261: The amount of practice needs to reflect how critical the task is.
-    - Cites Schnackenberg, Sullivan, Leader, & Jones, 1998; Schnackenberg & Sullivan, 2000
-- SB 350: Finding the right level of challenge for the learner's goal is critical to motivation.
-    - Cites Locke and Latham’s (2002); (Malone & Lepper, 1987)
 - SB 351-352: Focusing on mastery rather than performance leads to better learning strategies.
     - Cites Schunk and Zimmerman (2006)
 - SB 360: To support self-confidence, provide tasks at the right challenge.
@@ -892,7 +900,7 @@ _File_
 - SH 31: Looking for patterns of errors in what student's do can help to identify inappropriate and inaccurate prior knowledge.
 - SE 188: People interact with computers as if they are human. Human voices do better than machine voices.
     - Cites Reeves and Nass 1996; Mayer, Sobko, and Mautone 2003; Atkinson, Mayer, and Merrill 2005; Nass and Brave 2005
-    
+
 **Question**: _What types of feedback are most effective during practice? What feedback is not effective?_
 
 - SH 58: Asking learners to explain correct answers can speed up the development of their knowledge organization.
@@ -1723,7 +1731,7 @@ Community and Discussion
     - Cites Beck, McKeown, Sandora, Kucan, & Worthy, 1996; Mayer, 2005d; Moreno and Mayer 2000b, Moreno and Mayer 2004; Mayer, Fennell, Farmer, & Campbell 2004; Kartel 2010
 - SH 131: One-on-one tutoring can greatly help teachers to identify a correct level of challenge for the learner.
     - Cites Anderson, Corbett, Koedinger, & Pelletier, 1995; Bloom, 1984; Merrill, Reiser, Ranney, & Trafton, 1992
-    
+
 ### Community and Discussion: Consensus and validity
 
 **Question**: _Are decisions based on authority, majority-vote, or consensus most effective? What are the advantages and disadvantages of each?_
