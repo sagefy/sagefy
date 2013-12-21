@@ -1,5 +1,5 @@
 <header>
-    <img src="/docs/static/astrolabe.svg" alt="astrolabe" height="84" class="large" />
+    <img src="{{ site.baseurl }}/docs/static/astrolabe.svg" alt="astrolabe" height="84" class="large" />
     <hgroup>
         <div class="title">Sagefy</div>
         <div class="description">Adaptive, collaborative, and open learning platform.</div>
@@ -7,7 +7,7 @@
 </header>
 
 <ul>
-    <li><a href="/">Home</a></li>
+    <li><a href="{{ site.baseurl }}/">Home</a></li>
     <li><a href="http://github.com/heiskr/sagefy">Github</a></li>
     <li><a href="http://twitter.com/sagefyorg">Twitter</a></li>
 </ul>
@@ -17,14 +17,14 @@
 <h4 id="documents">Documents</h4>
 
 <ul>
-    <li><a href="/docs/overview.html">Overview</a></li>
-    <li><a href="/docs/data_structure.html">Data structure</a></li>
-    <li><a href="/docs/user_processes.html">User processes</a></li>
-    <li><a href="/docs/survey_of_learning_research.html">Survey of Learning Research</a></li>
-    <li><a href="/docs/machine_learning_application.html">Machine learning application</a></li>
-    <li><a href="/docs/technology.html">Technology</a></li>
-    <li><a href="/docs/development_plan.html">Development Plan</a></li>
-    <li><a href="/docs/reference.html">Reference</a></li>
+    <li><a href="{{ site.baseurl }}/docs/overview.html">Overview</a></li>
+    <li><a href="{{ site.baseurl }}/docs/data_structure.html">Data structure</a></li>
+    <li><a href="{{ site.baseurl }}/docs/user_processes.html">User processes</a></li>
+    <li><a href="{{ site.baseurl }}/docs/survey_of_learning_research.html">Survey of Learning Research</a></li>
+    <li><a href="{{ site.baseurl }}/docs/machine_learning_application.html">Machine learning application</a></li>
+    <li><a href="{{ site.baseurl }}/docs/technology.html">Technology</a></li>
+    <li><a href="{{ site.baseurl }}/docs/development_plan.html">Development Plan</a></li>
+    <li><a href="{{ site.baseurl }}/docs/reference.html">Reference</a></li>
 </ul>
 
 <hr />
