@@ -10,12 +10,12 @@ Infrastructure
 
 - **Server**: [Chef](https://github.com/opscode/chef) with [Vagrant](http://www.vagrantup.com/)
     - **CDN**: [CloudFlare](https://www.cloudflare.com/)
-        - Only the Core runs on a web-server, rest are just static to end users
     - [uWSGI](http://uwsgi-docs.readthedocs.org/en/latest/) on [Nginx](http://wiki.nginx.org/Main)
     - Deployment
     - Local development
         - Development test data
     - Researching alternatives for a more PaaS-style development and deployment
+    - Only the Core runs on a web-server, rest are just static to end users
 - **Language**: [Python 2.7](http://docs.python.org/2.7/)
 - **Web framework**: [Flask](http://flask.pocoo.org/)
 - **User & Content Database**: [PostgreSQL](http://www.postgresql.org/docs/9.1/interactive/index.html)
