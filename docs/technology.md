@@ -71,7 +71,7 @@ Infrastructure
     - Style compiler - [Stylus](http://learnboost.github.io/stylus/)
     - Style framework, boilerplate - Custom, based on [TWBootstrap](http://getbootstrap.com/), [HTML5 B](http://html5boilerplate.com/), and [Foundation](http://foundation.zurb.com/)
     - Script frameworks - [Coffeescript](http://coffeescript.org/), [jQuery](http://jquery.com/), [Backbone.js](http://backbonejs.org/), [Require.js](http://requirejs.org/), [Modernizr](http://modernizr.com/)
-    - Script utilities - [Select2](http://ivaynberg.github.io/select2/), [Moment](http://momentjs.com/), [Uglify](https://github.com/mishoo/UglifyJS), [Intro.js](http://usablica.github.io/intro.js/), [Selectize](http://brianreavis.github.io/selectize.js/), [Backgrid](http://backgridjs.com/), [Listjs](http://listjs.com/)
+    - Script utilities - [Select2](http://ivaynberg.github.io/select2/), [Moment](http://momentjs.com/), [Uglify](https://github.com/mishoo/UglifyJS), [Intro.js](http://usablica.github.io/intro.js/), [Selectize](http://brianreavis.github.io/selectize.js/), [Backgrid](http://backgridjs.com/), [Listjs](http://listjs.com/), [Dynatable.js](http://www.dynatable.com/)
     - Script data visualization - [D3.js](http://d3js.org/)
     - Form validation plugin - [Parsely](http://parsleyjs.org/) or [jQuery Validation](http://jqueryvalidation.org/) or [h5validate](http://ericleads.com/h5validate/) or [happyjs](http://happyjs.com/) or [h5f](https://github.com/ryanseddon/H5F) or [backbone forms](https://github.com/powmedia/backbone-forms) or [backbone validation](https://github.com/thedersen/backbone.validation)
     - Script boilerplate - Custom built
