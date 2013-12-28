@@ -1,10 +1,14 @@
 /*
 DEFAULT CHAR SET IS UTF-8
 POSTGRES v 9.1
+TODO: Move to Alembic
 */
 
+CREATE USER sagefy password 'sagefy' SUPERUSER;
+CREATE DATABASE sagefy;
 
-DROP TABLE IF EXISTS users CASCADE;
+\connect sagefy;
+
 CREATE TABLE users (
     id          varchar(64) PRIMARY KEY,
     created     timestamp DEFAULT current_timestamp,
@@ -17,10 +21,10 @@ CREATE TABLE users (
     status      varchar(64),
     avatar      varchar(128)
 );
+
 GRANT ALL PRIVILEGES ON TABLE users TO sagefy;
 
 
-DROP TABLE IF EXISTS notifications CASCADE;
 CREATE TABLE notifications (
     id                  varchar(64) PRIMARY KEY,
     created             timestamp DEFAULT current_timestamp,
@@ -33,10 +37,10 @@ CREATE TABLE notifications (
     body                text,
     read                boolean DEFAULT FALSE
 );
+
 GRANT ALL PRIVILEGES ON TABLE notifications TO sagefy;
 
 
-DROP TABLE IF EXISTS messages CASCADE;
 CREATE TABLE messages (
     id              varchar(64) PRIMARY KEY,
     created         timestamp DEFAULT current_timestamp,
@@ -50,8 +54,8 @@ CREATE TABLE messages (
     action          varchar(64),
     action_url      varchar(128),
     seen            boolean DEFAULT FALSE
-
 );
+
 GRANT ALL PRIVILEGES ON TABLE messages TO sagefy;
 
 

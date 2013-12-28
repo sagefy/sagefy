@@ -6,7 +6,17 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y install language-pack-en
 
+#### Get Code #################################################################
+
+sudo apt-get -y install git
+git clone https://github.com/heiskr/sagefy.git /sagefy
+cd /sagefy
+git remote add upstream https://github.com/heiskr/sagefy.git
+
 #### Aliases ##################################################################
+
+sudo rm -rf /var/www
+sudo ln -fs /sagefy /var/www
 
 #### PostgreSQL ###############################################################
 
@@ -17,30 +27,20 @@ sudo apt-get -y install libpq-dev
 #### Python ###################################################################
 
 sudo apt-get -y install python-pip
-sudo pip install -r /vagrant/api/requirements.txt
+sudo pip install -r /var/www/setup/requirements.txt
 
 #### Redis ####################################################################
 
 sudo apt-get -y install redis-server
-
-#### Stylus and CoffeeScript ##################################################
-
-sudo apt-get -y install npm
-sudo npm install -g coffee-script stylus
-sudo ln -s /usr/bin/nodejs /usr/bin/node
-echo 'export NODE_PATH=/usr/local/lib/node_modules' >> ~/.bashrc
 
 #### Server ###################################################################
 
 cd /var/www
 sudo apt-get -y install nginx
 sudo apt-get -y install uwsgi
-sudo uwsgi  --http :8652 \
-            --pythonpath /vagrant/api \
-            --wsgi index:app \
-            --processes 4 \
-            --threads 2 \
-            --daemonize /tmp/uwsgi.log
-sudo nginx -c /vagrant/nginx.conf
+sudo cp /var/www/setup/uwsgi_upstart.conf /etc/init/uwsgi.conf
+sudo cp /var/www/setup/nginx_upstart.conf /etc/init/nginx.conf
+sudo initctl start uwsgi
+sudo initctl start nginx
 
-echo "Hooray! Provisioned."
+echo "Now you should run the deploy script"

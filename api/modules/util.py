@@ -6,9 +6,9 @@ import random
 import string
 
 
-def uniqid(length=8):
+def uniqid(length=9):
     """
-    Generates a unique string with 8 characters.
+    Generates a unique string with 9 characters.
     http://stackoverflow.com/a/2257449
     """
     return ''.join(
