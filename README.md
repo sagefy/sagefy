@@ -14,8 +14,6 @@ _Adaptive, collaborative, and open learning platform._
 
 * * *
 
-Currently in research and planning phase. [See the documentation](http://sagefy.org/docs/overview).
-
 [![Donate](https://dl.dropboxusercontent.com/u/178965380/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PXGYRLUR53MBJ)
 
 * * *
@@ -41,3 +39,5 @@ All contents in this project are licensed under [AGPLv3](https://raw.github.com/
 * * *
 
 [![Build Status](https://travis-ci.org/heiskr/sagefy.png?branch=master)](https://travis-ci.org/heiskr/sagefy)
+
+[Get setup and make a PR!](https://github.com/heiskr/sagefy/blob/master/setup/setup.md)
