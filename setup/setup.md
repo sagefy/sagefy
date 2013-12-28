@@ -55,3 +55,13 @@ Make a new Vagrant
     cd ~/Sites/sagefy
     vagrant destroy
     vagrant up
+
+How to Deploy
+------------
+
+    # On local machine
+    sudo pip install fabric
+
+    # and...
+    cd ~/Sites/sagefy
+    fabric deploy
