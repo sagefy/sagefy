@@ -11,6 +11,7 @@ User Research and Experience
 - [100 Things Every Designer Needs to Know About People](http://www.amazon.com/dp/0321767535) by Weinschenk
 - [Good UI](http://goodui.org/)
 - [Mo2L](http://www.elearning-usability.com/use.html)
+- [Usability checklist](http://userium.com/)
 
 Learning Science
 ----------------
