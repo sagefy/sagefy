@@ -10,6 +10,7 @@ User Research and Experience
 
 - [100 Things Every Designer Needs to Know About People](http://www.amazon.com/dp/0321767535) by Weinschenk
 - [Good UI](http://goodui.org/)
+- [Mo2L](http://www.elearning-usability.com/use.html)
 
 Learning Science
 ----------------
@@ -27,6 +28,8 @@ Gamification
 - [Gamification 101 - Bunchball](http://www.bunchball.com/sites/default/files/downloads/gamification101.pdf)
 - [Gamification in Enterprise Technology](http://www.slideshare.net/Rypple/work-better-play-together-on-enterprise-gamification)
 - [Mozilla Open Badges](http://openbadges.org/)
+- [The Business of Gamification](http://visual.ly/business-gamification)
+- [How to Gamify: 15 ways to introduce gaming concepts into eLearning](http://www.growthengineering.co.uk/how-to-gamify-15-ways-to-introduce-gaming-concepts-into-elearning/)
 
 Statistics, Data science and Machine learning
 ---------------------------------------------

@@ -22,6 +22,7 @@ Infrastructure
 - **Memory, ORM caching**: [Redis](http://redis.io/documentation)
 - **Search**: Redis autocomplete, then [ElasticSearch](https://github.com/elasticsearch/elasticsearch)
 - **Primary ORM**: [SQLAlchemy](http://www.sqlalchemy.org/) with [Flask-SQLAlchemy](http://pythonhosted.org/Flask-SQLAlchemy/)
+- **Migrations**: [Alembic](http://alembic.readthedocs.org/en/latest/)
 - **Documentation**: Github Wiki
     - **API Doc**: [Sphinx](http://sphinx-doc.org/) from inline docstrings using the [NumPy](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt) convention
     - **Versioning**: [SemVer](http://semver.org/)
