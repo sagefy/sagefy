@@ -15,10 +15,10 @@
 #### Documents
 
 - [Overview](/docs/overview.html)
-- [Data structure](/docs/data_structure.html)
-- [User processes](/docs/user_processes.html)
+- [Data Structure](/docs/data_structure.html)
+- [User Processes](/docs/user_processes.html)
 - [Survey of Learning Research](/docs/survey_of_learning_research.html)
-- [Machine learning application](/docs/machine_learning_application.html)
+- [Machine Learning Application](/docs/machine_learning_application.html)
 - [Technology](/docs/technology.html)
 - [Development Plan](/docs/development_plan.html)
 - [Reference](/docs/reference.html)
