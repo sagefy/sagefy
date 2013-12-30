@@ -102,7 +102,7 @@ Andrew Ng's Coursera Course
 
 - Use **diagnostics** on your algorithm before jumping to huge conclusions.
 - Evaluate your hypothesis by breaking your examples into 60%, 20% and 20% randomly. The first set is your **training set**, the second **cross validation set** and the third **test set**.
-- The error is `J = sum((h(x) - j) ^ 2) / (2 * m)`.
+- The error is `J = sum((h(x) - y) ^ 2) / (2 * m)`.
 - One way to select polynomial models is to start with just 1, then move up one at a time until the cross validation error does not improve.
 - A similar technique can be used to train the regularization parameter, increasing until cross validation does not improve.
 - Underfit is also called **bias** and overfit is also called **variance**.
@@ -115,17 +115,98 @@ Andrew Ng's Coursera Course
 
 ### Designing a System
 
+- Where to invest time:
+    - Collect data.
+    - Develop feaetures.
+    - Account for edge cases in features, such as misspellings.
+- Start with a simple algorithm; get an implementation up quick and dirty.
+- Plot a learning curve before moving forward.
+- Examine the examples your algorithm predicts incorrectly.
+- Find a single number for determining the quality of the system, usually the error rate.
+- In the case of a **skewed class**, where positive example far outnumber negative examples, error rates are not informative. Instead use precision and recall.
+- **Precision** measures of the predicted positive, what percentage is actually positive. The formula is `true positive / (true position + false positive)`.
+- **Recall** measures how many postive examples were correctly predicted. The formula is `true positive / (true positive + false negative)`.
+- The **F score** combines precision and recall into a single number for comparision. It's formula is `2 * P * R / (P + R)`.
+- A useful test of whether an algorithm will success is if a _human expert_ could also make an accurate prediction.
+- The **large data rationale** states you should use a learning algorithm with many features on a very large training set that is unlikely to overfit.
+
 ### Support Vector Machines
+
+- Support vector machines are related to logistic regression.
+- We want a large margin of confidence when making predictions. If `transpose(theta) * x` is greater than 1, or less than -1, we can be very confident in our prediction.
+- Support vector machines try to find the largest margin between classes possible.
+- The **gaussian kernel** can predict non-linear boundaries by identifying examples as _landmarks_. The predictions are then based on _similarity_ of examples.
+- The similarity is measured by `exp(-length(x - l[i]) ^ 2 / (2 * sigma ^ 2))`.
+- If `sigma` is large, then the features will vary more smoothly. This means high bias and low variance.
+- If `sigma` is small, then there will be high variance and low bias.
+- Use an SVM package for optimizations. You'll need to specify the **kernel** or similarity function, as well as a parameter `C`.
+- Do feature scaling before using SVM.
+- SVM packages often already have multiclass classification built-in.
+- If `n >> m`, use logisitic regression.
+- If `n < m`, use SVM with Gaussian kernel.
+- If `n << m`, use logistic regression or SVM with linear kernel. Try adding more features.
+- Neural networks work well for most combinations, but are prone to be slower.
 
 ### Clustering
 
+- **K-means** is the most popular clustering, or unsupervised, algorithm.
+- You must specify `K`, or the number of clusters.
+- `K` must be less than `m`.
+- Start with a random selection of cluster centroids. Then, find the closest centroids to each example. Then, move the centroid to the mean of the points assigned to that centroid. Continue until convergence.
+- `J` is measured as `sum(len(x - mu) ^ 2) / m`.
+- In general, you'll want to run K-means several times with different values of `K` and pick the one with the lowest cost. Local optima are possible as well.
+
 ### Dimensionality Reduction
+
+- Sometimes we need to reduce the number of features.
+- We can reduce several similar features down to a smaller number of features.
+- **Principal Component Analysis** or PCA can be used to reduce down the number of features.
+- Before running PCA, use feature scaling on the features you want to reduce.
+- First, compute the _covariance matrix_ by `Sigma = sum(x[i] * transpose(x[i])) / m`.
+- Use the _singular value decomposition_ on `Sigma` and take the first matrix `U`.
+- The `U` matrix tells us how to reduce the features optimally. We can also use `U` to decompress the features back to their original state.
+- You should eliminate down to the number of features, `k`, where `sum(length(x - x[approx]) ^ 2) / m / (sum(length(x) ^ 2) / m)` is less than 0.01. Alternatively, where `sum(S over k) / sum(S over m)` > 0.99.
+- Only run PCA on the training set.
+- PCA works well for performance and reducing space requirements, as well as visualizing data. It doesn't work as well to solve overfitting problems.
+- Do PCA only if running the algorithm without PCA first doesn't work.
 
 ### Anomaly Detection
 
+- Sometimes, we want to use machine learning to find problematic or abnormal examples. This includes fraud detection, manufactoring, and monitoring online systems.
+- The **gaussian distribution** also known as the normal distribution will tell us if an example falls outside of the normal variance, also known as `sigma ^ 2`.
+- We fit the parameters to `mu = sum(x) / m` and `sigma ^ 2 = sum((x - mu) ^ 2) / m`. When we have a new example, we compute `Pi(exp(-(x - mu) ^ 2 / (2 * sigma ^ 2)) / (sqrt(2 * pi) * sigma))`.
+- Its easier to tell if we have a good algoritm if we have labeled examples. Use the _F score_ to detemine if the algorithm is good.
+- You can also use cross validation to choose the threshold.
+- Its common in anomaly detection to want to make features that include dividing an existing feature by another.
+- Multivariate gaussian distribution is also possible.
+
 ### Recommender Systems
+
+- Sometimes we want to make predictions both for examples and users. In this case, we have `nu` for the number of users, and `nm` for the examples. The matrix `r` determines if a user has engaged with an example. The matrix `y` evaluates this engagement. `y` may have empty values.
+- We want to find `theta` such that `theta = min(sum((transpose(theta) * x - y) ^ 2) / 2 + sum(theta ^ 2) * lambda / 2 / 2)`.
+- The **collaborative filtering** algorithm can find `theta` given `x`, and can find `x` given `theta`. Therefore, we just make a guess for `theta`, then produce `x`, then produce `theta`, and so forth, until we converge.
+- The gradient descent step is:
+    - `x = x - alpha * (sum(transpose(theta) * x - y) * theta + lambda * x)`
+    - `theta = theta - alpha * (sum(transpose(theta) * x - y) * x + lambda * theta)`
+- The prediction is `transpose(theta) * x`.
+- We can use **low rank matrix factorization** to recommend new examples to the user.
+- We can use **mean normalization** to initialize users with few to no examples.
 
 ### Large Scale Machine Learning
 
+- Having more data means you can have more features without overfitting.
+- Having more data makes batch gradient descent computationally expensive.
+- Two alternatives to batch gradient descent are **stochastic gradient descent** and **mini-batch gradient descent**.
+- A stochastic gradient descent updates theta for each example, one at a time, rather than each example on every iteration. Often, one to ten run throughs of the examples will converge.
+- With mini-batch gradient descent, we randomly select a small number of examples on each iteration of batch gradient descent. Often, this is the fastest route to an accurate model.
+- Another way to speed up batch gradient descent is to use **map-reduce**. Have each machine handle part of the summation, and combine the summations in the reduce step.
+- With any example, if you have difficulty converging, use a smaller `alpha`.
+- In a system where new examples are constantly coming in, use **online learning**.
+- In online learning, we update `theta` for each new example, using `theta = theta - alpha * (h(x) - y) * x`.
+- Online learning systems can adapt to changes in user preferences.
+
 ### Photo OCR
 
+- To create new examples from existing data, you can distort existing examples. Add noise, rotate, blur, stretch, skew...
+- Crowd sourcing can help produce more examples as well.
+- Often machine learning systems involve multiple machine learning components. Measure the error rate of the pipeline. Any component that varies greatly from the overall system error rate will be a candidate for improvement.
