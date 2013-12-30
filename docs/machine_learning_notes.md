@@ -1,5 +1,7 @@
-Machine Learning Notes
-======================
+---
+title: Machine Learning Notes
+layout: default
+---
 
 Andrew Ng's Coursera Course
 ---------------------------
