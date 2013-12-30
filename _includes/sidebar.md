@@ -39,6 +39,8 @@
     </button>
 </form>
 
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PXGYRLUR53MBJ" class="button" target="_blank">Donate</a>
+
 <hr />
 
 <p><small>&copy; Copyright Sagefy 2013. All contents are licensed under <a href="https://raw.github.com/heiskr/sagefy/master/license.txt">AGPLv3</a>.</small></p>
