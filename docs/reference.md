@@ -79,16 +79,19 @@ Learning platforms
 - [ALEKS](http://www.aleks.com)
 - [AutoTutor](http://www.autotutor.org)
 - [ScootPad](https://scootpad.com/)
-- Cerego
-- Memrise
-- Quizlet
-- Membean
-- Lingualia
-- SmartSparrow
+- [Lingualia](http://www.lingualia.com/)
+- [Smart Sparrow](https://www.smartsparrow.com/)
+
+### Flash card based
+
+- [Cerego](http://cerego.com/)
+- [Memrise](http://www.memrise.com/)
+- [Quizlet](http://quizlet.com/)
+- [Membean](membean)
 
 ### Open content
 - [Wikipedia](http://wikipedia.org)
-- Quora
+- [Quora](https://www.quora.com/)
 
 ### MOOC
 - [Khan Academy](https://www.khanacademy.org)
@@ -96,16 +99,17 @@ Learning platforms
 - [Coursera](https://www.coursera.org/)
 - [Udacity](https://www.udacity.com/)
 - [Duolingo](http://duolingo.com)
-- Udemy
+- [Udemy](https://www.udemy.com/)
 
 ### LMS
 - [List of LMS software](http://lms.findthebest.com/)
-- Desire2Learn
-- TalentLMS
-- CanvasLMS
+- [Desire2Learn](http://www.desire2learn.com/)
+- [TalentLMS](http://www.talentlms.com/)
+- [CanvasLMS](http://www.instructure.com/)
 - [TopXY](http://interactyx.com/)
-- SnapWiz
+- [SnapWiz](http://snapwiz.com/)
 
 ### Instructional design
-- Articulate Storyline
-- Captivate
+- [Articulate Storyline](http://www.articulate.com/products/storyline-overview.php)
+- [Captivate](http://www.adobe.com/products/captivate.html)
+- [brightbytes](http://www.brightbytes.net/)
