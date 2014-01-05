@@ -166,6 +166,24 @@ Background
 - SB 352-353: Intrinsic goals lead to better commitment to the goal.
     - Cites Greene & Azevedo, 2007; Vansteenkiste, Simons, Lens, Soenens, Matos, and Lacante (2004)
 
+**Question**: _How do we retain learners?_
+
+- From "Strategies to Engage Online Students and Reduce Attrition Rates" by Lorraine M. Angelino, Keels Williams, and Deborah Natvig; The Journal of Educators Online, Volume 4, Number 2, July 2007.
+    - Attrition rates in online courses are extremely high.
+    - Surveys to generate feedback can help lower attrition rates.
+        - Cites Nash 2005.
+    - The biggest problem that cause attrition is learners having difficulty managing their time. Family problems, finances, child care, distractions, and jobs all act against online learning.
+        - Cites Nash 2005, Martinez 2003
+    - There's four big ways to fight attrition.
+        - 1. Make students intregrated and engaged in the community. Require learners to participate socially in their learning. Early and frequent contact is critical.
+            - Cites Tinto 1975, Towles 1993, Wojciechowski & Palmer 2005, Carnevale 2000, Hughes 2004, Minich 1996, Nash 2005
+        - 2. Focus on a constructivist approach, rather than a teacher centered approach. Require the learner to constantly actively input. Require learner to shape own learning objectives.
+            - Cites Diaz & Bontenbal, 2001; Minich, 1996; Anderson, 2004; Rovai, 2002; Tinto, 1993; Anderson, 2004; Carnevale, 2000
+        - 3. Have learners work together in groups and communities to accomplish their goals. Online learners often feel isolated and unsupported.
+            - Cites Anderson, 2004; Vygotsky, 1978; Wehlage, Rutter, and Smith (1989); Rovai, 2002; Tinto (1993); Rovai, 2002; Wilson, 2001)
+        - 4. Provide online services to learners to support their learning. Tools like assessments, counseling, techincal support, study skills support, career counseling, and library support help keep learners engaged and supported.
+            - Cites Hughes, 2004
+
 Learning Objectives
 -------------------
 
