@@ -17,14 +17,14 @@
 <h4 id="documents">Documents</h4>
 
 <ul>
-    <li><a href="/docs/overview.html">Overview</a></li>
-    <li><a href="/docs/data_structure.html">Data Structure</a></li>
-    <li><a href="/docs/user_processes.html">User Processes</a></li>
-    <li><a href="/docs/survey_of_learning_research.html">Survey of Learning Research</a></li>
-    <li><a href="/docs/machine_learning_application.html">Machine Learning Application</a></li>
-    <li><a href="/docs/technology.html">Technology</a></li>
-    <li><a href="/docs/development_plan.html">Development Plan</a></li>
-    <li><a href="/docs/reference.html">Reference</a></li>
+    <li><a href="/docs/overview">Overview</a></li>
+    <li><a href="/docs/data_structure">Data Structure</a></li>
+    <li><a href="/docs/user_processes">User Processes</a></li>
+    <li><a href="/docs/survey_of_learning_research">Survey of Learning Research</a></li>
+    <li><a href="/docs/machine_learning_application">Machine Learning Application</a></li>
+    <li><a href="/docs/technology">Technology</a></li>
+    <li><a href="/docs/development_plan">Development Plan</a></li>
+    <li><a href="/docs/reference">Reference</a></li>
 </ul>
 
 <hr />

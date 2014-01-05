@@ -1,0 +1,89 @@
+---
+title: Survey of Learning Research > Prior Knowledge
+layout: default
+---
+
+**Question**: _How important is prior knowledge to learning?_
+
+- SB Ch5: Prior knowledge determines the working memory limits of the learner.
+    - Cites Chase and Simon, 1973; Miller, 1956; Hamilton, Hockey, and Rejman, 1977; Sweller 2005
+- SB Ch8: Entire chapter is dedicated to prior knowledge activation; see "Review and spaced learning" section.
+    - Cites Dochy Segers and Buehl, 1999: "Prior knowledge has a large influence on student performance, explaining up to 81 percent of the variance in post-test scores."
+- SH Ch1: Entire first chapter is devoted to prior knowledge.
+    - New knowledge is essentially just an integration with prior knowledge.
+        - Cites Vygotsky, 1978; National Research Council, 2000; Bransford & Johnson, 1972; Resnick, 1983.
+- SL 89-90: "Memory Is Better for Information That Relates to Prior Knowledge".
+    - Cites Bransford & Johnson, 1972 and Bekerian & Baddeley, 1980.
+- SH 108: Learner can fail to apply knowledge when their do not have a sufficient knowledge of the component skills.
+
+**Question**: _How can inappropriate prior knowledge hinder learning?_
+
+- SH 17: Inaccurate prior knowledge can severely hinder learning.
+    - Cites Alvermann, Smith, & Readance 1985
+- SH 20: Inappropriate prior knowledge can adversely impact a student's ability to integrate new knowledge.
+    - Cites Del Mas & Liu, 2007; Kaplan, Fisher, & Rogness, 2009; Spiro et al., 1989; Bartlett, 1932; Thonis, 1981
+- SH 21-22: Cultural knowledge can lead to misunderstanding factual knowledge
+    - Cites Ahmed, 1993; El Guindi, 1999; Wikan, 1982
+- SH 23: Learners will discard and resist information that conflicts with information they think is true.
+    - Cites Dunbar, Fugelsang, & Stein, 2007; Chinn & Malhotra, 2002; Brewer & Lambert, 2000; Fiske & Taylor, 1991; Alvermann, Smith, & Readance, 1985
+- SH 24-25: Wrong concepts and models are particularly difficult to overcome, such as those based on stereotypes and experiential knowledge.
+    - Cites Brown, 1983; Kaiser, McCloskey, & Proffitt, 1986; McCloskey, 1983; Taylor & Kowalski, 2004
+- SH 25: Wrong concepts and models are difficult to overcome because we are drawn to simplification and categorization.
+    - Cites Allport, 1954; Brewer, 1988; Fiske & Taylor, 1991
+- SB 155-158: Avoid activating inappropropriate prior knowledge, such as seductive details. They can severely hinder learning.
+    - Cites Garner, Gillingham, & White, 1989; Mayer 2005; Clark & Mayer, 2008; Harp and Mayer 1998
+
+**Question**: _What strategies are effective for dealing with inappropriate prior knowledge?_
+
+- SH 22: Learners should be taught explicitly the "conditions and context" of information presented to avoid hindering learning. Existing prior knowledge should be activated and then categorized to avoid misapplication.
+    - Cites Schwartz et al., 1999; Spiro et al., 1989; Minstrell, 1989, 1992
+- SH 24: Learners can update their inaccurate prior knowledge when presented with "explanations and evidence"
+    - Cites Sinatra, & Reynolds, 2007; Guzetti, Snyder, Glass, & Gamas, 1993; Chi, 2008; Chi & Roscoe, 2002
+- SH 25: Overcoming wrong concepts and models takes a great deal of persistence. It will not appear immediately in performance results.
+    - Cites Ram, Nersessian, & Keil, 1997; Gardner & Dalsing, 1986; Gutman, 1979; Confrey, 1990; McCloskey, Caramazza, and Green 1980; McCloskey, Caramazza, and Green
+- SH 26: Learners can be motivated to suppress incorrect models. Particularly removing time sensitivity and distractions can help learners to suppress incorrect models.
+    - Cites Monteith & Mark, 2005; Monteith, Sherman, & Devine, 1998; Finucane et al., 2000; Kahnemann & Frederick, 2002
+- SH 26: Another way to overcome wrong concepts and models is to use the "bridging" strategy, using other existing prior knowledge to combat the incorrect prior knowledge.
+    - Cites Brown, 1992; Brown & Clement, 1989; Clement, 1993
+- SH 35: When there is a pattern of misapplication of prior knowledge, start by showing where and where not the prior knowledge applies. Heuristics are an excellent tool for this problem.
+- SH 37: Asking students to predict based on their inaccurate prior knowledge and then testing the results can help to more quickly overcome the inaccurate prior knowledge. Ask learners to justify the reasoning.
+
+**Question**: _Are people more likely to remember facts or stories?_
+
+- _Needs research_
+
+**Question**: _What are the limitations of working memory?_
+
+- _Needs research_
+
+**Question**: _Can expertise in the subject hinder teaching?_
+
+- SB 12: Experts can be very biased in favor of their expertise, even when unwarranted.
+    - Cites Chi 2006, Uhalde and Strohl 2006.
+- SH 52: Experts can assume beginners share they knowledge organization when teaching, which can greatly hinder learning.
+- SH 55: Experts are much more likely to be able to classify information in more useful patterns, and are often unaware they are using these schemas.
+    - Cites DeGroot 1965; Gobet & Charness, 2006; Chase & Simon, 1973a, 1973b
+- SH 59: Before creating your course or lecture, develop a concept map of your own knowledge on the subject. This will force you to overcome your bias towards deeper organization and teach your own organization with the factual knowledge.
+- SH 182: Avoid messages that suggest low-ability of the learner.
+
+**Question**: _How effective is activating prior knowledge to learning?_
+
+- SB Ch8: Cites a variety of techniques, nearly all of which produce large effect sizes on learner performance.
+- SH 15: "Students must connect what they learn to what they already know, interpreting incoming information, and even sensory perception, through the lens of their existing knowledge, beliefs, and assumptions"
+    - Cites Vygotsky, 1978; National Research Council, 2000; Bransford & Johnson, 1972; Resnick, 1983
+- SH 16: Activated prior knowledge greatly improves recall, by nearly double. In particular elaborative interrogation, asking a series of "why" questions, has a great impact.
+    - Cites Morris et al 1981; Kole and Healy 2007; Woloshyn, Paivio, & Pressley 1994
+- SH 17: Asking students to recall knowledge from previous courses improve integration of knowledge.
+    - Cites Peeck, Van Den Bosch and Kruepeling 1982; Garfield, Del Mas, and Chance 2007
+
+**Question**: _What are the most effect strategies to activate prior knowledge?_
+
+- SB 141-148: Offers three techniques: 1) Group discussion of a problem, 2) Pre-assignment questions and 3) a "comparative advance organizer".
+    - For 1, cites Schmidt and Moust 200.
+    - For 2, cites Pressley, Wood, Woloshyn, Martin, King & Menke 1992 and Gurlitt, Renkl, Motes, and Hauser 2006.
+    - For 3, cites Mayer and Wittrock 2006 and Ausubel and Youssef 1963. A "comparative advance organizer" is a presentation that compares prior knowledge with upcoming knowledge. Suggests using a diagram, citing Mayer 1983 and Kloster and Winne 1989.
+- SB 155-156: Avoid activating inappropriate prior knowledge, or "seductive details." Has a strongly adverse impact on learning.
+    - Cites Garner, Gillingham and White 1989, Mayer 2005, Harp and Mayer 1998, and Clark and Mayer 2008.
+- SB 142-144: Presenting a relevant problem, and discussing it as a group, effectively activates prior knowledge.
+    - Cites Schmidy and Moust 2000
+
