@@ -87,3 +87,16 @@ layout: default
 - SB 142-144: Presenting a relevant problem, and discussing it as a group, effectively activates prior knowledge.
     - Cites Schmidy and Moust 2000
 
+**Question**: _How can teacher expertise hinder creating effective information? What strategies can overcome it?_
+
+- SH 36: Explicitly show discipline-specific conventions. Conventions from other disciplines can interfere with the recall of new information.
+- SH 99: The "expert blind spot" is when experts are "blind" to what learners fully need to know. Often seemingly simple skills are the combination of other skills.
+    - Cites Nickerson, 1999; Hinds, 1999; Nathan & Koedinger, 2000; Nathan & Petrosino, 2003
+- SH 113: Get help from an intermediate level learner, or someone outside your own discipline, to help decompose your expert knowledge.
+- SB 191-192: Experts often do not need the cognitive support to build mental models that novices require.
+    - Cites Mayer and Gallini 1990; Kalyuga, Ayers, Chandler, and Sweller 2003
+- SB 75: Experts often overload learners who do not have developed schemas, and therefore the difference in working memory capacity is greater.
+- SH 100: Experts must be able to decompose their knowledge and complex tasks so learners can practice the individual component skills. Computer-based programs that strengthen weak component skills have been shown to greatly improve their performance.
+    - Cites Koedinger and Anderson 1990; Koedinger & Anderson, 1993; Lovett 2001; Anderson et al., 1995; Singley, 1995; Ritter et al., 2007; Anderson, Conrad, & Corbett, 1989
+- SB 77: Automaticity, or automated response, occurs when schemas are highly developed; this bypasses working memory. The price is that experts are no longer able to explain these processes because they are not in working memory.
+    - Cites Chao & Salvendy, 1994; Feldon 2007
