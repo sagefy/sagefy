@@ -50,9 +50,9 @@ Outline
 - [Presenting Information](/docs/survey_learning_research/presenting_information)
 - [Memory and Cognitive Load](/docs/survey_learning_research/memory_and_cognitive_load)
 - [Metacognitive Learning](/docs/survey_learning_research/metacognitive_learning)
-- [Organization of Knowledge](/docs/survey_learning_research/organiziation_of_knowledge)
+- [Organization of Knowledge](/docs/survey_learning_research/organization_of_knowledge)
 - [Prior Knowledge](/docs/survey_learning_research/prior_knowledge)
-- [Worked Examples and Analogies](/docs/survey_learning_research/worked_examples_and_anologies)
+- [Worked Examples and Analogies](/docs/survey_learning_research/worked_examples_and_analogies)
 
 **Practice**, read:
 
@@ -60,7 +60,7 @@ Outline
 - [Practice Formats](/docs/survey_learning_research/practice_formats)
 - [Practice Sets](/docs/survey_learning_research/practice_sets)
 - [Assessing Knowledge](/docs/survey_learning_research/assessing_knowledge)
-- [Diagnostic Assessment](/docs/survey_learning_research/diagnostic_assesment)
+- [Diagnostic Assessment](/docs/survey_learning_research/diagnostic_assessment)
 - [Feedback](/docs/survey_learning_research/feedback)
 - [Games](/docs/survey_learning_research/games)
 - [Memory and Cognitive Load](/docs/survey_learning_research/memory_and_cognitive_load)
@@ -82,6 +82,6 @@ Outline
 - [Practice Formats](/docs/survey_learning_research/practice_formats)
 - [Practice Sets](/docs/survey_learning_research/practice_sets)
 - [Prior Knowledge](/docs/survey_learning_research/prior_knowledge)
-- [Social Learing](/docs/survey_learning_research/social_learning)
+- [Social Learning](/docs/survey_learning_research/social_learning)
 - [Worked Examples and Analogies](/docs/survey_learning_research/worked_examples_and_analogies)
 
