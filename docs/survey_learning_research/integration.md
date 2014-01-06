@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Integration
+title: Survey of Learning Research
+subtitle: Integration
 layout: default
 ---
 

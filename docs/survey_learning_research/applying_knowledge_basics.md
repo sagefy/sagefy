@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Applying Knowledge Basics
+title: Survey of Learning Research
+subtitle: Applying Knowledge Basics
 layout: default
 ---
 

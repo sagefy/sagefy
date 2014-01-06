@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Learner Goals and Motivation
+title: Survey of Learning Research
+subtitle: Learner Goals and Motivation
 layout: default
 ---
 
