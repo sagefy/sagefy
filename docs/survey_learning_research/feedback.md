@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Feedback
+title: Survey of Learning Research
+subtitle: Feedback
 layout: default
 ---
 

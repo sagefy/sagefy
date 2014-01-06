@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Models of Learning Process
+title: Survey of Learning Research
+subtitle: Models of Learning Process
 layout: default
 ---
 

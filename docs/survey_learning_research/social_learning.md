@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Social Learning
+title: Survey of Learning Research
+sutitle: Social Learning
 layout: default
 ---
 

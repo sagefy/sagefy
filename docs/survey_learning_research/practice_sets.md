@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Practice Sets
+title: Survey of Learning Research
+subtitle: Practice Sets
 layout: default
 ---
 

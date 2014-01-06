@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Practice Formats
+title: Survey of Learning Research
+subtitle: Practice Formats
 layout: default
 ---
 

@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Games
+title: Survey of Learning Research
+subtitle: Games
 layout: default
 ---
 

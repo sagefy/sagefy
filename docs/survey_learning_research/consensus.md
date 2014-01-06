@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Consensus
+title: Survey of Learning Research
+subtitle: Consensus
 layout: default
 ---
 

@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Basic Terminology
+title: Survey of Learning Research
+subtitle: Basic Terminology
 layout: default
 ---
 

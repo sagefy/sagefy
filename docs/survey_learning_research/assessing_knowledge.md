@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Assessing Knowledge
+title: Survey of Learning Research
+subtitle: Assessing Knowledge
 layout: default
 ---
 

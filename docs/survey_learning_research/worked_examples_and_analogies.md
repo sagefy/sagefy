@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Worked Examples and Analogies
+title: Survey of Learning Research
+subtitle: Worked Examples and Analogies
 layout: default
 ---
 

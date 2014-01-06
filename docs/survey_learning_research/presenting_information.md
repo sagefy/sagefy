@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Presenting Information
+title: Survey of Learning Research
+subtitle: Presenting Information
 layout: default
 ---
 

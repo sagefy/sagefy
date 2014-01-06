@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Mentoring
+title: Survey of Learning Research
+subtitle: Mentoring
 layout: default
 ---
 

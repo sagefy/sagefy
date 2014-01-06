@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Learning Objectives
+title: Survey of Learning Research
+subtitle: Learning Objectives
 layout: default
 ---
 

@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Control and Choice
+title: Survey of Learning Research
+subtitle: Control and Choice
 layout: default
 ---
 

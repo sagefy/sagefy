@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Improving the System
+title: Survey of Learning Research
+subtitle: Improving the System
 layout: default
 ---
 

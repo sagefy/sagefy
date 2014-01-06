@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Diagnostic Assessment
+title: Survey of Learning Research
+subtitle: Diagnostic Assessment
 layout: default
 ---
 

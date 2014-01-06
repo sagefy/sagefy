@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Review and Spaced Learning
+title: Survey of Learning Research
+subtitle: Review and Spaced Learning
 layout: default
 ---
 

@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Memory and Cognitive Load
+title: Survey of Learning Research
+subtitle: Memory and Cognitive Load
 layout: default
 ---
 

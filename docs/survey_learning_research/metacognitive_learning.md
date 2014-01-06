@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Metacognitive Learning
+title: Survey of Learning Research
+subtitle: Metacognitive Learning
 layout: default
 ---
 

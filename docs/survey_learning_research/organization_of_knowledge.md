@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Organization of Knowledge
+title: Survey of Learning Research
+subtitle: Organization of Knowledge
 layout: default
 ---
 

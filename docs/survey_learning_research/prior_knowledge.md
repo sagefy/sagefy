@@ -1,5 +1,6 @@
 ---
-title: Survey of Learning Research > Prior Knowledge
+title: Survey of Learning Research
+subtitle: Prior Knowledge
 layout: default
 ---
 
