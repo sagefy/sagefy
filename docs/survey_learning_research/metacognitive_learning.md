@@ -4,7 +4,7 @@ subtitle: Metacognitive Learning
 layout: default
 ---
 
-**Question**: _Is it effective to guide learners through the project process?_
+### Is it effective to guide learners through the project process?
 
 - SB 118: Asking frequent questions can sustain learner attention and focus.
 - SE 266: Provide step by step feedback for processes.
@@ -21,7 +21,7 @@ layout: default
 - SH 215: Scaffold learners in their metacognitive processes by starting with a ton of aids, and gradually weaning them off.
 - SB 330-331: Ask learners questions as they practice to develop their self-monitoring skills.
 
-**Question**: _Can project work aid intellectual development? How?_
+### Can project work aid intellectual development? How?
 
 - SB 364-365: To support mastery-based goals, encourage learners to attribute success and failure to things within their control.
 - SB 320: Metacognitive skills are not hopeless.
@@ -35,7 +35,7 @@ layout: default
 - SB 316: Defines four components of metacognitive skills: a) setting goals, b) planning, 3) monitoring, and 4) making adjustments.
     - Cites Greene and Azevedo (2007)
 
-**Question**: _How can one learn effective planning strategies?_
+### How can one learn effective planning strategies?
 
 - SH 88: Provide learners with study strategies early in the course so they will stay motivated throughout the course.
 - SB 321: Provide learners with explicit opportunities to practice their metacognitive skills.
@@ -61,7 +61,7 @@ layout: default
 - SH 206: Give learners opportunities in the course to evaluate themselves.
 - SH 212: Directly intervene on student's beliefs about their own learning to support the idea that they are in control of their learning.
 
-**Question**: _Is required reflection effective? What strategies are effective for reflection activities?_
+### Is required reflection effective? What strategies are effective for reflection activities?
 
 - SH 89: Provide moments for learners to reflect on their experiences to keep them motivated. Ask questions such as "What did you learn from this project?" and "What was the most valuable part of this assignment?" "How would you approach this differently in the future?"
 - SH 209: Require learners to reflect on their experiences and keep a log of their work to help support development of strategies. Such questions as
@@ -74,6 +74,6 @@ layout: default
     - How did you study?
     - What would you do differently?
 
-**Question**: ???
+### ???
 
 - SB 326: Include how to study the content in the learning object; and include forced monitoring of progress in the course.

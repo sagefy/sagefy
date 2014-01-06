@@ -4,7 +4,7 @@ sutitle: Social Learning
 layout: default
 ---
 
-**Question**: _How do we retain learners?_
+### How do we retain learners?
 
 - From "Strategies to Engage Online Students and Reduce Attrition Rates" by Lorraine M. Angelino, Keels Williams, and Deborah Natvig; The Journal of Educators Online, Volume 4, Number 2, July 2007.
     - Attrition rates in online courses are extremely high.
@@ -22,8 +22,7 @@ layout: default
         - 4. Provide online services to learners to support their learning. Tools like assessments, counseling, techincal support, study skills support, career counseling, and library support help keep learners engaged and supported.
             - Cites Hughes, 2004
 
-
-**Question**: _Do learners learn more in a community or individually?_
+### Do learners learn more in a community or individually?
 
 - SE 184-188: A formal tone does not indicate the seriousness of the subject. Learners are more effective when they feel they are in a conversation with a partner. Social presence engages deeper cognitive processes.
     - Cites Beck, McKeown, Sandora, Kucan, & Worthy, 1996; Mayer, 2005d; Moreno and Mayer 2000b, Moreno and Mayer 2004; Mayer, Fennell, Farmer, & Campbell 2004; Kartel 2010
@@ -35,11 +34,11 @@ layout: default
 - SH 157: "A negative climate may impede learning and performance, but a positive climate can energize students’ learning"
     - Cites Pascarella & Terenzini, 1991
 
-**Question**: _Does anonymity or self-identification more effective for learning?_
+### Does anonymity or self-identification more effective for learning?
 
 - SH 182-183: Don't make learners feel anonymous; support the learning environment with involvement.
 
-**Question**: _How can we promote inclusive, productive discussion?_
+### How can we promote inclusive, productive discussion?
 
 - SH 178-180: Course content can impact the learning environment. If only the majority view is shown, or the majority view dominates, this can adversely impact outcomes.
     - Cites Marchesani and Adams (1992); Seymour and Hewitt (1997); Astin 1993
@@ -62,7 +61,7 @@ layout: default
         - Cites Fries-Britt (2000); Beverly Daniel Tatum (1997); Helms (1993); D’Augelli (1994); Rankin (2003)
     - e) Redefinition and Internalization, moving beyond majority/minority categories
 
-**Question**: _How do we reduce trolling and nonproductive negative discussion?_
+### How do we reduce trolling and nonproductive negative discussion?
 
 - SH 184: Establish feedback channels on the social learning environment.
 - SH 176-177: Tone can also impact the learning environment, even as early as the syllabus. Punitive, scolding, sarcasm, denigration, and ridicule will damage learning outcomes.
@@ -71,22 +70,22 @@ layout: default
     - Cites Brown and Levinson 1987; Mayer, Johnson, Shaw, and Sandhu 2006;  Wang, Johnson, Mayer, Rizzo, Shaw, and Collins 2008; McLaren, DeLeeuw, and Mayer 2011
 - SH 183-184: To create a supportive social learning environment, establish ground rules for discussion.
 
-**Question**: _How do we effectively manage sensitive topics?_
+### How do we effectively manage sensitive topics?
 
 - SH 184: Establish feedback channels on the social learning environment.
 - SH 182: Don't ask minorities to be spokespeople of their group. Focus on the individual
 - SH 183-184: To create a supportive social learning environment, establish ground rules for discussion.
 
-**Question**: _What be done in debate to produce learning?_
+### What be done in debate to produce learning?
 
 - SH 250: Discussion ground rules > Read Brookfield & Preskill (2005)
 - SH 185-186: Address tensions early by turning discord into a learning opportunity. Encourage active listening.
 
-**Question**: _Is synchronous or asynchronous communication more effective?_
+### Is synchronous or asynchronous communication more effective?
 
 - _Needs research_
 
-**Question**: _How does culture impact learning during information?_
+### How does culture impact learning during information?
 
 - SH 178-180: Course content can impact the learning environment. If only the majority view is shown, or the majority view dominates, this can adversely impact outcomes.
     - Cites Marchesani and Adams (1992); Seymour and Hewitt (1997); Astin 1993
@@ -99,14 +98,14 @@ layout: default
 - SE 188: People interact with computers as if they are human. Human voices do better than machine voices.
     - Cites Reeves and Nass 1996; Mayer, Sobko, and Mautone 2003; Atkinson, Mayer, and Merrill 2005; Nass and Brave 2005
 
-**Question**: _What tools are available for group work?_
+### What tools are available for group work?
 
 - SE 284-287: Computer-supported collaborative learning supports learner collaboration via: blogs, social media, breakout rooms, chats, email, message board, conferencing, and wikis.
     - Cites Clark and Kwinn, 2007
 - SE 303: There is still a huge need for research in online group learning.
     - Cites 2005 Jonassen, Lee, Yang, and Laffey
 
-**Question**: _How many group members can be effective for learning?_
+### How many group members can be effective for learning?
 
 - SB 223-224: In some conditions, learners can learn more effectively in small groups.
     - Cites Cohen, 1994; Johnson, Johnson, & Smith, 2007; Lou, Abrami, & d’Apollonia, 2001; Qin, Johnson, & Johnson, 1995; Springer, Stanne, & Donovan, 1999
@@ -117,7 +116,7 @@ layout: default
         - d) Require input from each member
         - e) Outcome is based on the group as well as individual contribution
 
-**Question**: _When is group work more effective than individual work? Vice versa?_
+### When is group work more effective than individual work? Vice versa?
 
 - SE 293: Group learning is more suitable when there is no single correct answer.
     - Cites Jonassen, Lee, Yang, and Laffey (2005); Uribe, Klein, and Sullivan (2003)
@@ -173,7 +172,7 @@ layout: default
 - SH 131: Teachers who regularly adjust the challenge level at the group level improve learning outcomes.
     - Cites Clarke, Ayres, and Sweller 2005
 
-**Question**: _How do you ensure all members of a group participate?_
+### How do you ensure all members of a group participate?
 
 - SE 298-300: Online discussion are more effective with student moderates rather than instructor moderators.
     - Cites De Wever, Van Winckel, and Valcke (2006)
@@ -181,10 +180,10 @@ layout: default
     - Cites Johnson and Johnson (1992)
 - SH 250: Discussion ground rules > Read Brookfield & Preskill (2005)
 
-**Question**: _Will asking learners to contribute information and practice aid in their own learning?_
+### Will asking learners to contribute information and practice aid in their own learning?
 
 - _Needs research_
 
-**Question**: _How effective is learning by teaching?_
+### How effective is learning by teaching?
 
 - _Needs research_

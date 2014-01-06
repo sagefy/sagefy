@@ -4,34 +4,34 @@ subtitle: Practice
 layout: default
 ---
 
-**Question**: _Can humans learn effectively just by observing?_
+### Can humans learn effectively just by observing?
 
 - SE 22: Cites three learning "architectures": receptive, directive, and guided discovery.
 - SE 34: States that while each architecture is needed at different points in time, all three perspectives are required for expertise. (Hence, information, practice, integration, and application.)
 
-**Question**: _How important is practice to effective learning? How much practice is effective?_
+### How important is practice to effective learning? How much practice is effective?
 
 - SB 9: Expertise requires extensive practice, often more than 10 years. However, expertise training can be sped up using training simulation to less than 1/5 the time.
     - Cites Ericsson 2006 and Cites Gott & Lesgold 2000.
 
-**Question**: _How much repetition is necessary to remember a concept? For how long?_
+### How much repetition is necessary to remember a concept? For how long?
 
-**Question**: _When does practice stop being effective?_
+### When does practice stop being effective?
 
 - SE 259: There is a power law to practice, the benefits diminish with more practice.
     - Cites Crossman, 1959; Rosenbaum, Carlson, & Gilmore, 2001
 - SE 260-261: The amount of practice needs to reflect how critical the task is.
     - Cites Schnackenberg, Sullivan, Leader, & Jones, 1998; Schnackenberg & Sullivan, 2000
 
-**Question**: _How should practice be paced?_
+### How should practice be paced?
 
-**Question**: _What strategies are effective to promoting learner organization through practice?_
+### What strategies are effective to promoting learner organization through practice?
 
-**Question**: _Is relevance important to effective practice? What strategies are effective?_
+### Is relevance important to effective practice? What strategies are effective?
 
 - SH 84: Demonstrate the relevance of the material to the learner's current and future self.
 
-**Question**: _How can learner's know what is most relevant in practice?_
+### How can learners know what is most relevant in practice?
 
 - SE 151-154: Keep to the learning objectives; do not add material that does not support learning objectives.
     - Cites Mayer and Moreno 2003; Garner, Gillingham, & White, 1989; Bishop, Amankwaita, and Cates (2008); Mayer & Johnson, 2010; Svetcov, 2000; Dewey 1913; Moreno and Mayer 2000a; Knez and Hygge 2002; Ransdell and Gilroy 2001; Mayer, 1993; Mayer, Sims, & Tajika, 1995; Dewey, 1913; Harp and Mayer 1998; Harp and Mayer 1998; Mayer, Heiser, and Lonn 2001; Sanchez and Wiley 2006; Butcher 2006; Scheiter, Gerjets, Huk, Imhof, and Kammerer 2009; Mayer, Hegarty, Mayer, and Campbell 2005
@@ -40,19 +40,19 @@ layout: default
 - SE 159-164: Do not add graphics that do not support the learning objectives. They can distract, disrupt, and seduce the learner and add cognitive load.
     - Cites Mayer, 1993; Mayer, Sims, & Tajika, 1995; Dewey, 1913; Harp and Mayer 1998; Harp and Mayer 1998; Mayer, Heiser, and Lonn 2001; Sanchez and Wiley 2006
 
-**Question**: _How does the challenge level impact learning?_
+### How does the challenge level impact learning?
 
-**Question**: _What is the best way to choose an appropriate challenge level?_
+### What is the best way to choose an appropriate challenge level?
 
 - SB 350: Finding the right level of challenge for the learner's goal is critical to motivation.
     - Cites Locke and Latham’s (2002); (Malone & Lepper, 1987)
 
-**Question**: _What strategies can be used to keep learners engaged and motivated?_
+### What strategies can be used to keep learners engaged and motivated?
 
 - SH 86: Give learners many opportunities, especially early on, for low-risk success.
 - SH 86: Keep the level of challenge appriopriate to the learner to keep learners motivated. Preassessment can help identify the correct level of challenge.
 
-**Question**: _Is it effective to focus student attention? When is focusing student attention during practice effective?_
+### Is it effective to focus student attention? When is focusing student attention during practice effective?
 
 - SB 118: Asking frequent questions can sustain learner attention and focus.
 - SB 121-124: Cueing, or signaling, can help to focus learner attention on critical aspects. Examples are arrows, bolding text, emphasizing spoken words...
@@ -60,7 +60,7 @@ layout: default
 - SB 128-129: Include the learning objectives to help learners focus their attention. Reiterate the learning objectives in information, practice, and assignments.
     - Cites Rothkopf & Billington, 1979; Cavalier & Klein, 1998
 
-**Question**: _Is it more effective to try to cover all material equally, or target areas of weakness during practice?_
+### Is it more effective to try to cover all material equally, or target areas of weakness during practice?
 
 - SE 256: There are five major elements to deliberate practice:
     - a) Effort
@@ -79,16 +79,16 @@ layout: default
 - SB 332-333: To support metacognitive developer, teach learners deliberate practice.
     - Cites Ericsson, 2006; Zimmerman (2006)
 
-**Question**: _What types of practice lead to far-transfer and expertise development?_
+### What types of practice lead to far-transfer and expertise development?
 
 - SB 11: Expertise requires highly deliberate practice, focusing on areas of weaknesses instead of pure repetition.
     - Cites Ericsson 2006.
 
-**Question**: _What strategies are effective for boosting student confidence?_
+### What strategies are effective for boosting student confidence?
 
-**Question**: _Is it better to practice an entire process at once, or step-by-step?_
+### Is it better to practice an entire process at once, or step-by-step?
 
-**Question**: _Is scaffolding an effective strategy? When does it work?_
+### Is scaffolding an effective strategy? When does it work?
 
 - SH 105: Scaffolding, or letting learners focus on one task at a time before integrating skills, is highly effective. Worked examples are an example of scaffolding.
     - Cites Clarke, Ayres, and Sweller 2005, Sweller & Cooper, 1985; Cooper & Sweller, 1987; Paas & van Merrienboer, 1994
@@ -101,15 +101,15 @@ layout: default
 - SH 146-147: Add scaffolding to practice and application to support the appropriate level of challenge.
 - SH 215: Scaffold learners in their metacognitive processes by starting with a ton of aids, and gradually weaning them off.
 
-**Question**: _When is automatic response needed? How do we train an automatic response?_
+### When is automatic response needed? How do we train an automatic response?
 
-**Question**: _Should learners only be asked what they have been literally presented?_
+### Should learners only be asked what they have been literally presented?
 
-**Question**: _Is it effective to attribute correct and incorrect answers to intelligence or effort?_
+### Is it effective to attribute correct and incorrect answers to intelligence or effort?
 
-**Question**: _Is praise effective to learning outcomes?_
+### Is praise effective to learning outcomes?
 
-**Question**: _How can we promote knowledge transfer to real situations?_
+### How can we promote knowledge transfer to real situations?
 
 - SH 111: Focusing learner attention during study and application questions and projects can also help promote far-transfer.
     - Cites Gick & Holyoak, 1980; Perfetto et al., 1983; Klahr & Carver, 1988; Bassok, 1990
@@ -123,7 +123,7 @@ layout: default
 - SB 263-265: To promote far transfer, practice in a variety of contexts.
     - Cites Paas and van Merrienboer 1996; Quilici and Mayer 1996
 
-**Question**: _Can classical conditioning or instrumental conditioning be used effectively in an online environment?_
+### Can classical conditioning or instrumental conditioning be used effectively in an online environment?
 
 - _Needs research_
 

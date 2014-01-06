@@ -4,7 +4,7 @@ subtitle: Presenting Information
 layout: default
 ---
 
-**Question**: _Is it effective to focus student attention? How can learner's know what information to value or specifically target? When is focusing student attention during presentation effective?_
+### Is it effective to focus student attention? How can learner's know what information to value or specifically target? When is focusing student attention during presentation effective?
 
 - SB 10: Expertise is domain specific and narrow; built on concrete and specific memory.
     - Cites Simon & Gilmartin, 1973.
@@ -17,12 +17,12 @@ layout: default
 - SB 124-128: Insert questions into information, presentation, or instruction. This helps to focus learner attention.
     - Cites Van den Broek, Risden, Tzeng, Trabasso, and Brasche 2001; McCrudden and colleagues 2005
 
-**Question**: _Is note taking effective for learning? Can physical engagement improvement learning?_
+### Is note taking effective for learning? Can physical engagement improvement learning?
 
 - SB 226-227: Note taking, and other purely behavioral activities, often removes focus from the learning event, and should be minimized. Instead, offer notes at the end of the lecture. Encourage elaborate rehearsal after lecture instead of route memorization.
     - Cites Kiewra, 1989; Kobayashi, 2005; Benton, Kiewra, Whitefill, and Dennison 1993
 
-**Question**: _Is it better to teach information as part of a process, or before teaching a process?_
+### Is it better to teach information as part of a process, or before teaching a process?
 
 - SE 212-218: Before presenting processes, present the key concepts of the lesson first.
     - Cites Clark and Kwinn, 2007; Mayer, Mathias, and Wetzell, 2002; Kester, Kirshner, & van Merrienboer, 2006; Pollock, Chandler, & Sweller, 2002
@@ -38,7 +38,7 @@ layout: default
 - SB 260: To promote moderate transfer, show how the specifics of the procedure can be generalized.
     - Cites Mayer 2002
 
-**Question**: _Is formal or casual language more effective during presentation? Is it better to speak fully in third-person, or to use first- and second-person?_
+### Is formal or casual language more effective during presentation? Is it better to speak fully in third-person, or to use first- and second-person?
 
 - SE 188: A casual tone does not have to be overly personal, it only has to be conversational.
 - SE 184-188: A formal tone does not indicate the seriousness of the subject. Learners are more effective when they feel they are in a conversation with a partner. Social presence engages deeper cognitive processes.
@@ -63,11 +63,11 @@ layout: default
 - SB 183-184: Learning agents should engage the learner in "deep-level questions and answers". In fact, emulating a dialog can be as effective, if not more so, than actual interaction.
     - Cites Gholson and Craig 2006; Craig, Sullings, Witherspoon, and Gholson 2006
 
-**Question**: _When is textual presentation most effective?_
+### When is textual presentation most effective?
 
 - SE 99: Avoid using external links, prefer embedding external content or having external content come up in a small window that can be moved around.
 
-**Question**: _When are visuals most effective?_
+### When are visuals most effective?
 
 - SB 35-40: Graphics can greatly improve learning, 1) especially for novice learners, and 2) when the graphic directly supports the learning objective.
     - Cites Clark and Mayer, 2008; Mayer and Gallini, 1990
@@ -88,7 +88,7 @@ layout: default
 - SB 219-220: Use graphics to promote building mental models.
     - Cites Natter and Berry 2005; Stern, Aprea, and Ebner 2003; Cosmides and Tooby 1996; Stull and Mayer 2007
 
-**Question**: _When is audio most effective?_
+### When is audio most effective?
 
 - SE 102: Keep the narration and graphics that correspond with the narration in sync and on screen/in audio at the same time.
     - Cites (on 109) Mayer & Anderson, 1991, 1992; Mayer, Moreno, Boire, & Vagge, 1999; Mayer & Sims, 1994; Baggett 1984; Baggett and Ehrenfeucht 1983; Ginns 2006
@@ -103,7 +103,7 @@ layout: default
 - SE 153-159: Do not add extra audio, such as background music or sound effects. It will not improve engagement and it will increase cognitive load.
     - Cites Bishop, Amankwaita, and Cates (2008); Mayer & Johnson, 2010; Svetcov, 2000; Dewey 1913; Moreno and Mayer 2000a; Knez and Hygge 2002; Ransdell and Gilroy 2001
 
-**Question**: _Is animation or a set of static images more effective?_
+### Is animation or a set of static images more effective?
 
 - SE 84-85: A series of static frames is more effective in most cases than true animations. Animations require more cognitive load to process, and take away learner control. Static frames provide learner control of pacing, and have lower cognitive load. There are exceptions.
     - Cites Betrancourt, 2005; Hegarty, Kriz, & Cate, 2003; Mayer, Hegarty, Mayer, & Campbell, 2005; Tversky, Morrison, & Betrancourt, 2002
@@ -116,17 +116,17 @@ layout: default
 - SE 164-166: Prefer simple graphics, such as basic line drawings, to detailed or complex graphics.
     - Cites Butcher 2006; Scheiter, Gerjets, Huk, Imhof, and Kammerer 2009;  Mayer, Hegarty, Mayer, and Campbell 2005
 
-**Question**: _Is it better to present information in multiple formats or to reduce redundancy?_
+### Is it better to present information in multiple formats or to reduce redundancy?
 
 - SE 133-141, 144-146: Either have text on screen, or narrate the graphics on screen. "Do not add on-screen text to narrated graphics." Learners will use their visual processing when it isn't needed and it will increase cognitive load.
     - Cites Mayer 2001a, Mayer 2005b; Craig, Gholson, & Driscoll, 2002; Mayer, Heiser, & Lonn, 2001; Moreno & Mayer, 2002a; Kalyuga, Chandler, and Sweller 1999, 2000; Kalyuga, Chandler, and Sweller 2004; Jamet and Le Bohec 2007; Moreno and Mayer 2002b; Mayer and Johnson 2008
 
-**Question**: _When are simulations effective for information presentation?_
+### When are simulations effective for information presentation?
 
 - SB 255-257: To promote transfer to specific context, use simulations of that context.
     - Cites Issenberg 2005
 
-**Question**: _Is it better to present text within graphics or below graphics?_
+### Is it better to present text within graphics or below graphics?
 
 - SE 93-95: Embed words next to relevant parts of the graphics. Avoid separating text and graphics both between screens and within screens. When necessary, tooltips and hovers are preferable to separated graphics. Do not use legends.
     - Cites (on 106) Mayer, 1989b; Mayer, Steinhoff, Bower, & Mars, 1995; Moreno & Mayer, 1999a; (on 107) Chandler & Sweller, 1991; Paas & Van Merrienboer, 1994; Sweller & Chandler, 1994; Sweller, Chandler, Tierney, & Cooper, 1990; Pociask & Morrison, 2008; Florax & Ploetzner, 2010; Erhel and Jamet (2006); Ginns (2006); (on 108) Hegarty, Carpenter, & Just, 1996; Schmidt-Weigand, Kohnert, & Glowalla, 2010
@@ -134,15 +134,15 @@ layout: default
     - Cites (on 108) Holsanova, Holmberg, & Holmqvist, 2009; Mayer, Steinhoff, Bower, & Mars, 1995
 - SE 99-100: Don't put caption text below images. Embed text or put it to the side.
 
-**Question**: _Are learning agents effective?_
+### Are learning agents effective?
 
 - _Needs notes_
 
-**Question**: _What strategies for learning agents are effective?_
+### What strategies for learning agents are effective?
 
 - _Needs notes_
 
-**Question**: _Do learning styles greatly impact learning outcomes?_
+### Do learning styles greatly impact learning outcomes?
 
 - Learning styles is a theory that breaks up learners by format, such as visual, auditory, and kinetic.
 - According to [The Myth of Learning Styles](http://elearningindustry.com/the-myth-of-learning-styles), learning styles are not a strong predictor of learning outcomes.

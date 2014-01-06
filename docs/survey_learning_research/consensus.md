@@ -4,26 +4,26 @@ subtitle: Consensus
 layout: default
 ---
 
-**Question**: _Are decisions based on authority, majority-vote, or consensus most effective? What are the advantages and disadvantages of each?_
+### Are decisions based on authority, majority-vote, or consensus most effective? What are the advantages and disadvantages of each?
 
 - _Needs research_
 
-**Question**: _What consensus-based systems have proven effective in online systems?_
+### What consensus-based systems have proven effective in online systems?
 
 - _Needs research_
 
-**Question**: _When is consensus not effective?_
+### When is consensus not effective?
 
 - _Needs research_
 
-**Question**: _How does consensus-based decision making impact information validity and accuracy?_
+### How does consensus-based decision making impact information validity and accuracy?
 
 - _Needs research_
 
-**Question**: _When is a neutral point of view effective for learning?_
+### When is a neutral point of view effective for learning?
 
 - _Needs research_
 
-**Question**: _What situations require a non-neutral point of view?_
+### What situations require a non-neutral point of view?
 
 - _Needs research_

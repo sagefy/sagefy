@@ -4,18 +4,18 @@ subtitle: Improving the System
 layout: default
 ---
 
-**Question**: _What methods can be used to determine learning outcomes of information?_
+### What methods can be used to determine learning outcomes of information?
 
 - _Needs research_
 
-**Question**: _What methods can be used to determine learning outcomes of practice?_
+### What methods can be used to determine learning outcomes of practice?
 
 - _Needs research_
 
-**Question**: _What methods can be used to determine learning outcomes of projects?_
+### What methods can be used to determine learning outcomes of projects?
 
 - _Needs research_
 
-**Question**: _How do we know when a unit is effective or needs work?_
+### How do we know when a unit is effective or needs work?
 
 - _Needs research_

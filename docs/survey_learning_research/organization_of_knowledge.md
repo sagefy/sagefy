@@ -4,7 +4,7 @@ subtitle: Organization of Knowledge
 layout: default
 ---
 
-**Question**: _How important is promoting organizational knowledge? What strategies are effective to promoting learner organization through presentation?_
+### How important is promoting organizational knowledge? What strategies are effective to promoting learner organization through presentation?
 
 - SH 50: Learners tend to make simple and linear relationships in knowledge, which is vastly slower than a strongly connected network.
     - Cites Bradshaw & Anderson, 1982; Reder & Anderson, 1980; Smith, Adams, & Schorr, 1978; DiSessa 1982; Catrambone, 1995, 1998
@@ -36,13 +36,13 @@ layout: default
 - SE 329: Use on screen navigational elements such as headers. Use links sparingly.
     - Cites Lorch, Lorch, Ritchey, McGovern, and Coleman (2001); Mayer (2005b); Neiderhauser, Reynolds, Salmen, and Skolmoski (2000); Shapiro (2008)
 
-**Question**: _How effective are concept maps?_
+### How effective are concept maps?
 
 - SE 330: Provide maps of the site and course. Use a simple hierarchical structure.
     - Cites Nilsson and Mayer (2002); Potelle and Rouet, 2003; Neiderhauser, Reynolds, Salmen, and Skolmoski (2000); Shapiro (2005, 2008)
 - SH 149: Let learners also see their areas of strength and improvement to support motivation; learners are often unaware of their own progress.
 
-**Question**: _Does presenting module organization improve learning?_
+### Does presenting module organization improve learning?
 
 - SB 154: Site maps can improve learning; hierarchical structures are more helpful to novices than experts.
    - Cites Shapiro 2005.

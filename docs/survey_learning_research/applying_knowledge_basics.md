@@ -3,7 +3,7 @@ title: Survey of Learning Research > Applying Knowledge Basics
 layout: default
 ---
 
-**Question**: _How do we learn to apply knowledge?_
+### How do we learn to apply knowledge?
 
 - SB 240: To be able to transfer knowledge to other contexts, you must be able to explain why something is the way it is, not just what it is or how to do it.
     - Cites Kieras & Bovair, 1984
@@ -18,28 +18,26 @@ layout: default
 - SB 248-249: Transfer is highly dependent on expertise; intelligence and talent are not significant factors.
     - Cites Schraw, 2006; Cattell 1943; Neitfeld, Finney, Schraw, & McCrudden, 2007
 
-
-
-**Question**: _Do real world tasks promote learning?_
+### Do real world tasks promote learning?
 
 - SB 13: There is both routine expertise and adaptive expertise. Adaptive expertise can be applied to multiple contexts.
     - Cites Neitfeld, Finney, Schraw, & McCrudden 2007.
 - SH 83: Real-world tasks can help transition goals from extrinsic and attainment to intrinsic.
 
-**Question**: _How can projects be made relevant to the learner?_
+### How can projects be made relevant to the learner?
 
-**Question**: _How can one learn to apply knowledge to appropriate contexts?_
+### How can one learn to apply knowledge to appropriate contexts?
 
-**Question**: _How does prior knowledge impact project work?_
+### How does prior knowledge impact project work?
 
 - SH 16: Suggesting prior knowledge to apply to a problem improves performance dramatically.
     - Cites Bransford and Johnson 1972, Dooling and Lachman 1971
 
-**Question**: _Is peer feedback effective? When and what situations?_
+### Is peer feedback effective? When and what situations?
 
-**Question**: _How explicit is necessary for designing projects?_
+### How explicit is necessary for designing projects?
 
-**Question**: _Is self assessment effective in project work? What strategies can be used?_
+### Is self assessment effective in project work? What strategies can be used?
 
 _File_
 
@@ -155,8 +153,7 @@ _File_
     - Authentic tasks specific to the domain
     - Problem is the "focal point" of teaching
 
-
-**Question**: _How do we ensure learners understand the task?_
+### How do we ensure learners understand the task?
 
 - SH 194: Learners often fail to assess the task at hand, instead relying own their previous experiences. Learners often need assistance knowing how to assess tasks, and need feedback on task assessment.
     - Cites Carey, Flower, Hayes, and others (1989)
@@ -165,4 +162,3 @@ _File_
     - Cites Stone, 2000; Glenberg, Sanocki, Epstein, and Morris (1987); Eva, Cunnington, Reiter, Keane, and Norman (2004); Glenberg (1992); Violato and Luckyer (2006)
 - SH 195: People are generally weak at evaluating their own strengths and weaknesses. Novice learners are more likely to evaluate themselves poorly than experts. This interferes with metacognitive processes.
     - Cites Dunning, 2007; Hacker et al., 2000
-

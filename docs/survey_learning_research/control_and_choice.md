@@ -4,12 +4,12 @@ subtitle: Control and Choice
 layout: default
 ---
 
-**Question**: _Should learners be in control of the pacing of the presentation?_
+### Should learners be in control of the pacing of the presentation?
 
 - SB 101-102: To reduce cognitive load, segment lessons into short chunks; and let learners be in control of the pace of the segments.
     - Cites Mayer and Chandler (2001)
 
-**Question**: _Is learner or program control more effective? When? Do choices improve or hinder learning?_
+### Is learner or program control more effective? When? Do choices improve or hinder learning?
 
 - SE 316, 318: Our low ability to self-assessment impacts our ability to make effective learning decisions
     - Cites Stone, 2000; Glenberg, Sanocki, Epstein, and Morris (1987); Eva, Cunnington, Reiter, Keane, and Norman (2004); Violato and Lockyer (2006); Moos and Azevedo (2008)

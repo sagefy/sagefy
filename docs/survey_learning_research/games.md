@@ -4,7 +4,7 @@ subtitle: Games
 layout: default
 ---
 
-**Question**: _Can games be more effective for learning? How?_
+### Can games be more effective for learning? How?
 
 - SE 373: Games are very popular in online learning.
     - Cites Issenberg, McGaghie, Petrusa, Gordon, & Scalese, 2005; Anderson and Lawton (2009); Carson (2009)
@@ -15,7 +15,7 @@ layout: default
 - SE 382: When gaming to learn, make learning required to play the game.
     - Cites Belanich, Sibley, and Orvis (2004)
 
-**Question**: _What tips are there for learning games?_
+### What tips are there for learning games?
 
 - SE 381: The type of game (shooter, adventure, racing etc) should match the learning objective.
     - Cites Van Eck (2007)

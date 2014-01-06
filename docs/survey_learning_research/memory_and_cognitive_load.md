@@ -4,7 +4,7 @@ subtitle: Memory and Cognitive Load
 layout: default
 ---
 
-**Question**: _How does memory work?_
+### How does memory work?
 
 - SB 50-52: There are essentially two major types of memory: working (short-term), and long-term. Working memory focuses on the task at hand, and is limited by a small number of items. Because working memory is limited, there is a requirement for a great deal of focus and removing cognitive load for effective learning.
 - SB 52-53: What's stored in long-term memory will greatly impact the amount of information that can reside in working memory at one time. There are two major types of long-term memories: declarative (factual) and procedural (how). The ways these types of memories are connected, or schemas, have a profound impact on being able to use in working memory. Transfer from working memory to long-term memory is the goal of transfer, and several strategies exist to promote transfer.
@@ -19,7 +19,7 @@ layout: default
 - SB 165: Mental models, or schemas, are long-term memories that serve as the root of all expertise.
 - SB 167: Mental models are built by integrating new information in working memory into existing knowledge in long-term memory.
 
-**Question**: _What is cognitive load? How do we manage it?_
+### What is cognitive load? How do we manage it?
 
 - SB 86-87: The four factors that determine cognitive load are a) complexity, b) prior knowledge, c) presentation rate and control, and d) instructional modes and methods.
 - SB 112: "Manage attention in the design of instructional environments in ways that (1) optimize attention capacity, (2) direct attention to important instructional content, and (3) minimize divided attention in order to devote limited cognitive resources to learning."
@@ -34,7 +34,7 @@ layout: default
 - SH 103: Humans can't multitask, the performance degrades when a learner is asked to do more than one thing at a time. Experts at skills are more likely to be able to perform multiple tasks at a time.
     - Cites Kahnemann, 1973; Navon & Gopher, 1979; Wickens, 1991; Strayer and Johnston 2001; Smith & Chamberlin, 1992; Lansdown, 2002; Beilock, Wierenga, & Carr, 2002
 
-**Question**: _How much information can one person process at a time? What strategies are effective to managing cognitive load?_
+### How much information can one person process at a time? What strategies are effective to managing cognitive load?
 
 - SB 79-80  Working memory has both visual and auditory components as well as an executive component. Elderly and disabled people are less able to use both at the same time.
     - Cites Baddeley & Logie, 1999
@@ -53,7 +53,7 @@ layout: default
 - SH 106: Not all reductions to cognitive load promote learning; learners need to fully use their cognitive capacity on the task at hand rather than being distracted.
     - Cites Paas, Renkl, & Sweller, 2003, 2004
 
-**Question**: _Is it more effective to add interesting information, or stick to the basics? Do emotional appeals help or hinder learning?_
+### Is it more effective to add interesting information, or stick to the basics? Do emotional appeals help or hinder learning?
 
 - SH 85: Show passion and enthusiasm for the subject, which will make the students more curious about the subject.
 - SB 97: To reduce cognitive load, remove seductive details and tangential stories.
@@ -77,6 +77,6 @@ layout: default
     - f) Signaling the learner's attention
     - Cites Mayer, 2005b, 2009
 
-**Questions**: _How can we reduce cognitive load in learning projects?_
+### How can we reduce cognitive load in learning projects?
 
 - SE 99: Keep the directions and the exercise together. Do not separate them into two different screens.

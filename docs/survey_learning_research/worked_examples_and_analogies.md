@@ -4,13 +4,13 @@ subtitle: Worked Examples and Analogies
 layout: default
 ---
 
-**Question**: _How can analogies and examples activate prior knowledge?_
+### How can analogies and examples activate prior knowledge?
 
 - SH 33: Analogies and examples can strongly connect existing prior knowledge to new information.
 - SE 223-229: Worked examples are preferred by learners, and can reduce the time it takes to understand a concept. Worked examples are useful both for procedural and strategic tasks.
     - Cites  LeFevre and Dixon 1986; Atkinson, Renkl, and Merrill, 2003; Sweller & Cooper, 1985; Rourke & Sweller, 2009; Schworm & Renkl, 2007; van Gog, Paas, & van Merrienboer, 2008; Hilbert, Renkl, Kessler, & Reiss, 2008; Moreno & Ortegano-Layne, 2008; Moreno & Valdez, 2007
 
-**Questions**: _How can one design effective worked examples?_
+### How can one design effective worked examples?
 
 - SB 102-104: To reduce cognitive load, replace some practice exercises early on with worked examples.
     - Cites Sweller and Cooper (1985)
@@ -43,11 +43,11 @@ layout: default
     - Cites Anderson, Farrell, & Sauers, 1984; Lefevre & Dixon, 1986; Chi, 2000; Chi, DeLeeuw, Chiu, & LaVancher, 1994; Renkl, Stark, Gruber, & Mandl, 1998; Stark, Mandl, Gruber, & Renkl, 2002
 - SH 183: Demonstrate inclusive "language, behavior, and attitudes." Use diverse examples.
 
-**Question**: _When are worked examples more effective than practice?_
+### When are worked examples more effective than practice?
 
 - _Needs research_
 
-**Question**: _Do learners do better after observing expert practice?_
+### Do learners do better after observing expert practice?
 
 - SH 58: Walking learners through the expert analytical reasoning of a problem can help them see stronger relationships and connections.
     - Cites Gentner, Loewenstein, & Thompson, 2003; McDaniel & Donnelly, 1996
@@ -58,8 +58,7 @@ layout: default
     - Cites Schoenfeld, 1987; Moreno (2009); Van Gog, Sluijsmans, Joosten-ten Brinke, and Prins (2010)
 - SH 147: Show examples of how much practice is required and what that practice looks like.
 
-
-**Question**: _When are analogies and comparisons effective?_
+### When are analogies and comparisons effective?
 
 - SB 187-189: Use analogies to promote building mental models. Analogies must draw on existing prior knowledge and draw from unrelated domains.
     - Cites Stepich & Newby, 1988; Newby, Ertmer, & Stepich, 1995
@@ -69,12 +68,11 @@ layout: default
     - Cites Loewenstein, Thompson, and Gentner 2003; Gentner, Holyoak, & Kokinov, 2001; Catrambone & Holyoak, 1989; Holyoak & Koh, 1987; Klahr & Carver, 1988; Biederman & Shiffrar, 1987; Brown & Kane, 1988
 - SH 118: Use comparisons to help learners transfer knowledge to appriopriate contexts.
 
-
-**Question**: _Is it effective to see a comparison of an expert strategy versus a self devised strategy?_
+### Is it effective to see a comparison of an expert strategy versus a self devised strategy?
 
 - SB 328: Experts vary greatly in their metacogntive processes; experts spend more time on analysis, planning, and verification whereas novices focus on exploring.
     - Cites Schoenfeld, 1987
 
-**Question**: _Is comparison exercises effective to knowledge integration? When and how?_
+### Are comparison exercises effective to knowledge integration? When and how?
 
 - _Needs research_

@@ -4,7 +4,7 @@ subtitle: Practice Sets
 layout: default
 ---
 
-**Question**: _When is a series of questions more effective than single questions?_
+### When is a series of questions more effective than single questions?
 
 - SB 101-102: To reduce cognitive load, segment lessons into short chunks; and let learners be in control of the pace of the segments.
     - Cites Mayer and Chandler (2001)
@@ -43,7 +43,7 @@ layout: default
 - SB 260-262: To promote moderate transfer, teach how it works at the steps of the procedure.
     - Cites Kieras and Bovair 1984
 
-**Question**: _How many questions should go in a single set?_
+### How many questions should go in a single set?
 
 - _Needs research_
 

@@ -4,7 +4,7 @@ subtitle: Models of Learning Process
 layout: default
 ---
 
-**Question**: _How do learners develop over time?_
+### How do learners develop over time?
 
 - SH 96: There is a four-stage development cycle to mastery:
     - a) unconscious incompetence

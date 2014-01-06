@@ -3,7 +3,7 @@ title: Survey of Learning Research > Learner Goals and Motivation
 layout: default
 ---
 
-**Question**: _What do we know about learn motivation?_
+### What do we know about learner motivation?
 
 - SH 200: Learner's beliefs about themselves will change their learning outcomes. If learners believe they are in control of their intelligence, self-efficacy, motivation, strategies, and behaviors, they are more likely to succeed.
     - Cites Schommer, 1994; Henderson & Dweck, 1990; Aronson, Fried, & Good, 2002
@@ -22,7 +22,7 @@ layout: default
 - SB 352-353: Intrinsic goals lead to better commitment to the goal.
     - Cites Greene & Azevedo, 2007; Vansteenkiste, Simons, Lens, Soenens, Matos, and Lacante (2004)
 
-**Question**: _Does asking learners their goals at the beginning of a course improve outcomes?_
+### Does asking learners their goals at the beginning of a course improve outcomes?
 
 - SH 69: The three ways to understand and consider learner motivation is a) the value of the goal and b) their expectations of that goal and c) whether or not the environment is supportive.
     - Cites Atkinson, 1957, 1964; Wigfield & Eccles, 1992, 2000
@@ -41,19 +41,19 @@ layout: default
 - SH 76: Learner goals change over the period of a course. Learners can transition from extrinsic and attainment goals to intrinsic goals.
     - Cites Hidi & Renninger, 2006
 
-**Question**: _How do we manage learner fatigue?_
+### How do we manage learner fatigue?
 
 - SB 116: To sustain learner attention, manage their fatigue. Alter between types of activities and build in regular breaks.
 - SB 119-120: Material pacing is critical to sustaining learner attention. A "relatively rapid pace" sustains attention.
     - Cites Anderson & Torrey, 1995 and Brophy and Good, 1986
 
-**Question**: _Does asking learners their satisfaction support learning?_
+### Does asking learners their satisfaction support learning?
 
 - SE 317: Learner satistifaction has a low correlation with learning outcomes.
     - Cites Sitzmann, Brown, Casper, Ely, and Zimmerman (2008); Schnackenberg, Sullivan, Leader, and Jones (1998)
 - SH 149: Let learners also see their areas of strength and improvement to support motivation; learners are often unaware of their own progress.
 
-**Question**: _How can the information be made relevant to the learner?_
+### How can the information be made relevant to the learner?
 
 - SH 84: Identify your own values early in the course to encourage learners to understand those values and increase their motivation.
 - SB 371: Add situational interest to support motivation.
@@ -68,7 +68,7 @@ layout: default
 - SB 158: If the learners already have the prior knowledge, activating it might not be necessary.
     - Clark, Nguyen, & Sweller, 2006
 
-**Question**: _Is setting learner expectations effective? What are the best strategies?_
+### Is setting learner expectations effective? What are the best strategies?
 
 - SH 77: Learners must be able to expect a positive outcome from their learning.
     - Cites Carver & Scheier, 1998

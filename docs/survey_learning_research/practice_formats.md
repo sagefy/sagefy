@@ -4,7 +4,7 @@ subtitle: Practice Formats
 layout: default
 ---
 
-**Question**: _Should the question be presented as text, image, audio, video, or an interactive game or simulation? When?_
+### Should the question be presented as text, image, audio, video, or an interactive game or simulation? When?
 
 - SB 35-40: Graphics can greatly improve learning, 1) especially for novice learners, and 2) when the graphic directly supports the learning objective.
     - Cites Clark and Mayer, 2008; Mayer and Gallini, 1990
@@ -47,38 +47,38 @@ layout: default
 - SH 127-128: Deliberate practice is far more effective than general practice. Deliberate practice focuses on area of weakness while receiving observation and feedback. Deliberate practice is the defining difference between experts.
     - Cites Ericsson, Krampe, & Tescher-Romer, 2003; Ericsson & Lehmann, 1996; Ericsson & Charness, 1994
 
-**Question**: _Are true or false questions effective? When?_
+### Are true or false questions effective? When?
 
 - _Needs research_
 
-**Question**: _Are multiple choice questions effective? When?_
+### Are multiple choice questions effective? When?
 
 - _Needs research_
 
-**Question**: _When should numeric input be used?_
+### When should numeric input be used?
 
 - _Needs research_
 
-**Question**: _When are matching exercises effective?_
+### When are matching exercises effective?
 
 - _Needs research_
 
-**Question**: _When would a matrix of input be necessary?_
+### When would a matrix of input be necessary?
 
 - _Needs research_
 
-**Question**: _How do we assess essay style questions? What strategies are effective for a massive, teacher-less system?_
+### ow do we assess essay style questions? What strategies are effective for a massive, teacher-less system?
 
 - _Needs research_
 
-**Question**: _How do we assess file upload based questions, such as audio, video, images, and documents?_
+### How do we assess file upload based questions, such as audio, video, images, and documents?
 
 - _Needs research_
 
-**Question**: _Are simulations and games effective for practice? Are they worth the development expense?_
+### Are simulations and games effective for practice? Are they worth the development expense?
 
 - _Needs research_
 
-**Question**: _When should we assess using interactive games and simulations?_
+### When should we assess using interactive games and simulations?
 
 - _Needs research_

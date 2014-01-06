@@ -4,7 +4,7 @@ subtitle: Prior Knowledge
 layout: default
 ---
 
-**Question**: _How important is prior knowledge to learning?_
+### How important is prior knowledge to learning?
 
 - SB Ch5: Prior knowledge determines the working memory limits of the learner.
     - Cites Chase and Simon, 1973; Miller, 1956; Hamilton, Hockey, and Rejman, 1977; Sweller 2005
@@ -17,7 +17,7 @@ layout: default
     - Cites Bransford & Johnson, 1972 and Bekerian & Baddeley, 1980.
 - SH 108: Learner can fail to apply knowledge when their do not have a sufficient knowledge of the component skills.
 
-**Question**: _How can inappropriate prior knowledge hinder learning?_
+### How can inappropriate prior knowledge hinder learning?
 
 - SH 17: Inaccurate prior knowledge can severely hinder learning.
     - Cites Alvermann, Smith, & Readance 1985
@@ -34,7 +34,7 @@ layout: default
 - SB 155-158: Avoid activating inappropropriate prior knowledge, such as seductive details. They can severely hinder learning.
     - Cites Garner, Gillingham, & White, 1989; Mayer 2005; Clark & Mayer, 2008; Harp and Mayer 1998
 
-**Question**: _What strategies are effective for dealing with inappropriate prior knowledge?_
+### What strategies are effective for dealing with inappropriate prior knowledge?
 
 - SH 22: Learners should be taught explicitly the "conditions and context" of information presented to avoid hindering learning. Existing prior knowledge should be activated and then categorized to avoid misapplication.
     - Cites Schwartz et al., 1999; Spiro et al., 1989; Minstrell, 1989, 1992
@@ -49,15 +49,15 @@ layout: default
 - SH 35: When there is a pattern of misapplication of prior knowledge, start by showing where and where not the prior knowledge applies. Heuristics are an excellent tool for this problem.
 - SH 37: Asking students to predict based on their inaccurate prior knowledge and then testing the results can help to more quickly overcome the inaccurate prior knowledge. Ask learners to justify the reasoning.
 
-**Question**: _Are people more likely to remember facts or stories?_
+### Are people more likely to remember facts or stories?
 
 - _Needs research_
 
-**Question**: _What are the limitations of working memory?_
+### What are the limitations of working memory?
 
 - _Needs research_
 
-**Question**: _Can expertise in the subject hinder teaching?_
+### Can expertise in the subject hinder teaching?
 
 - SB 12: Experts can be very biased in favor of their expertise, even when unwarranted.
     - Cites Chi 2006, Uhalde and Strohl 2006.
@@ -67,7 +67,7 @@ layout: default
 - SH 59: Before creating your course or lecture, develop a concept map of your own knowledge on the subject. This will force you to overcome your bias towards deeper organization and teach your own organization with the factual knowledge.
 - SH 182: Avoid messages that suggest low-ability of the learner.
 
-**Question**: _How effective is activating prior knowledge to learning?_
+### How effective is activating prior knowledge to learning?
 
 - SB Ch8: Cites a variety of techniques, nearly all of which produce large effect sizes on learner performance.
 - SH 15: "Students must connect what they learn to what they already know, interpreting incoming information, and even sensory perception, through the lens of their existing knowledge, beliefs, and assumptions"
@@ -77,7 +77,7 @@ layout: default
 - SH 17: Asking students to recall knowledge from previous courses improve integration of knowledge.
     - Cites Peeck, Van Den Bosch and Kruepeling 1982; Garfield, Del Mas, and Chance 2007
 
-**Question**: _What are the most effect strategies to activate prior knowledge?_
+### What are the most effect strategies to activate prior knowledge?
 
 - SB 141-148: Offers three techniques: 1) Group discussion of a problem, 2) Pre-assignment questions and 3) a "comparative advance organizer".
     - For 1, cites Schmidt and Moust 200.
@@ -88,7 +88,7 @@ layout: default
 - SB 142-144: Presenting a relevant problem, and discussing it as a group, effectively activates prior knowledge.
     - Cites Schmidy and Moust 2000
 
-**Question**: _How can teacher expertise hinder creating effective information? What strategies can overcome it?_
+### How can teacher expertise hinder creating effective information? What strategies can overcome it?
 
 - SH 36: Explicitly show discipline-specific conventions. Conventions from other disciplines can interfere with the recall of new information.
 - SH 99: The "expert blind spot" is when experts are "blind" to what learners fully need to know. Often seemingly simple skills are the combination of other skills.
