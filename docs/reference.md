@@ -21,6 +21,7 @@ Learning Science
 - [Building Expertise: Cognitive Methods for Training and Performance Improvement](http://www.amazon.com/Building-Expertise-Cognitive-Performance-Improvement/dp/0787988448) by Ruth Clark
 - [e-Learning and the Science of Instruction](http://www.amazon.com/Learning-Science-Instruction-Guidelines-Multimedia/dp/0470874309/ref=dp_ob_title_bk) by Clark, Mayer
 - [Educause](http://www.educause.edu/)
+- [How to Solve It](http://en.wikipedia.org/wiki/How_to_Solve_It)
 
 Gamification
 ------------
@@ -31,6 +32,7 @@ Gamification
 - [Mozilla Open Badges](http://openbadges.org/)
 - [The Business of Gamification](http://visual.ly/business-gamification)
 - [How to Gamify: 15 ways to introduce gaming concepts into eLearning](http://www.growthengineering.co.uk/how-to-gamify-15-ways-to-introduce-gaming-concepts-into-elearning/)
+- [We Don't Need No Stinkin' Badges](http://www.gdcvault.com/play/1014576/We-Don-t-Need-No)
 
 Statistics, Data science and Machine learning
 ---------------------------------------------

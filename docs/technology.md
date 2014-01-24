@@ -52,7 +52,7 @@ Infrastructure
         - Unit: [unittest](http://docs.python.org/2/library/unittest.html) via [nose](https://nose.readthedocs.org/en/latest/)
         - Lint: [Flake8](https://pypi.python.org/pypi/flake8)
         - Coverage: [Coverage.py](http://nedbatchelder.com/code/coverage/)
-        - Mock:
+        - Mock: [Faker](https://github.com/joke2k/faker)
         - Performance:
         - Security:
         - i18n:
@@ -61,7 +61,7 @@ Infrastructure
         - Unit: [Mocha](http://visionmedia.github.io/mocha/)
         - Lint: ??? - See [JSHint](http://www.jshint.com/) & [Coffeescript Style Guide](https://github.com/polarmobile/coffeescript-style-guide)
         - Coverage: [Istanbul](https://github.com/gotwarlost/istanbul)
-        - Mock:
+        - Mock: [Chance.js](http://chancejs.com/)
         - Performance:
         - i18n:
         - Error reporting:
