@@ -33,6 +33,8 @@ Gamification
 - [The Business of Gamification](http://visual.ly/business-gamification)
 - [How to Gamify: 15 ways to introduce gaming concepts into eLearning](http://www.growthengineering.co.uk/how-to-gamify-15-ways-to-introduce-gaming-concepts-into-elearning/)
 - [We Don't Need No Stinkin' Badges](http://www.gdcvault.com/play/1014576/We-Don-t-Need-No)
+- [Designing for Behavioral Change in Health](http://www.uxbooth.com/articles/designing-for-behavioral-change-in-health/)
+
 
 Statistics, Data science and Machine learning
 ---------------------------------------------
