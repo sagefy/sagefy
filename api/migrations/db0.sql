@@ -17,7 +17,6 @@ CREATE TABLE users (
     email       varchar(256) UNIQUE,
     password    varchar(256),
     ip          inet[],
-    role        varchar(64),
     status      varchar(64),
     avatar      varchar(128)
 );
@@ -29,13 +28,11 @@ CREATE TABLE notifications (
     id                  varchar(64) PRIMARY KEY,
     created             timestamp DEFAULT current_timestamp,
     modified            timestamp DEFAULT current_timestamp,
-    notification_type   varchar(64)
-    format              varchar(64)
-    from_user_id        varchar(64) REFERENCES users(id),
-    to_user_id          varchar(64) REFERENCES users(id),
     subject             text,
     body                text,
-    read                boolean DEFAULT FALSE
+    read                boolean DEFAULT FALSE,
+    user_id             varchar(64) REFERENCES users(id),
+    notification_type   varchar(64)
 );
 
 GRANT ALL PRIVILEGES ON TABLE notifications TO sagefy;
@@ -45,15 +42,11 @@ CREATE TABLE messages (
     id              varchar(64) PRIMARY KEY,
     created         timestamp DEFAULT current_timestamp,
     modified        timestamp DEFAULT current_timestamp,
-    message_type    varchar(64),
-    user_id         varchar(64) REFERENCES users(id),
-    object_id       varchar(64),
-    object_type     varchar(64),
     subject         text,
     body            text,
-    action          varchar(64),
-    action_url      varchar(128),
-    seen            boolean DEFAULT FALSE
+    read            boolean DEFAULT FALSE,
+    user_id         varchar(64) REFERENCES users(id),
+    message_type    varchar(64)
 );
 
 GRANT ALL PRIVILEGES ON TABLE messages TO sagefy;

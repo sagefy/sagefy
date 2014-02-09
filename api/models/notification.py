@@ -8,9 +8,7 @@ class Notification(db.Model):
     created = db.Column(db.DateTime)
     modified = db.Column(db.DateTime)
     notification_type = db.Column(db.String(64))
-    format = db.Column(db.String(64))
-    from_user_id = db.Column(db.String(64))  # TODO: Foreign Key
-    to_user_id = db.Column(db.String(64))  # TODO: Foreign Key
+    user_id = db.Column(db.String(64))  # TODO: Foreign Key
     subject = db.Column(db.Text)
     body = db.Column(db.Text)
     read = db.Column(db.Boolean)  # TODO: Default False
