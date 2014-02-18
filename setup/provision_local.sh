@@ -33,10 +33,10 @@ sudo pip install -r /var/www/api/requirements.txt
 
 sudo apt-get -y install redis-server
 
-#### Stylus and CoffeeScript ##################################################
+#### UI Tooling ###############################################################
 
 sudo apt-get -y install npm
-sudo npm install -g coffee-script stylus
+sudo npm install -g gulp coffee-script stylus
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 echo 'export NODE_PATH=/usr/local/lib/node_modules' >> ~/.bashrc
 

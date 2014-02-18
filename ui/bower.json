@@ -9,5 +9,13 @@
     "moment": "latest",
     "underscore": "latest",
     "handlebars": "*"
+  },
+  "overrides": {
+    "jquery": {
+      "main": "dist/jquery.js"
+    },
+    "modernizr": {
+      "main": "modernizr.js"
+    }
   }
 }

@@ -1,6 +1,7 @@
-require [
+define [
     'jquery'
-], ($) ->
+    'hbs/styleguide/index'
+], ($, t) ->
     $ ->
         # if window.location.pathname != '/styleguide':
         #     return
@@ -10,10 +11,12 @@ require [
         $body = $ 'body'
         $body.addClass 'max-width-10'
         $body.attr 'id', 'styleguide'
-        $body.html HBS['styleguide/index']()
+        $body.html t()
 
         $('a[href="#"]').click ->
             false
 
         $('a[href*="//"]').click ->
             @target = "_blank"
+
+    {}

@@ -1,27 +1,29 @@
 {
   "name": "Sagefy",
   "version": "0.0.0",
-  "dependencies": {},
-  "devDependencies": {
-    "connect-livereload": "latest",
-    "grunt": "latest",
-    "grunt-bower-requirejs": "latest",
-    "grunt-concurrent": "latest",
-    "grunt-contrib-clean": "latest",
-    "grunt-contrib-coffee": "latest",
-    "grunt-contrib-concat": "latest",
-    "grunt-contrib-connect": "latest",
-    "grunt-contrib-copy": "latest",
-    "grunt-contrib-handlebars": "latest",
-    "grunt-contrib-livereload": "latest",
-    "grunt-contrib-requirejs": "latest",
-    "grunt-contrib-stylus": "latest",
-    "grunt-contrib-uglify": "latest",
-    "grunt-contrib-watch": "latest",
-    "grunt-open": "latest",
-    "load-grunt-tasks": "latest"
+  "description": "",
+  "main": "scripts/app.coffee",
+  "directories": {
+    "test": "tests"
   },
-  "engines": {
-    "node": ">=0.8.0"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sagefy",
+  "license": "AGPL",
+  "devDependencies": {
+    "gulp-util": "~2.2.14",
+    "gulp": "~3.5.2",
+    "gulp-bower-files": "~0.1.8",
+    "gulp-clean": "~0.2.4",
+    "gulp-coffee": "~1.4.1",
+    "gulp-concat": "~2.1.7",
+    "gulp-handlebars": "~1.0.2",
+    "gulp-resolve-dependencies": "0.0.1",
+    "gulp-stylus": "0.0.13",
+    "gulp-uglify": "~0.2.1",
+    "gulp-load-tasks": "~0.1.1",
+    "coffee-script": "~1.7.1",
+    "gulp-declare": "~0.1.0"
   }
 }
