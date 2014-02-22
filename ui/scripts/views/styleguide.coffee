@@ -27,5 +27,5 @@ define [
 
         openInNewWindow: (e) ->
             $target = $(e.target).closest 'a'
-            $target.target = "_blank"
+            $target[0].target = "_blank"
 
