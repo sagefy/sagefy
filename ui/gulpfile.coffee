@@ -39,7 +39,7 @@ gulp.task 'copyStatic', ->
 
 gulp.task 'bower', ->
     plugins['bower-files']()
-        .pipe gulp.dest dist
+        .pipe gulp.dest dist + 'bower/'
 
 gulp.task 'handlebars', ->
     gulp.src hbsSrc
