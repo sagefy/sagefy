@@ -2,7 +2,7 @@ require.config
     paths:
         jquery: 'jquery/dist/jquery'
         handlebars: 'handlebars/handlebars'
-        _: 'underscore/underscore'
+        underscore: 'underscore/underscore'
         backbone: 'backbone/backbone'
     shim:
         handlebars:
@@ -12,5 +12,6 @@ require.config
                 window.Handlebars
 
 require [
-    'sections/styleguide'
+    'styleguide',
+    'index'
 ]
