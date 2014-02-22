@@ -27,7 +27,7 @@ done
 #### Python ###################################################################
 
 sudo apt-get -y install python-pip
-sudo pip install -r /var/www/api/requirements.txt
+sudo pip install -r /var/www/setup/requirements.txt
 
 #### Redis ####################################################################
 
