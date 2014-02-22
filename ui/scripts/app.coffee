@@ -1,9 +1,9 @@
 require.config
     paths:
-        jquery: 'jquery/dist/jquery'
-        handlebars: 'handlebars/handlebars'
-        underscore: 'underscore/underscore'
-        backbone: 'backbone/backbone'
+        jquery: 'bower/jquery/dist/jquery'
+        handlebars: 'bower/handlebars/handlebars'
+        underscore: 'bower/underscore/underscore'
+        backbone: 'bower/backbone/backbone'
     shim:
         handlebars:
             exports: 'Handlebars'
