@@ -3,8 +3,8 @@ define [
     'hbs/styleguide/index'
 ], ($, t) ->
     $ ->
-        # if window.location.pathname != '/styleguide':
-        #     return
+        if window.location.pathname != '/styleguide'
+            return
 
         document.title = 'Sagefy Style Guide and Component Library'
 
@@ -18,5 +18,3 @@ define [
 
         $('a[href*="//"]').click ->
             @target = "_blank"
-
-    {}
