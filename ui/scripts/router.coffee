@@ -1,4 +1,4 @@
-define([
+define [
     'backbone'
 ], (Bb) ->
 
@@ -9,15 +9,12 @@ define([
             '(/)': 'viewIndex'
 
         initialize: ->
-            Bb.history.start(pushState: true)
+            Bb.history.start pushState: true
 
         viewIndex: ->
-            require(['views/index'], (IndexView) ->
+            require ['views/index'], (IndexView) ->
                 indexView = new IndexView
-            )
 
         viewStyleguide: ->
-            require(['views/styleguide'], (StyleguideView) ->
+            require ['views/styleguide'], (StyleguideView) ->
                 styleguideView = new StyleguideView
-            )
-)

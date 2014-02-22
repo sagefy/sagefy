@@ -1,4 +1,4 @@
-require.config(
+require.config
     paths:
         jquery: 'bower/jquery/dist/jquery'
         handlebars: 'bower/handlebars/handlebars'
@@ -10,8 +10,6 @@ require.config(
             init: ->
                 window.Handlebars = Handlebars
                 window.Handlebars
-)
 
-require(['router'], (PrimaryRouter) ->
+require ['router'], (PrimaryRouter) ->
     primaryRouter = new PrimaryRouter
-)
