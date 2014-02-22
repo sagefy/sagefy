@@ -11,7 +11,5 @@ require.config
                 window.Handlebars = Handlebars
                 window.Handlebars
 
-require [
-    'styleguide',
-    'index'
-]
+require ['router'], (PrimaryRouter) ->
+    primaryRouter = new PrimaryRouter
