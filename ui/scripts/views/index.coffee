@@ -1,4 +1,4 @@
-define [
+define([
     'jquery'
     'backbone'
     'hbs/public/index'
@@ -6,13 +6,14 @@ define [
 
     class IndexView extends Bb.View
 
-        el: $ 'body'
+        el: $('body')
 
         initialize: ->
             @render()
 
         render: ->
             document.title = 'Sagefy - Adaptive, collaborative, and open learning platform.'
-            @$el.addClass 'max-width-8'
-                .attr 'id', 'index'
-                .html t()
+            @$el.addClass('max-width-8')
+                .attr('id', 'index')
+                .html(t())
+)
