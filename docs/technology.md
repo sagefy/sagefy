@@ -18,6 +18,7 @@ Infrastructure
     - Only the Core runs on a web-server, rest are just static to end users
 - **Language**: [Python 2.7](http://docs.python.org/2.7/)
 - **Web framework**: [Flask](http://flask.pocoo.org/)
+    - See [RESTish](/docs/restish)
 - **User & Content Database**: [PostgreSQL](http://www.postgresql.org/docs/9.1/interactive/index.html)
 - **Memory, ORM caching**: [Redis](http://redis.io/documentation)
 - **Search**: Redis autocomplete, then [ElasticSearch](https://github.com/elasticsearch/elasticsearch)

@@ -2,3 +2,7 @@ tmp
 npm-debug.log
 _site
 .vagrant
+bower_components
+node_modules
+*.pyc
+ui/distribution
