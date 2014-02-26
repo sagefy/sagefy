@@ -15,10 +15,7 @@ CREATE TABLE users (
     modified    timestamp DEFAULT current_timestamp,
     username    varchar(256) UNIQUE,
     email       varchar(256) UNIQUE,
-    password    varchar(256),
-    ip          inet[],
-    status      varchar(64),
-    avatar      varchar(128)
+    password    varchar(256)
 );
 
 GRANT ALL PRIVILEGES ON TABLE users TO sagefy;
