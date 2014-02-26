@@ -38,7 +38,7 @@ General REST principles, but made more practical.
 References
 ----------
 
-- <http://info.apigee.com/Portals/62317/docs/web%20api.pdf>
-- <http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api>
-- <https://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml>
-- <http://www.slideshare.net/mario_cardinal/best-practices-for-designing-pragmatic-restful-api>
+- http://info.apigee.com/Portals/62317/docs/web%20api.pdf
+- http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
+- https://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml
+- http://www.slideshare.net/mario_cardinal/best-practices-for-designing-pragmatic-restful-api
