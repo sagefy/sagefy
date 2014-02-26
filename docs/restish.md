@@ -3,6 +3,8 @@ title: RESTish
 layout: default
 ---
 
+General REST principles, but made more practical.
+
 - Use nouns.
 - Plural nouns.
 - All lowercase.
@@ -10,7 +12,7 @@ layout: default
 - Parent noun, id, child noun, id...
 - ID can be reference.
     - Current, recent...
-- GET (1||n) POST PUT PATCH DELETE
+- 6: GET one GET many POST PUT PATCH DELETE
 - Everything else in query string.
     - Search, sort, filter, fields (embed), paginate...
 - Verbose errors. One for devs, one for users.
@@ -20,9 +22,9 @@ layout: default
 - Content type as extension if not JSON.
 - JSON is default.
 - Use pagination (limit, offset) and optional field params.
-- No resource -> pseudo resource or root level verb.
+- If no resource, pseudo resource or root level verb.
 - Fields in lower camelCase.
-- method=x with POST for PUT/DELETE
+- method=x with POST for PUT, PATCH, and DELETE.
 - Updates should return object as well.
 - Use OAuth latest.
 - Stateless except for authorization.
