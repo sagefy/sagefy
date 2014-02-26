@@ -3,6 +3,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-dburi = 'postgresql://sagefy:sagefy@localhost/sagefy'
-app.config['SQLALCHEMY_DATABASE_URI'] = dburi
+app.debug = True
+
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    'postgresql://sagefy:sagefy@localhost/sagefy'
 db = SQLAlchemy(app)
