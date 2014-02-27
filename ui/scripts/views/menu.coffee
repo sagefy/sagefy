@@ -6,7 +6,7 @@ define [
 
     class MenuView extends Bb.View
 
-        el: $ {}
+        el: $ '#page'
 
         initialize: ->
             @render()

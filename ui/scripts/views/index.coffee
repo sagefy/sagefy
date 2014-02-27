@@ -1,12 +1,13 @@
 define [
     'jquery'
     'backbone'
-    'hbs/public/index'
+    'hbs/sections/public/index'
 ], ($, Bb, t) ->
 
     class IndexView extends Bb.View
 
-        el: $ 'body'
+        el: $ '#page'
+        template: t
 
         initialize: ->
             @render()
@@ -15,4 +16,4 @@ define [
             document.title = 'Sagefy - Adaptive, collaborative, and open learning platform.'
             @$el.addClass 'max-width-8'
                 .attr 'id', 'index'
-                .html t()
+                .html @template()

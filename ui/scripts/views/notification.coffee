@@ -6,7 +6,7 @@ define [
 
     class NotificationView extends Bb.View
 
-        el: $ {}
+        el: $ '#page'
 
         initialize: ->
             @render()

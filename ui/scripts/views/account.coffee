@@ -6,7 +6,7 @@ define [
 
     class AccountView extends Bb.View
 
-        el: $ {}
+        el: $ '#page'
 
         initialize: ->
             @render()

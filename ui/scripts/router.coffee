@@ -6,6 +6,10 @@ define [
 
         routes:
             'styleguide': 'viewStyleguide'
+            'login': 'viewLogin'
+            'signup': 'viewSignup'
+            'terms': 'viewTerms'
+            'contact': 'viewContact'
             '(/)': 'viewIndex'
 
         initialize: ->
@@ -14,6 +18,22 @@ define [
         viewIndex: ->
             require ['views/index'], (IndexView) ->
                 indexView = new IndexView
+
+        viewLogin: ->
+            require ['views/login'], (LoginView) ->
+                loginView = new LoginView
+
+        viewSignup: ->
+            require ['views/signup'], (SignupView) ->
+                signupView = new SignupView
+
+        viewTerms: ->
+            require ['views/terms'], (TermsView) ->
+                termsView = new TermsView
+
+        viewContact: ->
+            require ['views/contact'], (ContactView) ->
+                contactView = new ContactView
 
         viewStyleguide: ->
             require ['views/styleguide'], (StyleguideView) ->

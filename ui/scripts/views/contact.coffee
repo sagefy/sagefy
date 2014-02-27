@@ -1,10 +1,10 @@
 define [
     'jquery'
     'backbone'
-    'hbs/sections/user/signup'
+    'hbs/sections/public/contact'
 ], ($, Bb, t) ->
 
-    class Signup extends Bb.View
+    class ContactView extends Bb.View
 
         el: $ '#page'
         template: t
@@ -13,7 +13,6 @@ define [
             @render()
 
         render: ->
-            document.title = 'Signup for Sagefy.'
-            @$el.addClass 'max-width-8'
-                .attr 'id', 'signup'
+            document.title = 'Contact Sagefy.'
+            @$el.attr 'id', 'contact'
                 .html @template()
