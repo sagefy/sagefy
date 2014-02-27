@@ -1,12 +1,13 @@
 define [
     'jquery'
     'backbone'
-    'hbs/styleguide/index'
+    'hbs/sections/styleguide/index'
 ], ($, Bb, t) ->
 
     class StyleguideView extends Bb.View
 
-        el: $ 'body'
+        el: $ '#page'
+        template: t
 
         events:
             'click a[href="#"]': 'cancel'
@@ -20,12 +21,12 @@ define [
 
             @$el.addClass 'max-width-10'
                 .attr 'id', 'styleguide'
-                .html t()
+                .html @template()
 
         cancel: ->
             false
 
         openInNewWindow: (e) ->
             $target = $(e.target).closest 'a'
-            $target[0].target = "_blank"
+            $target[0].target = '_blank'
 

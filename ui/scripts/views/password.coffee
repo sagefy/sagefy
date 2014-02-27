@@ -6,7 +6,7 @@ define [
 
     class PasswordView extends Bb.View
 
-        el: $ {}
+        el: $ '#page'
 
         initialize: ->
             @render()
