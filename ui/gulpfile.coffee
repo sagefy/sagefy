@@ -20,9 +20,11 @@ gulp.task 'watch', ['build'], ->
 gulp.task 'deploy', ['build'], ->
     # TODO: Compile Requires
     # TODO: Uglify and Compress Files
+    # TODO: Run KSS & JSDoc
 
 gulp.task 'test', ['build'], ->
-    # TODO: Run test suites
+    # TODO: Run Coffeelint https://github.com/janraasch/gulp-coffeelint
+    # TODO: Run Mocha
 
 #####
 
