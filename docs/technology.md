@@ -8,7 +8,7 @@ This document lists technology that Sagefy uses and intends to use.
 Infrastructure
 --------------
 
-- **Server**: [Chef](https://github.com/opscode/chef) with [Vagrant](http://www.vagrantup.com/)
+- **Server**: [Ansible](http://www.ansible.com/) with [Vagrant](http://www.vagrantup.com/)
     - **CDN**: [CloudFlare](https://www.cloudflare.com/)
     - [uWSGI](http://uwsgi-docs.readthedocs.org/en/latest/) on [Nginx](http://wiki.nginx.org/Main)
     - Deployment
@@ -27,6 +27,7 @@ Infrastructure
 - **Documentation**: Github Wiki
     - **API Doc**: [Sphinx](http://sphinx-doc.org/) from inline docstrings using the [NumPy](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt) convention
     - **Versioning**: [SemVer](http://semver.org/)
+- **Deployment**: [Fabric](http://docs.fabfile.org/en/1.8/)
 - **Version control**: [GitHub](http://github.com/)
 - **Machine learning**: [NumPy](http://www.numpy.org/) + [SciPy](http://www.scipy.org/) + [Scikit-Learn](http://scikit-learn.org/stable/)
 - **Continuous integration**: [TravisCI](https://travis-ci.org/)
@@ -48,6 +49,7 @@ Infrastructure
     - Put verbs in params: `_method`
     - See [ember.js](http://emberjs.com/guides/models/the-rest-adapter/) models too
 - **Test suites**
+    - -
     - Python:
         - BDD: [Behave](http://pythonhosted.org/behave/)
         - Unit: [unittest](http://docs.python.org/2/library/unittest.html) via [nose](https://nose.readthedocs.org/en/latest/)
@@ -58,11 +60,12 @@ Infrastructure
         - Security:
         - i18n:
     - Script:
-        - BDD: [Cucumber.js](https://github.com/cucumber/cucumber-js)
+        - BDD: [Mocha](http://visionmedia.github.io/mocha/)
         - Unit: [Mocha](http://visionmedia.github.io/mocha/)
-        - Lint: ??? - See [JSHint](http://www.jshint.com/) & [Coffeescript Style Guide](https://github.com/polarmobile/coffeescript-style-guide)
-        - Coverage: [Istanbul](https://github.com/gotwarlost/istanbul)
-        - Mock: [Chance.js](http://chancejs.com/)
+        - Lint: [CoffeeLint](http://www.coffeelint.org/); also see [JSHint](http://www.jshint.com/)
+        - Styleguide: Inhouse, based on [Coffeescript Style Guide](https://github.com/polarmobile/coffeescript-style-guide)
+        - Coverage: [Istanbul](https://github.com/gotwarlost/istanbul) or Blanket, JSCoverage, or or Coveralls
+        - Mock: [Chance.js](http://chancejs.com/) or Sinon, or Mockito
         - Performance:
         - i18n:
         - Error reporting:
@@ -72,17 +75,20 @@ Infrastructure
 - **UIs**
     - Style compiler - [Stylus](http://learnboost.github.io/stylus/)
     - Style framework, boilerplate - Custom, based on [TWBootstrap](http://getbootstrap.com/), [HTML5 B](http://html5boilerplate.com/), and [Foundation](http://foundation.zurb.com/)
-    - Script frameworks - [Coffeescript](http://coffeescript.org/), [jQuery](http://jquery.com/), [Backbone.js](http://backbonejs.org/), [Require.js](http://requirejs.org/), [Modernizr](http://modernizr.com/)
+    - Script MVC -[Backbone.js](http://backbonejs.org/)
+    - Script frameworks - [Coffeescript](http://coffeescript.org/), [jQuery](http://jquery.com/),  , [Modernizr](http://modernizr.com/)
     - Script utilities - [Select2](http://ivaynberg.github.io/select2/), [Moment](http://momentjs.com/), [Uglify](https://github.com/mishoo/UglifyJS), [Intro.js](http://usablica.github.io/intro.js/), [Selectize](http://brianreavis.github.io/selectize.js/), [Backgrid](http://backgridjs.com/), [Listjs](http://listjs.com/), [Dynatable.js](http://www.dynatable.com/)
     - Script data visualization - [D3.js](http://d3js.org/)
     - Form validation plugin - [Parsely](http://parsleyjs.org/) or [jQuery Validation](http://jqueryvalidation.org/) or [h5validate](http://ericleads.com/h5validate/) or [happyjs](http://happyjs.com/) or [h5f](https://github.com/ryanseddon/H5F) or [backbone forms](https://github.com/powmedia/backbone-forms) or [backbone validation](https://github.com/thedersen/backbone.validation)
     - Script boilerplate - Custom built
-    - Script documentation - [Docco](http://jashkenas.github.io/docco/)
-    - Script templates - [Handlebars](http://handlebarsjs.com/)
+    - Script documentation - [JSDoc](http://usejsdoc.org/)
+    - Style documentation - [KSS](http://warpspire.com/kss/)
+    - Style architecture - [BEM](http://bem.info/method/) and [SMACSS](http://smacss.com/)
+    - Script templates - [Handlebars](http://handlebarsjs.com/); also test out [Jade](http://jade-lang.com/)
     - User content template system - [Markdown](http://daringfireball.net/projects/markdown/)
         - Add extensions for [Math](http://www.mathjax.org/), Footnotes, [Tables](https://github.com/chjj/marked#tables), Code, [Graphviz Dot](https://github.com/mdaines/viz.js), [Media Embeds](http://sloblog.io/+sloblog/qhdsk2SMoAU/sloblog-dot-io-easy-oembed-powered-media-embeds), and Definition Lists
         - [EpicEditor](https://github.com/OscarGodson/EpicEditor) with [Marked](https://github.com/chjj/marked) and [MathJax](http://www.mathjax.org/) or [Ace](http://ace.c9.io/) also see [LaTeX2HTML5](http://latex2html5.com/)
-    - Compilation - [Grunt](http://gruntjs.com/) & [Bower](http://sindresorhus.com/bower-components/)
+    - Compilation - [Gulp](http://gulpjs.com/) & [Bower](http://sindresorhus.com/bower-components/), [Require.js](http://requirejs.org/) (AMD)
     - Search engine access - [Node seo server](https://npmjs.org/package/seoserver)
 - **Monitoring** - [Pingdom](https://www.pingdom.com/), [New Relic](http://newrelic.com/) (Free)
 - _hold_ User research tools
