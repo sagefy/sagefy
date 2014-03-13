@@ -5,6 +5,8 @@ layout: default
 
 This document gives an overview of the Sagefy vision by storytelling from users perspectives. This document does not assert to be correct for the subject matters specified, but provides a high level view of desired functionality.
 
+- TODO: Remove 'badge' and 'trophy' phrasing. Update 'rewards' to be more accomplishment based, intrinsic rather than extrinsic.
+
 Learners
 --------
 
