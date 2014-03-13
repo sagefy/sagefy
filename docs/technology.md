@@ -94,7 +94,7 @@ Infrastructure
     - Script data visualization - [D3.js](http://d3js.org/)
     - Form validation plugin - [Parsely](http://parsleyjs.org/) or [jQuery Validation](http://jqueryvalidation.org/) or [h5validate](http://ericleads.com/h5validate/) or [happyjs](http://happyjs.com/) or [h5f](https://github.com/ryanseddon/H5F) or [backbone forms](https://github.com/powmedia/backbone-forms) or [backbone validation](https://github.com/thedersen/backbone.validation)
     - Script boilerplate - Custom built
-    - Script documentation - [JSDoc](http://usejsdoc.org/)
+    - Script documentation - [JSDoc](http://usejsdoc.org/) or Dox or [Codo](https://github.com/coffeedoc/codo)
     - Style documentation - [KSS](http://warpspire.com/kss/)
     - Style architecture - [BEM](http://bem.info/method/) and [SMACSS](http://smacss.com/)
     - Script templates - [Handlebars](http://handlebarsjs.com/); also test out [Jade](http://jade-lang.com/)
