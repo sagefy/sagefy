@@ -1,4 +1,4 @@
-define [
+define([
     'jquery'
     'backbone'
     'hbs/sections/user/login'
@@ -6,7 +6,7 @@ define [
 
     class LoginView extends Bb.View
 
-        el: $ '#page'
+        el: $('#page')
         template: t
 
         initialize: ->
@@ -14,6 +14,9 @@ define [
 
         render: ->
             document.title = 'Login to Sagefy.'
-            @$el.addClass 'max-width-8'
-                .attr 'id', 'login'
-                .html @template()
+            @$el.addClass('max-width-8')
+                .attr('id', 'login')
+                .html(@template())
+
+
+)
