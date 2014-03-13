@@ -5,6 +5,18 @@ layout: default
 
 This document lists technology that Sagefy uses and intends to use.
 
+Development Checklist
+---------------------
+
+For each pull request, ensure the following:
+
+- Each method is documented according to the system for the given domain
+- Code passes used linters
+- Passes existing automated tests (run CI automatically on pull requests)
+- Reviewed by a person
+- Provides some basic unit test coverage, where appropriate
+- Provides some basic functional test coverage, where appropriate
+
 Infrastructure
 --------------
 
@@ -26,14 +38,15 @@ Infrastructure
 - **Migrations**: [Alembic](http://alembic.readthedocs.org/en/latest/)
 - **Documentation**: Github Wiki
     - **API Doc**: [Sphinx](http://sphinx-doc.org/) from inline docstrings using the [NumPy](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt) convention
-    - **Versioning**: [SemVer](http://semver.org/)
+    - **Versioning**: [SemVer](http://semver.org/) with [Version Badge](http://badge.fury.io/)
 - **Deployment**: [Fabric](http://docs.fabfile.org/en/1.8/)
 - **Version control**: [GitHub](http://github.com/)
 - **Machine learning**: [NumPy](http://www.numpy.org/) + [SciPy](http://www.scipy.org/) + [Scikit-Learn](http://scikit-learn.org/stable/)
-- **Continuous integration**: [TravisCI](https://travis-ci.org/)
-- **Dependency manager**: [DavidDM](https://david-dm.org/)
+- **Continuous integration**: [TravisCI](https://travis-ci.org/) or [Semaphore](https://semaphoreapp.com/) or [Scrutinizer](https://scrutinizer-ci.com/)
+- **Dependency manager**: [DavidDM](https://david-dm.org/) or [Gemnasium](https://gemnasium.com/)
 - **Blogging**: [Wordpress.com](http://wordpress.com)
 - **Feedback**: Github Issues, [StackOverflow](http://stackoverflow.com), [UserVoice](http://uservoice.com)
+- **Project Management**: Github Issues with [Waffle.io](https://waffle.io/heiskr/sagefy)
 - **Media page**: [Totemapp](http://totemapp.com)
 - **Social**: [Twitter](http://twitter.com/sagefyorg), [Facebook](https://www.facebook.com/sagefy), [Google+](https://plus.google.com/102422704401628739470/posts), Github, [Wordpress](http://sagefy.wordpress.com/)
 - **Analytics**: [Google Analytics](http://google.com/analytics) & in-house
@@ -54,7 +67,7 @@ Infrastructure
         - BDD: [Behave](http://pythonhosted.org/behave/)
         - Unit: [unittest](http://docs.python.org/2/library/unittest.html) via [nose](https://nose.readthedocs.org/en/latest/)
         - Lint: [Flake8](https://pypi.python.org/pypi/flake8)
-        - Coverage: [Coverage.py](http://nedbatchelder.com/code/coverage/)
+        - Coverage: [Coverage.py](http://nedbatchelder.com/code/coverage/) or [Coveralls](https://coveralls.io/)
         - Mock: [Faker](https://github.com/joke2k/faker)
         - Performance:
         - Security:
@@ -64,7 +77,7 @@ Infrastructure
         - Unit: [Mocha](http://visionmedia.github.io/mocha/)
         - Lint: [CoffeeLint](http://www.coffeelint.org/); also see [JSHint](http://www.jshint.com/)
         - Styleguide: Inhouse, based on [Coffeescript Style Guide](https://github.com/polarmobile/coffeescript-style-guide)
-        - Coverage: [Istanbul](https://github.com/gotwarlost/istanbul) or Blanket, JSCoverage, or or Coveralls
+        - Coverage: [Istanbul](https://github.com/gotwarlost/istanbul) or [Blanket](http://blanketjs.org/), JSCoverage, or [Coveralls](https://coveralls.io/)
         - Mock: [Chance.js](http://chancejs.com/) or Sinon, or Mockito
         - Performance:
         - i18n:
