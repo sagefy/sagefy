@@ -41,6 +41,7 @@ ui/distribution
 ui/node_modules
 ui/bower_components
 ui/npm-debug.log
+ui/templates/sections/styleguide/compiled.hbs
 
 .vagrant
 _site

@@ -1,3 +1,117 @@
+/*
+---
+title: Tables
+description: Tables are zebra-striped, and common elements such as header and footer rows are available. Rows classes are available for each hue; as they only change hue, another indicator needs to be used to differentiate row types. Supplimental tags, such as `tbody` are recommended.
+elements:
+    - table, caption, thead, tr, th, td, tfoot
+modifiers:
+    - tr
+        - row--accept
+        - row--accent
+        - row--error
+        - row--admin
+        - row--warn
+example:
+    <table>
+        <caption>An example table with a header row and a caption.</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Marissa</td>
+                <td>marissa@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Edward</td>
+                <td>edward@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Theo</td>
+                <td>theo@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Jasmine</td>
+                <td>jasmine@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr class="row--accept">
+                <td>5</td>
+                <td>Jacob</td>
+                <td>jacob@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr class="row--accept">
+                <td>6</td>
+                <td>Alexander</td>
+                <td>alexander@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr class="row--accent">
+                <td>7</td>
+                <td>Cornelia</td>
+                <td>cornelia@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr class="row--accent">
+                <td>8</td>
+                <td>Sophie</td>
+                <td>sophie@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr class="row--error">
+                <td>9</td>
+                <td>Kadri</td>
+                <td>kadri@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr class="row--error">
+                <td>10</td>
+                <td>Dalton</td>
+                <td>dalton@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr class="row--admin">
+                <td>11</td>
+                <td>Seiji</td>
+                <td>seiji@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr class="row--admin">
+                <td>12</td>
+                <td>Sanjay</td>
+                <td>sanjay@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr class="row--warn">
+                <td>13</td>
+                <td>Iris</td>
+                <td>iris@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+            <tr class="row--warn">
+                <td>14</td>
+                <td>Frederico</td>
+                <td>frederico@example.com</td>
+                <td><a href="#">Contact</a></td>
+            </tr>
+        </tbody>
+    </table>
+---
+*/
+
 table
     th, td
         padding 0 ($unit / 2)

@@ -1,3 +1,143 @@
+/*
+---
+title: Buttons
+description:
+elements:
+    - button
+    - a.button
+    - .button-group (wrapper)
+modifiers:
+    - Roles
+        - primary
+        - secondary
+        - danger
+        - cancel
+    - Size
+        - large
+        - epic
+    - disabled
+example:
+    <ul class="unstyled">
+        <li>
+            <button class="button--primary">
+                Primary
+            </button>
+
+            Navigation, Next
+        </li>
+        <li>
+            <button class="button--secondary">
+                Secondary
+            </button>
+
+            Success, Accept
+        </li>
+        <li>
+            <button class="button--danger">
+                Danger
+            </button>
+
+            Error, Delete
+        </li>
+        <li>
+            <button class="button--cancel">
+                Cancel
+            </button>
+
+            Escape, Previous, Back, Information
+        </li>
+    </ul>
+
+    <ul class="inline">
+        <li>
+            <button class="button--primary">
+                Normal
+            </button>
+        </li>
+        <li>
+            <button class="button--primary button--large">
+                Large
+            </button>
+        </li>
+        <li>
+            <button class="button--primary button--big">
+                Big
+            </button>
+        </li>
+    </ul>
+
+    <ul class="inline">
+        <li>
+            <button class="button--primary">
+                Next Page
+                <i class="icon-chevron-right"></i>
+            </button>
+        </li>
+        <li>
+            <button class="button--secondary">
+                <i class="icon-edit"></i>
+                Edit
+            </button>
+        </li>
+        <li>
+            <button class="button--danger">
+                <i class="icon-trash"></i>
+                Delete
+            </button>
+        </li>
+        <li>
+            <button class="button--cancel">
+                <i class="icon-refresh"></i>
+                Resume
+            </button>
+        </li>
+    </ul>
+
+    <ul class="inline">
+        <li>
+            <button class="button--primary" disabled>
+                Next Page
+                <i class="icon-chevron-right"></i>
+            </button>
+        </li>
+        <li>
+            <button class="button--secondary" disabled>
+                <i class="icon-edit"></i>
+                Edit
+            </button>
+        </li>
+        <li>
+            <button class="button--danger" disabled>
+                <i class="icon-trash"></i>
+                Delete
+            </button>
+        </li>
+        <li>
+            <button class="button--cancel" disabled>
+                <i class="icon-refresh"></i>
+                Resume
+            </button>
+        </li>
+    </ul>
+
+    <div class="button-group">
+        <button class="button--primary">
+            <i class="icon-heart"></i> Primary
+        </button>
+        <button class="button--secondary">
+            <i class="icon-star"></i> Secondary
+        </button>
+        <button class="button">
+            <i class="icon-refresh"></i> Refresh
+        </button>
+        <button class="button--cancel">
+            <i class="icon-ban-circle"></i> Cancel
+        </button>
+    </div>
+---
+*/
+
+
 button-background($color, $raise = 5, $reduce = 5)
     background-color $color
     background-image -webkit-linear-gradient(lighten($color, $raise), darken($color, $reduce))

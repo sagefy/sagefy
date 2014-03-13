@@ -2,12 +2,14 @@ define([
     'jquery'
     'backbone'
     'hbs/sections/styleguide/index'
-], ($, Bb, t) ->
+    'hbs/sections/styleguide/compiled'
+], ($, Bb, t, t2) ->
 
     class StyleguideView extends Bb.View
 
         el: $('#page')
         template: t
+        template2: t2
 
         events: {
             'click a[href="#"]': 'cancel'
@@ -23,6 +25,7 @@ define([
             @$el.addClass('max-width-10')
                 .attr('id', 'styleguide')
                 .html(@template())
+                .append(@template2())
 
         cancel: ->
             false

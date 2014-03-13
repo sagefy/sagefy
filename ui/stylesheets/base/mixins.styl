@@ -1,3 +1,12 @@
+/*
+---
+title: Vendor Mixin
+description:
+parameters:
+returns:
+---
+*/
+
 vendor(property, args)
     -webkit-{property} args
     -moz-{property} args
@@ -5,19 +14,35 @@ vendor(property, args)
     -o-{property} args
     {property} args
 
+/*
+---
+title: Border Radius Mixin
+description:
+parameters:
+returns:
+---
+*/
 border-radius()
     vendor 'border-radius', arguments
 
+/*
+---
+title: Transition Mixin
+description:
+parameters:
+returns:
+---
+*/
 transition()
     vendor 'transition', arguments
 
+/*
+---
+title: Box Sizing Mixin
+description:
+parameters:
+returns:
+---
+*/
 box-sizing()
     vendor 'box-sizing', arguments
-
-break-words()
-    -ms-word-break break-all
-    word-break break-all
-    word-break break-word
-    -webkit-hyphens auto
-    -moz-hyphens auto
-    hyphens auto

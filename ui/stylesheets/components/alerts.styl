@@ -1,3 +1,45 @@
+/*
+---
+title: Alerts & Errors
+description: Systemic-alerts are often used when an error has occured. Alerts are fixed to the page until a user chooses to close them. Very serious alerts can force the user to reload the page. This situation calls for a modal.
+elements:
+    - div (root)
+    - a.alert__close
+modifiers:
+    - error
+    - default
+    - accept
+    - accent
+    - official
+example: |
+    <div class="alert--error">
+        We are sorry, but an error has occurred. Please reload the page.
+        <a href="#" class="alert__close">Close</a>
+    </div>
+
+    <div class="alert--default">
+        We are sorry, but an error has occurred. Please reload the page.
+        <a href="#" class="alert__close">Close</a>
+    </div>
+
+    <div class="alert--accept">
+        We are sorry, but an error has occurred. Please reload the page.
+        <a href="#" class="alert__close">Close</a>
+    </div>
+
+    <div class="alert--accent">
+        We are sorry, but an error has occurred. Please reload the page.
+        <a href="#" class="alert__close">Close</a>
+    </div>
+
+    <div class="alert--official">
+        We are sorry, but an error has occurred. Please reload the page.
+        <a href="#" class="alert__close">Close</a>
+    </div>
+---
+*/
+
+
 .alert
     border-radius $border-radius
     display block

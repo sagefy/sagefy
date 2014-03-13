@@ -14,7 +14,7 @@ gulp.task 'default', ['watch'], ->
 gulp.task 'watch', ['build'], ->
     gulp.watch staticSrc, ['copyStatic']
     gulp.watch hbsSrc, ['handlebars']
-    gulp.watch ['stylesheets/*.styl', 'stylesheets/**/*.styl'], ['stylus']
+    gulp.watch ['stylesheets/*.styl', 'stylesheets/**/*.styl'], ['stylus', 'styleguide']
     gulp.watch coffeeSrc, ['coffee']
 
 gulp.task 'deploy', [
@@ -30,17 +30,10 @@ gulp.task 'test', [
     # TODO: Run Mocha
 ]
 
-
 #####
 
-gulp.task 'build', [
-    'clean'
-    'copyStatic'
-    'bower'
-    'handlebars'
-    'stylus'
-    'coffee'
-]
+gulp.task 'build', ['clean'], ->
+    gulp.run 'copyStatic', 'bower', 'styleguide', 'handlebars', 'stylus', 'coffee'
 
 gulp.task 'clean', ->
     gulp.src dist, read: false
@@ -65,6 +58,12 @@ gulp.task 'stylus', ->
     gulp.src 'stylesheets/app.styl'
         .pipe plugins.stylus()
         .pipe gulp.dest dist
+
+gulp.task 'styleguide', ->
+    yms = require 'ym-styleguide'
+    fs = require 'fs'
+    yms.build 'stylesheets/', (html) ->
+        fs.writeFile 'templates/sections/styleguide/compiled.hbs', html
 
 gulp.task 'coffee', ->
     gulp.src coffeeSrc

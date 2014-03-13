@@ -1,3 +1,52 @@
+/*
+---
+title: Forms
+description: Forms are perhaps the most complicated part of any web design. The Sagefy style guide provides a usable, consistent, comprehensive approach to form elements. Forms typically have only a single column of fields. Most forms terminate with one, and only one, primary action button and several possible secondary actions. Most standard forms start with a title and short description of the form.
+example:
+    <form>
+        <h3>
+            A basic form
+        </h3>
+        <div class="form-description">
+            A description of a basic form.
+        </div>
+        <div class="form-field form-field--text">
+            <label for="name">Name</label>
+            <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
+            <p class="form-field__description">
+                Your name belongs in the box
+            </p>
+        </div>
+        <div class="form-field form-field--boolean">
+            <label for="spam">
+                <input name="spam" id="spam" type="checkbox" value="y">
+                Send me spam
+            </label>
+        </div>
+        <div class="form-field form-field--textarea">
+            <label for="thoughts">My thoughts on spam</label>
+            <textarea cols="40" id="thoughts" name="thoughts" rows="4"></textarea>
+        </div>
+        <button type="submit">
+            <i class="icon-ok"></i>
+            Send
+        </button>
+    </form>
+---
+*/
+
+/*
+---
+title: Placeholders
+description:
+elements:
+modifiers:
+parameters:
+returns:
+example:
+---
+*/
+
 ::-webkit-input-placeholder
     color $gold-90
 
@@ -9,6 +58,72 @@
 
 input:-moz-placeholder
     color $gold-90
+
+/*
+---
+title: Text Inputs
+description: Range elements do not use sliders. Instead, ranges are input as two text fields.
+elements:
+modifiers:
+example:
+    <form>
+        <div class="form-field form-field--text">
+            <input type="text" placeholder="Example text input" />
+        </div>
+
+        <div class="form-field form-field--text form-field--disabled">
+            <label>Disabled</label>
+            <input type="text" placeholder="Example disabled" disabled="disabled" />
+        </div>
+
+        <div class="form-field form-field--text form-field--success">
+            <label>Success</label>
+            <input type="text" placeholder="Example success" />
+            <span class="form-field__feedback">
+                <i class="icon-check"></i>
+                This is a success
+            </span>
+        </div>
+
+        <div class="form-field form-field--text form-field--warning">
+            <label>Warning</label>
+            <input type="text" placeholder="Example warning" />
+            <span class="form-field__feedback">
+                <i class="icon-exclamation"></i>
+                This is a warning
+            </span>
+        </div>
+
+        <div class="form-field form-field--text form-field--error">
+            <label>Error</label>
+            <input type="text" placeholder="Example error" />
+            <span class="form-field__feedback">
+                <i class="icon-ban-circle"></i>
+                This is an error
+            </span>
+        </div>
+    </form>
+
+    <input type="email" placeholder="e.g. alice@example.com" />
+
+    <input type="number" placeholder="0" />
+
+    <input type="url" placeholder="e.g. http://google.com" />
+
+    <input type="time" step="1" />
+
+    <input type="search" placeholder="Search" />
+
+    <input type="search" placeholder="Search" autocomplete="off" />
+
+    <input type="tel" placeholder="e.g. 515-481-9182" />
+
+    <input type="password" />
+
+    <input type="number" placeholder="Min" />
+    <input type="number" placeholder="Max" />
+---
+*/
 
 input[type="text"],
 input[type="password"],
@@ -51,8 +166,74 @@ input[type="tel"]
     padding ($unit / 2) $unit
     height $unit * 3
 
+/*
+---
+title: Textarea
+description:
+elements:
+    - textarea
+example:
+    <textarea cols="40" id="thoughts" name="thoughts" rows="4"></textarea>
+---
+*/
+
 textarea
     padding ($unit / 2) $unit
+
+/*
+---
+title: Checkboxes and Radios
+description:
+elements:
+modifiers:
+parameters:
+returns:
+example:
+    <ul class="unstyled">
+        <li>
+            <label class="checkbox">
+                <input type="checkbox" value="option1"> Option 1
+            </label>
+        </li>
+        <li>
+            <label class="checkbox">
+                <input type="checkbox" value="option1"> Option 2
+            </label>
+        </li>
+        <li>
+            <label class="checkbox">
+                <input type="checkbox" value="option1"> Option 3
+            </label>
+        </li>
+    </ul>
+
+    <label class="checkbox">
+        <input type="checkbox" value="option1"> Option 1
+    </label>
+
+    <label class="toggle">
+        <input type="checkbox" value="option1"> Option 1
+    </label>
+
+    <ul class="unstyled">
+        <li>
+            <label class="radio">
+                <input type="radio" name="radio" value="option1"> Option 1
+            </label>
+        </li>
+        <li>
+            <label class="radio">
+                <input type="radio" name="radio" value="option1"> Option 2
+            </label>
+        </li>
+        <li>
+            <label class="radio">
+                <input type="radio" name="radio" value="option1"> Option 3
+            </label>
+        </li>
+    </ul>
+---
+*/
 
 input[type="checkbox"],
 input[type="radio"]
@@ -100,21 +281,88 @@ input[type="radio"]
     &:checked::before
         border-radius 100%
 
-form
-    label
-        display block
+/*
+---
+title: Field Labels
+description: Every field that is not in a horizontal form has a label. The label clicks to focus on the related form element. Forms typically have labels above the field.
+elements:
+modifiers:
+example:
+    <form>
+        <div class="form-field form-field--text">
+            <label for="name">Name</label>
+            <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
+        </div>
+    </form>
+---
+*/
 
-        .required, .optional
-            border-radius $border-radius
-            margin-left $gutter
-            padding 0 ($unit / 4)
+/*
+---
+title: Optional and Required Fields
+description: The label may contain a <code>span</code> with either <code>optional</code> or <code>required</code> as the class and copy to indicate the field is either required or optional. More useful for forms with more than three fields or several sections.
+elements:
+modifiers:
+example:
+    <form>
+        <div class="form-field form-field--text">
+            <label for="name">Name <span class="required">required</span></label>
+            <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
+        </div>
+    </form>
+---
+*/
 
-        .required
-            color $red-43
-            background $red-95
+form label
+    display block
 
-        .optional
-            color $gold-66
+    .required, .optional
+        border-radius $border-radius
+        margin-left $gutter
+        padding 0 ($unit / 4)
+
+    .required
+        color $red-43
+        background $red-95
+
+    .optional
+        color $gold-66
+
+/*
+---
+title: Fieldsets and Legends
+description: Many users have difficult with forms with more than three fields. In such situations, it is useful to group the fields into fieldsets and legends to segment the field. These fieldsets can also be constructed as a step-by-step wizard.
+elements:
+modifiers:
+example:
+    <form>
+        <div class="form-field form-field--text">
+            <label for="name">Name</label>
+            <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
+            <p class="form-field__description">
+                Your name belongs in the box
+            </p>
+        </div>
+        <fieldset>
+            <legend>Spam Fields</legend>
+            <div class="form-field form-field--boolean">
+                <label for="spam">
+                    <input name="spam" id="spam" type="checkbox" value="y">
+                    Send me spam
+                </label>
+            </div>
+            <div class="form-field form-field--textarea">
+                <label for="thoughts">My thoughts on spam</label>
+                <textarea cols="40" id="thoughts" name="thoughts" rows="4"></textarea>
+            </div>
+        </fieldset>
+        <button type="submit">
+            <i class="icon-ok"></i>
+            Send
+        </button>
+    </form>
+---
+*/
 
 fieldset
     border 1px dashed $gold-78
@@ -124,6 +372,23 @@ fieldset
 
 legend
     color $gold-43
+
+/*
+---
+title: Select Menu
+description: Prefer to use a list of radios over a select element. Do not use the multiple select element. When there are more than 20 items, use a typeahead feature instead of a simple select.
+elements:
+    - select, option
+example:
+    <select>
+        <option>First option 1</option>
+        <option>Second option 2</option>
+        <option>Third option 3</option>
+        <option>Fourth option 4</option>
+        <option>Fifth option 5</option>
+    </select>
+---
+*/
 
 select
     height $unit * 3
@@ -142,35 +407,151 @@ select[multiple]
     color $red-43
     background $red-90
 
+/*
+---
+title: Form Description
+description:
+elements:
+modifiers:
+parameters:
+returns:
+example:
+---
+*/
+
 .form-description
     @extend .font-size-accent
     color $gold-43
 
+/*
+---
+title: Form Fields
+description: Form fields are wrapped in a class of <code>form-field</code> and the type of the form field, such as <code>form-field--text</code>.
+elements:
+modifiers:
+parameters:
+returns:
+example:
+---
+*/
+
 .form-field
     margin 1em 0
+
+/*
+---
+title: Field Descriptions
+description: In the standard vertical layout, each form field may have a short description below the field. These descriptions are particularly useful when the user may not understand the expected input, or has reservations about why the field is necessary or beneficial. Fields typically have descriptions below the field.
+elements:
+modifiers:
+example:
+    <form>
+        <div class="form-field form-field--text">
+            <label for="name">Name</label>
+            <input id="name" name="name" placeholder="e.g. Marissa" size="50" type="text" />
+            <p class="form-field__description">
+                We need a name to identify you to other users.
+            </p>
+        </div>
+    </form>
+---
+*/
 
 .form-field__description
     margin 0
     color $gold-43
     font-style italic
 
+/*
+---
+title: Grouped Inputs
+description:
+elements:
+modifiers:
+parameters:
+returns:
+example:
+    <form>
+        <div class="form-field--grouped">
+            <div class="form-field form-field--text">
+                <label for="given-name">Given Name</label>
+                <input id="given-name" name="given-name" placeholder="" size="20" type="text" />
+            </div>
+            <div class="form-field form-field--text">
+                <label for="family-name">Family Name</label>
+                <input id="family-name" name="family-name" placeholder="" size="20" type="text" />
+            </div>
+        </div>
+    </form>
+---
+*/
+
 .form-field--grouped
     .form-field
         display inline-block
+
+/*
+---
+title: Horizontal Forms
+description:
+elements:
+modifiers:
+example:
+    <form class="form--horizontal">
+        <div class="form-field form-field--search">
+            <input id="name" name="name" placeholder="Search" size="20" type="search" />
+        </div>
+        <div class="form-field form-field--boolean">
+            <label for="spam">
+                <input name="spam" id="spam" type="checkbox" value="y">
+                Include all types
+            </label>
+        </div>
+        <button type="submit">
+            <i class="icon-search"></i>
+            Search
+        </button>
+    </form>
+---
+*/
 
 .form--horizontal
     > *
         display inline-block
         @extend .push-right
 
-.form-field__feedback
-    display inline-block
-    border-radius $border-radius
-    padding 0 ($unit / 2)
+/*
+---
+title: Disabled Form Fields
+description:
+elements:
+modifiers:
+parameters:
+returns:
+example:
+---
+*/
 
 .form-field--disabled
     label
         color $gold-66
+
+/*
+---
+title: Form Feedback
+description: Forms typically have validation messages to the right of the field.
+elements:
+modifiers:
+parameters:
+returns:
+example:
+---
+*/
+
+.form-field__feedback
+    display inline-block
+    border-radius $border-radius
+    padding 0 ($unit / 2)
 
 .form-field--success
     label
