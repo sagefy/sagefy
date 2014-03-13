@@ -1,4 +1,12 @@
-/*** Metrics ***/
+/*
+---
+title: Metrics
+description: |
+    Sagefy uses a larger-than-typical metric system. The rhythm is 24px both vertically and horizontally. The base font size is 16px with a line-height of 24px. Columns are 48px and gutters are 24px. Because of Sagefy's large metrics, a great deal of focus and minimalism is required.
+
+    Different screen sizes alter the number of columns present. While Sagefy is not considered <a href="http://alistapart.com/article/responsive-web-design">responsive web design</a>, it does adjust to available width. Ideas are borrowed from <a href="http://framelessgrid.com/">Frameless Grid</a>, <a href="http://getbootstrap.com/">Twitter Bootstrap</a>, and <a href="http://foundation.zurb.com/">Foundation</a>.
+---
+*/
 
 $unit = 12px
 $gutter = $unit * 2
@@ -7,14 +15,29 @@ $font-size = 16px
 $border-radius = 2px
 $max-columns = 20
 
-/*** Utility classes ***/
-
+/*
+---
+title: Box Sizing
+description: |
+    Sagefy uses the box sizing mode of border box. See the [Paul Irish article](http://www.paulirish.com/2012/box-sizing-border-box-ftw/).
+---
+*/
 *, *:before, *:after
     box-sizing border-box
 
+/*
+---
+title: Clearfix
+---
+*/
 .clearfix
     overflow auto
 
+/*
+---
+title: Display Type Helpers
+---
+*/
 .block
     display block
 
@@ -24,6 +47,11 @@ $max-columns = 20
 .inline
     display inline
 
+/*
+---
+title: Pull and Push Helpers
+---
+*/
 .pull-left
     float left
 
@@ -42,7 +70,72 @@ $max-columns = 20
 .push-right-gutter
     margin-right $gutter
 
-/*** Body layout ***/
+/*
+---
+title: Body Layout
+description: The `body` element will use up to 20 columns of width in rendering, but will adapt to the user's available screen real estate.
+elements:
+    - Body
+example:
+    <table class="size-table">
+        <thead>
+            <tr>
+                <th>Columns</th>
+                <th>Inside</th>
+                <th>Outside</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>4</td>
+                <td>264px</td>
+                <td>312px</td>
+
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>408px</td>
+                <td>456px</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>552px</td>
+                <td>600px</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>696px</td>
+                <td>744px</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>840px</td>
+                <td>888px</td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>984px</td>
+                <td>1032px</td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>1128px</td>
+                <td>1176px</td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td>1272px</td>
+                <td>1320px</td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td>1416px</td>
+                <td>1464px</td>
+            </tr>
+        </tbody>
+    </table>
+---
+*/
 
 cols(n)
     n * $column + (n - 1) * $gutter
@@ -95,17 +188,45 @@ body
     @media $20-columns
         width body-cols(20)
 
-/*** Layouts ***/
+/*
+---
+title: Layouts
+description: Sagefy takes a layout-specified approach rather than a column-specified approach. There are essentially **five types of layouts** present in most web designs. Layouts can be nested within each other.
+---
+*/
 
+/*
+---
+title: Columns
+description: Any element may be set to a specific number of columns, using the class <code>col-n</code>. Any element with set columns larger than the available screen will be reduced to the maximum width.
+example:
+---
+*/
 for i in (1..$max-columns)
     .col-{i}
         max-width cols(i)
 
-// ß 1.2.1 Full Width Layout
+/*
+---
+title: Full Width Layout
+description: A full-width element assumes the width of its parent. Full-width is native to block level elements, but can be manually set by <code>full-width</code>.
+elements:
+modifiers:
+example:
+---
+*/
 .full-width
     max-width 100%
 
-// ß 1.2.2 Max Width Layout
+/*
+---
+title: Max Width Layout
+description: A max-width element will assume the width of its parent up to a specified number of columns. Max width is set by the class <code>max-width-n</code>. Prefer max-widths set in two, four, six...
+elements:
+modifiers:
+example:
+---
+*/
 .max-width
     margin-left auto
     margin-right auto
@@ -115,7 +236,18 @@ for i in (1..$max-columns)
         @extend .max-width
         max-width cols(i)
 
-// ß 1.2.3 Serial Layout
+/*
+---
+title: Serial Layout
+description:
+    A serial layout consists of a set of even-width elements. Serial layouts specify a maximum number of columns per element.
+
+    Wrap the elements in a <code>div</code> of <code>serial-n</code>, where <var>n</var> is the number of columns from one to ten, not the number of elements.
+elements:
+modifiers:
+example:
+---
+*/
 .serial
     margin-left -1 * $gutter
     margin-right -1 * $gutter
@@ -132,7 +264,19 @@ for i in (1..($max-columns / 2))
         > *
             max-width cols(i)
 
-// ß 1.2.4 Aside Layout
+/*
+---
+title: Aside Layout
+description: |
+    An aside, either on the left or right side, of one to eight columns. The main element will take the rest of the parent's width. When the main is less than 60% of the parent, both the main and the aside appear in full width. For a two-in-one aside, use the serial layout inside the aside.
+
+    Wrap both <code>main</code> and <code>aside</code> in a <code>div</code> with the class <code>aside-d-n</code>, where <var>d</var> is either <em>left</em> or <em>right</em>, and <var>n</var> is the number of columns of the aside.
+elements:
+modifiers:
+example:
+---
+*/
+
 .reset-aside
     > main
         margin-left 0
@@ -158,7 +302,19 @@ for d in left right
             *{$attr-selector} &
                 @extend .reset-aside
 
-// ß 1.2.5 Double Aside Layout
+/*
+---
+title: Double Aside Layout
+description: |
+    Two asides appear with the main content, one on the left and one on the right. Each aside is one to seven columns. The main element takes the remaining space. If the main element is less than 60% of the parent, all three elements are in full width. The sum of the aside columns must be eight or less.
+
+    Create container <code>aside-left-dl-right-dr</code>, where <var>dl</var> is the number of left columns and <var>dr</var> is the number of right columns. Create an <code>aside</code>, <code>main</code>, and <code>aside</code> elements within the container.
+elements:
+modifiers:
+example:
+---
+*/
+
 for l in (1..($max-columns / 2 - 3))
     for r in (1..($max-columns / 2 - 3))
         if l + r <= ($max-columns / 2 - 2)

@@ -1,3 +1,109 @@
+/*
+---
+title: Breadcrumbs, Wizards, & Pagination
+description:
+elements:
+modifiers:
+example: |
+    <nav class="breadcrumbs">
+        <ol>
+            <li>
+                <a href="#">
+                    Home
+                </a>
+            </li>
+            <li><i class="icon-chevron-right"></i></li>
+            <li>
+                <a href="#">
+                    Learn
+                </a>
+            </li>
+            <li><i class="icon-chevron-right"></i></li>
+            <li>
+                <a href="#">
+                    Propose
+                </a>
+            </li>
+            <li><i class="icon-chevron-right"></i></li>
+            <li class="selected">
+                <a href="#">
+                    Analyze
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <nav class="wizard">
+        <ol>
+            <li>
+                <a href="#">
+                    1.
+                    Home
+                </a>
+            </li>
+            <li>
+                <i class="icon-chevron-right"></i>
+            </li>
+            <li class="selected">
+                <a href="#">
+                    2.
+                    Learn
+                </a>
+            </li>
+            <li class="disabled">
+                <i class="icon-chevron-right"></i>
+            </li>
+            <li class="disabled">
+                <a href="#">
+                    3.
+                    Propose
+                </a>
+            </li>
+            <li class="disabled">
+                <i class="icon-chevron-right"></i>
+            </li>
+            <li class="disabled">
+                <a href="#">
+                    4.
+                    Analyze
+                </a>
+            </li>
+        </ol>
+    </nav>
+
+    <nav class="pagination">
+        <ul>
+            <li>
+                <a href="#">
+                    <i class="icon-chevron-left"></i>
+                    Back
+                </a>
+            </li>
+            <li class="selected">
+                <a href="#">1</a>
+            </li>
+            <li>
+                <a href="#">2</a>
+            </li>
+            <li class="pagination__separator">&hellip;</li>
+            <li>
+                <a href="#">11</a>
+            </li>
+            <li>
+                <a href="#">12</a>
+            </li>
+            <li>
+                <a href="#">
+                    Next
+                    <i class="icon-chevron-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+---
+*/
+
 .breadcrumbs, .wizard, .pagination
     margin $unit 0
 

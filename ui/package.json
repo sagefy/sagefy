@@ -27,8 +27,8 @@
     "gulp-declare": "~0.1.0",
     "gulp-coffeelint": "~0.3.1",
     "gulp-mocha": "~0.4.1",
-    "gulp-kss": "0.0.2",
     "gulp-jsdoc": "0.0.2",
-    "gulp-istanbul": "~0.1.1"
+    "gulp-istanbul": "~0.1.1",
+    "ym-styleguide": "git://github.com/heiskr/ym-styleguide.git"
   }
 }

@@ -1,3 +1,39 @@
+/*
+---
+title: Images
+description: Alt tags, title tags, and captions for images are recommended where possible. Images subscribe to the basic grid of `10px` as much as possible, more so on the width. Additionally, widths that match the grid system, `40n + 20(n-1)`, are preferable.
+elements:
+modifiers:
+parameters:
+returns:
+example:
+    <img src="http://placehold.it/10x10/e7e3c7/aaa354" />
+    <img src="http://placehold.it/20x20/e7e3c7/aaa354" />
+    <img src="http://placehold.it/30x30/e7e3c7/aaa354" />
+    <img src="http://placehold.it/40x40/e7e3c7/aaa354" />
+    <img src="http://placehold.it/60x60/e7e3c7/aaa354" />
+    <img src="http://placehold.it/100x100/e7e3c7/aaa354" />
+    <img src="http://placehold.it/160x160/e7e3c7/aaa354" />
+---
+*/
+
+/*
+---
+title: Image Captions
+description: Images can be framed by wrapping them in a <code>figure</code> tag. Be sure to subtract 20px to account for padding incurred. The <code>figcaption</code> tag can be used inside of a <code>figure</code> tag to add a caption. This prodecure is useful but not limited to images.
+elements:
+    - figure
+    - figcaption
+    - img
+modifiers:
+example:
+    <figure>
+        <img src="http://placehold.it/160x160/e7e3c7/aaa354" />
+        <figcaption>Figcaptions are not limited to images, but images are an excellent example.</figcaption>
+    </figure>
+---
+*/
+
 figure
     display inline-block
     padding ($unit / 2)
@@ -13,3 +49,26 @@ figcaption
     font-style italic
     margin-top $unit
     color $gold-43
+
+/*
+---
+title: Avatars
+description: Avatars simply use the <a href="https://en.gravatar.com/">Gravatar</a> system. Sizes match the image sizes stated above. Avatars are not captioned.
+---
+*/
+
+/*
+---
+title: Logos and Branding
+description: The Sagefy logo is a mariner's astrolabe. It is presented on all pages, and clicking it either returns to a home page or presents an overlayed menu of options. The Sagefy name, when used independently or with the logo, is lowercase, normal weight Palatino in color <code>#343115</code>. It is not required to accompany the logo. When used in a sentence or title, Sagefy is capitalized.
+example:
+    <img src="/astrolabe.svg" height="300" />
+---
+*/
+
+/*
+---
+title: Region Flags
+description: Where applicable, we use <a href="https://github.com/koppi/iso-country-flags-svg-collection">this collection</a> of flags for countries and regions.
+---
+*/

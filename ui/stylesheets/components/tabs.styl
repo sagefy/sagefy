@@ -1,3 +1,80 @@
+/*
+---
+title: Tabs
+description:
+elements:
+    - __nav (ul)
+    - __pages (div)
+    - __page (div)
+modifiers:
+    - horizontal
+    - vertical
+    - selected (anchor)
+example: |
+    <div class="tabs--horizontal">
+        <ul class="tabs__nav">
+            <li>
+                <a href="#">
+                    Home
+                </a>
+            </li>
+            <li class="selected">
+                <a href="#">
+                    Learn
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    Propose
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    Analyze
+                </a>
+            </li>
+        </ul>
+        <div class="tabs__pages">
+            <div class="tabs__page">Home Page</div>
+            <div class="tabs__page selected">Learn Page</div>
+            <div class="tabs__page">Propose Page</div>
+            <div class="tabs__page">Analyze Page</div>
+        </div>
+    </div>
+
+    <div class="tabs--vertical">
+        <ul class="tabs__nav">
+            <li>
+                <a href="#">
+                    Home
+                </a>
+            </li>
+            <li class="selected">
+                <a href="#">
+                    Learn
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    Propose
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    Analyze
+                </a>
+            </li>
+        </ul>
+        <div class="tabs__pages">
+            <div class="tabs__page">Home Page</div>
+            <div class="tabs__page selected">Learn Page</div>
+            <div class="tabs__page">Propose Page</div>
+            <div class="tabs__page">Analyze Page</div>
+        </div>
+    </div>
+---
+*/
+
 .tabs__nav
     list-style none
     padding-left 0
