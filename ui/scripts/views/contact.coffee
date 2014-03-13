@@ -1,4 +1,4 @@
-define [
+define([
     'jquery'
     'backbone'
     'hbs/sections/public/contact'
@@ -6,7 +6,7 @@ define [
 
     class ContactView extends Bb.View
 
-        el: $ '#page'
+        el: $('#page')
         template: t
 
         initialize: ->
@@ -14,5 +14,8 @@ define [
 
         render: ->
             document.title = 'Contact Sagefy.'
-            @$el.attr 'id', 'contact'
-                .html @template()
+            @$el.attr('id', 'contact')
+                .html(@template())
+
+
+)

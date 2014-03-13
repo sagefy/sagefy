@@ -1,4 +1,4 @@
-define [
+define([
     'jquery'
     'backbone'
     'hbs/sections/styleguide/index'
@@ -6,12 +6,13 @@ define [
 
     class StyleguideView extends Bb.View
 
-        el: $ '#page'
+        el: $('#page')
         template: t
 
-        events:
+        events: {
             'click a[href="#"]': 'cancel'
             'click a[href*="//"]': 'openInNewWindow'
+        }
 
         initialize: ->
             @render()
@@ -19,14 +20,16 @@ define [
         render: ->
             document.title = 'Sagefy - Style Guide and Component Library.'
 
-            @$el.addClass 'max-width-10'
-                .attr 'id', 'styleguide'
-                .html @template()
+            @$el.addClass('max-width-10')
+                .attr('id', 'styleguide')
+                .html(@template())
 
         cancel: ->
             false
 
         openInNewWindow: (e) ->
-            $target = $(e.target).closest 'a'
+            $target = $(e.target).closest('a')
             $target[0].target = '_blank'
 
+
+)

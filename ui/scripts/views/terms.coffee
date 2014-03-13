@@ -1,4 +1,4 @@
-define [
+define([
     'jquery'
     'backbone'
     'hbs/sections/public/terms'
@@ -6,7 +6,7 @@ define [
 
     class TermsView extends Bb.View
 
-        el: $ '#page'
+        el: $('#page')
         template: t
 
         initialize: ->
@@ -14,6 +14,9 @@ define [
 
         render: ->
             document.title = 'Sagefy Terms of Service.'
-            @$el.addClass 'max-width-12'
-                .attr 'id', 'terms'
-                .html @template()
+            @$el.addClass('max-width-12')
+                .attr('id', 'terms')
+                .html(@template())
+
+
+)

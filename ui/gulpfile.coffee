@@ -17,19 +17,30 @@ gulp.task 'watch', ['build'], ->
     gulp.watch ['stylesheets/*.styl', 'stylesheets/**/*.styl'], ['stylus']
     gulp.watch coffeeSrc, ['coffee']
 
-gulp.task 'deploy', ['build'], ->
+gulp.task 'deploy', [
+    'build'
     # TODO: Compile Requires
     # TODO: Uglify and Compress Files
     # TODO: Run KSS & JSDoc
+]
 
-gulp.task 'test', ['build'], ->
-    # TODO: Run Coffeelint https://github.com/janraasch/gulp-coffeelint
+gulp.task 'test', [
+    'build'
+    'testCoffee'
     # TODO: Run Mocha
+]
+
 
 #####
 
-gulp.task 'build', ['clean'], ->
-    gulp.run 'copyStatic', 'bower', 'handlebars', 'stylus', 'coffee'
+gulp.task 'build', [
+    'clean'
+    'copyStatic'
+    'bower'
+    'handlebars'
+    'stylus'
+    'coffee'
+]
 
 gulp.task 'clean', ->
     gulp.src dist, read: false
@@ -57,5 +68,12 @@ gulp.task 'stylus', ->
 
 gulp.task 'coffee', ->
     gulp.src coffeeSrc
+        .pipe plugins.coffeelint()
+        .pipe plugins.coffeelint.reporter('default')
         .pipe plugins.coffee()
         .pipe gulp.dest dist
+
+gulp.task 'testCoffee', ->
+    gulp.src coffeeSrc
+        .pipe plugins.coffeelint()
+        .pipe plugins.coffeelint.reporter('fail')

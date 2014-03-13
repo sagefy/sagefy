@@ -1,4 +1,4 @@
-define [
+define([
     'jquery'
     'backbone'
     'hbs/'
@@ -6,9 +6,12 @@ define [
 
     class MessagesView extends Bb.View
 
-        el: $ {}
+        el: $('#page')
 
         initialize: ->
             @render()
 
         render: ->
+
+
+)
