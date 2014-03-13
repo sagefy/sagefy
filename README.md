@@ -21,7 +21,7 @@ _Adaptive, collaborative, and open learning platform._
 All contents in this project are licensed under [AGPLv3](https://raw.github.com/heiskr/sagefy/master/license.txt).
 
     Sagefy, learner-generated algorithmic adaptive learning.
-    Copyright (C) 2013  Kevin Heis and associates
+    Copyright (C) 2013  Kevin Heis and [contributors](https://github.com/heiskr/sagefy/graphs/contributors)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
