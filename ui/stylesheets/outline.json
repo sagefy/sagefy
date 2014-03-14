@@ -70,6 +70,7 @@
     ],
     "Tables",
     "Components", [
+        "Details & Summary",
         "Scrollbars",
         "Alerts & Errors",
         "Breadcrumbs, Wizards, & Pagination",
@@ -86,5 +87,12 @@
         "Tag Cloud",
         "Tooltips"
     ],
-    "More remarks"
+    "Layouts", [
+        "Basic Page Layout",
+        "Navigated Page Layout",
+        "Object Representation",
+        "Settings Layout",
+        "Search, Sort, & Filter Layout"
+    ],
+    "More Remarks"
 ] }

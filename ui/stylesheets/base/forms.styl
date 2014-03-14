@@ -2,7 +2,7 @@
 ---
 title: Forms
 description: Forms are perhaps the most complicated part of any web design. The Sagefy style guide provides a usable, consistent, comprehensive approach to form elements. Forms typically have only a single column of fields. Most forms terminate with one, and only one, primary action button and several possible secondary actions. Most standard forms start with a title and short description of the form.
-example:
+example: |
     <form>
         <h3>
             A basic form
@@ -38,12 +38,12 @@ example:
 /*
 ---
 title: Placeholders
-description:
+description: Placeholders provide the user with an example of the what the field should contain. Typically, include _e.g._ at the beginning. Do not use placeholder in place of labels.
 elements:
-modifiers:
-parameters:
-returns:
-example:
+    - input
+    - textarea
+example: |
+    <input type="text" placeholder="e.g. Placeholder" />
 ---
 */
 
@@ -64,8 +64,13 @@ input:-moz-placeholder
 title: Text Inputs
 description: Range elements do not use sliders. Instead, ranges are input as two text fields.
 elements:
+    - input
 modifiers:
-example:
+    - disabled
+    - hover
+    - focus
+    - selected
+example: |
     <form>
         <div class="form-field form-field--text">
             <input type="text" placeholder="Example text input" />
@@ -169,10 +174,10 @@ input[type="tel"]
 /*
 ---
 title: Textarea
-description:
+description: Text areas are for larger text entry that a normal `input`.
 elements:
     - textarea
-example:
+example: |
     <textarea cols="40" id="thoughts" name="thoughts" rows="4"></textarea>
 ---
 */
@@ -183,12 +188,14 @@ textarea
 /*
 ---
 title: Checkboxes and Radios
-description:
+description: Checkboxes and radios receive some special styling in Chrome and Safari.
 elements:
+    - input
+    - label
 modifiers:
-parameters:
-returns:
-example:
+    - hover
+    - selected
+example: |
     <ul class="unstyled">
         <li>
             <label class="checkbox">
@@ -286,8 +293,8 @@ input[type="radio"]
 title: Field Labels
 description: Every field that is not in a horizontal form has a label. The label clicks to focus on the related form element. Forms typically have labels above the field.
 elements:
-modifiers:
-example:
+    - label
+example: |
     <form>
         <div class="form-field form-field--text">
             <label for="name">Name</label>
@@ -302,8 +309,8 @@ example:
 title: Optional and Required Fields
 description: The label may contain a <code>span</code> with either <code>optional</code> or <code>required</code> as the class and copy to indicate the field is either required or optional. More useful for forms with more than three fields or several sections.
 elements:
-modifiers:
-example:
+    - .required
+example: |
     <form>
         <div class="form-field form-field--text">
             <label for="name">Name <span class="required">required</span></label>
@@ -333,8 +340,8 @@ form label
 title: Fieldsets and Legends
 description: Many users have difficult with forms with more than three fields. In such situations, it is useful to group the fields into fieldsets and legends to segment the field. These fieldsets can also be constructed as a step-by-step wizard.
 elements:
-modifiers:
-example:
+    - fieldset, legend
+example: |
     <form>
         <div class="form-field form-field--text">
             <label for="name">Name</label>
@@ -379,7 +386,7 @@ title: Select Menu
 description: Prefer to use a list of radios over a select element. Do not use the multiple select element. When there are more than 20 items, use a typeahead feature instead of a simple select.
 elements:
     - select, option
-example:
+example: |
     <select>
         <option>First option 1</option>
         <option>Second option 2</option>
@@ -410,12 +417,18 @@ select[multiple]
 /*
 ---
 title: Form Description
-description:
+description: A form may need an explanation as to why the data is required from the user.
 elements:
-modifiers:
-parameters:
-returns:
-example:
+    - .form-description
+example: |
+    <form>
+        <h3>
+            A basic form
+        </h3>
+        <div class="form-description">
+            A description of a basic form.
+        </div>
+    </form>
 ---
 */
 
@@ -427,11 +440,6 @@ example:
 ---
 title: Form Fields
 description: Form fields are wrapped in a class of <code>form-field</code> and the type of the form field, such as <code>form-field--text</code>.
-elements:
-modifiers:
-parameters:
-returns:
-example:
 ---
 */
 
@@ -444,7 +452,7 @@ title: Field Descriptions
 description: In the standard vertical layout, each form field may have a short description below the field. These descriptions are particularly useful when the user may not understand the expected input, or has reservations about why the field is necessary or beneficial. Fields typically have descriptions below the field.
 elements:
 modifiers:
-example:
+example: |
     <form>
         <div class="form-field form-field--text">
             <label for="name">Name</label>
@@ -465,12 +473,10 @@ example:
 /*
 ---
 title: Grouped Inputs
-description:
-elements:
+description: Grouped inputs are useful for data entry where the data points are very closely related. Otherwise, prefer to stick with one column forms.
 modifiers:
-parameters:
-returns:
-example:
+    - --grouped
+example: |
     <form>
         <div class="form-field--grouped">
             <div class="form-field form-field--text">
@@ -493,10 +499,10 @@ example:
 /*
 ---
 title: Horizontal Forms
-description:
-elements:
+description: Most of the time, the verical form is for the best. For small forms, it may be easier to lay them out horizontally. In this one case, it can be necessary to use placeholders as labels.
 modifiers:
-example:
+    - --horizontal
+example: |
     <form class="form--horizontal">
         <div class="form-field form-field--search">
             <input id="name" name="name" placeholder="Search" size="20" type="search" />
@@ -523,12 +529,18 @@ example:
 /*
 ---
 title: Disabled Form Fields
-description:
+description: Disabling for elements causes them to lose opacity.
 elements:
+    - input, textarea, select
 modifiers:
-parameters:
-returns:
-example:
+    - disabled
+example: |
+    <form>
+        <div class="form-field form-field--text form-field--disabled">
+            <label>Disabled</label>
+            <input type="text" placeholder="Example disabled" disabled="disabled" />
+        </div>
+    </form>
 ---
 */
 
@@ -541,10 +553,22 @@ example:
 title: Form Feedback
 description: Forms typically have validation messages to the right of the field.
 elements:
+    - form-field__feedback
 modifiers:
-parameters:
-returns:
-example:
+    - --success
+    - --error
+    - --warning
+example: |
+    <form>
+        <div class="form-field form-field--text form-field--success">
+            <label>Success</label>
+            <input type="text" placeholder="Example success" />
+            <span class="form-field__feedback">
+                <i class="icon-check"></i>
+                This is a success
+            </span>
+        </div>
+    </form>
 ---
 */
 

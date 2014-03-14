@@ -1,9 +1,12 @@
 /*
 ---
 title: Vendor Mixin
-description:
+description: Whenever a wrapped property is called, all vendor prefixes are automatically added as well.
 parameters:
+    - property
+    - args
 returns:
+    - Styling, for webkit, moz, ms, and o
 ---
 */
 
@@ -17,9 +20,9 @@ vendor(property, args)
 /*
 ---
 title: Border Radius Mixin
-description:
+description: Includes vendor prefixes for border radius.
 parameters:
-returns:
+    - Use as normal
 ---
 */
 border-radius()
@@ -28,9 +31,9 @@ border-radius()
 /*
 ---
 title: Transition Mixin
-description:
+description: Includes vendor prefixes for transitions.
 parameters:
-returns:
+    - Use as normal
 ---
 */
 transition()
@@ -39,9 +42,9 @@ transition()
 /*
 ---
 title: Box Sizing Mixin
-description:
+description: Includes vendor prefixes for box sizing.
 parameters:
-returns:
+    - Use as normal
 ---
 */
 box-sizing()
