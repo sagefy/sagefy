@@ -1,0 +1,27 @@
+/*
+---
+title: Details & Summary
+description: Sometimes known as an accordian, the details and summary tags in HTML5 are somewhat styled.
+elements:
+    - details
+    - summary
+example: |
+    <details>
+        <summary>More</summary>
+        This is detailed information
+    </detail>
+---
+*/
+
+
+details
+    margin $unit 0
+
+summary
+    font-weight bold
+    font-style italic
+    color $gold-43
+
+    &:focus
+        outline 0
+

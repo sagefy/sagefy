@@ -56,7 +56,7 @@ gulp.task 'handlebars', ->
 
 gulp.task 'stylus', ->
     gulp.src 'stylesheets/app.styl'
-        .pipe plugins.stylus()
+        .pipe plugins.stylus({ set: ['include css'] })
         .pipe gulp.dest dist
 
 gulp.task 'styleguide', ->

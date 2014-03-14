@@ -1,3 +1,13 @@
+/*
+---
+title: Typography
+description: |
+    Sagefy strives to provide basic typographic support for all commonly used HTML5 elements.
+
+    For more on excellent web typography, check out [Practical Typography](http://practicaltypography.com/).
+---
+*/
+
 html, body, input, textarea, select
     font-family $base-font-family
 
@@ -44,6 +54,22 @@ a
 /*
 ---
 title: Font Sizes
+description: |
+    Font sizes are fuzzified by names. Available sizes are:
+
+    - small
+    - normal
+    - accent
+    - large
+    - big
+    - epic
+example: |
+    <span class="font-size-small">I'm a huge font size</span>
+    <span class="font-size-normal">I'm an outstanding font size</span>
+    <span class="font-size-accent">I'm a small font</span>
+    <span class="font-size-large">I'm a blend-in font size</span>
+    <span class="font-size-big">I'm a lovely font size</span>
+    <span class="font-size-epic">I'm a tiny font size</span>
 ---
 */
 
@@ -55,6 +81,12 @@ for set in (small 14 24/14) (normal 16 1.5) (accent 18 24/18) (large 20 1.2) (bi
 /*
 ---
 title: Width Limiting
+description: |
+    Because paragraphs can become too long to read, we provide a `width-limit` class to keep it under control. Most type specialists consider about 13-15 words per line ideal.
+example: |
+    <p class="width-limit">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
 ---
 */
 
@@ -261,8 +293,9 @@ blockquote
 title: Horizontal Rules
 description: Horizontal rules are avoided as Sagefy prefers whitespace over lines. Rules are useful in certain situations, however.
 elements:
-modifiers:
-example:
+    - hr
+example: |
+    <hr />
 ---
 */
 
@@ -287,9 +320,11 @@ example: |
 /*
 ---
 title: Time and Dates
-description: The <code>time</code> tag is used to describe specific dates and times. It does not indicate durations. The <code>datetime</code> attribute is optional.
+description: The `time` tag is used to describe specific dates and times. It does not indicate durations. The `datetime` attribute is optional.
 elements:
     - time
+example: |
+    <time datetime="2009-11-13">November 13<sup>th</sup></time>
 ---
 */
 

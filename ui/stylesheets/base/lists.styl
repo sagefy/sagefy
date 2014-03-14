@@ -8,8 +8,11 @@ description: |
 
     Horizontal, or inline, lists are also supported. Often used as simple navigational menus. Subitems do not appear.
 elements:
+    - ul, ol, li
 modifiers:
-example:
+    - unstyled
+    - horizontal
+example: |
     <ul>
         <li>Item 1
             <ul>
@@ -85,7 +88,7 @@ elements:
     - ul, li...
 modifiers:
     - with-thumbnails
-example:
+example: |
     <table class="list--with-thumbnails">
         <tr>
             <td>
@@ -136,7 +139,7 @@ title: Definition Lists
 description: Definition lists are useful for glossaries, dictionaries, and outlines. The tags <code>dl</code>, <code>dt</code>, and <code>dd</code> are used together to form the definition list. Definition lists are also used for marking up metadata.
 elements:
     - dl, dt, dd
-example:
+example: |
     <dl>
         <dt>RSS</dt>
         <dd>An XML format for aggregating information from websites whose

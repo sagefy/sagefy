@@ -28,14 +28,25 @@ description: |
 /*
 ---
 title: Clearfix
+description: |
+    The `clearfix` class clears any floats within the element so it doesn't impact neighboring elements.
+
+    TODO: Show example
 ---
 */
 .clearfix
-    overflow auto
+    &:before, &:after
+        content " "
+        display table
+
+    &:after
+        clear both
 
 /*
 ---
 title: Display Type Helpers
+description: |
+    TODO: Describe, show examples
 ---
 */
 .block
@@ -50,6 +61,8 @@ title: Display Type Helpers
 /*
 ---
 title: Pull and Push Helpers
+description: |
+    TODO: Describe, show examples
 ---
 */
 .pull-left
@@ -75,8 +88,8 @@ title: Pull and Push Helpers
 title: Body Layout
 description: The `body` element will use up to 20 columns of width in rendering, but will adapt to the user's available screen real estate.
 elements:
-    - Body
-example:
+    - body
+example: |
     <table class="size-table">
         <thead>
             <tr>
@@ -90,7 +103,6 @@ example:
                 <td>4</td>
                 <td>264px</td>
                 <td>312px</td>
-
             </tr>
             <tr>
                 <td>6</td>
@@ -198,8 +210,10 @@ description: Sagefy takes a layout-specified approach rather than a column-speci
 /*
 ---
 title: Columns
-description: Any element may be set to a specific number of columns, using the class <code>col-n</code>. Any element with set columns larger than the available screen will be reduced to the maximum width.
-example:
+description: |
+    Any element may be set to a specific number of columns, using the class `col-n`. Any element with set columns larger than the available screen will be reduced to the maximum width.
+
+    TODO: Examples
 ---
 */
 for i in (1..$max-columns)
@@ -209,10 +223,10 @@ for i in (1..$max-columns)
 /*
 ---
 title: Full Width Layout
-description: A full-width element assumes the width of its parent. Full-width is native to block level elements, but can be manually set by <code>full-width</code>.
-elements:
-modifiers:
-example:
+description: |
+    A full-width element assumes the width of its parent. Full-width is native to block level elements, but can be manually set by <code>full-width</code>.
+
+    TODO: Rework for flexbox, examples
 ---
 */
 .full-width
@@ -221,10 +235,10 @@ example:
 /*
 ---
 title: Max Width Layout
-description: A max-width element will assume the width of its parent up to a specified number of columns. Max width is set by the class <code>max-width-n</code>. Prefer max-widths set in two, four, six...
-elements:
-modifiers:
-example:
+description: |
+    A max-width element will assume the width of its parent up to a specified number of columns. Max width is set by the class `max-width-n`. Prefer max-widths set in two, four, six...
+
+    TODO: Rework for flexbox, examples
 ---
 */
 .max-width
@@ -239,13 +253,12 @@ for i in (1..$max-columns)
 /*
 ---
 title: Serial Layout
-description:
+description: |
     A serial layout consists of a set of even-width elements. Serial layouts specify a maximum number of columns per element.
 
     Wrap the elements in a <code>div</code> of <code>serial-n</code>, where <var>n</var> is the number of columns from one to ten, not the number of elements.
-elements:
-modifiers:
-example:
+
+    TODO: Rework for flexbox, examples
 ---
 */
 .serial
@@ -271,9 +284,8 @@ description: |
     An aside, either on the left or right side, of one to eight columns. The main element will take the rest of the parent's width. When the main is less than 60% of the parent, both the main and the aside appear in full width. For a two-in-one aside, use the serial layout inside the aside.
 
     Wrap both <code>main</code> and <code>aside</code> in a <code>div</code> with the class <code>aside-d-n</code>, where <var>d</var> is either <em>left</em> or <em>right</em>, and <var>n</var> is the number of columns of the aside.
-elements:
-modifiers:
-example:
+
+    TODO: Rework for flexbox, examples
 ---
 */
 
@@ -309,9 +321,8 @@ description: |
     Two asides appear with the main content, one on the left and one on the right. Each aside is one to seven columns. The main element takes the remaining space. If the main element is less than 60% of the parent, all three elements are in full width. The sum of the aside columns must be eight or less.
 
     Create container <code>aside-left-dl-right-dr</code>, where <var>dl</var> is the number of left columns and <var>dr</var> is the number of right columns. Create an <code>aside</code>, <code>main</code>, and <code>aside</code> elements within the container.
-elements:
-modifiers:
-example:
+
+    TODO: Rework for flexbox, examples
 ---
 */
 
