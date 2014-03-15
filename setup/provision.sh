@@ -33,6 +33,16 @@ sudo pip install -r /var/www/setup/requirements.txt
 
 sudo apt-get -y install redis-server
 
+#### UI Tooling ###############################################################
+
+sudo apt-get -y update
+sudo apt-get -y install software-properties-common
+sudo apt-get -y install python-software-properties python g++ make
+sudo add-apt-repository -y ppa:chris-lea/node.js
+sudo apt-get -y update
+sudo apt-get -y install nodejs
+sudo npm install -g gulp bower
+
 #### Server ###################################################################
 
 cd /var/www
