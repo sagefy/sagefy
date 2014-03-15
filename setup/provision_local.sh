@@ -35,10 +35,16 @@ sudo apt-get -y install redis-server
 
 #### UI Tooling ###############################################################
 
-sudo apt-get -y install npm
-sudo npm install -g gulp coffee-script stylus
-sudo ln -s /usr/bin/nodejs /usr/bin/node
-echo 'export NODE_PATH=/usr/local/lib/node_modules' >> ~/.bashrc
+sudo apt-get -y update
+sudo apt-get -y install software-properties-common
+sudo apt-get -y install python-software-properties python g++ make
+sudo add-apt-repository -y ppa:chris-lea/node.js
+sudo apt-get -y update
+sudo apt-get -y install nodejs
+sudo npm install -g gulp bower
+cd /var/www/ui
+# sudo npm install
+# sudo bower install
 
 #### Server ###################################################################
 

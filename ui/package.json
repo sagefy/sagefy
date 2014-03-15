@@ -22,13 +22,13 @@
     "gulp-resolve-dependencies": "0.0.1",
     "gulp-stylus": "0.0.13",
     "gulp-uglify": "~0.2.1",
-    "gulp-load-tasks": "~0.1.1",
     "coffee-script": "~1.7.1",
     "gulp-declare": "~0.1.0",
     "gulp-coffeelint": "~0.3.1",
     "gulp-mocha": "~0.4.1",
     "gulp-jsdoc": "0.0.2",
     "gulp-istanbul": "~0.1.1",
-    "ym-styleguide": "latest"
+    "ym-styleguide": "~0.1.2",
+    "gulp-load-plugins": "~0.4.0"
   }
 }
