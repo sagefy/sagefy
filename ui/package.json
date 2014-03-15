@@ -29,6 +29,6 @@
     "gulp-mocha": "~0.4.1",
     "gulp-jsdoc": "0.0.2",
     "gulp-istanbul": "~0.1.1",
-    "ym-styleguide": "git://github.com/heiskr/ym-styleguide.git"
+    "ym-styleguide": "latest"
   }
 }
