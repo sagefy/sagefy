@@ -1,5 +1,5 @@
 gulp = require "gulp"
-gulpLoadPlugins = require "gulp-load-tasks"
+gulpLoadPlugins = require "gulp-load-plugins"
 plugins = gulpLoadPlugins()
 
 dist = 'distribution/'
@@ -61,7 +61,7 @@ gulp.task('copyFonts', ->
 )
 
 gulp.task('bower', ->
-    plugins['bower-files']()
+    plugins.bowerFiles()
         .pipe(gulp.dest dist + 'bower/')
 )
 
