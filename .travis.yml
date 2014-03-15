@@ -11,7 +11,7 @@ node_js:
     - "0.10"
 before_install:
     - "cd ui"
-    - npm install -g bower grunt-cli
+    - npm install -g bower gulp
     - npm install
 
 notifications:
