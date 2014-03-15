@@ -4,7 +4,7 @@ require.config({
         handlebars: 'bower/handlebars/handlebars'
         underscore: 'bower/underscore/underscore'
         backbone: 'bower/backbone/backbone'
-        markdown: 'bower/marked/marked'
+        markdown: 'bower/marked/lib/marked'
         moment: 'bower/moment/moment'
         d3: 'bower/d3/d3'
         modernizr: 'bower/modernizr/modernizr'
