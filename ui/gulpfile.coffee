@@ -12,10 +12,10 @@ gulp.task 'default', ['watch'], ->
 #####
 
 gulp.task 'watch', ['build'], ->
-    gulp.watch staticSrc, ['copyStatic']
-    gulp.watch hbsSrc, ['handlebars']
-    gulp.watch ['stylesheets/*.styl', 'stylesheets/**/*.styl'], ['stylus', 'styleguide']
-    gulp.watch coffeeSrc, ['coffee']
+    gulp.watch(staticSrc, ['copyStatic'])
+    gulp.watch(hbsSrc, ['handlebars'])
+    gulp.watch(['stylesheets/*.styl', 'stylesheets/**/*.styl'], ['stylus', 'styleguide'])
+    gulp.watch(coffeeSrc, ['coffee'])
 
 gulp.task 'deploy', [
     'build'
@@ -33,7 +33,15 @@ gulp.task 'test', [
 #####
 
 gulp.task 'build', ['clean'], ->
-    gulp.run 'copyStatic', 'bower', 'styleguide', 'handlebars', 'stylus', 'coffee'
+    gulp.run(
+        'copyStatic',
+        'copyFonts',
+        'bower',
+        'styleguide',
+        'handlebars',
+        'stylus',
+        'coffee'
+    )
 
 gulp.task 'clean', ->
     gulp.src dist, read: false
@@ -42,6 +50,11 @@ gulp.task 'clean', ->
 gulp.task 'copyStatic', ->
     gulp.src staticSrc
         .pipe gulp.dest dist
+
+gulp.task('copyFonts', ->
+    gulp.src('bower_components/fontawesome/fonts/fontawesome-webfont.*')
+        .pipe(gulp.dest(dist + 'fonts/'))
+)
 
 gulp.task 'bower', ->
     plugins['bower-files']()
