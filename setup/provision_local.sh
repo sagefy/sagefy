@@ -6,6 +6,10 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y install language-pack-en
 
+#### Get Code #################################################################
+
+sudo apt-get -y install git
+
 #### Aliases ##################################################################
 
 sudo rm -rf /var/www
@@ -43,8 +47,9 @@ sudo apt-get -y update
 sudo apt-get -y install nodejs
 sudo npm install -g gulp bower
 cd /var/www/ui
-# sudo npm install
-# sudo bower install
+sudo npm install
+bower install -F --allow-root
+gulp deploy
 
 #### Server ###################################################################
 
@@ -57,3 +62,4 @@ sudo initctl start uwsgi
 sudo initctl start nginx
 
 echo "Hooray! Provisioned."
+echo "For script and style watching, run gulp."
