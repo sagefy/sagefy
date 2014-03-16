@@ -23,7 +23,8 @@
     "marked": "~0.3.2",
     "modernizr": "~2.7.1",
     "moment": "~2.5.1",
-    "normalize.css": "~3.0.0"
+    "normalize.css": "~3.0.0",
+    "parsleyjs": "~1.2.4"
   },
   "overrides": {
     "fontawesome": {
@@ -34,6 +35,9 @@
     },
     "modernizr": {
       "main": "modernizr.js"
+    },
+    "parsleyjs": {
+      "main": "parsley.js"
     }
   }
 }

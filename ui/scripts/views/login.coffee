@@ -1,13 +1,14 @@
 define([
     'jquery'
     'backbone'
+    'parsley'
     'hbs/sections/user/login'
-], ($, Bb, t) ->
+], ($, Backbone, parsley, template) ->
 
-    class LoginView extends Bb.View
+    class LoginView extends Backbone.View
 
         el: $('#page')
-        template: t
+        template: template
 
         initialize: ->
             @render()
