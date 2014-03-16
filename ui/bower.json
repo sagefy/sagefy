@@ -24,7 +24,7 @@
     "modernizr": "~2.7.1",
     "moment": "~2.5.1",
     "normalize.css": "~3.0.0",
-    "parsleyjs": "~1.2.4"
+    "jquery-validation": "git://github.com/jzaefferer/jquery-validation.git#~1.11.1"
   },
   "overrides": {
     "fontawesome": {
@@ -36,8 +36,8 @@
     "modernizr": {
       "main": "modernizr.js"
     },
-    "parsleyjs": {
-      "main": "parsley.js"
+    "jquery-validation": {
+      "main": "jquery.validate.js"
     }
   }
 }

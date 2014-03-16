@@ -10,18 +10,18 @@
 <form method="post" action="/api/users">
     <div class="form-field form-field--text">
         <label for="username">Username</label>
-        <input id="username" name="username" placeholder="e.g. Marissa" size="50" type="text" required data-parsley-trigger="change" />
+        <input id="username" name="username" placeholder="e.g. Marissa" size="50" type="text" />
     </div>
     <div class="form-field form-field--text">
         <label for="email">Email</label>
-        <input id="email" name="email" placeholder="e.g. marissa@example.com" size="50" type="email" required data-parsley-trigger="change" />
+        <input id="email" name="email" placeholder="e.g. marissa@example.com" size="50" type="email" />
         <p class="form-field__description">
             We hate spam too. But we'll need it to get you setup.
         </p>
     </div>
     <div class="form-field form-field--text">
         <label for="password">Password</label>
-        <input id="password" name="password" size="50" type="password" required data-parsley-trigger="change" data-parsley-minlength="8" data-parsley-pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$" />
+        <input id="password" name="password" size="50" type="password" />
         <p class="form-field__description">
             Minimum 8 characters, one uppercase letter, one number.
         </p>

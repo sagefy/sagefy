@@ -1,6 +1,7 @@
 define([
     'backbone'
-], (Bb) ->
+    'modules/init'
+], (Bb, init) ->
 
     class PrimaryRouter extends Bb.Router
 
@@ -14,6 +15,7 @@ define([
         }
 
         initialize: ->
+            init.configFormValidation()
             Bb.history.start({pushState: true})
 
         viewIndex: ->

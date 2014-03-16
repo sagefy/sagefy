@@ -1,11 +1,10 @@
 define([
     'jquery'
     'backbone'
-    'parsley'
     'hbs/sections/user/login'
     'models/user'
     'modules/mixins'
-], ($, Backbone, parsley, template, UserModel, mixins) ->
+], ($, Backbone, template, UserModel, mixins) ->
 
     class LoginView extends Backbone.View
 
