@@ -27,7 +27,9 @@ define([
             @$form = @$el.find('form')
             @$form.validate({
                 rules: {
-                    username: 'required'
+                    username: {
+                        required: true
+                    }
                     email: {
                         required: true
                         email: true
