@@ -2,12 +2,13 @@ define([
     'jquery'
     'backbone'
     'hbs/sections/user/signup'
-], ($, Bb, t) ->
+    'parsley'
+], ($, Backbone, template, parsley) ->
 
-    class Signup extends Bb.View
+    class Signup extends Backbone.View
 
         el: $('#page')
-        template: t
+        template: template
 
         initialize: ->
             @render()
@@ -17,6 +18,8 @@ define([
             @$el.addClass('max-width-8')
                 .attr('id', 'signup')
                 .html(@template())
+
+            @$el.find('form').parsley()
 
 
 )

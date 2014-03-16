@@ -8,6 +8,7 @@ require.config({
         moment: 'bower/moment/moment'
         d3: 'bower/d3/d3'
         modernizr: 'bower/modernizr/modernizr'
+        parsley: 'bower/parsleyjs/parsley'
     }
     shim: {
         handlebars: {
