@@ -4,7 +4,7 @@ define([
 
     class UserModel extends Backbone.Model
 
-        url: '/api/users'
+        url: '/api/users/'
 
         # id
         # created

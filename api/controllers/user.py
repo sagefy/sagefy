@@ -11,13 +11,11 @@ def create_user():
     Create user.
     """
 
-    # TODO: test route
-
     try:
-        user = User(request.form)
+        user = User(request.json)
     except AssertionError as error:
         return jsonify(error=str(error))
-    return jsonify(user=user.to_dict())
+    return jsonify(user=user.to_dict_secure())
 
 
 @app.route('/api/users/<user_id>/', methods=['GET'])

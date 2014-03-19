@@ -45,6 +45,9 @@ define([
         submit: (e) ->
             e.preventDefault()
             @model.save(@formData(@$form))
+            @model.on('sync', =>
+                alert('Hello ' + @model.get('username'))
+            )
 
         formData: mixins.formData
 
