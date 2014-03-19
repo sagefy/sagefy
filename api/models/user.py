@@ -15,9 +15,7 @@ class User(db.Model):
     modified = db.Column(db.DateTime)
     username = db.Column(db.String(256))  # Ensure unique
     email = db.Column(db.String(256))  # Ensure unique
-    password = db.Column(db.String(256))
-    # TODO: Notification settings
-    # TODO: Message settings
+    password = db.Column(db.String(256))  # Use `set_password` instead
 
     def __init__(self, params):
         """
@@ -28,25 +26,15 @@ class User(db.Model):
         self.created = self.modified = datetime.utcnow()
         self.username = params.get('username')
         self.email = params.get('email')
-        self.password = params.get('password')
+        self.set_password(params.get('password'))
+        self.commit()
 
-        # TODO: self.commit() (?)
-
-    @property
-    def password(self):
-        """
-        Just pretend this method doesn't exist.
-        """
-
-        return self.password
-
-    @password.setter
-    def password(self, value):
+    def set_password(self, value):
         """
         Encrypt the password with Bcrypt before storing to the database.
         """
 
-        # TODO: Ensure this works 100%
+        assert self.validate_password('password', value)
         self.password = bcrypt.encrypt(value)
 
     @validates('username')
@@ -56,9 +44,7 @@ class User(db.Model):
         A username must be unique.
         """
 
-        # TODO: Test the assertion change, ensure good responses
-
-        assert username is not None, "A username is required."
+        assert username, "A username is required."
         assert not User.query.filter_by(username=username).first(), \
             "There's already an account with that username."
         return username
@@ -71,15 +57,12 @@ class User(db.Model):
         An email address must be unique.
         """
 
-        # TODO: Test the assertion change, ensure good responses
-
-        assert email is not None, "An email address is required."
-        assert '@' in email and '.' in email, "Must be an email address"
+        assert email and '@' in email and '.' in email, \
+            "A valid email address is required."
         assert not User.query.filter_by(email=email).first(), \
             "There's already an account with this email address."
         return email
 
-    @validates('password')
     def validate_password(self, key, password):
         """
         A password is required.
@@ -89,11 +72,11 @@ class User(db.Model):
         A password cannot contain the username.
         A password cannot contain the email.
         A password must not be one of the most common passwords.
+
+        Notice: Not using SQLAlchemy >>> Called by set_password directly
         """
 
-        # TODO: Test the assertion change, ensure good responses
-
-        assert password is not None, "A password is required."
+        assert password, "A password is required."
         assert len(password) >= 8, "A password must be 8 characters or longer."
         assert re.search('\d+', password) is not None, \
             "A password must contain a number."
@@ -103,7 +86,7 @@ class User(db.Model):
             "A password cannot contain username."
         assert self.email not in password, \
             "A password cannot contain email."
-        assert password not in most_common_passwords, \
+        assert password.lower() not in most_common_passwords, \
             "A password must not be one of the most common passwords."
         return password
 
@@ -113,13 +96,13 @@ class User(db.Model):
         Do not include sensitive fields.
         """
 
-        # TODO: Whitelist instead of blacklist
+        public_fields = [
+            'id',
+            'created',
+            'username',
+        ]
 
-        d = dict(User)
-        del d['password']
-        del d['modified']
-        del d['email']
-        return d
+        return {field: getattr(self, field, None) for field in public_fields}
 
     def to_dict_secure(self):
         """
@@ -128,12 +111,15 @@ class User(db.Model):
         May include some sensitive fields.
         """
 
-        # TODO: Whitelist instead of blacklist
-        # TOOD: Combine methods?
+        my_fields = [
+            'id',
+            'created',
+            'modified',
+            'username',
+            'email',
+        ]
 
-        d = dict(User)
-        del d['password']
-        return d
+        return {field: getattr(self, field, None) for field in my_fields}
 
     def is_authenticated(self):
         """
@@ -186,78 +172,79 @@ class User(db.Model):
         # TODO: Redis cache
         return User.query.filter_by(id=id).first()
 
-    @staticmethod
-    def get_by_email(email):
-        """
-        Given an email address, return a matching user when available.
-        """
+    # @staticmethod
+    # def get_by_email(email):
+    #     """
+    #     Given an email address, return a matching user when available.
+    #     """
 
-        # TODO: Redis cache
-        return User.query.filter_by(email=email).first()
+    #     # TODO: Redis cache
+    #     return User.query.filter_by(email=email).first()
 
-    @staticmethod
-    def get_by_username(username):
-        """
-        Given a username, return a matching user when available.
-        """
+    # @staticmethod
+    # def get_by_username(username):
+    #     """
+    #     Given a username, return a matching user when available.
+    #     """
 
-        # TODO: Redis cache
-        return User.query.filter_by(username=username).first()
+    #     # TODO: Redis cache
+    #     return User.query.filter_by(username=username).first()
 
-    @staticmethod
-    def get_by_token(token):
-        """
-        Given a password creation token,
-        find and validate the corresponding user.
-        """
+    # @staticmethod
+    # def get_by_token(token):
+    #     """
+    #     Given a password creation token,
+    #     find and validate the corresponding user.
+    #     """
 
-        # TODO: id = token.split('--')[0]
-        # user = User.get_by_id(id)
-        # TODO: if token matches, return user
-        return False
+    #     # TODO: id = token.split('--')[0]
+    #     # user = User.get_by_id(id)
+    #     # TODO: if token matches, return user
+    #     return False
 
-    def is_password_valid(self, password):
-        """
-        Given a password, test to see if it matches
-        what's stored in the database.
-        """
+    # def is_password_valid(self, password):
+    #     """
+    #     Given a password, test to see if it matches
+    #     what's stored in the database.
+    #     """
 
-        # TODO: Verify this works correctly
+    #     # TODO: Verify this works correctly
 
-        try:
-            result = bcrypt.verify(password, self.password)
-        except:
-            result = False
+    #     try:
+    #         result = bcrypt.verify(password, self.password)
+    #     except:
+    #         result = False
 
-        return result
+    #     return result
 
-    def send_password_token(self):
-        """
+    # def send_password_token(self):
+    #     """
 
-        """
+    #     """
 
-        # token = '%s--%s' % (self.id, uniqid())
-        # TODO: send token to redis
-        # TODO: send user an email
-        return False
+    #     # token = '%s--%s' % (self.id, uniqid())
+    #     # TODO: send token to redis
+    #     # TODO: send user an email
+    #     return False
 
-    def update(self, params):
-        """
+    # def update(self, params):
+    #     """
 
-        """
+    #     """
 
-        # TODO: Improve and validate method
+    #     # TODO: Improve and validate method
 
-        for field in ['email', 'username']:
-            val = getattr(params, field)
-            if val:
-                setattr(self, field, val)
+    #     for field in ['email', 'username']:
+    #         val = getattr(params, field)
+    #         if val:
+    #             setattr(self, field, val)
 
-        return self.commit()
+    #     return self.commit()
 
     def commit(self):
         """
-
+        Commits user to the database.
+        Sort of defeats the purpose of SQLAlchemy.
         """
 
         # TODO: Clear Redis caches
