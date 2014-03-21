@@ -6,12 +6,28 @@ define([
 
         url: '/api/users/'
 
+        # [fields]
         # id
         # created
         # modified
         # username
         # email
         # password
+
+        validations: {
+            username: {
+                required: true
+            }
+            email: {
+                required: true
+                email: true
+            }
+            password: {
+                required: true
+                password: true
+                minlength: 8
+            }
+        }
 
         validate: (attrs, options) ->
             if not attrs.username
