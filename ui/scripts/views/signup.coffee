@@ -25,22 +25,7 @@ define([
                 .html(@template())
 
             @$form = @$el.find('form')
-            @$form.validate({
-                rules: {
-                    username: {
-                        required: true
-                    }
-                    email: {
-                        required: true
-                        email: true
-                    }
-                    password: {
-                        required: true
-                        password: true
-                        minlength: 8
-                    }
-                }
-            })
+            @$form.validate(@model.validations)
 
         submit: (e) ->
             e.preventDefault()
