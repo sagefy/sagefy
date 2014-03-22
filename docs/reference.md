@@ -22,6 +22,7 @@ Learning Science
 - [e-Learning and the Science of Instruction](http://www.amazon.com/Learning-Science-Instruction-Guidelines-Multimedia/dp/0470874309/ref=dp_ob_title_bk) by Clark, Mayer
 - [Educause](http://www.educause.edu/)
 - [How to Solve It](http://en.wikipedia.org/wiki/How_to_Solve_It)
+- [How a Radical New Teaching Method Could Unleash a Generation of Geniuses](http://www.wired.com/business/2013/10/free-thinkers/all/&src=longreads)
 
 Gamification
 ------------
@@ -34,6 +35,8 @@ Gamification
 - [How to Gamify: 15 ways to introduce gaming concepts into eLearning](http://www.growthengineering.co.uk/how-to-gamify-15-ways-to-introduce-gaming-concepts-into-elearning/)
 - [We Don't Need No Stinkin' Badges](http://www.gdcvault.com/play/1014576/We-Don-t-Need-No)
 - [Designing for Behavioral Change in Health](http://www.uxbooth.com/articles/designing-for-behavioral-change-in-health/)
+- [eLearning & Gamification: The Octalysis Framework](http://iconlogic.blogs.com/weblog/2012/12/elearning-gamification-the-octalysis-framework.html)
+- [Gamification: Using Game Mechanics to Enhance eLearning](http://elearnmag.acm.org/featured.cfm?aid=2031772)
 
 
 Statistics, Data science and Machine learning
