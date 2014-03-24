@@ -47,7 +47,9 @@ Statistics, Data science and Machine learning
 - [WikipediaProblems: How Do You Classify Everything?](http://www.theatlantic.com/technology/archive/2013/10/-wikipediaproblems-how-do-you-classify-everything/280178/)
 
 ### Educational Data Mining and Learning Analytics
+
 - [Educational Data Mining and Learning Analytics by Ryan Baker and George Siemens](http://www.columbia.edu/~rsb2162/BakerSiemensHandbook2013.pdf)
+- [Knowledge Spaces -- The Science Behind ALEKS](http://www.aleks.com/about_aleks/Science_Behind_ALEKS.pdf)
 
 Data Visualization
 ------------------
@@ -82,6 +84,7 @@ Learning platforms
 ------------------
 
 ### Adaptive
+
 - [Knewton](http://knewton.com)
 - [ALEKS](http://www.aleks.com)
 - [AutoTutor](http://www.autotutor.org)
