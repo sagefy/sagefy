@@ -6,15 +6,10 @@ define([
 
         url: '/api/users/'
 
-        # [fields]
-        # id
-        # created
-        # modified
-        # username
-        # email
-        # password
-
-        validations: {
+        fields: {
+            # id
+            # created
+            # modified
             username: {
                 required: true
             }

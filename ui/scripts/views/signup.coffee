@@ -4,6 +4,7 @@ define([
     'hbs/sections/user/signup'
     'models/user'
     'modules/mixins'
+    'backbone.marionette'
 ], ($, Backbone, template, UserModel, mixins) ->
 
     class Signup extends Backbone.View
@@ -15,8 +16,8 @@ define([
         }
 
         initialize: ->
-            @render()
             @model = new UserModel()
+            @render()
 
         render: ->
             document.title = 'Signup for Sagefy.'
@@ -25,7 +26,7 @@ define([
                 .html(@template())
 
             @$form = @$el.find('form')
-            @$form.validate(@model.validations)
+            @$form.validate(@model.fields)
 
         submit: (e) ->
             e.preventDefault()
