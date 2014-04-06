@@ -6,7 +6,7 @@ define([
 
     class MessageView extends Bb.View
 
-        el: $('#page')
+        el: $('.page')
 
         initialize: ->
             @render()
