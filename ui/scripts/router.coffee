@@ -9,6 +9,7 @@ define([
             'styleguide': 'viewStyleguide'
             'login': 'viewLogin'
             'signup': 'viewSignup'
+            'dashboard': 'viewDashboard'
             'terms': 'viewTerms'
             'contact': 'viewContact'
             '(/)': 'viewIndex'
@@ -46,6 +47,11 @@ define([
         viewStyleguide: ->
             require(['views/styleguide'], (StyleguideView) ->
                 styleguideView = new StyleguideView
+            )
+
+        viewDashboard: ->
+            require(['views/dashboard'], (DashboardView) ->
+                dashboardView = new DashboardView
             )
 
 

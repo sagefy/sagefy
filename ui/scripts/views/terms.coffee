@@ -6,7 +6,7 @@ define([
 
     class TermsView extends Bb.View
 
-        el: $('#page')
+        el: $('.page')
         template: t
 
         initialize: ->

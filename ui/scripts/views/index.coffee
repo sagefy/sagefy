@@ -6,7 +6,7 @@ define([
 
     class IndexView extends Bb.View
 
-        el: $('#page')
+        el: $('.page')
         template: t
 
         initialize: ->

@@ -7,7 +7,7 @@ define([
 
     class StyleguideView extends Bb.View
 
-        el: $('#page')
+        el: $('.page')
         template: t
         template2: t2
 

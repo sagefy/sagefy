@@ -8,6 +8,9 @@ define([
                 obj[field.name] = field.value
                 obj
             , {})
+
+        isLoggedIn: ->
+            false
     }
 
 )
