@@ -10,6 +10,7 @@ Development Checklist
 
 For each pull request, ensure the following:
 
+- General follows [code styleguide](/docs/code_styleguide).
 - Each method is documented according to the system for the given domain
 - Code passes used linters
 - Passes existing automated tests (run CI automatically on pull requests)
@@ -96,16 +97,16 @@ Infrastructure
     - Search engine access - [Node SEO Server](https://npmjs.org/package/seoserver)
 - **Monitoring** - [Pingdom](https://www.pingdom.com/), [New Relic](http://newrelic.com/) (Free)
 - _hold_ User research tools
-    - Split test _TODO_ 
-    - Accessibility _TODO_ 
+    - Split test _TODO_
+    - Accessibility _TODO_
     - [Card sort](http://conceptcodify.com)
-    - Prototype testing _TODO_ 
+    - Prototype testing _TODO_
     - [Heatmap](http://www.crazyegg.com/)
-    - Mobile testing _TODO_ 
-    - Remote usability _TODO_ 
+    - Mobile testing _TODO_
+    - Remote usability _TODO_
     - [Surveying](http://surveymonkey.com)
     - Web Analytics - Google Analytics
-    - Wireframes & diagrams _TODO_ 
+    - Wireframes & diagrams _TODO_
 - _TODO_ Analytics Databases (Mongo? PostgreSQL? Hadoop? Neo4J? Riak? http://influxdb.org/?)
 
 ## Sections
