@@ -48,7 +48,6 @@ HTML
 
 - The least markup possible.
 - Use `ui-` for classes that interact with JavaScript/Coffeescript; plain classes are styling only.
--
 
 Ansible and Configuration
 -------------------------
