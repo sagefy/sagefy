@@ -19,7 +19,6 @@ define([
             }
             password: {
                 required: true
-                password: true
                 minlength: 8
             }
         }
