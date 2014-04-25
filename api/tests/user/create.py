@@ -33,19 +33,7 @@
 # Then it should assert an error
 
 # When I create a new user
-# And the password doesn't contain a number
-# Then it should assert an error
-
-# When I create a new user
-# And the password doesn't contain an uppercase letter
-# Then it should assert an error
-
-# When I create a new user
 # And the password contains the username or email
-# Then it should assert an error
-
-# When I create a new user
-# And the password is very common
 # Then it should assert an error
 
 # When I create a new user by hitting the API

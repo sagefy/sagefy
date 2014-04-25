@@ -17,12 +17,5 @@ define([
                         .addClass('form-field--success')
                         .removeClass('form-field--error')
             })
-
-            $.validator.addMethod(
-                'password'
-                (value) ->
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/.test(value)
-                "Enter a valid password."
-            )
     }
 )

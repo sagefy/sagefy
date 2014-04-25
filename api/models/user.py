@@ -3,8 +3,6 @@ from passlib.hash import bcrypt
 from sqlalchemy.orm import validates
 from datetime import datetime
 from modules.util import uniqid
-import re
-from modules.most_common_passwords import most_common_passwords
 
 
 class User(db.Model):
@@ -67,27 +65,18 @@ class User(db.Model):
         """
         A password is required.
         A password must be 8 characters or longer.
-        A password must contain a number.
-        A password must contain at least one uppercase letter.
         A password cannot contain the username.
         A password cannot contain the email.
-        A password must not be one of the most common passwords.
 
         Notice: Not using SQLAlchemy >>> Called by set_password directly
         """
 
         assert password, "A password is required."
         assert len(password) >= 8, "A password must be 8 characters or longer."
-        assert re.search('\d+', password) is not None, \
-            "A password must contain a number."
-        assert password.lower() != password, \
-            "A password must contain at least one uppercase letter."
         assert self.username not in password, \
             "A password cannot contain username."
         assert self.email not in password, \
             "A password cannot contain email."
-        assert password.lower() not in most_common_passwords, \
-            "A password must not be one of the most common passwords."
         return password
 
     def to_dict(self):
