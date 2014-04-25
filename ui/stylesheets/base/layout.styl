@@ -30,8 +30,21 @@ description: |
 title: Clearfix
 description: |
     The `clearfix` class clears any floats within the element so it doesn't impact neighboring elements.
-
-    TODO: Show example
+example: |
+    <div class="clearfix">
+        <div class="pull-left push-right">
+            Left 1
+        </div>
+        <div class="pull-left push-right">
+            Left 2
+        </div>
+        <div class="pull-left push-right">
+            Left 3
+        </div>
+        <div class="pull-right">
+            Right 3
+        </div>
+    </div>
 ---
 */
 .clearfix
@@ -46,7 +59,17 @@ description: |
 ---
 title: Display Type Helpers
 description: |
-    TODO: Describe, show examples
+    Helpers that can change the `display` property on arbitrary elements.
+example: |
+    <span class="block">
+        A `span` that's now `block`
+    </span>
+    <div class="inline-block">
+        A `div` that's now `inline-block`
+    </div>
+    <div class="inline">
+        A `div` that's now `inline`
+    </div>
 ---
 */
 .block
@@ -62,7 +85,26 @@ description: |
 ---
 title: Pull and Push Helpers
 description: |
-    TODO: Describe, show examples
+    These helpers can apply floating and margins to elements.
+example: |
+    <div class="pull-left">
+        Pull left
+    </div>
+    <div class="pull-right">
+        Pull right
+    </div>
+    <div class="push-left">
+        Push left
+    </div>
+    <div class="push-right">
+        Push right
+    </div>
+    <div class="push-left-gutter">
+        Push left gutter
+    </div>
+    <div class="push-right-gutter">
+        Push right gutter
+    </div>
 ---
 */
 .pull-left
@@ -212,8 +254,8 @@ description: Sagefy takes a layout-specified approach rather than a column-speci
 title: Columns
 description: |
     Any element may be set to a specific number of columns, using the class `col-n`. Any element with set columns larger than the available screen will be reduced to the maximum width.
-
-    TODO: Examples
+example: |
+    TODO
 ---
 */
 for i in (1..$max-columns)
@@ -225,8 +267,10 @@ for i in (1..$max-columns)
 title: Full Width Layout
 description: |
     A full-width element assumes the width of its parent. Full-width is native to block level elements, but can be manually set by <code>full-width</code>.
-
-    TODO: Rework for flexbox, examples
+example: |
+    <div class="full-width">
+        Suspendisse potenti. Nullam auctor tempor dui id fermentum. Nunc condimentum massa ut ipsum pellentesque, eget tristique massa varius. Nulla molestie ante porttitor aliquam blandit. Fusce est diam, tempor vitae sollicitudin nec, consectetur suscipit nisl. Maecenas fermentum nibh turpis. Ut imperdiet porttitor ligula ut iaculis. Phasellus justo dolor, porttitor a leo in, mattis congue elit. Phasellus imperdiet viverra velit non porttitor.
+    </div>
 ---
 */
 .full-width
@@ -237,17 +281,22 @@ description: |
 title: Max Width Layout
 description: |
     A max-width element will assume the width of its parent up to a specified number of columns. Max width is set by the class `max-width-n`. Prefer max-widths set in two, four, six...
-
-    TODO: Rework for flexbox, examples
+example: |
+    <div class="max-width-6">
+        Vivamus semper elit lorem, ac tristique nunc pulvinar eget. Phasellus dictum lacinia velit, eu egestas sapien consequat in. Aliquam consequat laoreet tincidunt. Donec eros nisi, sodales eu nisl ac, condimentum tincidunt risus. Duis condimentum iaculis dui in dapibus. Nulla consequat ut orci a porttitor. Integer elit enim, elementum vitae faucibus nec, elementum eu nisl. Quisque at congue augue. Vestibulum sed ipsum sollicitudin, iaculis urna non, hendrerit metus.
+    </div>
+    <div class="max-width-2">
+        Nam interdum pulvinar arcu. Vestibulum eget elit elit. Donec aliquam felis neque, sed condimentum leo consectetur ut. Nullam eu venenatis lorem, et volutpat ligula.
+    </div>
 ---
 */
-.max-width
+$max-width
     margin-left auto
     margin-right auto
 
 for i in (1..$max-columns)
     .max-width-{i}
-        @extend .max-width
+        @extend $max-width
         max-width cols(i)
 
 /*
@@ -258,10 +307,17 @@ description: |
 
     Wrap the elements in a <code>div</code> of <code>serial-n</code>, where <var>n</var> is the number of columns from one to ten, not the number of elements.
 
-    TODO: Rework for flexbox, examples
+    TODO: Rework for flexbox
+example: |
+    <div class="serial-4">
+        <div>A</div>
+        <div>B</div>
+        <div>C</div>
+        <div>D</div>
+    </div>
 ---
 */
-.serial
+$serial
     margin-left -1 * $gutter
     margin-right -1 * $gutter
 
@@ -272,7 +328,7 @@ description: |
 
 for i in (1..($max-columns / 2))
     .serial-{i}
-        @extend .serial
+        @extend $serial
 
         > *
             max-width cols(i)
@@ -285,11 +341,20 @@ description: |
 
     Wrap both <code>main</code> and <code>aside</code> in a <code>div</code> with the class <code>aside-d-n</code>, where <var>d</var> is either <em>left</em> or <em>right</em>, and <var>n</var> is the number of columns of the aside.
 
-    TODO: Rework for flexbox, examples
+    TODO: Rework for flexbox
+example: |
+    <div class="aside-left-2">
+        <aside>
+            Aside content
+        </aside>
+        <main>
+            Main content
+        </main>
+    </div>
 ---
 */
 
-.reset-aside
+$reset-aside
     > main
         margin-left 0
         margin-right 0
@@ -312,7 +377,7 @@ for d in left right
 
             $attr-selector = '[max-width~="' + cols(ceil(i / 0.4)) + '"]'
             *{$attr-selector} &
-                @extend .reset-aside
+                @extend $reset-aside
 
 /*
 ---
@@ -322,7 +387,19 @@ description: |
 
     Create container <code>aside-left-dl-right-dr</code>, where <var>dl</var> is the number of left columns and <var>dr</var> is the number of right columns. Create an <code>aside</code>, <code>main</code>, and <code>aside</code> elements within the container.
 
-    TODO: Rework for flexbox, examples
+    TODO: Rework for flexbox
+example: |
+    <div class="aside-left-2-right-2">
+        <aside>
+            Aside content first
+        </aside>
+        <aside>
+            Aside content last
+        </aside>
+        <main>
+            Main content
+        </main>
+    </div>
 ---
 */
 
@@ -340,10 +417,10 @@ for l in (1..($max-columns / 2 - 3))
                     float left
                     max-width cols(l)
 
-                > aside:last-child
+                > aside:nth-child(2n+2)
                     float right
                     max-width cols(r)
 
                 $attr-selector = '[max-width~="' + cols(ceil((l + r) / 0.4)) + '"]'
                 *{$attr-selector} &
-                    @extend .reset-aside
+                    @extend $reset-aside
