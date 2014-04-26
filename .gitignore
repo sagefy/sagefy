@@ -46,3 +46,6 @@ ui/templates/sections/styleguide/compiled.hbs
 .vagrant
 _site
 
+
+# API
+config.py

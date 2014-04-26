@@ -1,6 +1,7 @@
 define([
     'backbone'
-], (Backbone) ->
+    'modules/mixins'
+], (Backbone, mixins) ->
 
     class UserModel extends Backbone.Model
 
@@ -23,19 +24,21 @@ define([
             }
         }
 
-        validate: (attrs, options) ->
-            if not attrs.username
-                return "A username is required."
-
-            if not attrs.email
-                return "An email address is required."
-
-            if not /\S+@\S+\.\S+/.test(attrs.email)
-                return "A valid email address is required."
+        validate: mixins.validateModelFromFields
 
         parse: (response) ->
-            response.user
+            return response.user
 
         login: (data) ->
+            $.post(@urlRoot + 'login', data)
+                .done(=>
+                    @trigger('login')
+                )
+                .fail((error) =>
+                    @trigger('loginError', @parseAjaxError(error))
+                )
+
+        parseAjaxError: mixins.parseAjaxError
+
 
 )

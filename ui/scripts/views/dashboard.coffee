@@ -9,10 +9,15 @@ define([
 
         el: $('.page')
 
+        template: template
+
         initialize: ->
-            @model = new UserModel({id: 'current/'})
+            @model = new UserModel({id: 'current'})
             @model.fetch()
-            @render()
+            @model.on('sync', => @render)
+            @model.on('error', ->
+                Backbone.history.navigate('/login')
+            )
 
         render: ->
             @$el.html(@template())

@@ -17,7 +17,13 @@ define([
         initialize: ->
             if @isLoggedIn()
                 Backbone.history.navigate('/dashboard')
+                return
+
             @model = new UserModel()
+            @model.on('sync', ->
+                # Hard redirect to get the cookie
+                window.location = '/dashboard'
+            )
             @render()
 
         render: ->
@@ -34,10 +40,6 @@ define([
         submit: (e) ->
             e.preventDefault()
             @model.save(@formData(@$form))
-            @model.on('sync', ->
-                window.location = '/dashboard'
-                # Hard redirect to get the cookie
-            )
 
         formData: mixins.formData
         isLoggedIn: mixins.isLoggedIn
