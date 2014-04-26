@@ -161,23 +161,23 @@ class User(db.Model):
         # TODO: Redis cache
         return User.query.filter_by(id=id).first()
 
-    # @staticmethod
-    # def get_by_email(email):
-    #     """
-    #     Given an email address, return a matching user when available.
-    #     """
+    @staticmethod
+    def get_by_email(email):
+        """
+        Given an email address, return a matching user when available.
+        """
 
-    #     # TODO: Redis cache
-    #     return User.query.filter_by(email=email).first()
+        # TODO: Redis cache
+        return User.query.filter_by(email=email).first()
 
-    # @staticmethod
-    # def get_by_username(username):
-    #     """
-    #     Given a username, return a matching user when available.
-    #     """
+    @staticmethod
+    def get_by_username(username):
+        """
+        Given a username, return a matching user when available.
+        """
 
-    #     # TODO: Redis cache
-    #     return User.query.filter_by(username=username).first()
+        # TODO: Redis cache
+        return User.query.filter_by(username=username).first()
 
     # @staticmethod
     # def get_by_token(token):
@@ -191,20 +191,20 @@ class User(db.Model):
     #     # TODO: if token matches, return user
     #     return False
 
-    # def is_password_valid(self, password):
-    #     """
-    #     Given a password, test to see if it matches
-    #     what's stored in the database.
-    #     """
+    def is_password_valid(self, password):
+        """
+        Given a password, test to see if it matches
+        what's stored in the database.
+        """
 
-    #     # TODO: Verify this works correctly
+        # TODO: Verify this works correctly
 
-    #     try:
-    #         result = bcrypt.verify(password, self.password)
-    #     except:
-    #         result = False
+        try:
+            result = bcrypt.verify(password, self.password)
+        except:
+            result = False
 
-    #     return result
+        return result
 
     # def send_password_token(self):
     #     """
@@ -216,19 +216,19 @@ class User(db.Model):
     #     # TODO: send user an email
     #     return False
 
-    # def update(self, params):
-    #     """
+    def update(self, params):
+        """
 
-    #     """
+        """
 
-    #     # TODO: Improve and validate method
+        # TODO: Improve and validate method
 
-    #     for field in ['email', 'username']:
-    #         val = getattr(params, field)
-    #         if val:
-    #             setattr(self, field, val)
+        for field in ['email', 'username']:
+            val = getattr(params, field)
+            if val:
+                setattr(self, field, val)
 
-    #     return self.commit()
+        return self.commit()
 
     def commit(self):
         """

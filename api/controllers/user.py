@@ -13,12 +13,13 @@ def create_user():
 
     try:
         user = User(request.json)
+        login_user(user)
     except AssertionError as error:
         return jsonify(error=str(error))
     return jsonify(user=user.to_dict_secure())
 
 
-@app.route('/api/users/<user_id>/', methods=['GET'])
+@app.route('/api/users/<user_id>', methods=['GET'])
 def get_user_by_id(user_id):
     """
     Get user by ID.
@@ -35,7 +36,7 @@ def get_user_by_id(user_id):
     return jsonify(message='No user found.'), 404
 
 
-@app.route('/api/users/current/', methods=['GET'])
+@app.route('/api/users/current', methods=['GET'])
 def get_current_user():
     """
     Get current user's information.
@@ -48,7 +49,7 @@ def get_current_user():
     return jsonify(message='Not logged in.'), 404
 
 
-@app.route('/api/users/<user_id>/', methods=['PUT'])
+@app.route('/api/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
     """
     Update user.
@@ -81,7 +82,7 @@ def update_user(user_id):
     return jsonify(message='Not authorized to update user.'), 401
 
 
-@app.route('/api/users/login/', methods=['POST'])
+@app.route('/api/users/login', methods=['POST'])
 def login():
     """
     Login user.
@@ -98,7 +99,7 @@ def login():
     return jsonify(message='Email and password do not match.'), 404
 
 
-@app.route('/api/users/logout/', methods=['POST'])
+@app.route('/api/users/logout', methods=['POST'])
 def logout():
     """
     Logout user.
@@ -112,7 +113,7 @@ def logout():
     # TODO: message different if not currently logged in
 
 
-@app.route('/api/users/request_password_token/', methods=['GET', 'POST'])
+@app.route('/api/users/request_password_token', methods=['GET', 'POST'])
 def request_password_token():
     """
     Request a token to update the password.
