@@ -3,8 +3,8 @@ define([
     'backbone'
     'underscore'
     'modules/mixins'
-    'hbs/components/form/form'
-    'hbs/components/form/field'
+    'hbs/components/forms/form'
+    'hbs/components/forms/field'
 ], ($, Bb, _, mixins, formTemplate, fieldTemplate) ->
 
     class FormView extends Backbone.View
@@ -17,7 +17,7 @@ define([
         formTemplate: formTemplate
         fieldTemplate: fieldTemplate
 
-        initialize: (options) ->
+        initialize: (options = {}) ->
             if @beforeInitialize
                 @beforeInitialize()
 
@@ -34,7 +34,7 @@ define([
                 @onInitialize()
 
             if options.mode != "edit"
-                render()
+                @render()
 
         _getFields: ->
             if @fields
@@ -44,10 +44,14 @@ define([
 
             return @model.fields
 
-        render:
+        render: ->
             fields = ""
             for field in @_getFields()
-                fields += @fieldTemplate(field)
+                fields += @fieldTemplate(
+                    $.extend(true, {}, field, {
+                        inputTypeFields: ['text', 'email', 'password']
+                    })
+                )
 
             html = @formTemplate({
                 fields: fields
@@ -69,8 +73,14 @@ define([
                 @onRender()
 
         _displayErrors: (errors) ->
+            console.log('_displayErrors', errors)
+
             for error in errors
-                $field = @$form.find("[name=\"#{error.name}\"]")
+                $field = @$form
+                    .find("[name=\"#{error.name}\"]")
+                    .closest('.form-field')
+                console.log($field.length)
+
                 $field.addClass('form-field--error')
                 $field.append("""
                     <span class="form-field__feedback">
