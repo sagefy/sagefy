@@ -24,7 +24,6 @@
     "modernizr": "~2.7.1",
     "moment": "~2.5.1",
     "normalize.css": "~3.0.0",
-    "jquery-validation": "git://github.com/jzaefferer/jquery-validation.git#~1.11.1",
     "marionette": "~1.7.3"
   },
   "overrides": {
@@ -36,9 +35,6 @@
     },
     "modernizr": {
       "main": "modernizr.js"
-    },
-    "jquery-validation": {
-      "main": "jquery.validate.js"
     },
     "backbone.wreqr": {
       "main": "lib/backbone.wreqr.js"
