@@ -8,7 +8,10 @@ define([
         catch e
             return str
 
-    {
+    validEmail = (val) ->
+        return /\S+@\S+\.\S+/.test(val)
+
+    return {
         formData: ($form) ->
             _($form.serializeArray()).reduce((obj, field) ->
                 obj[field.name] = field.value
@@ -24,17 +27,32 @@ define([
             return parseJSON(error.responseText)
 
         validateModelFromFields: (attrs, options) ->
-            for field, validations of @fields  # where @ is model
-                value = attrs[field]
+            errors = []
 
-                if validations.required and not value
-                    return "Please enter #{field}"
+            for field in @fields  # where @ is model
+                val = attrs[field.name]
+                test = field.validations
 
-                if validations.email and not /\S+@\S+\.\S+/.test(value)
-                    return "Please enter a valid email address."
+                if test.required and not val
+                    errors.push({
+                        name: field.name
+                        message: "Please enter #{field}"
+                    })
 
-                if validations.minlength and value.length < validations.minlength
-                    return "Please enter at least #{validations.minlength} in #{field}."
+                if test.email and not validEmail(val)
+                    errors.push({
+                        name: field.name
+                        message: "Please enter a valid email address."
+                    })
+
+                if test.minlength and val.length < test.minlength
+                    errors.push({
+                        name: field.name
+                        message: "Please enter at least #{validations.minlength} in #{field}."
+                    })
+
+            if errors.length
+                return errors
 
     }
 

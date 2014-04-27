@@ -1,50 +1,41 @@
 define([
     'jquery'
-    'backbone'
-    'hbs/sections/user/login'
+    'views/form'
     'models/user'
     'modules/mixins'
-], ($, Backbone, template, UserModel, mixins) ->
+], ($, FormView, UserModel, mixins) ->
 
-    class LoginView extends Backbone.View
+    class LoginView extends FormView
 
-        el: $('.page')
-        template: template
-        events: {
-            'submit form': 'submit'
-        }
+        title: 'Login to Sagefy'
+        addID: 'login'
+        fields: ['username', 'password']
+        description: '''
+            Don't have an account?
+            <a href="/signup"><i class="fa fa-user"></i> Signup</a>
+        '''
+        submitLabel: 'Login'
+        submitIcon: 'sign-in'
 
-        initialize: ->
+        beforeInitialize: ->
             if @isLoggedIn()
                 Backbone.history.navigate('/dashboard')
-                return
 
             @model = new UserModel()
-            @model.on('login', ->
-                # Hard redirect to get the cookie
-                window.location = '/dashboard'
-            )
-            @model.on('loginError', (error) ->
-                window.alert(error.message)
-            )
-            @render()
+            @model.on('login', @login)
+            @model.on('loginError', @loginError)
 
-        render: ->
-            @$el.html(@template())
-            @onRender()
+        login: ->
+            # Hard redirect to get the cookie
+            window.location = '/dashboard'
 
-        onRender: ->
-            document.title = 'Login to Sagefy.'
-            @$el.addClass('max-width-8')
-                .attr('id', 'login')
-            @$form = @$el.find('form')
-            @$form.validate(@model.fields)
+        loginError: (error) =>
+            window.alert(error.message)
 
         submit: (e) ->
             e.preventDefault()
             @model.login(@formData(@$form))
 
-        formData: mixins.formData
         isLoggedIn: mixins.isLoggedIn
 
 

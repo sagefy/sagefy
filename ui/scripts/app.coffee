@@ -22,8 +22,6 @@ require.config({
             'bower/d3/d3'
         modernizr:
             'bower/modernizr/modernizr'
-        validation:
-            'bower/jquery-validation/jquery.validate'
     }
     shim: {
         jquery: {
@@ -44,9 +42,6 @@ require.config({
         marionette: {
             deps: ['jquery', 'underscore', 'backbone']
             exports: 'Marionette'
-        }
-        validation: {
-            deps: ['jquery']
         }
     }
 })

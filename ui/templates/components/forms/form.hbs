@@ -1,0 +1,24 @@
+{{#if title}}
+    <h1>
+        {{title}}
+    </h1>
+{{/if}}
+
+{{#if description}}
+    <p>
+        {{{description}})
+    </p>
+{{/if}}
+
+<form>
+    {{{fields}}}
+    {{#if presubmit}}
+        <p>
+            {{presubmit}}
+        </p>
+    {{/if}}
+    <button type="submit">
+        <i class="fa fa-{{submitIcon}}"></i>
+        {{submitLabel}}
+    </button>
+</form>

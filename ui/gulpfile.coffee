@@ -22,7 +22,7 @@ gulp.task('deploy', [
     'build'
     # TODO: Compile Requires
     # TODO: Uglify and Compress Files
-    # TODO: Run JSDoc
+    # TODO: Run Codo
 ])
 
 gulp.task('test', [

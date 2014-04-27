@@ -1,0 +1,22 @@
+<div class="form-field form-field--{{type}}">
+    <label for="{{name}}">
+        {{title}}
+        {{#if validations.required}}
+            <span class="required">
+                Required
+            </span>
+        {{else}}
+            <span class="optional">
+                Optional
+            </span>
+        {{/if}}
+    </label>
+    {{#contains ['text', 'email', 'password'] type}}
+        <input id="{{name}}" name="{{name}}" placeholder="{{placeholder}}" type="{{type}}" />
+    {{/is}}
+    {{#if description}}
+        <p class="form-field__description">
+            {{description}}
+        </p>
+    {{/if}}
+</div>

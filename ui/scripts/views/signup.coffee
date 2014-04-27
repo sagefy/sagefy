@@ -1,47 +1,32 @@
 define([
     'jquery'
-    'backbone'
-    'hbs/sections/user/signup'
+    'views/form'
     'models/user'
     'modules/mixins'
-], ($, Backbone, template, UserModel, mixins) ->
+], ($, FormView, UserModel, mixins) ->
 
-    class Signup extends Backbone.View
+    class Signup extends FormView
 
-        el: $('.page')
-        template: template
-        events: {
-            'submit form': 'submit'
-        }
+        title: 'Create Account'
+        addID: 'signup'
+        fields: ['username', 'email', 'password']
+        description: '''
+            Already have an account?
+            <a href="/login"><i class="fa fa-sign-in"></i> Login</a>
+        '''
+        presubmit: '''
+            By signing up,
+            you agree to our <a href="/terms">Terms of Service</a>.
+        '''
+        submitLabel: 'Create Account'
+        submitIcon: 'user'
 
-        initialize: ->
+        beforeInitialize: ->
             if @isLoggedIn()
                 Backbone.history.navigate('/dashboard')
-                return
 
             @model = new UserModel()
-            @model.on('sync', ->
-                # Hard redirect to get the cookie
-                window.location = '/dashboard'
-            )
-            @render()
 
-        render: ->
-            @$el.html(@template())
-            @onRender()
-
-        onRender: ->
-            document.title = 'Signup for Sagefy.'
-            @$el.addClass('max-width-8')
-                .attr('id', 'signup')
-            @$form = @$el.find('form')
-            @$form.validate(@model.fields)
-
-        submit: (e) ->
-            e.preventDefault()
-            @model.save(@formData(@$form))
-
-        formData: mixins.formData
         isLoggedIn: mixins.isLoggedIn
 
 
