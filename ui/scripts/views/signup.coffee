@@ -23,9 +23,11 @@ define([
 
         beforeInitialize: ->
             if @isLoggedIn()
-                Backbone.history.navigate('/dashboard')
-
+                @onSync()
             @model = new UserModel()
+
+        onSync: ->
+            Backbone.history.navigate('/dashboard')
 
         isLoggedIn: mixins.isLoggedIn
 
