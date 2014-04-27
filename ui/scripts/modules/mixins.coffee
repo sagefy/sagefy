@@ -36,7 +36,7 @@ define([
                 if test.required and not val
                     errors.push({
                         name: field.name
-                        message: "Please enter #{field}"
+                        message: "Please enter #{field.name}"
                     })
 
                 if test.email and not validEmail(val)
@@ -48,7 +48,7 @@ define([
                 if test.minlength and val.length < test.minlength
                     errors.push({
                         name: field.name
-                        message: "Please enter at least #{validations.minlength} in #{field}."
+                        message: "Please enter at least #{test.minlength} characters in #{field.name}."
                     })
 
             if errors.length

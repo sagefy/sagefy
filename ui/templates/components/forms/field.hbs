@@ -11,9 +11,9 @@
             </span>
         {{/if}}
     </label>
-    {{#contains ['text', 'email', 'password'] type}}
+    {{#contains inputTypeFields type}}
         <input id="{{name}}" name="{{name}}" placeholder="{{placeholder}}" type="{{type}}" />
-    {{/is}}
+    {{/contains}}
     {{#if description}}
         <p class="form-field__description">
             {{description}}
