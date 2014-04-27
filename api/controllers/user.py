@@ -15,7 +15,16 @@ def create_user():
         user = User(request.json)
         login_user(user)
     except AssertionError as error:
-        return jsonify(error=str(error))
+        return jsonify(errors=str(error))
+        """
+        TODO: These errors should be formatted as follows:
+        [
+            {
+                name: 'username',
+                message: 'You suck.',
+            },
+        ]
+        """
     return jsonify(user=user.to_dict_secure())
 
 
