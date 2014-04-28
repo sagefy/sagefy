@@ -14,6 +14,10 @@ Get Vagrant Running
 
     http://downloads.vagrantup.com/
 
+### Intstal Vagrant Guest Additions
+
+    vagrant plugin install vagrant-vbguest
+
 ### In your Terminal
 
     mkdir ~/Sites  # Make a new Sites directory if needed
@@ -74,5 +78,5 @@ Tailing the Log
 Working with the UI
 -------------------
 
-    todo
-
+    cd ~/Sites/sagefy/ui
+    gulp

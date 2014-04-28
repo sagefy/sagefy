@@ -18,7 +18,7 @@ sudo ln -fs /vagrant /var/www
 #### PostgreSQL ###############################################################
 
 sudo apt-get -y install python-dev
-sudo apt-get -y install postgresql-9.1
+sudo apt-get -y install postgresql
 sudo apt-get -y install libpq-dev
 
 # Schema Migration TODO: move to Alembic
