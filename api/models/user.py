@@ -13,7 +13,7 @@ class User(db.Model):
     modified = db.Column(db.DateTime)
     username = db.Column(db.String(256))  # Ensure unique
     email = db.Column(db.String(256))  # Ensure unique
-    password = db.Column(db.String(256))  # Use `set_password` instead
+    password = db.Column(db.String(256))
 
     def __init__(self, params):
         """
@@ -24,16 +24,8 @@ class User(db.Model):
         self.created = self.modified = datetime.utcnow()
         self.username = params.get('username')
         self.email = params.get('email')
-        self.set_password(params.get('password'))
+        self.password = params.get('password')
         self.commit()
-
-    def set_password(self, value):
-        """
-        Encrypt the password with Bcrypt before storing to the database.
-        """
-
-        assert self.validate_password('password', value)
-        self.password = bcrypt.encrypt(value)
 
     @validates('username')
     def validate_username(self, key, username):
@@ -42,9 +34,15 @@ class User(db.Model):
         A username must be unique.
         """
 
-        assert username, "A username is required."
-        assert not User.query.filter_by(username=username).first(), \
-            "There's already an account with that username."
+        assert username, {
+            "name": 'username',
+            "message": "A username is required.",
+        }
+        assert not User.query.filter_by(username=username).first(), {
+            "name": 'username',
+            "message": "There's already an account with that username.",
+        }
+
         return username
 
     @validates('email')
@@ -55,29 +53,42 @@ class User(db.Model):
         An email address must be unique.
         """
 
-        assert email and '@' in email and '.' in email, \
-            "A valid email address is required."
-        assert not User.query.filter_by(email=email).first(), \
-            "There's already an account with this email address."
+        assert email and '@' in email and '.' in email, {
+            "name": 'email',
+            "message": "A valid email address is required.",
+        }
+        assert not User.query.filter_by(email=email).first(), {
+            "name": "email",
+            "message": "There's already an account with this email address.",
+        }
         return email
 
+    @validates('password')
     def validate_password(self, key, password):
         """
         A password is required.
         A password must be 8 characters or longer.
         A password cannot contain the username.
         A password cannot contain the email.
-
-        Notice: Not using SQLAlchemy >>> Called by set_password directly
         """
 
-        assert password, "A password is required."
-        assert len(password) >= 8, "A password must be 8 characters or longer."
-        assert self.username not in password, \
-            "A password cannot contain username."
-        assert self.email not in password, \
-            "A password cannot contain email."
-        return password
+        assert password, {
+            "name": 'password',
+            "message": "A password is required.",
+        }
+        assert len(password) >= 8, {
+            "name": 'password',
+            "message": "A password must be 8 characters or longer.",
+        }
+        assert self.username not in password, {
+            "name": 'password',
+            "message": "A password cannot contain username.",
+        }
+        assert self.email not in password, {
+            "name": 'password',
+            "message": "A password cannot contain email.",
+        }
+        return bcrypt.encrypt(password)
 
     def to_dict(self):
         """

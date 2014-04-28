@@ -57,7 +57,7 @@ Make a new Vagrant
     vagrant up
 
 How to Deploy
-------------
+-------------
 
     # On local machine
     sudo pip install fabric
@@ -65,3 +65,14 @@ How to Deploy
     # and...
     cd ~/Sites/sagefy
     fabric deploy
+
+Tailing the Log
+---------------
+
+    sudo tail -F /tmp/uwsgi.log
+
+Working with the UI
+-------------------
+
+    todo
+

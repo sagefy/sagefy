@@ -116,6 +116,7 @@ define([
 
         error: (model, response) ->
             errors = @parseAjaxError(response).errors
+            @_displayErrors(errors)
 
             if @onError
                 @onError()
