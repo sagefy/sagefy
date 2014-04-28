@@ -18,7 +18,7 @@ define([
         return !! $.cookie('session')
 
     parseAjaxError = (error) ->
-            return parseJSON(error.responseText or error)
+        return parseJSON(error.responseText or error)
 
     validEmail = (val) ->
         return /\S+@\S+\.\S+/.test(val)
@@ -41,7 +41,8 @@ define([
         if test.minlength and val.length < test.minlength
             return {
                 name: field.name
-                message: "Please enter at least #{test.minlength} characters in #{field.name}."
+                message: "Please enter at least #{test.minlength} " +
+                    "characters in #{field.name}."
             }
 
         return false  # `false` meaning there's no error

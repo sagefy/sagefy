@@ -25,7 +25,8 @@ define([
                 title: 'Email'
                 type: 'email'
                 placeholder: 'e.g. marissa@example.com'
-                description: 'We hate spam too. But we\'ll need it to get you setup.'
+                description: 'We hate spam too. '+
+                    'But we\'ll need it to get you setup.'
                 validations: {
                     required: true
                     email: true
@@ -57,5 +58,6 @@ define([
                 .fail((error) =>
                     @trigger('loginError', @parseAjaxError(error))
                 )
+
 
 )
