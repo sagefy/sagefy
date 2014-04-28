@@ -2,6 +2,8 @@ require.config({
     paths: {
         jquery:
             'bower/jquery/dist/jquery'
+        'jquery.cookie':
+            'bower/jquery.cookie/jquery.cookie'
         handlebars:
             'bower/handlebars/handlebars'
         underscore:
@@ -49,6 +51,7 @@ require.config({
 require([
     'router'
     'modules/hbs_helpers'
+    'jquery.cookie'
 ], (PrimaryRouter) ->
     primaryRouter = new PrimaryRouter()
 )
