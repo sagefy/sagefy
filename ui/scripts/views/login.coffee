@@ -29,14 +29,15 @@ define([
             # Hard redirect to get the cookie
             window.location = '/dashboard'
 
-        loginError: (error) =>
-            window.alert(error.message)
+        loginError: (response) ->
+            @invalid(undefined, response)
 
         submit: (e) ->
             e.preventDefault()
             @model.login(@formData(@$form))
 
         isLoggedIn: mixins.isLoggedIn
+
 
 
 )
