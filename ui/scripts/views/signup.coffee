@@ -27,7 +27,8 @@ define([
             @model = new UserModel()
 
         onSync: ->
-            Backbone.history.navigate('/dashboard')
+            # Hard redirect to get the cookie
+            window.location = '/dashboard'
 
         isLoggedIn: mixins.isLoggedIn
 
