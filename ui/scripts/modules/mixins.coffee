@@ -18,7 +18,7 @@ define([
         return !! $.cookie('session')
 
     parseAjaxError = (error) ->
-        return parseJSON(error.responseText or error)
+        return parseJSON(error.responseText).errors or error
 
     validEmail = (val) ->
         return /\S+@\S+\.\S+/.test(val)

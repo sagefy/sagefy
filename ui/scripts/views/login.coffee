@@ -29,8 +29,8 @@ define([
             # Hard redirect to get the cookie
             window.location = '/dashboard'
 
-        loginError: (response) ->
-            @invalid(undefined, response)
+        loginError: (errors) =>
+            @invalid(undefined, errors)
 
         submit: (e) ->
             e.preventDefault()

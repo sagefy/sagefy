@@ -90,13 +90,22 @@ def login():
 
     # TODO: test route
 
-    user = User.get_by_email(request.form.get('email'))
+    user = User.get_by_username(request.form.get('username'))
 
-    if user and user.is_password_valid(request.form.get('password')):
+    if not user:
+        return jsonify({'errors': [{
+            'name': 'username',
+            'message': 'No user by that name.',
+        }]}), 404
+
+    if user.is_password_valid(request.form.get('password')):
         login_user(user)
-        return jsonify(user=user)
+        return jsonify(user=user.to_dict_secure())
 
-    return jsonify(message='Email and password do not match.'), 404
+    return jsonify({'errors': [{
+        'name': 'password',
+        'message': 'Username and password do not match.',
+    }]}), 404
 
 
 @app.route('/api/users/logout', methods=['POST'])
