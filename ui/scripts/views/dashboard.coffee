@@ -1,27 +1,21 @@
 define([
     'jquery'
-    'backbone'
+    'views/model'
     'hbs/sections/user/dashboard'
     'models/user'
-], ($, Backbone, template, UserModel) ->
+], ($, ModelView, template, UserModel) ->
 
-    class DashboardView extends Backbone.View
+    class DashboardView extends ModelView
 
         el: $('.page')
 
         template: template
 
-        initialize: ->
+        beforeInitialize: ->
             @model = new UserModel({id: 'current'})
-            @model.fetch()
-            @model.on('sync', => @render)
             @model.on('error', ->
                 Backbone.history.navigate('/login')
             )
-
-        render: ->
-            @$el.html(@template())
-            @onRender()
 
         onRender: ->
             document.title = 'Welcome to your Dashboard'
