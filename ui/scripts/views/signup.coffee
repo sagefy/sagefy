@@ -23,7 +23,8 @@ define([
 
         beforeInitialize: ->
             if @isLoggedIn()
-                @onSync()
+                return @onSync()
+
             @model = new UserModel()
 
         onSync: ->

@@ -19,7 +19,7 @@ define([
 
         beforeInitialize: ->
             if @isLoggedIn()
-                Backbone.history.navigate('/dashboard')
+                return Backbone.history.navigate('/dashboard')
 
             @model = new UserModel()
             @model.on('login', @login)

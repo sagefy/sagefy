@@ -74,7 +74,7 @@ define([
             if @onRender
                 @onRender()
 
-        _displayErrors: (errors) ->
+        _displayErrors: (errors = []) ->
             for error in errors
                 $field = @$form
                     .find("[name=\"#{error.name}\"]")
@@ -115,6 +115,7 @@ define([
         , 250)
 
         error: (model, response) ->
+            @$form.find(':submit').removeAttr('disabled')
             errors = @parseAjaxError(response).errors
             @_displayErrors(errors)
 
@@ -122,6 +123,7 @@ define([
                 @onError()
 
         invalid: (model, errors) ->
+            @$form.find(':submit').removeAttr('disabled')
             @_displayErrors(errors)
 
             if @onInvalid
@@ -130,6 +132,7 @@ define([
         submit: (e) ->
             e.preventDefault()
             @model.save(@formData(@$form))
+            @$form.find(':submit').attr('disabled', 'disabled')
 
             if @onSubmit
                 @onSubmit()
