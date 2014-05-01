@@ -25,7 +25,7 @@ define([
             if options.model
                 @model = options.model
 
-            if @model and options.mode == "edit"
+            if @model and @mode == "edit"
                 @model.fetch()
 
             @listenTo(@model, 'error', @error)
@@ -35,7 +35,7 @@ define([
             if @onInitialize
                 @onInitialize()
 
-            if options.mode != "edit"
+            if @mode != "edit"
                 @render()
 
         _getFields: ->
@@ -62,6 +62,7 @@ define([
                 presubmit: @presubmit
                 submitIcon: @submitIcon or 'check'
                 submitLabel: @submitLabel or 'Submit'
+                mode: @mode
             })
 
             @$el.html(html)
