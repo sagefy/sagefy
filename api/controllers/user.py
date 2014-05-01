@@ -2,6 +2,7 @@ from app import app
 from flask import jsonify
 from models.user import User
 from flask import request
+from flask import make_response
 from flask.ext.login import login_user, logout_user, current_user
 
 
@@ -13,10 +14,12 @@ def create_user():
 
     try:
         user = User(request.json)
-        login_user(user)
+        login_user(user, remember=True)
+        resp = make_response(jsonify(user=user.to_dict_secure()))
+        resp.set_cookie('logged_in', '1')
+        return resp
     except AssertionError as error:
         return jsonify(errors=list(error)), 401
-    return jsonify(user=user.to_dict_secure())
 
 
 @app.route('/api/users/<user_id>', methods=['GET'])
@@ -67,7 +70,6 @@ def update_user(user_id):
 
         if user:
             user.password = request.form.get('password')
-            login_user(user)
             return jsonify(message='Password updated.'), 204
 
         return jsonify(message='User not found.'), 404
@@ -99,8 +101,10 @@ def login():
         }]}), 404
 
     if user.is_password_valid(request.form.get('password')):
-        login_user(user)
-        return jsonify(user=user.to_dict_secure())
+        login_user(user, remember=True)
+        resp = make_response(jsonify(user=user.to_dict_secure()))
+        resp.set_cookie('logged_in', '1')
+        return resp
 
     return jsonify({'errors': [{
         'name': 'password',
