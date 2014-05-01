@@ -11,6 +11,7 @@ define([
             'dashboard': 'viewDashboard'
             'terms': 'viewTerms'
             'contact': 'viewContact'
+            'settings': 'viewSettings'
             '(/)': 'viewIndex'
         }
 
@@ -52,5 +53,9 @@ define([
                 dashboardView = new DashboardView
             )
 
+        viewSettings: ->
+            require(['views/settings'], (SettingsView) ->
+                settingsView = new SettingsView
+            )
 
 )

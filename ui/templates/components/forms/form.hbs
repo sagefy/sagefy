@@ -17,8 +17,10 @@
             {{{presubmit}}}
         </p>
     {{/if}}
-    <button type="submit">
-        <i class="fa fa-{{submitIcon}}"></i>
-        {{submitLabel}}
-    </button>
+    {{#isnt mode 'edit'}}
+        <button type="submit">
+            <i class="fa fa-{{submitIcon}}"></i>
+            {{submitLabel}}
+        </button>
+    {{/isnt}}
 </form>
