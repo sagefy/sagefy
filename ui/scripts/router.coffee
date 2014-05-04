@@ -1,8 +1,9 @@
 define([
     'backbone'
-], (Bb) ->
+    'views/menu--global'
+], (Backbone, MenuGlobalView) ->
 
-    class PrimaryRouter extends Bb.Router
+    class PrimaryRouter extends Backbone.Router
 
         routes: {
             'styleguide': 'viewStyleguide'
@@ -16,7 +17,15 @@ define([
         }
 
         initialize: ->
-            Bb.history.start({pushState: true})
+            Backbone.history.start({pushState: true})
+            menuGlobalView = new MenuGlobalView()
+
+            # When we click an internal link, use Navigate instead
+            $('body').on('click', 'a[href^="/"]', (e) ->
+                e.preventDefault()
+                href = $(e.currentTarget).closest('a').attr('href')
+                Backbone.history.navigate(href, {trigger: true})
+            )
 
         viewIndex: ->
             require(['views/index'], (IndexView) ->

@@ -60,6 +60,20 @@ define([
         if errors.length
             return errors
 
+    ucfirst = (str) ->
+        return str.charAt(0).toUpperCase() + str.slice(1)
+
+    underscored = (str) ->
+        return str.replace(/[-\s]+/g, '_').toLowerCase()
+
+    updatePageWidth = (width) ->
+        $page = $('.page')
+        classes = $page.attr('class').match(/max-width-\d/) or []
+        for cls in classes
+            $page.removeClass(cls)
+        if width
+            $page.addClass('max-width-' + width)
+
     return {
         formData: formData
         isLoggedIn: isLoggedIn
@@ -67,7 +81,9 @@ define([
         parseAjaxError: parseAjaxError
         validateField: validateField
         validateModelFromFields: validateModelFromFields
-
+        ucfirst: ucfirst
+        underscored: underscored
+        updatePageWidth: updatePageWidth
     }
 
 )

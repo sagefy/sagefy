@@ -66,7 +66,6 @@ define([
             })
 
             @$el.html(html)
-            @$el.addClass('max-width-8')
             @$form = @$el.find('form')
 
             if @addID
