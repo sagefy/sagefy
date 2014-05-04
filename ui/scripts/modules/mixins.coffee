@@ -68,11 +68,15 @@ define([
 
     updatePageWidth = (width) ->
         $page = $('.page')
-        classes = $page.attr('class').match(/max-width-\d/) or []
-        for cls in classes
-            $page.removeClass(cls)
+
+        classes = $page.attr('class').split(' ').filter((c) ->
+            return ! /max-width-\d/.test(c)
+        )
+
         if width
-            $page.addClass('max-width-' + width)
+            classes.push('max-width-' + width)
+
+        $page.attr('class', classes.join(' '))
 
     return {
         formData: formData
