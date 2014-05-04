@@ -3,7 +3,8 @@ define([
     'views/model'
     'hbs/sections/user/dashboard'
     'models/user'
-], ($, ModelView, template, UserModel) ->
+    'modules/mixins'
+], ($, ModelView, template, UserModel, mixins) ->
 
     class DashboardView extends ModelView
 
@@ -19,8 +20,10 @@ define([
 
         onRender: ->
             document.title = 'Welcome to your Dashboard'
-            @$el.addClass('max-width-8')
-                .attr('id', 'dashboard')
+            @$el.attr('id', 'dashboard')
+            @updatePageWidth(8)
+
+        updatePageWidth: mixins.updatePageWidth
 
 
 )

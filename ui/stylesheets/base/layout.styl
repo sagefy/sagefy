@@ -318,12 +318,11 @@ example: |
 ---
 */
 $serial
-    margin-left -1 * $gutter
-    margin-right -1 * $gutter
+    margin -1 * $gutter
+    text-align center
 
     > *
-        margin-left $gutter
-        margin-right $gutter
+        margin $gutter
         display inline-block
 
 for i in (1..($max-columns / 2))
@@ -331,7 +330,7 @@ for i in (1..($max-columns / 2))
         @extend $serial
 
         > *
-            max-width cols(i)
+            width cols(i)
 
 /*
 ---

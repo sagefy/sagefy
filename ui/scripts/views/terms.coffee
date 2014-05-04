@@ -2,7 +2,8 @@ define([
     'jquery'
     'backbone'
     'hbs/sections/public/terms'
-], ($, Bb, t) ->
+    'modules/mixins'
+], ($, Bb, t, mixins) ->
 
     class TermsView extends Bb.View
 
@@ -14,9 +15,10 @@ define([
 
         render: ->
             document.title = 'Sagefy Terms of Service.'
-            @$el.addClass('max-width-12')
-                .attr('id', 'terms')
+            @$el.attr('id', 'terms')
                 .html(@template())
+            @updatePageWidth(10)
 
+        updatePageWidth: mixins.updatePageWidth
 
 )

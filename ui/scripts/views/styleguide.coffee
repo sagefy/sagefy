@@ -3,7 +3,8 @@ define([
     'backbone'
     'hbs/sections/styleguide/index'
     'hbs/sections/styleguide/compiled'
-], ($, Bb, t, t2) ->
+    'modules/mixins'
+], ($, Bb, t, t2, mixins) ->
 
     class StyleguideView extends Bb.View
 
@@ -22,10 +23,11 @@ define([
         render: ->
             document.title = 'Sagefy - Style Guide and Component Library.'
 
-            @$el.addClass('max-width-10')
-                .attr('id', 'styleguide')
+            @$el.attr('id', 'styleguide')
                 .html(@template())
                 .append(@template2())
+
+            @updatePageWidth(10)
 
         cancel: ->
             false
@@ -33,6 +35,8 @@ define([
         openInNewWindow: (e) ->
             $target = $(e.target).closest('a')
             $target[0].target = '_blank'
+
+        updatePageWidth: mixins.updatePageWidth
 
 
 )

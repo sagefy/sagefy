@@ -32,11 +32,15 @@ define([
         loginError: (errors) =>
             @invalid(undefined, errors)
 
+        onRender: ->
+            @updatePageWidth(4)
+
         submit: (e) ->
             e.preventDefault()
             @model.login(@formData(@$form))
 
         isLoggedIn: mixins.isLoggedIn
+        updatePageWidth: mixins.updatePageWidth
 
 
 

@@ -2,7 +2,8 @@ define([
     'jquery'
     'backbone'
     'hbs/sections/public/index'
-], ($, Bb, t) ->
+    'modules/mixins'
+], ($, Bb, t, mixins) ->
 
     class IndexView extends Bb.View
 
@@ -15,9 +16,10 @@ define([
         render: ->
             document.title = 'Sagefy - ' +
                 'Adaptive, collaborative, and open learning platform.'
-            @$el.addClass('max-width-8')
-                .attr('id', 'index')
+            @$el.attr('id', 'index')
                 .html(@template())
+            @updatePageWidth(8)
 
+        updatePageWidth: mixins.updatePageWidth
 
 )

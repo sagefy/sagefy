@@ -2,7 +2,8 @@ define([
     'handlebars'
     'markdown'
     'moment'
-], (hbs, md, moment) ->
+    'modules/mixins'
+], (hbs, md, moment, mixins) ->
 
     helpers = {
         ### NUMBERS ###
@@ -35,7 +36,7 @@ define([
             str.toUpperCase()
 
         ucfirst: (str) ->
-            str.charAt(0).toUpperCase() + str.slice(1)
+            return mixins.ucfirst(str)
 
         titlecase: (str) ->
             title = str.replace(/[ \-_]+/g, " ")
@@ -62,6 +63,20 @@ define([
 
         markdown: (str) ->
             md(str)
+
+        # trim:
+        # isBlank
+        # stripTags
+        # charLength
+        # escapeHTML
+        # escapeURL
+        # replace
+        # startsWith
+        # endsWith
+        # camelize
+        # underscored
+        # dasherize
+        # humanize
 
         ### ARRAYS ###
 

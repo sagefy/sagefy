@@ -31,7 +31,11 @@ define([
             # Hard redirect to get the cookie
             window.location = '/dashboard'
 
+        onRender: ->
+            @updatePageWidth(6)
+
         isLoggedIn: mixins.isLoggedIn
+        updatePageWidth: mixins.updatePageWidth
 
 
 
