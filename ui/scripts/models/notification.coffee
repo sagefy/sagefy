@@ -1,20 +1,15 @@
-define([
-    'backbone'
-], (Backbone) ->
+Backbone = require('backbone')
 
-    class NotificationModel extends Backbone.Model
+module.exports = class NotificationModel extends Backbone.Model
 
-        url: '/api/notifications/'
+    url: '/api/notifications/'
 
-        # [fields]
-        # id
-        # created
-        # modified
+    # [fields]
+    # id
+    # created
+    # modified
 
-        validate: (attrs, options) ->
+    validate: (attrs, options) ->
 
-        parse: (response) ->
-            response.notification
-
-
-)
+    parse: (response) ->
+        response.notification

@@ -1,58 +1,53 @@
-define([
-    'jquery'
-    'backbone'
-    'underscore'
-    'models/menu'
-    'hbs/components/menu/layout'
-    'hbs/components/menu/item'
-], ($, Bb, _, MenuModel, layoutTemplate, itemTemplate) ->
+$ = require('jquery')
+Bb = require('backbone')
+_ = require('underscore')
+MenuModel = require('../models/menu')
+layoutTemplate = require('../../distribution/hbs/components/menu/layout')
+itemTemplate = require('../../distribution/hbs/components/menu/item')
 
-    class MenuView extends Bb.View
+module.exports = class MenuView extends Bb.View
+    $body: $('body')
+    $page: $('.page')
+    className: 'menu'
+    events: {
+        'click .menu__overlay': 'toggle'
+        'click .menu__trigger': 'toggle'
+        'click .menu__item a': 'select'
+    }
 
-        $body: $('body')
-        $page: $('.page')
-        className: 'menu'
-        events: {
-            'click .menu__overlay': 'toggle'
-            'click .menu__trigger': 'toggle'
-            'click .menu__item a': 'select'
-        }
+    layoutTemplate: layoutTemplate
+    itemTemplate: itemTemplate
+    selected: false
 
-        layoutTemplate: layoutTemplate
-        itemTemplate: itemTemplate
-        selected: false
+    initialize: ->
+        @model = new MenuModel
+        @listenTo(@model, 'changeState', @render)
+        @render()
 
-        initialize: ->
-            @model = new MenuModel
-            @listenTo(@model, 'changeState', @render)
-            @render()
+    render: ->
+        if ! @$layout
+            @_renderLayout()
+        @_renderItems()
 
-        render: ->
-            if ! @$layout
-                @_renderLayout()
-            @_renderItems()
+    _renderLayout: ->
+        @$el.html(@layoutTemplate())
+        @$items = @$el.find('.menu__items')
+        @$body.prepend(@$el)
 
-        _renderLayout: ->
-            @$el.html(@layoutTemplate())
-            @$items = @$el.find('.menu__items')
-            @$body.prepend(@$el)
+    _renderItems: ->
+        html = _.reduce(@model.items(), (memo, item) =>
+            return memo + @itemTemplate(item)
+        , '')
 
-        _renderItems: ->
-            html = _.reduce(@model.items(), (memo, item) =>
-                return memo + @itemTemplate(item)
-            , '')
+        @$items.html(html)
 
-            @$items.html(html)
+    toggle: (e) ->
+        if e
+            e.preventDefault()
+            e.stopPropagation()
+        @selected = ! @selected
+        @$el.toggleClass('selected', @selected)
 
-        toggle: (e) ->
-            if e
-                e.preventDefault()
-                e.stopPropagation()
-            @selected = ! @selected
-            @$el.toggleClass('selected', @selected)
-
-        select: (e) ->
-            @$page.empty()
-            @toggle()
-
-)
+    select: (e) ->
+        @$page.empty()
+        @toggle()

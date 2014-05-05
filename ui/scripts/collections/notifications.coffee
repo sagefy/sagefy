@@ -1,11 +1,5 @@
-define([
-    'backbone'
-    'models/notification'
-], (Backbone, NotificationModel) ->
+Backbone = require('backbone')
+NotificationModel = require('models/notification')
 
-    class NotificationsCollection extends Backbone.UsersCollection
-
-        model: NotificationModel
-
-
-)
+module.exports = class NotificationsCollection extends Backbone.UsersCollection
+    model: NotificationModel

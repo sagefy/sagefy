@@ -1,29 +1,23 @@
-define([
-    'jquery'
-    'views/model'
-    'hbs/sections/user/dashboard'
-    'models/user'
-    'modules/mixins'
-], ($, ModelView, template, UserModel, mixins) ->
+$ = require('jquery')
+ModelView = require('views/model')
+template = require('hbs/sections/user/dashboard')
+UserModel = require('models/user')
+mixins = require('modules/mixins')
 
-    class DashboardView extends ModelView
+module.exports = class DashboardView extends ModelView
+    el: $('.page')
+    template: template
 
-        el: $('.page')
+    beforeInitialize: ->
+        @model = new UserModel({id: 'current'})
+        @model.on('error', ->
+            Backbone.history.navigate('/login')
+        )
 
-        template: template
+    onRender: ->
+        document.title = 'Welcome to your Dashboard'
+        @$el.attr('id', 'dashboard')
+        @updatePageWidth(8)
 
-        beforeInitialize: ->
-            @model = new UserModel({id: 'current'})
-            @model.on('error', ->
-                Backbone.history.navigate('/login')
-            )
+    updatePageWidth: mixins.updatePageWidth
 
-        onRender: ->
-            document.title = 'Welcome to your Dashboard'
-            @$el.attr('id', 'dashboard')
-            @updatePageWidth(8)
-
-        updatePageWidth: mixins.updatePageWidth
-
-
-)

@@ -1,93 +1,89 @@
-define([
-    'underscore'
-], (_) ->
+_ = require('underscore')
 
-    formData = ($form) ->
-        _($form.serializeArray()).reduce((obj, field) ->
-            obj[field.name] = field.value
-            obj
-        , {})
+formData = ($form) ->
+    _($form.serializeArray()).reduce((obj, field) ->
+        obj[field.name] = field.value
+        obj
+    , {})
 
-    parseJSON = (str) ->
-        try
-            return JSON.parse(str)
-        catch e
-            return str
+parseJSON = (str) ->
+    try
+        return JSON.parse(str)
+    catch e
+        return str
 
-    isLoggedIn = ->
-        return $.cookie('logged_in') == '1'
+isLoggedIn = ->
+    return $.cookie('logged_in') == '1'
 
-    parseAjaxError = (error) ->
-        return parseJSON(error.responseText).errors or error
+parseAjaxError = (error) ->
+    return parseJSON(error.responseText).errors or error
 
-    validEmail = (val) ->
-        return /\S+@\S+\.\S+/.test(val)
+validEmail = (val) ->
+    return /\S+@\S+\.\S+/.test(val)
 
-    validateField = (field, val) ->
-        test = field.validations
+validateField = (field, val) ->
+    test = field.validations
 
-        if test.required and not val
-            return {
-                name: field.name
-                message: "Please enter #{field.name}."
-            }
+    if test.required and not val
+        return {
+            name: field.name
+            message: "Please enter #{field.name}."
+        }
 
-        if test.email and not validEmail(val)
-            return {
-                name: field.name
-                message: "Please enter a valid email address."
-            }
+    if test.email and not validEmail(val)
+        return {
+            name: field.name
+            message: "Please enter a valid email address."
+        }
 
-        if test.minlength and val.length < test.minlength
-            return {
-                name: field.name
-                message: "Please enter at least #{test.minlength} " +
-                    "characters in #{field.name}."
-            }
+    if test.minlength and val.length < test.minlength
+        return {
+            name: field.name
+            message: "Please enter at least #{test.minlength} " +
+                "characters in #{field.name}."
+        }
 
-        return false  # `false` meaning there's no error
+    return false  # `false` meaning there's no error
 
-    validateModelFromFields = (attrs, options) ->
-        errors = []
+validateModelFromFields = (attrs, options) ->
+    errors = []
 
-        for field in @fields  # where @ is model
-            val = attrs[field.name]
+    for field in @fields  # where @ is model
+        val = attrs[field.name]
 
-            error = validateField(field, val)
-            if error
-                errors.push(error)
+        error = validateField(field, val)
+        if error
+            errors.push(error)
 
-        if errors.length
-            return errors
+    if errors.length
+        return errors
 
-    ucfirst = (str) ->
-        return str.charAt(0).toUpperCase() + str.slice(1)
+ucfirst = (str) ->
+    return str.charAt(0).toUpperCase() + str.slice(1)
 
-    underscored = (str) ->
-        return str.replace(/[-\s]+/g, '_').toLowerCase()
+underscored = (str) ->
+    return str.replace(/[-\s]+/g, '_').toLowerCase()
 
-    updatePageWidth = (width) ->
-        $page = $('.page')
+updatePageWidth = (width) ->
+    $page = $('.page')
 
-        classes = $page.attr('class').split(' ').filter((c) ->
-            return ! /max-width-\d/.test(c)
-        )
+    classes = $page.attr('class').split(' ').filter((c) ->
+        return ! /max-width-\d/.test(c)
+    )
 
-        if width
-            classes.push('max-width-' + width)
+    if width
+        classes.push('max-width-' + width)
 
-        $page.attr('class', classes.join(' '))
+    $page.attr('class', classes.join(' '))
 
-    return {
-        formData: formData
-        isLoggedIn: isLoggedIn
-        parseJSON: parseJSON
-        parseAjaxError: parseAjaxError
-        validateField: validateField
-        validateModelFromFields: validateModelFromFields
-        ucfirst: ucfirst
-        underscored: underscored
-        updatePageWidth: updatePageWidth
-    }
-
-)
+module.exports = {
+    formData: formData
+    isLoggedIn: isLoggedIn
+    parseJSON: parseJSON
+    parseAjaxError: parseAjaxError
+    validateField: validateField
+    validateModelFromFields: validateModelFromFields
+    ucfirst: ucfirst
+    underscored: underscored
+    updatePageWidth: updatePageWidth
+}

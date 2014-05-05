@@ -1,11 +1,6 @@
-define([
-    'backbone'
-    'models/message'
-], (Backbone, MessageModel) ->
+Backbone = require('backbone')
+MessageModel = require('models/message')
 
-    class MessagesCollection extends Backbone.UsersCollection
+module.exports = class MessagesCollection extends Backbone.UsersCollection
+    model: MessageModel
 
-        model: MessageModel
-
-
-)
