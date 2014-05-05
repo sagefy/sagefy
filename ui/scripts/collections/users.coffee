@@ -1,11 +1,5 @@
-define([
-    'backbone'
-    'models/user'
-], (Backbone, UserModel) ->
+Backbone = require('backbone')
+UserModel = require('models/user')
 
-    class UsersCollection extends Backbone.UsersCollection
-
-        model: UserModel
-
-
-)
+module.exports = class UsersCollection extends Backbone.UsersCollection
+    model: UserModel

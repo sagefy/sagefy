@@ -1,25 +1,19 @@
-define([
-    'jquery'
-    'backbone'
-    'hbs/sections/public/terms'
-    'modules/mixins'
-], ($, Bb, t, mixins) ->
+$ = require('jquery')
+Bb = require('backbone')
+t = require('hbs/sections/public/terms')
+mixins = require('modules/mixins')
 
-    class TermsView extends Bb.View
+module.exports = class TermsView extends Bb.View
+    el: $('.page')
+    template: t
 
-        el: $('.page')
-        template: t
+    initialize: ->
+        @render()
 
-        initialize: ->
-            @render()
+    render: ->
+        document.title = 'Sagefy Terms of Service.'
+        @$el.attr('id', 'terms')
+            .html(@template())
+        @updatePageWidth(10)
 
-        render: ->
-            document.title = 'Sagefy Terms of Service.'
-            @$el.attr('id', 'terms')
-                .html(@template())
-            @updatePageWidth(10)
-
-        updatePageWidth: mixins.updatePageWidth
-
-
-)
+    updatePageWidth: mixins.updatePageWidth

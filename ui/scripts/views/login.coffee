@@ -1,46 +1,40 @@
-define([
-    'jquery'
-    'views/form'
-    'models/user'
-    'modules/mixins'
-], ($, FormView, UserModel, mixins) ->
+$ = require('jquery')
+FormView = require('views/form')
+UserModel = require('models/user')
+mixins = require('modules/mixins')
 
-    class LoginView extends FormView
+module.exports = class LoginView extends FormView
+    title: 'Login to Sagefy'
+    addID: 'login'
+    fields: ['username', 'password']
+    description: '''
+        Don't have an account?
+        <a href="/signup"><i class="fa fa-user"></i> Signup</a>
+    '''
+    submitLabel: 'Login'
+    submitIcon: 'sign-in'
 
-        title: 'Login to Sagefy'
-        addID: 'login'
-        fields: ['username', 'password']
-        description: '''
-            Don't have an account?
-            <a href="/signup"><i class="fa fa-user"></i> Signup</a>
-        '''
-        submitLabel: 'Login'
-        submitIcon: 'sign-in'
+    beforeInitialize: ->
+        if @isLoggedIn()
+            return Backbone.history.navigate('/dashboard')
 
-        beforeInitialize: ->
-            if @isLoggedIn()
-                return Backbone.history.navigate('/dashboard')
+        @model = new UserModel()
+        @model.on('login', @login)
+        @model.on('loginError', @loginError)
 
-            @model = new UserModel()
-            @model.on('login', @login)
-            @model.on('loginError', @loginError)
+    login: ->
+        # Hard redirect to get the cookie
+        window.location = '/dashboard'
 
-        login: ->
-            # Hard redirect to get the cookie
-            window.location = '/dashboard'
+    loginError: (errors) =>
+        @invalid(undefined, errors)
 
-        loginError: (errors) =>
-            @invalid(undefined, errors)
+    onRender: ->
+        @updatePageWidth(4)
 
-        onRender: ->
-            @updatePageWidth(4)
+    submit: (e) ->
+        e.preventDefault()
+        @model.login(@formData(@$form))
 
-        submit: (e) ->
-            e.preventDefault()
-            @model.login(@formData(@$form))
-
-        isLoggedIn: mixins.isLoggedIn
-        updatePageWidth: mixins.updatePageWidth
-
-
-)
+    isLoggedIn: mixins.isLoggedIn
+    updatePageWidth: mixins.updatePageWidth

@@ -1,42 +1,36 @@
-define([
-    'jquery'
-    'backbone'
-    'hbs/sections/styleguide/index'
-    'hbs/sections/styleguide/compiled'
-    'modules/mixins'
-], ($, Bb, t, t2, mixins) ->
+$ = require('jquery')
+Bb = require('backbone')
+t = require('hbs/sections/styleguide/index')
+t2 = require('hbs/sections/styleguide/compiled')
+mixins = require('modules/mixins')
 
-    class StyleguideView extends Bb.View
+module.exports = class StyleguideView extends Bb.View
+    el: $('.page')
+    template: t
+    template2: t2
 
-        el: $('.page')
-        template: t
-        template2: t2
+    events: {
+        'click a[href="#"]': 'cancel'
+        'click a[href*="//"]': 'openInNewWindow'
+    }
 
-        events: {
-            'click a[href="#"]': 'cancel'
-            'click a[href*="//"]': 'openInNewWindow'
-        }
+    initialize: ->
+        @render()
 
-        initialize: ->
-            @render()
+    render: ->
+        document.title = 'Sagefy - Style Guide and Component Library.'
 
-        render: ->
-            document.title = 'Sagefy - Style Guide and Component Library.'
+        @$el.attr('id', 'styleguide')
+            .html(@template())
+            .append(@template2())
 
-            @$el.attr('id', 'styleguide')
-                .html(@template())
-                .append(@template2())
+        @updatePageWidth(10)
 
-            @updatePageWidth(10)
+    cancel: ->
+        false
 
-        cancel: ->
-            false
+    openInNewWindow: (e) ->
+        $target = $(e.target).closest('a')
+        $target[0].target = '_blank'
 
-        openInNewWindow: (e) ->
-            $target = $(e.target).closest('a')
-            $target[0].target = '_blank'
-
-        updatePageWidth: mixins.updatePageWidth
-
-
-)
+    updatePageWidth: mixins.updatePageWidth

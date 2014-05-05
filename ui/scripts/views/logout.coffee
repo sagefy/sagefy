@@ -1,24 +1,18 @@
-define([
-    'backbone'
-    'modules/mixins'
-    'models/user'
-], (Bb, mixins, UserModel) ->
+Bb = require('backbone')
+mixins = require('modules/mixins')
+UserModel = require('models/user')
 
-    class LogoutView extends Bb.View
+module.exports = class LogoutView extends Bb.View
+    initialize: ->
+        if ! @isLoggedIn()
+            return Backbone.history.navigate('/', {trigger: true})
 
-        initialize: ->
-            if ! @isLoggedIn()
-                return Backbone.history.navigate('/', {trigger: true})
+        @model = new UserModel({id: 'current'})
+        @model.on('logout', @logout)
+        @model.logout()
 
-            @model = new UserModel({id: 'current'})
-            @model.on('logout', @logout)
-            @model.logout()
+    logout: ->
+        window.location = '/'
+        # Hard redirect to lose cookie
 
-        logout: ->
-            window.location = '/'
-            # Hard redirect to lose cookie
-
-        isLoggedIn: mixins.isLoggedIn
-
-
-)
+    isLoggedIn: mixins.isLoggedIn

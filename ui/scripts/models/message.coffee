@@ -1,20 +1,15 @@
-define([
-    'backbone'
-], (Backbone) ->
+Backbone = require('backbone')
 
-    class MessageModel extends Backbone.Model
+module.exports = class MessageModel extends Backbone.Model
 
-        url: '/api/messages/'
+    url: '/api/messages/'
 
-        # [fields]
-        # id
-        # created
-        # modified
+    # [fields]
+    # id
+    # created
+    # modified
 
-        validate: (attrs, options) ->
+    validate: (attrs, options) ->
 
-        parse: (response) ->
-            response.message
-
-
-)
+    parse: (response) ->
+        response.message

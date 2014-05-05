@@ -1,25 +1,19 @@
-define([
-    'jquery'
-    'backbone'
-    'hbs/sections/public/contact'
-    'modules/mixins'
-], ($, Bb, t, mixins) ->
+$ = require('jquery')
+Backbone = require('backbone')
+t = require('hbs/sections/public/contact')
+mixins = require('modules/mixins')
 
-    class ContactView extends Bb.View
+module.exports = class ContactView extends Backbone.View
+    el: $('.page')
+    template: t
 
-        el: $('.page')
-        template: t
+    initialize: ->
+        @render()
 
-        initialize: ->
-            @render()
+    render: ->
+        document.title = 'Contact Sagefy.'
+        @$el.attr('id', 'contact')
+            .html(@template())
+        @updatePageWidth(8)
 
-        render: ->
-            document.title = 'Contact Sagefy.'
-            @$el.attr('id', 'contact')
-                .html(@template())
-            @updatePageWidth(8)
-
-        updatePageWidth: mixins.updatePageWidth
-
-
-)
+    updatePageWidth: mixins.updatePageWidth

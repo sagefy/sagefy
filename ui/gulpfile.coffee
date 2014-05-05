@@ -37,7 +37,6 @@ gulp.task('build', ['clean'], ->
     gulp.run(
         'copyStatic',
         'copyFonts',
-        'bower',
         'styleguide',
         'handlebars',
         'stylus',
@@ -56,19 +55,14 @@ gulp.task('copyStatic', ->
 )
 
 gulp.task('copyFonts', ->
-    gulp.src('bower_components/fontawesome/fonts/fontawesome-webfont.*')
+    gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.*')
         .pipe(gulp.dest(dist + 'fonts/'))
-)
-
-gulp.task('bower', ->
-    plugins.bowerFiles()
-        .pipe(gulp.dest dist + 'bower/')
 )
 
 gulp.task('handlebars', ->
     gulp.src(hbsSrc)
         .pipe(plugins.handlebars({
-            outputType: 'amd'
+            outputType: 'commonjs'
             wrapped: true
         }))
         .pipe(gulp.dest(dist + 'hbs/'))
@@ -89,10 +83,11 @@ gulp.task('styleguide', ->
 )
 
 gulp.task('coffee', ->
-    gulp.src(coffeeSrc)
-        .pipe(plugins.coffeelint())
-        .pipe(plugins.coffeelint.reporter('default'))
-        .pipe(plugins.coffee())
+    gulp.src('scripts/app.coffee', { read: false })
+        .pipe(plugins.browserify({
+            transform: ['coffeeify']
+            extensions: ['.coffee']
+        }))
         .pipe(gulp.dest(dist))
 )
 
