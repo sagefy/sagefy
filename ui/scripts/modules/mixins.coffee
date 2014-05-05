@@ -15,7 +15,7 @@ define([
             return str
 
     isLoggedIn = ->
-        return !! $.cookie('logged_in')
+        return $.cookie('logged_in') == '1'
 
     parseAjaxError = (error) ->
         return parseJSON(error.responseText).errors or error

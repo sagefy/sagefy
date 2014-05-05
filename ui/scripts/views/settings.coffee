@@ -2,7 +2,8 @@ define([
     'jquery'
     'views/form'
     'models/user'
-], ($, FormView, UserModel) ->
+    'modules/mixins'
+], ($, FormView, UserModel, mixins) ->
 
     class Settings extends FormView
 
@@ -15,6 +16,10 @@ define([
         beforeInitialize: ->
             @model = new UserModel({ id: 'current' })
 
+        onRender: ->
+            @updatePageWidth(6)
+
+        updatePageWidth: mixins.updatePageWidth
 
 
 )

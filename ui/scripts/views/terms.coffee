@@ -21,4 +21,5 @@ define([
 
         updatePageWidth: mixins.updatePageWidth
 
+
 )

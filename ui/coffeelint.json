@@ -92,12 +92,12 @@
     },
     "cyclomatic_complexity": {
         "name": "cyclomatic_complexity",
-        "value": 6,
+        "value": 10,
         "level": "error"
     },
     "newlines_after_classes": {
         "name": "newlines_after_classes",
-        "value": 3,
+        "value": 2,
         "level": "error"
     },
     "no_unnecessary_fat_arrows": {

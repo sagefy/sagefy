@@ -17,9 +17,11 @@ define([
             document.title = 'Sagefy - ' +
                 'Adaptive, collaborative, and open learning platform.'
             @$el.attr('id', 'index')
-                .html(@template())
+                .html(@template({isLoggedIn: @isLoggedIn()}))
             @updatePageWidth(8)
 
         updatePageWidth: mixins.updatePageWidth
+        isLoggedIn: mixins.isLoggedIn
+
 
 )

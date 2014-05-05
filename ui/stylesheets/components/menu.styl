@@ -7,7 +7,7 @@ example: |
     <div class="menu">
         <div class="menu__overlay"></div>
         <a href="#" class="menu__trigger">
-            <img src="/astrolabe.svg" />
+            <div class="menu__logo"></div>
             <i class="menu__close fa fa-times-circle" style="display:none"></i>
         </a>
         <a href="#" class="menu__close"></a>
@@ -27,11 +27,11 @@ example: |
 
 .menu
     display inline-block
+    position fixed
 
     &.selected
         z-index 2
         display block
-        position fixed
         top 0
         left 0
         width 100%
@@ -59,9 +59,16 @@ example: |
     left $unit
     border-bottom 0
 
-    img
-        height $unit * 4
+    .menu__logo
+        $h = $unit * 6
+        height $h
+        width ($h * 324 / 464)
         display block
+        background-image url('/astrolabe.svg')
+        background-size contain
+
+        .selected &
+            background-image url('/astrolabe_light.svg')
 
     &:hover .menu__close
         color $gold-90
@@ -69,7 +76,7 @@ example: |
 .menu__close
     position absolute
     top 0
-    right -1 * $unit
+    right 0
     display none
     color $gold-66
 
