@@ -15,6 +15,4 @@ define([
             @$el.html(@template(@model.toJSON()))
             @onRender()
 
-
-
 )

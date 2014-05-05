@@ -55,5 +55,4 @@ define([
             @$page.empty()
             @toggle()
 
-
 )

@@ -45,8 +45,6 @@ def get_current_user():
     Get current user's information.
     """
 
-    # TODO: test route
-
     if current_user.is_authenticated():
         return jsonify(user=current_user.to_dict_secure())
     return jsonify(message='Not logged in.'), 404
@@ -90,8 +88,6 @@ def login():
     Login user.
     """
 
-    # TODO: test route
-
     user = User.get_by_username(request.form.get('username'))
 
     if not user:
@@ -118,12 +114,10 @@ def logout():
     Logout user.
     """
 
-    # TODO: test route
-
     logout_user()
-    return jsonify(message='Successfully logged out.'), 204
-
-    # TODO: message different if not currently logged in
+    resp = make_response(jsonify(message='Successfully logged out.'))
+    resp.set_cookie('logged_in', '0')
+    return resp, 204
 
 
 @app.route('/api/users/request_password_token', methods=['GET', 'POST'])

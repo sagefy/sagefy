@@ -8,5 +8,4 @@ define([
         model: UserModel
 
 
-
 )

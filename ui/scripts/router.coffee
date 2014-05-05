@@ -8,6 +8,7 @@ define([
         routes: {
             'styleguide': 'viewStyleguide'
             'login': 'viewLogin'
+            'logout': 'viewLogout'
             'signup': 'viewSignup'
             'dashboard': 'viewDashboard'
             'terms': 'viewTerms'
@@ -27,44 +28,36 @@ define([
                 Backbone.history.navigate(href, {trigger: true})
             )
 
-        viewIndex: ->
-            require(['views/index'], (IndexView) ->
-                indexView = new IndexView
+        _view: (type) ->
+            require(['views/' + type], (View) ->
+                view = new View
             )
+
+        viewIndex: ->
+            @_view('index')
 
         viewLogin: ->
-            require(['views/login'], (LoginView) ->
-                loginView = new LoginView
-            )
+            @_view('login')
+
+        viewLogout: ->
+            @_view('logout')
 
         viewSignup: ->
-            require(['views/signup'], (SignupView) ->
-                signupView = new SignupView
-            )
+            @_view('signup')
 
         viewTerms: ->
-            require(['views/terms'], (TermsView) ->
-                termsView = new TermsView
-            )
+            @_view('terms')
 
         viewContact: ->
-            require(['views/contact'], (ContactView) ->
-                contactView = new ContactView
-            )
+            @_view('contact')
 
         viewStyleguide: ->
-            require(['views/styleguide'], (StyleguideView) ->
-                styleguideView = new StyleguideView
-            )
+            @_view('styleguide')
 
         viewDashboard: ->
-            require(['views/dashboard'], (DashboardView) ->
-                dashboardView = new DashboardView
-            )
+            @_view('dashboard')
 
         viewSettings: ->
-            require(['views/settings'], (SettingsView) ->
-                settingsView = new SettingsView
-            )
+            @_view('settings')
 
 )
