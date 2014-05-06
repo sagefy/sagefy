@@ -1,6 +1,6 @@
 Bb = require('backbone')
-mixins = require('modules/mixins')
-UserModel = require('models/user')
+mixins = require('../modules/mixins')
+UserModel = require('../models/user')
 
 module.exports = class LogoutView extends Bb.View
     initialize: ->

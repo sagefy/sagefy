@@ -1,5 +1,6 @@
 Backbone = require('backbone')
-mixins = 'modules/mixins'
+$ = require('jquery')
+mixins = require('../modules/mixins')
 
 module.exports = class MenuModel extends Backbone.Model
     menus: {

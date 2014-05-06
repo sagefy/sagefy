@@ -1,5 +1,6 @@
 Backbone = require('backbone')
-mixins = require('modules/mixins')
+mixins = require('../modules/mixins')
+$ = require('jquery')
 
 module.exports = class UserModel extends Backbone.Model
     urlRoot: '/api/users/'

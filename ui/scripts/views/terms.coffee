@@ -1,7 +1,7 @@
 $ = require('jquery')
 Bb = require('backbone')
-t = require('hbs/sections/public/terms')
-mixins = require('modules/mixins')
+t = require('../../templates/sections/public/terms')
+mixins = require('../modules/mixins')
 
 module.exports = class TermsView extends Bb.View
     el: $('.page')

@@ -1,7 +1,7 @@
-hbs = require('handlebars')
 md = require('marked')
 moment = require('moment')
 mixins = require('./mixins')
+Handlebars = require('hbsfy/runtime')
 
 helpers = {
     ### NUMBERS ###
@@ -191,6 +191,6 @@ helpers = {
 }
 
 for name, fn of helpers
-    hbs.registerHelper(name, fn)
+    Handlebars.registerHelper(name, fn)
 
 module.exports = helpers

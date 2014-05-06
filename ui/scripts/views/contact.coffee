@@ -1,7 +1,7 @@
 $ = require('jquery')
 Backbone = require('backbone')
-t = require('hbs/sections/public/contact')
-mixins = require('modules/mixins')
+t = require('../../templates/sections/public/contact')
+mixins = require('../modules/mixins')
 
 module.exports = class ContactView extends Backbone.View
     el: $('.page')

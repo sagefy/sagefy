@@ -1,6 +1,16 @@
 Backbone = require('backbone')
+$ = require('jquery')
 MenuGlobalView = require('./views/menu--global')
 StyleguideView = require('./views/styleguide')
+LoginView = require('./views/login')
+LogoutView = require('./views/logout')
+TermsView = require('./views/terms')
+DashboardView = require('./views/dashboard')
+TermsView = require('./views/terms')
+ContactView = require('./views/contact')
+SettingsView = require('./views/settings')
+IndexView = require('./views/index')
+SignupView = require('./views/signup')
 
 module.exports = class PrimaryRouter extends Backbone.Router
     routes: {
@@ -26,34 +36,29 @@ module.exports = class PrimaryRouter extends Backbone.Router
             Backbone.history.navigate(href, {trigger: true})
         )
 
-    _view: (type) ->
-        require(['views/' + type], (View) ->
-            view = new View
-        )
-
     viewIndex: ->
-        @_view('index')
+        view = new IndexView()
 
     viewLogin: ->
-        @_view('login')
+        view = new LoginView()
 
     viewLogout: ->
-        @_view('logout')
+        view = new LogoutView()
 
     viewSignup: ->
-        @_view('signup')
+        view = new SignupView()
 
     viewTerms: ->
-        @_view('terms')
+        view = new TermsView()
 
     viewContact: ->
-        @_view('contact')
+        view = new ContactView()
 
     viewStyleguide: ->
-        @_view('styleguide')
+        view = new StyleguideView()
 
     viewDashboard: ->
-        @_view('dashboard')
+        view = new DashboardView()
 
     viewSettings: ->
-        @_view('settings')
+        view = new SettingsView()

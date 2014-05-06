@@ -1,8 +1,8 @@
 $ = require('jquery')
-ModelView = require('views/model')
-template = require('hbs/sections/user/dashboard')
-UserModel = require('models/user')
-mixins = require('modules/mixins')
+ModelView = require('../views/model')
+template = require('../../templates/sections/user/dashboard')
+UserModel = require('../models/user')
+mixins = require('../modules/mixins')
 
 module.exports = class DashboardView extends ModelView
     el: $('.page')

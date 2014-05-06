@@ -1,7 +1,7 @@
 $ = require('jquery')
-FormView = require('views/form')
-UserModel = require('models/user')
-mixins = require('modules/mixins')
+FormView = require('./form')
+UserModel = require('../models/user')
+mixins = require('../modules/mixins')
 
 module.exports = class Settings extends FormView
     title: 'Settings'
