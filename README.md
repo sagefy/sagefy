@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/heiskr/sagefy.png?label=ready&title=Ready)](https://waffle.io/heiskr/sagefy)
 # Sagefy
 _Adaptive, collaborative, and open learning platform._
 
