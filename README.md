@@ -12,13 +12,12 @@ _Adaptive, collaborative, and open learning platform._
 [Twitter]: http://twitter.com/sagefyorg
 [Docs]: http://sagefy.org/docs/overview
 
-[![Donate](https://dl.dropboxusercontent.com/u/178965380/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PXGYRLUR53MBJ)
+### Help out with Sagefy!
 
-[![Stories in Ready](https://badge.waffle.io/heiskr/sagefy.png?label=ready&title=Ready)](https://waffle.io/heiskr/sagefy)
-
-[Get setup and make a PR!](https://github.com/heiskr/sagefy/blob/master/setup/setup.md)
-
-[![Build Status](https://travis-ci.org/heiskr/sagefy.png?branch=master)](https://travis-ci.org/heiskr/sagefy)
+- [Get setup and make a PR!](https://github.com/heiskr/sagefy/blob/master/setup/setup.md)
+- [![Stories in Ready](https://badge.waffle.io/heiskr/sagefy.png?label=ready&title=Ready)](https://waffle.io/heiskr/sagefy) View our open issues 
+- [![Donate](https://dl.dropboxusercontent.com/u/178965380/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PXGYRLUR53MBJ)
+- [![Build Status](https://travis-ci.org/heiskr/sagefy.png?branch=master)](https://travis-ci.org/heiskr/sagefy) View current build status
 
 All contents in this project are licensed under [AGPLv3](https://raw.github.com/heiskr/sagefy/master/license.txt).
 
