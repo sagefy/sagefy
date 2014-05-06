@@ -13,9 +13,8 @@ gulp.task('default', ['watch'])
 
 gulp.task('watch', ['build'], ->
     gulp.watch(staticSrc, ['copyStatic'])
-    gulp.watch(hbsSrc, ['handlebars'])
     gulp.watch(['stylesheets/*.styl', 'stylesheets/**/*.styl'], ['stylus', 'styleguide'])
-    gulp.watch(coffeeSrc, ['coffee'])
+    gulp.watch(coffeeSrc.concat(hbsSrc), ['coffee'])
 )
 
 gulp.task('deploy', [
@@ -38,7 +37,6 @@ gulp.task('build', ['clean'], ->
         'copyStatic',
         'copyFonts',
         'styleguide',
-        'handlebars',
         'stylus',
         'coffee'
     )
@@ -59,15 +57,6 @@ gulp.task('copyFonts', ->
         .pipe(gulp.dest(dist + 'fonts/'))
 )
 
-gulp.task('handlebars', ->
-    gulp.src(hbsSrc)
-        .pipe(plugins.handlebars({
-            outputType: 'commonjs'
-            wrapped: true
-        }))
-        .pipe(gulp.dest(dist + 'hbs/'))
-)
-
 gulp.task('stylus', ->
     gulp.src('stylesheets/app.styl')
         .pipe(plugins.stylus({ set: ['include css'] }))
@@ -85,9 +74,11 @@ gulp.task('styleguide', ->
 gulp.task('coffee', ->
     gulp.src('scripts/app.coffee', { read: false })
         .pipe(plugins.browserify({
-            transform: ['coffeeify']
-            extensions: ['.coffee']
+            transform: ['coffeeify', 'hbsfy']
+            extensions: ['.coffee', '.hbs']
+            debug: true
         }))
+        .pipe(plugins.rename('app.js'))
         .pipe(gulp.dest(dist))
 )
 

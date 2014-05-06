@@ -1,8 +1,8 @@
 $ = require('jquery')
 Bb = require('backbone')
-t = require('hbs/sections/styleguide/index')
-t2 = require('hbs/sections/styleguide/compiled')
-mixins = require('modules/mixins')
+t = require('../../templates/sections/styleguide/index')
+t2 = require('../../templates/sections/styleguide/compiled')
+mixins = require('../modules/mixins')
 
 module.exports = class StyleguideView extends Bb.View
     el: $('.page')

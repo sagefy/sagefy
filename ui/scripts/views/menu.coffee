@@ -2,8 +2,8 @@ $ = require('jquery')
 Bb = require('backbone')
 _ = require('underscore')
 MenuModel = require('../models/menu')
-layoutTemplate = require('../../distribution/hbs/components/menu/layout')
-itemTemplate = require('../../distribution/hbs/components/menu/item')
+layoutTemplate = require('../../templates/components/menu/layout')
+itemTemplate = require('../../templates/components/menu/item')
 
 module.exports = class MenuView extends Bb.View
     $body: $('body')

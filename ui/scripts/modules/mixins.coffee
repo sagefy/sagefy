@@ -1,4 +1,5 @@
 _ = require('underscore')
+$ = require('jquery')
 
 formData = ($form) ->
     _($form.serializeArray()).reduce((obj, field) ->

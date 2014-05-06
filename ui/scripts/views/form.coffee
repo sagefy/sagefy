@@ -1,9 +1,9 @@
 $ = require('jquery')
-Bb = require('backbone')
+Backbone = require('backbone')
 _ = require('underscore')
-mixins = require('modules/mixins')
-formTemplate = require('hbs/components/forms/form')
-fieldTemplate = require('hbs/components/forms/field')
+mixins = require('../modules/mixins')
+formTemplate = require('../../templates/components/forms/form')
+fieldTemplate = require('../../templates/components/forms/field')
 
 module.exports = class FormView extends Backbone.View
     el: $('.page')

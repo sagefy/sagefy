@@ -1,7 +1,7 @@
 $ = require('jquery')
 Bb = require('backbone')
-t = require('hbs/sections/public/index')
-mixins = require('modules/mixins')
+t = require('../../templates/sections/public/index')
+mixins = require('../modules/mixins')
 
 module.exports = class IndexView extends Bb.View
     el: $('.page')
