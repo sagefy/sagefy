@@ -14,6 +14,8 @@ _Adaptive, collaborative, and open learning platform._
 
 [![Donate](https://dl.dropboxusercontent.com/u/178965380/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PXGYRLUR53MBJ)
 
+[![Stories in Ready](https://badge.waffle.io/heiskr/sagefy.png?label=ready&title=Ready)](https://waffle.io/heiskr/sagefy)
+
 [Get setup and make a PR!](https://github.com/heiskr/sagefy/blob/master/setup/setup.md)
 
 [![Build Status](https://travis-ci.org/heiskr/sagefy.png?branch=master)](https://travis-ci.org/heiskr/sagefy)
