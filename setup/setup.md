@@ -6,23 +6,26 @@ These instructions assume you are using Mac OS X.
 Get Vagrant Running
 -------------------
 
-### Install VirtualBox
+### 1. Install VirtualBox
 
     https://www.virtualbox.org/wiki/Downloads
 
-### Install Vagrant
+### 2. Install Vagrant
 
     http://downloads.vagrantup.com/
 
-### Intstal Vagrant Guest Additions
+### 3. Install Vagrant Guest Additions
 
     vagrant plugin install vagrant-vbguest
 
-### In your Terminal
+### 4. Clone the Repository
 
     mkdir ~/Sites  # Make a new Sites directory if needed
     cd ~/Sites  # Enter the Sites directory
     git clone https://github.com/heiskr/sagefy.git sagefy
+
+### 5. Rev it up
+
     cd sagefy  # Go into directory
     vagrant up  # Startup the virtual machine
 

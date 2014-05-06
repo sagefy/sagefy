@@ -34,9 +34,7 @@ module.exports = class MenuModel extends Backbone.Model
         @updateState()
 
     _itemsBoilerplate: (items = {}) ->
-        names = @_names()
-
-        for name in names
+        for name in @_names()
             items[name] = $.extend({
                 name: name
                 title: @ucfirst(name)
