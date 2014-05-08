@@ -19,6 +19,7 @@
         "Border Radius Mixin",
         "Transition Mixin",
         "Box Sizing Mixin",
+        "Filter Mixin",
         "Default Animations"
     ],
     "Fonts",

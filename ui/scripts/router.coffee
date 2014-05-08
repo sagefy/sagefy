@@ -11,6 +11,7 @@ ContactView = require('./views/contact')
 SettingsView = require('./views/settings')
 IndexView = require('./views/index')
 SignupView = require('./views/signup')
+CreatePasswordView = require('./views/create_password')
 
 module.exports = class PrimaryRouter extends Backbone.Router
     routes: {
@@ -22,6 +23,7 @@ module.exports = class PrimaryRouter extends Backbone.Router
         'terms': 'viewTerms'
         'contact': 'viewContact'
         'settings': 'viewSettings'
+        'create_password': 'createPassword'
         '(/)': 'viewIndex'
     }
 
@@ -62,3 +64,6 @@ module.exports = class PrimaryRouter extends Backbone.Router
 
     viewSettings: ->
         view = new SettingsView()
+
+    createPassword: ->
+        view = new CreatePasswordView()

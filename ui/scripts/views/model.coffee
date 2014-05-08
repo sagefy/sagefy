@@ -6,7 +6,7 @@ module.exports = class ModelView extends Backbone.View
             @beforeInitialize()
 
         @model.fetch()
-        @model.on('sync', @render)
+        @listenTo(@model, 'sync', @render)
 
     render: =>
         @$el.html(@template(@model.toJSON()))

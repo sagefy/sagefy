@@ -62,3 +62,15 @@ module.exports = class UserModel extends Backbone.Model
                 @trigger('logout')
             )
 
+    getPasswordToken: (data) ->
+        $.post(@urlRoot + 'request_password_token', data)
+            .done(=>
+                @trigger('passwordToken')
+            )
+            .fail((error) =>
+                @trigger('errorPasswordToken', @parseAjaxError(error))
+            )
+
+    setPassword: (data) ->
+        @set('password', data.password)
+        @save()

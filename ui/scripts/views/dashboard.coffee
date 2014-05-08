@@ -10,7 +10,7 @@ module.exports = class DashboardView extends ModelView
 
     beforeInitialize: ->
         @model = new UserModel({id: 'current'})
-        @model.on('error', ->
+        @listenTo(@model, 'error', ->
             Backbone.history.navigate('/login')
         )
 

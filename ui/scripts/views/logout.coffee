@@ -8,7 +8,7 @@ module.exports = class LogoutView extends Bb.View
             return Backbone.history.navigate('/', {trigger: true})
 
         @model = new UserModel({id: 'current'})
-        @model.on('logout', @logout)
+        @listenTo(@model, 'logout', @logout)
         @model.logout()
 
     logout: ->

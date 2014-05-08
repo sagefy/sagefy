@@ -11,6 +11,10 @@ module.exports = class LoginView extends FormView
         Don't have an account?
         <a href="/signup"><i class="fa fa-user"></i> Signup</a>
     '''
+    presubmit: '''
+        Forgot your password?
+        <a href="/create_password">Create a new password</a>
+    '''
     submitLabel: 'Login'
     submitIcon: 'sign-in'
 
@@ -19,8 +23,8 @@ module.exports = class LoginView extends FormView
             return Backbone.history.navigate('/dashboard')
 
         @model = new UserModel()
-        @model.on('login', @login)
-        @model.on('loginError', @loginError)
+        @listenTo(@model, 'login', @login)
+        @listenTo(@model, 'loginError', @loginError)
 
     login: ->
         # Hard redirect to get the cookie
