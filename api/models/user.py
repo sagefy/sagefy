@@ -1,19 +1,22 @@
 from app import db
 from passlib.hash import bcrypt
 from sqlalchemy.orm import validates
-from datetime import datetime
 from modules.util import uniqid
+from datetime import datetime
 
 
 class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.String(64), primary_key=True)
-    created = db.Column(db.DateTime)
-    modified = db.Column(db.DateTime)
-    username = db.Column(db.String(256))  # Ensure unique
-    email = db.Column(db.String(256))  # Ensure unique
+    created = db.Column(db.DateTime, default=datetime.utcnow())
+    modified = db.Column(db.DateTime, onupdate=datetime.utcnow())
+    username = db.Column(db.String(256), unique=True)
+    email = db.Column(db.String(256), unique=True)
     password = db.Column(db.String(256))
+
+    notifications = db.relation('Notification', backref='user')
+    messages = db.relation('Message', backref='user')
 
     def __init__(self, params):
         """
@@ -21,7 +24,6 @@ class User(db.Model):
         """
 
         self.id = uniqid()
-        self.created = self.modified = datetime.utcnow()
         self.username = params.get('username')
         self.email = params.get('email')
         self.password = params.get('password')

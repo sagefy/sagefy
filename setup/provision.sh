@@ -29,6 +29,15 @@ sudo apt-get -y install libpq-dev
 sudo apt-get -y install python-pip
 sudo pip install -r /var/www/setup/requirements.txt
 
+#### Migrations ###############################################################
+
+cd /var/www/api
+sudo -u postgres psql --username=postgres <<EOF
+CREATE USER sagefy password 'sagefy' SUPERUSER;
+CREATE DATABASE sagefy;
+EOF
+alembic upgrade head
+
 #### Redis ####################################################################
 
 sudo apt-get -y install redis-server

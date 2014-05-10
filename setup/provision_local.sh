@@ -21,17 +21,20 @@ sudo apt-get -y install python-dev
 sudo apt-get -y install postgresql
 sudo apt-get -y install libpq-dev
 
-# Schema Migration TODO: move to Alembic
-FILES=/var/www/api/migrations/*.sql
-for f in $FILES
-do
-    sudo -u postgres psql --username=postgres -f $f
-done
-
 #### Python ###################################################################
 
 sudo apt-get -y install python-pip
-sudo pip install -r /var/www/setup/requirements_local.txt
+sudo pip install -r /var/www/setup/requirements.txt
+sudo pip install pytest
+
+#### Migrations ###############################################################
+
+cd /var/www/api
+sudo -u postgres psql --username=postgres <<EOF
+CREATE USER sagefy password 'sagefy' SUPERUSER;
+CREATE DATABASE sagefy;
+EOF
+alembic upgrade head
 
 #### Redis ####################################################################
 
