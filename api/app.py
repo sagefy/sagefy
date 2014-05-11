@@ -7,6 +7,8 @@ from config import SECRET_KEY, MAIL_DEFAULT_SENDER, MAIL_PASSWORD, \
 
 app = Flask(__name__)
 
+app.debug = True
+
 
 ### Configure Database and ORM ###
 
