@@ -7,3 +7,4 @@ node_modules
 *.pyc
 ui/distribution
 compiled.hbs
+api/config.py
