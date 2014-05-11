@@ -73,7 +73,6 @@ attrs = {
     "measure": {
         "width": 8.0,
         "height": 5.0,
-        "radius": 1.0,
         "rotate": '-30',
         "fill": light_color,
 
@@ -199,7 +198,6 @@ def get_attrs(base):
             base * (
                 arms_y_center
                 - attrs['measure']['height'] / 2
-                + attrs['measure']['radius']
             ),
             # x3
             base * arms1_x1,
@@ -207,7 +205,6 @@ def get_attrs(base):
             base * (
                 arms_y_center
                 - attrs['measure']['height'] / 2
-                + attrs['measure']['radius']
             ),
         )
     attrs['measure']['arms'][2]['d'] = \
@@ -226,7 +223,6 @@ def get_attrs(base):
             base * (
                 arms_y_center
                 + attrs['measure']['height'] / 2
-                - attrs['measure']['radius']
             ),
             # x3
             base * arms2_x1,
@@ -234,7 +230,6 @@ def get_attrs(base):
             base * (
                 arms_y_center
                 + attrs['measure']['height'] / 2
-                - attrs['measure']['radius']
             )
         )
 

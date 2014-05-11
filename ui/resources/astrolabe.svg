@@ -116,8 +116,6 @@
             y="{{measure.y}}"
             width="{{measure.width}}"
             height="{{measure.height}}"
-            rx="{{measure.radius}}"
-            ry="{{measure.radius}}"
             fill="{{measure.fill}}"
             stroke="{{measure.fill}}"
         />
