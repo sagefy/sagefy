@@ -10,44 +10,78 @@
     <title>Sagefy</title>
     <g>
         <path
-            d="{{main_circle.buttresses.1.d}}"
-            fill="{{main_circle.buttresses.1.fill}}"
-            stroke="none"
+            d="{{main_circle.buttresses.d}}"
+            fill="{{main_circle.buttresses.fill}}"
+            stroke="{{main_circle.buttresses.fill}}"
         />
         <path
-            d="{{main_circle.buttresses.2.d}}"
-            fill="{{main_circle.buttresses.2.fill}}"
-            stroke="none"
+            d="{{main_circle.buttresses.d2}}"
+            fill="{{main_circle.buttresses.fill}}"
+            stroke="{{main_circle.buttresses.fill}}"
         />
         <path
-            d="{{main_circle.buttresses.3.d}}"
-            fill="{{main_circle.buttresses.3.fill}}"
-            stroke="none"
+            transform="rotate({{main_circle.buttresses[3].rotate}} {{main_circle.cx}} {{main_circle.cy}})"
+            d="{{main_circle.buttresses.d}}"
+            fill="{{main_circle.buttresses.fill}}"
+            stroke="{{main_circle.buttresses.fill}}"
         />
         <path
-            d="{{main_circle.buttresses.4.d}}"
-            fill="{{main_circle.buttresses.4.fill}}"
-            stroke="none"
+            transform="rotate({{main_circle.buttresses[4].rotate}} {{main_circle.cx}} {{main_circle.cy}})"
+            d="{{main_circle.buttresses.d2}}"
+            fill="{{main_circle.buttresses.fill}}"
+            stroke="{{main_circle.buttresses.fill}}"
         />
         <path
-            d="{{main_circle.buttresses.5.d}}"
-            fill="{{main_circle.buttresses.5.fill}}"
-            stroke="none"
+            transform="rotate({{main_circle.buttresses[5].rotate}} {{main_circle.cx}} {{main_circle.cy}})"
+            d="{{main_circle.buttresses.d}}"
+            fill="{{main_circle.buttresses.fill}}"
+            stroke="{{main_circle.buttresses.fill}}"
         />
         <path
-            d="{{main_circle.buttresses.6.d}}"
-            fill="{{main_circle.buttresses.6.fill}}"
-            stroke="none"
+            transform="rotate({{main_circle.buttresses[6].rotate}} {{main_circle.cx}} {{main_circle.cy}})"
+            d="{{main_circle.buttresses.d2}}"
+            fill="{{main_circle.buttresses.fill}}"
+            stroke="{{main_circle.buttresses.fill}}"
         />
         <path
-            d="{{main_circle.buttresses.7.d}}"
-            fill="{{main_circle.buttresses.7.fill}}"
-            stroke="none"
+            transform="rotate({{main_circle.buttresses[7].rotate}} {{main_circle.cx}} {{main_circle.cy}})"
+            d="{{main_circle.buttresses.d}}"
+            fill="{{main_circle.buttresses.fill}}"
+            stroke="{{main_circle.buttresses.fill}}"
         />
         <path
-            d="{{main_circle.buttresses.8.d}}"
-            fill="{{main_circle.buttresses.8.fill}}"
-            stroke="none"
+            transform="rotate({{main_circle.buttresses[8].rotate}} {{main_circle.cx}} {{main_circle.cy}})"
+            d="{{main_circle.buttresses.d2}}"
+            fill="{{main_circle.buttresses.fill}}"
+            stroke="{{main_circle.buttresses.fill}}"
+        />
+    </g>
+    <g>
+        <path
+            d="{{small_circle.buttresses.1.d}}"
+            fill="{{small_circle.buttresses.1.fill}}"
+            stroke="{{small_circle.buttresses.1.fill}}"
+        />
+        <path
+            d="{{small_circle.buttresses.2.d}}"
+            fill="{{small_circle.buttresses.2.fill}}"
+            stroke="{{small_circle.buttresses.1.fill}}"
+        />
+        <line
+            x1="{{small_circle.neck.x1}}"
+            y1="{{small_circle.neck.y1}}"
+            x2="{{small_circle.neck.x2}}"
+            y2="{{small_circle.neck.y2}}"
+            stroke="{{small_circle.neck.stroke}}"
+            stroke-width="{{small_circle.neck.stroke_width}}"
+        />
+        <circle
+            cx="{{small_circle.cx}}"
+            cy="{{small_circle.cy}}"
+            r="{{small_circle.r}}"
+            fill="none"
+            stroke="{{small_circle.stroke}}"
+            stroke-width="{{small_circle.stroke_width}}"
         />
     </g>
     <g>
@@ -76,34 +110,6 @@
             stroke-width="{{main_circle.stroke_width}}"
         />
     </g>
-    <g>
-        <path
-            d="{{small_circle.buttresses.1.d}}"
-            fill="{{small_circle.buttresses.1.fill}}"
-            stroke="none"
-        />
-        <path
-            d="{{small_circle.buttresses.2.d}}"
-            fill="{{small_circle.buttresses.2.fill}}"
-            stroke="none"
-        />
-        <line
-            x1="{{small_circle.neck.x1}}"
-            y1="{{small_circle.neck.y1}}"
-            x2="{{small_circle.neck.x2}}"
-            y2="{{small_circle.neck.y2}}"
-            stroke="{{small_circle.neck.stroke}}"
-            stroke-width="{{small_circle.neck.stroke_width}}"
-        />
-        <circle
-            cx="{{small_circle.cx}}"
-            cy="{{small_circle.cy}}"
-            r="{{small_circle.r}}"
-            fill="none"
-            stroke="{{small_circle.stroke}}"
-            stroke-width="{{small_circle.stroke_width}}"
-        />
-    </g>
     <g transform="rotate({{measure.rotate}} {{main_circle.cx}} {{main_circle.cy}})">
         <rect
             x="{{measure.x}}"
@@ -113,6 +119,7 @@
             rx="{{measure.radius}}"
             ry="{{measure.radius}}"
             fill="{{measure.fill}}"
+            stroke="{{measure.fill}}"
         />
         <path
             d="{{measure.arms.1.d}}"
