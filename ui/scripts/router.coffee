@@ -12,6 +12,7 @@ SettingsView = require('./views/settings')
 IndexView = require('./views/index')
 SignupView = require('./views/signup')
 CreatePasswordView = require('./views/create_password')
+ErrorView = require('./views/error')
 
 module.exports = class PrimaryRouter extends Backbone.Router
     routes: {
@@ -25,6 +26,7 @@ module.exports = class PrimaryRouter extends Backbone.Router
         'settings': 'viewSettings'
         'create_password': 'createPassword'
         '(/)': 'viewIndex'
+        '*_': 'viewError'
     }
 
     initialize: ->
@@ -37,6 +39,9 @@ module.exports = class PrimaryRouter extends Backbone.Router
             href = $(e.currentTarget).closest('a').attr('href')
             Backbone.history.navigate(href, {trigger: true})
         )
+
+    viewError: ->
+        view = new ErrorView()
 
     viewIndex: ->
         view = new IndexView()
