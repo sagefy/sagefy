@@ -42,6 +42,20 @@ Stylus
 - Add comments in [YM Styleguide](https://github.com/heiskr/ym-styleguide).
 - Use the [BEM](http://bem.info/method/) naming convention.
 - Borrow ideas from the [SMACSS](http://smacss.com/) organization scheme.
+- General guidelines:
+    - Lowercase selectors.
+    - Use extend first.
+    - No duplicate properties.
+    - Empty line after blocks of properties.
+    - No empty rules.
+    - Use leading zeros.
+    - Merge selectors.
+    - Don't go more than 3 levels deep.
+    - Hyphen for names.
+    - Spell correctly.
+    - Use shorthands.
+    - Space after commas.
+    - Zero is unitless.
 
 HTML
 ----
