@@ -18,96 +18,86 @@ For each pull request, ensure the following:
 - Provides some basic unit test coverage, where appropriate
 - Provides some basic functional test coverage, where appropriate
 
-Infrastructure
---------------
+We Use
+------
 
-- **Server**: [Ansible](http://www.ansible.com/) with [Vagrant](http://www.vagrantup.com/)
-    - **CDN**: [CloudFlare](https://www.cloudflare.com/)
-    - [uWSGI](http://uwsgi-docs.readthedocs.org/en/latest/) on [Nginx](http://wiki.nginx.org/Main)
-- **Language**: [Python 2.7](http://docs.python.org/2.7/)
-- **Web framework**: [Flask](http://flask.pocoo.org/)
-    - See [RESTish](/docs/restish)
-- **User & Content Database**: [PostgreSQL](http://www.postgresql.org/docs/9.1/interactive/index.html)
-- **Memory, ORM caching**: [Redis](http://redis.io/documentation)
-- **Search**: [ElasticSearch](https://github.com/elasticsearch/elasticsearch)
-- **Primary ORM**: [SQLAlchemy](http://www.sqlalchemy.org/) with [Flask-SQLAlchemy](http://pythonhosted.org/Flask-SQLAlchemy/)
-- **Migrations**: [Alembic](http://alembic.readthedocs.org/en/latest/)
-- **Documentation**: [Jekyll](http://jekyllrb.com/) on [Github Pages](https://pages.github.com/)
-    - **API Doc**: [Sphinx](http://sphinx-doc.org/) from inline docstrings using the [NumPy](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt) convention
-    - **Versioning**: [SemVer](http://semver.org/) with [Version Badge](http://badge.fury.io/)
-- **Deployment**: [Fabric](http://docs.fabfile.org/en/1.8/)
-- **Version control**: [GitHub](http://github.com/)
-- **Machine learning**: [NumPy](http://www.numpy.org/) + [SciPy](http://www.scipy.org/) + [Scikit-Learn](http://scikit-learn.org/stable/)
-- **Continuous integration**: [TravisCI](https://travis-ci.org/) or [Semaphore](https://semaphoreapp.com/) or [Scrutinizer](https://scrutinizer-ci.com/)  _TODO:_ Choose one
-- **Dependency manager**: [DavidDM](https://david-dm.org/)
-- **Blogging**: [Wordpress.com](http://wordpress.com)
-- **Feedback**: Github Issues, [StackOverflow](http://stackoverflow.com), [UserVoice](http://uservoice.com)
-- **Project Management**: Github Issues with [Waffle.io](https://waffle.io/heiskr/sagefy)
-- **Media page**: [Totemapp](http://totemapp.com)
-- **Social**: [Twitter](http://twitter.com/sagefyorg), [Facebook](https://www.facebook.com/sagefy), [Google+](https://plus.google.com/102422704401628739470/posts), Github, [Wordpress](http://sagefy.wordpress.com/)
-- **Analytics**: [Google Analytics](http://google.com/analytics) & in-house
-- **Email accounts**: [Google Apps](http://apps.google.com)
-- **Cloud storage**: [Google Drive](http://drive.google.com), [Dropbox](http://dropbox.com)
-- **Authentication & Authorization**: Traditional Login + [OAuth2.0](http://oauth.net/2/)
-- **Events, messaging, queues**: [Celery](http://www.celeryproject.org/), [RabbitMQ](http://www.rabbitmq.com/), Redis
-- **Database admin** - [Flask admin](https://github.com/mrjoes/flask-admin/)
-- **Package management** - [pip](https://pypi.python.org/pypi/pip), [npm](https://npmjs.org/), [bower](http://bower.io/)
-- **Interface Formatting**
-    - Try to match the [Google JSON Styleguide](http://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml)
-    - Put verbs in params: `_method`
-    - See [ember.js](http://emberjs.com/guides/models/the-rest-adapter/) models too
-- **Test suites**
-    - -
-    - Python:
-        - Unit, BDD: [py.test](http://pytest.org/latest/)
-        - Lint: [Flake8](https://pypi.python.org/pypi/flake8)
-        - Coverage: [Coverage.py](http://nedbatchelder.com/code/coverage/)
-        - Mock: [Faker](https://github.com/joke2k/faker)
-        - Performance: _TODO_
-        - Security: _TODO_
-        - i18n: _TODO_
-    - Script:
-        - Unit, BDD: [Mocha](http://visionmedia.github.io/mocha/)
-        - Lint: [CoffeeLint](http://www.coffeelint.org/); also see [JSHint](http://www.jshint.com/)
-        - Styleguide: Inhouse, based on [Coffeescript Style Guide](https://github.com/polarmobile/coffeescript-style-guide)
-        - Coverage: [Blanket](http://blanketjs.org/)
-        - Mock: [Chance.js](http://chancejs.com/)
-        - Performance: _TODO_
-        - i18n: _TODO_
-        - Error reporting: _TODO_
-    - Style:
-        - Visual: [PhantomCSS](https://github.com/Huddle/PhantomCSS)
-- **Transactional email** - [Mandrill](http://mandrill.com/), then [Postfix](http://www.postfix.org/)
-- **UIs**
-    - Style compiler - [Stylus](http://learnboost.github.io/stylus/)
-    - Style framework, boilerplate - Custom, based on [TWBootstrap](http://getbootstrap.com/), [HTML5 B](http://html5boilerplate.com/), and [Foundation](http://foundation.zurb.com/)
-    - Script MVC -[Backbone.js](http://backbonejs.org/) with (Marionette)[http://marionettejs.com/]
-    - Script frameworks - [Coffeescript](http://coffeescript.org/), [jQuery](http://jquery.com/),  , [Modernizr](http://modernizr.com/)
-    - Script utilities - _TODO_ [Select2](http://ivaynberg.github.io/select2/), [Moment](http://momentjs.com/), [Uglify](https://github.com/mishoo/UglifyJS), [Intro.js](http://usablica.github.io/intro.js/), [Selectize](http://brianreavis.github.io/selectize.js/), [Backgrid](http://backgridjs.com/), [Listjs](http://listjs.com/), [Dynatable.js](http://www.dynatable.com/)
-    - Script data visualization - [D3.js](http://d3js.org/)
-    - Form validation plugin - [jQuery Validation](http://jqueryvalidation.org/) or [backbone forms](https://github.com/powmedia/backbone-forms) or custom
-    - Script documentation - [Codo](https://github.com/coffeedoc/codo)
-    - Style documentation - [YM Styleguide](https://github.com/heiskr/ym-styleguide)
-    - Style architecture - [BEM](http://bem.info/method/) and [SMACSS](http://smacss.com/)
-    - Script templates - [Handlebars](http://handlebarsjs.com/); _TODO_ also test out [Jade](http://jade-lang.com/)
-    - User content template system - [Markdown](http://daringfireball.net/projects/markdown/)
-        - Add extensions for [Math](http://www.mathjax.org/), Footnotes, [Tables](https://github.com/chjj/marked#tables), Code, [Graphviz Dot](https://github.com/mdaines/viz.js), [Media Embeds](http://sloblog.io/+sloblog/qhdsk2SMoAU/sloblog-dot-io-easy-oembed-powered-media-embeds), and Definition Lists
-        - [EpicEditor](https://github.com/OscarGodson/EpicEditor) with [Marked](https://github.com/chjj/marked) and [MathJax](http://www.mathjax.org/) or [Ace](http://ace.c9.io/) also see [LaTeX2HTML5](http://latex2html5.com/)
-    - Compilation - [Gulp](http://gulpjs.com/) & [Bower](http://sindresorhus.com/bower-components/), [Require.js](http://requirejs.org/) (AMD)
-    - Search engine access - [Node SEO Server](https://npmjs.org/package/seoserver)
-- **Monitoring** - [Pingdom](https://www.pingdom.com/), [New Relic](http://newrelic.com/) (Free)
-- _hold_ User research tools
-    - Split test _TODO_
-    - Accessibility _TODO_
-    - [Card sort](http://conceptcodify.com)
-    - Prototype testing _TODO_
-    - [Heatmap](http://www.crazyegg.com/)
-    - Mobile testing _TODO_
-    - Remote usability _TODO_
-    - [Surveying](http://surveymonkey.com)
-    - Web Analytics - Google Analytics
-    - Wireframes & diagrams _TODO_
-- _TODO_ Analytics Databases (Mongo? PostgreSQL? Hadoop? Neo4J? Riak? http://influxdb.org/?)
+- [Vagrant](http://www.vagrantup.com/)
+- [CloudFlare](https://www.cloudflare.com/)
+- [uWSGI](http://uwsgi-docs.readthedocs.org/en/latest/)
+- [Nginx](http://wiki.nginx.org/Main)
+- [Python 2.7](http://docs.python.org/2.7/)
+- [Flask](http://flask.pocoo.org/)
+- [PostgreSQL](http://www.postgresql.org/docs/9.1/interactive/index.html)
+- [Redis](http://redis.io/documentation)
+- [SQLAlchemy](http://www.sqlalchemy.org/)
+    - [Flask-SQLAlchemy](http://pythonhosted.org/Flask-SQLAlchemy/)
+    - [Alembic](http://alembic.readthedocs.org/en/latest/)
+- [GitHub](http://github.com/)
+    - Github Issues with [Waffle.io](https://waffle.io/heiskr/sagefy)
+- [Jekyll](http://jekyllrb.com/) on [Github Pages](https://pages.github.com/)
+- [pip](https://pypi.python.org/pypi/pip)
+- [npm](https://npmjs.org/)
+    - [Gulp](http://gulpjs.com/)
+        - [CoffeeLint](http://www.coffeelint.org/)
+        - Browserify
+    - [Stylus](http://learnboost.github.io/stylus/)
+- [Backbone.js](http://backbonejs.org/)
+- [Coffeescript](http://coffeescript.org/)
+- [Handlebars](http://handlebarsjs.com/)
+- [BEM](http://bem.info/method/)
+- [YM Styleguide](https://github.com/heiskr/ym-styleguide)
+- [Markdown](http://daringfireball.net/projects/markdown/)
+
+We Intend to Use
+----------------
+
+- [Ansible](http://www.ansible.com/)
+- [ElasticSearch](https://github.com/elasticsearch/elasticsearch)
+- [Fabric](http://docs.fabfile.org/en/1.8/)
+- [NumPy](http://www.numpy.org/) + [SciPy](http://www.scipy.org/) + [Scikit-Learn](http://scikit-learn.org/stable/)
+- [SemVer](http://semver.org/) with [Version Badge](http://badge.fury.io/)
+- [Sphinx](http://sphinx-doc.org/) from inline docstrings using the [NumPy](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt) convention
+- [TravisCI](https://travis-ci.org/) or [Semaphore](https://semaphoreapp.com/) or [Scrutinizer](https://scrutinizer-ci.com/)  _TODO:_ Choose one
+- [DavidDM](https://david-dm.org/)
+- [Wordpress.com](http://wordpress.com)
+- Github Issues, [StackOverflow](http://stackoverflow.com), [UserVoice](http://uservoice.com)
+- [Totemapp](http://totemapp.com)
+- [Twitter](http://twitter.com/sagefyorg), [Facebook](https://www.facebook.com/sagefy), [Google+](https://plus.google.com/102422704401628739470/posts), Github, [Wordpress](http://sagefy.wordpress.com/)
+- [Google Analytics](http://google.com/analytics) & in-house
+- [Google Apps](http://apps.google.com)
+- [Google Drive](http://drive.google.com), [Dropbox](http://dropbox.com)
+- Traditional Login + [OAuth2.0](http://oauth.net/2/)
+- [Celery](http://www.celeryproject.org/), [RabbitMQ](http://www.rabbitmq.com/), Redis
+- [Flask admin](https://github.com/mrjoes/flask-admin/)
+- [py.test](http://pytest.org/latest/)
+- [Flake8](https://pypi.python.org/pypi/flake8)
+- [Coverage.py](http://nedbatchelder.com/code/coverage/)
+- [Faker](https://github.com/joke2k/faker)
+- [Mocha](http://visionmedia.github.io/mocha/)
+- Chai
+- Sinon
+- [Blanket](http://blanketjs.org/)
+- [Chance.js](http://chancejs.com/)
+- JS error reporting _TODO_
+- [PhantomCSS](https://github.com/Huddle/PhantomCSS)
+- [Mandrill](http://mandrill.com/), then [Postfix](http://www.postfix.org/)
+- Split test _TODO_
+- Accessibility _TODO_
+- [Card sort](http://conceptcodify.com)
+- Prototype testing _TODO_
+- [Heatmap](http://www.crazyegg.com/)
+- Mobile testing _TODO_
+- Remote usability _TODO_
+- [Surveying](http://surveymonkey.com)
+- Web Analytics - Google Analytics
+- Wireframes & diagrams _TODO_
+- [Pingdom](https://www.pingdom.com/)
+- [New Relic](http://newrelic.com/) (Free)
+- [Codo](https://github.com/coffeedoc/codo)
+- [D3.js](http://d3js.org/)
+- Script utilities - _TODO_ [Select2](http://ivaynberg.github.io/select2/), [Moment](http://momentjs.com/), [Uglify](https://github.com/mishoo/UglifyJS), [Intro.js](http://usablica.github.io/intro.js/), [Selectize](http://brianreavis.github.io/selectize.js/), [Backgrid](http://backgridjs.com/), [Listjs](http://listjs.com/), [Dynatable.js](http://www.dynatable.com/)
+- Markdown; Add extensions for [Math](http://www.mathjax.org/), Footnotes, [Tables](https://github.com/chjj/marked#tables), Code, [Graphviz Dot](https://github.com/mdaines/viz.js), [Media Embeds](http://sloblog.io/+sloblog/qhdsk2SMoAU/sloblog-dot-io-easy-oembed-powered-media-embeds), and Definition Lists
+- [EpicEditor](https://github.com/OscarGodson/EpicEditor) with [Marked](https://github.com/chjj/marked) and [MathJax](http://www.mathjax.org/) or [Ace](http://ace.c9.io/) also see [LaTeX2HTML5](http://latex2html5.com/)
 
 ## Sections
 

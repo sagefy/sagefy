@@ -25,6 +25,8 @@ Python
 - _TODO_: Query parameter formatting.
 - _TODO_: JSON response formatting.
     - Try to match the [Google JSON Styleguide](http://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml)
+    - Put verbs in params: `_method`
+    - See [ember.js](http://emberjs.com/guides/models/the-rest-adapter/) models too
 - _TODO_: Database naming and conventions.
 - _TODO_: Writing tests.
 
