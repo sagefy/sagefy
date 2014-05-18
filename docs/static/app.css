@@ -170,7 +170,7 @@ table {
   border-spacing: 0;
 }
 .base-font {
-  font-family: "noto serif", serif;
+  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", serif;
 }
 .monospace,
 pre,
@@ -204,7 +204,7 @@ body,
 input,
 textarea,
 select {
-  font-family: "noto serif", serif;
+  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", serif;
 }
 body {
   color: #343115;
