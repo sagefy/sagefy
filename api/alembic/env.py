@@ -20,9 +20,20 @@ sys.path.append(os.getcwd())
 
 from app import db
 
-from models.user import User
-from models.message import Message
-from models.notification import Notification
+import models.user
+import models.message
+import models.notification
+
+import models.category
+
+import models.module
+import models.component
+import models.objective
+import models.presentation
+import models.practice
+
+import models.proposal
+import models.discussion
 
 target_metadata = db.metadata
 

@@ -258,3 +258,22 @@ class User(db.Model):
         except:
             db.session.rollback()
             return False
+
+
+class UserNotificationSettings(db.Model):
+    __tablename__ = 'users_notifications_settings'
+
+    user_id = db.Column(
+        db.String(64),
+        db.ForeignKey('users.id'),
+        primary_key=True,
+    )
+
+users_roles = db.Table(
+    'users_roles',
+    db.Column('user_id', db.String(64), db.ForeignKey('users.id')),
+    db.Column(
+        'role_id',
+        db.Enum('admin', name='e5'),
+    ),
+)
