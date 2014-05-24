@@ -2,7 +2,7 @@ $ = require('jquery')
 Backbone = require('backbone')
 Backbone.$ = $
 
-PrimaryRouter = require('./router')
+PrimaryRouter = require('./routers/index')
 hbsHelpers = require('./modules/hbs_helpers')
 cookie = require('jquery.cookie')
 

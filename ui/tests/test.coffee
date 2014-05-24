@@ -1,0 +1,5 @@
+require('mocha')
+require('chai')
+require('sinon')
+require('sinon-chai')
+require('chai-jquery')
