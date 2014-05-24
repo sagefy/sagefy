@@ -36,6 +36,9 @@ We Use
     - [SQLAlchemy](http://www.sqlalchemy.org/)
         - [Flask-SQLAlchemy](http://pythonhosted.org/Flask-SQLAlchemy/)
         - [Alembic](http://alembic.readthedocs.org/en/latest/)
+    - Testing
+        - [py.test](http://pytest.org/latest/)
+        - [Flake8](https://pypi.python.org/pypi/flake8)
 - UI
     - [npm](https://npmjs.org/)
     - [Gulp](http://gulpjs.com/)
@@ -47,6 +50,10 @@ We Use
     - [Handlebars](http://handlebarsjs.com/)
     - [BEM](http://bem.info/method/)
     - [YM Styleguide](https://github.com/heiskr/ym-styleguide)
+    - Testing
+        - [Mocha](http://visionmedia.github.io/mocha/)
+        - [Chai](http://chaijs.com/)
+        - [Sinon](http://sinonjs.org/)
 - Project Management, Documentation
     - [GitHub](http://github.com/)
         - Github Issues with [Waffle.io](https://waffle.io/heiskr/sagefy)
@@ -69,8 +76,6 @@ We Intend to Use
     - [NumPy](http://www.numpy.org/) + [SciPy](http://www.scipy.org/) + [Scikit-Learn](http://scikit-learn.org/stable/)
     - [Sphinx](http://sphinx-doc.org/) from inline docstrings using the [NumPy](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt) convention
     - Testing
-        - [py.test](http://pytest.org/latest/)
-        - [Flake8](https://pypi.python.org/pypi/flake8)
         - [Coverage.py](http://nedbatchelder.com/code/coverage/)
         - [Faker](https://github.com/joke2k/faker)
     - Traditional Login + [OAuth2.0](http://oauth.net/2/)
@@ -85,9 +90,6 @@ We Intend to Use
     - Markdown; Add extensions for [Math](http://www.mathjax.org/), Footnotes, [Tables](https://github.com/chjj/marked#tables), Code, [Graphviz Dot](https://github.com/mdaines/viz.js), [Media Embeds](http://sloblog.io/+sloblog/qhdsk2SMoAU/sloblog-dot-io-easy-oembed-powered-media-embeds), and Definition Lists
     - [EpicEditor](https://github.com/OscarGodson/EpicEditor) with [Marked](https://github.com/chjj/marked) and [MathJax](http://www.mathjax.org/) or [Ace](http://ace.c9.io/) also see [LaTeX2HTML5](http://latex2html5.com/)
     - Testing
-        - [Mocha](http://visionmedia.github.io/mocha/)
-        - [Chai](http://chaijs.com/)
-        - [Sinon](http://sinonjs.org/)
         - [Blanket](http://blanketjs.org/)
         - [Chance.js](http://chancejs.com/)
         - [PhantomCSS](https://github.com/Huddle/PhantomCSS)
