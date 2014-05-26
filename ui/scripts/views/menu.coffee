@@ -5,7 +5,7 @@ MenuModel = require('../models/menu')
 layoutTemplate = require('../../templates/components/menu/layout')
 itemTemplate = require('../../templates/components/menu/item')
 
-module.exports = class MenuView extends Bb.View
+class MenuView extends Bb.View
     $body: $('body')
     $page: $('.page')
     className: 'menu'
@@ -51,3 +51,5 @@ module.exports = class MenuView extends Bb.View
     select: (e) ->
         @$page.empty()
         @toggle()
+
+module.exports = MenuView

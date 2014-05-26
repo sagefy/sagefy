@@ -1,11 +1,12 @@
 $ = require('jquery')
 FormView = require('../views/form')
-UserModel = require('../models/user')
+
 mixins = require('../modules/mixins')
 
-module.exports = class Signup extends FormView
+class Signup extends FormView
     title: 'Create Account'
-    addID: 'signup'
+    id: 'signup'
+    className: 'max-width-6'
     fields: ['username', 'email', 'password']
     description: '''
         Already have an account?
@@ -22,14 +23,10 @@ module.exports = class Signup extends FormView
         if @isLoggedIn()
             return @onSync()
 
-        @model = new UserModel()
-
     onSync: ->
         # Hard redirect to get the cookie
         window.location = '/dashboard'
 
-    onRender: ->
-        @updatePageWidth(6)
-
     isLoggedIn: mixins.isLoggedIn
-    updatePageWidth: mixins.updatePageWidth
+
+module.exports = Signup

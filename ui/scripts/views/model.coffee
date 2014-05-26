@@ -1,7 +1,12 @@
 Backbone = require('backbone')
 
-module.exports = class ModelView extends Backbone.View
-    initialize: ->
+class ModelView extends Backbone.View
+    initialize: (options = {}) ->
+        @$region = options.$region || $({})
+
+        if options.model
+            @model = options.model
+
         if @beforeInitialize
             @beforeInitialize()
 
@@ -10,4 +15,8 @@ module.exports = class ModelView extends Backbone.View
 
     render: =>
         @$el.html(@template(@model.toJSON()))
+        @$region.html(@$el)
         @onRender()
+
+
+module.exports = ModelView

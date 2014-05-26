@@ -1,6 +1,6 @@
 Backbone = require('backbone')
 
-module.exports = class NotificationModel extends Backbone.Model
+class NotificationModel extends Backbone.Model
 
     url: '/api/notifications/'
 
@@ -13,3 +13,5 @@ module.exports = class NotificationModel extends Backbone.Model
 
     parse: (response) ->
         response.notification
+
+module.exports = NotificationModel

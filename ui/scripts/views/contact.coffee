@@ -1,19 +1,19 @@
 $ = require('jquery')
 Backbone = require('backbone')
-t = require('../../templates/sections/public/contact')
-mixins = require('../modules/mixins')
+template = require('../../templates/sections/public/contact')
 
-module.exports = class ContactView extends Backbone.View
-    el: $('.page')
-    template: t
+class ContactView extends Backbone.View
+    id: 'contact'
+    className: 'max-width-8'
+    template: template
 
-    initialize: ->
+    initialize: (options) ->
+        @$region = options.$region
         @render()
 
     render: ->
         document.title = 'Contact Sagefy.'
-        @$el.attr('id', 'contact')
-            .html(@template())
-        @updatePageWidth(8)
+        @$el.html(@template())
+        @$region.html(@$el)
 
-    updatePageWidth: mixins.updatePageWidth
+module.exports = ContactView

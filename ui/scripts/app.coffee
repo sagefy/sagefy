@@ -6,4 +6,6 @@ PrimaryRouter = require('./routers/index')
 hbsHelpers = require('./modules/hbs_helpers')
 cookie = require('jquery.cookie')
 
-primaryRouter = new PrimaryRouter()
+$(->
+    primaryRouter = new PrimaryRouter()
+)

@@ -1,22 +1,22 @@
 $ = require('jquery')
-Bb = require('backbone')
-t = require('../../templates/sections/public/error')
-mixins = require('../modules/mixins')
+Backbone = require('backbone')
+template = require('../../templates/sections/public/error')
 
-module.exports = class ErrorView extends Bb.View
-    el: $('.page')
-    template: t
+class ErrorView extends Backbone.View
+    id: 'error'
+    className: 'max-width-4'
+    template: template
 
-    initialize: ->
+    initialize: (options) ->
+        @$region = options.$region
         @render()
 
     render: ->
         document.title = 'Error'
-        @$el.attr('id', 'error')
-            .html(@template({
-                code: 404
-                message: 'Not Found'
-            }))
-        @updatePageWidth(4)
+        @$el.html(@template({
+            code: 404
+            message: 'Not Found'
+        }))
+        @$region.html(@$el)
 
-    updatePageWidth: mixins.updatePageWidth
+module.exports = ErrorView

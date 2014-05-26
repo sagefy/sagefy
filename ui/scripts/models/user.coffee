@@ -2,7 +2,7 @@ Backbone = require('backbone')
 mixins = require('../modules/mixins')
 $ = require('jquery')
 
-module.exports = class UserModel extends Backbone.Model
+class UserModel extends Backbone.Model
     urlRoot: '/api/users/'
 
     fields: [
@@ -74,3 +74,5 @@ module.exports = class UserModel extends Backbone.Model
     setPassword: (data) ->
         @set('password', data.password)
         @save()
+
+module.exports = UserModel

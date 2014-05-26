@@ -1,19 +1,19 @@
 $ = require('jquery')
-Bb = require('backbone')
-t = require('../../templates/sections/public/terms')
-mixins = require('../modules/mixins')
+Backbone = require('backbone')
+template = require('../../templates/sections/public/terms')
 
-module.exports = class TermsView extends Bb.View
-    el: $('.page')
-    template: t
+class TermsView extends Backbone.View
+    id: 'terms'
+    className: 'max-width-10'
+    template: template
 
-    initialize: ->
+    initialize: (options) ->
+        @$region = options.$region
         @render()
 
     render: ->
         document.title = 'Sagefy Terms of Service.'
-        @$el.attr('id', 'terms')
-            .html(@template())
-        @updatePageWidth(10)
+        @$el.html(@template())
+        @$region.html(@$el)
 
-    updatePageWidth: mixins.updatePageWidth
+module.exports = TermsView

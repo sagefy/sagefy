@@ -1,6 +1,6 @@
 Backbone = require('backbone')
 
-module.exports = class MessageModel extends Backbone.Model
+class MessageModel extends Backbone.Model
 
     url: '/api/messages/'
 
@@ -13,3 +13,5 @@ module.exports = class MessageModel extends Backbone.Model
 
     parse: (response) ->
         response.message
+
+module.exports = MessageModel

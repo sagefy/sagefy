@@ -2,7 +2,7 @@ Backbone = require('backbone')
 $ = require('jquery')
 mixins = require('../modules/mixins')
 
-module.exports = class MenuModel extends Backbone.Model
+class MenuModel extends Backbone.Model
     menus: {
         loggedOut: [
             'login'
@@ -68,3 +68,5 @@ module.exports = class MenuModel extends Backbone.Model
     ucfirst: mixins.ucfirst
     underscored: mixins.underscored
     isLoggedIn: mixins.isLoggedIn
+
+module.exports = MenuModel

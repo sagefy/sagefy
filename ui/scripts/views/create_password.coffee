@@ -1,17 +1,16 @@
 FormView = require('./form')
-UserModel = require('../models/user')
 mixins = require('../modules/mixins')
 
-module.exports = class CreatePasswordView extends FormView
+class CreatePasswordView extends FormView
     title: 'Create a New Password'
-    addID: 'create-password'
+    id: 'create-password'
+    className: 'max-width-6'
     fields: []  # Step 1: Email, otherwise none
     submitLabel: 'Send Email'
     submitIcon: 'envelope'
     mode: ''
 
     beforeInitialize: ->
-        @model = new UserModel()
         @listenTo(@model, 'passwordToken', @tokenSent)
         @listenTo(@model, 'errorPasswordToken', @error)
         @listenTo(@model, 'change:password', @passwordUpdated)
@@ -26,13 +25,11 @@ module.exports = class CreatePasswordView extends FormView
     passwordUpdated: ->
         # TODO: go to step 4
 
-    onRender: ->
-        @updatePageWidth(6)
-
     submit: (e) ->
         e.preventDefault()
         data = @formData(@$form)
         @model.getPasswordToken(data)
         # @model.setPassword(data)
 
-    updatePageWidth: mixins.updatePageWidth
+
+module.exports =  CreatePasswordView

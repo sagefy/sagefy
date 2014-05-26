@@ -22,7 +22,7 @@ gulp.task('build', ->
             'styles:doc'
             'styles:app'
             'scripts:app'
-            'scripts:doc'
+            # 'scripts:doc'
         ]
     )
 )
@@ -38,7 +38,10 @@ gulp.task('watch', ['build'], ->
     )
     gulp.watch(
         coffeeSrc.concat(hbsSrc)
-        ['scripts:app', 'scripts:doc']
+        [
+            'scripts:app'
+            # 'scripts:doc'
+        ]
     )
 )
 
@@ -51,7 +54,7 @@ gulp.task('deploy', ->
             'styles:doc'
             'styles:app'
             'scripts:app'
-            'scripts:doc'
+            # 'scripts:doc'
         ]
         [
             'minify-css'

@@ -1,21 +1,23 @@
 $ = require('jquery')
-Bb = require('backbone')
-t = require('../../templates/sections/public/index')
+Backbone = require('backbone')
+template = require('../../templates/sections/public/index')
 mixins = require('../modules/mixins')
 
-module.exports = class IndexView extends Bb.View
-    el: $('.page')
-    template: t
+class IndexView extends Backbone.View
+    id: 'index'
+    className: 'max-width-8'
+    template: template
 
-    initialize: ->
+    initialize: (options) ->
+        @$region = options.$region
         @render()
 
     render: ->
         document.title = 'Sagefy - ' +
             'Adaptive, collaborative, and open learning platform.'
-        @$el.attr('id', 'index')
-            .html(@template({isLoggedIn: @isLoggedIn()}))
-        @updatePageWidth(8)
+        @$el.html(@template({isLoggedIn: @isLoggedIn()}))
+        @$region.html(@$el)
 
-    updatePageWidth: mixins.updatePageWidth
     isLoggedIn: mixins.isLoggedIn
+
+module.exports = IndexView

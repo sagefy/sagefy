@@ -1,5 +1,11 @@
 Backbone = require('backbone')
 $ = require('jquery')
+_ = require('underscore')
+
+PageController = require('../controllers/page')
+
+UserModel = require('../models/user')
+
 MenuGlobalView = require('../views/menu--global')
 StyleguideView = require('../views/styleguide')
 LoginView = require('../views/login')
@@ -14,7 +20,7 @@ SignupView = require('../views/signup')
 CreatePasswordView = require('../views/create_password')
 ErrorView = require('../views/error')
 
-module.exports = class PrimaryRouter extends Backbone.Router
+class PrimaryRouter extends Backbone.Router
     routes: {
         'styleguide': 'viewStyleguide'
         'login': 'viewLogin'
@@ -30,8 +36,10 @@ module.exports = class PrimaryRouter extends Backbone.Router
     }
 
     initialize: ->
-        Backbone.history.start({pushState: true})
         menuGlobalView = new MenuGlobalView()
+
+        # Create the page container
+        $('body').prepend('<div class="page"></div>')
 
         # When we click an internal link, use Navigate instead
         $('body').on('click', 'a[href^="/"]', (e) ->
@@ -40,35 +48,76 @@ module.exports = class PrimaryRouter extends Backbone.Router
             Backbone.history.navigate(href, {trigger: true})
         )
 
+        Backbone.history.start({pushState: true})
+
+    route: (route, name, callback) ->
+        prevCallback = callback || @[name]
+
+        callback = =>
+            if _.isFunction(@beforeRoute)
+                @beforeRoute()
+            prevCallback.call(this, arguments)
+
+        Backbone.Router.prototype.route.call(this, route, name, callback)
+
+    beforeRoute: ->
+        console.log('beforeRoute', @controller)
+        if @controller
+            @controller.close()
+
     viewError: ->
-        view = new ErrorView()
+        @controller = new PageController({view: ErrorView})
 
     viewIndex: ->
-        view = new IndexView()
+        @controller = new PageController({view: IndexView})
 
     viewLogin: ->
-        view = new LoginView()
+        @controller = new PageController({
+            view: LoginView
+            model: UserModel
+        })
 
     viewLogout: ->
-        view = new LogoutView()
+        view = new PageController({
+            view: LogoutView
+            model: UserModel
+            modelOptions: {id: 'current'}
+        })
 
     viewSignup: ->
-        view = new SignupView()
+        @controller = new PageController({
+            view: SignupView
+            model: UserModel
+        })
 
     viewTerms: ->
-        view = new TermsView()
+        @controller = new PageController({view: TermsView})
 
     viewContact: ->
-        view = new ContactView()
+        @controller = new PageController({view: ContactView})
 
     viewStyleguide: ->
-        view = new StyleguideView()
+        @controller = new PageController({view: StyleguideView})
 
     viewDashboard: ->
-        view = new DashboardView()
+        @controller = new PageController({
+            view: DashboardView
+            model: UserModel
+            modelOptions: {id: 'current'}
+        })
 
     viewSettings: ->
-        view = new SettingsView()
+        @controller = new PageController({
+            view: SettingsView
+            model: UserModel
+            modelOptions: {id: 'current'}
+        })
 
     createPassword: ->
-        view = new CreatePasswordView()
+        @controller = new PageController({
+            view: CreatePasswordView
+            model: UserModel
+        })
+
+
+module.exports = PrimaryRouter

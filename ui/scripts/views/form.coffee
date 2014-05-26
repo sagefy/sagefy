@@ -5,8 +5,7 @@ mixins = require('../modules/mixins')
 formTemplate = require('../../templates/components/forms/form')
 fieldTemplate = require('../../templates/components/forms/field')
 
-module.exports = class FormView extends Backbone.View
-    el: $('.page')
+class FormView extends Backbone.View
     events: {
         'submit form': 'submit'
         'keyup input': 'validateField'
@@ -16,11 +15,13 @@ module.exports = class FormView extends Backbone.View
     fieldTemplate: fieldTemplate
 
     initialize: (options = {}) ->
-        if @beforeInitialize
-            @beforeInitialize()
+        @$region = options.$region || $({})
 
         if options.model
             @model = options.model
+
+        if @beforeInitialize
+            @beforeInitialize()
 
         if @model and @mode == "edit"
             @model.fetch()
@@ -35,15 +36,30 @@ module.exports = class FormView extends Backbone.View
         if @mode != "edit"
             @render()
 
+    render: ->
+        @$el.html(@formTemplate({
+            fields: @_getFieldsHTML()
+            title: @title
+            description: @description
+            presubmit: @presubmit
+            submitIcon: @submitIcon or 'check'
+            submitLabel: @submitLabel or 'Submit'
+            mode: @mode
+        }))
+        @$region.html(@$el)
+        @$form = @$el.find('form')
+
+        if @onRender
+            @onRender()
+
     _getFields: ->
         if @fields
             return _.filter(@model.fields, (field) =>
                 return field.name in @fields
             )
-
         return @model.fields
 
-    render: ->
+    _getFieldsHTML: ->
         fields = ""
         for field in @_getFields()
             fields += @fieldTemplate(
@@ -51,25 +67,7 @@ module.exports = class FormView extends Backbone.View
                     inputTypeFields: ['text', 'email', 'password']
                 })
             )
-
-        html = @formTemplate({
-            fields: fields
-            title: @title
-            description: @description
-            presubmit: @presubmit
-            submitIcon: @submitIcon or 'check'
-            submitLabel: @submitLabel or 'Submit'
-            mode: @mode
-        })
-
-        @$el.html(html)
-        @$form = @$el.find('form')
-
-        if @addID
-            @$el.attr('id', @addID)
-
-        if @onRender
-            @onRender()
+        return fields
 
     _displayErrors: (errors = []) ->
         for error in errors
@@ -141,3 +139,6 @@ module.exports = class FormView extends Backbone.View
     formData: mixins.formData
     fieldHasError: mixins.validateField
     parseAjaxError: mixins.parseAjaxError
+
+
+module.exports = FormView

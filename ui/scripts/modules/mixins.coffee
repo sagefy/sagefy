@@ -65,18 +65,6 @@ ucfirst = (str) ->
 underscored = (str) ->
     return str.replace(/[-\s]+/g, '_').toLowerCase()
 
-updatePageWidth = (width) ->
-    $page = $('.page')
-
-    classes = $page.attr('class').split(' ').filter((c) ->
-        return ! /max-width-\d/.test(c)
-    )
-
-    if width
-        classes.push('max-width-' + width)
-
-    $page.attr('class', classes.join(' '))
-
 module.exports = {
     formData: formData
     isLoggedIn: isLoggedIn
@@ -86,5 +74,4 @@ module.exports = {
     validateModelFromFields: validateModelFromFields
     ucfirst: ucfirst
     underscored: underscored
-    updatePageWidth: updatePageWidth
 }

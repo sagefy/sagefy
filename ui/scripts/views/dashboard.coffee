@@ -1,23 +1,19 @@
+Backbone = require('Backbone')
 $ = require('jquery')
 ModelView = require('../views/model')
 template = require('../../templates/sections/user/dashboard')
-UserModel = require('../models/user')
-mixins = require('../modules/mixins')
 
-module.exports = class DashboardView extends ModelView
-    el: $('.page')
+class DashboardView extends ModelView
+    id: 'dashboard'
+    className: 'max-width-4'
     template: template
 
     beforeInitialize: ->
-        @model = new UserModel({id: 'current'})
         @listenTo(@model, 'error', ->
             Backbone.history.navigate('/login')
         )
 
     onRender: ->
         document.title = 'Welcome to your Dashboard'
-        @$el.attr('id', 'dashboard')
-        @updatePageWidth(8)
 
-    updatePageWidth: mixins.updatePageWidth
-
+module.exports = DashboardView

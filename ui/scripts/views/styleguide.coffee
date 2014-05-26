@@ -1,11 +1,12 @@
 $ = require('jquery')
-Bb = require('backbone')
+Backbone = require('backbone')
 t = require('../../templates/sections/styleguide/index')
 t2 = require('../../templates/sections/styleguide/compiled')
 mixins = require('../modules/mixins')
 
-module.exports = class StyleguideView extends Bb.View
-    el: $('.page')
+class StyleguideView extends Backbone.View
+    id: 'styleguide'
+    className: 'max-width-10'
     template: t
     template2: t2
 
@@ -14,23 +15,21 @@ module.exports = class StyleguideView extends Bb.View
         'click a[href*="//"]': 'openInNewWindow'
     }
 
-    initialize: ->
+    initialize: (options) ->
+        @$region = options.$region
         @render()
 
     render: ->
         document.title = 'Sagefy - Style Guide and Component Library.'
-
-        @$el.attr('id', 'styleguide')
-            .html(@template())
+        @$el.html(@template())
             .append(@template2())
-
-        @updatePageWidth(10)
+        @$region.html(@$el)
 
     cancel: ->
-        false
+        return false
 
     openInNewWindow: (e) ->
         $target = $(e.target).closest('a')
         $target[0].target = '_blank'
 
-    updatePageWidth: mixins.updatePageWidth
+module.exports = StyleguideView

@@ -1,4 +1,6 @@
 MenuView = require('./menu')
 
-module.exports = class GlobalMenuView extends MenuView
+class GlobalMenuView extends MenuView
     className: 'menu--global'
+
+module.exports = GlobalMenuView

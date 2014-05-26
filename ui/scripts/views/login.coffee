@@ -1,11 +1,11 @@
 $ = require('jquery')
 FormView = require('../views/form')
-UserModel = require('../models/user')
 mixins = require('../modules/mixins')
 
-module.exports = class LoginView extends FormView
+class LoginView extends FormView
     title: 'Login to Sagefy'
-    addID: 'login'
+    id: 'login'
+    className: 'max-width-4'
     fields: ['username', 'password']
     description: '''
         Don't have an account?
@@ -22,7 +22,6 @@ module.exports = class LoginView extends FormView
         if @isLoggedIn()
             return Backbone.history.navigate('/dashboard')
 
-        @model = new UserModel()
         @listenTo(@model, 'login', @login)
         @listenTo(@model, 'loginError', @loginError)
 
@@ -33,12 +32,11 @@ module.exports = class LoginView extends FormView
     loginError: (errors) =>
         @invalid(undefined, errors)
 
-    onRender: ->
-        @updatePageWidth(4)
-
     submit: (e) ->
         e.preventDefault()
         @model.login(@formData(@$form))
 
     isLoggedIn: mixins.isLoggedIn
-    updatePageWidth: mixins.updatePageWidth
+
+
+module.exports =  LoginView

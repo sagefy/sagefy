@@ -3,11 +3,14 @@ _ = require('underscore')
 
 class Controller extends Backbone.Events
     constructor: (options) ->
-        if @initialize
+        if _.isFunction(@initialize)
             @initialize(options)
 
     close: ->
-        @stopListening()
-        @off()
+        if _.isFunction(@beforeClose)
+            @beforeClose()
+
+        # @stopListening()
+        # @off()
 
 module.exports = Controller
