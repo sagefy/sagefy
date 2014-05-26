@@ -36,7 +36,7 @@ class PrimaryRouter extends Backbone.Router
     }
 
     initialize: ->
-        menuGlobalView = new MenuGlobalView()
+        @menuGlobalView = new MenuGlobalView()
 
         # Create the page container
         $('body').prepend('<div class="page"></div>')
@@ -61,7 +61,6 @@ class PrimaryRouter extends Backbone.Router
         Backbone.Router.prototype.route.call(this, route, name, callback)
 
     beforeRoute: ->
-        console.log('beforeRoute', @controller)
         if @controller
             @controller.close()
 
@@ -78,7 +77,7 @@ class PrimaryRouter extends Backbone.Router
         })
 
     viewLogout: ->
-        view = new PageController({
+        @controller = new PageController({
             view: LogoutView
             model: UserModel
             modelOptions: {id: 'current'}
