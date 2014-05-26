@@ -2,6 +2,7 @@ gulp = require("gulp")
 gulpLoadPlugins = require("gulp-load-plugins")
 plugins = gulpLoadPlugins()
 run = require('run-sequence')
+codo = require('codo')
 
 dist = 'distribution/'
 staticSrc = ['images/*', 'statics/*']
@@ -18,10 +19,10 @@ gulp.task('build', ->
         [
             'copy:static'
             'copy:fonts'
-            'styleguide'
+            'styles:doc'
             'styles:app'
             'scripts:app'
-            # TODO: Run Codo
+            'scripts:doc'
         ]
     )
 )
@@ -33,11 +34,11 @@ gulp.task('watch', ['build'], ->
     )
     gulp.watch(
         ['styles/*.styl', 'styles/**/*.styl']
-        ['styles:app', 'styleguide']
+        ['styles:app', 'styles:doc']
     )
     gulp.watch(
         coffeeSrc.concat(hbsSrc)
-        ['scripts:app']
+        ['scripts:app', 'scripts:doc']
     )
 )
 
@@ -47,10 +48,10 @@ gulp.task('deploy', ->
         [
             'copy:static'
             'copy:fonts'
-            'styleguide'
+            'styles:doc'
             'styles:app'
             'scripts:app'
-            # TODO: Run Codo
+            'scripts:doc'
         ]
         [
             'minify-css'
@@ -92,7 +93,7 @@ gulp.task('styles:app', ->
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('styleguide', ->
+gulp.task('styles:doc', ->
     yms = require('ym-styleguide')
     fs = require('fs')
     yms.build('styles/', (html) ->
@@ -115,6 +116,13 @@ gulp.task('scripts:test', ->
     gulp.src(coffeeSrc)
         .pipe(plugins.coffeelint())
         .pipe(plugins.coffeelint.reporter('fail'))
+)
+
+gulp.task('scripts:doc', ->
+    codo.parseProject('scripts/', {
+        output: dist + 'doc/'
+        name: 'Sagefy'
+    })
 )
 
 gulp.task('minify-css', ->
