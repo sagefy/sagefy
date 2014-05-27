@@ -121,30 +121,26 @@ Contributor Models
 - object_type
 - name (aka title, subject)
 - body (description)
-- type (create, update, delete, split, merge)
-- fields (changes, updates)
-- status (active, pending, accepted, declined, can't accept)
+
+### Proposal: Versions (Amendments)
+- id
+- created
+- modified
 - version (based on)
+- proposal_id
+- status (active, pending, accepted, declined, can't accept)
+- name
+- body
+- type (create, update, delete, split, merge)
+- fields
 
 ### Proposal: Votes
 - id
 - created
 - modified
 - user_id
-- object_id
-- object_id
+- proposal_version_id
 - type (agree, consent, discuss, disagree...)
-
-### Proposal: Amendments
-- id
-- created
-- modified
-- proposal_id
-- status
-- name
-- body
-- type
-- fields
 
 ### Discussion > Thread
 - id
@@ -153,15 +149,12 @@ Contributor Models
 - object_id
 - object_type
 - name
-- body (aka description)
 
 ### Discussion > Message
 - id
 - created
 - modified
 - user_id
-- object_id
-- object_type
 - body (aka message, copy)
 - reply_to (message_id)
 - thread_id
