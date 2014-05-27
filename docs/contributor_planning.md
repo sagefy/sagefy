@@ -162,34 +162,83 @@ Contributor Models
 Contributor Screen Requirements
 -------------------------------
 
-### Section Selector
-- Logo
-- Links to sections: Learn, Contribute...
-- Menu
 
-### Contributor Home
+### Contributor Dashboard
 
-### Contributor Search (Modules, Components, Information...)
+- Notifications & Messages
+- Watched Objects
 
-### Object Overviews
-- Children, Parents
-- History
-- List Proposals
-- Discussions
-- -
-- Create Component
-    - Five to eight minutes of information, 30-60 minutes of practice to bronze
-- Create/Edit Learning Objectives
-    - Three to five learning objectives
-    - Allow subjectives
-    - Reordering
+### Contributor Search (System-wide)
 
-### View Proposal
-- Agree, Consent, Discuss, Dissent...
 
-### Create Proposal
+-------
 
-### Amend Proposal
+_Object Screen Requirements_
+
+The following views are per type: Module, Component/Integration, Presentation, and Practice.
+
+### List, Search, Filter and Sort View
+
+#### List Modules
+#### List Components & Integrations
+#### List Presentations
+#### List Practices
+
+### Object View
+
+- List Children & Parents
+
+#### View Module
+#### View Component/Integration
+
+- List lost presentation/practice children (?)
+
+#### View Presentation
+#### View Practice
+
+### List History View
+
+#### Module History
+#### Component/Integration History
+#### Presentation History
+#### Practice History
+
+### Create and Edit Object View
+
+- Preview edit/create
+
+#### Post Module
+#### Post Component/Integration
+#### Post Presentation
+#### Post Practice
+
+### Proposals View
+
+#### List Module Proposals
+#### List Component/Integration Proposals
+#### List Presentation Proposals
+#### List Practice Proposals
+
+### Proposal View
+
+- Start with something very basic, e.g.
+    - 2 points agree, 1 point consent, 0 point discuss, block on dissent
+    - 10 points to accept
+- Later, list out other factors to consider in formula
+    - Age, activity, usage of object
+    - Activity and participation of voters
+    - Activity and participation of proposer...
+
+#### Module Proposal View
+#### Component/Integration Proposal View
+#### Presentation Proposal View
+#### Practice Proposal View
+
+### Search Discussion Threads
+
+### List Discussion Threads (per Object)
+
+### Discussion View
 
 Contributor Wireframes
 ----------------------
