@@ -34,6 +34,8 @@ General REST principles, but made more practical.
 - Autodoc everything.
 - Cache everything.
 - Gzip everything.
+- Provide full resources.
+- Use ISO8601.
 
 References
 ----------
@@ -42,3 +44,4 @@ References
 - http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
 - https://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml
 - http://www.slideshare.net/mario_cardinal/best-practices-for-designing-pragmatic-restful-api
+- https://github.com/interagent/http-api-design
