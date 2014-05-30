@@ -47,3 +47,14 @@ _site
 
 # API
 config.py
+
+tmp
+npm-debug.log
+_site
+.vagrant
+bower_components
+node_modules
+*.pyc
+ui/distribution
+compiled.hbs
+api/config.py
