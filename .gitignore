@@ -1,60 +1,38 @@
-*.py[cod]
-
-# C extensions
-*.so
-
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-bin
-var
-sdist
-develop-eggs
-.installed.cfg
-lib
-lib64
-
-# Installer logs
-pip-log.txt
-
-# Unit test / coverage reports
+_site
 .coverage
-.tox
-nosetests.xml
-
-# Translations
-*.mo
-
-# Mr Developer
+.DS_Store
+.installed.cfg
 .mr.developer.cfg
 .project
 .pydevproject
-
-.DS_Store
-
-# UI
+.tox
+.vagrant
+*.egg
+*.egg-info
+*.mo
+*.py[cod]
+*.pyc
+*.so
+api/config.py
+bin
+build
+compiled.hbs
+config.py
+develop-eggs
+dist
+eggs
+lib
+lib64
+node_modules
+nosetests.xml
+npm-debug.log
+parts
+pip-log.txt
+sdist
+tmp
+ui/distribution
 ui/distribution
 ui/node_modules
 ui/npm-debug.log
 ui/templates/sections/styleguide/compiled.hbs
-
-.vagrant
-_site
-
-# API
-config.py
-
-tmp
-npm-debug.log
-_site
-.vagrant
-bower_components
-node_modules
-*.pyc
-ui/distribution
-compiled.hbs
-api/config.py
+var
