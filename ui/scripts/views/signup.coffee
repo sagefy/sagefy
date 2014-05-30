@@ -25,7 +25,7 @@ class Signup extends FormView
 
     onSync: ->
         # Hard redirect to get the cookie
-        window.location = '/dashboard'
+        window.location = '/'
 
     isLoggedIn: mixins.isLoggedIn
 

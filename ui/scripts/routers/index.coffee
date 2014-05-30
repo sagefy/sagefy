@@ -11,7 +11,6 @@ StyleguideView = require('../views/styleguide')
 LoginView = require('../views/login')
 LogoutView = require('../views/logout')
 TermsView = require('../views/terms')
-DashboardView = require('../views/dashboard')
 TermsView = require('../views/terms')
 ContactView = require('../views/contact')
 SettingsView = require('../views/settings')
@@ -26,7 +25,6 @@ class PrimaryRouter extends Backbone.Router
         'login': 'viewLogin'
         'logout': 'viewLogout'
         'signup': 'viewSignup'
-        'dashboard': 'viewDashboard'
         'terms': 'viewTerms'
         'contact': 'viewContact'
         'settings': 'viewSettings'
@@ -97,13 +95,6 @@ class PrimaryRouter extends Backbone.Router
 
     viewStyleguide: ->
         @controller = new PageController({view: StyleguideView})
-
-    viewDashboard: ->
-        @controller = new PageController({
-            view: DashboardView
-            model: UserModel
-            modelOptions: {id: 'current'}
-        })
 
     viewSettings: ->
         @controller = new PageController({

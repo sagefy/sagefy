@@ -10,7 +10,6 @@ class MenuModel extends Backbone.Model
             'contact'
         ]
         loggedIn: [
-            'dashboard'
             'inbox'
             'settings'
             'contact'
@@ -23,7 +22,7 @@ class MenuModel extends Backbone.Model
         login: { icon: 'sign-in' }
         terms: { icon: 'pencil-square-o' }
         contact: { icon: 'envelope' }
-        dashboard: { icon: 'tachometer' }
+        # dashboard: { icon: 'tachometer' }
         inbox: { icon: 'inbox' }
         settings: { icon: 'cog' }
         logout: { icon: 'sign-out' }

@@ -20,14 +20,14 @@ class LoginView extends FormView
 
     beforeInitialize: ->
         if @isLoggedIn()
-            return Backbone.history.navigate('/dashboard')
+            return Backbone.history.navigate('/')
 
         @listenTo(@model, 'login', @login)
         @listenTo(@model, 'loginError', @loginError)
 
     login: ->
         # Hard redirect to get the cookie
-        window.location = '/dashboard'
+        window.location = '/'
 
     loginError: (errors) =>
         @invalid(undefined, errors)
