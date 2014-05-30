@@ -83,3 +83,8 @@ Working with the UI
 
     cd ~/Sites/sagefy/ui
     gulp
+
+Push gh-pages to Github Pages
+-----------------------------
+
+    git subtree push --prefix gh-pages origin gh-pages
