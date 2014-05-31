@@ -84,7 +84,6 @@ We Intend to Use
     - [Mandrill](http://mandrill.com/), then [Postfix](http://www.postfix.org/)
 - UI
     - JS error reporting _TODO_
-    - [Codo](https://github.com/coffeedoc/codo)
     - [D3.js](http://d3js.org/)
     - Script utilities - _TODO_ [Select2](http://ivaynberg.github.io/select2/), [Moment](http://momentjs.com/), [Uglify](https://github.com/mishoo/UglifyJS), [Intro.js](http://usablica.github.io/intro.js/), [Selectize](http://brianreavis.github.io/selectize.js/), [Backgrid](http://backgridjs.com/), [Listjs](http://listjs.com/), [Dynatable.js](http://www.dynatable.com/)
     - Markdown; Add extensions for [Math](http://www.mathjax.org/), Footnotes, [Tables](https://github.com/chjj/marked#tables), Code, [Graphviz Dot](https://github.com/mdaines/viz.js), [Media Embeds](http://sloblog.io/+sloblog/qhdsk2SMoAU/sloblog-dot-io-easy-oembed-powered-media-embeds), and Definition Lists

@@ -1,8 +1,13 @@
 gulp = require("gulp")
+gutil = require('gulp-util')
 gulpLoadPlugins = require("gulp-load-plugins")
 plugins = gulpLoadPlugins()
 run = require('run-sequence')
-codo = require('codo')
+browserify = require('browserify')
+watchify = require('watchify')
+source = require('vinyl-source-stream')
+_ = require('underscore')
+prettyHrtime = require('pretty-hrtime')
 
 dist = 'distribution/'
 staticSrc = ['images/*', 'statics/*']
@@ -13,34 +18,18 @@ gulp.task('default', ['watch'])
 
 #####
 
-gulp.task('build', ->
+gulp.task('watch', ->
     run(
         'clean'
         [
-            'copy:static'
-            'copy:fonts'
-            'styles:doc'
-            'styles:app'
-            'scripts:app'
-            # 'scripts:doc'
+            'static:build'
+            'styles:build'
+            'scripts:build'
         ]
-    )
-)
-
-gulp.task('watch', ['build'], ->
-    gulp.watch(
-        staticSrc
-        ['copy:static']
-    )
-    gulp.watch(
-        ['styles/*.styl', 'styles/**/*.styl']
-        ['styles:app', 'styles:doc']
-    )
-    gulp.watch(
-        coffeeSrc.concat(hbsSrc)
         [
-            'scripts:app'
-            # 'scripts:doc'
+            'static:watch'
+            'styles:watch'
+            'scripts:watch'
         ]
     )
 )
@@ -49,27 +38,26 @@ gulp.task('deploy', ->
     run(
         'clean'
         [
-            'copy:static'
-            'copy:fonts'
-            'styles:doc'
-            'styles:app'
-            'scripts:app'
-            # 'scripts:doc'
+            'static:build'
+            'styles:build'
+            'scripts:build'
         ]
         [
-            'minify-css'
-            'uglify'
+            'styles:compress'
+            'scripts:compress'
         ]
     )
 )
 
 gulp.task('test', ->
     run(
+        'clean'
         [
-            'build'
-            'scripts:test'
+            'static:build'
+            'styles:build'
+            'scripts:build'
         ]
-        'mocha-phantomjs'
+        'scripts:test'
     )
 )
 
@@ -80,20 +68,25 @@ gulp.task('clean', ->
         .pipe(plugins.clean())
 )
 
-gulp.task('copy:static', ->
+gulp.task('static:build', ->
     gulp.src(staticSrc)
         .pipe(gulp.dest(dist))
-)
-
-gulp.task('copy:fonts', ->
     gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.*')
         .pipe(gulp.dest(dist + 'fonts/'))
 )
 
-gulp.task('styles:app', ->
+gulp.task('static:watch', ->
+    gulp.watch(
+        staticSrc
+        ['static:build']
+    )
+)
+
+gulp.task('styles:build', ->
     gulp.src('styles/app.styl')
-        .pipe(plugins.stylus({ set: ['include css'] }))
+        .pipe(plugins.stylus({set: ['include css']}))
         .pipe(gulp.dest(dist))
+    run('styles:doc')
 )
 
 gulp.task('styles:doc', ->
@@ -104,14 +97,52 @@ gulp.task('styles:doc', ->
     )
 )
 
-gulp.task('scripts:app', ->
-    gulp.src('scripts/app.coffee', { read: false })
-        .pipe(plugins.browserify({
-            transform: ['coffeeify', 'hbsfy']
-            extensions: ['.js', '.coffee', '.hbs']
-            debug: true
-        }))
-        .pipe(plugins.rename('app.js'))
+gulp.task('styles:compress', ->
+    gulp.src(dist + 'app.css')
+        .pipe(plugins.minifyCss())
+        .pipe(gulp.dest(dist))
+)
+
+gulp.task('styles:watch', ->
+    gulp.watch(
+        ['styles/*.styl', 'styles/**/*.styl']
+        ['styles:build']
+    )
+)
+
+browserifyConfig = {
+    entries: ['./scripts/app.coffee']
+    extensions: ['.js', '.coffee', '.hbs']
+    debug: true
+}
+
+gulp.task('scripts:build', ->
+    browserify(browserifyConfig)
+        .bundle()
+        .pipe(source('app.js'))
+        .pipe(gulp.dest(dist))
+)
+
+gulp.task('scripts:watch', ->
+    bundle = watchify(browserifyConfig)
+    rebundle = ->
+        startTime = process.hrtime()
+        bundle
+            .bundle()
+            .pipe(source('app.js'))
+            .pipe(gulp.dest(dist))
+        endTime = prettyHrtime(process.hrtime(startTime))
+        gutil.log(
+            'Finished', gutil.colors.cyan("'scripts:watch'"),
+            'after', gutil.colors.magenta(endTime)
+        )
+    bundle.on('update', rebundle)
+    return rebundle()
+)
+
+gulp.task('scripts:compress', ->
+    gulp.src(dist + 'app.js')
+        .pipe(plugins.uglify())
         .pipe(gulp.dest(dist))
 )
 
@@ -119,27 +150,6 @@ gulp.task('scripts:test', ->
     gulp.src(coffeeSrc)
         .pipe(plugins.coffeelint())
         .pipe(plugins.coffeelint.reporter('fail'))
-)
 
-gulp.task('scripts:doc', ->
-    codo.parseProject('scripts/', {
-        output: dist + 'doc/'
-        name: 'Sagefy'
-    })
-)
-
-gulp.task('minify-css', ->
-    gulp.src(dist + 'app.css')
-        .pipe(plugins.minifyCss())
-        .pipe(gulp.dest(dist))
-)
-
-gulp.task('uglify', ->
-    gulp.src(dist + 'app.js')
-        .pipe(plugins.uglify())
-        .pipe(gulp.dest(dist))
-)
-
-gulp.task('mocha-phantomjs', ->
     # plugins.mochaPhantomjs()
 )
