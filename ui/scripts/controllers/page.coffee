@@ -14,10 +14,12 @@ class PageController extends Controller
             $region: @$page
         }, options.viewOptions))
 
-    beforeClose: ->
+    close: ->
         if _.isFunction(@view.close)
             @view.close()
 
         @view.remove()
+
+        super()
 
 module.exports = PageController

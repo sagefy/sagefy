@@ -1,6 +1,6 @@
 Backbone = require('backbone')
+BaseRouter = require('./base')
 $ = require('jquery')
-_ = require('underscore')
 
 PageController = require('../controllers/page')
 
@@ -19,16 +19,16 @@ SignupView = require('../views/signup')
 CreatePasswordView = require('../views/create_password')
 ErrorView = require('../views/error')
 
-class PrimaryRouter extends Backbone.Router
+class PrimaryRouter extends BaseRouter
     routes: {
-        'styleguide': 'viewStyleguide'
-        'login': 'viewLogin'
-        'logout': 'viewLogout'
-        'signup': 'viewSignup'
-        'terms': 'viewTerms'
-        'contact': 'viewContact'
-        'settings': 'viewSettings'
-        'create_password': 'createPassword'
+        'styleguide(/)': 'viewStyleguide'
+        'login(/)': 'viewLogin'
+        'logout(/)': 'viewLogout'
+        'signup(/)': 'viewSignup'
+        'terms(/)': 'viewTerms'
+        'contact(/)': 'viewContact'
+        'settings(/)': 'viewSettings'
+        'create_password(/)': 'createPassword'
         '(/)': 'viewIndex'
         '*_': 'viewError'
     }
@@ -45,22 +45,6 @@ class PrimaryRouter extends Backbone.Router
             href = $(e.currentTarget).closest('a').attr('href')
             Backbone.history.navigate(href, {trigger: true})
         )
-
-        Backbone.history.start({pushState: true})
-
-    route: (route, name, callback) ->
-        prevCallback = callback || @[name]
-
-        callback = =>
-            if _.isFunction(@beforeRoute)
-                @beforeRoute()
-            prevCallback.call(this, arguments)
-
-        Backbone.Router.prototype.route.call(this, route, name, callback)
-
-    beforeRoute: ->
-        if @controller
-            @controller.close()
 
     viewError: ->
         @controller = new PageController({view: ErrorView})

@@ -1,16 +1,16 @@
 Backbone = require('backbone')
 _ = require('underscore')
 
-class Controller extends Backbone.Events
+class Controller
     constructor: (options) ->
+        # http://stackoverflow.com/a/11068223/1509526
+        _.extend(@, Backbone.Events)
+
         if _.isFunction(@initialize)
             @initialize(options)
 
     close: ->
-        if _.isFunction(@beforeClose)
-            @beforeClose()
-
-        # @stopListening()
-        # @off()
+        @stopListening()
+        @off()
 
 module.exports = Controller
