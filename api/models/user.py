@@ -277,3 +277,10 @@ users_roles = db.Table(
         db.Enum('admin', name='e5'),
     ),
 )
+
+users_watches = db.Table(
+    'users_watches',
+    db.Column('user_id', db.String(64), db.ForeignKey('users.id')),
+    db.Column('kind_tablename', db.String(64)),
+    db.Column('kind_id', db.String(64)),
+)

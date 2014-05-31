@@ -24,6 +24,7 @@ class PresentationVersion(db.Model):
         db.String(64),
         db.ForeignKey('objectives.id'),
     )
+    name = db.Column(db.String(256))
     canonical = db.Column(db.Boolean, default=False)
 
 
