@@ -6,7 +6,6 @@ run = require('run-sequence')
 browserify = require('browserify')
 watchify = require('watchify')
 source = require('vinyl-source-stream')
-_ = require('underscore')
 prettyHrtime = require('pretty-hrtime')
 
 dist = 'distribution/'
