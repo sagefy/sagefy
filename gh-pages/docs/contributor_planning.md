@@ -162,65 +162,217 @@ Contributor Models
 Contributor Screen Requirements
 -------------------------------
 
-
-### Contributor Dashboard
-
-- Notifications & Messages
-- Watched Objects
-
-### Contributor Search (System-wide)
-
-
--------
-
-_Object Screen Requirements_
+### Object Screen Requirements
 
 The following views are per type: Module, Component/Integration, Presentation, and Practice.
 
+These sections list the editable/viewable subcomponents per each type of object.
+
+#### Module Elements
+
+- language
+- name (title)
+- body (description)
+- contains
+    - modules
+    - components
+
+#### Component/Integration Elements
+
+- language
+- name (title)
+- body (description)
+- objectives (listed, ordered)
+- changes depending on being either component or integration
+    - kind
+    - prerequisites
+        - Component has zero to many prerequisites, must only be other components
+        - Integration must have exactly two prerequisites of either type
+
+#### Presentation Elements
+
+- language
+- kind
+- objective belongs to
+- video specific:
+    - name
+    - url
+    - duration
+- categories
+
+#### Practice Elements
+
+- language
+- kind
+- objective belongs to
+- multiple choice text
+    - attempts allowed
+    - max choices
+    - multiple correct (boolean)
+    - body (question)
+    - answer
+        - body (text)
+        - correct (boolean)
+        - feedback (text)
+- categories
+
+--------
+
+### Contributor Dashboard
+
+- Notifications
+    - TODO
+- Messages
+    - TODO
+- Watched
+    - Match search formatting
+- My Proposals
+    - TODO
+- My Discussions
+    - TODO
+- Link to search, list views
+
+### Contributor Search (System-wide)
+
+- Search box and button
+- No results mode
+- Results
+    - Infinite scroll
+    - Show type (explode out component/integration)
+    - Module: name
+    - Component: name
+    - Presentation::Video: name
+    - Practice::Multiple Choice::Text: body (question) ... truncated
+
 ### List, Search, Filter and Sort View
 
+- Search box and button
+- No results mode
+- List
+    - Infinite scroll
+- Order by
+    - Latest
+    - Watched
+    - Proposals
+    - Versions
+    - Most connections
+- Filter by
+    - Language
+    - ... TODO
+
 #### List Modules
+
+- List
+    - Show name, body (truncated), contains modules, components (truncated)
+
 #### List Components & Integrations
+
+- List
+    - Show name, kind, body (truncated), prereqs (truncated)
+
 #### List Presentations
+
+- List
+    - Video: show name, url (truncated), duration, categories (truncated)
+
 #### List Practices
+
+- List
+    - Multiple choice text: show body (question, truncated)
 
 ### Object View
 
-- List Children & Parents
+- TODO
+- Flag it
+    - Creates a proposal to delete by system
 
 #### View Module
+
+- TODO
+- List element modules and components
+- List parent modules
+
 #### View Component/Integration
 
+- TODO
+- List prerequisites
+- List prerequisite ofs
+- List modules belong to
 - List lost presentation/practice children (?)
 
 #### View Presentation
+
+- TODO
+- Show objective belongs to, component/integration belongs to
+
 #### View Practice
+
+- TODO
+- Show objective belongs to, component/integration belongs to
 
 ### List History View
 
+- TODO
+
 #### Module History
+
+- TODO
+
 #### Component/Integration History
+
+- TODO
+
 #### Presentation History
+
+- TODO
+
 #### Practice History
+
+- TODO
 
 ### Create and Edit Object View
 
 - Preview edit/create
 
 #### Post Module
+
+- TODO
+
 #### Post Component/Integration
+
+- TODO
+
 #### Post Presentation
+
+- TODO
+
 #### Post Practice
+
+- TODO
 
 ### Proposals View
 
+- TODO
+
 #### List Module Proposals
+
+- TODO
+
 #### List Component/Integration Proposals
+
+- TODO
+
 #### List Presentation Proposals
+
+- TODO
+
 #### List Practice Proposals
+
+- TODO
 
 ### Proposal View
 
+- TODO
 - Start with something very basic, e.g.
     - 2 points agree, 1 point consent, 0 point discuss, block on dissent
     - 10 points to accept
@@ -230,15 +382,34 @@ The following views are per type: Module, Component/Integration, Presentation, a
     - Activity and participation of proposer...
 
 #### Module Proposal View
+
+- TODO
+
 #### Component/Integration Proposal View
+
+- TODO
+
 #### Presentation Proposal View
+
+- TODO
+
 #### Practice Proposal View
+
+- TODO
 
 ### Search Discussion Threads
 
+- TODO
+
 ### List Discussion Threads (per Object)
+
+- TODO
 
 ### Discussion View
 
+- TODO
+
 Contributor Wireframes
 ----------------------
+
+TODO
