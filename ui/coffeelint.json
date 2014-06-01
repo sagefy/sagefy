@@ -97,8 +97,8 @@
     },
     "newlines_after_classes": {
         "name": "newlines_after_classes",
-        "value": 2,
-        "level": "error"
+        "value": 1,
+        "level": "warn"
     },
     "no_unnecessary_fat_arrows": {
         "name": "no_unnecessary_fat_arrows",

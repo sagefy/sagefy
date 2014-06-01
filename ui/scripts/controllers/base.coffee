@@ -4,7 +4,7 @@ _ = require('underscore')
 class Controller
     constructor: (options) ->
         # http://stackoverflow.com/a/11068223/1509526
-        _.extend(@, Backbone.Events)
+        _.extend(this, Backbone.Events)
 
         if _.isFunction(@initialize)
             @initialize(options)

@@ -7,6 +7,7 @@ browserify = require('browserify')
 watchify = require('watchify')
 source = require('vinyl-source-stream')
 prettyHrtime = require('pretty-hrtime')
+_ = require('underscore')
 
 dist = 'distribution/'
 staticSrc = ['images/*', 'statics/*']
@@ -54,9 +55,10 @@ gulp.task('test', ->
         [
             'static:build'
             'styles:build'
-            'scripts:build'
+            'scripts:test:lint'
+            'scripts:test:build'
         ]
-        'scripts:test'
+        'scripts:test:run'
     )
 )
 
@@ -145,10 +147,35 @@ gulp.task('scripts:compress', ->
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('scripts:test', ->
+gulp.task('scripts:test:build', ->
+    gulp.src([
+        'node_modules/mocha/mocha.css'
+        'node_modules/mocha/mocha.js'
+        'node_modules/chai/chai.js'
+        'node_modules/jquery/dist/jquery.js'
+        'node_modules/chai-jquery/chai-jquery.js'
+        'node_modules/sinon/pkg/sinon.js'
+        'node_modules/sinon-chai/lib/sinon-chai.js'
+    ])
+        .pipe(gulp.dest(dist))
+
+    config = _.extend({}, browserifyConfig)
+    config.entries = ['./tests/test.coffee']
+
+    browserify(config)
+        .bundle()
+        .pipe(source('test.js'))
+        .pipe(gulp.dest(dist))
+)
+
+gulp.task('scripts:test:lint', ->
     gulp.src(coffeeSrc)
         .pipe(plugins.coffeelint())
-        .pipe(plugins.coffeelint.reporter('fail'))
+        .pipe(plugins.coffeelint.reporter())
+        # send reporter('fail') to fail out
+)
 
-    # plugins.mochaPhantomjs()
+gulp.task('scripts:test:run', ->
+    gulp.src(dist + 'test.html')
+        .pipe(plugins.mochaPhantomjs({reporter: 'spec'}))
 )

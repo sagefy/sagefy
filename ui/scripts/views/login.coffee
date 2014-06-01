@@ -38,5 +38,4 @@ class LoginView extends FormView
 
     isLoggedIn: mixins.isLoggedIn
 
-
 module.exports =  LoginView

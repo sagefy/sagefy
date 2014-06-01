@@ -18,5 +18,4 @@ class LogoutView extends Backbone.View
 
     isLoggedIn: mixins.isLoggedIn
 
-
 module.exports = LogoutView

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Sagefy</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="app.css">
+        <link rel="stylesheet" href="mocha.css">
+        <link rel="shortcut icon" href="favicon.ico">
+    </head>
+    <body>
+        <div id="mocha"></div>
+        <div class="test"></div>
+        <script src="mocha.js"></script>
+        <script src="chai.js"></script>
+        <script src="jquery.js"></script>
+        <script src="chai-jquery.js"></script>
+        <script src="sinon.js"></script>
+        <script src="sinon-chai.js"></script>
+        <script>
+            mocha.setup('bdd');
+            window.expect = chai.expect;
+        </script>
+        <script src="test.js"></script>
+        <script>window.mochaPhantomJS ? mochaPhantomJS.run() : mocha.run()</script>
+    </body>
+</html>
