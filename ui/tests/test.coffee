@@ -16,7 +16,6 @@ window.expect = chai.expect
 require('./test_basic')
 require('./models/menu')
 require('./views/menu')
-
 # End include tests
 
 if window.mochaPhantomJS
