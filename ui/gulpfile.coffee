@@ -154,8 +154,6 @@ gulp.task('scripts:test:build', ->
         'node_modules/chai/chai.js'
         'node_modules/jquery/dist/jquery.js'
         'node_modules/chai-jquery/chai-jquery.js'
-        'node_modules/sinon/pkg/sinon.js'
-        'node_modules/sinon-chai/lib/sinon-chai.js'
     ])
         .pipe(gulp.dest(dist))
 
