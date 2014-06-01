@@ -1,7 +1,6 @@
 $ = require('jquery')
 Bb = require('backbone')
 _ = require('underscore')
-MenuModel = require('../models/menu')
 layoutTemplate = require('../../templates/components/menu/layout')
 itemTemplate = require('../../templates/components/menu/item')
 
@@ -19,8 +18,8 @@ class MenuView extends Bb.View
     itemTemplate: itemTemplate
     selected: false
 
-    initialize: ->
-        @model = new MenuModel
+    initialize: (options) ->
+        @model ||= options.model
         @listenTo(@model, 'changeState', @render)
         @render()
 

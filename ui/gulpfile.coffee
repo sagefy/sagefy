@@ -13,6 +13,7 @@ dist = 'distribution/'
 staticSrc = ['images/*', 'statics/*']
 hbsSrc = 'templates/**/*.hbs'
 coffeeSrc = ['scripts/*.coffee', 'scripts/**/*.coffee']
+testSrc = ['tests/*.coffee', 'tests/**/*.coffee']
 
 gulp.task('default', ['watch'])
 
@@ -167,7 +168,7 @@ gulp.task('scripts:test:build', ->
 )
 
 gulp.task('scripts:test:lint', ->
-    gulp.src(coffeeSrc)
+    gulp.src(coffeeSrc.concat(testSrc))
         .pipe(plugins.coffeelint())
         .pipe(plugins.coffeelint.reporter())
         # send reporter('fail') to fail out

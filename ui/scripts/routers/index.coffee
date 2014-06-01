@@ -4,6 +4,7 @@ $ = require('jquery')
 
 PageController = require('../controllers/page')
 
+MenuModel = require('../models/menu')
 UserModel = require('../models/user')
 
 MenuGlobalView = require('../views/menu--global')
@@ -34,7 +35,10 @@ class PrimaryRouter extends BaseRouter
     }
 
     initialize: ->
-        @menuGlobalView = new MenuGlobalView()
+        @menuModel = new MenuModel()
+        @menuGlobalView = new MenuGlobalView({
+            model: @menuModel
+        })
 
         # Create the page container
         $('body').prepend('<div class="page"></div>')
