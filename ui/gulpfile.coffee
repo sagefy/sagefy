@@ -152,9 +152,6 @@ gulp.task('scripts:test:build', ->
     gulp.src([
         'node_modules/mocha/mocha.css'
         'node_modules/mocha/mocha.js'
-        'node_modules/chai/chai.js'
-        'node_modules/jquery/dist/jquery.js'
-        'node_modules/chai-jquery/chai-jquery.js'
     ])
         .pipe(gulp.dest(dist))
 
