@@ -221,15 +221,15 @@ These sections list the editable/viewable subcomponents per each type of object.
 ### Contributor Dashboard
 
 - Notifications
-    - TODO
+    - Subject, time ago, read
 - Messages
-    - TODO
+    - From, subject, time ago, read
 - Watched
     - Match search formatting
 - My Proposals
-    - TODO
+    - Name, votes
 - My Discussions
-    - TODO
+    - Thread name, modified, messages
 - Link to search, list views
 
 ### Contributor Search (System-wide)
@@ -258,7 +258,7 @@ These sections list the editable/viewable subcomponents per each type of object.
     - Most connections
 - Filter by
     - Language
-    - ... TODO
+    - ...
 
 #### List Modules
 
@@ -282,19 +282,21 @@ These sections list the editable/viewable subcomponents per each type of object.
 
 ### Object View
 
-- TODO
+- Link to discussion
+- Link to history
+- Link to proposals
 - Flag it
     - Creates a proposal to delete by system
 
 #### View Module
 
-- TODO
+- See fields above
 - List element modules and components
 - List parent modules
 
 #### View Component/Integration
 
-- TODO
+- See fields above
 - List prerequisites
 - List prerequisite ofs
 - List modules belong to
@@ -302,112 +304,84 @@ These sections list the editable/viewable subcomponents per each type of object.
 
 #### View Presentation
 
-- TODO
+- See fields above
 - Show objective belongs to, component/integration belongs to
 
 #### View Practice
 
-- TODO
+- See fields above
 - Show objective belongs to, component/integration belongs to
 
 ### List History View
 
-- TODO
-
-#### Module History
-
-- TODO
-
-#### Component/Integration History
-
-- TODO
-
-#### Presentation History
-
-- TODO
-
-#### Practice History
-
-- TODO
+- Table layout
+    - proposal name
+    - proposal time
 
 ### Create and Edit Object View
 
+- language (create: select, edit: view)
 - Preview edit/create
-
-#### Post Module
-
-- TODO
-
-#### Post Component/Integration
-
-- TODO
-
-#### Post Presentation
-
-- TODO
-
-#### Post Practice
-
-- TODO
+- Fields: see above
+- Presentation/Practice:
+    - Kind selection changes fields available
 
 ### Proposals View
 
-- TODO
-
-#### List Module Proposals
-
-- TODO
-
-#### List Component/Integration Proposals
-
-- TODO
-
-#### List Presentation Proposals
-
-- TODO
-
-#### List Practice Proposals
-
-- TODO
+- object summary
+- list
+    - proposal name
+    - proposal time
+    - status
+    - votes
 
 ### Proposal View
 
-- TODO
-- Start with something very basic, e.g.
-    - 2 points agree, 1 point consent, 0 point discuss, block on dissent
-    - 10 points to accept
-- Later, list out other factors to consider in formula
-    - Age, activity, usage of object
-    - Activity and participation of voters
-    - Activity and participation of proposer...
-
-#### Module Proposal View
-
-- TODO
-
-#### Component/Integration Proposal View
-
-- TODO
-
-#### Presentation Proposal View
-
-- TODO
-
-#### Practice Proposal View
-
-- TODO
+- list of proposal blocks and messages
+    - Proposal block
+        - proposal name
+        - proposal body
+        - proposal action
+        - proposal decision
+    - Messages
+        - see below
+- Final block
+    - Write message
+    - Amend proposal (if owned)
+    - Vote block (if not owned)
+- Considerations
+    - Start with something very basic, e.g.
+        - 2 points agree, 1 point consent, 0 point discuss, block on dissent
+        - 10 points to accept
+    - Later, list out other factors to consider in formula
+        - Age, activity, usage of object
+        - Activity and participation of voters
+        - Activity and participation of proposer...
 
 ### Search Discussion Threads
 
-- TODO
+- Search box and button
+- Table
+    - Thread name
+    - Number of messages
+    - Last modified
 
 ### List Discussion Threads (per Object)
 
-- TODO
+- Same as table for search threads
 
 ### Discussion View
 
-- TODO
+- zebra striped cards in list
+    - user avatar
+    - username
+    - date time
+    - edited
+    - body
+    - actions (reply, +1, -1, own: edit)
+- infinite scroll
+- reverse chronological
+
 
 Contributor Wireframes
 ----------------------
