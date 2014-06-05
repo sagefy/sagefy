@@ -2,10 +2,7 @@
 MenuView = require('../../scripts/views/menu')
 
 
-describe('MenuView', ->
-    it.skip('should render its dom', ->
-
-    )
-
+describe.skip('MenuView', ->
+    it('should render its dom', ->)
 )
 
