@@ -1,0 +1,10 @@
+describe.skip('UserModel', ->
+    it('should define the appropriate fields', ->)
+    it('should validate the username field correctly', ->)
+    it('should validate the email address correctly', ->)
+    it('should validate the password field correctly', ->)
+    it('should login a user', ->)
+    it('should logout a user', ->)
+    it('should get a new password token', ->)
+    it('should update the password', ->)
+)
