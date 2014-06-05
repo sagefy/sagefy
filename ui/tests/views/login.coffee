@@ -1,6 +1,6 @@
 
 
-describe('login view', ->
+describe.skip('LoginView', ->
     before((done) ->
         # create a new user
     )
