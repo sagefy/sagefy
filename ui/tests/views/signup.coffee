@@ -1,6 +1,6 @@
 
 
-describe('signup view', ->
+describe.skip('SignupView', ->
     before((done) ->
         # ensure user removed
     )
