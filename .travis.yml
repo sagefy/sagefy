@@ -2,11 +2,11 @@ language: python
 python:
     - 2.7
 install:
-    - pip install -r setup/requirements.txt --use-mirrors
-    - npm install -g gulp; cd ui; npm install; cd ..
+    - pip install -r setup/requirements.txt
+    - npm install -g gulp && cd ui && npm install && cd ..
 script:
     - py.test api/tests/
-    - gulp test
+    - cd ui && gulp test && cd ui
 
 notifications:
     email: false
