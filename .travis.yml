@@ -1,19 +1,15 @@
 language: python
 python:
-    - "2.7"
-before_install:
-    - "cd api"
-install: pip install -r ../setup/requirements.txt --use-mirrors
-script: py.test api/tests/
-
-language: node_js
-node_js:
-    - "0.10"
-before_install:
-    - "cd ui"
-    - npm install -g gulp
-    - npm install
-script: gulp test
+    - 2.7
+install:
+    - pip install -r setup/requirements.txt --use-mirrors
+    - npm install -g gulp; cd ui; npm install; cd ..
+script:
+    - py.test api/tests/
+    - gulp test
 
 notifications:
     email: false
+
+after_success:
+    coveralls
