@@ -1,10 +1,13 @@
 $ = require('jquery')
-Bb = require('backbone')
+Backbone = require('backbone')
+Backbone.$ = $
 _ = require('underscore')
 layoutTemplate = require('../../templates/components/menu/layout')
 itemTemplate = require('../../templates/components/menu/item')
 
-class MenuView extends Bb.View
+# A menu component, creates an icon and on click, displays
+# an iOS style list of options
+class MenuView extends Backbone.View
     $body: $('body')
     $page: $('.page')
     className: 'menu'
@@ -20,26 +23,35 @@ class MenuView extends Bb.View
 
     initialize: (options) ->
         @model ||= options.model
+        # When we update the model, update the view
         @listenTo(@model, 'changeState', @render)
         @render()
 
+    # Render the layout if needed
+    # then render the state of the model
     render: ->
         if ! @$layout
-            @_renderLayout()
-        @_renderItems()
+            @renderLayout()
+        @renderItems()
 
-    _renderLayout: ->
+    # Produces the basic HTML for the menu
+    renderLayout: ->
         @$el.html(@layoutTemplate())
         @$items = @$el.find('.menu__items')
         @$body.prepend(@$el)
 
-    _renderItems: ->
+    # Produces the model specific HTML
+    renderItems: ->
+        # Reduce will automatically concat all the template
+        # strings for the menu
         html = _.reduce(@model.items(), (memo, item) =>
             return memo + @itemTemplate(item)
         , '')
 
         @$items.html(html)
 
+    # Open if closed, close if opened
+    # Keeps track of own state
     toggle: (e) ->
         if e
             e.preventDefault()
@@ -47,6 +59,9 @@ class MenuView extends Bb.View
         @selected = ! @selected
         @$el.toggleClass('selected', @selected)
 
+    # When a menu item is selected,
+    # First clear out the current page
+    # So that we don't get distracted by it
     select: (e) ->
         @$page.empty()
         @toggle()

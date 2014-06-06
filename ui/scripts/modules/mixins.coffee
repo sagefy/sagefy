@@ -1,5 +1,6 @@
 _ = require('underscore')
 $ = require('jquery')
+require('jquery.cookie')
 
 formData = ($form) ->
     _($form.serializeArray()).reduce((obj, field) ->
