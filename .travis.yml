@@ -6,7 +6,7 @@ install:
     - npm install -g gulp && cd ui && npm install && cd ..
 script:
     - py.test api/tests/
-    - cd ui && gulp test && cd ui
+    - cd ui && gulp test && cd ..
 
 notifications:
     email: false
