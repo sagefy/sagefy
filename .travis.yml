@@ -4,7 +4,7 @@ python:
 before_install:
     - "cd api"
 install: pip install -r ../setup/requirements.txt --use-mirrors
-script:
+script: py.test api/tests/
 
 language: node_js
 node_js:
@@ -13,6 +13,7 @@ before_install:
     - "cd ui"
     - npm install -g gulp
     - npm install
+script: gulp test
 
 notifications:
     email: false
