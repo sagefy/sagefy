@@ -1,11 +1,11 @@
 
 
-describe.skip('LoginView', ->
-    before((done) ->
+describe.skip('Login View', ->
+    before(->
         # create a new user
     )
 
-    after((done) ->
+    after(->
         # remove created user
     )
 

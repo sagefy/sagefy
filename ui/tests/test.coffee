@@ -14,8 +14,28 @@ window.expect = chai.expect
 
 # Include tests here
 require('./test_basic')
+
+require('./modules/hbs_helpers')
+require('./modules/mixins')
+
+require('./routers/base')
+require('./routers/index')
+
+require('./controllers/base')
+
 require('./models/menu')
+require('./models/user')
+
+require('./views/create_password')
+require('./views/error')
+require('./views/form')
+require('./views/index')
+require('./views/login')
+require('./views/logout')
 require('./views/menu')
+require('./views/settings')
+require('./views/signup')
+require('./views/styleguide')
 # End include tests
 
 if window.mochaPhantomJS
