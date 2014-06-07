@@ -21,13 +21,16 @@ class StyleguideView extends Backbone.View
 
     render: ->
         document.title = 'Sagefy - Style Guide and Component Library.'
+        # Add both base template and Styleguide compiled HTML
         @$el.html(@template())
             .append(@template2())
         @$region.html(@$el)
 
+    # Empty-ish links should go nowhere when clicked
     cancel: ->
         return false
 
+    # External links should automatically open in a new window
     openInNewWindow: (e) ->
         $target = $(e.target).closest('a')
         $target[0].target = '_blank'
