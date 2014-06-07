@@ -9,13 +9,15 @@ class ErrorView extends Backbone.View
 
     initialize: (options) ->
         @$region = options.$region
+        @code = options.code
+        @message = options.message
         @render()
 
     render: ->
         document.title = 'Error'
         @$el.html(@template({
-            code: 404
-            message: 'Not Found'
+            code: @code
+            message: @message
         }))
         @$region.html(@$el)
 

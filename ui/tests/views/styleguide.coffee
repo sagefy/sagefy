@@ -8,6 +8,7 @@ describe('Styleguide View', ->
     )
 
     after(->
+        @$test.empty()
         @view.remove()
     )
 

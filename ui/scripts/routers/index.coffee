@@ -51,7 +51,13 @@ class PrimaryRouter extends BaseRouter
         )
 
     viewError: ->
-        @controller = new PageController({view: ErrorView})
+        @controller = new PageController({
+            view: ErrorView
+            viewOptions: {
+                code: 404
+                message: 'Not Found'
+            }
+        })
 
     viewIndex: ->
         @controller = new PageController({view: IndexView})
