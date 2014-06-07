@@ -30,6 +30,7 @@ describe('Mixins', ->
         expect(mixins.isLoggedIn()).to.be.true
         $.cookie('logged_in', '0', {expires: 7, path: '/'})
         expect(mixins.isLoggedIn()).to.be.false
+        $.removeCookie('logged_in')
     )
 
     it('should parse an Ajax error', ->
