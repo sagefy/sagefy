@@ -10,7 +10,7 @@ Development Checklist
 
 For each pull request, ensure the following:
 
-- General follows [code styleguide](/docs/code_styleguide).
+- General follows [code styleguide](/code_styleguide).
 - Each method is documented according to the system for the given domain
 - Code passes used linters
 - Passes existing automated tests (run CI automatically on pull requests)
@@ -27,11 +27,11 @@ We Use
     - [uWSGI](http://uwsgi-docs.readthedocs.org/en/latest/)
     - [Nginx](http://wiki.nginx.org/Main)
 - Databases
-    - [PostgreSQL](http://www.postgresql.org/docs/9.1/interactive/index.html)
+    - [PostgreSQL](http://www.postgresql.org/9.1/interactive/index.html)
     - [Redis](http://redis.io/documentation)
 - API
     - [pip](https://pypi.python.org/pypi/pip)
-    - [Python 2.7](http://docs.python.org/2.7/)
+    - [Python 2.7](http:/.python.org/2.7/)
     - [Flask](http://flask.pocoo.org/)
     - [SQLAlchemy](http://www.sqlalchemy.org/)
         - [Flask-SQLAlchemy](http://pythonhosted.org/Flask-SQLAlchemy/)
@@ -65,7 +65,7 @@ We Intend to Use
 
 - Building and Serving
     - [Ansible](http://www.ansible.com/)
-    - [Fabric](http://docs.fabfile.org/en/1.8/)
+    - [Fabric](http:/.fabfile.org/en/1.8/)
     - [TravisCI](https://travis-ci.org/) or [Semaphore](https://semaphoreapp.com/) or [Scrutinizer](https://scrutinizer-ci.com/)  _TODO:_ Choose one
     - [DavidDM](https://david-dm.org/)
     - [Pingdom](https://www.pingdom.com/)
@@ -159,4 +159,4 @@ Routing
 
 ### External applications
 
-- `/blog`, `/support`, `/questions`, `/feedback`, `/docs`, `/api/docs`
+- `/blog`, `/support`, `/questions`, `/feedback`

@@ -1,5 +1,5 @@
 <header>
-    <img src="/docs/static/astrolabe.svg" alt="astrolabe" height="84" class="large" />
+    <img src="/astrolabe.svg" alt="astrolabe" height="84" class="large" />
     <hgroup>
         <div class="title">Sagefy</div>
         <div class="description">Adaptive, collaborative, and open learning platform.</div>
@@ -14,14 +14,14 @@
 
 #### Documents
 
-- [Overview](/docs/overview.html)
-- [Data structure](/docs/data_structure.html)
-- [User processes](/docs/user_processes.html)
-- [Survey of Learning Research](/docs/survey_of_learning_research.html)
-- [Machine learning application](/docs/machine_learning_application.html)
-- [Technology](/docs/technology.html)
-- [Development Plan](/docs/development_plan.html)
-- [Reference](/docs/reference.html)
+- [Overview](/overview.html)
+- [Data structure](/data_structure.html)
+- [User processes](/user_processes.html)
+- [Survey of Learning Research](/survey_of_learning_research.html)
+- [Machine learning application](/machine_learning_application.html)
+- [Technology](/technology.html)
+- [Development Plan](/development_plan.html)
+- [Reference](/reference.html)
 
 ---
 

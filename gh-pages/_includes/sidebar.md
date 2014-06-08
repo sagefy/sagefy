@@ -1,5 +1,5 @@
 <header>
-    <img src="/docs/static/astrolabe.svg" alt="astrolabe" height="84" class="large" />
+    <img src="/astrolabe.svg" alt="astrolabe" height="84" class="large" />
     <hgroup>
         <div class="title">Sagefy</div>
         <div class="description">Adaptive, collaborative, and open learning platform.</div>
@@ -17,14 +17,14 @@
 <h4 id="documents">Documents</h4>
 
 <ul>
-    <li><a href="/docs/overview">Overview</a></li>
-    <li><a href="/docs/data_structure">Data Structure</a></li>
-    <li><a href="/docs/user_processes">User Processes</a></li>
-    <li><a href="/docs/survey_of_learning_research">Survey of Learning Research</a></li>
-    <li><a href="/docs/machine_learning_application">Machine Learning Application</a></li>
-    <li><a href="/docs/technology">Technology</a></li>
-    <li><a href="/docs/development_plan">Development Plan</a></li>
-    <li><a href="/docs/reference">Reference</a></li>
+    <li><a href="/overview">Overview</a></li>
+    <li><a href="/data_structure">Data Structure</a></li>
+    <li><a href="/user_processes">User Processes</a></li>
+    <li><a href="/survey_of_learning_research">Survey of Learning Research</a></li>
+    <li><a href="/machine_learning_application">Machine Learning Application</a></li>
+    <li><a href="/technology">Technology</a></li>
+    <li><a href="/development_plan">Development Plan</a></li>
+    <li><a href="/reference">Reference</a></li>
 </ul>
 
 <hr />

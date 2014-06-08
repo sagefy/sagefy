@@ -26,7 +26,7 @@ Python
 - In general, we use [Flake8](https://flake8.readthedocs.org/en/2.0/) for Python formatting.
     - Flake8 is the merger of [pep8](https://github.com/jcrocholl/pep8) and [PyFlakes](https://launchpad.net/pyflakes).
 - Methods should be no longer than 12 statements.
-- See [RESTish](/docs/restish).
+- See [RESTish](/restish).
 - DocStrings should follow [NumPy convention]().
 - _TODO_: URL formatting.
 - _TODO_: Query parameter formatting.

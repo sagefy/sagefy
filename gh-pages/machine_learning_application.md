@@ -7,7 +7,7 @@ This document covers the algorithms and strategies that will be applied to Sagef
 
 All of these questions ask about how machine learning and other algorithmic methods can be applied to these problems. Other methods, such as manual, community, or mechanical turks are best left to other sections of the documentation.
 
-Also see [Machine Learning Notes](/docs/machine_learning_notes).
+Also see [Machine Learning Notes](/machine_learning_notes).
 
 Information
 -----------
