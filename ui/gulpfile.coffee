@@ -23,11 +23,6 @@ gulp.task('watch', ->
     run(
         'clean'
         [
-            'static:build'
-            'styles:build'
-            'scripts:build'
-        ]
-        [
             'static:watch'
             'styles:watch'
             'scripts:watch'
@@ -40,10 +35,6 @@ gulp.task('deploy', ->
         'clean'
         [
             'static:build'
-            'styles:build'
-            'scripts:build'
-        ]
-        [
             'styles:compress'
             'scripts:compress'
         ]
@@ -53,13 +44,10 @@ gulp.task('deploy', ->
 gulp.task('test', ->
     run(
         'clean'
-        'styles:build'
         [
-            'static:build'
             'scripts:test:lint'
-            'scripts:test:build'
+            'scripts:test:run'
         ]
-        'scripts:test:run'
     )
 )
 
@@ -77,7 +65,7 @@ gulp.task('static:build', ->
         .pipe(gulp.dest(dist + 'fonts/'))
 )
 
-gulp.task('static:watch', ->
+gulp.task('static:watch', ['static:build'], ->
     gulp.watch(
         staticSrc
         ['static:build']
@@ -88,24 +76,24 @@ gulp.task('styles:build', ->
     gulp.src('styles/app.styl')
         .pipe(plugins.stylus({set: ['include css']}))
         .pipe(gulp.dest(dist))
-    run('styles:doc')
 )
 
-gulp.task('styles:doc', ->
+gulp.task('styles:doc', (done) ->
     yms = require('ym-styleguide')
     fs = require('fs')
     yms.build('styles/', (html) ->
-        fs.writeFile('templates/sections/styleguide/compiled.hbs', html)
+        fs.writeFileSync('templates/sections/styleguide/compiled.hbs', html)
+        done()
     )
 )
 
-gulp.task('styles:compress', ->
+gulp.task('styles:compress', ['styles:build'], ->
     gulp.src(dist + 'app.css')
         .pipe(plugins.minifyCss())
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('styles:watch', ->
+gulp.task('styles:watch', ['styles:build'], ->
     gulp.watch(
         ['styles/*.styl', 'styles/**/*.styl']
         ['styles:build']
@@ -118,14 +106,14 @@ browserifyConfig = {
     debug: true
 }
 
-gulp.task('scripts:build', ->
+gulp.task('scripts:build', ['styles:doc'], ->
     browserify(browserifyConfig)
         .bundle()
         .pipe(source('app.js'))
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('scripts:watch', ->
+gulp.task('scripts:watch', ['scripts:build'], ->
     bundle = watchify(browserifyConfig)
     rebundle = ->
         startTime = process.hrtime()
@@ -142,13 +130,13 @@ gulp.task('scripts:watch', ->
     return rebundle()
 )
 
-gulp.task('scripts:compress', ->
+gulp.task('scripts:compress', ['scripts:build'], ->
     gulp.src(dist + 'app.js')
         .pipe(plugins.uglify())
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('scripts:test:build', ->
+gulp.task('scripts:test:build', ['styles:doc'], ->
     gulp.src([
         'node_modules/mocha/mocha.css'
         'node_modules/mocha/mocha.js'
@@ -171,7 +159,11 @@ gulp.task('scripts:test:lint', ->
         # send reporter('fail') to fail out
 )
 
-gulp.task('scripts:test:run', ->
+gulp.task('scripts:test:run', [
+    'styles:build'
+    'static:build'
+    'scripts:test:build'
+], ->
     gulp.src(dist + 'test.html')
         .pipe(plugins.mochaPhantomjs({reporter: 'spec'}))
 )
