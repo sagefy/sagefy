@@ -53,9 +53,9 @@ gulp.task('deploy', ->
 gulp.task('test', ->
     run(
         'clean'
+        'styles:build'
         [
             'static:build'
-            'styles:build'
             'scripts:test:lint'
             'scripts:test:build'
         ]
