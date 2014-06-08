@@ -74,7 +74,10 @@ gulp.task('static:watch', ['static:build'], ->
 
 gulp.task('styles:build', ->
     gulp.src('styles/app.styl')
-        .pipe(plugins.stylus({set: ['include css']}))
+        .pipe(plugins.stylus({
+            set: ['include css']
+            errors: true
+        }))
         .pipe(gulp.dest(dist))
 )
 
@@ -96,7 +99,7 @@ gulp.task('styles:compress', ['styles:build'], ->
 gulp.task('styles:watch', ['styles:build'], ->
     gulp.watch(
         ['styles/*.styl', 'styles/**/*.styl']
-        ['styles:build']
+        ['styles:build', 'scripts:build']
     )
 )
 

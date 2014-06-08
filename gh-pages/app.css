@@ -170,7 +170,7 @@ table {
   border-spacing: 0;
 }
 .base-font {
-  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", "lucida bright", georgia, serif;
+  font-family: "helvetica neue", helvetica, arial, sans-serif;
 }
 .monospace,
 pre,
@@ -204,11 +204,11 @@ body,
 input,
 textarea,
 select {
-  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", "lucida bright", georgia, serif;
+  font-family: "helvetica neue", helvetica, arial, sans-serif;
 }
 body {
   color: #343115;
-  background: #fcfcfa url("fcfcfa.png");
+  background: #fcfcfa;
   font-size: 16px;
   line-height: 1.5;
 }
@@ -220,7 +220,7 @@ a {
   -o-transition: color 0.2s;
   transition: color 0.2s;
   text-decoration: none;
-  border-bottom: 1px dashed #51abcd;
+  border-bottom: 1px solid #51abcd;
 }
 a:hover,
 a.hover,
@@ -372,7 +372,7 @@ mark {
   border-radius: 2px;
 }
 abbr {
-  border-bottom: 1px dashed #aaa354;
+  border-bottom: 1px solid #aaa354;
 }
 code {
   color: #6c6733;
@@ -1490,7 +1490,7 @@ form label .optional {
   color: #aaa354;
 }
 fieldset {
-  border: 1px dashed #cbc475;
+  border: 1px solid #cbc475;
   margin: 0;
   padding: 0 1em;
   -webkit-border-radius: 2px;

@@ -45,6 +45,7 @@
     "run-sequence": "^0.3.6",
     "sinon": "~1.10.0",
     "sinon-chai": "~2.5.0",
+    "stylus": "^0.46.2",
     "underscore": "~1.6.0",
     "vinyl-source-stream": "^0.1.1",
     "watchify": "^0.10.2",

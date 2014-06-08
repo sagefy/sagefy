@@ -13,7 +13,7 @@ html, body, input, textarea, select
 
 body
     color $gold-20
-    background $gold-99 url('fcfcfa.png')
+    background $gold-99
     font-size $font-size
     line-height unit(($unit * 2) / $font-size, "")
 
@@ -41,7 +41,7 @@ a
     color $blue-66
     transition color 0.2s
     text-decoration none
-    border-bottom 1px dashed $blue-66
+    border-bottom 1px solid $blue-66
 
     &:hover, &.hover, &:focus, &.focus
         color $blue-78
@@ -234,7 +234,7 @@ mark
     border-radius $border-radius
 
 abbr
-    border-bottom 1px dashed $gold-66
+    border-bottom 1px solid $gold-66
 
 pre, samp, code, kbd
     @extend .monospace
@@ -343,10 +343,8 @@ title: Programming Code and Preformatted Elements
 description: |
     Preformatted element defaults to use monospaced fonts. Computer code is syntax highlighted based on language.
 
-    - [SyntaxHighligher](http://alexgorbatchev.com/SyntaxHighlighter/)
-    - [Rainbows](http://craig.is/making/rainbows)
-    - [Highlight](http://softwaremaniacs.org/soft/highlight/en/)
-    - [PrismJS](http://prismjs.com/)
+    - [Highlight.js](http://highlightjs.org/)
+
 elements:
     - pre
 example: >
