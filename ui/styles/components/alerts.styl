@@ -10,7 +10,6 @@ modifiers:
     - default
     - accept
     - accent
-    - official
 example: |
     <div class="alert--error">
         We are sorry, but an error has occurred. Please reload the page.
@@ -28,11 +27,6 @@ example: |
     </div>
 
     <div class="alert--accent">
-        We are sorry, but an error has occurred. Please reload the page.
-        <a href="#" class="alert__close">Close</a>
-    </div>
-
-    <div class="alert--official">
         We are sorry, but an error has occurred. Please reload the page.
         <a href="#" class="alert__close">Close</a>
     </div>
@@ -88,13 +82,3 @@ example: |
     .alert__close
         color $blue-43
         border-color $blue-43
-
-.alert--admin,
-.alert--official
-    @extend .alert
-    background $purple-90
-    color $purple-43
-
-    .alert__close
-        color $purple-43
-        border-color $purple-43

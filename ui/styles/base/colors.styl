@@ -2,19 +2,14 @@
 ---
 title: Colors
 description: |
-    Sagefy uses a color scheme derived from [HUSLp](http://boronine.com/husl/), which corrects issues with HSL, CIE-based color schemes, and HUSL itself at the price of highly saturated colors. 5 primary hues are used by Sagefy.
+    Four primary hues are used by Sagefy. All are generated via [huslp](http://www.boronine.com/husl/) at 100% saturation.
 
-    - 9&deg; &ndash; Red. Reserved for errors, danger, major issues, or to provide warmth.
-    - 81&deg; &ndash; Gold. Serves as the base hue. Useful for warning states. Where possible use this hue over red.
-    - 153&deg; &ndash; Green. Useful for success and acceptance states.
-    - 225&deg; &ndash; Blue. Indicates a clickable element or navigation element. Also an accent color when no other is applicable.
-    - 297&deg; &ndash; Purple. Represents authority and acceptance. Can also represent official statements and figures.
+    - **Gold**. 80&deg; Serves as the base hue. Also ndicates warning.
+    - **Blue**. 240&deg; -- Indicates a clickable element or navigation element. Also an accent color when no other is applicable.
+    - **Green**. 120&deg; -- Useful for success and acceptance states.
+    - **Red**. 0&deg; -- Reserved for errors, danger, major issues, or to provide warmth.
 
-    Other hues can be used, particularly when hue is a linear function, such as a progress bar color.
-
-    **Saturation**. Sagefy defaults to using the full saturation available (100%) at any particular hue. Desaturation is available particularly at disabled states, and multiple of 20% are preferred for such states.
-
-    **Lightness**. Any lightness values may be used. Sagefy recommends against values darker than 20%. Default to 20%, 43%, 66%, 78%, 90%, 95%, and 99% where applicable.
+    **Lightness**. Any lightness values may be used. Sagefy recommends against values darker than 20%. Default to 20%, 43%, 66%, 78%, 90%, 95%, 97%, and 99% where applicable.
 
 example: |
     <table class="color-table">
@@ -27,59 +22,54 @@ example: |
                 <th>78%</th>
                 <th>90%</th>
                 <th>95%</th>
+                <th>97%</th>
                 <th>99%</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>9&deg;</td>
-                <td style="background:#44292a"></td>
-                <td style="background:#8b585b"></td>
-                <td style="background:#d98b90"></td>
-                <td style="background:#fdabb0"></td>
-                <td style="background:#fedadb"></td>
-                <td style="background:#ffeced"></td>
-                <td style="background:#fffbfb"></td>
-            </tr>
-            <tr>
-                <td>81&deg;</td>
+                <td>Gold</td>
                 <td style="background:#343115"></td>
                 <td style="background:#6c6733"></td>
-                <td style="background:#aaa354"></td>
-                <td style="background:#cbc475"></td>
+                <td style="background:#aba354"></td>
+                <td style="background:#ccc375"></td>
                 <td style="background:#e7e3c7"></td>
                 <td style="background:#f3f1e4"></td>
-                <td style="background:#fcfcfa"></td>
+                <td style="background:#f8f7ef"></td>
+                <td style="background:#fdfcfa"></td>
             </tr>
             <tr>
-                <td>153&deg;</td>
-                <td style="background:#0f3728"></td>
-                <td style="background:#287256"></td>
-                <td style="background:#44b389"></td>
-                <td style="background:#68d5a9"></td>
-                <td style="background:#c5ebd9"></td>
-                <td style="background:#e3f5ec"></td>
-                <td style="background:#f9fdfb"></td>
+                <td>Blue</td>
+                <td style="background:#1f3243"></td>
+                <td style="background:#456988"></td>
+                <td style="background:#6fa6d4"></td>
+                <td style="background:#90c6f7"></td>
+                <td style="background:#d2e4fa"></td>
+                <td style="background:#e9f2fc"></td>
+                <td style="background:#f2f7fd"></td>
+                <td style="background:#fbfcfe"></td>
             </tr>
             <tr>
-                <td>225&deg;</td>
-                <td style="background:#143440"></td>
-                <td style="background:#316d83"></td>
-                <td style="background:#51abcd"></td>
-                <td style="background:#75ccef"></td>
-                <td style="background:#cae7f6"></td>
-                <td style="background:#e6f3fa"></td>
-                <td style="background:#fafcfe"></td>
+                <td>Green</td>
+                <td style="background:#22351c"></td>
+                <td style="background:#4c6e3f"></td>
+                <td style="background:#7aae67"></td>
+                <td style="background:#99cf87"></td>
+                <td style="background:#d2e9cc"></td>
+                <td style="background:#e9f4e6"></td>
+                <td style="background:#f2f8f0"></td>
+                <td style="background:#fbfdfa"></td>
             </tr>
             <tr>
-                <td>297&deg;</td>
-                <td style="background:#3c2a42"></td>
-                <td style="background:#7b5a86"></td>
-                <td style="background:#c18ed1"></td>
-                <td style="background:#e3aef4"></td>
-                <td style="background:#f0dcf8"></td>
-                <td style="background:#f7edfb"></td>
-                <td style="background:#fdfbfe"></td>
+                <td>Red</td>
+                <td style="background:#45282e"></td>
+                <td style="background:#8c5661"></td>
+                <td style="background:#da899a"></td>
+                <td style="background:#ffa9ba"></td>
+                <td style="background:#ffd9e0"></td>
+                <td style="background:#ffecef"></td>
+                <td style="background:#fff4f6"></td>
+                <td style="background:#fffbfc"></td>
             </tr>
         </tbody>
     </table>
@@ -88,42 +78,40 @@ example: |
 
 $gold-20 = #343115
 $gold-43 = #6c6733
-$gold-66 = #aaa354
-$gold-78 = #cbc475
+$gold-66 = #aba354
+$gold-78 = #ccc375
 $gold-90 = #e7e3c7
 $gold-95 = #f3f1e4
 $gold-97 = #f8f7ef
-$gold-99 = #fcfcfa
+$gold-99 = #fdfcfa
+
 $white = #ffffff
 
-$blue-20 = #143440
-$blue-43 = #316d83
-$blue-66 = #51abcd
-$blue-78 = #75ccef
-$blue-90 = #cae7f6
-$blue-95 = #e6f3fa
-$blue-99 = #fafcfe
+$blue-20 = #1f3243
+$blue-43 = #456988
+$blue-50 = #517b9e
+$blue-66 = #6fa6d4
+$blue-78 = #90c6f7
+$blue-90 = #d2e4fa
+$blue-95 = #e9f2fc
+$blue-97 = #f2f7fd
+$blue-99 = #fbfcfe
 
-$green-20 = #0f3728
-$green-43 = #287256
-$green-66 = #44b389
-$green-78 = #68d5a9
-$green-90 = #c5ebd9
-$green-95 = #e3f5ec
-$green-99 = #f9fdfb
+$green-20 = #22351c
+$green-43 = #4c6e3f
+$green-66 = #7aae67
+$green-78 = #99cf87
+$green-90 = #d2e9cc
+$green-95 = #e9f4e6
+$green-97 = #f2f8f0
+$green-99 = #fbfdfa
 
-$red-20 = #44292a
-$red-43 = #8b585b
-$red-66 = #d98b90
-$red-78 = #fdabb0
-$red-90 = #fedadb
-$red-95 = #ffeced
-$red-99 = #fffbfb
+$red-20 = #45282e
+$red-43 = #8c5661
+$red-66 = #da899a
+$red-78 = #ffa9ba
+$red-90 = #ffd9e0
+$red-95 = #ffecef
+$red-97 = #fff4f6
+$red-99 = #fffbfc
 
-$purple-20 = #3c2a42
-$purple-43 = #7b5a86
-$purple-66 = #c18ed1
-$purple-78 = #e3aef4
-$purple-90 = #f0dcf8
-$purple-95 = #f7edfb
-$purple-99 = #fdfbfe

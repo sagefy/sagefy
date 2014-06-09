@@ -8,7 +8,6 @@ modifiers:
     - row--accept
     - row--accent
     - row--error
-    - row--admin
     - row--warn
 example:
     <table>
@@ -82,18 +81,6 @@ example:
                 <td>dalton@example.com</td>
                 <td><a href="#">Contact</a></td>
             </tr>
-            <tr class="row--admin">
-                <td>11</td>
-                <td>Seiji</td>
-                <td>seiji@example.com</td>
-                <td><a href="#">Contact</a></td>
-            </tr>
-            <tr class="row--admin">
-                <td>12</td>
-                <td>Sanjay</td>
-                <td>sanjay@example.com</td>
-                <td><a href="#">Contact</a></td>
-            </tr>
             <tr class="row--warn">
                 <td>13</td>
                 <td>Iris</td>
@@ -135,10 +122,6 @@ table
             background $red-95
             color $red-20
 
-        &.row--admin
-            background $purple-95
-            color $purple-20
-
         &.row--warn
             background $gold-95
             color $gold-20
@@ -154,9 +137,6 @@ table
 
             &.row--error
                 background $red-90
-
-            &.row--admin
-                background $purple-90
 
             &.row--warn
                 background $gold-90
