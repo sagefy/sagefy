@@ -30,7 +30,8 @@ html,
 body,
 input,
 textarea,
-select {
+select,
+button {
   font-family: "helvetica neue", helvetica, arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
