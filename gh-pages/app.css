@@ -32,12 +32,12 @@ input,
 textarea,
 select {
   font-family: "helvetica neue", helvetica, arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
 }
 body {
   color: #343115;
   background: #fdfcfa;
-  font-size: 16px;
-  line-height: 1.5;
 }
 a {
   color: #517b9e;
@@ -69,13 +69,13 @@ code,
 kbd,
 small {
   font-size: 14px;
-  line-height: 1.714285714285714;
+  line-height: 24px;
 }
 .font-size-normal,
 h5,
 h6 {
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 24px;
 }
 .font-size-accent,
 h4,
@@ -83,24 +83,24 @@ h4,
 blockquote q,
 .form-description {
   font-size: 18px;
-  line-height: 1.333333333333333;
+  line-height: 24px;
 }
 .font-size-large,
 h3 {
   font-size: 20px;
-  line-height: 1.2;
+  line-height: 24px;
 }
 .font-size-big,
 h2,
 .button--big,
 header .title {
   font-size: 26px;
-  line-height: 1.384615384615385;
+  line-height: 36px;
 }
 .font-size-epic,
 h1 {
   font-size: 30px;
-  line-height: 1.2;
+  line-height: 36px;
 }
 .width-limit,
 p {
@@ -131,6 +131,7 @@ h4,
 h5,
 h6 {
   margin: 12px 0;
+  font-weight: normal;
 }
 h1 em,
 h2 em,
@@ -1302,7 +1303,7 @@ select {
   height: 36px;
   padding: 6px 12px;
   font-size: 100%;
-  line-height: 1.5;
+  line-height: 24px;
   color: #343115;
   vertical-align: middle;
   background-color: #fdfcfa;

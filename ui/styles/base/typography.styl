@@ -10,12 +10,12 @@ description: |
 
 html, body, input, textarea, select
     font-family $base-font-family
+    font-size $font-size
+    line-height ($unit * 2)
 
 body
     color $gold-20
     background $gold-99
-    font-size $font-size
-    line-height unit(($unit * 2) / $font-size, "")
 
 /*
 ---
@@ -73,10 +73,10 @@ example: |
 ---
 */
 
-for set in (small 14 24/14) (normal 16 1.5) (accent 18 24/18) (large 20 1.2) (big 26 36/26) (epic 30 36/30)
+for set in (small 14 24) (normal 16 24) (accent 18 24) (large 20 24) (big 26 36) (epic 30 36)
     .font-size-{set[0]}
         font-size unit(set[1], "px")
-        line-height set[2]
+        line-height unit(set[2], "px")
 
 /*
 ---
@@ -131,6 +131,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, pre, blockquote, hr
 
 h1, h2, h3, h4, h5, h6
     margin $unit 0
+    font-weight normal
 
     em
         font-style normal
