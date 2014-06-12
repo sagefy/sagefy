@@ -1,19 +1,11 @@
 $ = require('jquery')
-Backbone = require('backbone')
+PageView = require('./page')
 template = require('../../templates/sections/public/contact')
 
-class ContactView extends Backbone.View
+class ContactView extends PageView
     id: 'contact'
     className: 'max-width-8'
     template: template
-
-    initialize: (options) ->
-        @$region = options.$region
-        @render()
-
-    render: ->
-        document.title = 'Contact Sagefy.'
-        @$el.html(@template())
-        @$region.html(@$el)
+    title: 'Contact Sagefy.'
 
 module.exports = ContactView

@@ -1,24 +1,17 @@
 $ = require('jquery')
-Backbone = require('backbone')
+PageView = require('./page')
 template = require('../../templates/sections/public/error')
 
-class ErrorView extends Backbone.View
+class ErrorView extends PageView
     id: 'error'
     className: 'max-width-4'
     template: template
+    title: 'Error'
 
-    initialize: (options) ->
-        @$region = options.$region
-        @code = options.code
-        @message = options.message
-        @render()
-
-    render: ->
-        document.title = 'Error'
-        @$el.html(@template({
-            code: @code
-            message: @message
-        }))
-        @$region.html(@$el)
+    beforeRender: ->
+        @templateData = {
+            code: @options.code
+            message: @options.message
+        }
 
 module.exports = ErrorView

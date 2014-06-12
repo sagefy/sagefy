@@ -35,16 +35,18 @@ class PrimaryRouter extends BaseRouter
     }
 
     initialize: ->
+        $body = $('body')
         @menuModel = new MenuModel()
         @menuGlobalView = new MenuGlobalView({
+            $region: $body
             model: @menuModel
         })
 
         # Create the page container
-        $('body').prepend('<div class="page"></div>')
+        $body.prepend('<div class="page"></div>')
 
         # When we click an internal link, use Navigate instead
-        $('body').on('click', 'a[href^="/"]', (e) ->
+        $body.on('click', 'a[href^="/"]', (e) ->
             e.preventDefault()
             href = $(e.currentTarget).closest('a').attr('href')
             Backbone.history.navigate(href, {trigger: true})

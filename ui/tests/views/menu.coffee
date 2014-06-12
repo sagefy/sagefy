@@ -4,10 +4,12 @@ $ = require('jquery')
 
 describe('Menu View', ->
     before(->
-        @model = new MenuModel()
-        @view = new MenuView({model: @model})
         @$test = $('#test')
-        @$test.append(@view.$el)
+        @model = new MenuModel()
+        @view = new MenuView({
+            model: @model
+            $region: @$test
+        })
     )
 
     after(->

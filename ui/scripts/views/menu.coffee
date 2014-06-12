@@ -8,8 +8,6 @@ itemTemplate = require('../../templates/components/menu/item')
 # A menu component, creates an icon and on click, displays
 # an iOS style list of options
 class MenuView extends Backbone.View
-    $body: $('body')
-    $page: $('.page')
     className: 'menu'
     events: {
         'click .menu__overlay': 'toggle'
@@ -23,6 +21,7 @@ class MenuView extends Backbone.View
 
     initialize: (options) ->
         @model ||= options.model
+        @$region = options.$region
         # When we update the model, update the view
         @listenTo(@model, 'changeState', @render)
         @render()
@@ -38,7 +37,7 @@ class MenuView extends Backbone.View
     renderLayout: ->
         @$el.html(@layoutTemplate())
         @$items = @$el.find('.menu__items')
-        @$body.prepend(@$el)
+        @$region.prepend(@$el)
 
     # Produces the model specific HTML
     renderItems: ->
@@ -59,11 +58,7 @@ class MenuView extends Backbone.View
         @selected = ! @selected
         @$el.toggleClass('selected', @selected)
 
-    # When a menu item is selected,
-    # First clear out the current page
-    # So that we don't get distracted by it
-    select: (e) ->
-        @$page.empty()
+    select: ->
         @toggle()
 
 module.exports = MenuView
