@@ -36,26 +36,26 @@ validEmail = (val) ->
 # Validates a field one off,
 # Expects field to be formatted as in models
 # Can validated `required`, `email`, and `minlength`
-validateField = (field, val) ->
+validateField = (name, field, val) ->
     test = field.validations
 
     if test.required and not val
         return {
-            name: field.name
-            message: "Please enter #{field.name}."
+            name: name
+            message: "Please enter #{name}."
         }
 
     if test.email and not validEmail(val)
         return {
-            name: field.name
+            name: name
             message: "Please enter a valid email address."
         }
 
     if test.minlength and val.length < test.minlength
         return {
-            name: field.name
+            name: name
             message: "Please enter at least #{test.minlength} " +
-                "characters in #{field.name}."
+                "characters in #{name}."
         }
 
     return false  # `false` meaning there's no error
@@ -67,10 +67,11 @@ validateField = (field, val) ->
 validateModelFromFields = (attrs = {}) ->
     errors = []
 
-    for field in @fields  # where @ is model
-        val = attrs[field.name]
+    for name, field of @fields  # where @ is model
+        val = attrs[name]
 
-        error = validateField(field, val)
+        error = validateField(name, field, val)
+
         if error
             errors.push(error)
 

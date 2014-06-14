@@ -29,7 +29,8 @@ class CreatePasswordView extends FormView
         e.preventDefault()
         data = @formData(@$form)
         @model.getPasswordToken(data)
-        # @model.setPassword(data)
+        # @model.set('password', data.password)
+        # @model.save()
 
 
 module.exports =  CreatePasswordView

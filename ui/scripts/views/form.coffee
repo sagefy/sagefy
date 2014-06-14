@@ -52,22 +52,16 @@ class FormView extends Backbone.View
         if @onRender
             @onRender()
 
-    _getFields: ->
-        if @fields
-            return _.filter(@model.fields, (field) =>
-                return field.name in @fields
-            )
-        return @model.fields
-
     _getFieldsHTML: ->
-        fields = ""
-        for field in @_getFields()
-            fields += @fieldTemplate(
-                $.extend(true, {}, field, {
+        html = ""
+        for fieldName in @fields
+            html += @fieldTemplate(
+                $.extend(true, {}, @model.fields[fieldName], {
+                    name: fieldName
                     inputTypeFields: ['text', 'email', 'password']
                 })
             )
-        return fields
+        return html
 
     _displayErrors: (errors = []) ->
         for error in errors

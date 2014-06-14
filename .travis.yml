@@ -7,9 +7,5 @@ install:
 script:
     - py.test api/tests/
     - cd ui && gulp test && cd ..
-
-notifications:
-    email: false
-
 after_success:
     coveralls

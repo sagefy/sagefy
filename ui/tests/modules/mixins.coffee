@@ -46,17 +46,17 @@ describe('Mixins', ->
     )
 
     it('should validate field data', ->
-        field = {name: 'username', validations: {required: true}}
-        expect(mixins.validateField(field, '')).to.be.an('object')
-        expect(mixins.validateField(field, 'a')).to.be.false  # no error
+        field = {validations: {required: true}}
+        expect(mixins.validateField('username', field, '')).to.be.an('object')
+        expect(mixins.validateField('username', field, 'a')).to.be.false
+        # false ~= no error
     )
 
     it('should validate fields from model data', ->
         class TestModel extends Backbone.Model
             validate: mixins.validateModelFromFields
-            fields: [
-                {
-                    name: 'password'
+            fields: {
+                password: {
                     title: 'Password'
                     type: 'password'
                     description: 'Minimum 8 characters.'
@@ -65,7 +65,7 @@ describe('Mixins', ->
                         minlength: 8
                     }
                 }
-            ]
+            }
         model = new TestModel()
 
         expect(model.validate(model.toJSON())).to.be.an('array')

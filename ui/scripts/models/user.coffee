@@ -5,12 +5,8 @@ $ = require('jquery')
 class UserModel extends Backbone.Model
     urlRoot: '/api/users/'
 
-    fields: [
-        # id
-        # created
-        # modified
-        {
-            name: 'username'
+    fields: {
+        username: {
             title: 'Username'
             type: 'text'
             placeholder: 'e.g. Marissa'
@@ -18,8 +14,7 @@ class UserModel extends Backbone.Model
                 required: true
             }
         }
-        {
-            name: 'email'
+        email: {
             title: 'Email'
             type: 'email'
             placeholder: 'e.g. marissa@example.com'
@@ -29,8 +24,7 @@ class UserModel extends Backbone.Model
                 email: true
             }
         }
-        {
-            name: 'password'
+        password: {
             title: 'Password'
             type: 'password'
             description: 'Minimum 8 characters.'
@@ -39,7 +33,7 @@ class UserModel extends Backbone.Model
                 minlength: 8
             }
         }
-    ]
+    }
 
     validate: mixins.validateModelFromFields
     parseAjaxError: mixins.parseAjaxError
@@ -70,9 +64,5 @@ class UserModel extends Backbone.Model
             .fail((error) =>
                 @trigger('errorPasswordToken', @parseAjaxError(error))
             )
-
-    setPassword: (data) ->
-        @set('password', data.password)
-        @save()
 
 module.exports = UserModel
