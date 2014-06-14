@@ -5,14 +5,14 @@ Backbone = require('backbone')
 describe('Index Router', ->
     before(->
         @$test = $('#test')
-        sinon.stub(IndexRouter::, 'viewError')
+        @viewErrorStub = sinon.stub(IndexRouter::, 'viewError')
         @router = new IndexRouter({$region: @$test})
         Backbone.history.start({pushState: true})
     )
 
     after(->
         Backbone.history.stop()
-        IndexRouter::viewError.restore()
+        @viewErrorStub.restore()
         delete @router
     )
 
@@ -26,6 +26,6 @@ describe('Index Router', ->
 
     it('should 404 if the URL doesn\'t match', ->
         @router.navigate('/rainbow', {trigger: true, replace: true})
-        expect(IndexRouter::viewError).to.have.been.called
+        expect(@router.viewError).to.have.been.called
     )
 )
