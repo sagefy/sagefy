@@ -158,8 +158,7 @@ gulp.task('scripts:test:build', ['styles:doc'], ->
 gulp.task('scripts:test:lint', ->
     gulp.src(coffeeSrc.concat(testSrc))
         .pipe(plugins.coffeelint())
-        .pipe(plugins.coffeelint.reporter())
-        # send reporter('fail') to fail out
+        .pipe(plugins.coffeelint.reporter('fail'))
 )
 
 gulp.task('scripts:test:run', [

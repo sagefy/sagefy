@@ -10,16 +10,18 @@ class PageController extends Controller
         if options.model
             @model = new options.model(options.modelOptions)
 
-        @view = new options.view(_.extend({
-            model: @model || null
-            $region: @$page
-        }, options.viewOptions))
+        if options.view
+            @view = new options.view(_.extend({
+                model: @model || null
+                $region: @$page
+            }, options.viewOptions))
 
     close: ->
         if _.isFunction(@view.close)
             @view.close()
 
-        @view.remove()
+        if @view
+            @view.remove()
 
         super()
 
