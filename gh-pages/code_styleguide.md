@@ -50,7 +50,7 @@ Coffeescript
 
 - See [Coffeelint](http://www.coffeelint.org/) for basic Coffeescript formatting.
 - See [Coffeescript Style Guide](https://github.com/polarmobile/coffeescript-style-guide).
-- Docstrings formatted in [Codo](https://github.com/coffeedoc/codo).
+- Write concise comments before classes, methods, blocks.
 
 Stylus
 ------
