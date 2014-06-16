@@ -74,7 +74,7 @@ We Intend to Use
     - [ElasticSearch](https://github.com/elasticsearch/elasticsearch)
 - API
     - [NumPy](http://www.numpy.org/) + [SciPy](http://www.scipy.org/) + [Scikit-Learn](http://scikit-learn.org/stable/)
-    - [Sphinx](http://sphinx-doc.org/) from inline docstrings using the [NumPy](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt) convention
+    - [Blueprint](http://apiblueprint.org/)
     - Testing
         - [Coverage.py](http://nedbatchelder.com/code/coverage/)
         - [Faker](https://github.com/joke2k/faker)
