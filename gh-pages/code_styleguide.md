@@ -27,7 +27,7 @@ Python
     - Flake8 is the merger of [pep8](https://github.com/jcrocholl/pep8) and [PyFlakes](https://launchpad.net/pyflakes).
 - Methods should be no longer than 12 statements.
 - See [RESTish](/restish).
-- DocStrings should follow [NumPy convention]().
+- DocStrings should follow [PEP-0257](http://legacy.python.org/dev/peps/pep-0257/) and when relevant the [NumPy convention](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt).
 - _TODO_: URL formatting.
 - _TODO_: Query parameter formatting.
 - _TODO_: JSON response formatting.
