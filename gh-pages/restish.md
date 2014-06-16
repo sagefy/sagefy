@@ -12,7 +12,7 @@ General REST principles, but made more practical.
 - Parent noun, id, child noun, id...
 - ID can be reference.
     - Current, recent...
-- 6: GET one GET many POST PUT PATCH DELETE
+- GET one, GET many, POST (create), PUT (update), PATCH, DELETE, OPTIONS
 - Everything else in query string.
     - Search, sort, filter, fields (embed), paginate...
 - Verbose errors. One for devs, one for users.
@@ -30,12 +30,15 @@ General REST principles, but made more practical.
 - Stateless except for authorization.
 - No root level arrays.
 - Wrap objects in type of object.
-- Include links to related requests.
+- Include links to related requests. [RFC5988](http://tools.ietf.org/html/rfc5988)
 - Autodoc everything.
 - Cache everything.
 - Gzip everything.
 - Provide full resources.
-- Use ISO8601.
+- Use ISO8601 for dates and times.
+- Implement the options verb.
+- Aim for orthogonal.
+- Use [response codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).
 
 References
 ----------
