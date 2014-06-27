@@ -19,11 +19,13 @@ class Signup extends FormView
     submitLabel: 'Create Account'
     submitIcon: 'user'
 
-    beforeInitialize: ->
+    initialize: (options) ->
         if @isLoggedIn()
-            return @onSync()
+            return @sync()
 
-    onSync: ->
+        super(options)
+
+    sync: ->
         # Hard redirect to get the cookie
         window.location = '/'
 

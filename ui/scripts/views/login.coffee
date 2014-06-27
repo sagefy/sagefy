@@ -18,12 +18,14 @@ class LoginView extends FormView
     submitLabel: 'Login'
     submitIcon: 'sign-in'
 
-    beforeInitialize: ->
+    initialize: (options) ->
         if @isLoggedIn()
             return Backbone.history.navigate('/')
 
         @listenTo(@model, 'login', @login)
         @listenTo(@model, 'loginError', @loginError)
+
+        super(options)
 
     login: ->
         # Hard redirect to get the cookie
@@ -33,8 +35,16 @@ class LoginView extends FormView
         @invalid(undefined, errors)
 
     submit: (e) ->
-        e.preventDefault()
-        @model.login(@formData(@$form))
+        if e
+            e.preventDefault()
+        data = @formData(@$form)
+        @model.viewFields = @fields  # TODO: this is bad
+        errors = @model.validate(data)
+        @model.viewFields = null
+        if errors
+            @displayErrors(errors)
+        else
+            @model.login(@formData(@$form))
 
     isLoggedIn: mixins.isLoggedIn
 

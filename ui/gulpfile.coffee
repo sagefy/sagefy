@@ -19,37 +19,22 @@ gulp.task('default', ['watch'])
 
 #####
 
-gulp.task('watch', ->
-    run(
-        'clean'
-        [
-            'static:watch'
-            'styles:watch'
-            'scripts:watch'
-        ]
-    )
-)
+gulp.task('watch', [
+    'static:watch'
+    'styles:watch'
+    'scripts:watch'
+])
 
-gulp.task('deploy', ->
-    run(
-        'clean'
-        [
-            'static:build'
-            'styles:compress'
-            'scripts:compress'
-        ]
-    )
-)
+gulp.task('deploy', [
+    'static:build'
+    'styles:compress'
+    'scripts:compress'
+])
 
-gulp.task('test', ->
-    run(
-        'clean'
-        [
-            'scripts:test:lint'
-            'scripts:test:run'
-        ]
-    )
-)
+gulp.task('test', [
+    'scripts:test:lint'
+    'scripts:test:run'
+])
 
 #####
 
@@ -58,7 +43,7 @@ gulp.task('clean', ->
         .pipe(plugins.clean())
 )
 
-gulp.task('static:build', ->
+gulp.task('static:build', ['clean'], ->
     gulp.src(staticSrc)
         .pipe(gulp.dest(dist))
     gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.*')
@@ -72,16 +57,16 @@ gulp.task('static:watch', ['static:build'], ->
     )
 )
 
-gulp.task('styles:build', ->
+gulp.task('styles:build', ['clean'], ->
     gulp.src('styles/app.styl')
         .pipe(plugins.stylus({
-            set: ['include css']
+            'include css': true
             errors: true
         }))
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('styles:doc', (done) ->
+gulp.task('styles:doc', ['clean'], (done) ->
     yms = require('ym-styleguide')
     fs = require('fs')
     yms.build('styles/', (html) ->

@@ -36,7 +36,7 @@ class UserModel extends Backbone.Model
     }
 
     validate: mixins.validateModelFromFields
-    parseAjaxError: mixins.parseAjaxError
+    parseAjaxErrors: mixins.parseAjaxErrors
 
     parse: (response) ->
         return response.user
@@ -47,7 +47,7 @@ class UserModel extends Backbone.Model
                 @trigger('login')
             )
             .fail((error) =>
-                @trigger('loginError', @parseAjaxError(error))
+                @trigger('loginError', @parseAjaxErrors(error))
             )
 
     logout: ->
@@ -62,7 +62,7 @@ class UserModel extends Backbone.Model
                 @trigger('passwordToken')
             )
             .fail((error) =>
-                @trigger('errorPasswordToken', @parseAjaxError(error))
+                @trigger('errorPasswordToken', @parseAjaxErrors(error))
             )
 
 module.exports = UserModel

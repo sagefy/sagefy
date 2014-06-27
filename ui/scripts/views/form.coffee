@@ -5,7 +5,11 @@ mixins = require('../modules/mixins')
 formTemplate = require('../../templates/components/forms/form')
 fieldTemplate = require('../../templates/components/forms/field')
 
+# Generic Form View
+# Designed to be extended
 class FormView extends Backbone.View
+    # Validates all fields on submit
+    # Validates single fields on change
     events: {
         'submit form': 'submit'
         'keyup input': 'validateField'
@@ -14,15 +18,14 @@ class FormView extends Backbone.View
     formTemplate: formTemplate
     fieldTemplate: fieldTemplate
 
+    # Expects options `model` and `$region`
     initialize: (options = {}) ->
         @$region = options.$region || $({})
 
         if options.model
             @model = options.model
 
-        if @beforeInitialize
-            @beforeInitialize()
-
+        # Edit mode on the model will fetch the data to fill in the form
         if @model and @mode == "edit"
             @model.fetch()
 
@@ -30,12 +33,11 @@ class FormView extends Backbone.View
         @listenTo(@model, 'invalid', @invalid)
         @listenTo(@model, 'sync', @sync)
 
-        if @onInitialize
-            @onInitialize()
-
         if @mode != "edit"
             @render()
 
+    # Optional fields of `title`, `description`, `presubmit`... render
+    # in the markup
     render: ->
         @$el.html(@formTemplate({
             fields: @_getFieldsHTML()
@@ -49,9 +51,8 @@ class FormView extends Backbone.View
         @$region.html(@$el)
         @$form = @$el.find('form')
 
-        if @onRender
-            @onRender()
-
+    # Iterates over each field specified
+    # And generates the fields HTML
     _getFieldsHTML: ->
         html = ""
         for fieldName in @fields
@@ -63,13 +64,17 @@ class FormView extends Backbone.View
             )
         return html
 
-    _displayErrors: (errors = []) ->
+    # Given an array of errors,
+    # Shows those errors on the form
+    displayErrors: (errors = []) ->
+        @$form.find('[type="submit"]').removeAttr('disabled')
         for error in errors
             $field = @$form
                 .find("[name=\"#{error.name}\"]")
                 .closest('.form-field')
             @_showError($field, error)
 
+    # Adds an error message to a single form field
     _showError: ($field, error) ->
         $field
             .removeClass('form-field--success')
@@ -83,6 +88,7 @@ class FormView extends Backbone.View
             </span>
         """)
 
+    # Removes error messages to a single form field
     _showValid: ($field) ->
         $field
             .removeClass('form-field--error')
@@ -90,49 +96,43 @@ class FormView extends Backbone.View
             .find('.form-field__feedback')
                 .remove()
 
-    validateField: _.debounce((e) ->
+    # Validates a single form field. Throttled.
+    validateField: _.throttle((e) ->
         $input = $(e.currentTarget)
         $field = $input.closest('.form-field')
         name = $input.attr('name')
-        field = _(@_getFields()).findWhere({ name: name })
+        field = @model.fields[name]
         value = $input.val()
-        error = @fieldHasError(field, value)
+        error = mixins.validateField(name, field, value)
         if error
             @_showError($field, error)
         else
             @_showValid($field)
-    , 250)
+    , 100)
 
+    # Ajax error => displayErrors
     error: (model, response) ->
-        @$form.find(':submit').removeAttr('disabled')
-        errors = @parseAjaxError(response).errors
-        @_displayErrors(errors)
+        errors = @parseAjaxErrors(response)
+        @displayErrors(errors)
 
-        if @onError
-            @onError()
-
+    # Backbone model validate => displayErrors
     invalid: (model, errors) ->
-        @$form.find(':submit').removeAttr('disabled')
-        @_displayErrors(errors)
+        @displayErrors(errors)
 
-        if @onInvalid
-            @onInvalid()
-
+    # Saves the model if possible
+    # Communicates to the model the list of fields to validate
     submit: (e) ->
-        e.preventDefault()
+        if e
+            e.preventDefault()
+
+        @model.viewFields = @fields  # TODO: this is bad
         @model.save(@formData(@$form))
+        @model.viewFields = null
         @$form.find(':submit').attr('disabled', 'disabled')
 
-        if @onSubmit
-            @onSubmit()
-
     sync: ->
-        if @onSync
-            @onSync()
 
     formData: mixins.formData
-    fieldHasError: mixins.validateField
-    parseAjaxError: mixins.parseAjaxError
-
+    parseAjaxErrors: mixins.parseAjaxErrors
 
 module.exports = FormView

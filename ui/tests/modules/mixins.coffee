@@ -34,9 +34,10 @@ describe('Mixins', ->
     )
 
     it('should parse an Ajax error', ->
-        expect(mixins.parseAjaxError({responseText: '{"errors":[]}'}))
-            .to.eql([])
-        expect(mixins.parseAjaxError({responseText: 'crepe'}))
+        expect(mixins.parseAjaxErrors({
+            responseText: '{"errors":[{"name":"a"}]}'
+        })).to.eql([{name: "a"}])
+        expect(mixins.parseAjaxErrors({responseText: 'crepe'}))
             .to.equal('crepe')
     )
 
@@ -66,6 +67,7 @@ describe('Mixins', ->
                     }
                 }
             }
+            viewFields: ['password']
         model = new TestModel()
 
         expect(model.validate(model.toJSON())).to.be.an('array')

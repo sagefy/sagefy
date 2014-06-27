@@ -30,7 +30,7 @@
     "gulp-minify-css": "^0.3.4",
     "gulp-mocha-phantomjs": "^0.2.1",
     "gulp-rename": "~1.2.0",
-    "gulp-stylus": "0.0.13",
+    "gulp-stylus": "^1.0.2",
     "gulp-uglify": "^0.3.0",
     "gulp-util": "~2.2.14",
     "handlebars": "~1.3.0",

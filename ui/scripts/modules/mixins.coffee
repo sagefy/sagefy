@@ -26,8 +26,11 @@ isLoggedIn = ->
 
 # Try to parse the errors array
 # Or just return the error text
-parseAjaxError = (error) ->
-    return parseJSON(error.responseText)?.errors or error.responseText
+parseAjaxErrors = (r) ->
+    try
+        return JSON.parse(r.responseText).errors
+    catch e
+        return r.responseText
 
 # Very simple email string validation
 validEmail = (val) ->
@@ -67,7 +70,9 @@ validateField = (name, field, val) ->
 validateModelFromFields = (attrs = {}) ->
     errors = []
 
-    for name, field of @fields  # where @ is model
+    # TODO: how can we communicate without using `@viewFields`?
+    for name in @viewFields  # where `@` is model
+        field = @fields[name]
         val = attrs[name]
 
         error = validateField(name, field, val)
@@ -90,7 +95,7 @@ module.exports = {
     formData: formData
     isLoggedIn: isLoggedIn
     parseJSON: parseJSON
-    parseAjaxError: parseAjaxError
+    parseAjaxErrors: parseAjaxErrors
     validEmail: validEmail
     validateField: validateField
     validateModelFromFields: validateModelFromFields

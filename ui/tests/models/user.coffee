@@ -9,11 +9,13 @@ validate = (model, search) ->
 
 describe('User Model', ->
     before(->
+        UserModel::viewFields = Object.keys(UserModel::fields)  # TODO: bad
         @ajaxStub = sinon.stub($, 'ajax', -> $({}).promise())
         @user = new UserModel()
     )
 
     after(->
+        UserModel::viewFields = null  # TODO: bad
         @ajaxStub.restore()
         delete @user
     )
