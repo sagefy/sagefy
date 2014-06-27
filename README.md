@@ -12,7 +12,7 @@ _Adaptive, collaborative, and open learning platform._
 [Twitter]: http://twitter.com/sagefyorg
 [Docs]: http://sagefy.org/docs/overview
 
-[![Get Setup](http://img.shields.io/badge/get setup-yay-brightgreen.svg)](https://github.com/heiskr/sagefy/blob/master/setup/setup.md) [![Stories in Ready](https://badge.waffle.io/heiskr/sagefy.png?label=ready&title=Ready)](https://waffle.io/heiskr/sagefy) [![Donate](http://img.shields.io/badge/donate-yay-brightgreen.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PXGYRLUR53MBJ) [![Build Status](https://travis-ci.org/heiskr/sagefy.svg?branch=master)](https://travis-ci.org/heiskr/sagefy) [![Coverage Status](https://img.shields.io/coveralls/heiskr/sagefy.svg)](https://coveralls.io/r/heiskr/sagefy)
+[![Get Setup](http://img.shields.io/badge/get setup-yay-brightgreen.svg?style=flat)](https://github.com/heiskr/sagefy/blob/master/setup/setup.md) [![Stories in Ready](https://badge.waffle.io/heiskr/sagefy.png?label=ready&title=Ready&style=flat)](https://waffle.io/heiskr/sagefy) [![Donate](http://img.shields.io/badge/donate-yay-brightgreen.svg?style=flat)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PXGYRLUR53MBJ) [![Build Status](http://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy) [![Coverage Status](http://img.shields.io/coveralls/heiskr/sagefy.svg?style=flat)](https://coveralls.io/r/heiskr/sagefy)
 
 All contents in this project are licensed under [AGPLv3](https://raw.github.com/heiskr/sagefy/master/license.txt).
 
