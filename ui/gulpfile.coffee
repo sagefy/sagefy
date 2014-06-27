@@ -8,6 +8,7 @@ watchify = require('watchify')
 source = require('vinyl-source-stream')
 prettyHrtime = require('pretty-hrtime')
 _ = require('underscore')
+sequence = require('run-sequence')
 
 dist = 'distribution/'
 staticSrc = ['images/*', 'statics/*']
@@ -19,22 +20,28 @@ gulp.task('default', ['watch'])
 
 #####
 
-gulp.task('watch', [
-    'static:watch'
-    'styles:watch'
-    'scripts:watch'
-])
+gulp.task('watch', (done) ->
+    sequence('clean', [
+        'static:watch'
+        'styles:watch'
+        'scripts:watch'
+    ], done)
+)
 
-gulp.task('deploy', [
-    'static:build'
-    'styles:compress'
-    'scripts:compress'
-])
+gulp.task('deploy', (done) ->
+    sequence('clean', [
+        'static:build'
+        'styles:compress'
+        'scripts:compress'
+    ], done)
+)
 
-gulp.task('test', [
-    'scripts:test:lint'
-    'scripts:test:run'
-])
+gulp.task('test', (done) ->
+    sequence('clean', [
+        'scripts:test:lint'
+        'scripts:test:run'
+    ], done)
+)
 
 #####
 
@@ -43,7 +50,7 @@ gulp.task('clean', ->
         .pipe(plugins.clean())
 )
 
-gulp.task('static:build', ['clean'], ->
+gulp.task('static:build', ->
     gulp.src(staticSrc)
         .pipe(gulp.dest(dist))
     gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.*')
@@ -57,7 +64,7 @@ gulp.task('static:watch', ['static:build'], ->
     )
 )
 
-gulp.task('styles:build', ['clean'], ->
+gulp.task('styles:build', ->
     gulp.src('styles/app.styl')
         .pipe(plugins.stylus({
             'include css': true
@@ -66,7 +73,7 @@ gulp.task('styles:build', ['clean'], ->
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('styles:doc', ['clean'], (done) ->
+gulp.task('styles:doc', (done) ->
     yms = require('ym-styleguide')
     fs = require('fs')
     yms.build('styles/', (html) ->
