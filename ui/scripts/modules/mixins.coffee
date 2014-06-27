@@ -67,11 +67,10 @@ validateField = (name, field, val) ->
 # Used when submitting a model
 # Perfect for Backbone.Model.validate
 # Returns an array of errors or `undefined`
-validateModelFromFields = (attrs = {}) ->
+validateModelFromFields = (attrs = {}, options = {}) ->
     errors = []
 
-    # TODO: how can we communicate without using `@viewFields`?
-    for name in @viewFields  # where `@` is model
+    for name in options.fields  # where `@` is model
         field = @fields[name]
         val = attrs[name]
 

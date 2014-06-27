@@ -125,9 +125,7 @@ class FormView extends Backbone.View
         if e
             e.preventDefault()
 
-        @model.viewFields = @fields  # TODO: this is bad
-        @model.save(@formData(@$form))
-        @model.viewFields = null
+        @model.save(@formData(@$form), {fields: @fields})
         @$form.find(':submit').attr('disabled', 'disabled')
 
     sync: ->

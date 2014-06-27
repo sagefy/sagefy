@@ -38,9 +38,7 @@ class LoginView extends FormView
         if e
             e.preventDefault()
         data = @formData(@$form)
-        @model.viewFields = @fields  # TODO: this is bad
-        errors = @model.validate(data)
-        @model.viewFields = null
+        errors = @model.validate(data, {fields: @fields})
         if errors
             @displayErrors(errors)
         else

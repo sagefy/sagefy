@@ -67,12 +67,15 @@ describe('Mixins', ->
                     }
                 }
             }
-            viewFields: ['password']
         model = new TestModel()
 
-        expect(model.validate(model.toJSON())).to.be.an('array')
+        expect(
+            model.validate(model.toJSON(), {fields: ['password']})
+        ).to.be.an('array')
         model.set('password', 'password')
-        expect(model.validate(model.toJSON())).to.be.undefined
+        expect(
+            model.validate(model.toJSON(), {fields: ['password']})
+        ).to.be.undefined
     )
 
     it('should capitalize the first letter of a string', ->

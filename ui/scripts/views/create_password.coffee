@@ -30,10 +30,9 @@ class CreatePasswordView extends FormView
         if e
             e.preventDefault()
         data = @formData(@$form)
-        # TODO: this is bad
-        @model.viewFields = @fields
-        errors = @model.validate(data)
-        @model.viewFields = null
+
+        errors = @model.validate(data, {fields: @fields})
+
         if errors
             @displayErrors(errors)
         else
