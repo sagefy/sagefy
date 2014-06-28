@@ -1,12 +1,12 @@
 $ = require('jquery')
 FormView = require('../views/form')
-
 mixins = require('../modules/mixins')
 
 class Signup extends FormView
     title: 'Create Account'
     id: 'signup'
     className: 'max-width-6'
+    mode: 'create'
     fields: ['username', 'email', 'password']
     description: '''
         Already have an account?

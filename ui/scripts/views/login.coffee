@@ -1,11 +1,13 @@
 $ = require('jquery')
 FormView = require('../views/form')
 mixins = require('../modules/mixins')
+Backbone = require('backbone')
 
 class LoginView extends FormView
     title: 'Login to Sagefy'
     id: 'login'
     className: 'max-width-4'
+    mode: 'create'
     fields: ['username', 'password']
     description: '''
         Don't have an account?
@@ -22,17 +24,17 @@ class LoginView extends FormView
         if @isLoggedIn()
             return Backbone.history.navigate('/')
 
+        super(options)
+
         @listenTo(@model, 'login', @login)
         @listenTo(@model, 'loginError', @loginError)
-
-        super(options)
 
     login: ->
         # Hard redirect to get the cookie
         window.location = '/'
 
     loginError: (errors) =>
-        @invalid(undefined, errors)
+        @displayErrors(errors)
 
     submit: (e) ->
         if e

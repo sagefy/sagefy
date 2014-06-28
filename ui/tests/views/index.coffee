@@ -10,7 +10,7 @@ describe('Index View', ->
 
     after(->
         @view.remove()
-        $.removeCookie('logged_in')
+        $.removeCookie('logged_in', { path: '/' })
     )
 
     it('should show login or signup on logged out', ->

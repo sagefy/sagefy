@@ -1,31 +1,67 @@
+UserModel = require('../../scripts/models/user')
+SignupView = require('../../scripts/views/signup')
+$ = require('jquery')
+require('jquery.cookie')
 
-
-describe.skip('Signup View', ->
-    before((done) ->
-        # ensure user removed
+describe('Signup View', ->
+    beforeEach(->
+        $.removeCookie('logged_in', { path: '/' })
+        @model = new UserModel()
+        @$test = $('#test')
+        @view = new SignupView({
+            model: @model
+            $region: @$test
+        })
+        @ajaxStub = sinon.stub($, 'ajax', -> $({}).promise())
     )
 
-    after((done) ->
-        # remove created user
+    afterEach(->
+        @view.remove()
+        @$test.empty()
+        delete @model
+        @ajaxStub.restore()
     )
 
     it('should error on empty username', ->
-
+        @view.$form.submit()
+        expect(@view.$('#username').closest('.form-field'))
+            .to.have.class('form-field--error')
     )
 
     it('should error on invalid email address', ->
-
+        @view.$('#email').val('fdsa')
+        @view.$form.submit()
+        expect(@view.$('#email').closest('.form-field'))
+            .to.have.class('form-field--error')
     )
 
     it('should error if password less than 8 characters', ->
-
+        @view.$('#password').val('fdsa')
+        @view.$form.submit()
+        expect(@view.$('#password').closest('.form-field'))
+            .to.have.class('form-field--error')
     )
 
     it('should error if email address already used', ->
-
+        @view.$('#username').val('used')
+        @view.$('#email').val('used@example.com')
+        @view.$('#password').val('example1')
+        @view.$form.submit()
+        @model.trigger('error', @model, {
+            responseText: '{"errors":[{"name":"email","message":"a"}]}'
+        })
+        expect(@view.$('#email').closest('.form-field'))
+            .to.have.class('form-field--error')
     )
 
-    it('should create user when form it submitted', ->
-        # and direct to account page
+    it('should create user when the form is submitted', ->
+        stub = sinon.stub(SignupView::, 'sync')
+        @view.$('#username').val('testuser')
+        @view.$('#email').val('testuser@example.com')
+        @view.$('#password').val('example1')
+        @view.$form.submit()
+        @model.trigger('sync')
+        # TODO: expect(stub).to.have.been.called
+        stub.restore()
     )
 )
