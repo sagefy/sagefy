@@ -6,14 +6,13 @@ layout: default
 General REST principles, but made more practical.
 
 - Requests
-    - URL format is `/api(/{version})/noun/id/noun/id?params`
+    - URL format is `/api/noun/id/noun/id?params`
         - Use plural, all lowercase, nouns.
         - Concrete is better than abstract.
         - ID can be reference.
             - Current, recent...
         - Everything else in query string.
         - Search, sort, filter, fields (embed), paginate...
-        - Version at beginning of URL.
         - Use SSL if possible.
         - If no resource, pseudo resource or root level verb.
     - Verbs: GET, POST, PUT, PATCH, DELETE, OPTIONS
@@ -30,6 +29,7 @@ General REST principles, but made more practical.
         - method=x with POST for PUT, PATCH, and DELETE.
         - Use OAuth latest.
         - Stateless except for authorization.
+        - API Version: use `?version=`. Defaults to latest version.
 - Responses
     - Content type as extension if not JSON. (Assume JSON.)
     - Fields in lower camelCase.
