@@ -5,43 +5,51 @@ layout: default
 
 General REST principles, but made more practical.
 
-- Use nouns.
-- Plural nouns.
-- All lowercase.
-- Concrete is better than abstract.
-- Parent noun, id, child noun, id...
-- ID can be reference.
-    - Current, recent...
-- GET one, GET many, POST (create), PUT (update), PATCH, DELETE, OPTIONS
-- Everything else in query string.
-    - Search, sort, filter, fields (embed), paginate...
-- Verbose errors. One for devs, one for users.
-- Use HTTP status codes.
-- Use SSL.
-- Version at beginning of URL.
-- Content type as extension if not JSON.
-- JSON is default.
-- Use pagination (limit, offset) and optional field params.
-- If no resource, pseudo resource or root level verb.
-- Fields in lower camelCase.
-- method=x with POST for PUT, PATCH, and DELETE.
-- Updates should return object as well.
-- Use OAuth latest.
-- Stateless except for authorization.
-- No root level arrays.
-- Wrap objects in type of object.
-- Include links to related requests. [RFC5988](http://tools.ietf.org/html/rfc5988)
-- Autodoc everything.
-- Cache everything.
-- Gzip everything.
-- Provide full resources.
-- Use ISO8601 for dates and times.
-- Implement the options verb.
-- Aim for orthogonal.
-- Use [response codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).
+- Requests
+    - URL format is `/api(/{version})/noun/id/noun/id?params`
+        - Use plural, all lowercase, nouns.
+        - Concrete is better than abstract.
+        - ID can be reference.
+            - Current, recent...
+        - Everything else in query string.
+        - Search, sort, filter, fields (embed), paginate...
+        - Version at beginning of URL.
+        - Use SSL if possible.
+        - If no resource, pseudo resource or root level verb.
+    - Verbs: GET, POST, PUT, PATCH, DELETE, OPTIONS
+        - Get: GET `bunnies/id`
+        - List: GET `bunnies/`
+        - Create: POST `bunnies/`
+        - Update: PUT `bunnies/id`
+        - Update (small): PATCH `bunnies/id`
+        - Delete: DELETE `bunnies/id`
+        - Methods: OPTIONS `bunnies/`
+    - Parameters
+        - Use database or HTTP words over invention.
+        - Pagination: use `limit` and `offset`.
+        - method=x with POST for PUT, PATCH, and DELETE.
+        - Use OAuth latest.
+        - Stateless except for authorization.
+- Responses
+    - Content type as extension if not JSON. (Assume JSON.)
+    - Fields in lower camelCase.
+    - No root level arrays.
+    - Use ISO8601 and RFC3339 for dates and times.
+    - Use [response codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).
+    - Success: Wrap objects in type of object. Return `{bunnies:[]}` or `{bunny:[]}`
+        - Provide full resources.
+        - Updates (POST, PUT, PATCH) should return object as well.
+        - Include links to related requests. [RFC5988](http://tools.ietf.org/html/rfc5988)
+            - `{bunnies:[{id:1,links:[]}],links:[]}`
+            - Give kind: get, list, create, update, delete, next, prev, self, parent, child
+        - Aim for orthogonal updates and deletes (PUT, PATCH, DELETE).
+        - Include `limit`, `offset`, and `count` in pagination.
+    - Errors: return `{errors:[ {message: ""} ]}`. Use 4xx and 5xx status codes.
+    - GZip and Cache everything.
+    - Use blueprint for documentation
 
-References
-----------
+RESTish References
+------------------
 
 - http://info.apigee.com/Portals/62317/web%20api.pdf
 - http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api

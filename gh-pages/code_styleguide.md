@@ -23,25 +23,29 @@ Naming Conventions
 Python
 ------
 
-- In general, we use [Flake8](https://flake8.readthedocs.org/en/2.0/) for Python formatting.
+- Use [Flake8](https://flake8.readthedocs.org/en/2.0/) for Python formatting.
     - Flake8 is the merger of [pep8](https://github.com/jcrocholl/pep8) and [PyFlakes](https://launchpad.net/pyflakes).
 - Methods should be no longer than 12 statements.
-- See [RESTish](/restish).
+- Request and response formatting: see [RESTish](/restish).
 - DocStrings should follow [PEP-0257](http://legacy.python.org/dev/peps/pep-0257/) and when relevant the [NumPy convention](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt).
-- _TODO_: URL formatting.
-- _TODO_: Query parameter formatting.
-- _TODO_: JSON response formatting.
-    - Try to match the [Google JSON Styleguide](http://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml)
-    - Put verbs in params: `_method`
-    - See [ember.js](http://emberjs.com/guides/models/the-rest-adapter/) models too
 - Database naming and conventions.
-    - IDs are always randomly generated strings, String(64).
+    - IDs are always randomly generated strings, `String(64)`.
     - Include `created` and `modified`, using those exact names, when sensible.
-    - Use `name` for title, name, or subject, `body` for body, message, description... Use String(256) for `name` and Text for `body`.
-    - `language` is String(2)
+    - Use `name` for title, name, or subject; use `String(256)`.
+    - Use `body` for body, message, description... use `Text` for `body`.
+    - `language` is `String(2)`
+    - `email` is `String(256)`
+    - `url` is `String(2048)`
     - Use `kind` for kind or type.
-    - Use foreign keys.
+        - When the number of kinds is unknown, use `categories` instead.
+    - Use `_tablename` to refer to the name of another table.
+    - Use foreign keys. When assigning a foreign key, use tablename (singular) then `_id`.
     - Table names use all plural, column names are singular. Model names are singular. Use underscores.
+    - Multiple join tables should use both names, and both in plural form.
+    - When the relationship is...
+        - 1 to 1: Use the same ID for both.
+        - 1 to many: Put the "1" ID into the "many" rows.
+        - Many to many: Use a join table.
     - Don't use negative named booleans. Stay positive :)
 
 
