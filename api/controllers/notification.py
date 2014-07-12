@@ -34,3 +34,20 @@ def list_notifications():
         if error['name'] == 'user_id':
             code = 401
         return jsonify(errors=list(error)), code
+
+
+@app.route('/api/notifications/<notification_id>/read', methods=['PUT'])
+def mark_notification_as_read(notification_id):
+    """
+    Marks notification as read.
+    Must be logged in as user and provide a valid id.
+    Returns notification.
+    """
+
+    notification = Notification.get_by_id(notification_id)
+    if not notification:
+        return jsonify(errors=[{'message': "Not a valid id."}]), 404
+    if notification.user_id != current_user.id:
+        return jsonify(errors=[{'message': "Not own notification."}]), 401
+    notification.mark_as_read()
+    return jsonify(notification=notification)

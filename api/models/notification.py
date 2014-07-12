@@ -76,7 +76,7 @@ class Notification(db.Model):
         """
 
         # TODO: Redis cache
-        return Notification.query.filter_by(id=id).first()
+        return Notification.query.filter_by(id=id).one()
 
     def mark_as_read(self):
         """

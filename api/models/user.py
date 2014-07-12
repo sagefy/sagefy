@@ -172,7 +172,7 @@ class User(db.Model):
         """
 
         # TODO: Redis cache
-        return User.query.filter_by(id=id).first()
+        return User.query.filter_by(id=id).one()
 
     @staticmethod
     def get_by_email(email):
@@ -181,7 +181,7 @@ class User(db.Model):
         """
 
         # TODO: Redis cache
-        return User.query.filter_by(email=email).first()
+        return User.query.filter_by(email=email).one()
 
     @staticmethod
     def get_by_username(username):
@@ -190,7 +190,7 @@ class User(db.Model):
         """
 
         # TODO: Redis cache
-        return User.query.filter_by(username=username).first()
+        return User.query.filter_by(username=username).one()
 
     # @staticmethod
     # def get_by_token(token):
