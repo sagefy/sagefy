@@ -139,7 +139,7 @@ gulp.task('scripts:test:build', ['styles:doc'], ->
         .pipe(gulp.dest(dist))
 
     config = _.extend({}, browserifyConfig)
-    config.entries = ['./tests/test.coffee']
+    config.entries = ['./tests/index.coffee']
 
     browserify(config)
         .bundle()

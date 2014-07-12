@@ -1,5 +1,0 @@
-testMixins = {
-
-}
-
-module.exports = testMixins

@@ -13,7 +13,7 @@ mocha.setup('bdd')
 window.expect = chai.expect
 
 # Include tests here
-require('./test_basic')
+require('./basic')
 
 require('./modules/hbs_helpers')
 require('./modules/mixins')
