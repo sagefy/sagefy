@@ -53,6 +53,9 @@ class Notification(db.Model):
 
         query = Notification.query.filter_by(user_id=kwargs.get('user_id'))
 
+        if kwargs.get('read') is not None:
+            query.filter_by(read=kwargs.get('read'))
+
         if kwargs.get('categories'):
             # http://stackoverflow.com/a/6543089
             query.join(Notification.categories)

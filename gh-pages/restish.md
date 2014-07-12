@@ -43,7 +43,7 @@ General REST principles, but made more practical.
             - `{bunnies:[{id:1,links:[]}],links:[]}`
             - Give kind: get, list, create, update, delete, next, prev, self, parent, child
         - Aim for orthogonal updates and deletes (PUT, PATCH, DELETE).
-        - Include `limit` and `offset` (and optionally `count` for _total_ count) in pagination.
+        - Return all parameters under `parameters:`.
     - Errors: return `{errors:[ {message: ""} ]}`. Use 4xx and 5xx status codes.
     - GZip and Cache everything.
     - Use blueprint for documentation
