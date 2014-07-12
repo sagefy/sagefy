@@ -6,6 +6,6 @@ class TermsView extends PageView
     id: 'terms'
     className: 'max-width-10'
     template: template
-    title: 'Sagefy Terms of Service.'
+    title: 'Terms of Service'
 
 module.exports = TermsView

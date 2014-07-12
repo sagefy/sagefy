@@ -7,7 +7,7 @@ class IndexView extends PageView
     id: 'index'
     className: 'max-width-8'
     template: template
-    title: 'Sagefy - Adaptive, collaborative, and open learning platform.'
+    title: 'Adaptive, Collaborative, and Open Learning Platform'
 
     beforeRender: ->
         @templateData = {isLoggedIn: @isLoggedIn()}

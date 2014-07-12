@@ -4,7 +4,7 @@ mixins = require('../modules/mixins')
 Backbone = require('backbone')
 
 class LoginView extends FormView
-    title: 'Login to Sagefy'
+    title: 'Login'
     id: 'login'
     className: 'max-width-4'
     mode: 'create'

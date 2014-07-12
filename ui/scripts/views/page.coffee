@@ -5,13 +5,16 @@ class PageView extends Backbone.View
     initialize: (options) ->
         @options = options
         @$region = @options.$region
-        @render()
+        if @model
+            @listenTo(@model, 'sync', @render)
+        else
+            @render()
 
-    render: ->
+    render: =>
         if @beforeRender
             @beforeRender()
 
-        document.title = @title || ''
+        document.title = (@title || '') + ' -- Sagefy'
         templateData = @model?.toJSON() || @templateData || null
 
         @$el.html(@template(templateData))

@@ -9,7 +9,7 @@ class StyleguideView extends PageView
     className: 'max-width-10'
     template: t
     template2: t2
-    title: 'Sagefy - Style Guide and Component Library.'
+    title: 'Style Guide and Component Library'
 
     events: {
         'click a[href="#"]': 'cancel'

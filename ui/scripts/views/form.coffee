@@ -39,6 +39,7 @@ class FormView extends Backbone.View
     # Optional fields of `title`, `description`, `presubmit`... render
     # in the markup
     render: ->
+        document.title = (@title || '') + ' -- Sagefy'
         @$el.html(@formTemplate({
             fields: @_getFieldsHTML()
             title: @title

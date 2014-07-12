@@ -15,8 +15,8 @@ class User(db.Model):
     email = db.Column(db.String(256), unique=True)
     password = db.Column(db.String(256))
 
-    # notifications = db.relation('Notification', backref='user')
-    # messages = db.relation('Message', backref='user')
+    # notifications = db.relationship('Notification')
+    # messages = db.relationship('Message')
 
     def __init__(self, params):
         """

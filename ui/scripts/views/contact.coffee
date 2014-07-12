@@ -6,6 +6,6 @@ class ContactView extends PageView
     id: 'contact'
     className: 'max-width-8'
     template: template
-    title: 'Contact Sagefy.'
+    title: 'Contact'
 
 module.exports = ContactView

@@ -59,10 +59,10 @@ gulp deploy
 cd /var/www
 sudo apt-get -y install nginx
 sudo apt-get -y install uwsgi
-sudo cp /var/www/setup/uwsgi_upstart_local.conf /etc/init/uwsgi.conf
-sudo cp /var/www/setup/nginx_upstart.conf /etc/init/nginx.conf
-sudo initctl start uwsgi
-sudo initctl start nginx
+sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
+# TO STOP: sudo uwsgi --stop /tmp/uwsgi-master.pid
+sudo nginx -c /var/www/setup/nginx.conf
+# TO STOP: sudo nginx -s stop    (/var/run/nginx.pid)
 
 echo "Hooray! Provisioned."
 echo "For script and style watching, run gulp."
