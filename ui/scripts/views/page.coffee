@@ -11,9 +11,6 @@ class PageView extends Backbone.View
             @render()
 
     render: =>
-        if @beforeRender
-            @beforeRender()
-
         document.title = (@title || '') + ' -- Sagefy'
         templateData = @model?.toJSON() || @templateData || null
 

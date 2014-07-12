@@ -8,10 +8,11 @@ class ErrorView extends PageView
     template: template
     title: 'Error'
 
-    beforeRender: ->
+    render: ->
         @templateData = {
             code: @options.code
             message: @options.message
         }
+        super()
 
 module.exports = ErrorView

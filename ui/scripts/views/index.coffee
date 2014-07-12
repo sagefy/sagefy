@@ -9,8 +9,9 @@ class IndexView extends PageView
     template: template
     title: 'Adaptive, Collaborative, and Open Learning Platform'
 
-    beforeRender: ->
+    render: ->
         @templateData = {isLoggedIn: @isLoggedIn()}
+        super()
 
     isLoggedIn: mixins.isLoggedIn
 
