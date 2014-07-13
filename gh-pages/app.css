@@ -1,6 +1,6 @@
 @import "../../node_modules/normalize.css/normalize.css";
 .base-font {
-  font-family: "helvetica neue", helvetica, arial, sans-serif;
+  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", serif;
 }
 .monospace,
 pre,
@@ -32,7 +32,7 @@ input,
 textarea,
 select,
 button {
-  font-family: "helvetica neue", helvetica, arial, sans-serif;
+  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", serif;
   font-size: 16px;
   line-height: 24px;
 }
