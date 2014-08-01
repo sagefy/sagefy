@@ -3,6 +3,8 @@ title: Survey of Learning Research
 layout: default
 ---
 
+_TODO: Establish core principles, and expand on them in sections._
+
 This guide is intended as a reference of learning science research as relevant to Sagefy. It does not serve as a guide to learning instructional design. It does not answer every possible question or aspect.
 
 Contributions are welcome! Please make a pull request to our [Github repository](http://github.com/heiskr/sagefy) or report on the [issues tab](https://github.com/heiskr/sagefy/issues).
