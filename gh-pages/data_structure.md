@@ -16,7 +16,7 @@ Cards are the smallest entity in the Sagefy data structure system. A card repres
 
 A card could present information, ask the learner to answer a question, collaborate with a small group to tackle a challenge, or create other cards.
 
-### Kinds
+### Card Kinds
 
 Some kinds may include:
 
@@ -87,7 +87,7 @@ Some kinds may include:
         - **Reflect**: Invite learner to reflection on project experience.
     - Rubrics system: provide a systematic means of evaluation.
 
-### Categories
+### Card Categories
 
 Some categories may include:
 
@@ -96,34 +96,34 @@ Some categories may include:
 - Motivational examples
 - Comparisons
 
-### Requirements
+### Card Requirements
 
 - A card must relate to a learning objective within a unit.
 
-### Guidelines
+### Card Guidelines
 
 - Cards can form relationships with each other.
     - _TODO: Kinds of relationships?_
     - _TODO: Projects as card series..._
 - Cards can vary in length, but generally should be shorter than 10 minutes.
 
-Objectives
-----------
+Goal
+----
 
-A learning objective is a subentity of a unit.
+A learning goal is a subentity of a unit.
 
-One learning objective can contain multiple cards.
+One goal can contain multiple cards.
 
-### Categories
+### Goal Categories
 
 - See [Bloom's Taxonomy](http://en.wikipedia.org/wiki/Bloom's_taxonomy).
 
-### Requirements
+### Goal Requirements
 
 - Must be the same language as the unit.
 - No cycles may be formed with learning objective prerequisites.
 
-### Guidelines
+### Goal Guidelines
 
 - Learning objectives may have a prerequisite objective within the same unit.
 - Displayed to the learner at the beginning of starting the unit.
@@ -137,13 +137,17 @@ An example of a unit is a small learning lesson, which may contain about five to
 
 A unit may also represent an **integration** of other units. In this case, a prerequisite tree would automatically form.
 
-### Requirements
+### Unit Categories
+
+Unit categories would need to be community-defined.
+
+### Unit Requirements
 
 - Units are language specific.
 - Must include at least one learning objective.
 - Unit prerequisites cannot form a cycle.
 
-### Guidelines
+### Unit Guidelines
 
 - Three to five learning objectives.
 - Can establish prerequisite units. (Keep it very specific.)
@@ -155,14 +159,14 @@ A set is a collection of units and other sets. A set describes a course of units
 
 A graph is automatically formed based on the units and sets specified. Any chaining units or sets or necessary learner prerequisites would be automatically included.
 
-### Categories
+### Set Categories
 
 Set categories would need to be community-defined.
 
-### Requirements
+### Set Requirements
 
 - A set must contain at least one unit or set.
 
-### Guidelines
+### Set Guidelines
 
 - Most sets should be described as either a collection of "base" units or a collection of sets.
