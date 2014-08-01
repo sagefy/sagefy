@@ -2,37 +2,50 @@ from app import db
 from datetime import datetime
 
 
-class Practice(db.Model):
-    __tablename__ = 'practices'
+class Card(db.Model):
+    __tablename__ = 'cards'
 
     id = db.Column(db.String(64), primary_key=True)
     language = db.Column(db.String(2))
 
 
-class PracticeVersion(db.Model):
-    __tablename__ = 'practices_versions'
+class CardVersion(db.Model):
+    __tablename__ = 'cards_versions'
 
     id = db.Column(db.String(64), primary_key=True)
     created = db.Column(db.DateTime, default=datetime.utcnow())
     modified = db.Column(db.DateTime, onupdate=datetime.utcnow())
-    practice_id = db.Column(
+    card_id = db.Column(
         db.String(64),
-        db.ForeignKey('practices.id'),
+        db.ForeignKey('cards.id'),
     )
     kind_tablename = db.Column(db.String(64))
-    objective_id = db.Column(
+    goal_id = db.Column(
         db.String(64),
-        db.ForeignKey('objectives.id'),
+        db.ForeignKey('goals.id'),
     )
+    name = db.Column(db.String(256))
     canonical = db.Column(db.Boolean, default=False)
 
 
-class PracticeVersionMultipleChoice(db.Model):
-    __tablename__ = 'practices_versions_multiple_choice'
+class CardVersionVideo(db.Model):
+    __tablename__ = 'cards_versions_videos'
 
     version_id = db.Column(
         db.String(64),
-        db.ForeignKey('practices_versions.id'),
+        db.ForeignKey('cards_versions.id'),
+        primary_key=True,
+    )
+    duration = db.Column(db.Interval)
+    url = db.Column(db.String(2048))
+
+
+class CardVersionMultipleChoice(db.Model):
+    __tablename__ = 'cards_versions_multiple_choice'
+
+    version_id = db.Column(
+        db.String(64),
+        db.ForeignKey('cards_versions.id'),
         primary_key=True,
     )
     body = db.Column(db.Text)  # question
@@ -41,8 +54,8 @@ class PracticeVersionMultipleChoice(db.Model):
     multiple_correct = db.Column(db.Boolean, default=False)
 
 
-class PracticeVersionMultipleChoiceAnswerText(db.Model):
-    __tablename__ = 'practices_versions_multiple_choice_answer_text'
+class CardVersionMultipleChoiceAnswerText(db.Model):
+    __tablename__ = 'cards_versions_multiple_choice_answer_text'
 
     id = db.Column(
         db.String(64),
@@ -50,23 +63,23 @@ class PracticeVersionMultipleChoiceAnswerText(db.Model):
     )
     version_id = db.Column(
         db.String(64),
-        db.ForeignKey('practices_versions.id')
+        db.ForeignKey('cards_versions.id')
     )
     body = db.Column(db.Text)
     correct = db.Column(db.Boolean)
     feedback = db.Column(db.Text)
 
 
-practices_versions_categories = db.Table(
-    'practices_versions_categories',
+cards_versions_categories = db.Table(
+    'cards_versions_categories',
     db.Column(
         'version_id',
         db.String(64),
-        db.ForeignKey('practices_versions.id')
+        db.ForeignKey('cards_versions.id'),
     ),
     db.Column(
         'category_id',
         db.String(64),
-        db.ForeignKey('categories.id')
+        db.ForeignKey('categories.id'),
     ),
 )

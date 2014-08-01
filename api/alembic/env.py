@@ -26,11 +26,10 @@ import models.notification
 
 import models.category
 
-import models.module
-import models.component
-import models.objective
-import models.presentation
-import models.practice
+import models.set
+import models.unit
+import models.goal
+import models.card
 
 import models.proposal
 import models.discussion
