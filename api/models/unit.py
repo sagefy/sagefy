@@ -20,7 +20,7 @@ class UnitVersion(db.Model):
         db.ForeignKey('units.id'),
     )
     name = db.Column(db.String(256))
-    body = db.Column(db.Text)
+    body = db.Column(db.Text)  # Goal
     canonical = db.Column(db.Boolean, default=False)
 
 
@@ -36,19 +36,4 @@ units_versions_prerequisites = db.Table(
         db.String(64),
         db.ForeignKey('units.id'),
     ),
-)
-
-units_goals = db.Table(
-    'units_goals',
-    db.Column(
-        'version_id',
-        db.String(64),
-        db.ForeignKey('units_versions.id'),
-    ),
-    db.Column(
-        'goal_id',
-        db.String(64),
-        db.ForeignKey('goals.id'),
-    ),
-    db.Column('ordinal', db.Integer),
 )

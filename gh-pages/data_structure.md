@@ -107,27 +107,6 @@ Some categories may include:
     - _TODO: Projects as card series..._
 - Cards can vary in length, but generally should be shorter than 10 minutes.
 
-Goal
-----
-
-A learning goal is a subentity of a unit.
-
-One goal can contain multiple cards.
-
-### Goal Categories
-
-- See [Bloom's Taxonomy](http://en.wikipedia.org/wiki/Bloom's_taxonomy).
-
-### Goal Requirements
-
-- Must be the same language as the unit.
-- No cycles may be formed with learning objective prerequisites.
-
-### Goal Guidelines
-
-- Learning objectives may have a prerequisite objective within the same unit.
-- Displayed to the learner at the beginning of starting the unit.
-
 Units
 -----
 
@@ -137,19 +116,25 @@ An example of a unit is a small learning lesson, which may contain about five to
 
 A unit may also represent an **integration** of other units. In this case, a prerequisite tree would automatically form.
 
+A unit contains multiple cards.
+
+A unit is defined by a single goal (objective). See [Bloom's Taxonomy](http://en.wikipedia.org/wiki/Bloom's_taxonomy).
+
 ### Unit Categories
 
-Unit categories would need to be community-defined.
+- Unit categories may include Bloom's Taxonomy
 
 ### Unit Requirements
 
 - Units are language specific.
-- Must include at least one learning objective.
+- Units must be the same language as the set.
+- Must describe a specific learning objective.
 - Unit prerequisites cannot form a cycle.
 
 ### Unit Guidelines
 
-- Three to five learning objectives.
+- The unit goal should be described to the learner at the beginning.
+- The current goal must be available to the learner at all times.
 - Can establish prerequisite units. (Keep it very specific.)
 
 Sets

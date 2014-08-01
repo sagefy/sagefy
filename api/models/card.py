@@ -20,9 +20,9 @@ class CardVersion(db.Model):
         db.ForeignKey('cards.id'),
     )
     kind_tablename = db.Column(db.String(64))
-    goal_id = db.Column(
+    unit_id = db.Column(
         db.String(64),
-        db.ForeignKey('goals.id'),
+        db.ForeignKey('units.id'),
     )
     name = db.Column(db.String(256))
     canonical = db.Column(db.Boolean, default=False)
