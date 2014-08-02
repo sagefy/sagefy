@@ -6,7 +6,7 @@ class UserModel extends Backbone.Model
     urlRoot: '/api/users/'
 
     fields: {
-        username: {
+        name: {
             title: 'Username'
             type: 'text'
             placeholder: 'e.g. Marissa'
@@ -42,7 +42,12 @@ class UserModel extends Backbone.Model
         return response.user
 
     login: (data) ->
-        $.post(@urlRoot + 'login', data)
+        $.ajax({
+            type: 'POST'
+            url: @urlRoot + 'login'
+            data: JSON.stringify(data)
+            contentType: 'application/json'
+        })
             .done(=>
                 @trigger('login')
             )
@@ -57,7 +62,12 @@ class UserModel extends Backbone.Model
             )
 
     getPasswordToken: (data) ->
-        $.post(@urlRoot + 'request_password_token', data)
+        $.ajax({
+            type: 'POST'
+            url: @urlRoot + 'request_password_token'
+            data: JSON.stringify(data)
+            contentType: 'application/json'
+        })
             .done(=>
                 @trigger('passwordToken')
             )

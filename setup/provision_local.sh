@@ -5,6 +5,7 @@
 sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y install language-pack-en
+sudo apt-get -y autoremove
 
 #### Get Code #################################################################
 
@@ -15,26 +16,19 @@ sudo apt-get -y install git
 sudo rm -rf /var/www
 sudo ln -fs /vagrant /var/www
 
-#### PostgreSQL ###############################################################
+#### Rethink ##################################################################
 
-sudo apt-get -y install python-dev
-sudo apt-get -y install postgresql
-sudo apt-get -y install libpq-dev
+source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | sudo tee /etc/apt/sources.list.d/rethinkdb.list
+wget -qO- http://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
+sudo apt-get -y update
+sudo apt-get -y install rethinkdb
+rethinkdb --daemon
 
 #### Python ###################################################################
 
 sudo apt-get -y install python-pip
 sudo pip install -r /var/www/setup/requirements.txt
 sudo pip install pytest
-
-#### Migrations ###############################################################
-
-cd /var/www/api
-sudo -u postgres psql --username=postgres <<EOF
-CREATE USER sagefy password 'sagefy' SUPERUSER;
-CREATE DATABASE sagefy;
-EOF
-alembic upgrade head
 
 #### Redis ####################################################################
 
@@ -60,6 +54,7 @@ cd /var/www
 sudo apt-get -y install nginx
 sudo apt-get -y install uwsgi
 sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
+# TO LOG: sudo tail -F /tmp/uwsgi.log
 # TO STOP: sudo uwsgi --stop /tmp/uwsgi-master.pid
 sudo nginx -c /var/www/setup/nginx.conf
 # TO STOP: sudo nginx -s stop    (/var/run/nginx.pid)
