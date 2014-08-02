@@ -5,7 +5,7 @@ class Settings extends FormView
     title: 'Settings'
     id: 'settings'
     className: 'max-width-6'
-    fields: ['username', 'email']  # password, avatar, notifications
+    fields: ['name', 'email']  # password, avatar, notifications
     description: 'All fields autosave.'
     edit: true
 

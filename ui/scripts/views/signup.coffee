@@ -7,7 +7,7 @@ class Signup extends FormView
     id: 'signup'
     className: 'max-width-6'
     mode: 'create'
-    fields: ['username', 'email', 'password']
+    fields: ['name', 'email', 'password']
     description: '''
         Already have an account?
         <a href="/login"><i class="fa fa-sign-in"></i> Login</a>

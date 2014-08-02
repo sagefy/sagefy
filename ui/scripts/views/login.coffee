@@ -8,7 +8,7 @@ class LoginView extends FormView
     id: 'login'
     className: 'max-width-4'
     mode: 'create'
-    fields: ['username', 'password']
+    fields: ['name', 'password']
     description: '''
         Don't have an account?
         <a href="/signup"><i class="fa fa-user"></i> Signup</a>
