@@ -3,7 +3,7 @@ from flask.ext.login import LoginManager
 from flask_mail import Mail
 from config import SECRET_KEY, MAIL_DEFAULT_SENDER, MAIL_PASSWORD, \
     MAIL_USERNAME
-import rethinkdb as rdb
+import rethinkdb as r
 from rethinkdb.errors import RqlRuntimeError
 import os
 from redis import StrictRedis
@@ -23,11 +23,11 @@ app.config['RDB_DB'] = 'sagefy'
 
 
 def setup_db():
-    db_conn = rdb.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
+    db_conn = r.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
 
     try:
-        rdb.db_create(app.config['RDB_DB']).run(db_conn)
-        rdb.db(app.config['RDB_DB']).table_create('users').run(db_conn)
+        r.db_create(app.config['RDB_DB']).run(db_conn)
+        r.db(app.config['RDB_DB']).table_create('users').run(db_conn)
 
     except RqlRuntimeError:
         print 'No need to setup RethinkDB.'
@@ -38,8 +38,8 @@ def setup_db():
 
 @app.before_request
 def make_db_connection():
-    g.db_conn = rdb.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
-    g.db = rdb.db(app.config['RDB_DB'])
+    g.db_conn = r.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
+    g.db = r.db(app.config['RDB_DB'])
 
 
 @app.teardown_request

@@ -89,7 +89,6 @@
 #     def commit(self):
 #         """
 #         Commits notification to the database.
-#         Sort of defeats the purpose of SQLAlchemy.
 #         """
 
 #         # TODO: Clear Redis caches

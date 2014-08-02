@@ -27,15 +27,12 @@ We Use
     - [uWSGI](http://uwsgi-docs.readthedocs.org/en/latest/)
     - [Nginx](http://wiki.nginx.org/Main)
 - Databases
-    - [PostgreSQL](http://www.postgresql.org/9.1/interactive/index.html)
-    - [Redis](http://redis.io/documentation)
+    - [RethinkDB](http://rethinkdb.com/)
+    - [Redis](http://redis.io/)
 - API
     - [pip](https://pypi.python.org/pypi/pip)
     - [Python 2.7](http:/.python.org/2.7/)
     - [Flask](http://flask.pocoo.org/)
-    - [SQLAlchemy](http://www.sqlalchemy.org/)
-        - [Flask-SQLAlchemy](http://pythonhosted.org/Flask-SQLAlchemy/)
-        - [Alembic](http://alembic.readthedocs.org/en/latest/)
     - Testing
         - [py.test](http://pytest.org/latest/)
         - [Flake8](https://pypi.python.org/pypi/flake8)
