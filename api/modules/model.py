@@ -16,9 +16,7 @@ class Model:
         """
         assert self.tablename, 'You must provide a tablename.'
         self.table = g.db.table(self.tablename)
-
-        assert self.schema, 'You must provide a schema.'
-        self.fields = pick(fields or {}, self.schema.keys())
+        self.fields = fields
 
     @classmethod
     def get_table(cls):
@@ -35,11 +33,18 @@ class Model:
         Given a set of parameters, fetchs a single model.
         Returns a Model instance if found, otherwise returns None.
         """
+        fields = None
         if params.get('id'):
             fields = cls.get_table()\
                         .get(params.get('id'))\
                         .run(g.db_conn)
-            # TODO: cache in Redis
+        else:
+            fields = cls.get_table()\
+                        .filter(params)\
+                        .limit(1)\
+                        .run(g.db_conn)
+            fields = list(fields)[0]
+        # TODO: cache in Redis
         if fields:
             return cls(fields)
 
@@ -67,6 +72,10 @@ class Model:
             self.fields['id'] = uniqid()
         valid, errors = self.validate()
         if valid:
+            # TODO: Hack
+            if self.fields.get('password'):
+                self.encrypt_password()
+            # END hack
             self.table.insert(self.fields).run(g.db_conn)
             # TODO: clear Redis cache
             return True, []
@@ -111,7 +120,7 @@ class Model:
         """
         Returns a dict representation of the model for outputting to JSON.
         Defaults to returning all fields.
-        Overwrite to limit the fields that are returned based on context.
+        Overwrite to change.
         """
         return self.fields
 
@@ -122,6 +131,12 @@ class Model:
             1) whether the fields are valid and
             2) a list of errors, formatted as {name: , message: }
         """
+
+        # Only allow fields specified
+        assert self.schema, 'You must provide a schema.'
+        self.fields = pick(self.fields, self.schema.keys())
+        # TODO: handle subfields
+
         errors = []
         for key, qualities in self.schema.iteritems():
             errors.append(
@@ -137,7 +152,8 @@ class Model:
 
     def validate_field(self, key, validations):
         """
-
+        Given a field key and a list of validations,
+        ensure the field matches the specification.
         """
         message = None
         for validation in validations:
@@ -153,14 +169,16 @@ class Model:
 
     def test_required(self, key):
         """
-
+        Ensure the field exists.
+        None if okay, String if failed.
         """
         if self.fields.get(key) is None:
             return "%s is required" % key
 
     def test_unique(self, key):
         """
-
+        Ensure field is unique in database.
+        None if okay, String if failed.
         """
         value = self.fields.get(key)
         result = self.table.filter({key: value}).limit(1).run(g.db_conn)
@@ -169,7 +187,8 @@ class Model:
 
     def test_email(self, key):
         """
-
+        Ensure field is formatted like an email address.
+        None if okay, String if failed.
         """
         value = self.fields.get(key)
         if not re.match(r'\S+@\S+\.\S+', value):
@@ -177,7 +196,8 @@ class Model:
 
     def test_minlength(self, key, length):
         """
-
+        Ensure field has minimum length.
+        None if okay, String if failed.
         """
         value = self.fields.get(key)
         if len(value) < length:

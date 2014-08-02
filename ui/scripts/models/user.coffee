@@ -42,7 +42,13 @@ class UserModel extends Backbone.Model
         return response.user
 
     login: (data) ->
-        $.post(@urlRoot + 'login', data)
+        $.ajax({
+            url: @urlRoot + 'login'
+            data: data
+            type: 'POST'
+            contentType: 'application/json; charset=utf-8'
+            dataType: 'json'
+        })
             .done(=>
                 @trigger('login')
             )
