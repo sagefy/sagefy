@@ -4,8 +4,7 @@ Core model class, structures Rethink queries and caching.
 from flask import g
 from modules.util import uniqid, pick, compact
 import re
-
-# TODO: created and modified
+import rethinkdb as r
 
 
 class Model:
@@ -44,7 +43,6 @@ class Model:
                         .limit(1)\
                         .run(g.db_conn)
             fields = list(fields)[0]
-        # TODO: cache in Redis
         if fields:
             return cls(fields)
 
@@ -59,7 +57,6 @@ class Model:
                          .run(g.db_conn)
         if fields_list:
             return [cls(fields) for fields in fields_list]
-            # TODO: cache each in Redis
 
     def insert(self):
         """
@@ -68,21 +65,16 @@ class Model:
         Returns a True if succeeded.
         Returns False and a list of errors if failed.
         """
-        if not self.fields.get('id'):
-            self.fields['id'] = uniqid()
         valid, errors = self.validate()
         if valid:
-            # TODO: Hack
-            if self.fields.get('password'):
-                self.encrypt_password()
-            # END hack
+            self.tidy_fields()
             self.table.insert(self.fields).run(g.db_conn)
-            # TODO: clear Redis cache
+            self.sync_fields()
             return True, []
         else:
             return False, errors
 
-    def update(self):
+    def update(self, fields):
         """
         Updates the model in the database.
         Takes no fields.
@@ -90,16 +82,24 @@ class Model:
         Returns a True if succeeded.
         Returns False and a list of errors if failed.
         """
+        self.fields.update(fields)
         valid, errors = self.validate()
         if valid:
+            self.tidy_fields()
             self.table\
                 .get(self.fields.get('id'))\
                 .update(self.fields)\
                 .run(g.db_conn)
-            # TODO: clear cache in Redis
+            self.sync_fields()
             return True, []
         else:
             return False, errors
+
+    def sync_fields(self):
+        """
+        Get fields updated to what is actually in the database.
+        """
+        self.fields = self.table.get(self.fields.get('id')).run(g.db_conn)
 
     def delete(self):
         """
@@ -112,7 +112,6 @@ class Model:
             .get(self.fields.get('id'))\
             .delete()\
             .run(g.db_conn)
-        # TODO: clear cache in Redis
         self.fields = None
         return True, []
 
@@ -124,6 +123,31 @@ class Model:
         """
         return self.fields
 
+    def tidy_fields(self):
+        """
+        Only allow fields specified in the schema.
+        """
+
+        # Add in generic fields
+        if not self.fields.get('id'):
+            self.fields['id'] = uniqid()
+        if not self.fields.get('created'):
+            self.fields['created'] = r.now()
+        self.fields['modified'] = r.now()
+
+        # Only allow fields specified in the schema.
+        assert self.schema, 'You must provide a schema.'
+        keys = self.schema.keys() + ['id', 'created', 'modified']
+        # TODO: handle subfields
+        self.fields = pick(self.fields, keys)
+
+        # Update password if needed
+        if (
+            self.fields.get('password') and
+            not self.fields['password'].startswith('$2a$')
+        ):
+            self.encrypt_password()
+
     def validate(self):
         """
         Validate fields before insert or update.
@@ -131,12 +155,6 @@ class Model:
             1) whether the fields are valid and
             2) a list of errors, formatted as {name: , message: }
         """
-
-        # Only allow fields specified
-        assert self.schema, 'You must provide a schema.'
-        self.fields = pick(self.fields, self.schema.keys())
-        # TODO: handle subfields
-
         errors = []
         for key, qualities in self.schema.iteritems():
             errors.append(
@@ -181,8 +199,11 @@ class Model:
         None if okay, String if failed.
         """
         value = self.fields.get(key)
-        result = self.table.filter({key: value}).limit(1).run(g.db_conn)
-        if [u for u in result]:
+        entries = list(self.table
+                           .filter({key: value})
+                           .filter(r.row['id'] != self.fields.get('id'))
+                           .run(g.db_conn))
+        if entries:
             return "%s must be unique" % key
 
     def test_email(self, key):
@@ -201,4 +222,4 @@ class Model:
         """
         value = self.fields.get(key)
         if len(value) < length:
-            return "%s requires at least %s characters" % ()
+            return "%s requires at least %s characters" % (key, length)

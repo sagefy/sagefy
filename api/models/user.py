@@ -27,7 +27,7 @@ class User(Model):
         """
         fields = copy(self.fields)
         fields.pop('password', None)
-        if self.fields.get('id') is not current_user.fields.get('id'):
+        if self.is_current_user():
             fields.pop('email', None)
         return fields
 
@@ -62,3 +62,7 @@ class User(Model):
     def get_id(self):
         """For Flask-Login."""
         return unicode(self.fields['id'])
+
+    def is_current_user(self):
+        """Returns True if the user is the one logged in."""
+        return self.fields.get('id') is not current_user.fields.get('id')
