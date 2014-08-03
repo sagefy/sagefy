@@ -1,6 +1,6 @@
 ---
-title: Reference
 layout: default
+title: Reference
 ---
 
 This document is a list of organized, curated links to support the development of Sagefy.

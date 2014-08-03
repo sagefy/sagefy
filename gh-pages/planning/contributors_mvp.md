@@ -5,6 +5,8 @@ layout: default
 
 At first, there will only be video information with multiple choice questions with textual questions, answers, and feedback. Later stages will add more formats.
 
+_TODO: Rework and simplify_
+
 Contributor Screens
 -------------------
 

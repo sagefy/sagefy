@@ -1,9 +1,22 @@
 ---
-title: Code Styleguide
 layout: default
+title: Technology -- Contribution
 ---
 
 This document covers basic code styling and notes for Sagefy.
+
+Development Checklist
+---------------------
+
+For each pull request, ensure the following:
+
+- Generally follows code styleguide below.
+- Each method is documented according to the system for the given domain
+- Code passes used linters
+- Passes existing automated tests (run CI automatically on pull requests)
+- Reviewed by a person
+- Provides some basic unit test coverage, where appropriate
+- Provides some basic functional test coverage, where appropriate
 
 Global Code Styling
 -------------------
@@ -26,28 +39,23 @@ Python
 - Use [Flake8](https://flake8.readthedocs.org/en/2.0/) for Python formatting.
     - Flake8 is the merger of [pep8](https://github.com/jcrocholl/pep8) and [PyFlakes](https://launchpad.net/pyflakes).
 - Methods should be no longer than 12 statements.
-- Request and response formatting: see [RESTish](/restish).
+- Request and response formatting: see [RESTish](/technology/restish).
 - DocStrings should follow [PEP-0257](http://legacy.python.org/dev/peps/pep-0257/) and when relevant the [NumPy convention](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt).
 - Database naming and conventions.
-    - IDs are always randomly generated strings, `String(64)`.
+    - IDs are always randomly generated strings.
     - Include `created` and `modified`, using those exact names, when sensible.
-    - Use `name` for title, name, or subject; use `String(256)`.
-    - Use `body` for body, message, description... use `Text` for `body`.
-    - `language` is `String(2)`
-    - `email` is `String(256)`
-    - `url` is `String(2048)`
+    - Use `name` for title, name, or subject.
+    - Use `body` for body, message, description..
     - Use `kind` for kind or type.
         - When the number of kinds is unknown, use `categories` instead.
     - Use `_tablename` to refer to the name of another table.
-    - Use foreign keys. When assigning a foreign key, use tablename (singular) then `_id`.
-    - Table names use all plural, column names are singular. Model names are singular. Use underscores.
+    - Table names use all plural, field names are singular. Model names are singular. Use underscores.
     - Multiple join tables should use both names, and both in plural form.
-    - When the relationship is...
+    - When the relationship is...  _TODO: Review_
         - 1 to 1: Use the same ID for both.
         - 1 to many: Put the "1" ID into the "many" rows.
         - Many to many: Use a join table.
     - Don't use negative named booleans. Stay positive :)
-
 
 Coffeescript
 ------------
@@ -114,4 +122,3 @@ Other Documentation
 -------------------
 
 - Use [Markdown](https://daringfireball.net/projects/markdown/) when possible as the default.
-
