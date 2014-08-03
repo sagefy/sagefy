@@ -11,12 +11,12 @@ Development Checklist
 For each pull request, ensure the following:
 
 - Generally follows code styleguide below.
-- Each method is documented according to the system for the given domain
-- Code passes used linters
-- Passes existing automated tests (run CI automatically on pull requests)
-- Reviewed by a person
-- Provides some basic unit test coverage, where appropriate
-- Provides some basic functional test coverage, where appropriate
+- Each method is documented according to the system for the given domain.
+- Code passes used linters.
+- Passes existing automated tests (run CI automatically on pull requests).
+- Reviewed by a person.
+- Provides some basic unit test coverage, where appropriate.
+- Provides some basic functional test coverage, where appropriate.
 
 Global Code Styling
 -------------------
@@ -24,7 +24,7 @@ Global Code Styling
 - Four spaces per tab, unless its a generated file where that is the norm.
 - No extra whitespace at the ends of lines.
 - A single line break at the end of the file.
-- A maximum of 79 characters per line.
+- A maximum of 80 characters per line.
 
 Naming Conventions
 ------------------
@@ -51,11 +51,11 @@ Python
     - Use `_tablename` to refer to the name of another table.
     - Table names use all plural, field names are singular. Model names are singular. Use underscores.
     - Multiple join tables should use both names, and both in plural form.
-    - When the relationship is...  _TODO: Review_
-        - 1 to 1: Use the same ID for both.
+    - When the relationship is...
+        - 1 to 1: Should probably use embedding. Otherwise, use the same ID for both.
         - 1 to many: Put the "1" ID into the "many" rows.
-        - Many to many: Use a join table.
-    - Don't use negative named booleans. Stay positive :)
+        - Many to many: Embed IDs, otherwise use a join table.
+    - Don't use negative named booleans. Stay positive.
 
 Coffeescript
 ------------
@@ -116,7 +116,7 @@ It's hard to know how we implement things ahead of time. Describe the tests that
 Ansible and Configuration
 -------------------------
 
-- _TODO_
+- Use the `setup` directory.
 
 Other Documentation
 -------------------

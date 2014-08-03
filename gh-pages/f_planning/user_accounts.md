@@ -39,27 +39,22 @@ Models
 - id
 - created
 - modified
-- type
-- user_id
-- object_id
-- object_type
-- subject
+- name
 - body
-- action
-- action_url
-- seen
+- categories
+- read (boolean)
+- concerns: pagination and filtering
 
 ### Message
 - id
 - created
 - modified
-- type
-- format
-- from_user_id
-- to_user_id
-- subject
+- from_user
+- to_user
+- name
 - body
-- read
+- read (boolean)
+- categories
 
 Screen Requirements
 -------------------

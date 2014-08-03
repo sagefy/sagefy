@@ -26,31 +26,101 @@ Contributor Models
 
 ### Card
 
-- TODO
+- id
+- created
+- modified
+- language
+- unit
+- name (e.g. title)
+- versioning (canonical)
+- categories
+- prerequisites
+- Videos
+    - duration
+    - url
+- Text Multiple Choice Question
+    - question
+    - attempts allowed
+    - max choices
+    - multiple correct
+    - answers
+        - body
+        - correct (boolean)
+        - feedback
 
 ### Unit
 
-- TODO
+- id
+- created
+- modified
+- language
+- versioning (canonical)
+- name (title)
+- body (objective, goal, description)
+- prerequisites
 
 ### Set
 
-- TODO
+- id
+- created
+- modified
+- language
+- units
+- sets
+- name
+- body (description, objective)
+- versioning
 
 ### Proposal
 
-- TODO
+- id
+- created
+- modified
+- language
+- user
+- object kind, id
+
+### Amendments
+
+- id
+- created
+- modified
+- language
+- proposal
+- object version
+- action (create, update, delete, split, merge)
+- decision (pending, blocked, accepted, declined)
 
 ### Vote
 
-- TODO
+- id
+- created
+- modified
+- language
+- user
+- amendment
+- body
+- action (agree, consent, discuss, dissent)
 
 ### Discussion > Thread
 
-- TODO
+- id
+- created
+- modified
+- language
+- object kind and id
+- name
 
 ### Discussion > Message
 
-- TODO
+- id
+- created
+- modified
+- language
+- user
+- thread
+- body
+- replies to message
 
 Contributor Screen Requirements
 -------------------------------
@@ -59,19 +129,29 @@ Contributor Screen Requirements
 
 The following views are per type: Set, Unit, and Card. These sections list the editable/viewable subcomponents per each type of object.
 
-#### Set Elements
+#### Card Elements
 
-- TODO
+- name
+- categories
+- prerequisites
+- Video:
+    - duration and url
+- Text Multiple Choice:
+    - question
+    - answers and feedback
+    - options
 
 #### Unit Elements
 
-- TODO
+- name
+- goal
+- prerequisites
 
-#### Card Elements
+#### Set Elements
 
-- TODO
-- Video: TODO
-- Text Multiple Choice: TODO
+- units and sets
+- name
+- body
 
 --------
 
