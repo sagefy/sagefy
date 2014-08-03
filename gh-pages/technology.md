@@ -3,6 +3,6 @@ layout: default
 title: Technology
 ---
 
-- [Stack](/technology_/stack)
-- [Sections](/technology_/sections)
-- [Contribution](/technology_/contribution)
+- [Stack](/f_technology/stack)
+- [Sections](/f_technology/sections)
+- [Contribution](/f_technology/contribution)
