@@ -22,9 +22,9 @@ describe('Signup View', ->
         @ajaxStub.restore()
     )
 
-    it('should error on empty username', ->
+    it('should error on empty name', ->
         @view.$form.submit()
-        expect(@view.$('#username').closest('.form-field'))
+        expect(@view.$('#name').closest('.form-field'))
             .to.have.class('form-field--error')
     )
 
@@ -43,7 +43,7 @@ describe('Signup View', ->
     )
 
     it('should error if email address already used', ->
-        @view.$('#username').val('used')
+        @view.$('#name').val('used')
         @view.$('#email').val('used@example.com')
         @view.$('#password').val('example1')
         @view.$form.submit()
@@ -56,7 +56,7 @@ describe('Signup View', ->
 
     it('should create user when the form is submitted', ->
         stub = sinon.stub(SignupView::, 'sync')
-        @view.$('#username').val('testuser')
+        @view.$('#name').val('testuser')
         @view.$('#email').val('testuser@example.com')
         @view.$('#password').val('example1')
         @view.$form.submit()

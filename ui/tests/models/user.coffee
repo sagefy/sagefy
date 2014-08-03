@@ -21,16 +21,16 @@ describe('User Model', ->
     )
 
     it('should define the appropriate fields', ->
-        expect(UserModel::fields).to.contain.keys('username')
+        expect(UserModel::fields).to.contain.keys('name')
             .and.to.contain.keys('email')
             .and.to.contain.keys('password')
     )
 
-    it('should validate the username field correctly', ->
-        @user.set('username', '')
-        expect(validate(@user, 'username')).to.be.an('object')
-        @user.set('username', 'abcd')
-        expect(validate(@user, 'username')).to.not.exist
+    it('should validate the name field correctly', ->
+        @user.set('name', '')
+        expect(validate(@user, 'name')).to.be.an('object')
+        @user.set('name', 'abcd')
+        expect(validate(@user, 'name')).to.not.exist
     )
 
     it('should validate the email address correctly', ->
@@ -50,7 +50,7 @@ describe('User Model', ->
     it('should login a user', ->
         spy = sinon.spy()
         @user.on('login', spy)
-        @user.login({username: 'abcd', password: 'asdfasdf'})
+        @user.login({name: 'abcd', password: 'asdfasdf'})
         expect(spy).to.be.called
     )
 

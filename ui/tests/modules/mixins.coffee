@@ -11,12 +11,12 @@ describe('Mixins', ->
     it('should format data from an HTML form', ->
         formHTML = '''
         <form>
-            <input name="username" value="Moogle" />
+            <input name="name" value="Moogle" />
         </form>
         '''
         @$test.append(formHTML)
         expect(mixins.formData(@$test.find('form')))
-            .to.eql({username: "Moogle"})
+            .to.eql({name: "Moogle"})
         @$test.empty()
     )
 
@@ -48,8 +48,8 @@ describe('Mixins', ->
 
     it('should validate field data', ->
         field = {validations: {required: true}}
-        expect(mixins.validateField('username', field, '')).to.be.an('object')
-        expect(mixins.validateField('username', field, 'a')).to.be.false
+        expect(mixins.validateField('name', field, '')).to.be.an('object')
+        expect(mixins.validateField('name', field, 'a')).to.be.false
         # false ~= no error
     )
 

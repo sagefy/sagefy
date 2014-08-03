@@ -26,7 +26,7 @@ describe('Login View', ->
     )
 
     it('should error if password is wrong', ->
-        @view.$form.find('#username').val('testuser')
+        @view.$form.find('#name').val('testuser')
         @view.$form.find('#password').val('wrongpassword')
         @view.loginError([{
             name: 'password'
@@ -36,9 +36,9 @@ describe('Login View', ->
             .to.have.class('form-field--error')
     )
 
-    it('should login if correct username and email', ->
+    it('should login if correct name and email', ->
         ajaxStub = sinon.stub(jQuery, 'ajax', -> $({}).promise())
-        @view.$form.find('#username').val('testuser')
+        @view.$form.find('#name').val('testuser')
         @view.$form.find('#password').val('example1')
         @view.$form.submit()
         expect(ajaxStub).to.have.been.called
