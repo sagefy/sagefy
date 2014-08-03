@@ -5,14 +5,12 @@ layout: default
 
 At first, there will only be video information with multiple choice questions with textual questions, answers, and feedback. Later stages will add more formats.
 
-_TODO: Rework and simplify_
-
 Contributor Screens
 -------------------
 
 - Section Selector
 - Contributor Home
-- Contributor Search (Modules, Components, Information...)
+- Contributor Search (Set, Unit, Card...)
 - Object Overviews
     - Children, Parents
     - History
@@ -26,197 +24,54 @@ Contributor Screens
 Contributor Models
 ------------------
 
-- _Versioning_
-- _Internationalization and Translation_
-- _Notifications_
-- _Flagging_
-- _Discussion_
+### Card
 
-### Module
-- id
-- created
-- modified
-- version
-- name (aka title, topic, subject)
-- body (aka description)
-- component_ids (array)
-- module_ids (array)
-    - !! ensure no prereq cycles
+- TODO
 
-### Component (or Integration)
-- id
-- created
-- modified
-- version
-- name (aka title, topic, subject)
-- body (aka description)
-- prerequisite_ids (array)
-    - !! ensure no prereq cycles
-- type (component, integration)
-    - !! ensure integration has no learning objectives
+### Unit
 
-### Learning Objective
-- id
-- created
-- modified
-- version
-- component_id
-- body (aka copy, text)
-    - languages (en, es, jp)
-- ordinal (order)
+- TODO
 
-### Information
-- id
-- component_id
-- version
-- created
-- modified
-- format_type
-- format_id
-- learning_objective_id
-- categories (eg worked example, application, motivational, compare and contrast...)
-- language
+### Set
 
-#### Information: Video Format
-- id
-- parent_id
-- duration
-- url
-
-### Practice
-- id
-- component_id
-- version
-- created
-- modified
-- learning_objective_id
-- language
-- question_id
-- question_type
-- answer_id
-- answer_type
-
-### Practice: Question > Textual
-- id
-- practice_id
-- created
-- attempts_allowed
-- modified
-- question
-
-### Practice: Answer > Selection
-- id
-- practice_id
-- created
-- modified
-- answers
-    - formats
-    - correct_answer
-    - feedback
-- single_or_multiple
+- TODO
 
 ### Proposal
-- id
-- created
-- modified
-- object_id
-- object_type
-- name (aka title, subject)
-- body (description)
 
-### Proposal: Versions (Amendments)
-- id
-- created
-- modified
-- version (based on)
-- proposal_id
-- status (active, pending, accepted, declined, can't accept)
-- name
-- body
-- type (create, update, delete, split, merge)
-- fields
+- TODO
 
-### Proposal: Votes
-- id
-- created
-- modified
-- user_id
-- proposal_version_id
-- type (agree, consent, discuss, disagree...)
+### Vote
+
+- TODO
 
 ### Discussion > Thread
-- id
-- created
-- modified
-- object_id
-- object_type
-- name
+
+- TODO
 
 ### Discussion > Message
-- id
-- created
-- modified
-- user_id
-- body (aka message, copy)
-- reply_to (message_id)
-- thread_id
+
+- TODO
 
 Contributor Screen Requirements
 -------------------------------
 
 ### Object Screen Requirements
 
-The following views are per type: Module, Component/Integration, Presentation, and Practice.
+The following views are per type: Set, Unit, and Card. These sections list the editable/viewable subcomponents per each type of object.
 
-These sections list the editable/viewable subcomponents per each type of object.
+#### Set Elements
 
-#### Module Elements
+- TODO
 
-- language
-- name (title)
-- body (description)
-- contains
-    - modules
-    - components
+#### Unit Elements
 
-#### Component/Integration Elements
+- TODO
 
-- language
-- name (title)
-- body (description)
-- objectives (listed, ordered)
-- changes depending on being either component or integration
-    - kind
-    - prerequisites
-        - Component has zero to many prerequisites, must only be other components
-        - Integration must have exactly two prerequisites of either type
+#### Card Elements
 
-#### Presentation Elements
-
-- language
-- kind
-- objective belongs to
-- video specific:
-    - name
-    - url
-    - duration
-- categories
-
-#### Practice Elements
-
-- language
-- kind
-- objective belongs to
-- multiple choice text
-    - attempts allowed
-    - max choices
-    - multiple correct (boolean)
-    - body (question)
-    - answer
-        - body (text)
-        - correct (boolean)
-        - feedback (text)
-- categories
+- TODO
+- Video: TODO
+- Text Multiple Choice: TODO
 
 --------
 
@@ -241,10 +96,9 @@ These sections list the editable/viewable subcomponents per each type of object.
 - Results
     - Infinite scroll
     - Show type (explode out component/integration)
-    - Module: name
-    - Component: name
-    - Presentation::Video: name
-    - Practice::Multiple Choice::Text: body (question) ... truncated
+    - Set: name
+    - Unit: name
+    - Card: name
 
 ### List, Search, Filter and Sort View
 
@@ -262,24 +116,20 @@ These sections list the editable/viewable subcomponents per each type of object.
     - Language
     - ...
 
-#### List Modules
+#### List Set
 
 - List
     - Show name, body (truncated), contains modules, components (truncated)
 
-#### List Components & Integrations
+#### List Unit
 
 - List
     - Show name, kind, body (truncated), prereqs (truncated)
 
-#### List Presentations
+#### List Card
 
 - List
     - Video: show name, url (truncated), duration, categories (truncated)
-
-#### List Practices
-
-- List
     - Multiple choice text: show body (question, truncated)
 
 ### Object View
@@ -290,29 +140,25 @@ These sections list the editable/viewable subcomponents per each type of object.
 - Flag it
     - Creates a proposal to delete by system
 
-#### View Module
+#### View Set
 
 - See fields above
-- List element modules and components
-- List parent modules
+- List units
+- List parent sets
 
-#### View Component/Integration
+#### View Unit
 
 - See fields above
 - List prerequisites
 - List prerequisite ofs
-- List modules belong to
-- List lost presentation/practice children (?)
+- List sets belong to
 
-#### View Presentation
-
-- See fields above
-- Show objective belongs to, component/integration belongs to
-
-#### View Practice
+#### View Card
 
 - See fields above
-- Show objective belongs to, component/integration belongs to
+- Show unit belongs to
+- List prerequisites
+- List prerequisite ofs
 
 ### List History View
 
@@ -325,7 +171,7 @@ These sections list the editable/viewable subcomponents per each type of object.
 - language (create: select, edit: view)
 - Preview edit/create
 - Fields: see above
-- Presentation/Practice:
+- Unit:
     - Kind selection changes fields available
 
 ### Proposals View
