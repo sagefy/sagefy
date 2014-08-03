@@ -3,7 +3,7 @@ title: RESTish
 layout: default
 ---
 
-General REST principles, but made more practical.
+General REST ideas, but made more practical.
 
 - Requests
     - URL format is `/api/noun/id/noun/id?params`
