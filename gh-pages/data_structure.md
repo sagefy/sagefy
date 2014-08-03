@@ -16,7 +16,7 @@ A card could present information, ask the learner to answer a question, collabor
 
 ### Card Kinds
 
-Some kinds may include a video, a multiple choice question, or interactive demonstration. For more, see [Data Structure: Card Kinds](/data_structure/cards).
+Some kinds may include a video, a multiple choice question, or interactive demonstration. For more, see [Data Structure: Card Kinds](/data_structure_/cards).
 
 ### Card Categories
 

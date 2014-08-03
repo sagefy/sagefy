@@ -8,8 +8,8 @@ This document covers a rough list in the order of which things will be built. It
 - [✔] Initial Research
 - [✔] Technology Scaffoldling
 - [✔] Style Guide and Component Library
-- [ ] [User Accounts](/planning/user_accounts)
-- [ ] [Contributors (MVP)](/planning/contributors_mvp)
+- [ ] [User Accounts](/planning_/user_accounts)
+- [ ] [Contributors (MVP)](/planning_/contributors_mvp)
 - [ ] Learners (MVP)
 - [ ] Additional Card Formats
 - [ ] Mentors (MVP)
