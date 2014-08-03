@@ -48,7 +48,7 @@ We Intend to Use
 - Building and Serving
     - [Ansible](http://www.ansible.com/)
     - [Fabric](http:/.fabfile.org/en/1.8/)
-    - [TravisCI](https://travis-ci.org/) or [Semaphore](https://semaphoreapp.com/) or [Scrutinizer](https://scrutinizer-ci.com/)  _TODO:_ Choose one
+    - [TravisCI](https://travis-ci.org/)
     - [DavidDM](https://david-dm.org/)
     - [Pingdom](https://www.pingdom.com/)
     - [New Relic](http://newrelic.com/) (Free)
@@ -67,7 +67,7 @@ We Intend to Use
 - UI
     - JS error reporting _TODO_
     - [D3.js](http://d3js.org/)
-    - Script utilities - _TODO_ [Select2](http://ivaynberg.github.io/select2/), [Moment](http://momentjs.com/), [Uglify](https://github.com/mishoo/UglifyJS), [Intro.js](http://usablica.github.io/intro.js/), [Selectize](http://brianreavis.github.io/selectize.js/), [Backgrid](http://backgridjs.com/), [Listjs](http://listjs.com/), [Dynatable.js](http://www.dynatable.com/)
+    - Script date and time - [Moment](http://momentjs.com/)
     - Markdown; Add extensions for [Math](http://www.mathjax.org/), Footnotes, [Tables](https://github.com/chjj/marked#tables), Code, [Graphviz Dot](https://github.com/mdaines/viz.js), [Media Embeds](http://sloblog.io/+sloblog/qhdsk2SMoAU/sloblog-dot-io-easy-oembed-powered-media-embeds), and Definition Lists
     - [EpicEditor](https://github.com/OscarGodson/EpicEditor) with [Marked](https://github.com/chjj/marked) and [MathJax](http://www.mathjax.org/) or [Ace](http://ace.c9.io/) also see [LaTeX2HTML5](http://latex2html5.com/)
     - Testing
