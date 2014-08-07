@@ -1,11 +1,11 @@
-from app import app
-from flask import jsonify
+from flask import Blueprint, jsonify, request
 from models.notification import Notification
-from flask import request
 from flask.ext.login import current_user
+notification = Blueprint('notification', __name__,
+                         url_prefix='/api/notifications')
 
 
-@app.route('/api/notifications/', methods=['GET'])
+@notification.route('/api/notifications/', methods=['GET'])
 def list_notifications():
     """
     List notifications for current user.
@@ -36,7 +36,8 @@ def list_notifications():
         return jsonify(errors=list(error)), code
 
 
-@app.route('/api/notifications/<notification_id>/read', methods=['PUT'])
+@notification.route('/api/notifications/<notification_id>/read',
+                    methods=['PUT'])
 def mark_notification_as_read(notification_id):
     """
     Marks notification as read.

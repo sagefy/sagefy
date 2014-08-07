@@ -1,8 +1,8 @@
-from app import app
-from flask import jsonify
+from flask import Blueprint, jsonify
+public = Blueprint('public', __name__, url_prefix='/api')
 
 
-@app.route('/api/')
+@public.route('/')
 def api_index():
     """
     View a documentation page.

@@ -1,6 +1,3 @@
-from app import app
-import controllers.error
-import controllers.public
-import controllers.user
-# import controllers.notification
-# import controllers.message
+from app import create_app
+import config
+app = create_app(config, debug=True)  # TODO: Turn this off!

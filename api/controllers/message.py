@@ -1,11 +1,10 @@
-from app import app
-from flask import jsonify
-from flask import request
+from flask import Blueprint, jsonify, request
 from flask.ext.login import current_user
 # from models.message import Message
+message = Blueprint('message', __name__, url_prefix='/api/messages')
 
 
-@app.route('/api/messages/', methods=['GET'])
+@message.route('/', methods=['GET'])
 def list_messages():
     """
     List messages
@@ -30,7 +29,7 @@ def list_messages():
     return jsonify(**{})
 
 
-@app.route('/api/messages/<message_id>/', methods=['GET'])
+@message.route('/<message_id>/', methods=['GET'])
 def get_message(message_id):
     """
     Get message
@@ -44,7 +43,7 @@ def get_message(message_id):
     return jsonify(**{})
 
 
-@app.route('/api/messages/', methods=['POST'])
+@message.route('/', methods=['POST'])
 def create_message():
     """
     Create message

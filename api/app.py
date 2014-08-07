@@ -1,75 +1,111 @@
 from flask import Flask, g
+import rethinkdb as r
+from redis import StrictRedis
 from flask.ext.login import LoginManager
 from flask_mail import Mail
-from config import SECRET_KEY, MAIL_DEFAULT_SENDER, MAIL_PASSWORD, \
-    MAIL_USERNAME
-import rethinkdb as r
-from rethinkdb.errors import RqlRuntimeError
-import os
-from redis import StrictRedis
 
-app = Flask(__name__)
-
-app.debug = True
+from controllers.error import setup_errors
+from controllers.public import public
+from controllers.user import user
 
 
-### Configure Database ###
+def create_app(config, debug=False, testing=False):
+    """
+    Factory that creates an application instance.
+    Setups up all kinds of stuff.
+    It's fun!
+    """
+    app = Flask(__name__)
 
-# From http://rethinkdb.com/docs/examples/flask-backbone-todo/
+    # Configure the app
+    app.config.from_object(config)
+    app.debug = debug
+    app.testing = testing
 
-app.config['RDB_HOST'] = os.environ.get('RDB_HOST') or 'localhost'
-app.config['RDB_PORT'] = os.environ.get('RDB_PORT') or 28015
-app.config['RDB_DB'] = 'sagefy'
+    # Setup the database and components
+    setup_db(app)
+    setup_redis(app)
+    setup_login(app)
+    setup_email(app)
 
+    # Add in the controllers
+    setup_errors(app)
+    app.register_blueprint(public)
+    app.register_blueprint(user)
 
-def setup_db():
-    db_conn = r.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
-
-    try:
-        r.db_create(app.config['RDB_DB']).run(db_conn)
-        r.db(app.config['RDB_DB']).table_create('users').run(db_conn)
-
-    except RqlRuntimeError:
-        print 'No need to setup RethinkDB.'
-
-    finally:
-        db_conn.close()
+    return app
 
 
-@app.before_request
-def make_db_connection():
+def make_db_connection(app):
+    """
+    Given a Flask application instance,
+    creates a database connection.
+    """
     g.db_conn = r.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
     g.db = r.db(app.config['RDB_DB'])
 
 
-@app.teardown_request
-def close_db_connection(exception):
+def close_db_connection(*args, **kwargs):
+    """
+    Given whatever arguments,
+    close the request database connection.
+    """
     g.db_conn.close()
 
 
-### Configure Redis ###
+def setup_db(app):
+    """
+    Sets up the database.
+    Includes a sequence to make sure databases and tables exist where they
+    need to be.
+    """
+    db_conn = r.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
 
-app.redis = StrictRedis()
+    ## Add all setup needed here:
+    if app.config['RDB_DB'] not in r.db_list().run(db_conn):
+        r.db_create(app.config['RDB_DB']).run(db_conn)
+    if 'users' not in r.db(app.config['RDB_DB']).table_list().run(db_conn):
+        r.db(app.config['RDB_DB']).table_create('users').run(db_conn)
+
+    db_conn.close()
+
+    # On each request, we create and close a new connection
+    # Rethink was designed to work this way, no reason to be alarmed.
+    @app.before_request
+    def _m():
+        # We wrap it here so that we can
+        # make the main function available for testing
+        make_db_connection(app)
+
+    @app.teardown_request
+    def _c(*args, **kwargs):
+        # Same situation here, we want to be able to
+        # test the same way
+        close_db_connection(*args, **kwargs)
 
 
-### Configure Login ###
-
-app.config['SECRET_KEY'] = SECRET_KEY
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    from models.user import User  # TODO: Avoid this
-    return User.get(id=user_id)
+def setup_redis(app):
+    """
+    Stores a Redis instance on our app object.
+    """
+    app.redis = StrictRedis()
 
 
-## Configure Email ###
+def setup_login(app):
+    """
+    Add login capabilities to our app.
+    """
+    login_manager = LoginManager()
+    login_manager.init_app(app)
 
-app.config['MAIL_DEFAULT_SENDER'] = MAIL_DEFAULT_SENDER
-app.config['MAIL_SERVER'] = 'smtp.mandrillapp.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = MAIL_USERNAME
-app.config['MAIL_PASSWORD'] = MAIL_PASSWORD
-mail = Mail(app)
+    @login_manager.user_loader
+    def load_user(user_id):
+        from models.user import User  # TODO: Avoid this
+        return User.get(id=user_id)
+
+
+def setup_email(app):
+    """
+    Add email capabilities to our app.
+    """
+    Mail(app)

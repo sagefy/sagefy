@@ -1,9 +1,9 @@
-from app import app
-from flask import jsonify
+from flask import Blueprint, jsonify
+docs = Blueprint('docs', __name__, url_prefix='/api/docs')
 
 
-@app.route('/api/docs/<page_slug>/')
-def docs_page():
+@docs.route('<page_slug>/')
+def docs_page(page_slug):
     """
     View a documentation page.
     """

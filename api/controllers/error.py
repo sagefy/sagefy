@@ -1,14 +1,14 @@
-from app import app
 from flask import jsonify
 
-
+# A rather comprehensive list of error codes
+# Most probably won't be used
 messages = {
     400: 'Bad Request',
-    401: 'Unauthorized',
+    401: 'Unauthorized',  # !!!
     402: 'Payment Required',
     403: 'Forbidden',
-    404: 'Not Found',
-    405: 'Method Not Allowed',
+    404: 'Not Found',  # !!!
+    405: 'Method Not Allowed',  # !!!
     406: 'Not Acceptable',
     407: 'Proxy Authentication Required',
     408: 'Request Timeout',
@@ -32,7 +32,7 @@ messages = {
     429: 'Too Many Requests',
     431: 'Request Header Fields Too Large',
     444: 'No Response',
-    500: 'Internal Server Error',
+    500: 'Internal Server Error',  # !!!
     501: 'Not Implemented',
     502: 'Bad Gateway',
     503: 'Service Unavailable',
@@ -43,15 +43,22 @@ messages = {
 
 
 def error_response(code):
-    def _(error):
-        code = error.code
-        return jsonify({'errors': [{
-            'name': '',
-            'message': messages[code],
-            'code': code
-        }]}), code
-    return _
+    """
+    A factory which produces controller functions
+    for each type of error code.
+    """
+    def fn(error):
+        return jsonify(errors=[{
+            'message': messages[error.code],
+            'code': error.code
+        }]), error.code
+    return fn
 
 
-for code, message in messages.iteritems():
-    app.error_handler_spec[None][code] = error_response(code)
+def setup_errors(app):
+    """
+    Given a Flask application instance,
+    add error handling for each type of error code.
+    """
+    for code, message in messages.iteritems():
+        app.error_handler_spec[None][code] = error_response(code)

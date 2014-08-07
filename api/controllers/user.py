@@ -1,12 +1,12 @@
-from app import app
 from models.user import User
-from flask import jsonify
-from flask import request
-from flask import make_response
+from flask import Blueprint, jsonify, request, make_response
 from flask.ext.login import login_user, current_user, logout_user
 
 
-@app.route('/api/users/<user_id>', methods=['GET'])
+user = Blueprint('user', __name__, url_prefix='/api/users')
+
+
+@user.route('/<user_id>', methods=['GET'])
 def get_user(user_id):
     """
     Get the user by their ID.
@@ -17,7 +17,7 @@ def get_user(user_id):
     return jsonify(errors=[{'message': 'No user found.'}]), 404
 
 
-@app.route('/api/users/current', methods=['GET'])
+@user.route('/current', methods=['GET'])
 def get_current_user():
     """
     Get current user's information.
@@ -27,7 +27,7 @@ def get_current_user():
     return jsonify(errors=[{'message': 'Not logged in.'}]), 404
 
 
-@app.route('/api/users/', methods=['POST'])
+@user.route('/', methods=['POST'])
 def create_user():
     """
     Create user.
@@ -43,7 +43,7 @@ def create_user():
         return jsonify(errors=errors), 401
 
 
-@app.route('/api/users/login', methods=['POST'])
+@user.route('/login', methods=['POST'])
 def login():
     """
     Login user.
@@ -65,7 +65,7 @@ def login():
     }]), 404
 
 
-@app.route('/api/users/logout', methods=['POST'])
+@user.route('/logout', methods=['POST'])
 def logout():
     """
     Logout user.
@@ -76,7 +76,7 @@ def logout():
     return resp, 204
 
 
-@app.route('/api/users/<user_id>', methods=['PUT'])
+@user.route('/<user_id>', methods=['PUT'])
 def update_user(user_id):
     """
 

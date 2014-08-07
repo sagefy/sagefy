@@ -2,14 +2,32 @@ from modules import util
 import string
 
 
-def test_uniqid():
+def test_uniqid_length():
     # Expect the length of the ID to be 16
     assert len(util.uniqid()) is 16
 
+
+def test_uniqid_length_mutable():
     # Expect the length of the ID to be changeable
     assert len(util.uniqid(length=8)) is 8
 
+
+def test_uniqid_charset():
     # Expect the ID to only have numbers and lowercase letters
     uid = util.uniqid()
     for c in uid:
         assert c in string.ascii_lowercase + string.digits
+
+
+def test_pick():
+    # Expect pick to make a new dict with only keys presented
+    d = {'a': 1, 'b': 2}
+    keys = ('a')
+    assert util.pick(d, keys) == {'a': 1}
+    assert d == {'a': 1, 'b': 2}
+
+
+def test_compact():
+    # Expect compact to remove None from an array
+    a = [1, None, 3, None]
+    assert util.compact(a) == [1, 3]
