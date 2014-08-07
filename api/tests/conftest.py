@@ -12,7 +12,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
 from app import create_app
-import config
+import test_config as config
 
 
 @pytest.fixture(scope='session')
