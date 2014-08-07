@@ -47,7 +47,7 @@ gulp.task('test', (done) ->
 
 gulp.task('clean', ->
     gulp.src(dist, {read: false})
-        .pipe(plugins.clean())
+        .pipe(plugins.rimraf())
 )
 
 gulp.task('static:build', ->
