@@ -64,8 +64,8 @@ def test_list_model(app, db_conn, tests_table):
         {'id': 3, 'a': 10}
     ]).run(db_conn)
     models = TestModel.list(a=10)
-    assert models[0].fields['id'] == 1
-    assert models[1].fields['id'] == 3
+    ids = [models[0].fields['id'], models[1].fields['id']]
+    assert ids == [1, 3] or ids == [3, 1]
 
 
 def test_list_empty(app, db_conn, tests_table):
