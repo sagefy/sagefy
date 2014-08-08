@@ -72,6 +72,7 @@ API Development
     - [Revision](http://www.mediawiki.org/wiki/Manual:Revision_table)
     - [Page](http://www.mediawiki.org/wiki/Manual:Page_table)
     - [Text](http://www.mediawiki.org/wiki/Manual:Text_table)
+- [Writing RESTful Web Services With Flask](https://speakerdeck.com/miguelgrinberg/writing-restful-web-services-with-flask-pycon-2014) – PyCon 2014 by Miguel Grinberg
 
 Web UI development
 ------------------
