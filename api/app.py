@@ -41,16 +41,9 @@ def make_db_connection(app):
     Given a Flask application instance,
     creates a database connection.
     """
-    g.db_conn = r.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
-    g.db = r.db(app.config['RDB_DB'])
-
-
-def close_db_connection(*args, **kwargs):
-    """
-    Given whatever arguments,
-    close the request database connection.
-    """
-    g.db_conn.close()
+    db_conn = r.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
+    db = r.db(app.config['RDB_DB'])
+    return db_conn, db
 
 
 def setup_db(app):
@@ -64,8 +57,11 @@ def setup_db(app):
     ## Add all setup needed here:
     if app.config['RDB_DB'] not in r.db_list().run(db_conn):
         r.db_create(app.config['RDB_DB']).run(db_conn)
-    if 'users' not in r.db(app.config['RDB_DB']).table_list().run(db_conn):
-        r.db(app.config['RDB_DB']).table_create('users').run(db_conn)
+
+    tables = r.db(app.config['RDB_DB']).table_list().run(db_conn)
+    for table in ['users']:
+        if table not in tables:
+            r.db(app.config['RDB_DB']).table_create(table).run(db_conn)
 
     db_conn.close()
 
@@ -75,13 +71,13 @@ def setup_db(app):
     def _m():
         # We wrap it here so that we can
         # make the main function available for testing
-        make_db_connection(app)
+        g.db_conn, g.db = make_db_connection(app)
 
     @app.teardown_request
     def _c(*args, **kwargs):
         # Same situation here, we want to be able to
         # test the same way
-        close_db_connection(*args, **kwargs)
+        g.db_conn.close()
 
 
 def setup_redis(app):

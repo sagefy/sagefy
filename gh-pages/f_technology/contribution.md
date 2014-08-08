@@ -15,8 +15,7 @@ For each pull request, ensure the following:
 - Code passes used linters.
 - Passes existing automated tests (run CI automatically on pull requests).
 - Reviewed by a person.
-- Provides some basic unit test coverage, where appropriate.
-- Provides some basic functional test coverage, where appropriate.
+- Provides some basic test coverage, where appropriate.
 
 Global Code Styling
 -------------------
@@ -39,7 +38,7 @@ Python
 - Use [Flake8](https://flake8.readthedocs.org/en/2.0/) for Python formatting.
     - Flake8 is the merger of [pep8](https://github.com/jcrocholl/pep8) and [PyFlakes](https://launchpad.net/pyflakes).
 - Methods should be no longer than 12 statements.
-- Request and response formatting: see [RESTish](/technology/restish).
+- Request and response formatting: see [RESTish](/f_technology/restish).
 - DocStrings should follow [PEP-0257](http://legacy.python.org/dev/peps/pep-0257/) and when relevant the [NumPy convention](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt).
 - Database naming and conventions.
     - IDs are always randomly generated strings.
@@ -99,7 +98,7 @@ Basic rules for automated tests:
 
 **1) Tests what matters**
 
-It's too easy to get to get caught up in isolating everything for unit testing, writing a sea of functional tests, arguing over what type of test a test is, and gaming the coverage tool. Instead, simply tests what matters, and don't test what doesn't. If you don't care that the test fails, then don't write it.
+It's too easy to get to get caught up in isolating everything for unit testing, writing a sea of esoteric tests, arguing over what type of test a test is, and gaming the coverage tool. Instead, simply tests what matters, and don't test what doesn't. If you don't care that the test fails, then don't write it.
 
 **2) Use the context**
 

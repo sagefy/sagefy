@@ -66,7 +66,7 @@ API Development
 - [Best Practices for Designing a Pragmatic RESTful API](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api) by Vinay Sahni
 - [Implementing a RESTful Web API with Python & Flask](http://blog.luisrei.com/articles/flaskrest.html) by Luis Rei
 - [The Twelve-Factor App](http://12factor.net/)
-- [The TDD process with Functional and Unit tests](http://chimera.labs.oreilly.com/books/1234000000754/ch06.html#_implementing_the_new_design_using_tdd) from Test-Driven Web Development with Python
+- [The TDD process with Functional and Unit Tests](http://chimera.labs.oreilly.com/books/1234000000754/ch06.html#_implementing_the_new_design_using_tdd) from Test-Driven Web Development with Python
 - Wikipedia's Database Schema
     - [Diagram](http://upload.wikimedia.org/wikipedia/commons/thumb/4/42/MediaWiki_1.20_%2844edaa2%29_database_schema.svg/2500px-MediaWiki_1.20_%2844edaa2%29_database_schema.svg.png)
     - [Revision](http://www.mediawiki.org/wiki/Manual:Revision_table)

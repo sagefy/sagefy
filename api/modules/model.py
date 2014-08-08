@@ -15,7 +15,7 @@ class Model:
         """
         assert self.tablename, 'You must provide a tablename.'
         self.table = g.db.table(self.tablename)
-        self.fields = fields
+        self.fields = fields or {}
 
     @classmethod
     def get_table(cls):
@@ -50,7 +50,7 @@ class Model:
     def list(cls, **params):
         """
         Given a set of paramaters, fetchs a list of models that match.
-        Returns a list of Model instances if found, otherwise returns None.
+        Returns a list of Model instances if found, otherwise returns [].
         """
         fields_list = cls.get_table()\
                          .filter(params)\
