@@ -1,6 +1,4 @@
-from flask import Blueprint, jsonify, request
-from models.notification import Notification
-from flask.ext.login import current_user
+from flask import Blueprint
 notification = Blueprint('notification', __name__,
                          url_prefix='/api/notifications')
 
@@ -9,31 +7,8 @@ notification = Blueprint('notification', __name__,
 def list_notifications():
     """
     List notifications for current user.
-    Takes parameters `limit`, `offset`, and `categories`.
+    Takes parameters `limit`, `offset`, `categories`, and `read`.
     """
-
-    try:
-        limit = int(request.values.get('limit', 0))
-        offset = int(request.values.get('offset', 0))
-        categories = request.values.get('categories', [])
-        read = request.values.get('read', None)
-        return jsonify(notifications=Notification.get_user_notifications(
-            user_id=current_user.id,
-            limit=limit,
-            offset=offset,
-            categories=categories,
-            read=read,
-        ), parameters={
-            'limit': limit,
-            'offset': offset,
-            'categories': categories,
-            'read': read,
-        })
-    except AssertionError as error:
-        code = 400
-        if error['name'] == 'user_id':
-            code = 401
-        return jsonify(errors=list(error)), code
 
 
 @notification.route('/api/notifications/<notification_id>/read',
@@ -41,14 +16,7 @@ def list_notifications():
 def mark_notification_as_read(notification_id):
     """
     Marks notification as read.
-    Must be logged in as user and provide a valid id.
+    Must be logged in as user, provide a valid ID, and
+    own the notification.
     Returns notification.
     """
-
-    notification = Notification.get_by_id(notification_id)
-    if not notification:
-        return jsonify(errors=[{'message': "Not a valid id."}]), 404
-    if notification.user_id != current_user.id:
-        return jsonify(errors=[{'message': "Not own notification."}]), 401
-    notification.mark_as_read()
-    return jsonify(notification=notification)

@@ -1,4 +1,4 @@
-from modules.model import Model
+from foundations.model import Model
 
 
 class TestModel(Model):
@@ -141,40 +141,138 @@ def test_delete_model(app, db_conn, tests_table):
     model.delete()
     assert len(list(tests_table.run(db_conn))) == 0
 
-# Expect get fields to return the model's fields
 
-# Expect tidy fields to add an ID
+def test_get_model_fields(app, db_conn):
+    """
+    Expect get fields to return the model's fields.
+    """
+    model = TestModel({'a': 10})
+    assert model.get_fields()['a'] == 10
 
-# Expect tidy fields to maintain an existing ID
 
-# Expect tidy fields to update the modified time
+def test_model_tidy_id(app, db_conn):
+    """
+    Expect tidy fields to add an ID.
+    """
+    model = TestModel({'a': 10})
+    model.tidy_fields()
+    assert model.fields['id']
 
-# Expect tidy fields to remove non schema'd keys
 
-# Expect tidy fields to keey schema'd keys
+def test_tidy_keep_id(app, db_conn):
+    """
+    Expect tidy fields to maintain an existing ID.
+    """
+    assert False
 
-# Expect tidy fields to encrypt a plain password
 
-# Expect validate to validate all fields in a schema
+def test_tidy_modified_time(app, db_conn):
+    """
+    Expect tidy fields to update the modified time.
+    """
+    assert False
 
-# Expect validate to be true when all fields valid
 
-# Expect validate to give errors when fields don't match schema
+def test_tidy_non_schema(app, db_conn):
+    """
+    Expect tidy fields to remove non schema'd keys.
+    """
+    assert False
 
-# Expect validate field to run all validations on fields
 
-# Expect validate field to work on a single field valdation
+def test_tidy_keep_schemad(app, db_conn):
+    """
+    Expect tidy fields to keep schema'd keys.
+    """
+    assert False
 
-# Expect validate field to work on a field with parameters
 
-# Expect validate field to give error
+def test_tidy_encrypt_password(app, db_conn):
+    """
+    Expect tidy fields to encrypt a plain password.
+    """
+    assert False
 
-# Expect validate field to give None when okay
 
-# Expect required to require the field
+def test_validate_schema(app, db_conn):
+    """
+    Expect validate to validate all fields in a schema.
+    """
+    assert False
 
-# Expect unique to validate field uniqueness
 
-# Expect email to ensure field is formatted as email
+def test_validate_success(app, db_conn):
+    """
+    Expect validate to be true when all fields valid.
+    """
+    assert False
 
-# Expect minlength to ensure field matches a minimum length
+
+def test_validate_error(app, db_conn):
+    """
+    Expect validate to give errors when fields don't match schema.
+    """
+    assert False
+
+
+def test_validate_field(app, db_conn):
+    """
+    Expect validate field to run all validations on fields.
+    """
+    assert False
+
+
+def test_validate_field_no_params(app, db_conn):
+    """
+    Expect validate field to work on a field with no parameters.
+    """
+    assert False
+
+
+def test_validate_field_params(app, db_conn):
+    """
+    Expect validate field to work on a field with parameters.
+    """
+    assert False
+
+
+def test_validate_field_error(app, db_conn):
+    """
+    Expect validate field to give error.
+    """
+    assert False
+
+
+def test_validate_field_success(app, db_conn):
+    """
+    Expect validate field to give None when okay.
+    """
+    assert False
+
+
+def test_validate_requied(app, db_conn):
+    """
+    Expect required to require the field.
+    """
+    assert False
+
+
+def test_validate_unique(app, db_conn):
+    """
+    Expect unique to validate field uniqueness.
+    """
+    assert False
+
+
+def test_validate_email(app, db_conn):
+    """
+    Expect email to ensure field is formatted as email.
+    """
+    assert False
+
+
+def test_validate_minlength(app, db_conn):
+    """
+    Expect minlength to ensure field matches a minimum length.
+    """
+    assert False

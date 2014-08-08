@@ -79,7 +79,8 @@ def logout():
 @user.route('/<user_id>', methods=['PUT'])
 def update_user(user_id):
     """
-
+    Update the user.
+    Must be the current user.
     """
     user = User.get(id=user_id)
 

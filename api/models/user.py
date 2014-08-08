@@ -1,4 +1,4 @@
-from modules.model import Model
+from foundations.model import Model
 from passlib.hash import bcrypt
 from flask.ext.login import current_user
 from copy import copy

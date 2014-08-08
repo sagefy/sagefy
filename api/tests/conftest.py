@@ -23,10 +23,6 @@ def app(request):
     Use a different database for testing.
     """
 
-    # For now, use the same config mostly and
-    # we'll just create a separate test database
-    config.RDB_DB = 'sagefy_test'
-
     app = create_app(config, debug=True, testing=True)
 
     # Manage app context for testing
