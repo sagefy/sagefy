@@ -5,11 +5,21 @@ title: The Eight Ideas – Collaborate
 
 _We are more effective as team or as a community. Often, but not always._
 
-What (Define)
--------------
+What do we mean by "Collborate"?
+-------------------------------------
 
-Why (Evidence)
---------------
+_TODO_
 
-How (Who, Where, When)
----------------
+Why is collaboration so important?
+--------------------------------------
+
+_TODO_
+
+How does Sagefy implement this idea?
+------------------------------------
+
+- Learners can work on cards together.
+- Discussions are available for all cards, units, and sets.
+- Creating and editing content uses the consensus model.
+- Everything is open source.
+- Documentation throughout.

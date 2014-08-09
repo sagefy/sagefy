@@ -52,7 +52,7 @@ RESTish References
 ------------------
 
 - http://info.apigee.com/Portals/62317/web%20api.pdf
-- http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
-- https://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml
-- http://www.slideshare.net/mario_cardinal/best-practices-for-designing-pragmatic-restful-api
-- https://github.com/interagent/http-api-design
+- [Best Practices for Designing a Pragmatic RESTful API](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
+- [Google JSON Style Guide](https://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml)
+- [Best practices for designing pragmatic RESTful api](http://www.slideshare.net/mario_cardinal/best-practices-for-designing-pragmatic-restful-api)
+- [HTTP API Design Guide](https://github.com/interagent/http-api-design)

@@ -5,11 +5,20 @@ title: The Eight Ideas – Open Up
 
 _Secrets never last. Openness builds trust and confidence._
 
-What (Define)
--------------
+What do we mean by "Open Up"?
+-------------------------------------
 
-Why (Evidence)
---------------
+_TODO_
 
-How (Who, Where, When)
----------------
+Why is opening up so important?
+--------------------------------------
+
+_TODO_
+
+How does Sagefy implement this idea?
+------------------------------------
+
+- Everything in the cards is public by default.
+- Providing basic analytics to everyone means we can have more honest conversations.
+- Everything is up for discussion and can be flagged.
+- Sagefy is open source and is built on open source software.

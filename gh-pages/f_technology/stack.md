@@ -11,6 +11,7 @@ We Use
     - [CloudFlare](https://www.cloudflare.com/)
     - [uWSGI](http://uwsgi-docs.readthedocs.org/en/latest/)
     - [Nginx](http://wiki.nginx.org/Main)
+    - [TravisCI](https://travis-ci.org/)
 - Databases
     - [RethinkDB](http://rethinkdb.com/)
     - [Redis](http://redis.io/)
@@ -32,6 +33,7 @@ We Use
     - [Handlebars](http://handlebarsjs.com/)
     - [BEM](http://bem.info/method/)
     - [YM Styleguide](https://github.com/heiskr/ym-styleguide)
+    - Script date and time - [Moment](http://momentjs.com/)
     - Testing
         - [Mocha](http://visionmedia.github.io/mocha/)
         - [Chai](http://chaijs.com/)
@@ -48,7 +50,6 @@ We Intend to Use
 - Building and Serving
     - [Ansible](http://www.ansible.com/)
     - [Fabric](http:/.fabfile.org/en/1.8/)
-    - [TravisCI](https://travis-ci.org/)
     - [DavidDM](https://david-dm.org/)
     - [Pingdom](https://www.pingdom.com/)
     - [New Relic](http://newrelic.com/) (Free)
@@ -65,9 +66,7 @@ We Intend to Use
     - [Flask admin](https://github.com/mrjoes/flask-admin/)
     - [Mandrill](http://mandrill.com/), then [Postfix](http://www.postfix.org/)
 - UI
-    - JS error reporting _TODO_
     - [D3.js](http://d3js.org/)
-    - Script date and time - [Moment](http://momentjs.com/)
     - Markdown; Add extensions for [Math](http://www.mathjax.org/), Footnotes, [Tables](https://github.com/chjj/marked#tables), Code, [Graphviz Dot](https://github.com/mdaines/viz.js), [Media Embeds](http://sloblog.io/+sloblog/qhdsk2SMoAU/sloblog-dot-io-easy-oembed-powered-media-embeds), and Definition Lists
     - [EpicEditor](https://github.com/OscarGodson/EpicEditor) with [Marked](https://github.com/chjj/marked) and [MathJax](http://www.mathjax.org/) or [Ace](http://ace.c9.io/) also see [LaTeX2HTML5](http://latex2html5.com/)
     - Testing
