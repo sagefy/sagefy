@@ -4,14 +4,19 @@ class Field:
         pass
 
 
+class Document:
+    def __init__(self, **kwargs):
+        pass
+
+
 class Model:
     def __init__(self, *args, **kwargs):
         pass
 
 
-def embed(cls):
+def has(doc):
     pass
 
 
-def embed_many(cls):
+def has_many(doc):
     pass
