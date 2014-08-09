@@ -6,7 +6,7 @@ layout: default
 This document covers the overall architecture of Sagefy's data storage. This data structure allows Sagefy to be both open-content as well as highly adaptive and flexible while maintaining practicality.
 
 <style>img { max-width: 100%; }</style>
-![Data Structure Example: Statistics](/images/data_structure_example.png)
+![Data Structure Example: Statistics](/images/Data Structure Example.png)
 
 Cards
 -----
