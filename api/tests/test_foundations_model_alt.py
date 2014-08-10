@@ -1,6 +1,5 @@
-from foundations.model_alt import Field, Document, Model, has, has_many
-from foundations.model_alt_validations import required, boolean, unique, \
-    email, minlength
+from foundations.model_alt import Field, Document, Model, has, has_many, \
+    required, boolean, unique, email, minlength
 import rethinkdb as r
 from datetime import datetime
 
@@ -16,6 +15,10 @@ class Settings(Document):
     )
 
 
+def is_current_user():
+    return True
+
+
 class User(Model):
     tablename = 'users'
     name = Field(
@@ -23,7 +26,7 @@ class User(Model):
     )
     email = Field(
         validations=(required, unique, email),
-        access='is_current_user'
+        access=is_current_user
     )
     password = Field(
         validations=(required, (minlength, 8)),
@@ -32,8 +35,8 @@ class User(Model):
     )
     settings = has(Settings)
 
-    def is_current_user():
-        return True
+    def is_current_user(self):
+        return is_current_user()
 
 
 class Book(Document):
@@ -52,7 +55,7 @@ def test_table_class(app, db_conn, users_table):
     Expect the model to have a table as a class.
     """
     assert User.tablename == 'users'
-    assert User.table == users_table
+    assert User.get_table() == users_table
 
 
 def test_table_instance(app, db_conn, users_table):
@@ -266,7 +269,7 @@ def test_json(app, db_conn):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    fields = user.to_fields()
+    fields = user.to_dict()
     assert isinstance(fields, dict)
     assert fields['name'] == 'test'
 
@@ -280,7 +283,7 @@ def test_access(app, db_conn):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    fields = user.to_fields()
+    fields = user.to_dict()
     assert 'email' in fields
     assert 'password' not in fields
 
