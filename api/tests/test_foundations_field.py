@@ -68,7 +68,9 @@ def test_before_save(app, db_conn):
     """
     Expect a field to be able to use before_save when going into the database.
     """
+    password.set('abcd1234')
     assert password.to_database() == '$2a$abcd1234'
+    password.set(None)
 
 
 def test_set(app, db_conn):

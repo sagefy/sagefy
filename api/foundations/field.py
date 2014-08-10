@@ -28,7 +28,10 @@ class Field:
         """
         if self.value is None and self.default is not None:
             if hasattr(self.default, '__call__'):
-                return self.default()
+                return self.default(self)
+                # Methods defined outside a class,
+                # even if refered to,
+                # still do not automatically receive `self`
             return self.default
         return self.value
 
@@ -38,8 +41,8 @@ class Field:
         Calls before_save if applicable.
         Otherwise, its the same as `get`.
         """
-        # if self.before_save and hasattr(self.before_save, '__call__'):
-            # return self.before_save()
+        if self.before_save and hasattr(self.before_save, '__call__'):
+            return self.before_save(self)
         return self.get()
 
     def set(self, value):
