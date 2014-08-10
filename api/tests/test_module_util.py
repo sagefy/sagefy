@@ -3,20 +3,16 @@ import string
 
 
 def test_uniqid_length():
-    # Expect the length of the ID to be 16
+    # Expect the length of the ID to be 32
     assert len(util.uniqid()) is 16
 
 
-def test_uniqid_length_mutable():
-    # Expect the length of the ID to be changeable
-    assert len(util.uniqid(length=8)) is 8
-
-
 def test_uniqid_charset():
-    # Expect the ID to only have numbers and lowercase letters
+    # Expect the ID to only have numbers and letters (mixed case)
     uid = util.uniqid()
     for c in uid:
-        assert c in string.ascii_lowercase + string.digits
+        assert c in (string.ascii_lowercase + string.ascii_uppercase +
+                     string.digits)
 
 
 def test_pick():
