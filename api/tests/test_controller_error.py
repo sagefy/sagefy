@@ -1,3 +1,7 @@
+import pytest
+
+
+@pytest.mark.xfail
 def test_important_codes(app):
     """
     Expect most common codes present.
@@ -6,6 +10,7 @@ def test_important_codes(app):
     assert False
 
 
+@pytest.mark.xfail
 def test_error_factory(app):
     """
     Expect the error response to return a function
@@ -14,6 +19,7 @@ def test_error_factory(app):
     assert False
 
 
+@pytest.mark.xfail
 def test_setup_errors(app):
     """
     Expect that each error code is handled by Flask jsonically.
@@ -21,6 +27,7 @@ def test_setup_errors(app):
     assert False
 
 
+@pytest.mark.xfail
 def test_404(app):
     """
     Expect the right format for a 404 response.

@@ -1,6 +1,7 @@
 from foundations.model2 import Field
 from foundations.document import Document
-from foundations.validations import required, unique, email, minlength
+from foundations.validations import required, email, minlength
+import pytest
 
 
 def encrypt_password(field):
@@ -13,11 +14,13 @@ def is_current_user():
 
 class User(Document):
     name = Field(
-        validations=(required, unique)
+        validations=(required,),
+        unique=True
     )
     email = Field(
-        validations=(required, unique, email),
-        access=is_current_user
+        validations=(required, email),
+        access=is_current_user,
+        unique=True
     )
     password = Field(
         validations=(required, (minlength, 8)),
@@ -29,6 +32,7 @@ class User(Document):
         return is_current_user()
 
 
+@pytest.mark.xfail
 def test_init_fields(app, db_conn):
     """
     Expect fields to be a duplicate per instance.
@@ -36,6 +40,7 @@ def test_init_fields(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_update_fields(app, db_conn):
     """
     Expect a document to update the fields.
@@ -55,10 +60,12 @@ def test_not_field(app, db_conn):
         'color': 'blue',
     })
     assert isinstance(user, User)
-    assert len(errors) > 1
+    assert len(errors) == 1
+    assert errors[0]['name'] == 'color'
 
 
-def test_isfeild(app, db_conn):
+@pytest.mark.xfail
+def test_isfield(app, db_conn):
     """
     Expect to test if an instance is a field.
     """
@@ -92,6 +99,7 @@ def test_create_instance_other(app, db_conn):
     assert user.name.get() == 'test'
 
 
+@pytest.mark.xfail
 def test_to_database(app, db_conn):
     """
     Expect to database to get database ready

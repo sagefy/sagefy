@@ -84,7 +84,7 @@ class Document:
         """
         errors = []
         for name, field in self.get_fields():
-            error = field.validate(self, name)
+            error = field.validate()
             if error:
                 errors.append({
                     'name': name,

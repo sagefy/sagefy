@@ -5,7 +5,7 @@ class Field:
     """
 
     def __init__(self, validations=None, default=None, access=None,
-                 before_save=None):
+                 before_save=None, unique=False):
         """
         Initialize Field.
         Sets to self the following keyword arguments:
@@ -19,6 +19,7 @@ class Field:
         self.default = default
         self.access = access if access is not None else True
         self.before_save = before_save
+        self.unique = unique
 
     def get(self):
         """
@@ -44,19 +45,15 @@ class Field:
     def set(self, value):
         """
         Sets the value.
-        Will use default if set to None.
+        Will use default on `get` if set to None.
         """
-        if value is None and self.default is not None:
-            if hasattr(self.default, '__call'):
-                self.value = self.default()
-            self.value = self.default
         self.value = value
         return self
 
     # TODO: is there a way to use __get__, __set__, __delete__, __getattr__ ...
     # so we don't have to do `field.get()` and `field.set(value)` all the time?
 
-    def validate(self, instance, name):
+    def validate(self):
         """
         Validates the field using given validations.
         Returns a string if a validation fails.
@@ -64,9 +61,21 @@ class Field:
         """
         for validation in self.validations:
             if isinstance(validation, (list, tuple)):
-                error = validation[0](doc=instance, name=name,
-                                      params=validation[1:])
+                error = validation[0](self, params=validation[1:])
             else:
-                error = validation(doc=instance, name=name)
+                error = validation(self)
             if error:
                 return error
+
+    # def unique(self):
+    #     """
+    #     Ensure the given doc field is unique.
+    #     """
+    #     other = list(
+    #         doc.table
+    #            .filter({name: self.get()})
+    #            .filter(r.row['id'] != doc.id.get())
+    #            .run(g.db_conn)
+    #     )
+    #     if other:
+    #         return 'Must be unique.'

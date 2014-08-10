@@ -1,4 +1,7 @@
+import pytest
 
+
+@pytest.mark.xfail
 def test_user_get(app, db_conn):
     """
     Ensure a user can be retrieved by ID.
@@ -6,6 +9,7 @@ def test_user_get(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_get_failed(app, db_conn):
     """
     Ensure a no user is returned when ID doesn't match.
@@ -13,6 +17,7 @@ def test_user_get_failed(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_get_current(app, db_conn):
     """
     Ensure the current user can be retrieved.
@@ -20,6 +25,7 @@ def test_user_get_current(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_get_current_failed(app, db_conn):
     """
     Ensure no user is returned when logged out.
@@ -27,6 +33,7 @@ def test_user_get_current_failed(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_create(app, db_conn):
     """
     Ensure a user can be created.
@@ -34,6 +41,7 @@ def test_user_create(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_create_failed(app, db_conn):
     """
     Ensure a user will fail to create when invalid.
@@ -41,6 +49,7 @@ def test_user_create_failed(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_login(app, db_conn):
     """
     Ensure a user can login.
@@ -48,6 +57,7 @@ def test_user_login(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_login_none(app, db_conn):
     """
     Ensure a user can't login if no user by name.
@@ -55,6 +65,7 @@ def test_user_login_none(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_login_password_fail(app, db_conn):
     """
     Ensure a user can't login if password is wrong.
@@ -62,6 +73,7 @@ def test_user_login_password_fail(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_logout(app, db_conn):
     """
     Ensure a user can log out.
@@ -69,6 +81,7 @@ def test_user_logout(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_update(app, db_conn):
     """
     Ensure a user can be updated.
@@ -76,6 +89,7 @@ def test_user_update(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_update_none(app, db_conn):
     """
     Ensure a user won't update if not exist.
@@ -83,6 +97,7 @@ def test_user_update_none(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_update_self_only(app, db_conn):
     """
     Ensure a user can only update herself.
@@ -90,6 +105,7 @@ def test_user_update_self_only(app, db_conn):
     assert False
 
 
+@pytest.mark.xfail
 def test_user_update_invalid(app, db_conn):
     """
     Ensure a user won't update if invalid.
