@@ -349,6 +349,19 @@ def test_created(app, db_conn, users_table):
     assert record['created'] == user.created.get()
 
 
+def test_before_save(app, db_conn, users_table):
+    """
+    Expect a model to call before_save before going into DB.
+    """
+    user, errors = User.insert({
+        'name': 'test',
+        'email': 'test@example.com',
+        'password': 'abcd1234'
+    })
+    assert len(errors) == 0
+    assert user.password.get().startswith('$2a$')
+
+
 def test_modified(app, db_conn, users_table):
     """
     Expect to sync fields with database.
@@ -477,14 +490,14 @@ def test_require(app, db_conn):
         'password': 'abcd1234'
     })
     assert required(user, 'name') is None
-    assert required(user, 'email')['message']
+    assert required(user, 'email')
 
 
 def test_unique(app, db_conn, users_table):
     """
     Expect a validation to test uniqueness.
     """
-    user = User.insert({
+    user, errors = User.insert({
         'name': 'test',
         'email': 'test@example.com',
         'password': 'abcd1234'
@@ -493,7 +506,7 @@ def test_unique(app, db_conn, users_table):
         'name': 'test'
     })
     assert unique(user, 'name') is None
-    assert unique(user2, 'name')['message']
+    assert unique(user2, 'name')
 
 
 def test_email(app, db_conn):
@@ -507,7 +520,7 @@ def test_email(app, db_conn):
         'email': 'other'
     })
     assert email(user, 'email') is None
-    assert email(user2, 'email')['message']
+    assert email(user2, 'email')
 
 
 def test_minlength(app, db_conn):
@@ -520,8 +533,8 @@ def test_minlength(app, db_conn):
     user2 = User({
         'password2': 'a'
     })
-    assert minlength(user, 'password', 8) is None
-    assert minlength(user2, 'password', 8)['message']
+    assert minlength(user, 'password', (8,)) is None
+    assert minlength(user2, 'password', (8,))
 
 
 def test_default(app, db_conn):
@@ -532,15 +545,3 @@ def test_default(app, db_conn):
         'settings': {}
     })
     assert user.settings.get().email_notifications.get() is False
-
-
-def test_before_save(app, db_conn, users_table):
-    """
-    Expect a model to call before_save before going into DB.
-    """
-    user = User.insert({
-        'name': 'test',
-        'email': 'test@example.com',
-        'password': 'abcd1234'
-    })
-    assert user.password.get().startswith('$2a$')

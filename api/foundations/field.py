@@ -65,8 +65,8 @@ class Field:
         for validation in self.validations:
             if isinstance(validation, (list, tuple)):
                 error = validation[0](doc=instance, name=name,
-                                      field=self, params=validation[1:])
+                                      params=validation[1:])
             else:
-                error = validation(doc=instance, name=name, field=self)
+                error = validation(doc=instance, name=name)
             if error:
                 return error
