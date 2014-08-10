@@ -1,4 +1,4 @@
-from foundations.model_alt import Field, Document, Model
+from foundations.model2 import Field, Document, Model
 from foundations.embed import has, has_many, EmbeddedDocument, \
     ManyEmbeddedDocument
 from foundations.validations import required, unique, boolean, email, minlength
