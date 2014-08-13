@@ -1,8 +1,8 @@
 import rethinkdb as r
 from flask import g
 from modules.util import uniqid
-from foundations.field import Field
-from foundations.document import Document
+from odm.field import Field
+from odm.document import Document
 
 
 def update_modified(field):
@@ -18,7 +18,9 @@ class Model(Document):
     Extends the Document to add database-oriented methods.
     """
 
-    id = Field(default=generate_id)
+    id = Field(
+        default=generate_id
+    )
     created = Field(
         default=r.now(),
     )
@@ -37,13 +39,13 @@ class Model(Document):
         Document.__init__(self, fields)
 
     @classmethod
-    def get_table(cls):
+    def get_table(Cls):
         """
         For classmethods, a way to get the Model database table.
         Returns the table directly.
         """
-        assert cls.tablename, 'You must provide a tablename.'
-        return g.db.table(cls.tablename)
+        assert Cls.tablename, 'You must provide a tablename.'
+        return g.db.table(Cls.tablename)
 
     @classmethod
     def get(Cls, **params):
@@ -60,7 +62,11 @@ class Model(Document):
             fields = list(Cls.get_table()
                              .filter(params)
                              .limit(1)
-                             .run(g.db_conn))[0]
+                             .run(g.db_conn))
+            if len(fields) > 0:
+                fields = fields[0]
+            else:
+                fields = None
         if fields:
             return Cls(fields)
 
@@ -102,6 +108,9 @@ class Model(Document):
         errors = self.validate()
         if len(errors):
             return self, errors
+        errors = self.test_unique()
+        if len(errors):
+            return self, errors
         db_fields = self.to_database()
         self.id.set(db_fields['id'])
         self.table.insert(db_fields, upsert=True).run(g.db_conn)
@@ -127,3 +136,22 @@ class Model(Document):
             .delete()\
             .run(g.db_conn)
         return self, []
+
+    def test_unique(self):
+        """
+        Tests all top-level fields marked as unique.
+        """
+        errors = []
+        for name, field in self.get_fields():
+            if not field.unique:
+                continue
+            entries = list(self.table
+                               .filter({name: field.get()})
+                               .filter(r.row['id'] != self.id.get())
+                               .run(g.db_conn))
+            if len(entries) > 0:
+                errors.append({
+                    'name': name,
+                    'message': 'Must be unique.',
+                })
+        return errors

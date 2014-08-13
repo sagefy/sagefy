@@ -1,4 +1,4 @@
-from foundations.field import Field
+from odm.field import Field
 
 
 class EmbeddedDocument(Field):

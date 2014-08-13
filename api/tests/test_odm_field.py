@@ -1,6 +1,5 @@
-from foundations.field import Field
-from foundations.validations import required, email
-import pytest
+from odm.field import Field
+from odm.validations import required, email
 
 
 def encrypt_password(field):
@@ -73,6 +72,15 @@ def test_before_save(app, db_conn):
     password.set(None)
 
 
+def test_access(app, db_conn):
+    """
+    Expect a field to check before providing as JSON.
+    """
+    password.set('abcd1234')
+    assert password.to_json() is None
+    password.set(None)
+
+
 def test_set(app, db_conn):
     """
     Expect a field to set its value.
@@ -91,21 +99,3 @@ def test_validate(app, db_conn):
     name.set('test')
     assert name.validate() is None
     name.set(None)
-
-
-@pytest.mark.xfail
-def test_unique(app, db_conn, users_table):
-    """
-    Expect a validation to test uniqueness.
-    """
-    # user, errors = User.insert({
-    #     'name': 'test',
-    #     'email': 'test@example.com',
-    #     'password': 'abcd1234'
-    # })
-    # user2 = User({
-    #     'name': 'test'
-    # })
-    # assert unique(user, 'name') is None
-    # assert unique(user2, 'name')
-    assert False

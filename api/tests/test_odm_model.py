@@ -1,5 +1,5 @@
-from foundations.model2 import Field, Model
-from foundations.validations import required, email, minlength
+from odm.model import Field, Model
+from odm.validations import required, email, minlength
 from datetime import datetime
 import pytest
 
@@ -231,12 +231,19 @@ def test_update_fail(app, db_conn, users_table):
     assert record['email'] == 'test@example.com'
 
 
-@pytest.mark.xfail
 def test_save(app, db_conn, users_table):
     """
     Expect a model to be able to save at any time.
     """
-    assert False
+    user = User({
+        'name': 'test',
+        'email': 'test@example.com',
+        'password': 'abcd1234'
+    })
+    user, errors = user.save()
+    assert len(errors) == 0
+    records = list(users_table.filter({'name': 'test'}).run(db_conn))
+    assert len(records) == 1
 
 
 def test_delete(app, db_conn, users_table):
@@ -312,6 +319,25 @@ def test_modified(app, db_conn, users_table):
     assert isinstance(user.modified.get(), datetime)
     assert record['modified'] == user.modified.get()
     assert user.created.get() != user.modified.get()
+
+
+def test_unique(app, db_conn, users_table):
+    """
+    Expect a validation to test uniqueness.
+    """
+    user, errors = User.insert({
+        'name': 'test',
+        'email': 'test@example.com',
+        'password': 'abcd1234',
+    })
+    user2, errors2 = User.insert({
+        'name': 'test',
+        'email': 'coin@example.com',
+        'password': '1234abcd',
+    })
+    assert len(errors) == 0
+    assert len(errors2) == 1
+    assert errors2[0]['name'] == 'name'
 
 
 @pytest.mark.xfail

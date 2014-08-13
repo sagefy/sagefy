@@ -45,6 +45,16 @@ class Field:
             return self.before_save(self)
         return self.get()
 
+    def to_json(self):
+        """
+        Ensure if the data can be accessed.
+        """
+        if hasattr(self.access, '__call__'):
+            if self.access(self):
+                return self.get()
+        elif self.access:
+            return self.get()
+
     def set(self, value):
         """
         Sets the value.
@@ -69,16 +79,3 @@ class Field:
                 error = validation(self)
             if error:
                 return error
-
-    # def unique(self):
-    #     """
-    #     Ensure the given doc field is unique.
-    #     """
-    #     other = list(
-    #         doc.table
-    #            .filter({name: self.get()})
-    #            .filter(r.row['id'] != doc.id.get())
-    #            .run(g.db_conn)
-    #     )
-    #     if other:
-    #         return 'Must be unique.'

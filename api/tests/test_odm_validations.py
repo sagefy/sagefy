@@ -1,5 +1,5 @@
-from foundations.model2 import Field, Model
-from foundations.validations import required, email, minlength
+from odm.model import Field, Model
+from odm.validations import required, email, minlength
 
 
 class User(Model):

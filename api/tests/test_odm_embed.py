@@ -1,6 +1,6 @@
-from foundations.model2 import Field, Document, Model
-from foundations.embed import has, has_many
-from foundations.validations import required, boolean, email, minlength
+from odm.model import Field, Document, Model
+from odm.embed import has, has_many
+from odm.validations import required, boolean, email, minlength
 import pytest
 
 

@@ -1,14 +1,13 @@
-from foundations.model2 import Field
-from foundations.document import Document
-from foundations.validations import required, email, minlength
-import pytest
+from odm.field import Field
+from odm.document import Document
+from odm.validations import required, email, minlength
 
 
 def encrypt_password(field):
     return '$2a$' + field.get()
 
 
-def is_current_user():
+def is_current_user(field):
     return True
 
 
@@ -32,20 +31,23 @@ class User(Document):
         return is_current_user()
 
 
-@pytest.mark.xfail
 def test_init_fields(app, db_conn):
     """
     Expect fields to be a duplicate per instance.
     """
-    assert False
+    user = User()
+    assert user.name is not User.name
 
 
-@pytest.mark.xfail
 def test_update_fields(app, db_conn):
     """
     Expect a document to update the fields.
     """
-    assert False
+    user = User()
+    user.update_fields({
+        'name': 'test'
+    })
+    assert user.name.get() == 'test'
 
 
 def test_not_field(app, db_conn):
@@ -64,12 +66,12 @@ def test_not_field(app, db_conn):
     assert errors[0]['name'] == 'color'
 
 
-@pytest.mark.xfail
 def test_isfield(app, db_conn):
     """
     Expect to test if an instance is a field.
     """
-    assert False
+    assert User.isfield(User.name)
+    assert not User.isfield(True)
 
 
 def test_get_fields(app, db_conn):
@@ -99,13 +101,14 @@ def test_create_instance_other(app, db_conn):
     assert user.name.get() == 'test'
 
 
-@pytest.mark.xfail
 def test_to_database(app, db_conn):
     """
     Expect to database to get database ready
     versions of all fields
     """
-    assert False
+    User.password.set('abcd1234')
+    assert User.password.to_database() == '$2a$abcd1234'
+    User.password.set(None)
 
 
 def test_json(app, db_conn):

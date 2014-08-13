@@ -13,7 +13,7 @@ def get_user(user_id):
     """
     user = User.get(id=user_id)
     if user:
-        return jsonify(user=user.get_fields())
+        return jsonify(user=user.to_json())
     return jsonify(errors=[{'message': 'No user found.'}]), 404
 
 
@@ -23,7 +23,7 @@ def get_current_user():
     Get current user's information.
     """
     if current_user.is_authenticated():
-        return jsonify(user=current_user.get_fields())
+        return jsonify(user=current_user.to_json())
     return jsonify(errors=[{'message': 'Not logged in.'}]), 404
 
 
@@ -32,11 +32,10 @@ def create_user():
     """
     Create user.
     """
-    user = User(request.json)
-    valid, errors = user.insert()
-    if valid:
+    user, errors = User.insert(request.json)
+    if len(errors) == 0:
         login_user(user, remember=True)
-        resp = make_response(jsonify(user=user.get_fields()))
+        resp = make_response(jsonify(user=user.to_json()))
         resp.set_cookie('logged_in', '1')
         return resp
     else:
@@ -56,7 +55,7 @@ def login():
         }]), 404
     if user.is_password_valid(request.json.get('password')):
         login_user(user, remember=True)
-        resp = make_response(jsonify(user=user.get_fields()))
+        resp = make_response(jsonify(user=user.to_json()))
         resp.set_cookie('logged_in', '1')
         return resp
     return jsonify(errors=[{
@@ -94,8 +93,8 @@ def update_user(user_id):
             "message": "Not authorized."
         }]), 401
 
-    valid, errors = user.update(request.json)
-    if valid:
-        return jsonify(user=user.get_fields())
+    user, errors = user.update(request.json)
+    if len(errors) == 0:
+        return jsonify(user=user.to_json())
     else:
         return jsonify(errors=errors), 400

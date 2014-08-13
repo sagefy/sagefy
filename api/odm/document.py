@@ -1,6 +1,6 @@
 from copy import deepcopy
 import inspect
-from foundations.field import Field
+from odm.field import Field
 
 
 class Document:
@@ -71,10 +71,9 @@ class Document:
         Only returns fields allowed.
         """
         return {
-            name: field.get()
+            name: field.to_json()
             for name, field in self.get_fields()
-            if (field.access is True or
-                (hasattr(field.access, '__call__') and field.access()))
+            if field.to_json() is not None
         }
 
     def validate(self):
