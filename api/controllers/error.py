@@ -50,7 +50,7 @@ def error_response(code):
     def fn(error):
         return jsonify(errors=[{
             'message': messages[error.code],
-            'code': error.code
+            'code': error.code,
         }]), error.code
     return fn
 
