@@ -28,6 +28,7 @@ nosetests.xml
 npm-debug.log
 parts
 pip-log.txt
+rethinkdb_data
 sdist
 tmp
 ui/distribution
