@@ -8,7 +8,10 @@ _Our memory system works by forming relationships. Mastery is the result of an o
 What do we mean by "Keep Organized"?
 -------------------------------------
 
-_TODO_
+- Show how information is organized directly to the learner.
+- Relate information to prior information.
+- Task the learner with organizational challenges.
+- Use technology to automate organization.
 
 Why is organization so important?
 --------------------------------------

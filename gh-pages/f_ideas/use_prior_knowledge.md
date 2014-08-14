@@ -8,7 +8,11 @@ _The strongest predictor of how much we will learn is what we already know. Ever
 What do we mean by "Use Prior Knowledge"?
 -------------------------------------
 
-_TODO_
+- Adjust the challenge level to the learner's knowledge.
+- Ensure a learner knows what they need to in order to complete a task.
+- Focus on areas of weakness.
+- Focus on building knowledge.
+- Connect new information with prior knowledge.
 
 Why is prior knowledge so important?
 --------------------------------------

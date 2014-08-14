@@ -8,7 +8,9 @@ _Defining small, achievable goals and constantly checking against them builds be
 What do we mean by "Adhere to Goals"?
 -------------------------------------
 
-_TODO_
+- Always define the goal.
+- Focus content on exploring the different facets of the goal.
+- Remove content that is not needed for the goal.
 
 Why is adhering to goals so important?
 --------------------------------------

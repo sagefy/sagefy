@@ -5,10 +5,13 @@ title: The Eight Ideas – Collaborate
 
 _We are more effective as team or as a community. Often, but not always._
 
-What do we mean by "Collborate"?
+What do we mean by "Collaborate"?
 -------------------------------------
 
-_TODO_
+- Allow more experienced learners to pair up and group up.
+- Invite discussion at all levels.
+- Use consensus to build.
+- Communicate and log.
 
 Why is collaboration so important?
 --------------------------------------

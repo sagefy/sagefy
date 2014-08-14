@@ -8,7 +8,12 @@ _Our memory system is powerful but limited. We are most effective when focusing 
 What do we mean by "Do One Thing at a Time"?
 -------------------------------------
 
-_TODO_
+- Only do one specific activity at any given point in time.
+- Avoid multitasking.
+- Prefer one source of input and one source of output at a time.
+- Scaffold the learner to success.
+- Avoid unnecessary choices.
+- Stay focused and eliminate tangents.
 
 Why is doing one thing at a time so important?
 --------------------------------------

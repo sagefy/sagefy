@@ -8,7 +8,10 @@ _Secrets never last. Openness builds trust and confidence._
 What do we mean by "Open Up"?
 -------------------------------------
 
-_TODO_
+- Return to the community.
+- Be honest with learners.
+- Hold users accountable.
+- Don't cover up non-private information.
 
 Why is opening up so important?
 --------------------------------------

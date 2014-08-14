@@ -8,7 +8,11 @@ _Route memorizing isn't enough. We must be able to use our knowledge._
 What do we mean by "Go Deep"?
 -------------------------------------
 
-_TODO_
+- Go beyond route memorization. Challenge the learner to explain, analyse, apply, and synthesize.
+- Build metacognitive capabilities.
+- Go in for the long term. Use spaced repetition.
+- Focus on developing areas of weakness.
+- Remove barriers to going deep.
 
 Why is going deep so important?
 --------------------------------------

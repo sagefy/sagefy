@@ -18,7 +18,7 @@ def test_uniqid_charset():
 def test_pick():
     # Expect pick to make a new dict with only keys presented
     d = {'a': 1, 'b': 2}
-    keys = ('a')
+    keys = ('a',)
     assert util.pick(d, keys) == {'a': 1}
     assert d == {'a': 1, 'b': 2}
 
