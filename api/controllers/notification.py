@@ -3,7 +3,7 @@ notification = Blueprint('notification', __name__,
                          url_prefix='/api/notifications')
 
 
-@notification.route('/api/notifications/', methods=['GET'])
+@notification.route('/', methods=['GET'])
 def list_notifications():
     """
     List notifications for current user.
@@ -11,7 +11,7 @@ def list_notifications():
     """
 
 
-@notification.route('/api/notifications/<notification_id>/read',
+@notification.route('/<notification_id>/read',
                     methods=['PUT'])
 def mark_notification_as_read(notification_id):
     """

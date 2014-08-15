@@ -1,113 +1,168 @@
-import pytest
+from passlib.hash import bcrypt
 
 
-@pytest.mark.xfail
-def test_user_get(app, db_conn):
+def create_user_in_db(users_table, db_conn):
+    return users_table.insert({
+        'id': 'abcd1234',
+        'name': 'test',
+        'email': 'test@example.com',
+        'password': bcrypt.encrypt('abcd1234'),
+    }).run(db_conn)
+
+
+def login(app):
+    return app.test_client().post('/api/users/login', data={
+        'name': 'test',
+        'password': 'abcd1234'
+    }, follow_redirects=True)
+
+
+def logout(app):
+    return app.test_client().post('/api/users/logout', follow_redirects=True)
+
+
+def test_user_get(app, db_conn, users_table):
     """
     Ensure a user can be retrieved by ID.
     """
-    assert False
+    create_user_in_db(users_table, db_conn)
+    response = app.test_client().get('/api/users/abcd1234')
+    assert 'test' in response.data
 
 
-@pytest.mark.xfail
-def test_user_get_failed(app, db_conn):
+def test_user_get_failed(app, db_conn, users_table):
     """
     Ensure a no user is returned when ID doesn't match.
     """
-    assert False
+    response = app.test_client().get('/api/users/abcd1234')
+    assert '404' in response.data
 
 
-@pytest.mark.xfail
-def test_user_get_current(app, db_conn):
-    """
-    Ensure the current user can be retrieved.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_user_get_current_failed(app, db_conn):
-    """
-    Ensure no user is returned when logged out.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_user_create(app, db_conn):
-    """
-    Ensure a user can be created.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_user_create_failed(app, db_conn):
-    """
-    Ensure a user will fail to create when invalid.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_user_login(app, db_conn):
+def test_user_login(app, db_conn, users_table):
     """
     Ensure a user can login.
     """
-    assert False
+    create_user_in_db(users_table, db_conn)
+    response = login(app)
+    assert 'logged_in' in response.data
+    logout(app)
 
 
-@pytest.mark.xfail
-def test_user_login_none(app, db_conn):
+def test_user_login_none(app, db_conn, users_table):
     """
     Ensure a user can't login if no user by name.
     """
-    assert False
+    response = login(app)
+    assert '404' in response.data
 
 
-@pytest.mark.xfail
-def test_user_login_password_fail(app, db_conn):
+def test_user_login_password_fail(app, db_conn, users_table):
     """
     Ensure a user can't login if password is wrong.
     """
-    assert False
+    create_user_in_db(users_table, db_conn)
+    response = app.test_client().post('/api/users/login', data={
+        'name': 'test',
+        'password': '1234abcd'
+    }, follow_redirects=True)
+    assert '404' in response.data
 
 
-@pytest.mark.xfail
-def test_user_logout(app, db_conn):
+def test_user_logout(app, db_conn, users_table):
     """
     Ensure a user can log out.
     """
-    assert False
+    create_user_in_db(users_table, db_conn)
+    login(app)
+    response = logout(app)
+    assert '204' in response.data
 
 
-@pytest.mark.xfail
-def test_user_update(app, db_conn):
+def test_user_get_current(app, db_conn, users_table):
+    """
+    Ensure the current user can be retrieved.
+    """
+    create_user_in_db(users_table, db_conn)
+    login(app)
+    response = app.test_client().get('/api/users/abcd1234')
+    assert 'test' in response.data
+
+
+def test_user_get_current_failed(app, db_conn, users_table):
+    """
+    Ensure no user is returned when logged out.
+    """
+    response = app.test_client().get('/api/users/abcd1234')
+    assert '404' in response.data
+
+
+def test_user_create(app, db_conn, users_table):
+    """
+    Ensure a user can be created.
+    """
+    response = app.test_client().post('/api/users', data={
+        'name': 'test',
+        'email': 'test@example.com',
+        'password': 'abcd1234',
+    })
+    assert 'test' in response.data
+
+
+def test_user_create_failed(app, db_conn, users_table):
+    """
+    Ensure a user will fail to create when invalid.
+    """
+    response = app.test_client().post('/api/users')
+    assert 'errors' in response.data
+
+
+def test_user_update(app, db_conn, users_table):
     """
     Ensure a user can be updated.
     """
-    assert False
+    create_user_in_db(users_table, db_conn)
+    login(app)
+    response = app.test_client().put('/api/users/abcd1234', data={
+        'email': 'other@example.com'
+    })
+    assert 'other@example.com' in response.data
 
 
-@pytest.mark.xfail
-def test_user_update_none(app, db_conn):
+def test_user_update_none(app, db_conn, users_table):
     """
     Ensure a user won't update if not exist.
     """
-    assert False
+    response = app.test_client().put('/api/users/abcd1234', data={
+        'email': 'other@example.com'
+    })
+    assert '404' in response.data
 
 
-@pytest.mark.xfail
-def test_user_update_self_only(app, db_conn):
+def test_user_update_self_only(app, db_conn, users_table):
     """
     Ensure a user can only update herself.
     """
-    assert False
+    users_table.insert({
+        'id': '1234abcd',
+        'name': 'other',
+        'email': 'other@example.com',
+        'password': bcrypt.encrypt('1234abcd'),
+    }).run(db_conn)
+    create_user_in_db(users_table, db_conn)
+    login(app)
+    response = app.test_client().put('/api/users/1234abcd', data={
+        'email': 'other@example.com'
+    })
+    assert '401' in response.data
 
 
-@pytest.mark.xfail
-def test_user_update_invalid(app, db_conn):
+def test_user_update_invalid(app, db_conn, users_table):
     """
     Ensure a user won't update if invalid.
     """
-    assert False
+    create_user_in_db(users_table, db_conn)
+    login(app)
+    response = app.test_client().put('/api/users/abcd1234', data={
+        'email': 'other'
+    })
+    assert 'errors' in response.data
