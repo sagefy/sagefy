@@ -8,9 +8,7 @@ user = Blueprint('user', __name__, url_prefix='/api/users')
 
 @user.route('/<user_id>', methods=['GET'])
 def get_user(user_id):
-    """
-    Get the user by their ID.
-    """
+    """Get the user by their ID."""
     user = User.get(id=user_id)
     if user:
         return jsonify(user=user.to_json())
@@ -19,9 +17,7 @@ def get_user(user_id):
 
 @user.route('/current', methods=['GET'])
 def get_current_user():
-    """
-    Get current user's information.
-    """
+    """Get current user's information."""
     if current_user.is_authenticated():
         return jsonify(user=current_user.to_json())
     return jsonify(errors=[{'message': 'Not logged in.'}]), 404
@@ -29,9 +25,7 @@ def get_current_user():
 
 @user.route('/', methods=['POST'])
 def create_user():
-    """
-    Create user.
-    """
+    """Create user."""
     user, errors = User.insert(request.json)
     if len(errors) == 0:
         login_user(user, remember=True)
@@ -44,9 +38,7 @@ def create_user():
 
 @user.route('/login', methods=['POST'])
 def login():
-    """
-    Login user.
-    """
+    """Login user."""
     user = User.get(name=request.json.get('name'))
     if not user:
         return jsonify(errors=[{
@@ -66,9 +58,7 @@ def login():
 
 @user.route('/logout', methods=['POST'])
 def logout():
-    """
-    Logout user.
-    """
+    """Logout user."""
     logout_user()
     resp = make_response('')
     resp.set_cookie('logged_in', '0')
@@ -77,10 +67,7 @@ def logout():
 
 @user.route('/<user_id>', methods=['PUT'])
 def update_user(user_id):
-    """
-    Update the user.
-    Must be the current user.
-    """
+    """Update the user. Must be the current user."""
     user = User.get(id=user_id)
 
     if not user:

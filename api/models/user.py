@@ -9,7 +9,8 @@ def encrypt_password(field):
 
 
 def access_email(field):
-    return field.get() == current_user.email.get()
+    return (current_user.is_authenticated() and
+            field.get() == current_user.email.get())
 
 
 class User(Model):
@@ -39,7 +40,8 @@ class User(Model):
 
     def is_current_user(self):
         """Returns True if the user is the one logged in."""
-        return self.id.get() == current_user.id.get()
+        return (current_user.is_authenticated() and
+                self.id.get() == current_user.id.get())
 
     def is_authenticated(self):
         """For Flask-Login."""
