@@ -4,7 +4,7 @@ class Field:
     either in a document or in an embedded document.
     """
 
-    def __init__(self, validations=None, default=None, access=None,
+    def __init__(self, validations=(), default=None, access=True,
                  before_save=None, unique=False):
         """
         Initialize Field.
@@ -15,9 +15,9 @@ class Field:
         - before_save
         """
         self.value = None
-        self.validations = validations or ()
+        self.validations = validations
         self.default = default
-        self.access = access if access is not None else True
+        self.access = access
         self.before_save = before_save
         self.unique = unique
 
@@ -45,14 +45,11 @@ class Field:
             return self.before_save(self)
         return self.get()
 
-    def to_json(self):
+    def to_json(self, private=False):
         """
         Ensure if the data can be accessed.
         """
-        if hasattr(self.access, '__call__'):
-            if self.access(self):
-                return self.get()
-        elif self.access:
+        if (self.access == 'private' and private) or self.access is True:
             return self.get()
 
     def set(self, value):

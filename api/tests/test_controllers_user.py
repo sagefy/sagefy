@@ -1,7 +1,6 @@
 from passlib.hash import bcrypt
 import json
 import rethinkdb as r
-import pytest
 
 
 def create_user_in_db(users_table, db_conn):
@@ -131,7 +130,6 @@ def test_user_create_failed(app, db_conn, users_table):
     assert 'errors' in response.data
 
 
-@pytest.mark.xfail
 def test_user_update(app, db_conn, users_table):
     """
     Ensure a user can be updated.

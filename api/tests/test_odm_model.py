@@ -1,7 +1,6 @@
 from odm.model import Field, Model
 from odm.validations import required, email, minlength
 from datetime import datetime
-import pytest
 
 
 def encrypt_password(field):
@@ -21,7 +20,7 @@ class User(Model):
     email = Field(
         validations=(required, email),
         unique=True,
-        access=is_current_user
+        access='private'
     )
     password = Field(
         validations=(required, (minlength, 8)),
@@ -338,16 +337,3 @@ def test_unique(app, db_conn, users_table):
     assert len(errors) == 0
     assert len(errors2) == 1
     assert errors2[0]['name'] == 'name'
-
-
-@pytest.mark.xfail
-def test_url(app, db_conn, users_table):
-    """
-    Expect a model to provide URLs.
-    """
-    user, errors = User.insert({
-        'name': 'test',
-        'email': 'test@example.com',
-        'password': 'abcd1234'
-    })
-    assert user.get_url().startswith('/users/')

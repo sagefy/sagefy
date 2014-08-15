@@ -22,7 +22,7 @@ name = Field(
 )
 email = Field(
     validations=(email,),
-    access=is_current_user,
+    access='private',
     default='test@example.com',
     unique=True,
 )

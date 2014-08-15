@@ -96,3 +96,16 @@ def test_user_current(app, db_conn):
     Ensure a user can be tested if she is the current user.
     """
     assert False
+
+
+@pytest.mark.xfail
+def test_url(app, db_conn, users_table):
+    """
+    Expect a model to provide URLs.
+    """
+    user, errors = User.insert({
+        'name': 'test',
+        'email': 'test@example.com',
+        'password': 'abcd1234'
+    })
+    assert user.get_url().startswith('/users/')

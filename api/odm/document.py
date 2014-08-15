@@ -65,15 +65,15 @@ class Document:
             for name, field in self.get_fields()
         }
 
-    def to_json(self):
+    def to_json(self, private=False):
         """
         Returns a dict form of the model's fields.
         Only returns fields allowed.
         """
         return {
-            name: field.to_json()
+            name: field.to_json(private)
             for name, field in self.get_fields()
-            if field.to_json() is not None
+            if field.to_json(private) is not None
         }
 
     def validate(self):

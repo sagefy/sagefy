@@ -27,7 +27,7 @@ class User(Model):
     )
     email = Field(
         validations=(required, email),
-        access=is_current_user,
+        access='private',
         unique=True
     )
     password = Field(

@@ -18,7 +18,7 @@ class User(Document):
     )
     email = Field(
         validations=(required, email),
-        access=is_current_user,
+        access='private',
         unique=True
     )
     password = Field(
@@ -134,7 +134,7 @@ def test_json_access(app, db_conn):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    fields = user.to_json()
+    fields = user.to_json(private=True)
     assert 'email' in fields
     assert 'password' not in fields
 
