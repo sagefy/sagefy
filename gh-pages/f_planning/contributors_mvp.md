@@ -314,4 +314,28 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 Contributor Wireframes
 ----------------------
 
-_TODO_
+### Components
+
+- Notification post TODO
+- Notifications card TODO
+- Message post TODO
+- Messages card TODO
+- Discussion post TODO
+- Proposal post TODO
+- Search add/remove field TODO
+- Search (sort, filter) element TODO
+- Decision block TODO
+- Table listing TODO
+
+### Screens
+
+- Dashboard TODO
+- Search TODO
+    - Objs
+    - Proposals and History
+    - Discussion
+- View Object TODO
+- Create/Edit Object TODO
+- Flag Object TODO
+- Proposal TODO
+- Discussion TODO
