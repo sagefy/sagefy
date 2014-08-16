@@ -41,7 +41,7 @@ class User(Model):
 
     def get_url(self):
         """Where to get the user's data."""
-        return url_for('user.get_user', id=self.id.get())
+        return url_for('user.get_user', user_id=self.id.get())
 
     def is_authenticated(self):
         """For Flask-Login."""

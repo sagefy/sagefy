@@ -106,9 +106,10 @@ def test_to_database(app, db_conn):
     Expect to database to get database ready
     versions of all fields
     """
-    User.password.set('abcd1234')
-    assert User.password.to_database() == '$2a$abcd1234'
-    User.password.set(None)
+    user = User()
+    user.password.set('abcd1234')
+    assert user.password.to_database() == '$2a$abcd1234'
+    user.password.set(None)
 
 
 def test_json(app, db_conn):
