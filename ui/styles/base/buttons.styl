@@ -149,6 +149,7 @@ button-background-inv($color, $raise = 5, $reduce = 5)
     background-image linear-gradient(darken($color, $reduce), lighten($color, $raise))
 
 $base-button
+    border 0
     border-radius $border-radius
     padding ($unit / 2) ($unit * 4 / 3)
     margin 0 auto
@@ -156,7 +157,6 @@ $base-button
     margin $unit 0
     cursor pointer
     transition all 0.2s
-    box-shadow inset 0 1px 0 rgba(255,255,255,0.25)
 
     &:focus, &.focus
         outline 0
@@ -182,17 +182,15 @@ input[type="button"],
 .button--info
     @extend $base-button
 
-    border 1px solid $gold-78
     button-background $gold-90
     color $gold-43
+    box-shadow inset 0 -2px 0 $gold-78
 
     &:hover, &:focus, &.hover, &.focus
         color $gold-20
-        border 1px solid $gold-78
         button-background $gold-95
 
     &:active, &.active, &.selected
-        border 1px solid $gold-66
         button-background-inv $gold-78
 
     &[disabled], &.button--disabled
@@ -200,7 +198,6 @@ input[type="button"],
 
         &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
             color $gold-78
-            border 1px solid $gold-90
             background transparent
 
 button[type="submit"],
@@ -209,27 +206,24 @@ button[type="submit"],
 .button--next
     @extend $base-button
 
-    border 1px solid $blue-43
     button-background $blue-50
     color $blue-99
+    box-shadow inset 0 -2px 0 $blue-20
 
     &:hover, &:focus, &.hover, &.focus
         color $white
-        border 1px solid $blue-43
         button-background $blue-66
 
     &:active, &.active, &.selected
         color $blue-95
-        border 1px solid $blue-20
         button-background-inv $blue-43
 
     &[disabled], &.button--disabled
         color $blue-78
-        border 1px solid $blue-90
+        box-shadow inset 0 -2px 0 $blue-78
 
         &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
             color $blue-78
-            border 1px solid $blue-90
             background transparent
 
 .button--secondary,
@@ -237,17 +231,15 @@ button[type="submit"],
 .button--accept
     @extend $base-button
 
-    border 1px solid $green-78
     button-background $green-90
     color $green-43
+    box-shadow inset 0 -2px 0 $green-78
 
     &:hover, &:focus, &.hover, &.focus
         color $green-20
-        border 1px solid $green-78
         button-background $green-95
 
     &:active, &.active, &.selected
-        border 1px solid $green-66
         button-background-inv $green-78
 
     &[disabled], &.button--disabled
@@ -255,7 +247,6 @@ button[type="submit"],
 
         &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
             color $green-78
-            border 1px solid $green-90
             background transparent
 
 .button--danger,
@@ -263,17 +254,15 @@ button[type="submit"],
 .button--delete
     @extend $base-button
 
-    border 1px solid $red-78
     button-background $red-90, 3, 2
     color $red-43
+    box-shadow inset 0 -2px 0 $red-78
 
     &:hover, &:focus, &.hover, &.focus
         color $red-20
-        border 1px solid $red-78
         button-background $red-95, 3, 2
 
     &:active, &.active, &.selected
-        border 1px solid $red-66
         button-background-inv $red-78, 3, 2
 
     &[disabled], &.button--disabled
@@ -281,7 +270,6 @@ button[type="submit"],
 
         &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
             color $red-78
-            border 1px solid $red-90
             background transparent
 
 .button-group
