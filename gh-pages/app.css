@@ -758,6 +758,7 @@ button[type="submit"],
 .button--danger,
 .button--error,
 .button--delete {
+  border: 0;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
@@ -773,7 +774,6 @@ button[type="submit"],
   -ms-transition: all 0.2s;
   -o-transition: all 0.2s;
   transition: all 0.2s;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
 }
 .button:focus,
 button:focus,
@@ -866,11 +866,11 @@ input[type="button"],
 .button--prev,
 .button--back,
 .button--info {
-  border: 1px solid #ccc375;
   background-color: #e7e3c7;
   background-image: -webkit-linear-gradient(#efecd9, #dfdab5);
   background-image: linear-gradient(#efecd9, #dfdab5);
   color: #6c6733;
+  box-shadow: inset 0 -2px 0 #ccc375;
 }
 .button:hover,
 button:hover,
@@ -905,7 +905,6 @@ input[type="button"].focus,
 .button--back.focus,
 .button--info.focus {
   color: #343115;
-  border: 1px solid #ccc375;
   background-color: #f3f1e4;
   background-image: -webkit-linear-gradient(#fbfaf6, #ebe8d2);
   background-image: linear-gradient(#fbfaf6, #ebe8d2);
@@ -934,7 +933,6 @@ input[type="button"].selected,
 .button--prev.selected,
 .button--back.selected,
 .button--info.selected {
-  border: 1px solid #aba354;
   background-color: #ccc375;
   background-image: -webkit-linear-gradient(#c5bb62, #d3cb88);
   background-image: linear-gradient(#c5bb62, #d3cb88);
@@ -1070,18 +1068,17 @@ input[type="button"].button--disabled.selected,
 .button--back.button--disabled.selected,
 .button--info.button--disabled.selected {
   color: #ccc375;
-  border: 1px solid #e7e3c7;
   background: transparent;
 }
 button[type="submit"],
 .button--primary,
 .button--navigation,
 .button--next {
-  border: 1px solid #456988;
   background-color: #517b9e;
   background-image: -webkit-linear-gradient(#5d88ac, #486e8d);
   background-image: linear-gradient(#5d88ac, #486e8d);
   color: #fbfcfe;
+  box-shadow: inset 0 -2px 0 #1f3243;
 }
 button[type="submit"]:hover,
 .button--primary:hover,
@@ -1100,7 +1097,6 @@ button[type="submit"].focus,
 .button--navigation.focus,
 .button--next.focus {
   color: #fff;
-  border: 1px solid #456988;
   background-color: #6fa6d4;
   background-image: -webkit-linear-gradient(#83b2da, #5b9ace);
   background-image: linear-gradient(#83b2da, #5b9ace);
@@ -1118,7 +1114,6 @@ button[type="submit"].selected,
 .button--navigation.selected,
 .button--next.selected {
   color: #e9f2fc;
-  border: 1px solid #1f3243;
   background-color: #456988;
   background-image: -webkit-linear-gradient(#3c5c77, #4e7699);
   background-image: linear-gradient(#3c5c77, #4e7699);
@@ -1132,7 +1127,7 @@ button[type="submit"].button--disabled,
 .button--navigation.button--disabled,
 .button--next.button--disabled {
   color: #90c6f7;
-  border: 1px solid #d2e4fa;
+  box-shadow: inset 0 -2px 0 #90c6f7;
 }
 button[type="submit"][disabled]:hover,
 .button--primary[disabled]:hover,
@@ -1191,17 +1186,16 @@ button[type="submit"].button--disabled.selected,
 .button--navigation.button--disabled.selected,
 .button--next.button--disabled.selected {
   color: #90c6f7;
-  border: 1px solid #d2e4fa;
   background: transparent;
 }
 .button--secondary,
 .button--success,
 .button--accept {
-  border: 1px solid #99cf87;
   background-color: #d2e9cc;
   background-image: -webkit-linear-gradient(#e2f1de, #c2e1ba);
   background-image: linear-gradient(#e2f1de, #c2e1ba);
   color: #4c6e3f;
+  box-shadow: inset 0 -2px 0 #99cf87;
 }
 .button--secondary:hover,
 .button--success:hover,
@@ -1216,7 +1210,6 @@ button[type="submit"].button--disabled.selected,
 .button--success.focus,
 .button--accept.focus {
   color: #22351c;
-  border: 1px solid #99cf87;
   background-color: #e9f4e6;
   background-image: -webkit-linear-gradient(#f9fcf8, #d9ecd4);
   background-image: linear-gradient(#f9fcf8, #d9ecd4);
@@ -1230,7 +1223,6 @@ button[type="submit"].button--disabled.selected,
 .button--secondary.selected,
 .button--success.selected,
 .button--accept.selected {
-  border: 1px solid #7aae67;
   background-color: #99cf87;
   background-image: -webkit-linear-gradient(#8ac875, #a8d699);
   background-image: linear-gradient(#8ac875, #a8d699);
@@ -1286,17 +1278,16 @@ button[type="submit"].button--disabled.selected,
 .button--success.button--disabled.selected,
 .button--accept.button--disabled.selected {
   color: #99cf87;
-  border: 1px solid #d2e9cc;
   background: transparent;
 }
 .button--danger,
 .button--error,
 .button--delete {
-  border: 1px solid #ffa9ba;
   background-color: #ffd9e0;
   background-image: -webkit-linear-gradient(#ffe8ec, #ffcfd8);
   background-image: linear-gradient(#ffe8ec, #ffcfd8);
   color: #8c5661;
+  box-shadow: inset 0 -2px 0 #ffa9ba;
 }
 .button--danger:hover,
 .button--error:hover,
@@ -1311,7 +1302,6 @@ button[type="submit"].button--disabled.selected,
 .button--error.focus,
 .button--delete.focus {
   color: #45282e;
-  border: 1px solid #ffa9ba;
   background-color: #ffecef;
   background-image: -webkit-linear-gradient(#fffbfc, #ffe2e6);
   background-image: linear-gradient(#fffbfc, #ffe2e6);
@@ -1325,7 +1315,6 @@ button[type="submit"].button--disabled.selected,
 .button--danger.selected,
 .button--error.selected,
 .button--delete.selected {
-  border: 1px solid #da899a;
   background-color: #ffa9ba;
   background-image: -webkit-linear-gradient(#ff9fb2, #ffb8c6);
   background-image: linear-gradient(#ff9fb2, #ffb8c6);
@@ -1381,7 +1370,6 @@ button[type="submit"].button--disabled.selected,
 .button--error.button--disabled.selected,
 .button--delete.button--disabled.selected {
   color: #ffa9ba;
-  border: 1px solid #ffd9e0;
   background: transparent;
 }
 .button-group {
