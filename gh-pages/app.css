@@ -1,4 +1,3 @@
-/*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 
 /**
  * 1. Set default font family to sans-serif.
@@ -442,13 +441,294 @@ kbd {
   -o-box-sizing: border-box;
   box-sizing: border-box;
 }
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+.block {
+  display: block;
+}
 .inline-block,
 .button-group {
   display: inline-block;
 }
+.inline {
+  display: inline;
+}
+.pull-left {
+  float: left;
+}
+.pull-right {
+  float: right;
+}
+.push-left {
+  margin-left: 12px;
+}
+.push-left-gutter {
+  margin-left: 24px;
+}
 .push-right,
 .form--horizontal > * {
   margin-right: 12px;
+}
+.push-right-gutter {
+  margin-right: 24px;
+}
+html,
+body {
+  margin: 0 auto;
+}
+body {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+@media screen and (min-width: 324px) {
+  body {
+    width: 312px;
+  }
+}
+@media screen and (min-width: 468px) {
+  body {
+    width: 456px;
+  }
+}
+@media screen and (min-width: 612px) {
+  body {
+    width: 600px;
+  }
+}
+@media screen and (min-width: 756px) {
+  body {
+    width: 744px;
+  }
+}
+@media screen and (min-width: 900px) {
+  body {
+    width: 888px;
+  }
+}
+@media screen and (min-width: 1044px) {
+  body {
+    width: 1032px;
+  }
+}
+@media screen and (min-width: 1188px) {
+  body {
+    width: 1176px;
+  }
+}
+@media screen and (min-width: 1332px) {
+  body {
+    width: 1320px;
+  }
+}
+@media screen and (min-width: 1476px) {
+  body {
+    width: 1464px;
+  }
+}
+body {
+  padding: 12px;
+}
+.row,
+.page {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  -moz-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  -o-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
+  margin: -12px;
+}
+.col-1 {
+  -webkit-flex-basis: 48px;
+  -moz-flex-basis: 48px;
+  -ms-flex-basis: 48px;
+  -o-flex-basis: 48px;
+  flex-basis: 48px;
+  max-width: 48px;
+  padding: 12px;
+}
+.col-2 {
+  -webkit-flex-basis: 120px;
+  -moz-flex-basis: 120px;
+  -ms-flex-basis: 120px;
+  -o-flex-basis: 120px;
+  flex-basis: 120px;
+  max-width: 120px;
+  padding: 12px;
+}
+.col-3 {
+  -webkit-flex-basis: 192px;
+  -moz-flex-basis: 192px;
+  -ms-flex-basis: 192px;
+  -o-flex-basis: 192px;
+  flex-basis: 192px;
+  max-width: 192px;
+  padding: 12px;
+}
+.col-4 {
+  -webkit-flex-basis: 264px;
+  -moz-flex-basis: 264px;
+  -ms-flex-basis: 264px;
+  -o-flex-basis: 264px;
+  flex-basis: 264px;
+  max-width: 264px;
+  padding: 12px;
+}
+.col-5 {
+  -webkit-flex-basis: 336px;
+  -moz-flex-basis: 336px;
+  -ms-flex-basis: 336px;
+  -o-flex-basis: 336px;
+  flex-basis: 336px;
+  max-width: 336px;
+  padding: 12px;
+}
+.col-6 {
+  -webkit-flex-basis: 408px;
+  -moz-flex-basis: 408px;
+  -ms-flex-basis: 408px;
+  -o-flex-basis: 408px;
+  flex-basis: 408px;
+  max-width: 408px;
+  padding: 12px;
+}
+.col-7 {
+  -webkit-flex-basis: 480px;
+  -moz-flex-basis: 480px;
+  -ms-flex-basis: 480px;
+  -o-flex-basis: 480px;
+  flex-basis: 480px;
+  max-width: 480px;
+  padding: 12px;
+}
+.col-8 {
+  -webkit-flex-basis: 552px;
+  -moz-flex-basis: 552px;
+  -ms-flex-basis: 552px;
+  -o-flex-basis: 552px;
+  flex-basis: 552px;
+  max-width: 552px;
+  padding: 12px;
+}
+.col-9 {
+  -webkit-flex-basis: 624px;
+  -moz-flex-basis: 624px;
+  -ms-flex-basis: 624px;
+  -o-flex-basis: 624px;
+  flex-basis: 624px;
+  max-width: 624px;
+  padding: 12px;
+}
+.col-10 {
+  -webkit-flex-basis: 696px;
+  -moz-flex-basis: 696px;
+  -ms-flex-basis: 696px;
+  -o-flex-basis: 696px;
+  flex-basis: 696px;
+  max-width: 696px;
+  padding: 12px;
+}
+.col-11 {
+  -webkit-flex-basis: 768px;
+  -moz-flex-basis: 768px;
+  -ms-flex-basis: 768px;
+  -o-flex-basis: 768px;
+  flex-basis: 768px;
+  max-width: 768px;
+  padding: 12px;
+}
+.col-12 {
+  -webkit-flex-basis: 840px;
+  -moz-flex-basis: 840px;
+  -ms-flex-basis: 840px;
+  -o-flex-basis: 840px;
+  flex-basis: 840px;
+  max-width: 840px;
+  padding: 12px;
+}
+.col-13 {
+  -webkit-flex-basis: 912px;
+  -moz-flex-basis: 912px;
+  -ms-flex-basis: 912px;
+  -o-flex-basis: 912px;
+  flex-basis: 912px;
+  max-width: 912px;
+  padding: 12px;
+}
+.col-14 {
+  -webkit-flex-basis: 984px;
+  -moz-flex-basis: 984px;
+  -ms-flex-basis: 984px;
+  -o-flex-basis: 984px;
+  flex-basis: 984px;
+  max-width: 984px;
+  padding: 12px;
+}
+.col-15 {
+  -webkit-flex-basis: 1056px;
+  -moz-flex-basis: 1056px;
+  -ms-flex-basis: 1056px;
+  -o-flex-basis: 1056px;
+  flex-basis: 1056px;
+  max-width: 1056px;
+  padding: 12px;
+}
+.col-16 {
+  -webkit-flex-basis: 1128px;
+  -moz-flex-basis: 1128px;
+  -ms-flex-basis: 1128px;
+  -o-flex-basis: 1128px;
+  flex-basis: 1128px;
+  max-width: 1128px;
+  padding: 12px;
+}
+.col-17 {
+  -webkit-flex-basis: 1200px;
+  -moz-flex-basis: 1200px;
+  -ms-flex-basis: 1200px;
+  -o-flex-basis: 1200px;
+  flex-basis: 1200px;
+  max-width: 1200px;
+  padding: 12px;
+}
+.col-18 {
+  -webkit-flex-basis: 1272px;
+  -moz-flex-basis: 1272px;
+  -ms-flex-basis: 1272px;
+  -o-flex-basis: 1272px;
+  flex-basis: 1272px;
+  max-width: 1272px;
+  padding: 12px;
+}
+.col-19 {
+  -webkit-flex-basis: 1344px;
+  -moz-flex-basis: 1344px;
+  -ms-flex-basis: 1344px;
+  -o-flex-basis: 1344px;
+  flex-basis: 1344px;
+  max-width: 1344px;
+  padding: 12px;
+}
+.col-20 {
+  -webkit-flex-basis: 1416px;
+  -moz-flex-basis: 1416px;
+  -ms-flex-basis: 1416px;
+  -o-flex-basis: 1416px;
+  flex-basis: 1416px;
+  max-width: 1416px;
+  padding: 12px;
 }
 html,
 body,
@@ -526,14 +806,6 @@ header .title {
 h1 {
   font-size: 30px;
   line-height: 36px;
-}
-.width-limit,
-p {
-  max-width: 696px;
-}
-.width-limit.full-width,
-p.full-width {
-  max-width: auto;
 }
 h1,
 h2,
@@ -1428,6 +1700,7 @@ textarea {
   -ms-transition: box-shadow 0.2s;
   -o-transition: box-shadow 0.2s;
   transition: box-shadow 0.2s;
+  max-width: 100%;
 }
 input[type="text"]:hover,
 input[type="password"]:hover,
@@ -1862,20 +2135,14 @@ table tbody tr:nth-child(2n+2).row--error {
 table tbody tr:nth-child(2n+2).row--warn {
   background: #e7e3c7;
 }
-html,
-body {
-  margin: 0 auto;
-}
-body {
-  width: 984px;
-  padding: 24px;
-}
-main {
-  margin-right: 288px;
-}
-aside {
-  width: 264px;
-  float: right;
+@media screen and (min-width: 756px) {
+  .page {
+    -webkit-flex-flow: row nowrap;
+    -moz-flex-flow: row nowrap;
+    -ms-flex-flow: row nowrap;
+    -o-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+  }
 }
 header {
   overflow: auto;

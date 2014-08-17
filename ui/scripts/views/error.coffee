@@ -4,7 +4,7 @@ template = require('../../templates/sections/public/error')
 
 class ErrorView extends PageView
     id: 'error'
-    className: 'max-width-4'
+    className: 'col-4'
     template: template
     title: 'Error'
 

@@ -5,7 +5,7 @@ template = require('../../templates/sections/contribute/dashboard')
 # This view is a layout of other components
 class ContributorDashboardView extends PageView
     id: 'contributor-dashboard'
-    className: 'max-width-10'
+    className: 'col-10'
     title: 'Contributor Dashboard'
     template: template
 

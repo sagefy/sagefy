@@ -1,7 +1,19 @@
 /*
 ---
-title: Vendor Mixin
-description: Whenever a wrapped property is called, all vendor prefixes are automatically added as well.
+title: Vendor Mixins
+description: |
+    Whenever a wrapped property is called, all vendor prefixes are automatically added as well.
+
+    The following properties receive vendor mixins:
+
+    - border-radius
+    - transition
+    - box-sizing
+    - filter
+    - flex-flow
+    - justify-content
+    - flex-basis
+    - order
 parameters:
     - property
     - args
@@ -17,46 +29,26 @@ vendor(property, args)
     -o-{property} args
     {property} args
 
-/*
----
-title: Border Radius Mixin
-description: Includes vendor prefixes for border radius.
-parameters:
-    - Use as normal
----
-*/
 border-radius()
     vendor 'border-radius', arguments
 
-/*
----
-title: Transition Mixin
-description: Includes vendor prefixes for transitions.
-parameters:
-    - Use as normal
----
-*/
 transition()
     vendor 'transition', arguments
 
-/*
----
-title: Box Sizing Mixin
-description: Includes vendor prefixes for box sizing.
-parameters:
-    - Use as normal
----
-*/
 box-sizing()
     vendor 'box-sizing', arguments
 
-/*
----
-title: Filter Mixin
-description: Includes vendor prefixes for filter.
-parameters:
-    - Use as normal
----
-*/
 filter()
     vendor 'filter', arguments
+
+flex-flow()
+    vendor 'flex-flow', arguments
+
+justify-content()
+    vendor 'justify-content', arguments
+
+flex-basis()
+    vendor 'flex-basis', arguments
+
+order()
+    vendor 'order', arguments

@@ -5,7 +5,7 @@ mixins = require('../modules/mixins')
 class Signup extends FormView
     title: 'Create Account'
     id: 'signup'
-    className: 'max-width-6'
+    className: 'col-6'
     mode: 'create'
     fields: ['name', 'email', 'password']
     description: '''

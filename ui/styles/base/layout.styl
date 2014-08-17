@@ -211,7 +211,6 @@ html, body
     margin 0 auto
 
 body
-    padding 0 $gutter
     overflow-y scroll
     overflow-x hidden
 
@@ -244,182 +243,33 @@ body
 
 /*
 ---
-title: Layouts
-description: Sagefy takes a layout-specified approach rather than a column-specified approach. There are essentially **five types of layouts** present in most web designs. Layouts can be nested within each other.
----
-*/
-
-/*
----
 title: Columns
 description: |
     Any element may be set to a specific number of columns, using the class `col-n`. Any element with set columns larger than the available screen will be reduced to the maximum width.
+
+    Borrows "magic" from [Bootstrap's grid system](http://www.helloerik.com/the-subtle-magic-behind-why-the-bootstrap-3-grid-works).
 example: |
-    TODO
+    <div class="column-demo row">
+        <div class="col-2">col-2</div>
+        <div class="col-6">col-6</div>
+    </div>
 ---
 */
+body
+    padding $unit
+
+.row
+    display -webkit-flex
+    display flex
+    flex-flow row wrap
+    justify-content center
+    margin -1 * $unit
+
+.page
+    @extend .row
+
 for i in (1..$max-columns)
     .col-{i}
+        flex-basis cols(i)
         max-width cols(i)
-
-/*
----
-title: Full Width Layout
-description: |
-    A full-width element assumes the width of its parent. Full-width is native to block level elements, but can be manually set by <code>full-width</code>.
-example: |
-    <div class="full-width">
-        Suspendisse potenti. Nullam auctor tempor dui id fermentum. Nunc condimentum massa ut ipsum pellentesque, eget tristique massa varius. Nulla molestie ante porttitor aliquam blandit. Fusce est diam, tempor vitae sollicitudin nec, consectetur suscipit nisl. Maecenas fermentum nibh turpis. Ut imperdiet porttitor ligula ut iaculis. Phasellus justo dolor, porttitor a leo in, mattis congue elit. Phasellus imperdiet viverra velit non porttitor.
-    </div>
----
-*/
-.full-width
-    max-width 100%
-
-/*
----
-title: Max Width Layout
-description: |
-    A max-width element will assume the width of its parent up to a specified number of columns. Max width is set by the class `max-width-n`. Prefer max-widths set in two, four, six...
-example: |
-    <div class="max-width-6">
-        Vivamus semper elit lorem, ac tristique nunc pulvinar eget. Phasellus dictum lacinia velit, eu egestas sapien consequat in. Aliquam consequat laoreet tincidunt. Donec eros nisi, sodales eu nisl ac, condimentum tincidunt risus. Duis condimentum iaculis dui in dapibus. Nulla consequat ut orci a porttitor. Integer elit enim, elementum vitae faucibus nec, elementum eu nisl. Quisque at congue augue. Vestibulum sed ipsum sollicitudin, iaculis urna non, hendrerit metus.
-    </div>
-    <div class="max-width-2">
-        Nam interdum pulvinar arcu. Vestibulum eget elit elit. Donec aliquam felis neque, sed condimentum leo consectetur ut. Nullam eu venenatis lorem, et volutpat ligula.
-    </div>
----
-*/
-$max-width
-    margin-left auto
-    margin-right auto
-
-for i in (1..$max-columns)
-    .max-width-{i}
-        @extend $max-width
-        max-width cols(i)
-
-/*
----
-title: Serial Layout
-description: |
-    A serial layout consists of a set of even-width elements. Serial layouts specify a maximum number of columns per element.
-
-    Wrap the elements in a <code>div</code> of <code>serial-n</code>, where <var>n</var> is the number of columns from one to ten, not the number of elements.
-
-    TODO: Rework for flexbox
-example: |
-    <div class="serial-4">
-        <div>A</div>
-        <div>B</div>
-        <div>C</div>
-        <div>D</div>
-    </div>
----
-*/
-$serial
-    margin -1 * $gutter
-    text-align center
-
-    > *
-        margin $gutter
-        display inline-block
-
-for i in (1..($max-columns / 2))
-    .serial-{i}
-        @extend $serial
-
-        > *
-            width cols(i)
-
-/*
----
-title: Aside Layout
-description: |
-    An aside, either on the left or right side, of one to eight columns. The main element will take the rest of the parent's width. When the main is less than 60% of the parent, both the main and the aside appear in full width. For a two-in-one aside, use the serial layout inside the aside.
-
-    Wrap both <code>main</code> and <code>aside</code> in a <code>div</code> with the class <code>aside-d-n</code>, where <var>d</var> is either <em>left</em> or <em>right</em>, and <var>n</var> is the number of columns of the aside.
-
-    TODO: Rework for flexbox
-example: |
-    <div class="aside-left-2">
-        <aside>
-            Aside content
-        </aside>
-        <main>
-            Main content
-        </main>
-    </div>
----
-*/
-
-$reset-aside
-    > main
-        margin-left 0
-        margin-right 0
-
-    > aside
-        float none
-        max-width auto
-
-for d in left right
-    for i in (1..($max-columns / 2 - 2))
-        .aside-{d}-{i}
-            @extend .clearfix
-
-            > main
-                margin-{d} (cols(i) + $gutter)
-
-            > aside
-                max-width cols(i)
-                float d
-
-            $attr-selector = '[max-width~="' + cols(ceil(i / 0.4)) + '"]'
-            *{$attr-selector} &
-                @extend $reset-aside
-
-/*
----
-title: Double Aside Layout
-description: |
-    Two asides appear with the main content, one on the left and one on the right. Each aside is one to seven columns. The main element takes the remaining space. If the main element is less than 60% of the parent, all three elements are in full width. The sum of the aside columns must be eight or less.
-
-    Create container <code>aside-left-dl-right-dr</code>, where <var>dl</var> is the number of left columns and <var>dr</var> is the number of right columns. Create an <code>aside</code>, <code>main</code>, and <code>aside</code> elements within the container.
-
-    TODO: Rework for flexbox
-example: |
-    <div class="aside-left-2-right-2">
-        <aside>
-            Aside content first
-        </aside>
-        <aside>
-            Aside content last
-        </aside>
-        <main>
-            Main content
-        </main>
-    </div>
----
-*/
-
-for l in (1..($max-columns / 2 - 3))
-    for r in (1..($max-columns / 2 - 3))
-        if l + r <= ($max-columns / 2 - 2)
-            .aside-left-{l}-right-{r}
-                @extend .clearfix
-
-                > main
-                    margin-left (cols(l) + $gutter)
-                    margin-right (cols(r) + $gutter)
-
-                > aside:first-child
-                    float left
-                    max-width cols(l)
-
-                > aside:nth-child(2n+2)
-                    float right
-                    max-width cols(r)
-
-                $attr-selector = '[max-width~="' + cols(ceil((l + r) / 0.4)) + '"]'
-                *{$attr-selector} &
-                    @extend $reset-aside
+        padding $unit

@@ -4,7 +4,7 @@ template = require('../../templates/sections/public/terms')
 
 class TermsView extends PageView
     id: 'terms'
-    className: 'max-width-10'
+    className: 'col-10'
     template: template
     title: 'Terms of Service'
 

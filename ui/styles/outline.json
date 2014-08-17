@@ -2,24 +2,13 @@
     "Metrics", [
         "Box Sizing",
         "Body Layout",
-        "Layouts", [
-            "Columns",
-            "Full Width Layout",
-            "Max Width Layout",
-            "Serial Layout",
-            "Aside Layout",
-            "Double Aside Layout"
-        ]
+        "Columns"
     ],
     "Global Utilities", [
         "Clearfix",
         "Display Type Helpers",
         "Pull and Push Helpers",
-        "Vendor Mixin",
-        "Border Radius Mixin",
-        "Transition Mixin",
-        "Box Sizing Mixin",
-        "Filter Mixin",
+        "Vendor Mixins",
         "Default Animations"
     ],
     "Fonts",

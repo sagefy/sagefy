@@ -8,53 +8,55 @@
         <link rel="icon" href="/images/favicon.ico" />
         <link href="/app.css" rel="stylesheet" />
     </head>
-    <body class="page_{{doc_slug|e}}">
-        <aside>
-            <header>
-                <img src="/images/astrolabe.svg" alt="astrolabe" height="84" class="large">
-                <hgroup>
-                    <div class="title">Sagefy</div>
-                    <div class="description">Adaptive, collaborative, and open learning platform.</div>
-                </hgroup>
-            </header>
+    <body>
+        <div class="page">
+            <main class="col-10">
+                {% if page.title %}<h1>{{ page.title }}</h1>{% endif %}
+                {% if page.subtitle %}<h2 class="subheader">{{ page.subtitle }}</h2>{% endif %}
+                {{ content }}
+            </main>
+            <aside class="col-4">
+                <header>
+                    <img src="/images/astrolabe.svg" alt="astrolabe" height="84" class="large">
+                    <hgroup>
+                        <div class="title">Sagefy</div>
+                        <div class="description">Adaptive, collaborative, and open learning platform.</div>
+                    </hgroup>
+                </header>
 
-            <ul>
-                <li><a href="/">Overview</a></li>
-                <li><a href="/ideas">Ideas</a></li>
-                <li><a href="/data_structure">Data Structure</a></li>
-                <li><a href="/technology">Technology</a></li>
-                <li><a href="/planning">Planning</a></li>
-                <li><a href="/reference">Reference</a></li>
-            </ul>
+                <ul>
+                    <li><a href="/">Overview</a></li>
+                    <li><a href="/ideas">Ideas</a></li>
+                    <li><a href="/data_structure">Data Structure</a></li>
+                    <li><a href="/technology">Technology</a></li>
+                    <li><a href="/planning">Planning</a></li>
+                    <li><a href="/reference">Reference</a></li>
+                </ul>
 
-            <hr>
+                <hr>
 
-            <ul>
-                <li><a href="http://github.com/heiskr/sagefy">Github</a></li>
-                <li><a href="http://twitter.com/sagefyorg">Twitter</a></li>
-            </ul>
+                <ul>
+                    <li><a href="http://github.com/heiskr/sagefy">Github</a></li>
+                    <li><a href="http://twitter.com/sagefyorg">Twitter</a></li>
+                </ul>
 
-            <hr>
+                <hr>
 
-            <form action="http://sagefy.us3.list-manage1.com/subscribe/post?u=3fc3d9b161e568d1a8e5f3a86&amp;id=26c1244ee8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
-                <label for="email">
-                    Email address
-                </label>
-                <input type="email" name="EMAIL" id="email" placeholder="me@example.com">
-                <button type="submit">
-                    Get updates
-                </button>
-            </form>
+                <form action="http://sagefy.us3.list-manage1.com/subscribe/post?u=3fc3d9b161e568d1a8e5f3a86&amp;id=26c1244ee8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+                    <label for="email">
+                        Email address
+                    </label>
+                    <input type="email" name="EMAIL" id="email" placeholder="me@example.com">
+                    <button type="submit">
+                        Get updates
+                    </button>
+                </form>
 
-            <hr>
+                <hr>
 
-            <p><small>© Copyright Sagefy 2014. All contents are licensed under <a href="https://raw.github.com/heiskr/sagefy/master/license.txt">AGPLv3</a>.</small></p>
-        </aside>
-        <main>
-            {% if page.title %}<h1>{{ page.title }}</h1>{% endif %}
-            {% if page.subtitle %}<h2 class="subheader">{{ page.subtitle }}</h2>{% endif %}
-            {{ content }}
-        </main>
+                <p><small>© Copyright Sagefy 2014. All contents are licensed under <a href="https://raw.github.com/heiskr/sagefy/master/license.txt">AGPLv3</a>.</small></p>
+            </aside>
+        </div><!-- END .page -->
     </body>
     <script>(function(G,o,O,g,l){G.GoogleAnalyticsObject=O;G[O]||(G[O]=function(){(G[O].q=G[O].q||[]).push(arguments)});G[O].l=+new Date;g=o.createElement('script'),l=o.scripts[0];g.src='//www.google-analytics.com/analytics.js';l.parentNode.insertBefore(g,l)}(this,document,'ga'));ga('create','UA-40497674-1');ga('send','pageview')</script>
 </html>

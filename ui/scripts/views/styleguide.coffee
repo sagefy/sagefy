@@ -6,7 +6,7 @@ mixins = require('../modules/mixins')
 
 class StyleguideView extends PageView
     id: 'styleguide'
-    className: 'max-width-10'
+    className: 'col-10'
     template: t
     template2: t2
     title: 'Style Guide and Component Library'

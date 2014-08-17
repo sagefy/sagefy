@@ -4,7 +4,7 @@ mixins = require('../modules/mixins')
 class CreatePasswordView extends FormView
     title: 'Create a New Password'
     id: 'create-password'
-    className: 'max-width-6'
+    className: 'col-6'
     fields: ['email']  # Step 1: Email, otherwise none
     submitLabel: 'Send Email'
     submitIcon: 'envelope'

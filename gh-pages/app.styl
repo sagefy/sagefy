@@ -2,31 +2,7 @@
 @import "../ui/styles/base/mixins"
 @import "../ui/styles/base/colors"
 @import "../ui/styles/base/fonts"
-
-// layout mock:
-
-$unit = 12px
-$gutter = $unit * 2
-$column = $gutter * 2
-$font-size = 16px
-$border-radius = 2px
-$max-columns = 20
-
-cols(n)
-    n * $column + (n - 1) * $gutter
-
-body-cols(n)
-    n * $column + (n + 1) * $gutter
-
-*, *:before, *:after
-    box-sizing border-box
-
-.inline-block
-    display inline-block
-
-.push-right
-    margin-right $unit
-
+@import "../ui/styles/base/layout"
 @import "../ui/styles/base/typography"
 @import "../ui/styles/base/images"
 @import "../ui/styles/base/lists"
@@ -34,19 +10,9 @@ body-cols(n)
 @import "../ui/styles/base/forms"
 @import "../ui/styles/base/tables"
 
-html, body
-    margin 0 auto
-
-body
-    width cols(14)
-    padding $gutter
-
-main
-    margin-right cols(4) + $gutter
-
-aside
-    width cols(4)
-    float right
+@media $10-columns
+    .page
+        flex-flow row nowrap
 
 header
     overflow auto

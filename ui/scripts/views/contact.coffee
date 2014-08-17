@@ -4,7 +4,7 @@ template = require('../../templates/sections/public/contact')
 
 class ContactView extends PageView
     id: 'contact'
-    className: 'max-width-8'
+    className: 'col-8'
     template: template
     title: 'Contact'
 

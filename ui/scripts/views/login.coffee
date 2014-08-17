@@ -6,7 +6,7 @@ Backbone = require('backbone')
 class LoginView extends FormView
     title: 'Login'
     id: 'login'
-    className: 'max-width-4'
+    className: 'col-4'
     mode: 'create'
     fields: ['name', 'password']
     description: '''

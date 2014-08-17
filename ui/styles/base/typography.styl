@@ -80,24 +80,6 @@ for set in (small 14 24) (normal 16 24) (accent 18 24) (large 20 24) (big 26 36)
 
 /*
 ---
-title: Width Limiting
-description: |
-    Because paragraphs can become too long to read, we provide a `width-limit` class to keep it under control. Most type specialists consider about 13-15 words per line ideal.
-example: |
-    <p class="width-limit">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
----
-*/
-
-.width-limit
-    max-width cols(10)
-
-    &.full-width
-        max-width auto
-
-/*
----
 title: Headings, Subheadings, and Header Groups
 description: All elements <code>h1</code> through <code>h6</code> are styled. Sub-headers use the class <code>subheader</code> when used directly below a higher order header. An <code>hgroup</code> collapses the margins between the headers. Optionally, elements can float along with the header. The most easy way to accomplish this is to wrap the header in an <code>hgroup</code> and add the class <code>inline-block</code> to the header tag.
 elements:
@@ -176,12 +158,9 @@ h6
 ---
 title: Paragraphs
 description: |
-    Paragraphs follow standard conventions. Paragraphs have a default maximum width to improve readability. This can be overwritten using the <code>full-width</code> class.
+    Paragraphs follow standard conventions. Paragraphs should be no longer than `col-10`.
 ---
 */
-
-p
-    @extend .width-limit
 
 /*
 ---

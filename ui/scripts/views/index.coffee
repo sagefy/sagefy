@@ -5,7 +5,7 @@ mixins = require('../modules/mixins')
 
 class IndexView extends PageView
     id: 'index'
-    className: 'max-width-8'
+    className: 'col-8'
     template: template
     title: 'Adaptive, Collaborative, and Open Learning Platform'
 
