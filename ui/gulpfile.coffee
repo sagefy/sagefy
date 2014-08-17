@@ -73,6 +73,15 @@ gulp.task('styles:build', ->
         .pipe(gulp.dest(dist))
 )
 
+gulp.task('styles:build:doc', ->
+    gulp.src('../gh-pages/app.styl')
+        .pipe(plugins.stylus({
+            'include css': true
+            errors: true
+        }))
+        .pipe(gulp.dest('../gh-pages/'))
+)
+
 gulp.task('styles:doc', (done) ->
     yms = require('ym-styleguide')
     fs = require('fs')
@@ -88,10 +97,10 @@ gulp.task('styles:compress', ['styles:build'], ->
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('styles:watch', ['styles:build'], ->
+gulp.task('styles:watch', ['styles:build', 'styles:build:doc'], ->
     gulp.watch(
         ['styles/*.styl', 'styles/**/*.styl']
-        ['styles:build', 'scripts:build']
+        ['styles:build', 'styles:build:doc', 'scripts:build']
     )
 )
 
