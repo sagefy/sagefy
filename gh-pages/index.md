@@ -6,27 +6,11 @@ What is Sagefy?
 ------------------
 
 - Open-source and freely available.
-- Learner-generated modules and assessments.
-- Community-driven and generated.
 - Adaptive to the learner.
-- Flexibly stored.
-- Data-driven.
-- Based on learning science and neuroscience research.
-- Discussion oriented.
-
-What is Sagefy not?
-----------------------
-
-- A learning management system.
-- A courseware system.
-- A flashcard system.
-- A wiki.
-- Designed for schools or corporate use.
-- Designed rigorously by subject experts.
-- Certification-oriented.
-- Limited to specific subjects.
-- Suitable for every subject.
-- Designed to exist in isolation.
+- Based on learning science research.
+- User-generated modules and assessments.
+- Consensus-driven and generated.
+- Data-driven and flexibly stored.
 
 Who will use it?
 -----------------

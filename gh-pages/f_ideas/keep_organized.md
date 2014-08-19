@@ -21,7 +21,7 @@ _TODO_
 How does Sagefy implement this idea?
 ------------------------------------
 
-- The three basic entities are easy to remember, and have a clear hierarchy.
+- The three basic entities are easy to remember and have a clear hierarchy.
 - Sets can embed each other, allowing for a variety of organizational structures.
 - A card must belong to a unit, which defines its purpose.
 - A unit can only have a single goal, limiting extraneous information.

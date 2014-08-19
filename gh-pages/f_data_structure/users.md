@@ -62,7 +62,7 @@ Sets
     - See progress
     - See organizational schema at any point in time
     - Regularly review material to retain in memory
-    - Encourage and reminded to work on module
+    - Encouraged and reminded to work on module
 - _Contributors_
     - View history, analytics, and discussion
     - Consensus editing

@@ -15,5 +15,6 @@ This document covers a rough list in the order of which things will be built. It
 - [ ] Mentors (MVP)
 - [ ] Moderators (MVP)
 - [ ] Analyics (MVP)
+- [ ] Learner Groups (MVP)
 - And beyond...
 
