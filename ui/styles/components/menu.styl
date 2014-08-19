@@ -84,14 +84,16 @@ example: |
         display inline-block
 
 .menu__items
-    margin-top $gutter
+    @extend .row
+    padding $unit
     display none
     position relative
 
     .selected &
-        display block
+        display flex
 
 .menu__item
+    @extend .col-2
     text-align center
 
     a

@@ -3,20 +3,18 @@
 title: Discussion
 description: |
     Discussions are common on just about any social site. A default layout helps to bring consistency to these discussions. Discussions can also be modified to achieve the goal of the widget.
-
-    TODO: Style
-elements:
-modifiers:
 example: |
     <ul class="discussion">
         <li>
-            <img src="http://placehold.it/48/e7e3c7/aaa354" data-title="username" class="discussion__avatar" />
-            <div class="discussion__message">
-                <div class="discussion__user__name">
-                    username
-                </div>
+            <div class="discussion__avatar">
+                <img src="http://placehold.it/48/e7e3c7/aaa354" data-title="username" />
+            </div>
+            <div class="discussion__content">
                 <div class="discussion__when">
                     52 minutes ago
+                </div>
+                <div class="discussion__name">
+                    username
                 </div>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -24,24 +22,434 @@ example: |
                     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
                 </p>
                 <div class="discussion__footer">
-                    <a href="#">Edit</a>
-                    <a href="#">Share</a>
-                    <a href="#">Flag</a>
+                    <a href="#"><i class="fa fa-edit"></i> Edit</a>
+                    <a href="#"><i class="fa fa-share"></i> Share</a>
+                    <a href="#"><i class="fa fa-flag"></i> Flag</a>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="discussion__avatar">
+                <img src="http://placehold.it/48/e7e3c7/aaa354" data-title="username" />
+            </div>
+            <div class="discussion__content">
+                <div class="discussion__when">
+                    54 minutes ago
+                </div>
+                <div class="discussion__name">
+                    username
+                </div>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+                </p>
+                <div class="discussion__footer">
+                    <a href="#"><i class="fa fa-edit"></i> Edit</a>
+                    <a href="#"><i class="fa fa-share"></i> Share</a>
+                    <a href="#"><i class="fa fa-flag"></i> Flag</a>
                 </div>
             </div>
         </li>
     </ul>
-
+    <hr />
     <table class="discussion-list">
         <thead>
             <tr>
                 <th>Topic</th>
-                <th>Category</th>
                 <th>Posts</th>
                 <th>Views</th>
                 <th>Last Modified</th>
             </tr>
         </thead>
+        <tbody>
+            <tr>
+                <td><a href="#">Astronomy set too large</a></td>
+                <td>10</td>
+                <td>45</td>
+                <td>4 hours ago</td>
+            </tr>
+            <tr>
+                <td><a href="#">Split up astronomy set</a></td>
+                <td>15</td>
+                <td>105</td>
+                <td>2 hours ago</td>
+            </tr>
+        </tbody>
     </table>
 ---
 */
+
+/*
+---
+title: Notification
+description: |
+    Notifications have a similar layout to discussion.
+example: |
+    <ul class="notifications">
+        <li>
+            <div class="notifications__image">
+                <img src="http://placehold.it/48/e7e3c7/aaa354" data-title="username" />
+            </div>
+            <div class="notifications__content">
+                <div class="notifications__when">
+                    52 minutes ago
+                </div>
+                <p class="notifications__subject">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt.
+                </p>
+            </div>
+        </li>
+        <li>
+            <div class="notifications__image">
+                <img src="http://placehold.it/48/e7e3c7/aaa354" data-title="username" />
+            </div>
+            <div class="notifications__content">
+                <div class="notifications__when">
+                    3 hours ago
+                </div>
+                <p class="notifications__subject">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt.
+                </p>
+            </div>
+        </li>
+    </ul>
+    <hr />
+    <div class="notification">
+        <div class="notification__image">
+            <img src="http://placehold.it/48/e7e3c7/aaa354" data-title="username" />
+        </div>
+        <div class="notification__content">
+            <div class="discussion__when">
+                3 hours ago
+            </div>
+            <p class="notification__subject">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt.
+            </p>
+            <div class="notification__body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+                </p>
+            </div>
+            <div class="notification__tags">
+                Tagged:
+                <ul>
+                    <li>
+                        <a href="#">Unit</a>
+                    </li>
+                    <li>
+                        <a href="#">Contribute</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+---
+*/
+
+/*
+---
+title: Message
+description: |
+    Messages also have a similar layout to discussion.
+example: |
+    <ul class="messages">
+        <li class="messages__li--unread">
+            <div class="messages__avatar">
+                <img src="http://placehold.it/48/e7e3c7/aaa354" data-title="username" />
+            </div>
+            <div class="messages__content">
+                <div class="messages__when">
+                    52 minutes ago
+                </div>
+                <div class="messages__name">
+                    from: username
+                </div>
+                <p class="messages__subject">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt.
+                </p>
+            </div>
+        </li>
+        <li>
+            <div class="messages__avatar">
+                <img src="http://placehold.it/48/e7e3c7/aaa354" data-title="username" />
+            </div>
+            <div class="messages__content">
+                <div class="messages__when">
+                    3 hours ago
+                </div>
+                <div class="messages__name">
+                    from: username
+                </div>
+                <p class="messages__subject">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt.
+                </p>
+            </div>
+        </li>
+    </ul>
+    <hr />
+    <div class="message">
+        <div class="message__avatar">
+            <img src="http://placehold.it/48/e7e3c7/aaa354" data-title="username" />
+        </div>
+        <div class="message__content">
+            <div class="message__when">
+                3 hours ago
+            </div>
+            <div class="messages__name">
+                from: username
+            </div>
+            <p class="message__subject">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt.
+            </p>
+            <div class="message__body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+                </p>
+            </div>
+            <div class="message__tags">
+                Tagged:
+                <ul>
+                    <li>
+                        <a href="#">Unit</a>
+                    </li>
+                    <li>
+                        <a href="#">Contribute</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="message__footer">
+                <a href="#" class="button--accept"><i class="fa fa-reply"></i> Reply</a>
+                <a href="#" class="button--error"><i class="fa fa-flag"></i> Flag</a>
+            </div>
+        </div>
+    </div>
+---
+*/
+
+/*
+---
+title: Proposal
+description: |
+    A proposal to create, update, delete, merge, or split an entity.
+example: |
+    <div class="proposal">
+        <div class="proposal__avatar">
+            <img src="http://placehold.it/48/e7e3c7/aaa354" data-title="username" />
+        </div>
+        <div class="proposal__content">
+            <div class="proposal__when">
+                3 hours ago
+            </div>
+            <div class="proposal__name">
+                username
+            </div>
+            <p class="proposal__subject">
+                Kind: Object Name
+                <span class="proposal__action--update">Update</span>
+                <span class="proposal__status--pending">Pending</span>
+            </p>
+            <div class="proposal__body">
+                <p>
+                    Changes block TBD.
+                </p>
+            </div>
+        </div>
+    </div>
+---
+*/
+
+/*
+---
+title: Vote
+description: |
+    A vote from a user on a proposal.
+example: |
+    <div class="vote">
+        <div class="vote__header">
+            <span class="vote__action--consent">Consent</span>
+            by
+            <img src="http://placehold.it/24/e7e3c7/aaa354" data-title="username" />
+            <span class="vote__name">
+                username
+            </span>
+            <span class="vote__when">
+                3 hours ago
+            </span>
+        </div>
+        <div class="vote__body">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt.
+            </p>
+        </div>
+    </div>
+---
+*/
+
+.discussion
+.notifications
+.messages
+    padding 0
+
+    li
+        @extend .row
+
+        &:hover
+            background $gold-97
+
+        > a
+            color $gold-20
+            text-decoration none
+
+.messages__li--unread
+.notifications__li--unread
+    background $blue-95
+    font-weight bold
+
+.notification
+.message
+.proposal
+    @extend .row
+
+.discussion__avatar
+.notifications__image
+.notification__image
+.messages__avatar
+.message__avatar
+.proposal__avatar
+    @extend .col-1
+    padding $unit 0
+
+.discussion__content
+.notifications__content
+.notification__content
+.messages__content
+.message__content
+.proposal__content
+    @extend .col-7
+
+.discussion__name
+.messages__name
+.message__name
+.proposal__name
+    color $gold-43
+    margin 0
+
+.discussion__when
+.notifications__when
+.notification__when
+.messages__when
+.message__when
+.proposal__when
+.vote__when
+    float right
+    @extend .font-size-small
+    color $gold-66
+    margin 0 $unit $unit 0
+
+.notifications__subject
+.notification__subject
+.messages__subject
+.message__subject
+.proposal__subject
+    margin 0
+
+.message__subject
+.proposal__subject
+    font-weight bold
+
+.discussion__footer
+.message__footer
+    a
+        margin-right $unit
+
+.discussion__footer
+    @extend .font-size-small
+
+    opacity 0
+    margin-top -1 * $unit
+    transition opacity 0.2s linear
+
+    .discussion li:hover &
+        opacity 1
+
+.message__footer
+    margin $unit 0
+
+.message__tags
+.notification__tags
+    ul
+        @extend ul.inline
+        display inline
+
+.discussion-list
+    width 100%
+
+.proposal__action--create
+    @extend .label--accept
+
+.proposal__action--update
+    @extend .label--accent
+
+.proposal__action--delete
+    @extend .label--danger
+
+.proposal__action--split
+    @extend .label--danger
+
+.proposal__action--merge
+    @extend .label--accept
+
+.proposal__status--pending
+    @extend .label--default
+
+.proposal__status--blocked
+    @extend .label--danger
+
+.proposal__status--accepted
+    @extend .label--accept
+
+.proposal__status--declined
+    @extend .label--danger
+
+.vote__header
+    margin $unit 0
+
+.vote__action--agree
+    @extend .label--accept
+
+.vote__action--consent
+    @extend .label--accept
+
+.vote__action--discuss
+    @extend .label--info
+
+.vote__action--disagree
+    @extend .label--danger
+
+.vote__header img
+    vertical-align middle
+
+.vote__body
+    padding-left $gutter

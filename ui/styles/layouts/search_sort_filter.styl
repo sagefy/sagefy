@@ -4,9 +4,29 @@ title: Search, Sort, & Filter Layout
 description: |
     The search with filters layout is based on a simple aside layout.
 
-    Set the body to <code>aside-right-3</code>, and use vertical navigation for filters in the <code>aside</code>. Include sorting options in the aside. Start the <code>main</code> element with an <code>h1</code> and possibly breadcrumbs. Then include a large search bar. Show a list with thumbnails in infinite scroll below the search bar. Manage empty states.
+    Begin the layout in either `page` or `row`. Use a main `div` with as many columns as needed, and an aside with `col-2`. Include a large search bar and button. Use infinite scroll below the search bar. Manage empty states. Use the _select_ component for the sort and filters.
 
-    TODO: Code, example
+    TODO: After building the select component, add it to the sort and filters.
+example: |
+    <div class="row">
+        <div class="col-6">
+            <form>
+                <input type="text" placeholder="Search" />
+                <button type="submit">
+                    <i class="fa fa-search"></i> Search
+                </button>
+            </form>
+            <ul>
+                <li>
+                    Search Item
+                </li>
+            </ul>
+        </div>
+        <aside class="col-2">
+            <h3>Sort</h3>
+            <h3>Filters</h3>
+        </div>
+    </div>
 ---
 */
 

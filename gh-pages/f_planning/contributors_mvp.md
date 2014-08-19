@@ -80,7 +80,7 @@ Contributor Models
 - user
 - object kind, id
 
-### Amendments
+### Proposal Version
 
 - id
 - created
@@ -98,7 +98,7 @@ Contributor Models
 - modified
 - language
 - user
-- amendment
+- proposal version
 - body
 - action (agree, consent, discuss, dissent)
 
@@ -310,32 +310,31 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 - infinite scroll
 - reverse chronological
 
-
 Contributor Wireframes
 ----------------------
 
 ### Components
 
-- Notification post TODO
-- Notifications card TODO
-- Message post TODO
-- Messages card TODO
-- Discussion post TODO
-- Proposal post TODO
-- Search add/remove field TODO
-- Search (sort, filter) element TODO
-- Decision block TODO
-- Table listing TODO
+- Notification post -- Styleguide
+- Notifications/Messages card
+    - Title
+    - 5 latest
+    - Link to full page
+- Message post -- Styleguide
+- Discussion post -- Styleguide
+- Proposal post  -- Styleguide
+- Vote block  -- Styleguide
+- Search (sort, filter) layout -- Styleguide
 
 ### Screens
 
-- Dashboard TODO
-- Search TODO
+- Dashboard -- TODO
+- Search -- TODO
     - Objs
     - Proposals and History
     - Discussion
-- View Object TODO
-- Create/Edit Object TODO
-- Flag Object TODO
-- Proposal TODO
-- Discussion TODO
+- View Object -- TODO
+- Create/Edit Object -- TODO
+- Flag Object -- TODO
+- Proposal -- TODO
+- Discussion -- TODO

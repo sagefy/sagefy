@@ -2104,6 +2104,7 @@ table caption {
 table thead {
   background: #e7e3c7;
   border-bottom: 1px solid #ccc375;
+  text-align: left;
 }
 table tbody tr.row--accept {
   background: #e9f4e6;
