@@ -22,7 +22,7 @@ def pick(d, keys):
     """
     Returns a dictionary with only the specified keys.
     """
-    return dict((key, d[key]) for key in keys if key in d)
+    return {key: d[key] for key in keys if key in d}
 
 
 def compact(a):
