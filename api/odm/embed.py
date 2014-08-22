@@ -1,7 +1,11 @@
 from odm.field import Field
 
 
-class EmbeddedDocument(Field):
+class Has(Field):
+    """
+    Allows a document to be embedded within another document directly.
+    """
+
     def __init__(self, Doc, validations=None, default=None, access=True,
                  before_save=None):
         self.value = None
@@ -22,7 +26,12 @@ class EmbeddedDocument(Field):
         pass
 
 
-class ManyEmbeddedDocument(EmbeddedDocument):
+class HasMany(Has):
+    """
+    Allows for multiple documents of the same kind to be embedded
+    into another document.
+    """
+
     def __init__(self, Doc, validations=None, default=None, access=True,
                  before_save=None):
         self.value = []
@@ -37,28 +46,8 @@ class ManyEmbeddedDocument(EmbeddedDocument):
             return self.value[index].to_database()
         return [d.to_database() for d in self.value]
 
-    def set(self, index, value):
-        if index:
-            self.value[index] = value
-        else:
-            self.value = value
-        return self
+    def set(self, value):
+        self.value = value
 
     def validate(self, instance, name):
         pass
-
-
-def has(Doc, validations=None, default=None, access=True, before_save=None):
-    """
-    Allows a document to be embedded within another document directly.
-    """
-    return EmbeddedDocument(Doc, validations, default, access, before_save)
-
-
-def has_many(Doc, validations=None, default=None, access=True,
-             before_save=None):
-    """
-    Allows for multiple documents of the same kind to be embedded
-    into another document.
-    """
-    return ManyEmbeddedDocument(Doc, validations, default, access, before_save)
