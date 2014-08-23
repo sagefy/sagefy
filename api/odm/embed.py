@@ -6,24 +6,25 @@ class Has(Field):
     Allows a document to be embedded within another document directly.
     """
 
-    def __init__(self, Doc, validations=None, default=None, access=True,
+    def __init__(self, Doc, validations=(), default=None, access=True,
                  before_save=None):
+        """
+        Store initialized parameters onto self.
+        """
         self.value = None
         self.Doc = Doc
-        self.validations = validations or ()
+        self.validations = validations
         self.default = default
         self.access = access
         self.before_save = before_save
 
-    def get(self):
-        if self.value:
-            return self.value.to_database()
-
     def set(self, value):
-        self.value = value
-
-    def validate(self, instance, name):
-        pass
+        """
+        Set should update the fields on the document instead.
+        """
+        if not self.value:
+            self.value = self.Doc()
+        self.value.update_fields(value)
 
 
 class HasMany(Has):
@@ -32,22 +33,23 @@ class HasMany(Has):
     into another document.
     """
 
-    def __init__(self, Doc, validations=None, default=None, access=True,
+    def __init__(self, Doc, validations=(), default=None, access=True,
                  before_save=None):
+        """
+        Store initialized parameters onto self.
+        """
         self.value = []
         self.Doc = Doc
-        self.validations = validations or ()
+        self.validations = validations
         self.default = default
         self.access = access
         self.before_save = before_save
 
-    def get(self, index):
-        if index:
-            return self.value[index].to_database()
-        return [d.to_database() for d in self.value]
-
     def set(self, value):
-        self.value = value
-
-    def validate(self, instance, name):
-        pass
+        """
+        Set should update the fields in the documents instead.
+        """
+        for i, v in enumerate(value):
+            if i >= len(self.value):
+                self.value.append(self.Doc())
+            self.value[i].update_fields(v)

@@ -60,7 +60,7 @@ def test_embed(app, db_conn):
     """
     author = Author()
     assert author.biography
-    assert isinstance(Author.biography.Doc, Biography)
+    assert Author.biography.Doc == Biography
 
 
 def test_embed_many(app, db_conn):
@@ -70,7 +70,7 @@ def test_embed_many(app, db_conn):
     author = Author()
     assert author.books
     assert isinstance(author.books.value, list)
-    assert isinstance(Author.books.Doc, Book)
+    assert Author.books.Doc == Book
 
 
 def test_embed_set(app, db_conn):
@@ -211,7 +211,7 @@ def test_embed_append(app, db_conn):
         }]
     })
     assert len(author.books.get()) == 1
-    author.books.append(Book({
+    author.books.get().append(Book({
         'name': 'Blue',
         'serial': 456
     }))
@@ -236,10 +236,10 @@ def test_embed_splice(app, db_conn):
         }]
     })
     assert len(author.books.get()) == 3
-    author.books.pop(1)
+    author.books.get().pop(1)
     assert len(author.books.get()) == 2
     assert author.books.get()[0].name.get() == 'Red'
-    assert author.books.get()[1].name.get() == 'Blue'
+    assert author.books.get()[1].name.get() == 'Green'
 
 
 @pytest.mark.xfail
