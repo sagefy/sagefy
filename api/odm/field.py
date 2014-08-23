@@ -35,6 +35,19 @@ class Field:
             return self.default
         return self.value
 
+    def set(self, value):
+        """
+        Sets the value.
+        Will use default on `get` if set to None.
+        """
+        self.value = value
+
+    # TODO: is there a way to use __get__, __set__, __delete__
+    # so we don't have to do `field.get()` and `field.set(value)` all the time?
+    # http://goo.gl/e1mzwJ
+    # http://goo.gl/CP8n2e
+    # http://stackoverflow.com/questions/3798835
+
     def to_database(self):
         """
         Gets the value for the database.
@@ -51,17 +64,6 @@ class Field:
         """
         if (self.access == 'private' and private) or self.access is True:
             return self.get()
-
-    def set(self, value):
-        """
-        Sets the value.
-        Will use default on `get` if set to None.
-        """
-        self.value = value
-        return self
-
-    # TODO: is there a way to use __get__, __set__, __delete__, __getattr__ ...
-    # so we don't have to do `field.get()` and `field.set(value)` all the time?
 
     def validate(self):
         """
