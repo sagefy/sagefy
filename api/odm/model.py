@@ -111,7 +111,7 @@ class Model(Document):
         errors = self.test_unique()
         if len(errors):
             return self, errors
-        db_fields = self.to_database()
+        db_fields = self.bundle()
         self.id.set(db_fields['id'])
         self.table.insert(db_fields, upsert=True).run(g.db_conn)
         self.sync()

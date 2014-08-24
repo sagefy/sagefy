@@ -101,14 +101,14 @@ def test_create_instance_other(app, db_conn):
     assert user.name.get() == 'test'
 
 
-def test_to_database(app, db_conn):
+def test_bundle(app, db_conn):
     """
     Expect to database to get database ready
     versions of all fields
     """
     user = User()
     user.password.set('abcd1234')
-    assert user.password.to_database() == '$2a$abcd1234'
+    assert user.password.bundle() == '$2a$abcd1234'
     user.password.set(None)
 
 
@@ -121,7 +121,7 @@ def test_json(app, db_conn):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    fields = user.to_json()
+    fields = user.deliver()
     assert isinstance(fields, dict)
     assert fields['name'] == 'test'
 
@@ -135,7 +135,7 @@ def test_json_access(app, db_conn):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    fields = user.to_json(private=True)
+    fields = user.deliver(private=True)
     assert 'email' in fields
     assert 'password' not in fields
 

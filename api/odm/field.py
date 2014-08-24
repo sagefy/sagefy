@@ -48,23 +48,6 @@ class Field:
     # http://goo.gl/CP8n2e
     # http://stackoverflow.com/questions/3798835
 
-    def to_database(self):
-        """
-        Gets the value for the database.
-        Calls before_save if applicable.
-        Otherwise, its the same as `get`.
-        """
-        if self.before_save and hasattr(self.before_save, '__call__'):
-            return self.before_save(self)
-        return self.get()
-
-    def to_json(self, private=False):
-        """
-        Ensure if the data can be accessed.
-        """
-        if (self.access == 'private' and private) or self.access is True:
-            return self.get()
-
     def validate(self):
         """
         Validates the field using given validations.
@@ -78,3 +61,20 @@ class Field:
                 error = validation(self)
             if error:
                 return error
+
+    def bundle(self):
+        """
+        Gets the value for the database.
+        Calls before_save if applicable.
+        Otherwise, its the same as `get`.
+        """
+        if self.before_save and hasattr(self.before_save, '__call__'):
+            return self.before_save(self)
+        return self.get()
+
+    def deliver(self, private=False):
+        """
+        Ensure if the data can be accessed.
+        """
+        if (self.access == 'private' and private) or self.access is True:
+            return self.get()

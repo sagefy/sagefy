@@ -154,7 +154,7 @@ def test_generate_id(app, db_conn, users_table):
     Expect to automatically generate an ID.
     """
     user = User({'password': 'abcd1234'})
-    d = user.to_database()
+    d = user.bundle()
     assert isinstance(d['id'], basestring)
     assert len(d['id']) == 16
 

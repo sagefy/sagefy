@@ -55,25 +55,25 @@ class Document:
         """
         return inspect.getmembers(self, Document.isfield)
 
-    def to_database(self):
+    def bundle(self):
         """
         Returns a dict form of the model's fields.
         Ready for going into the database.
         """
         return {
-            name: field.to_database()
+            name: field.bundle()
             for name, field in self.get_fields()
         }
 
-    def to_json(self, private=False):
+    def deliver(self, private=False):
         """
         Returns a dict form of the model's fields.
         Only returns fields allowed.
         """
         return {
-            name: field.to_json(private)
+            name: field.deliver(private)
             for name, field in self.get_fields()
-            if field.to_json(private) is not None
+            if field.deliver(private) is not None
         }
 
     def validate(self):

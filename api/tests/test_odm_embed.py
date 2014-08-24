@@ -1,5 +1,5 @@
 from odm.model import Field, Model, Document
-from odm.validations import required, email, minlength
+from odm.validations import required, minlength
 from odm.embed import Embeds, EmbedsMany
 import pytest
 
@@ -15,13 +15,15 @@ class Book(Document):
     )
     serial = Field(
         validations=(required,),
-        unique=True
+        unique=True,
+        access=False,
     )
 
 
 class Biography(Document):
     location = Field(
         default='Unknown',
+        access=False
     )
     body = Field(
         validations=(required,),
@@ -29,8 +31,16 @@ class Biography(Document):
 
 
 class Author(User):
-    biography = Embeds(Biography, validations=(required,))
-    books = EmbedsMany(Book, validations=((minlength, 2),))
+    biography = Embeds(
+        Biography,
+        validations=(required,),
+        access='private'
+    )
+    books = EmbedsMany(
+        Book,
+        validations=((minlength, 2),),
+        access='private'
+    )
 
 
 def test_embed(app, db_conn):
@@ -225,19 +235,19 @@ def test_validation(app, db_conn):
     """
     Expect validation on embedded document.
     """
-    author = Author({ 
+    author = Author({
         'name': 'Dalton',
         'books': [
-            {'serial': 1234}, 
+            {'serial': 1234},
             {'serial': 5678}
         ]
     })
     errors = author.validate()
     assert len(errors) == 1
     assert errors[0]['name'] == 'biography'
-    author.update_fields({ 
+    author.update_fields({
         'biography': {
-            'body': 'Lorem ipsum.' 
+            'body': 'Lorem ipsum.'
         }
     })
     errors = author.validate()
@@ -248,20 +258,24 @@ def test_validation_fields(app, db_conn):
     """
     Expect validation on embedded document fields.
     """
-    author = Author({ 
+    author = Author({
         'name': 'Dalton',
         'biography': {
             'location': 'Arkansas'
         },
         'books': [
-            {'serial': 1234}, 
+            {'serial': 1234},
             {'serial': 5678}
         ]
     })
     errors = author.validate()
     assert len(errors) == 1
     assert errors[0]['message'][0]['name'] == 'body'
-    author.update_fields({ 'biography': { 'body': 'Lorem ipsum.' }})
+    author.update_fields({
+        'biography': {
+            'body': 'Lorem ipsum.'
+        }
+    })
     errors = author.validate()
     assert len(errors) == 0
 
@@ -280,10 +294,10 @@ def test_validation_many(app, db_conn):
     errors = author.validate()
     assert len(errors) == 1
     assert errors[0]['name'] == 'books'
-    author.update_fields({ 
+    author.update_fields({
         'books': [
-            { 'serial': 1234 },
-            { 'serial': 5678 }
+            {'serial': 1234},
+            {'serial': 5678}
         ]
     })
     errors = author.validate()
@@ -294,7 +308,7 @@ def test_validation_many_fields(app, db_conn):
     """
     Expect validation on list of embedded document fields.
     """
-    author = Author({ 
+    author = Author({
         'name': 'Dalton',
         'biography': {
             'body': 'Lorem ipsum.'
@@ -308,76 +322,95 @@ def test_validation_many_fields(app, db_conn):
     assert len(errors) == 1
     print errors
     assert errors[0]['message'][0]['name'] == 'serial'
-    author.update_fields({ 'books': [
-        { 'serial': 1234 },
-        { 'serial': 5678 },
+    author.update_fields({'books': [
+        {'serial': 1234},
+        {'serial': 5678},
     ]})
     errors = author.validate()
     assert len(errors) == 0
 
 
-@pytest.mark.xfail
 def test_access(app, db_conn):
     """
     Expect access to trickle down to embedded document.
     """
-    assert False
+    author = Author({
+        'name': 'Dalton',
+        'biography': {
+            'body': 'Lorem ipsum.'
+        },
+        'books': [{
+            'name': 'Red',
+            'serial': 1234,
+        }, {
+            'name': 'Blue',
+            'serial': 5678
+        }]
+    })
+    assert not 'biography' in author.deliver()
+    assert 'biography' in author.deliver(private=True)
 
 
-@pytest.mark.xfail
-def test_access_fields(app, db_conn):
-    """
-    Expect access to trickle down to embedded document fields.
-    """
-    assert False
-
-
-@pytest.mark.xfail
 def test_access_many(app, db_conn):
     """
     Expect access to trickle down to lists of embedded documents.
     """
-    assert False
+    author = Author({
+        'name': 'Dalton',
+        'biography': {
+            'body': 'Lorem ipsum.'
+        },
+        'books': [{
+            'name': 'Red',
+            'serial': 1234,
+        }, {
+            'name': 'Blue',
+            'serial': 5678
+        }]
+    })
+    assert not 'books' in author.deliver()
+    assert 'books' in author.deliver(private=True)
 
 
-@pytest.mark.xfail
+def test_access_fields(app, db_conn):
+    """
+    Expect access to trickle down to embedded document fields.
+    """
+    author = Author({
+        'name': 'Dalton',
+        'biography': {
+            'location': 'Dallas',
+            'body': 'Lorem ipsum.'
+        },
+        'books': [{
+            'name': 'Red',
+            'serial': 1234,
+        }, {
+            'name': 'Blue',
+            'serial': 5678
+        }]
+    })
+    assert not 'location' in author.deliver(private=True)['biography']
+
+
 def test_access_many_fields(app, db_conn):
     """
     Expect access to trickle down to lists of embedded document fields.
     """
-    assert False
-
-
-@pytest.mark.xfail
-def test_embed_before(app, db_conn):
-    """
-    Expect before_save called on embedded document.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_embed_fields_before(app, db_conn):
-    """
-    Expect before_save called on embedded document fields.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_embed_many_before(app, db_conn):
-    """
-    Expect before_save called on list of embedded documents.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_embed_many_fields_before(app, db_conn):
-    """
-    Expect before_save called on list of embedded documents fields.
-    """
-    assert False
+    author = Author({
+        'name': 'Dalton',
+        'biography': {
+            'body': 'Lorem ipsum.'
+        },
+        'books': [{
+            'name': 'Red',
+            'serial': 1234,
+        }, {
+            'name': 'Blue',
+            'serial': 5678
+        }]
+    })
+    assert not 'serial' in author.deliver(private=True)['books'][0]
 
 
 @pytest.mark.xfail

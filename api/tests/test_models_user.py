@@ -90,7 +90,7 @@ def test_user_no_password(app, db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    json = user.to_json(private=True)
+    json = user.deliver(private=True)
     assert 'password' not in json
 
 
@@ -103,9 +103,9 @@ def test_user_email_current(app, db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    json = user.to_json(private=False)
+    json = user.deliver(private=False)
     assert 'email' not in json
-    json = user.to_json(private=True)
+    json = user.deliver(private=True)
     assert 'email' in json
 
 
@@ -119,7 +119,7 @@ def test_user_password_encrypt(app, db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    assert user.password.to_database().startswith('$2a$')
+    assert user.password.bundle().startswith('$2a$')
     assert len(errors) == 0
     assert user.password.get() != 'abcd1234'
     assert user.password.get().startswith('$2a$')

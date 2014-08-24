@@ -6,8 +6,7 @@ class Embeds(Field):
     Allows a document to be embedded within another document directly.
     """
 
-    def __init__(self, Doc, validations=(), default=None, access=True,
-                 before_save=None):
+    def __init__(self, Doc, validations=(), default=None, access=True):
         """
         Store initialized parameters onto self.
         """
@@ -16,7 +15,6 @@ class Embeds(Field):
         self.validations = validations
         self.default = default
         self.access = access
-        self.before_save = before_save
 
     def set(self, value):
         """
@@ -45,6 +43,31 @@ class Embeds(Field):
                     })
             return errors
 
+    def bundle(self):
+        """
+        Gets the value for the database.
+        Calls before_save if applicable.
+        Otherwise, its the same as `get`.
+        """
+        if self.value:
+            return {
+                name: field.bundle()
+                for name, field in self.value.get_fields()
+            }
+
+    def deliver(self, private=False):
+        """
+        Ensure if the data can be accessed.
+        """
+        if self.value and (
+            (self.access == 'private' and private) or self.access is True
+        ):
+            return {
+                name: field.deliver(private)
+                for name, field in self.value.get_fields()
+                if field.deliver(private) is not None
+            }
+
 
 class EmbedsMany(Embeds):
     """
@@ -52,8 +75,7 @@ class EmbedsMany(Embeds):
     into another document.
     """
 
-    def __init__(self, Doc, validations=(), default=None, access=True,
-                 before_save=None):
+    def __init__(self, Doc, validations=(), default=None, access=True):
         """
         Store initialized parameters onto self.
         """
@@ -62,7 +84,6 @@ class EmbedsMany(Embeds):
         self.validations = validations
         self.default = default
         self.access = access
-        self.before_save = before_save
 
     def set(self, value):
         """
@@ -80,7 +101,7 @@ class EmbedsMany(Embeds):
         error = Field.validate(self)
         if error:
             return error
-        
+
         if self.value is not None:
             errors = []
             for doc in self.value:
@@ -92,3 +113,28 @@ class EmbedsMany(Embeds):
                             'message': error,
                         })
             return errors
+
+    def bundle(self):
+        """
+        Gets the value for the database.
+        Calls before_save if applicable.
+        Otherwise, its the same as `get`.
+        """
+        if self.value:
+            return [{
+                name: field.bundle()
+                for name, field in v.get_fields()
+            } for v in self.value]
+
+    def deliver(self, private=False):
+        """
+        Ensure if the data can be accessed.
+        """
+        if self.value and (
+            (self.access == 'private' and private) or self.access is True
+        ):
+            return [{
+                name: field.deliver(private)
+                for name, field in v.get_fields()
+                if field.deliver(private) is not None
+            } for v in self.value]
