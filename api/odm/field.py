@@ -1,4 +1,4 @@
-class Field:
+class Field(object):
     """
     A single field (aka column),
     either in a document or in an embedded document.

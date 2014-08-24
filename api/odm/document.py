@@ -3,7 +3,7 @@ import inspect
 from odm.field import Field
 
 
-class Document:
+class Document(object):
     """
     A representation of a document.
     Unless its also a model, has no knowledge of the database.
