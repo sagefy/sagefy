@@ -1,7 +1,7 @@
 from odm.field import Field
 
 
-class Has(Field):
+class Embeds(Field):
     """
     Allows a document to be embedded within another document directly.
     """
@@ -26,8 +26,27 @@ class Has(Field):
             self.value = self.Doc()
         self.value.update_fields(value)
 
+    def validate(self):
+        """
+        Runs own validations, and then child field validations.
+        """
+        error = Field.validate(self)
+        if error:
+            return error
 
-class HasMany(Has):
+        if self.value is not None:
+            errors = []
+            for name, field in self.value.get_fields():
+                error = field.validate()
+                if error:
+                    errors.append({
+                        'name': name,
+                        'message': error,
+                    })
+            return errors
+
+
+class EmbedsMany(Embeds):
     """
     Allows for multiple documents of the same kind to be embedded
     into another document.
@@ -53,3 +72,23 @@ class HasMany(Has):
             if i >= len(self.value):
                 self.value.append(self.Doc())
             self.value[i].update_fields(v)
+
+    def validate(self):
+        """
+        Runs own validations, and then child field validations.
+        """
+        error = Field.validate(self)
+        if error:
+            return error
+        
+        if self.value is not None:
+            errors = []
+            for doc in self.value:
+                for name, field in doc.get_fields():
+                    error = field.validate()
+                    if error:
+                        errors.append({
+                            'name': name,
+                            'message': error,
+                        })
+            return errors

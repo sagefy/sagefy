@@ -1,37 +1,16 @@
 from odm.model import Field, Model, Document
 from odm.validations import required, email, minlength
-from odm.embed import Has, HasMany
+from odm.embed import Embeds, EmbedsMany
 import pytest
-
-
-def encrypt_password(field):
-    return '$2a$' + field.get()
 
 
 class User(Model):
     tablename = 'users'
-    name = Field(
-        validations=(required,),
-        unique=True,
-    )
-    email = Field(
-        validations=(required, email),
-        unique=True,
-        access='private'
-    )
-    password = Field(
-        validations=(required, (minlength, 8)),
-        access=False,
-        before_save=encrypt_password
-    )
-
-    def is_current_user(self):
-        return True
+    name = Field(validations=(required,))
 
 
 class Book(Document):
     name = Field(
-        validations=(required,),
         default='Untitled'
     )
     serial = Field(
@@ -50,8 +29,8 @@ class Biography(Document):
 
 
 class Author(User):
-    biography = Has(Biography)
-    books = HasMany(Book)
+    biography = Embeds(Biography, validations=(required,))
+    books = EmbedsMany(Book, validations=((minlength, 2),))
 
 
 def test_embed(app, db_conn):
@@ -242,36 +221,99 @@ def test_embed_splice(app, db_conn):
     assert author.books.get()[1].name.get() == 'Green'
 
 
-@pytest.mark.xfail
-def test_embed_before(app, db_conn):
+def test_validation(app, db_conn):
     """
-    Expect before_save called on embedded document.
+    Expect validation on embedded document.
     """
-    assert False
+    author = Author({ 
+        'name': 'Dalton',
+        'books': [
+            {'serial': 1234}, 
+            {'serial': 5678}
+        ]
+    })
+    errors = author.validate()
+    assert len(errors) == 1
+    assert errors[0]['name'] == 'biography'
+    author.update_fields({ 
+        'biography': {
+            'body': 'Lorem ipsum.' 
+        }
+    })
+    errors = author.validate()
+    assert len(errors) == 0
 
 
-@pytest.mark.xfail
-def test_embed_fields_before(app, db_conn):
+def test_validation_fields(app, db_conn):
     """
-    Expect before_save called on embedded document fields.
+    Expect validation on embedded document fields.
     """
-    assert False
+    author = Author({ 
+        'name': 'Dalton',
+        'biography': {
+            'location': 'Arkansas'
+        },
+        'books': [
+            {'serial': 1234}, 
+            {'serial': 5678}
+        ]
+    })
+    errors = author.validate()
+    assert len(errors) == 1
+    assert errors[0]['message'][0]['name'] == 'body'
+    author.update_fields({ 'biography': { 'body': 'Lorem ipsum.' }})
+    errors = author.validate()
+    assert len(errors) == 0
 
 
-@pytest.mark.xfail
-def test_embed_many_before(app, db_conn):
+def test_validation_many(app, db_conn):
     """
-    Expect before_save called on list of embedded documents.
+    Expect validation on list of embedded documents.
     """
-    assert False
+    author = Author({
+        'name': 'Dalton',
+        'biography': {
+            'body': 'Lorem ipsum.'
+        },
+        'books': []
+    })
+    errors = author.validate()
+    assert len(errors) == 1
+    assert errors[0]['name'] == 'books'
+    author.update_fields({ 
+        'books': [
+            { 'serial': 1234 },
+            { 'serial': 5678 }
+        ]
+    })
+    errors = author.validate()
+    assert len(errors) == 0
 
 
-@pytest.mark.xfail
-def test_embed_many_fields_before(app, db_conn):
+def test_validation_many_fields(app, db_conn):
     """
-    Expect before_save called on list of embedded documents fields.
+    Expect validation on list of embedded document fields.
     """
-    assert False
+    author = Author({ 
+        'name': 'Dalton',
+        'biography': {
+            'body': 'Lorem ipsum.'
+        },
+        'books': [
+            {'name': 'Red'},
+            {'name': 'Blue'}
+        ]
+    })
+    errors = author.validate()
+    assert len(errors) == 1
+    print errors
+    assert errors[0]['message'][0]['name'] == 'serial'
+    author.update_fields({ 'books': [
+        { 'serial': 1234 },
+        { 'serial': 5678 },
+    ]})
+    errors = author.validate()
+    assert len(errors) == 0
 
 
 @pytest.mark.xfail
@@ -307,33 +349,33 @@ def test_access_many_fields(app, db_conn):
 
 
 @pytest.mark.xfail
-def test_validation(app, db_conn):
+def test_embed_before(app, db_conn):
     """
-    Expect validation on embedded document.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_validation_fields(app, db_conn):
-    """
-    Expect validation on embedded document fields.
+    Expect before_save called on embedded document.
     """
     assert False
 
 
 @pytest.mark.xfail
-def test_validation_many(app, db_conn):
+def test_embed_fields_before(app, db_conn):
     """
-    Expect validation on list of embedded documents.
+    Expect before_save called on embedded document fields.
     """
     assert False
 
 
 @pytest.mark.xfail
-def test_validation_many_fields(app, db_conn):
+def test_embed_many_before(app, db_conn):
     """
-    Expect validation on list of embedded document fields.
+    Expect before_save called on list of embedded documents.
+    """
+    assert False
+
+
+@pytest.mark.xfail
+def test_embed_many_fields_before(app, db_conn):
+    """
+    Expect before_save called on list of embedded documents fields.
     """
     assert False
 

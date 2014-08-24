@@ -31,4 +31,4 @@ def minlength(field, params):
     """
     ln = params[0]
     if not field.get() or len(field.get()) < ln:
-        return 'Must be at least %s characters.' % ln
+        return 'Minimum length of %s.' % ln
