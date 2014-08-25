@@ -2,20 +2,12 @@ from odm.field import Field
 from odm.validations import required, email
 
 
-def encrypt_password(field):
-    return '$2a$' + field.get()
-
-
-def is_current_user(field):
-    return True
-
-
-def generate_id(field):
-    return 'abcd1234'
+def encrypt_password(value):
+    return '$2a$' + value
 
 
 id = Field(
-    default=generate_id
+    default='abcd1234'
 )
 name = Field(
     validations=(required,)

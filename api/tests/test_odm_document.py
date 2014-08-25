@@ -3,12 +3,8 @@ from odm.document import Document
 from odm.validations import required, email, minlength
 
 
-def encrypt_password(field):
-    return '$2a$' + field.get()
-
-
-def is_current_user(field):
-    return True
+def encrypt_password(value):
+    return '$2a$' + value
 
 
 class User(Document):
@@ -26,9 +22,6 @@ class User(Document):
         access=False,
         before_save=encrypt_password
     )
-
-    def is_current_user(self):
-        return is_current_user()
 
 
 def test_init_fields(app, db_conn):

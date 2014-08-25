@@ -5,8 +5,8 @@ from flask import url_for
 from flask.ext.login import current_user
 
 
-def encrypt_password(field):
-    return bcrypt.encrypt(field.get())
+def encrypt_password(value):
+    return bcrypt.encrypt(value)
 
 
 class User(Model):

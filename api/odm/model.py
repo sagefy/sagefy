@@ -9,17 +9,13 @@ def update_modified(field):
     return r.now()
 
 
-def generate_id(field):
-    return uniqid()
-
-
 class Model(Document):
     """
     Extends the Document to add database-oriented methods.
     """
 
     id = Field(
-        default=generate_id
+        default=uniqid
     )
     created = Field(
         default=r.now(),

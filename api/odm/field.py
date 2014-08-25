@@ -28,9 +28,8 @@ class Field(object):
         """
         if self.value is None and self.default is not None:
             if hasattr(self.default, '__call__'):
-                return self.default(self)
-                # Methods defined outside a class,
-                # even if refered to,
+                return self.default()
+                # Methods defined outside a class, even if refered to,
                 # still do not automatically receive `self`
             return self.default
         return self.value
@@ -56,9 +55,9 @@ class Field(object):
         """
         for validation in self.validations:
             if isinstance(validation, (list, tuple)):
-                error = validation[0](self, params=validation[1:])
+                error = validation[0](self.get(), params=validation[1:])
             else:
-                error = validation(self)
+                error = validation(self.get())
             if error:
                 return error
 
@@ -69,7 +68,7 @@ class Field(object):
         Otherwise, its the same as `get`.
         """
         if self.before_save and hasattr(self.before_save, '__call__'):
-            return self.before_save(self)
+            return self.before_save(self.get())
         return self.get()
 
     def deliver(self, private=False):

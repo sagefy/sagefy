@@ -3,12 +3,8 @@ from odm.validations import required, email, minlength
 from datetime import datetime
 
 
-def encrypt_password(field):
-    return '$2a$' + field.get()
-
-
-def is_current_user():
-    return True
+def encrypt_password(value):
+    return '$2a$' + value
 
 
 class User(Model):
@@ -27,9 +23,6 @@ class User(Model):
         access=False,
         before_save=encrypt_password
     )
-
-    def is_current_user(self):
-        return is_current_user()
 
 
 def test_table_class(app, db_conn, users_table):

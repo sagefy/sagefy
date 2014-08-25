@@ -1,34 +1,34 @@
 import re
 
 
-def required(field):
+def required(value):
     """
-    Given a doc and field, ensure the field is present on the model.
+    Ensure the value is present.
     """
-    if field.get() is None:
+    if value is None:
         return 'Required.'
 
 
-def boolean(field):
+def boolean(value):
     """
-    Ensure the given doc field is a boolean.
+    Ensure the given value is a boolean.
     """
-    if not isinstance(field.get(), bool):
+    if not isinstance(value, bool):
         return 'Must be true or false.'
 
 
-def email(field):
+def email(value):
     """
-    Ensure the given field is formatted as an email
+    Ensure the given value is formatted as an email.
     """
-    if not re.match(r'\S+@\S+\.\S+', field.get()):
+    if not re.match(r'\S+@\S+\.\S+', value):
         return 'Must be an email.'
 
 
-def minlength(field, params):
+def minlength(value, params):
     """
-    Ensure the given field is a minimum length.
+    Ensure the given value is a minimum length.
     """
     ln = params[0]
-    if not field.get() or len(field.get()) < ln:
+    if not value or len(value) < ln:
         return 'Minimum length of %s.' % ln

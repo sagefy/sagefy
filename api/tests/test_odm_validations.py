@@ -25,8 +25,8 @@ def test_require(app, db_conn):
         'name': 'test',
         'password': 'abcd1234'
     })
-    assert required(user.name) is None
-    assert required(user.email)
+    assert required(user.name.get()) is None
+    assert required(user.email.get())
 
 
 def test_email(app, db_conn):
@@ -39,8 +39,8 @@ def test_email(app, db_conn):
     user2 = User({
         'email': 'other'
     })
-    assert email(user.email) is None
-    assert email(user2.email)
+    assert email(user.email.get()) is None
+    assert email(user2.email.get())
 
 
 def test_minlength(app, db_conn):
@@ -53,5 +53,5 @@ def test_minlength(app, db_conn):
     user2 = User({
         'password2': 'a'
     })
-    assert minlength(user.password, (8,)) is None
-    assert minlength(user2.password, (8,))
+    assert minlength(user.password.get(), (8,)) is None
+    assert minlength(user2.password.get(), (8,))
