@@ -413,127 +413,202 @@ def test_access_many_fields(app, db_conn):
     assert not 'serial' in author.deliver(private=True)['books'][0]
 
 
-@pytest.mark.xfail
-def test_id(app, db_conn, users_table):
-    """
-    Expect only one ID for an entire model.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_created(app, db_conn, users_table):
-    """
-    Expect only one created time for an entire model.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_modified(app, db_conn, users_table):
-    """
-    Expect only one modified time for an entire model.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_sync(app, db_conn, users_table):
-    """
-    Expect to synchronize an embedded document.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_sync_many(app, db_conn, users_table):
-    """
-    Expect to synchronize a list of embedded documents.
-    """
-    assert False
-
-
-@pytest.mark.xfail
 def test_get_db(app, db_conn, users_table):
     """
     Expect to get a model with an embedded document from the database.
     """
-    assert False
+    users_table.insert({
+        'id': 'abcd1234',
+        'name': 'Dalton',
+        'biography': {
+            'body': 'Lorem ipsum.'
+        }
+    }).run(db_conn)
+    author = Author.get(id='abcd1234')
+    assert author.name.get() == 'Dalton'
+    assert author.biography.get().body.get() == 'Lorem ipsum.'
 
 
-@pytest.mark.xfail
 def test_get_db_many(app, db_conn, users_table):
     """
     Expect to get a model with a list of embedded document from the database.
     """
-    assert False
+    users_table.insert({
+        'id': 'abcd1234',
+        'name': 'Dalton',
+        'books': [{
+            'name': 'Red',
+            'serial': 1234,
+        }, {
+            'name': 'Blue',
+            'serial': 5678
+        }]
+    }).run(db_conn)
+    author = Author.get(id='abcd1234')
+    assert author.name.get() == 'Dalton'
+    assert author.books.get()[0].name.get() == 'Red'
+    assert author.books.get()[1].serial.get() == 5678
 
 
-@pytest.mark.xfail
 def test_list_db(app, db_conn, users_table):
     """
     Expect to list models with embedded documents from the database.
     """
-    assert False
+    users_table.insert([{
+        'id': 'abcd1234',
+        'biography': {
+            'body': 'Lorem redsum.',
+        }
+    }, {
+        'id': 'efgh5678',
+        'biography': {
+            'body': 'Lorem bluesum.',
+        }
+    }]).run(db_conn)
+    authors = Author.list()
+    assert 'Lorem redsum.' in [
+        author.biography.get().body.get()
+        for author in authors
+    ]
+    assert 'Lorem bluesum.' in [
+        author.biography.get().body.get()
+        for author in authors
+    ]
 
 
-@pytest.mark.xfail
 def test_list_db_many(app, db_conn, users_table):
     """
     Expect to list models with lists of embedded documents from the database.
     """
-    assert False
+    users_table.insert([{
+        'id': 'abcd1234',
+        'books': [{
+            'name': 'Red',
+        }, {
+            'name': 'Blue',
+        }]
+    }, {
+        'id': 'efgh5678',
+        'books': [{
+            'name': 'Green',
+        }, {
+            'name': 'Yellow',
+        }]
+    }]).run(db_conn)
+    authors = Author.list()
+    assert 'Red' in [
+        book.name.get()
+        for author in authors
+        for book in author.books.get()
+    ]
 
 
-@pytest.mark.xfail
 def test_insert_db(app, db_conn, users_table):
     """
     Expect to insert a model with an embedded document into the database.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_insert_db_many(app, db_conn, users_table):
-    """
     Expect to insert a model with a list of embedded document
     into the database.
     """
-    assert False
+    author, errors = Author.insert({
+        'name': 'Dalton',
+        'biography': {
+            'location': 'Dallas',
+            'body': 'Lorem ipsum.'
+        },
+        'books': [{
+            'name': 'Red',
+            'serial': 1234,
+        }, {
+            'name': 'Blue',
+            'serial': 5678
+        }]
+    })
+    assert len(errors) == 0
+    record = users_table.get(author.id.get()).run(db_conn)
+    assert record['biography']['location'] == 'Dallas'
+    assert record['books'][0]['name'] == 'Red'
 
 
-@pytest.mark.xfail
 def test_update(app, db_conn, users_table):
     """
     Expect to update a model with an embedded document into the database.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_update_many(app, db_conn, users_table):
-    """
     Expect to update a model with a list of embedded document
     into the database.
     """
-    assert False
+    author, errors = Author.insert({
+        'name': 'Dalton',
+        'biography': {
+            'location': 'Dallas',
+            'body': 'Lorem ipsum.'
+        },
+        'books': [{
+            'name': 'Red',
+            'serial': 1234,
+        }, {
+            'name': 'Blue',
+            'serial': 5678
+        }]
+    })
+    assert len(errors) == 0
+    author.update({
+        'biography': {
+            'location': 'San Antonio'
+        },
+        'books': [{
+            'name': 'Purple'
+        }]
+    })
+    record = users_table.get(author.id.get()).run(db_conn)
+    assert record['biography']['location'] == 'San Antonio'
+    assert record['books'][0]['name'] == 'Purple'
+    assert record['books'][0]['serial'] == 1234
 
 
-@pytest.mark.xfail
+def test_sync(app, db_conn, users_table):
+    """
+    Expect to synchronize an embedded document.
+    Expect to synchronize a list of embedded documents.
+    """
+    author, errors = Author.insert({
+        'name': 'Dalton',
+        'biography': {
+            'location': 'Dallas',
+            'body': 'Lorem ipsum.'
+        },
+        'books': [{
+            'name': 'Red',
+            'serial': 1234,
+        }, {
+            'name': 'Blue',
+            'serial': 5678
+        }]
+    })
+    assert author.id.get()
+
+
 def test_delete(app, db_conn, users_table):
     """
     Expect to delete a model with an embedded document from the database.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_delete_many(app, db_conn, users_table):
-    """
     Expect to delete a model with a list of embedded document
     from the database.
     """
-    assert False
+    author, errors = Author.insert({
+        'name': 'Dalton',
+        'biography': {
+            'location': 'Dallas',
+            'body': 'Lorem ipsum.'
+        },
+        'books': [{
+            'name': 'Red',
+            'serial': 1234,
+        }, {
+            'name': 'Blue',
+            'serial': 5678
+        }]
+    })
+    author.delete()
+    records = users_table.run(db_conn)
+    assert len(list(records)) == 0
 
 
 @pytest.mark.xfail

@@ -15,6 +15,7 @@ class Embeds(Field):
         self.validations = validations
         self.default = default
         self.access = access
+        self.unique = False
 
     def set(self, value):
         """
@@ -84,6 +85,7 @@ class EmbedsMany(Embeds):
         self.validations = validations
         self.default = default
         self.access = access
+        self.unique = False
 
     def set(self, value):
         """
