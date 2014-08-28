@@ -1,6 +1,6 @@
 import rethinkdb as r
 from flask import g
-from modules.util import uniqid
+from modules.util import uniqid, omit
 from odm.field import Field
 from odm.document import Document
 
@@ -84,6 +84,7 @@ class Model(Document):
         Returns model and errors if failed.
         """
         assert isinstance(fields, dict)
+        fields = omit(fields, ('id', 'created', 'modified'))
         instance = Cls(fields)
         return instance.save()
 
@@ -93,6 +94,7 @@ class Model(Document):
         Returns model and errors if failed.
         """
         assert isinstance(fields, dict)
+        fields = omit(fields, ('id', 'created', 'modified'))
         self.update_fields(fields)
         return self.save()
 

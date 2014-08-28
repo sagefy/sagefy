@@ -25,6 +25,13 @@ def pick(d, keys):
     return {key: d[key] for key in keys if key in d}
 
 
+def omit(d, keys):
+    """
+    Returns a dictionary without the specified keys.
+    """
+    return {key: d[key] for key in d if key not in keys}
+
+
 def compact(a):
     """
     Returns an array with None removed.
