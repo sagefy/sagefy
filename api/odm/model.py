@@ -109,7 +109,7 @@ class Model(Document):
             return self, errors
         db_fields = self.bundle()
         self.id.set(db_fields['id'])
-        self.table.insert(db_fields, upsert=True).run(g.db_conn)
+        self.table.insert(db_fields, conflict='update').run(g.db_conn)
         self.sync()
         return self, []
 
