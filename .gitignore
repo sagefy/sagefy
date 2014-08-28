@@ -21,6 +21,7 @@ config.py
 develop-eggs
 dist
 eggs
+htmlcov
 lib
 lib64
 node_modules

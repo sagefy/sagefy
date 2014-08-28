@@ -29,6 +29,7 @@ rethinkdb --daemon
 sudo apt-get -y install python-pip
 sudo pip install -r /var/www/setup/requirements.txt
 sudo pip install pytest
+sudo pip install coverage
 
 #### Redis ####################################################################
 

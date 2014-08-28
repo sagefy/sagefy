@@ -8,8 +8,10 @@ before_install:
     - sudo apt-get -y install rethinkdb
     - rethinkdb --daemon
 install:
-    - 'pip install -r setup/requirements.txt && npm install -g gulp && cd ui && npm install && cd ..'
+    - pip install -r setup/requirements.txt
+    - 'npm install -g gulp && cd ui && npm install && cd ..'
 script:
-    - 'py.test api/tests/ && cd ui && gulp test && cd ..'
+    - 'coverage run --module py.test api'
+    - 'cd ui && gulp test && cd ..'
 after_success:
-    coveralls
+    - 'coverage report --omit="/usr*,tests/*"'
