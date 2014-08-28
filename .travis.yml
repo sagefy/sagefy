@@ -9,6 +9,7 @@ before_install:
     - rethinkdb --daemon
 install:
     - pip install -r setup/requirements.txt
+    - pip install pytest coverage
     - 'npm install -g gulp && cd ui && npm install && cd ..'
 script:
     - 'coverage run --module py.test api'
