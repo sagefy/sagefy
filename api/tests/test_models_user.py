@@ -150,3 +150,50 @@ def test_url(app, db_conn, users_table):
     })
     with app.test_request_context('/'):
         assert user.get_url().startswith('/api/users/')
+
+
+def test_get_email_token(app, db_conn, users_table):
+    """
+    Expect an email token created so a user can reset their password.
+    """
+    users_table.insert({
+        'id': 'abcd1234',
+        'name': 'Dalton',
+        'email': 'test@example.com',
+        'password': 'abcd1234',
+    }).run(db_conn)
+    user = User.get(id='abcd1234')
+    token = user.get_email_token(send_email=False)
+    assert app.redis.get('user_password_token_abcd1234')
+    assert token
+
+
+def test_is_valid_token(app, db_conn, users_table):
+    """
+    Expect a valid token to be approved.
+    Expect an invalid token to not be approved.
+    """
+    users_table.insert({
+        'id': 'abcd1234',
+        'name': 'Dalton',
+        'email': 'test@example.com',
+        'password': 'abcd1234',
+    }).run(db_conn)
+    user = User.get(id='abcd1234')
+    token = user.get_email_token(send_email=False)
+    assert user.is_valid_token(token)
+    assert not user.is_valid_token('abcd1234')
+
+
+def test_update_password(app, db_conn, users_table):
+    """
+    Expect to update a user's password.
+    """
+    user, errors = User.insert({
+        'name': 'Dalton',
+        'email': 'test@example.com',
+        'password': 'abcd1234',
+    })
+    pw1 = user.password.get()
+    user.update_password('1234abcd')
+    assert pw1 != user.password.get()

@@ -1,6 +1,7 @@
 from passlib.hash import bcrypt
 import json
 import rethinkdb as r
+from models.user import User
 
 
 def create_user_in_db(users_table, db_conn):
@@ -189,3 +190,57 @@ def test_user_update_invalid(app, db_conn, users_table):
             'email': 'other'
         }), content_type='application/json')
         assert 'errors' in response.data
+
+
+def test_user_token(app, db_conn, users_table):
+    """
+    Expect to create a token so the user can get a new password.
+    """
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        response = c.post('/api/users/token', data=json.dumps({
+            'email': 'other'
+        }), content_type='application/json')
+        assert response.status_code == 404
+        response = c.post('/api/users/token', data=json.dumps({
+            'email': 'test@example.com'
+        }), content_type='application/json')
+        assert response.status_code == 204
+
+
+def test_user_create_password_fail(app, db_conn, users_table):
+    """
+    Expect a user to be able to reset their password.
+    """
+    create_user_in_db(users_table, db_conn)
+    user = User.get(id='abcd1234')
+    pw1 = user.password.get()
+    user.get_email_token(send_email=False)
+    with app.test_client() as c:
+        response = c.post('/api/users/password', data=json.dumps({
+            'id': 'abcd1234',
+            'token': 'qza',
+            'password': 'qwer1234'
+        }), content_type='application/json')
+        assert response.status_code == 404
+        user.sync()
+        assert user.password.get() == pw1
+
+
+def test_user_create_password_ok(app, db_conn, users_table):
+    """
+    Expect a user to be able to reset their password.
+    """
+    create_user_in_db(users_table, db_conn)
+    user = User.get(id='abcd1234')
+    pw1 = user.password.get()
+    token = user.get_email_token(send_email=False)
+    with app.test_client() as c:
+        response = c.post('/api/users/password', data=json.dumps({
+            'id': 'abcd1234',
+            'token': token,
+            'password': 'qwer1234'
+        }), content_type='application/json')
+        assert response.status_code == 200
+        user.sync()
+        assert user.password.get() != pw1

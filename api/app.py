@@ -104,4 +104,4 @@ def setup_email(app):
     """
     Add email capabilities to our app.
     """
-    Mail(app)
+    app.mail = Mail(app)
