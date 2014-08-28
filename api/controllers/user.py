@@ -85,3 +85,27 @@ def update_user(user_id):
         return jsonify(user=user.deliver(private=True))
     else:
         return jsonify(errors=errors), 400
+
+
+@user.route('/token', methods=['POST'])
+def create_token():
+    """Create an email token for the user."""
+    user = User.get(email=request.json.get('email'))
+    if not user:
+        return jsonify(errors=[{"message": "User not found."}]), 404
+    user.get_email_token()
+    return '', 204
+
+
+@user.route('/password', methods=['POST'])
+def create_password():
+    """Update a user's password if the token is valid."""
+    user = User.get(id=request.json.get('id'))
+    valid = user.is_valid_token(request.json.get('token'))
+    if not valid:
+        return jsonify(errors=[{"message": "Token not found."}]), 404
+    user.update_password(request.json.get('password'))
+    login_user(user, remember=True)
+    resp = make_response(jsonify(user=user.deliver(private=True)))
+    resp.set_cookie('logged_in', '1')
+    return resp

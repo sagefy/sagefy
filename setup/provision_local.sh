@@ -26,6 +26,7 @@ rethinkdb --daemon
 
 #### Python ###################################################################
 
+sudo apt-get -y install python2.7-dev
 sudo apt-get -y install python-pip
 sudo pip install -r /var/www/setup/requirements.txt
 sudo pip install pytest

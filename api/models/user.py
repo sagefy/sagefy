@@ -3,6 +3,7 @@ from odm.validations import required, email, minlength
 from passlib.hash import bcrypt
 from flask import url_for
 from flask.ext.login import current_user
+from modules.util import uniqid
 
 
 def encrypt_password(value):
@@ -58,3 +59,39 @@ class User(Model):
     def get_id(self):
         """For Flask-Login."""
         return unicode(self.id.get())
+
+    def get_email_token(self):
+        """Creates an email token for the user to reset their password."""
+        token = uniqid()
+        # TODO:
+        # redis.setex(
+        #     'user_password_token_%s' % self.id.get(),
+        #     60 * 10,
+        #     bcrypt.encrypt(self.id.get() + token)
+        # )
+        # TODO: Send email
+        # send_message(
+        #     subject='Sagefy - Reset Password',
+        #     recipients=[self.email.get()],
+        #     body='To change your password, please visit: ' +
+        #     url_for(
+        #         'user.create_password',
+        #         id=self.id.get(),
+        #         token=token,
+        #         _external=True
+        #     )
+        # )
+        return token
+
+    def is_valid_token(self, token):
+        """Ensure the given token is valid."""
+        # entoken = redis.get('user_password_token_%s' % self.id.get())
+        entoken = None
+        if entoken:
+            return bcrypt.verify(self.id.get() + token, entoken)
+        return False
+
+    def update_password(self, password):
+        """Updates the user's password."""
+        self.password.set(password)
+        self.save()
