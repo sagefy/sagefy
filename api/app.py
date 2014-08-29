@@ -54,7 +54,7 @@ def setup_db(app):
     """
     db_conn = r.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
 
-    ## Add all setup needed here:
+    # Add all setup needed here:
     if app.config['RDB_DB'] not in r.db_list().run(db_conn):
         r.db_create(app.config['RDB_DB']).run(db_conn)
 

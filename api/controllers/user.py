@@ -39,7 +39,7 @@ def create_user():
     """Create user."""
     user, errors = User.insert(request.json)
     if len(errors):
-        return jsonify(errors=errors), 401
+        return jsonify(errors=errors), 400
     return _login(user)
 
 
