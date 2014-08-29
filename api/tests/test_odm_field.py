@@ -1,5 +1,5 @@
 from odm.field import Field
-from odm.validations import required, email
+from odm.validations import is_required, is_email
 
 
 def encrypt_password(value):
@@ -10,16 +10,16 @@ id = Field(
     default='abcd1234'
 )
 name = Field(
-    validations=(required,)
+    validations=(is_required,)
 )
 email = Field(
-    validations=(email,),
+    validations=(is_email,),
     access='private',
     default='test@example.com',
     unique=True,
 )
 password = Field(
-    validations=(required,),
+    validations=(is_required,),
     access=False,
     before_save=encrypt_password
 )

@@ -25,7 +25,7 @@ General REST ideas, but made more practical.
         - Methods: OPTIONS `bunnies/`
     - Parameters
         - Use database or HTTP words over invention.
-        - Pagination: use `limit` and `offset`.
+        - Pagination: use `limit` and `skip`.
         - method=x with POST for PUT, PATCH, and DELETE.
         - Use OAuth latest.
         - Stateless except for authorization.

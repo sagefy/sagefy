@@ -41,7 +41,7 @@ Models
 - modified
 - name
 - body
-- categories
+- tags
 - read (boolean)
 - concerns: pagination and filtering
 
@@ -54,7 +54,7 @@ Models
 - name
 - body
 - read (boolean)
-- categories
+- tags
 
 Screen Requirements
 -------------------

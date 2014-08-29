@@ -1,5 +1,5 @@
 from odm.model import Field, Model
-from odm.validations import required, email, minlength
+from odm.validations import is_required, is_email, has_min_length
 from datetime import datetime
 
 
@@ -10,16 +10,16 @@ def encrypt_password(value):
 class User(Model):
     tablename = 'users'
     name = Field(
-        validations=(required,),
+        validations=(is_required,),
         unique=True,
     )
     email = Field(
-        validations=(required, email),
+        validations=(is_required, is_email),
         unique=True,
         access='private'
     )
     password = Field(
-        validations=(required, (minlength, 8)),
+        validations=(is_required, (has_min_length, 8)),
         access=False,
         before_save=encrypt_password
     )

@@ -1,12 +1,12 @@
 from odm.model import Field, Model, Document
-from odm.validations import required, minlength
+from odm.validations import is_required, has_min_length
 from odm.embed import Embeds, EmbedsMany
 import pytest
 
 
 class User(Model):
     tablename = 'users'
-    name = Field(validations=(required,))
+    name = Field(validations=(is_required,))
 
 
 class Book(Document):
@@ -14,7 +14,7 @@ class Book(Document):
         default='Untitled'
     )
     serial = Field(
-        validations=(required,),
+        validations=(is_required,),
         unique=True,
         access=False,
     )
@@ -26,19 +26,19 @@ class Biography(Document):
         access=False
     )
     body = Field(
-        validations=(required,),
+        validations=(is_required,),
     )
 
 
 class Author(User):
     biography = Embeds(
         Biography,
-        validations=(required,),
+        validations=(is_required,),
         access='private'
     )
     books = EmbedsMany(
         Book,
-        validations=((minlength, 2),),
+        validations=((has_min_length, 2),),
         access='private'
     )
 

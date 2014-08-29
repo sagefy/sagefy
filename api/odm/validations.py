@@ -1,7 +1,7 @@
 import re
 
 
-def required(value):
+def is_required(value):
     """
     Ensure the value is present.
     """
@@ -9,7 +9,7 @@ def required(value):
         return 'Required.'
 
 
-def boolean(value):
+def is_boolean(value):
     """
     Ensure the given value is a boolean.
     """
@@ -17,7 +17,19 @@ def boolean(value):
         return 'Must be true or false.'
 
 
-def email(value):
+def is_string(value):
+    """Ensure the given value is a string."""
+    if not isinstance(value, basestring):
+        return 'Must be a string.'
+
+
+def is_list(value):
+    """Ensure the given value is a list."""
+    if not isinstance(value, list):
+        return 'Must be a list.'
+
+
+def is_email(value):
     """
     Ensure the given value is formatted as an email.
     """
@@ -25,7 +37,7 @@ def email(value):
         return 'Must be an email.'
 
 
-def minlength(value, params):
+def has_min_length(value, params):
     """
     Ensure the given value is a minimum length.
     """

@@ -59,7 +59,7 @@ def setup_db(app):
         r.db_create(app.config['RDB_DB']).run(db_conn)
 
     tables = r.db(app.config['RDB_DB']).table_list().run(db_conn)
-    for table in ['users']:
+    for table in ['users', 'notifications']:
         if table not in tables:
             r.db(app.config['RDB_DB']).table_create(table).run(db_conn)
 

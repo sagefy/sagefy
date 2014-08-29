@@ -1,6 +1,6 @@
 from odm.field import Field
 from odm.document import Document
-from odm.validations import required, email, minlength
+from odm.validations import is_required, is_email, has_min_length
 
 
 def encrypt_password(value):
@@ -9,16 +9,16 @@ def encrypt_password(value):
 
 class User(Document):
     name = Field(
-        validations=(required,),
+        validations=(is_required,),
         unique=True
     )
     email = Field(
-        validations=(required, email),
+        validations=(is_required, is_email),
         access='private',
         unique=True
     )
     password = Field(
-        validations=(required, (minlength, 8)),
+        validations=(is_required, (has_min_length, 8)),
         access=False,
         before_save=encrypt_password
     )

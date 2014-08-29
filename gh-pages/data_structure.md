@@ -19,9 +19,9 @@ A card could present information, ask the learner to answer a question, collabor
 
 Some kinds may include a video, a multiple choice question, or interactive demonstration. For more, see [Data Structure: Card Kinds](/f_data_structure/cards).
 
-### Card Categories
+### Card Kinds
 
-Some categories may include:
+Some kinds may include:
 
 - Worked examples
 - Application examples
@@ -49,9 +49,9 @@ A unit is defined by a single goal (objective). See [Bloom's Taxonomy](http://en
 
 An example of a unit is a small learning lesson, which may contain about five to eight minutes of information and 30-60 minutes of practice to gain proficiency.
 
-### Unit Categories
+### Unit Kinds
 
-- Unit categories may include Bloom's Taxonomy
+- Unit kinds may include Bloom's Taxonomy
 
 ### Unit Requirements
 
@@ -78,9 +78,9 @@ Sets can vary greatly in scale. For example, a small statistics set may cover ce
 
 A graph is automatically formed based on the units and sets specified. Any chaining units or sets or necessary learner prerequisites would be automatically included.
 
-### Set Categories
+### Set Kinds
 
-- Set categories would need to be community-defined.
+- Set kinds would need to be community-defined.
 
 ### Set Requirements
 

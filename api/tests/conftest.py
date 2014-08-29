@@ -50,22 +50,22 @@ def db_conn(app, request):
 
 
 @pytest.fixture(scope='module')
-def tests_table(app, db_conn, request):
-    try:
-        g.db.table_create('tests').run(db_conn)
-    except RqlRuntimeError:
-        pass
-    table = g.db.table('tests')
-    table.delete().run(db_conn)
-    return table
-
-
-@pytest.fixture(scope='module')
 def users_table(app, db_conn, request):
     try:
         g.db.table_create('users').run(db_conn)
     except RqlRuntimeError:
         pass
     table = g.db.table('users')
+    table.delete().run(db_conn)
+    return table
+
+
+@pytest.fixture(scope='module')
+def notifications_table(app, db_conn, request):
+    try:
+        g.db.table_create('notifications').run(db_conn)
+    except RqlRuntimeError:
+        pass
+    table = g.db.table('notifications')
     table.delete().run(db_conn)
     return table

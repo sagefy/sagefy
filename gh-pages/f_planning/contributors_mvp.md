@@ -33,7 +33,7 @@ Contributor Models
 - unit
 - name (e.g. title)
 - versioning (canonical)
-- categories
+- tags
 - prerequisites
 - Videos
     - duration
@@ -132,7 +132,7 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 #### Card Elements
 
 - name
-- categories
+- tags
 - prerequisites
 - Video:
     - duration and url
@@ -209,7 +209,7 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 #### List Card
 
 - List
-    - Video: show name, url (truncated), duration, categories (truncated)
+    - Video: show name, url (truncated), duration, tags (truncated)
     - Multiple choice text: show body (question, truncated)
 
 ### Object View

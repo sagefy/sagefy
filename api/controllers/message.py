@@ -9,8 +9,8 @@ def list_messages():
         - to user
         - from user
         - unread to user
-    - Pagination (limit, offset)
-    - Filter by categories
+    - Pagination (limit, skip)
+    - Filter by tags
     """
 
 

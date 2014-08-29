@@ -1,5 +1,5 @@
 from odm.model import Model, Field
-from odm.validations import required, email, minlength
+from odm.validations import is_required, is_email, is_string, has_min_length
 from passlib.hash import bcrypt
 from flask import url_for, current_app as app
 from flask.ext.login import current_user
@@ -14,16 +14,16 @@ class User(Model):
     tablename = 'users'
 
     name = Field(
-        validations=(required,),
+        validations=(is_string, is_required,),
         unique=True
     )
     email = Field(
-        validations=(required, email,),
+        validations=(is_required, is_email,),
         unique=True,
         access='private'
     )
     password = Field(
-        validations=(required, (minlength, 8)),
+        validations=(is_required, is_string, (has_min_length, 8)),
         access=False,
         before_save=encrypt_password
     )

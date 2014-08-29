@@ -46,7 +46,7 @@ Python
     - Use `name` for title, name, or subject.
     - Use `body` for body, message, description..
     - Use `kind` for kind or type.
-        - When the number of kinds is unknown, use `categories` instead.
+        - When the number of kinds is unknown, use `tags` instead.
     - Use `_tablename` to refer to the name of another table.
     - Table names use all plural, field names are singular. Model names are singular. Use underscores.
     - Multiple join tables should use both names, and both in plural form.
