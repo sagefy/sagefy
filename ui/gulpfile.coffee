@@ -168,5 +168,5 @@ gulp.task('scripts:test:run', [
     'scripts:test:build'
 ], ->
     gulp.src(dist + 'test.html')
-        .pipe(plugins.mochaPhantomjs({reporter: 'spec'}))
+        .pipe(plugins.mochaPhantomjs({reporter: 'dot'}))
 )
