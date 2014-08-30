@@ -29,23 +29,16 @@ class Notification(Model):
         Also adds pagination capabilities.
         Returns empty array when no models match.
         """
-        query = Cls.get_table()\
-                   .order_by(r.desc('created'))
-        if tag is not None and read is not None:
-            query = query.filter(lambda n: (n['user_id'] == user_id) &
-                                   (n['tags'].contains(tag)) &
-                                   (n['read'] == read))
-        elif read is not None:
-            query = query.filter(lambda n: (n['user_id'] == user_id) &
-                                   (n['read'] == read))
-        elif tag is not None:
-            query = query.filter(lambda n: (n['user_id'] == user_id) &
-                                   (n['tags'].contains(tag)))
-        else:
-            query = query.filter(lambda n: n['user_id'] == user_id)
-        fields_list = query.skip(skip)\
-                           .limit(limit)\
-                           .run(g.db_conn)
+        def _(n):
+            return (n['user_id'] == user_id) & \
+                   (n['tags'].contains(tag) if tag is not None else True) & \
+                   (n['read'] == read if read is not None else True)
+        query = Cls.get_table() \
+                   .order_by(r.desc('created')) \
+                   .filter(_) \
+                   .skip(skip)\
+                   .limit(limit)
+        fields_list = query.run(g.db_conn)
         return [Cls(fields) for fields in fields_list]
 
     def mark_as_read(self):
