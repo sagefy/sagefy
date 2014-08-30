@@ -347,7 +347,7 @@ def test_access(app, db_conn):
             'serial': 5678
         }]
     })
-    assert not 'biography' in author.deliver()
+    assert 'biography' not in author.deliver()
     assert 'biography' in author.deliver(private=True)
 
 
@@ -368,7 +368,7 @@ def test_access_many(app, db_conn):
             'serial': 5678
         }]
     })
-    assert not 'books' in author.deliver()
+    assert 'books' not in author.deliver()
     assert 'books' in author.deliver(private=True)
 
 
@@ -390,7 +390,7 @@ def test_access_fields(app, db_conn):
             'serial': 5678
         }]
     })
-    assert not 'location' in author.deliver(private=True)['biography']
+    assert 'location' not in author.deliver(private=True)['biography']
 
 
 def test_access_many_fields(app, db_conn):
@@ -410,7 +410,7 @@ def test_access_many_fields(app, db_conn):
             'serial': 5678
         }]
     })
-    assert not 'serial' in author.deliver(private=True)['books'][0]
+    assert 'serial' not in author.deliver(private=True)['books'][0]
 
 
 def test_get_db(app, db_conn, users_table):

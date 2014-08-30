@@ -11,10 +11,11 @@ before_install:
     - rethinkdb --daemon
 install:
     - pip install -r setup/requirements.txt
-    - pip install pytest coverage
+    - pip install pytest coverage flake8
     - 'npm install -g gulp && cd ui && npm install && cd ..'
 script:
-    - 'coverage run --module py.test api'
+    - flake8 api/**.py
+    - coverage run --module py.test api
     - 'cd ui && gulp test && cd ..'
 after_success:
     - 'coverage report --omit="/home*,/usr*,api/tests/*"'
