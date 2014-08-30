@@ -40,7 +40,10 @@ def test_user_email_unique(app, db_conn, users_table):
     """
     Ensure an email is unique.
     """
-    users_table.insert({'email': 'test@example.com'}).run(db_conn)
+    users_table.insert({
+        'id': 'abcd1234',
+        'email': 'test@example.com',
+    }).run(db_conn)
     user, errors = User.insert({
         'name': 'test',
         'email': 'test@example.com',

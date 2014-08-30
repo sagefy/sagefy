@@ -18,7 +18,7 @@ class Notification(Model):
         default=False
     )
     tags = Field(
-        validations=(is_list),
+        validations=(is_list,),
         default=[]
     )
 
@@ -30,12 +30,19 @@ class Notification(Model):
         Returns empty array when no models match.
         """
         query = Cls.get_table()\
-                   .order_by(r.desc('created'))\
-                   .filter({'user_id': user_id})
-        if read is not None:
-            query.filter({'read': read})
-        if tag:
-            query.filter(lambda n: n['tags'].contains(tag))
+                   .order_by(r.desc('created'))
+        if tag is not None and read is not None:
+            query = query.filter(lambda n: (n['user_id'] == user_id) &
+                                   (n['tags'].contains(tag)) &
+                                   (n['read'] == read))
+        elif read is not None:
+            query = query.filter(lambda n: (n['user_id'] == user_id) &
+                                   (n['read'] == read))
+        elif tag is not None:
+            query = query.filter(lambda n: (n['user_id'] == user_id) &
+                                   (n['tags'].contains(tag)))
+        else:
+            query = query.filter(lambda n: n['user_id'] == user_id)
         fields_list = query.skip(skip)\
                            .limit(limit)\
                            .run(g.db_conn)

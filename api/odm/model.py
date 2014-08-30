@@ -143,10 +143,10 @@ class Model(Document):
         for name, field in self.get_fields():
             if not field.unique:
                 continue
-            entries = list(self.table
-                               .filter({name: field.get()})
-                               .filter(r.row['id'] != self.id.get())
-                               .run(g.db_conn))
+            query = self.table \
+                        .filter(lambda m: (m[name] == field.get()) &
+                                          (m['id'] != self.id.get()))
+            entries = list(query.run(g.db_conn))
             if len(entries) > 0:
                 errors.append({
                     'name': name,
