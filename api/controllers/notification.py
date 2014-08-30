@@ -12,11 +12,14 @@ def list_notifications():
     List notifications for current user.
     Takes parameters `limit`, `skip`, `tag`, and `read`.
     """
-    if not current_user:
+    if not current_user.is_authenticated():
         return jsonify(errors=[{"message": "Must login."}]), 401
     notifications = Notification.list(user_id=current_user.id.get(),
-                                      **request.json)
-    return jsonify(notifications=notifications)
+                                      **request.json or {})
+    return jsonify(notifications=[
+        n.deliver(private=True)
+        for n in notifications
+    ])
 
 
 @notification.route('/<notification_id>/read', methods=['PUT'])
@@ -26,11 +29,14 @@ def mark_notification_as_read(notification_id):
     Must be logged in as user, provide a valid ID, and own the notification.
     Returns notification.
     """
-    if not current_user:
+    if not current_user.is_authenticated():
         return jsonify(errors=[{"message": "Must login."}]), 401
     notification = Notification.get(id=notification_id)
     if not notification:
         return jsonify(errors=[{"message": "Not found."}]), 404
     if notification.user_id.get() != current_user.id.get():
         return jsonify(errors=[{"message": "Not owned by user."}]), 401
-    return notification.mark_as_read()
+    notification, errors = notification.mark_as_read()
+    if len(errors):
+        return jsonify(errors=errors), 400
+    return jsonify(notification=notification.deliver(private=True))

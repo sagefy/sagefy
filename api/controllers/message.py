@@ -13,7 +13,7 @@ def list_messages():
     - Pagination (limit, skip)
     - Filter by tags
     """
-    if not current_user:
+    if not current_user.is_authenticated():
         return jsonify(errors=[{"message": "Must login."}]), 401
     if current_user.id.get() not in (request.json.get('to_user_id'),
                                      request.json.get('from_user_id')):
@@ -28,7 +28,7 @@ def get_message(message_id):
     Get message by ID.
     Must be either the `from` user or `to` user.
     """
-    if not current_user:
+    if not current_user.is_authenticated():
         return jsonify(errors=[{"message": "Must login."}]), 401
     message = Message.get(id=message_id)
     if not message:
@@ -45,7 +45,7 @@ def read_message(message_id):
     Set message mark as read.
     Must be `to` user.
     """
-    if not current_user:
+    if not current_user.is_authenticated():
         return jsonify(errors=[{"message": "Must login."}]), 401
     message = Message.get(id=message_id)
     if not message:
@@ -62,7 +62,7 @@ def create_message():
     Create a message.
     Will do as current logged in user.
     """
-    if not current_user:
+    if not current_user.is_authenticated():
         return jsonify(errors=[{"message": "Must login."}]), 401
     fields = request.json
     fields['from_user_id'] = current_user.id.get()
