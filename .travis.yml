@@ -18,4 +18,4 @@ script:
     - coverage run --module py.test api
     - 'cd ui && gulp test && cd ..'
 after_success:
-    - 'coverage report --omit="/home*,/usr*,api/tests/*"'
+    - coverage report --omit="/home/travis/*,api/tests/*"
