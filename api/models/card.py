@@ -40,3 +40,6 @@ class Card(Model):
         validations=(is_list,),
         default=[]
     )
+    kind = Field(
+        validations=(is_required, is_string,)
+    )

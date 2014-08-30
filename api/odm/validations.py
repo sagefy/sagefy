@@ -50,3 +50,11 @@ def has_min_length(value, params):
     ln = params[0]
     if not value or len(value) < ln:
         return 'Minimum length of %s.' % ln
+
+
+def is_one_of(value, params):
+    """
+    Ensure the value is within an enumerated set.
+    """
+    if value not in params:
+        return 'Must be one of %s.' % ', '.join(params)

@@ -1,7 +1,7 @@
 Backbone = require('backbone')
 NotificationModel = require('../models/notification')
 
-class NotificationsCollection extends Backbone.UsersCollection
+class NotificationsCollection extends Backbone.Collection
     url: '/api/notifications/'
     model: NotificationModel
 
