@@ -36,7 +36,7 @@ class Notification(Model):
         query = Cls.get_table() \
                    .order_by(r.desc('created')) \
                    .filter(_) \
-                   .skip(skip)\
+                   .skip(skip) \
                    .limit(limit)
         fields_list = query.run(g.db_conn)
         return [Cls(fields) for fields in fields_list]

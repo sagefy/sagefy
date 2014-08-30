@@ -14,7 +14,8 @@ def list_notifications():
     """
     if not current_user:
         return jsonify(errors=[{"message": "Must login."}]), 401
-    notifications = Notification.list(current_user.id.get(), **request.json)
+    notifications = Notification.list(user_id=current_user.id.get(),
+                                      **request.json)
     return jsonify(notifications=notifications)
 
 

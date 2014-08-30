@@ -22,30 +22,22 @@ def app(request):
     Create an application for running the tests.
     Use a different database for testing.
     """
-
     app = create_app(config, debug=True, testing=True)
-
     # Manage app context for testing
     ctx = app.app_context()
     ctx.push()
-
     def teardown():
         ctx.pop()
-
     request.addfinalizer(teardown)
-
     return app
 
 
 @pytest.fixture(scope='function')
 def db_conn(app, request):
     g.db_conn, g.db = make_db_connection(app)
-
     def teardown():
         g.db_conn.close()
-
     request.addfinalizer(teardown)
-
     return g.db_conn
 
 
@@ -67,5 +59,16 @@ def notifications_table(app, db_conn, request):
     except RqlRuntimeError:
         pass
     table = g.db.table('notifications')
+    table.delete().run(db_conn)
+    return table
+
+
+@pytest.fixture(scope='module')
+def messages_table(app, db_conn, request):
+    try:
+        g.db.table_create('messages').run(db_conn)
+    except RqlRuntimeError:
+        pass
+    table = g.db.table('messages')
     table.delete().run(db_conn)
     return table

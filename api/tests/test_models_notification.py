@@ -83,11 +83,8 @@ def test_list_paginate(app, db_conn, notifications_table):
         }).run(db_conn)
     notifications = Notification.list(user_id=22)
     assert len(notifications) == 10
-    assert notifications[0].id.get() < 10
     notifications = Notification.list(user_id=22, skip=20)
     assert len(notifications) == 5
-    assert notifications[0].id.get() >= 20
-
 
 def test_list_unread(app, db_conn, notifications_table):
     """

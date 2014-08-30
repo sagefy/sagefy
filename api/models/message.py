@@ -24,7 +24,7 @@ class Message(Model):
         default=False
     )
     tags = Field(
-        validations=(is_list),
+        validations=(is_list,),
         default=[]
     )
 
@@ -36,19 +36,18 @@ class Message(Model):
         Also adds pagination capabilities.
         Returns empty array when no models match.
         """
-        query = Cls.get_table()\
-                   .order_by(r.desc('created'))
-        if to_user_id:
-            query.filter({'to_user_id': to_user_id})
-        if from_user_id:
-            query.filter({'from_user_id': from_user_id})
-        if read is not None:
-            query.filter({'read': read})
-        if tag:
-            query.filter(lambda n: n['tags'].contains(tag))
-        fields_list = query.skip(skip)\
-                           .limit(limit)\
-                           .run(g.db_conn)
+        def _(m):
+            return (m['to_user_id'] == to_user_id if to_user_id else True) & \
+                   (m['from_user_id'] == from_user_id
+                       if from_user_id else True) & \
+                   (m['read'] == read if read is not None else True) & \
+                   (m['tags'].contains(tag) if tag is not None else True)
+        query = Cls.get_table() \
+                   .order_by(r.desc('created')) \
+                   .filter(_) \
+                   .skip(skip) \
+                   .limit(limit)
+        fields_list = query.run(g.db_conn)
         return [Cls(fields) for fields in fields_list]
 
     def mark_as_read(self):
