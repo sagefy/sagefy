@@ -78,18 +78,10 @@ Contributor Models
 - modified
 - language
 - user
-- object kind, id
-
-### Proposal Version
-
-- id
-- created
-- modified
-- language
-- proposal
-- object version
-- action (create, update, delete, split, merge)
-- decision (pending, blocked, accepted, declined)
+- object kind, id, and version
+- action (create, update, delete ... split, merge)
+- status (pending, blocked, accepted, declined)
+- name
 
 ### Vote
 
@@ -98,11 +90,11 @@ Contributor Models
 - modified
 - language
 - user
-- proposal version
+- proposal
 - body
-- action (agree, consent, discuss, dissent)
+- kind (consent, discuss, dissent)
 
-### Discussion > Thread
+### Discussion > Topic
 
 - id
 - created
@@ -118,7 +110,7 @@ Contributor Models
 - modified
 - language
 - user
-- thread
+- topic
 - body
 - replies to message
 
@@ -166,7 +158,7 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 - My Proposals
     - Name, votes
 - My Discussions
-    - Thread name, modified, messages
+    - Topic name, modified, messages
 - Link to search, list views
 
 ### Contributor Search (System-wide)
@@ -286,17 +278,17 @@ The following views are per type: Set, Unit, and Card. These sections list the e
         - Activity and participation of voters
         - Activity and participation of proposer...
 
-### Search Discussion Threads
+### Search Discussion Topics
 
 - Search box and button
 - Table
-    - Thread name
+    - Topic name
     - Number of messages
     - Last modified
 
-### List Discussion Threads (per Object)
+### List Discussion Topics (per Object)
 
-- Same as table for search threads
+- Same as table for search topics
 
 ### Discussion View
 

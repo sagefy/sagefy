@@ -23,6 +23,12 @@ def is_string(value):
         return 'Must be a string.'
 
 
+def is_language(value):
+    """Entity must be ISO 639-1 code."""
+    if not isinstance(value, basestring) or len(value) != 2:
+        return 'Must be a language.'
+
+
 def is_list(value):
     """Ensure the given value is a list."""
     if not isinstance(value, list):
