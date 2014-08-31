@@ -23,7 +23,7 @@ def list_messages():
     return jsonify(messages=[m.deliver(private=True) for m in messages])
 
 
-@message.route('/<message_id>/', methods=['GET'])
+@message.route('/<message_id>', methods=['GET'])
 def get_message(message_id):
     """
     Get message by ID.
@@ -36,8 +36,8 @@ def get_message(message_id):
         return jsonify(errors=[{"message": "No message found."}]), 404
     if current_user.id.get() not in (message.from_user_id.get(),
                                      message.to_user_id.get()):
-        return jsonify(errors=[{"message": "Not own message."}]), 401
-    return jsonify(message=message)
+        return jsonify(errors=[{"message": "Not own message."}]), 403
+    return jsonify(message=message.deliver(private=True))
 
 
 @message.route('/<message_id>/read', methods=['PUT'])
@@ -52,9 +52,9 @@ def read_message(message_id):
     if not message:
         return jsonify(errors=[{"message": "No message found."}]), 404
     if current_user.id.get() != message.to_user_id.get():
-        return jsonify(errors=[{"message": "Not own message."}]), 401
+        return jsonify(errors=[{"message": "Not own message."}]), 403
     message.mark_as_read()
-    return jsonify(message=message)
+    return jsonify(message=message.deliver(private=True))
 
 
 @message.route('/', methods=['POST'])
@@ -70,4 +70,4 @@ def create_message():
     message, errors = Message.insert(fields)
     if len(errors):
         return jsonify(errors=errors), 400
-    return jsonify(message=message)
+    return jsonify(message=message.deliver(private=True))

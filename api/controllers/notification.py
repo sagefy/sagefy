@@ -35,7 +35,7 @@ def mark_notification_as_read(notification_id):
     if not notification:
         return jsonify(errors=[{"message": "Not found."}]), 404
     if notification.user_id.get() != current_user.id.get():
-        return jsonify(errors=[{"message": "Not owned by user."}]), 401
+        return jsonify(errors=[{"message": "Not owned by user."}]), 403
     notification, errors = notification.mark_as_read()
     if len(errors):
         return jsonify(errors=errors), 400

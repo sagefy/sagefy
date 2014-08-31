@@ -79,90 +79,171 @@ def test_list_paginate(app, db_conn, users_table, messages_table):
         logout(c)
 
 
-@pytest.mark.xfail
 def test_get_login(app, db_conn, messages_table):
     """
     Expect to require login to get a message.
     """
-    assert False
+    with app.test_client() as c:
+        response = c.get('/api/messages/abcd1234')
+        assert response.status_code == 401
 
 
-@pytest.mark.xfail
-def test_get_none(app, db_conn, messages_table):
+def test_get_none(app, db_conn, users_table, messages_table):
     """
     Expect to 404 if no matching message.
     """
-    assert False
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.get('/api/messages/abcd1234')
+        assert response.status_code == 404
+        logout(c)
 
 
-@pytest.mark.xfail
-def test_get_member(app, db_conn, messages_table):
+def test_get_member(app, db_conn, users_table, messages_table):
     """
     Expect to require user to be member to get message.
     """
-    assert False
+    message, errors = Message.insert({
+        'to_user_id': '56',
+        'from_user_id': '89',
+        'name': 'a',
+        'body': 'b',
+    })
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.get('/api/messages/%s' % message.id.get())
+        assert response.status_code == 403
+        logout(c)
 
 
-@pytest.mark.xfail
-def test_get(app, db_conn, messages_table):
+def test_get(app, db_conn, users_table, messages_table):
     """
     Expect to get a message.
     """
-    assert False
+    message, errors = Message.insert({
+        'to_user_id': 'abcd1234',
+        'from_user_id': '89',
+        'name': 'a',
+        'body': 'b',
+    })
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.get('/api/messages/%s' % message.id.get())
+        assert response.status_code == 200
+        response = json.loads(response.data)
+        assert response['message']['name'] == 'a'
+        logout(c)
 
 
-@pytest.mark.xfail
 def test_mark_login(app, db_conn, messages_table):
     """
     Expect to require login to mark message as read.
     """
-    assert False
+    with app.test_client() as c:
+        response = c.put('/api/messages/abcd1234/read')
+        assert response.status_code == 401
 
 
-@pytest.mark.xfail
-def test_mark_none(app, db_conn, messages_table):
+def test_mark_none(app, db_conn, users_table, messages_table):
     """
     Expect to 404 if no matching message when marking as read.
     """
-    assert False
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.put('/api/messages/abcd1234/read')
+        assert response.status_code == 404
+        logout(c)
 
 
-@pytest.mark.xfail
-def test_mark_member(app, db_conn, messages_table):
+def test_mark_member(app, db_conn, users_table, messages_table):
     """
     Expect to require own message to mark as read.
     """
-    assert False
+    message, errors = Message.insert({
+        'to_user_id': '56',
+        'from_user_id': '89',
+        'name': 'a',
+        'body': 'b',
+    })
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.put('/api/messages/%s/read' % message.id.get())
+        assert response.status_code == 403
+        logout(c)
 
 
-@pytest.mark.xfail
-def test_mark(app, db_conn, messages_table):
+def test_mark(app, db_conn, users_table, messages_table):
     """
     Expect to mark a message as read.
     """
-    assert False
+    message, errors = Message.insert({
+        'to_user_id': 'abcd1234',
+        'from_user_id': '89',
+        'name': 'a',
+        'body': 'b',
+    })
+    record = messages_table.get(message.id.get()).run(db_conn)
+    assert record['read'] is False
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.put('/api/messages/%s/read' % message.id.get())
+        assert response.status_code == 200
+        response = json.loads(response.data)
+        assert response['message']['name'] == 'a'
+        record = messages_table.get(message.id.get()).run(db_conn)
+        assert record['read'] is True
+        logout(c)
 
 
-@pytest.mark.xfail
 def test_create_login(app, db_conn, messages_table):
     """
     Expect to require login to create a message.
     """
-    assert False
+    with app.test_client() as c:
+        response = c.post('/api/messages/', data=json.dumps({
+            'to_user_id': '5678',
+            'name': 'Yo!',
+            'body': 'How\'s it goin\'?',
+        }), content_type='application/json')
+        assert response.status_code == 401
 
 
-@pytest.mark.xfail
-def test_create_error(app, db_conn, messages_table):
+def test_create_error(app, db_conn, users_table, messages_table):
     """
     Expect to show errors if error when insert message.
     """
-    assert False
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.post('/api/messages/', data=json.dumps({
+            'to_user_id': '5678',
+        }), content_type='application/json')
+        assert response.status_code == 400
+        response = json.loads(response.data)
+        assert len(response['errors']) == 2
+        logout(c)
 
 
-@pytest.mark.xfail
-def test_create(app, db_conn, messages_table):
+def test_create(app, db_conn, users_table, messages_table):
     """
     Expect to create a message.
     With the correct from user.
     """
-    assert False
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.post('/api/messages/', data=json.dumps({
+            'to_user_id': '5678',
+            'name': 'Yo!',
+            'body': 'How\'s it goin\'?',
+        }), content_type='application/json')
+        assert response.status_code == 200
+        response = json.loads(response.data)
+        assert response['message']['name'] == 'Yo!'
+        logout(c)

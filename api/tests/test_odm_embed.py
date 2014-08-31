@@ -609,19 +609,3 @@ def test_delete(app, db_conn, users_table):
     author.delete()
     records = users_table.run(db_conn)
     assert len(list(records)) == 0
-
-
-@pytest.mark.xfail
-def test_unique(app, db_conn, users_table):
-    """
-    Expect unique to check embedded document fields.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_unique_many(app, db_conn, users_table):
-    """
-    Expect unique to check list embedded document fields.
-    """
-    assert False

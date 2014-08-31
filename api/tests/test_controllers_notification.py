@@ -118,7 +118,7 @@ def test_mark_not_owned(app, db_conn, users_table, notifications_table):
     with app.test_client() as c:
         response = login(c)
         response = c.put('/api/notifications/%s/read' % nid)
-        assert response.status_code == 401
+        assert response.status_code == 403
         record = notifications_table.get(nid).run(db_conn)
         assert record['read'] is False
         logout(c)
