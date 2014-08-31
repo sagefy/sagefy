@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from models.message import Message
+from flask.ext.login import current_user
 message = Blueprint('message', __name__, url_prefix='/api/messages')
 
 
@@ -17,9 +18,9 @@ def list_messages():
         return jsonify(errors=[{"message": "Must login."}]), 401
     if current_user.id.get() not in (request.json.get('to_user_id'),
                                      request.json.get('from_user_id')):
-        return jsonify(errors=[{"message": "Not own message."}]), 401
+        return jsonify(errors=[{"message": "Not own message."}]), 403
     messages = Message.list(**request.json)
-    return jsonify(messages=messages)
+    return jsonify(messages=[m.deliver(private=True) for m in messages])
 
 
 @message.route('/<message_id>/', methods=['GET'])

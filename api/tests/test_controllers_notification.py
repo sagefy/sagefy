@@ -15,7 +15,7 @@ def test_list(app, db_conn, users_table, notifications_table):
         })
     with app.test_client() as c:
         response = login(c)
-        response = c.get('/api/notifications/', follow_redirects=True)
+        response = c.get('/api/notifications/')
         assert response.status_code == 200
         response = json.loads(response.data)
         assert len(response['notifications']) == 10
@@ -28,7 +28,7 @@ def test_list_no_user(app, db_conn):
     Expect to get an error if not logged in.
     """
     with app.test_client() as c:
-        response = c.get('/api/notifications/', follow_redirects=True)
+        response = c.get('/api/notifications/')
         assert response.status_code == 401
 
 
@@ -44,12 +44,12 @@ def test_list_paginate(app, db_conn, users_table, notifications_table):
         })
     with app.test_client() as c:
         response = login(c)
-        response = c.get('/api/notifications/', follow_redirects=True)
+        response = c.get('/api/notifications/')
         response = json.loads(response.data)
         assert len(response['notifications']) == 10
         response = c.get('/api/notifications/', data=json.dumps({
             'skip': 20,
-        }), content_type='application/json', follow_redirects=True)
+        }), content_type='application/json')
         response = json.loads(response.data)
         assert len(response['notifications']) == 5
         logout(c)

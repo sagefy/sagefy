@@ -19,13 +19,12 @@ def login(c):
     return c.post('/api/users/login', data=json.dumps({
         'name': 'test',
         'password': 'abcd1234'
-    }), content_type='application/json', follow_redirects=True)
+    }), content_type='application/json')
 
 
 def logout(c):
     return c.post('/api/users/logout', data=json.dumps({}),
-                  content_type='application/json',
-                  follow_redirects=True)
+                  content_type='application/json')
 
 
 def test_user_get(app, db_conn, users_table):
@@ -72,7 +71,7 @@ def test_user_login_password_fail(app, db_conn, users_table):
     response = app.test_client().post('/api/users/login', data=json.dumps({
         'name': 'test',
         'password': '1234abcd'
-    }), content_type='application/json', follow_redirects=True)
+    }), content_type='application/json')
     assert 'errors' in response.data
 
 

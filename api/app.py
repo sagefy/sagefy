@@ -8,6 +8,7 @@ from controllers.error import setup_errors
 from controllers.public import public
 from controllers.user import user
 from controllers.notification import notification
+from controllers.message import message
 
 
 def create_app(config, debug=False, testing=False):
@@ -34,6 +35,7 @@ def create_app(config, debug=False, testing=False):
     app.register_blueprint(public)
     app.register_blueprint(user)
     app.register_blueprint(notification)
+    app.register_blueprint(message)
 
     return app
 

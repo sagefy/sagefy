@@ -1,41 +1,86 @@
 import pytest
 import rethinkdb as r
+from test_controllers_user import create_user_in_db, login, logout
+import json
+from models.message import Message
 
 
-@pytest.mark.xfail
-def test_a(app, db_conn, messages_table):
+def test_list_login(app, db_conn, messages_table):
     """
     Expect to require login to list messages.
     """
-    assert False
+    with app.test_client() as c:
+        response = c.get('/api/messages/')
+        assert response.status_code == 401
 
 
-@pytest.mark.xfail
-def test_b(app, db_conn, messages_table):
+def test_list_member(app, db_conn, users_table, messages_table):
     """
     Expect to require user to be member to list messages.
     """
-    assert False
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.get('/api/messages/', data=json.dumps({
+            'to_user_id': '5687abvd',
+        }), content_type='application/json')
+        assert response.status_code == 403
+        assert json.loads(response.data)['errors'][0]['message'] == \
+            'Not own message.'
+        logout(c)
 
 
-@pytest.mark.xfail
-def test_c(app, db_conn, messages_table):
+def test_list_messages(app, db_conn, users_table, messages_table):
     """
     Expect to list messages.
     """
-    assert False
+    create_user_in_db(users_table, db_conn)
+    Message.insert({'from_user_id': 'a', 'to_user_id': 'abcd1234',
+                    'name': 'a', 'body': 'b'})
+    Message.insert({'from_user_id': 'b', 'to_user_id': 'abcd1234',
+                    'name': 'ra', 'body': 'rb'})
+    Message.insert({'from_user_id': 'abcd1234', 'to_user_id': 'd',
+                    'name': 'da', 'body': 'qb'})
+    Message.insert({'from_user_id': 'c', 'to_user_id': 'd',
+                    'name': 'ca', 'body': 'gb'})
+    with app.test_client() as c:
+        login(c)
+        response = c.get('/api/messages/', data=json.dumps({
+            'to_user_id': 'abcd1234',
+        }), content_type='application/json')
+        assert response.status_code == 200
+        response = json.loads(response.data)
+        assert len(response['messages']) == 2
+        assert response['messages'][0]['to_user_id'] == 'abcd1234'
+        logout(c)
 
 
-@pytest.mark.xfail
-def test_d(app, db_conn, messages_table):
+def test_list_paginate(app, db_conn, users_table, messages_table):
     """
     Expect to paginate listed messages.
     """
-    assert False
+    for i in range(0, 25):
+        Message.insert({'from_user_id': 'a', 'to_user_id': 'abcd1234',
+                        'name': 'a%s' % i, 'body': 'b%s' % i})
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.get('/api/messages/', data=json.dumps({
+            'to_user_id': 'abcd1234',
+        }), content_type='application/json')
+        response = json.loads(response.data)
+        assert len(response['messages']) == 10
+        response = c.get('/api/messages/', data=json.dumps({
+            'to_user_id': 'abcd1234',
+            'skip': 20,
+        }), content_type='application/json')
+        response = json.loads(response.data)
+        assert len(response['messages']) == 5
+        logout(c)
 
 
 @pytest.mark.xfail
-def test_e(app, db_conn, messages_table):
+def test_get_login(app, db_conn, messages_table):
     """
     Expect to require login to get a message.
     """
@@ -43,7 +88,7 @@ def test_e(app, db_conn, messages_table):
 
 
 @pytest.mark.xfail
-def test_f(app, db_conn, messages_table):
+def test_get_none(app, db_conn, messages_table):
     """
     Expect to 404 if no matching message.
     """
@@ -51,7 +96,7 @@ def test_f(app, db_conn, messages_table):
 
 
 @pytest.mark.xfail
-def test_g(app, db_conn, messages_table):
+def test_get_member(app, db_conn, messages_table):
     """
     Expect to require user to be member to get message.
     """
@@ -59,7 +104,7 @@ def test_g(app, db_conn, messages_table):
 
 
 @pytest.mark.xfail
-def test_h(app, db_conn, messages_table):
+def test_get(app, db_conn, messages_table):
     """
     Expect to get a message.
     """
@@ -67,7 +112,7 @@ def test_h(app, db_conn, messages_table):
 
 
 @pytest.mark.xfail
-def test_i(app, db_conn, messages_table):
+def test_mark_login(app, db_conn, messages_table):
     """
     Expect to require login to mark message as read.
     """
@@ -75,7 +120,7 @@ def test_i(app, db_conn, messages_table):
 
 
 @pytest.mark.xfail
-def test_j(app, db_conn, messages_table):
+def test_mark_none(app, db_conn, messages_table):
     """
     Expect to 404 if no matching message when marking as read.
     """
@@ -83,7 +128,7 @@ def test_j(app, db_conn, messages_table):
 
 
 @pytest.mark.xfail
-def test_k(app, db_conn, messages_table):
+def test_mark_member(app, db_conn, messages_table):
     """
     Expect to require own message to mark as read.
     """
@@ -91,7 +136,7 @@ def test_k(app, db_conn, messages_table):
 
 
 @pytest.mark.xfail
-def test_l(app, db_conn, messages_table):
+def test_mark(app, db_conn, messages_table):
     """
     Expect to mark a message as read.
     """
@@ -99,7 +144,7 @@ def test_l(app, db_conn, messages_table):
 
 
 @pytest.mark.xfail
-def test_m(app, db_conn, messages_table):
+def test_create_login(app, db_conn, messages_table):
     """
     Expect to require login to create a message.
     """
@@ -107,15 +152,7 @@ def test_m(app, db_conn, messages_table):
 
 
 @pytest.mark.xfail
-def test_n(app, db_conn, messages_table):
-    """
-    Expect to insert a message with the correct from user.
-    """
-    assert False
-
-
-@pytest.mark.xfail
-def test_o(app, db_conn, messages_table):
+def test_create_error(app, db_conn, messages_table):
     """
     Expect to show errors if error when insert message.
     """
@@ -123,8 +160,9 @@ def test_o(app, db_conn, messages_table):
 
 
 @pytest.mark.xfail
-def test_p(app, db_conn, messages_table):
+def test_create(app, db_conn, messages_table):
     """
     Expect to create a message.
+    With the correct from user.
     """
     assert False
