@@ -36,15 +36,16 @@ class Message(Model):
         Also adds pagination capabilities.
         Returns empty array when no models match.
         """
-        def _(m):
-            return (m['to_user_id'] == to_user_id if to_user_id else True) & \
-                   (m['from_user_id'] == from_user_id
-                       if from_user_id else True) & \
-                   (m['read'] == read if read is not None else True) & \
-                   (m['tags'].contains(tag) if tag is not None else True)
         query = Cls.get_table() \
                    .order_by(r.desc('created')) \
-                   .filter(_) \
+                   .filter(r.row['to_user_id'] == to_user_id
+                           if to_user_id else True) \
+                   .filter(r.row['from_user_id'] == from_user_id
+                           if from_user_id else True) \
+                   .filter(r.row['read'] == read
+                           if read is not None else True) \
+                   .filter(r.row['tags'].contains(tag)
+                           if tag is not None else True) \
                    .skip(skip) \
                    .limit(limit)
         fields_list = query.run(g.db_conn)
