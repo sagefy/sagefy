@@ -110,7 +110,7 @@ class Model(Document):
         if len(errors):
             return self, errors
         db_fields = self.bundle()
-        self.id.set(db_fields['id'])
+        self.id = db_fields['id']
         self.table.insert(db_fields, conflict='update').run(g.db_conn)
         self.sync()
         return self, []
@@ -120,7 +120,7 @@ class Model(Document):
         Pull the fields from the database.
         """
         fields = self.table\
-                     .get(self.id.value)\
+                     .get(self.id)\
                      .run(g.db_conn)
         self.update_fields(fields)
         return self
@@ -130,7 +130,7 @@ class Model(Document):
         Removes the model from the database.
         """
         self.table\
-            .get(self.id.value)\
+            .get(self.id)\
             .delete()\
             .run(g.db_conn)
         return self, []
@@ -143,9 +143,10 @@ class Model(Document):
         for name, field in self.get_fields():
             if not field.unique:
                 continue
+            value = field.__get__(self, None)
             query = self.table \
-                        .filter(lambda m: (m[name] == field.get()) &
-                                          (m['id'] != self.id.get()))
+                        .filter(lambda m: (m[name] == value) &
+                                          (m['id'] != self.id))
             entries = list(query.run(g.db_conn))
             if len(entries) > 0:
                 errors.append({

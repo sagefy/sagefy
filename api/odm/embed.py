@@ -1,4 +1,5 @@
 from odm.field import Field
+from weakref import WeakKeyDictionary
 
 
 class Embeds(Field):
@@ -10,33 +11,34 @@ class Embeds(Field):
         """
         Store initialized parameters onto self.
         """
-        self.value = None
+        self.data = WeakKeyDictionary()
         self.Doc = Doc
         self.validations = validations
         self.default = default
         self.access = access
         self.unique = False
 
-    def set(self, value):
+    def __set__(self, instance, value):
         """
         Set should update the fields on the document instead.
         """
-        if not self.value:
-            self.value = self.Doc()
-        self.value.update_fields(value)
+        if not self.data.get(instance):
+            self.data[instance] = self.Doc()
+        self.data[instance].update_fields(value)
 
-    def validate(self):
+    def validate(self, instance):
         """
         Runs own validations, and then child field validations.
         """
-        error = Field.validate(self)
+        error = Field.validate(self, instance)
         if error:
             return error
 
-        if self.value is not None:
+        doc = self.__get__(instance, None)
+        if doc is not None:
             errors = []
-            for name, field in self.value.get_fields():
-                error = field.validate()
+            for name, field in doc.get_fields():
+                error = getattr(doc.__class__, name).validate(doc)
                 if error:
                     errors.append({
                         'name': name,
@@ -44,30 +46,33 @@ class Embeds(Field):
                     })
             return errors
 
-    def bundle(self):
+    def bundle(self, instance):
         """
         Gets the value for the database.
         Calls before_save if applicable.
         Otherwise, its the same as `get`.
         """
-        if self.value:
+        doc = self.__get__(instance, None)
+        if doc:
             return {
-                name: field.bundle()
-                for name, field in self.value.get_fields()
+                name: getattr(doc.__class__, name).bundle(doc)
+                for name, field in doc.get_fields()
             }
 
-    def deliver(self, private=False):
+    def deliver(self, instance, private=False):
         """
         Ensure if the data can be accessed.
         """
-        if self.value and (
+        doc = self.__get__(instance, None)
+        if doc and (
             (self.access == 'private' and private) or self.access is True
         ):
-            return {
-                name: field.deliver(private)
-                for name, field in self.value.get_fields()
-                if field.deliver(private) is not None
-            }
+            package = {}
+            for name, field in doc.get_fields():
+                value = getattr(doc.__class__, name).deliver(doc, private)
+                if value is not None:
+                    package[name] = value
+            return package
 
 
 class EmbedsMany(Embeds):
@@ -80,35 +85,38 @@ class EmbedsMany(Embeds):
         """
         Store initialized parameters onto self.
         """
-        self.value = []
+        self.data = WeakKeyDictionary()
         self.Doc = Doc
         self.validations = validations
         self.default = default
         self.access = access
         self.unique = False
 
-    def set(self, value):
+    def __set__(self, instance, value):
         """
         Set should update the fields in the documents instead.
         """
+        if not self.data.get(instance):
+            self.data[instance] = []
         for i, v in enumerate(value):
-            if i >= len(self.value):
-                self.value.append(self.Doc())
-            self.value[i].update_fields(v)
+            if i >= len(self.data[instance]):
+                self.data[instance].append(self.Doc())
+            self.data[instance][i].update_fields(v)
 
-    def validate(self):
+    def validate(self, instance):
         """
         Runs own validations, and then child field validations.
         """
-        error = Field.validate(self)
+        error = Field.validate(self, instance)
         if error:
             return error
 
-        if self.value is not None:
+        docs = self.__get__(instance, None)
+        if docs is not None:
             errors = []
-            for doc in self.value:
+            for doc in docs:
                 for name, field in doc.get_fields():
-                    error = field.validate()
+                    error = getattr(doc.__class__, name).validate(doc)
                     if error:
                         errors.append({
                             'name': name,
@@ -116,27 +124,33 @@ class EmbedsMany(Embeds):
                         })
             return errors
 
-    def bundle(self):
+    def bundle(self, instance):
         """
         Gets the value for the database.
         Calls before_save if applicable.
         Otherwise, its the same as `get`.
         """
-        if self.value:
+        docs = self.__get__(instance, None)
+        if docs:
             return [{
-                name: field.bundle()
-                for name, field in v.get_fields()
-            } for v in self.value]
+                name: getattr(doc.__class__, name).bundle(doc)
+                for name, field in doc.get_fields()
+            } for doc in docs]
 
-    def deliver(self, private=False):
+    def deliver(self, instance, private=False):
         """
         Ensure if the data can be accessed.
         """
-        if self.value and (
+        docs = self.__get__(instance, None)
+        if docs and (
             (self.access == 'private' and private) or self.access is True
         ):
-            return [{
-                name: field.deliver(private)
-                for name, field in v.get_fields()
-                if field.deliver(private) is not None
-            } for v in self.value]
+            packages = []
+            for doc in docs:
+                package = {}
+                for name, field in doc.get_fields():
+                    value = getattr(doc.__class__, name).deliver(doc, private)
+                    if value is not None:
+                        package[name] = value
+                packages.append(package)
+            return packages

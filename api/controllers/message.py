@@ -16,7 +16,7 @@ def list_messages():
     """
     if not current_user.is_authenticated():
         return jsonify(errors=[{"message": "Must login."}]), 401
-    if current_user.id.get() not in (request.json.get('to_user_id'),
+    if current_user.id not in (request.json.get('to_user_id'),
                                      request.json.get('from_user_id')):
         return jsonify(errors=[{"message": "Not own message."}]), 403
     messages = Message.list(**request.json)
@@ -34,8 +34,8 @@ def get_message(message_id):
     message = Message.get(id=message_id)
     if not message:
         return jsonify(errors=[{"message": "No message found."}]), 404
-    if current_user.id.get() not in (message.from_user_id.get(),
-                                     message.to_user_id.get()):
+    if current_user.id not in (message.from_user_id,
+                                     message.to_user_id):
         return jsonify(errors=[{"message": "Not own message."}]), 403
     return jsonify(message=message.deliver(private=True))
 
@@ -51,7 +51,7 @@ def read_message(message_id):
     message = Message.get(id=message_id)
     if not message:
         return jsonify(errors=[{"message": "No message found."}]), 404
-    if current_user.id.get() != message.to_user_id.get():
+    if current_user.id != message.to_user_id:
         return jsonify(errors=[{"message": "Not own message."}]), 403
     message.mark_as_read()
     return jsonify(message=message.deliver(private=True))
@@ -66,7 +66,7 @@ def create_message():
     if not current_user.is_authenticated():
         return jsonify(errors=[{"message": "Must login."}]), 401
     fields = request.json
-    fields['from_user_id'] = current_user.id.get()
+    fields['from_user_id'] = current_user.id
     message, errors = Message.insert(fields)
     if len(errors):
         return jsonify(errors=errors), 400

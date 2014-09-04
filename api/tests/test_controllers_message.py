@@ -113,7 +113,7 @@ def test_get_member(app, db_conn, users_table, messages_table):
     create_user_in_db(users_table, db_conn)
     with app.test_client() as c:
         login(c)
-        response = c.get('/api/messages/%s' % message.id.get())
+        response = c.get('/api/messages/%s' % message.id)
         assert response.status_code == 403
         logout(c)
 
@@ -131,7 +131,7 @@ def test_get(app, db_conn, users_table, messages_table):
     create_user_in_db(users_table, db_conn)
     with app.test_client() as c:
         login(c)
-        response = c.get('/api/messages/%s' % message.id.get())
+        response = c.get('/api/messages/%s' % message.id)
         assert response.status_code == 200
         response = json.loads(response.data)
         assert response['message']['name'] == 'a'
@@ -172,7 +172,7 @@ def test_mark_member(app, db_conn, users_table, messages_table):
     create_user_in_db(users_table, db_conn)
     with app.test_client() as c:
         login(c)
-        response = c.put('/api/messages/%s/read' % message.id.get())
+        response = c.put('/api/messages/%s/read' % message.id)
         assert response.status_code == 403
         logout(c)
 
@@ -187,16 +187,16 @@ def test_mark(app, db_conn, users_table, messages_table):
         'name': 'a',
         'body': 'b',
     })
-    record = messages_table.get(message.id.get()).run(db_conn)
+    record = messages_table.get(message.id).run(db_conn)
     assert record['read'] is False
     create_user_in_db(users_table, db_conn)
     with app.test_client() as c:
         login(c)
-        response = c.put('/api/messages/%s/read' % message.id.get())
+        response = c.put('/api/messages/%s/read' % message.id)
         assert response.status_code == 200
         response = json.loads(response.data)
         assert response['message']['name'] == 'a'
-        record = messages_table.get(message.id.get()).run(db_conn)
+        record = messages_table.get(message.id).run(db_conn)
         assert record['read'] is True
         logout(c)
 

@@ -43,5 +43,5 @@ class Notification(Model):
 
     def mark_as_read(self):
         """Marks the notification as read."""
-        self.read.set(True)
+        self.read = True
         return self.save()

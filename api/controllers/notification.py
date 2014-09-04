@@ -14,7 +14,7 @@ def list_notifications():
     """
     if not current_user.is_authenticated():
         return jsonify(errors=[{"message": "Must login."}]), 401
-    notifications = Notification.list(user_id=current_user.id.get(),
+    notifications = Notification.list(user_id=current_user.id,
                                       **request.json or {})
     return jsonify(notifications=[
         n.deliver(private=True)
@@ -34,7 +34,7 @@ def mark_notification_as_read(notification_id):
     notification = Notification.get(id=notification_id)
     if not notification:
         return jsonify(errors=[{"message": "Not found."}]), 404
-    if notification.user_id.get() != current_user.id.get():
+    if notification.user_id != current_user.id:
         return jsonify(errors=[{"message": "Not owned by user."}]), 403
     notification, errors = notification.mark_as_read()
     if len(errors):

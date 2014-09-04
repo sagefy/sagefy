@@ -52,7 +52,7 @@ def test_get_id(app, db_conn, users_table):
         'email': 'test@example.com',
     }).run(db_conn)
     user = User.get(id='abcdefgh12345678')
-    assert user.name.get() == 'test'
+    assert user.name == 'test'
 
 
 def test_get_params(app, db_conn, users_table):
@@ -65,7 +65,7 @@ def test_get_params(app, db_conn, users_table):
         'email': 'test@example.com',
     }).run(db_conn)
     user = User.get(name='test', email='test@example.com')
-    assert user.id.get() == 'abcdefgh12345678'
+    assert user.id == 'abcdefgh12345678'
 
 
 def test_get_none(app, db_conn, users_table):
@@ -105,7 +105,7 @@ def test_list(app, db_conn, users_table):
     users = User.list()
     assert len(users) == 3
     assert isinstance(users[0], User)
-    assert users[2].id.get() in ('1', '2', '3')
+    assert users[2].id in ('1', '2', '3')
 
 
 def test_list_params(app, db_conn, users_table):
@@ -131,7 +131,7 @@ def test_list_params(app, db_conn, users_table):
     ]).run(db_conn)
     users = User.list(id='1', name='test1')
     assert len(users) == 1
-    assert users[0].email.get() == 'test1@example.com'
+    assert users[0].email == 'test1@example.com'
 
 
 def test_list_none(app, db_conn, users_table):
@@ -163,8 +163,8 @@ def test_insert(app, db_conn, users_table):
     })
     assert len(errors) == 0
     record = list(users_table.filter({'name': 'test'}).run(db_conn))[0]
-    assert user.id.get()
-    assert user.name.get() == 'test'
+    assert user.id
+    assert user.name == 'test'
     assert record['email'] == 'test@example.com'
 
 
@@ -176,8 +176,8 @@ def test_insert_fail(app, db_conn, users_table):
     user, errors = User.insert({
         'email': 'test@example.com'
     })
-    assert user.name.get() is None
-    assert user.password.get() is None
+    assert user.name is None
+    assert user.password is None
     assert isinstance(user, User)
     assert isinstance(errors, (list, tuple))
     assert len(errors) == 2
@@ -199,7 +199,7 @@ def test_update(app, db_conn, users_table):
     })
     assert len(errors) == 0
     record = list(users_table.filter({'name': 'test'}).run(db_conn))[0]
-    assert user.email.get() == 'open@example.com'
+    assert user.email == 'open@example.com'
     assert record['email'] == 'open@example.com'
 
 
@@ -219,7 +219,7 @@ def test_update_fail(app, db_conn, users_table):
     record = list(users_table.filter({'name': 'test'}).run(db_conn))[0]
     assert isinstance(user, User)
     assert isinstance(errors, (list, tuple))
-    assert user.email.get() == 'open'
+    assert user.email == 'open'
     assert record['email'] == 'test@example.com'
 
 
@@ -262,11 +262,11 @@ def test_id_keep(app, db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    id = user.id.get()
+    id = user.id
     user.update({
         'name': 'other'
     })
-    assert user.id.get() == id
+    assert user.id == id
 
 
 def test_created(app, db_conn, users_table):
@@ -279,7 +279,7 @@ def test_created(app, db_conn, users_table):
         'password': 'abcd1234'
     })
     record = list(users_table.filter({'name': 'test'}).run(db_conn))[0]
-    assert record['created'] == user.created.get()
+    assert record['created'] == user.created
 
 
 def test_before_save(app, db_conn, users_table):
@@ -292,7 +292,7 @@ def test_before_save(app, db_conn, users_table):
         'password': 'abcd1234'
     })
     assert len(errors) == 0
-    assert user.password.get().startswith('$2a$')
+    assert user.password.startswith('$2a$')
 
 
 def test_modified(app, db_conn, users_table):
@@ -308,9 +308,9 @@ def test_modified(app, db_conn, users_table):
         'email': 'other@example.com'
     })
     record = list(users_table.filter({'name': 'test'}).run(db_conn))[0]
-    assert isinstance(user.modified.get(), datetime)
-    assert record['modified'] == user.modified.get()
-    assert user.created.get() != user.modified.get()
+    assert isinstance(user.modified, datetime)
+    assert record['modified'] == user.modified
+    assert user.created != user.modified
 
 
 def test_unique(app, db_conn, users_table):

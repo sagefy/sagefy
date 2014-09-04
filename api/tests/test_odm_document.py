@@ -24,6 +24,29 @@ class User(Document):
     )
 
 
+def test_isfield(app, db_conn):
+    """
+    Expect to test if an instance is a field.
+    """
+    assert User.isfield(User.name)
+    assert not User.isfield(True)
+
+
+def test_get_fields(app, db_conn):
+    """
+    Expect to get able to get the fields on a Model.
+    """
+    user = User()
+    fields = user.get_fields()
+    names = [name for name, field in fields]
+    assert 'name' in names
+    assert 'email' in names
+    assert 'password' in names
+    for name, field in fields:
+        assert isinstance(name, basestring)
+        assert isinstance(field, Field)
+
+
 def test_init_fields(app, db_conn):
     """
     Expect fields to be a duplicate per instance.
@@ -40,7 +63,7 @@ def test_update_fields(app, db_conn):
     user.update_fields({
         'name': 'test'
     })
-    assert user.name.get() == 'test'
+    assert user.name == 'test'
 
 
 def test_not_field(app, db_conn):
@@ -59,30 +82,12 @@ def test_not_field(app, db_conn):
     assert errors[0]['name'] == 'color'
 
 
-def test_isfield(app, db_conn):
-    """
-    Expect to test if an instance is a field.
-    """
-    assert User.isfield(User.name)
-    assert not User.isfield(True)
-
-
-def test_get_fields(app, db_conn):
-    """
-    Expect to get able to get the fields on a Model.
-    """
-    user = User()
-    for name, field in user.get_fields():
-        assert isinstance(name, basestring)
-        assert isinstance(field, Field)
-
-
 def test_create_instance(app, db_conn):
     """
     Expect to create a model, no DB, on dict of fields.
     """
     user = User({'name': 'test'})
-    assert user.name.get() == 'test'
+    assert user.name == 'test'
 
 
 def test_create_instance_other(app, db_conn):
@@ -90,8 +95,8 @@ def test_create_instance_other(app, db_conn):
     Expect to create a model, no DB, setting properties.
     """
     user = User()
-    user.name.set('test')
-    assert user.name.get() == 'test'
+    user.name = 'test'
+    assert user.name == 'test'
 
 
 def test_bundle(app, db_conn):
@@ -100,9 +105,9 @@ def test_bundle(app, db_conn):
     versions of all fields
     """
     user = User()
-    user.password.set('abcd1234')
-    assert user.password.bundle() == '$2a$abcd1234'
-    user.password.set(None)
+    user.password = 'abcd1234'
+    assert user.bundle()['password'] == '$2a$abcd1234'
+    user.password = None
 
 
 def test_json(app, db_conn):

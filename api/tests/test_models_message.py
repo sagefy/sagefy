@@ -12,7 +12,7 @@ def test_insert(app, db_conn, messages_table):
         'body': 'How\'s it going?',
     })
     assert len(errors) == 0
-    record = messages_table.get(message.id.get()).run(db_conn)
+    record = messages_table.get(message.id).run(db_conn)
     assert record['from_user_id'] == '1'
     assert record['name'] == 'Yo!'
 
@@ -27,7 +27,7 @@ def test_read_default(app, db_conn, messages_table):
         'name': 'Yo!',
         'body': 'How\'s it going?',
     })
-    assert message.read.get() is False
+    assert message.read is False
 
 
 def test_list(app, db_conn, messages_table):
@@ -130,10 +130,10 @@ def test_read(app, db_conn, messages_table):
         'name': 'Yo!',
         'body': 'How\'s it going?',
     })
-    record = messages_table.get(message.id.get()).run(db_conn)
-    assert message.read.get() is False
+    record = messages_table.get(message.id).run(db_conn)
+    assert message.read is False
     assert record['read'] is False
     message.mark_as_read()
-    record = messages_table.get(message.id.get()).run(db_conn)
-    assert message.read.get() is True
+    record = messages_table.get(message.id).run(db_conn)
+    assert message.read is True
     assert record['read'] is True

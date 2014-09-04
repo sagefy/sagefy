@@ -48,7 +48,7 @@ def test_embed(app, db_conn):
     Expect to embed a document on a model.
     """
     author = Author()
-    assert author.biography
+    assert Author.biography
     assert Author.biography.Doc == Biography
 
 
@@ -57,8 +57,7 @@ def test_embed_many(app, db_conn):
     Expect to embed a list of documents on a model.
     """
     author = Author()
-    assert author.books
-    assert isinstance(author.books.value, list)
+    assert Author.books
     assert Author.books.Doc == Book
 
 
@@ -72,7 +71,7 @@ def test_embed_set(app, db_conn):
             'body': 'Lorem ipsum.'
         }
     })
-    assert author.biography.value.body.value == 'Lorem ipsum.'
+    assert author.biography.body == 'Lorem ipsum.'
     assert len(errors) == 0
 
 
@@ -90,8 +89,8 @@ def test_embed_many_set(app, db_conn):
             'serial': 456
         }]
     })
-    assert author.books.value[0].name.value == 'Red'
-    assert author.books.value[1].serial.value == 456
+    assert author.books[0].name == 'Red'
+    assert author.books[1].serial == 456
     assert len(errors) == 0
 
 
@@ -104,7 +103,7 @@ def test_embed_get(app, db_conn):
             'body': 'Lorem ipsum.'
         }
     })
-    assert author.biography.get().body.get() == 'Lorem ipsum.'
+    assert author.biography.body == 'Lorem ipsum.'
 
 
 def test_embed_many_get(app, db_conn):
@@ -120,8 +119,8 @@ def test_embed_many_get(app, db_conn):
             'serial': 456
         }]
     })
-    assert author.books.get()[0].name.get() == 'Red'
-    assert author.books.get()[1].serial.get() == 456
+    assert author.books[0].name == 'Red'
+    assert author.books[1].serial == 456
 
 
 def test_embed_default(app, db_conn):
@@ -131,7 +130,7 @@ def test_embed_default(app, db_conn):
     author = Author({
         'biography': {}
     })
-    assert author.biography.get().location.get() == 'Unknown'
+    assert author.biography.location == 'Unknown'
 
 
 def test_embed_many_default(app, db_conn,):
@@ -143,7 +142,7 @@ def test_embed_many_default(app, db_conn,):
             'serial': 123
         }]
     })
-    assert author.books.get()[0].name.get() == 'Untitled'
+    assert author.books[0].name == 'Untitled'
 
 
 def test_embed_update(app, db_conn):
@@ -155,17 +154,17 @@ def test_embed_update(app, db_conn):
             'body': 'Lorem ipsum.'
         }
     })
-    assert author.biography.get().body.get() == 'Lorem ipsum.'
+    assert author.biography.body == 'Lorem ipsum.'
     author.update_fields({
         'biography': {
             'body': 'Ipsum lorem.'
         }
     })
-    assert author.biography.get().body.get() == 'Ipsum lorem.'
-    author.biography.get().update_fields({
+    assert author.biography.body == 'Ipsum lorem.'
+    author.biography.update_fields({
         'body': 'Lorem ipsyum.'
     })
-    assert author.biography.get().body.get() == 'Lorem ipsyum.'
+    assert author.biography.body == 'Lorem ipsyum.'
 
 
 def test_embed_many_update(app, db_conn):
@@ -181,12 +180,12 @@ def test_embed_many_update(app, db_conn):
             'serial': 456
         }]
     })
-    assert author.books.get()[0].name.get() == 'Red'
-    assert author.books.get()[1].serial.get() == 456
-    author.books.get()[0].update_fields({
+    assert author.books[0].name == 'Red'
+    assert author.books[1].serial == 456
+    author.books[0].update_fields({
         'name': 'Yellow'
     })
-    assert author.books.get()[0].name.get() == 'Yellow'
+    assert author.books[0].name == 'Yellow'
 
 
 def test_embed_append(app, db_conn):
@@ -199,13 +198,13 @@ def test_embed_append(app, db_conn):
             'serial': 123,
         }]
     })
-    assert len(author.books.get()) == 1
-    author.books.get().append(Book({
+    assert len(author.books) == 1
+    author.books.append(Book({
         'name': 'Blue',
         'serial': 456
     }))
-    assert len(author.books.get()) == 2
-    assert author.books.get()[1].name.get() == 'Blue'
+    assert len(author.books) == 2
+    assert author.books[1].name == 'Blue'
 
 
 def test_embed_splice(app, db_conn):
@@ -224,11 +223,11 @@ def test_embed_splice(app, db_conn):
             'serial': 789
         }]
     })
-    assert len(author.books.get()) == 3
-    author.books.get().pop(1)
-    assert len(author.books.get()) == 2
-    assert author.books.get()[0].name.get() == 'Red'
-    assert author.books.get()[1].name.get() == 'Green'
+    assert len(author.books) == 3
+    author.books.pop(1)
+    assert len(author.books) == 2
+    assert author.books[0].name == 'Red'
+    assert author.books[1].name == 'Green'
 
 
 def test_validation(app, db_conn):
@@ -320,7 +319,6 @@ def test_validation_many_fields(app, db_conn):
     })
     errors = author.validate()
     assert len(errors) == 1
-    print errors
     assert errors[0]['message'][0]['name'] == 'serial'
     author.update_fields({'books': [
         {'serial': 1234},
@@ -425,8 +423,8 @@ def test_get_db(app, db_conn, users_table):
         }
     }).run(db_conn)
     author = Author.get(id='abcd1234')
-    assert author.name.get() == 'Dalton'
-    assert author.biography.get().body.get() == 'Lorem ipsum.'
+    assert author.name == 'Dalton'
+    assert author.biography.body == 'Lorem ipsum.'
 
 
 def test_get_db_many(app, db_conn, users_table):
@@ -445,9 +443,9 @@ def test_get_db_many(app, db_conn, users_table):
         }]
     }).run(db_conn)
     author = Author.get(id='abcd1234')
-    assert author.name.get() == 'Dalton'
-    assert author.books.get()[0].name.get() == 'Red'
-    assert author.books.get()[1].serial.get() == 5678
+    assert author.name == 'Dalton'
+    assert author.books[0].name == 'Red'
+    assert author.books[1].serial == 5678
 
 
 def test_list_db(app, db_conn, users_table):
@@ -467,11 +465,11 @@ def test_list_db(app, db_conn, users_table):
     }]).run(db_conn)
     authors = Author.list()
     assert 'Lorem redsum.' in [
-        author.biography.get().body.get()
+        author.biography.body
         for author in authors
     ]
     assert 'Lorem bluesum.' in [
-        author.biography.get().body.get()
+        author.biography.body
         for author in authors
     ]
 
@@ -497,9 +495,9 @@ def test_list_db_many(app, db_conn, users_table):
     }]).run(db_conn)
     authors = Author.list()
     assert 'Red' in [
-        book.name.get()
+        book.name
         for author in authors
-        for book in author.books.get()
+        for book in author.books
     ]
 
 
@@ -524,7 +522,7 @@ def test_insert_db(app, db_conn, users_table):
         }]
     })
     assert len(errors) == 0
-    record = users_table.get(author.id.get()).run(db_conn)
+    record = users_table.get(author.id).run(db_conn)
     assert record['biography']['location'] == 'Dallas'
     assert record['books'][0]['name'] == 'Red'
 
@@ -558,7 +556,7 @@ def test_update(app, db_conn, users_table):
             'name': 'Purple'
         }]
     })
-    record = users_table.get(author.id.get()).run(db_conn)
+    record = users_table.get(author.id).run(db_conn)
     assert record['biography']['location'] == 'San Antonio'
     assert record['books'][0]['name'] == 'Purple'
     assert record['books'][0]['serial'] == 1234
@@ -583,7 +581,7 @@ def test_sync(app, db_conn, users_table):
             'serial': 5678
         }]
     })
-    assert author.id.get()
+    assert author.id
 
 
 def test_delete(app, db_conn, users_table):

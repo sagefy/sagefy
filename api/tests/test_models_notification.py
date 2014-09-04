@@ -54,7 +54,7 @@ def test_list(app, db_conn, notifications_table):
     ]).run(db_conn)
     notifications = Notification.list(user_id=22)
     assert len(notifications) == 4
-    assert notifications[0].body.get() in ('red', 'blue', 'green', 'brown')
+    assert notifications[0].body in ('red', 'blue', 'green', 'brown')
 
 
 def test_list_user(app, db_conn, notifications_table):
@@ -69,8 +69,8 @@ def test_list_user(app, db_conn, notifications_table):
     ]).run(db_conn)
     notifications = Notification.list(user_id=22)
     assert len(notifications) == 2
-    assert notifications[0].body.get() in ('red', 'blue')
-    assert notifications[1].body.get() in ('red', 'blue')
+    assert notifications[0].body in ('red', 'blue')
+    assert notifications[1].body in ('red', 'blue')
 
 
 def test_list_paginate(app, db_conn, notifications_table):
@@ -97,8 +97,8 @@ def test_list_unread(app, db_conn, notifications_table):
     ]).run(db_conn)
     notifications = Notification.list(user_id=22, read=False)
     assert len(notifications) == 2
-    assert notifications[0].id.get() in (3, 4)
-    assert notifications[1].id.get() in (3, 4)
+    assert notifications[0].id in (3, 4)
+    assert notifications[1].id in (3, 4)
 
 
 def test_list_tag(app, db_conn, notifications_table):
@@ -113,8 +113,8 @@ def test_list_tag(app, db_conn, notifications_table):
     ]).run(db_conn)
     notifications = Notification.list(user_id=22, tag='apple')
     assert len(notifications) == 2
-    assert 'apple' in notifications[0].tags.get()
-    assert 'apple' in notifications[1].tags.get()
+    assert 'apple' in notifications[0].tags
+    assert 'apple' in notifications[1].tags
 
 
 def test_list_empty(app, db_conn, notifications_table):
@@ -134,9 +134,9 @@ def test_mark_as_read(app, db_conn, notifications_table):
         'body': 'Lorem ipsum.',
         'tags': ['test']
     })
-    assert notification.read.get() is False
+    assert notification.read is False
     notification.mark_as_read()
-    assert notification.read.get() is True
+    assert notification.read is True
     record = notifications_table.filter({'user_id': 'abcd1234'}).run(db_conn)
     record = list(record)[0]
     assert record['read'] is True

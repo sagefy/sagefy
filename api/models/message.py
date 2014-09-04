@@ -53,5 +53,5 @@ class Message(Model):
 
     def mark_as_read(self):
         """Mark the message as having been read."""
-        self.read.set(True)
+        self.read = True
         return self.save()

@@ -213,7 +213,7 @@ def test_user_create_password_fail(app, db_conn, users_table):
     """
     create_user_in_db(users_table, db_conn)
     user = User.get(id='abcd1234')
-    pw1 = user.password.get()
+    pw1 = user.password
     user.get_email_token(send_email=False)
     with app.test_client() as c:
         response = c.post('/api/users/password', data=json.dumps({
@@ -223,7 +223,7 @@ def test_user_create_password_fail(app, db_conn, users_table):
         }), content_type='application/json')
         assert response.status_code == 404
         user.sync()
-        assert user.password.get() == pw1
+        assert user.password == pw1
 
 
 def test_user_create_password_ok(app, db_conn, users_table):
@@ -232,7 +232,7 @@ def test_user_create_password_ok(app, db_conn, users_table):
     """
     create_user_in_db(users_table, db_conn)
     user = User.get(id='abcd1234')
-    pw1 = user.password.get()
+    pw1 = user.password
     token = user.get_email_token(send_email=False)
     with app.test_client() as c:
         response = c.post('/api/users/password', data=json.dumps({
@@ -242,4 +242,4 @@ def test_user_create_password_ok(app, db_conn, users_table):
         }), content_type='application/json')
         assert response.status_code == 200
         user.sync()
-        assert user.password.get() != pw1
+        assert user.password != pw1

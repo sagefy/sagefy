@@ -64,7 +64,7 @@ def test_mark(app, db_conn, users_table, notifications_table):
         'user_id': 'abcd1234',
         'body': 'b',
     })
-    nid = notification.id.get()
+    nid = notification.id
     with app.test_client() as c:
         response = login(c)
         response = c.put('/api/notifications/%s/read' % nid)
@@ -84,7 +84,7 @@ def test_mark_no_user(app, db_conn, notifications_table):
         'user_id': 'abcd1234',
         'body': 'b',
     })
-    nid = notification.id.get()
+    nid = notification.id
     with app.test_client() as c:
         response = c.put('/api/notifications/%s/read' % nid)
         assert response.status_code == 401
@@ -114,7 +114,7 @@ def test_mark_not_owned(app, db_conn, users_table, notifications_table):
         'user_id': '1234abcd',
         'body': 'b',
     })
-    nid = notification.id.get()
+    nid = notification.id
     with app.test_client() as c:
         response = login(c)
         response = c.put('/api/notifications/%s/read' % nid)

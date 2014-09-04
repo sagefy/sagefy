@@ -1,4 +1,3 @@
-from copy import deepcopy
 import inspect
 from odm.field import Field
 
@@ -13,16 +12,8 @@ class Document(object):
         Takes a set of fields, and update self with them.
         Otherwise, its just a blank new instance.
         """
-        self.init_fields()
         if fields:
             self.update_fields(fields)
-
-    def init_fields(self):
-        """
-        Create new versions of each field.
-        """
-        for name, field in self.get_fields():
-            setattr(self, name, deepcopy(field))
 
     def update_fields(self, fields):
         """
@@ -33,8 +24,8 @@ class Document(object):
         errors = []
         for name, value in fields.iteritems():
             if (hasattr(self, name) and
-                    Document.isfield(getattr(self, name))):
-                getattr(self, name).set(value)
+                    Document.isfield(getattr(self.__class__, name))):
+                setattr(self, name, value)
             else:
                 errors.append({
                     'name': name,
@@ -53,7 +44,7 @@ class Document(object):
         """
         Returns a list of fields in the document.
         """
-        return inspect.getmembers(self, Document.isfield)
+        return inspect.getmembers(self.__class__, Document.isfield)
 
     def bundle(self):
         """
@@ -61,7 +52,7 @@ class Document(object):
         Ready for going into the database.
         """
         return {
-            name: field.bundle()
+            name: getattr(self.__class__, name).bundle(self)
             for name, field in self.get_fields()
         }
 
@@ -70,11 +61,12 @@ class Document(object):
         Returns a dict form of the model's fields.
         Only returns fields allowed.
         """
-        return {
-            name: field.deliver(private)
-            for name, field in self.get_fields()
-            if field.deliver(private) is not None
-        }
+        package = {}
+        for name, field in self.get_fields():
+            value = getattr(self.__class__, name).deliver(self, private)
+            if value is not None:
+                package[name] = value
+        return package
 
     def validate(self):
         """
@@ -83,7 +75,7 @@ class Document(object):
         """
         errors = []
         for name, field in self.get_fields():
-            error = field.validate()
+            error = getattr(self.__class__, name).validate(self)
             if error:
                 errors.append({
                     'name': name,

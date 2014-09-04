@@ -1,9 +1,8 @@
-from odm.model import Field, Model
+from odm.model import Field, Document
 from odm.validations import is_required, is_email, has_min_length
 
 
-class User(Model):
-    tablename = 'users'
+class User(Document):
     name = Field(
         validations=(is_required),
         unique=True,
@@ -25,8 +24,8 @@ def test_require(app, db_conn):
         'name': 'test',
         'password': 'abcd1234'
     })
-    assert is_required(user.name.get()) is None
-    assert is_required(user.email.get())
+    assert is_required(user.name) is None
+    assert is_required(user.email)
 
 
 def test_email(app, db_conn):
@@ -39,8 +38,8 @@ def test_email(app, db_conn):
     user2 = User({
         'email': 'other'
     })
-    assert is_email(user.email.get()) is None
-    assert is_email(user2.email.get())
+    assert is_email(user.email) is None
+    assert is_email(user2.email)
 
 
 def test_minlength(app, db_conn):
@@ -53,5 +52,5 @@ def test_minlength(app, db_conn):
     user2 = User({
         'password2': 'a'
     })
-    assert has_min_length(user.password.get(), (8,)) is None
-    assert has_min_length(user2.password.get(), (8,))
+    assert has_min_length(user.password, (8,)) is None
+    assert has_min_length(user2.password, (8,))
