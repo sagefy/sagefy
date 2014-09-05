@@ -16,6 +16,15 @@ sudo apt-get -y install git
 sudo rm -rf /var/www
 sudo ln -fs /vagrant /var/www
 
+#### Python ###################################################################
+
+sudo apt-get -y install python3-dev
+sudo apt-get -y install python3-setuptools
+sudo apt-get -y install python3-pip
+sudo pip3 install -r /var/www/setup/requirements.txt
+sudo pip3 install pytest
+sudo pip3 install coverage
+
 #### Rethink ##################################################################
 
 source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | sudo tee /etc/apt/sources.list.d/rethinkdb.list
@@ -23,14 +32,6 @@ wget -qO- http://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
 sudo apt-get -y update
 sudo apt-get -y install rethinkdb
 rethinkdb --daemon
-
-#### Python ###################################################################
-
-sudo apt-get -y install python2.7-dev
-sudo apt-get -y install python-pip
-sudo pip install -r /var/www/setup/requirements.txt
-sudo pip install pytest
-sudo pip install coverage
 
 #### Redis ####################################################################
 
@@ -59,6 +60,7 @@ sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
 # TO LOG: sudo tail -F /tmp/uwsgi.log
 # TO STOP: sudo uwsgi --stop /tmp/uwsgi-master.pid
 sudo nginx -c /var/www/setup/nginx.conf
+# TO LOG: sudo tail -F /var/log/nginx/error.log
 # TO STOP: sudo nginx -s stop    (/var/run/nginx.pid)
 
 echo "Hooray! Provisioned."

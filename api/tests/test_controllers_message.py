@@ -25,7 +25,8 @@ def test_list_member(app, db_conn, users_table, messages_table):
             'to_user_id': '5687abvd',
         }), content_type='application/json')
         assert response.status_code == 403
-        assert json.loads(response.data)['errors'][0]['message'] == \
+        assert json.loads(response.data.decode('utf-8'))\
+            ['errors'][0]['message'] == \
             'Not own message.'
         logout(c)
 
@@ -49,7 +50,7 @@ def test_list_messages(app, db_conn, users_table, messages_table):
             'to_user_id': 'abcd1234',
         }), content_type='application/json')
         assert response.status_code == 200
-        response = json.loads(response.data)
+        response = json.loads(response.data.decode('utf-8'))
         assert len(response['messages']) == 2
         assert response['messages'][0]['to_user_id'] == 'abcd1234'
         logout(c)
@@ -68,13 +69,13 @@ def test_list_paginate(app, db_conn, users_table, messages_table):
         response = c.get('/api/messages/', data=json.dumps({
             'to_user_id': 'abcd1234',
         }), content_type='application/json')
-        response = json.loads(response.data)
+        response = json.loads(response.data.decode('utf-8'))
         assert len(response['messages']) == 10
         response = c.get('/api/messages/', data=json.dumps({
             'to_user_id': 'abcd1234',
             'skip': 20,
         }), content_type='application/json')
-        response = json.loads(response.data)
+        response = json.loads(response.data.decode('utf-8'))
         assert len(response['messages']) == 5
         logout(c)
 
@@ -133,7 +134,7 @@ def test_get(app, db_conn, users_table, messages_table):
         login(c)
         response = c.get('/api/messages/%s' % message.id)
         assert response.status_code == 200
-        response = json.loads(response.data)
+        response = json.loads(response.data.decode('utf-8'))
         assert response['message']['name'] == 'a'
         logout(c)
 
@@ -194,7 +195,7 @@ def test_mark(app, db_conn, users_table, messages_table):
         login(c)
         response = c.put('/api/messages/%s/read' % message.id)
         assert response.status_code == 200
-        response = json.loads(response.data)
+        response = json.loads(response.data.decode('utf-8'))
         assert response['message']['name'] == 'a'
         record = messages_table.get(message.id).run(db_conn)
         assert record['read'] is True
@@ -225,7 +226,7 @@ def test_create_error(app, db_conn, users_table, messages_table):
             'to_user_id': '5678',
         }), content_type='application/json')
         assert response.status_code == 400
-        response = json.loads(response.data)
+        response = json.loads(response.data.decode('utf-8'))
         assert len(response['errors']) == 2
         logout(c)
 
@@ -244,6 +245,6 @@ def test_create(app, db_conn, users_table, messages_table):
             'body': 'How\'s it goin\'?',
         }), content_type='application/json')
         assert response.status_code == 200
-        response = json.loads(response.data)
+        response = json.loads(response.data.decode('utf-8'))
         assert response['message']['name'] == 'Yo!'
         logout(c)

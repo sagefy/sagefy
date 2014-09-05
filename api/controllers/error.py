@@ -60,5 +60,5 @@ def setup_errors(app):
     Given a Flask application instance,
     add error handling for each type of error code.
     """
-    for code, message in messages.iteritems():
+    for code, message in messages.items():
         app.error_handler_spec[None][code] = error_response(code)

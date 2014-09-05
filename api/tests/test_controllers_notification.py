@@ -17,7 +17,7 @@ def test_list(app, db_conn, users_table, notifications_table):
         response = login(c)
         response = c.get('/api/notifications/')
         assert response.status_code == 200
-        response = json.loads(response.data)
+        response = json.loads(response.data.decode('utf-8'))
         assert len(response['notifications']) == 10
         assert 'user_id' in response['notifications'][0]
         logout(c)
@@ -45,12 +45,12 @@ def test_list_paginate(app, db_conn, users_table, notifications_table):
     with app.test_client() as c:
         response = login(c)
         response = c.get('/api/notifications/')
-        response = json.loads(response.data)
+        response = json.loads(response.data.decode('utf-8'))
         assert len(response['notifications']) == 10
         response = c.get('/api/notifications/', data=json.dumps({
             'skip': 20,
         }), content_type='application/json')
-        response = json.loads(response.data)
+        response = json.loads(response.data.decode('utf-8'))
         assert len(response['notifications']) == 5
         logout(c)
 
@@ -69,7 +69,7 @@ def test_mark(app, db_conn, users_table, notifications_table):
         response = login(c)
         response = c.put('/api/notifications/%s/read' % nid)
         assert response.status_code == 200
-        response = json.loads(response.data)
+        response = json.loads(response.data.decode('utf-8'))
         assert response['notification']['read'] is True
         record = notifications_table.get(nid).run(db_conn)
         assert record['read'] is True
@@ -101,7 +101,7 @@ def test_mark_no_notification(app, db_conn, users_table, notifications_table):
         response = login(c)
         response = c.put('/api/notifications/abcd1234/read')
         assert response.status_code == 404
-        response = json.loads(response.data)
+        response = json.loads(response.data.decode('utf-8'))
         logout(c)
 
 

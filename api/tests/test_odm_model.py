@@ -148,7 +148,7 @@ def test_generate_id(app, db_conn, users_table):
     """
     user = User({'password': 'abcd1234'})
     d = user.bundle()
-    assert isinstance(d['id'], basestring)
+    assert isinstance(d['id'], str)
     assert len(d['id']) == 16
 
 

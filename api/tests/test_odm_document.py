@@ -43,7 +43,7 @@ def test_get_fields(app, db_conn):
     assert 'email' in names
     assert 'password' in names
     for name, field in fields:
-        assert isinstance(name, basestring)
+        assert isinstance(name, str)
         assert isinstance(field, Field)
 
 

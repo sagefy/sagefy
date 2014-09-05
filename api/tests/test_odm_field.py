@@ -91,7 +91,7 @@ def test_validate(app, db_conn):
     """
     Expect a field to validate itself.
     """
-    assert isinstance(User.name.validate(user), basestring)
+    assert isinstance(User.name.validate(user), str)
     user.name = 'test'
     assert User.name.validate(user) is None
     user.name = None

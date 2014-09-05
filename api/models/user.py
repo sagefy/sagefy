@@ -58,7 +58,7 @@ class User(Model):
 
     def get_id(self):
         """For Flask-Login."""
-        return unicode(self.id)
+        return self.id
 
     def get_email_token(self, send_email=True):
         """Creates an email token for the user to reset their password."""

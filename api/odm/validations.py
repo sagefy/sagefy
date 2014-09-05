@@ -19,7 +19,7 @@ def is_boolean(value):
 
 def is_string(value):
     """Ensure the given value is a string."""
-    if not isinstance(value, basestring):
+    if not isinstance(value, str):
         return 'Must be a string.'
 
 

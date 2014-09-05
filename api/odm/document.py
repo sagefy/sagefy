@@ -22,7 +22,7 @@ class Document(object):
         """
         assert isinstance(fields, dict)
         errors = []
-        for name, value in fields.iteritems():
+        for name, value in fields.items():
             if (hasattr(self, name) and
                     Document.isfield(getattr(self.__class__, name))):
                 setattr(self, name, value)
