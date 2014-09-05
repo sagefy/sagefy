@@ -26,8 +26,10 @@ def app(request):
     # Manage app context for testing
     ctx = app.app_context()
     ctx.push()
+
     def teardown():
         ctx.pop()
+
     request.addfinalizer(teardown)
     return app
 
@@ -35,8 +37,10 @@ def app(request):
 @pytest.fixture(scope='function')
 def db_conn(app, request):
     g.db_conn, g.db = make_db_connection(app)
+
     def teardown():
         g.db_conn.close()
+
     request.addfinalizer(teardown)
     return g.db_conn
 

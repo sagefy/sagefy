@@ -25,8 +25,8 @@ def test_list_member(app, db_conn, users_table, messages_table):
             'to_user_id': '5687abvd',
         }), content_type='application/json')
         assert response.status_code == 403
-        assert json.loads(response.data.decode('utf-8'))\
-            ['errors'][0]['message'] == \
+        response = json.loads(response.data.decode('utf-8'))
+        assert response['errors'][0]['message'] == \
             'Not own message.'
         logout(c)
 

@@ -86,6 +86,7 @@ def test_list_paginate(app, db_conn, notifications_table):
     notifications = Notification.list(user_id=22, skip=20)
     assert len(notifications) == 5
 
+
 def test_list_unread(app, db_conn, notifications_table):
     """
     Expect to get a list of unread notifications.
