@@ -24,6 +24,7 @@ Learning Science
 - [How to Solve It](http://en.wikipedia.org/wiki/How_to_Solve_It)
 - [How a Radical New Teaching Method Could Unleash a Generation of Geniuses](http://www.wired.com/business/2013/10/free-thinkers/all/&src=longreads)
 - [Why Do Americans Stink at Math?](http://www.nytimes.com/2014/07/27/magazine/why-do-americans-stink-at-math.html)
+- [Why Flunking Exams Is Actually a Good Thing](http://www.nytimes.com/2014/09/07/magazine/why-flunking-exams-is-actually-a-good-thing.html)
 
 Gamification
 ------------
