@@ -13,13 +13,13 @@ class Proposal(Model):
     user_id = Field(
         validations=(is_required, is_string,)
     )
-    object_kind = Field(
+    entity_kind = Field(
         validations=(is_required, is_string,)
     )
-    object_id = Field(
+    entity_id = Field(
         validations=(is_required, is_string,)
     )
-    object_version_id = Field(
+    entity_version_id = Field(
         validations=(is_required, is_string,)
     )
     name = Field(

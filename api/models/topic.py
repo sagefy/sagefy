@@ -10,10 +10,10 @@ class Topic(Model):
         validations=(is_required, is_language,),
         default='en'
     )
-    object_kind = Field(
+    entity_kind = Field(
         validations=(is_required, is_string,)
     )
-    object_id = Field(
+    entity_id = Field(
         validations=(is_required, is_string,)
     )
     name = Field(

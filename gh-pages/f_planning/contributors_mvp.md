@@ -78,7 +78,7 @@ Contributor Models
 - modified
 - language
 - user
-- object kind, id, and version
+- entity kind, id, and version
 - action (create, update, delete ... split, merge)
 - status (pending, blocked, accepted, declined)
 - name
@@ -100,7 +100,7 @@ Contributor Models
 - created
 - modified
 - language
-- object kind and id
+- entity kind and id
 - name
 
 ### Discussion > Message
@@ -113,6 +113,52 @@ Contributor Models
 - topic
 - body
 - replies to message
+
+Contributor Endpoints
+---------------------
+
+### Proposal API
+
+- GET /proposals/ (search)
+- GET /proposals/{id}
+    - Include entity information
+    - Include votes
+- POST /proposals/
+    - Include entity information
+- PUT (PATCH) /proposals/{id} (change status only)
+- POST /proposals/{id}/votes
+- PUT /proposals/{id}/votes/{id}
+- GET /proposals/{id}/votes
+
+### Card, Unit, Set API
+
+- GET /cards/ (search)
+- GET /cards/{id}
+- GET /units/ (search)
+- GET /units/{id}
+- GET /sets/ (search)
+- GET /sets/{id}
+
+### Discussion API
+
+- GET /topics/ (search)
+- GET /topics/{id}/posts  (paginated posting)
+- POST /topics/
+    - Include entity information
+- PUT (PATCH) /topics/{id}
+    - Include entity information
+- POST /topics/{id}/posts
+- PUT (PATCH) /topics/{id}/posts/{id}
+
+### Flags API
+
+- POST /flags/
+    - Include entity information
+
+### Follow API
+
+- POST /follows/
+- DELETE /follows/{id}
 
 Contributor Screen Requirements
 -------------------------------
