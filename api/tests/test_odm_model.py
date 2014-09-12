@@ -21,7 +21,7 @@ class User(Model):
     password = Field(
         validations=(is_required, (has_min_length, 8)),
         access=False,
-        before_save=encrypt_password
+        transform=encrypt_password
     )
 
 
@@ -282,9 +282,9 @@ def test_created(app, db_conn, users_table):
     assert record['created'] == user.created
 
 
-def test_before_save(app, db_conn, users_table):
+def test_transform(app, db_conn, users_table):
     """
-    Expect a model to call before_save before going into DB.
+    Expect a model to call transform before going into DB.
     """
     user, errors = User.insert({
         'name': 'test',

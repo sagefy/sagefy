@@ -49,7 +49,7 @@ class Embeds(Field):
     def bundle(self, instance):
         """
         Gets the value for the database.
-        Calls before_save if applicable.
+        Calls transform if applicable.
         Otherwise, its the same as `get`.
         """
         doc = self.__get__(instance, None)
@@ -127,7 +127,7 @@ class EmbedsMany(Embeds):
     def bundle(self, instance):
         """
         Gets the value for the database.
-        Calls before_save if applicable.
+        Calls transform if applicable.
         Otherwise, its the same as `get`.
         """
         docs = self.__get__(instance, None)

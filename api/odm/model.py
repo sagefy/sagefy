@@ -22,7 +22,7 @@ class Model(Document):
     )
     modified = Field(
         default=r.now(),
-        before_save=update_modified
+        transform=update_modified
     )
 
     def __init__(self, fields=None):

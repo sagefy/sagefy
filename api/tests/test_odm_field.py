@@ -22,7 +22,7 @@ class User(object):
     password = Field(
         validations=(is_required,),
         access=False,
-        before_save=encrypt_password
+        transform=encrypt_password
     )
 
 
@@ -36,7 +36,7 @@ def test_init(app, db_conn):
     assert isinstance(User.password.validations, tuple)
     assert user.password is None
     assert User.password.access is False
-    assert User.password.before_save is encrypt_password
+    assert User.password.transform is encrypt_password
     assert User.email.default == 'test@example.com'
     assert User.password.unique is False
     assert User.email.unique is True
@@ -59,9 +59,9 @@ def test_get_default(app, db_conn):
     assert user.id == 'abcd1234'
 
 
-def test_before_save(app, db_conn):
+def test_transform(app, db_conn):
     """
-    Expect a field to be able to use before_save when going into the database.
+    Expect a field to be able to use transform when going into the database.
     """
     user.password = 'abcd1234'
     assert User.password.bundle(user) == '$2a$abcd1234'

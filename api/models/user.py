@@ -25,7 +25,7 @@ class User(Model):
     password = Field(
         validations=(is_required, is_string, (has_min_length, 8)),
         access=False,
-        before_save=encrypt_password
+        transform=encrypt_password
     )
 
     def is_password_valid(self, password):

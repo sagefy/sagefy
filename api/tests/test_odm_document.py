@@ -20,7 +20,7 @@ class User(Document):
     password = Field(
         validations=(is_required, (has_min_length, 8)),
         access=False,
-        before_save=encrypt_password
+        transform=encrypt_password
     )
 
 

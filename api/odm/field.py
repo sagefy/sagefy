@@ -8,20 +8,20 @@ class Field(object):
     """
 
     def __init__(self, validations=(), default=None, access=True,
-                 before_save=None, unique=False):
+                 transform=None, unique=False):
         """
         Initialize Field.
         Sets to self the following keyword arguments:
         - validations
         - default
         - access
-        - before_save
+        - transform
         """
         self.data = WeakKeyDictionary()
         self.validations = validations
         self.default = default
         self.access = access
-        self.before_save = before_save
+        self.transform = transform
         self.unique = unique
 
     def __get__(self, instance, owner):
@@ -65,12 +65,12 @@ class Field(object):
     def bundle(self, instance):
         """
         Gets the value for the database.
-        Calls before_save if applicable.
+        Calls transform if applicable.
         Otherwise, its the same as `get`.
         """
         value = self.__get__(instance, None)
-        if self.before_save and hasattr(self.before_save, '__call__'):
-            return self.before_save(value)
+        if self.transform and hasattr(self.transform, '__call__'):
+            return self.transform(value)
         return value
 
     def deliver(self, instance, private=False):
