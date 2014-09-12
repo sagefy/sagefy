@@ -64,7 +64,7 @@ class UserModel extends Backbone.Model
     getPasswordToken: (data) ->
         $.ajax({
             type: 'POST'
-            url: @urlRoot + 'request_password_token'
+            url: @urlRoot + 'token'
             data: JSON.stringify(data)
             contentType: 'application/json'
         })
@@ -73,6 +73,20 @@ class UserModel extends Backbone.Model
             )
             .fail((error) =>
                 @trigger('errorPasswordToken', @parseAjaxErrors(error))
+            )
+
+    createPassword: (data) ->
+        $.ajax({
+            type: 'POST'
+            url: @urlRoot + 'password'
+            data: JSON.stringify(data)
+            contentType: 'application/json'
+        })
+            .done(=>
+                @trigger('createPassword')
+            )
+            .fail((error) =>
+                @trigger('errorCreatePassword', @parseAjaxErrors(error))
             )
 
 module.exports = UserModel

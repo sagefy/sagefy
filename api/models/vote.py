@@ -19,7 +19,7 @@ class Vote(Model):
     body = Field(
         validations=(is_required, is_string,)
     )
-    agree = Field(
+    kind = Field(
         validations=((is_one_of, True, None, False),),
         default=None
-    )  # Where True is agree, None is discuss, False is disagree
+    )  # Where True is yes, None is discuss, False is no

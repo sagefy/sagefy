@@ -25,7 +25,7 @@ class Proposal(Model):
     name = Field(
         validations=(is_required, is_string,)
     )
-    action = Field(
+    kind = Field(
         validations=(is_required, (is_one_of, 'create', 'update', 'delete')),
     )
     status = Field(
