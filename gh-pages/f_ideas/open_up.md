@@ -16,7 +16,7 @@ What do we mean by "Open Up"?
 Why is opening up so important?
 --------------------------------------
 
-_TODO_
+- Raymond, The Cathedral and the Bazaar
 
 How does Sagefy implement this idea?
 ------------------------------------

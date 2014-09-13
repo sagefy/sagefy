@@ -17,7 +17,10 @@ What do we mean by "Go Deep"?
 Why is going deep so important?
 --------------------------------------
 
-_TODO_
+- Azevedo, R., & Cromley, J.G. (2004). Does training on self-regulated learning facilitate students’ learning with hypermedia? Journal of Educational Psychology, 96, 523–535
+- Sprague, J., & Stuart, D. (2000). The speaker’s handbook. Fort Worth, TX: Harcourt College Publishers.
+- Judd, C. H. (1908). The relation of special training to general intelligence. Educational Review, 36, 28–42.
+- Chi, M.T.H., Bassok, M., Lewis, M. W., Reimann, P., & Glaser, R. (1989). Self-explanations: How students study and use examples in learning to solve problems. Cognitive Science, 13, 145–182.
 
 How does Sagefy implement this idea?
 ------------------------------------

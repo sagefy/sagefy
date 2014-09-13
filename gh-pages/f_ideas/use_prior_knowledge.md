@@ -17,7 +17,9 @@ What do we mean by "Use Prior Knowledge"?
 Why is prior knowledge so important?
 --------------------------------------
 
-_TODO_
+- Dochy, F., Segers, M., & Buehl, M.M. (1999). The relation between assessment practices and outcomes of studies: The case of research on prior knowledge. Review of Educational Research, 69(2), 145–186.
+- Bransford, J. D., & Johnson, M. K. (1972). Contextual prerequisites for understanding: Some investigations of comprehension and recall. Journal of Verbal Learning and Verbal Behavior, 11, 717– 726.
+- Resnick, L. B. (1983). Mathematics and science learning. Science, 220, 477–478.
 
 How does Sagefy implement this idea?
 ------------------------------------
