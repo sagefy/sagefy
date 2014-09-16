@@ -1,6 +1,6 @@
 $ = require('jquery')
 PageView = require('./page')
-template = require('../../templates/sections/public/terms')
+template = require('../templates/sections/public/terms')
 
 class TermsView extends PageView
     id: 'terms'

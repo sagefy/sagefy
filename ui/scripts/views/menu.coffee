@@ -2,8 +2,8 @@ $ = require('jquery')
 Backbone = require('backbone')
 Backbone.$ = $
 _ = require('underscore')
-layoutTemplate = require('../../templates/components/menu/layout')
-itemTemplate = require('../../templates/components/menu/item')
+layoutTemplate = require('../templates/components/menu/layout')
+itemTemplate = require('../templates/components/menu/item')
 
 # A menu component, creates an icon and on click, displays
 # an iOS style list of options

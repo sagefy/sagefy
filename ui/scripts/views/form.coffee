@@ -2,8 +2,8 @@ $ = require('jquery')
 Backbone = require('backbone')
 _ = require('underscore')
 mixins = require('../modules/mixins')
-formTemplate = require('../../templates/components/forms/form')
-fieldTemplate = require('../../templates/components/forms/field')
+formTemplate = require('../templates/components/forms/form')
+fieldTemplate = require('../templates/components/forms/field')
 
 # Generic Form View
 # Designed to be extended

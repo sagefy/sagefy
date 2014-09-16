@@ -86,7 +86,7 @@ gulp.task('styles:doc', (done) ->
     yms = require('ym-styleguide')
     fs = require('fs')
     yms.build('styles/', (html) ->
-        fs.writeFileSync('templates/sections/styleguide/compiled.hbs', html)
+        fs.writeFileSync('scripts/templates/sections/styleguide/compiled.hbs', html)
         done()
     )
 )

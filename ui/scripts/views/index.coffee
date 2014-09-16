@@ -1,6 +1,6 @@
 $ = require('jquery')
 PageView = require('./page')
-template = require('../../templates/sections/public/index')
+template = require('../templates/sections/public/index')
 mixins = require('../modules/mixins')
 
 class IndexView extends PageView

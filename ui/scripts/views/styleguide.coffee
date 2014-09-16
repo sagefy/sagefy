@@ -1,7 +1,7 @@
 $ = require('jquery')
 PageView = require('./page')
-t = require('../../templates/sections/styleguide/index')
-t2 = require('../../templates/sections/styleguide/compiled')
+t = require('../templates/sections/styleguide/index')
+t2 = require('../templates/sections/styleguide/compiled')
 mixins = require('../modules/mixins')
 
 class StyleguideView extends PageView
