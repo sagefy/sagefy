@@ -4,11 +4,11 @@ from redis import StrictRedis
 from flask.ext.login import LoginManager
 from flask_mail import Mail
 
-from controllers.error import setup_errors
-from controllers.public import public
-from controllers.user import user
-from controllers.notification import notification
-from controllers.message import message
+from routes.error import setup_errors
+from routes.public import public
+from routes.user import user
+from routes.notification import notification
+from routes.message import message
 
 
 def create_app(config, debug=False, testing=False):
@@ -30,7 +30,7 @@ def create_app(config, debug=False, testing=False):
     setup_login(app)
     setup_email(app)
 
-    # Add in the controllers
+    # Add in the routes
     setup_errors(app)
     app.register_blueprint(public)
     app.register_blueprint(user)

@@ -1,4 +1,4 @@
-from test_controllers_user import create_user_in_db, login, logout
+from test_routes_user import create_user_in_db, login, logout
 import json
 from models.notification import Notification
 

@@ -1,4 +1,4 @@
-import controllers.error as error
+import routes.error as error
 
 
 def test_important_codes(app):
