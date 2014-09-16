@@ -15,6 +15,8 @@ window.expect = chai.expect
 # Include tests here
 require('./basic')
 
+require('./framework/events')
+
 require('./modules/hbs_helpers')
 require('./modules/mixins')
 
