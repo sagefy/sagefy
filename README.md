@@ -12,14 +12,14 @@ Sagefy is also open-source. The content and the code are freely available.
 
 [Site]: http://sagefy.org
 [Twitter]: http://twitter.com/sagefyorg
-[Docs]: http://sagefy.org/docs/overview
+[Docs]: http://docs.sagefy.org/
 
 [![Get Setup](http://img.shields.io/badge/get setup-yay-brightgreen.svg?style=flat)](https://github.com/heiskr/sagefy/blob/master/setup/setup.md) [![Huboard](http://img.shields.io/badge/huboard-yay-7965cc.svg?style=flat)](https://huboard.com/heiskr/sagefy) [![Donate](http://img.shields.io/badge/donate-yay-brightgreen.svg?style=flat)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PXGYRLUR53MBJ) [![Build Status](http://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy) [![Coverage Status](http://img.shields.io/coveralls/heiskr/sagefy.svg?style=flat)](https://coveralls.io/r/heiskr/sagefy)
 
 All contents in this project are licensed under [AGPLv3](https://raw.github.com/heiskr/sagefy/master/license.txt).
 
     Sagefy, learner-generated algorithmic adaptive learning.
-    Copyright (C) 2013  Kevin Heis and [contributors](https://github.com/heiskr/sagefy/graphs/contributors)
+    Copyright (C) 2014 Kevin Heis and [contributors](https://github.com/heiskr/sagefy/graphs/contributors)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
