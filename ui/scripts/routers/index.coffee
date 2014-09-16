@@ -7,7 +7,7 @@ PageController = require('../controllers/page')
 MenuModel = require('../models/menu')
 UserModel = require('../models/user')
 
-MenuGlobalView = require('../views/menu--global')
+MenuView = require('../views/menu')
 StyleguideView = require('../views/styleguide')
 LoginView = require('../views/login')
 LogoutView = require('../views/logout')
@@ -17,7 +17,7 @@ ContactView = require('../views/contact')
 SettingsView = require('../views/settings')
 IndexView = require('../views/index')
 SignupView = require('../views/signup')
-CreatePasswordView = require('../views/create_password')
+PasswordView = require('../views/password')
 ErrorView = require('../views/error')
 
 class PrimaryRouter extends BaseRouter
@@ -29,7 +29,7 @@ class PrimaryRouter extends BaseRouter
         'terms(/)': 'viewTerms'
         'contact(/)': 'viewContact'
         'settings(/)': 'viewSettings'
-        'create_password(/)': 'createPassword'
+        'password(/)': 'viewPassword'
         '(/)': 'viewIndex'
         '*_': 'viewError'
     }
@@ -38,7 +38,7 @@ class PrimaryRouter extends BaseRouter
         # Create the global menu
         @$region = options.$region
         @menuModel = new MenuModel()
-        @menuGlobalView = new MenuGlobalView({
+        @menuView = new MenuView({
             $region: @$region
             model: @menuModel
         })
@@ -100,9 +100,9 @@ class PrimaryRouter extends BaseRouter
             modelOptions: {id: 'current'}
         })
 
-    createPassword: ->
+    viewPassword: ->
         @controller = new PageController({
-            view: CreatePasswordView
+            view: PasswordView
             model: UserModel
         })
 

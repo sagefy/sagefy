@@ -26,7 +26,7 @@ require('./controllers/base')
 require('./models/menu')
 require('./models/user')
 
-require('./views/create_password')
+require('./views/password')
 require('./views/error')
 require('./views/form')
 require('./views/index')

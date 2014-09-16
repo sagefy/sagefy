@@ -1,9 +1,9 @@
 FormView = require('./form')
 mixins = require('../modules/mixins')
 
-class CreatePasswordView extends FormView
+class PasswordView extends FormView
     title: 'Create a New Password'
-    id: 'create-password'
+    id: 'password'
     className: 'col-6'
     fields: ['email']  # Step 1: Email, otherwise none
     submitLabel: 'Send Email'
@@ -41,4 +41,4 @@ class CreatePasswordView extends FormView
             # @model.save()
 
 
-module.exports =  CreatePasswordView
+module.exports =  PasswordView
