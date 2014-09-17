@@ -53,8 +53,8 @@ gulp.task('clean', ->
 gulp.task('static:build', ->
     gulp.src(staticSrc)
         .pipe(gulp.dest(dist))
-    gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.*')
-        .pipe(gulp.dest(dist + 'fonts/'))
+    gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.woff')
+        .pipe(gulp.dest(dist))
 )
 
 gulp.task('static:watch', ['static:build'], ->
@@ -168,5 +168,10 @@ gulp.task('scripts:test:run', [
     'scripts:test:build'
 ], ->
     gulp.src(dist + 'test.html')
-        .pipe(plugins.mochaPhantomjs({reporter: 'dot'}))
+        .pipe(plugins.mochaPhantomjs({
+            reporter: 'dot'
+            phantomjs: {
+                loadImages: false
+            }
+        }))
 )
