@@ -3,6 +3,17 @@ The app takes a series of adapters, and delegates URLs
 to them when the URL changes.
 ###
 
+
+###
+TODO:
+- Router / pushState capability
+- bind adapters to routes
+- regexp friendly routing
+- navigate function
+- route function (remove prev, create new)
+- write tests
+###
+
 Events = require('./events')
 
 class App extends Events

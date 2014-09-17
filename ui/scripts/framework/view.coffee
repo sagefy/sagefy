@@ -1,5 +1,9 @@
 ###
-
+TODO:
+- Write description
+- Write tests
+- Write delegate and undelegate events
+- Naive templating system
 ###
 
 Events = require('./events')

@@ -1,5 +1,10 @@
 ###
-
+# TODO:
+- Write URL function
+- Write Ajax function/utils
+- Flesh out REST methods
+- Write fields/validate
+- Write tests
 ###
 
 Events = require('./events')
@@ -30,6 +35,8 @@ class Model extends Events
         return this
 
     fetch: ->
+
+    parse: ->
 
     sync: ->
 
