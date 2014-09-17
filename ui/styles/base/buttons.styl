@@ -172,19 +172,13 @@ $base-button
     @extend .font-size-big
     padding $unit $unit * 2
 
-.button,
-button,
-input[type="button"],
-.button--cancel,
-.button--escape,
-.button--prev,
-.button--back,
-.button--info
+.button
+button
+input[type="button"]
     @extend $base-button
 
     button-background $gold-90
     color $gold-43
-    box-shadow inset 0 -2px 0 $gold-78
 
     &:hover, &:focus, &.hover, &.focus
         color $gold-20
@@ -201,14 +195,11 @@ input[type="button"],
             background transparent
 
 button[type="submit"],
-.button--primary,
-.button--navigation,
-.button--next
+.button--primary
     @extend $base-button
 
     button-background $blue-50
     color $blue-99
-    box-shadow inset 0 -2px 0 $blue-20
 
     &:hover, &:focus, &.hover, &.focus
         color $white
@@ -220,20 +211,16 @@ button[type="submit"],
 
     &[disabled], &.button--disabled
         color $blue-78
-        box-shadow inset 0 -2px 0 $blue-78
 
         &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
             color $blue-78
             background transparent
 
-.button--secondary,
-.button--success,
-.button--accept
+.button--secondary
     @extend $base-button
 
     button-background $green-90
     color $green-43
-    box-shadow inset 0 -2px 0 $green-78
 
     &:hover, &:focus, &.hover, &.focus
         color $green-20
@@ -249,14 +236,11 @@ button[type="submit"],
             color $green-78
             background transparent
 
-.button--danger,
-.button--error,
-.button--delete
+.button--danger
     @extend $base-button
 
     button-background $red-90, 3, 2
     color $red-43
-    box-shadow inset 0 -2px 0 $red-78
 
     &:hover, &:focus, &.hover, &.focus
         color $red-20
