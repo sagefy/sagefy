@@ -8,11 +8,6 @@ The adapter is responsible for
 - cleaning up after the route is finished.
 ###
 
-###
-TODO:
-- Write tests
-###
-
 class Adapter extends Events
     # The app fetches the URLs from the adapters and registers them
     # with the router

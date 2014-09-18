@@ -16,6 +16,11 @@ window.expect = chai.expect
 require('./basic')
 
 require('./framework/events')
+require('./framework/utilities')
+require('./framework/adapter')
+require('./framework/model')
+require('./framework/view')
+require('./framework/application')
 
 require('./modules/hbs_helpers')
 require('./modules/mixins')
