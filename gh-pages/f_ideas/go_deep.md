@@ -1,6 +1,6 @@
 ---
 layout: default
-title: The Eight Ideas – Go Deep
+title: The Ideas – Go Deep
 ---
 
 _Route memorizing isn't enough. We must be able to use our knowledge._

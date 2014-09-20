@@ -1,9 +1,9 @@
 ---
 layout: default
-title: The Eight Ideas
+title: The Ideas
 ---
 
-The Eight Ideas are the foundation of Sagefy's architecture. The ideas are broad and based on highly common patterns in memory and learning research. Use the ideas to provide a sense of direction.
+The ideas are the foundation of Sagefy's architecture. The ideas are broad and based on highly common patterns in memory and learning research. Use the ideas to provide a sense of direction.
 
 ### 1) Do One Thing at a Time
 
@@ -29,10 +29,6 @@ We rely on real-life experiences to guide to our learning. [More on 5.](/f_ideas
 
 Route memorizing isn't enough. We must be able to use our knowledge. [More on 6.](/f_ideas/go_deep)
 
-### 7) Collaborate
+### 7) Work Together
 
-We are more effective as team or as a community. Often, but not always. [More on 7.](/f_ideas/collaborate)
-
-### 8) Open Up
-
-Secrets never last. Openness builds trust and confidence. [More on 8.](/f_ideas/open_up)
+We are more effective as team or as a community. Often, but not always. [More on 7.](/f_ideas/work_together)

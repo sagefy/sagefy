@@ -1,5 +1,5 @@
 ---
-title: Data Structure -- Card Kinds
+title: Data Structure – Card Kinds
 layout: default
 ---
 

@@ -51,7 +51,7 @@ Statistics, Data science and Machine learning
 ### Educational Data Mining and Learning Analytics
 
 - [Educational Data Mining and Learning Analytics by Ryan Baker and George Siemens](http://www.columbia.edu/~rsb2162/BakerSiemensHandbook2013.pdf)
-- [Knowledge Spaces -- The Science Behind ALEKS](http://www.aleks.com/about_aleks/Science_Behind_ALEKS.pdf)
+- [Knowledge Spaces – The Science Behind ALEKS](http://www.aleks.com/about_aleks/Science_Behind_ALEKS.pdf)
 
 Data Visualization
 ------------------

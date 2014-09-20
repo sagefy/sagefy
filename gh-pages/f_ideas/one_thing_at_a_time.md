@@ -1,6 +1,6 @@
 ---
 layout: default
-title: The Eight Ideas – Do One Thing at a Time
+title: The Ideas – Do One Thing at a Time
 ---
 
 _Our memory system is powerful but limited. We are most effective when focusing on one task at a time._

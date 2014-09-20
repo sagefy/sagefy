@@ -1,6 +1,6 @@
 ---
 layout: default
-title: The Eight Ideas – Make it Real
+title: The Ideas – Make it Real
 ---
 
 _We rely on real-life experiences to guide to our learning._

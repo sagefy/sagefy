@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Technology -- Contribution
+title: Technology – Contribution
 ---
 
 This document covers basic code styling and notes for Sagefy.
