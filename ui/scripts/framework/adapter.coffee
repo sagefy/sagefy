@@ -1,4 +1,5 @@
 Events = require('./events')
+_ = require('./utilities')
 
 ###
 The adapter is responsible for
@@ -11,7 +12,26 @@ The adapter is responsible for
 class Adapter extends Events
     # The app fetches the URLs from the adapters and registers them
     # with the router
+    # URL allows for plain string, RegExp, and also the format
+    # /foo/{id}/bar/{slug}
     url: ''
+
+    # Determine if a given path matches this router
+    # Returns either false or array, where array is matches parameters
+    matches: (path) ->
+        @urlRegExp = @getUrlRegExp(@url) unless @urlRegExp
+        match = path.match(@urlRegExp)
+        return if match then match.slice(1) else false
+
+    # Converts a string representation of URL to a RegExp representation
+    getUrlRegExp: (url) ->
+        if _.isRegExp(url)
+            return url
+        return new RegExp(
+            '^' +
+            url.replace(/\{([\d\w\_\$]+)\}/g, '([^/]+)') +
+            '$'
+        )
 
     # **constructor**
     # When a route is hit, the constructor will be called.
