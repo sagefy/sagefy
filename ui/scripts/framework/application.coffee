@@ -69,8 +69,8 @@ class Application extends Events
     bindPopState: ->
         # Ensure we don't overwrite any previous `onpopstate` call
         prev = window.onpopstate if window.onpopstate
-        window.onpopstate = (event) ->
-            prev(event)
+        window.onpopstate = (event) =>
+            prev(event) if prev
             @route(window.location.pathname)
         return this
 

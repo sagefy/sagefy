@@ -48,6 +48,13 @@ describe('Application', ->
         x.remove()
     )
 
+    it('should unbind navigate from adapters when removing the app', ->
+        x = new App(A)
+        expect(A::navigate).to.equal(x.navigate)
+        x.remove()
+        expect(A::navigate).to.not.exist
+    )
+
     it('should find an adapter, given a path', ->
         x = new App(A, B, C)
         expect(x.findAdapter('/bar')).to.equal(C)
@@ -57,35 +64,63 @@ describe('Application', ->
     )
 
     describe('navigate and route', ->
-        it.skip('should do nothing if navigate ' +
-                'is called with the current path', ->
-
+        beforeEach(->
+            @pushState = sinon.stub(window.history, 'pushState')
         )
 
-        it.skip('should route to a new adapter', ->
-
+        afterEach(->
+            @pushState.restore()
         )
 
-        it.skip('should throw an error ' +
-                'if there\'s no adapter matching the path', ->
-
+        it('should do nothing if navigate ' +
+           'is called with the current path', ->
+            spy = sinon.spy(App::, 'route')
+            x = new App()
+            x.navigate(window.location.pathname)
+            expect(spy).to.not.be.called
+            expect(@pushState).to.not.be.called
+            x.remove()
+            spy.restore()
         )
 
-        it.skip('should remove the previous adapter on a new route', ->
-
+        it('should route to a new adapter', ->
+            spy = sinon.spy(App::, 'route')
+            x = new App(A, B, C)
+            x.navigate('/foo')
+            expect(spy).to.be.called
+            expect(@pushState).to.be.called
+            expect(x.adapter).to.be.instanceof(B)
+            x.remove()
+            spy.restore()
         )
 
-        it.skip('should update the URL on route', ->
+        it('should throw an error ' +
+           'if there\'s no adapter matching the path', ->
+            x = new App(A, B)
+            expect(-> x.navigate('/bar')).to.throw
+            expect(@pushState).to.not.be.called
+            x.remove()
+        )
 
+        it('should remove the previous adapter on a new route', ->
+            x = new App(A, B, C)
+            x.navigate('/foo')
+            expect(x.adapter).to.be.instanceof(B)
+            spy = sinon.spy(x.adapter, 'remove')
+            x.navigate('/foo/23')
+            expect(spy).to.be.called
+            expect(x.adapter).to.be.instanceof(A)
+            x.remove()
         )
 
         it.skip('should listen to the forward/back events ' +
                 'and update to match', ->
-
-        )
-
-        it.skip('should unbind navigate from adapters when removing the app', ->
-
+            x = new App(A, B, C)
+            x.navigate('/foo')
+            x.navigate('/foo/23')
+            # todo: hit back button ???
+            # but we can't actually change the path
+            x.remove()
         )
     )
 )
