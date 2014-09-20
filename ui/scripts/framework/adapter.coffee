@@ -10,6 +10,16 @@ The adapter is responsible for
 ###
 
 class Adapter extends Events
+    # **constructor**
+    # When a route is hit, the constructor will be called.
+    # Here, models and views should be defined, and listeners to the
+    # views and models should bind here.
+    # Additional methods can be defined to handle model and view events.
+
+    # **remove**
+    # When a different route is hit, the current adapter is removed.
+    # Here, clean up the models, views, and event bindings.
+
     # The app fetches the URLs from the adapters and registers them
     # with the router
     # URL allows for plain string, RegExp, and also the format
@@ -32,15 +42,5 @@ class Adapter extends Events
             url.replace(/\{([\d\w\_\$]+)\}/g, '([^/]+)') +
             '$'
         )
-
-    # **constructor**
-    # When a route is hit, the constructor will be called.
-    # Here, models and views should be defined, and listeners to the
-    # views and models should bind here.
-    # Additional methods can be defined to handle model and view events.
-
-    # **remove**
-    # When a different route is hit, the current adapter is removed.
-    # Here, clean up the models, views, and event bindings.
 
 module.exports = Adapter

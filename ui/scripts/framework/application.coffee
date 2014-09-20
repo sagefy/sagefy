@@ -14,6 +14,11 @@ class Application extends Events
         @bindAdapter(Adapter) for Adapter in Adapters
         @bindPopState()
 
+    # Removes the application
+    remove: ->
+        @unbindAdapter(Adapter) for Adapter in @Adapters
+        super
+
     # Provide the navigate function to each of the adapters
     bindAdapter: (Adapter) ->
         Adapter::navigate = @navigate
@@ -68,10 +73,5 @@ class Application extends Events
             prev(event) if prev
             @route(window.location.pathname)
         return this
-
-    # Removes the application
-    remove: ->
-        @unbindAdapter(Adapter) for Adapter in @Adapters
-        super
 
 module.exports = Application

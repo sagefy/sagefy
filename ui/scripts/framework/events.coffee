@@ -10,6 +10,12 @@ class Events
         @events = {}
         @listeners = []
 
+    # Descending objects should super this method
+    remove: ->
+        @stopListening()
+        @off()
+        return this
+
     # Triggers the event, where `name` is a string, and `args` will
     # be passed to any event handlers
     trigger: (name, args...) ->
@@ -73,12 +79,6 @@ class Events
                 listener.obj.off(listener.name, listener.fn)
                 @listeners.splice(index, 1)
 
-        return this
-
-    # Descending objects should super this method
-    remove: ->
-        @stopListening()
-        @off()
         return this
 
 module.exports = Events

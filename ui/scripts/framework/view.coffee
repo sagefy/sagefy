@@ -11,16 +11,15 @@ Events = require('./events')
 require('./matches_polyfill')
 
 class View extends Events
-    # On
+    # On creating a new view, create the element and possibly set the region
     constructor: ->
         super
-        @setRegion(@options.region) if @options.region
+        @setElement(@options.element)
+        @setRegion(@options.region)
 
     # Places the element inside of the provided region
-    setRegion: (region) ->
-        @setElement() unless @el
-        @region = region
-        region.appendChild(@el)
+    setRegion: (@region) ->
+        @region.appendChild(@el) if @region
 
     # Create the containing DOM element, based on
     # instance properties `id`, `className`, `tagName`, and `attributes`.
@@ -65,11 +64,11 @@ class View extends Events
             @el.addEventListener(key, @refDomEvents[key])
         return this
 
-    # Clears all events in `domEventsRef`
+    # Clears all events in `refDomEvents`
     undelegateEvents: ->
         for key, method of @refDomEvents or {}
             @el.removeEventListener(key, method)
-        @domEventsRef = {}
+        @refDomEvents = {}
         return this
 
 module.exports = View
