@@ -1,9 +1,15 @@
 ###
 TODO:
-- Write description
-- Write tests
 - Write delegate and undelegate events
 - Naive templating system
+- Write tests
+###
+
+###
+Views are responsible for:
+- Create a DOM element to contain the view contents
+- Rendering data
+- Binding to content events
 ###
 
 Events = require('./events')

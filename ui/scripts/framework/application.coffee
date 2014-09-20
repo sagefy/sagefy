@@ -3,11 +3,6 @@ The app takes a series of adapters, and delegates URLs
 to them when the URL changes.
 ###
 
-###
-TODO:
-- write tests
-###
-
 Events = require('./events')
 _ = require('./utilities')
 history = window.history

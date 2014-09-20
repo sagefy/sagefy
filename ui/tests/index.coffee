@@ -18,10 +18,12 @@ require('./basic')
 require('./framework/events')
 require('./framework/utilities')
 require('./framework/adapter')
+require('./framework/validations')
 require('./framework/model')
 require('./framework/view')
 require('./framework/application')
 
+###
 require('./modules/hbs_helpers')
 require('./modules/mixins')
 
@@ -42,7 +44,9 @@ require('./views/logout')
 require('./views/menu')
 require('./views/settings')
 require('./views/signup')
-# require('./views/styleguide')
+require('./views/styleguide')
+###
+
 # End include tests
 
 if window.mochaPhantomJS
