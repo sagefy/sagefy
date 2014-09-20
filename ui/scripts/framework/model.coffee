@@ -13,8 +13,8 @@ class Model extends Events
 
     # Creates `attributes` to ensure they are always there
     constructor: ->
-        super()
-        attributes = {}
+        super
+        @attributes = {}
 
     # URL can be a string or a function
     url: ''

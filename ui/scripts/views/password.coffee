@@ -15,7 +15,7 @@ class PasswordView extends FormView
         @listenTo(@model, 'errorPasswordToken', @error)
         @listenTo(@model, 'change:password', @passwordUpdated)
         # TODO: determine mode
-        super(options)
+        super
 
     error: (errors) =>
         @invalid(undefined, errors)

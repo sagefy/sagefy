@@ -10,7 +10,7 @@ describe('Adapter', ->
     it('should have a constructor', ->
         class A extends Adapter
             constructor: ->
-                super()
+                super
                 @a = true
         a = new A
         expect(a.events).to.be.an('object')

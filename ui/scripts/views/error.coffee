@@ -13,6 +13,6 @@ class ErrorView extends PageView
             code: @options.code
             message: @options.message
         }
-        super()
+        super
 
 module.exports = ErrorView

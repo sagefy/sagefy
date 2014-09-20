@@ -22,8 +22,7 @@ class Signup extends FormView
     initialize: (options) ->
         if @isLoggedIn()
             return @sync()
-
-        super(options)
+        super
 
     sync: ->
         # Hard redirect to get the cookie

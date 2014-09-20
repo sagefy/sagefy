@@ -15,7 +15,7 @@ class BaseRouter extends Backbone.Router
             prevCallback.call(this, arguments)
 
         # Call the Backbone router with updated callback
-        super(route, name, callback)
+        super
 
     # Closes any existing routers, and by extension,
     # Any children the controller contains

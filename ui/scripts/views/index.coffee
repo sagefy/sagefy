@@ -11,7 +11,7 @@ class IndexView extends PageView
 
     render: ->
         @templateData = {isLoggedIn: @isLoggedIn()}
-        super()
+        super
 
     isLoggedIn: mixins.isLoggedIn
 

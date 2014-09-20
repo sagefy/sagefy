@@ -65,7 +65,7 @@ gulp.task('static:watch', ['static:build'], ->
 )
 
 gulp.task('styles:build', ->
-    gulp.src('styles/app.styl')
+    gulp.src('styles/index.styl')
         .pipe(plugins.stylus({
             'include css': true
             errors: true
@@ -74,7 +74,7 @@ gulp.task('styles:build', ->
 )
 
 gulp.task('styles:build:doc', ->
-    gulp.src('../gh-pages/app.styl')
+    gulp.src('../gh-pages/index.styl')
         .pipe(plugins.stylus({
             'include css': true
             errors: true
@@ -92,7 +92,7 @@ gulp.task('styles:doc', (done) ->
 )
 
 gulp.task('styles:compress', ['styles:build'], ->
-    gulp.src(dist + 'app.css')
+    gulp.src(dist + 'index.css')
         .pipe(plugins.minifyCss())
         .pipe(gulp.dest(dist))
 )
@@ -105,7 +105,7 @@ gulp.task('styles:watch', ['styles:build', 'styles:build:doc'], ->
 )
 
 browserifyConfig = {
-    entries: ['./scripts/app.coffee']
+    entries: ['./scripts/index.coffee']
     extensions: ['.js', '.coffee', '.hbs']
     debug: true
 }
@@ -113,7 +113,7 @@ browserifyConfig = {
 gulp.task('scripts:build', ['styles:doc'], ->
     browserify(browserifyConfig)
         .bundle()
-        .pipe(source('app.js'))
+        .pipe(source('index.js'))
         .pipe(gulp.dest(dist))
 )
 
@@ -123,7 +123,7 @@ gulp.task('scripts:watch', ['scripts:build'], ->
         startTime = process.hrtime()
         bundle
             .bundle()
-            .pipe(source('app.js'))
+            .pipe(source('index.js'))
             .pipe(gulp.dest(dist))
         endTime = prettyHrtime(process.hrtime(startTime))
         gutil.log(
@@ -135,7 +135,7 @@ gulp.task('scripts:watch', ['scripts:build'], ->
 )
 
 gulp.task('scripts:compress', ['scripts:build'], ->
-    gulp.src(dist + 'app.js')
+    gulp.src(dist + 'index.js')
         .pipe(plugins.uglify())
         .pipe(gulp.dest(dist))
 )

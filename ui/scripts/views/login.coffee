@@ -24,7 +24,7 @@ class LoginView extends FormView
         if @isLoggedIn()
             return Backbone.history.navigate('/')
 
-        super(options)
+        super
 
         @listenTo(@model, 'login', @login)
         @listenTo(@model, 'loginError', @loginError)

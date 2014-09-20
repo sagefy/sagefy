@@ -19,7 +19,7 @@ class StyleguideView extends PageView
     render: ->
         # Add both base template and Styleguide compiled HTML
         @templateData = {html: @template2()}
-        super()
+        super
 
     # Empty-ish links should go nowhere when clicked
     cancel: ->

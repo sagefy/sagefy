@@ -5,8 +5,8 @@ Designed to be extended.
 
 class Events
     # Establishes the events and listeners hashes
-    # Descending classes should call `super()` before defining their own
-    constructor: ->
+    # Descending classes should call `super` before defining their own
+    constructor: (@options = {}) ->
         @events = {}
         @listeners = []
 
@@ -75,7 +75,7 @@ class Events
 
         return this
 
-    # Descending objects should super() this method
+    # Descending objects should super this method
     remove: ->
         @stopListening()
         @off()

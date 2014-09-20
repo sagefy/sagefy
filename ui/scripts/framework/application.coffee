@@ -10,7 +10,7 @@ history = window.history
 class Application extends Events
     # The application instance takes a list of adapters
     constructor: (@Adapters...) ->
-        super()
+        super
         @bindAdapter(Adapter) for Adapter in Adapters
         @bindPopState()
 
@@ -72,6 +72,6 @@ class Application extends Events
     # Removes the application
     remove: ->
         @unbindAdapter(Adapter) for Adapter in @Adapters
-        super()
+        super
 
 module.exports = Application

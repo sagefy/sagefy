@@ -1,57 +1,75 @@
 ###
-TODO:
-- Write delegate and undelegate events
-- Naive templating system
-- Write tests
-###
-
-###
 Views are responsible for:
 - Create a DOM element to contain the view contents
 - Rendering data
 - Binding to content events
 ###
 
+# TODO: Write tests
+
 Events = require('./events')
+require('./matches_polyfill')
 
 class View extends Events
-    id: ''
-    className: ''
-    tagName: 'div'
-    attributes: {}
-    el: null
-    region: null
-    domEvents: {}
-    template: null
+    # On
+    constructor: ->
+        super
+        @setRegion(@options.region) if @options.region
 
+    # Places the element inside of the provided region
+    setRegion: (region) ->
+        @setElement() unless @el
+        @region = region
+        region.appendChild(@el)
+
+    # Create the containing DOM element, based on
+    # instance properties `id`, `className`, `tagName`, and `attributes`.
+    # Can also receive a DOM element directly.
     setElement: (element) ->
         if element
             @el = element
         else
-            @el = document.createElement(@tagName)
-            @el.setAttribute('id', @id)
-            @el.setAttribute('class', @className)
-            for attribute, value of attributes
+            @el = document.createElement(@tagName or 'div')
+            @el.setAttribute('id', @id) if @id
+            @el.setAttribute('class', @className) if @className
+            for attribute, value of attributes or {}
                 @el.setAttribute(attribute, value)
         return @el
 
+    # Given data, renders it. If `template` is defined on the view,
+    # the template function will be called and passed the data.
+    # Overwrite liberally, keep `super`.
     render: (data) ->
         @data = data || {}
-        if @el
-            @el.html(if @template then @template(@data) else '')
+        @el.html(if @template then @template(@data) else '') if @el
+        @delegateEvents()
         return this
 
+    # Removes the element from the DOM in addition to
+    # the regular remove capability.
+    # Overwrite and `super` to clean up anything else.
     remove: ->
+        @undelegateEvents()
         if @el.parentNode
             @el.parentNode.removeChild(@el)
-        super()
+        super
 
+    # Takes `domEvents` and binds methods to events.
     delegateEvents: ->
-
+        @undelegateEvents()
+        for query, methodName of @domEvents or {}
+            [key, selector] = query.match(/^(\S+) (.*)$/).slice(1)
+            @refDomEvents[key] = (e) ->
+                if e.target.matches(selector)
+                    @[methodName].call(this, e)
+            @el.addEventListener(key, @refDomEvents[key])
         return this
 
+    # Clears all events in `domEventsRef`
     undelegateEvents: ->
-
+        for key, method of @refDomEvents or {}
+            @el.removeEventListener(key, method)
+        @domEventsRef = {}
         return this
 
 module.exports = View

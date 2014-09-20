@@ -1,7 +1,7 @@
 {
   "name": "Sagefy",
   "version": "0.0.0",
-  "main": "scripts/app.coffee",
+  "main": "scripts/index.coffee",
   "directories": {
     "test": "tests"
   },

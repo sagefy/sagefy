@@ -19,10 +19,8 @@ class PageController extends Controller
     close: ->
         if _.isFunction(@view.close)
             @view.close()
-
         if @view
             @view.remove()
-
-        super()
+        super
 
 module.exports = PageController
