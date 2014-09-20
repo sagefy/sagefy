@@ -87,6 +87,7 @@ Marketing
 
 - [Online Marketing Tips for Nonprofits - Moz](http://moz.com/blog/online-marketing-tips-for-nonprofits)
 - [OPEN SOURCE: Marketing for Developers](http://mbleigh.github.io/open-source-marketing)
+- [PlacesToPostYourStartup](https://github.com/mmccaff/PlacesToPostYourStartup)
 
 Learning platforms
 ------------------
