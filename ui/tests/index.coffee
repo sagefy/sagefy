@@ -42,7 +42,7 @@ require('./views/logout')
 require('./views/menu')
 require('./views/settings')
 require('./views/signup')
-require('./views/styleguide')
+# require('./views/styleguide')
 # End include tests
 
 if window.mochaPhantomJS

@@ -22,24 +22,24 @@ class Application extends Events
     # Provide the navigate function to each of the adapters
     bindAdapter: (Adapter) ->
         Adapter::navigate = @navigate
+        return Adapter
 
     # Remove the navigate function so the adapter can be cleanly removed
     unbindAdapter: (Adapter) ->
-        Adapter::navigate = null
+        delete Adapter::navigate
+        return Adapter
 
     # Find the adapter matching the path
     findAdapter: (path) ->
         for Adapter in @Adapters
-            if (_.isString(A.url) and A.url is path) or
-               (_.isRegExp(A.url) and A.url.match(path))
+            if Adapter::matches(path)
                 return Adapter
 
     # Navigate the application to a specific URL
     navigate: (path) ->
         # Don't navigate if we're already on the path
         if path is window.location.pathname
-            return
-
+            return null
         return @route(path)
 
     # Route to a new adapter, given a path
@@ -62,6 +62,8 @@ class Application extends Events
         # Update the display of the URL
         history.pushState({}, '', path)
 
+        return @adapter
+
     # When the user uses their back and forward buttons,
     # we need to listen to those events
     bindPopState: ->
@@ -70,10 +72,11 @@ class Application extends Events
         window.onpopstate = (event) ->
             prev(event)
             @route(window.location.pathname)
+        return this
 
     # Removes the application
     remove: ->
+        @unbindAdapter(Adapter) for Adapter in @Adapters
         super()
-        @unbindAdapter(Adapter) for Adapter in Adapters
 
 module.exports = Application
