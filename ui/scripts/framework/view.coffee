@@ -16,9 +16,11 @@ class View extends Events
         super
         @setElement(@options.element)
         @setRegion(@options.region)
+        @template = @options.template if @options.template
 
     # Places the element inside of the provided region
     setRegion: (@region) ->
+        @region.innerHTML = ''
         @region.appendChild(@el) if @region
 
     # Create the containing DOM element, based on
