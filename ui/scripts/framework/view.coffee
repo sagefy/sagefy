@@ -9,19 +9,21 @@ Views are responsible for:
 
 Events = require('./events')
 require('./matches_polyfill')
+eventRegExp = /^(\S+) (.*)$/
 
 class View extends Events
     # On creating a new view, create the element and possibly set the region
     constructor: ->
         super
         @setElement(@options.element)
-        @setRegion(@options.region)
+        @setRegion(@options.region) if @options.region
         @template = @options.template if @options.template
+        @myDelegatedEvent = @delegatedEvent.bind(this)
 
     # Places the element inside of the provided region
     setRegion: (@region) ->
         @region.innerHTML = ''
-        @region.appendChild(@el) if @region
+        @region.appendChild(@el)
 
     # Create the containing DOM element, based on
     # instance properties `id`, `className`, `tagName`, and `attributes`.
@@ -33,7 +35,7 @@ class View extends Events
             @el = document.createElement(@tagName or 'div')
             @el.setAttribute('id', @id) if @id
             @el.setAttribute('class', @className) if @className
-            for attribute, value of attributes or {}
+            for attribute, value of @attributes or {}
                 @el.setAttribute(attribute, value)
         return @el
 
@@ -42,7 +44,8 @@ class View extends Events
     # Overwrite liberally, keep `super`.
     render: (data) ->
         @data = data || {}
-        @el.html(if @template then @template(@data) else '') if @el
+        if @el
+            @el.innerHTML = if @template then @template(@data) else ''
         @delegateEvents()
         return this
 
@@ -59,18 +62,25 @@ class View extends Events
     delegateEvents: ->
         @undelegateEvents()
         for query, methodName of @domEvents or {}
-            [key, selector] = query.match(/^(\S+) (.*)$/).slice(1)
-            @refDomEvents[key] = (e) ->
-                if e.target.matches(selector)
-                    @[methodName].call(this, e)
-            @el.addEventListener(key, @refDomEvents[key])
+            key = query.match(eventRegExp).slice(1)[0]
+            @domEventKeys.push(key)
+        for key in @domEventKeys
+            @el.addEventListener(key, @myDelegatedEvent)
         return this
 
-    # Clears all events in `refDomEvents`
+    # Clears all events in `domEvents`
     undelegateEvents: ->
-        for key, method of @refDomEvents or {}
-            @el.removeEventListener(key, method)
-        @refDomEvents = {}
+        for key in @domEventKeys or []
+            @el.removeEventListener(key, @myDelegatedEvent)
+        @domEventKeys = []
         return this
+
+    # Looks through the events, and calls any matching functions
+    delegatedEvent: (e) ->
+        for query, methodName of @domEvents or {}
+            [key, selector] = query.match(eventRegExp).slice(1)
+            if e.target.matches(selector)
+                @[methodName].call(this, e)
+
 
 module.exports = View

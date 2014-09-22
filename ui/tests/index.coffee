@@ -20,7 +20,10 @@ require('./framework/utilities')
 require('./framework/adapter')
 require('./framework/validations')
 require('./framework/model')
+require('./framework/collection')
 require('./framework/view')
+require('./framework/list_view')
+require('./framework/layout_view')
 require('./framework/application')
 
 ###

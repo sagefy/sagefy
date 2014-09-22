@@ -1,7 +1,7 @@
 validations = {}
 
 validations.required = (val) ->
-    return 'Required.' if not val
+    return 'Required.' if val is null or val is undefined
 
 validations.email = (val) ->
     return 'Must be an email.' if not val.match(/^\S+@\S+\.\S+$/)
