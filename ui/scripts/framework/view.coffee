@@ -79,7 +79,7 @@ class View extends Events
     delegatedEvent: (e) ->
         for query, methodName of @domEvents or {}
             [key, selector] = query.match(eventRegExp).slice(1)
-            if e.target.matches(selector)
+            if key is e.type and e.target.matches(selector)
                 @[methodName].call(this, e)
 
 
