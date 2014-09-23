@@ -28,14 +28,14 @@ require('./framework/list_view')
 require('./framework/layout_view')
 require('./framework/application')
 
-###
-require('./modules/hbs_helpers')
-require('./modules/mixins')
-
 require('./routers/base')
 require('./routers/index')
 
 require('./controllers/base')
+
+###
+require('./modules/hbs_helpers')
+require('./modules/mixins')
 
 require('./models/menu')
 require('./models/user')

@@ -5,11 +5,6 @@ helpers = {
         if array.indexOf(value) > -1
             return options.fn(this)
         return options.inverse(this)
-
-    isnt: (a, b, options) ->
-        if a isnt b
-            return options.fn(this)
-        return options.inverse(this)
 }
 
 module.exports = (hbs) ->

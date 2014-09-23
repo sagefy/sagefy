@@ -23,9 +23,4 @@ describe('Handlebars Helpers', ->
         )
             .to.equal('true')
     )
-
-    it('should do something if two values are not equal', ->
-        expect(@render('{{#isnt true false}}true{{/isnt}}'))
-            .to.equal('true')
-    )
 )
