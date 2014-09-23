@@ -20,7 +20,7 @@ class Model extends Events
     url: ''
 
     # Utility method, used by `fetch` and `save`
-    makeUrl: (options) ->
+    makeUrl: (options = {}) ->
         if _.isString(@url)
             return @url
         return @url(options)
@@ -32,8 +32,8 @@ class Model extends Events
     # Store the value. Can take either `key, value` or `options`.
     # Does not perform any validations.
     set: (key, value) ->
-        if Util.isObject(key)
-            @attributes = Util.extend(key)
+        if _.isObject(key)
+            @attributes = _.extend(@attributes, key)
             @trigger('change', Object.keys(key))
         else
             @attributes[key] = value
@@ -104,12 +104,22 @@ class Model extends Events
     # Triggers `invalid` if errors are found.
     validate: ->
         errors = []
-        for fieldName, schema of @fields
-            for vName, vVal of schema.validations
-                error = validations[vName](@get(fieldName), vVal)
-                errors.push(error) if errors
+        for fieldName in Object.keys(@fields)
+            error = @validateField(fieldName)
+            errors.push({
+                name: fieldName
+                message: error
+            }) if error
         @trigger('invalid', errors) if errors.length
         return errors
+
+    # Validates a specific field
+    # Returns an error message or null
+    validateField: (fieldName) ->
+        schema = @fields[fieldName]
+        for vName, vVal of schema.validations
+            error = validations[vName](@get(fieldName), vVal)
+            return error if error
 
     ###
     Make an Ajax call given options:
