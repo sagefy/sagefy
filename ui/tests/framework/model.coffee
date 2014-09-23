@@ -313,16 +313,46 @@ describe('Model', ->
     )
 
     describe('#ajax', ->
-        it.skip('should make a GET request with no data', ->
-
+        beforeEach(->
+            @xhr = sinon.useFakeXMLHttpRequest()
+            @requests = []
+            @xhr.onCreate = (xhr) =>
+                @requests.push(xhr)
         )
 
-        it.skip('should make a POST request with data', ->
-
+        afterEach(->
+            @xhr.restore()
         )
 
-        it.skip('should make a DELETE request', ->
+        it('should make a GET request with no data', ->
+            test = {}
+            Model::ajax({
+                method: 'GET'
+                url: '/foo'
+                done: (json) -> test = json
+            })
+            @requests[0].respond(
+                200
+                {'Content-Type': 'application/json'}
+                '{"foo":{"id": 23}}'
+            )
+            expect(test).to.deep.equal({foo: {id: 23}})
+        )
 
+        it('should make a POST request with data', ->
+            Model::ajax({
+                method: 'POST'
+                url: '/foo'
+                data: {id: 23}
+                done: (json) -> test = json
+            })
+            expect(@requests[0].requestBody).to.equal(JSON.stringify({id: 23}))
+            @requests[0].respond(
+                200
+                {'Content-Type': 'application/json'}
+                '{"foo":{"id": 23}}'
+            )
+            expect(@requests[0].status).to.equal(200)
         )
     )
 )

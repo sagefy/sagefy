@@ -138,6 +138,7 @@ class Model extends Events
         else
             url = options.url
         @request = new XMLHttpRequest()
+        @request.open(method, url, true)
         @request.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
         @request.setRequestHeader(
             'Content-Type'
@@ -150,7 +151,6 @@ class Model extends Events
                 options.fail(JSON.parse(@responseText), this)
         @request.onerror = ->
             options.fail(null, this)
-        @request.open(method, url, true)
         @request.send(JSON.stringify(options.data or {}))
         return @request
 

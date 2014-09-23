@@ -3,6 +3,8 @@ window.$ = window.jQuery = require('jquery')
 window.chai = require('chai')
 
 window.sinon = require('sinon')
+require('sinon/lib/sinon/util/event')
+require('sinon/lib/sinon/util/fake_xml_http_request')
 window.sinonChai = require('sinon-chai')
 chai.use(sinonChai)
 
