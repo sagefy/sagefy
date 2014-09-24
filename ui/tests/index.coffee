@@ -28,12 +28,6 @@ require('./framework/list_view')
 require('./framework/layout_view')
 require('./framework/application')
 
-require('./routers/base')
-require('./routers/index')
-
-require('./controllers/base')
-
-###
 require('./modules/hbs_helpers')
 require('./modules/mixins')
 
@@ -50,7 +44,6 @@ require('./views/menu')
 require('./views/settings')
 require('./views/signup')
 require('./views/styleguide')
-###
 
 # End include tests
 

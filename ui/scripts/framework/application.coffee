@@ -60,7 +60,8 @@ class Application extends Events
         @adapter = new Adapter()
 
         # Update the display of the URL
-        history.pushState({}, '', path)
+        if path isnt window.location.pathname
+            history.pushState({}, '', path)
 
         return @adapter
 
