@@ -24,8 +24,6 @@ require('./framework/validations')
 require('./framework/model')
 require('./framework/collection')
 require('./framework/view')
-require('./framework/list_view')
-require('./framework/layout_view')
 require('./framework/application')
 
 require('./modules/hbs_helpers')

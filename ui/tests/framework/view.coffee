@@ -93,6 +93,39 @@ describe('View', ->
         spy.restore()
     )
 
+    it('should select elements', ->
+        class V extends View
+            elements: {
+                a: '.a'
+                b: '#b'
+            }
+            template: ->
+                return '<span class="a"></span><span id="b"></span>'
+
+        v = new V()
+        v.render()
+        expect(v.a).to.be.instanceof(Element)
+        expect(v.b).to.be.instanceOf(Element)
+        v.remove()
+    )
+
+    it('should unselect elements', ->
+        class V extends View
+            elements: {
+                a: '.a'
+                b: '#b'
+            }
+            template: ->
+                return '<span class="a"></span><span id="b"></span>'
+
+        v = new V()
+        v.render()
+        v.unselectElements()
+        expect(v.a).to.not.exist
+        expect(v.b).to.not.exist
+        v.remove()
+    )
+
     it('should be okay to call delegateEvents with no events', ->
         v = new View()
         expect(-> v.delegateEvents()).to.not.throw

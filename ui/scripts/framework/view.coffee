@@ -5,8 +5,6 @@ Views are responsible for:
 - Binding to content events
 ###
 
-# TODO: Write tests
-
 Events = require('./events')
 require('./matches_polyfill')
 eventRegExp = /^(\S+) (.*)$/
@@ -32,12 +30,25 @@ class View extends Events
         if element
             @el = element
         else
-            @el = document.createElement(@tagName or 'div')
-            @el.setAttribute('id', @id) if @id
-            @el.setAttribute('class', @className) if @className
-            for attribute, value of @attributes or {}
-                @el.setAttribute(attribute, value)
+            @el = @createElement({
+                tagName: @tagName
+                id: @id
+                className: @className
+                attributes: @attributes
+            })
         return @el
+
+    # Create a DOM element, based on options
+    # `id`, `className`, `tagName`, and `attributes`
+    createElement: (options) ->
+        el = document.createElement(options.tagName or 'div')
+        if options.id
+            el.setAttribute('id', options.id)
+        if options.className
+            el.setAttribute('class', options.className)
+        for attribute, value of options.attributes or {}
+            el.setAttribute(attribute, value)
+        return el
 
     # Given data, renders it. If `template` is defined on the view,
     # the template function will be called and passed the data.
@@ -46,14 +57,30 @@ class View extends Events
         @data = data || {}
         if @el
             @el.innerHTML = if @template then @template(@data) else ''
+        @selectElements()
         @delegateEvents()
         return this
+
+    # If the user has entered `elements` on the view
+    # in a `key: selector` hash,
+    # we will go ahead and select those elements at store them at key
+    selectElements: ->
+        for key, selector of @elements or {}
+            @[key] = @el.querySelectorAll(selector)
+            if @[key].length is 1
+                @[key] = @[key][0]
+
+    # Remove all elements stored as a result of `selectElements`
+    unselectElements: ->
+        for key in Object.keys(@elements or {})
+            delete @[key]
 
     # Removes the element from the DOM in addition to
     # the regular remove capability.
     # Overwrite and `super` to clean up anything else.
     remove: ->
         @undelegateEvents()
+        @unselectElements()
         if @el.parentNode
             @el.parentNode.removeChild(@el)
         super
