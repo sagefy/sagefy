@@ -22,7 +22,6 @@ class Events
         if @events[name]
             for fn in @events[name]
                 fn.apply(this, args)
-
         return this
 
     # Bind to events
