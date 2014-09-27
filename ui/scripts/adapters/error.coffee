@@ -1,12 +1,26 @@
 PageAdapter = require('./page')
-ErrorView = require('../views/error')
+View = require('../framework/view')
+template = require('../templates/pages/error')
 
 class ErrorAdapter extends PageAdapter
     url: /.*/
-    View: ErrorView
-    viewOptions: {
-        code: 404
-        message: 'Not Found'
-    }
+    title: 'Not Found'
+
+    constructor: ->
+        super
+        @view = new View({
+            id: 'error'
+            className: 'col-4'
+            template: template
+            region: @page
+        })
+        @view.render({
+            code: 404
+            message: 'Not Found'
+        })
+
+    remove: ->
+        @view.remove()
+        super
 
 module.exports = ErrorAdapter

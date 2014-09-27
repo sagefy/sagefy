@@ -1,5 +1,5 @@
-LayoutView = require('../layout')
+View = require('../../framework/view')
 
-class FormLayoutView extends LayoutView
+class FormLayoutView extends View
 
 module.exports = FormLayoutView

@@ -16,8 +16,13 @@ class Sagefy extends Application
         @menuModel = new MenuModel()
         @menuView = new MenuView({
             region: document.body
-            model: @menuModel
         })
+
+        # When we update the model, update the view
+        render = ->
+            @menuView.render(@model.items())
+        @listenTo(@model, 'changeState', render)
+        render()
 
         # When we click an internal link, use `navigate` instead
         document.body.addEventListener('click', (e) ->

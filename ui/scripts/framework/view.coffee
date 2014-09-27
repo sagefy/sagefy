@@ -31,10 +31,10 @@ class View extends Events
             @el = element
         else
             @el = @createElement({
-                tagName: @tagName
-                id: @id
-                className: @className
-                attributes: @attributes
+                tagName: @options.tagName or @tagName
+                id: @options.id or @id
+                className: @options.className or @className
+                attributes: @options.attributes or @attributes
             })
         return @el
 

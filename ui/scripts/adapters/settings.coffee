@@ -1,11 +1,19 @@
 PageAdapter = require('./page')
 UserModel = require('../models/user')
-SettingsView = require('../views/settings')
+# SettingsView = require('../views/settings')
 
 class SettingsAdapter extends PageAdapter
     url: '/settings'
-    Model: UserModel
-    View: SettingsView
-    modelOptions: {id: 'current'}
+    title: 'Settings'
+
+    constructor: ->
+        super
+        @model = new UserModel({id: 'current'})
+        # @view = new SettingsView()
+
+    remove: ->
+        @view.remove()
+        @model.remove()
+        super
 
 module.exports = SettingsAdapter

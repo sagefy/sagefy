@@ -1,8 +1,24 @@
 PageAdapter = require('./page')
-TermsView = require('../views/terms')
+View = require('../framework/view')
+template = require('../templates/pages/terms')
 
 class TermsAdapter extends PageAdapter
     url: '/terms'
-    View: TermsView
+    title: 'Terms of Service'
+
+    constructor: ->
+        @view = new View({
+            id: 'terms'
+            className: 'col-10'
+            template: template
+            region: @page
+        })
+        @view.render()
+        super
+
+    remove: ->
+        @view.remove()
+        super
+
 
 module.exports = TermsAdapter

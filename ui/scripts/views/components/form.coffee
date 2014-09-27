@@ -1,5 +1,5 @@
-ComponentView = require('../component')
+View = require('../../framework/view')
 
-class FormView extends ComponentView
+class FormView extends View
 
 module.exports = FormView

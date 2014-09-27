@@ -1,0 +1,6 @@
+require('./contact')
+require('./dashboard')
+require('./error')
+require('./index_')
+require('./styleguide')
+require('./terms')
