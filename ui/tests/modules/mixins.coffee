@@ -1,81 +1,29 @@
 mixins = require('../../scripts/modules/mixins')
-$ = require('jquery')
-require('jquery.cookie')
-Backbone = require('backbone')
+cookie = require('../../scripts/modules/cookie')
 
 describe('Mixins', ->
-    before(->
-        @$test = $('#test')
-    )
-
     it('should format data from an HTML form', ->
-        formHTML = '''
+        test = document.getElementById('test')
+        test.innerHTML = '''
         <form>
             <input name="name" value="Moogle" />
+            <textarea name="description">Chocobo</textarea>
         </form>
         '''
-        @$test.append(formHTML)
-        expect(mixins.formData(@$test.find('form')))
-            .to.eql({name: "Moogle"})
-        @$test.empty()
-    )
-
-    it('should parse a JSON file, and not error if not JSON', ->
-        expect(mixins.parseJSON('{"a":1}')).to.eql({a: 1})
-        expect(mixins.parseJSON('bowling')).to.equal('bowling')
+        expect(mixins.formData(test.querySelector('form')))
+            .to.deep.equal({
+                name: "Moogle"
+                description: "Chocobo"
+            })
+        test.innerHTML = ''
     )
 
     it('should detect login', ->
-        $.cookie('logged_in', '1', {expires: 7, path: '/'})
+        cookie.set('logged_in', '1')
         expect(mixins.isLoggedIn()).to.be.true
-        $.cookie('logged_in', '0', {expires: 7, path: '/'})
+        cookie.set('logged_in', '0')
         expect(mixins.isLoggedIn()).to.be.false
-        $.removeCookie('logged_in', { path: '/' })
-    )
-
-    it('should parse an Ajax error', ->
-        expect(mixins.parseAjaxErrors({
-            responseText: '{"errors":[{"name":"a"}]}'
-        })).to.eql([{name: "a"}])
-        expect(mixins.parseAjaxErrors({responseText: 'crepe'}))
-            .to.equal('crepe')
-    )
-
-    it('should validate email addresses', ->
-        expect(mixins.validEmail('a@z.b')).to.be.true
-        expect(mixins.validEmail('voo')).to.be.false
-    )
-
-    it('should validate field data', ->
-        field = {validations: {required: true}}
-        expect(mixins.validateField('name', field, '')).to.be.an('object')
-        expect(mixins.validateField('name', field, 'a')).to.be.false
-        # false ~= no error
-    )
-
-    it('should validate fields from model data', ->
-        class TestModel extends Backbone.Model
-            validate: mixins.validateModelFromFields
-            fields: {
-                password: {
-                    title: 'Password'
-                    type: 'password'
-                    description: 'Minimum 8 characters.'
-                    validations: {
-                        required: true
-                        minlength: 8
-                    }
-                }
-            }
-        model = new TestModel()
-
-        expect(
-            model.validate(model.toJSON(), {fields: ['password']})
-        ).to.be.an('array')
-        model.set('password', 'password')
-        expect(
-            model.validate(model.toJSON(), {fields: ['password']})
-        ).to.be.undefined
+        cookie.unset('logged_in')
     )
 
     it('should capitalize the first letter of a string', ->

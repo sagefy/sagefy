@@ -1,33 +1,26 @@
-Backbone = require('backbone')
-mixins = require('../modules/mixins')
-$ = require('jquery')
+Model = require('../framework/model')
 
-class UserModel extends Backbone.Model
-    urlRoot: '/api/users/'
+class UserModel extends Model
+    url: (options) ->
+        id = options.id or @get('id') or null
+        return '/api/users' + (if id then '/' + id else '')
 
     fields: {
         name: {
-            title: 'Username'
             type: 'text'
-            placeholder: 'e.g. Marissa'
             validations: {
                 required: true
             }
         }
         email: {
-            title: 'Email'
             type: 'email'
-            placeholder: 'e.g. marissa@example.com'
-            description: 'We ask for your email to send notifications.'
             validations: {
                 required: true
                 email: true
             }
         }
         password: {
-            title: 'Password'
             type: 'password'
-            description: 'Minimum 8 characters.'
             validations: {
                 required: true
                 minlength: 8
@@ -35,58 +28,49 @@ class UserModel extends Backbone.Model
         }
     }
 
-    validate: mixins.validateModelFromFields
-    parseAjaxErrors: mixins.parseAjaxErrors
-
     parse: (response) ->
         return response.user
 
     login: (data) ->
-        $.ajax({
-            type: 'POST'
-            url: @urlRoot + 'login'
-            data: JSON.stringify(data)
-            contentType: 'application/json'
-        })
-            .done(=>
+        return @ajax({
+            method: 'POST'
+            url: '/api/users/login'
+            data: data
+            done: =>
                 @trigger('login')
-            )
-            .fail((error) =>
+            fail: (error) =>
                 @trigger('loginError', @parseAjaxErrors(error))
-            )
+        })
 
     logout: ->
-        $.post(@urlRoot + 'logout')
-            .done(=>
+        return @ajax({
+            method: 'POST'
+            url: '/api/users/logout'
+            done: =>
                 @trigger('logout')
-            )
+        })
 
     getPasswordToken: (data) ->
-        $.ajax({
-            type: 'POST'
-            url: @urlRoot + 'token'
-            data: JSON.stringify(data)
-            contentType: 'application/json'
-        })
-            .done(=>
+        return @ajax({
+            method: 'POST'
+            url: '/api/users/token'
+            data: data
+            done: =>
                 @trigger('passwordToken')
-            )
-            .fail((error) =>
+            fail: (error) =>
                 @trigger('errorPasswordToken', @parseAjaxErrors(error))
-            )
+
+        })
 
     createPassword: (data) ->
-        $.ajax({
-            type: 'POST'
-            url: @urlRoot + 'password'
-            data: JSON.stringify(data)
-            contentType: 'application/json'
-        })
-            .done(=>
+        @ajax({
+            method: 'POST'
+            url: '/api/users/password'
+            data: data
+            done: =>
                 @trigger('createPassword')
-            )
-            .fail((error) =>
+            fail: (error) =>
                 @trigger('errorCreatePassword', @parseAjaxErrors(error))
-            )
+        })
 
 module.exports = UserModel

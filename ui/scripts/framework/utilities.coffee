@@ -36,4 +36,12 @@ _.extend = (target, injects...) ->
                 else val # number, boolean, string, regexp, null, function
     return target
 
+# Try to parse a string as JSON
+# Otherwise just return the string
+_.parseJSON = (str) ->
+    try
+        return JSON.parse(str)
+    catch e
+        return str
+
 module.exports = _

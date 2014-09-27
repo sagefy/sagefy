@@ -82,6 +82,8 @@ gulp.task('styles:build:doc', ->
         .pipe(gulp.dest('../gh-pages/'))
 )
 
+
+###
 gulp.task('styles:doc', (done) ->
     yms = require('ym-styleguide')
     fs = require('fs')
@@ -90,6 +92,8 @@ gulp.task('styles:doc', (done) ->
         done()
     )
 )
+###
+gulp.task('styles:doc', -> )
 
 gulp.task('styles:compress', ['styles:build'], ->
     gulp.src(dist + 'index.css')

@@ -1,20 +1,19 @@
 Adapter = require('../framework/adapter')
 _ = require('../framework/utilities')
-$ = require('jquery')
 
 class PageAdapter extends Adapter
     constructor: (options) ->
         super
 
-        $page = $('.page')
-        $page.empty()
+        page = document.querySelector('.page')
+        page.innerHTML = ''
 
         if @Model
             @model = new @Model(@modelOptions or {})
         if @View
             @view = new @View(_.extend({
                 model: @model or null
-                $region: $page
+                region: page
             }, @viewOptions or {}))
 
     remove: ->

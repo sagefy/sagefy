@@ -1,15 +1,12 @@
 MenuModel = require('../../scripts/models/menu')
 
 describe('Menu Model', ->
-    before(->
-        @model = new MenuModel()
-    )
-
     beforeEach(->
+        @model = new MenuModel()
         @model.state = 'loggedOut'
     )
 
-    after(->
+    afterEach(->
         delete @model
     )
 
@@ -54,7 +51,8 @@ describe('Menu Model', ->
     it('should use underscores for URLs', ->
         @model._items['taxi-service'] = {}
         @model.menus.loggedOut.push('taxi-service')
-        @model.initialize()
+        @model._items = @model._itemsBoilerplate(@_items)
+        @model.updateState()
         expect(@model.items()[3].url).to.equal('/taxi_service')
     )
 )

@@ -1,23 +1,23 @@
 UserModel = require('../../scripts/models/user')
-_ = require('underscore')
 
 validate = (model, search) ->
-    return _.findWhere(
-        model.validate(model.toJSON(), {
-            fields: Object.keys(model.fields)
-        })
-        {name: search}
-    )
+    errors = model.validate()
+    for error in errors
+        if error.name is search
+            return error
 
 describe('User Model', ->
-    before(->
-        @ajaxStub = sinon.stub($, 'ajax', -> $({}).promise())
+    beforeEach(->
+        @xhr = sinon.useFakeXMLHttpRequest()
+        @requests = []
+        @xhr.onCreate = (xhr) =>
+            @requests.push(xhr)
         @user = new UserModel()
     )
 
-    after(->
-        @ajaxStub.restore()
+    afterEach(->
         delete @user
+        @xhr.restore()
     )
 
     it('should define the appropriate fields', ->
@@ -51,6 +51,11 @@ describe('User Model', ->
         spy = sinon.spy()
         @user.on('login', spy)
         @user.login({name: 'abcd', password: 'asdfasdf'})
+        @requests[0].respond(
+            204
+            {'Content-Type': 'application/json'}
+            ''
+        )
         expect(spy).to.be.called
     )
 
@@ -58,6 +63,11 @@ describe('User Model', ->
         spy = sinon.spy()
         @user.on('logout', spy)
         @user.logout()
+        @requests[0].respond(
+            204
+            {'Content-Type': 'application/json'}
+            ''
+        )
         expect(spy).to.be.called
     )
 
@@ -65,6 +75,11 @@ describe('User Model', ->
         spy = sinon.spy()
         @user.on('passwordToken', spy)
         @user.getPasswordToken()
+        @requests[0].respond(
+            204
+            {'Content-Type': 'application/json'}
+            ''
+        )
         expect(spy).to.be.called
     )
 )
