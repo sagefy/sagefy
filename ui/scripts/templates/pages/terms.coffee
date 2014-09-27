@@ -1,4 +1,5 @@
-module.exports = -> return """
+module.exports = ->
+    return """
     <h1>Sagefy Privacy Policy and Terms of Service</h1>
 
     <p>By accessing Sagefy, you agree to these terms and
@@ -132,4 +133,4 @@ module.exports = -> return """
     <p><strong>Questions</strong>: If you have questions about these terms,
     contact us at
     <a href="mailto:support@sagefy.org">support@sagefy.org</a>.</p>
-"""
+    """

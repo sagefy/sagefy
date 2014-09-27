@@ -1,4 +1,5 @@
-module.exports = -> return """
+module.exports = ->
+    return """
     <h1>Contact Sagefy</h1>
 
     <ul>
@@ -35,4 +36,4 @@ module.exports = -> return """
             Sagefy is not intended or suitable for school or corporate use.
         </li>
     </ul>
-"""
+    """
