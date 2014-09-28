@@ -3,7 +3,8 @@ _ = require('./utilities')
 validations = {}
 
 validations.required = (val) ->
-    if val is null or val is undefined
+    if val is null or val is undefined or
+       (_.isString(val) and val is '')
         return 'Required.'
 
 validations.email = (val) ->

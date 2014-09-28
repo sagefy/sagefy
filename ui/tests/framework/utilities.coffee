@@ -293,4 +293,9 @@ describe('_', ->
             expect(d.valueOf()).to.not.equal(c.a.valueOf())
         )
     )
+
+    it('should parse a JSON file, and not error if not JSON', ->
+        expect(_.parseJSON('{"a":1}')).to.eql({a: 1})
+        expect(_.parseJSON('bowling')).to.equal('bowling')
+    )
 )

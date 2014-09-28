@@ -82,11 +82,13 @@ gulp.task('styles:build:doc', ->
         .pipe(gulp.dest('../gh-pages/'))
 )
 
+
 gulp.task('styles:doc', (done) ->
     yms = require('ym-styleguide')
     fs = require('fs')
     yms.build('styles/', (html) ->
-        fs.writeFileSync('scripts/templates/sections/styleguide/compiled.hbs', html)
+        coffee = 'module.exports="""\n' + html + '\n"""\n'
+        fs.writeFileSync('scripts/templates/pages/compiled.coffee', coffee)
         done()
     )
 )
@@ -157,7 +159,10 @@ gulp.task('scripts:test:build', ['styles:doc'], ->
 )
 
 gulp.task('scripts:test:lint', ->
-    gulp.src(coffeeSrc.concat(testSrc))
+    src = coffeeSrc
+        .concat(testSrc)
+        .concat(['!./scripts/templates/pages/compiled.coffee'])
+    gulp.src(src)
         .pipe(plugins.coffeelint())
         .pipe(plugins.coffeelint.reporter('fail'))
 )

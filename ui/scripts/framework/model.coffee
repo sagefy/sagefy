@@ -2,8 +2,6 @@
 Models are a representation in the client of data on the server.
 ###
 
-# TODO: Write tests
-
 Events = require('./events')
 _ = require('./utilities')
 validations = require('./validations')
@@ -81,6 +79,7 @@ class Model extends Events
             data: @attributes
             done: (json) =>
                 @set(@parse(json))
+                @trigger('sync')
             fail: (json) =>
                 @trigger('error', json)
         })
@@ -146,12 +145,22 @@ class Model extends Events
         )
         @request.onload = ->
             if 400 > @status >= 200
-                options.done(JSON.parse(@responseText), this)
+                options.done(_.parseJSON(@responseText), this)
             else
-                options.fail(JSON.parse(@responseText), this)
+                options.fail(Model::parseAjaxErrors(this), this)
         @request.onerror = ->
             options.fail(null, this)
         @request.send(JSON.stringify(options.data or {}))
         return @request
+
+    # Try to parse the errors array
+    # Or just return the error text
+    parseAjaxErrors: (r) ->
+        if not r.responseText
+            return null
+        errors =  _.parseJSON(r.responseText)
+        if _.isString(errors)
+            return errors
+        return errors.errors
 
 module.exports = Model

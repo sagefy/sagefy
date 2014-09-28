@@ -6,7 +6,7 @@ Views are responsible for:
 ###
 
 Events = require('./events')
-require('./matches_polyfill')
+_ = require('./utilities')
 eventRegExp = /^(\S+) (.*)$/
 
 class View extends Events
@@ -31,10 +31,10 @@ class View extends Events
             @el = element
         else
             @el = @createElement({
-                tagName: @tagName
-                id: @id
-                className: @className
-                attributes: @attributes
+                tagName: @options.tagName or @tagName
+                id: @options.id or @id
+                className: @options.className or @className
+                attributes: @options.attributes or @attributes
             })
         return @el
 
@@ -43,9 +43,9 @@ class View extends Events
     createElement: (options) ->
         el = document.createElement(options.tagName or 'div')
         if options.id
-            el.setAttribute('id', options.id)
+            el.id = options.id
         if options.className
-            el.setAttribute('class', options.className)
+            el.className = options.className
         for attribute, value of options.attributes or {}
             el.setAttribute(attribute, value)
         return el
@@ -106,8 +106,7 @@ class View extends Events
     delegatedEvent: (e) ->
         for query, methodName of @domEvents or {}
             [key, selector] = query.match(eventRegExp).slice(1)
-            if key is e.type and e.target.matches(selector)
+            if key is e.type and _.closest(e.target, @el, selector)
                 @[methodName].call(this, e)
-
 
 module.exports = View

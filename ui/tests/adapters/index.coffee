@@ -1,0 +1,13 @@
+require('./page')
+require('./menu')
+
+require('./index_')
+require('./contact')
+require('./error')
+require('./login')
+require('./logout')
+require('./password')
+require('./settings')
+require('./signup')
+require('./styleguide')
+require('./terms')

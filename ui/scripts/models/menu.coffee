@@ -1,8 +1,8 @@
-Backbone = require('backbone')
-$ = require('jquery')
+Model = require('../framework/model')
+_ = require('../framework/utilities')
 mixins = require('../modules/mixins')
 
-class MenuModel extends Backbone.Model
+class MenuModel extends Model
 
     # For each state, a list of the menu items to appear
     menus: {
@@ -23,7 +23,7 @@ class MenuModel extends Backbone.Model
     # A list of all menu items and their configurations
     # The method `_itemBoilerplate` will fill in other values
     _items: {
-        login: { icon: 'sign-in' }
+        login: { title: 'Log In', icon: 'sign-in' }
         terms: { icon: 'pencil-square-o' }
         contact: { icon: 'envelope' }
         # dashboard: { icon: 'tachometer' }
@@ -32,7 +32,8 @@ class MenuModel extends Backbone.Model
         logout: { icon: 'sign-out' }
     }
 
-    initialize: ->
+    constructor: ->
+        super
         # Updates the @_items array with boilerplate
         @_items = @_itemsBoilerplate(@_items)
         # Sets current state
@@ -43,7 +44,7 @@ class MenuModel extends Backbone.Model
     # And set the default icon to be painfully obviously wrong
     _itemsBoilerplate: (items = {}) ->
         for name in @_names()
-            items[name] = $.extend({
+            items[name] = _.extend({
                 name: name
                 title: @ucfirst(name)
                 url: '/' + @underscored(name)
@@ -66,11 +67,7 @@ class MenuModel extends Backbone.Model
     # Determines the state the menu should be in
     # Will vary based on logged in, logged out, and current user page
     updateState: ->
-        if @isLoggedIn()
-            @state = 'loggedIn'
-        else
-            @state = 'loggedOut'
-
+        @state = if @isLoggedIn() then 'loggedIn' else 'loggedOut'
         @trigger('changeState', @state)
 
     # Returns the list of items for the menu

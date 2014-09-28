@@ -1,36 +1,21 @@
-$ = require('jquery')
-Backbone = require('backbone')
-Backbone.$ = $
-Handlebars = require('hbsfy/runtime')
-hbsHelpers = require('./modules/hbs_helpers')(Handlebars)
 Application = require('./framework/application')
+MenuAdapter = require('./adapters/menu')
 
-### TODO: This all needs to go somewhere else... ###
-MenuModel = require('./models/menu')
-MenuView = require('./views/menu')
 class Sagefy extends Application
     constructor: ->
         # Create the page container
-        $region = $('body')
-        $region.prepend('<div class="page"></div>')
+        page = document.createElement('div')
+        page.classList.add('page')
+        document.body.appendChild(page)
+        super
+        @menu = new MenuAdapter({app: this})
 
+
+    remove: ->
+        @menu.remove()
         super
 
-        # Create the global menu
-        @menuModel = new MenuModel()
-        @menuView = new MenuView({
-            $region: $region
-            model: @menuModel
-        })
-
-        # When we click an internal link, use Navigate instead
-        $region.on('click', 'a[href^="/"]', (e) =>
-            e.preventDefault()
-            href = $(e.currentTarget).closest('a').attr('href')
-            @navigate(href, {trigger: true})
-        )
-
-$(->
+document.addEventListener('DOMContentLoaded', ->
     app = new Sagefy(
         require('./adapters/signup')
         require('./adapters/login')

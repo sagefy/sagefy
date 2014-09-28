@@ -3,10 +3,6 @@ describe('Basic test setup', ->
         expect(true).to.be.true
     )
 
-    it('should have chai jquery', ->
-        expect($('#mocha')).to.have.id('mocha')
-    )
-
     it('should have sinon', ->
         spy = sinon.spy()
         spy('foo')
