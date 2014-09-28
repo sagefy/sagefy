@@ -7,12 +7,14 @@ module.exports = (data) ->
         </button>
         """
 
+    required = data.validations.required
+
     html = """
     <div class="form-field form-field--#{data.type}} form-field--#{data.name}">
         <label for="#{data.name}">
-            #{title}
-            <span class="#{if data.required then "required" else "optional"}">
-                #{if data.required then "Required" else "Optional"}
+            #{data.title}
+            <span class="#{if required then "required" else "optional"}">
+                #{if required then "Required" else "Optional"}
             </span>
         </label>
     """
@@ -23,7 +25,7 @@ module.exports = (data) ->
             <input
                 id="#{data.name}"
                 name="#{data.name}"
-                placeholder="#{data.placeholder}"
+                placeholder="#{data.placeholder or ''}"
                 type="#{data.type}"
             >
             """

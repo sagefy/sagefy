@@ -62,19 +62,19 @@ class FormView extends View
     # Communicate that the form has been submitted
     submit: (e) ->
         e.preventDefault() if e
-        @trigger('submit', @getValues())
         @disable()
+        @trigger('submit', @getValues())
 
     disable: ->
-        @form.querySelector('[type="submit"]')
+        @el.querySelector('[type="submit"]')
             .setAttribute('disabled', 'disabled')
 
     enable: ->
-        @form.querySelector('[type="submit"]')
-            .setAttribute('disabled', '')
+        @el.querySelector('[type="submit"]')
+            .removeAttribute('disabled')
 
     change: _.debounce((e) ->
-        @trigger('validate', e.target.name, e.target.value)
+        @trigger('change', e.target.name, e.target.value)
     , 200)
 
     error: (fieldName, error) ->
@@ -84,7 +84,8 @@ class FormView extends View
     errorField: (field, error) ->
         field.classList.remove('form-field--success')
         field.classList.add('form-field--error')
-        field.removeChild(field.querySelector('.form-field__feedback'))
+        feedback = field.querySelector('.form-field__feedback')
+        field.removeChild(feedback) if feedback
         feedback = @createElement({
             tagName: 'span'
             className: 'form-field__feedback'
@@ -110,7 +111,8 @@ class FormView extends View
     clearField: (field) ->
         field.classList.remove('form-field--error')
         field.classList.add('form-field--success')
-        field.removeChild(field.querySelector('.form-field__feedback'))
+        feedback = field.querySelector('.form-field__feedback')
+        field.removeChild(feedback) if feedback
 
     clearAll: ->
         for field in @getFields()

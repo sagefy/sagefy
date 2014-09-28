@@ -23,7 +23,7 @@ class MenuModel extends Model
     # A list of all menu items and their configurations
     # The method `_itemBoilerplate` will fill in other values
     _items: {
-        login: { icon: 'sign-in' }
+        login: { title: 'Log In', icon: 'sign-in' }
         terms: { icon: 'pencil-square-o' }
         contact: { icon: 'envelope' }
         # dashboard: { icon: 'tachometer' }

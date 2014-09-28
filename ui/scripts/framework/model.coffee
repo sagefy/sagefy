@@ -79,6 +79,7 @@ class Model extends Events
             data: @attributes
             done: (json) =>
                 @set(@parse(json))
+                @trigger('sync')
             fail: (json) =>
                 @trigger('error', json)
         })
@@ -146,7 +147,7 @@ class Model extends Events
             if 400 > @status >= 200
                 options.done(_.parseJSON(@responseText), this)
             else
-                options.fail(@parseAjaxErrors(@responseText), this)
+                options.fail(Model::parseAjaxErrors(@responseText), this)
         @request.onerror = ->
             options.fail(null, this)
         @request.send(JSON.stringify(options.data or {}))
@@ -155,6 +156,8 @@ class Model extends Events
     # Try to parse the errors array
     # Or just return the error text
     parseAjaxErrors: (r) ->
+        if not r.responseText
+            return null
         errors =  _.parseJSON(r.responseText)
         if _.isString(errors)
             return errors

@@ -3,7 +3,7 @@ Model = require('../framework/model')
 class UserModel extends Model
     url: (options) ->
         id = options.id or @get('id') or null
-        return '/api/users' + (if id then '/' + id else '')
+        return '/api/users/' + (id or '')
 
     fields: {
         name: {

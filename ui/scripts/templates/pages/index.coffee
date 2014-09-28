@@ -8,6 +8,6 @@ module.exports = ->
         </h3>
     </hgroup>
     <p class="leading">
-        <a href="/login">Login</a> or <a href="/signup">Signup</a>
+        <a href="/login">Log In</a> or <a href="/signup">Sign Up</a>
     </p>
     """
