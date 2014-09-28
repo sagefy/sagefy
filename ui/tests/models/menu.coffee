@@ -45,7 +45,7 @@ describe('Menu Model', ->
     )
 
     it('should capitalize the page title', ->
-        expect(@model.items()[0].title).to.equal('Login')
+        expect(@model.items()[0].title).to.equal('Log In')
     )
 
     it('should use underscores for URLs', ->
