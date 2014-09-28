@@ -8,7 +8,7 @@ class LogoutAdapter extends PageAdapter
 
     constructor: ->
         super
-        if @isLoggedIn()
+        if mixins.isLoggedIn()
             @model = new UserModel({
                 id: 'current'
             })

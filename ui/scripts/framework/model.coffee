@@ -147,7 +147,7 @@ class Model extends Events
             if 400 > @status >= 200
                 options.done(_.parseJSON(@responseText), this)
             else
-                options.fail(Model::parseAjaxErrors(@responseText), this)
+                options.fail(Model::parseAjaxErrors(this), this)
         @request.onerror = ->
             options.fail(null, this)
         @request.send(JSON.stringify(options.data or {}))

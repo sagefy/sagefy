@@ -38,8 +38,8 @@ class UserModel extends Model
             data: data
             done: =>
                 @trigger('login')
-            fail: (error) =>
-                @trigger('loginError', @parseAjaxErrors(error))
+            fail: (errors) =>
+                @trigger('error', errors)
         })
 
     logout: ->
@@ -48,6 +48,8 @@ class UserModel extends Model
             url: '/api/users/logout'
             done: =>
                 @trigger('logout')
+            fail: (errors) =>
+                @trigger('error', errors)
         })
 
     getPasswordToken: (data) ->
@@ -57,9 +59,8 @@ class UserModel extends Model
             data: data
             done: =>
                 @trigger('passwordToken')
-            fail: (error) =>
-                @trigger('errorPasswordToken', @parseAjaxErrors(error))
-
+            fail: (errors) =>
+                @trigger('error', errors)
         })
 
     createPassword: (data) ->
@@ -69,8 +70,8 @@ class UserModel extends Model
             data: data
             done: =>
                 @trigger('createPassword')
-            fail: (error) =>
-                @trigger('errorCreatePassword', @parseAjaxErrors(error))
+            fail: (errors) =>
+                @trigger('error', errors)
         })
 
 module.exports = UserModel
