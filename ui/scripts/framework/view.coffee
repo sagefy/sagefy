@@ -7,7 +7,6 @@ Views are responsible for:
 
 Events = require('./events')
 _ = require('./utilities')
-require('./matches_polyfill')
 eventRegExp = /^(\S+) (.*)$/
 
 class View extends Events

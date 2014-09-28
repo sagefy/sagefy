@@ -1,4 +1,12 @@
 module.exports = (data) ->
+    if data.type is 'submit'
+        return """
+        <button type="submit">
+            <i class="fa fa-#{data.icon}"></i>
+            #{data.label}
+        </button>
+        """
+
     html = """
     <div class="form-field form-field--#{data.type}} form-field--#{data.name}">
         <label for="#{data.name}">

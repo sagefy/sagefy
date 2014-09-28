@@ -2,22 +2,6 @@ mixins = require('../../scripts/modules/mixins')
 cookie = require('../../scripts/modules/cookie')
 
 describe('Mixins', ->
-    it('should format data from an HTML form', ->
-        test = document.getElementById('test')
-        test.innerHTML = '''
-        <form>
-            <input name="name" value="Moogle" />
-            <textarea name="description">Chocobo</textarea>
-        </form>
-        '''
-        expect(mixins.formData(test.querySelector('form')))
-            .to.deep.equal({
-                name: "Moogle"
-                description: "Chocobo"
-            })
-        test.innerHTML = ''
-    )
-
     it('should detect login', ->
         cookie.set('logged_in', '1')
         expect(mixins.isLoggedIn()).to.be.true
