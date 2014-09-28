@@ -2,7 +2,7 @@ PageAdapter = require('./page')
 template = require('../templates/pages/styleguide')
 compiled = require('../templates/pages/compiled')
 
-StyleguideView = require('../views/pages/styleguide')
+View = require('../framework/view')
 
 class StyleguideAdapter extends PageAdapter
     url: '/styleguide'
@@ -10,7 +10,7 @@ class StyleguideAdapter extends PageAdapter
 
     constructor: ->
         super
-        @view = new StyleguideView({
+        @view = new View({
             id: 'styleguide'
             className: 'col-10'
             template: template

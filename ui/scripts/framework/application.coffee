@@ -56,12 +56,12 @@ class Application extends Events
         # Remove previous adapter instance
         @adapter.remove() if @adapter
 
-        # Create a new adapter instance
-        @adapter = new Adapter()
-
         # Update the display of the URL
         if path isnt window.location.pathname
             history.pushState({}, '', path)
+
+        # Create a new adapter instance
+        @adapter = new Adapter()
 
         return @adapter
 

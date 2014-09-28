@@ -22,7 +22,7 @@ class FormView extends View
 
     # As there's no template... instead the HTML is
     # the composition of the fields
-    render: (data) ->
+    render: (data = {}) ->
         super
         @el.innerHTML = @getFieldsHTML(data)
 
@@ -30,8 +30,7 @@ class FormView extends View
     # And generates the fields HTML
     getFieldsHTML: (data) ->
         html = ''
-        for field in @fields
-            field = _.copy(field)
+        for field in _.copy(@fields)
             field.value = data[field.name]
             html += @fieldTemplate(field)
         return html
