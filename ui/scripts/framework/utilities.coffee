@@ -43,6 +43,16 @@ _.extend = (target, injects...) ->
                 else val # number, boolean, string, regexp, null, function
     return target
 
+# Makes a copy of the array or object
+_.copy = (obj) ->
+    if _.isObject(obj)
+        return _.extend({}, obj)
+    if _.isArray(obj)
+        return _.extend([], obj)
+    if _.isDate(obj)
+        return new Date(obj)
+    return obj
+
 # Try to parse a string as JSON
 # Otherwise just return the string
 _.parseJSON = (str) ->

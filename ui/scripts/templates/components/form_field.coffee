@@ -7,6 +7,14 @@ module.exports = (data) ->
         </button>
         """
 
+    if data.type is 'message'
+        return """
+        <div class="form-field">
+            <label>#{data.title}</label>
+            <p class="form-field__description">#{data.description}</p>
+        </div>
+        """
+
     required = data.validations.required
 
     html = """
@@ -27,6 +35,7 @@ module.exports = (data) ->
                 name="#{data.name}"
                 placeholder="#{data.placeholder or ''}"
                 type="#{data.type}"
+                value="#{data.value or ''}"
             >
             """
 

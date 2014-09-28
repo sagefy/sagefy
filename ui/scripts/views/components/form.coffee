@@ -24,13 +24,15 @@ class FormView extends View
     # the composition of the fields
     render: (data) ->
         super
-        @el.innerHTML = @getFieldsHTML()
+        @el.innerHTML = @getFieldsHTML(data)
 
     # Iterates over each field specified
     # And generates the fields HTML
-    getFieldsHTML: ->
+    getFieldsHTML: (data) ->
         html = ''
         for field in @fields
+            field = _.copy(field)
+            field.value = data[field.name]
             html += @fieldTemplate(field)
         return html
 

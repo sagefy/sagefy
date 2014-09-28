@@ -58,6 +58,7 @@ class Model extends Events
             url: @makeUrl(options)
             done: (json) =>
                 @set(@parse(json))
+                @trigger('sync')
             fail: (json) =>
                 @trigger('error', json)
         })
@@ -70,8 +71,8 @@ class Model extends Events
     # The save function will either PUT or POST the model to the server,
     # depending on if the model has an ID.
     # Provide options, which will in turn be sent to the URL function.
-    save: (options) ->
-        errors = @validate()
+    save: (options = {}) ->
+        errors = @validate(options.fields or null)
         return errors if errors.length
         return @ajax({
             method: if @get('id') then 'PUT' else 'POST'
@@ -94,6 +95,7 @@ class Model extends Events
             url: @makeUrl(options)
             done: =>
                 @unset()
+                @trigger('sync')
             fail: (json) =>
                 @trigger('error', json)
         })
@@ -101,9 +103,9 @@ class Model extends Events
     # Validates the values of the model against the schema
     # described in the fields. Returns a list of errors
     # Triggers `invalid` if errors are found.
-    validate: ->
+    validate: (fields) ->
         errors = []
-        for fieldName in Object.keys(@fields)
+        for fieldName in (fields or Object.keys(@fields))
             error = @validateField(fieldName)
             errors.push({
                 name: fieldName
