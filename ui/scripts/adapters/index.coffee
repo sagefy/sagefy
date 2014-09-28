@@ -9,18 +9,21 @@ class IndexAdapter extends PageAdapter
 
     constructor: ->
         super
-        @view = new View({
-            id: 'index'
-            className: 'col-8'
-            template: template
-            region: @page
-        })
-        @view.render({
-            isLoggedIn: @isLoggedIn()
-        })
+        if @isLoggedIn()
+            @navigate('/dashboard')
+        else
+            @view = new View({
+                id: 'index'
+                className: 'col-8'
+                template: template
+                region: @page
+            })
+            @view.render()
 
     remove: ->
         @view.remove()
         super
+
+    isLoggedIn: mixins.isLoggedIn
 
 module.exports = IndexAdapter

@@ -6,7 +6,7 @@ itemTemplate = require('../../templates/components/menu_item')
 # an iOS style list of options
 class MenuView extends View
     className: 'menu'
-    events: {
+    domEvents: {
         'click .menu__overlay': 'toggle'
         'click .menu__trigger': 'toggle'
         'click .menu__item a': 'select'
@@ -16,11 +16,16 @@ class MenuView extends View
     itemTemplate: itemTemplate
     selected: false
 
+    constructor: (options) ->
+        super
+        options.body.appendChild(@el)
+
     # Render the layout if needed
     # then render data
     render: (data) ->
-        super
+        @el.innerHTML = @template()
         @renderItems(data)
+        @delegateEvents()
 
     # Produces the data specific HTML
     renderItems: (data) ->

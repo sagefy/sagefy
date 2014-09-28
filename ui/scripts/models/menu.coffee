@@ -67,11 +67,7 @@ class MenuModel extends Model
     # Determines the state the menu should be in
     # Will vary based on logged in, logged out, and current user page
     updateState: ->
-        if @isLoggedIn()
-            @state = 'loggedIn'
-        else
-            @state = 'loggedOut'
-
+        @state = if @isLoggedIn() then 'loggedIn' else 'loggedOut'
         @trigger('changeState', @state)
 
     # Returns the list of items for the menu

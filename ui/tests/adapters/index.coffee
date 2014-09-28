@@ -1,4 +1,5 @@
 require('./page')
+require('./menu')
 
 require('./index_')
 require('./contact')

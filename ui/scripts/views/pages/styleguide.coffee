@@ -1,7 +1,7 @@
 View = require('../../framework/view')
 
 class StyleguideView extends View
-    events: {
+    domEvents: {
         'click a[href="#"]': 'cancel'
         'click a[href*="//"]': 'openInNewWindow'
     }

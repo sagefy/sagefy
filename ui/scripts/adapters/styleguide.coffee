@@ -1,6 +1,6 @@
 PageAdapter = require('./page')
 template = require('../templates/pages/styleguide')
-# compiled = require('../templates/pages/compiled')
+compiled = require('../templates/pages/compiled')
 
 StyleguideView = require('../views/pages/styleguide')
 
@@ -9,6 +9,7 @@ class StyleguideAdapter extends PageAdapter
     title: 'Style Guide and Component Library'
 
     constructor: ->
+        super
         @view = new StyleguideView({
             id: 'styleguide'
             className: 'col-10'
@@ -18,7 +19,6 @@ class StyleguideAdapter extends PageAdapter
         @view.render({
             html: compiled
         })
-        super
 
     remove: ->
         @view.remove()

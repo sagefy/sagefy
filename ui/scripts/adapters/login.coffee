@@ -12,7 +12,7 @@ class LoginAdapter extends PageAdapter
         # @view = new LoginView()
 
     remove: ->
-        @view.remove()
+        # @view.remove()
         @model.remove()
         super
 

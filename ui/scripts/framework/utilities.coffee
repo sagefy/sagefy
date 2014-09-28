@@ -44,4 +44,12 @@ _.parseJSON = (str) ->
     catch e
         return str
 
+# Find the closest element matching the given selector
+_.closest = (element, top, selector) ->
+    while not element.matches(selector)
+        element = element.parentNode
+        if element is top
+            return null
+    return element
+
 module.exports = _

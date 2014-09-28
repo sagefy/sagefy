@@ -6,6 +6,7 @@ Views are responsible for:
 ###
 
 Events = require('./events')
+_ = require('./utilities')
 require('./matches_polyfill')
 eventRegExp = /^(\S+) (.*)$/
 
@@ -106,7 +107,7 @@ class View extends Events
     delegatedEvent: (e) ->
         for query, methodName of @domEvents or {}
             [key, selector] = query.match(eventRegExp).slice(1)
-            if key is e.type and e.target.matches(selector)
+            if key is e.type and _.closest(e.target, @el, selector)
                 @[methodName].call(this, e)
 
 

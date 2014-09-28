@@ -7,6 +7,7 @@ class TermsAdapter extends PageAdapter
     title: 'Terms of Service'
 
     constructor: ->
+        super
         @view = new View({
             id: 'terms'
             className: 'col-10'
@@ -14,11 +15,9 @@ class TermsAdapter extends PageAdapter
             region: @page
         })
         @view.render()
-        super
 
     remove: ->
         @view.remove()
         super
-
 
 module.exports = TermsAdapter
