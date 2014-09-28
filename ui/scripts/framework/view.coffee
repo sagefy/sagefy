@@ -44,9 +44,9 @@ class View extends Events
     createElement: (options) ->
         el = document.createElement(options.tagName or 'div')
         if options.id
-            el.setAttribute('id', options.id)
+            el.id = options.id
         if options.className
-            el.setAttribute('class', options.className)
+            el.className = options.className
         for attribute, value of options.attributes or {}
             el.setAttribute(attribute, value)
         return el
@@ -109,6 +109,5 @@ class View extends Events
             [key, selector] = query.match(eventRegExp).slice(1)
             if key is e.type and _.closest(e.target, @el, selector)
                 @[methodName].call(this, e)
-
 
 module.exports = View

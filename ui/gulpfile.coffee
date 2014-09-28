@@ -159,7 +159,10 @@ gulp.task('scripts:test:build', ['styles:doc'], ->
 )
 
 gulp.task('scripts:test:lint', ->
-    gulp.src(coffeeSrc.concat(testSrc))
+    src = coffeeSrc
+        .concat(testSrc)
+        .concat(['!./scripts/templates/pages/compiled.coffee'])
+    gulp.src(src)
         .pipe(plugins.coffeelint())
         .pipe(plugins.coffeelint.reporter('fail'))
 )
