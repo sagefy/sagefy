@@ -8,7 +8,6 @@ class MenuAdapter extends Events
     constructor: (options) ->
         super
         # Create the global menu
-        @app = options.app
         @model = new MenuModel()
         @view = new MenuView({
             body: document.body
@@ -29,7 +28,7 @@ class MenuAdapter extends Events
             # Navigate to in-app URLs instead of new page
             if el.matches('[href^="/"]')
                 e.preventDefault()
-                @app.navigate(el.pathname)
+                @navigate(el.pathname)
             # Do nothing on empty links
             else if el.matches('[href="#"]')
                 e.preventDefault()

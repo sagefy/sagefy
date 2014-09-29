@@ -8,8 +8,8 @@ class Sagefy extends Application
         page.classList.add('page')
         document.body.appendChild(page)
         super
-        @menu = new MenuAdapter({app: this})
-
+        @bindAdapter(MenuAdapter)
+        @menu = new MenuAdapter()
 
     remove: ->
         @menu.remove()
