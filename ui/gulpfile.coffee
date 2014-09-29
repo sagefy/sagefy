@@ -7,7 +7,6 @@ browserify = require('browserify')
 watchify = require('watchify')
 source = require('vinyl-source-stream')
 prettyHrtime = require('pretty-hrtime')
-_ = require('underscore')
 sequence = require('run-sequence')
 
 dist = 'distribution/'
@@ -106,21 +105,23 @@ gulp.task('styles:watch', ['styles:build', 'styles:build:doc'], ->
     )
 )
 
-browserifyConfig = {
-    entries: ['./scripts/index.coffee']
-    extensions: ['.js', '.coffee', '.hbs']
-    debug: true
-}
-
 gulp.task('scripts:build', ['styles:doc'], ->
-    browserify(browserifyConfig)
+    browserify({
+        entries: ['./scripts/index.coffee']
+        extensions: ['.js', '.coffee']
+        debug: true
+    })
         .bundle()
         .pipe(source('index.js'))
         .pipe(gulp.dest(dist))
 )
 
 gulp.task('scripts:watch', ['scripts:build'], ->
-    bundle = watchify(browserifyConfig)
+    bundle = watchify({
+        entries: ['./scripts/index.coffee']
+        extensions: ['.js', '.coffee']
+        debug: true
+    })
     rebundle = ->
         startTime = process.hrtime()
         bundle
@@ -149,10 +150,11 @@ gulp.task('scripts:test:build', ['styles:doc'], ->
     ])
         .pipe(gulp.dest(dist))
 
-    config = _.extend({}, browserifyConfig)
-    config.entries = ['./tests/index.coffee']
-
-    browserify(config)
+    browserify({
+        entries: ['./tests/index.coffee']
+        extensions: ['.js', '.coffee']
+        debug: true
+    })
         .bundle()
         .pipe(source('test.js'))
         .pipe(gulp.dest(dist))
