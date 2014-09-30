@@ -16,4 +16,67 @@ describe('Form (Component)', ->
         form.remove()
     )
 
+    it.skip('should listen to form submit', ->
+
+    )
+
+    it.skip('should listen to field changes', ->
+
+    )
+
+    it.skip('should setup fields', ->
+
+    )
+
+    it.skip('should create the fields html', ->
+
+    )
+
+    it.skip('should produce a hash of values', ->
+
+    )
+
+    it.skip('should get a field value', ->
+
+    )
+
+    it.skip('should get the input fields', ->
+
+    )
+
+    it.skip('should get a form field wrapper', ->
+
+    )
+
+    it.skip('should trigger submit event', ->
+
+    )
+
+    it.skip('should disable submit button', ->
+
+    )
+
+    it.skip('should enable submit button', ->
+
+    )
+
+    it.skip('should debounce change events', ->
+
+    )
+
+    it.skip('should show a list of errors', ->
+
+    )
+
+    it.skip('should show an error message', ->
+
+    )
+
+    it.skip('should clear an error message', ->
+
+    )
+
+    it.skip('should clear all error messages', ->
+
+    )
 )
