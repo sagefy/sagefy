@@ -15,12 +15,32 @@ class Collection extends Events
     url: ''
     makeUrl: Model::makeUrl
 
+    # For each model provided, find a model with the same ID.
+    # Update existing model if found, otherwise create a new instance
+    # with the given properties.
+    set: (models) ->
+        for model in models
+            m = @models.find((m) -> return m.id is model.id)
+            if m
+                m.set(model)
+            else
+                @models.push(new @Model(model))
+
     # Get data from the server.
     # Provide options, which will in turn be sent to the URL function.
     fetch: (options) ->
+        return @ajax({
+            method: 'GET'
+            url: @makeUrl(options)
+            done: (json) =>
+                @set(@parse(json))
+                @trigger('sync')
+            fail: (json) =>
+                @trigger('error', json)
+        })
 
     # The parse function determines what to do when the response comes back
-    # from the server. Overwrite per cocllection.
+    # from the server. Overwrite per collection.
     parse: (json) ->
         return json
 
