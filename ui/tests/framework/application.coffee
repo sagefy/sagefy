@@ -33,16 +33,16 @@ describe('Application', ->
 
     it('should set an adapter to use its `navigate` function', ->
         x = new App(A, B)
-        expect(x.Adapters[0]::navigate).to.equal(x.navigate)
+        expect(x.Adapters[0]::navigate).to.be.a('function')
         x.bindAdapter(C)
-        expect(C::navigate).to.equal(x.navigate)
+        expect(C::navigate).to.be.a('function')
         x.unbindAdapter(C)
         x.remove()
     )
 
     it('should unset an adapter\'s navigate function', ->
         x = new App(A)
-        expect(A::navigate).to.equal(x.navigate)
+        expect(A::navigate).to.be.a('function')
         x.unbindAdapter(A)
         expect(A::navigate).to.not.exist
         x.remove()
@@ -50,7 +50,7 @@ describe('Application', ->
 
     it('should unbind navigate from adapters when removing the app', ->
         x = new App(A)
-        expect(A::navigate).to.equal(x.navigate)
+        expect(A::navigate).to.be.a('function')
         x.remove()
         expect(A::navigate).to.not.exist
     )

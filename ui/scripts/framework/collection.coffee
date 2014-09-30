@@ -24,15 +24,6 @@ class Collection extends Events
     parse: (json) ->
         return json
 
-    # The save function will POST the collection to the server.
-    # Provide options, which will in turn be sent to the URL function.
-    save: (options) ->
-
-    # Validates the values of the models against their schemas.
-    # Returns a list of errors.
-    # Triggers `invalid` if errors are found.
-    validate: ->
-
     ajax: Model::ajax
 
 module.exports = Collection

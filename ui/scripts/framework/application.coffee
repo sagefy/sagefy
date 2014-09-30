@@ -21,8 +21,7 @@ class Application extends Events
 
     # Provide the navigate function to each of the adapters
     bindAdapter: (Adapter) ->
-        Adapter::navigate = (path) =>
-            @navigate(path)
+        Adapter::navigate = @navigate.bind(this)
         return Adapter
 
     # Remove the navigate function so the adapter can be cleanly removed
