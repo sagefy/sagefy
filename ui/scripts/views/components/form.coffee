@@ -16,7 +16,7 @@ class FormView extends View
     fieldTemplate: fieldTemplate
 
     # Setup the fields for display
-    constructor: (options) ->
+    constructor: (options = {}) ->
         super
         @fields = options.fields
 
