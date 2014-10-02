@@ -73,7 +73,7 @@ class LoginAdapter extends PageAdapter
         if _.isArray(errors)
             @form.errorMany(errors)
         else
-            window.alert('Error!')
+            window.alert(errors)
 
     validate: ->
         @model.login(@form.getValues())

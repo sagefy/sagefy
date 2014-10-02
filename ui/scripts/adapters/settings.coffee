@@ -65,7 +65,7 @@ class SettingsAdapter extends PageAdapter
         if _.isArray(errors)
             @form.errorMany(errors)
         else
-            window.alert('Error!')
+            window.alert(errors)
 
     validate: ->
         @model.set(@form.getValues())

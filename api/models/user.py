@@ -1,7 +1,7 @@
 from odm.model import Model, Field
 from odm.validations import is_required, is_email, is_string, has_min_length
 from passlib.hash import bcrypt
-from flask import url_for, current_app as app
+from flask import url_for, current_app as app, request
 from flask.ext.login import current_user
 from modules.util import uniqid
 
@@ -73,12 +73,8 @@ class User(Model):
                 subject='Sagefy - Reset Password',
                 recipients=[self.email],
                 body='To change your password, please visit: ' +
-                url_for(
-                    'user.create_password',
-                    id=self.id,
-                    token=token,
-                    _external=True
-                )
+                     '%spassword?id=%s&token=%s' %
+                     (request.url_root, self.id, token)
             )
         return token
 
