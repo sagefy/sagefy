@@ -6,7 +6,7 @@ class LogoutAdapter extends PageAdapter
     url: '/logout'
     title: 'Logging out...'
 
-    constructor: ->
+    render: ->
         super
         if mixins.isLoggedIn()
             @model = new UserModel({

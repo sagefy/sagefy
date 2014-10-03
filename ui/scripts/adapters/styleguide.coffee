@@ -8,7 +8,7 @@ class StyleguideAdapter extends PageAdapter
     url: '/styleguide'
     title: 'Style Guide and Component Library'
 
-    constructor: ->
+    render: ->
         super
         @view = new View({
             id: 'styleguide'

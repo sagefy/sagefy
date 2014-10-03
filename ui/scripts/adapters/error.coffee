@@ -6,7 +6,7 @@ class ErrorAdapter extends PageAdapter
     url: /.*/
     title: 'Not Found'
 
-    constructor: ->
+    render: ->
         super
         @view = new View({
             id: 'error'

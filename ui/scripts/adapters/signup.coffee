@@ -8,12 +8,10 @@ _ = require('../framework/utilities')
 class SignupAdapter extends PageAdapter
     url: '/signup'
     title: 'Sign Up'
+    requireLogout: true
 
-    constructor: ->
+    render: ->
         super
-        if mixins.isLoggedIn()
-            @navigate('/dashboard')
-            return
         @model = new UserModel()
         @form = new FormView({fields: @getFields()})
         @form.render()

@@ -6,7 +6,7 @@ class TermsAdapter extends PageAdapter
     url: '/terms'
     title: 'Terms of Service'
 
-    constructor: ->
+    render: ->
         super
         @view = new View({
             id: 'terms'

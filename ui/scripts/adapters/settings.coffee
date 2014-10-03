@@ -7,8 +7,9 @@ _ = require('../framework/utilities')
 class SettingsAdapter extends PageAdapter
     url: '/settings'
     title: 'Settings'
+    requireLogin: true
 
-    constructor: ->
+    render: ->
         super
         @model = new UserModel()
         @form = new FormView({fields: @getFields()})

@@ -8,12 +8,10 @@ mixins = require('../modules/mixins')
 class LoginAdapter extends PageAdapter
     url: '/login'
     title: 'Log In'
+    requireLogout: true
 
-    constructor: ->
+    render: ->
         super
-        if mixins.isLoggedIn()
-            @navigate('/dashboard')
-            return
         @model = new UserModel()
         @form = new FormView({fields: @getFields()})
         @form.render()

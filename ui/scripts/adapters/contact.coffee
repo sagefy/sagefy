@@ -6,7 +6,7 @@ class ContactAdapter extends PageAdapter
     url: '/contact'
     title: 'Contact'
 
-    constructor: ->
+    render: ->
         super
         @view = new View({
             id: 'contact'

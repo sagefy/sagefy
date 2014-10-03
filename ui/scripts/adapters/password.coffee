@@ -10,7 +10,7 @@ class PasswordAdapter extends PageAdapter
     url: '/password'
     title: 'Create a New Password'
 
-    constructor: ->
+    render: ->
         super
         @model = new UserModel()
         @view = new FormLayoutView({
