@@ -14,17 +14,21 @@ class Collection extends Events
     # URL can be a string or a function
     url: ''
     makeUrl: Model::makeUrl
+    Model: Model
 
     # For each model provided, find a model with the same ID.
     # Update existing model if found, otherwise create a new instance
     # with the given properties.
-    set: (models) ->
-        for model in models
-            m = @models.find((m) -> return m.id is model.id)
-            if m
-                m.set(model)
-            else
-                @models.push(new @Model(model))
+    set: (arr) ->
+        for data in arr
+            model = null
+            if data.id
+                matches = @models.filter((m) -> return m.get('id') is data.id)
+                model = if matches.length then matches[0]
+            if not model
+                model = new @Model()
+                @models.push(model)
+            model.set(data)
 
     # Get data from the server.
     # Provide options, which will in turn be sent to the URL function.
