@@ -103,7 +103,7 @@ Contributor Models
 - entity kind and id
 - name
 
-### Discussion > Message
+### Discussion > Post
 
 - id
 - created
@@ -112,7 +112,7 @@ Contributor Models
 - user
 - topic
 - body
-- replies to message
+- replies to post
 
 Contributor Endpoints
 ---------------------
@@ -197,14 +197,12 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 
 - Notifications
     - Subject, time ago, read
-- Messages
-    - From, subject, time ago, read
 - Watched
     - Match search formatting
 - My Proposals
     - Name, votes
 - My Discussions
-    - Topic name, modified, messages
+    - Topic name, modified, posts
 - Link to search, list views
 
 ### Contributor Search (System-wide)
@@ -303,16 +301,16 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 
 ### Proposal View
 
-- list of proposal blocks and messages
+- list of proposal blocks and posts
     - Proposal block
         - proposal name
         - proposal body
         - proposal action
         - proposal decision
-    - Messages
+    - Posts
         - see below
 - Final block
-    - Write message
+    - Write post
     - Amend proposal (if owned)
     - Vote block (if not owned)
 - Considerations
@@ -329,7 +327,7 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 - Search box and button
 - Table
     - Topic name
-    - Number of messages
+    - Number of posts
     - Last modified
 
 ### List Discussion Topics (per Object)
@@ -354,11 +352,10 @@ Contributor Wireframes
 ### Components
 
 - Notification post -- Styleguide
-- Notifications/Messages card
+- Notifications
     - Title
     - 5 latest
     - Link to full page
-- Message post -- Styleguide
 - Discussion post -- Styleguide
 - Proposal post  -- Styleguide
 - Vote block  -- Styleguide

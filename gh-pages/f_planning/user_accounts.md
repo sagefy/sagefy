@@ -17,7 +17,6 @@ Account Screens
 - Terms
 - Contact
 - Notifications
-- Messages
 
 Models
 ------
@@ -44,17 +43,6 @@ Models
 - tags
 - read (boolean)
 - concerns: pagination and filtering
-
-### Message
-- id
-- created
-- modified
-- from_user
-- to_user
-- name
-- body
-- read (boolean)
-- tags
 
 Screen Requirements
 -------------------
@@ -123,7 +111,7 @@ Screen Requirements
 ### Contact
 - List methods of contact
 
-### Inbox (Messages and Notifications)
+### Inbox (Notifications)
 - List notifications
     - Filter notifications by type
     - Each notification:
@@ -133,29 +121,6 @@ Screen Requirements
         - Action
         - Seen/unseen status
         - Time ago
-- Unread messages
-    - Time ago
-    - From
-    - Subject
-- All messages
-    - Time ago
-    - From
-    - Subject
-    - Unread/read status
-- Sent messages
-    - Time ago
-    - From
-    - Subject
-- View message
-    - From, To
-    - Subject
-    - Body
-    - Reply to message
-- Create message
-    - To
-    - Subject
-    - Body
-    - Send
 
 Wireframes
 ----------
@@ -183,10 +148,6 @@ Wireframes
 ### Settings
 
 ![s](https://docs.google.com/drawings/d/1EWBadWBpQCfXXcFrH9D1--h8cb2dMFDljSH1SfVw2TY/pub?w=600&amp;h=600)
-
-### Messages
-
-![s](https://docs.google.com/drawings/d/1Tf6oDRukTVWBYi9nZnNyOGKjaB4J1vyjAT65IUN1Gmo/pub?w=600&amp;h=600)
 
 ### Notifications
 

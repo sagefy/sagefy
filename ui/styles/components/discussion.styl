@@ -159,96 +159,6 @@ example: |
 
 /*
 ---
-title: Message
-description: |
-    Messages also have a similar layout to discussion.
-example: |
-    <ul class="messages">
-        <li class="messages__li--unread">
-            <div class="messages__avatar">
-                <img src="https://placekitten.com/g/48/48" data-title="username" />
-            </div>
-            <div class="messages__content">
-                <div class="messages__when">
-                    52 minutes ago
-                </div>
-                <div class="messages__name">
-                    from: username
-                </div>
-                <p class="messages__subject">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt.
-                </p>
-            </div>
-        </li>
-        <li>
-            <div class="messages__avatar">
-                <img src="https://placekitten.com/g/48/48" data-title="username" />
-            </div>
-            <div class="messages__content">
-                <div class="messages__when">
-                    3 hours ago
-                </div>
-                <div class="messages__name">
-                    from: username
-                </div>
-                <p class="messages__subject">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt.
-                </p>
-            </div>
-        </li>
-    </ul>
-    <hr />
-    <div class="message">
-        <div class="message__avatar">
-            <img src="https://placekitten.com/g/48/48" data-title="username" />
-        </div>
-        <div class="message__content">
-            <div class="message__when">
-                3 hours ago
-            </div>
-            <div class="messages__name">
-                from: username
-            </div>
-            <p class="message__subject">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt.
-            </p>
-            <div class="message__body">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
-                </p>
-            </div>
-            <div class="message__tags">
-                Tagged:
-                <ul>
-                    <li>
-                        <a href="#">Unit</a>
-                    </li>
-                    <li>
-                        <a href="#">Contribute</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="message__footer">
-                <a href="#" class="button--secondary"><i class="fa fa-reply"></i> Reply</a>
-                <a href="#" class="button--danger"><i class="fa fa-flag"></i> Flag</a>
-            </div>
-        </div>
-    </div>
----
-*/
-
-/*
----
 title: Proposal
 description: |
     A proposal to create, update, delete, merge, or split an entity.
@@ -309,7 +219,6 @@ example: |
 
 .discussion
 .notifications
-.messages
     padding 0
 
     li
@@ -322,21 +231,17 @@ example: |
             color $gold-20
             text-decoration none
 
-.messages__li--unread
 .notifications__li--unread
     background $blue-95
     font-weight bold
 
 .notification
-.message
 .proposal
     @extend .row
 
 .discussion__avatar
 .notifications__image
 .notification__image
-.messages__avatar
-.message__avatar
 .proposal__avatar
     @extend .col-1
     padding $unit 0
@@ -344,14 +249,10 @@ example: |
 .discussion__content
 .notifications__content
 .notification__content
-.messages__content
-.message__content
 .proposal__content
     @extend .col-7
 
 .discussion__name
-.messages__name
-.message__name
 .proposal__name
     color $gold-43
     margin 0
@@ -359,8 +260,6 @@ example: |
 .discussion__when
 .notifications__when
 .notification__when
-.messages__when
-.message__when
 .proposal__when
 .vote__when
     float right
@@ -370,17 +269,13 @@ example: |
 
 .notifications__subject
 .notification__subject
-.messages__subject
-.message__subject
 .proposal__subject
     margin 0
 
-.message__subject
 .proposal__subject
     font-weight bold
 
 .discussion__footer
-.message__footer
     a
         margin-right $unit
 
@@ -394,10 +289,6 @@ example: |
     .discussion li:hover &
         opacity 1
 
-.message__footer
-    margin $unit 0
-
-.message__tags
 .notification__tags
     ul
         @extend ul.inline

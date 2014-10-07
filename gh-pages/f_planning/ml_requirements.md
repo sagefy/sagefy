@@ -44,7 +44,7 @@ layout: default
 - Mark down low quality discussion.
 - Matching up learners with other learners and mentors.
 - Ensure no prerequisite cycles.
-- High quality search through entities, discussions, messages...
+- High quality search through entities, discussions...
 
 ### Known systems
 

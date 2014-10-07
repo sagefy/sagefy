@@ -69,15 +69,15 @@ describe('Form (Component)', ->
 
     )
 
-    it.skip('should show an error message', ->
+    it.skip('should show an error', ->
 
     )
 
-    it.skip('should clear an error message', ->
+    it.skip('should clear an error', ->
 
     )
 
-    it.skip('should clear all error messages', ->
+    it.skip('should clear all error', ->
 
     )
 )
