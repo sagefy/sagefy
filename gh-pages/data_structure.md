@@ -43,7 +43,7 @@ Units
 
 A unit is the medium size in the Sagefy data structure system. A unit represents a unit of learning activity.
 
-A unit is defined by a single goal (objective). See [Bloom's Taxonomy](http://en.wikipedia.org/wiki/Bloom's_taxonomy). A unit should represent a goal that is as small as possible without becoming systemically redundant.
+A unit is defined by a single goal (objective). See [Bloom's Taxonomy](https://en.wikipedia.org/wiki/Bloom's_taxonomy). A unit should represent a goal that is as small as possible without becoming systemically redundant.
 
 An example of a unit is a small learning lesson, which may contain about five to eight minutes of information and 30-60 minutes of practice to gain proficiency.
 

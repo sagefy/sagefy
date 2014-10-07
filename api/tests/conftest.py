@@ -1,4 +1,4 @@
-# via http://stackoverflow.com/a/11158224
+# via https://stackoverflow.com/a/11158224
 import os
 import sys
 import inspect

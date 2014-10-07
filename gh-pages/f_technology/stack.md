@@ -91,6 +91,6 @@ We Intend to Use
     - [Google Drive](http://drive.google.com), [Dropbox](http://dropbox.com)
 - Outreach
     - [Wordpress.com](http://wordpress.com)
-    - Github Issues, [StackOverflow](http://stackoverflow.com), [UserVoice](http://uservoice.com)
-    - [Totemapp](http://totemapp.com)
-    - [Twitter](http://twitter.com/sagefyorg), [Facebook](https://www.facebook.com/sagefy), [Google+](https://plus.google.com/102422704401628739470/posts), Github, [Wordpress](http://sagefy.wordpress.com/)
+    - Github Issues, [StackOverflow](https://stackoverflow.com), [UserVoice](https://uservoice.com)
+    - [Totemapp](https://totemapp.com)
+    - [Twitter](https://twitter.com/sagefyorg), [Facebook](https://www.facebook.com/sagefy), [Google+](https://plus.google.com/102422704401628739470/posts), Github, [Wordpress](http://sagefy.wordpress.com/)

@@ -13,7 +13,7 @@ module.exports = ->
         </li>
         <li>
             <strong>I have an idea for the software</strong>:
-            <a href="http://sagefy.uservoice.com/forums/233394-general">
+            <a href="https://sagefy.uservoice.com/forums/233394-general">
                 Add it to our feedback forum</a>.
         </li>
         <li>

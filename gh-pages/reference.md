@@ -8,7 +8,7 @@ This document is a list of organized, curated links to support the development o
 User Research and Experience
 ----------------------------
 
-- [100 Things Every Designer Needs to Know About People](http://www.amazon.com/dp/0321767535) by Weinschenk
+- [100 Things Every Designer Needs to Know About People](https://www.amazon.com/dp/0321767535) by Weinschenk
 - [Good UI](http://goodui.org/)
 - [Mo2L](http://www.elearning-usability.com/use.html)
 - [Usability checklist](http://userium.com/)
@@ -16,12 +16,12 @@ User Research and Experience
 Learning Science
 ----------------
 
-- [Learning and Memory: From Brain to Behavior](http://www.amazon.com/Learning-Memory-From-Brain-Behavior/dp/0716786540) by Gluck, Mercado, Myers
+- [Learning and Memory: From Brain to Behavior](https://www.amazon.com/dp/0716786540) by Gluck, Mercado, Myers
 - [How Learning Works: Seven Research-Based Principles for Smart Teaching](http://www.amazon.com/How-Learning-Works-Research-Based-Principles/dp/0470484101) by Ambrose, Bridges, DiPietro, Lovett, Norman, Mayer
-- [Building Expertise: Cognitive Methods for Training and Performance Improvement](http://www.amazon.com/Building-Expertise-Cognitive-Performance-Improvement/dp/0787988448) by Ruth Clark
+- [Building Expertise: Cognitive Methods for Training and Performance Improvement](https://www.amazon.com/dp/0787988448) by Ruth Clark
 - [e-Learning and the Science of Instruction](http://www.amazon.com/Learning-Science-Instruction-Guidelines-Multimedia/dp/0470874309/ref=dp_ob_title_bk) by Clark, Mayer
 - [Educause](http://www.educause.edu/)
-- [How to Solve It](http://en.wikipedia.org/wiki/How_to_Solve_It)
+- [How to Solve It](https://en.wikipedia.org/wiki/How_to_Solve_It)
 - [How a Radical New Teaching Method Could Unleash a Generation of Geniuses](http://www.wired.com/business/2013/10/free-thinkers/all/&src=longreads)
 - [Why Do Americans Stink at Math?](http://www.nytimes.com/2014/07/27/magazine/why-do-americans-stink-at-math.html)
 - [Why Flunking Exams Is Actually a Good Thing](http://www.nytimes.com/2014/09/07/magazine/why-flunking-exams-is-actually-a-good-thing.html)

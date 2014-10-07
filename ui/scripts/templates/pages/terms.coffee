@@ -6,9 +6,9 @@ module.exports = ->
     all local, state, national, and international laws.</p>
 
     <p><strong>Terms</strong>: This statement applies to all assets on
-    <a href="http://sagefy.org/">http://sagefy.org/</a>. All references to
+    <a href="https://sagefy.org/">https://sagefy.org/</a>. All references to
     "Sagefy", "we", "our", and "us" refer to all contents and staff of
-    <a href="http://sagefy.org/">http://sagefy.org/</a>.
+    <a href="https://sagefy.org/">https://sagefy.org/</a>.
     This statement is effective as of October 5, 2013.</p>
 
     <p><strong>Updates to Terms</strong>: We reserve the right to update this
@@ -34,7 +34,7 @@ module.exports = ->
     GNU Affero General Public License for more details.
 
     You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+    along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
     </code></pre>
 
     <p><strong>Collecting Information</strong>: Sagefy may collect personally

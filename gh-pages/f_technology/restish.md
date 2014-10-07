@@ -35,11 +35,11 @@ General REST ideas, but made more practical.
     - Fields in lower camelCase.
     - No root level arrays.
     - Use ISO8601 and RFC3339 for dates and times.
-    - Use [response codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).
+    - Use [response codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).
     - Success: Wrap objects in type of object. Return `{bunnies:[]}` or `{bunny:[]}`
         - Provide full resources.
         - Updates (POST, PUT, PATCH) should return object as well.
-        - Include links to related requests. [RFC5988](http://tools.ietf.org/html/rfc5988)
+        - Include links to related requests. [RFC5988](https://tools.ietf.org/html/rfc5988)
             - `{bunnies:[{id:1,links:[]}],links:[]}`
             - Give kind: get, list, create, update, delete, next, prev, self, parent, child
         - Aim for orthogonal updates and deletes (PUT, PATCH, DELETE).
