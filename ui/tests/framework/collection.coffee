@@ -20,7 +20,33 @@ describe('Collection', ->
         expect(c.models[2].get('name')).to.equal('C')
     )
 
-    it.skip('should fetch more models', ->
+    it('should fetch more models', ->
+        stub = sinon.stub(Collection::, 'ajax', (options) ->
+            options.done({
+                apples: [{
+                    id: '1'
+                    kind: 'Fuji'
+                }, {
+                    id: '2'
+                    kind: 'Honeycrisp'
+                }, {
+                    id: '3'
+                    kind: 'Pink Lady'
+                }]
+            })
+        )
 
+        class C extends Collection
+            url: '/apples'
+
+            parse: (json) ->
+                return json.apples
+
+        c = new C()
+        c.fetch()
+        expect(stub).to.be.called
+        expect(c.models).to.have.length(3)
+        expect(c.models[0].attributes).to.deep.equal({id: '1', kind: 'Fuji'})
+        stub.restore()
     )
 )
