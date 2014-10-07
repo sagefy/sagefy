@@ -69,7 +69,7 @@ Stylus
 - Use the least amount of syntax possible.
 - Add comments in [YM Styleguide](https://github.com/heiskr/ym-styleguide).
 - Use the [BEM](http://bem.info/method/) naming convention.
-- Borrow ideas from the [SMACSS](http://smacss.com/) organization scheme.
+- Borrow ideas from the [SMACSS](https://smacss.com/) organization scheme.
 - General guidelines:
     - Lowercase selectors.
     - Use extend first.

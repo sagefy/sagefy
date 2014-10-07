@@ -7,7 +7,7 @@ We Use
 ------
 
 - Building and Serving
-    - [Vagrant](http://www.vagrantup.com/)
+    - [Vagrant](https://www.vagrantup.com/)
     - [CloudFlare](https://www.cloudflare.com/)
     - [uWSGI](http://uwsgi-docs.readthedocs.org/en/latest/)
     - [Nginx](http://wiki.nginx.org/Main)
@@ -28,31 +28,28 @@ We Use
         - [CoffeeLint](http://www.coffeelint.org/)
         - [Browserify](http://browserify.org/)
     - [Stylus](http://learnboost.github.io/stylus/)
-    - [Backbone.js](http://backbonejs.org/)
     - [Coffeescript](http://coffeescript.org/)
-    - [Handlebars](http://handlebarsjs.com/)
     - [BEM](http://bem.info/method/)
     - [YM Styleguide](https://github.com/heiskr/ym-styleguide)
     - Script date and time - [Moment](http://momentjs.com/)
     - Testing
-        - [Mocha](http://visionmedia.github.io/mocha/)
+        - [Mocha](https://visionmedia.github.io/mocha/)
         - [Chai](http://chaijs.com/)
         - [Sinon](http://sinonjs.org/)
 - Project Management, Documentation
-    - [GitHub](http://github.com/)
+    - [GitHub](https://github.com/)
         - Github Issues with [Waffle.io](https://waffle.io/heiskr/sagefy)
     - [Jekyll](http://jekyllrb.com/) on [Github Pages](https://pages.github.com/)
-    - [Markdown](http://daringfireball.net/projects/markdown/)
+    - [Markdown](https://daringfireball.net/projects/markdown/)
 
 We Intend to Use
 ----------------
 
 - Building and Serving
     - [Ansible](http://www.ansible.com/)
-    - [Fabric](http:/.fabfile.org/en/1.8/)
     - [DavidDM](https://david-dm.org/)
     - [Pingdom](https://www.pingdom.com/)
-    - [New Relic](http://newrelic.com/) (Free)
+    - [New Relic](https://newrelic.com/) (Free)
 - Databases
     - [ElasticSearch](https://github.com/elasticsearch/elasticsearch)
 - API
@@ -85,12 +82,12 @@ We Intend to Use
         - Web Analytics - Google Analytics
         - Wireframes & diagrams _TODO_
 - Project Management, Documentation
-    - [SemVer](http://semver.org/) with [Version Badge](http://badge.fury.io/)
-    - [Google Analytics](http://google.com/analytics) & in-house
-    - [Google Apps](http://apps.google.com)
-    - [Google Drive](http://drive.google.com), [Dropbox](http://dropbox.com)
+    - [SemVer](http://semver.org/) with [Version Badge](https://badge.fury.io/)
+    - [Google Analytics](https://google.com/analytics) & in-house
+    - [Google Apps](https://apps.google.com)
+    - [Google Drive](https://drive.google.com), [Dropbox](https://dropbox.com)
 - Outreach
-    - [Wordpress.com](http://wordpress.com)
+    - [Wordpress.com](https://wordpress.com)
     - Github Issues, [StackOverflow](https://stackoverflow.com), [UserVoice](https://uservoice.com)
     - [Totemapp](https://totemapp.com)
     - [Twitter](https://twitter.com/sagefyorg), [Facebook](https://www.facebook.com/sagefy), [Google+](https://plus.google.com/102422704401628739470/posts), Github, [Wordpress](http://sagefy.wordpress.com/)

@@ -66,12 +66,7 @@ Make a new Vagrant
 How to Deploy
 -------------
 
-    # On local machine
-    sudo pip install fabric
-
-    # and...
-    cd ~/Sites/sagefy
-    fabric deploy
+    ???
 
 Tailing the Log
 ---------------
