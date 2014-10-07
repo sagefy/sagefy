@@ -26,7 +26,7 @@ Cards
     - Asked to plan
     - Asynchronous feedback:
         - Some projects can't be assess immediately
-        - Receive notification when assessment is complete
+        - Receive notice when assessment is complete
         - Progress must reflect project state
     - Invited to reflect on experiences
 - _Contributors_
@@ -49,7 +49,7 @@ Units
 - _Contributors_
     - View history, analytics, and discussion
     - Establish prerequisite units
-    - Notifications
+    - Notices
     - Consensus editing
     - Tips
 
@@ -68,4 +68,4 @@ Sets
     - Consensus editing
     - Specify prerequisites, no closed loops
     - Merge and split operations
-    - Notifications
+    - Notices

@@ -195,7 +195,7 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 
 ### Contributor Dashboard
 
-- Notifications
+- Notices
     - Subject, time ago, read
 - Watched
     - Match search formatting
@@ -351,8 +351,8 @@ Contributor Wireframes
 
 ### Components
 
-- Notification post -- Styleguide
-- Notifications
+- Notice post -- Styleguide
+- Notices
     - Title
     - 5 latest
     - Link to full page

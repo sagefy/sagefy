@@ -57,11 +57,11 @@ def users_table(app, db_conn, request):
 
 
 @pytest.fixture(scope='module')
-def notifications_table(app, db_conn, request):
+def notices_table(app, db_conn, request):
     try:
-        g.db.table_create('notifications').run(db_conn)
+        g.db.table_create('notices').run(db_conn)
     except RqlRuntimeError:
         pass
-    table = g.db.table('notifications')
+    table = g.db.table('notices')
     table.delete().run(db_conn)
     return table

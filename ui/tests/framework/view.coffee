@@ -51,12 +51,12 @@ describe('View', ->
     it('should create a new element', ->
         class V extends View
             tagName: 'li'
-            className: 'notification'
+            className: 'notice'
             id: 'first'
         v = new V()
         expect(v.el).to.exist
         expect(v.el.id).to.equal('first')
-        expect(v.el.className).to.equal('notification')
+        expect(v.el.className).to.equal('notice')
         expect(v.el.tagName).to.equal('LI')
         v.remove()
     )

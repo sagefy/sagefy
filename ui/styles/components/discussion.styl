@@ -82,34 +82,34 @@ example: |
 
 /*
 ---
-title: Notification
+title: Notice
 description: |
-    Notifications have a similar layout to discussion.
+    Notices have a similar layout to discussion.
 example: |
-    <ul class="notifications">
+    <ul class="notices">
         <li>
-            <div class="notifications__image">
+            <div class="notices__image">
                 <img src="https://placekitten.com/g/48/48" data-title="username" />
             </div>
-            <div class="notifications__content">
-                <div class="notifications__when">
+            <div class="notices__content">
+                <div class="notices__when">
                     52 minutes ago
                 </div>
-                <p class="notifications__subject">
+                <p class="notices__subject">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                     tempor incididunt.
                 </p>
             </div>
         </li>
         <li>
-            <div class="notifications__image">
+            <div class="notices__image">
                 <img src="https://placekitten.com/g/48/48" data-title="username" />
             </div>
-            <div class="notifications__content">
-                <div class="notifications__when">
+            <div class="notices__content">
+                <div class="notices__when">
                     3 hours ago
                 </div>
-                <p class="notifications__subject">
+                <p class="notices__subject">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                     tempor incididunt.
                 </p>
@@ -117,19 +117,19 @@ example: |
         </li>
     </ul>
     <hr />
-    <div class="notification">
-        <div class="notification__image">
+    <div class="notice">
+        <div class="notice__image">
             <img src="https://placekitten.com/g/48/48" data-title="username" />
         </div>
-        <div class="notification__content">
+        <div class="notice__content">
             <div class="discussion__when">
                 3 hours ago
             </div>
-            <p class="notification__subject">
+            <p class="notice__subject">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                 tempor incididunt.
             </p>
-            <div class="notification__body">
+            <div class="notice__body">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -141,7 +141,7 @@ example: |
                     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
                 </p>
             </div>
-            <div class="notification__tags">
+            <div class="notice__tags">
                 Tagged:
                 <ul>
                     <li>
@@ -218,7 +218,7 @@ example: |
 */
 
 .discussion
-.notifications
+.notices
     padding 0
 
     li
@@ -231,24 +231,24 @@ example: |
             color $gold-20
             text-decoration none
 
-.notifications__li--unread
+.notices__li--unread
     background $blue-95
     font-weight bold
 
-.notification
+.notice
 .proposal
     @extend .row
 
 .discussion__avatar
-.notifications__image
-.notification__image
+.notices__image
+.notice__image
 .proposal__avatar
     @extend .col-1
     padding $unit 0
 
 .discussion__content
-.notifications__content
-.notification__content
+.notices__content
+.notice__content
 .proposal__content
     @extend .col-7
 
@@ -258,8 +258,8 @@ example: |
     margin 0
 
 .discussion__when
-.notifications__when
-.notification__when
+.notices__when
+.notice__when
 .proposal__when
 .vote__when
     float right
@@ -267,8 +267,8 @@ example: |
     color $gold-66
     margin 0 $unit $unit 0
 
-.notifications__subject
-.notification__subject
+.notices__subject
+.notice__subject
 .proposal__subject
     margin 0
 
@@ -289,7 +289,7 @@ example: |
     .discussion li:hover &
         opacity 1
 
-.notification__tags
+.notice__tags
     ul
         @extend ul.inline
         display inline

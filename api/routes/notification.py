@@ -1,42 +1,42 @@
 from flask import Blueprint, jsonify, request
 from flask.ext.login import current_user
-from models.notification import Notification
+from models.notice import Notice
 
-notification = Blueprint('notification', __name__,
-                         url_prefix='/api/notifications')
+notice = Blueprint('notice', __name__,
+                         url_prefix='/api/notices')
 
 
-@notification.route('/', methods=['GET'])
-def list_notifications():
+@notice.route('/', methods=['GET'])
+def list_notices():
     """
-    List notifications for current user.
+    List notices for current user.
     Takes parameters `limit`, `skip`, `tag`, and `read`.
     """
     if not current_user.is_authenticated():
         return jsonify(errors=[{"message": "Must login."}]), 401
-    notifications = Notification.list(user_id=current_user.id,
+    notices = Notice.list(user_id=current_user.id,
                                       **request.json or {})
-    return jsonify(notifications=[
+    return jsonify(notices=[
         n.deliver(private=True)
-        for n in notifications
+        for n in notices
     ])
 
 
-@notification.route('/<notification_id>/read', methods=['PUT'])
-def mark_notification_as_read(notification_id):
+@notice.route('/<notice_id>/read', methods=['PUT'])
+def mark_notice_as_read(notice_id):
     """
-    Marks notification as read.
-    Must be logged in as user, provide a valid ID, and own the notification.
-    Returns notification.
+    Marks notice as read.
+    Must be logged in as user, provide a valid ID, and own the notice.
+    Returns notice.
     """
     if not current_user.is_authenticated():
         return jsonify(errors=[{"message": "Must login."}]), 401
-    notification = Notification.get(id=notification_id)
-    if not notification:
+    notice = Notice.get(id=notice_id)
+    if not notice:
         return jsonify(errors=[{"message": "Not found."}]), 404
-    if notification.user_id != current_user.id:
+    if notice.user_id != current_user.id:
         return jsonify(errors=[{"message": "Not owned by user."}]), 403
-    notification, errors = notification.mark_as_read()
+    notice, errors = notice.mark_as_read()
     if len(errors):
         return jsonify(errors=errors), 400
-    return jsonify(notification=notification.deliver(private=True))
+    return jsonify(notice=notice.deliver(private=True))

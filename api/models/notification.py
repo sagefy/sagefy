@@ -4,8 +4,8 @@ import rethinkdb as r
 from flask import g
 
 
-class Notification(Model):
-    tablename = 'notifications'
+class Notice(Model):
+    tablename = 'notices'
 
     user_id = Field(
         validations=(is_required, is_string,)
@@ -42,6 +42,6 @@ class Notification(Model):
         return [Cls(fields) for fields in fields_list]
 
     def mark_as_read(self):
-        """Marks the notification as read."""
+        """Marks the notice as read."""
         self.read = True
         return self.save()

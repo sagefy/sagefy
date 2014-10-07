@@ -52,7 +52,7 @@ class SignupAdapter extends PageAdapter
         }, {
             name: 'email'
             title: 'Email'
-            description: 'We need your email to send notifications ' +
+            description: 'We need your email to send notices ' +
                          '<br />and reset password.'
             placeholder: 'ex: unicorn@example.com'
         }, {

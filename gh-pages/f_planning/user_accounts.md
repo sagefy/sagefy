@@ -16,7 +16,7 @@ Account Screens
 - Settings
 - Terms
 - Contact
-- Notifications
+- Notices
 
 Models
 ------
@@ -29,12 +29,12 @@ Models
 - email
 - password
 - ip
-- notification settings
+- notice settings
 - roles (array)
 - status
 - avatar
 
-### Notification
+### Notice
 - id
 - created
 - modified
@@ -100,8 +100,8 @@ Screen Requirements
 - Email (validate unique; errors; warnings; confirm ownership)
 - Password => link to create a new password
 - Avatar (requirements, errors, etc)
-- Notifications settings, for each:
-    - Site notification
+- Notices settings, for each:
+    - Site notice
     - Email
     - Timing (immediate, daily, weekly...)
 
@@ -111,10 +111,10 @@ Screen Requirements
 ### Contact
 - List methods of contact
 
-### Inbox (Notifications)
-- List notifications
-    - Filter notifications by type
-    - Each notification:
+### Inbox (Notices)
+- List notices
+    - Filter notices by type
+    - Each notice:
         - Image
         - Subject
         - Body
@@ -149,6 +149,6 @@ Wireframes
 
 ![s](https://docs.google.com/drawings/d/1EWBadWBpQCfXXcFrH9D1--h8cb2dMFDljSH1SfVw2TY/pub?w=600&amp;h=600)
 
-### Notifications
+### Notices
 
 ![s](https://docs.google.com/drawings/d/1wC5h3JBFLG4ALnxVkT_RocjcifuqmfWoy8Cx8hy1fxM/pub?w=600&amp;h=600)

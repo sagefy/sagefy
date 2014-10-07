@@ -7,7 +7,7 @@ from flask_mail import Mail
 from routes.error import setup_errors
 from routes.public import public
 from routes.user import user
-from routes.notification import notification
+from routes.notice import notice
 
 
 def create_app(config, debug=False, testing=False):
@@ -33,7 +33,7 @@ def create_app(config, debug=False, testing=False):
     setup_errors(app)
     app.register_blueprint(public)
     app.register_blueprint(user)
-    app.register_blueprint(notification)
+    app.register_blueprint(notice)
 
     return app
 
@@ -61,7 +61,7 @@ def setup_db(app):
         r.db_create(app.config['RDB_DB']).run(db_conn)
 
     tables = r.db(app.config['RDB_DB']).table_list().run(db_conn)
-    for table in ('users', 'notifications'):
+    for table in ('users', 'notices'):
         if table not in tables:
             r.db(app.config['RDB_DB']).table_create(table).run(db_conn)
 

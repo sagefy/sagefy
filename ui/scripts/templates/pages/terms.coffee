@@ -50,8 +50,8 @@ module.exports = ->
     of Sagefy.</p>
 
     <p><strong>Email</strong>: By using Sagefy, you agree that we can contact
-    you by your email address. You can opt-out of most of these notifications.
-    You agree that these notifications satisfy any legal requirement that such
+    you by your email address. You can opt-out of most of these notices.
+    You agree that these notices satisfy any legal requirement that such
     communication must be in writing.</p>
 
     <p><strong>Third Parties</strong>: We may need to send some personally
