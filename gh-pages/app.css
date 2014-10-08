@@ -487,51 +487,6 @@ body {
   overflow-y: scroll;
   overflow-x: hidden;
 }
-@media screen and (min-width: 324px) {
-  body {
-    width: 312px;
-  }
-}
-@media screen and (min-width: 468px) {
-  body {
-    width: 456px;
-  }
-}
-@media screen and (min-width: 612px) {
-  body {
-    width: 600px;
-  }
-}
-@media screen and (min-width: 756px) {
-  body {
-    width: 744px;
-  }
-}
-@media screen and (min-width: 900px) {
-  body {
-    width: 888px;
-  }
-}
-@media screen and (min-width: 1044px) {
-  body {
-    width: 1032px;
-  }
-}
-@media screen and (min-width: 1188px) {
-  body {
-    width: 1176px;
-  }
-}
-@media screen and (min-width: 1332px) {
-  body {
-    width: 1320px;
-  }
-}
-@media screen and (min-width: 1476px) {
-  body {
-    width: 1464px;
-  }
-}
 body {
   padding: 24px;
 }
@@ -1812,14 +1767,8 @@ table tbody tr:nth-child(2n+2).row--error {
 table tbody tr:nth-child(2n+2).row--warn {
   background: #e7e3c7;
 }
-@media screen and (min-width: 756px) {
-  .page {
-    -webkit-flex-flow: row nowrap;
-    -moz-flex-flow: row nowrap;
-    -ms-flex-flow: row nowrap;
-    -o-flex-flow: row nowrap;
-    flex-flow: row nowrap;
-  }
+aside {
+  width: 264px;
 }
 header {
   overflow: auto;
