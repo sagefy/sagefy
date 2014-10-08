@@ -197,49 +197,12 @@ cols(n)
 body-cols(n)
     n * $column + (n + 1) * $gutter
 
-$4-columns  = "screen and (min-width: " + (body-cols(4)  + $unit) + ")"
-$6-columns  = "screen and (min-width: " + (body-cols(6)  + $unit) + ")"
-$8-columns  = "screen and (min-width: " + (body-cols(8)  + $unit) + ")"
-$10-columns = "screen and (min-width: " + (body-cols(10) + $unit) + ")"
-$12-columns = "screen and (min-width: " + (body-cols(12) + $unit) + ")"
-$14-columns = "screen and (min-width: " + (body-cols(14) + $unit) + ")"
-$16-columns = "screen and (min-width: " + (body-cols(16) + $unit) + ")"
-$18-columns = "screen and (min-width: " + (body-cols(18) + $unit) + ")"
-$20-columns = "screen and (min-width: " + (body-cols(20) + $unit) + ")"
-
 html, body
     margin 0 auto
 
 body
     overflow-y scroll
     overflow-x hidden
-
-    @media $4-columns
-        width body-cols(4)
-
-    @media $6-columns
-        width body-cols(6)
-
-    @media $8-columns
-        width body-cols(8)
-
-    @media $10-columns
-        width body-cols(10)
-
-    @media $12-columns
-        width body-cols(12)
-
-    @media $14-columns
-        width body-cols(14)
-
-    @media $16-columns
-        width body-cols(16)
-
-    @media $18-columns
-        width body-cols(18)
-
-    @media $20-columns
-        width body-cols(20)
 
 /*
 ---
