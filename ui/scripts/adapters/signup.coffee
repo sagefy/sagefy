@@ -1,4 +1,5 @@
 PageAdapter = require('./page')
+FormAdapter = require('./form')
 UserModel = require('../models/user')
 FormView = require('../views/components/form')
 FormLayoutView = require('../views/layouts/form')

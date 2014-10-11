@@ -1,4 +1,4 @@
-PageAdapter = require('./page')
+FormAdapter = require('./form')
 UserModel = require('../models/user')
 View = require('../framework/view')
 FormView = require('../views/components/form')
@@ -6,7 +6,7 @@ FormLayoutView = require('../views/layouts/form')
 _ = require('../framework/utilities')
 queryString = require('../modules/query_string')
 
-class PasswordAdapter extends PageAdapter
+class PasswordAdapter extends FormAdapter
     url: '/password'
     title: 'Create a New Password'
 
