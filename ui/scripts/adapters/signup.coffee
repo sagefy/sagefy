@@ -1,4 +1,3 @@
-PageAdapter = require('./page')
 FormAdapter = require('./form')
 UserModel = require('../models/user')
 FormView = require('../views/components/form')
@@ -6,7 +5,7 @@ FormLayoutView = require('../views/layouts/form')
 mixins = require('../modules/mixins')
 _ = require('../framework/utilities')
 
-class SignupAdapter extends PageAdapter
+class SignupAdapter extends FormAdapter
     url: '/signup'
     title: 'Sign Up'
     requireLogout: true
