@@ -1,3 +1,4 @@
+# TODO: trans
 module.exports = (data) ->
     return """
     <h1>Style Guide &amp; Component Library</h1>

@@ -1,5 +1,6 @@
 import inspect
 from odm.field import Field
+from modules.content import get as _
 
 
 class Document(object):
@@ -29,7 +30,7 @@ class Document(object):
             else:
                 errors.append({
                     'name': name,
-                    'message': 'No such field.',
+                    'message': _('error', 'field'),
                 })
         return self, errors
 

@@ -1,9 +1,8 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, abort
 from flask.ext.login import current_user
 from models.notice import Notice
 
-notice = Blueprint('notice', __name__,
-                         url_prefix='/api/notices')
+notice = Blueprint('notice', __name__, url_prefix='/api/notices')
 
 
 @notice.route('/', methods=['GET'])
@@ -13,9 +12,8 @@ def list_notices():
     Takes parameters `limit`, `skip`, `tag`, and `read`.
     """
     if not current_user.is_authenticated():
-        return jsonify(errors=[{"message": "Must login."}]), 401
-    notices = Notice.list(user_id=current_user.id,
-                                      **request.json or {})
+        return abort(401)
+    notices = Notice.list(user_id=current_user.id, **request.json or {})
     return jsonify(notices=[
         n.deliver(private=True)
         for n in notices
@@ -30,12 +28,12 @@ def mark_notice_as_read(notice_id):
     Returns notice.
     """
     if not current_user.is_authenticated():
-        return jsonify(errors=[{"message": "Must login."}]), 401
+        return abort(401)
     notice = Notice.get(id=notice_id)
     if not notice:
-        return jsonify(errors=[{"message": "Not found."}]), 404
+        return abort(404)
     if notice.user_id != current_user.id:
-        return jsonify(errors=[{"message": "Not owned by user."}]), 403
+        return abort(403)
     notice, errors = notice.mark_as_read()
     if len(errors):
         return jsonify(errors=errors), 400

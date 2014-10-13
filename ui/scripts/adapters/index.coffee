@@ -5,7 +5,7 @@ template = require('../templates/pages/index')
 
 class IndexAdapter extends PageAdapter
     url: /^\/?$/
-    title: 'Adaptive, Collaborative, and Open Learning Platform'
+    title: 'Adaptive, Collaborative, and Open Learning Platform'  # TODO: trans
     requireLogout: true
 
     render: ->

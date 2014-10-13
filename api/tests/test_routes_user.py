@@ -221,7 +221,7 @@ def test_user_create_password_fail(app, db_conn, users_table):
             'token': 'qza',
             'password': 'qwer1234'
         }), content_type='application/json')
-        assert response.status_code == 404
+        assert response.status_code == 403
         user.sync()
         assert user.password == pw1
 

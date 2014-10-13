@@ -6,7 +6,7 @@ View = require('../framework/view')
 
 class StyleguideAdapter extends PageAdapter
     url: '/styleguide'
-    title: 'Style Guide and Component Library'
+    title: 'Style Guide and Component Library'  # TODO: trans
 
     render: ->
         super

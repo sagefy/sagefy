@@ -3,6 +3,7 @@ from flask import g
 from modules.util import uniqid, omit
 from odm.field import Field
 from odm.document import Document
+from modules.content import get as _
 
 
 def update_modified(field):
@@ -151,6 +152,6 @@ class Model(Document):
             if len(entries) > 0:
                 errors.append({
                     'name': name,
-                    'message': 'Must be unique.',
+                    'message': _('error', 'unique'),
                 })
         return errors

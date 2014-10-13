@@ -1,3 +1,4 @@
+# TODO: trans
 module.exports = ->
     return """
     <img src="/astrolabe.svg" id="logo" />

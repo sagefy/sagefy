@@ -1,3 +1,5 @@
+# TODO: trans Required/Optional
+
 module.exports = (data) ->
     if data.type is 'submit'
         return """

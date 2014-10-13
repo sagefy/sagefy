@@ -37,5 +37,6 @@ ui/distribution
 ui/distribution
 ui/node_modules
 ui/npm-debug.log
+ui/scripts/content
 ui/scripts/templates/pages/compiled.coffee
 var

@@ -1,18 +1,19 @@
 _ = require('./utilities')
+g = require('../modules/content').get
 
 validations = {}
 
 validations.required = (val) ->
     if val is null or val is undefined or
        (_.isString(val) and val is '')
-        return 'Required.'
+        return g('error', 'required')
 
 validations.email = (val) ->
     if not _.isString(val) or not val.match(/^\S+@\S+\.\S+$/)
-        return 'Must be an email.'
+        return g('error', 'email')
 
 validations.minlength = (val, len) ->
     if (not _.isString(val) and not _.isArray(val)) or val.length < len
-        return "Must be a minimum of #{len}."
+        return g('error', 'minlength').replace('{length}', len)
 
 module.exports = validations

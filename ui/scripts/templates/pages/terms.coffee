@@ -1,3 +1,5 @@
+# TODO: trans
+
 module.exports = ->
     return """
     <h1>Sagefy Privacy Policy and Terms of Service</h1>

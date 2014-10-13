@@ -2,6 +2,8 @@ Model = require('../framework/model')
 _ = require('../framework/utilities')
 mixins = require('../modules/mixins')
 
+# TODO: Add content translations
+
 class MenuModel extends Model
 
     # For each state, a list of the menu items to appear

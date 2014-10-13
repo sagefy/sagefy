@@ -1,3 +1,4 @@
+# TODO: trans
 module.exports = ->
     return """
     <div class="menu__overlay"></div>

@@ -4,7 +4,7 @@ template = require('../templates/pages/contact')
 
 class ContactAdapter extends PageAdapter
     url: '/contact'
-    title: 'Contact'
+    title: 'Contact'  # TODO: trans
 
     render: ->
         super

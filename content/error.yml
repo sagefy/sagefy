@@ -1,0 +1,41 @@
+# This file contains error messages, such as form validations and server errors.
+# This file should not contain error messages that are specific to one part
+# of the site.
+
+required:
+    en: 'Required.'
+    eo: 'Postulo.'
+email:
+    en: 'Must be an email.'
+minlength:
+    en: 'Must have minimum length of {length}.'
+boolean:
+    en: 'Must be true or false.'
+string:
+    en: 'Must be a string.'
+language:
+    en: 'Must be a language.'
+list:
+    en: 'Must be a list.'
+options:
+    en: 'Must be one of {options}.'
+field:
+    en: 'No such field.'
+unique:
+    en: 'Must be unique.'
+code_400:
+    en: 'Bad request.'
+code_401:
+    en: 'Must log in.'
+code_403:
+    en: 'Unauthorized.'
+code_404:
+    en: 'Not found.'
+code_405:
+    en: 'Unacceptable.'
+code_500:
+    en: 'Server error.'
+code_502:
+    en: 'Server error.'
+code_503:
+    en: 'Unavailable.'

@@ -105,7 +105,13 @@ gulp.task('styles:watch', ['styles:build', 'styles:build:doc'], ->
     )
 )
 
-gulp.task('scripts:build', ['styles:doc'], ->
+gulp.task('content', ->
+    gulp.src('../content/*.yml')
+        .pipe(plugins.yaml())
+        .pipe(gulp.dest('./scripts/content/'))
+)
+
+gulp.task('scripts:build', ['styles:doc', 'content'], ->
     browserify({
         entries: ['./scripts/index.coffee']
         extensions: ['.js', '.coffee']
@@ -143,7 +149,7 @@ gulp.task('scripts:compress', ['scripts:build'], ->
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('scripts:test:build', ['styles:doc'], ->
+gulp.task('scripts:test:build', ['styles:doc', 'content'], ->
     gulp.src([
         'node_modules/mocha/mocha.css'
         'node_modules/mocha/mocha.js'

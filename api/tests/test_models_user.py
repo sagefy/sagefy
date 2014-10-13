@@ -81,7 +81,7 @@ def test_user_password_minlength(app, db_conn):
     user = User({'password': 'abcd'})
     errors = user.validate()
     assert 'password' in [e['name'] for e in errors]
-    assert 'Minimum length of 8.' in [e['message'] for e in errors]
+    assert 'Must have minimum length of 8.' in [e['message'] for e in errors]
 
 
 def test_user_no_password(app, db_conn, users_table):

@@ -5,6 +5,8 @@ FormLayoutView = require('../views/layouts/form')
 mixins = require('../modules/mixins')
 _ = require('../framework/utilities')
 
+# TODO: trans
+
 class SignupAdapter extends FormAdapter
     url: '/signup'
     title: 'Sign Up'

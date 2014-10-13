@@ -4,7 +4,7 @@ template = require('../templates/pages/terms')
 
 class TermsAdapter extends PageAdapter
     url: '/terms'
-    title: 'Terms of Service'
+    title: 'Terms of Service'  # TODO: trans
 
     render: ->
         super

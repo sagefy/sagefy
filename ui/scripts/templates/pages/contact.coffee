@@ -1,3 +1,4 @@
+# TODO: trans
 module.exports = ->
     return """
     <h1>Contact Sagefy</h1>

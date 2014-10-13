@@ -1,0 +1,9 @@
+# Content specific to user model and routes, such as login, signup,
+# and settings.
+
+no_match:
+    en: 'Username and password do not match.'
+no_user:
+    en: 'No user by that name.'
+change_password_url:
+    en: 'To change your password, please visit: {url}'

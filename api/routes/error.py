@@ -1,14 +1,15 @@
 from flask import jsonify
+from modules.content import get as _
 
 # A rather comprehensive list of error codes
 # Most probably won't be used
 messages = {
-    400: 'Bad Request',
-    401: 'Unauthorized',
+    400: _('error', 'code_400'),
+    401: _('error', 'code_401'),
     402: 'Payment Required',
-    403: 'Forbidden',
-    404: 'Not Found',
-    405: 'Method Not Allowed',
+    403: _('error', 'code_403'),
+    404: _('error', 'code_404'),
+    405: _('error', 'code_405'),
     406: 'Not Acceptable',
     407: 'Proxy Authentication Required',
     408: 'Request Timeout',
@@ -32,10 +33,10 @@ messages = {
     429: 'Too Many Requests',
     431: 'Request Header Fields Too Large',
     444: 'No Response',
-    500: 'Internal Server Error',
+    500: _('error', 'code_500'),
     501: 'Not Implemented',
-    502: 'Bad Gateway',
-    503: 'Service Unavailable',
+    502: _('error', 'code_502'),
+    503: _('error', 'code_503'),
     504: 'Gateway Timeout',
     505: 'Version Not Supported',
     506: 'Variant Also Negotiates',

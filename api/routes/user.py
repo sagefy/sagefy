@@ -1,6 +1,7 @@
 from models.user import User
-from flask import Blueprint, jsonify, request, make_response
+from flask import Blueprint, jsonify, request, make_response, abort
 from flask.ext.login import login_user, current_user, logout_user
+from modules.content import get as _
 
 
 user = Blueprint('user', __name__, url_prefix='/api/users')
@@ -23,7 +24,7 @@ def get_user(user_id):
     user = User.get(id=user_id)
     if user:
         return jsonify(user=user.deliver(private=user.is_current_user()))
-    return jsonify(errors=[{'message': 'No user found.'}]), 404
+    return abort(404)
 
 
 @user.route('/current', methods=['GET'])
@@ -31,7 +32,7 @@ def get_current_user():
     """Get current user's information."""
     if current_user.is_authenticated():
         return jsonify(user=current_user.deliver(private=True))
-    return jsonify(errors=[{'message': 'Not logged in.'}]), 404
+    return abort(401)
 
 
 @user.route('/', methods=['POST'])
@@ -50,13 +51,13 @@ def login():
     if not user:
         return jsonify(errors=[{
             'name': 'name',
-            'message': 'No user by that name.',
+            'message': _('user', 'no_user'),
         }]), 404
     if not user.is_password_valid(request.json.get('password')):
         return jsonify(errors=[{
             'name': 'password',
-            'message': 'Name and password do not match.',
-        }]), 404
+            'message': _('user', 'no_match'),
+        }]), 400
     return _login(user)
 
 
@@ -74,13 +75,9 @@ def update_user(user_id):
     """Update the user. Must be the current user."""
     user = User.get(id=user_id)
     if not user:
-        return jsonify(errors=[{
-            "message": "User not found."
-        }]), 404
+        return abort(404)
     if not user.is_current_user():
-        return jsonify(errors=[{
-            "message": "Not authorized."
-        }]), 401
+        return abort(401)
     user, errors = user.update(request.json)
     if len(errors):
         return jsonify(errors=errors), 400
@@ -92,7 +89,7 @@ def create_token():
     """Create an email token for the user."""
     user = User.get(email=request.json.get('email'))
     if not user:
-        return jsonify(errors=[{"message": "User not found."}]), 404
+        return abort(404)
     user.get_email_token()
     return '', 204
 
@@ -102,9 +99,9 @@ def create_password():
     """Update a user's password if the token is valid."""
     user = User.get(id=request.json.get('id'))
     if not user:
-        return jsonify(errors=[{"message": "User not found."}]), 404
+        return abort(404)
     valid = user.is_valid_token(request.json.get('token'))
     if not valid:
-        return jsonify(errors=[{"message": "Token not found."}]), 404
+        return abort(403)
     user.update_password(request.json.get('password'))
     return _login(user)

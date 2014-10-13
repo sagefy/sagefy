@@ -2,6 +2,8 @@ PageAdapter = require('./page')
 UserModel = require('../models/user')
 mixins = require('../modules/mixins')
 
+# TODO: trans
+
 class LogoutAdapter extends PageAdapter
     url: '/logout'
     title: 'Logging out...'
