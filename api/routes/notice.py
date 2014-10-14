@@ -13,7 +13,7 @@ def list_notices():
     """
     if not current_user.is_authenticated():
         return abort(401)
-    notices = Notice.list(user_id=current_user.id, **request.json or {})
+    notices = Notice.list(user_id=current_user.id, **request.args or {})
     return jsonify(notices=[
         n.deliver(private=True)
         for n in notices

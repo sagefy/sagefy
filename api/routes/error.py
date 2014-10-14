@@ -1,5 +1,7 @@
 from flask import jsonify
 from modules.content import get as _
+from werkzeug.exceptions import HTTPException
+
 
 # A rather comprehensive list of error codes
 # Most probably won't be used
@@ -49,10 +51,14 @@ def error_response(code):
     for each type of error code.
     """
     def fn(error):
+        if isinstance(error, HTTPException):
+            code = error.code
+        else:
+            code = 500
         return jsonify(errors=[{
-            'message': messages[error.code],
-            'code': error.code,
-        }]), error.code
+            'message': messages[code],
+            'code': code,
+        }]), code
     return fn
 
 

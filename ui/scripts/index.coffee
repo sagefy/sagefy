@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', ->
         require('./adapters/terms')
         require('./adapters/contact')
         require('./adapters/settings')
+        require('./adapters/dashboard')
         require('./adapters/index')
         require('./adapters/error')
     )

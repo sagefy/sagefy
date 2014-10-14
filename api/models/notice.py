@@ -23,7 +23,8 @@ class Notice(Model):
     )
 
     @classmethod
-    def list(Cls, user_id=None, limit=10, skip=0, read=None, tag=None):
+    def list(Cls, user_id=None, limit=10, skip=0, read=None, tag=None,
+             **params):
         """
         Get a list of models matching the provided arguments.
         Also adds pagination capabilities.
