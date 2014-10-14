@@ -16,6 +16,13 @@ class Collection extends Events
     makeUrl: Model::makeUrl
     Model: Model
 
+    # If an index is provided, return that specific model,
+    # Otherwise return a "plain" representation of all the model attributes
+    get: (index) ->
+        if index
+            return @models[index]
+        return (model.attributes for model in @models)
+
     # For each model provided, find a model with the same ID.
     # Update existing model if found, otherwise create a new instance
     # with the given properties.

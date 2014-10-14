@@ -1,6 +1,6 @@
 Model = require('../framework/model')
 _ = require('../framework/utilities')
-mixins = require('../modules/mixins')
+utilities = require('../modules/utilities')
 
 # TODO: Add content translations
 
@@ -77,8 +77,8 @@ class MenuModel extends Model
     items: ->
         return (@_items[name] for name in @menus[@state])
 
-    ucfirst: mixins.ucfirst
-    underscored: mixins.underscored
-    isLoggedIn: mixins.isLoggedIn
+    ucfirst: utilities.ucfirst
+    underscored: utilities.underscored
+    isLoggedIn: utilities.isLoggedIn
 
 module.exports = MenuModel

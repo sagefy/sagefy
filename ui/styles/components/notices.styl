@@ -1,0 +1,47 @@
+/*
+---
+title: Notice
+description: |
+    TBD
+example: |
+    <ul class="notices">
+        <li class="notice notice--unread">
+            <span class="notice__when">
+                52 minutes ago
+            </span>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt. <a href="#">Do something</a>.
+        </li>
+        <li class="notice">
+            <span class="notice__when">
+                3 hours ago
+            </span>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt. <a href="#">Do something</a>.
+        </li>
+    </ul>
+---
+*/
+
+.notices
+    padding 0
+    list-style none
+
+.notice
+    padding $unit
+
+    &:hover
+        background $gold-97
+
+.notice--unread
+    background $blue-95
+    font-weight bold
+    cursor pointer
+
+    &:hover
+        background $blue-97
+
+.notice__when
+    float right
+    @extend .font-size-small
+    color $gold-66

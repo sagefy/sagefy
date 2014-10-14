@@ -1,21 +1,21 @@
-mixins = require('../../scripts/modules/mixins')
+utilities = require('../../scripts/modules/utilities')
 cookie = require('../../scripts/modules/cookie')
 
 describe('Mixins', ->
     it('should detect login', ->
         cookie.set('logged_in', '1')
-        expect(mixins.isLoggedIn()).to.be.true
+        expect(utilities.isLoggedIn()).to.be.true
         cookie.set('logged_in', '0')
-        expect(mixins.isLoggedIn()).to.be.false
+        expect(utilities.isLoggedIn()).to.be.false
         cookie.unset('logged_in')
     )
 
     it('should capitalize the first letter of a string', ->
-        expect(mixins.ucfirst('unicorn')).to.equal('Unicorn')
+        expect(utilities.ucfirst('unicorn')).to.equal('Unicorn')
     )
 
     it('should underscore a name', ->
-        expect(mixins.underscored('hip-po potu Mus'))
+        expect(utilities.underscored('hip-po potu Mus'))
             .to.equal('hip_po_potu_mus')
     )
 )

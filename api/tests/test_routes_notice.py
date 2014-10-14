@@ -47,9 +47,7 @@ def test_list_paginate(app, db_conn, users_table, notices_table):
         response = c.get('/api/notices/')
         response = json.loads(response.data.decode('utf-8'))
         assert len(response['notices']) == 10
-        response = c.get('/api/notices/', data=json.dumps({
-            'skip': 20,
-        }), content_type='application/json')
+        response = c.get('/api/notices/?skip=20')
         response = json.loads(response.data.decode('utf-8'))
         assert len(response['notices']) == 5
         logout(c)

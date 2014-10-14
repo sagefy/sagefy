@@ -14,14 +14,22 @@ class DashboardAdapter extends PageAdapter
             region: @page
         })
         @listenTo(@collection, 'sync', @showNotices.bind(this))
+        @listenTo(@collection, 'markDone', @markDone.bind(this))
+        @listenTo(@view, 'requestMark', @requestMark.bind(this))
         @collection.fetch()
 
     showNotices: ->
-        console.log(@collection.models)
-        @view.render()
+        @view.render(@collection.get())
+
+    requestMark: (id) ->
+        @collection.mark(id)
+
+    markDone: (id) ->
+        @view.mark(id)
 
     remove: ->
         @view.remove()
+        @collection.remove()
         super
 
 module.exports = DashboardAdapter

@@ -1,6 +1,6 @@
 PageAdapter = require('./page')
 View = require('../framework/view')
-mixins = require('../modules/mixins')
+utilities = require('../modules/utilities')
 template = require('../templates/pages/index')
 
 class IndexAdapter extends PageAdapter
@@ -22,6 +22,6 @@ class IndexAdapter extends PageAdapter
         @view.remove()
         super
 
-    isLoggedIn: mixins.isLoggedIn
+    isLoggedIn: utilities.isLoggedIn
 
 module.exports = IndexAdapter

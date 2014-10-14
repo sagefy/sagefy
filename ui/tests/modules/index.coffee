@@ -1,4 +1,4 @@
 require('./cookie')
-require('./mixins')
+require('./utilities')
 require('./query_string')
 require('./content')

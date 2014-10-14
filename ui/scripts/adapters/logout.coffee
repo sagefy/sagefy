@@ -1,6 +1,6 @@
 PageAdapter = require('./page')
 UserModel = require('../models/user')
-mixins = require('../modules/mixins')
+utilities = require('../modules/utilities')
 
 # TODO: trans
 
@@ -10,7 +10,7 @@ class LogoutAdapter extends PageAdapter
 
     render: ->
         super
-        if mixins.isLoggedIn()
+        if utilities.isLoggedIn()
             @model = new UserModel({
                 id: 'current'
             })

@@ -1,12 +1,12 @@
 Adapter = require('../framework/adapter')
-mixins = require('../modules/mixins')
+utilities = require('../modules/utilities')
 
 class PageAdapter extends Adapter
     constructor: (options) ->
         super
-        if @requireLogin and not mixins.isLoggedIn()
+        if @requireLogin and not utilities.isLoggedIn()
             @navigate('/login')
-        else if @requireLogout and mixins.isLoggedIn()
+        else if @requireLogout and utilities.isLoggedIn()
             @navigate('/dashboard')
         else
             @render()

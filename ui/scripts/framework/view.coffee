@@ -89,7 +89,8 @@ class View extends Events
     delegateEvents: ->
         @undelegateEvents()
         for query, methodName of @domEvents or {}
-            key = query.match(eventRegExp).slice(1)[0]
+            match = query.match(eventRegExp)
+            key = if match then match.slice(1)[0] else query
             @domEventKeys.push(key)
         for key in @domEventKeys
             @el.addEventListener(key, @myDelegatedEvent)
@@ -105,8 +106,13 @@ class View extends Events
     # Looks through the events, and calls any matching functions
     delegatedEvent: (e) ->
         for query, methodName of @domEvents or {}
-            [key, selector] = query.match(eventRegExp).slice(1)
-            if key is e.type and _.closest(e.target, @el, selector)
+            match = query.match(eventRegExp)
+            if match
+                [key, selector] = match.slice(1)
+            else
+                key = match
+            if (not selector) or
+               (key is e.type and _.closest(e.target, @el, selector))
                 @[methodName].call(this, e)
 
 module.exports = View

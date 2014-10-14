@@ -65,10 +65,10 @@
         "Alerts & Errors",
         "Breadcrumbs, Wizards, & Pagination",
         "Discussion", [
-            "Notice",
             "Proposal",
             "Vote"
         ],
+        "Notice",
         "Inline Help",
         "Inline Labels",
         "Audio, Video, & Embedded Objects",

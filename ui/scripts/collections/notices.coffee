@@ -6,4 +6,12 @@ class NoticesCollection extends Collection
     parse: (response) ->
         return response.notices
 
+    mark: (id) ->
+        @ajax({
+            method: 'PUT'
+            url: "/api/notices/#{id}/read"
+            done: =>
+                @trigger('markDone', id)
+        })
+
 module.exports = NoticesCollection

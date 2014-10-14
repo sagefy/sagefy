@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, abort
 from flask.ext.login import current_user
 from models.notice import Notice
+from modules.util import parse_args
 
 notice = Blueprint('notice', __name__, url_prefix='/api/notices')
 
@@ -13,7 +14,8 @@ def list_notices():
     """
     if not current_user.is_authenticated():
         return abort(401)
-    notices = Notice.list(user_id=current_user.id, **request.args or {})
+    args = parse_args(request.args)
+    notices = Notice.list(user_id=current_user.id, **args)
     return jsonify(notices=[
         n.deliver(private=True)
         for n in notices
