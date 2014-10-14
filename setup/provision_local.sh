@@ -31,7 +31,7 @@ source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_
 wget -qO- http://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
 sudo apt-get -y update
 sudo apt-get -y install rethinkdb
-rethinkdb --daemon
+rethinkdb --daemon --bind all
 
 #### Redis ####################################################################
 
@@ -56,12 +56,12 @@ gulp deploy
 cd /var/www
 sudo apt-get -y install nginx
 sudo apt-get -y install uwsgi
+sudo uwsgi --stop /tmp/uwsgi-master.pid
 sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
 # TO LOG: sudo tail -F /tmp/uwsgi.log
-# TO STOP: sudo uwsgi --stop /tmp/uwsgi-master.pid
+sudo nginx -s stop
 sudo nginx -c /var/www/setup/nginx.conf
 # TO LOG: sudo tail -F /var/log/nginx/error.log
-# TO STOP: sudo nginx -s stop    (/var/run/nginx.pid)
 
 echo "Hooray! Provisioned."
 echo "For script and style watching, run gulp."
