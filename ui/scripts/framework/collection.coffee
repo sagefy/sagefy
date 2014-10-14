@@ -49,5 +49,6 @@ class Collection extends Events
         return json
 
     ajax: Model::ajax
+    parameterize: Model::parameterize
 
 module.exports = Collection

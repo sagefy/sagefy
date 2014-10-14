@@ -134,10 +134,12 @@ class Model extends Events
     ###
     ajax: (options) ->
         method = options.method.toUpperCase()
+        url = options.url
         if options.method is 'GET'
-            url = options.url + '?_=' + (+new Date())
-        else
-            url = options.url
+            url += @parameterize(_.extend(
+                options.data or {}
+                {_: (+new Date())}  # Cachebreaker
+            ))
         @request = new XMLHttpRequest()
         @request.open(method, url, true)
         @request.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
@@ -152,8 +154,23 @@ class Model extends Events
                 options.fail(Model::parseAjaxErrors(this), this)
         @request.onerror = ->
             options.fail(null, this)
-        @request.send(JSON.stringify(options.data or {}))
+        if options.method is 'GET'
+            @request.send()
+        else
+            @request.send(JSON.stringify(options.data or {}))
         return @request
+
+    # Convert an object to a query string for GET requests
+    parameterize: (obj) ->
+        obj = _.copy(obj)
+        pairs = []
+        for key, value of obj
+            pairs.push(
+                encodeURIComponent(key) +
+                '=' +
+                encodeURIComponent(value)
+            )
+        return '?' + pairs.join('&').replace(/%20/g, '+')
 
     # Try to parse the errors array
     # Or just return the error text
