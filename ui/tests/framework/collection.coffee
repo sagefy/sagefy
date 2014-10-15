@@ -20,6 +20,14 @@ describe('Collection', ->
         expect(c.models[2].get('name')).to.equal('C')
     )
 
+    it.skip('should get a model', ->
+
+    )
+
+    it.skip('should get all model attributes', ->
+
+    )
+
     it('should fetch more models', ->
         stub = sinon.stub(Collection::, 'ajax', (options) ->
             options.done({

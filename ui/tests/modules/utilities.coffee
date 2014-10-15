@@ -18,4 +18,12 @@ describe('Mixins', ->
         expect(utilities.underscored('hip-po potu Mus'))
             .to.equal('hip_po_potu_mus')
     )
+
+    it.skip('should escape HTML', ->
+
+    )
+
+    it.skip('should show time ago', ->
+
+    )
 )
