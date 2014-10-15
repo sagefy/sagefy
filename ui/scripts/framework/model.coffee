@@ -136,6 +136,7 @@ class Model extends Events
         method = options.method.toUpperCase()
         url = options.url
         if options.method is 'GET'
+            url += if url.indexOf('?') > -1 then '&' else '?'
             url += @parameterize(_.extend(
                 options.data or {}
                 {_: (+new Date())}  # Cachebreaker
@@ -170,7 +171,7 @@ class Model extends Events
                 '=' +
                 encodeURIComponent(value)
             )
-        return '?' + pairs.join('&').replace(/%20/g, '+')
+        return pairs.join('&').replace(/%20/g, '+')
 
     # Try to parse the errors array
     # Or just return the error text
