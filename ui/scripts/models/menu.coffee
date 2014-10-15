@@ -14,7 +14,7 @@ class MenuModel extends Model
             'contact'
         ]
         loggedIn: [
-            'inbox'
+            'dashboard'
             'settings'
             'contact'
             'terms'
@@ -28,8 +28,7 @@ class MenuModel extends Model
         login: { title: 'Log In', icon: 'sign-in' }
         terms: { icon: 'pencil-square-o' }
         contact: { icon: 'envelope' }
-        # dashboard: { icon: 'tachometer' }
-        inbox: { icon: 'inbox' }
+        dashboard: { icon: 'tachometer' }
         settings: { icon: 'cog' }
         logout: { icon: 'sign-out' }
     }
