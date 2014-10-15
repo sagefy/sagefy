@@ -16,7 +16,7 @@ def list_topics():
     pass
 
 
-@topic.route('/<topic_id>', methods=['GET'])
+@topic.route('/<topic_id>/', methods=['GET'])
 def get_topic(topic_id):
     """
     Get topic information.
@@ -34,7 +34,7 @@ def create_topic():
     pass
 
 
-@topic.route('/<topic_id>', methods=['PUT', 'PATCH'])
+@topic.route('/<topic_id>/', methods=['PUT', 'PATCH'])
 def update_topic(topic_id):
     """
     Update the topic. Only the name can be changed by original author.
@@ -42,7 +42,7 @@ def update_topic(topic_id):
     pass
 
 
-@topic.route('/<topic_id>/posts', methods=['GET'])
+@topic.route('/<topic_id>/posts/', methods=['GET'])
 def get_posts(topic_id):
     """
     Get a reverse chronological listing of posts for given topic.
@@ -51,7 +51,7 @@ def get_posts(topic_id):
     pass
 
 
-@topic.route('/<topic_id>/posts', methods=['POST'])
+@topic.route('/<topic_id>/posts/', methods=['POST'])
 def create_post(topic_id):
     """
     Create a new post on a given topic.
@@ -59,7 +59,7 @@ def create_post(topic_id):
     pass
 
 
-@topic.route('/<topic_id>/posts/<post_id>', methods=['PUT', 'PATCH'])
+@topic.route('/<topic_id>/posts/<post_id>/', methods=['PUT', 'PATCH'])
 def update_post(topic_id, post_id):
     """
     Update an existing post. Must be one's own post.

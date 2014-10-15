@@ -3,7 +3,8 @@ Model = require('../framework/model')
 class UserModel extends Model
     url: (options) ->
         id = options.id or @get('id') or null
-        return '/api/users/' + (id or '')
+        return "/api/users/#{id}/" if id
+        return '/api/users/'
 
     fields: {
         name: {
@@ -34,7 +35,7 @@ class UserModel extends Model
     login: (data) ->
         return @ajax({
             method: 'POST'
-            url: '/api/users/login'
+            url: '/api/users/login/'
             data: data
             done: =>
                 @trigger('login')
@@ -45,7 +46,7 @@ class UserModel extends Model
     logout: ->
         return @ajax({
             method: 'POST'
-            url: '/api/users/logout'
+            url: '/api/users/logout/'
             done: =>
                 @trigger('logout')
             fail: (errors) =>
@@ -55,7 +56,7 @@ class UserModel extends Model
     getPasswordToken: (data) ->
         return @ajax({
             method: 'POST'
-            url: '/api/users/token'
+            url: '/api/users/token/'
             data: data
             done: =>
                 @trigger('passwordToken')
@@ -66,7 +67,7 @@ class UserModel extends Model
     createPassword: (data) ->
         @ajax({
             method: 'POST'
-            url: '/api/users/password'
+            url: '/api/users/password/'
             data: data
             done: =>
                 @trigger('createPassword')

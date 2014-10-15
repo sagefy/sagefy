@@ -15,7 +15,7 @@ def list_sets():
     pass
 
 
-@set_.route('/<set_id>', methods=['GET'])
+@set_.route('/<set_id>/', methods=['GET'])
 def get_set(set_id):
     """
     Gets a specific set given an ID.

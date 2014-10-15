@@ -15,7 +15,7 @@ def list_proposals():
     pass
 
 
-@proposal.route('/<proposal_id>', methods=['GET'])
+@proposal.route('/<proposal_id>/', methods=['GET'])
 def get_proposal(proposal_id):
     """
     Get specific information about a proposal.
@@ -34,7 +34,7 @@ def create_proposal():
     pass
 
 
-@proposal.route('/<proposal_id>', methods=['PUT', 'PATCH'])
+@proposal.route('/<proposal_id>/', methods=['PUT', 'PATCH'])
 def update_proposal(proposal_id):
     """
     Update a proposal.
@@ -43,7 +43,7 @@ def update_proposal(proposal_id):
     pass
 
 
-@proposal.route('/<proposal_id>/votes', methods=['GET'])
+@proposal.route('/<proposal_id>/votes/', methods=['GET'])
 def get_votes(proposal_id):
     """
     Produces the listing of votes.
@@ -52,7 +52,7 @@ def get_votes(proposal_id):
     pass
 
 
-@proposal.route('/<proposal_id>/votes', methods=['POST'])
+@proposal.route('/<proposal_id>/votes/', methods=['POST'])
 def create_vote(proposal_id):
     """
     Creates a new vote.
@@ -61,7 +61,7 @@ def create_vote(proposal_id):
     pass
 
 
-@proposal.route('/<proposal_id>/votes/<vote_id>', methods=['PUT'])
+@proposal.route('/<proposal_id>/votes/<vote_id>/', methods=['PUT'])
 def update_vote(proposal_id, vote_id):
     """
     Updates a specific vote.

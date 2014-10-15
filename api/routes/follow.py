@@ -13,7 +13,7 @@ def follow():
     pass
 
 
-@follow.route('/<follow_id>', methods=['DELETE'])
+@follow.route('/<follow_id>/', methods=['DELETE'])
 def unfollow():
     """
     Remove a follow. Must be current user's own follow.

@@ -15,7 +15,7 @@ def list_units():
     pass
 
 
-@unit.route('/<unit>', methods=['GET'])
+@unit.route('/<unit>/', methods=['GET'])
 def get_unit(unit_id):
     """
     Gets a specific unit given an ID.

@@ -22,7 +22,7 @@ def list_notices():
     ])
 
 
-@notice.route('/<notice_id>/read', methods=['PUT'])
+@notice.route('/<notice_id>/read/', methods=['PUT'])
 def mark_notice_as_read(notice_id):
     """
     Marks notice as read.

@@ -15,7 +15,7 @@ def list_cards():
     pass
 
 
-@card.route('/<card_id>', methods=['GET'])
+@card.route('/<card_id>/', methods=['GET'])
 def get_card(card_id):
     """
     Gets a specific card given an ID.

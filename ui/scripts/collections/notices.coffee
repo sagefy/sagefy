@@ -9,7 +9,7 @@ class NoticesCollection extends Collection
     mark: (id) ->
         @ajax({
             method: 'PUT'
-            url: "/api/notices/#{id}/read"
+            url: "/api/notices/#{id}/read/"
             done: =>
                 @trigger('markDone', id)
         })

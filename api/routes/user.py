@@ -18,7 +18,7 @@ def _login(user):
     return resp
 
 
-@user.route('/<user_id>', methods=['GET'])
+@user.route('/<user_id>/', methods=['GET'])
 def get_user(user_id):
     """Get the user by their ID."""
     user = User.get(id=user_id)
@@ -27,7 +27,7 @@ def get_user(user_id):
     return abort(404)
 
 
-@user.route('/current', methods=['GET'])
+@user.route('/current/', methods=['GET'])
 def get_current_user():
     """Get current user's information."""
     if current_user.is_authenticated():
@@ -44,7 +44,7 @@ def create_user():
     return _login(user)
 
 
-@user.route('/login', methods=['POST'])
+@user.route('/login/', methods=['POST'])
 def login():
     """Login user."""
     user = User.get(name=request.json.get('name'))
@@ -61,7 +61,7 @@ def login():
     return _login(user)
 
 
-@user.route('/logout', methods=['POST'])
+@user.route('/logout/', methods=['POST'])
 def logout():
     """Logout user."""
     logout_user()
@@ -70,7 +70,7 @@ def logout():
     return resp, 204
 
 
-@user.route('/<user_id>', methods=['PUT'])
+@user.route('/<user_id>/', methods=['PUT'])
 def update_user(user_id):
     """Update the user. Must be the current user."""
     user = User.get(id=user_id)
@@ -84,7 +84,7 @@ def update_user(user_id):
     return jsonify(user=user.deliver(private=True))
 
 
-@user.route('/token', methods=['POST'])
+@user.route('/token/', methods=['POST'])
 def create_token():
     """Create an email token for the user."""
     user = User.get(email=request.json.get('email'))
@@ -94,7 +94,7 @@ def create_token():
     return '', 204
 
 
-@user.route('/password', methods=['POST'])
+@user.route('/password/', methods=['POST'])
 def create_password():
     """Update a user's password if the token is valid."""
     user = User.get(id=request.json.get('id'))

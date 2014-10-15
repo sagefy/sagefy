@@ -65,7 +65,7 @@ def test_mark(app, db_conn, users_table, notices_table):
     nid = notice.id
     with app.test_client() as c:
         response = login(c)
-        response = c.put('/api/notices/%s/read' % nid)
+        response = c.put('/api/notices/%s/read/' % nid)
         assert response.status_code == 200
         response = json.loads(response.data.decode('utf-8'))
         assert response['notice']['read'] is True
@@ -84,7 +84,7 @@ def test_mark_no_user(app, db_conn, notices_table):
     })
     nid = notice.id
     with app.test_client() as c:
-        response = c.put('/api/notices/%s/read' % nid)
+        response = c.put('/api/notices/%s/read/' % nid)
         assert response.status_code == 401
         record = notices_table.get(nid).run(db_conn)
         assert record['read'] is False
@@ -97,7 +97,7 @@ def test_mark_no_notice(app, db_conn, users_table, notices_table):
     create_user_in_db(users_table, db_conn)
     with app.test_client() as c:
         response = login(c)
-        response = c.put('/api/notices/abcd1234/read')
+        response = c.put('/api/notices/abcd1234/read/')
         assert response.status_code == 404
         response = json.loads(response.data.decode('utf-8'))
         logout(c)
@@ -115,7 +115,7 @@ def test_mark_not_owned(app, db_conn, users_table, notices_table):
     nid = notice.id
     with app.test_client() as c:
         response = login(c)
-        response = c.put('/api/notices/%s/read' % nid)
+        response = c.put('/api/notices/%s/read/' % nid)
         assert response.status_code == 403
         record = notices_table.get(nid).run(db_conn)
         assert record['read'] is False
