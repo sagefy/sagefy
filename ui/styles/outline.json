@@ -61,7 +61,6 @@
     "Tables",
     "Components", [
         "Details & Summary",
-        "Scrollbars",
         "Alerts & Errors",
         "Breadcrumbs, Wizards, & Pagination",
         "Discussion", [
