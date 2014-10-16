@@ -41,8 +41,9 @@ class PasswordAdapter extends FormAdapter
             @form = new FormView({fields: @getFields(state)})
         else
             @form = new View({
-                template: -> return "Check your inbox. " +
-                                    "If not, check your spam folder."
+                template: ->
+                    return "Check your inbox. " +
+                           "If not, check your spam folder."
             })
         @form.render()
         @view.render({
