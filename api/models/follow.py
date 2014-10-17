@@ -1,5 +1,5 @@
 from odm.model import Model, Field
-from odm.validations import is_required, is_string, is_one_of
+from odm.validations import is_required, is_string
 
 
 class Follow(Model):

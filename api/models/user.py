@@ -7,7 +7,6 @@ from modules.util import uniqid
 from modules.content import get as _
 
 
-
 def encrypt_password(value):
     return bcrypt.encrypt(value)
 

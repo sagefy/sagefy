@@ -23,14 +23,14 @@ class Notice(Model):
     )
 
     @classmethod
-    def list(Cls, user_id=None, limit=10, skip=0, read=None, tag=None,
+    def list(cls, user_id=None, limit=10, skip=0, read=None, tag=None,
              **params):
         """
         Get a list of models matching the provided arguments.
         Also adds pagination capabilities.
         Returns empty array when no models match.
         """
-        query = Cls.get_table() \
+        query = cls.get_table() \
                    .order_by(r.desc('created')) \
                    .filter(r.row['user_id'] == user_id) \
                    .filter(r.row['tags'].contains(tag)
@@ -40,7 +40,7 @@ class Notice(Model):
                    .skip(skip) \
                    .limit(limit)
         fields_list = query.run(g.db_conn)
-        return [Cls(fields) for fields in fields_list]
+        return [cls(fields) for fields in fields_list]
 
     def mark_as_read(self):
         """Marks the notice as read."""

@@ -33,6 +33,19 @@ sudo apt-get -y update
 sudo apt-get -y install rethinkdb
 rethinkdb --daemon --bind all
 
+### Elasticsearch #############################################################
+
+sudo apt-get -y install openjdk-7-jre-headless
+wget -qO - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+echo "deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main" | sudo tee --append /etc/apt/sources.list
+sudo apt-get -y update
+sudo apt-get -y install elasticsearch
+sudo update-rc.d elasticsearch defaults 95 10
+sudo /etc/init.d/elasticsearch start
+cd /usr/share/elasticsearch
+bin/plugin --install river-rethinkdb --url http://goo.gl/UkBm47
+cd /var/www
+
 #### Redis ####################################################################
 
 sudo apt-get -y install redis-server

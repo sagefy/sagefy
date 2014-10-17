@@ -1,5 +1,5 @@
 from odm.model import Model, Field
-from odm.validations import is_required, is_string, is_language
+from odm.validations import is_required, is_string, is_language, is_one_of
 
 
 class Vote(Model):

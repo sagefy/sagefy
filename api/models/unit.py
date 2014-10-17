@@ -1,6 +1,7 @@
 from odm.model import Model, Field
 from odm.validations import is_required, is_language, is_string, is_boolean, \
     is_list
+from modules.util import uniqid
 
 
 class Unit(Model):
