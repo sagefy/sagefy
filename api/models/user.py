@@ -1,5 +1,8 @@
+from odm.document import Document
 from odm.model import Model, Field
-from odm.validations import is_required, is_email, is_string, has_min_length
+from odm.embed import Embeds
+from odm.validations import is_required, is_email, is_string, \
+    has_min_length, is_one_of
 from passlib.hash import bcrypt
 from flask import url_for, current_app as app, request
 from flask.ext.login import current_user
@@ -11,11 +14,21 @@ def encrypt_password(value):
     return bcrypt.encrypt(value)
 
 
+class UserSettings(Document):
+    email_frequency = Field(
+        validations=(is_required, is_string, (
+            is_one_of, 'immediate', 'daily', 'weekly', 'never',
+        )),
+        access='private',
+        default='daily'
+    )
+
+
 class User(Model):
     tablename = 'users'
 
     name = Field(
-        validations=(is_string, is_required,),
+        validations=(is_required, is_string,),
         unique=True
     )
     email = Field(
@@ -28,6 +41,7 @@ class User(Model):
         access=False,
         transform=encrypt_password
     )
+    settings = Embeds(UserSettings, access='private')
 
     def is_password_valid(self, password):
         """Takes an encrypted password, and verifies it. Returns bool."""

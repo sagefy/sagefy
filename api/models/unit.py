@@ -17,6 +17,11 @@ class Unit(Model):
     """
     tablename = 'units'
 
+    """
+    The model represents a **version** of a unit, not a unit itself.
+    The `entity_id` attribute is what refers to a particular unit.
+    The `id` attribute refers to a specific version of the unit.
+    """
     entity_id = Field(
         validations=(is_required, is_string,),
         default=uniqid
