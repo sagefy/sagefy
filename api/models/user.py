@@ -41,7 +41,7 @@ class User(Model):
         access=False,
         transform=encrypt_password
     )
-    settings = Embeds(UserSettings, access='private')
+    # settings = Embeds(UserSettings, access='private')
 
     def is_password_valid(self, password):
         """Takes an encrypted password, and verifies it. Returns bool."""
