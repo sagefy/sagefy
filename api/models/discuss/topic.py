@@ -5,6 +5,7 @@ from odm.validations import is_required, is_language, is_string
 
 
 class TopicEntity(Document):
+    """Summary information about the related entity."""
     kind = Field(
         validations=(is_required, is_string,)
     )

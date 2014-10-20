@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
-from models.topic import Topic
-from models.post import Post
+from models.discuss.topic import Topic
+from models.discuss.post import Post
 from flask.ext.login import current_user
 
 topic = Blueprint('topic', __name__, url_prefix='/api/topics')

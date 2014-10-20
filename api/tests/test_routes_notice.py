@@ -1,6 +1,6 @@
 from test_routes_user import create_user_in_db, login, logout
 import json
-from models.notice import Notice
+from models.follow.notice import Notice
 
 
 def test_list(app, db_conn, users_table, notices_table):

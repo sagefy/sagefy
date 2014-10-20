@@ -24,6 +24,12 @@ def is_string(value):
         return _('error', 'string')
 
 
+def is_string_or_none(value):
+    """Ensure the value is string or none."""
+    if not (value is None or isinstance(value, str)):
+        return _('error', 'string')
+
+
 def is_language(value):
     """Entity must be ISO 639-1 code."""
     if not isinstance(value, basestring) or len(value) != 2:

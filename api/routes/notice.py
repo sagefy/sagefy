@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request, abort
 from flask.ext.login import current_user
-from models.notice import Notice
+from models.follow.notice import Notice
 from modules.util import parse_args
 
 notice = Blueprint('notice', __name__, url_prefix='/api/notices')

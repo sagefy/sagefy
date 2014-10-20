@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, abort
-from models.proposal import Proposal
+from models.discuss.proposal import Proposal
 from flask.ext.login import current_user
 from modules.util import parse_args
 from modules.entity import get_latest_canonical, get_kind, create_entity

@@ -1,4 +1,4 @@
-from models.notice import Notice
+from models.follow.notice import Notice
 
 
 def get_error(errors, name):

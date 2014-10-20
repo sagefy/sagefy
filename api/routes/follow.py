@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from models.follow import Follow
+from models.follow.follow import Follow
 from flask.ext.login import current_user
 
 follow = Blueprint('follow', __name__, url_prefix='/api/follows')

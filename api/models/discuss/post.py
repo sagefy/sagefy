@@ -1,5 +1,5 @@
 from odm.model import Model, Field
-from odm.validations import is_required, is_string, is_language
+from odm.validations import is_required, is_language, is_string, is_one_of
 
 
 class Post(Model):
@@ -18,4 +18,9 @@ class Post(Model):
     )
     body = Field(
         validations=(is_required, is_string,)
+    )
+    kind = Field(
+        validations=(is_required, is_string,
+                     (is_one_of, 'post', 'proposal', 'vote', 'flag')),
+        default='post'
     )

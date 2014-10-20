@@ -1,5 +1,6 @@
-from odm.model import Model, Field
-from odm.validations import is_required, is_boolean, is_string, is_list
+from odm.model import Model
+from odm.field import Field
+from odm.validations import is_required, is_string, is_boolean, is_list
 import rethinkdb as r
 from flask import g
 
