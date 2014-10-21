@@ -10,7 +10,7 @@ from models.discuss.vote import Vote
 from models.discuss.flag import Flag
 
 
-def get_post():
+def get_post_facade():
     """
     Gets the post and the correct kind based on the `kind` field.
     """
@@ -18,7 +18,7 @@ def get_post():
     pass
 
 
-def get_posts():
+def get_posts_facade():
     """
     Get posts, and return an array where each
     post is the correct kind based on the `kind` field.
@@ -27,7 +27,7 @@ def get_posts():
     pass
 
 
-def create_post():
+def create_post_facade():
     """
     Creates the correct kind of post based on the `kind` field.
     """
