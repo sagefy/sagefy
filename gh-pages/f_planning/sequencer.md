@@ -3,6 +3,8 @@ title: Learning Sequencer Notes
 layout: default
 ---
 
+TODO: Merge this document into the machine learning document.
+
 ## Core Attributes
 
 - Learner to Unit Efficacy
@@ -13,6 +15,7 @@ layout: default
     - Measure: ???
 - Card Quality
     - How much is the card is likely to improve the learner's efficacy?
+    - Possibly, also consider learner retention
     - Measure: ???
 
 ## Composed Attributes
@@ -31,6 +34,7 @@ layout: default
     - ???
 - Set Quality
     - ???
+    - Value would be used by recommender system.
 
 ## Process
 
@@ -45,6 +49,8 @@ layout: default
         - If there is a decline in efficacy, intervene with a non-assessment card
     - High: Focus on mid-to-low likelihood (30-50%)
     - What levels are low, mid, and high? What confidence to assert?
+    - Prefer to follow card prerequisite chains.
+    - Account for card prerequisites.
 - Review
     - Determine intervals (time) for review per unit.
     - More time will impact efficacy more greatly.

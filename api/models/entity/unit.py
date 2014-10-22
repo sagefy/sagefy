@@ -52,3 +52,5 @@ class Unit(Model):
         validations=(is_list,),
         default=[]
     )
+
+    # TODO: Ensure no prerequisite cycles form

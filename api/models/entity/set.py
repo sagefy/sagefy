@@ -51,3 +51,5 @@ class Set(Model):
         validations=(is_list,),
         default=[]
     )
+
+    # TODO: Ensure no cycles form in `set_ids`

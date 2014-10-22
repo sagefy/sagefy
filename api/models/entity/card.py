@@ -52,3 +52,5 @@ class Card(Model):
     kind = Field(
         validations=(is_required, is_string,)
     )
+
+    # TODO: Ensure no prerequisite cycles form
