@@ -80,7 +80,7 @@ I search sets for "American Sign Language". I see ordering of sets matching, est
 
 I click one and add it to my sets. It will appear on my dashboard, along with my overall completion percent. A link to the tree diagram is present. I will see if I need to continue or review any particular set.
 
-I click to go into the set. First I see the diagram of the units. I can open the diagram at any time from the menu. The menu also has a discussion link, and a link to return to the dashboard. The discussion link can go up the chain; I can discuss the card, unit, and sets from within a card.
+I click to go into the set. First I see the diagram of the units. I can open the diagram at any time from the menu. In the diagram, the current unit is highlighted. The menu also has a discussion link, and a link to return to the dashboard. The discussion link can go up the chain; I can discuss the card, unit, and sets from within a card.
 
 ### Diagnostic Assessment
 
@@ -129,3 +129,12 @@ Other Applications
 - Determine when the learner should take a break.
 - Given unit difficulties, determine time to complete a set.
 - Assess validity of cards, units, and sets.
+
+#### Side note - Six diverse sample subjects for planning examples
+
+- Japanese Art History
+- American Sign Language
+- Online Broadcast Journalism
+- Physical Therapy
+- Classical Guitar
+- Statistics
