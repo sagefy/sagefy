@@ -8,18 +8,13 @@ At first, there will only be video information with multiple choice questions wi
 Contributor Screens
 -------------------
 
-- Section Selector
-- Contributor Home
-- Contributor Search (Set, Unit, Card...)
+- Dashboard
+- Search (Set, Unit, Card...)
 - Object Overviews
     - Children, Parents
     - History
-    - List Proposals
-    - Discussions
-- Proposal
-    - Create
-    - Amend
-    - Agree, Consent, Discuss, Dissent...
+- Discussions
+    - Proposal
 
 Contributor Models
 ------------------
@@ -71,29 +66,6 @@ Contributor Models
 - body (description, objective)
 - versioning
 
-### Proposal
-
-- id
-- created
-- modified
-- language
-- user
-- entity kind, id, and version
-- action (create, update, delete ... split, merge)
-- status (pending, blocked, accepted, declined)
-- name
-
-### Vote
-
-- id
-- created
-- modified
-- language
-- user
-- proposal
-- body
-- kind (consent, discuss, dissent)
-
 ### Discussion > Topic
 
 - id
@@ -112,23 +84,30 @@ Contributor Models
 - user
 - topic
 - body
-- replies to post
+- [kind]
+
+### Discussion > Proposal
+
+- Post +
+- entity version
+- action (create, update, delete ... split, merge)
+- status (pending, blocked, accepted, declined)
+- name
+
+### Discussion > Vote
+
+- Post +
+- proposal
+- kind (consent, discuss, dissent)
+
+### Discussion > Flag
+
+- Proposal +
+- reason (offensive, irrelevant, incorrect, unpublished, duplicate, inaccessible)
 
 Contributor Endpoints
 ---------------------
 
-### Proposal API
-
-- GET /proposals/ (search)
-- GET /proposals/{id}
-    - Include entity information
-    - Include votes
-- POST /proposals/
-    - Include entity information
-- PUT (PATCH) /proposals/{id} (change status only)
-- POST /proposals/{id}/votes
-- PUT /proposals/{id}/votes/{id}
-- GET /proposals/{id}/votes
 
 ### Card, Unit, Set API
 
@@ -142,18 +121,11 @@ Contributor Endpoints
 ### Discussion API
 
 - GET /topics/ (search)
-- GET /topics/{id}/posts  (paginated posting)
-- POST /topics/
-    - Include entity information
-- PUT (PATCH) /topics/{id}
-    - Include entity information
-- POST /topics/{id}/posts
-- PUT (PATCH) /topics/{id}/posts/{id}
-
-### Flags API
-
-- POST /flags/
-    - Include entity information
+- POST /topics/ (create topic)
+- PUT (PATCH) /topics/{id} (update topic)
+- GET /topics/{id}/posts (list posts)
+- POST /topics/{id}/posts (create post, proposal, vote...)
+- PUT (PATCH) /topics/{id}/posts/{id} (update post)
 
 ### Follow API
 
@@ -193,16 +165,16 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 
 --------
 
-### Contributor Dashboard
+### Dashboard
 
 - Notices
     - Subject, time ago, read
-- Watched
+- Followed
     - Match search formatting
-- My Proposals
-    - Name, votes
 - My Discussions
     - Topic name, modified, posts
+    - My Proposals
+        - Name, votes
 - Link to search, list views
 
 ### Contributor Search (System-wide)
@@ -250,9 +222,8 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 
 ### Object View
 
-- Link to discussion
+- Link to discussions/proposals
 - Link to history
-- Link to proposals
 - Flag it
     - Creates a proposal to delete by system
 
@@ -290,38 +261,6 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 - Unit:
     - Kind selection changes fields available
 
-### Proposals View
-
-- object summary
-- list
-    - proposal name
-    - proposal time
-    - status
-    - votes
-
-### Proposal View
-
-- list of proposal blocks and posts
-    - Proposal block
-        - proposal name
-        - proposal body
-        - proposal action
-        - proposal decision
-    - Posts
-        - see below
-- Final block
-    - Write post
-    - Amend proposal (if owned)
-    - Vote block (if not owned)
-- Considerations
-    - Start with something very basic, e.g.
-        - 2 points agree, 1 point consent, 0 point discuss, block on dissent
-        - 10 points to accept
-    - Later, list out other factors to consider in formula
-        - Age, activity, usage of object
-        - Activity and participation of voters
-        - Activity and participation of proposer...
-
 ### Search Discussion Topics
 
 - Search box and button
@@ -329,6 +268,11 @@ The following views are per type: Set, Unit, and Card. These sections list the e
     - Topic name
     - Number of posts
     - Last modified
+    - Proposals
+        - proposal name
+        - proposal time
+        - status
+        - votes
 
 ### List Discussion Topics (per Object)
 
@@ -345,6 +289,27 @@ The following views are per type: Set, Unit, and Card. These sections list the e
     - actions (reply, +1, -1, own: edit)
 - infinite scroll
 - reverse chronological
+- proposal
+    - list of proposal blocks and posts
+        - Proposal block
+            - proposal name
+            - proposal body
+            - proposal action
+            - proposal decision
+        - Posts
+            - see below
+    - Final block
+        - Write post
+        - Amend proposal (if owned)
+        - Vote block (if not owned)
+    - Considerations
+        - Start with something very basic, e.g.
+            - 1 points agree, 0 point discuss, block on dissent
+            - 10 points to accept
+        - Later, list out other factors to consider in formula
+            - Age, activity, usage of object
+            - Activity and participation of voters
+            - Activity and participation of proposer...
 
 Contributor Wireframes
 ----------------------
