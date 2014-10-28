@@ -8,7 +8,7 @@ This document covers the terms, parameters, flow, and formula for the primary le
 Terms
 -----
 
-**Sequencer** - Determines the next card or other activity to show to the learner.
+**Sequencer** - Determines the optimal ordering of cards, units, or other activity to present to the learner.
 
 Also see [data structure](/data_structure).
 
@@ -18,26 +18,30 @@ Also see [data structure](/data_structure).
 
 **Difficulty** - Refers to how likely either the specific learner or the general learner to respond well.
 
+**Assessment Cards** - Cards which have an assessment element, such as choosing an answer or typing in an answer.
+
 Parameters
 ----------
 
-_Card Efficacy_ -
+All parameters have a best-guess (e.g. mean, mu) and a confidence in that prediction (e.g. deviation, sigma).
 
-**Unit Efficacy** -
+_Learner-Card Efficacy_ - How likely is the learner to respond to the given card well? (Only applies to assessment cards.)
 
-_Set Efficacy_ -
+**Learner-Unit Efficacy** - How likely is the learner to respond well to a typical card within the unit?
 
-**Card Quality** -
+_Learner-Set Efficacy_ - How well does the learner know the set? Measured as the average of the unit efficacies for the units defined as part of the set.
 
-_Unit Quality_ -
+**Card Quality** - How much is the card is likely to improve the typical learner's efficacy?
 
-_Set Quality_ -
+_Unit Quality_ - How likely is the typical learner to gain significant efficacy within this unit?
 
-**Card Difficulty** -
+_Set Quality_ - How likely is the typical learner to gain significant efficacy within this set? Measured as the average of the unit qualities for units defined as part of the set.
 
-_Unit Difficulty_ -
+**Card Difficulty** - How likely is the typical learner to answer well? (Only applies to assessment cards.)
 
-_Set Difficulty_ -
+_Unit Difficulty_ - How difficult is it for a typical learner to gain proficiency? A function of time.
+
+_Set Difficulty_ - How difficult is it for a typical learner to gain proficiency? A function of time. Measured as the sum of unit difficulty for units defined as part of the set.
 
 Flow
 ----
@@ -50,44 +54,6 @@ Previous
 
 Sequencer
 ---------
-
-_Determines the optimal order to present cards, units, and sets to the learner._
-
-### Core Attributes
-
-- Learner to Unit Efficacy
-    - How well does the learner know the unit?
-    - Use responses to assessment cards.
-    - Measure: Bayesian Knowledge Tracing
-- Card Difficulty
-    - How likely is any learner to get the right (objective) or a good (subjective) answer?
-    - Measure: TODO
-- Card Quality
-    - How much is the card is likely to improve any learner's efficacy?
-    - Possibly, also consider learner retention characteristics.
-    - More important on non-assessment cards.
-    - Measure: TODO
-
-### Composed Attributes
-
-- Learner to Card Efficacy -- called `likelihood` below
-    - How likely is the learner to answer well?
-    - Measure: Item Response Theory
-- Learner to Set Efficacy
-    - How likely is the learner to know the set?
-    - Composition of Learner to Unit Efficacy
-- Unit Difficulty
-    - How difficult is it for a typical learner to gain proficiency?
-    - Translate to time
-- Set Difficulty
-    - Same as unit difficulty
-- Unit Quality
-    - TODO: What question should we ask?
-- Set Quality
-    - TODO: What question should we ask?
-    - Value would be used by recommender system.
-- Also consider learner-specific card difficulty.
-- Also consider learner-specific card quality.
 
 ### Process
 
