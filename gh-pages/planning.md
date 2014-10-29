@@ -13,8 +13,6 @@ This document covers a rough list in the order of which things will be built. It
 - [ ] [Learners (MVP)](/f_planning/learners_mvp)
 - [ ] [First Use Case](/f_planning/first_use_case)
 - [ ] Additional Card Formats
-- [ ] Mentors (MVP)
-- [ ] Moderators (MVP)
-- [ ] Analyics (MVP)
+- [ ] Analytics (MVP)
 - [ ] Learner Groups (MVP)
 - And beyond...

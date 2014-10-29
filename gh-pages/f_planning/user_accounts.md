@@ -50,8 +50,7 @@ Screen Requirements
 ### Home Screen
 - Logo and Title
 - Short description
-- a) Login or Signup
-- b) Section selector: Learn, Contribute, Moderate, Mentor, Analyze
+- Login or Signup
 - Terms link
 
 ### Menu

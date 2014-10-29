@@ -23,9 +23,4 @@ Who will use it?
     - Learners can collaborate on their learning.
 - **Contributors**
     - Contributors can share their knowledge in a collaborative and organized fashion, with a very low time commitment.
-- **Mentors**
-    - Mentors can help other gain knowledge, and learn in the process of doing so.
-- **Moderators**
-    - Moderators can ensure highly quality content in a collaborative fashion.
-- **Developers**
-    - Developers can add capabilities to empower the learning process.
+    - Contributors can ensure highly quality content in a collaborative fashion.
