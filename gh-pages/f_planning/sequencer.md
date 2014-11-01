@@ -8,9 +8,9 @@ This document covers the terms, parameters, flow, and formula for the primary le
 Terms
 -----
 
-**Sequencer** - Determines the optimal ordering of cards, units, or other activity to present to the learner.
+Also see [data structure](/data_structure) for definitions of **card**, **unit**, and **set**.
 
-Also see [data structure](/data_structure).
+**Sequencer** - Determines the optimal ordering of cards, units, or other activity to present to the learner.
 
 **Ability** - Refers to the learner's ability towards a particular card, unit, or set.
 
@@ -30,63 +30,84 @@ All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that pred
 - _Definition_ - How likely is the learner to respond to the given card well? (Only applies to assessment cards.)
 - _When_ - Selecting the next card. Assessing Learner-Unit Ability.
 - _Factors_ - Learner-unit ability, card difficulty, guess, slip.
-- _Formula_ - ???
+- _Formula_ - ??? (Basically, IRT.)
 
-**Learner-Unit Ability**
+**Learner-Unit Ability [!!!]**
 
 - _Definition_ - How likely is the learner to respond well to a typical card within the unit?
-- _When_ - **Primary parameter**. Diagnostic assessment. When to change units. When unit is complete. When to review. Forming completion tree.
-- _Factors_ - Prior, response, learner-card ability, guess, slip.
-- _Formula_ - ???
+- _When_ - Diagnostic assessment. When to change units. When unit is complete. When to review. Forming completion tree.
+- _Factors_ - Prior, response, learner-card ability, card difficulty, guess, slip.
+- _Formula_ - ??? (Basically, BKT.)
 
 **Learner-Set Ability**
 
-- _Definition_ - How well does the learner know the set? Measured as the average of the unit efficacies for the units defined as part of the set.
+- _Definition_ - How well does the learner know the set?
 - _When_ - Searching for sets. Time to complete estimates.
 - _Factors_ - Learner-unit ability.
-- _Formula_ - ???
+- _Formula_ - sum(learner-unit ability) / count(units)  [V2: Use probability distribution]
 
 **Card Quality**
 
 - _Definition_ - How much is the card is likely to improve the typical learner's ability?
 - _When_ - Selecting the next card.
-- _Factors_ - ???
-- _Formula_ - ???
+- _Factors_ - Prior, learner-unit ability, unit learning curve (difficulty), time.
+- _Formula_ - ??? (Look for significant changes in the learning acceleration.)
 
 **Unit Quality**
 
 - _Definition_ - How likely is the typical learner to gain significant ability within this unit?
 - _When_ - Computing set quality.
-- _Factors_ - ???
-- _Formula_ - ???
+- _Factors_ - Learner-unit ability.
+- _Formula_ - sum(learner-unit ability per learner) / count(learners engaged)  [V2: Use probability distribution]
 
 **Set Quality**
 
-- _Definition_ - How likely is the typical learner to gain significant ability within this set? Measured as the average of the unit qualities for units defined as part of the set.
+- _Definition_ - How likely is the typical learner to gain significant ability within this set?
 - _When_ - Searching for a sets.
-- _Factors_ - ???
-- _Formula_ - ???
+- _Factors_ - Unit quality.
+- _Formula_ - sum(unit quality per unit) / count(units)  [V2: Use probability distribution]
 
 **Card Difficulty**
 
 - _Definition_ - How likely is the typical learner to answer well? (Only applies to assessment cards.)
 - _When_ - Computing learner-unit ability. Selecting the next card.
-- _Factors_ - Learner-unit ability, guess, slip.
-- _Formula_ - ???
+- _Factors_ - Prior, response, learner-unit ability, guess, slip.
+- _Formula_ - ??? (A simple method would be a percentage of good answers.)
+
+**Card Guess**
+
+- _Definition_ -  How likely is the typical learner, without ability, to randomly guess towards a good answer? (Only applies to assessment cards.)
+- _When_ - ???
+- _Factors_ - Prior, ???
+- _Formula_ - ??? (Contextual... one right answer in many wrongs is likely a guess.)
+
+**Card Slip**
+
+- _Definition_ - How likely is the typical learner, with ability, to answer poorly? (Only applies to assessment cards.)
+- _When_ - ???
+- _Factors_ - Prior, ???
+- _Formula_ - ??? (Contextual... one wrong answer in many rights is likely a slip.)
 
 **Unit Difficulty**
 
 - _Definition_ - How difficult is it for a typical learner to gain proficiency? A function of time.
 - _When_ - Time to complete estimates.
-- _Factors_ - ???
-- _Formula_ - ???
+- _Factors_ - Prior, time, ??? (Typical learning curve.)
+- _Formula_ - ??? (Should reflect a learning curve.)
 
 **Set Difficulty**
 
-- _Definition_ - How difficult is it for a typical learner to gain proficiency? A function of time. Measured as the sum of unit difficulty for units defined as part of the set.
+- _Definition_ - How difficult is it for a typical learner to gain proficiency?
 - _When_ - Time to complete estimates.
+- _Factors_ - Unit difficulty.
+- _Formula_ - sum(unit difficulty per unit)  [V2: Use probability distribution]
+
+**Unit Retention**
+
+- _Definition_ - How quickly will a learner forget? (Should degrade learner-unit ability's confidence over time.)
+- _When_ - Review.
 - _Factors_ - ???
-- _Formula_ - ???
+- _Formula_ - ??? (Forgetting curve...)
 
 Flow
 ----
