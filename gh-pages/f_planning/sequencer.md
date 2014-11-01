@@ -25,63 +25,63 @@ Parameters
 
 All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that prediction (a.k.a. deviation, sigma).
 
-**Learner-Card Ability** 
+**Learner-Card Ability**
 
 - _Definition_ - How likely is the learner to respond to the given card well? (Only applies to assessment cards.)
 - _When_ - Selecting the next card. Assessing Learner-Unit Ability.
 - _Factors_ - Learner-unit ability, card difficulty, guess, slip.
 - _Formula_ - ???
 
-**Learner-Unit Ability** 
+**Learner-Unit Ability**
 
 - _Definition_ - How likely is the learner to respond well to a typical card within the unit?
 - _When_ - **Primary parameter**. Diagnostic assessment. When to change units. When unit is complete. When to review. Forming completion tree.
 - _Factors_ - Prior, response, learner-card ability, guess, slip.
 - _Formula_ - ???
 
-**Learner-Set Ability** 
+**Learner-Set Ability**
 
 - _Definition_ - How well does the learner know the set? Measured as the average of the unit efficacies for the units defined as part of the set.
 - _When_ - Searching for sets. Time to complete estimates.
 - _Factors_ - Learner-unit ability.
 - _Formula_ - ???
 
-**Card Quality** 
+**Card Quality**
 
 - _Definition_ - How much is the card is likely to improve the typical learner's ability?
 - _When_ - Selecting the next card.
 - _Factors_ - ???
 - _Formula_ - ???
 
-**Unit Quality** 
+**Unit Quality**
 
 - _Definition_ - How likely is the typical learner to gain significant ability within this unit?
 - _When_ - Computing set quality.
 - _Factors_ - ???
 - _Formula_ - ???
 
-**Set Quality** 
+**Set Quality**
 
 - _Definition_ - How likely is the typical learner to gain significant ability within this set? Measured as the average of the unit qualities for units defined as part of the set.
 - _When_ - Searching for a sets.
 - _Factors_ - ???
 - _Formula_ - ???
 
-**Card Difficulty** 
+**Card Difficulty**
 
 - _Definition_ - How likely is the typical learner to answer well? (Only applies to assessment cards.)
 - _When_ - Computing learner-unit ability. Selecting the next card.
 - _Factors_ - Learner-unit ability, guess, slip.
 - _Formula_ - ???
 
-**Unit Difficulty** 
+**Unit Difficulty**
 
 - _Definition_ - How difficult is it for a typical learner to gain proficiency? A function of time.
 - _When_ - Time to complete estimates.
 - _Factors_ - ???
 - _Formula_ - ???
 
-**Set Difficulty** 
+**Set Difficulty**
 
 - _Definition_ - How difficult is it for a typical learner to gain proficiency? A function of time. Measured as the sum of unit difficulty for units defined as part of the set.
 - _When_ - Time to complete estimates.
@@ -101,7 +101,7 @@ Previous
 - Diagnosis [Knowledge Spaces] -- Determine how much the learner knows about a unit.
     - Starting at the end of the set,
       makes a guess about the learner's ability about each unit.
-    - Any unit with a low ability, then assess the prerequisite ability
+    - Any unit with a low ability, then assess the required units' ability
 - Primary
     - Low (0-65%): Focus on high quality non-assessment cards,
         mixed in with high (60-80%) likelihood cards.
@@ -111,9 +111,9 @@ Previous
         - If a learner makes a significant gain, move to another unit.
     - High (85%+): Focus on mid-to-low likelihood (30-50%)
     - What levels are low, mid, and high? What confidence to assert?
-    - Prefer to follow card prerequisite chains in a sequence.
-    - Account for card prerequisites.
-    - Require 85% as a prerequisite.
+    - Prefer to follow card require chains in a sequence.
+    - Account for card requires.
+    - Require 85% ability.
 - Review [Spaced Learning]
     - Given an learner to unit ability, how long is the learner likely to retain the information?
     - Determine intervals (time) for review per unit.
@@ -139,9 +139,9 @@ The page says I will take a diagnostic assessment. It estimates how long it will
 
 I start the diagnostic assessment. The system picks a unit near the end of the set. It asks me a difficult question.
 
-The questions are all synchronous assessment. The system continues to ask me questions from the last units in the set until it is 75% confident in its finding. For any units I am at less than 85% ability, it diagnoses the prerequisite unit. Prerequisite units do not have to be explicitly defined in the set, just within other units. The system shows my progress on screen towards completing the diagnostic assessment. If I leave, I can come back later and finish the assessment. If I've already completed units previously, it will use those ratings. Questions do not present feedback in diagnostic assessment.
+The questions are all synchronous assessment. The system continues to ask me questions from the last units in the set until it is 75% confident in its finding. For any units I am at less than 85% ability, it diagnoses the required units. Required units do not have to be explicitly defined in the set, just within other units. The system shows my progress on screen towards completing the diagnostic assessment. If I leave, I can come back later and finish the assessment. If I've already completed units previously, it will use those ratings. Questions do not present feedback in diagnostic assessment.
 
-When there are no units left with prerequisites and below 85%, the diagnostic assessment ends. Again I see the tree within the metrics for each unit.
+When there are no units left with requires and below 85%, the diagnostic assessment ends. Again I see the tree within the metrics for each unit.
 
 ### Main Loop
 

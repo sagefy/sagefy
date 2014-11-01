@@ -29,7 +29,7 @@ Contributor Models
 - name (e.g. title)
 - versioning (canonical)
 - tags
-- prerequisites
+- requires
 - Videos
     - duration
     - url
@@ -52,7 +52,7 @@ Contributor Models
 - versioning (canonical)
 - name (title)
 - body (objective, goal, description)
-- prerequisites
+- requires
 
 ### Set
 
@@ -143,7 +143,7 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 
 - name
 - tags
-- prerequisites
+- requires
 - Video:
     - duration and url
 - Text Multiple Choice:
@@ -155,7 +155,7 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 
 - name
 - goal
-- prerequisites
+- requires
 
 #### Set Elements
 
@@ -212,7 +212,7 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 #### List Unit
 
 - List
-    - Show name, kind, body (truncated), prereqs (truncated)
+    - Show name, kind, body (truncated), requires (truncated)
 
 #### List Card
 
@@ -236,16 +236,16 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 #### View Unit
 
 - See fields above
-- List prerequisites
-- List prerequisite ofs
+- List requires
+- List required by
 - List sets belong to
 
 #### View Card
 
 - See fields above
 - Show unit belongs to
-- List prerequisites
-- List prerequisite ofs
+- List requires
+- List required by
 
 ### List History View
 

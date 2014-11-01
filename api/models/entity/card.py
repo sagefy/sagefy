@@ -45,7 +45,7 @@ class Card(Model):
         validations=(is_list,),
         default=[]
     )
-    prerequisite_ids = Field(
+    requires_ids = Field(
         validations=(is_list,),
         default=[]
     )
@@ -53,4 +53,4 @@ class Card(Model):
         validations=(is_required, is_string,)
     )
 
-    # TODO: Ensure no prerequisite cycles form
+    # TODO: Ensure no require cycles form

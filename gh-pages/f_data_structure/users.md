@@ -48,7 +48,7 @@ Units
     - Refer to objective during unit
 - _Contributors_
     - View history, analytics, and discussion
-    - Establish prerequisite units
+    - Establish required units
     - Notices
     - Consensus editing
     - Tips
@@ -66,6 +66,6 @@ Sets
 - _Contributors_
     - View history, analytics, and discussion
     - Consensus editing
-    - Specify prerequisites, no closed loops
+    - Specify requires, no closed loops
     - Merge and split operations
     - Notices

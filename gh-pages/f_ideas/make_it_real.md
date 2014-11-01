@@ -28,4 +28,4 @@ How does Sagefy implement this idea?
 ------------------------------------
 
 - The flexibility of card formats allows using audio, images, and video.
-- Cards can have prerequisites, allowing for more involved projects based on problem-based learning.
+- Cards can have requires, allowing for more involved projects based on problem-based learning.
