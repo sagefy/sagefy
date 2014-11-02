@@ -303,13 +303,7 @@ The following views are per type: Set, Unit, and Card. These sections list the e
         - Amend proposal (if owned)
         - Vote block (if not owned)
     - Considerations
-        - Start with something very basic, e.g.
-            - 1 points agree, 0 point discuss, block on dissent
-            - 10 points to accept
-        - Later, list out other factors to consider in formula
-            - Age, activity, usage of object
-            - Activity and participation of voters
-            - Activity and participation of proposer...
+        - [Contributor Ratings and Proposal Friction](/f_planning/contributor_ratings)
 
 Contributor Wireframes
 ----------------------
