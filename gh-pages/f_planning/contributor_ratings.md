@@ -8,26 +8,16 @@ Contributor Rating
 
 We consider contributor rating based on **proposals** and **votes**.
 
-### High positive impact
-
-- **Proposed, accepted**: Encourages creating good proposals
-- **Voted yes, accepted**: Encourages more frequent additions and changes
-- Equal weighting of creating accepted proposal and voting yes on an accepted proposal encourages collaboration
-- **Voted no, declined**: Encourages dissenters to work with OP and yes votes
-
-### Low negative impact
-
-- **Proposed, blocked**
-- **Voted yes, blocked**
-- Encourages discussion of the issue presented
-
-### No impact
-
-- **Proposal pending**: Encourages getting more votes
-- **Voted yes, pending**: Encourages getting more votes
-- **Proposal declined**: Encourages yes group discuss or decline issue by removing penalty
-- **Voted yes, declined**: Encourages yes group discuss or decline issue by removing penalty
-- **Voted no, blocked**: Encourages dissenter to get yes group to discuss or decline issue
+- (0): I create a proposal
+- (-): I create a proposal, and it's blocked
+- (0): I create a proposal, and I decline it
+- (+): I create a proposal, and it's accepted
+- (0): I vote for a proposal
+- (-): I vote for a proposal, and it's blocked
+- (0): I vote for a proposal, but it's declined
+- (+): I vote for a proposal, and it's accepted
+- (0): I vote against a proposal, and it's blocked
+- (+): I vote against a proposal, and it's declined by its creator
 
 Proposal Friction
 -----------------
