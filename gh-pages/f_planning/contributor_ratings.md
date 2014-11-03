@@ -35,6 +35,6 @@ Proposal V2: Friction
 
 All proposals require at least two yes votes in addition to the original proposal.
 
-Proposals that are more likely to impact learners directly should have more friction to acceptance. Below describes the sum of contributor scores needed to approve a proposal, including the original proposer's score. A contributor with a score of -2 or -1 has an effective score of 0. A contributor with a score lower than -2 cannot propose or vote.
+Proposals that are more likely to impact learners directly should have more friction to acceptance. The sum of contributor scores, including the original proposer's score, should also be considered.
 
 Creating a set or a unit, with no other information, should require little approval. Updating or removing a set, unit, or creating, updating or removing a card should factor in the number of learners impacted and the quality of the entity.
