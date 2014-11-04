@@ -112,78 +112,42 @@ All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that pred
 Flow
 ----
 
----------------
-
-Previous
----------
-
-### Process
-
-- Diagnosis [Knowledge Spaces] -- Determine how much the learner knows about a unit.
-    - Starting at the end of the set,
-      makes a guess about the learner's ability about each unit.
-    - Any unit with a low ability, then assess the required units' ability
-- Primary
-    - Low (0-65%): Focus on high quality non-assessment cards,
-        mixed in with high (60-80%) likelihood cards.
-        - If a learner makes a significant gain, move to another unit.
-    - Mid (65-85%): Focus on middle likelihood (50%) cards of at least moderate quality.
-        - If there is a decline in ability, intervene with a non-assessment card.
-        - If a learner makes a significant gain, move to another unit.
-    - High (85%+): Focus on mid-to-low likelihood (30-50%)
-    - What levels are low, mid, and high? What confidence to assert?
-    - Prefer to follow card require chains in a sequence.
-    - Account for card requires.
-    - Require 85% ability.
-- Review [Spaced Learning]
-    - Given an learner to unit ability, how long is the learner likely to retain the information?
-    - Determine intervals (time) for review per unit.
-    - More time will impact ability more greatly.
-
-Story Mode
+![Flowchart](https://docs.google.com/drawings/d/1fmdT0vqWPsq-oUG0IPRprckGw8wn9_QmO9tCe63yS80/pub?w=850&h=699)
 
 ### Set Selection
 
-I come to the site, I sign in.
+I come to the site, I sign in. Dashboard is empty. Links to search sets.
 
-Dashboard is empty. Links to search sets.
-
-I search sets for "American Sign Language". I see ordering of sets matching, estimates for difficulty (or time). I can click to see a map of the units involved in a tree diagram.
+I search sets. I see ordering of sets matching, estimates for difficulty (or time). I can click to see a map of the units involved in a tree diagram.
 
 I click one and add it to my sets. It will appear on my dashboard, along with my overall completion percent. A link to the tree diagram is present. I will see if I need to continue or review any particular set.
 
-I click to go into the set. First I see the diagram of the units. I can open the diagram at any time from the menu. In the diagram, the current unit is highlighted. The menu also has a discussion link, and a link to return to the dashboard. The discussion link can go up the chain; I can discuss the card, unit, and sets from within a card.
+### Menu
 
-### Diagnostic Assessment
+I can open the diagram at any time from the menu. In the diagram, the current unit is highlighted. The menu also has a discussion link, and a link to return to the dashboard. The discussion link can go up the chain; I can discuss the card, unit, and sets from within a card.
+
+### Diagnosis
+
+I click to go into the set. First I see the diagram of the units.
 
 The page says I will take a diagnostic assessment. It estimates how long it will take to complete the diagnostic assessment. It says it will start with the hardest questions first and work back.
 
-I start the diagnostic assessment. The system picks a unit near the end of the set. It asks me a difficult question.
+I start the diagnostic assessment. The system picks a unit near the end of the set.
 
-The questions are all synchronous assessment. The system continues to ask me questions from the last units in the set until it is 75% confident in its finding. For any units I am at less than 85% ability, it diagnoses the required units. Required units do not have to be explicitly defined in the set, just within other units. The system shows my progress on screen towards completing the diagnostic assessment. If I leave, I can come back later and finish the assessment. If I've already completed units previously, it will use those ratings. Questions do not present feedback in diagnostic assessment.
+The questions are all synchronous assessment. The system continues to ask me questions from the last units in the set until it is confident in its finding. For any units I am at less than proficient ability, it diagnoses the required units. Required units do not have to be explicitly defined in the set, just within other units. The system shows my progress on screen towards completing the diagnostic assessment. If I leave, I can come back later and finish the assessment. If I've already completed units previously, it will use those ratings. Questions do not present feedback in diagnostic assessment.
 
-When there are no units left with requires and below 85%, the diagnostic assessment ends. Again I see the tree within the metrics for each unit.
+When there are no units left with requires below proficiency, the diagnostic assessment ends. Again I see the tree within the metrics for each unit.
 
-### Main Loop
-
-Now if I continue or return to the set, I am in the primary learning loop.
+### Learning
 
 It starts from the furthest branches. I first choose which unit to start with. It emphasizes one of the units by default. It shows the learning objective and estimated difficulty (time) for each unit.
 
 I practice with the unit. I can see my progress on the unit at the bottom of the screen. I receive feedback on questions with assessment.
 
-If I have low ability, the system will add more high quality non-assessment cards, like videos. It also uses assessment cards that I am highly likely to answer correctly (60-80%).
+If I have low ability, the system will add more high quality non-assessment cards, like videos. It also uses assessment cards that I am highly likely to answer correctly. If I have moderate ability, the system focuses on medium likelihood cards. Non-assessment cards are shown if I get multiple answers incorrect. If I have high ability, the system focuses on lower likelihood cards. The system prefers to follow require chains in sequence for cards. If I gain significantly or reach proficient ability, the system recommends I switch to a different unit.
 
-If I have moderate ability, the system focuses on medium likelihood cards (50%). Non-assessment cards are shown if I get multiple answers incorrect.
+The set is complete when all cards have proficient ability with confidence. I'm encouraged to find a new set.
 
-If I have high ability, the system focuses on lower likelihood cards.
-
-If I gain more than 20% or reach 85% ability, the system recommends I switch to a different unit.
-
-The set is complete when all cards have 85% ability and confidence.
-
-At the end of the set, I'm encouraged to find a new set.
-
-### Review
+### Retention
 
 The system will monitor the last time I interacted with the units in the set. Using spaced repetition, it reminds me when I should review the units. The more time since the last review, the greater it will impact my ability score. The more time since the last review, the confidence will decrease.

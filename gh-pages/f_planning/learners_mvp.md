@@ -3,4 +3,4 @@ title: Learners (MVP) Requirements
 layout: default
 ---
 
-See [Machine Learning Requirements](/f_planning/ml_requirements) and [Sequencer](/f_planning/sequencer).
+See [Sequencer](/f_planning/sequencer) and [Machine Learning Requirements](/f_planning/ml_requirements).
