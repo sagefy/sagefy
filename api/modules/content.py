@@ -1,3 +1,8 @@
+"""
+Makes content in ../content in YAML format available to the Python API.
+"""
+
+
 import yaml
 import os
 

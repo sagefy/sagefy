@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify, request
-from models.entity.set import Set
-from flask.ext.login import current_user
+from flask import Blueprint
+# , jsonify, request
+# from models.entity.set import Set
+# from flask.ext.login import current_user
 
 set_ = Blueprint('set_', __name__, url_prefix='/api/sets')
 
