@@ -44,6 +44,10 @@ def db_conn(app, request):
     request.addfinalizer(teardown)
     return g.db_conn
 
+##########
+# TODO: For below functions, figure out a way to reduce this to one function
+##########
+
 
 @pytest.fixture(scope='module')
 def users_table(app, db_conn, request):
@@ -63,5 +67,27 @@ def notices_table(app, db_conn, request):
     except RqlRuntimeError:
         pass
     table = g.db.table('notices')
+    table.delete().run(db_conn)
+    return table
+
+
+@pytest.fixture(scope='module')
+def topics_table(app, db_conn, request):
+    try:
+        g.db.table_create('topics').run(db_conn)
+    except RqlRuntimeError:
+        pass
+    table = g.db.table('topics')
+    table.delete().run(db_conn)
+    return table
+
+
+@pytest.fixture(scope='module')
+def posts_table(app, db_conn, request):
+    try:
+        g.db.table_create('posts').run(db_conn)
+    except RqlRuntimeError:
+        pass
+    table = g.db.table('posts')
     table.delete().run(db_conn)
     return table
