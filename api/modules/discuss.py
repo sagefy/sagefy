@@ -4,32 +4,56 @@ for post (sub: proposal, vote, flag).
 """
 
 # from models.discuss.topic import Topic
-# from models.discuss.post import Post
-# from models.discuss.proposal import Proposal
-# from models.discuss.vote import Vote
-# from models.discuss.flag import Flag
+from models.discuss.post import Post
+from models.discuss.proposal import Proposal
+from models.discuss.vote import Vote
+from models.discuss.flag import Flag
+from flask import g
+from modules.util import omit
 
 
-def get_post_facade():
+def instance(data):
+    """
+    Given data from the database, return an appropriate model instance
+    based on the `kind` field.
+    """
+    if data['kind'] is 'post':
+        return Post(data)
+    if data['kind'] is 'proposal':
+        return Proposal(data)
+    if data['kind'] is 'vote':
+        return Vote(data)
+    if data['kind'] is 'flag':
+        return Flag(data)
+
+
+def get_post_facade(post_id):
     """
     Gets the post and the correct kind based on the `kind` field.
     """
+    data = g.db.table('posts').get(post_id).run(g.db_conn)
+    return instance(data)
 
-    pass
 
-
-def get_posts_facade():
+def get_posts_facade(user_id=None, limit=10, skip=0, **params):
     """
     Get posts, and return an array where each
     post is the correct kind based on the `kind` field.
     """
 
-    pass
+    data = g.db.table('posts') \
+            .filter(params) \
+            .skip(skip) \
+            .limit(limit) \
+            .run(g.db_conn)
+    return [instance(d) for d in data]
 
 
-def create_post_facade():
+def create_post_facade(data):
     """
     Creates the correct kind of post based on the `kind` field.
     """
 
-    pass
+    data = omit(data, ('id', 'created', 'modified'))
+    model = instance(data)
+    return model.save()

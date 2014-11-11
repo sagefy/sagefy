@@ -1,6 +1,6 @@
 from odm.model import Model, Field
 from odm.validations import is_required, is_language, is_string, is_boolean, \
-    is_list, is_string_or_none
+    is_list, is_string_or_none, is_one_of
 from modules.util import uniqid
 
 
@@ -50,7 +50,8 @@ class Card(Model):
         default=[]
     )
     kind = Field(
-        validations=(is_required, is_string,)
+        validations=(is_required, is_string,
+                     (is_one_of, 'video', 'choice'))
     )
 
     # TODO: Ensure no require cycles form
