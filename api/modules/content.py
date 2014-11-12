@@ -20,5 +20,6 @@ def get(filename, key, language='en'):
         files[filename] = yaml.load(stream)
         stream.close()
     return files[filename][key][language]
+    # TODO: Update so default to lang, then default to `en`
 
 _ = get
