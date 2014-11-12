@@ -71,7 +71,6 @@ Contributor Models
 - id
 - created
 - modified
-- language
 - entity kind and id
 - name
 
@@ -80,7 +79,6 @@ Contributor Models
 - id
 - created
 - modified
-- language
 - user
 - topic
 - body

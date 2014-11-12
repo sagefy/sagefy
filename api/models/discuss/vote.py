@@ -20,3 +20,8 @@ class Vote(Post):
         """
         Model.__init__(self, fields)
         self.kind = 'vote'
+
+    # You can only vote once per proposal.
+    # You can update the response on your vote.
+    # You cannot vote on your own proposal.
+    # A vote should not require a body.

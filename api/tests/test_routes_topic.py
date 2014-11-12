@@ -13,7 +13,6 @@ def create_topic_in_db(topics_table, db_conn):
         'id': 'wxyz7890',
         'created': r.now(),
         'modified': r.now(),
-        'language': 'en',
         'name': 'A Modest Proposal',
         'entity': {
             'entity_id': 'efgh5678',
@@ -39,7 +38,7 @@ def test_search_filter(app, db_conn):
 
 
 @xfail
-def test_search_lang(app, db_conn):
+def test_search_language(app, db_conn):
     """
     Expect to search topics by language.
     """
@@ -292,7 +291,6 @@ def test_create_post_vote(app, db_conn, users_table, topics_table,
         'id': 'jklm',
         'created': r.now(),
         'modified': r.now(),
-        'language': 'en',
         'user_id': 'abcd1234',
         'topic_id': 'wxyz7890',
         'body': '''A Modest Proposal for Preventing the Children of Poor

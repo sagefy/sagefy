@@ -22,7 +22,7 @@ def list_topics():
     - query: a query string for rich-text search
         - Also include entity name as well in indexing
     - kind: the kind of entity to search for (set, card, unit)
-    - language: the language of the proposal & entity
+    - language: the language of the entity
     - skip: for pagination
     - limit: for pagination
     - order: created, latest post; asc or dsc

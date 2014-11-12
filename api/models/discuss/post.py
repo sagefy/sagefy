@@ -1,15 +1,11 @@
 from odm.model import Model, Field
-from odm.validations import is_required, is_language, is_string, is_one_of
+from odm.validations import is_required, is_string, is_one_of
 
 
 class Post(Model):
     """A discussion post."""
     tablename = 'posts'
 
-    language = Field(
-        validations=(is_required, is_language,),
-        default='en'
-    )
     user_id = Field(
         validations=(is_required, is_string,)
     )

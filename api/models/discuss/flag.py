@@ -20,3 +20,6 @@ class Flag(Proposal):
         Model.__init__(self, fields)
         self.kind = 'flag'
         self.action = 'delete'
+
+    # Only one flag proposal per entity per reason is allowed.
+    # Otherwise, its a vote for the existing flag proposal for that reason.
