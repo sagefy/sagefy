@@ -48,13 +48,6 @@ Synchronous Assessment Card Kinds
 
 ### Match Card
 
-### Matrix Card
-
-- A table of rows and columns
-- Can select radio, checkbox, number, time date or short text per rows or per columns
-
-### Pattern Card
-
 - Text input, matches a regular expression, or similar
 - Feedback based on matching...
 
