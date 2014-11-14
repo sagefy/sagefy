@@ -21,6 +21,38 @@ def create_topic_in_db(topics_table, db_conn):
     }).run(db_conn)
 
 
+def create_post_in_db(posts_table, db_conn, user_id='abcd1234'):
+    posts_table.insert({
+        'id': 'jklm',
+        'created': r.now(),
+        'modified': r.now(),
+        'user_id': user_id,
+        'topic_id': 'wxyz7890',
+        'body': '''A Modest Proposal for Preventing the Children of Poor
+            People From Being a Burthen to Their Parents or Country, and
+            for Making Them Beneficial to the Publick.''',
+        'kind': 'post',
+    }).run(db_conn)
+
+
+def create_proposal_in_db(posts_table, db_conn):
+    posts_table.insert({
+        'id': 'jklm',
+        'created': r.now(),
+        'modified': r.now(),
+        'user_id': 'abcd1234',
+        'topic_id': 'wxyz7890',
+        'body': '''A Modest Proposal for Preventing the Children of Poor
+            People From Being a Burthen to Their Parents or Country, and
+            for Making Them Beneficial to the Publick.''',
+        'kind': 'proposal',
+        'entity_version_id': '1',
+        'name': 'New Unit',
+        'status': 'pending',
+        'action': 'create'
+    }).run(db_conn)
+
+
 @xfail
 def test_search(app, db_conn):
     """
@@ -287,21 +319,7 @@ def test_create_post_vote(app, db_conn, users_table, topics_table,
     """
     create_user_in_db(users_table, db_conn)
     create_topic_in_db(topics_table, db_conn)
-    posts_table.insert({
-        'id': 'jklm',
-        'created': r.now(),
-        'modified': r.now(),
-        'user_id': 'abcd1234',
-        'topic_id': 'wxyz7890',
-        'body': '''A Modest Proposal for Preventing the Children of Poor
-            People From Being a Burthen to Their Parents or Country, and
-            for Making Them Beneficial to the Publick.''',
-        'kind': 'proposal',
-        'entity_version_id': '1',
-        'name': 'New Unit',
-        'status': 'pending',
-        'action': 'create'
-    }).run(db_conn)
+    create_proposal_in_db(posts_table, db_conn)
     with app.test_client() as c:
         login(c)
         response = c.post('/api/topics/wxyz7890/posts', data=json.dumps({
@@ -317,32 +335,112 @@ def test_create_post_vote(app, db_conn, users_table, topics_table,
 
 
 @xfail
-def test_update_post_login(app, db_conn):
+def test_update_post_login(app, db_conn, users_table, topics_table,
+                           posts_table):
     """
     Expect update post to require login.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    create_topic_in_db(topics_table, db_conn)
+    create_post_in_db(posts_table, db_conn)
+    with app.test_client() as c:
+        response = c.put('/api/topics/wxyz7890/posts/jklm', data=json.dumps({
+            'body': '''Update.''',
+        }), content_type='application/json')
+        assert response.status_code == 401
+        data = json.loads(response.data.decode('utf-8'))
+        assert 'errors' in data
 
 
 @xfail
-def test_update_post_author(app, db_conn):
+def test_update_post_author(app, db_conn, users_table, topics_table,
+                            posts_table):
     """
     Expect update post to require own post.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    create_topic_in_db(topics_table, db_conn)
+    create_post_in_db(posts_table, db_conn, user_id='1234yuio')
+    with app.test_client() as c:
+        login(c)
+        response = c.put('/api/topics/wxyz7890/posts/jklm', data=json.dumps({
+            'body': '''Update.''',
+        }), content_type='application/json')
+        assert response.status_code == 403
+        data = json.loads(response.data.decode('utf-8'))
+        assert 'errors' in data
+        logout(c)
 
 
 @xfail
-def test_update_post_body(app, db_conn):
+def test_update_post_body(app, db_conn, users_table, topics_table,
+                          posts_table):
     """
-    Expect update post to change body only for general post.
+    Expect update post to change body for general post.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    create_topic_in_db(topics_table, db_conn)
+    create_post_in_db(posts_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.put('/api/topics/wxyz7890/posts/jklm', data=json.dumps({
+            'body': '''Update.''',
+        }), content_type='application/json')
+        assert response.status_code == 200
+        data = json.loads(response.data.decode('utf-8'))
+        assert 'Update' in data['post']['body']
+        logout(c)
 
 
 @xfail
-def test_update_proposal(app, db_conn):
+def test_update_proposal(app, db_conn, users_table, topics_table,
+                         posts_table):
     """
     Expect update post to handle proposals correctly.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    create_topic_in_db(topics_table, db_conn)
+    create_proposal_in_db(posts_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.put('/api/topics/wxyz7890/posts/jklm', data=json.dumps({
+            'status': 'declined'
+        }), content_type='application/json')
+        assert response.status_code == 200
+        data = json.loads(response.data.decode('utf-8'))
+        assert 'declined' in data['proposal']['status']
+        logout(c)
+
+
+@xfail
+def test_update_vote(app, db_conn, users_table, topics_table,
+                     posts_table):
+    """
+    Expect update vote to handle proposals correctly.
+    """
+    create_user_in_db(users_table, db_conn)
+    create_topic_in_db(topics_table, db_conn)
+    create_proposal_in_db(posts_table, db_conn)
+    posts_table.insert({
+        'id': 'vbnm1234',
+        'created': r.now(),
+        'modified': r.now(),
+        'user_id': 'abcd1234',
+        'topic_id': 'wxyz7890',
+        'proposal_id': 'jklm',
+        'body': 'Boo!',
+        'response': False,
+        'kind': 'vote',
+    }).run(db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.put(
+            '/api/topics/wxyz7890/posts/vbnm1234',
+            data=json.dumps({
+                'body': 'Yay!',
+                'response': True,
+            }), content_type='application/json')
+        assert response.status_code == 200
+        data = json.loads(response.data.decode('utf-8'))
+        assert True in data['vote']['response']
+        logout(c)
