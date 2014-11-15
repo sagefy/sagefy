@@ -70,7 +70,7 @@ def test_search_filter(app, db_conn):
 
 
 @xfail
-def test_search_language(app, db_conn):
+def test_search_language(app, db_conn, users_table, topics_table, posts_table):
     """
     Expect to search topics by language.
     """
@@ -78,7 +78,7 @@ def test_search_language(app, db_conn):
 
 
 @xfail
-def test_search_user(app, db_conn):
+def test_search_user(app, db_conn, users_table, topics_table, posts_table):
     """
     Expect to search topics by user.
     """
@@ -86,7 +86,7 @@ def test_search_user(app, db_conn):
 
 
 @xfail
-def test_search_proposal(app, db_conn):
+def test_search_proposal(app, db_conn, users_table, topics_table, posts_table):
     """
     Expect to search for proposals
     """
@@ -94,7 +94,7 @@ def test_search_proposal(app, db_conn):
 
 
 @xfail
-def test_search_sort(app, db_conn):
+def test_search_sort(app, db_conn, users_table, topics_table, posts_table):
     """
     Expect to sort topics in search.
     """
@@ -102,7 +102,7 @@ def test_search_sort(app, db_conn):
 
 
 @xfail
-def test_search_paginate(app, db_conn):
+def test_search_paginate(app, db_conn, users_table, topics_table, posts_table):
     """
     Expect to paginate topics in search.
     """
@@ -110,7 +110,7 @@ def test_search_paginate(app, db_conn):
 
 
 @xfail
-def test_search_blank(app, db_conn):
+def test_search_blank(app, db_conn, users_table, topics_table, posts_table):
     """
     Expect a blank search result.
     """
@@ -118,7 +118,7 @@ def test_search_blank(app, db_conn):
 
 
 @xfail
-def test_create_topic(app, db_conn):
+def test_create_topic(app, db_conn, users_table, topics_table, posts_table):
     """
     Expect to create a topic with post.
     """
@@ -126,7 +126,8 @@ def test_create_topic(app, db_conn):
 
 
 @xfail
-def test_create_topic_proposal(app, db_conn):
+def test_create_topic_proposal(app, db_conn, users_table, topics_table,
+                               posts_table):
     """
     Expect to create a topic with proposal.
     """
@@ -134,7 +135,8 @@ def test_create_topic_proposal(app, db_conn):
 
 
 @xfail
-def test_create_topic_flag(app, db_conn):
+def test_create_topic_flag(app, db_conn, users_table, topics_table,
+                           posts_table):
     """
     Expect to create topic with a flag.
     """
@@ -142,7 +144,8 @@ def test_create_topic_flag(app, db_conn):
 
 
 @xfail
-def test_create_topic_login(app, db_conn):
+def test_create_topic_login(app, db_conn, users_table, topics_table,
+                            posts_table):
     """
     Expect create topic to fail when logged out.
     """
@@ -150,7 +153,8 @@ def test_create_topic_login(app, db_conn):
 
 
 @xfail
-def test_create_topic_no_post(app, db_conn):
+def test_create_topic_no_post(app, db_conn, users_table, topics_table,
+                              posts_table):
     """
     Expect create topic to fail without post.
     """
@@ -158,7 +162,8 @@ def test_create_topic_no_post(app, db_conn):
 
 
 @xfail
-def test_topic_update(app, db_conn):
+def test_topic_update(app, db_conn, users_table, topics_table,
+                      posts_table):
     """
     Expect to update topic name.
     """
@@ -166,7 +171,8 @@ def test_topic_update(app, db_conn):
 
 
 @xfail
-def test_update_topic_author(app, db_conn):
+def test_update_topic_author(app, db_conn, users_table, topics_table,
+                             posts_table):
     """
     Expect update topic to require original author.
     """
@@ -174,7 +180,8 @@ def test_update_topic_author(app, db_conn):
 
 
 @xfail
-def test_update_topic_fields(app, db_conn):
+def test_update_topic_fields(app, db_conn, users_table, topics_table,
+                            posts_table):
     """
     Expect update topic to only change name.
     """
@@ -182,43 +189,118 @@ def test_update_topic_fields(app, db_conn):
 
 
 @xfail
-def test_get_posts(app, db_conn):
+def test_get_posts(app, db_conn, users_table, topics_table, posts_table):
     """
     Expect to get posts for given topic.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    create_topic_in_db(topics_table, db_conn)
+    posts_table.insert([{
+        'id': 'jklm',
+        'created': r.now(),
+        'modified': r.now(),
+        'user_id': 'abcd1234',
+        'topic_id': 'wxyz7890',
+        'body': '''A Modest Proposal for Preventing the Children of Poor
+            People From Being a Burthen to Their Parents or Country, and
+            for Making Them Beneficial to the Publick.''',
+        'kind': 'post',
+    }, {
+        'id': 'tyui',
+        'created': r.now(),
+        'modified': r.now(),
+        'user_id': 'abcd1234',
+        'topic_id': 'wxyz7890',
+        'body': 'A follow up.',
+        'kind': 'post',
+    }]).run(db_conn)
+    with app.test_client() as c:
+        response = c.get('/api/topics/wxyz7890/posts')
+        assert response.status_code == 200
+        data = json.loads(response.data.decode('utf-8'))
+        assert 'Beneficial to the Publick' in data['posts'][0]['body']
+        assert 'Beneficial to the Publick' in data['posts'][1]['body']
 
 
 @xfail
-def test_get_posts_not_topic(app, db_conn):
+def test_get_posts_not_topic(app, db_conn, users_table, topics_table,
+                             posts_table):
     """
     Expect 404 to get posts for a nonexistant topic.
     """
-    return False
+    with app.test_client() as c:
+        response = c.get('/api/topics/wxyz7890/posts')
+        assert response.status_code == 404
 
 
 @xfail
-def test_get_posts_paginate(app, db_conn):
+def test_get_posts_paginate(app, db_conn, users_table, topics_table,
+                            posts_table):
     """
     Expect get posts for topic to paginate.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    create_topic_in_db(topics_table, db_conn)
+    for i in range(0, 25):
+        posts_table.insert({
+            'id': 'jklm%s' % i,
+            'created': r.now(),
+            'modified': r.now(),
+            'user_id': 'abcd1234',
+            'topic_id': 'wxyz7890',
+            'body': 'test %s' % i,
+            'kind': 'post',
+        }).run(db_conn)
+    with app.test_client() as c:
+        response = c.get('/api/topics/wxyz7890/posts')
+        assert response.status_code == 200
+        data = json.loads(response.data.decode('utf-8'))
+        assert len(data['posts']) == 10
+        response = c.get('/api/notices/?skip=20')
+        data = json.loads(response.data.decode('utf-8'))
+        assert len(data['posts']) == 5
 
 
 @xfail
-def test_get_posts_proposal(app, db_conn):
+def test_get_posts_proposal(app, db_conn, users_table, topics_table,
+                            posts_table):
     """
     Expect get posts for topic to render a proposal correctly.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    create_topic_in_db(topics_table, db_conn)
+    create_proposal_in_db(posts_table, db_conn)
+    with app.test_client() as c:
+        response = c.get('/api/topics/wxyz7890/posts')
+        assert response.status_code == 200
+        data = json.loads(response.data.decode('utf-8'))
+        assert data['posts'][0]['kind'] == 'proposal'
 
 
 @xfail
-def test_get_posts_votes(app, db_conn):
+def test_get_posts_votes(app, db_conn, users_table, topics_table, posts_table):
     """
     Expect get posts for topic to render votes correctly.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    create_topic_in_db(topics_table, db_conn)
+    create_proposal_in_db(posts_table, db_conn)
+    posts_table.insert({
+        'id': 'asdf4567',
+        'created': r.now(),
+        'modified': r.now(),
+        'kind': 'vote',
+        'body': 'Hooray!',
+        'proposal_id': 'jklm',
+        'topic_id': 'wxyz7890',
+        'response': True,
+    }).run(db_conn)
+    with app.test_client() as c:
+        response = c.get('/api/topics/wxyz7890/posts')
+        assert response.status_code == 200
+        data = json.loads(response.data.decode('utf-8'))
+        assert data['posts'][0]['kind'] == 'proposal'
+        assert data['posts'][1]['kind'] == 'vote'
 
 
 @xfail
