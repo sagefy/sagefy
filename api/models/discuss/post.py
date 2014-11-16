@@ -20,6 +20,12 @@ class Post(Model):
                      (is_one_of, 'post', 'proposal', 'vote', 'flag')),
         default='post'
     )
+
+    # Must belong to the same topic
+    # a post can reply to a post, proposal, flag, or vote
+    # a proposal can reply to post, proposal, or flag
+    # a vote can reply to a proposal or flag
+    # a flag cannot be a reply
     replies_to_id = Field(
         validations=(is_string,)
     )

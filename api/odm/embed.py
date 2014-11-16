@@ -7,7 +7,7 @@ class Embeds(Field):
     Allows a document to be embedded within another document directly.
     """
 
-    def __init__(self, doc, validations=(), default={}, access=True):
+    def __init__(self, doc, validations=(), default=None, access=True):
         """
         Store initialized parameters onto self.
         """
@@ -81,7 +81,7 @@ class EmbedsMany(Embeds):
     into another document.
     """
 
-    def __init__(self, doc, validations=(), default=[], access=True):
+    def __init__(self, doc, validations=(), default=None, access=True):
         """
         Store initialized parameters onto self.
         """
