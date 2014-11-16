@@ -20,3 +20,6 @@ class Post(Model):
                      (is_one_of, 'post', 'proposal', 'vote', 'flag')),
         default='post'
     )
+    replies_to_id = Field(
+        validations=(is_string,)
+    )

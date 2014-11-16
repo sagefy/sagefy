@@ -1,7 +1,20 @@
+from odm.document import Document
 from odm.model import Model, Field
 from odm.validations import is_required, is_language, is_string, is_boolean, \
-    is_list, is_string_or_none
+    is_list, is_string_or_none, is_one_of
+from odm.embed import EmbedsMany
 from modules.util import uniqid
+
+
+class SetEntity(Document):
+    kind = Field(
+        validations=(is_required, is_string, (
+            is_one_of, 'unit', 'set',
+        ))
+    )
+    entity_id = Field(
+        validations=(is_required, is_string,)
+    )
 
 
 class Set(Model):
@@ -43,13 +56,6 @@ class Set(Model):
         validations=(is_list,),
         default=[]
     )
-    set_ids = Field(
-        validations=(is_list,),
-        default=[]
-    )
-    unit_ids = Field(
-        validations=(is_list,),
-        default=[]
-    )
 
     # TODO: Ensure no cycles form in `set_ids`
+    entities = EmbedsMany(SetEntity, validations=(is_required,))
