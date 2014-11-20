@@ -3,6 +3,10 @@ title: Contributor Ratings and Proposal Friction
 layout: default
 ---
 
+<script
+src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 Contributor Rating
 ------------------
 
@@ -35,6 +39,26 @@ Proposal V2: Friction
 
 All proposals require at least two yes votes in addition to the original proposal.
 
-Proposals that are more likely to impact learners directly should have more friction to acceptance. The sum of contributor scores, including the original proposer's score, should also be considered.
+The following criteria could be considered:
 
-Creating a set or a unit, with no other information, should require little approval. Updating or removing a set, unit, or creating, updating or removing a card should factor in the number of learners impacted and the quality of the entity.
+- The number of contributors voting "yes": $$c$$
+- The sum of contributor scores: $$s$$
+- The number of learners impacted: $$l$$
+- The quality of the entity: $$q$$
+
+The number of contributors should grow linearly, while other factors should consider some form of exponential. In particular, the sum of contributors scores would likely be $$s^2$$ while the number of learners may be as high as $$l^{10}$$, and the quality score would tighten approaching 1.
+
+A simple formulation may be:
+
+$$l=10^{\sqrt{\frac{s}{30}}}$$
+
+$$s=(\log_{10}l)^2*30$$
+
+Such results in:
+
+- 75s == 38l
+- 125s == 110l
+- 250s == 770l
+- 500s == 12,092l
+- 750s == 100,000l
+- 1000s == 593,612l
