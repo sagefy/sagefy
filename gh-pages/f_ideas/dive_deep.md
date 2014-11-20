@@ -1,11 +1,11 @@
 ---
 layout: default
-title: The Ideas – Go Deep
+title: The Ideas – Dive Deep
 ---
 
 _Route memorizing isn't enough. We must be able to use our knowledge._
 
-What do we mean by "Go Deep"?
+What do we mean by "Dive Deep"?
 -------------------------------------
 
 - Go beyond route memorization. Challenge the learner to explain, analyse, apply, and synthesize.
@@ -14,7 +14,7 @@ What do we mean by "Go Deep"?
 - Focus on developing areas of weakness.
 - Remove barriers to going deep.
 
-Why is going deep so important?
+Why is diving deep so important?
 --------------------------------------
 
 - Azevedo, R., & Cromley, J.G. (2004). Does training on self-regulated learning facilitate students’ learning with hypermedia? Journal of Educational Psychology, 96, 523–535
