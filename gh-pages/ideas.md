@@ -25,9 +25,9 @@ Defining small, achievable goals and constantly checking against them builds bet
 
 We rely on real-life experiences to guide to our learning. [More on 5.](/f_ideas/make_it_real)
 
-### 6) Go Deep
+### 6) Dive Deep
 
-Route memorizing isn't enough. We must be able to use our knowledge. [More on 6.](/f_ideas/go_deep)
+Route memorizing isn't enough. We must be able to use our knowledge. [More on 6.](/f_ideas/dive_deep)
 
 ### 7) Work Together
 
