@@ -3,6 +3,8 @@ title: Contributor Planning
 layout: default
 ---
 
+<style>img { max-width: 100% }</style>
+
 At first, there will only be video information with multiple choice questions with textual questions, answers, and feedback. Later stages will add more formats.
 
 Contributor Screens
@@ -306,27 +308,28 @@ The following views are per type: Set, Unit, and Card. These sections list the e
 Contributor Wireframes
 ----------------------
 
-### Components
+### Discussion
 
-- Notice post -- Styleguide
-- Notices
-    - Title
-    - 5 latest
-    - Link to full page
-- Discussion post -- Styleguide
-- Proposal post  -- Styleguide
-- Vote block  -- Styleguide
-- Search (sort, filter) layout -- Styleguide
+<img src="https://docs.google.com/drawings/d/1nIvhNcseLdUu4qzEN_0zfu9QenneynwFgmuDiZp5JC0/pub?w=913&amp;h=1136">
 
-### Screens
+### Create Post or Vote
 
-- Dashboard -- TODO
-- Search -- TODO
-    - Objs
-    - Proposals and History
-    - Discussion
-- View Object -- TODO
-- Create/Edit Object -- TODO
-- Flag Object -- TODO
-- Proposal -- TODO
-- Discussion -- TODO
+### Create Proposal
+
+- Create/Edit Card
+
+- Create/Edit Unit
+
+- Create/Edit Set
+
+### Edit Post
+
+### Search Entities
+
+### Search Topics and Discussion
+
+### View Card
+
+### View Unit
+
+### View Set
