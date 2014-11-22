@@ -116,15 +116,15 @@ Flow
 
 ### Set Selection
 
-I come to the site, I sign in. Dashboard is empty. Links to search sets.
+I come to the site, I sign in. Brings me to empty list of sets. Links to search sets.
 
 I search sets. I see ordering of sets matching, estimates for difficulty (or time). I can click to see a map of the units involved in a tree diagram.
 
-I click one and add it to my sets. It will appear on my dashboard, along with my overall completion percent. A link to the tree diagram is present. I will see if I need to continue or review any particular set.
+I click one and add it to my sets. It will appear on my list of sets, along with my overall completion percent. A link to the tree diagram is present. I will see if I need to continue or review any particular set.
 
 ### Menu
 
-I can open the diagram at any time from the menu. In the diagram, the current unit is highlighted. The menu also has a discussion link, and a link to return to the dashboard. The discussion link can go up the chain; I can discuss the card, unit, and sets from within a card.
+I can open the diagram at any time from the menu. In the diagram, the current unit is highlighted. The menu also has a discussion link, and a link to return to the list of sets. The discussion link can go up the chain; I can discuss the card, unit, and sets from within a card.
 
 ### Diagnosis
 

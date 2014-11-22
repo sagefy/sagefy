@@ -7,17 +7,6 @@ layout: default
 
 At first, there will only be video information with multiple choice questions with textual questions, answers, and feedback. Later stages will add more formats.
 
-Contributor Screens
--------------------
-
-- Dashboard
-- Search (Set, Unit, Card...)
-- Object Overviews
-    - Children, Parents
-    - History
-- Discussions
-    - Proposal
-
 Contributor Models
 ------------------
 
@@ -108,186 +97,41 @@ Contributor Models
 Contributor Endpoints
 ---------------------
 
-
 ### Card, Unit, Set API
 
-- GET /cards/ (search)
-- GET /cards/{id}
-- GET /units/ (search)
-- GET /units/{id}
-- GET /sets/ (search)
-- GET /sets/{id}
+- GET `/cards/` (search)
+- GET `/cards/{id}`
+- GET `/units/` (search)
+- GET `/units/{id}`
+- GET `/sets/` (search)
+- GET `/sets/{id}`
 
 ### Discussion API
 
-- GET /topics/ (search)
-- POST /topics/ (create topic)
-- PUT (PATCH) /topics/{id} (update topic)
-- GET /topics/{id}/posts (list posts)
-- POST /topics/{id}/posts (create post, proposal, vote...)
-- PUT (PATCH) /topics/{id}/posts/{id} (update post)
+- GET `/topics/` (search)
+- POST `/topics/` (create topic)
+- PUT `/topics/{id}` (update topic)
+- GET `/topics/{id}/posts` (list posts)
+- POST `/topics/{id}/posts` (create post, proposal, vote...)
+- PUT `/topics/{id}/posts/{id}` (update post)
 
 ### Follow API
 
-- POST /follows/
-- DELETE /follows/{id}
+- POST `/follows/`
+- DELETE `/follows/{id}`
 
-Contributor Screen Requirements
--------------------------------
+Contributor Screen Requirements & Wireframes
+--------------------------------------------
 
-### Object Screen Requirements
+### Discussion
 
-The following views are per type: Set, Unit, and Card. These sections list the editable/viewable subcomponents per each type of object.
-
-#### Card Elements
-
-- name
-- tags
-- requires
-- Video:
-    - duration and url
-- Text Multiple Choice:
-    - question
-    - answers and feedback
-    - options
-
-#### Unit Elements
-
-- name
-- goal
-- requires
-
-#### Set Elements
-
-- units and sets
-- name
-- body
-
---------
-
-### Dashboard
-
-- Notices
-    - Subject, time ago, read
-- Followed
-    - Match search formatting
-- My Discussions
-    - Topic name, modified, posts
-    - My Proposals
-        - Name, votes
-- Link to search, list views
-
-### Contributor Search (System-wide)
-
-- Search box and button
-- No results mode
-- Results
-    - Infinite scroll
-    - Show type (explode out component/integration)
-    - Set: name
-    - Unit: name
-    - Card: name
-
-### List, Search, Filter and Sort View
-
-- Search box and button
-- No results mode
-- List
-    - Infinite scroll
-- Order by
-    - Latest
-    - Watched
-    - Proposals
-    - Versions
-    - Most connections
-- Filter by
-    - Language
-    - ...
-
-#### List Set
-
-- List
-    - Show name, body (truncated), contains modules, components (truncated)
-
-#### List Unit
-
-- List
-    - Show name, kind, body (truncated), requires (truncated)
-
-#### List Card
-
-- List
-    - Video: show name, url (truncated), duration, tags (truncated)
-    - Multiple choice text: show body (question, truncated)
-
-### Object View
-
-- Link to discussions/proposals
-- Link to history
-- Flag it
-    - Creates a proposal to delete by system
-
-#### View Set
-
-- See fields above
-- List units
-- List parent sets
-
-#### View Unit
-
-- See fields above
-- List requires
-- List required by
-- List sets belong to
-
-#### View Card
-
-- See fields above
-- Show unit belongs to
-- List requires
-- List required by
-
-### List History View
-
-- Table layout
-    - proposal name
-    - proposal time
-
-### Create and Edit Object View
-
-- language (create: select, edit: view)
-- Preview edit/create
-- Fields: see above
-- Unit:
-    - Kind selection changes fields available
-
-### Search Discussion Topics
-
-- Search box and button
-- Table
-    - Topic name
-    - Number of posts
-    - Last modified
-    - Proposals
-        - proposal name
-        - proposal time
-        - status
-        - votes
-
-### List Discussion Topics (per Object)
-
-- Same as table for search topics
-
-### Discussion View
-
-- zebra striped cards in list
+- cards in list
     - user avatar
     - username
     - date time
-    - edited
     - body
-    - actions (reply, +1, -1, own: edit)
-- infinite scroll
+    - actions (edit, reply, vote, share, flag)
+- infinite scroll with pagination
 - reverse chronological
 - proposal
     - list of proposal blocks and posts
@@ -305,31 +149,123 @@ The following views are per type: Set, Unit, and Card. These sections list the e
     - Considerations
         - [Contributor Ratings and Proposal Friction](/f_planning/contributor_ratings)
 
-Contributor Wireframes
-----------------------
-
-### Discussion
-
 <img src="https://docs.google.com/drawings/d/1nIvhNcseLdUu4qzEN_0zfu9QenneynwFgmuDiZp5JC0/pub?w=913&amp;h=1136">
 
 ### Create Post or Vote
 
 ### Create Proposal
 
-- Create/Edit Card
-
-- Create/Edit Unit
-
-- Create/Edit Set
+- language (create: select, edit: view)
+- Preview edit/create
+- Fields: see above
+- **Create/Edit Card**
+    - Kind selection changes fields available
+- **Create/Edit Unit**
+- **Create/Edit Set**
 
 ### Edit Post
 
-### Search Entities
+### List, Search, Filter and Sort View (Template)
 
-### Search Topics and Discussion
+- Search box and button
+- No results mode
+- List
+    - Infinite scroll
+- Order by
+- Filter by
+    - Language
+    - ...
 
-### View Card
+#### Search Entities
 
-### View Unit
+- Search template + ...
+- Order by
+    - Latest
+    - Watched
+    - Proposals
+    - Versions
+    - Most connections
+- Set
+    - Show name, body (truncated), contains modules, components (truncated)
+- Unit
+    - Show name, kind, body (truncated), requires (truncated)
+- Card
+    - Video: show name, url (truncated), duration, tags (truncated)
+    - Multiple choice text: show body (question, truncated)
+- Show type (explode out component/integration)
 
-### View Set
+#### Search Topics and Discussion
+
+- Search template + ...
+- Topic name
+- Number of posts
+- Last modified
+
+#### Search Versions
+
+### View Entity (Template)
+
+- Language
+- Name
+- Tags
+- Flag
+- Follow
+- Contents (Changes by kind)
+- Stats (Changes by kind)
+    - Num Learners
+    - See [Sequencer](/f_planning/sequencer)
+- Relationships (Changes by kind)
+- Topics
+    - Topic name
+    - Number of posts
+    - Last modified
+- Versions (joins with proposals)
+    - Proposal name
+    - Created
+    - Proposal status (link to pr)
+
+<img src="https://docs.google.com/drawings/d/1S8b5GQnZ2Wj7XPG0cYvS-ac_Syhx6Gcb5lq0gsYUbWk/pub?w=960&amp;h=1920">
+
+#### View Card
+
+- Template + ...
+- Contents
+    - Kind Specific Data
+        - Video:
+            - duration and url
+        - Text Multiple Choice:
+            - question
+            - answers and feedback
+            - options
+- Relationships
+    - Belongs to (unit)
+    - Required By (card)
+    - Requires (card)
+
+#### View Unit
+
+- Template + ...
+- Contents
+    - Body
+- Relationships
+    - Requires (unit)
+    - Required By (unit)
+    - Belongs to (set)
+
+#### View Set
+
+- Template + ...
+- Contents
+    - Body
+    - Members
+- Relationships
+    - Belongs to (set)
+
+### What I'm Following
+
+- Match search formatting
+- Discussions
+    - Topic name, modified, posts
+    - My Proposals
+        - Name, votes
+- Link to search views
