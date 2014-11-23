@@ -176,6 +176,8 @@ Contributor Screen Requirements & Wireframes
     - Language
     - ...
 
+<img src="https://docs.google.com/drawings/d/1U3EjKczxkUanbjwgLsk81oFJCcJsAMOIR7JJfBdVWxw/pub?w=1440&amp;h=1358">
+
 #### Search Entities
 
 - Search template + ...
@@ -192,7 +194,7 @@ Contributor Screen Requirements & Wireframes
 - Card
     - Video: show name, url (truncated), duration, tags (truncated)
     - Multiple choice text: show body (question, truncated)
-- Show type (explode out component/integration)
+- Show type (explode out card)
 
 #### Search Topics and Discussion
 
@@ -247,6 +249,8 @@ Contributor Screen Requirements & Wireframes
 - Template + ...
 - Contents
     - Body
+- Stats
+    - Number of cards > link to search
 - Relationships
     - Requires (unit)
     - Required By (unit)
@@ -258,6 +262,8 @@ Contributor Screen Requirements & Wireframes
 - Contents
     - Body
     - Members
+- Stats
+    - Number of units > link to search
 - Relationships
     - Belongs to (set)
 
