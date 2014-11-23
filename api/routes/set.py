@@ -3,17 +3,8 @@ from flask import Blueprint
 # from models.entity.set import Set
 # from flask.ext.login import current_user
 
+# We use `set_` because `set` is a type in Python
 set_ = Blueprint('set_', __name__, url_prefix='/api/sets')
-
-
-@set_.route('/', methods=['GET'])
-def list_sets():
-    """
-    Search the sets.
-    Include query string, filters, sorting.
-    Paginates.
-    """
-    pass
 
 
 @set_.route('/<set_id>/', methods=['GET'])

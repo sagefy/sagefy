@@ -99,16 +99,12 @@ Contributor Endpoints
 
 ### Card, Unit, Set API
 
-- GET `/cards/` (search)
 - GET `/cards/{id}`
-- GET `/units/` (search)
 - GET `/units/{id}`
-- GET `/sets/` (search)
 - GET `/sets/{id}`
 
 ### Discussion API
 
-- GET `/topics/` (search)
 - POST `/topics/` (create topic)
 - PUT `/topics/{id}` (update topic)
 - GET `/topics/{id}/posts` (list posts)
@@ -119,6 +115,10 @@ Contributor Endpoints
 
 - POST `/follows/`
 - DELETE `/follows/{id}`
+
+### Search API
+
+- GET `/search`
 
 Contributor Screen Requirements & Wireframes
 --------------------------------------------
@@ -151,9 +151,9 @@ Contributor Screen Requirements & Wireframes
 
 <img src="https://docs.google.com/drawings/d/1nIvhNcseLdUu4qzEN_0zfu9QenneynwFgmuDiZp5JC0/pub?w=913&amp;h=1136">
 
-### Create Post or Vote
+### Create/Edit Post or Vote
 
-### Create Proposal
+### Create/Edit Proposal
 
 - language (create: select, edit: view)
 - Preview edit/create
@@ -163,47 +163,33 @@ Contributor Screen Requirements & Wireframes
 - **Create/Edit Unit**
 - **Create/Edit Set**
 
-### Edit Post
-
-### List, Search, Filter and Sort View (Template)
+### Search View
 
 - Search box and button
 - No results mode
 - List
     - Infinite scroll
 - Order by
+    - Created
 - Filter by
     - Language
     - ...
+- Kinds of Entities
+    - Set
+        - Show name, body (truncated), contains modules, components (truncated)
+    - Unit
+        - Show name, kind, body (truncated), requires (truncated)
+    - Card
+        - Video: show name, url (truncated), duration, tags (truncated)
+        - Multiple choice text: show body (question, truncated)
+        - Show type (explode out card)
+    - Topic
+        - Topic name
+        - Entity name
+        - Number of posts
+        - Last modified
 
 <img src="https://docs.google.com/drawings/d/1U3EjKczxkUanbjwgLsk81oFJCcJsAMOIR7JJfBdVWxw/pub?w=1440&amp;h=1358">
-
-#### Search Entities
-
-- Search template + ...
-- Order by
-    - Latest
-    - Watched
-    - Proposals
-    - Versions
-    - Most connections
-- Set
-    - Show name, body (truncated), contains modules, components (truncated)
-- Unit
-    - Show name, kind, body (truncated), requires (truncated)
-- Card
-    - Video: show name, url (truncated), duration, tags (truncated)
-    - Multiple choice text: show body (question, truncated)
-- Show type (explode out card)
-
-#### Search Topics and Discussion
-
-- Search template + ...
-- Topic name
-- Number of posts
-- Last modified
-
-#### Search Versions
 
 ### View Entity (Template)
 
@@ -225,47 +211,38 @@ Contributor Screen Requirements & Wireframes
     - Proposal name
     - Created
     - Proposal status (link to pr)
+- **Card**
+    - Contents
+        - Kind Specific Data
+            - Video:
+                - duration and url
+            - Text Multiple Choice:
+                - question
+                - answers and feedback
+                - options
+    - Relationships
+        - Belongs to (unit)
+        - Required By (card)
+        - Requires (card)
+- **Unit**
+    - Contents
+        - Body
+    - Stats
+        - Number of cards > link to search
+    - Relationships
+        - Requires (unit)
+        - Required By (unit)
+        - Belongs to (set)
+- **Set**
+    - Contents
+        - Body
+        - Members
+    - Stats
+        - Number of units > link to search
+    - Relationships
+        - Belongs to (set)
 
 <img src="https://docs.google.com/drawings/d/1S8b5GQnZ2Wj7XPG0cYvS-ac_Syhx6Gcb5lq0gsYUbWk/pub?w=960&amp;h=1920">
-
-#### View Card
-
-- Template + ...
-- Contents
-    - Kind Specific Data
-        - Video:
-            - duration and url
-        - Text Multiple Choice:
-            - question
-            - answers and feedback
-            - options
-- Relationships
-    - Belongs to (unit)
-    - Required By (card)
-    - Requires (card)
-
-#### View Unit
-
-- Template + ...
-- Contents
-    - Body
-- Stats
-    - Number of cards > link to search
-- Relationships
-    - Requires (unit)
-    - Required By (unit)
-    - Belongs to (set)
-
-#### View Set
-
-- Template + ...
-- Contents
-    - Body
-    - Members
-- Stats
-    - Number of units > link to search
-- Relationships
-    - Belongs to (set)
 
 ### What I'm Following
 

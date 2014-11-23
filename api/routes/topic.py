@@ -8,31 +8,10 @@ from models.discuss.proposal import Proposal
 from flask.ext.login import current_user
 from modules.util import parse_args
 from modules.entity import get_latest_canonical, get_kind, create_entity
-from modules.discuss import get_post_facade, get_posts_facade, \
-    create_post_facade
+# from modules.discuss import get_post_facade, get_posts_facade, \
+#     create_post_facade
 
 topic = Blueprint('topic', __name__, url_prefix='/api/topics')
-
-
-@topic.route('/', methods=['GET'])
-def list_topics():
-    """
-    Search the topics. Search, filter, sort, paginate.
-    Parameters:
-    - query: a query string for rich-text search
-        - Also include entity name as well in indexing
-    - kind: the kind of entity to search for (set, card, unit)
-    - language: the language of the entity
-    - skip: for pagination
-    - limit: for pagination
-    - order: created, latest post; asc or dsc
-    - user_id: contains posts from the user
-    - proposal: include topics that contain proposals/flags
-        - kind: create, update, or delete
-        - status: pending, blocked, accepted, declined
-    """
-    pass
-    # TODO: outline function
 
 
 @topic.route('/', methods=['POST'])

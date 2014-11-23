@@ -54,70 +54,6 @@ def create_proposal_in_db(posts_table, db_conn):
 
 
 @xfail
-def test_search(app, db_conn):
-    """
-    Expect to search topics by query.
-    """
-    return False
-
-
-@xfail
-def test_search_filter(app, db_conn):
-    """
-    Expect to search topics by kind.
-    """
-    return False
-
-
-@xfail
-def test_search_language(app, db_conn, users_table, topics_table, posts_table):
-    """
-    Expect to search topics by language.
-    """
-    return False
-
-
-@xfail
-def test_search_user(app, db_conn, users_table, topics_table, posts_table):
-    """
-    Expect to search topics by user.
-    """
-    return False
-
-
-@xfail
-def test_search_proposal(app, db_conn, users_table, topics_table, posts_table):
-    """
-    Expect to search for proposals
-    """
-    return False
-
-
-@xfail
-def test_search_sort(app, db_conn, users_table, topics_table, posts_table):
-    """
-    Expect to sort topics in search.
-    """
-    return False
-
-
-@xfail
-def test_search_paginate(app, db_conn, users_table, topics_table, posts_table):
-    """
-    Expect to paginate topics in search.
-    """
-    return False
-
-
-@xfail
-def test_search_blank(app, db_conn, users_table, topics_table, posts_table):
-    """
-    Expect a blank search result.
-    """
-    return False
-
-
-@xfail
 def test_create_topic(app, db_conn, users_table, topics_table, posts_table):
     """
     Expect to create a topic with post.
@@ -181,7 +117,7 @@ def test_update_topic_author(app, db_conn, users_table, topics_table,
 
 @xfail
 def test_update_topic_fields(app, db_conn, users_table, topics_table,
-                            posts_table):
+                             posts_table):
     """
     Expect update topic to only change name.
     """
