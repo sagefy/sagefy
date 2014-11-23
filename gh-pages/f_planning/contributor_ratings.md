@@ -46,19 +46,18 @@ The following criteria could be considered:
 - The number of learners impacted: $$l$$
 - The quality of the entity: $$q$$
 
-The number of contributors should grow linearly, while other factors should consider some form of exponential. In particular, the sum of contributors scores would likely be $$s^2$$ while the number of learners may be as high as $$l^{10}$$, and the quality score would tighten approaching 1.
+The number of contributors should grow linearly, while other factors should consider some form of exponential.
 
 A simple formulation may be:
 
-$$l=10^{\sqrt{\frac{s}{30}}}$$
+$$s=2^c$$
 
-$$s=(\log_{10}l)^2*30$$
+$$l=3^c$$
+
+$$log_{2}s=log_{3}l$$
+
+$$s=2^{log_{3}l}$$
+
+$$l=3^{log_{2}s}$$
 
 Such results in:
-
-- 75s == 38l
-- 125s == 110l
-- 250s == 770l
-- 500s == 12,092l
-- 750s == 100,000l
-- 1000s == 593,612l
