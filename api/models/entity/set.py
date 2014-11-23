@@ -58,4 +58,4 @@ class Set(Model):
     )
 
     # TODO: Ensure no cycles form in `set_ids`
-    entities = EmbedsMany(SetEntity, validations=(is_required,))
+    members = EmbedsMany(SetEntity, validations=(is_required,))

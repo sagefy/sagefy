@@ -51,8 +51,7 @@ Contributor Models
 - created
 - modified
 - language
-- units
-- sets
+- members
 - name
 - body (description, objective)
 - versioning
@@ -118,7 +117,7 @@ Contributor Endpoints
 
 ### Search API
 
-- GET `/search`
+- GET `/search/`
 
 Contributor Screen Requirements & Wireframes
 --------------------------------------------
@@ -151,17 +150,43 @@ Contributor Screen Requirements & Wireframes
 
 <img src="https://docs.google.com/drawings/d/1nIvhNcseLdUu4qzEN_0zfu9QenneynwFgmuDiZp5JC0/pub?w=913&amp;h=1136">
 
-### Create/Edit Post or Vote
+### Create/Edit Topic
 
-### Create/Edit Proposal
+- Standard Form Layout
+    - Title is one of Create Topic or Edit Topic
+- Fields
+    - Entity (create: select, edit: view)
+    - Name (only editable by original author)
+    - + Fieldset for Create Post if create mode (see below)
+- + Preview Post if create mode
 
-- language (create: select, edit: view)
-- Preview edit/create
-- Fields: see above
-- **Create/Edit Card**
-    - Kind selection changes fields available
-- **Create/Edit Unit**
-- **Create/Edit Set**
+### Create/Edit Post, Proposal, Flag, or Vote
+
+- Standard Form Layout
+    - Title updates as kind changes
+- Fields
+    - Kind (create: select, edit: view)
+    - Body
+    - Replies to ... (just view, only if applicable)
+    - (Hidden: topic)
+- Preview
+- **Proposal**
+    - Name
+    - Action
+        - If edit entity, select between edit or delete; else just view
+    - Status
+        - Only on edit and by original poster, allows to decline if applicable
+    - **Create/Edit Card**
+        - (Card, )Name, Language, Unit, Tags, Requires, Kind
+        - Kind selection changes fields available
+    - **Create/Edit Unit**
+        - (Unit, )Name, Language, Body, Tags, Requires
+    - **Create/Edit Set**
+        - (Set, )Name, Language, Body, Tags, Members
+- **Flag**
+    - Reason
+- **Vote**
+    - Response (Yes, No, Discuss)
 
 ### Search View
 
