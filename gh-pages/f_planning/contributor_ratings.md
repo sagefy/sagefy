@@ -59,5 +59,3 @@ $$log_{2}s=log_{3}l$$
 $$s=2^{log_{3}l}$$
 
 $$l=3^{log_{2}s}$$
-
-Such results in:
