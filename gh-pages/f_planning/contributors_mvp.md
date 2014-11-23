@@ -269,11 +269,8 @@ Contributor Screen Requirements & Wireframes
 
 <img src="https://docs.google.com/drawings/d/1S8b5GQnZ2Wj7XPG0cYvS-ac_Syhx6Gcb5lq0gsYUbWk/pub?w=960&amp;h=1920">
 
-### What I'm Following
+### Follows
 
-- Match search formatting
-- Discussions
-    - Topic name, modified, posts
-    - My Proposals
-        - Name, votes
-- Link to search views
+- A search view
+
+<img src="https://docs.google.com/drawings/d/17YxWGyu2XO8ndaOQ20KOpwgv5g_EaiCbkaTB73nwwcU/pub?w=1440&amp;h=1034">
