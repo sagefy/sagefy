@@ -58,7 +58,26 @@ def test_create_topic(app, db_conn, users_table, topics_table, posts_table):
     """
     Expect to create a topic with post.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.post('/api/topics', data=json.dumps({
+            'name': 'An entity',
+            'entity': {
+                'kind': 'unit',
+                'entity_id': 'dfgh4567'
+            },
+            'post': {
+                'body': 'Here\'s a pear.'
+            }
+        }), content_type='application/json')
+        assert response.status_code == 200
+        data = json.loads(response.data.decode('utf-8'))
+        assert 'post' in data
+        assert 'topic' in data
+        assert data['topic']['name'] == 'An entity'
+        assert data['post']['body'] == 'Here\'s a pear.'
+        logout(c)
 
 
 @xfail
@@ -67,7 +86,27 @@ def test_create_topic_proposal(app, db_conn, users_table, topics_table,
     """
     Expect to create a topic with proposal.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.post('/api/topics', data=json.dumps({
+            'name': 'An entity',
+            'entity': {
+                'kind': 'unit',
+                'entity_id': 'dfgh4567'
+            },
+            'post': {
+                'kind': 'proposal',
+                'body': 'Here\'s a pear.'
+            }
+        }), content_type='application/json')
+        assert response.status_code == 200
+        data = json.loads(response.data.decode('utf-8'))
+        assert 'post' in data
+        assert 'topic' in data
+        assert data['topic']['name'] == 'An entity'
+        assert data['post']['body'] == 'Here\'s a pear.'
+        logout(c)
 
 
 @xfail
@@ -76,7 +115,27 @@ def test_create_topic_flag(app, db_conn, users_table, topics_table,
     """
     Expect to create topic with a flag.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.post('/api/topics', data=json.dumps({
+            'name': 'An entity',
+            'entity': {
+                'kind': 'unit',
+                'entity_id': 'dfgh4567'
+            },
+            'post': {
+                'kind': 'flag',
+                'reason': 'duplicate',
+            }
+        }), content_type='application/json')
+        assert response.status_code == 200
+        data = json.loads(response.data.decode('utf-8'))
+        assert 'post' in data
+        assert 'topic' in data
+        assert data['topic']['name'] == 'An entity'
+        assert data['post']['body'] == 'Here\'s a pear.'
+        logout(c)
 
 
 @xfail
@@ -85,7 +144,20 @@ def test_create_topic_login(app, db_conn, users_table, topics_table,
     """
     Expect create topic to fail when logged out.
     """
-    return False
+    with app.test_client() as c:
+        response = c.post('/api/topics', data=json.dumps({
+            'name': 'An entity',
+            'entity': {
+                'kind': 'unit',
+                'entity_id': 'dfgh4567'
+            },
+            'post': {
+                'body': 'Here\'s a pear.'
+            }
+        }), content_type='application/json')
+        assert response.status_code == 401
+        data = json.loads(response.data.decode('utf-8'))
+        assert 'errors' in data
 
 
 @xfail
@@ -94,7 +166,20 @@ def test_create_topic_no_post(app, db_conn, users_table, topics_table,
     """
     Expect create topic to fail without post.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.post('/api/topics', data=json.dumps({
+            'name': 'An entity',
+            'entity': {
+                'kind': 'unit',
+                'entity_id': 'dfgh4567'
+            }
+        }), content_type='application/json')
+        assert response.status_code == 400
+        data = json.loads(response.data.decode('utf-8'))
+        assert 'errors' in data
+        logout(c)
 
 
 @xfail
@@ -103,7 +188,17 @@ def test_topic_update(app, db_conn, users_table, topics_table,
     """
     Expect to update topic name.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    create_topic_in_db(topics_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.put('/api/topics', data=json.dumps({
+            'name': 'Another entity',
+        }), content_type='application/json')
+        assert response.status_code == 200
+        data = json.loads(response.data.decode('utf-8'))
+        assert data['topic']['name'] == 'Another entity'
+        logout(c)
 
 
 @xfail
@@ -112,7 +207,17 @@ def test_update_topic_author(app, db_conn, users_table, topics_table,
     """
     Expect update topic to require original author.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    create_topic_in_db(topics_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.put('/api/topics', data=json.dumps({
+            'name': 'Another entity',
+        }), content_type='application/json')
+        assert response.status_code == 403
+        data = json.loads(response.data.decode('utf-8'))
+        assert 'errors' in data
+        logout(c)
 
 
 @xfail
@@ -121,7 +226,19 @@ def test_update_topic_fields(app, db_conn, users_table, topics_table,
     """
     Expect update topic to only change name.
     """
-    return False
+    create_user_in_db(users_table, db_conn)
+    create_topic_in_db(topics_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        response = c.put('/api/topics', data=json.dumps({
+            'entity': {
+                'kind': 'set'
+            }
+        }), content_type='application/json')
+        assert response.status_code == 400
+        data = json.loads(response.data.decode('utf-8'))
+        assert 'errors' in data
+        logout(c)
 
 
 @xfail

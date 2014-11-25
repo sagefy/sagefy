@@ -18,6 +18,9 @@ class Topic(Model):
     """A discussion topic."""
     tablename = 'topics'
 
+    user_id = Field(
+        validations=(is_required, is_string,)
+    )
     name = Field(
         validations=(is_required, is_string,)
     )
