@@ -25,6 +25,8 @@ def create_app(config, debug=False, testing=False):
 
     # Setup the database and components
     setup_db(app)
+    if not testing:
+        setup_conn_per_request(app)
     setup_redis(app)
     setup_login(app)
     setup_email(app)
@@ -61,14 +63,18 @@ def setup_db(app):
         r.db_create(app.config['RDB_DB']).run(db_conn)
 
     tables = r.db(app.config['RDB_DB']).table_list().run(db_conn)
-    for table in ('users', 'notices'):
+    for table in ('users', 'notices', 'topics', 'posts'):
         if table not in tables:
             r.db(app.config['RDB_DB']).table_create(table).run(db_conn)
 
     db_conn.close()
 
-    # On each request, we create and close a new connection
-    # Rethink was designed to work this way, no reason to be alarmed.
+
+def setup_conn_per_request(app):
+    """
+    On each request, we create and close a new connection
+    Rethink was designed to work this way, no reason to be alarmed.
+    """
     @app.before_request
     def _m():
         # We wrap it here so that we can

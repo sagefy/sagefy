@@ -13,81 +13,92 @@ import pytest
 from flask import g
 from app import create_app, make_db_connection
 import test_config as config
-from rethinkdb.errors import RqlRuntimeError
+import rethinkdb as r
+from passlib.hash import bcrypt
+import json
+
+
+def create_user_in_db(users_table, db_conn):
+    return users_table.insert({
+        'id': 'abcd1234',
+        'name': 'test',
+        'email': 'test@example.com',
+        'password': bcrypt.encrypt('abcd1234'),
+        'created': r.now(),
+        'modified': r.now()
+    }).run(db_conn)
+
+
+def login(c):
+    return c.post('/api/users/login/', data=json.dumps({
+        'name': 'test',
+        'password': 'abcd1234'
+    }), content_type='application/json')
+
+
+def logout(c):
+    return c.post('/api/users/logout/', data=json.dumps({}),
+                  content_type='application/json')
 
 
 @pytest.fixture(scope='session')
 def app(request):
     """
+    Manage app context for testing.
     Create an application for running the tests.
     Use a different database for testing.
     """
     app = create_app(config, debug=True, testing=True)
-    # Manage app context for testing
     ctx = app.app_context()
     ctx.push()
-
-    def teardown():
-        ctx.pop()
-
-    request.addfinalizer(teardown)
+    request.addfinalizer(lambda: ctx.pop())
     return app
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='session')
 def db_conn(app, request):
     g.db_conn, g.db = make_db_connection(app)
-
-    def teardown():
-        g.db_conn.close()
-
-    request.addfinalizer(teardown)
+    request.addfinalizer(lambda: g.db_conn.close())
     return g.db_conn
+
+
+@pytest.fixture
+def clogin(app, request, db_conn, users_table):
+    create_user_in_db(users_table, db_conn)
+    with app.test_client() as c:
+        login(c)
+        request.addfinalizer(lambda: logout(c))
+        return c
+
 
 ##########
 # TODO: For below functions, figure out a way to reduce this to one function
 ##########
 
-
-@pytest.fixture(scope='module')
-def users_table(app, db_conn, request):
-    try:
-        g.db.table_create('users').run(db_conn)
-    except RqlRuntimeError:
-        pass
-    table = g.db.table('users')
-    table.delete().run(db_conn)
+def table(name, request, db_conn):
+    """
+    Ensure the table is freshly empty after use.
+    """
+    table = g.db.table(name)
+    request.addfinalizer(lambda: table.delete().run(db_conn))
     return table
 
 
-@pytest.fixture(scope='module')
-def notices_table(app, db_conn, request):
-    try:
-        g.db.table_create('notices').run(db_conn)
-    except RqlRuntimeError:
-        pass
-    table = g.db.table('notices')
-    table.delete().run(db_conn)
-    return table
+@pytest.fixture
+def users_table(request, db_conn):
+    return table('users', request, db_conn)
 
 
-@pytest.fixture(scope='module')
-def topics_table(app, db_conn, request):
-    try:
-        g.db.table_create('topics').run(db_conn)
-    except RqlRuntimeError:
-        pass
-    table = g.db.table('topics')
-    table.delete().run(db_conn)
-    return table
+@pytest.fixture
+def notices_table(request, db_conn):
+    return table('notices', request, db_conn)
 
 
-@pytest.fixture(scope='module')
-def posts_table(app, db_conn, request):
-    try:
-        g.db.table_create('posts').run(db_conn)
-    except RqlRuntimeError:
-        pass
-    table = g.db.table('posts')
-    table.delete().run(db_conn)
-    return table
+@pytest.fixture
+def topics_table(request, db_conn):
+    return table('topics', request, db_conn)
+
+
+@pytest.fixture
+def posts_table(request, db_conn):
+    return table('posts', request, db_conn)

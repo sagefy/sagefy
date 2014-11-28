@@ -1,30 +1,7 @@
 from passlib.hash import bcrypt
 import json
-import rethinkdb as r
 from models.user import User
-
-
-def create_user_in_db(users_table, db_conn):
-    return users_table.insert({
-        'id': 'abcd1234',
-        'name': 'test',
-        'email': 'test@example.com',
-        'password': bcrypt.encrypt('abcd1234'),
-        'created': r.now(),
-        'modified': r.now()
-    }).run(db_conn)
-
-
-def login(c):
-    return c.post('/api/users/login/', data=json.dumps({
-        'name': 'test',
-        'password': 'abcd1234'
-    }), content_type='application/json')
-
-
-def logout(c):
-    return c.post('/api/users/logout/', data=json.dumps({}),
-                  content_type='application/json')
+from conftest import create_user_in_db, login, logout
 
 
 def test_user_get(app, db_conn, users_table):
@@ -81,24 +58,17 @@ def test_user_logout(app, db_conn, users_table):
     """
     create_user_in_db(users_table, db_conn)
     with app.test_client() as c:
-        with c.session_transaction() as sess:
-            sess['user_id'] = 'abcd1234'
-            sess['_fresh'] = True
+        login(c)
         response = logout(c)
         assert response.status_code == 204
 
 
-def test_user_get_current(app, db_conn, users_table):
+def test_user_get_current(clogin):
     """
     Ensure the current user can be retrieved.
     """
-    create_user_in_db(users_table, db_conn)
-    with app.test_client() as c:
-        with c.session_transaction() as sess:
-            sess['user_id'] = 'abcd1234'
-            sess['_fresh'] = True
-        response = c.get('/api/users/current/')
-        assert 'test' in response.data.decode('utf-8')
+    response = clogin.get('/api/users/current/')
+    assert 'test' in response.data.decode('utf-8')
 
 
 def test_user_get_current_failed(app, db_conn, users_table):
@@ -130,19 +100,14 @@ def test_user_create_failed(app, db_conn, users_table):
     assert 'errors' in response.data.decode('utf-8')
 
 
-def test_user_update(app, db_conn, users_table):
+def test_user_update(clogin):
     """
     Ensure a user can be updated.
     """
-    create_user_in_db(users_table, db_conn)
-    with app.test_client() as c:
-        with c.session_transaction() as sess:
-            sess['user_id'] = 'abcd1234'
-            sess['_fresh'] = True
-        response = c.put('/api/users/abcd1234/', data=json.dumps({
-            'email': 'other@example.com'
-        }), content_type='application/json')
-        assert 'other@example.com' in response.data.decode('utf-8')
+    response = clogin.put('/api/users/abcd1234/', data=json.dumps({
+        'email': 'other@example.com'
+    }), content_type='application/json')
+    assert 'other@example.com' in response.data.decode('utf-8')
 
 
 def test_user_update_none(app, db_conn, users_table):
@@ -155,7 +120,7 @@ def test_user_update_none(app, db_conn, users_table):
     assert 'errors' in response.data.decode('utf-8')
 
 
-def test_user_update_self_only(app, db_conn, users_table):
+def test_user_update_self_only(db_conn, users_table, clogin):
     """
     Ensure a user can only update herself.
     """
@@ -165,30 +130,20 @@ def test_user_update_self_only(app, db_conn, users_table):
         'email': 'other@example.com',
         'password': bcrypt.encrypt('1234abcd'),
     }).run(db_conn)
-    create_user_in_db(users_table, db_conn)
-    with app.test_client() as c:
-        with c.session_transaction() as sess:
-            sess['user_id'] = 'abcd1234'
-            sess['_fresh'] = True
-        response = c.put('/api/users/1234abcd/', data=json.dumps({
-            'email': 'other@example.com'
-        }), content_type='application/json')
-        assert 'errors' in response.data.decode('utf-8')
+    response = clogin.put('/api/users/1234abcd/', data=json.dumps({
+        'email': 'other@example.com'
+    }), content_type='application/json')
+    assert 'errors' in response.data.decode('utf-8')
 
 
-def test_user_update_invalid(app, db_conn, users_table):
+def test_user_update_invalid(app, db_conn, users_table, clogin):
     """
     Ensure a user won't update if invalid.
     """
-    create_user_in_db(users_table, db_conn)
-    with app.test_client() as c:
-        with c.session_transaction() as sess:
-            sess['user_id'] = 'abcd1234'
-            sess['_fresh'] = True
-        response = c.put('/api/users/abcd1234/', data=json.dumps({
-            'email': 'other'
-        }), content_type='application/json')
-        assert 'errors' in response.data.decode('utf-8')
+    response = clogin.put('/api/users/abcd1234/', data=json.dumps({
+        'email': 'other'
+    }), content_type='application/json')
+    assert 'errors' in response.data.decode('utf-8')
 
 
 def test_user_token(app, db_conn, users_table):
