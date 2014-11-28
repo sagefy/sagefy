@@ -12,15 +12,3 @@ _Sagefy is an open-content adaptive learning platform._
 Sagefy is open-content; **anyone can contribute**. All content is made freely available to everyone. Content is determined by a _consensus decision-making process_. Content can be created and edited by learners (students), contributors (teachers), and anyone in the world. Open-content, consensus-based models succeed in generating large volumes of high quality content.
 
 Sagefy is also open-source. The content and the code are freely available.
-
-Who will use it?
------------------
-
-- **Learners**
-    - Learners can learn any subject at their skill level.
-    - Learners can choose when and how much.
-    - Learners can go beyond memorization and into deeper levels of learning.
-    - Learners can collaborate on their learning.
-- **Contributors**
-    - Contributors can share their knowledge in a collaborative and organized fashion, with a very low time commitment.
-    - Contributors can ensure highly quality content in a collaborative fashion.
