@@ -48,9 +48,9 @@ The parameters read:
 
 There are two common forms:
 
-$$p(\theta|b)=\frac{e^{\theta-b}}{1+e^{\theta-b}}$$
+$$p(\theta)=\frac{e^{\theta-b}}{1+e^{\theta-b}}$$
 
-$$p(\theta|a,b,c)=c+(1-c)\frac{e^{a(\theta-b)}}{1+e^{a(\theta-b)}}$$
+$$p(\theta)=c+(1-c)\frac{e^{a(\theta-b)}}{1+e^{a(\theta-b)}}$$
 
 The formulas change slightly depending on author.
 
