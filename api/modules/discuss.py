@@ -17,6 +17,7 @@ def instance(data):
     Given data from the database, return an appropriate model instance
     based on the `kind` field.
     """
+
     if data['kind'] is 'post':
         return Post(data)
     if data['kind'] is 'proposal':
@@ -31,6 +32,7 @@ def get_post_facade(post_id):
     """
     Gets the post and the correct kind based on the `kind` field.
     """
+
     data = g.db.table('posts').get(post_id).run(g.db_conn)
     return instance(data)
 

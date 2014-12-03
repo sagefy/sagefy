@@ -5,6 +5,14 @@ xfail = pytest.mark.xfail
 
 
 @xfail
+def test_instance(app, db_conn):
+    """
+    Expect to take post data, and from it produce a post instance per kind.
+    """
+    return False
+
+
+@xfail
 def test_get_post_facade(app, db_conn):
     """
     Expect to get a post, and the instance to match the kind.
