@@ -5,45 +5,44 @@ from werkzeug.exceptions import HTTPException
 
 # A rather comprehensive list of error codes
 # Most probably won't be used
-# TODO: move copy to content directory
-messages = {
-    400: _('error', 'code_400'),
-    401: _('error', 'code_401'),
-    402: 'Payment Required',
-    403: _('error', 'code_403'),
-    404: _('error', 'code_404'),
-    405: _('error', 'code_405'),
-    406: 'Not Acceptable',
-    407: 'Proxy Authentication Required',
-    408: 'Request Timeout',
-    409: 'Conflict',
-    410: 'Gone',
-    411: 'Length Required',
-    412: 'Precondition Failed',
-    413: 'Request Entity Too Large',
-    414: 'Request URI Too Large',
-    415: 'Unsupported Media Type',
-    416: 'Requested Range Not Satisfiable',
-    417: 'Expectation Failed',
-    418: 'Im A Teapot',
-    419: 'Authentication Timeout',
-    420: 'Enhance Your Calm',
-    422: 'Unprocessable Entity',
-    424: 'Failed Dependency',
-    425: 'Unordered Collection',
-    426: 'Upgrade Required',
-    428: 'Precondition Required',
-    429: 'Too Many Requests',
-    431: 'Request Header Fields Too Large',
-    444: 'No Response',
-    500: _('error', 'code_500'),
-    501: 'Not Implemented',
-    502: _('error', 'code_502'),
-    503: _('error', 'code_503'),
-    504: 'Gateway Timeout',
-    505: 'Version Not Supported',
-    506: 'Variant Also Negotiates',
-}
+codes = (
+    400,
+    401,
+    402,
+    403,
+    404,
+    405,
+    406,
+    407,
+    408,
+    409,
+    410,
+    411,
+    412,
+    413,
+    414,
+    415,
+    416,
+    417,
+    418,
+    419,
+    420,
+    422,
+    424,
+    425,
+    426,
+    428,
+    429,
+    431,
+    444,
+    500,
+    501,
+    502,
+    503,
+    504,
+    505,
+    506,
+)
 
 
 def error_response(code):
@@ -57,7 +56,7 @@ def error_response(code):
         else:
             code = 500
         return jsonify(errors=[{
-            'message': messages[code],
+            'message': _('error', 'code_%s' % str(code)),
             'code': code,
         }]), code
     return fn
@@ -68,5 +67,5 @@ def setup_errors(app):
     Given a Flask application instance,
     add error handling for each type of error code.
     """
-    for code, message in messages.items():
+    for code in codes:
         app.error_handler_spec[None][code] = error_response(code)

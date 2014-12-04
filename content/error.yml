@@ -3,39 +3,95 @@
 # of the site.
 
 required:
-    en: 'Required.'
-    eo: 'Postulo.'
+    en: Required.
+    eo: Postulo.
 email:
-    en: 'Must be an email.'
+    en: Must be an email.
 minlength:
-    en: 'Must have minimum length of {length}.'
+    en: Must have minimum length of {length}.
 boolean:
-    en: 'Must be true or false.'
+    en: Must be true or false.
 string:
-    en: 'Must be a string.'
+    en: Must be a string.
 language:
-    en: 'Must be a language.'
+    en: Must be a language.
 list:
-    en: 'Must be a list.'
+    en: Must be a list.
 options:
-    en: 'Must be one of {options}.'
+    en: Must be one of {options}.
 field:
-    en: 'No such field.'
+    en: No such field.
 unique:
-    en: 'Must be unique.'
+    en: Must be unique.
 code_400:
-    en: 'Bad request.'
+    en: Bad request.
 code_401:
-    en: 'Must log in.'
+    en: Must log in.
+code_402:
+    en: Payment Required.
 code_403:
-    en: 'Unauthorized.'
+    en: Unauthorized.
 code_404:
-    en: 'Not found.'
+    en: Not found.
 code_405:
-    en: 'Unacceptable.'
+    en: Unacceptable.
+code_406:
+    en: Not Acceptable.
+code_407:
+    en: Proxy Authentication Required.
+code_408:
+    en: Request Timeout.
+code_409:
+    en: Conflict.
+code_410:
+    en: Gone.
+code_411:
+    en: Length Required.
+code_412:
+    en: Precondition Failed.
+code_413:
+    en: Request Entity Too Large.
+code_414:
+    en: Request URI Too Large.
+code_415:
+    en: Unsupported Media Type.
+code_416:
+    en: Requested Range Not Satisfiable.
+code_417:
+    en: Expectation Failed.
+code_418:
+    en: Im A Teapot.
+code_419:
+    en: Authentication Timeout.
+code_420:
+    en: Enhance Your Calm.
+code_422:
+    en: Unprocessable Entity.
+code_424:
+    en: Failed Dependency.
+code_425:
+    en: Unordered Collection.
+code_426:
+    en: Upgrade Required.
+code_428:
+    en: Precondition Required.
+code_429:
+    en: Too Many Requests.
+code_431:
+    en: Request Header Fields Too Large.
+code_444:
+    en: No Response.
 code_500:
-    en: 'Server error.'
+    en: Server Error.
+code_501:
+    en: Not Implemented.
 code_502:
-    en: 'Server error.'
+    en: Server Error.
 code_503:
-    en: 'Unavailable.'
+    en: Unavailable.
+code_504:
+    en: Gateway Timeout.
+code_505:
+    en: Version Not Supported.
+code_506:
+    en: Variant Also Negotiates.
