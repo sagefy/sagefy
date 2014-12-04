@@ -36,7 +36,7 @@ All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that pred
 
 - _Definition_ - How likely is the learner to respond well to a typical card within the unit?
 - _When_ - Diagnostic assessment. When to change units. When unit is complete. When to review. Forming completion tree.
-- _Factors_ - Prior, response, learner-card ability, card difficulty, guess, slip.
+- _Factors_ - Prior, response, learner-card ability, card difficulty, guess, slip. (Retention: should degrade learner-unit ability's confidence over time.)
 - _Formula_ - ??? (Basically, BKT.)
 
 **Learner-Set Ability**
@@ -78,21 +78,21 @@ All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that pred
 
 - _Definition_ -  How likely is the typical learner, without ability, to randomly guess towards a good answer? (Only applies to assessment cards.)
 - _When_ - ???
-- _Factors_ - Prior, ???
+- _Factors_ - Prior, learner-unit ability, response, history of incorrects.
 - _Formula_ - ??? (Contextual... one right answer in many wrongs is likely a guess.)
 
 **Card Slip**
 
 - _Definition_ - How likely is the typical learner, with ability, to answer poorly? (Only applies to assessment cards.)
 - _When_ - ???
-- _Factors_ - Prior, ???
+- _Factors_ - Prior, learner-unit-ability, response, history of corrects.
 - _Formula_ - ??? (Contextual... one wrong answer in many rights is likely a slip.)
 
 **Unit Difficulty**
 
 - _Definition_ - How difficult is it for a typical learner to gain proficiency? A function of time.
 - _When_ - Time to complete estimates.
-- _Factors_ - Prior, time, ??? (Typical learning curve.)
+- _Factors_ - Prior, time, learning/forgetting curve.
 - _Formula_ - ??? (Should reflect a learning curve.)
 
 **Set Difficulty**
@@ -101,13 +101,6 @@ All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that pred
 - _When_ - Time to complete estimates.
 - _Factors_ - Unit difficulty.
 - _Formula_ - sum(unit difficulty per unit)  [V2: Use probability distribution]
-
-**Unit Retention**
-
-- _Definition_ - How quickly will a learner forget? (Should degrade learner-unit ability's confidence over time.)
-- _When_ - Review.
-- _Factors_ - ???
-- _Formula_ - ??? (Forgetting curve...)
 
 Flow
 ----
