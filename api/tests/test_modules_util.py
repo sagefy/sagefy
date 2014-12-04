@@ -49,5 +49,4 @@ def test_parse_args():
         'e': 3.15,
     }
 
-    for key, value in args.items():
-        assert value == result[key]
+    assert util.parse_args(args) == result
