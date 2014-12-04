@@ -1,5 +1,4 @@
-# TODO: move copy to content directory
-
+# Note: we won't translate this copy as its dev specific
 module.exports = (data) ->
     return """
     <h1>Style Guide &amp; Component Library</h1>
