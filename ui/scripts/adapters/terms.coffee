@@ -4,7 +4,8 @@ template = require('../templates/pages/terms')
 
 class TermsAdapter extends PageAdapter
     url: '/terms'
-    title: 'Terms of Service'  # TODO: trans
+    title: 'Terms of Service'
+    # TODO: move copy to content directory
 
     render: ->
         super

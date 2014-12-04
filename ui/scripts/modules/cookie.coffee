@@ -1,3 +1,5 @@
+# TODO: Add comments
+
 _ = require('../framework/utilities')
 cookie = {}
 

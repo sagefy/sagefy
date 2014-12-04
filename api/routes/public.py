@@ -8,3 +8,4 @@ def api_index():
     View a documentation page.
     """
     return jsonify(message='Welcome to the Sagefy API.')
+    # TODO: move copy to content directory

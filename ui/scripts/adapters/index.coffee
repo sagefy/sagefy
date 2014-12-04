@@ -5,7 +5,8 @@ template = require('../templates/pages/index')
 
 class IndexAdapter extends PageAdapter
     url: /^\/?$/
-    title: 'Adaptive, Collaborative, and Open Learning Platform'  # TODO: trans
+    title: 'Adaptive, Collaborative, and Open Learning Platform'
+    # TODO: move copy to content directory
     requireLogout: true
 
     render: ->

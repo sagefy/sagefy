@@ -2,9 +2,11 @@ PageAdapter = require('./page')
 NoticesView = require('../views/lists/notices')
 NoticesCollection = require('../collections/notices')
 
+# TODO: no more dashboard, instead is now notices
+
 class DashboardAdapter extends PageAdapter
     url: '/dashboard'
-    title: 'Dashboard'  # TODO: trans
+    title: 'Dashboard'  # TODO: move copy to content directory
 
     render: ->
         super

@@ -5,6 +5,7 @@ from werkzeug.exceptions import HTTPException
 
 # A rather comprehensive list of error codes
 # Most probably won't be used
+# TODO: move copy to content directory
 messages = {
     400: _('error', 'code_400'),
     401: _('error', 'code_401'),

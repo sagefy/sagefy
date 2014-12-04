@@ -1,3 +1,5 @@
+# TODO: add comments
+
 decode = (s) -> decodeURIComponent(s)
 
 module.exports = ->

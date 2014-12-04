@@ -1,4 +1,4 @@
-# TODO: trans
+# TODO: move copy to content directory
 
 module.exports = ->
     return """

@@ -2,7 +2,7 @@ Model = require('../framework/model')
 _ = require('../framework/utilities')
 utilities = require('../modules/utilities')
 
-# TODO: Add content translations
+# TODO: move copy to content directory
 
 class MenuModel extends Model
 

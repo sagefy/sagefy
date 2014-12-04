@@ -1,6 +1,6 @@
 from odm.document import Document
 from odm.model import Model, Field
-from odm.embed import Embeds
+# from odm.embed import Embeds
 from odm.validations import is_required, is_email, is_string, \
     has_min_length, is_one_of
 from passlib.hash import bcrypt

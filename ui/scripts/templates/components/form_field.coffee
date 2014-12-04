@@ -1,4 +1,4 @@
-# TODO: trans Required/Optional
+# TODO: break this up
 
 module.exports = (data) ->
     if data.type is 'submit'
@@ -19,6 +19,7 @@ module.exports = (data) ->
 
     required = data.validations.required
 
+    # TODO: move copy to content directory  Required/Optional
     html = """
     <div class="form-field form-field--#{data.type}} form-field--#{data.name}">
         <label for="#{data.name}">

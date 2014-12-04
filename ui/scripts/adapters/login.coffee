@@ -5,7 +5,7 @@ FormLayoutView = require('../views/layouts/form')
 _ = require('../framework/utilities')
 utilities = require('../modules/utilities')
 
-# TODO: trans
+# TODO: move copy to content directory
 
 class LoginAdapter extends FormAdapter
     url: '/login'

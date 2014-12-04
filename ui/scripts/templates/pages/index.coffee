@@ -1,4 +1,5 @@
-# TODO: trans
+# TODO: move copy to content directory
+
 module.exports = ->
     return """
     <img src="/astrolabe.svg" id="logo" />

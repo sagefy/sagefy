@@ -4,7 +4,7 @@ FormView = require('../views/components/form')
 FormLayoutView = require('../views/layouts/form')
 _ = require('../framework/utilities')
 
-# TODO: trans
+# TODO: move copy to content directory
 
 class SettingsAdapter extends FormAdapter
     url: '/settings'
