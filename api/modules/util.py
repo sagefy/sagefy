@@ -52,9 +52,9 @@ def parse_args(args):
             output[key] = True
         elif value == 'false':
             output[key] = False
-        elif re.match(r'\d+', value):
+        elif re.match(r'^\d+$', value):
             output[key] = int(value)
-        elif re.match(r'\d+\.\d+', value):
+        elif re.match(r'^\d+\.\d+$', value):
             output[key] = float(value)
         else:
             output[key] = value
