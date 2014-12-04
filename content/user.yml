@@ -6,4 +6,4 @@ no_match:
 no_user:
     en: No user by that name.
 change_password_url:
-    en: To change your password, please visit: {url}
+    en: To change your password, please visit {url}

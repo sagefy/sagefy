@@ -7,7 +7,7 @@ def test_important_codes(app):
     400, 401, 403, 404, 405, 500, 502, 503.
     """
     for code in (400, 401, 403, 404, 405, 500, 502, 503):
-        assert code in error.messages
+        assert code in error.codes
 
 
 def test_error_factory(app):
