@@ -54,7 +54,7 @@ For BKT, we have the following factors:
 - $$p(L)$$ - probability the skill is learned
 - $$p(T)$$ - probability the skill will be learned on a particular item
 - $$p(G)$$ - probability the learner will just guess the right answer
-- $$p(S)$$ - propability the learner will mess up even knowing the skill
+- $$p(S)$$ - probability the learner will mess up even knowing the skill
 
 For any item, the probability of getting the answer correct is:
 
