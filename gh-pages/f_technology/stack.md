@@ -19,6 +19,7 @@ We Use
     - [pip](https://pypi.python.org/pypi/pip)
     - [Python 2.7](http:/.python.org/2.7/)
     - [Flask](http://flask.pocoo.org/)
+    - [Mandrill](http://mandrill.com/)
     - Testing
         - [py.test](http://pytest.org/latest/)
         - [Flake8](https://pypi.python.org/pypi/flake8)
@@ -38,34 +39,33 @@ We Use
         - [Sinon](http://sinonjs.org/)
 - Project Management, Documentation
     - [GitHub](https://github.com/)
-        - Github Issues with [Waffle.io](https://waffle.io/heiskr/sagefy)
+        - Github Issues with [Huboard](https://huboard.com/heiskr/sagefy)
     - [Jekyll](http://jekyllrb.com/) on [Github Pages](https://pages.github.com/)
     - [Markdown](https://daringfireball.net/projects/markdown/)
+    - [Google Drive](https://drive.google.com)
 
 We Intend to Use
 ----------------
 
 - Building and Serving
     - [Ansible](http://www.ansible.com/)
-    - [DavidDM](https://david-dm.org/)
-    - [Pingdom](https://www.pingdom.com/)
-    - [New Relic](https://newrelic.com/) (Free)
+    - TODO: monitoring software
 - Databases
     - [ElasticSearch](https://github.com/elasticsearch/elasticsearch)
 - API
     - [NumPy](http://www.numpy.org/) + [SciPy](http://www.scipy.org/) + [Scikit-Learn](http://scikit-learn.org/stable/)
     - [Blueprint](http://apiblueprint.org/)
-    - Testing
-        - [Coverage.py](http://nedbatchelder.com/code/coverage/)
-        - [Faker](https://github.com/joke2k/faker)
-    - Traditional Login + [OAuth2.0](http://oauth.net/2/)
-    - [Celery](http://www.celeryproject.org/), [RabbitMQ](http://www.rabbitmq.com/), Redis
-    - [Flask admin](https://github.com/mrjoes/flask-admin/)
-    - [Mandrill](http://mandrill.com/), then [Postfix](http://www.postfix.org/)
+    - [Coverage.py](http://nedbatchelder.com/code/coverage/)
+    - [OAuth2.0](http://oauth.net/2/)
+    - [Postfix](http://www.postfix.org/)
 - UI
-    - [D3.js](http://d3js.org/)
-    - Markdown; Add extensions for [Math](http://khan.github.io/KaTeX/), Footnotes, [Tables](https://github.com/chjj/marked#tables), Code, [Graphviz Dot](https://github.com/mdaines/viz.js), [Media Embeds](http://sloblog.io/+sloblog/qhdsk2SMoAU/sloblog-dot-io-easy-oembed-powered-media-embeds), and Definition Lists
-    - [EpicEditor](https://github.com/OscarGodson/EpicEditor) with [Marked](https://github.com/chjj/marked) and [MathJax](http://www.mathjax.org/) or [Ace](http://ace.c9.io/) also see [LaTeX2HTML5](http://latex2html5.com/)
+    - Markdown
+        - [Math](http://khan.github.io/KaTeX/)
+        - [Tables](https://github.com/chjj/marked#tables)
+        - Code,
+        - [Graphviz Dot](https://github.com/mdaines/viz.js)
+        - [Media Embeds](http://sloblog.io/+sloblog/qhdsk2SMoAU/sloblog-dot-io-easy-oembed-powered-media-embeds)
+    - [EpicEditor](https://github.com/OscarGodson/EpicEditor) or [Ace](http://ace.c9.io/)
     - Testing
         - [Blanket](http://blanketjs.org/)
         - [Chance.js](http://chancejs.com/)
@@ -73,21 +73,16 @@ We Intend to Use
     - User Research
         - Split test _TODO_
         - Accessibility _TODO_
-        - [Card sort](http://conceptcodify.com)
+        - Card sort _TODO_
         - Prototype testing _TODO_
-        - [Heatmap](http://www.crazyegg.com/)
+        - Heatmap _TODO_
         - Mobile testing _TODO_
         - Remote usability _TODO_
-        - [Surveying](http://surveymonkey.com)
-        - Web Analytics - Google Analytics
+        - Surveying _TODO_
+        - Web Analytics - ElasticSearch
         - Wireframes & diagrams _TODO_
-- Project Management, Documentation
-    - [SemVer](http://semver.org/) with [Version Badge](https://badge.fury.io/)
-    - [Google Analytics](https://google.com/analytics) & in-house
-    - [Google Apps](https://apps.google.com)
-    - [Google Drive](https://drive.google.com), [Dropbox](https://dropbox.com)
 - Outreach
-    - [Wordpress.com](https://wordpress.com)
-    - Github Issues, [StackOverflow](https://stackoverflow.com), [UserVoice](https://uservoice.com)
+    - [Jekyll](http://jekyllrb.com/)
+    - [UserVoice](https://uservoice.com)
     - [Totemapp](https://totemapp.com)
-    - [Twitter](https://twitter.com/sagefyorg), [Facebook](https://www.facebook.com/sagefy), [Google+](https://plus.google.com/102422704401628739470/posts), Github, [Wordpress](http://sagefy.wordpress.com/)
+    - [Twitter](https://twitter.com/sagefyorg), [Facebook](https://www.facebook.com/sagefy), [Google+](https://plus.google.com/102422704401628739470/posts),  [Wordpress](http://sagefy.wordpress.com/)

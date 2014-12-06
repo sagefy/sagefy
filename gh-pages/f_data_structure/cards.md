@@ -46,6 +46,11 @@ Synchronous Assessment Card Kinds
 - Feedback
     - General and based on answer
 
+### Formula Card
+
+- Set variables
+- Input formula for expected output
+
 ### Match Card
 
 - Text input, matches a regular expression, or similar

@@ -32,8 +32,41 @@ $$a=\frac{1}{1+e^{-\frac{\tau-\mu}{s}}}$$
 
 Bayesian Knowledge Tracing determines, given the pattern of learner responses, how likely a learner knows a skill.
 
-TODO
+Bayesian Knowledge Tracing is based on Bayes' Theorem.
 
+$$p(A:B)=\frac{p(A)p(B:A)}{p(B)}$$
+
+Here I am using `:` to mean 'given' because 'pipe' implies table to Markdown.
+
+We call...
+
+- $$p(A:B)$$ the posterior -- what we believe after seeing the data
+- $$p(A)$$ the prior -- what we believe before the data
+- $$p(B:A)$$ the likelihood -- how likely the data was given our prior belief
+- $$p(B)$$ the normalizer -- how likely is the data given all hypotheses
+
+As $$p(B)$$ can be difficult to formulate, often the following expression is useful.
+
+$$p(B)=p(A)p(B:A)+p(\sim A)p(B:\sim A)$$
+
+For BKT, we have the following factors:
+
+- $$p(L)$$ - probability the skill is learned
+- $$p(T)$$ - probability the skill will be learned on a particular item
+- $$p(G)$$ - probability the learner will just guess the right answer
+- $$p(S)$$ - propability the learner will mess up even knowing the skill
+
+For any item, the probability of getting the answer correct is:
+
+$$p(C)=p(L)p(\sim S)+p(\sim L)p(G)$$
+
+Putting this all together, the probability the learner has learned the skill is, given a correct answer:
+
+$$p(L:Correct)=\frac{p(L)(1-p(S))}{p(L)p(1-p(S))+(1-p(L))p(G)}$$
+
+Conversely...
+
+$$p(L:Incorrect)=\frac{p(L)p(S)}{p(L)p(S)+(1-p(L))(1-p(G))}$$
 
 ### Item Response Theory
 
