@@ -131,12 +131,68 @@ The latest is version [11/15](http://www.supermemo.com/english/algsm11.htm).
 Distribution Types
 ------------------
 
+For each distribution, I am most interested in $$\mu$$, or the mean of the distribution, and $$\sigma^2$$, or the variance, which can determine how confident we can be in our assertion.
+
 ### Beta Distribution
 
 [Beta distributions](http://en.wikipedia.org/wiki/Beta_distribution) map probabilities from 0 to 1, where $$\alpha$$ is the count of positive examples and $$\beta$$ is the count of negative examples. Computation is fairly straightforward for most statistics.
+
+$$f(x)=\frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}$$
 
 $$\mu=\frac{\alpha}{\alpha+\beta}$$
 
 $$\sigma^2=\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$$
 
 ...where $$\mu$$ is the mean and $$\sigma^2$$ is the variance.
+
+### Exponential Distribution
+
+The exponential distribution is often used to describe the frequency of time-bound events.
+
+$$f(x)=\lambda e^{-\lambda x}$$
+
+$$\mu=\lambda^{-1}$$
+
+$$\sigma^2=\lambda^{-2}$$
+
+### Normal Distribution
+
+$$f(x)=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+
+...where mu and sigma are provided. Mu and sigma can be determined from a sample by using a gaussian kernel.
+
+### Pareto Distribution
+
+The [Pareto Distribution](http://statisticalmodeling.wordpress.com/2011/06/23/the-pareto-distribution/) uses $$\alpha$$ for scale and $$\beta$$ for shape.
+
+$$f(x)=1-(\frac{\alpha}{x+\alpha})^\beta$$
+
+$$\mu=\frac{\alpha}{\beta+1}$$
+
+$$\sigma^2=\frac{\alpha^2\beta}{(\beta-1)^2(\beta-2)}$$
+
+### Poisson Distribution
+
+The Poisson distribution is often used for counting events.
+
+$$f(x)=\frac{\lambda^k}{k!}e^{-\lambda}$$
+
+$$\mu=\lambda$$
+
+$$\sigma^2=\lambda$$
+
+### Binomial Distribution
+
+Binomial distributions count the number $$n$$ of events each with a probability of $$p$$, where $$k$$ is the number of successes.
+
+$$f(x)={n \choose k}p^k(1-p)^{n-k}$$
+
+$$\mu=np$$
+
+$$\sigma^2=np(1-p)$$
+
+### Bernoulli Distribution
+
+The Bernoulli Distribution only has two hypotheses: 0 or 1. The mean is the probably of 1.
+
+$$\sigma^2=p(1-p)$$
