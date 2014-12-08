@@ -3,8 +3,6 @@ title: Contributor Planning
 layout: default
 ---
 
-<style>img { max-width: 100% }</style>
-
 At first, there will only be video information with multiple choice questions with textual questions, answers, and feedback. Later stages will add more formats.
 
 Contributor Models

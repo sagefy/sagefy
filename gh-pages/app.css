@@ -1787,3 +1787,6 @@ header .description {
   font-style: italic;
   color: #6c6733;
 }
+img {
+  max-width: 100%;
+}
