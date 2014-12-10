@@ -144,3 +144,50 @@ The set is complete when all cards have proficient ability with confidence. I'm 
 ### Retention
 
 The system will monitor the last time I interacted with the units in the set. Using spaced repetition, it reminds me when I should review the units. The more time since the last review, the greater it will impact my ability score. The more time since the last review, the confidence will decrease.
+
+Graph Traversal
+---------------
+
+We collect the set of units that the learner will be participating in. We will need to diagnose any units which have either never been seen by the learner. We will also need to diagnose any units that have been viewed, but we are no longer confident in the ability score due to time.
+
+The following is an example of this process, known as a graph traversal.
+
+<img src="https://docs.google.com/drawings/d/12mrz9ZmpfGYQLmELoaJVg3ft5fj0cNRzcVJ7E9hEFH0/pub?w=714&amp;h=745">
+
+The algorithm makes use of depth first search. We start near the end of the tree, and walk our way down as we diagnose. We record each node in one of three lists: Diagnose, Ready, and Learned.
+
+First, we start at node "A". We diagnose an L (low score). Because it is a low score, we will continue to traverse the tree. "A" is appended to list Diagnose.
+
+Next, we will continue to node "C". This is because we have higher confidence in "C" than "B". "C" is already diagnosed. "C" is appended to list Ready. We note that "C" has one dependency, "A".
+
+Third, we continue to node "F" (depth-first search). We are confident that the learner knows node "F", and therefore we start on the other side of the chain. "F" is appended to Learned. Although "I" is required by "F", because we are confident in high ability for "F", "I" will never be diagnosed.
+
+Because "C" has no other requires, we go back to "B". We find it is a low ability. Append to Ready, 1 dependent: A.
+
+We know more about "E" than "D", so we continue to "E". We find "E" is a low ability. Append to Ready, 2 dependents: A and B.
+
+We already know "G", so it is appended to Learned.
+
+We diagnose "H", and find it is low ability. Append to Ready, 3 dependents: "A", "B", and "E". If "F" had not been learned, unit "H" would have 4 dependencies instead of 3.  The algorithm considers how many nodes _depend_ on the given node, rather than how deep in the graph the node is.
+
+Finally, we diagnose node "D" with low ability. Append to Ready, and there are 2 dependents: "A" and "B".
+
+<img src="https://docs.google.com/drawings/d/1oN1fy2vK_LVBE4ZZY3-ycQD286-dj4reHW8NbtB5rVA/pub?w=714&amp;h=745">
+
+We also have the following lists:
+
+    Diagnose: []
+    Ready: [A, C, B, E, H, D]
+    Learned: [F, G]
+
+We are now ready to starting the learning process.
+
+The following is overly simplistic; most learners will not 'learn' a unit in their first attempt at it. If at any time the unit composition changes, when we come back to the tree, we will need to diagnose any new units. Additionally, as it will be spaced out, learners will need to have some units reviewed intermittently to keep the confidence scores up.
+
+In the ready list, A, B, and E have requires, so those are not options to the learner yet. The available ready nodes are C, D, and H.
+
+"H" has the most dependents, so that would be recommended as the starting place for the learner. Let's say, however, the learner choose to learn unit "D" first.
+
+Now the remaining set is C and H. The learner chooses H. So now the remaining set is E and C. Let's say the learner chooses C.
+
+Now, the only option remaining is E. After E, the learner would do B, then A.
