@@ -5,6 +5,7 @@ Makes content in ../content in YAML format available to the Python API.
 
 import yaml
 import os
+from util import get_first
 
 files = {}
 
@@ -19,7 +20,7 @@ def get(filename, key, language='en'):
         stream = open('%s/content/%s.yml' % (dirname, filename), 'r')
         files[filename] = yaml.load(stream)
         stream.close()
-    return files[filename][key][language]
-    # TODO: Update so default to lang, then default to `en`
+
+    return get_first(files[filename][key], language, language[:2], 'en')
 
 _ = get

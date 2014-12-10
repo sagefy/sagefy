@@ -59,3 +59,14 @@ def parse_args(args):
         else:
             output[key] = value
     return output
+
+
+def get_first(dct, *keys):
+    """
+    Given a dictionary, find the value for the first available key in the
+    list of keys. Otherwise, return none.
+    """
+    for key in keys:
+        if key in dct:
+            return dct[key]
+    return None

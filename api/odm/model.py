@@ -36,27 +36,27 @@ class Model(Document):
         Document.__init__(self, fields)
 
     @classmethod
-    def get_table(Cls):
+    def get_table(cls):
         """
         For classmethods, a way to get the Model database table.
         Returns the table directly.
         """
-        assert Cls.tablename, 'You must provide a tablename.'
-        return g.db.table(Cls.tablename)
+        assert cls.tablename, 'You must provide a tablename.'
+        return g.db.table(cls.tablename)
 
     @classmethod
-    def get(Cls, **params):
+    def get(cls, **params):
         """
         Get one model which matches the provided keyword arguments.
         Returns None when there's no matching document.
         """
         fields = None
         if params.get('id'):
-            fields = Cls.get_table()\
+            fields = cls.get_table()\
                         .get(params.get('id'))\
                         .run(g.db_conn)
         else:
-            fields = list(Cls.get_table()
+            fields = list(cls.get_table()
                              .filter(params)
                              .limit(1)
                              .run(g.db_conn))
@@ -65,28 +65,28 @@ class Model(Document):
             else:
                 fields = None
         if fields:
-            return Cls(fields)
+            return cls(fields)
 
     @classmethod
-    def list(Cls, **params):
+    def list(cls, **params):
         """
         Get a list of models matching the provided keyword arguments.
         Returns empty array when no models match.
         """
-        fields_list = Cls.get_table()\
+        fields_list = cls.get_table()\
                          .filter(params)\
                          .run(g.db_conn)
-        return [Cls(fields) for fields in fields_list]
+        return [cls(fields) for fields in fields_list]
 
     @classmethod
-    def insert(Cls, fields):
+    def insert(cls, fields):
         """
         Creates a new model instance.
         Returns model and errors if failed.
         """
         assert isinstance(fields, dict)
         fields = omit(fields, ('id', 'created', 'modified'))
-        instance = Cls(fields)
+        instance = cls(fields)
         return instance.save()
 
     def update(self, fields):
