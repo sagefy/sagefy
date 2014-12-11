@@ -69,13 +69,6 @@ All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that pred
 - _Factors_ - Unit quality.
 - _Formula_ - sum(unit quality per unit) / count(units)  [V2: Use probability distribution]
 
-**Card Difficulty**
-
-- _Definition_ - How likely is the typical learner to answer well? (Only applies to assessment cards.)
-- _When_ - Computing learner-unit ability. Selecting the next card.
-- _Factors_ - Prior, response, learner-unit ability, guess, slip.
-- _Formula_ - ??? (A simple method would be a percentage of good answers.)
-
 **Card Guess**
 
 - _Definition_ -  How likely is the typical learner, without ability, to randomly guess towards a good answer? (Only applies to assessment cards.)
@@ -89,6 +82,14 @@ All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that pred
 - _When_ - ???
 - _Factors_ - Prior, learner-unit-ability, response, history of corrects.
 - _Formula_ - ??? (Contextual... one wrong answer in many rights is likely a slip.)
+
+**Card Difficulty**
+
+- _Definition_ - How likely is the typical learner to answer well? (Only applies to assessment cards.)
+- _When_ - Computing learner-unit ability. Selecting the next card.
+- _Factors_ - Prior, response, learner-unit ability, guess, slip.
+- _Formula_ - ??? (A simple method would be a percentage of good answers.)
+- N.B.: Difficulty can be seen as either the same as slip, or possibly the combination of guess and slip.
 
 **Unit Difficulty**
 
