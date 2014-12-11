@@ -5,6 +5,8 @@ layout: default
 
 This document covers the terms, parameters, flow, and formula for the primary learning engine of Sagefy.
 
+Also see [Sequencer Background](/f_planning/sequencer_background).
+
 Terms
 -----
 
