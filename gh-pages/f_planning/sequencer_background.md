@@ -62,11 +62,15 @@ $$p(C)=p(L)p(\sim S)+p(\sim L)p(G)$$
 
 Putting this all together, the probability the learner has learned the skill is, given a correct answer:
 
-$$p(L:Correct)=\frac{p(L)(1-p(S))}{p(L)p(1-p(S))+(1-p(L))p(G)}$$
+$$p(L_{-1}:Correct)=\frac{p(L_{-1})(1-p(S))}{p(L_{-1})(1-p(S))+(1-p(L_{-1}))p(G)}$$
 
 Conversely...
 
-$$p(L:Incorrect)=\frac{p(L)p(S)}{p(L)p(S)+(1-p(L))(1-p(G))}$$
+$$p(L_{-1}:Incorrect)=\frac{p(L_{-1})p(S)}{p(L_{-1})p(S)+(1-p(L_{-1}))(1-p(G))}$$
+
+All together...
+
+$$p(L:Action)=p(L_{-1}:Action)+(1-p(L_{-1}:Action))p(T)$$
 
 ### Item Response Theory
 
