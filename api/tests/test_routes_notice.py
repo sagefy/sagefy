@@ -9,7 +9,7 @@ def test_list(db_conn, clogin, notices_table):
     for i in range(0, 10):
         Notice.insert({
             'user_id': 'abcd1234',
-            'body': 'b%s' % str(i),
+            'kind': 'new_proposal',
         })
     response = clogin.get('/api/notices/')
     assert response.status_code == 200
@@ -34,7 +34,7 @@ def test_list_paginate(app, db_conn, clogin, notices_table):
     for i in range(0, 25):
         Notice.insert({
             'user_id': 'abcd1234',
-            'body': 'b%s' % str(i),
+            'kind': 'new_proposal',
         })
 
     response = clogin.get('/api/notices/')
@@ -54,7 +54,7 @@ def test_mark(app, db_conn, clogin, notices_table):
     """
     notice, errors = Notice.insert({
         'user_id': 'abcd1234',
-        'body': 'b',
+        'kind': 'new_proposal',
     })
     nid = notice.id
     response = clogin.put('/api/notices/%s/read/' % nid)
@@ -71,7 +71,7 @@ def test_mark_no_user(app, db_conn, notices_table):
     """
     notice, errors = Notice.insert({
         'user_id': 'abcd1234',
-        'body': 'b',
+        'kind': 'new_proposal',
     })
     nid = notice.id
     with app.test_client() as c:
@@ -96,10 +96,15 @@ def test_mark_not_owned(app, db_conn, clogin, notices_table):
     """
     notice, errors = Notice.insert({
         'user_id': '1234abcd',
-        'body': 'b',
+        'kind': 'new_proposal',
     })
     nid = notice.id
     response = clogin.put('/api/notices/%s/read/' % nid)
     assert response.status_code == 403
     record = notices_table.get(nid).run(db_conn)
     assert record['read'] is False
+
+"""
+TODO: Expect to add body to notices.
+TODO: Expect to mark as unread.
+"""

@@ -23,4 +23,5 @@ def get(filename, key, language='en'):
 
     return get_first(files[filename][key], language, language[:2], 'en')
 
+
 _ = get
