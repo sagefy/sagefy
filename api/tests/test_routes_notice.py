@@ -1,5 +1,5 @@
 import json
-from models.follow.notice import Notice
+from models.notice import Notice
 
 
 def test_list(db_conn, clogin, notices_table):

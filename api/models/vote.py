@@ -1,6 +1,6 @@
 from odm.model import Model
 from odm.field import Field
-from models.discuss.post import Post
+from models.post import Post
 from odm.validations import is_required, is_string, is_one_of
 
 

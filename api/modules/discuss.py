@@ -3,11 +3,11 @@ Facade functions for discussion models, in particular
 for post (sub: proposal, vote, flag).
 """
 
-# from models.discuss.topic import Topic
-from models.discuss.post import Post
-from models.discuss.proposal import Proposal
-from models.discuss.vote import Vote
-from models.discuss.flag import Flag
+# from models.topic import Topic
+from models.post import Post
+from models.proposal import Proposal
+from models.vote import Vote
+from models.flag import Flag
 from flask import g
 from modules.util import omit
 

@@ -1,6 +1,6 @@
 from flask import Blueprint
 # , jsonify, request
-# from models.entity.set import Set
+# from models.set import Set
 # from flask.ext.login import current_user
 
 # We use `set_` because `set` is a type in Python

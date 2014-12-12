@@ -1,6 +1,6 @@
 from odm.model import Model, Field
 from odm.validations import is_required, is_string, is_one_of
-from models.discuss.post import Post
+from models.post import Post
 
 
 class Proposal(Post):

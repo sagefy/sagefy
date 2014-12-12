@@ -1,5 +1,5 @@
 from flask import Blueprint  # , jsonify, request
-# from models.entity.card import Card
+# from models.card import Card
 # from flask.ext.login import current_user
 
 card = Blueprint('card', __name__, url_prefix='/api/cards')
