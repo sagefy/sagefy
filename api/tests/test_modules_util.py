@@ -3,8 +3,8 @@ import string
 
 
 def test_uniqid_length():
-    # Expect the length of the ID to be 32
-    assert len(util.uniqid()) is 16
+    # Expect the length of the ID to be 24
+    assert len(util.uniqid()) is 24
 
 
 def test_uniqid_charset():

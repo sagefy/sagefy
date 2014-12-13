@@ -9,13 +9,13 @@ import re
 
 def uniqid():
     """
-    Generates a unique string with 16 characters.
+    Generates a unique string with 24 characters.
     https://stackoverflow.com/a/2257449
     """
     return ''.join(
         random.choice(string.ascii_lowercase + string.ascii_uppercase +
                       string.digits)
-        for i in range(16)
+        for i in range(24)
     )
 
 
