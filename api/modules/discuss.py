@@ -3,7 +3,6 @@ Facade functions for discussion models, in particular
 for post (sub: proposal, vote, flag).
 """
 
-# from models.topic import Topic
 from models.post import Post
 from models.proposal import Proposal
 from models.vote import Vote
@@ -37,7 +36,7 @@ def get_post_facade(post_id):
     return instance(data)
 
 
-def get_posts_facade(user_id=None, limit=10, skip=0, **params):
+def get_posts_facade(limit=10, skip=0, **params):
     """
     Get posts, and return an array where each
     post is the correct kind based on the `kind` field.

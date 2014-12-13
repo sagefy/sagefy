@@ -1,7 +1,7 @@
 from odm.document import Document
 from odm.model import Model, Field
 from odm.validations import is_required, is_language, is_string, is_boolean, \
-    is_list, is_string_or_none, is_one_of
+    is_list, is_one_of
 from odm.embed import EmbedsMany
 from modules.util import uniqid
 
@@ -36,7 +36,7 @@ class Set(Model):
         default=uniqid
     )
     previous_id = Field(
-        validations=(is_string_or_none,),
+        validations=(is_string,),
     )
     language = Field(
         validations=(is_required, is_language,),

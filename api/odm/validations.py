@@ -14,31 +14,26 @@ def is_boolean(value):
     """
     Ensure the given value is a boolean.
     """
-    if not isinstance(value, bool):
+    if not (value is None or isinstance(value, bool)):
         return _('error', 'boolean')
 
 
 def is_string(value):
     """Ensure the given value is a string."""
-    if not isinstance(value, str):
-        return _('error', 'string')
-
-
-def is_string_or_none(value):
-    """Ensure the value is string or none."""
     if not (value is None or isinstance(value, str)):
         return _('error', 'string')
 
 
 def is_language(value):
     """Entity must be ISO 639-1 code."""
-    if not isinstance(value, basestring) or len(value) != 2:
+    if not (value is None or
+            (isinstance(value, basestring) or len(value) != 2)):
         return _('error', 'language')
 
 
 def is_list(value):
     """Ensure the given value is a list."""
-    if not isinstance(value, list):
+    if not (value is None or isinstance(value, list)):
         return _('error', 'list')
 
 
@@ -46,7 +41,7 @@ def is_email(value):
     """
     Ensure the given value is formatted as an email.
     """
-    if not re.match(r'\S+@\S+\.\S+', value):
+    if not (value is None or re.match(r'\S+@\S+\.\S+', value)):
         return _('error', 'email')
 
 
