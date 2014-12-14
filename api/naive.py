@@ -22,13 +22,14 @@ Primary
     pB = pB + exp(k * (t0 - t1) / str) - 1
     k = ???
 
-- Card Guess -- pG
+- Card Guess and Slip -- pG and pS
 
-    ???
-
-- Card Slip -- pS
-
-    ???
+    if score == 1:
+        pG += (0.3 - pG) * (1 - pL) * 0.05
+        pS -= pS * pL * 0.05
+    else:
+        pG -= pG * (1 - pL) * 0.05
+        pS += (0.1 - pS) * pL * 0.05
 
 - Card Quality -- pT [transit] -- both if response and not response
 
@@ -68,19 +69,7 @@ Learned   pL >= 0.95
 Needs review/diagnosis   pB < 0.85
 
 P(AnsG | Correct) = 1 - P(L)
-P(AnsG | Incorrect) = 0
 P(AnsS | Incorrect) = P(L)
-P(AnsS | Correct) = 0
 
-p(C | G, L) = p(L) + (1 - p(L)) * pG
-p(I | G, L) = 1 - p(L) + (1 - p(L)) * pG
-p(C | S, L) = p(L) - p(L) * p(S)
-p(I | S, L) = 1 - p(L) - p(L) * p(S)
-
-p(G | C, L) = p(G) * p(C | G, L) / p(L)
-p(G | I, L) = p(G) * p(I | G, L) / (1 - p(L))
-
-P(S | C, L) = P(S) * p(C | S, L) / P(L)
-P(S | I, L) = P(S) * p(I | S, L) / (1 - P(L))
 
 """
