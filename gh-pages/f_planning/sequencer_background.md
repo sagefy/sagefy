@@ -91,6 +91,8 @@ $$p(\theta)=c+(1-c)\frac{e^{a(\theta-b)}}{1+e^{a(\theta-b)}}$$
 
 The formulas change slightly depending on author.
 
+Item Response Theory can be extended into Performance Factor Analysis, a competing model with Bayesian Knowledge Tracing.
+
 ### Knowledge Space Theory
 
 [Knowledge Space Theory](http://en.wikipedia.org/wiki/Knowledge_space) represents what skills learner knows. KST is based on [antimatroids](http://en.wikipedia.org/wiki/Antimatroid).
