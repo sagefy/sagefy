@@ -56,21 +56,30 @@ def compute_belief(time0, time1, learned=init_learned, belief=init_belief):
     return belief + exp(belief_k * (time0 - time1) / strength) - 1
 
 
-def compute_guess_and_slip(score, learned=init_learned,
-                           guess=init_guess, slip=init_slip):
+def compute_guess(score, learned=init_learned, guess=init_guess):
     """
-    Determines how to update guess and slip, given a score.
+    Determines how to update guess, given a score.
     Based on the following observation:
     - P(Answer is a Guess | Correct) = 1 - P(Learned)
-    - P(Answer is a Slip | Incorrect) = P(Learned)
 
     TODO: Alternatively, make use of `belief`.
     """
     guess += score * ((max_guess - guess) * (1 - learned)) ** 2
     guess -= (1 - score) * (guess * (1 - learned)) ** 2
+    return guess
+
+
+def compute_slip(score, learned=init_learned, slip=init_slip):
+    """
+    Determines how to update slip, given a score.
+    Based on the following observation:
+    - P(Answer is a Slip | Incorrect) = P(Learned)
+
+    TODO: Alternatively, make use of `belief`.
+    """
     slip -= score * (slip * learned) ** 2
     slip += (1 - score) * ((max_slip - slip) * learned) ** 2
-    return (guess, slip)
+    return slip
 
 
 def compute_transit(transit, learned0, learned3):
