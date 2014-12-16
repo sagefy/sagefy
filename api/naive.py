@@ -31,9 +31,31 @@ Primary
         pG -= pG * (1 - pL) * 0.05
         pS += (0.1 - pS) * pL * 0.05
 
+    ... or ...
+
+    if score == 1:
+        pG += ((0.3 - pG) * (1 - pL)) ** 2
+        pS -= (pS * pL) ** 2
+    else:
+        pG -= (pG * (1 - pL)) ** 2
+        pS += ((0.2 - pS) * pL) ** 2
+
+    ... 1 > score > 0 ...?
+
+    pG = pG + score * ((0.3 - pG) * (1 - pL)) ** 2
+            - (1 - score) * (pG * (1 - pL)) ** 2
+    pS = pS - score * (pS * pL) ** 2
+            + (1 - score) * ((0.2 - pS) * pL) ** 2
+
 - Card Quality -- pT [transit] -- both if response and not response
 
-    ???
+    (pL0) A  B  C (pL1)
+
+    pT[A]1 += ((pL1 / pL0) - 1 - pT[A]0) * 0.05
+
+    or
+
+    pT[A]1 ±= ((pL1 / pL0) - 1 - pT[A]0) ** 2   ... keep the sign ...
 
 Auxillary
 ---------
@@ -50,21 +72,24 @@ Auxillary
 
     sQ = mean(unit.uQ for unit in units)
 
-- Card Difficulty -- cD
+- Card Time -- cD
+
+    ??? (Doesn't matter.)
+
+- Unit Difficulty/Time -- uD
 
     ???
 
-- Unit Difficulty -- uD
-
-    ???
-
-- Set Difficulty -- sD
+- Set Difficulty/Time -- sD
 
     sD = sum(unit.uD for unit in units)
 
 ****************************
 
 p0   --   0.5
+s0   --   0.05
+g0   --   0.2
+t0   --   0.05
 Learned   pL >= 0.95
 Needs review/diagnosis   pB < 0.85
 
