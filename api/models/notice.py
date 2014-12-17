@@ -22,6 +22,7 @@ class Notice(Model):
     data = Field()
     # `data` stores other types of information about the notice
     # ... such as IDs to entities, users...
+    # TODO: Update ODM so we can have flexible models
     read = Field(
         validations=(is_boolean,),
         default=False
