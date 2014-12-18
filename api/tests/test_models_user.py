@@ -93,7 +93,7 @@ def test_user_no_password(app, db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    json = user.deliver(private=True)
+    json = user.deliver(access='private')
     assert 'password' not in json
 
 
@@ -106,9 +106,9 @@ def test_user_email_current(app, db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    json = user.deliver(private=False)
+    json = user.deliver()
     assert 'email' not in json
-    json = user.deliver(private=True)
+    json = user.deliver(access='private')
     assert 'email' in json
 
 
@@ -122,10 +122,9 @@ def test_user_password_encrypt(app, db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    assert User.password.bundle(user).startswith('$2a$')
     assert len(errors) == 0
-    assert user.password != 'abcd1234'
-    assert user.password.startswith('$2a$')
+    assert user['password'] != 'abcd1234'
+    assert user['password'].startswith('$2a$')
 
 
 def test_user_password_validate(app, db_conn, users_table):
@@ -197,6 +196,6 @@ def test_update_password(app, db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234',
     })
-    pw1 = user.password
+    pw1 = user['password']
     user.update_password('1234abcd')
-    assert pw1 != user.password
+    assert pw1 != user['password']

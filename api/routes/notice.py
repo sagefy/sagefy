@@ -9,7 +9,7 @@ notice = Blueprint('notice', __name__, url_prefix='/api/notices')
 def add_body_to_notices(notices):
     parsed = []
     for notice in notices:
-        n = notice.deliver(private=True)
+        n = notice.deliver(access='private')
         n['body'] = notice.get_body()
         parsed.append(n)
     return parsed
@@ -24,7 +24,7 @@ def list_notices():
     if not current_user.is_authenticated():
         return abort(401)
     args = parse_args(request.args)
-    notices = Notice.list(user_id=current_user.id, **args)
+    notices = Notice.list(user_id=current_user['id'], **args)
     return jsonify(notices=add_body_to_notices(notices))
 
 
@@ -43,12 +43,12 @@ def mark_notice_as_read(notice_id):
     notice = Notice.get(id=notice_id)
     if not notice:
         return abort(404)
-    if notice.user_id != current_user.id:
+    if notice['user_id'] != current_user['id']:
         return abort(403)
     notice, errors = notice.mark_as_read()
     if len(errors):
         return jsonify(errors=errors), 400
-    return jsonify(notice=notice.deliver(private=True))
+    return jsonify(notice=notice.deliver(access='private'))
 
 
 @notice.route('/<notice_id>/unread/', methods=['PUT'])
@@ -63,9 +63,9 @@ def mark_notice_as_unread(notice_id):
     notice = Notice.get(id=notice_id)
     if not notice:
         return abort(404)
-    if notice.user_id != current_user.id:
+    if notice['user_id'] != current_user['id']:
         return abort(403)
     notice, errors = notice.mark_as_unread()
     if len(errors):
         return jsonify(errors=errors), 400
-    return jsonify(notice=notice.deliver(private=True))
+    return jsonify(notice=notice.deliver(access='private'))

@@ -56,7 +56,7 @@ def test_mark(app, db_conn, clogin, notices_table):
         'user_id': 'abcd1234',
         'kind': 'new_proposal',
     })
-    nid = notice.id
+    nid = notice['id']
     response = clogin.put('/api/notices/%s/read/' % nid)
     assert response.status_code == 200
     response = json.loads(response.data.decode('utf-8'))
@@ -73,7 +73,7 @@ def test_mark_no_user(app, db_conn, notices_table):
         'user_id': 'abcd1234',
         'kind': 'new_proposal',
     })
-    nid = notice.id
+    nid = notice['id']
     with app.test_client() as c:
         response = c.put('/api/notices/%s/read/' % nid)
         assert response.status_code == 401
@@ -98,7 +98,7 @@ def test_mark_not_owned(app, db_conn, clogin, notices_table):
         'user_id': '1234abcd',
         'kind': 'new_proposal',
     })
-    nid = notice.id
+    nid = notice['id']
     response = clogin.put('/api/notices/%s/read/' % nid)
     assert response.status_code == 403
     record = notices_table.get(nid).run(db_conn)

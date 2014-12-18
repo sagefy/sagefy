@@ -95,8 +95,8 @@ def test_list_unread(app, db_conn, notices_table):
     ]).run(db_conn)
     notices = Notice.list(user_id=22, read=False)
     assert len(notices) == 2
-    assert notices[0].id in (3, 4)
-    assert notices[1].id in (3, 4)
+    assert notices[0]['id'] in (3, 4)
+    assert notices[1]['id'] in (3, 4)
 
 
 def test_list_tag(app, db_conn, notices_table):
@@ -115,8 +115,8 @@ def test_list_tag(app, db_conn, notices_table):
     ]).run(db_conn)
     notices = Notice.list(user_id=22, tag='apple')
     assert len(notices) == 2
-    assert 'apple' in notices[0].tags
-    assert 'apple' in notices[1].tags
+    assert 'apple' in notices[0]['tags']
+    assert 'apple' in notices[1]['tags']
 
 
 def test_list_empty(app, db_conn, notices_table):
@@ -136,9 +136,9 @@ def test_mark_as_read(app, db_conn, notices_table):
         'kind': 'new_proposal',
         'tags': ['test']
     })
-    assert notice.read is False
+    assert notice['read'] is False
     notice.mark_as_read()
-    assert notice.read is True
+    assert notice['read'] is True
     record = notices_table.filter({'user_id': 'abcd1234'}).run(db_conn)
     record = list(record)[0]
     assert record['read'] is True

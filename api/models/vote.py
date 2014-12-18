@@ -1,7 +1,6 @@
-from odm.model import Model
-from odm.field import Field
+from modules.model import Model
 from models.post import Post
-from odm.validations import is_required, is_string, is_one_of
+from modules.validations import is_required, is_string, is_one_of
 
 
 class Vote(Post):
@@ -10,16 +9,16 @@ class Vote(Post):
     # For votes, a body is not required but optional,
     # But a replies to id is required
     body = Field(
-        validations=(is_string,)
+        validate=(is_string,)
     )
     replies_to_id = Field(
-        validations=(is_required, is_string,)
+        validate=(is_required, is_string,)
     )
 
     # The only true unique field of a vote...
     # Where True is yes, None is discuss, False is no
     response = Field(
-        validations=((is_one_of, True, None, False),),
+        validate=((is_one_of, True, None, False),),
         default=None
     )
 

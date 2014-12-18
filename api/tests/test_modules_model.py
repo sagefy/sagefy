@@ -1,28 +1,41 @@
-from odm.model import Field, Model
-from odm.validations import is_required, is_email, has_min_length
+from modules.model import Model
+from modules.validations import is_required, is_email, has_min_length
 from datetime import datetime
+
+"""
+TODO:
+Test init
+Test getitem, setitem, hasitem, delitem
+Test validate
+Test bundle, default
+Test deliver, access
+"""
 
 
 def encrypt_password(value):
-    return '$2a$' + value
+    if value and not value.startswith('$2a$'):
+        return '$2a$' + value
 
 
 class User(Model):
     tablename = 'users'
-    name = Field(
-        validations=(is_required,),
-        unique=True,
-    )
-    email = Field(
-        validations=(is_required, is_email),
-        unique=True,
-        access='private'
-    )
-    password = Field(
-        validations=(is_required, (has_min_length, 8)),
-        access=False,
-        transform=encrypt_password
-    )
+
+    schema = dict(Model.schema.copy(), **{
+        'name': {
+            'validate': (is_required,),
+            'unique': True,
+        },
+        'email': {
+            'validate': (is_required, is_email),
+            'unique': True,
+            'access': 'private'
+        },
+        'password': {
+            'validate': (is_required, (has_min_length, 8)),
+            'access': False,
+            'bundle': encrypt_password
+        }
+    })
 
 
 def test_table_class(app, db_conn, users_table):
@@ -30,7 +43,7 @@ def test_table_class(app, db_conn, users_table):
     Expect the model to have a table as a class.
     """
     assert User.tablename == 'users'
-    assert User.get_table() == users_table
+    assert User.table == users_table
 
 
 def test_table_instance(app, db_conn, users_table):
@@ -52,7 +65,7 @@ def test_get_id(app, db_conn, users_table):
         'email': 'test@example.com',
     }).run(db_conn)
     user = User.get(id='abcdefgh12345678')
-    assert user.name == 'test'
+    assert user['name'] == 'test'
 
 
 def test_get_params(app, db_conn, users_table):
@@ -65,7 +78,7 @@ def test_get_params(app, db_conn, users_table):
         'email': 'test@example.com',
     }).run(db_conn)
     user = User.get(name='test', email='test@example.com')
-    assert user.id == 'abcdefgh12345678'
+    assert user['id'] == 'abcdefgh12345678'
 
 
 def test_get_none(app, db_conn, users_table):
@@ -105,7 +118,7 @@ def test_list(app, db_conn, users_table):
     users = User.list()
     assert len(users) == 3
     assert isinstance(users[0], User)
-    assert users[2].id in ('1', '2', '3')
+    assert users[2]['id'] in ('1', '2', '3')
 
 
 def test_list_params(app, db_conn, users_table):
@@ -131,7 +144,7 @@ def test_list_params(app, db_conn, users_table):
     ]).run(db_conn)
     users = User.list(id='1', name='test1')
     assert len(users) == 1
-    assert users[0].email == 'test1@example.com'
+    assert users[0]['email'] == 'test1@example.com'
 
 
 def test_list_none(app, db_conn, users_table):
@@ -163,8 +176,8 @@ def test_insert(app, db_conn, users_table):
     })
     assert len(errors) == 0
     record = list(users_table.filter({'name': 'test'}).run(db_conn))[0]
-    assert user.id
-    assert user.name == 'test'
+    assert user['id']
+    assert user['name'] == 'test'
     assert record['email'] == 'test@example.com'
 
 
@@ -176,8 +189,8 @@ def test_insert_fail(app, db_conn, users_table):
     user, errors = User.insert({
         'email': 'test@example.com'
     })
-    assert user.name is None
-    assert user.password is None
+    assert user['name'] is None
+    assert user['password'] is None
     assert isinstance(user, User)
     assert isinstance(errors, (list, tuple))
     assert len(errors) == 2
@@ -199,7 +212,7 @@ def test_update(app, db_conn, users_table):
     })
     assert len(errors) == 0
     record = list(users_table.filter({'name': 'test'}).run(db_conn))[0]
-    assert user.email == 'open@example.com'
+    assert user['email'] == 'open@example.com'
     assert record['email'] == 'open@example.com'
 
 
@@ -219,7 +232,7 @@ def test_update_fail(app, db_conn, users_table):
     record = list(users_table.filter({'name': 'test'}).run(db_conn))[0]
     assert isinstance(user, User)
     assert isinstance(errors, (list, tuple))
-    assert user.email == 'open'
+    assert user['email'] == 'open'
     assert record['email'] == 'test@example.com'
 
 
@@ -262,11 +275,11 @@ def test_id_keep(app, db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    id = user.id
+    id = user['id']
     user.update({
         'name': 'other'
     })
-    assert user.id == id
+    assert user['id'] == id
 
 
 def test_created(app, db_conn, users_table):
@@ -279,7 +292,7 @@ def test_created(app, db_conn, users_table):
         'password': 'abcd1234'
     })
     record = list(users_table.filter({'name': 'test'}).run(db_conn))[0]
-    assert record['created'] == user.created
+    assert record['created'] == user['created']
 
 
 def test_transform(app, db_conn, users_table):
@@ -292,7 +305,7 @@ def test_transform(app, db_conn, users_table):
         'password': 'abcd1234'
     })
     assert len(errors) == 0
-    assert user.password.startswith('$2a$')
+    assert user['password'].startswith('$2a$')
 
 
 def test_modified(app, db_conn, users_table):
@@ -308,9 +321,9 @@ def test_modified(app, db_conn, users_table):
         'email': 'other@example.com'
     })
     record = list(users_table.filter({'name': 'test'}).run(db_conn))[0]
-    assert isinstance(user.modified, datetime)
-    assert record['modified'] == user.modified
-    assert user.created != user.modified
+    assert isinstance(user['modified'], datetime)
+    assert record['modified'] == user['modified']
+    assert user['created'] != user['modified']
 
 
 def test_unique(app, db_conn, users_table):

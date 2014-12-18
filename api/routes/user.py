@@ -13,7 +13,7 @@ def _login(user):
     Used by signup, login, and reset password.
     """
     login_user(user, remember=True)
-    resp = make_response(jsonify(user=user.deliver(private=True)))
+    resp = make_response(jsonify(user=user.deliver(access='private')))
     resp.set_cookie('logged_in', '1')
     return resp
 
@@ -23,7 +23,11 @@ def get_user(user_id):
     """Get the user by their ID."""
     user = User.get(id=user_id)
     if user:
-        return jsonify(user=user.deliver(private=user.is_current_user()))
+        return jsonify(
+            user=user.deliver(
+                access='private' if user.is_current_user() else None
+            )
+        )
     return abort(404)
 
 
@@ -31,7 +35,7 @@ def get_user(user_id):
 def get_current_user():
     """Get current user's information."""
     if current_user.is_authenticated():
-        return jsonify(user=current_user.deliver(private=True))
+        return jsonify(user=current_user.deliver(access='private'))
     return abort(401)
 
 
@@ -81,7 +85,7 @@ def update_user(user_id):
     user, errors = user.update(request.json)
     if len(errors):
         return jsonify(errors=errors), 400
-    return jsonify(user=user.deliver(private=True))
+    return jsonify(user=user.deliver(access='private'))
 
 
 @user.route('/token/', methods=['POST'])

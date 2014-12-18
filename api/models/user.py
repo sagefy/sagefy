@@ -1,7 +1,5 @@
-from odm.document import Document
-from odm.model import Model, Field
-# from odm.embed import Embeds
-from odm.validations import is_required, is_email, is_string, \
+from modules.model import Model
+from modules.validations import is_required, is_email, is_string, \
     has_min_length, is_one_of
 from passlib.hash import bcrypt
 from flask import url_for, current_app as app, request
@@ -11,53 +9,52 @@ from modules.content import get as _
 
 
 def encrypt_password(value):
-    return bcrypt.encrypt(value)
-
-
-class UserSettings(Document):
-    email_frequency = Field(
-        validations=(is_required, is_string, (
-            is_one_of, 'immediate', 'daily', 'weekly', 'never',
-        )),
-        access='private',
-        default='daily'
-    )
+    if value and not value.startswith('$2a$'):
+        return bcrypt.encrypt(value)
 
 
 class User(Model):
     tablename = 'users'
 
-    name = Field(
-        validations=(is_required, is_string,),
-        unique=True
-    )
-    email = Field(
-        validations=(is_required, is_email,),
-        unique=True,
-        access='private'
-    )
-    password = Field(
-        validations=(is_required, is_string, (has_min_length, 8)),
-        access=False,
-        transform=encrypt_password
-    )
-    # settings = Embeds(UserSettings, access='private')
+    schema = dict(Model.schema.copy(), **{
+        'name': {
+            'validate': (is_required, is_string,),
+            'unique': True,
+        },
+        'email': {
+            'validate': (is_required, is_email,),
+            'unique': True,
+            'access': 'private'
+        },
+        'password': {
+            'validate': (is_required, is_string, (has_min_length, 8)),
+            'access': False,
+            'bundle': encrypt_password,
+        },
+        'email_frequency': {
+            'validate': (is_required, is_string, (
+                is_one_of, 'immediate', 'daily', 'weekly', 'never',
+            )),
+            'access': 'private',
+            'default': 'daily'
+        }
+    })
 
     def is_password_valid(self, password):
         """Takes an encrypted password, and verifies it. Returns bool."""
         try:
-            return bcrypt.verify(password, self.password)
+            return bcrypt.verify(password, self['password'])
         except:
             return False
 
     def is_current_user(self):
         """Returns True if the user is the one logged in."""
         return (current_user.is_authenticated() and
-                self.id == current_user.id)
+                self['id'] == current_user['id'])
 
     def get_url(self):
         """Where to get the user's data."""
-        return url_for('user.get_user', user_id=self.id)
+        return url_for('user.get_user', user_id=self['id'])
 
     def is_authenticated(self):
         """For Flask-Login."""
@@ -73,38 +70,38 @@ class User(Model):
 
     def get_id(self):
         """For Flask-Login."""
-        return self.id
+        return self['id']
 
     def get_email_token(self, send_email=True):
         """Creates an email token for the user to reset their password."""
         token = uniqid()
         app.redis.setex(
-            'user_password_token_%s' % self.id,  # key
+            'user_password_token_%s' % self['id'],  # key
             60 * 10,  # time
-            bcrypt.encrypt(self.id + token)  # value
+            bcrypt.encrypt(self['id'] + token)  # value
         )
         if send_email:
             app.mail.send_message(
                 subject='Sagefy - Reset Password',
-                recipients=[self.email],
+                recipients=[self['email']],
                 body=_('user', 'change_password_url').replace(
                     '{url}',
                     '%spassword?id=%s&token=%s' %
-                    (request.url_root, self.id, token)
+                    (request.url_root, self['id'], token)
                 )
             )
         return token
 
     def is_valid_token(self, token):
         """Ensure the given token is valid."""
-        key = 'user_password_token_%s' % self.id
+        key = 'user_password_token_%s' % self['id']
         entoken = app.redis.get(key)
         app.redis.delete(key)
         if entoken:
-            return bcrypt.verify(self.id + token, entoken)
+            return bcrypt.verify(self['id'] + token, entoken)
         return False
 
     def update_password(self, password):
         """Updates the user's password."""
-        self.password = password
+        self['password'] = password
         self.save()

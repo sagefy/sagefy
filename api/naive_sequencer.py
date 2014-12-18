@@ -8,7 +8,7 @@ Learning parameters:
 - **Slip**: The probability of slipping on a card
 - **Transit**: The probability of learning the skill on the given card
 - **Belief**: The probability of the learned being accurate
-- **Quality**: How well doe the entity promote learning?
+- **Quality**: How well does the entity promote learning?
 """
 
 init_learned = 0.4

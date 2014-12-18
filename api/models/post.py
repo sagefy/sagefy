@@ -1,5 +1,5 @@
-from odm.model import Model, Field
-from odm.validations import is_required, is_string, is_one_of
+from modules.model import Model
+from modules.validations import is_required, is_string, is_one_of
 
 
 class Post(Model):
@@ -7,16 +7,16 @@ class Post(Model):
     tablename = 'posts'
 
     user_id = Field(
-        validations=(is_required, is_string,)
+        validate=(is_required, is_string,)
     )
     topic_id = Field(
-        validations=(is_required, is_string,)
+        validate=(is_required, is_string,)
     )
     body = Field(
-        validations=(is_required, is_string,)
+        validate=(is_required, is_string,)
     )
     kind = Field(
-        validations=(is_required, is_string,
+        validate=(is_required, is_string,
                      (is_one_of, 'post', 'proposal', 'vote', 'flag')),
         default='post'
     )
@@ -27,5 +27,5 @@ class Post(Model):
     # a vote can reply to a proposal or flag
     # a flag cannot be a reply
     replies_to_id = Field(
-        validations=(is_string,)
+        validate=(is_string,)
     )

@@ -45,18 +45,17 @@ def is_email(value):
         return _('error', 'email')
 
 
-def has_min_length(value, params):
+def has_min_length(value, ln):
     """
     Ensure the given value is a minimum length.
     """
-    ln = params[0]
     if not value or len(value) < ln:
         return _('error', 'minlength').replace('{length}', str(ln))
 
 
-def is_one_of(value, params):
+def is_one_of(value, *options):
     """
     Ensure the value is within an enumerated set.
     """
-    if value not in params:
-        return _('error', 'options').replace('{options}', ', '.join(params))
+    if value not in options:
+        return _('error', 'options').replace('{options}', ', '.join(options))
