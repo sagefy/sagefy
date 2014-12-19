@@ -12,8 +12,6 @@
 # - Card Difficulty
 
 from random import uniform, randrange, sample
-import string
-
 
 question_gap = (5, 60)
 session_gap = (60 * 60 * 12, 60 * 60 * 36)
@@ -29,25 +27,36 @@ card_names = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')
 def bool_from_percent(percent):
     return randrange(100) < percent * 100
 
+cards = []
+
+for l in card_names:
+    cards.append({
+        'name': l,
+        'guess': uniform(*guess),
+        'slip': uniform(*slip),
+        'difficulty': uniform(*difficulty)
+    })
+
+
+def get_score(card, p_correct):
+    if bool_from_percent(card['guess']):
+        return 1
+    elif bool_from_percent(card['slip']):
+        return 0
+    elif p_correct < card['difficulty'] * uniform(0.5, 1.0):
+        return 0
+    return int(bool_from_percent(p_correct))
+
 
 def generate_responses():
     p_correct = 0
     t = 1
     current_session_count = 0
 
-    cards = []
     seen = []
 
     card = None
     responses = []
-
-    for l in card_names:
-        cards.append({
-            'name': l,
-            'guess': uniform(*guess),
-            'slip': uniform(*slip),
-            'difficulty': uniform(*difficulty)
-        })
 
     while p_correct < 0.95:
         if len(seen) >= len(card_names):
@@ -57,14 +66,7 @@ def generate_responses():
             card = sample(cards, 1)[0]
         seen.append(card)
 
-        if bool_from_percent(card['guess']):
-            score = 1
-        elif bool_from_percent(card['slip']):
-            score = 0
-        elif p_correct < card['difficulty'] * uniform(0.5, 1.0):
-            score = 0
-        else:
-            score = int(bool_from_percent(p_correct))
+        score = get_score(card, p_correct)
 
         responses.append({
             'time': t,

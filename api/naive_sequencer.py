@@ -18,7 +18,7 @@ required_learned = 0.95
 init_belief = 0.5
 required_belief = 0.95
 init_guess = 0.2
-max_guess = 0.3
+max_guess = 0.4
 init_slip = 0.05
 max_slip = 0.2
 init_transit = 0.05
@@ -101,6 +101,9 @@ def main():
 
         rows.append(row_stats)
         print(row_stats)
+
+        if learner['learned'] > 0.95 and learner['belief'] > 0.95:
+            break
 
     return rows
 
