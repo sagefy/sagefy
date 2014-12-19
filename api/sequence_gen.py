@@ -11,13 +11,9 @@
 # - Card Slip
 # - Card Difficulty
 
-from time import time
 from random import uniform, randrange, sample
 import string
 
-p_correct = 0
-time = int(time())
-current_session_count = 0
 
 question_gap = (5, 60)
 session_gap = (60 * 60 * 12, 60 * 60 * 36)
@@ -27,51 +23,68 @@ max_questions = (20, 100)
 guess = (0.2, 0.4)
 slip = (0.05, 0.2)
 difficulty = (0.3, 0.7)
-
-cards = []
-seen = []
-
-for l in string.ascii_uppercase:
-    cards.append({
-        'name': l,
-        'guess': uniform(*guess),
-        'slip': uniform(*slip),
-        'difficulty': uniform(*difficulty)
-    })
+card_names = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')
 
 
 def bool_from_percent(percent):
     return randrange(100) < percent * 100
 
-card = None
 
-while p_correct < 0.95:
-    if len(seen) >= len(string.ascii_uppercase):
-        seen = []
+def generate_responses():
+    p_correct = 0
+    t = 1
+    current_session_count = 0
 
-    while not card or card in seen:
-        card = sample(cards, 1)[0]
-    seen.append(card)
+    cards = []
+    seen = []
 
-    if bool_from_percent(card['guess']):
-        score = 1
-    elif bool_from_percent(card['slip']):
-        score = 0
-    elif p_correct < card['difficulty'] * uniform(0.5, 1.0):
-        score = 0
-    else:
-        score = int(bool_from_percent(p_correct))
+    card = None
+    responses = []
 
-    print(time, score, card['name'])
+    for l in card_names:
+        cards.append({
+            'name': l,
+            'guess': uniform(*guess),
+            'slip': uniform(*slip),
+            'difficulty': uniform(*difficulty)
+        })
 
-    current_session_count += 1
-    if current_session_count > uniform(*max_questions):
-        time += int(uniform(*question_gap))
-        p_correct += uniform(*p_correct_adjustment)
-        current_session_count = 0
-    else:
-        time += int(uniform(*session_gap))
-        p_correct += uniform(*p_correct_new_session)
+    while p_correct < 0.95:
+        if len(seen) >= len(card_names):
+            seen = []
 
-    if p_correct < 0:
-        p_correct = 0
+        while not card or card in seen:
+            card = sample(cards, 1)[0]
+        seen.append(card)
+
+        if bool_from_percent(card['guess']):
+            score = 1
+        elif bool_from_percent(card['slip']):
+            score = 0
+        elif p_correct < card['difficulty'] * uniform(0.5, 1.0):
+            score = 0
+        else:
+            score = int(bool_from_percent(p_correct))
+
+        responses.append({
+            'time': t,
+            'score': score,
+            'card': card['name']
+        })
+
+        current_session_count += 1
+        if current_session_count > uniform(*max_questions):
+            t += int(uniform(*question_gap))
+            p_correct += uniform(*p_correct_adjustment)
+            current_session_count = 0
+        else:
+            t += int(uniform(*session_gap))
+            p_correct += uniform(*p_correct_new_session)
+
+        if p_correct < 0:
+            p_correct = 0
+
+    return responses
+
+if __name__ == '__main__':
+    print(generate_responses())

@@ -15,6 +15,12 @@ class ClassProperty(object):
     def __get__(self, ins, owner):
         return self.fn(owner)
 
+    def __set__(self):
+        raise "Cannot set static class property."
+
+    def __delete__(self):
+        raise "Cannot delete static class property."
+
 
 class Model(object):
     strict = True
