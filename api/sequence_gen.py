@@ -58,7 +58,7 @@ def generate_responses():
     card = None
     responses = []
 
-    while p_correct < 0.95:
+    while p_correct < 0.99:
         if len(seen) >= len(card_names):
             seen = []
 

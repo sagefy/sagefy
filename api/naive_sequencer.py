@@ -14,7 +14,7 @@ Learning parameters:
 """
 
 init_learned = 0.4
-required_learned = 0.95
+required_learned = 0.99
 init_belief = 0.5
 required_belief = 0.95
 init_guess = 0.2
@@ -102,7 +102,8 @@ def main():
         rows.append(row_stats)
         print(row_stats)
 
-        if learner['learned'] > 0.95 and learner['belief'] > 0.95:
+        if (learner['learned'] > required_learned and
+                learner['belief'] > required_belief):
             break
 
     return rows
