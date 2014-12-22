@@ -1,5 +1,6 @@
 from math import exp, fsum
 from sequence_gen import generate_responses
+from sequence_gen import cards as true_cards
 
 
 """
@@ -22,89 +23,101 @@ max_guess = 0.4
 init_slip = 0.05
 max_slip = 0.2
 init_transit = 0.05
-belief_k = 0.000001  # The factor that alters the impact of time on belief
+belief_k = 0.00001  # The factor that alters the impact of time on belief
 # TODO: What should `belief_k` be?
 
 
 def main():
-    responses = generate_responses()
+    rows = []
     # schema: card, time (seconds), score
     cards = {}
-    learner = {
-        'learned': init_learned,
-        'belief': init_belief,
-    }
-    rows = []
 
-    for i, response in enumerate(responses):
-        if response['card'] not in cards:
-            cards[response['card']] = {
-                'guess': init_guess,
-                'slip': init_slip,
-                'transit': init_transit,
-            }
+    for lz in ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'):
+        responses = generate_responses()
+        learner = {
+            'learned': init_learned,
+            'belief': init_belief,
+        }
 
-        card = cards[response['card']]
+        for i, response in enumerate(responses):
+            if response['card'] not in cards:
+                cards[response['card']] = {
+                    'guess': init_guess,
+                    'slip': init_slip,
+                    'transit': init_transit,
+                }
 
-        row_stats = response.copy()
+            card = cards[response['card']]
 
-        # compute_correct  - no prior belief
-        row_stats['correct'] = compute_correct(
-            learned=learner['learned'],
-            guess=card['guess'],
-            slip=card['slip'],
-        )
+            row_stats = response.copy()
 
-        # compute_belief - always first update
-        row_stats['belief'] = learner['belief'] = compute_belief(
-            time0=responses[i - 1]['time'] if i > 1 else response['time'],
-            time1=response['time'],
-            learned=learner['learned'],
-            belief=learner['belief'],
-        )
+            row_stats['learner'] = lz
 
-        # compute_guess - before learned
-        row_stats['guess'] = card['guess'] = compute_guess(
-            score=response['score'],
-            learned=learner['learned'],
-            guess=card['guess'],
-        )
-
-        # compute_slip - before learned
-        row_stats['slip'] = card['slip'] = compute_slip(
-            score=response['score'],
-            learned=learner['learned'],
-            slip=card['slip'],
-        )
-
-        # ### compute_learned  ###
-        row_stats['learned'] = learner['learned'] = compute_learned(
-            score=response['score'],
-            learned=learner['learned'],
-            guess=card['guess'],
-            slip=card['slip'],
-            transit=card['transit'],
-        )
-
-        # compute_transit - after learned
-        if i > 3:
-            prev_card = cards[rows[i - 3]['card']]
-            row_stats['transit'] = prev_card['transit'] = compute_transit(
-                transit=prev_card['transit'],
-                learned0=rows[i - 3]['learned'],
-                learned3=learner['learned'],
+            # compute_correct  - no prior belief
+            row_stats['correct'] = compute_correct(
+                learned=learner['learned'],
+                guess=card['guess'],
+                slip=card['slip'],
             )
 
-        # TODO: compute_set_learned - after learned
-        # TODO: compute_unit_quality - after learned
-        # TODO: compute_set_quality - after unit quality
+            # compute_belief - always first update
+            row_stats['belief'] = learner['belief'] = compute_belief(
+                time0=responses[i - 1]['time'] if i > 1 else response['time'],
+                time1=response['time'],
+                learned=learner['learned'],
+                belief=learner['belief'],
+            )
 
-        rows.append(row_stats)
-        print(row_stats)
+            # compute_guess - before learned
+            row_stats['guess'] = card['guess'] = compute_guess(
+                score=response['score'],
+                learned=learner['learned'],
+                guess=card['guess'],
+            )
 
-        if (learner['learned'] > required_learned and
-                learner['belief'] > required_belief):
-            break
+            # compute_slip - before learned
+            row_stats['slip'] = card['slip'] = compute_slip(
+                score=response['score'],
+                learned=learner['learned'],
+                slip=card['slip'],
+            )
+
+            # ### compute_learned  ###
+            row_stats['learned'] = learner['learned'] = compute_learned(
+                score=response['score'],
+                learned=learner['learned'],
+                guess=card['guess'],
+                slip=card['slip'],
+                transit=card['transit'],
+            )
+
+            # compute_transit - after learned
+            if i > 3:
+                prev_card = cards[rows[i - 3]['card']]
+                row_stats['transit'] = prev_card['transit'] = compute_transit(
+                    transit=prev_card['transit'],
+                    learned0=rows[i - 3]['learned'],
+                    learned3=learner['learned'],
+                )
+
+            # TODO: compute_set_learned - after learned
+            # TODO: compute_unit_quality - after learned
+            # TODO: compute_set_quality - after unit quality
+
+            rows.append(row_stats)
+            print(row_stats)
+
+            if (learner['learned'] > required_learned and
+                    learner['belief'] > required_belief):
+                break
+
+    for tc in true_cards:
+        card = cards[tc['name']]
+        print(
+            tc['name'],
+            card['guess'] - tc['guess'],
+            card['slip'] - tc['slip']
+        )
 
     return rows
 

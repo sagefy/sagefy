@@ -9,7 +9,6 @@
 # - Response
 # - Card Guess
 # - Card Slip
-# - Card Difficulty
 
 from random import uniform, randrange, sample
 
@@ -20,7 +19,6 @@ p_correct_new_session = (-0.01, 0.01)
 max_questions = (20, 100)
 guess = (0.2, 0.4)
 slip = (0.05, 0.2)
-difficulty = (0.3, 0.7)
 card_names = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')
 
 
@@ -33,19 +31,13 @@ for l in card_names:
     cards.append({
         'name': l,
         'guess': uniform(*guess),
-        'slip': uniform(*slip),
-        'difficulty': uniform(*difficulty)
+        'slip': uniform(*slip)
     })
 
 
 def get_score(card, p_correct):
-    if bool_from_percent(card['guess']):
-        return 1
-    elif bool_from_percent(card['slip']):
-        return 0
-    elif p_correct < card['difficulty'] * uniform(0.5, 1.0):
-        return 0
-    return int(bool_from_percent(p_correct))
+    r = p_correct * (1 - card['slip']) + (1 - p_correct) * card['guess']
+    return int(bool_from_percent(r))
 
 
 def generate_responses():
@@ -76,11 +68,11 @@ def generate_responses():
 
         current_session_count += 1
         if current_session_count > uniform(*max_questions):
-            t += int(uniform(*question_gap))
+            t += int(uniform(*session_gap))
             p_correct += uniform(*p_correct_adjustment)
             current_session_count = 0
         else:
-            t += int(uniform(*session_gap))
+            t += int(uniform(*question_gap))
             p_correct += uniform(*p_correct_new_session)
 
         if p_correct < 0:
