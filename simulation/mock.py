@@ -40,7 +40,8 @@ def get_score(card, p_correct):
     return int(bool_from_percent(r))
 
 
-def generate_responses():
+# TODO: Use parameters
+def generate_responses(num_learners=1, num_cards=8):
     p_correct = 0
     t = 1
     current_session_count = 0
