@@ -1,85 +1,163 @@
-# time, score
-# p(score == 1) should increase over time
-# times should come in batches over one-two hours, on a few days a week
-# produce large variation
+"""
+Simulates learner responses for a unit. Can be used for prototyping and testing
+learner models.
+"""
 
-# Factors:
-# - Time
-# - Prior
-# - Response
-# - Card Guess
-# - Card Slip
+from random import uniform, sample, randrange
 
-from random import uniform, randrange, sample
-
+# How many seconds between questions
 question_gap = (5, 60)
+
+# How many seconds between sessions
 session_gap = (60 * 60 * 12, 60 * 60 * 36)
-p_correct_adjustment = (-0.01, uniform(0.05, 0.1))
-p_correct_new_session = (-0.01, 0.01)
-max_questions = (20, 100)
-guess = (0.2, 0.4)
-slip = (0.05, 0.2)
-card_names = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')
+
+# How many questions per session
+max_questions = (10, 20)
+
+# Typical ranges for parameters we will be estimating later
+guess = (0.01, 0.4)
+slip = (0.01, 0.2)
+transit = (0.01, 0.05)
+
+# When to end the responses per learner
+max_learned = 0.99
+degrade = 0.2
 
 
-def bool_from_percent(percent):
-    return randrange(100) < percent * 100
+def main(num_learners=1, num_cards=10):
+    """
+    Primary function. Given a number of learners and number of available cards,
+    simulates responses for a hypothetical unit.
 
-cards = []
+    Returns responses in an list, with the following attributes:
+    learner, card, time, score
+    """
 
-for l in card_names:
-    cards.append({
-        'name': l,
+    cards = create_cards(num_cards)
+    return {
+        'responses': create_responses(num_learners, cards),
+        'cards': cards,
+    }
+
+
+def create_cards(num_cards):
+    """
+    Produces random set of cards with underlying values for
+    guess, slip, and transit.
+    """
+
+    return [{
+        'name': str(chr(65 + i)),
         'guess': uniform(*guess),
-        'slip': uniform(*slip)
-    })
+        'slip': uniform(*slip),
+        'transit': uniform(*transit),
+    } for i in range(num_cards)]
 
 
-def get_score(card, p_correct):
-    r = p_correct * (1 - card['slip']) + (1 - p_correct) * card['guess']
-    return int(bool_from_percent(r))
+def create_responses(num_learners, cards):
+    """
+    Generates a set of responses based on a set of cards
+    and number of learners.
+    """
 
-
-# TODO: Use parameters
-def generate_responses(num_learners=1, num_cards=8):
-    p_correct = 0
-    t = 1
-    current_session_count = 0
-
-    seen = []
-
-    card = None
+    start_time = 1
     responses = []
 
-    while p_correct < 0.99:
-        if len(seen) >= len(card_names):
-            seen = []
+    for i in range(num_learners):
+        learner = str(chr(65 + i))
+        responses += create_responses_as_learner(learner, start_time, cards)
+        start_time += int(uniform(*session_gap))
 
-        while not card or card in seen:
-            card = sample(cards, 1)[0]
-        seen.append(card)
+    responses = sorted(responses, key=lambda d: d['time'])
+    return responses
 
-        score = get_score(card, p_correct)
+
+def create_responses_as_learner(learner, start_time, cards):
+    """
+    Creates a set of simulated responses for a learner.
+    """
+
+    learned = 0
+    count = 0
+    cards_seen = []
+    responses = []
+    time = start_time
+    score = 0
+
+    while learned < max_learned or score != 1:
+        card = choose_card(cards, cards_seen)
+        score = get_score(learned, card)
 
         responses.append({
-            'time': t,
+            'learner': learner,
+            'time': time,
+            'card': card['name'],
             'score': score,
-            'card': card['name']
         })
 
-        current_session_count += 1
-        if current_session_count > uniform(*max_questions):
-            t += int(uniform(*session_gap))
-            p_correct += uniform(*p_correct_adjustment)
-            current_session_count = 0
-        else:
-            t += int(uniform(*question_gap))
-            p_correct += uniform(*p_correct_new_session)
+        time, count = update_time(time, count)
 
-        if p_correct < 0:
-            p_correct = 0
+        if count > 0:
+            learned += card['transit']
+        else:
+            learned -= degrade
 
     return responses
 
+
+def choose_card(cards, cards_seen):
+    """
+    Selects a card at random from the set that hasn't been seen yet.
+    If we've seen all the cards, chooses a random card instead.
+    """
+
+    card = None
+    if len(cards_seen) == len(cards):
+        cards_seen = []
+    while not card or card in cards_seen:
+        card = sample(cards, 1)[0]
+    cards_seen.append(card)
+    return card
+
+
+def get_score(learned, card):
+    """
+    Given a probability of learned and card information,
+    produce a response that reflects that score.
+    """
+    correct = learned * (1 - card['slip']) + (1 - learned) * card['guess']
+    return int(bool_from_percent(correct))
+
+
+def bool_from_percent(percent, steps=1000000):
+    """
+    Given a percentage, returns a boolean that reflects that likelihood.
+    """
+
+    return percent * steps > randrange(steps)
+
+
+def update_time(time, count):
+    """
+    Updates the time and count, simulating user learning sessions.
+    """
+
+    count += 1
+    if count > uniform(*max_questions):
+        time += int(uniform(*session_gap))
+        count = 0
+    else:
+        time += int(uniform(*question_gap))
+
+    return time, count
+
+
 if __name__ == '__main__':
-    print(generate_responses())
+    d = main(10, 10)
+    for r in d['responses']:
+        print(r['learner'], r['card'], r['score'], r['time'])
+
+    print('\n')
+
+    for c in d['cards']:
+        print('%s %f %f %f' % (c['name'], c['guess'], c['slip'], c['transit']))
