@@ -4,6 +4,7 @@ learner models.
 """
 
 from random import uniform, sample, randrange
+from formulae import max_learned
 
 # How many seconds between questions
 question_gap = (5, 60)
@@ -12,7 +13,7 @@ question_gap = (5, 60)
 session_gap = (60 * 60 * 12, 60 * 60 * 36)
 
 # How many questions per session
-max_questions = (10, 20)
+max_questions = (5, 20)
 
 # Typical ranges for parameters we will be estimating later
 guess = (0.01, 0.4)
@@ -20,11 +21,10 @@ slip = (0.01, 0.2)
 transit = (0.01, 0.05)
 
 # When to end the responses per learner
-max_learned = 0.99
 degrade = 0.2
 
 
-def main(num_learners=1, num_cards=10):
+def main(num_learners=26, num_cards=10):
     """
     Primary function. Given a number of learners and number of available cards,
     simulates responses for a hypothetical unit.
@@ -34,8 +34,10 @@ def main(num_learners=1, num_cards=10):
     """
 
     cards = create_cards(num_cards)
+    learners = create_learners(num_learners)
     return {
-        'responses': create_responses(num_learners, cards),
+        'responses': create_responses(learners, cards),
+        'learners': learners,
         'cards': cards,
     }
 
@@ -54,19 +56,24 @@ def create_cards(num_cards):
     } for i in range(num_cards)]
 
 
-def create_responses(num_learners, cards):
+def create_learners(num_learners):
+    return [{
+        'name': str(chr(65 + i)),
+        'learned': 0,
+    } for i in range(num_learners)]
+
+
+def create_responses(learners, cards):
     """
     Generates a set of responses based on a set of cards
     and number of learners.
     """
 
-    start_time = 1
     responses = []
 
-    for i in range(num_learners):
-        learner = str(chr(65 + i))
+    for learner in learners:
+        start_time = int(uniform(*session_gap) * 5)
         responses += create_responses_as_learner(learner, start_time, cards)
-        start_time += int(uniform(*session_gap))
 
     responses = sorted(responses, key=lambda d: d['time'])
     return responses
@@ -77,19 +84,18 @@ def create_responses_as_learner(learner, start_time, cards):
     Creates a set of simulated responses for a learner.
     """
 
-    learned = 0
     count = 0
     cards_seen = []
     responses = []
     time = start_time
     score = 0
 
-    while learned < max_learned or score != 1:
+    while learner['learned'] < max_learned or score != 1:
         card = choose_card(cards, cards_seen)
-        score = get_score(learned, card)
+        score = get_score(learner['learned'], card)
 
         responses.append({
-            'learner': learner,
+            'learner': learner['name'],
             'time': time,
             'card': card['name'],
             'score': score,
@@ -98,9 +104,9 @@ def create_responses_as_learner(learner, start_time, cards):
         time, count = update_time(time, count)
 
         if count > 0:
-            learned += card['transit']
+            learner['learned'] += card['transit']
         else:
-            learned -= degrade
+            learner['learned'] -= degrade
 
     return responses
 
@@ -153,10 +159,12 @@ def update_time(time, count):
 
 
 if __name__ == '__main__':
-    d = main(10, 10)
+    d = main()
     for r in d['responses']:
         print(r['learner'], r['card'], r['score'], r['time'])
 
+    print('\n')
+    print(len(d['responses']))
     print('\n')
 
     for c in d['cards']:
