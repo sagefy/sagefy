@@ -9,9 +9,9 @@ init_learned = 0.4
 max_learned = 0.99
 init_belief = 0.5
 max_belief = 0.95
-init_guess = 0.2
+init_guess = 0.25
 max_guess = 0.5
-init_slip = 0.05
+init_slip = 0.25
 max_slip = 0.5
 init_transit = 0.05
 belief_k = 0.00001  # The factor that alters the impact of time on belief
@@ -114,9 +114,20 @@ def compute_guess(score, learned=init_learned, guess=init_guess):
     TODO: Adjust.
     TODO: Alternatively, make use of `belief`.
     """
-    guess += score * ((max_guess - guess) * (1 - learned)) ** 2
-    guess -= (1 - score) * (guess * (1 - learned)) ** 2
+    # Control
     return guess
+
+    # Additive form
+    # if score == 1:
+    #     return guess + ((max_guess - guess) * (1 - learned)) ** 2
+    # if score == 0:
+    #     return guess - (1 - score) * (guess * (1 - learned)) ** 2
+
+    # Bayesian form
+    # if score == 1:
+    #     return guess * ??? / (learned + (1 - learned) * guess)
+    # if score == 0:
+    #     return guess * ??? / (learned + (1 - learned) * (1 - guess))
 
 
 def compute_slip(score, learned=init_learned, slip=init_slip):
@@ -128,9 +139,20 @@ def compute_slip(score, learned=init_learned, slip=init_slip):
     TODO: Alternatively, make use of `belief`.
     TODO: Adjust.
     """
-    slip -= score * (slip * learned) ** 2
-    slip += (1 - score) * ((max_slip - slip) * learned) ** 2
+    # Control
     return slip
+
+    # Additive form
+    # if score == 1:
+    #     return slip - (slip * learned) ** 2
+    # if score == 0:
+    #     return slip + ((max_slip - slip) * learned) ** 2
+
+    # Bayesian form
+    # if score == 1:
+    #     return slip * ??? / (learned * (1 - slip) + (1 - learned))
+    # if score == 0:
+    #     return slip * ??? / (learned * slip + (1 - learned))
 
 
 def compute_learned(score, learned=init_learned, guess=init_guess,

@@ -16,8 +16,8 @@ session_gap = (60 * 60 * 12, 60 * 60 * 36)
 max_questions = (5, 20)
 
 # Typical ranges for parameters we will be estimating later
-guess = (0.01, 0.4)
-slip = (0.01, 0.2)
+guess = (0.01, 0.5)
+slip = (0.01, 0.5)
 transit = (0.01, 0.05)
 
 # When to end the responses per learner
