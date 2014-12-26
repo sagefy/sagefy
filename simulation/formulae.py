@@ -10,9 +10,9 @@ max_learned = 0.99
 init_belief = 0.5
 max_belief = 0.95
 init_guess = 0.2
-max_guess = 0.4
+max_guess = 0.5
 init_slip = 0.05
-max_slip = 0.2
+max_slip = 0.5
 init_transit = 0.05
 belief_k = 0.00001  # The factor that alters the impact of time on belief
 # TODO: What should `belief_k` be?
@@ -114,8 +114,8 @@ def compute_guess(score, learned=init_learned, guess=init_guess):
     TODO: Adjust.
     TODO: Alternatively, make use of `belief`.
     """
-    guess += (score * ((0.5 - guess) * (1 - learned)) ** 2) * 1
-    guess -= ((1 - score) * (guess * (1 - learned)) ** 2) * 1
+    guess += score * ((max_guess - guess) * (1 - learned)) ** 2
+    guess -= (1 - score) * (guess * (1 - learned)) ** 2
     return guess
 
 
@@ -128,8 +128,8 @@ def compute_slip(score, learned=init_learned, slip=init_slip):
     TODO: Alternatively, make use of `belief`.
     TODO: Adjust.
     """
-    slip -= (score * (slip * learned) ** 2) * 1
-    slip += ((1 - score) * ((0.5 - slip) * learned) ** 2) * 1
+    slip -= score * (slip * learned) ** 2
+    slip += (1 - score) * ((max_slip - slip) * learned) ** 2
     return slip
 
 

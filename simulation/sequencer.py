@@ -29,7 +29,7 @@ from formulae import update, init_learned, init_belief, \
 from math import sqrt
 
 
-def main(num_learners=100, num_cards=30):
+def main(num_learners=250, num_cards=10):
     d = create_responses(num_learners, num_cards)
     responses, learners, cards = d['responses'], d['learners'], d['cards']
 
