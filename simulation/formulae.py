@@ -1,5 +1,5 @@
 """
-This document does ...
+TODO This document does ...
 """
 
 from math import exp
@@ -114,8 +114,8 @@ def compute_guess(score, learned=init_learned, guess=init_guess):
     TODO: Adjust.
     TODO: Alternatively, make use of `belief`.
     """
-    guess += score * ((max_guess - guess) * (1 - learned)) ** 2
-    guess -= (1 - score) * (guess * (1 - learned)) ** 2
+    guess += (score * ((0.5 - guess) * (1 - learned)) ** 2) * 1
+    guess -= ((1 - score) * (guess * (1 - learned)) ** 2) * 1
     return guess
 
 
@@ -128,8 +128,8 @@ def compute_slip(score, learned=init_learned, slip=init_slip):
     TODO: Alternatively, make use of `belief`.
     TODO: Adjust.
     """
-    slip -= score * (slip * learned) ** 2
-    slip += (1 - score) * ((max_slip - slip) * learned) ** 2
+    slip -= (score * (slip * learned) ** 2) * 1
+    slip += ((1 - score) * ((0.5 - slip) * learned) ** 2) * 1
     return slip
 
 

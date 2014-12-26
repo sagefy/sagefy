@@ -49,7 +49,7 @@ def create_cards(num_cards):
     """
 
     return [{
-        'name': str(chr(65 + i)),
+        'name': 'c%s' % i,
         'guess': uniform(*guess),
         'slip': uniform(*slip),
         'transit': uniform(*transit),
@@ -57,8 +57,11 @@ def create_cards(num_cards):
 
 
 def create_learners(num_learners):
+    """
+    """
+
     return [{
-        'name': str(chr(65 + i)),
+        'name': 'l%s' % i,
         'learned': 0,
     } for i in range(num_learners)]
 
@@ -103,6 +106,7 @@ def create_responses_as_learner(learner, start_time, cards):
 
         time, count = update_time(time, count)
 
+        # TODO is the the correct formulation?
         if count > 0:
             learner['learned'] += card['transit']
         else:
@@ -131,6 +135,8 @@ def get_score(learned, card):
     Given a probability of learned and card information,
     produce a response that reflects that score.
     """
+
+    # TODO use the one in formulae
     correct = learned * (1 - card['slip']) + (1 - learned) * card['guess']
     return int(bool_from_percent(correct))
 
@@ -148,6 +154,7 @@ def update_time(time, count):
     Updates the time and count, simulating user learning sessions.
     """
 
+    # TODO test this function
     count += 1
     if count > uniform(*max_questions):
         time += int(uniform(*session_gap))
