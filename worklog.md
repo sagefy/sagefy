@@ -1,10 +1,41 @@
-
 Sagefy Work Log
 ===============
 
+2015 Jan 19
+-----------
 
-2014 December 28
-----------------
+**Weekly Goal**: Find working calculations for aggregates. TBD: Finish unit tests and API endpoints for discussion section.
+
+TODO
+
+2015 Jan 12
+-----------
+
+**Weekly Goal**: Find working updates for transit and belief. TBD: Write more unit tests and work on API endpoints for discussion section.
+
+TODO
+
+2015 Jan 05
+-----------
+
+**Weekly Goal**: Find working updates for guess and slip. TBD: Write more unit tests and work on API endpoints for discussion section.
+
+TODO
+
+2014 Dec 29
+-----------
+
+**Weekly Goal**: Write out major user flows and priority. Finish first draft of learner wireframes. Ensure base functions work as expected in simulation. Outline expectations for guess and slip updates.
+
+TODO
+
+2014 Dec 28
+-----------
+
+Started work log. Started weekly goals. Outlined expectations for guess and slip updates.
+
+Initial Entry
+-------------
 
 I'm starting a work log for Sagefy, with the hopes that it will motivate me and provide way to visualize my progress towards the first MVP. In the future updates will be a short description of what I did for the day, even if the activities don't directly involve pushing code. The grammar and spelling will not always be perfect here.
 

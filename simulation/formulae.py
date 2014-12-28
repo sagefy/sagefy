@@ -107,9 +107,7 @@ def compute_belief(prev_time, time, learned=init_learned, belief=init_belief):
 
 def compute_guess(score, correct, learned=init_learned, guess=init_guess):
     """
-    Determines how to update guess, given a score.
-    Based on the following observation:
-    - P(Answer is a Guess | Correct) = 1 - P(Learned)
+    Determines how to update guess given a score.
 
     TODO: Adjust.
     TODO: Alternatively, make use of `belief`.
@@ -132,9 +130,7 @@ def compute_guess(score, correct, learned=init_learned, guess=init_guess):
 
 def compute_slip(score, correct, learned=init_learned, slip=init_slip):
     """
-    Determines how to update slip, given a score.
-    Based on the following observation:
-    - P(Answer is a Slip | Incorrect) = P(Learned)
+    Determines how to update slip given a score.
 
     TODO: Alternatively, make use of `belief`.
     TODO: Adjust.
