@@ -71,8 +71,8 @@ def update(score, time,
     # Note: The ordering must be as follows...
     correct = compute_correct(learned, guess, slip)
     # TODO belief = compute_belief(prev_time, time, learned, belief)
-    guess = compute_guess(score, learned, guess)
-    slip = compute_slip(score, learned, slip)
+    guess = compute_guess(score, correct, learned, guess)
+    slip = compute_slip(score, correct, learned, slip)
     learned = compute_learned(score, learned, guess, slip, transit)
     # TODO prev_transit = compute_transit(prev_transit, prev_learned, learned)
 
@@ -105,7 +105,7 @@ def compute_belief(prev_time, time, learned=init_learned, belief=init_belief):
     return exp(belief_k * (prev_time - time) / learned)
 
 
-def compute_guess(score, learned=init_learned, guess=init_guess):
+def compute_guess(score, correct, learned=init_learned, guess=init_guess):
     """
     Determines how to update guess, given a score.
     Based on the following observation:
@@ -125,12 +125,12 @@ def compute_guess(score, learned=init_learned, guess=init_guess):
 
     # Bayesian form
     # if score == 1:
-    #     return guess * ??? / (learned + (1 - learned) * guess)
+    #     return guess * ??? / correct
     # if score == 0:
-    #     return guess * ??? / (learned + (1 - learned) * (1 - guess))
+    #     return guess * ??? / (1 - correct)
 
 
-def compute_slip(score, learned=init_learned, slip=init_slip):
+def compute_slip(score, correct, learned=init_learned, slip=init_slip):
     """
     Determines how to update slip, given a score.
     Based on the following observation:
@@ -150,9 +150,9 @@ def compute_slip(score, learned=init_learned, slip=init_slip):
 
     # Bayesian form
     # if score == 1:
-    #     return slip * ??? / (learned * (1 - slip) + (1 - learned))
+    #     return slip * ??? / correct
     # if score == 0:
-    #     return slip * ??? / (learned * slip + (1 - learned))
+    #     return slip * ??? / (1 - correct)
 
 
 def compute_learned(score, learned=init_learned, guess=init_guess,

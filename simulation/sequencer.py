@@ -93,6 +93,7 @@ def main(num_learners=250, num_cards=10):
 
 def get_previous_response(responses, i):
     # TODO test this making sure it works as expected
+    # TODO What if there's no previous response?
     learner = responses[i]['learner']
     while True:
         i -= 1
