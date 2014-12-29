@@ -107,10 +107,11 @@ def create_responses_as_learner(learner, start_time, cards):
         time, count = update_time(time, count)
 
         # TODO is the the correct formulation?
-        if count > 0:
-            learner['learned'] += card['transit']
-        else:
-            learner['learned'] -= degrade
+        # if count > 0:
+        #     learner['learned'] += card['transit']
+        # else:
+        #     learner['learned'] -= degrade
+        learner['learned'] += card['transit']
 
     return responses
 
