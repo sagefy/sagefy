@@ -52,6 +52,14 @@ A few notable formulas:
 
     p(answer is a guess | score == 0) = 0
 
+    p(correct | learned == 1) = 1 - slip
+
+    p(incorrect | learned == 1) = slip
+
+    p(correct | learned == 0) = guess
+
+    p(incorrect | learned == 0) = 1 - guess
+
 If a learned answers correctly, guess should go up or stay the same (l/n >= 1), and slip should go down or stay the same (l/n <= 1).
 
 If the learner answers incorrectly, guess should go down or stay the same (l/n <= 1), and slip should go up or stay the same (l/n >= 1).
