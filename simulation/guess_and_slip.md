@@ -41,24 +41,21 @@ Parameters available for update include score and priors: guess, slip, learned, 
 A few notable formulas:
 
     correct = learned * (1 - slip) + (1 - learned) * guess
-
     incorrect = learned * slip + (1 - learned) * (1 - guess)
-
     p(answer is a slip | score == 0) = learned
-
     p(answer is a guess | score == 1) = 1 - learned
-
     p(answer is a slip | score == 1) = 0
-
     p(answer is a guess | score == 0) = 0
-
     p(correct | learned == 1) = 1 - slip
-
+    p(correct | learned) = learned * (1 - slip)
     p(incorrect | learned == 1) = slip
-
+    p(incorrect | learned) = learned * slip
     p(correct | learned == 0) = guess
-
     p(incorrect | learned == 0) = 1 - guess
+    p(correct | guess, learned) = learned + (1 - learned) * guess
+    p(incorrect | guess, learned) = (1 - learned) * (1 - guess)
+    p(correct | slip, learned) = learned * (1 - slip)
+    p(incorrect | slip, learned) = learned * slip + (1 - learned)
 
 If a learned answers correctly, guess should go up or stay the same (l/n >= 1), and slip should go down or stay the same (l/n <= 1).
 
@@ -78,3 +75,11 @@ Question: Negative cases... How does `learned` impact guess when answer is incor
  low     | 1     | +++   | ?
  mid     | 1     | ++    | ?
  high    | 1     | +     | ?
+
+
+
+### References
+
+http://stats.stackexchange.com/questions/13275/bayesian-probability-1-is-it-possible
+
+http://en.wikipedia.org/wiki/Bayesian_inference#Probability_of_a_hypothesis

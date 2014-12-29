@@ -102,6 +102,8 @@ def compute_belief(prev_time, time, learned=init_learned, belief=init_belief):
     """
     # strength = 2 * learned * belief / (learned + belief)
     # return exp(belief_k * (prev_time - time) / strength)
+    if prev_time is None:
+        return 0
     return exp(belief_k * (prev_time - time) / learned)
 
 
