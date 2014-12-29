@@ -55,14 +55,14 @@ print('If a learner answers correctly, guess should go up or stay the same.')
 assert update_guess(1, 0.3, 0.1, 0.7) >= 0.3
 assert update_guess(1, 0.1, 0.3, 0.7) >= 0.1
 assert update_guess(1, 0.01, 0.01, 0.01) >= 0.01
-assert update_guess(1, 0.99, 0.99, 0.99) >= 0.99
+assert update_guess(1, 0.49, 0.49, 0.99) >= 0.49
 
 print('If a learner answers correctly, slip should go down or stay the same.')
 
 assert update_slip(1, 0.3, 0.1, 0.7) <= 0.1
 assert update_slip(1, 0.1, 0.3, 0.7) <= 0.3
 assert update_slip(1, 0.01, 0.01, 0.01) <= 0.01
-assert update_slip(1, 0.99, 0.99, 0.99) <= 0.99
+assert update_slip(1, 0.49, 0.49, 0.99) <= 0.49
 
 print('If a learner answers incorrectly, ' +
       'guess should go down or stay the same.')
@@ -70,58 +70,58 @@ print('If a learner answers incorrectly, ' +
 assert update_guess(0, 0.3, 0.1, 0.7) <= 0.3
 assert update_guess(0, 0.1, 0.3, 0.7) <= 0.1
 assert update_guess(0, 0.01, 0.01, 0.01) <= 0.01
-assert update_guess(0, 0.99, 0.99, 0.99) <= 0.99
+assert update_guess(0, 0.49, 0.49, 0.99) <= 0.49
 
 print('If a learner answers incorrectly, slip should go up or stay the same.')
 
 assert update_slip(0, 0.3, 0.1, 0.7) >= 0.1
 assert update_slip(0, 0.1, 0.3, 0.7) >= 0.3
 assert update_slip(0, 0.01, 0.01, 0.01) >= 0.01
-assert update_slip(0, 0.99, 0.99, 0.99) >= 0.99
+assert update_slip(0, 0.49, 0.49, 0.99) >= 0.49
 
 print('A learner with a low learned tells us more about guess ' +
       'than a learner with a high learned when the answer is correct.')
 
 assert update_guess(1, 0.3, 0.1, 0.2) > update_guess(1, 0.3, 0.1, 0.8)
 assert update_guess(1, 0.01, 0.01, 0.01) > update_guess(1, 0.01, 0.01, 0.99)
-assert update_guess(1, 0.99, 0.99, 0.01) > update_guess(1, 0.99, 0.99, 0.99)
+assert update_guess(1, 0.49, 0.49, 0.01) > update_guess(1, 0.49, 0.49, 0.99)
 
 print('A learner with a high learned tells us more about slip ' +
       'than a learner with a low learned when the answer is incorrect.')
 
 assert update_slip(0, 0.3, 0.1, 0.2) < update_slip(0, 0.3, 0.1, 0.8)
 assert update_slip(0, 0.01, 0.01, 0.01) < update_slip(0, 0.01, 0.01, 0.99)
-assert update_slip(0, 0.99, 0.99, 0.01) < update_slip(0, 0.99, 0.99, 0.99)
+assert update_slip(0, 0.49, 0.49, 0.01) < update_slip(0, 0.49, 0.49, 0.99)
 
 print('If l / n is negative or zero, ' +
       'probability drops to zero or less than zero.')
 
 assert guess_bayes(0, 0.3, 0.1, 0.7) > 0
 assert guess_bayes(0, 0.01, 0.01, 0.01) > 0
-assert guess_bayes(0, 0.99, 0.99, 0.99) > 0
+assert guess_bayes(0, 0.49, 0.49, 0.99) > 0
 assert guess_bayes(1, 0.3, 0.1, 0.7) > 0
 assert guess_bayes(1, 0.01, 0.01, 0.01) > 0
-assert guess_bayes(1, 0.99, 0.99, 0.99) > 0
+assert guess_bayes(1, 0.49, 0.49, 0.99) > 0
 
 assert slip_bayes(0, 0.3, 0.1, 0.7) > 0
 assert slip_bayes(0, 0.01, 0.01, 0.01) > 0
-assert slip_bayes(0, 0.99, 0.99, 0.99) > 0
+assert slip_bayes(0, 0.49, 0.49, 0.99) > 0
 assert slip_bayes(1, 0.3, 0.1, 0.7) > 0
 assert slip_bayes(1, 0.01, 0.01, 0.01) > 0
-assert slip_bayes(1, 0.99, 0.99, 0.99) > 0
+assert slip_bayes(1, 0.49, 0.49, 0.99) > 0
 
 print('If n / l < p, then the probability goes above one.')
 
 assert guess_bayes(0, 0.3, 0.1, 0.7) ** -1 > 0.3
 assert guess_bayes(0, 0.01, 0.01, 0.01) ** -1 > 0.01
-assert guess_bayes(0, 0.99, 0.99, 0.99) ** -1 > 0.99
+assert guess_bayes(0, 0.49, 0.49, 0.99) ** -1 > 0.49
 assert guess_bayes(1, 0.3, 0.1, 0.7) ** -1 > 0.3
 assert guess_bayes(1, 0.01, 0.01, 0.01) ** -1 > 0.01
-assert guess_bayes(1, 0.99, 0.99, 0.99) ** -1 > 0.99
+assert guess_bayes(1, 0.49, 0.49, 0.99) ** -1 > 0.49
 
 assert slip_bayes(0, 0.3, 0.1, 0.7) ** -1 > 0.1
 assert slip_bayes(0, 0.01, 0.01, 0.01) ** -1 > 0.01
-assert slip_bayes(0, 0.99, 0.99, 0.99) ** -1 > 0.99
+assert slip_bayes(0, 0.49, 0.49, 0.99) ** -1 > 0.49
 assert slip_bayes(1, 0.3, 0.1, 0.7) ** -1 > 0.1
 assert slip_bayes(1, 0.01, 0.01, 0.01) ** -1 > 0.01
-assert slip_bayes(1, 0.99, 0.99, 0.99) ** -1 > 0.99
+assert slip_bayes(1, 0.49, 0.49, 0.99) ** -1 > 0.49
