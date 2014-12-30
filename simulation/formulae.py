@@ -5,9 +5,9 @@ TODO This document does ...
 init_learned = 0.4
 max_learned = 0.99
 init_guess = 0.3
-init_slip = 0.05
+init_slip = 0.15
 init_weight = 1
-init_transit = 0.03
+init_transit = 0.1
 
 
 def update(score, time, prev_time,
