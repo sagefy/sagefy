@@ -4,7 +4,7 @@ learner models.
 """
 
 from random import uniform, triangular, sample, randrange
-from formulae import max_learned, init_guess, init_slip, init_transit
+from formulas import max_learned, init_guess, init_slip, init_transit
 
 
 # How many seconds between questions
@@ -137,7 +137,7 @@ def get_score(learned, card):
     produce a response that reflects that score.
     """
 
-    # TODO use the one in formulae
+    # TODO use the one in formulas
     correct = learned * (1 - card['slip']) + (1 - learned) * card['guess']
     return int(bool_from_percent(correct))
 

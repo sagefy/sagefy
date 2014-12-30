@@ -1,5 +1,5 @@
 """
-TODO This document does ...
+This document contains the formulas for Sagefy's adaptive learning algorithm.
 """
 
 init_learned = 0.4
@@ -19,37 +19,35 @@ def update(score, time, prev_time,
 
     - Score - What what the score (0 - wrong or 1 - correct)?
     - Time - When did the score come in (in seconds)?
+    - Prev Time [Previous Card] - When was the last time we saw
+        a learner response for this skill?
+
     - Learned [Learner] - Before seeing the response, how likely did we already
         believe the learner knew the skill?
     - Guess [Card] - Before the response, how likely would a learner who
         didn't know the skill still get the right answer?
     - Slip [Card] - Before the response, how likely woud a learner who
         did know the skill still get a wrong answer?
+    - Weight [Card] - How much should we consider previous examples?
     - Transit [Card] - Before seeing the data,
         how likely did we think the learner would learn the skill by seeing
         the card?
-    - Prev Time [Previous Card] - When was the last time we saw
-        a learner response for this skill?
-    - Prev Learned [2 Prior, Learner] - Two cards prior, before that,
-        what did we think about `learned`?
-    - Prev Transit [2 Prior, Card] - Two cards prior, before that, what was the
-        transit for the card?
 
     Output:
 
     - Correct - Before seeing the score, how likely was the learner
         to answer the card well?
         (doesn't update anything)
-    - Weight [Card] - How much should we consider previous examples?
-        (scale before guess and slip, update after)
+    - Learned [Learner] - How likely is it that the learner knows the skill?
+        (main calculation)
     - Guess [Card] - If the learner doesn't know the skill, how likely are they
         to get the answer right anyways?
         (should come before learned)
     - Slip [Card] - If the learner knows the skill,
         how likely are they to still answer incorrectly?
         (should come before learned)
-    - Learned [Learner] - How likely is it that the learner knows the skill?
-        (main calculation)
+    - Weight [Card] - How much should we consider previous examples?
+        (scale before guess and slip, update after)
     - Transit [Card, 2 Prior] - Given two cards prior,
         what `learned` was then, and what `learned` is now...
         how likely is it the learner learned the skill as the result
@@ -85,10 +83,9 @@ def calculate_correct(learned, guess, slip):
 def update_guess(score, learned, guess, weight):
     """
     Determines how to update guess given a score.
-    TODO
     """
 
-    weight = scale_weight(weight, 0, 0)
+    weight = scale_weight(weight)
     guess = ((guess * weight + (1 - learned) * (1 - learned) * score)
              / (weight + (1 - learned)))
     weight = weight + (1 - learned)
@@ -98,24 +95,22 @@ def update_guess(score, learned, guess, weight):
 def update_slip(score, learned, slip, weight):
     """
     Determines how to update slip given a score.
-    TODO
     """
-    # return slip, weight
-    weight = scale_weight(weight, 0, 0)
-    slip = ((slip * weight + learned * learned * (1 - score))
+
+    weight = scale_weight(weight)
+    # For unknown reasons, learned^3 out performs learned^2
+    slip = ((slip * weight + learned * learned * learned * (1 - score))
             / (weight + learned))
     weight = weight + learned
     return slip, weight
 
 
-def scale_weight(weight, prev_time, time):
+def scale_weight(weight):
     """
-    Scales back weight based on time elasped since previous example.
+    Scales back weight so new examples have a chance to shine.
     Guess and slip use weight in calculations.
-    TODO
     """
 
-    # return weight
     return min(weight, 25)
 
 

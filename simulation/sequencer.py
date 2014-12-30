@@ -1,18 +1,21 @@
 """
 TODO Description of this file.
 
+This document combines the formulas and the mock data, providing for
+'how good' the formulas actually are.
+
 Given we can reliably compute `correct` and `learned`, the other calculations
 should be formulated as follows:
 
-0) [ ] Ensure each function works as expected.
+0) [x] Ensure each function works as expected.
 
-1) [ ] Using the given `transit`, find formulations of `guess` and `slip` so
+1) [x] Using the given `transit`, find formulations of `guess` and `slip` so
     that the error rate is trivially small after
     a sufficient number of examples.
-    The error rate should ideally be near or less than 0.01.
+    The error rate should ideally be near or less than 0.05.
 
 2) [ ] Once `guess` and `slip` are established, find a formulation for transit.
-    Ideally, it's error rate should be less than 0.01.
+    Ideally, it's error rate should be less than 0.05.
 
 3) [ ] Describe how `belief` should act in a variety of scenarios. Find a
     formula that meets these scenarios, and compute the error versus the
@@ -24,8 +27,8 @@ should be formulated as follows:
 
 
 from mock import main as create_responses
-from formulae import update, init_learned, \
-    init_weight, init_guess, init_slip  # init_belief, init_transit
+from formulas import update, init_learned, \
+    init_weight, init_guess, init_slip  # init_transit
 from math import sqrt
 
 
