@@ -29,15 +29,24 @@ from formulae import update, init_learned, \
 from math import sqrt
 
 
-def main(num_learners=1000, num_cards=10):
+def get_learner(name, my_learners):
+    return my_learners[name]
+
+
+def get_card(name, my_cards):
+    return my_cards[name]
+
+
+def main(num_learners=1000, num_cards=50):
     d = create_responses(num_learners, num_cards)
     responses, learners, cards = d['responses'], d['learners'], d['cards']
 
     my_cards = [{
         'name': card['name'],
         'guess': init_guess,
+        'guess_weight': init_weight,
         'slip': init_slip,
-        'weight': init_weight,
+        'slip_weight': init_weight,
         'transit': card['transit'],  # TODO instead use init_transit,
     } for card in cards]
 
@@ -46,26 +55,36 @@ def main(num_learners=1000, num_cards=10):
         'learned': init_learned,
     } for learner in learners]
 
+    latest_response_per_learner = {}
+
     for i, response in enumerate(responses):
         # response keys: learner, card, time, score
 
-        prev_response = get_previous_response(responses, i)
+        if response['learner'] in latest_response_per_learner:
+            prev_response = latest_response_per_learner[response['learner']]
+        else:
+            prev_response = {'time': 0}
+
         my_learner = get_learner(response['learner'], my_learners)
         my_card = get_card(response['card'], my_cards)
 
         c = update(learned=my_learner['learned'],
-                   weight=my_card['weight'],
                    guess=my_card['guess'],
+                   guess_weight=my_card['guess_weight'],
                    slip=my_card['slip'],
+                   slip_weight=my_card['slip_weight'],
                    transit=my_card['transit'],
                    score=response['score'],
                    time=response['time'],
                    prev_time=prev_response['time'])
 
         my_learner['learned'] = c['learned']
-        my_card['weight'] = c['weight']
         my_card['guess'] = c['guess']
+        my_card['guess_weight'] = c['guess_weight']
         my_card['slip'] = c['slip']
+        my_card['slip_weight'] = c['slip_weight']
+
+        latest_response_per_learner[response['learner']] = response
 
     # Compute the error rates.
     # Error should sqrt(sum( (o - x)^2 for o in list ))
@@ -75,30 +94,13 @@ def main(num_learners=1000, num_cards=10):
         my_card = get_card(card['name'], my_cards)
         guess_error += (my_card['guess'] - card['guess']) ** 2
         slip_error += (my_card['slip'] - card['slip']) ** 2
-        print(my_card['guess'] - card['guess'], my_card['slip'] - card['slip'])
+        print('%.2f %.2f %.2f %.2f' % (
+            my_card['guess'], card['guess'], my_card['slip'], card['slip']))
         # TODO transit_error += (my_card['transit'] - card['transit']) ** 2
 
     print('guess_error', sqrt(guess_error / len(my_cards)))
     print('slip_error', sqrt(slip_error / len(my_cards)))
     # TODO print('transit_error')
-
-
-def get_previous_response(responses, i):
-    learner = responses[i]['learner']
-    while True:
-        i -= 1
-        if i < 0:
-            return {'time': None}
-        if responses[i]['learner'] == learner:
-            return responses[i]
-
-
-def get_learner(name, my_learners):
-    return [ml for ml in my_learners if ml['name'] == name][0]
-
-
-def get_card(name, my_cards):
-    return [mc for mc in my_cards if mc['name'] == name][0]
 
 
 if __name__ == '__main__':

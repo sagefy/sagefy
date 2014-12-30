@@ -27,7 +27,7 @@ TODO
 
 **Weekly Goal**: Write out major user flows and priority. Finish first draft of learner wireframes. Ensure base functions work as expected in simulation. Work on formula for guess and slip updates.
 
-TODO
+Working on 'weighted mean' style of updates for guess and slip.
 
 2014 Dec 28
 -----------

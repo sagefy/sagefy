@@ -4,16 +4,14 @@ TODO This document does ...
 
 init_learned = 0.4
 max_learned = 0.99
-init_guess = 0.25
-max_guess = 0.5
-init_slip = 0.25
-max_slip = 0.5
-init_weight = 0
-init_transit = 0.05
+init_guess = 0.3
+init_slip = 0.05
+init_weight = 1
+init_transit = 0.03
 
 
 def update(score, time, prev_time,
-           learned, weight, guess, slip, transit):
+           learned, guess, guess_weight, slip, slip_weight, transit):
     """
     Given a learner and a card, update both statistics.
 
@@ -61,10 +59,8 @@ def update(score, time, prev_time,
 
     correct = calculate_correct(learned, guess, slip)
 
-    weight = scale_weight(weight, prev_time, time)
-    guess = update_guess(score, learned, guess, weight)
-    slip = update_slip(score, learned, slip, weight)
-    weight += 1  # Update the count of examples so far...
+    guess, guess_weight = update_guess(score, learned, guess, guess_weight)
+    slip, slip_weight = update_slip(score, learned, slip, slip_weight)
 
     learned = update_learned(score, learned, guess, slip, transit)
 
@@ -73,9 +69,8 @@ def update(score, time, prev_time,
     return {
         'correct': correct,
         'learned': learned,
-        'guess': guess,
-        'slip': slip,
-        'weight': weight,
+        'guess': guess, 'guess_weight': guess_weight,
+        'slip': slip, 'slip_weight': slip_weight,
     }
 
 
@@ -87,23 +82,17 @@ def calculate_correct(learned, guess, slip):
     return learned * (1 - slip) + (1 - learned) * guess
 
 
-def scale_weight(weight, prev_time, time):
-    """
-    Scales back weight based on time elasped since previous example.
-    Guess and slip use weight in calculations.
-    TODO
-    """
-
-    return min(weight, 20)
-
-
 def update_guess(score, learned, guess, weight):
     """
     Determines how to update guess given a score.
     TODO
     """
 
-    return (guess * weight + (1 - learned) * score) / (weight + 1)
+    weight = scale_weight(weight, 0, 0)
+    guess = ((guess * weight + (1 - learned) * (1 - learned) * score)
+             / (weight + (1 - learned)))
+    weight = weight + (1 - learned)
+    return guess, weight
 
 
 def update_slip(score, learned, slip, weight):
@@ -111,8 +100,23 @@ def update_slip(score, learned, slip, weight):
     Determines how to update slip given a score.
     TODO
     """
+    # return slip, weight
+    weight = scale_weight(weight, 0, 0)
+    slip = ((slip * weight + learned * learned * (1 - score))
+            / (weight + learned))
+    weight = weight + learned
+    return slip, weight
 
-    return (slip * weight + learned * (1 - score)) / (weight + 1)
+
+def scale_weight(weight, prev_time, time):
+    """
+    Scales back weight based on time elasped since previous example.
+    Guess and slip use weight in calculations.
+    TODO
+    """
+
+    # return weight
+    return min(weight, 25)
 
 
 def update_learned(score, learned, guess, slip, transit):

@@ -3,8 +3,9 @@ Simulates learner responses for a unit. Can be used for prototyping and testing
 learner models.
 """
 
-from random import uniform, sample, randrange
-from formulae import max_learned
+from random import uniform, triangular, sample, randrange
+from formulae import max_learned, init_guess, init_slip, init_transit
+
 
 # How many seconds between questions
 question_gap = (5, 60)
@@ -16,15 +17,15 @@ session_gap = (60 * 60 * 12, 60 * 60 * 36)
 max_questions = (5, 20)
 
 # Typical ranges for parameters we will be estimating later
-guess = (0.01, 0.5)
-slip = (0.01, 0.5)
-transit = (0.01, 0.05)
+guess = (0, init_guess * 2)
+slip = (0, init_slip * 2)
+transit = (0, init_transit * 2)
 
 # When to end the responses per learner
 degrade = 0.2
 
 
-def main(num_learners=26, num_cards=10):
+def main(num_learners=100, num_cards=10):
     """
     Primary function. Given a number of learners and number of available cards,
     simulates responses for a hypothetical unit.
@@ -49,10 +50,10 @@ def create_cards(num_cards):
     """
 
     return [{
-        'name': 'c%s' % i,
-        'guess': uniform(*guess),
-        'slip': uniform(*slip),
-        'transit': uniform(*transit),
+        'name': i,
+        'guess': triangular(*guess),
+        'slip': triangular(*slip),
+        'transit': triangular(*transit),
     } for i in range(num_cards)]
 
 
@@ -61,8 +62,9 @@ def create_learners(num_learners):
     """
 
     return [{
-        'name': 'l%s' % i,
+        'name': i,
         'learned': 0,
+        'start_time': int(uniform(*session_gap) * num_learners / 2),
     } for i in range(num_learners)]
 
 
@@ -75,8 +77,8 @@ def create_responses(learners, cards):
     responses = []
 
     for learner in learners:
-        start_time = int(uniform(*session_gap) * 5)
-        responses += create_responses_as_learner(learner, start_time, cards)
+        responses += create_responses_as_learner(
+            learner, learner['start_time'], cards)
 
     responses = sorted(responses, key=lambda d: d['time'])
     return responses
@@ -106,12 +108,10 @@ def create_responses_as_learner(learner, start_time, cards):
 
         time, count = update_time(time, count)
 
-        # TODO is the the correct formulation?
-        # if count > 0:
-        #     learner['learned'] += card['transit']
-        # else:
-        #     learner['learned'] -= degrade
-        learner['learned'] += card['transit']
+        if count > 0:
+            learner['learned'] += card['transit']
+        else:
+            learner['learned'] -= degrade  # TODO Consider time since...
 
     return responses
 
