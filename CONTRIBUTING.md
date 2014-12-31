@@ -1,7 +1,5 @@
----
-layout: default
-title: Technology – Contribution
----
+Contributing
+------------
 
 This document covers basic code styling and notes for Sagefy.
 
@@ -36,25 +34,25 @@ Python
 ------
 
 - Use [Flake8](https://flake8.readthedocs.org/en/2.0/) for Python formatting.
-    - Flake8 is the merger of [pep8](https://github.com/jcrocholl/pep8) and [PyFlakes](https://launchpad.net/pyflakes).
+- Flake8 is the merger of [pep8](https://github.com/jcrocholl/pep8) and [PyFlakes](https://launchpad.net/pyflakes).
 - Methods should be no longer than 12 statements.
-- Request and response formatting: see [RESTish](/f_technology/restish).
+- Request and response formatting: see [RESTish](https://docs.sagefy.org/f_technology/restish).
 - DocStrings should follow [PEP-0257](http://legacy.python.org/dev/peps/pep-0257/) and when relevant the [NumPy convention](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt).
 - Database naming and conventions.
-    - IDs are always randomly generated strings.
-    - Include `created` and `modified`, using those exact names, when sensible.
-    - Use `name` for title, name, or subject.
-    - Use `body` for body, message, description..
-    - Use `kind` for kind or type.
-        - When the number of kinds is unknown, use `tags` instead.
-    - Use `_tablename` to refer to the name of another table.
-    - Table names use all plural, field names are singular. Model names are singular. Use underscores.
-    - Multiple join tables should use both names, and both in plural form.
-    - When the relationship is...
-        - 1 to 1: Should probably use embedding. Otherwise, use the same ID for both.
-        - 1 to many: Put the "1" ID into the "many" rows.
-        - Many to many: Embed IDs, otherwise use a join table.
-    - Don't use negative named booleans. Stay positive.
+- IDs are always randomly generated strings.
+- Include `created` and `modified`, using those exact names, when sensible.
+- Use `name` for title, name, or subject.
+- Use `body` for body, message, description..
+- Use `kind` for kind or type.
+- When the number of kinds is unknown, use `tags` instead.
+- Use `_tablename` to refer to the name of another table.
+- Table names use all plural, field names are singular. Model names are singular. Use underscores.
+- Multiple join tables should use both names, and both in plural form.
+- When the relationship is...
+- 1 to 1: Should probably use embedding. Otherwise, use the same ID for both.
+- 1 to many: Put the "1" ID into the "many" rows.
+- Many to many: Embed IDs, otherwise use a join table.
+- Don't use negative named booleans. Stay positive.
 
 Coffeescript
 ------------
@@ -71,19 +69,19 @@ Stylus
 - Use the [BEM](http://bem.info/method/) naming convention.
 - Borrow ideas from the [SMACSS](https://smacss.com/) organization scheme.
 - General guidelines:
-    - Lowercase selectors.
-    - Use extend first.
-    - No duplicate properties.
-    - Empty line after blocks of properties.
-    - No empty rules.
-    - Use leading zeros.
-    - Merge selectors.
-    - Don't go more than 3 levels deep.
-    - Hyphen for names.
-    - Spell correctly.
-    - Use shorthands.
-    - Space after commas.
-    - Zero is unitless.
+- Lowercase selectors.
+- Use extend first.
+- No duplicate properties.
+- Empty line after blocks of properties.
+- No empty rules.
+- Use leading zeros.
+- Merge selectors.
+- Don't go more than 3 levels deep.
+- Hyphen for names.
+- Spell correctly.
+- Use shorthands.
+- Space after commas.
+- Zero is unitless.
 
 HTML
 ----

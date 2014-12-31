@@ -23,7 +23,7 @@ module.exports = ->
         View the full license</a>.</p>
 
     <pre><code>Sagefy, learner-generated algorithmic adaptive learning.
-    Copyright (C) 2014  Kevin Heis and contributors.
+    Copyright (C) 2015  Kevin Heis and contributors.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as

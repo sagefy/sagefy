@@ -19,7 +19,7 @@ Sagefy is open-source. The content and the code are freely available.
 All contents in this project are licensed under [AGPLv3](https://raw.github.com/heiskr/sagefy/master/license.txt).
 
     Sagefy, learner-generated algorithmic adaptive learning.
-    Copyright (C) 2014 Kevin Heis and [contributors](https://github.com/heiskr/sagefy/graphs/contributors)
+    Copyright (C) 2015 Kevin Heis and [contributors](https://github.com/heiskr/sagefy/graphs/contributors)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
