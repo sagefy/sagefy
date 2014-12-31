@@ -1,24 +1,34 @@
 Contributing
 ------------
 
-This document covers basic code styling and notes for Sagefy.
+Thank you for contributing to Sagefy! This document covers basic guidelines for contributing to Sagefy.
 
-Development Checklist
----------------------
+Issues
+------
 
-For each pull request, ensure the following:
+- Please search the existing issues before submitting. This helps us reduce effort and prioritize.
+- For bug reports, to make the process as smooth as possible, please provide:
+    - Step-by-step how to reproduce.
+    - Screenshots.
+    - Logs, as available.
+- For feature requests, consider adding it to [UserVoice](http://sagefy.uservoice.com/) instead. On UserVoice, the feature can be discussed and prioritized more easily.
 
-- Generally follows code styleguide below.
-- Each method is documented according to the system for the given domain.
-- Code passes used linters.
-- Passes existing automated tests (run CI automatically on pull requests).
-- Reviewed by a person.
-- Provides some basic test coverage, where appropriate.
+Pull Request Checklist
+----------------------
+
+For each pull request, ensure:
+
+- ...the code passes linters as documented below.
+- ...the code passes existing automated tests.
+- ...each method is documented according to the given domain.
+- ...the code follows the code styleguide below.
+- ...the code has some basic test coverage, where appropriate.
+- ...another person has reviewed the code.
 
 Global Code Styling
 -------------------
 
-- Four spaces per tab, unless its a generated file where that is the norm.
+- Four spaces per tab, unless its a generated file where two is the norm.
 - No extra whitespace at the ends of lines.
 - A single line break at the end of the file.
 - A maximum of 80 characters per line.
@@ -34,10 +44,14 @@ Python
 ------
 
 - Use [Flake8](https://flake8.readthedocs.org/en/2.0/) for Python formatting.
-- Flake8 is the merger of [pep8](https://github.com/jcrocholl/pep8) and [PyFlakes](https://launchpad.net/pyflakes).
+    - Flake8 is the merger of [pep8](https://github.com/jcrocholl/pep8) and [PyFlakes](https://launchpad.net/pyflakes).
 - Methods should be no longer than 12 statements.
 - Request and response formatting: see [RESTish](https://docs.sagefy.org/f_technology/restish).
 - DocStrings should follow [PEP-0257](http://legacy.python.org/dev/peps/pep-0257/) and when relevant the [NumPy convention](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt).
+
+Database
+--------
+
 - Database naming and conventions.
 - IDs are always randomly generated strings.
 - Include `created` and `modified`, using those exact names, when sensible.
@@ -66,33 +80,32 @@ Stylus
 
 - Use the least amount of syntax possible.
 - Add comments in [YM Styleguide](https://github.com/heiskr/ym-styleguide).
-- Use the [BEM](http://bem.info/method/) naming convention.
-- Borrow ideas from the [SMACSS](https://smacss.com/) organization scheme.
+- Use the [BEM](http://bem.info/method/) naming convention where appropriate.
 - General guidelines:
-- Lowercase selectors.
-- Use extend first.
-- No duplicate properties.
-- Empty line after blocks of properties.
-- No empty rules.
-- Use leading zeros.
-- Merge selectors.
-- Don't go more than 3 levels deep.
-- Hyphen for names.
-- Spell correctly.
-- Use shorthands.
-- Space after commas.
-- Zero is unitless.
+    - Lowercase selectors.
+    - Use extend first.
+    - No duplicate properties.
+    - Empty line after blocks of properties.
+    - No empty rules.
+    - Use leading zeros.
+    - Merge selectors.
+    - Don't go more than 3 levels deep.
+    - Hyphen for names.
+    - Spell correctly.
+    - Use shorthands.
+    - Space after commas.
+    - Zero is unitless.
 
 HTML
 ----
 
 - The least markup possible.
-- Use `ui-` for classes that interact with JavaScript/Coffeescript; plain classes are styling only.
+- TODO: Use `ui-` for classes that interact with JavaScript/Coffeescript; plain classes are styling only.
 
 Writing Tests
 -------------
 
-Basic rules for automated tests:
+Basic guidelines for automated tests:
 
 **1) Tests what matters**
 
@@ -114,6 +127,7 @@ Ansible and Configuration
 -------------------------
 
 - Use the `setup` directory.
+- More guidelines TBD.
 
 Other Documentation
 -------------------
