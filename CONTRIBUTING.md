@@ -1,5 +1,5 @@
 Contributing
-------------
+============
 
 Thank you for contributing to Sagefy! This document covers basic guidelines for contributing to Sagefy.
 
@@ -52,21 +52,22 @@ Python
 Database
 --------
 
-- Database naming and conventions.
+- Table names are plural.
+- Field names are singular, unless an array.
+- Model names are singular.
+- Join tables should use both names, and both in plural form.
+- Don't use negative named booleans. Stay positive.
 - IDs are always randomly generated strings.
 - Include `created` and `modified`, using those exact names, when sensible.
 - Use `name` for title, name, or subject.
-- Use `body` for body, message, description..
+- Use `body` for body, message, description.
 - Use `kind` for kind or type.
 - When the number of kinds is unknown, use `tags` instead.
 - Use `_tablename` to refer to the name of another table.
-- Table names use all plural, field names are singular. Model names are singular. Use underscores.
-- Multiple join tables should use both names, and both in plural form.
 - When the relationship is...
-- 1 to 1: Should probably use embedding. Otherwise, use the same ID for both.
-- 1 to many: Put the "1" ID into the "many" rows.
-- Many to many: Embed IDs, otherwise use a join table.
-- Don't use negative named booleans. Stay positive.
+    - 1 to 1: Should probably use embedding. Otherwise, use the same ID for both.
+    - 1 to many: Put the "1" ID into the "many" rows.
+    - Many to many: Embed IDs, otherwise use a join table.
 
 Coffeescript
 ------------
