@@ -4,23 +4,28 @@ Sagefy Work Log
 2015 Jan 19
 -----------
 
-**Weekly Goal**: Find working calculations for aggregates. TBD: Finish unit tests and API endpoints for discussion section.
+**Weekly Goal**: TBD: Finish unit tests and API endpoints for discussion section.
 
 TODO
 
 2015 Jan 12
 -----------
 
-**Weekly Goal**: Find working updates for transit and belief. TBD: Write more unit tests and work on API endpoints for discussion section.
+**Weekly Goal**: Find working calculations for aggregates. TBD: Write more unit tests and work on API endpoints for discussion section.
 
 TODO
 
 2015 Jan 05
 -----------
 
-**Weekly Goal**: Find working updates for guess and slip. TBD: Write more unit tests and work on API endpoints for discussion section.
+**Weekly Goal**: Find working updates for transit and belief. TBD: Write more unit tests and work on API endpoints for discussion section.
 
 TODO
+
+2014 Dec 30
+-----------
+
+Accepted weighted mean variant of guess and slip updates... for now. Odd that slip prefers learned^3 rather than learned^2 (weight * chance). Beginning work on transit.
 
 2014 Dec 29
 -----------

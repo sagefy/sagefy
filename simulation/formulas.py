@@ -129,16 +129,37 @@ def update_learned(score, learned, guess, slip, transit):
     return posterior + (1 - posterior) * transit
 
 
-def update_transit(prev_transit, prev_learned, learned):
+def update_transit(transit, weight,
+                   prev_card_pre_learned,
+                   this_card_post_learned):
     """
     Determines the update to transit, given the `learned` score
-    before the card, and the `learned` score after two additional cards.
+    before the card, and the `learned` score after the next cards.
     Note that transit is both on assessment and non-assessment cards.
 
-    [prev_learned] A [...] B [...] C [learned]
+    Input
+    -----
+    transit - transit of the card to be updated (the previous card)
+    weight - weight of the transit of the card to be updated
 
-    TODO: Adjust to time
-    TODO
+    prev_card_pre_learned  (learned before the card to be updated)
+    card (whose transit is updated)
+    prev_card_post_learned  (learned after the card to be updated)
+    card (most recently observed)
+    this_card_post_learned  (learned after the most recent card)
+
+    Output
+    ------
+    transit - updated transit of the previous card
+    weight - updated transit weight of the previous card
+
+    TODO Adjust to get it to work
+    TODO Adjust to time
     """
 
-    return prev_transit
+    weight = max(weight, 50)
+    this_transit = ((this_card_post_learned - prev_card_pre_learned)
+                    * prev_card_pre_learned)
+    transit = ((transit * weight + this_transit) / (weight + 1))
+    weight = weight + 1
+    return transit, weight

@@ -1,8 +1,8 @@
 """
-TODO Description of this file.
-
 This document combines the formulas and the mock data, providing for
 'how good' the formulas actually are.
+
+---
 
 Given we can reliably compute `correct` and `learned`, the other calculations
 should be formulated as follows:
@@ -17,7 +17,8 @@ should be formulated as follows:
 2) [ ] Once `guess` and `slip` are established, find a formulation for transit.
     Ideally, it's error rate should be less than 0.05.
 
-3) [ ] Describe how `belief` should act in a variety of scenarios. Find a
+3) [ ] Account for time. Describe how time impacts each parameters.
+    Describe how `belief` should act in a variety of scenarios. Find a
     formula that meets these scenarios, and compute the error versus the
     expected results.
 
@@ -28,7 +29,7 @@ should be formulated as follows:
 
 from mock import main as create_responses
 from formulas import update, init_learned, \
-    init_weight, init_guess, init_slip  # init_transit
+    init_weight, init_guess, init_slip, init_transit
 from math import sqrt
 
 
@@ -50,7 +51,8 @@ def main(num_learners=1000, num_cards=50):
         'guess_weight': init_weight,
         'slip': init_slip,
         'slip_weight': init_weight,
-        'transit': card['transit'],  # TODO instead use init_transit,
+        'transit': init_transit,
+        'transit_weight': init_weight,
     } for card in cards]
 
     my_learners = [{

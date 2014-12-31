@@ -106,12 +106,13 @@ def create_responses_as_learner(learner, start_time, cards):
             'score': score,
         })
 
+        prev_time = time
         time, count = update_time(time, count)
 
         if count > 0:
             learner['learned'] += card['transit']
         else:
-            learner['learned'] -= degrade  # TODO Consider time since...
+            learner['learned'] -= degrade * (time - prev_time) / session_gap[1]
 
     return responses
 
@@ -137,7 +138,6 @@ def get_score(learned, card):
     produce a response that reflects that score.
     """
 
-    # TODO use the one in formulas
     correct = learned * (1 - card['slip']) + (1 - learned) * card['guess']
     return int(bool_from_percent(correct))
 
@@ -155,7 +155,6 @@ def update_time(time, count):
     Updates the time and count, simulating user learning sessions.
     """
 
-    # TODO test this function
     count += 1
     if count > uniform(*max_questions):
         time += int(uniform(*session_gap))
