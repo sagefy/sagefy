@@ -25,7 +25,7 @@ TODO
 2014 Dec 31
 -----------
 
-Updated year to 2015. Moved contributing notes to [CONTRIBUTING.md](https://github.com/blog/1184-contributing-guidelines).
+Updated year to 2015. Moved contributing notes to [CONTRIBUTING.md](https://github.com/blog/1184-contributing-guidelines). Started on learner wireframes.
 
 2014 Dec 30
 -----------

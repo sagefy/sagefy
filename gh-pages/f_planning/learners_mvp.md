@@ -24,7 +24,7 @@ Learner Screen Requirements and Wireframes
 
 ### Tree
 
-<img src="https://docs.google.com/drawings/d/1Joyz5yzekWZlr5q4x3xZhEym1UwEWV8Gpr55Y0qIzYs/pub?w=1440&amp;h=1080">
+<img src="https://docs.google.com/drawings/d/1Q0ymTVBfv_GOk-qDwes0eks3BJGTC1O_p4z_Mq32xjw/pub?w=1440&amp;h=999">
 
 ### Choose Unit
 
