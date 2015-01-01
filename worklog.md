@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 01
+-----------
+
+Worked on learner planning: models and endpoints.
+
 2014 Dec 31
 -----------
 

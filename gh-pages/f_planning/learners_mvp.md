@@ -8,8 +8,41 @@ See [Sequencer](/f_planning/sequencer), [Sequencer Background](/f_planning/seque
 Learner Models
 --------------
 
+**users_sets**
+
+- user_id : string
+- set_ids : array of strings
+
+**responses**
+
+- user_id : string
+- card_id : string
+- (unit_id : string) <- duplicate data, but convenient
+- created : datetime
+- score : number, 0 -> 1
+
+**redis**
+
+- user -> current set
+- user -> current unit
+- caching
+
 Learner Endpoints
 -----------------
+
+- GET `/api/users/{id}/menu/`
+- GET `/api/users/{id}/sets/`
+- POST `/api/users/{id}/sets/` <- Add to my sets
+- DELETE `/api/users/{id}/sets/{id}` <- Remove from my sets
+- GET `/api/sequencer/next`
+    - parameters: set_id
+    - returns: reference to one of the following endpoints
+- GET `/api/sets/{id}/tree` <- Show tree
+    - returns: what would be the next action?
+- GET `/api/sets/{id}/units` <- Choose Unit screen
+- PUT `/api/sets/{id}/units/{id}` <- Unit chosen
+- GET `/api/cards/{id}/learn` <- Render card
+- POST `/api/cards/{id}/responses` <- Respond to card
 
 Learner Screen Requirements and Wireframes
 ------------------------------------------
