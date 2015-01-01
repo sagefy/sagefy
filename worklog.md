@@ -1,31 +1,10 @@
 Sagefy Work Log
 ===============
 
-2015 Jan 19
------------
-
-**Weekly Goal**: TBD: Finish unit tests and API endpoints for discussion section.
-
-TODO
-
-2015 Jan 12
------------
-
-**Weekly Goal**: Find working calculations for aggregates. TBD: Write more unit tests and work on API endpoints for discussion section.
-
-TODO
-
-2015 Jan 05
------------
-
-**Weekly Goal**: Find working updates for transit and belief. TBD: Write more unit tests and work on API endpoints for discussion section.
-
-TODO
-
 2014 Dec 31
 -----------
 
-Updated year to 2015. Moved contributing notes to [CONTRIBUTING.md](https://github.com/blog/1184-contributing-guidelines). Started on learner wireframes.
+Updated year to 2015. Moved contributing notes to [CONTRIBUTING.md](https://github.com/blog/1184-contributing-guidelines). Finished first draft of learner wireframes.
 
 2014 Dec 30
 -----------
