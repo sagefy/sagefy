@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 02
+-----------
+
+Found acceptable model for `transit` updates. Clean up some Github tasks.
+
 2015 Jan 01
 -----------
 

@@ -11,7 +11,8 @@ init_transit = 0.1
 
 
 def update(score, time, prev_time,
-           learned, guess, guess_weight, slip, slip_weight, transit):
+           learned, guess, guess_weight, slip, slip_weight, transit,
+           prev_transit, prev_transit_weight, prev_card_pre_learned):
     """
     Given a learner and a card, update both statistics.
 
@@ -32,6 +33,9 @@ def update(score, time, prev_time,
     - Transit [Card] - Before seeing the data,
         how likely did we think the learner would learn the skill by seeing
         the card?
+    - Transit [Previous Card]
+    - Transit Weight [Previous Card]
+    - Learned [Previous Card, before update]
 
     Output:
 
@@ -62,13 +66,22 @@ def update(score, time, prev_time,
 
     learned = update_learned(score, learned, guess, slip, transit)
 
-    # TODO prev_transit = update_transit(prev_transit, prev_learned, learned)
+    this_card_post_learned = learned
+
+    prev_transit, prev_transit_weight = update_prev_transit(
+        prev_transit,
+        prev_transit_weight,
+        prev_card_pre_learned,
+        this_card_post_learned
+    )
 
     return {
         'correct': correct,
         'learned': learned,
         'guess': guess, 'guess_weight': guess_weight,
         'slip': slip, 'slip_weight': slip_weight,
+        'prev_transit': prev_transit,
+        'prev_transit_weight': prev_transit_weight,
     }
 
 
@@ -129,9 +142,10 @@ def update_learned(score, learned, guess, slip, transit):
     return posterior + (1 - posterior) * transit
 
 
-def update_transit(transit, weight,
-                   prev_card_pre_learned,
-                   this_card_post_learned):
+def update_prev_transit(prev_transit,
+                        prev_transit_weight,
+                        prev_card_pre_learned,
+                        this_card_post_learned):
     """
     Determines the update to transit, given the `learned` score
     before the card, and the `learned` score after the next cards.
@@ -157,9 +171,10 @@ def update_transit(transit, weight,
     TODO Adjust to time
     """
 
-    weight = max(weight, 50)
-    this_transit = ((this_card_post_learned - prev_card_pre_learned)
-                    * prev_card_pre_learned)
-    transit = ((transit * weight + this_transit) / (weight + 1))
-    weight = weight + 1
-    return transit, weight
+    prev_transit_weight = max(prev_transit_weight, 50)
+    # Should `this_transit` be weighted by learned?
+    this_transit = this_card_post_learned - prev_card_pre_learned
+    prev_transit = ((prev_transit * prev_transit_weight + this_transit)
+                    / (prev_transit_weight + 1))
+    prev_transit_weight = prev_transit_weight + 1
+    return prev_transit, prev_transit_weight
