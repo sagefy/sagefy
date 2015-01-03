@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 03
+-----------
+
+Found acceptable model for `belief`.
+
 2015 Jan 02
 -----------
 

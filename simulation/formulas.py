@@ -2,12 +2,17 @@
 This document contains the formulas for Sagefy's adaptive learning algorithm.
 """
 
+from math import exp
+
+
 init_learned = 0.4
 max_learned = 0.99
 init_guess = 0.3
 init_slip = 0.15
 init_weight = 1
+max_weight = 25
 init_transit = 0.1
+belief_factor = 708000
 
 
 def update(score, time, prev_time,
@@ -22,7 +27,7 @@ def update(score, time, prev_time,
     - Time - When did the score come in (in seconds)?
     - Prev Time [Previous Card] - When was the last time we saw
         a learner response for this skill?
-
+    - * * *
     - Learned [Learner] - Before seeing the response, how likely did we already
         believe the learner knew the skill?
     - Guess [Card] - Before the response, how likely would a learner who
@@ -33,6 +38,7 @@ def update(score, time, prev_time,
     - Transit [Card] - Before seeing the data,
         how likely did we think the learner would learn the skill by seeing
         the card?
+    - * * *
     - Transit [Previous Card]
     - Transit Weight [Previous Card]
     - Learned [Previous Card, before update]
@@ -51,7 +57,7 @@ def update(score, time, prev_time,
         how likely are they to still answer incorrectly?
         (should come before learned)
     - Weight [Card] - How much should we consider previous examples?
-        (scale before guess and slip, update after)
+        (scale before guess, slip, transit, update after)
     - Transit [Card, 2 Prior] - Given two cards prior,
         what `learned` was then, and what `learned` is now...
         how likely is it the learner learned the skill as the result
@@ -59,12 +65,14 @@ def update(score, time, prev_time,
         (after learned)
     """
 
-    correct = calculate_correct(learned, guess, slip)
+    correct = calculate_correct(guess, slip, learned)
 
     guess, guess_weight = update_guess(score, learned, guess, guess_weight)
     slip, slip_weight = update_slip(score, learned, slip, slip_weight)
 
-    learned = update_learned(score, learned, guess, slip, transit)
+    belief = calculate_belief(learned, time, prev_time)
+    learned = update_learned(score, learned, guess, slip, transit,
+                             time, prev_time)
 
     this_card_post_learned = learned
 
@@ -77,6 +85,7 @@ def update(score, time, prev_time,
 
     return {
         'correct': correct,
+        'belief': belief,
         'learned': learned,
         'guess': guess, 'guess_weight': guess_weight,
         'slip': slip, 'slip_weight': slip_weight,
@@ -85,12 +94,24 @@ def update(score, time, prev_time,
     }
 
 
-def calculate_correct(learned, guess, slip):
+def calculate_correct(guess, slip, learned):
     """
     Determines how likely the learner will respond to a card well.
     """
 
     return learned * (1 - slip) + (1 - learned) * guess
+
+
+def calculate_difficulty(guess, slip):
+    """
+    How hard is this card for the typical learner?
+    """
+
+    # If guess + slip is greater than 1, then we have a degenerate card...
+    # where the right answer lowers learned, and the wrong answer increases it
+    if guess + slip > 1:
+        return float("inf")
+    return calculate_correct(guess, slip, 0.5)
 
 
 def update_guess(score, learned, guess, weight):
@@ -124,16 +145,27 @@ def scale_weight(weight):
     Guess and slip use weight in calculations.
     """
 
-    return min(weight, 25)
+    return min(weight, max_weight)
 
 
-def update_learned(score, learned, guess, slip, transit):
+def calculate_belief(learned, time, prev_time):
+    """
+    How much should we believe in learned, given the amount of time that
+    has passed?
+    """
+    return exp(-1 * (time - prev_time) * (1 - learned)
+               / belief_factor)
+
+
+def update_learned(score, learned, guess, slip, transit,
+                   time, prev_time):
     """
     Given a learner response,
     determines how likely the learner knows the skill.
-    TODO: Adjust to time.
     """
 
+    belief = calculate_belief(learned, time, prev_time)
+    learned = learned * belief
     positive = (learned * (1 - slip)
                 / (learned * (1 - slip) + (1 - learned) * guess))
     negative = (learned * slip
@@ -166,12 +198,9 @@ def update_prev_transit(prev_transit,
     ------
     transit - updated transit of the previous card
     weight - updated transit weight of the previous card
-
-    TODO Adjust to get it to work
-    TODO Adjust to time
     """
 
-    prev_transit_weight = max(prev_transit_weight, 50)
+    prev_transit_weight = max(prev_transit_weight, max_weight)
     # Should `this_transit` be weighted by learned?
     this_transit = this_card_post_learned - prev_card_pre_learned
     prev_transit = ((prev_transit * prev_transit_weight + this_transit)
