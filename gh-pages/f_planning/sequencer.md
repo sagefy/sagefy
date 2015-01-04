@@ -3,6 +3,10 @@ title: Sequencer
 layout: default
 ---
 
+<script
+src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 This document covers the terms, parameters, flow, and formula for the primary learning engine of Sagefy.
 
 Also see [Sequencer Background](/f_planning/sequencer_background).
@@ -34,7 +38,7 @@ All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that pred
 - _Factors_ - Learner-unit ability, card difficulty, guess, slip.
 - _Formula_ - `learned * (1 - slip) + (1 - learned) * guess`
 
-**Learner-Unit Ability [!!!]** - $$p(learned)$$ with $$p(belief)$
+**Learner-Unit Ability [!!!]** - $$p(learned)$$ with $$p(belief)$$
 
 - _Definition_ - How likely is the learner to respond well to a typical card within the unit?
 - _When_ - Diagnostic assessment. When to change units. When unit is complete. When to review. Forming completion tree.
