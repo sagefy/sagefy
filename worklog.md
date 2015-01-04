@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 04
+-----------
+
+Updated sequencer documentation with formulas.
+
 2015 Jan 03
 -----------
 

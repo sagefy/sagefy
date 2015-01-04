@@ -27,69 +27,60 @@ Parameters
 
 All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that prediction (a.k.a. deviation, sigma).
 
-**Learner-Card Ability**
+**Learner-Card Ability** - $$p(correct)$$
 
 - _Definition_ - How likely is the learner to respond to the given card well? (Only applies to assessment cards.)
 - _When_ - Selecting the next card. Assessing Learner-Unit Ability.
 - _Factors_ - Learner-unit ability, card difficulty, guess, slip.
-- _Formula_ - ??? (Basically, IRT.)
+- _Formula_ - `learned * (1 - slip) + (1 - learned) * guess`
 
-**Learner-Unit Ability [!!!]**
+**Learner-Unit Ability [!!!]** - $$p(learned)$$ with $$p(belief)$
 
 - _Definition_ - How likely is the learner to respond well to a typical card within the unit?
 - _When_ - Diagnostic assessment. When to change units. When unit is complete. When to review. Forming completion tree.
 - _Factors_ - Prior, response, learner-card ability, card difficulty, guess, slip. (Retention: should degrade learner-unit ability's confidence over time.)
-- _Formula_ - ??? (Basically, BKT.)
+- _Formula_ -
+    - 1) `learned = learned * (slip || 1 - slip) / (p(correct) || p(incorrect))`
+    - 2) `learned = learned + (1 - learned) * transit`
 
 **Learner-Set Ability**
 
 - _Definition_ - How well does the learner know the set?
 - _When_ - Searching for sets. Time to complete estimates.
 - _Factors_ - Learner-unit ability.
-- _Formula_ - sum(learner-unit ability) / count(units)  [V2: Use probability distribution]
+- _Formula_ - `sum(learner-unit ability) / count(units)`
 
-**Card Quality**
+**Card Quality** - $$p(transit)$$
 
 - _Definition_ - How much is the card is likely to improve the typical learner's ability?
 - _When_ - Selecting the next card.
 - _Factors_ - Prior, learner-unit ability, unit learning curve (difficulty), time.
-- _Formula_ - ??? (Look for significant changes in the learning acceleration.)
+- _Formula_ - `transit = (weight * transit + instance-transit) / (weight + instance-weight)`
 
 **Unit Quality**
 
 - _Definition_ - How likely is the typical learner to gain significant ability within this unit?
 - _When_ - Computing set quality.
 - _Factors_ - Learner-unit ability.
-- _Formula_ - sum(learner-unit ability per learner) / count(learners engaged)  [V2: Use probability distribution]
+- _Formula_ - `sum(learner-unit ability per learner) / count(learners engaged)`
 
 **Set Quality**
 
 - _Definition_ - How likely is the typical learner to gain significant ability within this set?
 - _When_ - Searching for a sets.
 - _Factors_ - Unit quality.
-- _Formula_ - sum(unit quality per unit) / count(units)  [V2: Use probability distribution]
+- _Formula_ - `sum(unit quality per unit) / count(units)`
 
-**Card Guess**
-
-- _Definition_ -  How likely is the typical learner, without ability, to randomly guess towards a good answer? (Only applies to assessment cards.)
-- _When_ - ???
-- _Factors_ - Prior, learner-unit ability, response, history of incorrects.
-- _Formula_ - ??? (Contextual... one right answer in many wrongs is likely a guess.)
-
-**Card Slip**
-
-- _Definition_ - How likely is the typical learner, with ability, to answer poorly? (Only applies to assessment cards.)
-- _When_ - ???
-- _Factors_ - Prior, learner-unit-ability, response, history of corrects.
-- _Formula_ - ??? (Contextual... one wrong answer in many rights is likely a slip.)
-
-**Card Difficulty**
+**Card Difficulty** - $$p(guess)$$ and $$p(slip)$$
 
 - _Definition_ - How likely is the typical learner to answer well? (Only applies to assessment cards.)
+    - **Guess** - How likely is the typical learner, without ability, to randomly guess towards a good answer? (Only applies to assessment cards.)
+    - **Slip** - How likely is the typical learner, with ability, to answer poorly? (Only applies to assessment cards.)
 - _When_ - Computing learner-unit ability. Selecting the next card.
 - _Factors_ - Prior, response, learner-unit ability, guess, slip.
-- _Formula_ - ??? (A simple method would be a percentage of good answers.)
-- N.B.: Difficulty can be seen as either the same as slip, or possibly the combination of guess and slip.
+- _Formula_ -
+    - `guess = (weight * guess + instance-guess) / (weight + instance-weight)`
+    - `slip = (weight * slip + instance-slip) / (weight + instance(weight))`
 
 **Unit Difficulty**
 
@@ -103,7 +94,7 @@ All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that pred
 - _Definition_ - How difficult is it for a typical learner to gain proficiency?
 - _When_ - Time to complete estimates.
 - _Factors_ - Unit difficulty.
-- _Formula_ - sum(unit difficulty per unit)  [V2: Use probability distribution]
+- _Formula_ - `sum(unit difficulty per unit)`
 
 Flow
 ----
