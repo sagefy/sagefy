@@ -4,7 +4,7 @@ Sagefy Work Log
 2014 Jan 05
 -----------
 
-**Weekly Goal**:
+**Weekly Goal**: Complete unit tests: 152, 153, 154, 155, 156, 158, 159. Begin code for discuss API.
 
 Using scaled formula for unit quality and unit difficulty, completing the aggregates.
 
