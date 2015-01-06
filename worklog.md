@@ -1,6 +1,13 @@
 Sagefy Work Log
 ===============
 
+2014 Jan 05
+-----------
+
+**Weekly Goal**:
+
+Using scaled formula for unit quality and unit difficulty, completing the aggregates.
+
 2015 Jan 04
 -----------
 

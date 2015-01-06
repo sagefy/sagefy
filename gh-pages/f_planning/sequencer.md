@@ -66,14 +66,14 @@ All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that pred
 - _Definition_ - How likely is the typical learner to gain significant ability within this unit?
 - _When_ - Computing set quality.
 - _Factors_ - Learner-unit ability.
-- _Formula_ - `sum(learner-unit ability per learner) / count(learners engaged)`
+- _Formula_ - `mean_learner_unit_ability * (num_learners / (num_learners + min_learners))` where mean_learner_unit_ability is the average of ability of all learners who have participated with the unit
 
 **Set Quality**
 
 - _Definition_ - How likely is the typical learner to gain significant ability within this set?
 - _When_ - Searching for a sets.
 - _Factors_ - Unit quality.
-- _Formula_ - `sum(unit quality per unit) / count(units)`
+- _Formula_ - `sum(unit quality per unit) / count(units)` mean of the units contained.
 
 **Card Difficulty** - $$p(guess)$$ and $$p(slip)$$
 
@@ -83,15 +83,16 @@ All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that pred
 - _When_ - Computing learner-unit ability. Selecting the next card.
 - _Factors_ - Prior, response, learner-unit ability, guess, slip.
 - _Formula_ -
-    - `guess = (weight * guess + instance-guess) / (weight + instance-weight)`
-    - `slip = (weight * slip + instance-slip) / (weight + instance(weight))`
+    - `guess = (weight * guess + instance_guess) / (weight + instance_weight)`
+    - `slip = (weight * slip + instance_slip) / (weight + instance_weight)`
+    - `difficulty = 0.5 * guess + 0.5 * (1 - slip)`
 
 **Unit Difficulty**
 
-- _Definition_ - How difficult is it for a typical learner to gain proficiency? A function of time.
+- _Definition_ - How many cards does it take for a learner to typically get to learned state?
 - _When_ - Time to complete estimates.
-- _Factors_ - Prior, time, learning/forgetting curve.
-- _Formula_ - ??? (Should reflect a learning curve.)
+- _Factors_ - Responses, learned.
+- _Formula_ - When the learner first hits 99% p(learned), how many cards has the learner done so far? Take the average.
 
 **Set Difficulty**
 
