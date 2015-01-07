@@ -20,38 +20,41 @@ class Card(Model):
     The `id` attribute refers to a specific version of the card.
     The `previous_id` attribute refers to the version based off.
     """
-    entity_id = Field(
-        validate=(is_required, is_string,),
-        default=uniqid
-    )
-    previous_id = Field(
-        validate=(is_string,),
-    )
-    language = Field(
-        validate=(is_required, is_language,),
-        default='en'
-    )
-    unit_id = Field(
-        validate=(is_required, is_string,)
-    )
-    name = Field(
-        validate=(is_required, is_string,)
-    )
-    canonical = Field(
-        validate=(is_boolean,),
-        default=False
-    )
-    tags = Field(
-        validate=(is_list,),
-        default=[]
-    )
-    requires_ids = Field(
-        validate=(is_list,),
-        default=[]
-    )
-    kind = Field(
-        validate=(is_required, is_string,
-                     (is_one_of, 'video', 'choice'))
-    )
+
+    schema = dict(Model.schema.copy(), **{
+        'entity_id': {
+            'validate': (is_required, is_string,),
+            'default': uniqid
+        },
+        'previous_id': {
+            'validate': (is_string,),
+        },
+        'language': {
+            'validate': (is_required, is_language,),
+            'default': 'en'
+        },
+        'unit_id': {
+            'validate': (is_required, is_string,)
+        },
+        'name': {
+            'validate': (is_required, is_string,)
+        },
+        'canonical': {
+            'validate': (is_boolean,),
+            'default': False
+        },
+        'tags': {
+            'validate': (is_list,),
+            'default': []
+        },
+        'requires_ids': {
+            'validate': (is_list,),
+            'default': []
+        },
+        'kind': {
+            'validate': (is_required, is_string,
+                         (is_one_of, 'video', 'choice'))
+        }
+    })
 
     # TODO: Ensure no require cycles form

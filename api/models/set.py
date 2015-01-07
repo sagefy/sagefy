@@ -1,18 +1,7 @@
 from modules.model import Model
 from modules.validations import is_required, is_language, is_string, \
-    is_boolean, is_list, is_one_of
+    is_boolean, is_list, is_entity_list_dict
 from modules.util import uniqid
-
-
-class SetEntity(Document):
-    kind = Field(
-        validate=(is_required, is_string, (
-            is_one_of, 'unit', 'set',
-        ))
-    )
-    entity_id = Field(
-        validate=(is_required, is_string,)
-    )
 
 
 class Set(Model):
@@ -29,31 +18,34 @@ class Set(Model):
     The `id` attribute refers to a specific version of the set.
     The `previous_id` attribute refers to the version based off.
     """
-    entity_id = Field(
-        validate=(is_required, is_string,),
-        default=uniqid
-    )
-    previous_id = Field(
-        validate=(is_string,),
-    )
-    language = Field(
-        validate=(is_required, is_language,),
-        default='en'
-    )
-    name = Field(
-        validate=(is_required, is_string,)
-    )
-    body = Field(
-        validate=(is_required, is_string,)
-    )
-    canonical = Field(
-        validate=(is_boolean,),
-        default=False
-    )
-    tags = Field(
-        validate=(is_list,),
-        default=[]
-    )
 
-    # TODO: Ensure no cycles form in `set_ids`
-    members = EmbedsMany(SetEntity, validate=(is_required,))
+    schema = dict(Model.schema.copy(), **{
+        'entity_id': {
+            'validate': (is_required, is_string,),
+            'default': uniqid
+        },
+        'previous_id': {
+            'validate': (is_string,),
+        },
+        'language': {
+            'validate': (is_required, is_language,),
+            'default': 'en'
+        },
+        'name': {
+            'validate': (is_required, is_string,)
+        },
+        'body': {
+            'validate': (is_required, is_string,)
+        },
+        'canonical': {
+            'validate': (is_boolean,),
+            'default': False
+        },
+        'tags': {
+            'validate': (is_list,),
+            'default': []
+        },
+        'members': {
+            'validate': (is_required, is_entity_list_dict)
+        }
+    })

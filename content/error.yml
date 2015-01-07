@@ -23,6 +23,10 @@ field:
     en: No such field.
 unique:
     en: Must be unique.
+entity_id:
+    en: Must be an entity ID.
+entity_kind:
+    en: Must be an entity kind.
 code_400:
     en: Bad request.
 code_401:
