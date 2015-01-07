@@ -37,17 +37,17 @@ class Notice(Model):
         Also adds pagination capabilities.
         Returns empty array when no models match.
         """
-        query = cls.table \
-                   .order_by(r.desc('created')) \
-                   .filter(r.row['user_id'] == user_id) \
-                   .filter(r.row['kind'] == kind
-                           if kind is not None else True) \
-                   .filter(r.row['tags'].contains(tag)
-                           if tag is not None else True) \
-                   .filter(r.row['read'] == read
-                           if read is not None else True) \
-                   .skip(skip) \
-                   .limit(limit)
+        query = (cls.table
+                    .order_by(r.desc('created'))
+                    .filter(r.row['user_id'] == user_id)
+                    .filter(r.row['kind'] == kind
+                            if kind is not None else True)
+                    .filter(r.row['tags'].contains(tag)
+                            if tag is not None else True)
+                    .filter(r.row['read'] == read
+                            if read is not None else True)
+                    .skip(skip)
+                    .limit(limit))
         fields_list = query.run(g.db_conn)
         return [cls(fields) for fields in fields_list]
 

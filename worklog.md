@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2014 Jan 06
+-----------
+
+Update models to new model module.
+
 2014 Jan 05
 -----------
 
