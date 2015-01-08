@@ -1,15 +1,11 @@
+import pytest
+
+xfail = pytest.mark.xfail
+
+
 from modules.model import Model
 from modules.validations import is_required, is_email, has_min_length
 from datetime import datetime
-
-"""
-TODO:
-Test init
-Test getitem, setitem, hasitem, delitem
-Test validate
-Test bundle, default
-Test deliver, access
-"""
 
 
 def encrypt_password(value):
@@ -46,6 +42,14 @@ def test_table_class(app, db_conn, users_table):
     assert User.table == users_table
 
 
+@xfail
+def test_create_instance(app, db_conn, users_table):
+    """
+    Expect to create a model instance. Be able to pass in data too...
+    """
+    return False
+
+
 def test_table_instance(app, db_conn, users_table):
     """
     Expect the model to have a table as an instance.
@@ -53,6 +57,38 @@ def test_table_instance(app, db_conn, users_table):
     user = User()
     assert user.tablename == 'users'
     assert user.table == users_table
+
+
+@xfail
+def test_get_item(app, db_conn, users_table):
+    """
+    Expect to get an item from the model.
+    """
+    return False
+
+
+@xfail
+def test_set_item(app, db_conn, users_table):
+    """
+    Expect to set an item in the model.
+    """
+    return False
+
+
+@xfail
+def test_del_item(app, db_conn, users_table):
+    """
+    Expect to remove an item in the model.
+    """
+    return False
+
+
+@xfail
+def test_has_item(app, db_conn, users_table):
+    """
+    Expect to test if model has an item.
+    """
+    return False
 
 
 def test_get_id(app, db_conn, users_table):
@@ -163,6 +199,46 @@ def test_generate_id(app, db_conn, users_table):
     d = user.bundle()
     assert isinstance(d['id'], str)
     assert len(d['id']) == 24
+
+
+@xfail
+def test_validate(app, db_conn, users_table):
+    """
+    Expect to validate a model.
+    """
+    return False
+
+
+@xfail
+def test_bundle(app, db_conn, users_table):
+    """
+    Expect to...
+    """
+    return False
+
+
+@xfail
+def test_default(app, db_conn, users_table):
+    """
+    Expect to...
+    """
+    return False
+
+
+@xfail
+def test_deliver(app, db_conn, users_table):
+    """
+    Expect to...
+    """
+    return False
+
+
+@xfail
+def test_access(app, db_conn, users_table):
+    """
+    Expect to...
+    """
+    return False
 
 
 def test_insert(app, db_conn, users_table):
