@@ -1,31 +1,33 @@
 
+from formulas import calculate_correct, calculate_incorrect
+
 
 def guess_likelihood(score, guess, slip, learned):
     if score == 1:
-        return learned * (1 - slip) + (1 - learned) * 1
+        return calculate_correct(1, slip, learned)
     if score == 0:
-        return learned * slip
+        return calculate_incorrect(1, slip, learned)
 
 
 def guess_normal(score, guess, slip, learned):
     if score == 1:
-        return learned * (1 - slip) + (1 - learned) * guess
+        return calculate_correct(guess, slip, learned)
     if score == 0:
-        return learned * slip + (1 - learned) * (1 - guess)
+        return calculate_incorrect(guess, slip, learned)
 
 
 def slip_likelihood(score, guess, slip, learned):
     if score == 1:
-        return (1 - learned) * guess
+        return calculate_correct(guess, 1, learned)
     if score == 0:
-        return learned + (1 - learned) * (1 - guess)
+        return calculate_incorrect(guess, 1, learned)
 
 
 def slip_normal(score, guess, slip, learned):
     if score == 1:
-        return learned * (1 - slip) + (1 - learned) * guess
+        return calculate_correct(guess, slip, learned)
     if score == 0:
-        return learned * slip + (1 - learned) * (1 - guess)
+        return calculate_incorrect(guess, slip, learned)
 
 
 def update_guess(score, guess, slip, learned):
