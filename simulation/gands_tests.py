@@ -2,30 +2,30 @@
 
 def guess_likelihood(score, guess, slip, learned):
     if score == 1:
-        return learned + (1 - learned) * guess
+        return learned * (1 - slip) + (1 - learned) * 1
     if score == 0:
-        return (1 - learned) * (1 - guess)
+        return learned * slip
 
 
 def guess_normal(score, guess, slip, learned):
     if score == 1:
-        return learned
+        return learned * (1 - slip) + (1 - learned) * guess
     if score == 0:
-        return 1 - learned
+        return learned * slip + (1 - learned) * (1 - guess)
 
 
 def slip_likelihood(score, guess, slip, learned):
     if score == 1:
-        return learned * (1 - slip)
+        return (1 - learned) * guess
     if score == 0:
-        return learned * slip + (1 - learned)
+        return learned + (1 - learned) * (1 - guess)
 
 
 def slip_normal(score, guess, slip, learned):
     if score == 1:
-        return learned
+        return learned * (1 - slip) + (1 - learned) * guess
     if score == 0:
-        return 1 - learned
+        return learned * slip + (1 - learned) * (1 - guess)
 
 
 def update_guess(score, guess, slip, learned):

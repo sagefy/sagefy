@@ -1,12 +1,22 @@
 Sagefy Work Log
 ===============
 
-2014 Jan 06
+2015 Jan 08
+-----------
+
+Discovered Bayesian update formulas for guess and slip. Testing soon...
+
+2015 Jan 07
+-----------
+
+Scaffolding model unit tests.
+
+2015 Jan 06
 -----------
 
 Update models to new model module.
 
-2014 Jan 05
+2015 Jan 05
 -----------
 
 **Weekly Goal**: Complete unit tests: 152, 153, 154, 155, 156, 158, 159. Begin code for discuss API.

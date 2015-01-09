@@ -1,29 +1,6 @@
 """
 This document combines the formulas and the mock data, providing for
 'how good' the formulas actually are.
-
----
-
-Given we can reliably compute `correct` and `learned`, the other calculations
-should be formulated as follows:
-
-0) [x] Ensure each function works as expected.
-
-1) [x] Using the given `transit`, find formulations of `guess` and `slip` so
-    that the error rate is trivially small after
-    a sufficient number of examples.
-    The error rate should ideally be near or less than 0.05.
-
-2) [ ] Once `guess` and `slip` are established, find a formulation for transit.
-    Ideally, it's error rate should be less than 0.05.
-
-3) [ ] Account for time. Describe how time impacts each parameters.
-    Describe how `belief` should act in a variety of scenarios. Find a
-    formula that meets these scenarios, and compute the error versus the
-    expected results.
-
-4) [ ] Only after the other primary attributes are reliably compute-able,
-    compute sufficient attributes to support learner search.
 """
 
 

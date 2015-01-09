@@ -67,12 +67,14 @@ def update(score, time, prev_time,
 
     correct = calculate_correct(guess, slip, learned)
 
-    guess, guess_weight = update_guess(score, learned, guess, guess_weight)
-    slip, slip_weight = update_slip(score, learned, slip, slip_weight)
+    guess2, guess_weight = update_guess(score, learned, guess, guess_weight)
+    slip2, slip_weight = update_slip(score, learned, slip, slip_weight)
 
     belief = calculate_belief(learned, time, prev_time)
     learned = update_learned(score, learned, guess, slip, transit,
                              time, prev_time)
+
+    guess, slip = guess2, slip2
 
     this_card_post_learned = learned
 
@@ -100,6 +102,14 @@ def calculate_correct(guess, slip, learned):
     """
 
     return learned * (1 - slip) + (1 - learned) * guess
+
+
+def calculate_incorrect(guess, slip, learned):
+    """
+    Determines how likely the learner will respond to a card not well.
+    """
+
+    return learned * slip + (1 - learned) * (1 - guess)
 
 
 def calculate_difficulty(guess, slip):
@@ -166,10 +176,12 @@ def update_learned(score, learned, guess, slip, transit,
 
     belief = calculate_belief(learned, time, prev_time)
     learned = learned * belief
-    positive = (learned * (1 - slip)
-                / (learned * (1 - slip) + (1 - learned) * guess))
-    negative = (learned * slip
-                / (learned * slip + (1 - learned) * (1 - guess)))
+    positive = (learned
+                * calculate_correct(guess, slip, 1)
+                / calculate_correct(guess, slip, learned))
+    negative = (learned
+                * calculate_incorrect(guess, slip, 1)
+                / calculate_incorrect(guess, slip, learned))
     posterior = score * positive + (1 - score) * negative
     return posterior + (1 - posterior) * transit
 
