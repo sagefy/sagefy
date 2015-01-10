@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 09
+----------
+
+Bayesian update of guess and slip optimized to 0 or 1... so I believe a PMF would need to happen instead. Mocking up a PMF class to use to try out Bayesian guess and slip updates.
+
 2015 Jan 08
 -----------
 
