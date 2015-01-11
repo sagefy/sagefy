@@ -109,3 +109,35 @@ def create_password():
         return abort(403)
     user.update_password(request.json.get('password'))
     return _login(user)
+
+
+@user.route('/<user_id>/menu/', methods=['GET'])
+def get_menu(user_id):
+    """
+    Get the list of menu items given the user's context.
+    """
+    pass
+
+
+@user.route('/<user_id>/sets/', methods=['GET'])
+def get_user_sets(user_id):
+    """
+    Get the list of sets the user has added.
+    """
+    pass
+
+
+@user.route('/<user_id>/sets/', methods=['POST'])
+def add_set(user_id):
+    """
+    Adds a set to the learner's list of sets.
+    """
+    pass
+
+
+@user.route('/<user_id>/sets/<set_id>/', method=['DELETE'])
+def remove_set(user_id, set_id):
+    """
+    Removes a set from the learner's list of sets.
+    """
+    pass

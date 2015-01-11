@@ -8,6 +8,23 @@ card = Blueprint('card', __name__, url_prefix='/api/cards')
 @card.route('/<card_id>/', methods=['GET'])
 def get_card(card_id):
     """
-    Gets a specific card given an ID.
+    Gets a specific card given an ID. Show all relevant data, but
+    not used for the learning interface.
+    """
+    pass
+
+
+@card.route('/<card_id>/learn/', methods=['GET'])
+def learn_card(card_id):
+    """
+    Renders the card's data, ready for learning.
+    """
+    pass
+
+
+@card.route('/<card_id>/responses/', methods=['POST'])
+def respond_to_card(card_id):
+    """
+    Records and processes a learner's response to a card.
     """
     pass

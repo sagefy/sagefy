@@ -13,6 +13,8 @@ boolean:
     en: Must be true or false.
 string:
     en: Must be a string.
+number:
+    en: Must be a number.
 language:
     en: Must be a language.
 list:

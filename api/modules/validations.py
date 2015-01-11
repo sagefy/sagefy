@@ -35,6 +35,18 @@ def is_string(value):
         return _('error', 'string')
 
 
+def is_number(value):
+    """
+    Ensure the given value is a number.
+    """
+
+    if value is None:
+        return
+
+    if not isinstance(value, (int, long, float, complex)):
+        return _('error', 'number')
+
+
 def is_language(value):
     """
     Entity must be ISO 639-1 code.
@@ -131,3 +143,19 @@ def is_entity_list_dict(value):
 
     if len(errors):
         return errors
+
+
+def is_list_of_strings(value):
+    """
+    Ensure the number is a list of strings.
+    """
+
+    if value is None:
+        return
+
+    if not isinstance(value, list):
+        return _('error', 'list')
+
+    for v in value:
+        if not isinstance(v, basestring):
+            return _('error', 'string')
