@@ -4,7 +4,7 @@ Sagefy Work Log
 2015 Jan 11
 -----------
 
-Explicitly listing requirements for primary learning system.
+Explicitly listing requirements for primary learning system. Scaffolded routes and models for learners.
 
 2015 Jan 10
 -----------
