@@ -135,7 +135,7 @@ def add_set(user_id):
     pass
 
 
-@user.route('/<user_id>/sets/<set_id>/', method=['DELETE'])
+@user.route('/<user_id>/sets/<set_id>/', methods=['DELETE'])
 def remove_set(user_id, set_id):
     """
     Removes a set from the learner's list of sets.
