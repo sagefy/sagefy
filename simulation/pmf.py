@@ -8,13 +8,17 @@ import operator
 
 class PMF(object):
 
-    def __init__(self, hypotheses=[]):
+    def __init__(self, hypotheses):
         """
         Create a new PMF, given a list of hypotheses.
         Internally, hypotheses is a dict of hypo: probability.
         """
-
-        self.hypotheses = {hypothesis: 1 for hypothesis in hypotheses}
+        if isinstance(hypotheses, (tuple, list)):
+            self.hypotheses = {hypothesis: 1 for hypothesis in hypotheses}
+        elif isinstance(hypotheses, dict):
+            self.hypotheses = hypotheses
+        else:
+            self.hypotheses = {}
         self.normalize()
 
     def update(self, data):
@@ -35,7 +39,7 @@ class PMF(object):
         **This is function should be overwritten.**
         """
 
-        pass
+        raise Exception("No method implemented.")
 
     def normalize(self):
         """

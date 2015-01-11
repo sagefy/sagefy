@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 10
+-----------
+
+Working on PMF version of guess and slip updates. Results so far are somewhat worse than the weighted mean model.
+
 2015 Jan 09
 ----------
 
