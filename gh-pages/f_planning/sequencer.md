@@ -50,8 +50,8 @@ I write these requirements with the assumption of using Bayesian Knowledge Traci
 - incorrect: the probability of the learner getting the answer incorrect
 - learned: the probability that the learner knows the skill
 - guess: the probability the learner will answer correctly given learned == 0
-- slip: the probability the learner will answer incorrectly given learned == 0
-- learned0: learned before account for transit (Hidden Markov Model)
+- slip: the probability the learner will answer incorrectly given learned == 1
+- learned0: learned before accounting for transit (Hidden Markov Model)
 - transit: the probability the learner has learned the skill by seeing the card
 
 Requirements:
