@@ -97,7 +97,7 @@ def main(num_learners=1000, num_cards=50):
         slip_error += (my_card['slip'] - card['slip']) ** 2
         transit_error += (my_card['transit'] - card['transit']) ** 2
 
-        print('%.2f %.2f %.2f %.2f %.2f %.2f' % (
+        print('%.2f %.2f   %.2f %.2f   %.2f %.2f' % (
             my_card['guess'], card['guess'], my_card['slip'], card['slip'],
             my_card['transit'], card['transit']))
 
@@ -105,6 +105,14 @@ def main(num_learners=1000, num_cards=50):
     print('slip_error', sqrt(slip_error / len(my_cards)))
     print('transit_error', sqrt(transit_error / len(my_cards)))
 
+    guess_error, slip_error, transit_error = 0, 0, 0
+
+    for card in cards:
+        guess_error += (init_guess - card['guess']) ** 2
+        slip_error += (init_slip - card['slip']) ** 2
+
+    print('CONTROL guess_error', sqrt(guess_error / len(my_cards)))
+    print('CONTROL slip_error', sqrt(slip_error / len(my_cards)))
 
 if __name__ == '__main__':
     main()

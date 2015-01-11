@@ -26,10 +26,55 @@ Also see [data structure](/data_structure) for definitions of **card**, **unit**
 
 **Assessment Cards** - Cards which have an assessment element, such as choosing an answer or typing in an answer.
 
+Requirements
+------------
+
+I write these requirements with the assumption of using Bayesian Knowledge Tracing. In BKT, the following formulas are assumed:
+
+    correct = learned * (1 - slip) + (1 - learned) * guess
+    incorrect = learned * slip + (1 - learned) * (1 - guess)
+
+    learned0 = (
+        score
+        * learned
+        * calc_correct(1, guess, slip)
+        / calc_correct(learned, guess, slip)
+        + (1 - score)
+        * learned
+        * calc_incorrect(1, guess, slip)
+        / calc_incorrect(learned, guess, slip)
+    )
+    learned = learned0 + (1 - learned0) * transit
+
+- correct: the probability of the learner getting the answer correct
+- incorrect: the probability of the learner getting the answer incorrect
+- learned: the probability that the learner knows the skill
+- guess: the probability the learner will answer correctly given learned == 0
+- slip: the probability the learner will answer incorrectly given learned == 0
+- learned0: learned before account for transit (Hidden Markov Model)
+- transit: the probability the learner has learned the skill by seeing the card
+
+Requirements:
+
+- `guess`, `slip`, and `transit` should be **unique** to each card (item), not to each skill (unit). We need to be able to choose cards that suit the learner's current `learned` for the skill. We also need to be able to monitor high quality v low quality cards.
+- `guess`, `slip`, and `transit` should update **per response**. We will be much more capable of scaling out if we can avoid having to do any large all-at-once type of calculations.
+    - `guess` should increase with correct answers and decrease with incorrect answers, proportional to `1 - learned`.
+    - `slip` should increase with incorrect answers and decrease with correct answers, proportional to `learned`.
+    - `transit` should increase if the following card gets a correct answer, and decrease if the following card gets an incorrect answer. `transit` should be based on `learned` and `correct`.
+- The model for estimating `guess`, `slip`, and `transit` should beat static guesses (such as 0.3, 0.1, and 0.05). We want to ensure the model produces real results.
+- We need to know a way of letting the user know, based on what `learned` was and how much time has passed, when the learner should review the unit. We can call this parameter `belief`.
+- `learned` should be able to account for time. If a learner doesn't answer in a long time, our prediction of `learned` should go down.
+- We'll want to avoid having to look at previous responses and statistics too much, as it would cost in terms of database queries. Preferably, all the results of calculation should be stored in a key-value store and not in the main database.
+- We need aggregates to help learners with:
+    1. Searching for new sets
+    2. Estimating time to complete units and sets
+
 Parameters
 ----------
 
 All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that prediction (a.k.a. deviation, sigma).
+
+The formulas given below are based on the _weighted mean_ strategy. Other strategies may include _static parameters_ and _Bayesian updates_.
 
 **Learner-Card Ability** - $$p(correct)$$
 

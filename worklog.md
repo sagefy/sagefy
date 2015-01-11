@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 11
+-----------
+
+Explicitly listing requirements for primary learning system.
+
 2015 Jan 10
 -----------
 
