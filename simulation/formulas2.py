@@ -9,7 +9,7 @@ from pmf import PMF
 init_learned = 0.4
 max_learned = 0.99
 init_guess = 0.3
-init_slip = 0.15
+init_slip = 0.1
 init_weight = 1
 max_weight = 25
 init_transit = 0.1
@@ -18,26 +18,22 @@ belief_factor = 708000
 
 class GuessPMF(PMF):
     def likelihood(self, data, hypothesis):
-        score, learned, guess, slip = data['score'], data['learned'], data['guess'], data['slip']
+        score, learned, slip = \
+            data['score'], data['learned'], data['slip']
         return (score
                 * calculate_correct(hypothesis, slip, learned)
-                # / calculate_correct(guess, slip, learned)
                 + (1 - score)
-                * calculate_incorrect(hypothesis, slip, learned)
-                # / calculate_incorrect(guess, slip, learned)
-                )
+                * calculate_incorrect(hypothesis, slip, learned))
 
 
 class SlipPMF(PMF):
     def likelihood(self, data, hypothesis):
-        score, learned, guess, slip = data['score'], data['learned'], data['guess'], data['slip']
+        score, learned, guess = \
+            data['score'], data['learned'], data['guess']
         return (score
                 * calculate_correct(guess, hypothesis, learned)
-                # / calculate_correct(guess, slip, learned)
                 + (1 - score)
-                * calculate_incorrect(guess, hypothesis, learned)
-                # / calculate_incorrect(guess, slip, learned)
-                )
+                * calculate_incorrect(guess, hypothesis, learned))
 
 
 def update(score, time, prev_time,
@@ -96,8 +92,10 @@ def update(score, time, prev_time,
     learned2 = update_learned(score, learned, guess, slip, transit,
                               time, prev_time)
 
-    guess, guess_distro = update_guess(score, learned, guess, slip, guess_distro)
-    slip, slip_distro = update_slip(score, learned, guess, slip, slip_distro)
+    guess, guess_distro = update_guess(
+        score, learned, guess, slip, transit, guess_distro)
+    slip, slip_distro = update_slip(
+        score, learned, guess, slip, transit, slip_distro)
 
     this_card_post_learned = learned = learned2
 
@@ -149,7 +147,7 @@ def calculate_difficulty(guess, slip):
     return calculate_correct(guess, slip, 0.5)
 
 
-def update_guess(score, learned, guess, slip, guess_distro):
+def update_guess(score, learned, guess, slip, transit, guess_distro):
     """
     Determines how to update guess given a score.
     """
@@ -159,10 +157,10 @@ def update_guess(score, learned, guess, slip, guess_distro):
         'guess': guess,
         'slip': slip,
     })
-    return guess_distro.get_mode(), guess_distro
+    return guess_distro.get_value() * (1 - transit), guess_distro
 
 
-def update_slip(score, learned, guess, slip, slip_distro):
+def update_slip(score, learned, guess, slip, transit, slip_distro):
     """
     Determines how to update slip given a score.
     """
@@ -172,7 +170,7 @@ def update_slip(score, learned, guess, slip, slip_distro):
         'guess': guess,
         'slip': slip,
     })
-    return slip_distro.get_mode(), slip_distro
+    return slip_distro.get_value() * (1 - transit), slip_distro
 
 
 def calculate_belief(learned, time, prev_time):

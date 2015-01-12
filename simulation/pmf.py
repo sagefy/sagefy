@@ -71,3 +71,14 @@ class PMF(object):
         """
 
         return max(self.hypotheses.items(), key=operator.itemgetter(1))[0]
+
+    def get_value(self):
+        """
+        Turns the distribution into a single value.
+        Tends to fall inbetween the mode and the mean,
+        but fares better earlier on than either.
+        """
+
+        return sum(hypothesis * probability
+                   for hypothesis, probability
+                   in self.hypotheses.items())
