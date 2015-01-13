@@ -4,6 +4,8 @@ Sagefy Work Log
 2015 Jan 12
 -----------
 
+**Weekly Goal**: Complete unit tests: #152, #153, #154, #155, #156, #158, #159.
+
 Moving to use Bayesian updates of guess and slip with PMF.
 
 2015 Jan 11
