@@ -72,9 +72,7 @@ Requirements:
 Parameters
 ----------
 
-All parameters have a best-guess (a.k.a. mean, mu) and a confidence in that prediction (a.k.a. deviation, sigma).
-
-The formulas given below are based on the _weighted mean_ strategy. Other strategies may include _static parameters_ and _Bayesian updates_.
+The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) and _weighted mean_ (`transit`) strategy. Other strategies may include _static parameters_ and _Bayesian updates_.
 
 **Learner-Card Ability** - $$p(correct)$$
 
@@ -128,8 +126,9 @@ The formulas given below are based on the _weighted mean_ strategy. Other strate
 - _When_ - Computing learner-unit ability. Selecting the next card.
 - _Factors_ - Prior, response, learner-unit ability, guess, slip.
 - _Formula_ -
-    - `guess = (weight * guess + instance_guess) / (weight + instance_weight)`
-    - `slip = (weight * slip + instance_slip) / (weight + instance_weight)`
+    - Guess and Slip both use a PMF. The hypotheses are 0 to 1 with a step of 0.01. Each update, we update each hypothesis by `prior * likelihood`, then we normalize the PMF so its probabilities to 1.
+    - `guess[hypothesis] = prior * (score * correct(learned, hypothesis, slip) + (1 - score) * incorrect(learned, hypothesis, slip))`
+    - `slip[hypothesis] = prior * (score * correct(learned, guess, hypothesis) + (1 - score) * incorrect(learned, guess, hypothesis))`
     - `difficulty = 0.5 * guess + 0.5 * (1 - slip)`
 
 **Unit Difficulty**

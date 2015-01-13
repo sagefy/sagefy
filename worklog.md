@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 12
+-----------
+
+Moving to use Bayesian updates of guess and slip with PMF.
+
 2015 Jan 11
 -----------
 
