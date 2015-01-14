@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 13
+-----------
+
+Happy birthday to me. Taking a break for today :)
+
 2015 Jan 12
 -----------
 
