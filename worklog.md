@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 14
+-----------
+
+Found way to tighten scale of slip and guess. Thinking of a Bayesian update system for `transit`.
+
 2015 Jan 13
 -----------
 
