@@ -157,7 +157,7 @@ def update_guess(score, learned, guess, slip, transit, guess_distro):
         'guess': guess,
         'slip': slip,
     })
-    return guess_distro.get_value() * (1 - transit), guess_distro
+    return guess_distro.get_value() * 0.82, guess_distro
 
 
 def update_slip(score, learned, guess, slip, transit, slip_distro):
@@ -170,7 +170,7 @@ def update_slip(score, learned, guess, slip, transit, slip_distro):
         'guess': guess,
         'slip': slip,
     })
-    return slip_distro.get_value() * (1 - transit), slip_distro
+    return slip_distro.get_value() * 0.6, slip_distro
 
 
 def calculate_belief(learned, time, prev_time):
