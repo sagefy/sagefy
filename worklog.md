@@ -4,7 +4,7 @@ Sagefy Work Log
 2015 Jan 15
 -----------
 
-Adding white background images for social media usage.
+Adding white background images for social media usage. Scaffolding UI adapters for remaining MVP pages.
 
 2015 Jan 14
 -----------

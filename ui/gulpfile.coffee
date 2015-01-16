@@ -9,15 +9,21 @@ source = require('vinyl-source-stream')
 prettyHrtime = require('pretty-hrtime')
 sequence = require('run-sequence')
 
+################################################################################
+### Configuration ##############################################################
+################################################################################
+
 dist = 'distribution/'
 staticSrc = ['images/*', 'statics/*']
 hbsSrc = 'templates/**/*.hbs'
 coffeeSrc = ['scripts/*.coffee', 'scripts/**/*.coffee']
 testSrc = ['tests/*.coffee', 'tests/**/*.coffee']
 
-gulp.task('default', ['watch'])
+################################################################################
+### Main Tasks #################################################################
+################################################################################
 
-#####
+gulp.task('default', ['watch'])
 
 gulp.task('watch', (done) ->
     sequence('clean', [
@@ -42,11 +48,13 @@ gulp.task('test', (done) ->
     ], done)
 )
 
-#####
+################################################################################
+### Subtasks ###################################################################
+################################################################################
 
 gulp.task('clean', ->
     gulp.src(dist, {read: false})
-        .pipe(plugins.rimraf())
+        .pipe(plugins.rimraf())  # TODO update to use `del`
 )
 
 gulp.task('static:build', ->
@@ -80,7 +88,6 @@ gulp.task('styles:build:doc', ->
         }))
         .pipe(gulp.dest('../gh-pages/'))
 )
-
 
 gulp.task('styles:doc', (done) ->
     yms = require('ym-styleguide')
@@ -123,7 +130,7 @@ gulp.task('scripts:build', ['styles:doc', 'content'], ->
 )
 
 gulp.task('scripts:watch', ['scripts:build'], ->
-    bundle = watchify({
+    bundle = watchify({ # TODO upgrade to browserify 5, latest watchify
         entries: ['./scripts/index.coffee']
         extensions: ['.js', '.coffee']
         debug: true
@@ -182,7 +189,7 @@ gulp.task('scripts:test:run', [
 ], ->
     gulp.src(dist + 'test.html')
         .pipe(plugins.mochaPhantomjs({
-            reporter: 'dot'
+            reporter: 'min'
             phantomjs: {
                 loadImages: false
             }

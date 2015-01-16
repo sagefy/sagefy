@@ -1,7 +1,7 @@
 _ = require('../../scripts/framework/utilities')
 extend = _.extend
 
-describe('_', ->
+describe('Utilities', ->
     describe('isObject', ->
         it('should say an object is an object', ->
             expect(_.isObject({})).to.be.true

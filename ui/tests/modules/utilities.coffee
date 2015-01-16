@@ -1,7 +1,7 @@
 utilities = require('../../scripts/modules/utilities')
 cookie = require('../../scripts/modules/cookie')
 
-describe('Mixins', ->
+describe('Utilities', ->
     it('should detect login', ->
         cookie.set('logged_in', '1')
         expect(utilities.isLoggedIn()).to.be.true
