@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 16
+-----------
+
+Wrote cookie (UI module) tests.
+
 2015 Jan 15
 -----------
 

@@ -1,31 +1,26 @@
-require('../../scripts/modules/cookie')
+cookie = require('../../scripts/modules/cookie')
 
 describe('Cookie', ->
-    it.skip('should alias encode', ->
-
+    it('should parse a cookie value', ->
+        expect(cookie.read('"\"+"')).to.equal('" ')
     )
 
-    it.skip('should alias decode', ->
-
+    it('should get a cookie', ->
+        document.cookie = 'test=abcd;path=/;max-age=30'
+        expect(cookie.get('test')).to.equal('abcd')
+        cookie.unset('test')
     )
 
-    it.skip('should stringify', ->
-
+    it('should set a cookie', ->
+        cookie.set('test', 'abcd')
+        expect(document.cookie).to.contain('test=abcd')
+        cookie.unset('test')
     )
 
-    it.skip('should parse a cookie value', ->
-
-    )
-
-    it.skip('should get a cookie', ->
-
-    )
-
-    it.skip('should set a cookie', ->
-
-    )
-
-    it.skip('should unset a cookie', ->
-
+    it('should unset a cookie', ->
+        cookie.set('test', 'abcd')
+        expect(document.cookie).to.contain('test=abcd')
+        cookie.unset('test')
+        expect(document.cookie).to.not.contain('test=abcd')
     )
 )
