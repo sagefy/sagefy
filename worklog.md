@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 15
+-----------
+
+Adding white background images for social media usage.
+
 2015 Jan 14
 -----------
 
