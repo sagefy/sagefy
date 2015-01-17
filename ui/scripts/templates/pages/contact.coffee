@@ -34,7 +34,7 @@ module.exports = ->
         </li>
         <li>
             <strong>I'm a school or a corporation</strong>:
-            Sagefy is not intended or suitable for school or corporate use.
+            Sagefy is not intended for school or corporate use.
         </li>
     </ul>
     """

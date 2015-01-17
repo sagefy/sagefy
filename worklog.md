@@ -4,7 +4,7 @@ Sagefy Work Log
 2015 Jan 16
 -----------
 
-Wrote cookie (UI module) tests.
+Wrote cookie (UI module) tests. Scaffolding UI models and collections.
 
 2015 Jan 15
 -----------
