@@ -130,11 +130,14 @@ gulp.task('scripts:build', ['styles:doc', 'content'], ->
 )
 
 gulp.task('scripts:watch', ['scripts:build'], ->
-    bundle = watchify({ # TODO upgrade to browserify 5, latest watchify
+    bundle = watchify(browserify({
         entries: ['./scripts/index.coffee']
         extensions: ['.js', '.coffee']
         debug: true
-    })
+        cache: {}
+        packageCache: {}
+        fullPaths: true
+    }))
     rebundle = ->
         startTime = process.hrtime()
         bundle

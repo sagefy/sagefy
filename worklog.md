@@ -4,7 +4,7 @@ Sagefy Work Log
 2015 Jan 17
 -----------
 
-UI validations unit tests.
+UI validations unit tests. Update NPM packages.
 
 2015 Jan 16
 -----------

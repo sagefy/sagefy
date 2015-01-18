@@ -16,7 +16,7 @@
   "author": "Sagefy",
   "license": "AGPL",
   "devDependencies": {
-    "browserify": "^4.2.3",
+    "browserify": "^8.1.1",
     "chai": "^1.10.0",
     "coffee-script": "^1.8.0",
     "coffeeify": "^1.0.0",
@@ -40,7 +40,7 @@
     "sinon-chai": "^2.6.0",
     "stylus": "^0.49.3",
     "vinyl-source-stream": "^1.0.0",
-    "watchify": "^0.10.2",
+    "watchify": "^2.2.1",
     "ym-styleguide": "^0.1.6"
   },
   "browserify": {
