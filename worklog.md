@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 17
+-----------
+
+UI validations unit tests.
+
 2015 Jan 16
 -----------
 
