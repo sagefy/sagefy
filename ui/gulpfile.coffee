@@ -1,6 +1,6 @@
-gulp = require("gulp")
+gulp = require('gulp')
 gutil = require('gulp-util')
-gulpLoadPlugins = require("gulp-load-plugins")
+gulpLoadPlugins = require('gulp-load-plugins')
 plugins = gulpLoadPlugins()
 run = require('run-sequence')
 browserify = require('browserify')

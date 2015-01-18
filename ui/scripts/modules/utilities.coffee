@@ -17,12 +17,12 @@ _.underscored = (str) ->
 # From Handlebars
 _.escape = (str) ->
     chars = {
-        "&": "&amp;"
-        "<": "&lt;"
-        ">": "&gt;"
-        '"': "&quot;"
-        "'": "&#x27;"
-        "`": "&#x60;"
+        '&': '&amp;'
+        '<': '&lt;'
+        '>': '&gt;'
+        '"': '&quot;'
+        '\'': '&#x27;'
+        '`': '&#x60;'
     }
 
     return ('' + str).replace(/[&<>"'`]/g, (char) ->
@@ -37,11 +37,11 @@ _.timeAgo = (str) ->
     hours = Math.floor(diff / 3600000)
     minutes = Math.floor(diff / 60000)
     return "#{days} days ago" if days > 1
-    return "Yesterday" if days is 1
+    return 'Yesterday' if days is 1
     return "#{hours} hours ago" if hours > 1
-    return "1 hour ago" if hours is 1
+    return '1 hour ago' if hours is 1
     return "#{minutes} minutes ago" if minutes > 1
-    return "1 minute ago" if minutes is 1
-    return "Just now"
+    return '1 minute ago' if minutes is 1
+    return 'Just now'
 
 module.exports = _

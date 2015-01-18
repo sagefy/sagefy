@@ -5,7 +5,7 @@ describe('Events', ->
         @e = new Events()
         @ting = false
         @f = (a) =>
-            @ting = a || true
+            @ting = a or true
         @z = new Events()
     )
 

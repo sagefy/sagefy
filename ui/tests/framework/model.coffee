@@ -150,7 +150,7 @@ describe('Model', ->
     it('should parse an Ajax error', ->
         expect(Model::parseAjaxErrors({
             responseText: '{"errors":[{"name":"a"}]}'
-        })).to.eql([{name: "a"}])
+        })).to.eql([{name: 'a'}])
         expect(Model::parseAjaxErrors({responseText: 'crepe'}))
             .to.equal('crepe')
     )

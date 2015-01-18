@@ -10,8 +10,8 @@ describe('Form (Component)', ->
             <textarea name="description">Chocobo</textarea>
         '''
         expect(form.getValues()).to.deep.equal({
-            name: "Moogle"
-            description: "Chocobo"
+            name: 'Moogle'
+            description: 'Chocobo'
         })
         form.remove()
     )

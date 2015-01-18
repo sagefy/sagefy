@@ -24,7 +24,7 @@ _ = {}
 )
 
 _.isUndefined = (a) ->
-    return typeof a is "undefined"
+    return typeof a is 'undefined'
 
 _.extend = (target, injects...) ->
     for inject in injects

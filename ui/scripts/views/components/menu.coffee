@@ -42,7 +42,7 @@ class MenuView extends View
         if e
             e.preventDefault()
             e.stopPropagation()
-        @selected = ! @selected
+        @selected = not @selected
         if @selected
             @el.classList.add('selected')
         else

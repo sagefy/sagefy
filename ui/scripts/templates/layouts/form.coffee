@@ -1,5 +1,5 @@
 module.exports = (data) ->
-    html = ""
+    html = ''
 
     if data.title
         html += "<h1>#{data.title}</h1>"
@@ -8,5 +8,5 @@ module.exports = (data) ->
         html += "<p>#{data.description}</p>"
 
     html += '<div class="form"></div>'
-    
+
     return html

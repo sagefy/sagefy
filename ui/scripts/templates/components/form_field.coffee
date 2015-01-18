@@ -47,4 +47,4 @@ module.exports = (data) ->
             <p class="form-field__description">#{data.description}</p>
         """
 
-    return html + "</div>"
+    return html + '</div>'

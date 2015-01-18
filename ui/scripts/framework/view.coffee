@@ -54,7 +54,7 @@ class View extends Events
     # the template function will be called and passed the data.
     # Overwrite liberally, keep `super`.
     render: (data) ->
-        @data = data || {}
+        @data = data or {}
         if @el
             @el.innerHTML = if @template then @template(@data) else ''
         @selectElements()

@@ -1,7 +1,7 @@
 # TODO: move copy to content directory
 
 module.exports = ->
-    return """
+    return '''
     <img src="/astrolabe.svg" id="logo" />
     <hgroup>
         <h1>Sagefy</h1>
@@ -12,4 +12,4 @@ module.exports = ->
     <p class="leading">
         <a href="/login">Log In</a> or <a href="/signup">Sign Up</a>
     </p>
-    """
+    '''
