@@ -1,7 +1,3 @@
-import pytest
-
-xfail = pytest.mark.xfail
-
 from models.topic import Topic
 
 
