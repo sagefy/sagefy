@@ -102,7 +102,9 @@ def is_one_of(value, *options):
         return
 
     if value not in options:
-        return _('error', 'options').replace('{options}', ', '.join(options))
+        str_options = [str(o) for o in options]
+        return (_('error', 'options')
+                .replace('{options}', ', '.join(str_options)))
 
 
 def is_entity_dict(value):
