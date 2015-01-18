@@ -116,7 +116,7 @@ def is_entity_dict(value):
     if not isinstance(value, dict):
         return _('error', 'entity_id')
 
-    if 'entity_id' not in value or not isinstance(value['entity_id'], str):
+    if 'id' not in value or not isinstance(value['id'], str):
         return _('error', 'entity_id')
 
     if 'kind' not in value or value['kind'] not in ('card', 'unit', 'set'):

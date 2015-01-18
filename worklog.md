@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 18
+-----------
+
+Started API model "Post" tests.
+
 2015 Jan 17
 -----------
 
