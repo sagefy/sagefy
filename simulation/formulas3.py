@@ -49,7 +49,7 @@ class TransitPMF(PMF):
         llh cannot be 0
         """
 
-        return diff - hypothesis  # TODO find the real formula
+        return 1 - ((diff - hypothesis) / 2) ** 2  # TODO find the real formula
 
 
 def update(score, time, prev_time,

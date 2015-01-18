@@ -36,7 +36,7 @@ def main(num_learners=1000, num_cards=50):
         'transit': init_transit,
         'transit_distro': TransitPMF({
             h:  1 - (init_transit - h) ** 2
-            for h in [h / 100 - 1.0 for h in range(1, 200)]}),
+            for h in [h / 100 for h in range(1, 10)]}),
     } for card in cards]
 
     my_learners = [{
@@ -115,9 +115,11 @@ def main(num_learners=1000, num_cards=50):
     for card in cards:
         guess_error += (init_guess - card['guess']) ** 2
         slip_error += (init_slip - card['slip']) ** 2
+        transit_error += (init_transit - card['transit']) ** 2
 
     print('CONTROL guess_error', sqrt(guess_error / len(my_cards)))
     print('CONTROL slip_error', sqrt(slip_error / len(my_cards)))
+    print('CONTROL transit_error', sqrt(transit_error / len(my_cards)))
 
 if __name__ == '__main__':
     main()
