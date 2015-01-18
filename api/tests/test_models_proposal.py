@@ -1,84 +1,177 @@
-import pytest
-
-xfail = pytest.mark.xfail
+from models.proposal import Proposal
 
 
-@xfail
 def test_user_id(app, db_conn, posts_table):
     """
     Expect a proposal to require a user id.
     """
 
-    return False
+    proposal, errors = Proposal.insert({
+        'topic_id': 'B',
+        'body': 'C',
+        'entity_version_id': 'D',
+        'name': 'E',
+        'status': 'pending',
+        'action': 'update',
+    })
+    assert len(errors) == 1
+    proposal['user_id'] = 'A'
+    proposal, errors = proposal.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_topic(app, db_conn, posts_table):
     """
     Expect a proposal to require a topic id.
     """
 
-    return False
+    proposal, errors = Proposal.insert({
+        'user_id': 'A',
+        'body': 'C',
+        'entity_version_id': 'D',
+        'name': 'E',
+        'status': 'pending',
+        'action': 'update',
+    })
+    assert len(errors) == 1
+    proposal['topic_id'] = 'B'
+    proposal, errors = proposal.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_body(app, db_conn, posts_table):
     """
     Expect a proposal to require a body.
     """
 
-    return False
+    proposal, errors = Proposal.insert({
+        'user_id': 'A',
+        'topic_id': 'B',
+        'entity_version_id': 'D',
+        'name': 'E',
+        'status': 'pending',
+        'action': 'update',
+    })
+    assert len(errors) == 1
+    proposal['body'] = 'C'
+    proposal, errors = proposal.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_kind(app, db_conn, posts_table):
     """
     Expect a proposal to have a kind.
     """
 
-    return False
+    proposal = Proposal({
+        'user_id': 'A',
+        'topic_id': 'B',
+        'body': 'C',
+        'entity_version_id': 'D',
+        'name': 'E',
+        'status': 'pending',
+        'action': 'update',
+    })
+    del proposal['kind']
+    proposal, errors = proposal.save()
+    assert len(errors) == 1
+    proposal['kind'] = 'proposal'
+    proposal, errors = proposal.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_replies(app, db_conn, posts_table):
     """
     Expect a proposal to allow a replies to id.
     """
 
-    return False
+    proposal, errors = Proposal.insert({
+        'user_id': 'A',
+        'topic_id': 'B',
+        'body': 'C',
+        'entity_version_id': 'D',
+        'name': 'E',
+        'status': 'pending',
+        'action': 'update',
+        'replies_to_id': 'A',
+    })
+    assert len(errors) == 0
 
 
-@xfail
 def test_entity(app, db_conn, posts_table):
     """
     Expect a proposal to require an entity version id.
     """
 
-    return False
+    proposal, errors = Proposal.insert({
+        'user_id': 'A',
+        'topic_id': 'B',
+        'body': 'C',
+        'name': 'E',
+        'status': 'pending',
+        'action': 'update',
+    })
+    assert len(errors) == 1
+    proposal['entity_version_id'] = 'D'
+    proposal, errors = proposal.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_name(app, db_conn, posts_table):
     """
     Expect a proposal to require a name.
     """
 
-    return False
+    proposal, errors = Proposal.insert({
+        'user_id': 'A',
+        'topic_id': 'B',
+        'body': 'C',
+        'entity_version_id': 'D',
+        'status': 'pending',
+        'action': 'update',
+    })
+    assert len(errors) == 1
+    proposal['name'] = 'E'
+    proposal, errors = proposal.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_status(app, db_conn, posts_table):
     """
     Expect a proposal to require a status.
     """
 
-    return False
+    proposal = Proposal({
+        'user_id': 'A',
+        'topic_id': 'B',
+        'body': 'C',
+        'entity_version_id': 'D',
+        'name': 'E',
+        'action': 'update',
+    })
+    assert proposal['status'] == 'pending'
+    del proposal['status']
+    proposal, errors = proposal.save()
+    assert len(errors) == 1
+    proposal['status'] = 'pending'
+    proposal, errors = proposal.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_action(app, db_conn, posts_table):
     """
     Expect a proposal to require an action.
     """
 
-    return False
+    proposal, errors = Proposal.insert({
+        'user_id': 'A',
+        'topic_id': 'B',
+        'body': 'C',
+        'entity_version_id': 'D',
+        'name': 'E',
+        'status': 'pending',
+    })
+    assert len(errors) == 1
+    proposal['action'] = 'update'
+    proposal, errors = proposal.save()
+    assert len(errors) == 0
