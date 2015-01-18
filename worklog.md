@@ -4,7 +4,7 @@ Sagefy Work Log
 2015 Jan 18
 -----------
 
-Started API model "Post" and "Topic" tests.
+API model tests for Topic, Post, Proposal, Vote, and Flag.
 
 2015 Jan 17
 -----------
