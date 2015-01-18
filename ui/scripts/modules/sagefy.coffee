@@ -1,5 +1,5 @@
 Application = require('../framework/application')
-MenuAdapter = require('./menu')
+MenuAdapter = require('../adapters/menu')
 _ = require('../framework/utilities')
 
 class Sagefy extends Application
