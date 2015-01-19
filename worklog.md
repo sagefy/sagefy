@@ -1,6 +1,13 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 19
+-----------
+
+**Weekly Goal**: #158, #159, #129, #132.
+
+Thinking through Markdown requirements for card, unit, set, and posts <https://docs.sagefy.org/f_planning/markdown_features>.
+
 2015 Jan 18
 -----------
 
