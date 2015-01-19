@@ -65,14 +65,17 @@ class Card(Model):
         Get the latest canonical version of the card.
         """
 
+        # TODO: Can this method be merged with the same method
+        #       in set and unit?
+
         if not card_id:
             return
 
         query = (cls.table
-                    .filter(r.row['id'] == card_id)
+                    .filter(r.row['entity_id'] == card_id)
                     .order_by(r.desc('created'))
                     .limit(1))  # TODO this should have an index
-        fields = list(query.run(g.db_conn)[0])
+        fields = list(query.run(g.db_conn))[0]
 
         if fields:
             return cls(fields)

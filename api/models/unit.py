@@ -68,10 +68,10 @@ class Unit(Model):
             return
 
         query = (cls.table
-                    .filter(r.row['id'] == unit_id)
+                    .filter(r.row['entity_id'] == unit_id)
                     .order_by(r.desc('created'))
                     .limit(1))  # TODO this should have an index
-        fields = list(query.run(g.db_conn)[0])
+        fields = list(query.run(g.db_conn))[0]
 
         if fields:
             return cls(fields)
