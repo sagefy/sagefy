@@ -7,6 +7,8 @@ class UserSets(Model):
     Records the list of sets the learner has added.
     """
 
+    tablename = 'users_sets'
+
     schema = dict(Model.schema.copy(), **{
         'user_id': {
             'validate': (is_required, is_string,),

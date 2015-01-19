@@ -8,7 +8,7 @@ def update_modified(field):
     return r.now()
 
 
-class ClassProperty(object):
+class classproperty(object):  # flake8: noqa
     def __init__(self, fn):
         self.fn = fn
 
@@ -70,7 +70,7 @@ class Model(object):
     def __contains__(self, item):
         return item in self.data
 
-    @ClassProperty
+    @classproperty
     def table(self):
         assert self.tablename, 'You must provide a tablename.'
         return g.db.table(self.tablename)

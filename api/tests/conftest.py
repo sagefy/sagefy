@@ -102,3 +102,33 @@ def topics_table(request, db_conn):
 @pytest.fixture
 def posts_table(request, db_conn):
     return table('posts', request, db_conn)
+
+
+@pytest.fixture
+def cards_table(request, db_conn):
+    return table('cards', request, db_conn)
+
+
+@pytest.fixture
+def units_table(request, db_conn):
+    return table('units', request, db_conn)
+
+
+@pytest.fixture
+def sets_table(request, db_conn):
+    return table('sets', request, db_conn)
+
+
+@pytest.fixture
+def follows_table(request, db_conn):
+    return table('follows', request, db_conn)
+
+
+@pytest.fixture
+def users_sets_table(request, db_conn):
+    return table('users_sets', request, db_conn)
+
+
+@pytest.fixture
+def responses_table(request, db_conn):
+    return table('responses', request, db_conn)

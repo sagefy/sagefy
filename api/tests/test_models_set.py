@@ -65,3 +65,11 @@ def test_members(app, db_conn, sets_table):
     Expect a set to record a list of members.
     """
     return False
+
+
+@xfail
+def test_latest_canonical(app, db_conn, sets_table):
+    """
+    Expect to get the latest canonical set version.
+    """
+    return False

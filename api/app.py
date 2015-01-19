@@ -52,8 +52,8 @@ def make_db_connection(app):
 
 def setup_db(app):
     """
-    Sets up the database.
-    Includes a sequence to make sure databases and tables exist where they
+    Set up the database.
+    Include a sequence to make sure databases and tables exist where they
     need to be.
     """
     db_conn = r.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
@@ -63,7 +63,18 @@ def setup_db(app):
         r.db_create(app.config['RDB_DB']).run(db_conn)
 
     tables = r.db(app.config['RDB_DB']).table_list().run(db_conn)
-    for table in ('users', 'notices', 'topics', 'posts'):
+    for table in (
+        'users',
+        'notices',
+        'topics',
+        'posts',
+        'cards',
+        'units',
+        'sets',
+        'follows',
+        'users_sets',
+        'responses',
+    ):
         if table not in tables:
             r.db(app.config['RDB_DB']).table_create(table).run(db_conn)
 
@@ -90,7 +101,7 @@ def setup_conn_per_request(app):
 
 def setup_redis(app):
     """
-    Stores a Redis instance on our app object.
+    Store a Redis instance on our app object.
     """
     app.redis = StrictRedis()
 

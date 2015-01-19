@@ -65,3 +65,11 @@ def test_requires(app, db_conn, units_table):
     Expect a unit to allow requires ids.
     """
     return False
+
+
+@xfail
+def test_latest_canonical(app, db_conn, units_table):
+    """
+    Expect to get the latest canonical unit version.
+    """
+    return False

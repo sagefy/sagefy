@@ -12,6 +12,7 @@ class Response(Model):
     """
     Records the list of sets the learner has added.
     """
+    tablename = 'responses'
 
     schema = dict(Model.schema.copy(), **{
         'user_id': {

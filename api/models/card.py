@@ -2,6 +2,8 @@ from modules.model import Model
 from modules.validations import is_required, is_language, is_boolean, \
     is_list, is_string, is_one_of
 from modules.util import uniqid
+import rethinkdb as r
+from flask import g
 
 
 class Card(Model):
@@ -57,4 +59,22 @@ class Card(Model):
         }
     })
 
-    # TODO: Ensure no require cycles form
+    @classmethod
+    def get_latest_canonical(cls, card_id):
+        """
+        Get the latest canonical version of the card.
+        """
+
+        if not card_id:
+            return
+
+        query = (cls.table
+                    .filter(r.row['id'] == card_id)
+                    .order_by(r.desc('created'))
+                    .limit(1))  # TODO this should have an index
+        fields = list(query.run(g.db_conn)[0])
+
+        if fields:
+            return cls(fields)
+
+    # TODO: Ensure no require cycles form.

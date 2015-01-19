@@ -65,3 +65,11 @@ def test_kind(app, db_conn, cards_table):
     Expect a card to have a kind.
     """
     return False
+
+
+@xfail
+def test_latest_canonical(app, db_conn, cards_table):
+    """
+    Expect to get the latest canonical card version.
+    """
+    return False
