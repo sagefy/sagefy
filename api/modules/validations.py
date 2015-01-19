@@ -55,7 +55,7 @@ def is_language(value):
     if value is None:
         return
 
-    if not (isinstance(value, basestring) or len(value) != 2):
+    if not (isinstance(value, str) or len(value) != 2):
         return _('error', 'language')
 
 
@@ -159,5 +159,5 @@ def is_list_of_strings(value):
         return _('error', 'list')
 
     for v in value:
-        if not isinstance(v, basestring):
+        if not isinstance(v, str):
             return _('error', 'string')

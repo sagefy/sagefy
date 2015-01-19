@@ -1,34 +1,59 @@
-# import rethinkdb as r
+import rethinkdb as r
 # from flask import g
+
+from models.card import Card
+from modules import entity
 
 import pytest
 
 xfail = pytest.mark.xfail
 
 
-@xfail
-def test_get_latest_canonical(app, request):
+def test_get_latest_canonical(app, db_conn, cards_table):
     """
     Expect to pull the latest canonical
     version out of the database, given a kind and an entity_id.
     """
 
-    assert False
+    cards_table.insert([{
+        'id': 'A1',
+        'entity_id': 'A',
+        'created': r.time(2004, 11, 3, 'Z'),
+    }, {
+        'id': 'B2',
+        'entity_id': 'A',
+        'created': r.time(2005, 11, 3, 'Z'),
+    }, {
+        'id': 'C3',
+        'entity_id': 'B',
+        'created': r.time(2006, 11, 3, 'Z'),
+    }]).run(db_conn)
+
+    e = entity.get_latest_canonical('card', 'A')
+
+    assert isinstance(e, Card)
 
 
-@xfail
-def test_get_kind(app, request):
+def test_get_kind(app):
     """
     Expect to return kind as string given data.
     """
 
-    assert False
+    kind = entity.get_kind({'card': {}})
+    assert kind == 'card'
 
 
-@xfail
-def test_create_entity(app, request):
+def test_create_entity(app):
     """
     Expect to save a model to the DB given fields.
     """
 
-    assert False
+    e, errors = entity.create_entity({
+        'card': {
+            'unit_id': 'A',
+            'name': 'B',
+            'kind': 'video',
+        }
+    })
+    assert len(errors) == 0
+    assert isinstance(e, Card)
