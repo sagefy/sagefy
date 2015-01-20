@@ -17,13 +17,13 @@ def instance(data):
     based on the `kind` field.
     """
 
-    if data['kind'] is 'post':
+    if data['kind'] == 'post':
         return Post(data)
-    if data['kind'] is 'proposal':
+    if data['kind'] == 'proposal':
         return Proposal(data)
-    if data['kind'] is 'vote':
+    if data['kind'] == 'vote':
         return Vote(data)
-    if data['kind'] is 'flag':
+    if data['kind'] == 'flag':
         return Flag(data)
 
 
