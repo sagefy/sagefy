@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 21
+-----------
+
+Try to get `login_required` decorator to work... with mixed results. Updating outlines of discussion routes.
+
 2015 Jan 20
 -----------
 
