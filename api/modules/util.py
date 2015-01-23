@@ -9,7 +9,7 @@ import re
 
 def uniqid():
     """
-    Generates a unique string with 24 characters.
+    Generate a unique string with 24 characters.
     https://stackoverflow.com/a/2257449
     """
     return ''.join(
@@ -21,28 +21,28 @@ def uniqid():
 
 def pick(d, keys):
     """
-    Returns a dictionary with only the specified keys.
+    Return a dictionary with only the specified keys.
     """
     return {key: d[key] for key in keys if key in d}
 
 
 def omit(d, keys):
     """
-    Returns a dictionary without the specified keys.
+    Return a dictionary without the specified keys.
     """
     return {key: d[key] for key in d if key not in keys}
 
 
 def compact(a):
     """
-    Returns an array with None removed.
+    Return an array with None removed.
     """
     return [b for b in a if b is not None]
 
 
 def parse_args(args):
     """
-    Returns a dict with the args parsed into types.
+    Return a dict with the args parsed into types.
     """
     output = {}
     if not args:

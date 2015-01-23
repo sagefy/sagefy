@@ -19,7 +19,7 @@ def add_body_to_notices(notices):
 def list_notices():
     """
     List notices for current user.
-    Takes parameters `limit`, `skip`, `tag`, and `read`.
+    Take parameters `limit`, `skip`, `tag`, and `read`.
     """
     if not current_user.is_authenticated():
         return abort(401)
@@ -34,9 +34,9 @@ def list_notices():
 @notice.route('/<notice_id>/read/', methods=['PUT'])
 def mark_notice_as_read(notice_id):
     """
-    Marks notice as read.
+    Mark notice as read.
     Must be logged in as user, provide a valid ID, and own the notice.
-    Returns notice.
+    Return notice.
     """
     if not current_user.is_authenticated():
         return abort(401)
@@ -54,9 +54,9 @@ def mark_notice_as_read(notice_id):
 @notice.route('/<notice_id>/unread/', methods=['PUT'])
 def mark_notice_as_unread(notice_id):
     """
-    Marks notice as unread.
+    Mark notice as unread.
     Must be logged in as user, provide a valid ID, and own the notice.
-    Returns notice.
+    Return notice.
     """
     if not current_user.is_authenticated():
         return abort(401)

@@ -10,7 +10,7 @@ def is_score(val):
 
 class Response(Model):
     """
-    Records the list of sets the learner has added.
+    Record the list of sets the learner has added.
     """
     tablename = 'responses'
 

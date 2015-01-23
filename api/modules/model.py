@@ -78,7 +78,7 @@ class Model(object):
     def validate(self):
         """
         Ensure the data presented matches the validations in the schema.
-        Allows all data that is not specified in the schema.
+        Allow all data that is not specified in the schema.
         """
         errors = []
 
@@ -100,7 +100,7 @@ class Model(object):
 
     def defaults(self):
         """
-        Sets up defaults for data if not applied.
+        Set up defaults for data if not applied.
         """
         for name, field_schema in self.schema.items():
             if 'default' in field_schema and self.data.get(name) is None:
@@ -112,8 +112,8 @@ class Model(object):
 
     def bundle(self):
         """
-        Prepares the data for saving into the database.
-        Considers default values and will call `bundle`
+        Prepare the data for saving into the database.
+        Consider default values and will call `bundle`
         in the schema if present.
         """
         data = self.data.copy()
@@ -126,8 +126,8 @@ class Model(object):
 
     def deliver(self, access=None):
         """
-        Prepares the data for consumption.
-        Considers access allowed and will call `deliver`
+        Prepare the data for consumption.
+        Consider access allowed and will call `deliver`
         in the schema if present.
         """
         data = self.data.copy()
@@ -146,7 +146,7 @@ class Model(object):
     def get(cls, **params):
         """
         Get one model which matches the provided keyword arguments.
-        Returns None when there's no matching document.
+        Return None when there's no matching document.
         """
         data = None
         if params.get('id'):
@@ -169,7 +169,7 @@ class Model(object):
     def list(cls, **params):
         """
         Get a list of models matching the provided keyword arguments.
-        Returns empty array when no models match.
+        Return empty array when no models match.
         """
         data_list = (cls.table
                         .filter(params)
@@ -179,8 +179,8 @@ class Model(object):
     @classmethod
     def insert(cls, data):
         """
-        Creates a new model instance.
-        Returns model and errors if failed.
+        Create a new model instance.
+        Return model and errors if failed.
         """
         assert isinstance(data, dict)
         data = omit(data, ('id', 'created', 'modified'))
@@ -190,7 +190,7 @@ class Model(object):
     def update(self, data):
         """
         Update the model in the database.
-        Returns model and errors if failed.
+        Return model and errors if failed.
         """
         assert isinstance(data, dict)
         data = omit(data, ('id', 'created', 'modified'))
@@ -199,8 +199,8 @@ class Model(object):
 
     def save(self):
         """
-        Inserts the model in the database.
-        Returns model and errors if failed.
+        Insert the model in the database.
+        Return model and errors if failed.
         """
         errors = self.validate()
         if len(errors):
@@ -226,7 +226,7 @@ class Model(object):
 
     def delete(self):
         """
-        Removes the model from the database.
+        Remove the model from the database.
         """
         (self.table
              .get(self['id'])
@@ -236,7 +236,7 @@ class Model(object):
 
     def test_unique(self):
         """
-        Tests all top-level fields marked as unique.
+        Test all top-level fields marked as unique.
         """
         errors = []
         for name, value in self.data.items():

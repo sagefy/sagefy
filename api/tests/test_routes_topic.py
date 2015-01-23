@@ -53,23 +53,26 @@ def create_proposal_in_db(posts_table, db_conn):
     }).run(db_conn)
 
 
-@xfail
 def test_create_topic(app, db_conn, clogin, topics_table, posts_table):
     """
     Expect to create a topic with post.
     """
-    response = clogin.post('/api/topics', data=json.dumps({
-        'name': 'An entity',
-        'entity': {
-            'kind': 'unit',
-            'entity_id': 'dfgh4567'
+    response = clogin.post('/api/topics/', data=json.dumps({
+        'topic': {
+            'name': 'An entity',
+            'entity': {
+                'kind': 'unit',
+                'id': 'dfgh4567'
+            },
         },
         'post': {
-            'body': 'Here\'s a pear.'
+            'body': 'Here\'s a pear.',
+            'kind': 'post'
         }
     }), content_type='application/json')
-    assert response.status_code == 200
+
     data = json.loads(response.data.decode('utf-8'))
+    assert response.status_code == 200
     assert 'post' in data
     assert 'topic' in data
     assert data['topic']['name'] == 'An entity'
@@ -82,19 +85,22 @@ def test_create_topic_proposal(app, db_conn, users_table, topics_table,
     """
     Expect to create a topic with proposal.
     """
-    response = clogin.post('/api/topics', data=json.dumps({
-        'name': 'An entity',
-        'entity': {
-            'kind': 'unit',
-            'entity_id': 'dfgh4567'
+    response = clogin.post('/api/topics/', data=json.dumps({
+        'topic': {
+            'name': 'An entity',
+            'entity': {
+                'kind': 'unit',
+                'id': 'dfgh4567'
+            },
         },
         'post': {
             'kind': 'proposal',
             'body': 'Here\'s a pear.'
         }
     }), content_type='application/json')
-    assert response.status_code == 200
+
     data = json.loads(response.data.decode('utf-8'))
+    assert response.status_code == 200
     assert 'post' in data
     assert 'topic' in data
     assert data['topic']['name'] == 'An entity'
@@ -107,37 +113,40 @@ def test_create_topic_flag(app, db_conn, users_table, topics_table,
     """
     Expect to create topic with a flag.
     """
-    response = clogin.post('/api/topics', data=json.dumps({
-        'name': 'An entity',
-        'entity': {
-            'kind': 'unit',
-            'entity_id': 'dfgh4567'
+    response = clogin.post('/api/topics/', data=json.dumps({
+        'topic': {
+            'name': 'An entity',
+            'entity': {
+                'kind': 'unit',
+                'id': 'dfgh4567'
+            },
         },
         'post': {
             'kind': 'flag',
             'reason': 'duplicate',
         }
     }), content_type='application/json')
-    assert response.status_code == 200
     data = json.loads(response.data.decode('utf-8'))
+    assert response.status_code == 200
     assert 'post' in data
     assert 'topic' in data
     assert data['topic']['name'] == 'An entity'
     assert data['post']['body'] == 'Here\'s a pear.'
 
 
-@xfail
 def test_create_topic_login(app, db_conn, users_table, topics_table,
                             posts_table):
     """
     Expect create topic to fail when logged out.
     """
     with app.test_client() as c:
-        response = c.post('/api/topics', data=json.dumps({
-            'name': 'An entity',
-            'entity': {
-                'kind': 'unit',
-                'entity_id': 'dfgh4567'
+        response = c.post('/api/topics/', data=json.dumps({
+            'topic': {
+                'name': 'An entity',
+                'entity': {
+                    'kind': 'unit',
+                    'id': 'dfgh4567'
+                },
             },
             'post': {
                 'body': 'Here\'s a pear.'
@@ -148,17 +157,18 @@ def test_create_topic_login(app, db_conn, users_table, topics_table,
         assert 'errors' in data
 
 
-@xfail
 def test_create_topic_no_post(app, db_conn, users_table, topics_table,
                               posts_table, clogin):
     """
     Expect create topic to fail without post.
     """
-    response = clogin.post('/api/topics', data=json.dumps({
-        'name': 'An entity',
-        'entity': {
-            'kind': 'unit',
-            'entity_id': 'dfgh4567'
+    response = clogin.post('/api/topics/', data=json.dumps({
+        'topic': {
+            'name': 'An entity',
+            'entity': {
+                'kind': 'unit',
+                'id': 'dfgh4567'
+            }
         }
     }), content_type='application/json')
     assert response.status_code == 400

@@ -29,7 +29,7 @@ def instance(data):
 
 def get_post_facade(post_id):
     """
-    Gets the post and the correct kind based on the `kind` field.
+    Get the post and the correct kind based on the `kind` field.
     """
 
     data = g.db.table('posts').get(post_id).run(g.db_conn)
@@ -52,9 +52,18 @@ def get_posts_facade(limit=10, skip=0, **params):
 
 def create_post_facade(data):
     """
-    Creates the correct kind of post based on the `kind` field.
+    Create the correct kind of post based on the `kind` field.
     """
 
     data = omit(data, ('id', 'created', 'modified'))
     model = instance(data)
     return model.save()
+
+
+def instance_post_facade(data):
+    """
+    Create the correct kind of post based on the `kind` field.
+    """
+
+    data = omit(data, ('id', 'created', 'modified'))
+    return instance(data)

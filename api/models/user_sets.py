@@ -4,7 +4,7 @@ from modules.validations import is_required, is_string, is_list_of_strings
 
 class UserSets(Model):
     """
-    Records the list of sets the learner has added.
+    Record the list of sets the learner has added.
     """
 
     tablename = 'users_sets'

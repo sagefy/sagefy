@@ -3,34 +3,57 @@ Routes for the discussion platform.
 Includes topics, posts, proposals, votes, and flags.
 """
 
-from flask import Blueprint  # , jsonify, request, abort
-# from models.proposal import Proposal
-# from flask.ext.login import current_user
-# from modules.util import parse_args
-# from modules.entity import get_latest_canonical, get_kind, create_entity
-# from modules.discuss import get_post_facade, get_posts_facade, \
-#     create_post_facade
+from flask import Blueprint, abort, jsonify, request
+from models.topic import Topic
+from flask.ext.login import current_user
+from modules.util import parse_args
+from modules.discuss import instance_post_facade
+
 
 topic = Blueprint('topic', __name__, url_prefix='/api/topics')
 
 
 @topic.route('/', methods=['POST'])
-def create_topic(topic_id):
+def create_topic():
     """
     Create a new topic. The first post (proposal, flag) must be provided.
     Flag: if a flag for the same reason exists for the entity,
         create a vote there instead.
     """
 
-    # TODO First, let's create the topic, but not save it
+    if not current_user.is_authenticated():
+        return abort(401)
 
-    # TODO Then, we'll create the post with the topic ID
+    if 'topic' not in request.json:
+        return jsonify(errors=[{
+            'name': 'topic'
+        }]), 400
 
-    # TODO If errors, report back to user
+    if 'post' not in request.json:
+        return jsonify(errors=[{
+            'name': 'post'
+        }]), 400
 
-    # TODO If both validate, then save both to the database
+    # Let's create the topic, but not save it until we know we
+    # have a valid post
+    topic_data = dict(**request.json['topic'])
+    topic_data['user_id'] = current_user.get_id()
+    topic = Topic(topic_data)
+    post_data = dict(**request.json['post'])
+    post_data['user_id'] = current_user.get_id()
+    post_data['topic_id'] = topic['id']
+    post = instance_post_facade(post_data)
 
-    # TODO Finally, report new URL to user
+    errors, errors2 = topic.validate(), post.validate()
+    if len(errors + errors2):
+        return jsonify(errors=errors + errors2), 400
+
+    post, errors = post.save()
+    topic, errors2 = topic.save()
+    if len(errors + errors2):
+        return jsonify(errors=errors + errors2), 400
+
+    return jsonify(topic=topic.deliver(), post=post.deliver())
 
 
 @topic.route('/<topic_id>/', methods=['PUT', 'PATCH'])
@@ -39,7 +62,10 @@ def update_topic(topic_id):
     Update the topic. Only the name can be changed. Only by original author.
     """
 
-    # TODO Must be logged in
+    if not current_user.is_authenticated():
+        return abort(401)
+
+    # TODO Must be a valid topic_id
 
     # TODO Request must only be for name
 
@@ -56,7 +82,7 @@ def get_posts(topic_id):
     Paginates.
     """
 
-    # args = parse_args(request.args)
+    args = parse_args(request.args)
 
     # TODO Is the topic valid?
 
@@ -84,7 +110,8 @@ def create_post(topic_id):
     Vote: must refer to a proposal.
     """
 
-    # TODO The user must be logged in
+    if not current_user.is_authenticated():
+        return abort(401)
 
     # TODO For proposal or flag, entity must be included and valid
 
@@ -113,7 +140,8 @@ def update_post(topic_id, post_id):
     the current status is pending or blocked.
     """
 
-    # TODO A user must be logged in
+    if not current_user.is_authenticated():
+        return abort(401)
 
     # TODO Must be user's own post
 

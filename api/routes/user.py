@@ -130,7 +130,7 @@ def get_user_sets(user_id):
 @user.route('/<user_id>/sets/', methods=['POST'])
 def add_set(user_id):
     """
-    Adds a set to the learner's list of sets.
+    Add a set to the learner's list of sets.
     """
     pass
 
@@ -138,6 +138,6 @@ def add_set(user_id):
 @user.route('/<user_id>/sets/<set_id>/', methods=['DELETE'])
 def remove_set(user_id, set_id):
     """
-    Removes a set from the learner's list of sets.
+    Remove a set from the learner's list of sets.
     """
     pass

@@ -8,6 +8,7 @@ from routes.error import setup_errors
 from routes.public import public
 from routes.user import user
 from routes.notice import notice
+from routes.topic import topic
 
 
 def create_app(config, debug=False, testing=False):
@@ -36,6 +37,7 @@ def create_app(config, debug=False, testing=False):
     app.register_blueprint(public)
     app.register_blueprint(user)
     app.register_blueprint(notice)
+    app.register_blueprint(topic)
 
     return app
 
@@ -43,7 +45,7 @@ def create_app(config, debug=False, testing=False):
 def make_db_connection(app):
     """
     Given a Flask application instance,
-    creates a database connection.
+    create a database connection.
     """
     db_conn = r.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
     db = r.db(app.config['RDB_DB'])
@@ -83,7 +85,7 @@ def setup_db(app):
 
 def setup_conn_per_request(app):
     """
-    On each request, we create and close a new connection
+    On each request, we create and close a new connection.
     Rethink was designed to work this way, no reason to be alarmed.
     """
     @app.before_request

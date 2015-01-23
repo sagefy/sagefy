@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 22
+-----------
+
+Started on create topic route.
+
 2015 Jan 21
 -----------
 

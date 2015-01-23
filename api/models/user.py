@@ -41,14 +41,14 @@ class User(Model):
     })
 
     def is_password_valid(self, password):
-        """Takes an encrypted password, and verifies it. Returns bool."""
+        """Take an encrypted password, and verifies it. Returns bool."""
         try:
             return bcrypt.verify(password, self['password'])
         except:
             return False
 
     def is_current_user(self):
-        """Returns True if the user is the one logged in."""
+        """Return True if the user is the one logged in."""
         return (current_user.is_authenticated() and
                 self['id'] == current_user['id'])
 
@@ -73,7 +73,7 @@ class User(Model):
         return self['id']
 
     def get_email_token(self, send_email=True):
-        """Creates an email token for the user to reset their password."""
+        """Create an email token for the user to reset their password."""
         token = uniqid()
         app.redis.setex(
             'user_password_token_%s' % self['id'],  # key
@@ -102,6 +102,6 @@ class User(Model):
         return False
 
     def update_password(self, password):
-        """Updates the user's password."""
+        """Update the user's password."""
         self['password'] = password
         self.save()
