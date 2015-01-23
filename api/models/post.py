@@ -22,11 +22,11 @@ class Post(Model):
             'default': 'post'
         },
 
-        # Must belong to the same topic
-        # a post can reply to a post, proposal, flag, or vote
-        # a proposal can reply to post, proposal, or flag
-        # a vote can reply to a proposal or flag
-        # a flag cannot be a reply
+        # TODO Must belong to the same topic
+        # TODO a post can reply to a post, proposal, flag, or vote
+        # TODO a proposal can reply to post, proposal, or flag
+        # TODO a vote can reply to a proposal or flag
+        # TODO a flag cannot be a reply
         'replies_to_id': {
             'validate': (is_string,)
         }

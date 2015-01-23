@@ -28,5 +28,6 @@ class Flag(Post):
         Model.__init__(self, fields)
         self['kind'] = 'flag'
 
-    # Only one flag per entity per reason is allowed.
-    # Otherwise, its a vote for the existing flag proposal for that reason.
+    # TODO Only one flag per entity per reason is allowed.
+    # TODO Otherwise, its a vote for the
+    #      existing flag proposal for that reason.

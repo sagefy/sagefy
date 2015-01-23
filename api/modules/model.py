@@ -43,19 +43,20 @@ class Model(object):
     # Extend with: schema = dict(Parent.schema.copy(), **{ ... })
 
     # Avaliable per field:
-    # - validate
+    # - validate  TODO explain each, options
     # - bundle
     # - default
     # - deliver
     # - access
     # - unique
 
+    # TODO docstrings
     def __init__(self, data=None):
         self.data = {}
-        if data and self.strict:
+        if data and self.strict:  # TODO during validate/save instead
             data = pick(data, self.schema.keys())
         if data:
-            self.data.update(data)
+            self.data.update(data)  # TODO should this also happen elsewhere?
         self.defaults()
 
     def __getitem__(self, key):

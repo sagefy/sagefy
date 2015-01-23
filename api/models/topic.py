@@ -18,4 +18,5 @@ class Topic(Model):
         }
     })
 
-    # A topic must be created along with a post. No topic should have no posts.
+    # TODO A topic must be created along with a post.
+    #      No topic should have no posts.
