@@ -50,6 +50,9 @@ class Model(object):
     # - access
     # - unique
 
+    indexes = ()
+    # A list of indexes for the table
+
     # TODO docstrings
     def __init__(self, data=None):
         self.data = {}

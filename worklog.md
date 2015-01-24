@@ -4,7 +4,7 @@ Sagefy Work Log
 2015 Jan 24
 -----------
 
-Reading up on RethinkDB, particularly queries.
+Reading up on RethinkDB, particularly queries. Model: Add set indexes #79
 
 2015 Jan 23
 -----------

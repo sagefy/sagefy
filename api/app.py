@@ -64,21 +64,43 @@ def setup_db(app):
     if app.config['RDB_DB'] not in r.db_list().run(db_conn):
         r.db_create(app.config['RDB_DB']).run(db_conn)
 
+    from models.user import User
+    from models.notice import Notice
+    from models.topic import Topic
+    from models.post import Post
+    from models.proposal import Proposal
+    from models.vote import Vote
+    from models.flag import Flag
+    from models.card import Card
+    from models.unit import Unit
+    from models.set import Set
+    from models.follow import Follow
+    from models.user_sets import UserSets
+    from models.response import Response
+
+    models = (User, Notice, Topic, Post, Proposal, Vote, Flag,
+              Card, Unit, Set, Follow, UserSets, Response)
+
     tables = r.db(app.config['RDB_DB']).table_list().run(db_conn)
-    for table in (
-        'users',
-        'notices',
-        'topics',
-        'posts',
-        'cards',
-        'units',
-        'sets',
-        'follows',
-        'users_sets',
-        'responses',
-    ):
-        if table not in tables:
-            r.db(app.config['RDB_DB']).table_create(table).run(db_conn)
+
+    for modelCls in models:
+        tablename = getattr(modelCls, 'tablename', None)
+        if tablename and tablename not in tables:
+            (r.db(app.config['RDB_DB'])
+              .table_create(tablename)
+              .run(db_conn))
+            tables.append(tablename)
+
+        existant_indexes = (r.db(app.config['RDB_DB'])
+                             .table(tablename)
+                             .index_list()
+                             .run(db_conn))
+        indexes = getattr(modelCls, 'indexes', [])
+        for index in indexes:
+            if index[0] not in existant_indexes:
+                (r.db(app.config['RDB_DB'])
+                  .index_create(*index)
+                  .run(db_conn))
 
     db_conn.close()
 
