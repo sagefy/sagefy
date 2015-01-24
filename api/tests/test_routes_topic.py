@@ -183,7 +183,7 @@ def test_topic_update(app, db_conn, users_table, topics_table,
     Expect to update topic name.
     """
     create_topic_in_db(topics_table, db_conn)
-    response = clogin.put('/api/topics', data=json.dumps({
+    response = clogin.put('/api/topics/', data=json.dumps({
         'name': 'Another entity',
     }), content_type='application/json')
     assert response.status_code == 200
@@ -198,7 +198,7 @@ def test_update_topic_author(app, db_conn, users_table, topics_table,
     Expect update topic to require original author.
     """
     create_topic_in_db(topics_table, db_conn)
-    response = clogin.put('/api/topics', data=json.dumps({
+    response = clogin.put('/api/topics/', data=json.dumps({
         'name': 'Another entity',
     }), content_type='application/json')
     assert response.status_code == 403
@@ -213,7 +213,7 @@ def test_update_topic_fields(app, db_conn, users_table, topics_table,
     Expect update topic to only change name.
     """
     create_topic_in_db(topics_table, db_conn)
-    response = clogin.put('/api/topics', data=json.dumps({
+    response = clogin.put('/api/topics/', data=json.dumps({
         'entity': {
             'kind': 'set'
         }
@@ -250,7 +250,7 @@ def test_get_posts(app, db_conn, users_table, topics_table, posts_table):
         'kind': 'post',
     }]).run(db_conn)
     with app.test_client() as c:
-        response = c.get('/api/topics/wxyz7890/posts')
+        response = c.get('/api/topics/wxyz7890/posts/')
         assert response.status_code == 200
         data = json.loads(response.data.decode('utf-8'))
         assert 'Beneficial to the Publick' in data['posts'][0]['body']
@@ -264,7 +264,7 @@ def test_get_posts_not_topic(app, db_conn, users_table, topics_table,
     Expect 404 to get posts for a nonexistant topic.
     """
     with app.test_client() as c:
-        response = c.get('/api/topics/wxyz7890/posts')
+        response = c.get('/api/topics/wxyz7890/posts/')
         assert response.status_code == 404
 
 
@@ -287,7 +287,7 @@ def test_get_posts_paginate(app, db_conn, users_table, topics_table,
             'kind': 'post',
         }).run(db_conn)
     with app.test_client() as c:
-        response = c.get('/api/topics/wxyz7890/posts')
+        response = c.get('/api/topics/wxyz7890/posts/')
         assert response.status_code == 200
         data = json.loads(response.data.decode('utf-8'))
         assert len(data['posts']) == 10
@@ -306,7 +306,7 @@ def test_get_posts_proposal(app, db_conn, users_table, topics_table,
     create_topic_in_db(topics_table, db_conn)
     create_proposal_in_db(posts_table, db_conn)
     with app.test_client() as c:
-        response = c.get('/api/topics/wxyz7890/posts')
+        response = c.get('/api/topics/wxyz7890/posts/')
         assert response.status_code == 200
         data = json.loads(response.data.decode('utf-8'))
         assert data['posts'][0]['kind'] == 'proposal'
@@ -331,47 +331,49 @@ def test_get_posts_votes(app, db_conn, users_table, topics_table, posts_table):
         'response': True,
     }).run(db_conn)
     with app.test_client() as c:
-        response = c.get('/api/topics/wxyz7890/posts')
+        response = c.get('/api/topics/wxyz7890/posts/')
         assert response.status_code == 200
         data = json.loads(response.data.decode('utf-8'))
         assert data['posts'][0]['kind'] == 'proposal'
         assert data['posts'][1]['kind'] == 'vote'
 
 
-@xfail
 def test_create_post(app, db_conn, users_table, topics_table, posts_table,
                      clogin):
     """
     Expect create post.
     """
     create_topic_in_db(topics_table, db_conn)
-    response = clogin.post('/api/topics/wxyz7890/posts', data=json.dumps({
+    response = clogin.post('/api/topics/wxyz7890/posts/', data=json.dumps({
         # Should default to > 'kind': 'post',
         'body': '''A Modest Proposal for Preventing the Children of Poor
             People From Being a Burthen to Their Parents or Country, and
             for Making Them Beneficial to the Publick.''',
+        'kind': 'post',
+        'topic_id': 'wxyz7890',
     }), content_type='application/json')
     assert response.status_code == 200
     data = json.loads(response.data.decode('utf-8'))
     assert 'Beneficial to the Publick' in data['post']['body']
 
 
-@xfail
 def test_create_post_errors(app, db_conn, users_table, topics_table,
                             posts_table, clogin):
     """
     Expect create post missing field to show errors.
     """
     create_topic_in_db(topics_table, db_conn)
-    response = clogin.post('/api/topics/wxyz7890/posts',
-                           data=json.dumps({}),
+    response = clogin.post('/api/topics/wxyz7890/posts/',
+                           data=json.dumps({
+                               'kind': 'post',
+                               'topic_id': 'wxyz7890',
+                           }),
                            content_type='application/json')
     assert response.status_code == 400
     data = json.loads(response.data.decode('utf-8'))
     assert 'errors' in data
 
 
-@xfail
 def test_create_post_login(app, db_conn, users_table, topics_table,
                            posts_table):
     """
@@ -379,11 +381,12 @@ def test_create_post_login(app, db_conn, users_table, topics_table,
     """
     create_topic_in_db(topics_table, db_conn)
     with app.test_client() as c:
-        response = c.post('/api/topics/wxyz7890/posts', data=json.dumps({
+        response = c.post('/api/topics/wxyz7890/posts/', data=json.dumps({
             # Should default to > 'kind': 'post',
             'body': '''A Modest Proposal for Preventing the Children of Poor
                 People From Being a Burthen to Their Parents or Country, and
                 for Making Them Beneficial to the Publick.''',
+            'topic_id': 'wxyz7890',
         }), content_type='application/json')
         assert response.status_code == 401
         data = json.loads(response.data.decode('utf-8'))
@@ -397,7 +400,7 @@ def test_create_post_proposal(app, db_conn, users_table, topics_table,
     Expect create post to create a proposal.
     """
     create_topic_in_db(topics_table, db_conn)
-    response = clogin.post('/api/topics/wxyz7890/posts', data=json.dumps({
+    response = clogin.post('/api/topics/wxyz7890/posts/', data=json.dumps({
         'kind': 'proposal',
         'name': 'New Unit',
         'body': '''A Modest Proposal for Preventing the Children of Poor
@@ -425,7 +428,7 @@ def test_create_post_vote(app, db_conn, users_table, topics_table,
     """
     create_topic_in_db(topics_table, db_conn)
     create_proposal_in_db(posts_table, db_conn)
-    response = clogin.post('/api/topics/wxyz7890/posts', data=json.dumps({
+    response = clogin.post('/api/topics/wxyz7890/posts/', data=json.dumps({
         'kind': 'vote',
         'body': 'Hooray!',
         'proposal_id': 'jklm',
@@ -446,7 +449,7 @@ def test_update_post_login(app, db_conn, users_table, topics_table,
     create_topic_in_db(topics_table, db_conn)
     create_post_in_db(posts_table, db_conn)
     with app.test_client() as c:
-        response = c.put('/api/topics/wxyz7890/posts/jklm', data=json.dumps({
+        response = c.put('/api/topics/wxyz7890/posts/jklm/', data=json.dumps({
             'body': '''Update.''',
         }), content_type='application/json')
         assert response.status_code == 401
@@ -462,7 +465,7 @@ def test_update_post_author(app, db_conn, users_table, topics_table,
     """
     create_topic_in_db(topics_table, db_conn)
     create_post_in_db(posts_table, db_conn, user_id='1234yuio')
-    response = clogin.put('/api/topics/wxyz7890/posts/jklm', data=json.dumps({
+    response = clogin.put('/api/topics/wxyz7890/posts/jklm/', data=json.dumps({
         'body': '''Update.''',
     }), content_type='application/json')
     assert response.status_code == 403
@@ -478,7 +481,7 @@ def test_update_post_body(app, db_conn, users_table, topics_table,
     """
     create_topic_in_db(topics_table, db_conn)
     create_post_in_db(posts_table, db_conn)
-    response = clogin.put('/api/topics/wxyz7890/posts/jklm', data=json.dumps({
+    response = clogin.put('/api/topics/wxyz7890/posts/jklm/', data=json.dumps({
         'body': '''Update.''',
     }), content_type='application/json')
     assert response.status_code == 200
@@ -494,7 +497,7 @@ def test_update_proposal(app, db_conn, users_table, topics_table,
     """
     create_topic_in_db(topics_table, db_conn)
     create_proposal_in_db(posts_table, db_conn)
-    response = clogin.put('/api/topics/wxyz7890/posts/jklm', data=json.dumps({
+    response = clogin.put('/api/topics/wxyz7890/posts/jklm/', data=json.dumps({
         'status': 'declined'
     }), content_type='application/json')
     assert response.status_code == 200
@@ -523,7 +526,7 @@ def test_update_vote(app, db_conn, users_table, topics_table,
         'kind': 'vote',
     }).run(db_conn)
     response = clogin.put(
-        '/api/topics/wxyz7890/posts/vbnm1234',
+        '/api/topics/wxyz7890/posts/vbnm1234/',
         data=json.dumps({
             'body': 'Yay!',
             'response': True,

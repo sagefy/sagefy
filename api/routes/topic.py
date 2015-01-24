@@ -7,7 +7,7 @@ from flask import Blueprint, abort, jsonify, request
 from models.topic import Topic
 from flask.ext.login import current_user
 from modules.util import parse_args
-from modules.discuss import instance_post_facade
+from modules.discuss import instance_post_facade, create_post_facade
 
 
 topic = Blueprint('topic', __name__, url_prefix='/api/topics')
@@ -114,19 +114,35 @@ def create_post(topic_id):
         return abort(401)
 
     # TODO For proposal or flag, entity must be included and valid
+    kind = request.json.get('kind')
+    if kind in ('proposal', 'flag',):
+        pass
 
     # TODO For vote, must refer to a valid proposal
+    if kind == 'vote':
+        pass
 
-    # TODO The topic must be valid
+    # The topic must be valid
+    topic = Topic.get(id=request.json.get('topic_id'))
+    if not request.json.get('topic_id') or not topic:
+        return jsonify(errors=[{
+            'name': 'topic_id',
+            'message': 'Cannot find topic.',
+        }]), 404
 
-    # TODO Try to save the post (and others)
-
-    # TODO If error, show to user
+    # Try to save the post (and others)
+    post_data = dict(**request.json)
+    post_data['user_id'] = current_user.get_id()
+    post, errors = create_post_facade(post_data)
+    if len(errors):
+        return jsonify(errors=errors), 400
 
     # TODO If a proposal has sufficient votes, move it to canonical
     #      ... and close out any prior versions dependent
+    if kind == 'vote':
+        pass
 
-    # TODO Give user new URL
+    return jsonify(post=post.deliver())
 
 
 @topic.route('/<topic_id>/posts/<post_id>/', methods=['PUT', 'PATCH'])

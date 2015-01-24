@@ -17,13 +17,13 @@ def instance(data):
     based on the `kind` field.
     """
 
-    if data['kind'] == 'post':
+    if data.get('kind') == 'post':
         return Post(data)
-    if data['kind'] == 'proposal':
+    if data.get('kind') == 'proposal':
         return Proposal(data)
-    if data['kind'] == 'vote':
+    if data.get('kind') == 'vote':
         return Vote(data)
-    if data['kind'] == 'flag':
+    if data.get('kind') == 'flag':
         return Flag(data)
 
 
@@ -42,11 +42,11 @@ def get_posts_facade(limit=10, skip=0, **params):
     post is the correct kind based on the `kind` field.
     """
 
-    data = g.db.table('posts') \
-            .filter(params) \
-            .skip(skip) \
-            .limit(limit) \
-            .run(g.db_conn)
+    data = (g.db.table('posts')
+                .filter(params)
+                .skip(skip)
+                .limit(limit)
+                .run(g.db_conn))
     return [instance(d) for d in data]
 
 
