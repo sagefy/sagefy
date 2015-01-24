@@ -8,6 +8,7 @@ from models.topic import Topic
 from flask.ext.login import current_user
 from modules.util import parse_args
 from modules.discuss import instance_post_facade, create_post_facade
+from modules.content import get as _
 
 
 topic = Blueprint('topic', __name__, url_prefix='/api/topics')
@@ -65,13 +66,26 @@ def update_topic(topic_id):
     if not current_user.is_authenticated():
         return abort(401)
 
-    # TODO Must be a valid topic_id
+    # Must be a valid topic_id
+    topic = Topic.get(id=request.json.get('topic_id'))
+    if not topic:
+        return jsonify(errors=[{
+            'name': 'topic_id',
+            'message': _('discuss', 'no_topic'),
+        }]), 404
 
-    # TODO Request must only be for name
+    # Must be logged in as topic's author
+    if topic['user_id'] != current_user.get_id():
+        return abort(403)
 
-    # TODO Must be logged in as topic's author
+    # Request must only be for name
+    topic, errors = topic.update({
+        'name': request.json.get('name')
+    })
+    if errors:
+        return jsonify(errors=errors), 400
 
-    # TODO Update and notify user
+    return jsonify(topic=topic.deliver())
 
 
 @topic.route('/<topic_id>/posts/', methods=['GET'])
@@ -127,7 +141,7 @@ def create_post(topic_id):
     if not request.json.get('topic_id') or not topic:
         return jsonify(errors=[{
             'name': 'topic_id',
-            'message': 'Cannot find topic.',
+            'message': _('discuss', 'no_topic'),
         }]), 404
 
     # Try to save the post (and others)

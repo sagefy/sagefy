@@ -8,14 +8,15 @@ import json
 import rethinkdb as r
 
 
-def create_topic_in_db(topics_table, db_conn):
+def create_topic_in_db(topics_table, db_conn, user_id='abcd1234'):
     topics_table.insert({
         'id': 'wxyz7890',
         'created': r.now(),
         'modified': r.now(),
+        'user_id': user_id,
         'name': 'A Modest Proposal',
         'entity': {
-            'entity_id': 'efgh5678',
+            'id': 'efgh5678',
             'kind': 'unit'
         }
     }).run(db_conn)
@@ -176,50 +177,53 @@ def test_create_topic_no_post(app, db_conn, users_table, topics_table,
     assert 'errors' in data
 
 
-@xfail
+# @xfail
 def test_topic_update(app, db_conn, users_table, topics_table,
                       posts_table, clogin):
     """
     Expect to update topic name.
     """
     create_topic_in_db(topics_table, db_conn)
-    response = clogin.put('/api/topics/', data=json.dumps({
+    response = clogin.put('/api/topics/wxyz7890/', data=json.dumps({
         'name': 'Another entity',
+        'topic_id': 'wxyz7890',
     }), content_type='application/json')
-    assert response.status_code == 200
     data = json.loads(response.data.decode('utf-8'))
+    assert response.status_code == 200
     assert data['topic']['name'] == 'Another entity'
 
 
-@xfail
+# @xfail
 def test_update_topic_author(app, db_conn, users_table, topics_table,
                              posts_table, clogin):
     """
     Expect update topic to require original author.
     """
-    create_topic_in_db(topics_table, db_conn)
-    response = clogin.put('/api/topics/', data=json.dumps({
+    create_topic_in_db(topics_table, db_conn, user_id="qwerty")
+    response = clogin.put('/api/topics/wxyz7890/', data=json.dumps({
         'name': 'Another entity',
+        'topic_id': 'wxyz7890',
     }), content_type='application/json')
-    assert response.status_code == 403
     data = json.loads(response.data.decode('utf-8'))
+    assert response.status_code == 403
     assert 'errors' in data
 
 
-@xfail
+# @xfail
 def test_update_topic_fields(app, db_conn, users_table, topics_table,
                              posts_table, clogin):
     """
     Expect update topic to only change name.
     """
     create_topic_in_db(topics_table, db_conn)
-    response = clogin.put('/api/topics/', data=json.dumps({
+    response = clogin.put('/api/topics/wxyz7890/', data=json.dumps({
+        'topic_id': 'wxyz7890',
         'entity': {
             'kind': 'set'
         }
     }), content_type='application/json')
-    assert response.status_code == 400
     data = json.loads(response.data.decode('utf-8'))
+    assert response.status_code == 400
     assert 'errors' in data
 
 
