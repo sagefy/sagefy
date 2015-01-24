@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 24
+-----------
+
+Reading up on RethinkDB, particularly queries.
+
 2015 Jan 23
 -----------
 
