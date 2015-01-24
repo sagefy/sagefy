@@ -7,7 +7,8 @@ from flask import Blueprint, abort, jsonify, request
 from models.topic import Topic
 from flask.ext.login import current_user
 from modules.util import parse_args
-from modules.discuss import instance_post_facade, create_post_facade
+from modules.discuss import instance_post_facade, create_post_facade, \
+    get_post_facade
 from modules.content import get as _
 
 
@@ -173,12 +174,17 @@ def update_post(topic_id, post_id):
     if not current_user.is_authenticated():
         return abort(401)
 
-    # TODO Must be user's own post
+    post = get_post_facade(post_id)
+
+    # Must be user's own post
+    if post['user_id'] != current_user.get_id():
+        return abort(403)
 
     # TODO If proposal, make sure its allowed changes
+    if post['kind'] == 'proposal':
+        pass
 
-    # TODO Attempt to update
-
-    # TODO If errors, report
-
-    # TODO Notify user of success
+    post, errors = post.update(request.json)
+    if errors:
+        return jsonify(errors=errors), 401
+    return jsonify(post=post.deliver())

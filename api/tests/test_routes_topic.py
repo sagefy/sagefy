@@ -177,7 +177,6 @@ def test_create_topic_no_post(app, db_conn, users_table, topics_table,
     assert 'errors' in data
 
 
-# @xfail
 def test_topic_update(app, db_conn, users_table, topics_table,
                       posts_table, clogin):
     """
@@ -193,7 +192,6 @@ def test_topic_update(app, db_conn, users_table, topics_table,
     assert data['topic']['name'] == 'Another entity'
 
 
-# @xfail
 def test_update_topic_author(app, db_conn, users_table, topics_table,
                              posts_table, clogin):
     """
@@ -209,7 +207,6 @@ def test_update_topic_author(app, db_conn, users_table, topics_table,
     assert 'errors' in data
 
 
-# @xfail
 def test_update_topic_fields(app, db_conn, users_table, topics_table,
                              posts_table, clogin):
     """
@@ -443,7 +440,6 @@ def test_create_post_vote(app, db_conn, users_table, topics_table,
     assert data['post']['kind'] == 'vote'
 
 
-@xfail
 def test_update_post_login(app, db_conn, users_table, topics_table,
                            posts_table):
     """
@@ -461,7 +457,6 @@ def test_update_post_login(app, db_conn, users_table, topics_table,
         assert 'errors' in data
 
 
-@xfail
 def test_update_post_author(app, db_conn, users_table, topics_table,
                             posts_table, clogin):
     """
@@ -477,7 +472,6 @@ def test_update_post_author(app, db_conn, users_table, topics_table,
     assert 'errors' in data
 
 
-@xfail
 def test_update_post_body(app, db_conn, users_table, topics_table,
                           posts_table, clogin):
     """
@@ -493,7 +487,6 @@ def test_update_post_body(app, db_conn, users_table, topics_table,
     assert 'Update' in data['post']['body']
 
 
-@xfail
 def test_update_proposal(app, db_conn, users_table, topics_table,
                          posts_table, clogin):
     """
@@ -504,12 +497,11 @@ def test_update_proposal(app, db_conn, users_table, topics_table,
     response = clogin.put('/api/topics/wxyz7890/posts/jklm/', data=json.dumps({
         'status': 'declined'
     }), content_type='application/json')
-    assert response.status_code == 200
     data = json.loads(response.data.decode('utf-8'))
-    assert 'declined' in data['proposal']['status']
+    assert response.status_code == 200
+    assert 'declined' in data['post']['status']
 
 
-@xfail
 def test_update_vote(app, db_conn, users_table, topics_table,
                      posts_table, clogin):
     """
@@ -528,13 +520,15 @@ def test_update_vote(app, db_conn, users_table, topics_table,
         'body': 'Boo!',
         'response': False,
         'kind': 'vote',
+        'replies_to_id': 'val2345t',
     }).run(db_conn)
     response = clogin.put(
         '/api/topics/wxyz7890/posts/vbnm1234/',
         data=json.dumps({
             'body': 'Yay!',
             'response': True,
-        }), content_type='application/json')
-    assert response.status_code == 200
+        }),
+        content_type='application/json')
     data = json.loads(response.data.decode('utf-8'))
-    assert True in data['vote']['response']
+    assert response.status_code == 200
+    assert True == data['post']['response']
