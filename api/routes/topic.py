@@ -8,7 +8,7 @@ from models.topic import Topic
 from flask.ext.login import current_user
 from modules.util import parse_args
 from modules.discuss import instance_post_facade, create_post_facade, \
-    get_post_facade
+    get_post_facade, get_posts_facade
 from modules.content import get as _
 
 
@@ -99,9 +99,20 @@ def get_posts(topic_id):
 
     args = parse_args(request.args)
 
-    # TODO Is the topic valid?
+    # Is the topic valid?
+    topic = Topic.get(id=topic_id)
+    if not topic:
+        return jsonify(errors=[{
+            'name': 'topic_id',
+            'message': _('discuss', 'no_topic'),
+        }]), 404
 
-    # TODO Pull all kinds of posts
+    # Pull all kinds of posts
+    posts = get_posts_facade(
+        limit=args.get('limit') or 10,
+        skip=args.get('skip') or 0,
+        topic_id=topic_id
+    )
 
     # TODO For proposals, pull up the proposal entity version
 
@@ -113,7 +124,7 @@ def get_posts(topic_id):
     # TODO Make a diff between the latest canonical
     #       ... and the proposal entity version
 
-    # TODO Return all data to user
+    return jsonify(posts=[p.deliver() for p in posts])
 
 
 @topic.route('/<topic_id>/posts/', methods=['POST'])
