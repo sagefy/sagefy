@@ -9,4 +9,4 @@ def test_get_card():
     Expect to get the card information for displaying to a contributor.
     """
 
-    pass
+    assert False

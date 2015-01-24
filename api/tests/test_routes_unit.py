@@ -9,4 +9,4 @@ def test_get_unit():
     Expect to get the unit information for displaying to a contributor.
     """
 
-    pass
+    assert False

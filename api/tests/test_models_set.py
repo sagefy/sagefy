@@ -11,7 +11,7 @@ def test_entity(app, db_conn, sets_table):
     """
     Expect a set to require an entity_id.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -19,7 +19,7 @@ def test_previous(app, db_conn, sets_table):
     """
     Expect a set to allow a previous version id.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -27,7 +27,7 @@ def test_language(app, db_conn, sets_table):
     """
     Expect a set to require a language.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -35,7 +35,7 @@ def test_name(app, db_conn, sets_table):
     """
     Expect a set to require a name.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -43,7 +43,7 @@ def test_body(app, db_conn, sets_table):
     """
     Expect a set to require a body.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -51,7 +51,7 @@ def test_canonical(app, db_conn, sets_table):
     """
     Expect a set canonical to be a boolean.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -59,7 +59,7 @@ def test_tags(app, db_conn, sets_table):
     """
     Expect a set to allow tags.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -67,7 +67,7 @@ def test_members(app, db_conn, sets_table):
     """
     Expect a set to record a list of members.
     """
-    return False
+    assert False
 
 
 def test_latest_canonical(app, db_conn, sets_table):

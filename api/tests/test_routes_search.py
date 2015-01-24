@@ -8,7 +8,7 @@ def test_search(app, db_conn):
     """
     Expect to search by query.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -16,7 +16,7 @@ def test_search_topics(app, db_conn):
     """
     Expect to search only topics.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -25,7 +25,7 @@ def test_search_language(app, db_conn, users_table, topics_table,
     """
     Expect to search by language.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -34,7 +34,7 @@ def test_search_topics_user(app, db_conn, users_table, topics_table,
     """
     Expect to search topics by user.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -43,7 +43,7 @@ def test_search_topics_versions(app, db_conn, users_table, topics_table,
     """
     Expect to search for versions.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -52,7 +52,7 @@ def test_search_sort(app, db_conn, users_table, topics_table,
     """
     Expect to sort in search.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -61,7 +61,7 @@ def test_search_paginate(app, db_conn, users_table, topics_table,
     """
     Expect to paginate in search.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -70,4 +70,4 @@ def test_search_blank(app, db_conn, users_table, topics_table,
     """
     Expect a blank search result.
     """
-    return False
+    assert False

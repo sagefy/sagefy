@@ -13,10 +13,10 @@ def test_get():
 @xfail
 def test_get_default():
     # Expect to show English if language isn't available.
-    return False
+    assert False
 
 
 @xfail
 def test_get_no_country():
     # Expect to show base language if missing country-specific.
-    return False
+    assert False

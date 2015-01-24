@@ -9,7 +9,7 @@ def test_follow():
     Expect to follow an entity.
     """
 
-    return False
+    assert False
 
 
 @xfail
@@ -18,4 +18,4 @@ def test_unfollow():
     Expect to unfollow an entity.
     """
 
-    return False
+    assert False

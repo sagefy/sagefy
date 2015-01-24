@@ -47,7 +47,7 @@ def test_create_instance(app, db_conn, users_table):
     """
     Expect to create a model instance. Be able to pass in data too...
     """
-    return False
+    assert False
 
 
 def test_table_instance(app, db_conn, users_table):
@@ -64,7 +64,7 @@ def test_get_item(app, db_conn, users_table):
     """
     Expect to get an item from the model.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -72,7 +72,7 @@ def test_set_item(app, db_conn, users_table):
     """
     Expect to set an item in the model.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -80,7 +80,7 @@ def test_del_item(app, db_conn, users_table):
     """
     Expect to remove an item in the model.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -88,7 +88,7 @@ def test_has_item(app, db_conn, users_table):
     """
     Expect to test if model has an item.
     """
-    return False
+    assert False
 
 
 def test_get_id(app, db_conn, users_table):
@@ -206,7 +206,7 @@ def test_validate(app, db_conn, users_table):
     """
     Expect to validate a model.
     """
-    return False
+    assert False
 
 
 @xfail
@@ -214,7 +214,7 @@ def test_bundle(app, db_conn, users_table):
     """
     Expect to...
     """
-    return False
+    assert False
 
 
 @xfail
@@ -222,7 +222,7 @@ def test_default(app, db_conn, users_table):
     """
     Expect to...
     """
-    return False
+    assert False
 
 
 @xfail
@@ -230,7 +230,7 @@ def test_deliver(app, db_conn, users_table):
     """
     Expect to...
     """
-    return False
+    assert False
 
 
 @xfail
@@ -238,7 +238,7 @@ def test_access(app, db_conn, users_table):
     """
     Expect to...
     """
-    return False
+    assert False
 
 
 def test_insert(app, db_conn, users_table):
