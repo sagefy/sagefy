@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 23
+-----------
+
+First draft (and passing tests!) for the topics routes.
+
 2015 Jan 22
 -----------
 

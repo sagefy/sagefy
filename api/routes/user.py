@@ -113,7 +113,7 @@ def create_password():
 
 @user.route('/<user_id>/menu/', methods=['GET'])
 def get_menu(user_id):
-    """
+    """TODO
     Get the list of menu items given the user's context.
     """
     pass
@@ -121,7 +121,7 @@ def get_menu(user_id):
 
 @user.route('/<user_id>/sets/', methods=['GET'])
 def get_user_sets(user_id):
-    """
+    """TODO
     Get the list of sets the user has added.
     """
     pass
@@ -129,7 +129,7 @@ def get_user_sets(user_id):
 
 @user.route('/<user_id>/sets/', methods=['POST'])
 def add_set(user_id):
-    """
+    """TODO
     Add a set to the learner's list of sets.
     """
     pass
@@ -137,7 +137,7 @@ def add_set(user_id):
 
 @user.route('/<user_id>/sets/<set_id>/', methods=['DELETE'])
 def remove_set(user_id, set_id):
-    """
+    """TODO
     Remove a set from the learner's list of sets.
     """
     pass

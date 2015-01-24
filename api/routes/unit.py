@@ -7,7 +7,7 @@ unit = Blueprint('unit', __name__, url_prefix='/api/units')
 
 @unit.route('/<unit>/', methods=['GET'])
 def get_unit(unit_id):
-    """
+    """TODO
     Get a specific unit given an ID.
     """
     pass

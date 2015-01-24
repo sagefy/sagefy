@@ -9,7 +9,7 @@ set_ = Blueprint('set_', __name__, url_prefix='/api/sets')
 
 @set_.route('/<set_id>/', methods=['GET'])
 def get_set(set_id):
-    """
+    """TODO
     Get a specific set given an ID.
     """
     pass
@@ -17,7 +17,7 @@ def get_set(set_id):
 
 @set_.route('/<set_id>/tree/', methods=['GET'])
 def get_set_tree(set_id):
-    """
+    """TODO
     Render the tree of units that exists within a set.
     """
     pass
@@ -25,7 +25,7 @@ def get_set_tree(set_id):
 
 @set_.route('/<set_id>/units/', methods=['GET'])
 def get_set_units(set_id):
-    """
+    """TODO
     Render the units that exist within the set.
     Specifically, present a small number of units the learner can choose
     from.
@@ -35,7 +35,7 @@ def get_set_units(set_id):
 
 @set_.route('/<set_id>/units/<unit_id>/', methods=['POST', 'PUT'])
 def choose_unit(set_id, unit_id):
-    """
+    """TODO
     Updates the learner's information based on the unit they have chosen.
     """
     pass

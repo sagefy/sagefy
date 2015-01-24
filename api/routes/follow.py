@@ -7,7 +7,7 @@ follow = Blueprint('follow', __name__, url_prefix='/api/follows')
 
 @follow.route('/', methods=['POST'])
 def follow():
-    """
+    """TODO
     Current user follows an entity, topic, or proposal.
     """
     pass
@@ -15,7 +15,7 @@ def follow():
 
 @follow.route('/<follow_id>/', methods=['DELETE'])
 def unfollow():
-    """
+    """TODO
     Remove a follow. Must be current user's own follow.
     """
     pass
