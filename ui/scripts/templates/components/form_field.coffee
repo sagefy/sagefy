@@ -1,50 +1,22 @@
-# TODO: break this up
-
 module.exports = (data) ->
-    if data.type is 'submit'
-        return """
-        <button type="submit">
-            <i class="fa fa-#{data.icon}"></i>
-            #{data.label}
-        </button>
-        """
+    classes = [
+        'form-field'
+        'form-field--' + data.type
+        'form-field--' + data.name
+    ].join(' ')
 
-    if data.type is 'message'
-        return """
-        <div class="form-field">
-            <label>#{data.title}</label>
-            <p class="form-field__description">#{data.description}</p>
-        </div>
-        """
+    html = "<div class=\"#{classes}\">"
 
-    required = data.validations.required
+    if data.title
+        html += require('./form_field_label')(data)
 
-    # TODO: move copy to content directory  Required/Optional
-    html = """
-    <div class="form-field form-field--#{data.type}} form-field--#{data.name}">
-        <label for="#{data.name}">
-            #{data.title}
-            <span class="#{if required then "required" else "optional"}">
-                #{if required then "Required" else "Optional"}
-            </span>
-        </label>
-    """
-
-    html += switch data.type
+    switch data.type
         when 'text', 'email', 'password'
-            """
-            <input
-                id="#{data.name}"
-                name="#{data.name}"
-                placeholder="#{data.placeholder or ''}"
-                type="#{data.type}"
-                value="#{data.value or ''}"
-            >
-            """
+            html += require('./form_field_input')(data)
+        when 'submit', 'button'
+            html += require('./form_field_button')(data)
 
     if data.description
-        html += """
-            <p class="form-field__description">#{data.description}</p>
-        """
+        html += "<p class=\"form-field__description\">#{data.description}</p>"
 
     return html + '</div>'

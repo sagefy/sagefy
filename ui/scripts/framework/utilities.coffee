@@ -9,7 +9,7 @@ Element.prototype.matches = Element.prototype.matches or
                             Element.prototype.oMatchesSelector or
                             Element.prototype.msMatchesSelector
 
-_ = {}
+util = {}
 
 [
     'Object'
@@ -19,50 +19,50 @@ _ = {}
     'String'
     'RegExp'
 ].forEach((type) ->
-    _['is' + type] = (a) ->
+    util['is' + type] = (a) ->
         return Object::toString.call(a) is '[object ' + type + ']'
 )
 
-_.isUndefined = (a) ->
+util.isUndefined = (a) ->
     return typeof a is 'undefined'
 
-_.extend = (target, injects...) ->
+util.extend = (target, injects...) ->
     for inject in injects
         for prop, val of inject
-            if _.isUndefined(val)
+            if util.isUndefined(val)
                 continue
             target[prop] = switch
-                when _.isDate(val)
+                when util.isDate(val)
                     new Date(val)
-                when _.isArray(val)
-                    target[prop] = [] unless _.isArray(target[prop])
-                    _.extend(target[prop], val)
-                when _.isObject(val)
-                    target[prop] = {} unless _.isObject(target[prop])
-                    _.extend(target[prop], val)
+                when util.isArray(val)
+                    target[prop] = [] unless util.isArray(target[prop])
+                    util.extend(target[prop], val)
+                when util.isObject(val)
+                    target[prop] = {} unless util.isObject(target[prop])
+                    util.extend(target[prop], val)
                 else val # number, boolean, string, regexp, null, function
     return target
 
 # Makes a copy of the array or object
-_.copy = (obj) ->
-    if _.isObject(obj)
-        return _.extend({}, obj)
-    if _.isArray(obj)
-        return _.extend([], obj)
-    if _.isDate(obj)
+util.copy = (obj) ->
+    if util.isObject(obj)
+        return util.extend({}, obj)
+    if util.isArray(obj)
+        return util.extend([], obj)
+    if util.isDate(obj)
         return new Date(obj)
     return obj
 
 # Try to parse a string as JSON
 # Otherwise just return the string
-_.parseJSON = (str) ->
+util.parseJSON = (str) ->
     try
         return JSON.parse(str)
     catch e
         return str
 
 # Find the closest element matching the given selector
-_.closest = (element, top, selector) ->
+util.closest = (element, top, selector) ->
     while not element.matches(selector)
         element = element.parentNode
         if element is top
@@ -71,7 +71,7 @@ _.closest = (element, top, selector) ->
 
 # Wait for function to stop being called for `delay`
 # milliseconds, and then finally call the real function.
-_.debounce = (fn, delay) ->
+util.debounce = (fn, delay) ->
     timer = null
     return (args...) ->
         clearTimeout(timer)
@@ -79,4 +79,4 @@ _.debounce = (fn, delay) ->
             fn.apply(this, args)
         , delay)
 
-module.exports = _
+module.exports = util

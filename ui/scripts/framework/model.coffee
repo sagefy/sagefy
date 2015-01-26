@@ -3,7 +3,7 @@ Models are a representation in the client of data on the server.
 ###
 
 Events = require('./events')
-_ = require('./utilities')
+util = require('./utilities')
 validations = require('./validations')
 
 class Model extends Events
@@ -19,7 +19,7 @@ class Model extends Events
 
     # Utility method, used by `fetch` and `save`
     makeUrl: (options = {}) ->
-        if _.isString(@url)
+        if util.isString(@url)
             return @url
         return @url(options)
 
@@ -30,8 +30,8 @@ class Model extends Events
     # Store the value. Can take either `key, value` or `options`.
     # Does not perform any validations.
     set: (key, value) ->
-        if _.isObject(key)
-            @attributes = _.extend(@attributes, key)
+        if util.isObject(key)
+            @attributes = util.extend(@attributes, key)
             @trigger('change', Object.keys(key))
         else
             @attributes[key] = value
@@ -137,7 +137,7 @@ class Model extends Events
         url = options.url
         if options.method is 'GET'
             url += if url.indexOf('?') > -1 then '&' else '?'
-            url += @parameterize(_.extend(
+            url += @parameterize(util.extend(
                 options.data or {}
                 {_: (+new Date())}  # Cachebreaker
             ))
@@ -150,7 +150,7 @@ class Model extends Events
         )
         @request.onload = ->
             if 400 > @status >= 200
-                options.done(_.parseJSON(@responseText), this)
+                options.done(util.parseJSON(@responseText), this)
             else
                 options.fail(Model::parseAjaxErrors(this), this)
         @request.onerror = ->
@@ -163,7 +163,7 @@ class Model extends Events
 
     # Convert an object to a query string for GET requests
     parameterize: (obj) ->
-        obj = _.copy(obj)
+        obj = util.copy(obj)
         pairs = []
         for key, value of obj
             pairs.push(
@@ -178,8 +178,8 @@ class Model extends Events
     parseAjaxErrors: (r) ->
         if not r.responseText
             return null
-        errors =  _.parseJSON(r.responseText)
-        if _.isString(errors)
+        errors =  util.parseJSON(r.responseText)
+        if util.isString(errors)
             return errors
         return errors.errors
 

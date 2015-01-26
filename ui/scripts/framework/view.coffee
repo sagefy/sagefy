@@ -6,7 +6,7 @@ Views are responsible for:
 ###
 
 Events = require('./events')
-_ = require('./utilities')
+util = require('./utilities')
 eventRegExp = /^(\S+) (.*)$/
 
 class View extends Events
@@ -112,7 +112,7 @@ class View extends Events
             else
                 key = match
             if (not selector) or
-               (key is e.type and _.closest(e.target, @el, selector))
+               (key is e.type and util.closest(e.target, @el, selector))
                 @[methodName].call(this, e)
 
 module.exports = View

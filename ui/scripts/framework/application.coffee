@@ -4,7 +4,6 @@ to them when the URL changes.
 ###
 
 Events = require('./events')
-_ = require('./utilities')
 history = window.history
 
 class Application extends Events

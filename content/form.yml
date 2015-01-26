@@ -1,2 +1,7 @@
 # Content that is specific to form components, but not specific to any
 # particular form.
+
+required:
+    en: Required
+optional:
+    en: Optional

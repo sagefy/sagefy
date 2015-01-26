@@ -1,5 +1,5 @@
 View = require('../../framework/view')
-_ = require('../../framework/utilities')
+util = require('../../framework/utilities')
 
 class ListView extends View
     constructor: ->
@@ -9,7 +9,7 @@ class ListView extends View
     render: (data) ->
         super
         for datum in data
-            view = new @View(_.extend({parent: this}, @viewOptions or {}))
+            view = new @View(util.extend({parent: this}, @viewOptions or {}))
             @views.push(view)
             @el.appendChild(view.el)
             view.render(datum)

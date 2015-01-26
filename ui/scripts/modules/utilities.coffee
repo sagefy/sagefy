@@ -1,21 +1,21 @@
 cookie = require('./cookie')
 
-_ = {}
+util = {}
 
 # Determine if the user is logged in
-_.isLoggedIn = ->
+util.isLoggedIn = ->
     return cookie.get('logged_in') is '1'
 
 # Capitalizes the first letter of a string
-_.ucfirst = (str) ->
+util.ucfirst = (str) ->
     return str.charAt(0).toUpperCase() + str.slice(1)
 
 # Replaces dashes and spaces with underscores, ready to be used in an URL
-_.underscored = (str) ->
+util.underscored = (str) ->
     return str.replace(/[-\s]+/g, '_').toLowerCase()
 
 # From Handlebars
-_.escape = (str) ->
+util.escape = (str) ->
     chars = {
         '&': '&amp;'
         '<': '&lt;'
@@ -31,7 +31,7 @@ _.escape = (str) ->
 
 # From http://ejohn.org/files/pretty.js
 # TODO: move copy to content directory
-_.timeAgo = (str) ->
+util.timeAgo = (str) ->
     diff = (new Date()).getTime() - (new Date(str)).getTime()
     days = Math.floor(diff / 86400000)
     hours = Math.floor(diff / 3600000)
@@ -44,4 +44,4 @@ _.timeAgo = (str) ->
     return '1 minute ago' if minutes is 1
     return 'Just now'
 
-module.exports = _
+module.exports = util

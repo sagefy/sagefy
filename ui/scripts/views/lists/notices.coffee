@@ -1,6 +1,5 @@
 ListView = require('./_list')
 NoticeView = require('../components/notice')
-_ = require('../../framework/utilities')
 
 class NoticesView extends ListView
     View: NoticeView

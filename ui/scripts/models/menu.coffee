@@ -1,5 +1,5 @@
 Model = require('../framework/model')
-_ = require('../framework/utilities')
+util = require('../framework/utilities')
 utilities = require('../modules/utilities')
 
 # TODO: move copy to content directory
@@ -45,7 +45,7 @@ class MenuModel extends Model
     # And set the default icon to be painfully obviously wrong
     _itemsBoilerplate: (items = {}) ->
         for name in @_names()
-            items[name] = _.extend({
+            items[name] = util.extend({
                 name: name
                 title: @ucfirst(name)
                 url: '/' + @underscored(name)

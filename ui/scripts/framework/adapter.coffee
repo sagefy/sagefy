@@ -1,5 +1,5 @@
 Events = require('./events')
-_ = require('./utilities')
+util = require('./utilities')
 
 ###
 The adapter is responsible for
@@ -35,7 +35,7 @@ class Adapter extends Events
 
     # Converts a string representation of URL to a RegExp representation
     getUrlRegExp: (url) ->
-        if _.isRegExp(url)
+        if util.isRegExp(url)
             return url
         return new RegExp(
             '^' +

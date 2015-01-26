@@ -3,7 +3,7 @@ UserModel = require('../models/user')
 View = require('../framework/view')
 FormView = require('../views/components/form')
 FormLayoutView = require('../views/layouts/form')
-_ = require('../framework/utilities')
+util = require('../framework/utilities')
 queryString = require('../modules/query_string')
 
 # TODO: trans
@@ -82,7 +82,7 @@ class PasswordAdapter extends FormAdapter
                 icon: 'check'
             }]
         for field in fields
-            _.extend(field, @model.fields[field.name] or {})
+            util.extend(field, @model.fields[field.name] or {})
         return fields
 
     getDescription: (state) ->
@@ -113,7 +113,7 @@ class PasswordAdapter extends FormAdapter
         window.location = '/dashboard'
 
     error: (errors) ->
-        if _.isArray(errors)
+        if util.isArray(errors)
             @form.errorMany(errors)
         else
             window.alert(errors)
@@ -123,7 +123,7 @@ class PasswordAdapter extends FormAdapter
             @model.getPasswordToken(@form.getValues())
         else if @state is 'password'
             qs = queryString()
-            @model.createPassword(_.extend({
+            @model.createPassword(util.extend({
                 id: qs.id
                 token: qs.token
             }, @form.getValues()))

@@ -1,6 +1,6 @@
 View = require('../../framework/view')
 fieldTemplate = require('../../templates/components/form_field')
-_ = require('../../framework/utilities')
+util = require('../../framework/utilities')
 
 # Generic Form View
 # Designed to be extended
@@ -30,7 +30,7 @@ class FormView extends View
     # And generates the fields HTML
     getFieldsHTML: (data) ->
         html = ''
-        for field in _.copy(@fields)
+        for field in util.copy(@fields)
             field.value = data[field.name]
             html += @fieldTemplate(field)
         return html
@@ -58,7 +58,7 @@ class FormView extends View
 
     getField: (fieldName) ->
         input = @el.querySelector("[name=\"#{fieldName}\"]")
-        return _.closest(input, @el, '.form-field')
+        return util.closest(input, @el, '.form-field')
 
     # Communicate that the form has been submitted
     submit: (e) ->
@@ -74,7 +74,7 @@ class FormView extends View
         @el.querySelector('[type="submit"]')
             .removeAttribute('disabled')
 
-    change: _.debounce((e) ->
+    change: util.debounce((e) ->
         @trigger('change', e.target.name, e.target.value)
     , 200)
 

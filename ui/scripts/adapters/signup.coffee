@@ -3,7 +3,7 @@ UserModel = require('../models/user')
 FormView = require('../views/components/form')
 FormLayoutView = require('../views/layouts/form')
 utilities = require('../modules/utilities')
-_ = require('../framework/utilities')
+util = require('../framework/utilities')
 
 # TODO: move copy to content directory
 
@@ -66,7 +66,7 @@ class SignupAdapter extends FormAdapter
             icon: 'user'
         }]
         for field in fields
-            _.extend(field, @model.fields[field.name] or {})
+            util.extend(field, @model.fields[field.name] or {})
         return fields
 
     toDashboard: ->
@@ -74,7 +74,7 @@ class SignupAdapter extends FormAdapter
         window.location = '/dashboard'
 
     error: (errors) ->
-        if _.isArray(errors)
+        if util.isArray(errors)
             @form.errorMany(errors)
         else
             window.alert(errors)

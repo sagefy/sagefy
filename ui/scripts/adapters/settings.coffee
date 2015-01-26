@@ -2,7 +2,7 @@ FormAdapter = require('./form')
 UserModel = require('../models/user')
 FormView = require('../views/components/form')
 FormLayoutView = require('../views/layouts/form')
-_ = require('../framework/utilities')
+util = require('../framework/utilities')
 
 # TODO: move copy to content directory
 
@@ -58,14 +58,14 @@ class SettingsAdapter extends FormAdapter
             icon: 'check'
         }]
         for field in fields
-            _.extend(field, @model.fields[field.name] or {})
+            util.extend(field, @model.fields[field.name] or {})
         return fields
 
     showForm: ->
         @form.render(@model.attributes)
 
     error: (errors) ->
-        if _.isArray(errors)
+        if util.isArray(errors)
             @form.errorMany(errors)
         else
             window.alert(errors)

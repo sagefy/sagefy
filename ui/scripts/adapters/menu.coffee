@@ -1,5 +1,4 @@
 Events = require('../framework/events')
-_ = require('../framework/utilities')
 MenuModel = require('../models/menu')
 MenuView = require('../views/components/menu')
 

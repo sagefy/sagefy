@@ -1,6 +1,6 @@
 Application = require('../framework/application')
 MenuAdapter = require('../adapters/menu')
-_ = require('../framework/utilities')
+util = require('../framework/utilities')
 
 class Sagefy extends Application
     constructor: ->
@@ -20,7 +20,7 @@ class Sagefy extends Application
     bindLinks: ->
         # When we click an internal link, use `navigate` instead
         document.body.addEventListener('click', (e) =>
-            el = _.closest(e.target, document.body, 'a')
+            el = util.closest(e.target, document.body, 'a')
             if not el
                 return
 
