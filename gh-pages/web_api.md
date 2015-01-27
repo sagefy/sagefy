@@ -7,7 +7,7 @@ Errors will appear in the following format, along with the appropriate status co
 
 ```json
 {
-    errors: [{
+    "errors": [{
         "name": "field",
         "message": "The reason for the error."
     }]
