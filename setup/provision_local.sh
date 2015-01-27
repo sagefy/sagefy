@@ -33,17 +33,31 @@ sudo apt-get -y update
 sudo apt-get -y install rethinkdb
 rethinkdb --daemon --bind all
 
-### Elasticsearch #############################################################
+#### Elasticsearch ############################################################
 
 sudo apt-get -y install openjdk-7-jre-headless
 wget -qO - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
-echo "deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main" | sudo tee --append /etc/apt/sources.list
+echo "deb http://packages.elasticsearch.org/elasticsearch/1.4/debian stable main" | sudo tee --append /etc/apt/sources.list
 sudo apt-get -y update
 sudo apt-get -y install elasticsearch
 sudo update-rc.d elasticsearch defaults 95 10
 sudo /etc/init.d/elasticsearch start
-cd /usr/share/elasticsearch
-bin/plugin --install river-rethinkdb --url http://goo.gl/UkBm47
+# cd /usr/share/elasticsearch
+# bin/plugin --install river-rethinkdb --url http://goo.gl/UkBm47
+cd /var/www
+
+#### Kibana ###################################################################
+
+cd ~
+wget https://download.elasticsearch.org/kibana/kibana/kibana-4.0.0-beta3.tar.gz
+tar xvf kibana-4.0.0-beta3.tar.gz
+sudo mkdir -p /var/www/kibana
+sudo cp -R ~/kibana-4.0.0-beta3/* /var/www/kibana/
+rm kibana-4.0.0-beta3.tar.gz
+rm -R kibana-4.0.0-beta3
+cd /var/www/kibana
+ulimit -v unlimited
+# TO RUN: ./bin/kibana
 cd /var/www
 
 #### Redis ####################################################################

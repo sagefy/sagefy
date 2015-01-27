@@ -6,6 +6,8 @@ Sagefy Work Log
 
 **Weekly Goal**: #225, #95, #28, #167, #160
 
+Complete Setup Elasticsearch Admin UI #167.
+
 2015 Jan 25
 -----------
 

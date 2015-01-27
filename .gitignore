@@ -23,6 +23,7 @@ develop-eggs
 dist
 eggs
 htmlcov
+kibana
 lib
 lib64
 node_modules

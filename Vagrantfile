@@ -5,5 +5,9 @@ Vagrant.configure("2") do |config|
     config.vm.hostname = "doris"
     config.vm.network "forwarded_port", guest: 8080, host: 8080
     config.vm.network "forwarded_port", guest: 9200, host: 9200
+    config.vm.network "forwarded_port", guest: 5601, host: 5601
+    config.vm.provider :virtualbox do |vb|
+        vb.customize ["modifyvm", :id, "--cpus", "2", "--memory", "2048"]
+    end
     config.vm.network "private_network", ip: "192.168.122.114"
 end
