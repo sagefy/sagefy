@@ -1,5 +1,7 @@
-Sagefy Web API
-==============
+---
+layout: default
+title: Sagefy Web API
+---
 
 This document outlines the endpoints for Sagefy and their specifications.
 
