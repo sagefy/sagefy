@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 27
+-----------
+
+Fleshing out web API documentation.
+
 2015 Jan 26
 -----------
 
