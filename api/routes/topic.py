@@ -50,6 +50,9 @@ def create_topic():
     if len(errors + errors2):
         return jsonify(errors=errors + errors2), 400
 
+
+    # TODO validate topic entity is valid
+
     post, errors = post.save()
     topic, errors2 = topic.save()
     if len(errors + errors2):

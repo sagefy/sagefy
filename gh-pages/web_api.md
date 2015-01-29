@@ -265,21 +265,26 @@ Get User Menu
 
 `GET https://sagefy.org/api/users/{id}/menu/`
 
-...
+Get the list of menu items for the current user's state.
 
 ### Request Parameters
 
-Name | Default | Description
------|---------|------------
-... | ... | ...
+None
 
 ### Response Format
 
 ```json
-
+{
+    "items": [{
+        "name": "contact"
+        "title": "Contact",
+        "url": "/contact",
+        "icon": "envelope"
+    }]
+}
 ```
 
-Get User Sets
+TODO Get User Sets
 -------------
 
 `GET https://sagefy.org/api/users/{id}/sets/`
@@ -298,7 +303,7 @@ Get User Sets
 
 ```
 
-Add User Set
+TODO Add User Set
 ------------
 
 `POST https://sagefy.org/api/users/{id}/sets/`
@@ -318,7 +323,7 @@ Add User Set
 
 ```
 
-Remove User Set
+TODO Remove User Set
 ---------------
 
 `DELETE https://sagefy.org/api/users/{id}/sets/{id}/`
@@ -340,7 +345,7 @@ Cards
 
 ...
 
-Get Card Information
+TODO Get Card Information
 --------------------
 
 `GET https://sagefy.org/api/cards/{id}/`
@@ -352,7 +357,7 @@ not used for the learning interface.
 
 Name | Default | Description
 -----|---------|------------
-... | ... | ...
+...  | ...     | ...
 
 ### Response Format
 
@@ -360,7 +365,7 @@ Name | Default | Description
 
 ```
 
-Render Card for Learner
+TODO Render Card for Learner
 -----------------------
 
 `GET https://sagefy.org/api/cards/{id}/learn/`
@@ -371,7 +376,7 @@ Render the card's data, ready for learning.
 
 Name | Default | Description
 -----|---------|------------
-... | ... | ...
+...  | ...     | ...
 
 ### Response Format
 
@@ -379,7 +384,7 @@ Name | Default | Description
 
 ```
 
-Respond to Card
+TODO Respond to Card
 ---------------
 
 `POST https://sagefy.org/api/cards/{id}/responses/`
@@ -404,7 +409,7 @@ Units
 
 ...
 
-Get Unit Information
+TODO Get Unit Information
 --------------------
 
 `GET https://sagefy.org/api/units/{id}/`
@@ -428,7 +433,7 @@ Sets
 
 ...
 
-Get Set Information
+TODO Get Set Information
 -------------------
 
 `GET https://sagefy.org/api/sets/{id}/`
@@ -447,7 +452,7 @@ Name | Default | Description
 
 ```
 
-Get Set Tree
+TODO Get Set Tree
 ------------
 
 `GET https://sagefy.org/api/sets/{id}/tree/`
@@ -466,7 +471,7 @@ Name | Default | Description
 
 ```
 
-Show Available Units from Set
+TODO Show Available Units from Set
 -----------------------------
 
 `GET https://sagefy.org/api/sets/{id}/units/`
@@ -479,7 +484,7 @@ from.
 
 Name | Default | Description
 -----|---------|------------
-... | ... | ...
+...  | ...     | ...
 
 ### Response Format
 
@@ -487,7 +492,7 @@ Name | Default | Description
 
 ```
 
-Choose Unit
+TODO Choose Unit
 -----------
 
 `POST https://sagefy.org/api/sets/{id}/units/{id}/`
@@ -512,7 +517,7 @@ Sequencer
 
 ...
 
-Next
+TODO Next
 ----
 
 `GET https://sagefy.org/api/sequencer/next/`
@@ -523,7 +528,7 @@ Tell the learner where to go next.
 
 Name | Default | Description
 -----|---------|------------
-... | ... | ...
+...  | ...     | ...
 
 ### Response Format
 
@@ -536,7 +541,7 @@ Search
 
 ...
 
-Search
+TODO Search
 ------
 
 `GET https://sagefy.org/api/search/`
@@ -547,7 +552,7 @@ Search for entities.
 
 Name | Default | Description
 -----|---------|------------
-... | ... | ...
+...  | ...     | ...
 
 ### Response Format
 
@@ -629,7 +634,6 @@ Update the topic. Only the name can be changed. Only by original author.
 ```
 
 ### Response Format
-
 
 ```json
 {
@@ -762,15 +766,28 @@ Current user follows an entity, topic, or proposal.
 ### Request Format
 
 ```json
-
+{
+    "entity": {
+        "kind": "card",
+        "id": "fjk20tnJF"
+    }
+}
 ```
 
 ### Response Format
 
 
 ```json
-
+{
+    "user_id": "abcd1234",
+    "entity": {
+        "kind": "card",
+        "id": "fjk20tnJF"
+    }
+}
 ```
+
+Return 401 if not logged in. Return 400 if content issues.
 
 Unfollow
 --------
@@ -783,12 +800,11 @@ Remove a follow. Must be current user's own follow.
 
 None
 
-### Response Format
+### Response Format (204)
 
+None
 
-```json
-
-```
+Return 404 if it doesn't find that follow. Return 401 if not logged in. Return 403 if not own follow. Return 400 if other errors.
 
 Notices
 =======
@@ -842,7 +858,6 @@ None
 
 ### Response Format
 
-
 ```json
 {
     "notice": {
@@ -871,7 +886,6 @@ Return notice.
 None
 
 ### Response Format
-
 
 ```json
 {
