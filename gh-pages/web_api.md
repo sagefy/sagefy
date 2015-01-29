@@ -558,7 +558,7 @@ Name | Default | Description
 Topic
 =====
 
-...
+Topics, or threads, are the entity that hold a conversation, a list of posts. The Topic API handles both topics and posts, as posts always belong to a single topic.
 
 Create Topic
 ------------
@@ -571,15 +571,47 @@ Flag: if a flag for the same reason exists for the entity, create a vote there i
 ### Request Format
 
 ```json
-
+{
+    "topic": {
+        "name": "Lorem ipsum.",
+        "entity": {
+            "kind": "card",
+            "id": "fj204lasZ"
+        }
+    },
+    "post": {
+        "body": "Lorem ipsum.",
+        "kind": "post",
+        "replies_to_id": "a42lf9"
+    }
+}
 ```
+
+When creating a topic, you must also submit information for a valid post. There are four post kinds. All require the "kind" field filled out. Replies to ID is optional. Proposals also require an entity version ID, name, status, and action. Votes have optional bodies, but require "replies_to_id" and "response". Flag requires entity version ID, name, reason, and status.
 
 ### Response Format
 
-
 ```json
-
+{
+    "topic": {
+        "id": "fjkls234",
+        "name": "Lorem ipsum.",
+        "entity": {
+            "kind": "card",
+            "id": "fj204lasZ"
+        }
+    },
+    "post": {
+        "user_id": "ajfkl234",
+        "body": "Lorem ipsum.",
+        "kind": "post",
+        "replies_to_id": "a42lf9",
+        "topic_id": "fjkls234"
+    }
+}
 ```
+
+Returns 400 if missing or invalid topic or post information. Return 401 if not logged in as a user.
 
 Update Topic Name
 -----------------
@@ -591,15 +623,28 @@ Update the topic. Only the name can be changed. Only by original author.
 ### Request Format
 
 ```json
-
+{
+    "name": "Neo name."
+}
 ```
 
 ### Response Format
 
 
 ```json
-
+{
+    "topic": {
+        "id": "fjkls234",
+        "name": "Neo name.",
+        "entity": {
+            "kind": "card",
+            "id": "fj204lasZ"
+        }
+    }
+}
 ```
+
+401 if not logged in. 404 if topic by ID not found. 403 if not user's own topic. 400 if there's issues with the name field.
 
 Get Posts
 ---------
@@ -612,15 +657,26 @@ Paginates.
 
 ### Request Parameters
 
-Name | Default | Description
------|---------|------------
-... | ... | ...
+Name     | Default | Description
+---------|---------|------------
+limit    | null    | Maximum number of posts to return.
+skip     | 0       | Offset the return by count.
 
 ### Response Format
 
 ```json
-
+{
+    "posts": [{
+        "user_id": "ajfkl234",
+        "body": "Lorem ipsum.",
+        "kind": "post",
+        "replies_to_id": "a42lf9",
+        "topic_id": "fjkls234"
+    }]
+}
 ```
+
+Returns 404 if topic not found. Posts can be one of post, proposal, vote, or flag. The kind changes the field available.
 
 Create Post
 -----------
@@ -635,15 +691,27 @@ Vote: must refer to a proposal.
 ### Request Format
 
 ```json
-
+{
+    "body": "Lorem ipsum.",
+    "kind": "post",
+    "replies_to_id": "a42lf9"
+}
 ```
 
 ### Response Format
 
 
 ```json
-
+{
+    "user_id": "ajfkl234",
+    "body": "Lorem ipsum.",
+    "kind": "post",
+    "replies_to_id": "a42lf9",
+    "topic_id": "fjkls234"
+}
 ```
+
+401 if not logged in. 404 if topic not found. 400 if issue presented with content.
 
 Update Post
 -----------
@@ -659,15 +727,25 @@ the current status is pending or blocked.
 ### Request Format
 
 ```json
-
+{
+    "body": "Neo body."
+}
 ```
 
 ### Response Format
 
 
 ```json
-
+{
+    "user_id": "ajfkl234",
+    "body": "Neo body.",
+    "kind": "post",
+    "replies_to_id": "a42lf9",
+    "topic_id": "fjkls234"
+}
 ```
+
+401 if not logged in. 403 if not own post. 400 if issues with content.
 
 Follow
 ======
@@ -703,9 +781,7 @@ Remove a follow. Must be current user's own follow.
 
 ### Request Format
 
-```json
-
-```
+None
 
 ### Response Format
 

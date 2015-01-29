@@ -6,7 +6,7 @@ Includes topics, posts, proposals, votes, and flags.
 from flask import Blueprint, abort, jsonify, request
 from models.topic import Topic
 from flask.ext.login import current_user
-from modules.util import parse_args
+from modules.util import parse_args, omit
 from modules.discuss import instance_post_facade, create_post_facade, \
     get_post_facade, get_posts_facade
 from modules.content import get as _
@@ -195,7 +195,9 @@ def update_post(topic_id, post_id):
     if post['kind'] == 'proposal':
         pass
 
-    post, errors = post.update(request.json)
+    post_data = dict(**request.json)
+    post_data = omit(post_data, ('user_id', 'topic_id', 'kind'))
+    post, errors = post.update(post_data)
     if errors:
-        return jsonify(errors=errors), 401
+        return jsonify(errors=errors), 400
     return jsonify(post=post.deliver())
