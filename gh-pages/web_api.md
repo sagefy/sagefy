@@ -672,7 +672,7 @@ the current status is pending or blocked.
 Follow
 ======
 
-...
+Follows allow users to subscribe to updates on cards, units, and sets.
 
 Follow
 ------
@@ -717,7 +717,7 @@ Remove a follow. Must be current user's own follow.
 Notices
 =======
 
-...
+Notices provide updates to users on cards, units, and sets they follow.
 
 List Notices
 ------------
@@ -728,15 +728,28 @@ List notices for current user.
 
 ### Request Parameters
 
-Name | Default | Description
------|---------|------------
-... | ... | ...
+Name  | Default | Description
+------|---------|------------
+limit | null    | Maximum number of notices to return.
+skip  | 0       | Offset in returned set.
+tag   | ''      | Filter by a specific tag.
+read  | null    | Filter by read or unread notices.
 
 ### Response Format
 
 ```json
-
+{
+    "notices": [{
+        "id": "abcd1234",
+        "user_id": "fjskl234",
+        "kind": "new_proposal",
+        "read": false,
+        "tags": ["analyze"]
+    }]
+}
 ```
+
+Returns a 401 if there's no user currently logged in.
 
 Mark Notice as Read
 -------------------
@@ -749,16 +762,24 @@ Return notice.
 
 ### Request Format
 
-```json
-
-```
+None
 
 ### Response Format
 
 
 ```json
-
+{
+    "notice": {
+        "id": "abcd1234",
+        "user_id": "fjskl234",
+        "kind": "new_proposal",
+        "read": false,
+        "tags": ["analyze"]
+    }
+}
 ```
+
+Returns 401 if not logged in. Returns 404 if notice not found. Returns 403 if not user's own notice. Returns 400 if issues saving to the database.
 
 Mark Notice as Unread
 ---------------------
@@ -771,13 +792,21 @@ Return notice.
 
 ### Request Format
 
-```json
-
-```
+None
 
 ### Response Format
 
 
 ```json
-
+{
+    "notice": {
+        "id": "abcd1234",
+        "user_id": "fjskl234",
+        "kind": "new_proposal",
+        "read": false,
+        "tags": ["analyze"]
+    }
+}
 ```
+
+Returns 401 if not logged in. Returns 404 if notice not found. Returns 403 if not user's own notice. Returns 400 if issues saving to the database.
