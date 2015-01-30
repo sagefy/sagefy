@@ -284,51 +284,12 @@ None
 }
 ```
 
-TODO Get User Sets
+Get User Sets
 -------------
 
 `GET https://sagefy.org/api/users/{id}/sets/`
 
-...
-
-### Request Parameters
-
-```json
-
-```
-
-### Response Format
-
-```json
-
-```
-
-TODO Add User Set
-------------
-
-`POST https://sagefy.org/api/users/{id}/sets/`
-
-...
-
-### Request Format
-
-```json
-
-```
-
-### Response Format
-
-
-```json
-
-```
-
-TODO Remove User Set
----------------
-
-`DELETE https://sagefy.org/api/users/{id}/sets/{id}/`
-
-...
+Get the list of learner's sets.
 
 ### Request Parameters
 
@@ -337,15 +298,65 @@ None
 ### Response Format
 
 ```json
-
+{
+    "user_id": "fnsLJIoel",
+    "set_ids": ["fjkOTJRLEf"]
+}
 ```
+
+401 if not logged in. 403 if not current user.
+
+Add User Set
+------------
+
+`POST https://sagefy.org/api/users/{id}/sets/{id}`
+
+Add a set to the learner's list.
+
+### Request Format
+
+None
+
+### Response Format
+
+
+```json
+{
+    "user_id": "fnsLJIoel",
+    "set_ids": ["fjkOTJRLEf"]
+}
+```
+
+401 if not logged in. 403 if not current user. 404 if set not found. 409 if already added.
+
+Remove User Set
+---------------
+
+`DELETE https://sagefy.org/api/users/{id}/sets/{id}/`
+
+Remove a set from the learner's list.
+
+### Request Parameters
+
+None
+
+### Response Format
+
+```json
+{
+    "user_id": "fnsLJIoel",
+    "set_ids": ["fjkOTJRLEf"]
+}
+```
+
+401 if not logged in. 403 if not current user. 404 if set not found.
 
 Cards
 =====
 
-...
+Cards are the smallest entity in the Sagefy data structure system. A card represents a single learner activity.
 
-TODO Get Card Information
+Get Card Information
 --------------------
 
 `GET https://sagefy.org/api/cards/{id}/`
@@ -355,17 +366,26 @@ not used for the learning interface.
 
 ### Request Parameters
 
-Name | Default | Description
------|---------|------------
-...  | ...     | ...
+None
 
 ### Response Format
 
 ```json
-
+{
+    "card": {
+        "name": "Lorem ipsum.",
+        "body": "Lorem ipsum.",
+        "options": [{
+            "body": "Details...",
+            "correct": false
+        }]
+    }
+}
 ```
 
-TODO Render Card for Learner
+Always returns the latest canonical version. 404 if card not found.
+
+Render Card for Learner
 -----------------------
 
 `GET https://sagefy.org/api/cards/{id}/learn/`
@@ -374,17 +394,25 @@ Render the card's data, ready for learning.
 
 ### Request Parameters
 
-Name | Default | Description
------|---------|------------
-...  | ...     | ...
+None
 
 ### Response Format
 
 ```json
-
+{
+    "card": {
+        "name": "Lorem ipsum.",
+        "body": "Lorem ipsum.",
+        "options": [{
+            "body": "Details..."
+        }]
+    }
+}
 ```
 
-TODO Respond to Card
+Some data is filtered out, such as feedback and which answer is correct.
+
+Respond to Card
 ---------------
 
 `POST https://sagefy.org/api/cards/{id}/responses/`
@@ -394,22 +422,31 @@ Record and process a learner's response to a card.
 ### Request Format
 
 ```json
-
+{
+    "card_id": "zFK2201",
+    "response": 3
+}
 ```
 
-### Response Format
-
+### Response Format (200)
 
 ```json
-
+{
+    "response": {
+        "user_id": "Fj2Fo3L",
+        "card_id": "zFK2201",
+        "unit_id": "Y2o081l",
+        "score": 1
+    }
+}
 ```
 
 Units
 =====
 
-...
+A unit is the medium size in the Sagefy data structure system. A unit represents a unit of learning activity.
 
-TODO Get Unit Information
+Get Unit Information
 --------------------
 
 `GET https://sagefy.org/api/units/{id}/`
@@ -418,22 +455,30 @@ Get a specific unit given an ID.
 
 ### Request Parameters
 
-Name | Default | Description
------|---------|------------
-... | ... | ...
+None
 
 ### Response Format
 
 ```json
-
+{
+    "unit": {
+        "language": "en",
+        "name": "Lorem ipsum.",
+        "body": "Lorem ipsum.",
+        "tags": ["analyze"],
+        "requires_ids": ["a5kJ3kj"]
+    }
+}
 ```
+
+Always returns the latest canonical version. 404 if card not found.
 
 Sets
 ====
 
-...
+A set is a collection of units and other sets.
 
-TODO Get Set Information
+Get Set Information
 -------------------
 
 `GET https://sagefy.org/api/sets/{id}/`
@@ -442,17 +487,26 @@ Get a specific set given an ID.
 
 ### Request Parameters
 
-Name | Default | Description
------|---------|------------
-... | ... | ...
+None
 
 ### Response Format
 
 ```json
-
+{
+    "set": {
+        "language": "en",
+        "name": "Lorem ipsum.",
+        "body": "Lorem ipsum.",
+        "tags": ["Y950fnNo"]
+        "members": [{
+            "id": "9JmFKI04",
+            "kind": "unit"
+        }]
+    }
+}
 ```
 
-TODO Get Set Tree
+Get Set Tree
 ------------
 
 `GET https://sagefy.org/api/sets/{id}/tree/`
@@ -461,17 +515,21 @@ Render the tree of units that exists within a set.
 
 ### Request Parameters
 
-Name | Default | Description
------|---------|------------
-... | ... | ...
+None
 
 ### Response Format
 
 ```json
-
+{
+    "units": {
+        "fRjglO0": ["59JkflsoT", "Jn34NFKo0"]
+    }
+}
 ```
 
-TODO Show Available Units from Set
+404 if set not found.
+
+Show Available Units from Set
 -----------------------------
 
 `GET https://sagefy.org/api/sets/{id}/units/`
@@ -482,17 +540,25 @@ from.
 
 ### Request Parameters
 
-Name | Default | Description
------|---------|------------
-...  | ...     | ...
+None
 
 ### Response Format
 
 ```json
-
+{
+    "units": [{
+        "language": "en",
+        "name": "Lorem ipsum.",
+        "body": "Lorem ipsum.",
+        "tags": ["analyze"],
+        "requires_ids": ["a5kJ3kj"]
+    }]
+}
 ```
 
-TODO Choose Unit
+401 if not logged in. 404 if set not found. 400 if it doesn't make sense.
+
+Choose Unit
 -----------
 
 `POST https://sagefy.org/api/sets/{id}/units/{id}/`
@@ -501,23 +567,20 @@ Updates the learner's information based on the unit they have chosen.
 
 ### Request Format
 
-```json
+None
 
-```
+### Response Format (204)
 
-### Response Format
+None
 
-
-```json
-
-```
+401 if not logged in. 404 if set or unit not found. 400 if it doesn't make sense
 
 Sequencer
 =========
 
-...
+The sequencer is an abstract resource which only determines one thing: where to go next.
 
-TODO Next
+Next
 ----
 
 `GET https://sagefy.org/api/sequencer/next/`
@@ -526,22 +589,25 @@ Tell the learner where to go next.
 
 ### Request Parameters
 
-Name | Default | Description
------|---------|------------
-...  | ...     | ...
+None
 
 ### Response Format
 
 ```json
-
+{
+    "kind": "card",
+    "card_id": "aFN03O2m"
+}
 ```
+
+Can lead to a card, tree, or choose unit screen.
 
 Search
 ======
 
-...
+Site-wide search for cards, units, sets, users, topics, and posts.
 
-TODO Search
+Search
 ------
 
 `GET https://sagefy.org/api/search/`
@@ -550,14 +616,32 @@ Search for entities.
 
 ### Request Parameters
 
-Name | Default | Description
------|---------|------------
-...  | ...     | ...
+Name       | Default   | Description
+-----------|-----------|------------
+q          | null      | Text index based search query.
+skip       | 0         | Offset results by count.
+limit      | null      | Maximum number of results to return.
+entity     | null      |
+language   | null      |
+order      | relevance |
+as_learner | false     |
+user       | null      |
+topic      | null      | When entity is "post"
+unit       | null      | When entity is "card"
+canonical  | null      | When entity is "card", "unit", "set"
+tag        | null      |
+...        | ...       | ...
 
 ### Response Format
 
 ```json
-
+{
+    "results": [{
+        {
+            "table": "card",
+        }
+    }]
+}
 ```
 
 Topic
