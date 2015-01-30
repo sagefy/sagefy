@@ -8,7 +8,8 @@ history = window.history
 
 class Application extends Events
     # The application instance takes a list of adapters
-    constructor: (@Adapters...) ->
+    constructor: (Adapters...) ->
+        @Adapters = Adapters
         super
         @bindAdapter(Adapter) for Adapter in Adapters
         @bindPopState()
