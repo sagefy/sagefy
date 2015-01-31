@@ -4,12 +4,19 @@ utilities = require('../modules/utilities')
 class PageAdapter extends Adapter
     constructor: (options) ->
         super
-        if @requireLogin and not utilities.isLoggedIn()
+        @render()
+
+    requireLogin: ->
+        test = not utilities.isLoggedIn()
+        if test
             @navigate('/login')
-        else if @requireLogout and utilities.isLoggedIn()
+        return test
+
+    requireLogout: ->
+        test = utilities.isLoggedIn()
+        if test
             @navigate('/dashboard')
-        else
-            @render()
+        return test
 
     render: ->
         @page = document.querySelector('.page')

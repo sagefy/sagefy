@@ -22,12 +22,6 @@ class PasswordAdapter extends FormAdapter
         })
         @changeState(@getState())
 
-    remove: ->
-        @view.remove()
-        @form.remove()
-        @model.remove()
-        super
-
     getState: ->
         qs = window.location.search
         if qs.indexOf('token') > -1
@@ -54,6 +48,7 @@ class PasswordAdapter extends FormAdapter
         @bindEvents()
 
     bindEvents: ->
+        # Fully overwriting method
         @stopListening()
         @listenTo(@model, 'passwordToken', @toInbox.bind(this))
         @listenTo(@model, 'createPassword', @toDashboard.bind(this))
@@ -81,11 +76,11 @@ class PasswordAdapter extends FormAdapter
                 label: 'Change Password'
                 icon: 'check'
             }]
-        for field in fields
-            util.extend(field, @model.fields[field.name] or {})
+        fields = @addModelFields(fields)
         return fields
 
     getDescription: (state) ->
+        # TODO should this be a template?
         steps = [{
             name: 'email'
             title: '1. Enter Email'
@@ -111,12 +106,6 @@ class PasswordAdapter extends FormAdapter
     toDashboard: ->
         # Hard refresh to get the cookie
         window.location = '/dashboard'
-
-    error: (errors) ->
-        if util.isArray(errors)
-            @form.errorMany(errors)
-        else
-            window.alert(errors)
 
     post: ->
         if @state is 'email'

@@ -7,9 +7,9 @@ class IndexAdapter extends PageAdapter
     url: /^\/?$/
     title: 'Adaptive, Collaborative, and Open Learning Platform'
     # TODO: move copy to content directory
-    requireLogout: true
 
     render: ->
+        return if @requireLogout()
         super
         @view = new View({
             id: 'index'

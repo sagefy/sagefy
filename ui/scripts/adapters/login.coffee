@@ -10,9 +10,9 @@ utilities = require('../modules/utilities')
 class LoginAdapter extends FormAdapter
     url: '/login'
     title: 'Log In'
-    requireLogout: true
 
     render: ->
+        return if @requireLogout()
         super
         @model = new UserModel()
         @form = new FormView({fields: @getFields()})
@@ -34,21 +34,14 @@ class LoginAdapter extends FormAdapter
         })
         @view.form.appendChild(@form.el)
 
-        @listenTo(@model, 'login', @toDashboard.bind(this))
-        @listenTo(@model, 'error', @error.bind(this))
-        @listenTo(@model, 'invalid', @error.bind(this))
-        @listenTo(@form, 'submit', @validate.bind(this))
-        @listenTo(@form, 'change', @validateField.bind(this))
+        @bindEvents()
 
-
-    remove: ->
-        @view.remove()
-        @form.remove()
-        @model.remove()
+    bindEvents: ->
         super
+        @listenTo(@model, 'login', @toDashboard.bind(this))
 
     getFields: ->
-        fields = [{
+        return @addModelFields([{
             name: 'name'
             title: 'Username'
             placeholder: 'e.g. Unicorn'
@@ -60,30 +53,13 @@ class LoginAdapter extends FormAdapter
             type: 'submit'
             label: 'Log In'
             icon: 'sign-in'
-        }]
-        for field in fields
-            util.extend(field, @model.fields[field.name] or {})
-        return fields
+        }])
 
     toDashboard: ->
         # Hard redirect to get the cookie
         window.location = '/dashboard'
 
-    error: (errors) ->
-        if util.isArray(errors)
-            @form.errorMany(errors)
-        else
-            window.alert(errors)
-
     validate: ->
         @model.login(@form.getValues())
-
-    validateField: (name, value) ->
-        @model.set(name, value)
-        error = @model.validateField(name)
-        if error
-            @form.error(name, {message: error})
-        else
-            @form.clear(name)
 
 module.exports = LoginAdapter

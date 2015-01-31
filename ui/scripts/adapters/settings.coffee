@@ -9,9 +9,9 @@ util = require('../framework/utilities')
 class SettingsAdapter extends FormAdapter
     url: '/settings'
     title: 'Settings'
-    requireLogin: true
 
     render: ->
+        return if @requireLogin()
         super
         @model = new UserModel()
         @form = new FormView({fields: @getFields()})
