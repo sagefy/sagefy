@@ -12,41 +12,6 @@ def test_search(app, db_conn):
 
 
 @xfail
-def test_search_topics(app, db_conn):
-    """
-    Expect to search only topics.
-    """
-    assert False
-
-
-@xfail
-def test_search_language(app, db_conn, users_table, topics_table,
-                         posts_table):
-    """
-    Expect to search by language.
-    """
-    assert False
-
-
-@xfail
-def test_search_topics_user(app, db_conn, users_table, topics_table,
-                            posts_table):
-    """
-    Expect to search topics by user.
-    """
-    assert False
-
-
-@xfail
-def test_search_topics_versions(app, db_conn, users_table, topics_table,
-                                posts_table):
-    """
-    Expect to search for versions.
-    """
-    assert False
-
-
-@xfail
 def test_search_sort(app, db_conn, users_table, topics_table,
                      posts_table):
     """
@@ -69,5 +34,389 @@ def test_search_blank(app, db_conn, users_table, topics_table,
                       posts_table):
     """
     Expect a blank search result.
+    """
+    assert False
+
+
+@xfail
+def test_sort_created(app):
+    """
+    Expect to sort results by created at time.
+    """
+    assert False
+
+
+@xfail
+def test_sort_modified(app):
+    """
+    Expect to sort results by modified time.
+    """
+    assert False
+
+
+@xfail
+def test_sort_language(app):
+    """
+    Expect to filter results by language.
+    """
+    assert False
+
+
+@xfail
+def test_users(app):
+    """
+    Expect to filter results to users.
+    """
+    assert False
+
+
+@xfail
+def test_user_name(app):
+    """
+    Expect to search users by name.
+    """
+    assert False
+
+
+@xfail
+def test_topic(app):
+    """
+    Expect to filter results to topics.
+    """
+    assert False
+
+
+@xfail
+def test_topic_name(app):
+    """
+    Expect to search topics by name.
+    """
+    assert False
+
+
+@xfail
+def test_topic_entity(app):
+    """
+    Expect to filter topics by entity.
+    """
+    assert False
+
+
+@xfail
+def test_topic_entity_kind(app):
+    """
+    Expect to filter topics by entity kind.
+    """
+    assert False
+
+
+@xfail
+def test_topic_user(app):
+    """
+    Expect to filter topics by user.
+    """
+    assert False
+
+
+@xfail
+def test_topic_posts(app):
+    """
+    Expect to sort topics by number of posts.
+    """
+    assert False
+
+
+@xfail
+def test_post(app):
+    """
+    Expect to filter results to posts (all kinds).
+    """
+    assert False
+
+
+@xfail
+def test_post_body(app):
+    """
+    Expect to search posts by body.
+    """
+    assert False
+
+
+@xfail
+def test_post_topic(app):
+    """
+    Expect to filter posts by topic.
+    """
+    assert False
+
+
+@xfail
+def test_post_entity(app):
+    """
+    Expect to filter posts by entity.
+    """
+    assert False
+
+
+@xfail
+def test_post_entity_kind(app):
+    """
+    Expect to filter posts by entity kind.
+    """
+    assert False
+
+
+@xfail
+def test_post_user(app):
+    """
+    Expect to filter posts by user.
+    """
+    assert False
+
+
+@xfail
+def test_proposal(app):
+    """
+    Expect to filter to proposals.
+    """
+    assert False
+
+
+@xfail
+def test_proposal_status(app):
+    """
+    Expect to filter proposals by status.
+    """
+    assert False
+
+
+@xfail
+def test_proposal_action(app):
+    """
+    Expect to filter proposals by action.
+    """
+    assert False
+
+
+@xfail
+def test_flag(app):
+    """
+    Expect to filter to flags.
+    """
+    assert False
+
+
+@xfail
+def test_flag_status(app):
+    """
+    Expect to filter flags by status.
+    """
+    assert False
+
+
+@xfail
+def test_vote(app):
+    """
+    Expect to filter to votes.
+    """
+    assert False
+
+
+@xfail
+def test_vote_response(app):
+    """
+    Expect to filter votes by response.
+    """
+    assert False
+
+
+@xfail
+def test_card(app):
+    """
+    Expect to filter to cards.
+    """
+    assert False
+
+
+@xfail
+def test_card_name(app):
+    """
+    Expect to search cards by name and contents.
+    """
+    assert False
+
+
+@xfail
+def test_card_unit(app):
+    """
+    Expect to filter cards by unit.
+    """
+    assert False
+
+
+@xfail
+def test_card_require(app):
+    """
+    Expect to filter cards by requires.
+    """
+    assert False
+
+
+@xfail
+def test_card_required_by(app):
+    """
+    Expect to filter cards by required by.
+    """
+    assert False
+
+
+@xfail
+def test_card_kind(app):
+    """
+    Expect to filter cards by kind.
+    """
+    assert False
+
+
+@xfail
+def test_card_tag(app):
+    """
+    Expect to filter cards by tag.
+    """
+    assert False
+
+
+@xfail
+def test_unit(app):
+    """
+    Expect to filter to units.
+    """
+    assert False
+
+
+@xfail
+def test_unit_name(app):
+    """
+    Expect to search units by name and body.
+    """
+    assert False
+
+
+@xfail
+def test_unit_set(app):
+    """
+    Expect to filter units by sets.
+    """
+    assert False
+
+
+@xfail
+def test_unit_requires(app):
+    """
+    Expect to filter units by requires.
+    """
+    assert False
+
+
+@xfail
+def test_unit_required_by(app):
+    """
+    Expect to filter units by required by.
+    """
+    assert False
+
+
+@xfail
+def test_unit_tag(app):
+    """
+    Expect to filter units by tag.
+    """
+    assert False
+
+
+@xfail
+def test_unit_learners(app):
+    """
+    Expect to sort units by number of learners.
+    """
+    assert False
+
+
+@xfail
+def test_set(app):
+    """
+    Expect to filter to sets.
+    """
+    assert False
+
+
+@xfail
+def test_set_name(app):
+    """
+    Expect to search sets by name and body.
+    """
+    assert False
+
+
+@xfail
+def test_set_containing(app):
+    """
+    Expect to filter sets by unit containing.
+    """
+    assert False
+
+
+@xfail
+def test_set_tag(app):
+    """
+    Expect to filter sets by tag.
+    """
+    assert False
+
+
+@xfail
+def test_set_learners(app):
+    """
+    Expect to sort sets by number of learners.
+    """
+    assert False
+
+
+@xfail
+def test_version(app):
+    """
+    Expect to filter to versions.
+    """
+    assert False
+
+
+@xfail
+def test_version_name(app):
+    """
+    Expect to search versions by proposal name.
+    """
+    assert False
+
+
+@xfail
+def test_version_entity(app):
+    """
+    Expect to filter versions by entity.
+    """
+    assert False
+
+
+@xfail
+def test_version_entity_kind(app):
+    """
+    Expect to filter versions by entity kind.
+    """
+    assert False
+
+
+@xfail
+def test_version_canonical(app):
+    """
+    Expect to filter version by canonical.
     """
     assert False
