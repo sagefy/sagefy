@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Jan 30
+-----------
+
+Update to latest RethinkDB.
+
 2015 Jan 29
 -----------
 

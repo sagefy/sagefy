@@ -5,6 +5,6 @@ Flask-Mail==0.9.1
 Flask-Login==0.2.11
 py-bcrypt==0.4
 passlib==1.6.2
-rethinkdb>=1.15.0
+rethinkdb>=1.16.0
 pyyaml==3.11
 elasticsearch==1.2.0
