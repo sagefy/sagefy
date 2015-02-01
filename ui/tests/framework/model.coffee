@@ -93,7 +93,7 @@ describe('Model', ->
     describe('validate', ->
         beforeEach(->
             class @M extends Model
-                fields: {
+                schema: {
                     name: {
                         type: 'text'
                         validations: {
@@ -160,7 +160,7 @@ describe('Model', ->
             class @M extends Model
                 url: (options) ->
                     return '/apples/' + (@get('id') or options.id or  '')
-                fields: {
+                schema: {
                     name: {
                         type: 'text'
                         validations: {

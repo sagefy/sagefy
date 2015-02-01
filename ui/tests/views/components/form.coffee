@@ -24,9 +24,9 @@ describe('Form (Component)', ->
 
     )
 
-    it('should setup fields', ->
-        f = new Form({fields: [{}]})
-        expect(f.fields).to.be.an('array')
+    it('should setup schema', ->
+        f = new Form({schema: [{}]})
+        expect(f.schema).to.be.an('array')
     )
 
     it.skip('should create the fields html', ->

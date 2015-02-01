@@ -21,7 +21,7 @@ describe('User Model', ->
     )
 
     it('should define the appropriate fields', ->
-        expect(UserModel::fields).to.contain.keys('name')
+        expect(UserModel::schema).to.contain.keys('name')
             .and.to.contain.keys('email')
             .and.to.contain.keys('password')
     )
