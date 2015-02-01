@@ -13,6 +13,11 @@ Issues
     - Logs, as available.
 - For feature requests, consider adding it to [UserVoice](http://sagefy.uservoice.com/) instead. On UserVoice, the feature can be discussed and prioritized more easily.
 
+Contributing To Sagefy
+----------------------
+
+To get started, <a href="https://www.clahub.com/agreements/heiskr/sagefy">sign the Contributor License Agreement</a>.
+
 Pull Request Checklist
 ----------------------
 
