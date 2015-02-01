@@ -179,10 +179,13 @@ def update_post(topic_id, post_id):
     """
     Update an existing post. Must be one's own post.
 
-    For proposals:
+    For proposals and flags:
     The only field that can be updated is the status;
     the status can only be changed to declined, and only when
     the current status is pending or blocked.
+
+    For votes:
+    The only fields that can be updated are body and response.
     """
 
     if not current_user.is_authenticated():
@@ -195,7 +198,11 @@ def update_post(topic_id, post_id):
         return abort(403)
 
     # TODO If proposal, make sure its allowed changes
-    if post['kind'] == 'proposal':
+    if post['kind'] in ('proposal', 'flag'):
+        pass
+
+    # TODO If vote, make sure its allowed changes
+    if post['kind'] == 'vote':
         pass
 
     post_data = dict(**request.json)

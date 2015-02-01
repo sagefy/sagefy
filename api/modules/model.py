@@ -2,24 +2,11 @@ import rethinkdb as r
 from flask import g
 from modules.util import uniqid, omit, pick
 from modules.content import get as _
+from modules.classproperty import classproperty
 
 
 def update_modified(field):
     return r.now()
-
-
-class classproperty(object):  # flake8: noqa
-    def __init__(self, fn):
-        self.fn = fn
-
-    def __get__(self, ins, owner):
-        return self.fn(owner)
-
-    def __set__(self):
-        raise "Cannot set static class property."
-
-    def __delete__(self):
-        raise "Cannot delete static class property."
 
 
 class Model(object):
@@ -31,6 +18,8 @@ class Model(object):
     schema = {
         'id': {
             'default': uniqid
+            # RethinkDB by default uses UUID, but as its JSON,
+            # there's no reason to not use the full alphanumeric set
         },
         'created': {
             'default': r.now()
@@ -43,39 +32,67 @@ class Model(object):
     # Extend with: schema = dict(Parent.schema.copy(), **{ ... })
 
     # Avaliable per field:
-    # - validate  TODO explain each, options
-    # - bundle
-    # - default
-    # - deliver
-    # - access
-    # - unique
+    # - validate: a list of functions to run on the field.
+    #             return a string if error, None if okay
+    # - bundle:   before saving to the database,
+    #             transform the data
+    # - default:  default value of the field
+    #             can be a value or a function to call
+    # - deliver:  tranform the data before sending out to the client
+    #             can also be used for permissions
+    # - access:   control which client can access this field's information
+    # - unique:   True will check to make sure no other row has the same value
+    #             not needed on `id` field, as it is the primary key
 
     indexes = ()
     # A list of indexes for the table
 
-    # TODO docstrings
+    validations = ()
+    # A list of methods to run before saving,
+    # which can check class-level characteristics on the model
+
     def __init__(self, data=None):
-        self.data = {}
-        if data and self.strict:  # TODO during validate/save instead
-            data = pick(data, self.schema.keys())
-        if data:
-            self.data.update(data)  # TODO should this also happen elsewhere?
+        """
+        Initialize the model, setting defaults where needed.
+        """
+
+        self.data = data or {}
         self.defaults()
 
     def __getitem__(self, key):
+        """
+        Enable `model['field']`.
+        """
+
         return self.data.get(key)
 
     def __setitem__(self, key, value):
+        """
+        Enable `model['field'] = value`.
+        """
+
         self.data[key] = value
 
     def __delitem__(self, key):
+        """
+        Enable `del model['field']`.
+        """
+
         del self.data[key]
 
     def __contains__(self, item):
+        """
+        Enable `field in model`.
+        """
+
         return item in self.data
 
     @classproperty
     def table(self):
+        """
+        Refer to `self.table` and get a RethinkDB reference to the table.
+        """
+
         assert self.tablename, 'You must provide a tablename.'
         return g.db.table(self.tablename)
 
@@ -84,8 +101,41 @@ class Model(object):
         Ensure the data presented matches the validations in the schema.
         Allow all data that is not specified in the schema.
         """
-        errors = []
 
+        # To limit database queries, first we do strict checks, which
+        # takes no lookups. Then we validate fields, which are unlikely to
+        # have lookups. Then we test unique, which we know will have one lookup
+        # each. Finally we validate extras, which are likely to have multiple
+        # lookups.
+
+        errors = []
+        errors += self.enforce_strict_mode()
+        if not errors:
+            errors += self.validate_fields()
+        if not errors:
+            errors += self.test_unique()
+        if not errors:
+            errors += self.validate_extras()
+        return errors
+
+    def enforce_strict_mode(self):
+        """
+        If strict mode, remove any fields that aren't part of the schema
+        """
+
+        if self.strict:
+            self.data = pick(self.data, self.schema.keys())
+
+        return []
+        # For now, we'll just remove extra fields
+        # Later, we might want an option to throw errors instead
+
+    def validate_fields(self):
+        """
+        Iterate over the schema, ensuring that everything matches up.
+        """
+
+        errors = []
         for name, field_schema in self.schema.items():
             if 'validate' in field_schema:
                 for fn in field_schema['validate']:
@@ -99,13 +149,28 @@ class Model(object):
                             'message': error,
                         })
                         break
+        return errors
 
+    def validate_extras(self):
+        """
+        Finally, run any class level validations.
+        """
+
+        errors = []
+        for name, fn in self.validations:
+            error = fn(self)
+            if error:
+                errors.append({
+                    'name': name,
+                    'message': error,
+                })
         return errors
 
     def defaults(self):
         """
         Set up defaults for data if not applied.
         """
+
         for name, field_schema in self.schema.items():
             if 'default' in field_schema and self.data.get(name) is None:
                 if hasattr(field_schema['default'], '__call__'):
@@ -120,6 +185,7 @@ class Model(object):
         Consider default values and will call `bundle`
         in the schema if present.
         """
+
         data = self.data.copy()
 
         for name, field_schema in self.schema.items():
@@ -134,6 +200,7 @@ class Model(object):
         Consider access allowed and will call `deliver`
         in the schema if present.
         """
+
         data = self.data.copy()
 
         for name, field_schema in self.schema.items():
@@ -152,6 +219,7 @@ class Model(object):
         Get one model which matches the provided keyword arguments.
         Return None when there's no matching document.
         """
+
         data = None
         if params.get('id'):
             data = (cls.table
@@ -175,6 +243,7 @@ class Model(object):
         Get a list of models matching the provided keyword arguments.
         Return empty array when no models match.
         """
+
         data_list = (cls.table
                         .filter(params)
                         .run(g.db_conn))
@@ -186,6 +255,7 @@ class Model(object):
         Create a new model instance.
         Return model and errors if failed.
         """
+
         assert isinstance(data, dict)
         data = omit(data, ('id', 'created', 'modified'))
         instance = cls(data)
@@ -196,6 +266,7 @@ class Model(object):
         Update the model in the database.
         Return model and errors if failed.
         """
+
         assert isinstance(data, dict)
         data = omit(data, ('id', 'created', 'modified'))
         self.data.update(data)
@@ -206,10 +277,8 @@ class Model(object):
         Insert the model in the database.
         Return model and errors if failed.
         """
+
         errors = self.validate()
-        if len(errors):
-            return self, errors
-        errors = self.test_unique()
         if len(errors):
             return self, errors
         data = self.bundle()
@@ -222,6 +291,7 @@ class Model(object):
         """
         Pull the fields from the database.
         """
+
         data = (self.table
                     .get(self['id'])
                     .run(g.db_conn))
@@ -232,6 +302,7 @@ class Model(object):
         """
         Remove the model from the database.
         """
+
         (self.table
              .get(self['id'])
              .delete()
@@ -242,6 +313,7 @@ class Model(object):
         """
         Test all top-level fields marked as unique.
         """
+
         errors = []
         for name, value in self.data.items():
             if 'unique' not in self.schema[name]:

@@ -2,6 +2,17 @@ from modules.model import Model
 from modules.validations import is_required, is_string, is_one_of
 
 
+def is_valid_kind(value):
+    """
+    Must belong to the same topic
+    - TODO A post can reply to a post.
+    - TODO A proposal can reply to post, proposal, or flag.
+    - TODO A vote can reply to a proposal or flag.
+    - TODO A flag cannot be a reply.
+    """
+    # TODO
+
+
 class Post(Model):
     """A discussion post."""
     tablename = 'posts'
@@ -21,13 +32,7 @@ class Post(Model):
                          (is_one_of, 'post', 'proposal', 'vote', 'flag')),
             'default': 'post'
         },
-
-        # TODO Must belong to the same topic
-        # TODO a post can reply to a post, proposal, flag, or vote
-        # TODO a proposal can reply to post, proposal, or flag
-        # TODO a vote can reply to a proposal or flag
-        # TODO a flag cannot be a reply
         'replies_to_id': {
-            'validate': (is_string,)
+            'validate': (is_string, is_valid_kind)
         }
     })

@@ -37,6 +37,7 @@ class Notice(Model):
         Also adds pagination capabilities.
         Returns empty array when no models match.
         """
+        
         query = (cls.table
                     .order_by(r.desc('created'))
                     .filter(r.row['user_id'] == user_id)
@@ -52,15 +53,24 @@ class Notice(Model):
         return [cls(fields) for fields in fields_list]
 
     def mark_as_read(self):
-        """Marks the notice as read."""
+        """
+        Marks the notice as read.
+        """
+
         self['read'] = True
         return self.save()
 
     def mark_as_unread(self):
-        """Marks the notice as unread."""
+        """
+        Marks the notice as unread.
+        """
+
         self['read'] = False
         return self.save()
 
     def get_body(self):
-        """Get the copy associated with this notice."""
+        """
+        Get the copy associated with this notice.
+        """
+
         return _('notice', self['kind']).format(**{})

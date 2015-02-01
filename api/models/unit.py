@@ -6,6 +6,13 @@ import rethinkdb as r
 from flask import g
 
 
+def ensure_no_cycles(value):
+    """
+    Ensure no require cycles form.
+    """
+    # TODO
+
+
 class Unit(Model):
     """
     A unit is the medium size in the Sagefy data structure system.
@@ -53,7 +60,7 @@ class Unit(Model):
             'default': []
         },
         'requires_ids': {
-            'validate': (is_list,),
+            'validate': (is_list, ensure_no_cycles),
             'default': []
         },
     })
@@ -75,5 +82,3 @@ class Unit(Model):
 
         if fields:
             return cls(fields)
-
-    # TODO: Ensure no require cycles form

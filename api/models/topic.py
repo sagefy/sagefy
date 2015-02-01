@@ -3,7 +3,13 @@ from modules.validations import is_required, is_string, is_entity_dict
 
 
 class Topic(Model):
-    """A discussion topic."""
+    """
+    A discussion topic.
+
+    A topic must be created along with a post.
+    No topic should have no posts.
+    """
+
     tablename = 'topics'
 
     schema = dict(Model.schema.copy(), **{
@@ -17,6 +23,3 @@ class Topic(Model):
             'validate': (is_required, is_entity_dict,)
         }
     })
-
-    # TODO A topic must be created along with a post.
-    #      No topic should have no posts.

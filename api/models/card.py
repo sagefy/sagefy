@@ -6,6 +6,13 @@ import rethinkdb as r
 from flask import g
 
 
+def ensure_no_cycles(value):
+    """
+    Ensure no require cycles form.
+    """
+    # TODO
+
+
 class Card(Model):
     """
     Cards are the smallest entity in the Sagefy data structure system.
@@ -50,7 +57,7 @@ class Card(Model):
             'default': []
         },
         'requires_ids': {
-            'validate': (is_list,),
+            'validate': (is_list, ensure_no_cycles),
             'default': []
         },
         'kind': {
@@ -79,5 +86,3 @@ class Card(Model):
 
         if fields:
             return cls(fields)
-
-    # TODO: Ensure no require cycles form.

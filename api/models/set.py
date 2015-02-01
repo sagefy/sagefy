@@ -6,6 +6,13 @@ import rethinkdb as r
 from flask import g
 
 
+def ensure_no_cycles(value):
+    """
+    Ensure no membership cycles form.
+    """
+    # TODO
+
+
 class Set(Model):
     """
     A set is a collection of units and other sets.
@@ -48,7 +55,8 @@ class Set(Model):
             'default': []
         },
         'members': {
-            'validate': (is_required, is_entity_list_dict)
+            'validate': (is_required, is_entity_list_dict,
+                         ensure_no_cycles)
         }
     })
 

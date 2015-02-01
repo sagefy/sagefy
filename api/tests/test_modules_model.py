@@ -13,6 +13,11 @@ def encrypt_password(value):
         return '$2a$' + value
 
 
+def clean_password(instance):
+    if instance['name'] in instance['password']:
+        return 'Password cannot contain name.'
+
+
 class User(Model):
     tablename = 'users'
 
@@ -33,6 +38,10 @@ class User(Model):
         }
     })
 
+    validations = (
+        ('clean_password', clean_password),
+    )
+
 
 def test_table_class(app, db_conn, users_table):
     """
@@ -42,12 +51,12 @@ def test_table_class(app, db_conn, users_table):
     assert User.table == users_table
 
 
-@xfail
 def test_create_instance(app, db_conn, users_table):
     """
     Expect to create a model instance. Be able to pass in data too...
     """
-    assert False
+    user = User({'name': 'Test'})
+    assert user.data['name'] == 'Test'
 
 
 def test_table_instance(app, db_conn, users_table):
@@ -59,36 +68,43 @@ def test_table_instance(app, db_conn, users_table):
     assert user.table == users_table
 
 
-@xfail
 def test_get_item(app, db_conn, users_table):
     """
     Expect to get an item from the model.
     """
-    assert False
+    user = User()
+    user.data['name'] = 'Test'
+    assert user['name'] == 'Test'
 
 
-@xfail
 def test_set_item(app, db_conn, users_table):
     """
     Expect to set an item in the model.
     """
-    assert False
+    user = User()
+    user['name'] = 'Test'
+    assert user.data['name'] == 'Test'
 
 
-@xfail
 def test_del_item(app, db_conn, users_table):
     """
     Expect to remove an item in the model.
     """
-    assert False
+    user = User()
+    user['name'] = 'Test'
+    assert user.data['name'] == 'Test'
+    del user['name']
+    assert 'name' not in user.data
 
 
-@xfail
 def test_has_item(app, db_conn, users_table):
     """
     Expect to test if model has an item.
     """
-    assert False
+    user = User()
+    assert 'name' not in user
+    user['name'] = 'Test'
+    assert 'name' in user
 
 
 def test_get_id(app, db_conn, users_table):
@@ -201,44 +217,100 @@ def test_generate_id(app, db_conn, users_table):
     assert len(d['id']) == 24
 
 
-@xfail
 def test_validate(app, db_conn, users_table):
     """
     Expect to validate a model.
     """
-    assert False
+
+    user = User({
+        'name': 'Test',
+        'email': 'test@example.com',
+        'password': 'abcd'
+    })
+    errors = user.validate()
+    assert isinstance(errors, list)
+    assert errors[0]['name'] == 'password'
+    assert errors[0]['message']
 
 
-@xfail
+def test_enforce_strict(app, db_conn, users_table):
+    """
+    Expect to enforce strict mode.
+    """
+    user = User({'extra': True})
+    assert user.data['extra']
+    user.enforce_strict_mode()
+    assert 'extra' not in user.data
+
+
+def test_validate_fields(app, db_conn, users_table):
+    """
+    Expect to validate a model's fields.
+    """
+
+    user = User({
+        'name': 'Test',
+        'email': 'test@example.com',
+        'password': 'abcd'
+    })
+    errors = user.validate_fields()
+    assert isinstance(errors, list)
+    assert errors[0]['name'] == 'password'
+    assert errors[0]['message']
+
+
+def test_validate_extras(app, db_conn, users_table):
+    """
+    Expect to validate a model's top level checks.
+    """
+
+    user = User({
+        'name': 'Test',
+        'email': 'test@example.com',
+        'password': 'abTestcd'
+    })
+    errors = user.validate_extras()
+    assert isinstance(errors, list)
+    assert errors[0]['name'] == 'clean_password'
+
+
 def test_bundle(app, db_conn, users_table):
     """
     Expect to...
     """
-    assert False
+    user = User({
+        'name': 'Test',
+        'email': 'test@example.com',
+        'password': 'abcd1234'
+    })
+    data = user.bundle()
+    assert data['password'].startswith('$2a$')
+    assert user['password'] == 'abcd1234'
 
 
-@xfail
 def test_default(app, db_conn, users_table):
     """
-    Expect to...
+    Expect to set a default value for fields.
     """
-    assert False
+    user = User()
+    assert isinstance(user['id'], str)
 
 
-@xfail
 def test_deliver(app, db_conn, users_table):
     """
     Expect to...
     """
-    assert False
-
-
-@xfail
-def test_access(app, db_conn, users_table):
-    """
-    Expect to...
-    """
-    assert False
+    user = User({
+        'name': 'Test',
+        'email': 'test@example.com',
+        'password': 'abcd1234'
+    })
+    data = user.deliver()
+    assert 'email' not in data
+    assert 'password' not in data
+    data = user.deliver(access='private')
+    assert 'email' in data
+    assert 'password' not in data
 
 
 def test_insert(app, db_conn, users_table):

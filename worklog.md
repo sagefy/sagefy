@@ -1,6 +1,16 @@
 Sagefy Work Log
 ===============
 
+2015 Feb 01
+-----------
+
+Clean up model module, and finishing out basic tests.
+
+2015 Jan 31
+-----------
+
+Reduce redundancy in form adapters.
+
 2015 Jan 30
 -----------
 

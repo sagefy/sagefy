@@ -3,12 +3,19 @@ from modules.validations import is_required, is_string, is_one_of
 from models.post import Post
 
 
+def is_valid_version(value):
+    """
+    Ensure this is a valid version of the entity.
+    """
+    # TODO
+
+
 class Proposal(Post):
     """A proposal to change the discussed entity."""
 
     schema = dict(Post.schema.copy(), **{
         'entity_version_id': {
-            'validate': (is_required, is_string,)
+            'validate': (is_required, is_string, is_valid_version,)
         },
         'name': {
             'validate': (is_required, is_string,)
