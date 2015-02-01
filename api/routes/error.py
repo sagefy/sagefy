@@ -1,5 +1,5 @@
 from flask import jsonify
-from modules.content import get as _
+from modules.content import get as c
 from werkzeug.exceptions import HTTPException
 
 
@@ -56,7 +56,7 @@ def error_response(code):
         else:
             code = 500
         return jsonify(errors=[{
-            'message': _('error', 'code_%s' % str(code)),
+            'message': c('error', 'code_%s' % str(code)),
             'code': code,
         }]), code
     return fn

@@ -5,7 +5,7 @@ from passlib.hash import bcrypt
 from flask import url_for, current_app as app, request
 from flask.ext.login import current_user
 from modules.util import uniqid
-from modules.content import get as _
+from modules.content import get as c
 
 
 def encrypt_password(value):
@@ -84,7 +84,7 @@ class User(Model):
             app.mail.send_message(
                 subject='Sagefy - Reset Password',
                 recipients=[self['email']],
-                body=_('user', 'change_password_url').replace(
+                body=c('user', 'change_password_url').replace(
                     '{url}',
                     '%spassword?id=%s&token=%s' %
                     (request.url_root, self['id'], token)

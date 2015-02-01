@@ -9,7 +9,7 @@ from flask.ext.login import current_user
 from modules.util import parse_args, omit
 from modules.discuss import instance_post_facade, create_post_facade, \
     get_post_facade, get_posts_facade
-from modules.content import get as _
+from modules.content import get as c
 
 
 topic = Blueprint('topic', __name__, url_prefix='/api/topics')
@@ -50,7 +50,6 @@ def create_topic():
     if len(errors + errors2):
         return jsonify(errors=errors + errors2), 400
 
-
     # TODO validate topic entity is valid
 
     post, errors = post.save()
@@ -75,7 +74,7 @@ def update_topic(topic_id):
     if not topic:
         return jsonify(errors=[{
             'name': 'topic_id',
-            'message': _('discuss', 'no_topic'),
+            'message': c('discuss', 'no_topic'),
         }]), 404
 
     # Must be logged in as topic's author
@@ -107,7 +106,7 @@ def get_posts(topic_id):
     if not topic:
         return jsonify(errors=[{
             'name': 'topic_id',
-            'message': _('discuss', 'no_topic'),
+            'message': c('discuss', 'no_topic'),
         }]), 404
 
     # Pull all kinds of posts
@@ -156,7 +155,7 @@ def create_post(topic_id):
     if not request.json.get('topic_id') or not topic:
         return jsonify(errors=[{
             'name': 'topic_id',
-            'message': _('discuss', 'no_topic'),
+            'message': c('discuss', 'no_topic'),
         }]), 404
 
     # Try to save the post (and others)

@@ -1,11 +1,11 @@
 PageAdapter = require('./page')
 View = require('../framework/view')
 template = require('../templates/pages/error')
-g = require('../modules/content').get
+c = require('../modules/content').get
 
 class ErrorAdapter extends PageAdapter
     url: /.*/
-    title: g('error', 'code_404')
+    title: c('error', 'code_404')
 
     render: ->
         super
@@ -17,7 +17,7 @@ class ErrorAdapter extends PageAdapter
         })
         @view.render({
             code: 404
-            message: g('error', 'code_404')
+            message: c('error', 'code_404')
         })
 
     remove: ->

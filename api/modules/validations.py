@@ -1,5 +1,5 @@
 import re
-from modules.content import get as _
+from modules.content import get as c
 
 
 def is_required(value):
@@ -8,7 +8,7 @@ def is_required(value):
     """
 
     if value is None:
-        return _('error', 'required')
+        return c('error', 'required')
 
 
 def is_boolean(value):
@@ -20,7 +20,7 @@ def is_boolean(value):
         return
 
     if not isinstance(value, bool):
-        return _('error', 'boolean')
+        return c('error', 'boolean')
 
 
 def is_string(value):
@@ -32,7 +32,7 @@ def is_string(value):
         return
 
     if not isinstance(value, str):
-        return _('error', 'string')
+        return c('error', 'string')
 
 
 def is_number(value):
@@ -44,7 +44,7 @@ def is_number(value):
         return
 
     if not isinstance(value, (int, long, float, complex)):
-        return _('error', 'number')
+        return c('error', 'number')
 
 
 def is_language(value):
@@ -56,7 +56,7 @@ def is_language(value):
         return
 
     if not (isinstance(value, str) or len(value) != 2):
-        return _('error', 'language')
+        return c('error', 'language')
 
 
 def is_list(value):
@@ -68,7 +68,7 @@ def is_list(value):
         return
 
     if not isinstance(value, list):
-        return _('error', 'list')
+        return c('error', 'list')
 
 
 def is_email(value):
@@ -80,7 +80,7 @@ def is_email(value):
         return
 
     if not re.match(r'\S+@\S+\.\S+', value):
-        return _('error', 'email')
+        return c('error', 'email')
 
 
 def has_min_length(value, ln):
@@ -91,7 +91,7 @@ def has_min_length(value, ln):
         return
 
     if not value or len(value) < ln:
-        return _('error', 'minlength').replace('{length}', str(ln))
+        return c('error', 'minlength').replace('{length}', str(ln))
 
 
 def is_one_of(value, *options):
@@ -103,7 +103,7 @@ def is_one_of(value, *options):
 
     if value not in options:
         str_options = [str(o) for o in options]
-        return (_('error', 'options')
+        return (c('error', 'options')
                 .replace('{options}', ', '.join(str_options)))
 
 
@@ -116,13 +116,13 @@ def is_entity_dict(value):
         return
 
     if not isinstance(value, dict):
-        return _('error', 'entity_id')
+        return c('error', 'entity_id')
 
     if 'id' not in value or not isinstance(value['id'], str):
-        return _('error', 'entity_id')
+        return c('error', 'entity_id')
 
     if 'kind' not in value or value['kind'] not in ('card', 'unit', 'set'):
-        return _('error', 'entity_kind')
+        return c('error', 'entity_kind')
 
 
 def is_entity_list_dict(value):
@@ -156,8 +156,8 @@ def is_list_of_strings(value):
         return
 
     if not isinstance(value, list):
-        return _('error', 'list')
+        return c('error', 'list')
 
     for v in value:
         if not isinstance(v, str):
-            return _('error', 'string')
+            return c('error', 'string')

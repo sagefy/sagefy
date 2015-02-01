@@ -1,11 +1,11 @@
 from modules.model import Model
 from modules.validations import is_required, is_string, is_number
-from modules.content import get as _
+from modules.content import get as c
 
 
 def is_score(val):
-    if not (0 <= val <= 1):
-        return _('error', 'number')
+    if val > 1 or val < 0:
+        return c('error', 'number')
 
 
 class Response(Model):

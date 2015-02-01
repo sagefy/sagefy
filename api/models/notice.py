@@ -3,7 +3,7 @@ from modules.validations import is_required, is_string, is_boolean, is_list, \
     is_one_of
 import rethinkdb as r
 from flask import g
-from modules.content import get as _
+from modules.content import get as c
 
 
 class Notice(Model):
@@ -37,7 +37,7 @@ class Notice(Model):
         Also adds pagination capabilities.
         Returns empty array when no models match.
         """
-        
+
         query = (cls.table
                     .order_by(r.desc('created'))
                     .filter(r.row['user_id'] == user_id)
@@ -73,4 +73,4 @@ class Notice(Model):
         Get the copy associated with this notice.
         """
 
-        return _('notice', self['kind']).format(**{})
+        return c('notice', self['kind']).format(**{})

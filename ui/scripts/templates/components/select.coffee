@@ -1,4 +1,4 @@
-_ = require('../../modules/content')
+c = require('../../modules/content')
 
 module.exports = (data) ->
     html = ''
@@ -11,7 +11,7 @@ module.exports = (data) ->
         html += '<div class="select__overlay">'
 
     if data.showClear
-        html += '<a class="clear" href="#">#{_("select", "clear")}</a>'
+        html += '<a class="clear" href="#">#{c("select", "clear")}</a>'
 
     if data.showSearch
         html += '<input type="search" name="search">'

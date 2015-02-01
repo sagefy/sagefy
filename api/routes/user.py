@@ -1,7 +1,7 @@
 from models.user import User
 from flask import Blueprint, jsonify, request, make_response, abort
 from flask.ext.login import login_user, current_user, logout_user
-from modules.content import get as _
+from modules.content import get as c
 
 
 user = Blueprint('user', __name__, url_prefix='/api/users')
@@ -55,12 +55,12 @@ def login():
     if not user:
         return jsonify(errors=[{
             'name': 'name',
-            'message': _('user', 'no_user'),
+            'message': c('user', 'no_user'),
         }]), 404
     if not user.is_password_valid(request.json.get('password')):
         return jsonify(errors=[{
             'name': 'password',
-            'message': _('user', 'no_match'),
+            'message': c('user', 'no_match'),
         }]), 400
     return _login(user)
 

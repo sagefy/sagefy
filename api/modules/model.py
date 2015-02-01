@@ -1,7 +1,7 @@
 import rethinkdb as r
 from flask import g
 from modules.util import uniqid, omit, pick
-from modules.content import get as _
+from modules.content import get as c
 from modules.classproperty import classproperty
 
 
@@ -325,6 +325,6 @@ class Model(object):
             if len(entries) > 0:
                 errors.append({
                     'name': name,
-                    'message': _('error', 'unique'),
+                    'message': c('error', 'unique'),
                 })
         return errors
