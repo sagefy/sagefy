@@ -5,8 +5,8 @@ util = require('../../framework/utilities')
 # Generic Form View
 # Designed to be extended
 class FormView extends View
-    # Validates all fields on submit
-    # Validates single fields on change
+    # Validates schema on submit
+    # Validates single field on change
     domEvents: {
         'submit form': 'submit'
         'keyup input': 'change'
@@ -15,22 +15,22 @@ class FormView extends View
     tagName: 'form'
     fieldTemplate: fieldTemplate
 
-    # Setup the fields for display
+    # Setup the schema for display
     constructor: (options = {}) ->
         super
-        @fields = options.fields
+        @schema = options.schema
 
     # As there's no template... instead the HTML is
-    # the composition of the fields
+    # the composition of the schema
     render: (data = {}) ->
         super
         @el.innerHTML = @getFieldsHTML(data)
 
     # Iterates over each field specified
-    # And generates the fields HTML
+    # And generates the field HTML
     getFieldsHTML: (data) ->
         html = ''
-        for field in util.copy(@fields)
+        for field in util.copy(@schema)
             field.value = data[field.name]
             html += @fieldTemplate(field)
         return html

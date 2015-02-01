@@ -6,7 +6,7 @@ class UserModel extends Model
         return "/api/users/#{id}/" if id
         return '/api/users/'
 
-    fields: {
+    schema: {
         name: {
             type: 'text'
             validations: {

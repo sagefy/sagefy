@@ -15,7 +15,7 @@ class SignupAdapter extends FormAdapter
         return if @requireLogout()
         super
         @model = new UserModel()
-        @form = new FormView({fields: @getFields()})
+        @form = new FormView({schema: @getSchema()})
         @form.render()
         @view = new FormLayoutView({
             id: 'signup'
@@ -39,8 +39,8 @@ class SignupAdapter extends FormAdapter
         super
         @listenTo(@model, 'sync', @toDashboard.bind(this))
 
-    getFields: ->
-        return @addModelFields([{
+    getSchema: ->
+        return @addModelSchema([{
             name: 'name'
             title: 'Username'
             placeholder: 'ex: Unicorn'

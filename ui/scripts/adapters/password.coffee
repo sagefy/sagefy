@@ -32,7 +32,7 @@ class PasswordAdapter extends FormAdapter
 
     changeState: (state) ->
         if state in ['password', 'email']
-            @form = new FormView({fields: @getFields(state)})
+            @form = new FormView({schema: @getSchema(state)})
         else
             @form = new View({
                 template: ->
@@ -55,9 +55,9 @@ class PasswordAdapter extends FormAdapter
         @listenTo(@model, 'error', @error.bind(this))
         @listenTo(@form, 'submit', @post.bind(this))
 
-    getFields: (state) ->
+    getSchema: (state) ->
         if state is 'email'
-            fields = [{
+            schema = [{
                 name: 'email'
                 title: 'Email'
                 description: 'We need your email to send the token.'
@@ -68,7 +68,7 @@ class PasswordAdapter extends FormAdapter
                 icon: 'envelope'
             }]
         else if state is 'password'
-            fields = [{
+            schema = [{
                 name: 'password'
                 title: 'Password'
             }, {
@@ -76,8 +76,7 @@ class PasswordAdapter extends FormAdapter
                 label: 'Change Password'
                 icon: 'check'
             }]
-        fields = @addModelFields(fields)
-        return fields
+        return @addModelSchema(schema)
 
     getDescription: (state) ->
         # TODO should this be a template?

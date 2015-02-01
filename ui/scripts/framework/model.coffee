@@ -7,7 +7,7 @@ util = require('./utilities')
 validations = require('./validations')
 
 class Model extends Events
-    fields: {}
+    schema: {}
 
     # Creates `attributes` to ensure they are always there
     constructor: ->
@@ -72,7 +72,7 @@ class Model extends Events
     # depending on if the model has an ID.
     # Provide options, which will in turn be sent to the URL function.
     save: (options = {}) ->
-        errors = @validate(options.fields or null)
+        errors = @validate(options.schema or null)
         return errors if errors.length
         return @ajax({
             method: if @get('id') then 'PUT' else 'POST'
@@ -101,11 +101,11 @@ class Model extends Events
         })
 
     # Validates the values of the model against the schema
-    # described in the fields. Returns a list of errors
+    # described in the schema. Returns a list of errors
     # Triggers `invalid` if errors are found.
-    validate: (fields) ->
+    validate: (schema) ->
         errors = []
-        for fieldName in (fields or Object.keys(@fields))
+        for fieldName in (schema or Object.keys(@schema))
             error = @validateField(fieldName)
             errors.push({
                 name: fieldName
@@ -117,7 +117,7 @@ class Model extends Events
     # Validates a specific field
     # Returns an error message or null
     validateField: (fieldName) ->
-        schema = @fields[fieldName]
+        schema = @schema[fieldName]
         for vName, vVal of schema.validations
             error = validations[vName](@get(fieldName), vVal)
             return error if error
