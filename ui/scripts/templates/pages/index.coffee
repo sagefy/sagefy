@@ -12,4 +12,8 @@ module.exports = ->
     <p class="leading">
         <a href="/login">Log In</a> or <a href="/signup">Sign Up</a>
     </p>
+    <p class="legal">
+        &copy; Copyright 2015 Sagefy.
+        <a href="/terms">Privacy &amp; Terms</a>.
+    </p>
     '''
