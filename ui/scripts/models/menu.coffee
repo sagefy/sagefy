@@ -1,6 +1,6 @@
 Model = require('../framework/model')
 util = require('../framework/utilities')
-utilities = require('../modules/utilities')
+aux = require('../modules/auxiliaries')
 
 # TODO: move copy to content directory
 
@@ -76,8 +76,8 @@ class MenuModel extends Model
     items: ->
         return (@_items[name] for name in @menus[@state])
 
-    ucfirst: utilities.ucfirst
-    underscored: utilities.underscored
-    isLoggedIn: utilities.isLoggedIn
+    ucfirst: aux.ucfirst
+    underscored: aux.underscored
+    isLoggedIn: aux.isLoggedIn
 
 module.exports = MenuModel

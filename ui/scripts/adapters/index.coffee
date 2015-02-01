@@ -1,6 +1,6 @@
 PageAdapter = require('./page')
 View = require('../framework/view')
-utilities = require('../modules/utilities')
+aux = require('../modules/auxiliaries')
 template = require('../templates/pages/index')
 
 class IndexAdapter extends PageAdapter
@@ -23,6 +23,6 @@ class IndexAdapter extends PageAdapter
         @view.remove()
         super
 
-    isLoggedIn: utilities.isLoggedIn
+    isLoggedIn: aux.isLoggedIn
 
 module.exports = IndexAdapter

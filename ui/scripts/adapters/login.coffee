@@ -3,7 +3,6 @@ UserModel = require('../models/user')
 FormView = require('../views/components/form')
 FormLayoutView = require('../views/layouts/form')
 util = require('../framework/utilities')
-utilities = require('../modules/utilities')
 
 # TODO: move copy to content directory
 

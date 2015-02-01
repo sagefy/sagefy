@@ -1,5 +1,5 @@
 Adapter = require('../framework/adapter')
-utilities = require('../modules/utilities')
+aux = require('../modules/auxiliaries')
 
 class PageAdapter extends Adapter
     constructor: (options) ->
@@ -7,13 +7,13 @@ class PageAdapter extends Adapter
         @render()
 
     requireLogin: ->
-        test = not utilities.isLoggedIn()
+        test = not aux.isLoggedIn()
         if test
             @navigate('/login')
         return test
 
     requireLogout: ->
-        test = utilities.isLoggedIn()
+        test = aux.isLoggedIn()
         if test
             @navigate('/dashboard')
         return test

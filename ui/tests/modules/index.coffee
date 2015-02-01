@@ -1,4 +1,4 @@
 require('./cookie')
-require('./utilities')
+require('./auxiliaries')
 require('./query_string')
 require('./content')

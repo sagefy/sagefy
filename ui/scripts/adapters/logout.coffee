@@ -1,6 +1,6 @@
 PageAdapter = require('./page')
 UserModel = require('../models/user')
-utilities = require('../modules/utilities')
+aux = require('../modules/auxiliaries')
 
 # TODO: move copy to content directory
 
@@ -10,7 +10,7 @@ class LogoutAdapter extends PageAdapter
 
     render: ->
         super
-        if utilities.isLoggedIn()
+        if aux.isLoggedIn()
             @model = new UserModel({
                 id: 'current'
             })

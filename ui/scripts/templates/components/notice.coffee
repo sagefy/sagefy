@@ -1,4 +1,4 @@
-timeAgo = require('../../modules/utilities').timeAgo
+timeAgo = require('../../modules/auxiliaries').timeAgo
 
 module.exports = (data) ->
     return """
