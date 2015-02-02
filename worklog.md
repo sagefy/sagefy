@@ -1,6 +1,16 @@
 Sagefy Work Log
 ===============
 
+2015 Feb 02
+-----------
+
+**Weekly Goal**: 
+- Build a form 'select' component #28
+- Discuss API: Finish TODOs around proposals and votes #225
+- [Start on] UI: Discuss #233
+
+TODO
+
 2015 Feb 01
 -----------
 
