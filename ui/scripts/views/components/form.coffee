@@ -25,6 +25,7 @@ class FormView extends View
     render: (data = {}) ->
         super
         @el.innerHTML = @getFieldsHTML(data)
+        # TODO If there are select(s), create the instances
 
     # Iterates over each field specified
     # And generates the field HTML

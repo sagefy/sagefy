@@ -15,6 +15,8 @@ module.exports = (data) ->
             html += require('./form_field_input')(data)
         when 'submit', 'button'
             html += require('./form_field_button')(data)
+        when 'select'
+            html += require('./select')(data)
 
     if data.description
         html += "<p class=\"form-field__description\">#{data.description}</p>"

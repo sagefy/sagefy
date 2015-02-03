@@ -56,6 +56,26 @@ class SignupAdapter extends FormAdapter
             label: 'Sign Up'
             icon: 'user'
         }])
+        ###
+        }, {
+            type: 'select'
+            field: 'example'
+            options: [{
+                label: 'A'
+                value: 0
+            }, {
+                label: 'B'
+                value: 1
+            }, {
+                label: 'C'
+                value: 2
+            }, {
+                label: 'D'
+                value: 3
+            }]
+        }])
+        ###
+
 
     toDashboard: ->
         # Hard redirect to get the cookie

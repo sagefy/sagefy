@@ -1,13 +1,14 @@
 c = require('../../modules/content')
 
 module.exports = (data) ->
-    html = ''
-
     if not data.options or data.options.length is 0
-        return html
+        return c('select', 'no_options')
+
+    html = ''
 
     if data.showOverlay
         html += '<div class="select__selected"></div>'
+        # TODO List options that have already been selected
         html += '<div class="select__overlay">'
 
     if data.showClear

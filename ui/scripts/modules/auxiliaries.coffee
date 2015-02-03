@@ -44,4 +44,9 @@ aux.timeAgo = (str) ->
     return '1 minute ago' if minutes is 1
     return 'Just now'
 
+
+# Return a variable friendly name of the title
+aux.slugify = (s) ->
+    return s.toLowerCase().replace(/[-\s]+/g, '_')
+
 module.exports = aux
