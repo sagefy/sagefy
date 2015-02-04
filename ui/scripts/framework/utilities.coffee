@@ -32,10 +32,10 @@ util.extend = (target, injects...) ->
                     new Date(val)
                 when util.isArray(val)
                     target[prop] = [] unless util.isArray(target[prop])
-                    util.extend(target[prop], val)
+                    util.extend([], target[prop], val)
                 when util.isObject(val)
                     target[prop] = {} unless util.isObject(target[prop])
-                    util.extend(target[prop], val)
+                    util.extend({}, target[prop], val)
                 else val # number, boolean, string, regexp, null, function
     return target
 
