@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Feb 03
+-----------
+
+Reading and research.
+
 2015 Feb 02
 -----------
 
