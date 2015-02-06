@@ -14,8 +14,7 @@ class LoginAdapter extends FormAdapter
         return if @requireLogout()
         super
         @model = new UserModel()
-        @form = new FormView({schema: @getSchema()})
-        @form.render()
+
         @view = new FormLayoutView({
             id: 'login'
             className: 'col-6'
@@ -31,8 +30,11 @@ class LoginAdapter extends FormAdapter
                 <a href="/password"><i class="fa fa-refresh"></i> Reset</a>.
             '''
         })
-        @view.form.appendChild(@form.el)
-
+        @form = new FormView({
+            schema: @getSchema()
+            region: @view.form
+        })
+        @form.render()
         @bindEvents()
 
     bindEvents: ->
@@ -50,7 +52,8 @@ class LoginAdapter extends FormAdapter
             placeholder: ''
         }, {
             type: 'submit'
-            label: 'Log In'
+            name: 'log-in'
+            title: 'Log In'
             icon: 'sign-in'
         }])
 

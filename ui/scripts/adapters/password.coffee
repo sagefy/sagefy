@@ -64,7 +64,8 @@ class PasswordAdapter extends FormAdapter
                 placeholder: 'ex: unicorn@example.com'
             }, {
                 type: 'submit'
-                label: 'Send Token'
+                name: 'submit'
+                title: 'Send Token'
                 icon: 'envelope'
             }]
         else if state is 'password'
@@ -73,7 +74,8 @@ class PasswordAdapter extends FormAdapter
                 title: 'Password'
             }, {
                 type: 'submit'
-                label: 'Change Password'
+                name: 'submit'
+                title: 'Change Password'
                 icon: 'check'
             }]
         return @addModelSchema(schema)

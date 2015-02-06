@@ -1,24 +1,9 @@
 View = require('../../framework/view')
 util = require('../../framework/utilities')
+aux = require('../../modules/auxiliaries')
 
+template = require('../../templates/components/select')
 optTemplate = require('../../templates/components/select_option')
-
-###
-
-Options
--------
-
-- name           required
-- field          required, what to send to the API
-- options        either options or url are required .. [{value: '', label: ''}]
-- url            (default: null)
-- showClear      (default: false for 0 or 1, true 2+)
-- chooseMultiple (default: false)
-- showInline     (default: false)
-- showOverlay    (default: false 0-6, true 7+)
-- showSearch     (default: false 0-20 and not url, true 21+ or url)
-
-###
 
 class SelectView extends View
     className: 'select'
@@ -26,28 +11,45 @@ class SelectView extends View
     domEvents: {
         'click .clear': 'clearOptions'
         'change input[type="search"]': 'searchOptions'
-        'change input[type="radio"], input[type="checkbox"]': 'selectOption'
+        'change input[type="radio"], input[type="checkbox"]': 'updateDisplay'
     }
+    template: template
 
+    ###
+    - name           required, what to send to the API
+    - count          required, number of options to expect
+    - url            default: null
+    - multiple       default: false
+    - showInline     default: false
+    - showClear      default: false
+    - showOverlay    default: false 0-6, true 7+
+    - showSearch     default: false 0-20 and not url, true 21+ or url
+    ###
     constructor: ->
         super
         @options = util.extend({
-            title: ''
-            slug: aux.slugify(@options.name or '')
-            showClear: @options.options?.length > 1
-            showOverlay: @options.options?.length > 6
-            showSearch: @options.options?.length > 20 or @options.url
+            showOverlay: @options.count > 6
+            showSearch: @options.count > 20 or @options.url
         }, @options)
 
+    ###
+    - data.options:
+        either options or url are required .. [{value: '', label: ''}]
+    ###
     render: (data) ->
-        super
-        @el.querySelector('> ul').innerHTML = [@optTemplate({
-            chooseMultiple: @options.chooseMultiple
-            title: option.label
-            name: @options.field
-            id: aux.slugify(option.label)
+        @el.innerHTML = @template(util.extend({}, @options, data))
+        @renderOptions(data.options)
+        @selectElements()
+        @delegateEvents()
+        return this
+
+    renderOptions: (options) ->
+        @el.querySelector('ul').innerHTML = (optTemplate({
+            multiple: @options.multiple
+            label: option.label
+            name: @options.name
             value: option.value
-        }) for option in data.options].join('')
+        }) for option in options).join('')
 
     clearOptions: (e) ->
         e.preventDefault()

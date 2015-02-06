@@ -13,8 +13,6 @@ class SignupAdapter extends FormAdapter
         return if @requireLogout()
         super
         @model = new UserModel()
-        @form = new FormView({schema: @getSchema()})
-        @form.render()
         @view = new FormLayoutView({
             id: 'signup'
             className: 'col-6'
@@ -30,7 +28,11 @@ class SignupAdapter extends FormAdapter
                 you agree to our <a href="/terms">Terms of Service</a>.
             '''
         })
-        @view.form.appendChild(@form.el)
+        @form = new FormView({
+            schema: @getSchema()
+            region: @view.form
+        })
+        @form.render()
         @bindEvents()
 
     bindEvents: ->
@@ -52,30 +54,11 @@ class SignupAdapter extends FormAdapter
             name: 'password'
             title: 'Password'
         }, {
+            name: 'submit'
+            title: 'Sign Up'
             type: 'submit'
-            label: 'Sign Up'
             icon: 'user'
         }])
-        ###
-        }, {
-            type: 'select'
-            field: 'example'
-            options: [{
-                label: 'A'
-                value: 0
-            }, {
-                label: 'B'
-                value: 1
-            }, {
-                label: 'C'
-                value: 2
-            }, {
-                label: 'D'
-                value: 3
-            }]
-        }])
-        ###
-
 
     toDashboard: ->
         # Hard redirect to get the cookie

@@ -7,7 +7,7 @@ module.exports = (data) ->
 
     html = "<div class=\"#{classes}\">"
 
-    if data.title
+    if data.title and data.type not in ['button', 'submit']
         html += require('./form_field_label')(data)
 
     switch data.type
@@ -16,7 +16,7 @@ module.exports = (data) ->
         when 'submit', 'button'
             html += require('./form_field_button')(data)
         when 'select'
-            html += require('./select')(data)
+            html += '<div class="select-wrap"></div>'
 
     if data.description
         html += "<p class=\"form-field__description\">#{data.description}</p>"

@@ -1,4 +1,5 @@
 View = require('../../framework/view')
+SelectView = require('./select')
 fieldTemplate = require('../../templates/components/form_field')
 util = require('../../framework/utilities')
 
@@ -25,7 +26,7 @@ class FormView extends View
     render: (data = {}) ->
         super
         @el.innerHTML = @getFieldsHTML(data)
-        # TODO If there are select(s), create the instances
+        @createSelects()
 
     # Iterates over each field specified
     # And generates the field HTML
@@ -35,6 +36,21 @@ class FormView extends View
             field.value = data[field.name]
             html += @fieldTemplate(field)
         return html
+
+    # If there are select(s), create the instances
+    createSelects: ->
+        for field in util.copy(@schema)
+            if field.type is 'select'
+                select = new SelectView({
+                    region: @el.querySelector(
+                        '.form-field--' + field.name + ' .select-wrap')
+                    name: field.name
+                    count: field.options.length
+                    url: field.url
+                    multiple: field.multiple
+                    showInline: field.showInline
+                })
+                select.render({options: field.options})
 
     # Returns an object of the fields in the format:
     # {name: value, name: value}
