@@ -17,8 +17,8 @@ class FormAdapter extends PageAdapter
         @listenTo(@form, 'change', @validateField.bind(this))
 
     addModelSchema: (schema) ->
-        for field in schema
-            util.extend(field, @model.schema[field.name] or {})
+        for field, i in schema
+            schema[i] = util.extend({}, @model.schema[field.name] or {}, field)
         return schema
 
     error: (errors) ->

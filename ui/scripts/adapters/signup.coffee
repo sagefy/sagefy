@@ -42,20 +42,20 @@ class SignupAdapter extends FormAdapter
     getSchema: ->
         return @addModelSchema([{
             name: 'name'
-            title: 'Username'
+            label: 'Username'
             placeholder: 'ex: Unicorn'
         }, {
             name: 'email'
-            title: 'Email'
+            label: 'Email'
             description: 'We need your email to send notices ' +
                          '<br />and reset password.'
             placeholder: 'ex: unicorn@example.com'
         }, {
             name: 'password'
-            title: 'Password'
+            label: 'Password'
         }, {
             name: 'submit'
-            title: 'Sign Up'
+            label: 'Sign Up'
             type: 'submit'
             icon: 'user'
         }])

@@ -44,16 +44,16 @@ class LoginAdapter extends FormAdapter
     getSchema: ->
         return @addModelSchema([{
             name: 'name'
-            title: 'Username'
+            label: 'Username'
             placeholder: 'e.g. Unicorn'
         }, {
             name: 'password'
-            title: 'Password'
+            label: 'Password'
             placeholder: ''
         }, {
             type: 'submit'
             name: 'log-in'
-            title: 'Log In'
+            label: 'Log In'
             icon: 'sign-in'
         }])
 

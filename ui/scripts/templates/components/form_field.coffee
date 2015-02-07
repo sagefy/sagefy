@@ -7,7 +7,7 @@ module.exports = (data) ->
 
     html = "<div class=\"#{classes}\">"
 
-    if data.title and data.type not in ['button', 'submit']
+    if data.label and data.type not in ['button', 'submit']
         html += require('./form_field_label')(data)
 
     switch data.type

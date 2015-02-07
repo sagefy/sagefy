@@ -14,7 +14,6 @@ class SettingsAdapter extends FormAdapter
         return if @requireLogin()
         super
         @model = new UserModel()
-        @form = new FormView({fields: @getFields()})
         @view = new FormLayoutView({
             id: 'settings'
             className: 'col-6'
@@ -23,7 +22,10 @@ class SettingsAdapter extends FormAdapter
         @view.render({
             title: 'Settings'
         })
-        @view.form.appendChild(@form.el)
+        @form = new FormView({
+            schema: @getSchema()
+            region: @view.form
+        })
 
         @listenTo(@model, 'invalid', @error.bind(this))
         @listenTo(@model, 'error', @error.bind(this))
@@ -39,27 +41,32 @@ class SettingsAdapter extends FormAdapter
         @model.remove()
         super
 
-    getFields: ->
-        fields = [{
+    getSchema: ->
+        return @addModelSchema([{
             name: 'name'
-            title: 'Username'
+            label: 'Username'
             placeholder: 'ex: Unicorn'
         }, {
             name: 'email'
-            title: 'Email'
+            label: 'Email'
             placeholder: 'ex: unicorn@example.com'
         }, {
-            title: 'Password'
+            name: 'password'
+            label: 'Password'
             type: 'message'
             description: '<a href="/password">Change your password here</a>.'
         }, {
+            name: 'avatar'
+            label: 'Avatar'
+            type: 'message'
+            description: '<a href="http://gravatar.com">' +
+                         'Update your avatar here</a>'
+        }, {
+            name: 'submit'
             type: 'submit'
             label: 'Update'
             icon: 'check'
-        }]
-        for field in fields
-            util.extend(field, @model.fields[field.name] or {})
-        return fields
+        }])
 
     showForm: ->
         @form.render(@model.attributes)

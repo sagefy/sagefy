@@ -59,23 +59,23 @@ class PasswordAdapter extends FormAdapter
         if state is 'email'
             schema = [{
                 name: 'email'
-                title: 'Email'
+                label: 'Email'
                 description: 'We need your email to send the token.'
                 placeholder: 'ex: unicorn@example.com'
             }, {
                 type: 'submit'
                 name: 'submit'
-                title: 'Send Token'
+                label: 'Send Token'
                 icon: 'envelope'
             }]
         else if state is 'password'
             schema = [{
                 name: 'password'
-                title: 'Password'
+                label: 'Password'
             }, {
                 type: 'submit'
                 name: 'submit'
-                title: 'Change Password'
+                label: 'Change Password'
                 icon: 'check'
             }]
         return @addModelSchema(schema)

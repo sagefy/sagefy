@@ -74,12 +74,14 @@ def setup_db(app):
     from models.card import Card
     from models.unit import Unit
     from models.set import Set
-    from models.follow import Follow
+    # from models.follow import Follow   TODO why doesn't this work?
     from models.user_sets import UserSets
     from models.response import Response
 
     models = (User, Notice, Topic, Post, Proposal, Vote, Flag,
-              Card, Unit, Set, Follow, UserSets, Response)
+              Card, Unit, Set,
+              # Follow,
+              UserSets, Response)
 
     tables = r.db(app.config['RDB_DB']).table_list().run(db_conn)
 
