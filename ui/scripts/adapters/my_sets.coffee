@@ -2,9 +2,6 @@ PageAdapter = require('./page')
 
 class MySetsAdapter extends PageAdapter
     url: '/my_sets'
-
-    render: ->
-
-    remove: ->
+    title: 'My Sets'
 
 module.exports = MySetsAdapter

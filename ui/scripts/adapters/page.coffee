@@ -15,7 +15,7 @@ class PageAdapter extends Adapter
     requireLogout: ->
         test = aux.isLoggedIn()
         if test
-            @navigate('/dashboard')
+            @navigate('/my_sets')
         return test
 
     render: ->

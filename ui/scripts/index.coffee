@@ -10,9 +10,7 @@ document.addEventListener('DOMContentLoaded', ->
         require('./adapters/terms')
         require('./adapters/contact')
         require('./adapters/settings')
-        require('./adapters/dashboard')
-        require('./adapters/index')
-        require('./adapters/error')
+        require('./adapters/notices')
         require('./adapters/search')
         require('./adapters/topic')
         require('./adapters/card')
@@ -22,6 +20,8 @@ document.addEventListener('DOMContentLoaded', ->
         require('./adapters/my_sets')
         require('./adapters/choose_unit')
         require('./adapters/card_learn')
+        require('./adapters/index')  # Must be 2nd to last
+        require('./adapters/error')  # Must be last
     )
     app.route(window.location.pathname)
 )

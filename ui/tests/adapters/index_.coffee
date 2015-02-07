@@ -1,7 +1,7 @@
 require('../../scripts/adapters/index')
 
 describe('Index Adapter', ->
-    it.skip('should redirect to dashboard if logged in', ->
+    it.skip('should redirect to my sets if logged in', ->
 
     )
 

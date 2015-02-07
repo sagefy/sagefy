@@ -37,7 +37,7 @@ class SignupAdapter extends FormAdapter
 
     bindEvents: ->
         super
-        @listenTo(@model, 'sync', @toDashboard.bind(this))
+        @listenTo(@model, 'sync', @toMySets.bind(this))
 
     getSchema: ->
         return @addModelSchema([{
@@ -60,8 +60,8 @@ class SignupAdapter extends FormAdapter
             icon: 'user'
         }])
 
-    toDashboard: ->
+    toMySets: ->
         # Hard redirect to get the cookie
-        window.location = '/dashboard'
+        window.location = '/my_sets'
 
 module.exports = SignupAdapter

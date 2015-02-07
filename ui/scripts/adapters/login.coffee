@@ -39,7 +39,7 @@ class LoginAdapter extends FormAdapter
 
     bindEvents: ->
         super
-        @listenTo(@model, 'login', @toDashboard.bind(this))
+        @listenTo(@model, 'login', @toMySets.bind(this))
 
     getSchema: ->
         return @addModelSchema([{
@@ -57,9 +57,9 @@ class LoginAdapter extends FormAdapter
             icon: 'sign-in'
         }])
 
-    toDashboard: ->
+    toMySets: ->
         # Hard redirect to get the cookie
-        window.location = '/dashboard'
+        window.location = '/my_sets'
 
     validate: ->
         @model.login(@form.getValues())

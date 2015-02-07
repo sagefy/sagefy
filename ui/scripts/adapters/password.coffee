@@ -51,7 +51,7 @@ class PasswordAdapter extends FormAdapter
         # Fully overwriting method
         @stopListening()
         @listenTo(@model, 'passwordToken', @toInbox.bind(this))
-        @listenTo(@model, 'createPassword', @toDashboard.bind(this))
+        @listenTo(@model, 'createPassword', @toMySets.bind(this))
         @listenTo(@model, 'error', @error.bind(this))
         @listenTo(@form, 'submit', @post.bind(this))
 
@@ -104,9 +104,9 @@ class PasswordAdapter extends FormAdapter
     toInbox: ->
         @changeState('inbox')
 
-    toDashboard: ->
+    toMySets: ->
         # Hard refresh to get the cookie
-        window.location = '/dashboard'
+        window.location = '/my_sets'
 
     post: ->
         if @state is 'email'

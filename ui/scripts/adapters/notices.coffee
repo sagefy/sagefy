@@ -2,17 +2,15 @@ PageAdapter = require('./page')
 NoticesView = require('../views/lists/notices')
 NoticesCollection = require('../collections/notices')
 
-# TODO: no more dashboard, instead is now notices
-
-class DashboardAdapter extends PageAdapter
-    url: '/dashboard'
-    title: 'Dashboard'  # TODO: move copy to content directory
+class NoticesAdapter extends PageAdapter
+    url: '/notices'
+    title: 'Notices'  # TODO move copy to content directory
 
     render: ->
         super
         @collection = new NoticesCollection()
         @view = new NoticesView({
-            id: 'dashboard'
+            id: 'notices'
             region: @page
         })
         @listenTo(@collection, 'sync', @showNotices.bind(this))
@@ -34,4 +32,4 @@ class DashboardAdapter extends PageAdapter
         @collection.remove()
         super
 
-module.exports = DashboardAdapter
+module.exports = NoticesAdapter

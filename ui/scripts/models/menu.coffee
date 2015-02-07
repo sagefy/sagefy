@@ -14,7 +14,8 @@ class MenuModel extends Model
             'contact'
         ]
         loggedIn: [
-            'dashboard'
+            'my_sets'
+            'notices'
             'settings'
             'contact'
             'terms'
@@ -25,10 +26,11 @@ class MenuModel extends Model
     # A list of all menu items and their configurations
     # The method `_itemBoilerplate` will fill in other values
     _items: {
+        my_sets: { title: 'My Sets', icon: 'star' }
         login: { title: 'Log In', icon: 'sign-in' }
         terms: { icon: 'pencil-square-o' }
         contact: { icon: 'envelope' }
-        dashboard: { icon: 'tachometer' }
+        notices: { icon: 'tachometer' }
         settings: { icon: 'cog' }
         logout: { icon: 'sign-out' }
     }
