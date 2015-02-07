@@ -105,3 +105,7 @@ class User(Model):
         """Update the user's password."""
         self['password'] = password
         self.save()
+
+    # TODO When creating a new user or updating the user's name or email,
+    #      index in Elasticsearch
+    # TODO When close user, delete in Elasticsearch

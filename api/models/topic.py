@@ -23,3 +23,5 @@ class Topic(Model):
             'validate': (is_required, is_entity_dict,)
         }
     })
+
+    # TODO On create or update, update index in Elasticsearch

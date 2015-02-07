@@ -1,4 +1,5 @@
-from flask import Blueprint
+from flask import Blueprint, abort
+from flask.ext.login import current_user
 
 sequencer = Blueprint('sequencer', __name__, url_prefix='/api/sequencer')
 
@@ -8,4 +9,6 @@ def next():
     """TODO
     Tell the learner where to go next.
     """
-    pass
+
+    if not current_user.is_authenticated():
+        return abort(401)

@@ -4,9 +4,8 @@ import routes.error as error
 def test_important_codes(app):
     """
     Expect most common codes present.
-    400, 401, 403, 404, 405, 500, 502, 503.
     """
-    for code in (400, 401, 403, 404, 405, 500, 502, 503):
+    for code in (400, 401, 403, 404, 405, 409, 500, 502, 503):
         assert code in error.codes
 
 

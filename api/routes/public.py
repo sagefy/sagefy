@@ -8,4 +8,5 @@ def api_index():
     """
     View a documentation page.
     """
+    
     return jsonify(message=_('api', 'welcome'))

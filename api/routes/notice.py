@@ -21,6 +21,7 @@ def list_notices():
     List notices for current user.
     Take parameters `limit`, `skip`, `tag`, and `read`.
     """
+
     if not current_user.is_authenticated():
         return abort(401)
     args = parse_args(request.args)
@@ -38,6 +39,7 @@ def mark_notice_as_read(notice_id):
     Must be logged in as user, provide a valid ID, and own the notice.
     Return notice.
     """
+
     if not current_user.is_authenticated():
         return abort(401)
     notice = Notice.get(id=notice_id)
@@ -58,6 +60,7 @@ def mark_notice_as_unread(notice_id):
     Must be logged in as user, provide a valid ID, and own the notice.
     Return notice.
     """
+
     if not current_user.is_authenticated():
         return abort(401)
     notice = Notice.get(id=notice_id)

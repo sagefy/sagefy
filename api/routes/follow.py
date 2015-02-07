@@ -17,7 +17,7 @@ def follow():
     follow_data = dict(**request.body)
     follow_data['user_id'] = current_user.get_id()
 
-    # TODO validate entity exists
+    # TODO validate entity exists, use entity module
 
     follow, errors = Follow.insert(follow_data)
     if errors:

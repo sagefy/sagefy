@@ -34,8 +34,17 @@ General REST ideas, but made more practical.
     - Assume JSON.
     - Fields in lower camelCase.
     - No root level arrays.
-    - Use ISO8601 and RFC3339 for dates and times.
-    - Use [response codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).
+    - Use [ISO8601](http://en.wikipedia.org/wiki/ISO_8601) for dates and times.
+    - Use [response codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html). In order...
+        - 301: Is the resource somewhere else?
+        - 401: Does the user need to be logged in?
+        - 404: Can we find what they are asking for?
+        - 403: Do they have permission?
+        - 409: Can they take this action?
+        - 400: Are the parameters good?
+        - 201: Was something created?
+        - 204: Is there no body?
+        - 200: Success
     - Success: Wrap objects in type of object. Return `{bunnies:[]}` or `{bunny:{}}`
         - Provide full resources.
         - Updates (POST, PUT, PATCH) should return object as well.
@@ -44,9 +53,10 @@ General REST ideas, but made more practical.
             - Give kind: get, list, create, update, delete, next, prev, self, parent, child
         - Aim for orthogonal updates and deletes (PUT, PATCH, DELETE).
         - Return all parameters under `parameters:`.
-    - Errors: return `{errors:[ {message: ""} ]}`. Use 4xx and 5xx status codes.
-    - GZip and Cache everything.
-    - Use [Blueprint](https://apiblueprint.org/) for documentation.
+    - Errors: return `{errors:[ {message: ""} ]}`.
+    - GZip everything.
+    - Cache everything.
+    - Document each point.
 
 RESTish References
 ------------------

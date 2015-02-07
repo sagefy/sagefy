@@ -9,9 +9,10 @@ user = Blueprint('user', __name__, url_prefix='/api/users')
 
 def _login(user):
     """
-    Login a given user, and return an appropriate response.
+    Log in a given user, and return an appropriate response.
     Used by signup, login, and reset password.
     """
+
     login_user(user, remember=True)
     resp = make_response(jsonify(user=user.deliver(access='private')))
     resp.set_cookie('logged_in', '1')
@@ -20,7 +21,10 @@ def _login(user):
 
 @user.route('/<user_id>/', methods=['GET'])
 def get_user(user_id):
-    """Get the user by their ID."""
+    """
+    Get the user by their ID.
+    """
+
     user = User.get(id=user_id)
     if user:
         return jsonify(
@@ -33,7 +37,10 @@ def get_user(user_id):
 
 @user.route('/current/', methods=['GET'])
 def get_current_user():
-    """Get current user's information."""
+    """
+    Get current user's information.
+    """
+
     if current_user.is_authenticated():
         return jsonify(user=current_user.deliver(access='private'))
     return abort(401)
@@ -41,7 +48,10 @@ def get_current_user():
 
 @user.route('/', methods=['POST'])
 def create_user():
-    """Create user."""
+    """
+    Create user.
+    """
+
     user, errors = User.insert(request.json)
     if len(errors):
         return jsonify(errors=errors), 400
@@ -50,7 +60,10 @@ def create_user():
 
 @user.route('/login/', methods=['POST'])
 def login():
-    """Login user."""
+    """
+    Log in user.
+    """
+
     user = User.get(name=request.json.get('name'))
     if not user:
         return jsonify(errors=[{
@@ -67,7 +80,10 @@ def login():
 
 @user.route('/logout/', methods=['POST'])
 def logout():
-    """Logout user."""
+    """
+    Log out user.
+    """
+
     logout_user()
     resp = make_response('')
     resp.set_cookie('logged_in', '0')
@@ -76,7 +92,10 @@ def logout():
 
 @user.route('/<user_id>/', methods=['PUT'])
 def update_user(user_id):
-    """Update the user. Must be the current user."""
+    """
+    Update the user. Must be the current user.
+    """
+
     user = User.get(id=user_id)
     if not user:
         return abort(404)
@@ -100,7 +119,10 @@ def create_token():
 
 @user.route('/password/', methods=['POST'])
 def create_password():
-    """Update a user's password if the token is valid."""
+    """
+    Update a user's password if the token is valid.
+    """
+
     user = User.get(id=request.json.get('id'))
     if not user:
         return abort(404)
@@ -124,7 +146,9 @@ def get_user_sets(user_id):
     """TODO
     Get the list of sets the user has added.
     """
-    pass
+
+    if not current_user.is_authenticated():
+        return abort(401)
 
 
 @user.route('/<user_id>/sets/', methods=['POST'])
@@ -132,7 +156,9 @@ def add_set(user_id):
     """TODO
     Add a set to the learner's list of sets.
     """
-    pass
+
+    if not current_user.is_authenticated():
+        return abort(401)
 
 
 @user.route('/<user_id>/sets/<set_id>/', methods=['DELETE'])
@@ -140,4 +166,6 @@ def remove_set(user_id, set_id):
     """TODO
     Remove a set from the learner's list of sets.
     """
-    pass
+
+    if not current_user.is_authenticated():
+        return abort(401)

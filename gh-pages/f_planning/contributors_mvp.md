@@ -74,7 +74,7 @@ Contributor Models
 
 ### Discussion > Proposal
 
-- Post +
+- Post plus...
 - entity version
 - action (create, update, delete ... split, merge)
 - status (pending, blocked, accepted, declined)
@@ -82,13 +82,13 @@ Contributor Models
 
 ### Discussion > Vote
 
-- Post +
+- Post plus...
 - proposal
 - kind (consent, discuss, dissent)
 
 ### Discussion > Flag
 
-- Proposal +
+- Proposal plus...
 - reason (offensive, irrelevant, incorrect, unpublished, duplicate, inaccessible)
 
 Contributor Endpoints
@@ -155,8 +155,8 @@ Contributor Screen Requirements & Wireframes
 - Fields
     - Entity (create: select, edit: view)
     - Name (only editable by original author)
-    - + Fieldset for Create Post if create mode (see below)
-- + Preview Post if create mode
+    - plus Fieldset for Create Post if create mode (see below)
+- plus Preview Post if create mode
 
 ### Create/Edit Post, Proposal, Flag, or Vote
 

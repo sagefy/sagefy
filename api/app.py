@@ -1,8 +1,10 @@
 from flask import Flask, g
-import rethinkdb as r
-from redis import StrictRedis
 from flask.ext.login import LoginManager
 from flask_mail import Mail
+
+import rethinkdb as r
+from redis import StrictRedis
+from elasticsearch import Elasticsearch
 
 from routes.error import setup_errors
 from routes.public import public
@@ -15,8 +17,8 @@ def create_app(config, debug=False, testing=False):
     """
     Factory that creates an application instance.
     Setups up all kinds of stuff.
-    It's fun!
     """
+
     app = Flask(__name__)
 
     # Configure the app
@@ -29,6 +31,7 @@ def create_app(config, debug=False, testing=False):
     if not testing:
         setup_conn_per_request(app)
     setup_redis(app)
+    setup_search(app)
     setup_login(app)
     setup_email(app)
 
@@ -47,6 +50,7 @@ def make_db_connection(app):
     Given a Flask application instance,
     create a database connection.
     """
+
     db_conn = r.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
     db = r.db(app.config['RDB_DB'])
     return db_conn, db
@@ -58,6 +62,7 @@ def setup_db(app):
     Include a sequence to make sure databases and tables exist where they
     need to be.
     """
+
     db_conn = r.connect(app.config['RDB_HOST'], app.config['RDB_PORT'])
 
     # Add all setup needed here:
@@ -112,6 +117,7 @@ def setup_conn_per_request(app):
     On each request, we create and close a new connection.
     Rethink was designed to work this way, no reason to be alarmed.
     """
+
     @app.before_request
     def _m():
         # We wrap it here so that we can
@@ -129,13 +135,23 @@ def setup_redis(app):
     """
     Store a Redis instance on our app object.
     """
+
     app.redis = StrictRedis()
+
+
+def setup_search(app):
+    """
+    Create an elastic search reference.
+    """
+
+    app.es = Elasticsearch()
 
 
 def setup_login(app):
     """
     Add login capabilities to our app.
     """
+
     login_manager = LoginManager()
     login_manager.init_app(app)
 
@@ -149,4 +165,5 @@ def setup_email(app):
     """
     Add email capabilities to our app.
     """
+
     app.mail = Mail(app)

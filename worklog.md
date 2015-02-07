@@ -1,6 +1,16 @@
 Sagefy Work Log
 ===============
 
+2015 Feb 07
+-----------
+
+Reading on ElasticSearch. Project planning.
+
+2015 Feb 06
+-----------
+
+Working on select component. Updating form conventions.
+
 2015 Feb 05
 -----------
 

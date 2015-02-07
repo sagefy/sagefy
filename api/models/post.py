@@ -36,3 +36,5 @@ class Post(Model):
             'validate': (is_string, is_valid_kind)
         }
     })
+
+    # TODO On create or update, index in Elasticsearch
