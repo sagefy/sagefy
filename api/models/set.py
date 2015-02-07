@@ -50,6 +50,10 @@ class Set(Model):
             'validate': (is_boolean,),
             'default': False
         },
+        'available': {
+            'validate': (is_boolean,),
+            'default': True
+        },
         'tags': {
             'validate': (is_list,),
             'default': []
@@ -78,4 +82,4 @@ class Set(Model):
         if fields:
             return cls(fields)
 
-    # TODO On set canonical, index in Elasticsearch with entity_id
+    # TODO On set canonical, index (or delete) in Elasticsearch with entity_id
