@@ -60,7 +60,7 @@ class SettingsAdapter extends FormAdapter
             label: 'Avatar'
             type: 'message'
             description: '<a href="http://gravatar.com">' +
-                         'Update your avatar here</a>'
+                         'Update your avatar here</a>.'
         }, {
             name: 'submit'
             type: 'submit'
