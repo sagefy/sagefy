@@ -5,6 +5,18 @@ from flask.ext.login import current_user
 follow = Blueprint('follow', __name__, url_prefix='/api/follows')
 
 
+@follow.route('/', methods=['GET'])
+def get_follows():
+    """
+    Get a list of the users follows.
+    """
+
+    if not current_user.is_authenticated():
+        return abort(401)
+
+    # TODO
+
+
 @follow.route('/', methods=['POST'])
 def follow():
     """

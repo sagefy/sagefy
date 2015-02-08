@@ -50,6 +50,7 @@ class Model(object):
     validations = ()
     # A list of methods to run before saving,
     # which can check class-level characteristics on the model
+    # TODO should I just use super instead?
 
     def __init__(self, data=None):
         """

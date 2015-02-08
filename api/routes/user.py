@@ -139,6 +139,7 @@ def get_menu(user_id):
     Get the list of menu items given the user's context.
     """
     pass
+    # TODO should this just be a UI concern?
 
 
 @user.route('/<user_id>/sets/', methods=['GET'])

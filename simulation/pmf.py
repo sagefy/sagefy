@@ -13,6 +13,7 @@ class PMF(object):
         Create a new PMF, given a list of hypotheses.
         Internally, hypotheses is a dict of hypo: probability.
         """
+
         if isinstance(hypotheses, (tuple, list)):
             self.hypotheses = {hypothesis: 1 for hypothesis in hypotheses}
         elif isinstance(hypotheses, dict):
@@ -26,6 +27,7 @@ class PMF(object):
         Main update function. Updates each hypothesis based on the
         data provided.
         """
+
         self.hypotheses = {hypothesis:
                            probability * self.likelihood(data, hypothesis)
                            for hypothesis, probability
