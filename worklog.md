@@ -1,6 +1,11 @@
 Sagefy Work Log
 ===============
 
+2015 Feb 08
+-----------
+
+List out menu items per view.
+
 2015 Feb 07
 -----------
 

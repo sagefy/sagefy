@@ -30,7 +30,6 @@ Learner Models
 Learner Endpoints
 -----------------
 
-- GET `/api/users/{id}/menu/`
 - GET `/api/users/{id}/sets/`
 - POST `/api/users/{id}/sets/` <- Add to my sets
 - DELETE `/api/users/{id}/sets/{id}` <- Remove from my sets

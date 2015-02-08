@@ -260,30 +260,6 @@ Update the user's password. Must have a matching and timely token.
 
 200 also logs in user. 404 if not a valid user ID. 403 if the token doesn't match.
 
-Get User Menu
--------------
-
-`GET https://sagefy.org/api/users/{id}/menu/`
-
-Get the list of menu items for the current user's state.
-
-### Request Parameters
-
-None
-
-### Response Format
-
-```json
-{
-    "items": [{
-        "name": "contact"
-        "title": "Contact",
-        "url": "/contact",
-        "icon": "envelope"
-    }]
-}
-```
-
 Get User Sets
 -------------
 

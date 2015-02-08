@@ -10,8 +10,8 @@ class MenuModel extends Model
     menus: {
         loggedOut: [
             'login'
-            'terms'
             'contact'
+            'terms'
         ]
         loggedIn: [
             'my_sets'

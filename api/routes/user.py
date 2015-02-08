@@ -133,15 +133,6 @@ def create_password():
     return _login(user)
 
 
-@user.route('/<user_id>/menu/', methods=['GET'])
-def get_menu(user_id):
-    """TODO
-    Get the list of menu items given the user's context.
-    """
-    pass
-    # TODO should this just be a UI concern?
-
-
 @user.route('/<user_id>/sets/', methods=['GET'])
 def get_user_sets(user_id):
     """TODO

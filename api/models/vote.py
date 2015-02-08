@@ -3,15 +3,10 @@ from models.post import Post
 from modules.validations import is_required, is_string, is_one_of
 
 
-def is_unique_vote(instance):
-    """
-    Ensure a user can only vote once per proposal.
-    """
-    # TODO
-
-
 class Vote(Post):
-    """A vote or response on a proposal."""
+    """
+    A vote or response on a proposal.
+    """
 
     # For votes, a body is not required but optional,
     # But a replies to id is required
@@ -34,15 +29,24 @@ class Vote(Post):
         }
     })
 
-    validations = (
-        ('is unique vote', is_unique_vote),
-    )
-
     def __init__(self, fields=None):
         """
         When creating a new vote,
-        set the correct kind.
+        set the correct kiwnd.
         """
 
         Model.__init__(self, fields)
         self.kind = 'vote'
+
+    def validate(self):
+        errors = super().validate()
+        if not errors:
+            errors += self.is_unique_vote()
+        return errors
+
+    def is_unique_vote(self):
+        """
+        Ensure a user can only vote once per proposal.
+        """
+        return []
+        # TODO

@@ -23,6 +23,11 @@ def learn_card(card_id):
     if not current_user.is_authenticated():
         return abort(401)
 
+    # TODO for the menu, we must include...
+    #      set: name and id
+    #      unit: name, body, id
+    #      card: name and id
+
 
 @card.route('/<card_id>/responses/', methods=['POST'])
 def respond_to_card(card_id):

@@ -47,11 +47,6 @@ class Model(object):
     indexes = ()
     # A list of indexes for the table
 
-    validations = ()
-    # A list of methods to run before saving,
-    # which can check class-level characteristics on the model
-    # TODO should I just use super instead?
-
     def __init__(self, data=None):
         """
         Initialize the model, setting defaults where needed.
@@ -101,13 +96,20 @@ class Model(object):
         """
         Ensure the data presented matches the validations in the schema.
         Allow all data that is not specified in the schema.
-        """
 
-        # To limit database queries, first we do strict checks, which
-        # takes no lookups. Then we validate fields, which are unlikely to
-        # have lookups. Then we test unique, which we know will have one lookup
-        # each. Finally we validate extras, which are likely to have multiple
-        # lookups.
+        To limit database queries, first we do strict checks, which
+        takes no lookups. Then we validate fields, which are unlikely to
+        have lookups. Then we test unique, which we know will have one lookup
+        each.
+
+        To add model-level validations, extend this method, such as:
+
+            def validate(self):
+                errors = super().validate()
+                if not errors:
+                    errors += self.validate_...()
+                return errors
+        """
 
         errors = []
         errors += self.enforce_strict_mode()
@@ -115,21 +117,20 @@ class Model(object):
             errors += self.validate_fields()
         if not errors:
             errors += self.test_unique()
-        if not errors:
-            errors += self.validate_extras()
         return errors
 
     def enforce_strict_mode(self):
         """
-        If strict mode, remove any fields that aren't part of the schema
+        If strict mode, remove any fields that aren't part of the schema.
+
+        For now, we'll just remove extra fields.
+        Later, we might want an option to throw errors instead.
         """
 
         if self.strict:
             self.data = pick(self.data, self.schema.keys())
 
         return []
-        # For now, we'll just remove extra fields
-        # Later, we might want an option to throw errors instead
 
     def validate_fields(self):
         """
@@ -150,21 +151,6 @@ class Model(object):
                             'message': error,
                         })
                         break
-        return errors
-
-    def validate_extras(self):
-        """
-        Finally, run any class level validations.
-        """
-
-        errors = []
-        for name, fn in self.validations:
-            error = fn(self)
-            if error:
-                errors.append({
-                    'name': name,
-                    'message': error,
-                })
         return errors
 
     def defaults(self):

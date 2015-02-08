@@ -3,14 +3,6 @@ from models.post import Post
 from modules.validations import is_required, is_one_of
 
 
-def is_unique_flag(instance):
-    """
-    Only one flag per entity per reason is allowed.
-    """
-
-    # TODO
-
-
 class Flag(Post):
     """A proposal to delete a property."""
 
@@ -29,13 +21,22 @@ class Flag(Post):
         }
     })
 
-    validations = (
-        ('is_unique_flag', is_unique_flag),
-    )
-
     def __init__(self, fields=None):
         """
 
         """
         Model.__init__(self, fields)
         self['kind'] = 'flag'
+
+    def validate(self):
+        errors = super().validate()
+        if not errors:
+            errors += self.is_unique_flag()
+        return errors
+
+    def is_unique_flag(self):
+        """
+        Only one flag per entity per reason is allowed.
+        """
+        return []
+        # TODO

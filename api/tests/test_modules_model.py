@@ -13,11 +13,6 @@ def encrypt_password(value):
         return '$2a$' + value
 
 
-def clean_password(instance):
-    if instance['name'] in instance['password']:
-        return 'Password cannot contain name.'
-
-
 class User(Model):
     tablename = 'users'
 
@@ -37,10 +32,6 @@ class User(Model):
             'bundle': encrypt_password
         }
     })
-
-    validations = (
-        ('clean_password', clean_password),
-    )
 
 
 def test_table_class(app, db_conn, users_table):
@@ -257,21 +248,6 @@ def test_validate_fields(app, db_conn, users_table):
     assert isinstance(errors, list)
     assert errors[0]['name'] == 'password'
     assert errors[0]['message']
-
-
-def test_validate_extras(app, db_conn, users_table):
-    """
-    Expect to validate a model's top level checks.
-    """
-
-    user = User({
-        'name': 'Test',
-        'email': 'test@example.com',
-        'password': 'abTestcd'
-    })
-    errors = user.validate_extras()
-    assert isinstance(errors, list)
-    assert errors[0]['name'] == 'clean_password'
 
 
 def test_bundle(app, db_conn, users_table):
