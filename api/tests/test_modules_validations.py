@@ -1,7 +1,6 @@
-from modules.validations import is_required, is_email, has_min_length
-import pytest
-
-xfail = pytest.mark.xfail
+from modules.validations import is_required, is_boolean, is_string, \
+    is_number, is_language, is_list, is_email, has_min_length, is_one_of, \
+    is_entity_dict, is_entity_list_dict, is_list_of_strings
 
 
 def test_require(app, db_conn):
@@ -28,73 +27,73 @@ def test_minlength(app, db_conn):
     assert has_min_length('a', 8)
 
 
-@xfail
 def test_boolean(app, db_conn):
     """
-    Expect
+    Expect a boolean.
     """
-    assert False
+    assert is_boolean(False) is None
+    assert is_boolean('a')
 
 
-@xfail
 def test_string(app, db_conn):
     """
-    Expect
+    Expect a string.
     """
-    assert False
+    assert is_string('a') is None
+    assert is_string(0)
 
 
-@xfail
 def test_number(app, db_conn):
     """
-    Expect
+    Expect a number.
     """
-    assert False
+    assert is_number(0) is None
+    assert is_number('1')
 
 
-@xfail
 def test_language(app, db_conn):
     """
-    Expect
+    Expect two-char language.
     """
-    assert False
+    assert is_language('en') is None
+    assert is_language('enf')
 
 
-@xfail
 def test_list(app, db_conn):
     """
-    Expect
+    Expect a list.
     """
-    assert False
+    assert is_list([]) is None
+    assert is_list({})
 
 
-@xfail
 def test_one_of(app, db_conn):
     """
-    Expect
+    Expect to be one of a list.
     """
-    assert False
+    assert is_one_of('1', '1') is None
+    assert is_one_of(1, '1')
 
 
-@xfail
 def test_entity(app, db_conn):
     """
-    Expect
+    Expect to reference an entity.
     """
-    assert False
+    assert is_entity_dict({'id': 'a', 'kind': 'card'}) is None
+    assert is_entity_dict({'id': 'a', 'kind': 'Card'})
 
 
-@xfail
 def test_list_entity(app, db_conn):
     """
-    Expect
+    Expect a list of entity references.
     """
-    assert False
+    assert is_entity_list_dict([{'id': 'a', 'kind': 'card'}]) is None
+    assert is_entity_list_dict([{'id': 'a', 'kind': 'Card'}])
 
 
-@xfail
 def test_list_string(app, db_conn):
     """
-    Expect
+    Expect a list of strings.
     """
-    assert False
+    assert is_list_of_strings(['a']) is None
+    assert is_list_of_strings([1])

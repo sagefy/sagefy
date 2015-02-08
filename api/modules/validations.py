@@ -43,7 +43,7 @@ def is_number(value):
     if value is None:
         return
 
-    if not isinstance(value, (int, long, float, complex)):
+    if not isinstance(value, (int, float, complex)):
         return c('error', 'number')
 
 
@@ -55,7 +55,7 @@ def is_language(value):
     if value is None:
         return
 
-    if not (isinstance(value, str) or len(value) != 2):
+    if not isinstance(value, str) or len(value) != 2:
         return c('error', 'language')
 
 
