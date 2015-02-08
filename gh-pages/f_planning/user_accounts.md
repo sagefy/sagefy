@@ -10,7 +10,7 @@ Account Screens
 
 - Home Screen
 - Menu
-- Login
+- Log In
 - Sign Up
 - New Password
 - Settings
@@ -50,24 +50,24 @@ Screen Requirements
 ### Home Screen
 - Logo and Title
 - Short description
-- Login or Signup
+- Log In or Sign Up
 - Terms link
 
 ### Menu
 - Home
-- Login/logout
+- Log In/Log Out
 - Settings
 - Contact
 - Inbox
 - Terms
 
-### Login
+### Log In
 - Username or email
     - Error
 - Password
     - Error
     - I forgot my password
-- Login Button
+- Log In Button
 - Create Account link
 
 ### Create Account
@@ -79,9 +79,9 @@ Screen Requirements
     - Requirements; error
 - You agree to TOS
 - Create account button
-- Login link
+- Log In link
 - Success: Check inbox, spam, support link; validate email address
-    - Then login, Thanks for making account!
+    - Then log in, Thanks for making account!
 
 ### New Password
 - Wizard steps
@@ -91,7 +91,7 @@ Screen Requirements
 - 1) Email (to confirm you own account), send token button
 - 2) Check inbox, few minutes, check spam, support link
 - 3) Password field (requirements/errors), update password
-    - Then login, notify user of new password
+    - Then log in, notify user of new password
 
 ### Settings
 - Autosave fields

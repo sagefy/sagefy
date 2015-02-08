@@ -9,7 +9,7 @@ class MenuModel extends Model
     # For each state, a list of the menu items to appear
     menus: {
         loggedOut: [
-            'login'
+            'log_in'
             'contact'
             'terms'
         ]
@@ -19,7 +19,7 @@ class MenuModel extends Model
             'settings'
             'contact'
             'terms'
-            'logout'
+            'log_out'
         ]
     }
 
@@ -27,12 +27,12 @@ class MenuModel extends Model
     # The method `_itemBoilerplate` will fill in other values
     _items: {
         my_sets: { title: 'My Sets', icon: 'star' }
-        login: { title: 'Log In', icon: 'sign-in' }
+        log_in: { title: 'Log In', icon: 'sign-in' }
         terms: { icon: 'pencil-square-o' }
         contact: { icon: 'envelope' }
         notices: { icon: 'tachometer' }
         settings: { icon: 'cog' }
-        logout: { icon: 'sign-out' }
+        log_out: { title: 'Log Out', icon: 'sign-out' }
     }
 
     constructor: ->

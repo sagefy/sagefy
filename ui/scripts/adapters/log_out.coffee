@@ -4,8 +4,8 @@ aux = require('../modules/auxiliaries')
 
 # TODO: move copy to content directory
 
-class LogoutAdapter extends PageAdapter
-    url: '/logout'
+class LogOutAdapter extends PageAdapter
+    url: '/log_out'
     title: 'Logging out...'
 
     render: ->
@@ -14,8 +14,8 @@ class LogoutAdapter extends PageAdapter
             @model = new UserModel({
                 id: 'current'
             })
-            @listenTo(@model, 'logout', @toIndex)
-            @model.logout()
+            @listenTo(@model, 'logOut', @toIndex)
+            @model.logOut()
         else
             @toIndex()
 
@@ -27,4 +27,4 @@ class LogoutAdapter extends PageAdapter
     toIndex: ->
         window.location = '/'
 
-module.exports = LogoutAdapter
+module.exports = LogOutAdapter

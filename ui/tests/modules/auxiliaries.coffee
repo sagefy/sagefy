@@ -2,7 +2,7 @@ aux = require('../../scripts/modules/auxiliaries')
 cookie = require('../../scripts/modules/cookie')
 
 describe('Auxiliaries', ->
-    it('should detect login', ->
+    it('should detect log in', ->
         cookie.set('logged_in', '1')
         expect(aux.isLoggedIn()).to.be.true
         cookie.set('logged_in', '0')

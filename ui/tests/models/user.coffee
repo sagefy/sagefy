@@ -47,10 +47,10 @@ describe('User Model', ->
         expect(validate(@user, 'password')).to.not.exist
     )
 
-    it('should login a user', ->
+    it('should log in a user', ->
         spy = sinon.spy()
-        @user.on('login', spy)
-        @user.login({name: 'abcd', password: 'asdfasdf'})
+        @user.on('logIn', spy)
+        @user.logIn({name: 'abcd', password: 'asdfasdf'})
         @requests[0].respond(
             204
             {'Content-Type': 'application/json'}
@@ -59,10 +59,10 @@ describe('User Model', ->
         expect(spy).to.be.called
     )
 
-    it('should logout a user', ->
+    it('should log out a user', ->
         spy = sinon.spy()
-        @user.on('logout', spy)
-        @user.logout()
+        @user.on('logOut', spy)
+        @user.logOut()
         @requests[0].respond(
             204
             {'Content-Type': 'application/json'}

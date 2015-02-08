@@ -9,7 +9,7 @@ class IndexAdapter extends PageAdapter
     # TODO: move copy to content directory
 
     render: ->
-        return if @requireLogout()
+        return if @requireLogOut()
         super
         @view = new View({
             id: 'index'

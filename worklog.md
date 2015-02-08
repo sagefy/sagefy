@@ -246,7 +246,7 @@ So far, here's the big ticket items I've completed:
 
 **Technical Stack**. I chose my [technical stack](https://docs.sagefy.org/f_technology/stack) and began setting up the infrastructure and [technical direction](https://docs.sagefy.org/f_technology/contribution).
 
-**User Accounts**. I've created the basic abilities for users to create accounts, login, logout, change their password, and read notifications.
+**User Accounts**. I've created the basic abilities for users to create accounts, log in, log out, change their password, and read notifications.
 
 **Planning**. I've started planning on [how people will contribute](https://docs.sagefy.org/f_planning/user_accounts) and how the [learning process](https://docs.sagefy.org/f_planning/contributors_mvp) will work.
 

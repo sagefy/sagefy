@@ -7,10 +7,10 @@ from modules.content import get as c
 user = Blueprint('user', __name__, url_prefix='/api/users')
 
 
-def _login(user):
+def _log_in(user):
     """
     Log in a given user, and return an appropriate response.
-    Used by signup, login, and reset password.
+    Used by sign up, log in, and reset password.
     """
 
     login_user(user, remember=True)
@@ -55,11 +55,11 @@ def create_user():
     user, errors = User.insert(request.json)
     if len(errors):
         return jsonify(errors=errors), 400
-    return _login(user)
+    return _log_in(user)
 
 
-@user.route('/login/', methods=['POST'])
-def login():
+@user.route('/log_in/', methods=['POST'])
+def log_in():
     """
     Log in user.
     """
@@ -75,11 +75,11 @@ def login():
             'name': 'password',
             'message': c('user', 'no_match'),
         }]), 400
-    return _login(user)
+    return _log_in(user)
 
 
-@user.route('/logout/', methods=['POST'])
-def logout():
+@user.route('/log_out/', methods=['POST'])
+def log_out():
     """
     Log out user.
     """
@@ -130,7 +130,7 @@ def create_password():
     if not valid:
         return abort(403)
     user.update_password(request.json.get('password'))
-    return _login(user)
+    return _log_in(user)
 
 
 @user.route('/<user_id>/sets/', methods=['GET'])

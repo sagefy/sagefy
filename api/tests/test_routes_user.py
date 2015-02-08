@@ -1,7 +1,7 @@
 from passlib.hash import bcrypt
 import json
 from models.user import User
-from conftest import create_user_in_db, login, logout
+from conftest import create_user_in_db, log_in, log_out
 
 
 def test_user_get(app, db_conn, users_table):
@@ -21,53 +21,53 @@ def test_user_get_failed(app, db_conn, users_table):
     assert 'errors' in response.data.decode('utf-8')
 
 
-def test_user_login(app, db_conn, users_table):
+def test_user_log_in(app, db_conn, users_table):
     """
-    Ensure a user can login.
+    Ensure a user can log in.
     """
     create_user_in_db(users_table, db_conn)
     with app.test_client() as c:
-        response = login(c)
+        response = log_in(c)
         assert 'test@example.com' in response.data.decode('utf-8')
 
 
-def test_user_login_none(app, db_conn, users_table):
+def test_user_log_in_none(app, db_conn, users_table):
     """
-    Ensure a user can't login if no user by name.
+    Ensure a user can't log in if no user by name.
     """
     with app.test_client() as c:
-        response = login(c)
+        response = log_in(c)
         assert 'errors' in response.data.decode('utf-8')
 
 
-def test_user_login_password_fail(app, db_conn, users_table):
+def test_user_log_in_password_fail(app, db_conn, users_table):
     """
-    Ensure a user can't login if password is wrong.
+    Ensure a user can't log in if password is wrong.
     """
     create_user_in_db(users_table, db_conn)
-    response = app.test_client().post('/api/users/login/', data=json.dumps({
+    response = app.test_client().post('/api/users/log_in/', data=json.dumps({
         'name': 'test',
         'password': '1234abcd'
     }), content_type='application/json')
     assert 'errors' in response.data.decode('utf-8')
 
 
-def test_user_logout(app, db_conn, users_table):
+def test_user_log_out(app, db_conn, users_table):
     """
     Ensure a user can log out.
     """
     create_user_in_db(users_table, db_conn)
     with app.test_client() as c:
-        login(c)
-        response = logout(c)
+        log_in(c)
+        response = log_out(c)
         assert response.status_code == 204
 
 
-def test_user_get_current(clogin):
+def test_user_get_current(c_user):
     """
     Ensure the current user can be retrieved.
     """
-    response = clogin.get('/api/users/current/')
+    response = c_user.get('/api/users/current/')
     assert 'test' in response.data.decode('utf-8')
 
 
@@ -100,11 +100,11 @@ def test_user_create_failed(app, db_conn, users_table):
     assert 'errors' in response.data.decode('utf-8')
 
 
-def test_user_update(clogin):
+def test_user_update(c_user):
     """
     Ensure a user can be updated.
     """
-    response = clogin.put('/api/users/abcd1234/', data=json.dumps({
+    response = c_user.put('/api/users/abcd1234/', data=json.dumps({
         'email': 'other@example.com'
     }), content_type='application/json')
     assert 'other@example.com' in response.data.decode('utf-8')
@@ -120,7 +120,7 @@ def test_user_update_none(app, db_conn, users_table):
     assert 'errors' in response.data.decode('utf-8')
 
 
-def test_user_update_self_only(db_conn, users_table, clogin):
+def test_user_update_self_only(db_conn, users_table, c_user):
     """
     Ensure a user can only update herself.
     """
@@ -130,17 +130,17 @@ def test_user_update_self_only(db_conn, users_table, clogin):
         'email': 'other@example.com',
         'password': bcrypt.encrypt('1234abcd'),
     }).run(db_conn)
-    response = clogin.put('/api/users/1234abcd/', data=json.dumps({
+    response = c_user.put('/api/users/1234abcd/', data=json.dumps({
         'email': 'other@example.com'
     }), content_type='application/json')
     assert 'errors' in response.data.decode('utf-8')
 
 
-def test_user_update_invalid(app, db_conn, users_table, clogin):
+def test_user_update_invalid(app, db_conn, users_table, c_user):
     """
     Ensure a user won't update if invalid.
     """
-    response = clogin.put('/api/users/abcd1234/', data=json.dumps({
+    response = c_user.put('/api/users/abcd1234/', data=json.dumps({
         'email': 'other'
     }), content_type='application/json')
     assert 'errors' in response.data.decode('utf-8')

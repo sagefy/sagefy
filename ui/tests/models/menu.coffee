@@ -40,7 +40,7 @@ describe('Menu Model', ->
     )
 
     it('should allow setting a custom icon', ->
-        @model._items.login.icon = 'taxi'
+        @model._items.log_in.icon = 'taxi'
         expect(@model.items()[0].icon).to.equal('taxi')
     )
 

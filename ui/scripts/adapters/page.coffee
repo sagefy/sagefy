@@ -6,13 +6,13 @@ class PageAdapter extends Adapter
         super
         @render()
 
-    requireLogin: ->
+    requireLogIn: ->
         test = not aux.isLoggedIn()
         if test
-            @navigate('/login')
+            @navigate('/log_in')
         return test
 
-    requireLogout: ->
+    requireLogOut: ->
         test = aux.isLoggedIn()
         if test
             @navigate('/my_sets')

@@ -32,7 +32,7 @@ def create_app(config, debug=False, testing=False):
         setup_conn_per_request(app)
     setup_redis(app)
     setup_search(app)
-    setup_login(app)
+    setup_log_in(app)
     setup_email(app)
 
     # Add in the routes
@@ -147,9 +147,9 @@ def setup_search(app):
     app.es = Elasticsearch()
 
 
-def setup_login(app):
+def setup_log_in(app):
     """
-    Add login capabilities to our app.
+    Add log in capabilities to our app.
     """
 
     login_manager = LoginManager()

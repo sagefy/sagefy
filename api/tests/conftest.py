@@ -29,15 +29,15 @@ def create_user_in_db(users_table, db_conn):
     }).run(db_conn)
 
 
-def login(c):
-    return c.post('/api/users/login/', data=json.dumps({
+def log_in(c):
+    return c.post('/api/users/log_in/', data=json.dumps({
         'name': 'test',
         'password': 'abcd1234'
     }), content_type='application/json')
 
 
-def logout(c):
-    return c.post('/api/users/logout/', data=json.dumps({}),
+def log_out(c):
+    return c.post('/api/users/log_out/', data=json.dumps({}),
                   content_type='application/json')
 
 
@@ -63,11 +63,11 @@ def db_conn(app, request):
 
 
 @pytest.fixture
-def clogin(app, request, db_conn, users_table):
+def c_user(app, request, db_conn, users_table):
     create_user_in_db(users_table, db_conn)
     with app.test_client() as c:
-        login(c)
-        request.addfinalizer(lambda: logout(c))
+        log_in(c)
+        request.addfinalizer(lambda: log_out(c))
         return c
 
 

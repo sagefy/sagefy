@@ -2,9 +2,9 @@ Sagefy = require('./modules/sagefy')
 
 document.addEventListener('DOMContentLoaded', ->
     app = new Sagefy(
-        require('./adapters/signup')
-        require('./adapters/login')
-        require('./adapters/logout')
+        require('./adapters/sign_up')
+        require('./adapters/log_in')
+        require('./adapters/log_out')
         require('./adapters/password')
         require('./adapters/styleguide')
         require('./adapters/terms')

@@ -66,7 +66,7 @@ module.exports = ->
     </p>
 
     <p>
-        You cannot share a single login or account with multiple people.
+        You cannot share a single account with multiple people.
         You cannot make or use more than one account.
     </p>
 

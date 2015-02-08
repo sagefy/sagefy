@@ -11,7 +11,7 @@ class SettingsAdapter extends FormAdapter
     title: 'Settings'
 
     render: ->
-        return if @requireLogin()
+        return if @requireLogIn()
         super
         @model = new UserModel()
         @view = new FormLayoutView({

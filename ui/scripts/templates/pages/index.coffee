@@ -10,7 +10,7 @@ module.exports = ->
         </h3>
     </hgroup>
     <p class="leading">
-        <a href="/login">Log In</a> or <a href="/signup">Sign Up</a>
+        <a href="/log_in">Log In</a> or <a href="/sign_up">Sign Up</a>
     </p>
     <p class="legal">
         &copy; Copyright 2015 Sagefy.

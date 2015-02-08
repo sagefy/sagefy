@@ -32,23 +32,23 @@ class UserModel extends Model
     parse: (response) ->
         return response.user
 
-    login: (data) ->
+    logIn: (data) ->
         return @ajax({
             method: 'POST'
-            url: '/api/users/login/'
+            url: '/api/users/log_in/'
             data: data
             done: =>
-                @trigger('login')
+                @trigger('logIn')
             fail: (errors) =>
                 @trigger('error', errors)
         })
 
-    logout: ->
+    logOut: ->
         return @ajax({
             method: 'POST'
-            url: '/api/users/logout/'
+            url: '/api/users/log_out/'
             done: =>
-                @trigger('logout')
+                @trigger('logOut')
             fail: (errors) =>
                 @trigger('error', errors)
         })

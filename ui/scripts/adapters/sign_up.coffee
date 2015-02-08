@@ -2,32 +2,30 @@ FormAdapter = require('./form')
 UserModel = require('../models/user')
 FormView = require('../views/components/form')
 FormLayoutView = require('../views/layouts/form')
-util = require('../framework/utilities')
 
 # TODO: move copy to content directory
 
-class LoginAdapter extends FormAdapter
-    url: '/login'
-    title: 'Log In'
+class SignUpAdapter extends FormAdapter
+    url: '/sign_up'
+    title: 'Sign Up'
 
     render: ->
-        return if @requireLogout()
+        return if @requireLogOut()
         super
         @model = new UserModel()
-
         @view = new FormLayoutView({
-            id: 'login'
+            id: 'sign-up'
             className: 'col-6'
             region: @page
         })
         @view.render({
-            title: 'Log In to Sagefy'
+            title: 'Sign Up for Sagefy'
             description: '''
-                Don't have an account?
-                <a href="/signup"><i class="fa fa-user"></i> Sign Up</a>.
+                Already have an account?
+                <a href="/log_in"><i class="fa fa-sign-in"></i> Log In</a>.
                 <br />
-                Forgot your password?
-                <a href="/password"><i class="fa fa-refresh"></i> Reset</a>.
+                By signing up,
+                you agree to our <a href="/terms">Terms of Service</a>.
             '''
         })
         @form = new FormView({
@@ -39,29 +37,31 @@ class LoginAdapter extends FormAdapter
 
     bindEvents: ->
         super
-        @listenTo(@model, 'login', @toMySets.bind(this))
+        @listenTo(@model, 'sync', @toMySets.bind(this))
 
     getSchema: ->
         return @addModelSchema([{
             name: 'name'
             label: 'Username'
-            placeholder: 'e.g. Unicorn'
+            placeholder: 'ex: Unicorn'
+        }, {
+            name: 'email'
+            label: 'Email'
+            description: 'We need your email to send notices ' +
+                         '<br />and reset password.'
+            placeholder: 'ex: unicorn@example.com'
         }, {
             name: 'password'
             label: 'Password'
-            placeholder: ''
         }, {
+            name: 'submit'
+            label: 'Sign Up'
             type: 'submit'
-            name: 'log-in'
-            label: 'Log In'
-            icon: 'sign-in'
+            icon: 'user'
         }])
 
     toMySets: ->
         # Hard redirect to get the cookie
         window.location = '/my_sets'
 
-    validate: ->
-        @model.login(@form.getValues())
-
-module.exports = LoginAdapter
+module.exports = SignUpAdapter

@@ -135,7 +135,7 @@ Returns a 400 if there are errors, such as email already used or password too sh
 Log In User
 -----------
 
-`POST https://sagefy.org/api/users/login/`
+`POST https://sagefy.org/api/users/log_in/`
 
 Log in as an existing user.
 
@@ -165,7 +165,7 @@ Returns 404 if the user by name is not found. Returns a 400 if the password is n
 Log Out User
 ------------
 
-`POST https://sagefy.org/api/users/logout/`
+`POST https://sagefy.org/api/users/log_out/`
 
 Log out of the current user.
 
