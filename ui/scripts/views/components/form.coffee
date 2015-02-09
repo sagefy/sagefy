@@ -100,10 +100,8 @@ class FormView extends View
 
     # Adds an error message to a single form field
     errorField: (field, error) ->
-        field.classList.remove('form-field--success')
-        field.classList.add('form-field--error')
-        feedback = field.querySelector('.form-field__feedback')
-        field.removeChild(feedback) if feedback
+        @updateFieldStatus(field, false)
+
         feedback = @createElement({
             tagName: 'span'
             className: 'form-field__feedback'
@@ -127,8 +125,15 @@ class FormView extends View
 
     # Removes error messages to a single form field
     clearField: (field) ->
-        field.classList.remove('form-field--error')
-        field.classList.add('form-field--success')
+        @updateFieldStatus(field, true)
+
+    updateFieldStatus: (field, valid = true) ->
+        if valid
+            field.classList.remove('form-field--error')
+            field.classList.add('form-field--success')
+        else
+            field.classList.add('form-field--error')
+            field.classList.remove('form-field--success')
         feedback = field.querySelector('.form-field__feedback')
         field.removeChild(feedback) if feedback
 
