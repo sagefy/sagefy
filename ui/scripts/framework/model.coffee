@@ -72,7 +72,7 @@ class Model extends Events
     # depending on if the model has an ID.
     # Provide options, which will in turn be sent to the URL function.
     save: (options = {}) ->
-        errors = @validate(options.schema or null)
+        errors = @validate(options.fields or null)
         return errors if errors.length
         return @ajax({
             method: if @get('id') then 'PUT' else 'POST'
@@ -103,9 +103,9 @@ class Model extends Events
     # Validates the values of the model against the schema
     # described in the schema. Returns a list of errors
     # Triggers `invalid` if errors are found.
-    validate: (schema) ->
+    validate: (fields) ->
         errors = []
-        for fieldName in (schema or Object.keys(@schema))
+        for fieldName in (fields or Object.keys(@schema))
             error = @validateField(fieldName)
             errors.push({
                 name: fieldName

@@ -167,7 +167,7 @@ def update_guess(score, learned, guess, slip, transit, guess_distro):
     """
     Determines how to update guess given a score.
     """
-    
+
     guess_distro.update({
         'score': score,
         'learned': learned,
@@ -209,12 +209,14 @@ def update_learned(score, learned, guess, slip, transit,
     """
 
     learned *= calculate_belief(learned, time, prev_time)
-    posterior = (score * (learned
-                          * calculate_correct(guess, slip, 1)
-                          / calculate_correct(guess, slip, learned))
-                 + (1 - score) * (learned
-                                  * calculate_incorrect(guess, slip, 1)
-                                  / calculate_incorrect(guess, slip, learned)))
+    posterior = (score
+                 * learned
+                 * calculate_correct(guess, slip, 1)
+                 / calculate_correct(guess, slip, learned)
+                 + (1 - score)
+                 * learned
+                 * calculate_incorrect(guess, slip, 1)
+                 / calculate_incorrect(guess, slip, learned))
     return posterior + (1 - posterior) * transit
 
 
