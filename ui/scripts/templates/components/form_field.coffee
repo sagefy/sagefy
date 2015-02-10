@@ -13,6 +13,8 @@ module.exports = (data) ->
     switch data.type
         when 'text', 'email', 'password'
             html += require('./form_field_input')(data)
+        when 'textarea'
+            html += require('./form_field_textarea')(data)
         when 'submit', 'button'
             html += require('./form_field_button')(data)
         when 'select'

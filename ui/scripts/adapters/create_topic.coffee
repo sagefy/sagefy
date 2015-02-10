@@ -12,6 +12,7 @@ class CreateTopicAdapter extends FormAdapter
         return if @requireLogIn()
         super
         @model = new TopicModel()
+        @postModel = new PostModel()
         @view = new FormLayoutView({
             id: 'create-topic'
             className: 'col-6'
@@ -24,21 +25,34 @@ class CreateTopicAdapter extends FormAdapter
             schema: @getSchema()
             region: @view.form
         })
+        @postForm = new FormView({
+            schema: @getPostSchema()
+            region: null
+        })
         @form.render()
         @bindEvents()
 
     bindEvents: ->
         super
 
+    remove: ->
+        @postForm.remove()
+        @postModel.remove()
+        super
+
     getSchema: ->
         return @addModelSchema([{
             name: 'name'
-            label: 'Name'
-        }, {
+            label: 'Topic Name'
+            size: 40
+        }])
+
+    getPostSchema: ->
+        return [ {
             name: 'submit'
             label: 'Create Topic'
             type: 'submit'
             icon: 'check'
-        }])
+        }]
 
 module.exports = CreateTopicAdapter

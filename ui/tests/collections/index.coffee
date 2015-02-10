@@ -1,1 +1,6 @@
 require('./notices')
+require('./follows')
+require('./posts')
+require('./search')
+require('./sets')
+require('./units')

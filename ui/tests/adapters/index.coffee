@@ -13,6 +13,7 @@ require('./styleguide')
 require('./terms')
 
 require('./search')
+require('./create_topic')
 require('./topic')
 require('./card')
 require('./unit')
