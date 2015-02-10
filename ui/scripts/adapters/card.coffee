@@ -1,7 +1,7 @@
 PageAdapter = require('./page')
 
 class CardAdapter extends PageAdapter
-    url: '/card'
+    url: '/card/{id}'
 
     render: ->
 

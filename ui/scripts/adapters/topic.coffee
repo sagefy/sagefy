@@ -1,7 +1,7 @@
 PageAdapter = require('./page')
 
 class TopicAdapter extends PageAdapter
-    url: '/topic'
+    url: '/topic/{id}'
 
     render: ->
 
