@@ -5,7 +5,7 @@ TopicModel = require('../models/topic')
 PostModel = require('../models/post')
 
 class CreateTopicAdapter extends FormAdapter
-    url: '/topic/create'
+    url: '/topics/create'
     title: 'Create a New Topic'
 
     render: ->

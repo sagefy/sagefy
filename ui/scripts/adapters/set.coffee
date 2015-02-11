@@ -1,7 +1,7 @@
 PageAdapter = require('./page')
 
 class SetAdapter extends PageAdapter
-    url: '/set/{id}'
+    url: '/sets/{id}'
 
     render: ->
 

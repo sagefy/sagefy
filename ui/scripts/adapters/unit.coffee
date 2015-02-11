@@ -1,7 +1,7 @@
 PageAdapter = require('./page')
 
 class UnitAdapter extends PageAdapter
-    url: '/unit/{id}'
+    url: '/units/{id}'
 
     render: ->
 
