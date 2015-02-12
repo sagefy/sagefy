@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', ->
         require('./adapters/notices')
         require('./adapters/search')
         require('./adapters/create_topic')  # Must be before `topic`
+        require('./adapters/create_post')
         require('./adapters/topic')
         require('./adapters/card')
         require('./adapters/unit')

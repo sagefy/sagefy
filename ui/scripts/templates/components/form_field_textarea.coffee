@@ -4,6 +4,7 @@ module.exports = (data) ->
         id="#{data.name}"
         name="#{data.name}"
         placeholder="#{data.placeholder or ''}"
-        size="#{data.size or ''}"
+        cols="#{data.cols or ''}"
+        rows="#{data.rows or ''}"
     >#{data.value or ''}</textarea>
     """

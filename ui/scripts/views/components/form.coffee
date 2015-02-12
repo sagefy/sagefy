@@ -39,18 +39,20 @@ class FormView extends View
 
     # If there are select(s), create the instances
     createSelects: ->
+        @selectViews or= []
         for field in util.copy(@schema)
-            if field.type is 'select'
-                select = new SelectView({
-                    region: @el.querySelector(
-                        '.form-field--' + field.name + ' .select-wrap')
-                    name: field.name
-                    count: field.options.length
-                    url: field.url
-                    multiple: field.multiple
-                    showInline: field.showInline
-                })
-                select.render({options: field.options})
+            continue if field.type isnt 'select'
+            select = new SelectView({
+                region: @el.querySelector(
+                    '.form-field--' + field.name + ' .select-wrap')
+                name: field.name
+                count: field.options.length
+                url: field.url
+                multiple: field.multiple
+                showInline: field.showInline
+            })
+            select.render({options: field.options})
+            @selectViews.push(select)
 
     # Returns an object of the fields in the format:
     # {name: value, name: value}

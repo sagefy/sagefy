@@ -91,7 +91,7 @@ class View extends Events
         for query, methodName of @domEvents or {}
             match = query.match(eventRegExp)
             key = if match then match.slice(1)[0] else query
-            @domEventKeys.push(key)
+            @domEventKeys.push(key) if key not in @domEventKeys
         for key in @domEventKeys
             @el.addEventListener(key, @myDelegatedEvent)
         return this

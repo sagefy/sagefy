@@ -53,7 +53,8 @@
             "Text Inputs",
             "Textarea",
             "Checkboxes and Radios",
-            "Select Menu"
+            "Select Menu",
+            "Select Component"
         ],
         "Grouped Inputs",
         "Horizontal Forms"

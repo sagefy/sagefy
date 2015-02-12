@@ -3,6 +3,7 @@ FormLayoutView = require('../views/layouts/form')
 FormView = require('../views/components/form')
 TopicModel = require('../models/topic')
 PostModel = require('../models/post')
+util = require('../framework/utilities')
 
 class CreateTopicAdapter extends FormAdapter
     url: '/topics/create'
@@ -25,10 +26,6 @@ class CreateTopicAdapter extends FormAdapter
             schema: @getSchema()
             region: @view.form
         })
-        @postForm = new FormView({
-            schema: @getPostSchema()
-            region: null
-        })
         @form.render()
         @bindEvents()
 
@@ -36,23 +33,31 @@ class CreateTopicAdapter extends FormAdapter
         super
 
     remove: ->
-        @postForm.remove()
         @postModel.remove()
         super
 
     getSchema: ->
-        return @addModelSchema([{
-            name: 'name'
+        schema = [util.extend({
+            name: 'topic__name'
             label: 'Topic Name'
             size: 40
+        }, TopicModel::schema.name), util.extend({
+            name: 'post__kind'
+            label: 'First Post Kind'
+        }, PostModel::schema.kind), util.extend({
+            name: 'post__body'
+            label: 'First Post Body'
+            cols: 40
+            rows: 4
+        }, PostModel::schema.body)]
+
+        schema = schema.concat([{
+            type: 'submit'
+            name: 'create-topic'
+            label: 'Create Topic'
+            icon: 'plus'
         }])
 
-    getPostSchema: ->
-        return [ {
-            name: 'submit'
-            label: 'Create Topic'
-            type: 'submit'
-            icon: 'check'
-        }]
+        return schema
 
 module.exports = CreateTopicAdapter

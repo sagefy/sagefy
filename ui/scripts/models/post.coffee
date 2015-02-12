@@ -12,38 +12,24 @@ class PostModel extends Model
         }
         body: {
             type: 'textarea'
-            validations: {}
+            validations: {
+                required: true
+            }
         }
         kind: {
             type: 'select'
-            validations: {}
+            options: [
+                {label: 'Post', value: 'post'}
+                {label: 'Proposal', value: 'proposal'}
+                {label: 'Vote', value: 'vote'}
+                {label: 'Flag', value: 'flag'}
+            ]
+            validations: {
+                required: true
+            }
         }
         replies_to_id: {
             type: 'hidden'
-            validations: {}
-        }
-        status: {  # Proposal/Flag only
-            type: 'hidden'
-            validations: {}
-        }
-        entity_version_id: {  # Proposal/Flag only
-            type: 'hidden'
-            validations: {}
-        }
-        name: {  # Proposal only
-            type: 'text'
-            validations: {}
-        }
-        action: {  # Proposal only
-            type: 'select'
-            validations: {}
-        }
-        response: {  # Vote only
-            type: 'select'
-            validations: {}
-        }
-        reason: {  # Flag only
-            type: 'select'
             validations: {}
         }
     }

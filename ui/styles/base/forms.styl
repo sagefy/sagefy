@@ -418,6 +418,49 @@ select[multiple]
 
 /*
 ---
+title: Select Component
+description: The select component, more often used than the native select, uses checkboxes and radios and smartly updates based on the number of options
+example: |
+    <span class="select">
+        <ul class="unstyled">
+            <li>
+                <label>
+                    <input type="radio" value="post" name="kind">
+                    Post
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" value="proposal" name="kind">
+                    Proposal
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" value="vote" name="kind">
+                    Vote
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" value="flag" name="kind">
+                    Flag
+                </label>
+            </li>
+        </ul>
+    </span>
+---
+*/
+
+.select ul
+    margin-top 0
+
+.select label
+    cursor pointer
+
+
+/*
+---
 title: Form Description
 description: A form may need an explanation as to why the data is required from the user.
 elements:
