@@ -1,4 +1,5 @@
 Adapter = require('../framework/adapter')
+util = require('../framework/utilities')
 aux = require('../modules/auxiliaries')
 
 class PageAdapter extends Adapter
@@ -21,7 +22,7 @@ class PageAdapter extends Adapter
     render: ->
         @page = document.querySelector('.page')
         @page.innerHTML = ''
-        title = @title or 'FIX ME'
+        title = if util.isFunction(@title) then @title() else @title or 'FIX ME'
         document.title = "#{title} – Sagefy"
 
 module.exports = PageAdapter

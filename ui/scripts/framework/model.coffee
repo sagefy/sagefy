@@ -10,17 +10,16 @@ class Model extends Events
     schema: {}
 
     # Creates `attributes` to ensure they are always there
-    constructor: ->
+    constructor: (attributes) ->
         super
-        @attributes = {}
+        @attributes = attributes or {}
 
     # URL can be a string or a function
     url: ''
 
     # Utility method, used by `fetch` and `save`
     makeUrl: (options = {}) ->
-        if util.isString(@url)
-            return @url
+        return @url if util.isString(@url)
         return @url(options)
 
     # Get a value from the model.
@@ -176,11 +175,9 @@ class Model extends Events
     # Try to parse the errors array
     # Or just return the error text
     parseAjaxErrors: (r) ->
-        if not r.responseText
-            return null
+        return null if not r.responseText
         errors =  util.parseJSON(r.responseText)
-        if util.isString(errors)
-            return errors
+        return errors if util.isString(errors)
         return errors.errors
 
 module.exports = Model

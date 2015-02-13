@@ -15,6 +15,7 @@ We Use
 - Databases
     - [RethinkDB](http://rethinkdb.com/)
     - [Redis](http://redis.io/)
+    - [ElasticSearch](https://github.com/elasticsearch/elasticsearch)
 - API
     - [pip](https://pypi.python.org/pypi/pip)
     - [Python 2.7](http:/.python.org/2.7/)
@@ -23,6 +24,7 @@ We Use
     - Testing
         - [py.test](http://pytest.org/latest/)
         - [Flake8](https://pypi.python.org/pypi/flake8)
+        - [Coverage.py](http://nedbatchelder.com/code/coverage/)
 - UI
     - [npm](https://npmjs.org/)
     - [Gulp](http://gulpjs.com/)
@@ -50,26 +52,15 @@ We Intend to Use
 - Building and Serving
     - [Ansible](http://www.ansible.com/)
     - TODO: monitoring software
-- Databases
-    - [ElasticSearch](https://github.com/elasticsearch/elasticsearch)
 - API
     - [NumPy](http://www.numpy.org/) + [SciPy](http://www.scipy.org/) + [Scikit-Learn](http://scikit-learn.org/stable/)
-    - [Blueprint](http://apiblueprint.org/)
-    - [Coverage.py](http://nedbatchelder.com/code/coverage/)
     - [OAuth2.0](http://oauth.net/2/)
     - [Postfix](http://www.postfix.org/)
 - UI
-    - Markdown
-        - [Math](http://khan.github.io/KaTeX/)
-        - [Tables](https://github.com/chjj/marked#tables)
-        - Code,
-        - [Graphviz Dot](https://github.com/mdaines/viz.js)
-        - [Media Embeds](http://sloblog.io/+sloblog/qhdsk2SMoAU/sloblog-dot-io-easy-oembed-powered-media-embeds)
     - [EpicEditor](https://github.com/OscarGodson/EpicEditor) or [Ace](http://ace.c9.io/)
     - Testing
         - [Blanket](http://blanketjs.org/)
         - [Chance.js](http://chancejs.com/)
-        - [PhantomCSS](https://github.com/Huddle/PhantomCSS)
     - User Research
         - Split test _TODO_
         - Accessibility _TODO_

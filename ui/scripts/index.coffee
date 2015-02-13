@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', ->
         require('./adapters/settings')
         require('./adapters/notices')
         require('./adapters/search')
-        require('./adapters/create_topic')  # Must be before `topic`
-        require('./adapters/create_post')
+        require('./adapters/topic_form')  # Must be before `topic`
+        require('./adapters/post_form')
         require('./adapters/topic')
         require('./adapters/card')
         require('./adapters/unit')

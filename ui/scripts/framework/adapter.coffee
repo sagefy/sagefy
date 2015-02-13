@@ -29,14 +29,14 @@ class Adapter extends Events
     # Determine if a given path matches this router
     # Returns either false or array, where array is matches parameters
     matches: (path) ->
-        @urlRegExp = @getUrlRegExp(@url) unless @urlRegExp
+        @urlRegExp or= @getUrlRegExp(@url)
         match = path.match(@urlRegExp)
         return if match then match.slice(1) else false
 
     # Converts a string representation of URL to a RegExp representation
     getUrlRegExp: (url) ->
-        if util.isRegExp(url)
-            return url
+        return url if util.isRegExp(url)
+        url = url() if util.isFunction(url)
         return new RegExp(
             '^' +
             url.replace(/\{([\d\w\_\$]+)\}/g, '([^/]+)') +

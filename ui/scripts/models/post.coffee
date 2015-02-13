@@ -19,11 +19,12 @@ class PostModel extends Model
         kind: {
             type: 'select'
             options: [
-                {label: 'Post', value: 'post'}
+                {label: 'Post', value: 'post'}  # TODO label is a view concern
                 {label: 'Proposal', value: 'proposal'}
                 {label: 'Vote', value: 'vote'}
                 {label: 'Flag', value: 'flag'}
             ]
+            default: 'post'
             validations: {
                 required: true
             }
@@ -33,5 +34,10 @@ class PostModel extends Model
             validations: {}
         }
     }
+
+    constructor: (attributes) ->
+        if attributes and attributes.kind in ['proposal', 'vote', 'flag']
+            return
+        super
 
 module.exports = PostModel

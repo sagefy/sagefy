@@ -5,9 +5,12 @@ TopicModel = require('../models/topic')
 PostModel = require('../models/post')
 util = require('../framework/utilities')
 
-class CreateTopicAdapter extends FormAdapter
-    url: '/topics/create'
-    title: 'Create a New Topic'
+class TopicFormAdapter extends FormAdapter
+    url: /^\/topics\/(create|[\d\w]+\/update)$/
+
+    title: ->
+        return 'Update a Topic' if @getTopicID()
+        return 'Create a New Topic'
 
     render: ->
         return if @requireLogIn()
@@ -15,12 +18,14 @@ class CreateTopicAdapter extends FormAdapter
         @model = new TopicModel()
         @postModel = new PostModel()
         @view = new FormLayoutView({
-            id: 'create-topic'
+            id: 'topic-form'
             className: 'col-6'
             region: @page
         })
         @view.render({
-            title: 'Create a New Topic'
+            title: if @getTopicID() \
+                   then 'Update a Topic' \
+                   else 'Create a New Topic'
         })
         @form = new FormView({
             schema: @getSchema()
@@ -28,6 +33,12 @@ class CreateTopicAdapter extends FormAdapter
         })
         @form.render()
         @bindEvents()
+
+    getTopicID: ->
+        path = window.location.pathname
+        match = path.match(/^\/topics\/([\d\w]+)\/update$/)
+        return match[1] if match
+        return null
 
     bindEvents: ->
         super
@@ -54,10 +65,12 @@ class CreateTopicAdapter extends FormAdapter
         schema = schema.concat([{
             type: 'submit'
             name: 'create-topic'
-            label: 'Create Topic'
+            label: if @getTopicID() \
+                   then 'Update Topic' \
+                   else 'Create Topic'
             icon: 'plus'
         }])
 
         return schema
 
-module.exports = CreateTopicAdapter
+module.exports = TopicFormAdapter
