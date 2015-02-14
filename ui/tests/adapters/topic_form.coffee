@@ -94,7 +94,6 @@ describe('Topic Form Adapter', ->
     describe('Flag', ->
         it.skip('should ask for a reason', ->
 
-
         )
     )
 )
