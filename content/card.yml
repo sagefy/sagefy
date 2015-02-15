@@ -1,0 +1,6 @@
+# Strings that are specific to cards creating, editing, and viewing.
+
+error_options:
+    en: All options must have value, correct, and feedback.
+error_need_correct:
+    en: At least one option must be correct.

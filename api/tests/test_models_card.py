@@ -68,26 +68,3 @@ def test_kind(app, db_conn, cards_table):
     Expect a card to have a kind.
     """
     assert False
-
-
-def test_latest_canonical(app, db_conn, cards_table):
-    """
-    Expect to get the latest canonical card version.
-    """
-
-    cards_table.insert([{
-        'id': 'A1',
-        'entity_id': 'A',
-        'created': r.time(2004, 11, 3, 'Z'),
-    }, {
-        'id': 'B2',
-        'entity_id': 'A',
-        'created': r.time(2005, 11, 3, 'Z'),
-    }, {
-        'id': 'C3',
-        'entity_id': 'B',
-        'created': r.time(2006, 11, 3, 'Z'),
-    }]).run(db_conn)
-
-    card = Card.get_latest_canonical('A')
-    assert card['id'] == 'B2'

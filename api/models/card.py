@@ -2,18 +2,10 @@ from modules.model import Model
 from modules.validations import is_required, is_language, is_boolean, \
     is_list, is_string, is_one_of
 from modules.util import uniqid
-import rethinkdb as r
-from flask import g
+from models.mixins.entity import EntityMixin
 
 
-def ensure_no_cycles(value):
-    """
-    Ensure no require cycles form.
-    """
-    # TODO
-
-
-class Card(Model):
+class Card(EntityMixin, Model):
     """
     Cards are the smallest entity in the Sagefy data structure system.
     A card represents a single learner activity.
@@ -61,7 +53,7 @@ class Card(Model):
             'default': []
         },
         'requires_ids': {
-            'validate': (is_list, ensure_no_cycles),
+            'validate': (is_list,),
             'default': []
         },
         'kind': {
@@ -70,25 +62,17 @@ class Card(Model):
         }
     })
 
-    @classmethod
-    def get_latest_canonical(cls, card_id):
+    def validate(self):
+        errors = super().validate()
+        if not errors:
+            errors += self.ensure_no_cycles()
+        return errors
+
+    def ensure_no_cycles(self):
         """
-        Get the latest canonical version of the card.
+        Ensure no require cycles form.
         """
-
-        # TODO: Can this method be merged with the same method
-        #       in set and unit?
-
-        if not card_id:
-            return
-
-        query = (cls.table
-                    .filter(r.row['entity_id'] == card_id)
-                    .order_by(r.desc('created'))
-                    .limit(1))  # TODO this should have an index
-        fields = list(query.run(g.db_conn))[0]
-
-        if fields:
-            return cls(fields)
+        # TODO
+        return []
 
     # TODO On set canonical, index (or delete) in Elasticsearch with entity_id

@@ -7,6 +7,8 @@ required:
     eo: Postulo.
 email:
     en: Must be an email.
+url:
+    en: Must be a full URL.
 minlength:
     en: Must have minimum length of {length}.
 boolean:

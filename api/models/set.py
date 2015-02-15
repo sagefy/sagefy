@@ -2,18 +2,10 @@ from modules.model import Model
 from modules.validations import is_required, is_language, is_string, \
     is_boolean, is_list, is_entity_list_dict
 from modules.util import uniqid
-import rethinkdb as r
-from flask import g
+from models.mixins.entity import EntityMixin
 
 
-def ensure_no_cycles(value):
-    """
-    Ensure no membership cycles form.
-    """
-    # TODO
-
-
-class Set(Model):
+class Set(EntityMixin, Model):
     """
     A set is a collection of units and other sets.
     Sets can vary greatly in scale.
@@ -59,27 +51,21 @@ class Set(Model):
             'default': []
         },
         'members': {
-            'validate': (is_required, is_entity_list_dict,
-                         ensure_no_cycles)
+            'validate': (is_required, is_entity_list_dict,),
         }
     })
 
-    @classmethod
-    def get_latest_canonical(cls, set_id):
+    def validate(self):
+        errors = super().validate()
+        if not errors:
+            errors += self.ensure_no_cycles()
+        return errors
+
+    def ensure_no_cycles(self):
         """
-        Get the latest canonical version of the set.
+        Ensure no require cycles form.
         """
-
-        if not set_id:
-            return
-
-        query = (cls.table
-                    .filter(r.row['entity_id'] == set_id)
-                    .order_by(r.desc('created'))
-                    .limit(1))  # TODO this should have an index
-        fields = list(query.run(g.db_conn))[0]
-
-        if fields:
-            return cls(fields)
+        # TODO
+        return []
 
     # TODO On set canonical, index (or delete) in Elasticsearch with entity_id

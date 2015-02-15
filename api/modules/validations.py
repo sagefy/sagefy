@@ -83,6 +83,18 @@ def is_email(value):
         return c('error', 'email')
 
 
+def is_url(value):
+    """
+    Ensure the given value is formatted as an URL.
+    """
+
+    if value is None:
+        return
+
+    if not re.match(r'^(http(s)?:)?//[^.]+\..+$', value):
+        return c('error', 'url')
+
+
 def has_min_length(value, ln):
     """
     Ensure the given value is a minimum length.

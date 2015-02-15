@@ -8,7 +8,14 @@ class VideoCard(Card):
             'validate': (is_required, is_string, (
                 is_one_of, 'youtube', 'vimeo'),),
         },
-        'id': {
+        'video_id': {
             'validate': (is_required, is_string,),
         }
     })
+
+    def __init__(self, fields=None):
+        """
+
+        """
+        super().__init__(self, fields)
+        self['kind'] = 'video'

@@ -152,12 +152,13 @@ def setup_log_in(app):
     Add log in capabilities to our app.
     """
 
+    from models.user import User  # TODO: Avoid this
+
     login_manager = LoginManager()
     login_manager.init_app(app)
 
     @login_manager.user_loader
     def load_user(user_id):
-        from models.user import User  # TODO: Avoid this
         return User.get(id=user_id)
 
 

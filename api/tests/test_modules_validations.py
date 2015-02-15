@@ -1,6 +1,6 @@
 from modules.validations import is_required, is_boolean, is_string, \
     is_number, is_language, is_list, is_email, has_min_length, is_one_of, \
-    is_entity_dict, is_entity_list_dict, is_list_of_strings
+    is_entity_dict, is_entity_list_dict, is_list_of_strings, is_url
 
 
 def test_require(app, db_conn):
@@ -17,6 +17,20 @@ def test_email(app, db_conn):
     """
     assert is_email('test@example.com') is None
     assert is_email('other')
+
+
+def test_url(app, db_conn):
+    """
+    Expect a valid URL.
+    """
+    assert is_url('https://t.c') is None
+    assert is_url('http://t.c/t.html?t=b#s') is None
+    assert is_url('//t.c') is None
+    assert is_url('//t.c/t.html?t=b#s') is None
+    assert is_url('https://t')
+    assert is_url('http://t.')
+    assert is_url('//t')
+    assert is_url('//t.')
 
 
 def test_minlength(app, db_conn):

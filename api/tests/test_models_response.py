@@ -40,6 +40,15 @@ def test_unit(app, db_conn, responses_table):
 
 
 @xfail
+def test_answer(app, db_conn, responses_table):
+    """
+    Expect to record the user's answer.
+    """
+
+    assert False
+
+
+@xfail
 def test_score(app, db_conn, responses_table):
     """
     Expect to have a score between 0 and 1 (including).

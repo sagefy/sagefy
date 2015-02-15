@@ -25,7 +25,7 @@ class Flag(Post):
         """
 
         """
-        Model.__init__(self, fields)
+        super().__init__(self, fields)
         self['kind'] = 'flag'
 
     def validate(self):

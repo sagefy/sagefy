@@ -2,18 +2,10 @@ from modules.model import Model
 from modules.validations import is_required, is_language, is_string, \
     is_boolean, is_list
 from modules.util import uniqid
-import rethinkdb as r
-from flask import g
+from models.mixins.entity import EntityMixin
 
 
-def ensure_no_cycles(value):
-    """
-    Ensure no require cycles form.
-    """
-    # TODO
-
-
-class Unit(Model):
+class Unit(EntityMixin, Model):
     """
     A unit is the medium size in the Sagefy data structure system.
     A unit represents a unit of learning activity.
@@ -64,27 +56,22 @@ class Unit(Model):
             'default': []
         },
         'requires_ids': {
-            'validate': (is_list, ensure_no_cycles),
+            'validate': (is_list,),
             'default': []
         },
     })
 
-    @classmethod
-    def get_latest_canonical(cls, unit_id):
+    def validate(self):
+        errors = super().validate()
+        if not errors:
+            errors += self.ensure_no_cycles()
+        return errors
+
+    def ensure_no_cycles(self):
         """
-        Get the latest canonical version of the unit.
+        Ensure no require cycles form.
         """
-
-        if not unit_id:
-            return
-
-        query = (cls.table
-                    .filter(r.row['entity_id'] == unit_id)
-                    .order_by(r.desc('created'))
-                    .limit(1))  # TODO this should have an index
-        fields = list(query.run(g.db_conn))[0]
-
-        if fields:
-            return cls(fields)
+        # TODO
+        return []
 
     # TODO On set canonical, index (or delete) in Elasticsearch with entity_id
