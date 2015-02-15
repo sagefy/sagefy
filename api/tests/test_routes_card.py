@@ -3,6 +3,8 @@ import pytest
 xfail = pytest.mark.xfail
 
 
+# TODO outline tests
+
 @xfail
 def test_get_card():
     """
