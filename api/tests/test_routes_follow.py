@@ -10,6 +10,7 @@ def test_follow():
     """
 
     assert False
+    # TODO 401, 404, 409, 400
 
 
 @xfail
@@ -19,3 +20,14 @@ def test_unfollow():
     """
 
     assert False
+    # TODO 401, 404, 409, 400
+
+
+@xfail
+def test_get_follows():
+    """
+    Expect to get a list of follows for user.
+    """
+
+    assert False
+    # TODO 401, 400

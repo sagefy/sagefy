@@ -62,5 +62,5 @@ class FormulaCard(Card):
         """
 
         """
-        super().__init__(self, fields)
+        super().__init__()
         self['kind'] = 'formula'

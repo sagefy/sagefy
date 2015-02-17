@@ -10,3 +10,12 @@ def test_get_unit():
     """
 
     assert False
+
+
+@xfail
+def test_get_unit_404():
+    """
+    Expect to fail to get an unknown unit (404).
+    """
+
+    assert False

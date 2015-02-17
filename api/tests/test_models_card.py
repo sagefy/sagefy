@@ -2,9 +2,6 @@ import pytest
 
 xfail = pytest.mark.xfail
 
-import rethinkdb as r
-from models.card import Card
-
 
 @xfail
 def test_entity_id(app, db_conn, cards_table):
