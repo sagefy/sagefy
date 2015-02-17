@@ -20,5 +20,5 @@ class WritingCard(Card):
         """
 
         """
-        super().__init__()
+        super().__init__(fields)
         self['kind'] = 'writing'

@@ -35,7 +35,7 @@ class Vote(Post):
         set the correct kiwnd.
         """
 
-        super().__init__()
+        super().__init__(fields)
         self.kind = 'vote'
 
     def validate(self):

@@ -36,5 +36,5 @@ class Proposal(Post):
         """
 
         """
-        super().__init__()
+        super().__init__(fields)
         self.kind = 'proposal'

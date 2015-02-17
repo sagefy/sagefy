@@ -52,7 +52,7 @@ class ChoiceCard(Card):
         """
 
         """
-        super().__init__()
+        super().__init__(fields)
         self['kind'] = 'choice'
 
     # TODO When listing options to learner,

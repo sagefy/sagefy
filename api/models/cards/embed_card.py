@@ -16,5 +16,5 @@ class EmbedCard(Card):
         """
 
         """
-        super().__init__()
+        super().__init__(fields)
         self['kind'] = 'embed'
