@@ -3,12 +3,28 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-# TODO outline tests
+@xfail
+def test_upload_body(app):
+    """
+    Expect an upload card to require a body.
+    """
+
+    assert False
+
 
 @xfail
-def test_x(app):
+def test_upload_file_extensions(app):
     """
-    Expect ...
+    Expect an upload card to require file_extensions.
+    """
+
+    assert False
+
+
+@xfail
+def test_upload_rubric(app):
+    """
+    Expect an upload card to require a rubric.
     """
 
     assert False

@@ -3,12 +3,28 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-# TODO outline tests
+@xfail
+def test_writing_body(app):
+    """
+    Expect writing card to require body.
+    """
+
+    assert False
+
 
 @xfail
-def test_x(app):
+def test_writing_max_char(app):
     """
-    Expect ...
+    Expect writing card to allow max char.
+    """
+
+    assert False
+
+
+@xfail
+def test_writing_rubric(app):
+    """
+    Expect writing card to require a rubric.
     """
 
     assert False

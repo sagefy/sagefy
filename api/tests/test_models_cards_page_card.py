@@ -3,12 +3,10 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-# TODO outline tests
-
 @xfail
-def test_x(app):
+def test_page_body(app):
     """
-    Expect ...
+    Expect a page card to require a body.
     """
 
     assert False

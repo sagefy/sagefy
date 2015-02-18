@@ -3,12 +3,10 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-# TODO outline tests
-
 @xfail
-def test_x(app):
+def test_seq_next(app):
     """
-    Expect ...
+    Expect sequencer route to say where to go next
     """
 
     assert False
