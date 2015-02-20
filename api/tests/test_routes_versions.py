@@ -2,10 +2,6 @@ import pytest
 
 xfail = pytest.mark.xfail
 
-# TODO this should probably be per entity type... unless there's
-#      a way to make this a module
-
-
 @xfail
 def test_version(app):
     """

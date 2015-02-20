@@ -1,5 +1,8 @@
 import json
 from models.notice import Notice
+import pytest
+
+xfail = pytest.mark.xfail
 
 
 def test_list(db_conn, c_user, notices_table):
@@ -104,7 +107,20 @@ def test_mark_not_owned(app, db_conn, c_user, notices_table):
     record = notices_table.get(nid).run(db_conn)
     assert record['read'] is False
 
-"""
-TODO: Expect to add body to notices.
-TODO: Expect to mark as unread.
-"""
+
+@xfail
+def test_add_notices(app, db_conn, c_user, notices_table):
+    """
+    Expect to add body to notices.
+    """
+
+    assert False
+
+
+@xfail
+def test_mark_unread(app, db_conn, c_user, notices_table):
+    """
+    Expect to mark as unread.
+    """
+
+    assert False

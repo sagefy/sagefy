@@ -10,10 +10,10 @@ def test_get():
     assert content.get('error', 'required', 'eo') == 'Postulo.'
 
 
-@xfail
 def test_get_default():
     # Expect to show English if language isn't available.
-    assert False
+    assert (content.get('error', 'required') ==
+            content.get('error', 'required', 'en'))
 
 
 @xfail

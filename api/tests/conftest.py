@@ -71,10 +71,6 @@ def c_user(app, request, db_conn, users_table):
         return c
 
 
-##########
-# TODO: For below functions, figure out a way to reduce this to one function
-##########
-
 def table(name, request, db_conn):
     """
     Ensure the table is freshly empty after use.

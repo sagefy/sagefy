@@ -1,4 +1,7 @@
 from models.notice import Notice
+import pytest
+
+xfail = pytest.mark.xfail
 
 
 def get_error(errors, name):
@@ -144,9 +147,37 @@ def test_mark_as_read(app, db_conn, notices_table):
     assert record['read'] is True
 
 
-"""
-- TODO: Expect to filter notices by kind.
-- TODO: Expect to get the notice body.
-- TODO: Expect to get the notice body with other data added in from the db.
-- TODO: Expect to mark as unread.
-"""
+@xfail
+def test_notices_kind(app, db_conn, notices_table):
+    """
+    Expect to filter notices by kind.
+    """
+
+    assert False
+
+
+@xfail
+def test_notice_body(app, db_conn, notices_table):
+    """
+    Expect to get the notice body.
+    """
+
+    assert False
+
+
+@xfail
+def test_notice_body_data(app, db_conn, notices_table):
+    """
+    Expect to get the notice body with other data added in from the db.
+    """
+
+    assert False
+
+
+@xfail
+def test_mark_unread(app, db_conn, notices_table):
+    """
+    Expect to mark as unread.
+    """
+
+    assert False

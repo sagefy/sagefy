@@ -67,8 +67,6 @@ Expect to track number of units that depend on the given unit.
 Expect to prefer units with more dependencies in choose unit.
 Expect choose unit to only show available units. (No requires remaining.)
 
-
-
 UI
 ---------
 
