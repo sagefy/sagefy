@@ -32,6 +32,8 @@ class Flag(Post):
         errors = super().validate()
         if not errors:
             errors += self.is_unique_flag()
+        if not errors:
+            errors += self.is_valid_reply_kind()
         return errors
 
     def is_unique_flag(self):
@@ -40,3 +42,9 @@ class Flag(Post):
         """
         return []
         # TODO
+
+    def is_valid_reply_kind(self):
+        """
+        - TODO A flag cannot be a reply.
+        """
+        return []

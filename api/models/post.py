@@ -2,17 +2,6 @@ from modules.model import Model
 from modules.validations import is_required, is_string, is_one_of
 
 
-def is_valid_kind(value):
-    """
-    Must belong to the same topic
-    - TODO A post can reply to a post.
-    - TODO A proposal can reply to post, proposal, or flag.
-    - TODO A vote can reply to a proposal or flag.
-    - TODO A flag cannot be a reply.
-    """
-    # TODO
-
-
 class Post(Model):
     """A discussion post."""
     tablename = 'posts'
@@ -33,8 +22,22 @@ class Post(Model):
             'default': 'post'
         },
         'replies_to_id': {
-            'validate': (is_string, is_valid_kind)
+            'validate': (is_string,)
         }
     })
 
+    def validate(self):
+        errors = super().validate()
+        if not errors:
+            errors += self.is_valid_reply_kind()
+        return errors
+
     # TODO On create or update, index in Elasticsearch
+
+    def is_valid_reply_kind(self):
+        """
+        Must belong to the same topic
+        - TODO A post can reply to a post.
+        """
+        # TODO
+        return []

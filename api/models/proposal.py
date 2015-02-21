@@ -1,4 +1,3 @@
-from modules.model import Model
 from modules.validations import is_required, is_string, is_one_of
 from models.post import Post
 
@@ -38,3 +37,15 @@ class Proposal(Post):
         """
         super().__init__(fields)
         self.kind = 'proposal'
+
+    def validate(self):
+        errors = super().validate()
+        if not errors:
+            errors += self.is_valid_reply_kind()
+        return errors
+
+    def is_valid_reply_kind(self):
+        """
+        - TODO A proposal can reply to post, proposal, or flag.
+        """
+        return []

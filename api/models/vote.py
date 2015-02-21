@@ -1,4 +1,3 @@
-from modules.model import Model
 from models.post import Post
 from modules.validations import is_required, is_string, is_one_of
 
@@ -42,6 +41,8 @@ class Vote(Post):
         errors = super().validate()
         if not errors:
             errors += self.is_unique_vote()
+        if not errors:
+            errors += self.is_valid_reply_kind()
         return errors
 
     def is_unique_vote(self):
@@ -50,3 +51,9 @@ class Vote(Post):
         """
         return []
         # TODO
+
+    def is_valid_reply_kind(self):
+        """
+        - TODO A vote can reply to a proposal or flag.
+        """
+        return []
