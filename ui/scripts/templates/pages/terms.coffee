@@ -19,11 +19,13 @@ module.exports = ->
     </p>
 
     <p>
-        Sagefy is provided as-is and as-available. Sagefy makes no warranties.
+        <strong>Sagefy is provided as-is and as-available.
+        Sagefy makes no warranties.</strong>
     </p>
 
     <p>
-        Sagefy is not liable for any damages coming from use of Sagefy.
+        <strong>Sagefy is not liable for any damages
+        coming from use of Sagefy.</strong>
     </p>
 
     <p>

@@ -51,7 +51,8 @@ We Intend to Use
 
 - Building and Serving
     - [Ansible](http://www.ansible.com/)
-    - TODO: monitoring software
+    - [Pingdom](https://www.pingdom.com/)
+    - [New Relic](http://newrelic.com/)
 - API
     - [NumPy](http://www.numpy.org/) + [SciPy](http://www.scipy.org/) + [Scikit-Learn](http://scikit-learn.org/stable/)
     - [OAuth2.0](http://oauth.net/2/)
@@ -61,18 +62,7 @@ We Intend to Use
     - Testing
         - [Blanket](http://blanketjs.org/)
         - [Chance.js](http://chancejs.com/)
-    - User Research
-        - Split test _TODO_
-        - Accessibility _TODO_
-        - Card sort _TODO_
-        - Prototype testing _TODO_
-        - Heatmap _TODO_
-        - Mobile testing _TODO_
-        - Remote usability _TODO_
-        - Surveying _TODO_
-        - Web Analytics - ElasticSearch
-        - Wireframes & diagrams _TODO_
-- Outreach
+- Outreachw
     - [Jekyll](http://jekyllrb.com/)
     - [UserVoice](https://uservoice.com)
     - [Totemapp](https://totemapp.com)

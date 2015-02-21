@@ -14,7 +14,7 @@ Sagefy is open-source. The content and the code are freely available.
 [Twitter]: https://twitter.com/sagefyorg
 [Docs]: https://docs.sagefy.org/
 
-[![Setup](https://img.shields.io/badge/get-setup-brightgreen.svg?style=flat)](https://github.com/heiskr/sagefy/blob/master/setup/setup.md) [![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy)
+[![Setup](https://img.shields.io/badge/get-setup-brightgreen.svg?style=flat)](https://github.com/heiskr/sagefy/blob/master/setup/setup.md) [![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy) [![Gitter](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg?style=flat)](https://gitter.im/heiskr/sagefy)
 
 All contents in this project are licensed under [AGPLv3](https://raw.github.com/heiskr/sagefy/master/license.txt).
 
