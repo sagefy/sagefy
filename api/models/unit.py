@@ -27,11 +27,11 @@ class Unit(EntityMixin, Model):
 
     schema = dict(Model.schema.copy(), **{
         'entity_id': {
-            'validate': (is_required, is_string,),
+            'validate': (is_required, is_string,),  # TODO is valid id?
             'default': uniqid
         },
         'previous_id': {
-            'validate': (is_string,),
+            'validate': (is_string,),  # TODO is valid id?
         },
         'language': {
             'validate': (is_required, is_language,),
@@ -56,7 +56,7 @@ class Unit(EntityMixin, Model):
             'default': []
         },
         'requires_ids': {
-            'validate': (is_list,),
+            'validate': (is_list,),  # TODO is valid id?
             'default': []
         },
     })

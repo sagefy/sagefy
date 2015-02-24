@@ -1,21 +1,35 @@
-import pytest
-
-xfail = pytest.mark.xfail
+from models.user_sets import UserSets
 
 
-@xfail
-def test_user(app, db_conn, user_sets_table):
+def test_user(app, db_conn, users_sets_table):
     """
     Expect to require a user ID.
     """
 
-    assert False
+    user_sets, errors = UserSets.insert({
+        'set_ids': [
+            'A',
+            'B',
+        ],
+    })
+    assert len(errors) == 1
+    user_sets['user_id'] = 'A'
+    user_sets, errors = user_sets.save()
+    assert len(errors) == 0
 
 
-@xfail
-def test_sets(app, db_conn, user_sets_table):
+def test_sets(app, db_conn, users_sets_table):
     """
     Expect to require a list of set IDs.
     """
 
-    assert False
+    user_sets, errors = UserSets.insert({
+        'user_id': 'A'
+    })
+    assert len(errors) == 1
+    user_sets['set_ids'] = [
+        'A',
+        'B',
+    ]
+    user_sets, errors = user_sets.save()
+    assert len(errors) == 0

@@ -1,57 +1,109 @@
-import pytest
-
-xfail = pytest.mark.xfail
+from models.response import Response
 
 
-@xfail
 def test_created(app, db_conn, responses_table):
     """
     Expect to have a created date.
     """
 
-    assert False
+    response = Response({
+        'user_id': 'A',
+        'card_id': 'BC',
+        'unit_id': 'RM',
+        'answer': 42,
+        'score': 0.9,
+    })
+    del response['created']  # should be set to default anywho
+    response, errors = response.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_user(app, db_conn, responses_table):
     """
     Expect to require a user ID.
     """
 
-    assert False
+    response, errors = Response.insert({
+        'card_id': 'BC',
+        'unit_id': 'RM',
+        'answer': 42,
+        'score': 0.9,
+    })
+    assert len(errors) == 1
+    response['user_id'] = 'A'
+    response, errors = response.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_card(app, db_conn, responses_table):
     """
     Expect to require a card ID.
     """
 
-    assert False
+    response, errors = Response.insert({
+        'user_id': 'A',
+        'unit_id': 'RM',
+        'answer': 42,
+        'score': 0.9,
+    })
+    assert len(errors) == 1
+    response['card_id'] = 'AFJ'
+    response, errors = response.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_unit(app, db_conn, responses_table):
     """
     Expect to require a unit ID.
     """
 
-    assert False
+    response, errors = Response.insert({
+        'user_id': 'A',
+        'card_id': 'BC',
+        'answer': 42,
+        'score': 0.9,
+    })
+    assert len(errors) == 1
+    response['unit_id'] = 'A24JLD'
+    response, errors = response.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_answer(app, db_conn, responses_table):
     """
     Expect to record the user's answer.
     """
 
-    assert False
+    response, errors = Response.insert({
+        'user_id': 'A',
+        'card_id': 'BC',
+        'unit_id': 'RM',
+        'score': 0.9,
+    })
+    assert len(errors) == 1
+    response['answer'] = 42
+    response, errors = response.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_score(app, db_conn, responses_table):
     """
     Expect to have a score between 0 and 1 (including).
     """
 
-    assert False
+    response, errors = Response.insert({
+        'user_id': 'A',
+        'card_id': 'BC',
+        'unit_id': 'RM',
+        'answer': 42,
+    })
+    assert len(errors) == 1
+    response['score'] = 1.1
+    response, errors = response.save()
+    assert len(errors) == 1
+    response['score'] = 0
+    response, errors = response.save()
+    assert len(errors) == 0
+    response['score'] = 1
+    response, errors = response.save()
+    assert len(errors) == 0

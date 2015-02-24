@@ -1,67 +1,118 @@
-import pytest
-
-xfail = pytest.mark.xfail
+from models.unit import Unit
 
 
-@xfail
 def test_entity_id(app, db_conn, units_table):
     """
     Expect a unit to require an entity_id.
     """
-    assert False
+
+    unit, errors = Unit.insert({
+        'name': 'Learn this',
+        'body': 'Learn how to do this',
+    })
+    assert len(errors) == 0
+    unit['entity_id'] = 'JFKLD1234'
+    unit, errors = unit.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_previous(app, db_conn, units_table):
     """
     Expect a version previous_id to be a string or None.
     """
-    assert False
+
+    unit, errors = Unit.insert({
+        'name': 'Learn this',
+        'body': 'Learn how to do this',
+    })
+    assert len(errors) == 0
+    unit['previous_id'] = 'AFJkl345'
+    unit, errors = unit.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_language(app, db_conn, units_table):
     """
     Expect a unit to require a language.
     """
-    assert False
+
+    unit, errors = Unit.insert({
+        'name': 'Learn this',
+        'body': 'Learn how to do this',
+    })
+    assert len(errors) == 0
+    assert unit['language'] == 'en'
 
 
-@xfail
 def test_name(app, db_conn, units_table):
     """
     Expect a unit to require a name.
     """
-    assert False
+
+    unit, errors = Unit.insert({
+        'body': 'Learn how to do this',
+    })
+    assert len(errors) == 1
+    unit['name'] = 'Learn this'
+    unit, errors = unit.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_body(app, db_conn, units_table):
     """
     Expect a unit to require a body.
     """
-    assert False
+
+    unit, errors = Unit.insert({
+        'name': 'Learn this',
+    })
+    assert len(errors) == 1
+    unit['body'] = 'Learn how to do this'
+    unit, errors = unit.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_canonical(app, db_conn, units_table):
     """
     Expect a unit canonical to be a boolean.
     """
-    assert False
+
+    unit, errors = Unit.insert({
+        'name': 'Learn this',
+        'body': 'Learn how to do this',
+    })
+    assert len(errors) == 0
+    assert unit['canonical'] is False
+    unit['canonical'] = True
+    unit, errors = unit.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_tags(app, db_conn, units_table):
     """
     Expect a unit to allow tags.
     """
-    assert False
+
+    unit, errors = Unit.insert({
+        'name': 'Learn this',
+        'body': 'Learn how to do this',
+    })
+    assert len(errors) == 0
+    unit['tags'] = ['A', 'B']
+    unit, errors = unit.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_requires(app, db_conn, units_table):
     """
     Expect a unit to allow requires ids.
     """
-    assert False
+
+    unit, errors = Unit.insert({
+        'name': 'Learn this',
+        'body': 'Learn how to do this',
+    })
+    assert len(errors) == 0
+    unit['requires_ids'] = ['A']
+    unit, errors = unit.save()
+    assert len(errors) == 0

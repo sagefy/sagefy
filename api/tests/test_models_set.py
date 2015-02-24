@@ -1,67 +1,143 @@
-import pytest
-
-xfail = pytest.mark.xfail
+from models.set import Set
 
 
-@xfail
 def test_entity(app, db_conn, sets_table):
     """
     Expect a set to require an entity_id.
     """
-    assert False
+
+    set_, errors = Set.insert({
+        'name': 'Statistics',
+        'body': 'A beginning course focused on probability.',
+        'members': [{
+            'id': 'A',
+            'kind': 'unit',
+        }]
+    })
+    assert len(errors) == 0
+    assert set_['entity_id']
 
 
-@xfail
 def test_previous(app, db_conn, sets_table):
     """
     Expect a set to allow a previous version id.
     """
-    assert False
+
+    set_, errors = Set.insert({
+        'name': 'Statistics',
+        'body': 'A beginning course focused on probability.',
+        'members': [{
+            'id': 'A',
+            'kind': 'unit',
+        }],
+        'previous_id': 'fdsjKO',
+    })
+    assert len(errors) == 0
 
 
-@xfail
 def test_language(app, db_conn, sets_table):
     """
     Expect a set to require a language.
     """
-    assert False
+
+    set_, errors = Set.insert({
+        'name': 'Statistics',
+        'body': 'A beginning course focused on probability.',
+        'members': [{
+            'id': 'A',
+            'kind': 'unit',
+        }],
+    })
+    assert len(errors) == 0
+    assert set_['language'] == 'en'
 
 
-@xfail
 def test_name(app, db_conn, sets_table):
     """
     Expect a set to require a name.
     """
-    assert False
+
+    set_, errors = Set.insert({
+        'body': 'A beginning course focused on probability.',
+        'members': [{
+            'id': 'A',
+            'kind': 'unit',
+        }],
+    })
+    assert len(errors) == 1
+    set_['name'] = 'Statistics'
+    set_, errors = set_.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_body(app, db_conn, sets_table):
     """
     Expect a set to require a body.
     """
-    assert False
+
+    set_, errors = Set.insert({
+        'name': 'Statistics',
+        'members': [{
+            'id': 'A',
+            'kind': 'unit',
+        }],
+    })
+    assert len(errors) == 1
+    set_['body'] = 'A beginning course focused on probability.'
+    set_, errors = set_.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_canonical(app, db_conn, sets_table):
     """
     Expect a set canonical to be a boolean.
     """
-    assert False
+
+    set_, errors = Set.insert({
+        'name': 'Statistics',
+        'body': 'A beginning course focused on probability.',
+        'members': [{
+            'id': 'A',
+            'kind': 'unit',
+        }],
+    })
+    assert len(errors) == 0
+    assert set_['canonical'] is False
+    set_['canonical'] = True
+    set_, errors = set_.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_tags(app, db_conn, sets_table):
     """
     Expect a set to allow tags.
     """
-    assert False
+
+    set_, errors = Set.insert({
+        'name': 'Statistics',
+        'body': 'A beginning course focused on probability.',
+        'members': [{
+            'id': 'A',
+            'kind': 'unit',
+        }],
+        'tags': ['A', 'B', 'C']
+    })
+    assert len(errors) == 0
 
 
-@xfail
 def test_members(app, db_conn, sets_table):
     """
     Expect a set to record a list of members.
     """
-    assert False
+
+    set_, errors = Set.insert({
+        'name': 'Statistics',
+        'body': 'A beginning course focused on probability.',
+    })
+    assert len(errors) == 1
+    set_['members'] = [{
+        'id': 'A',
+        'kind': 'unit',
+    }]
+    set_, errors = set_.save()
+    assert len(errors) == 0

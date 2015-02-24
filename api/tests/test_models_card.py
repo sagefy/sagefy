@@ -1,67 +1,137 @@
-import pytest
-
-xfail = pytest.mark.xfail
+from models.card import Card
 
 
-@xfail
 def test_entity_id(app, db_conn, cards_table):
     """
     Expect a card to require an entity_id.
     """
-    assert False
+
+    card, errors = Card.insert({
+        'previous_id': 'TJKL35',
+        'language': 'en',
+        'unit_id': 'RUF531',
+        'name': 'What is?',
+        'kind': 'video'
+    })
+    assert len(errors) == 0
+    assert card['entity_id']
 
 
-@xfail
 def test_previous_version_id(app, db_conn, cards_table):
     """
     Expect a card to allow a previous version id.
     """
-    assert False
+
+    card, errors = Card.insert({
+        'language': 'en',
+        'unit_id': 'RUF531',
+        'name': 'What is?',
+        'kind': 'video'
+    })
+    assert len(errors) == 0
+    card['previous_id'] = 'TJKL35'
+    card, errors = card.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_language(app, db_conn, cards_table):
     """
     Expect a card to require a language.
     """
-    assert False
+
+    card, errors = Card.insert({
+        'previous_id': 'TJKL35',
+        'unit_id': 'RUF531',
+        'name': 'What is?',
+        'kind': 'video'
+    })
+    assert len(errors) == 0
+    card['language'] = 'en'
 
 
-@xfail
 def test_unit_id(app, db_conn, cards_table):
     """
     Expect a card to require a unit id.
     """
-    assert False
+
+    card, errors = Card.insert({
+        'previous_id': 'TJKL35',
+        'language': 'en',
+        'name': 'What is?',
+        'kind': 'video'
+    })
+    assert len(errors) == 1
+    card['unit_id'] = 'RUF531A'
+    card, errors = card.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_name(app, db_conn, cards_table):
     """
     Expect a card to require a name.
     """
-    assert False
+
+    card, errors = Card.insert({
+        'previous_id': 'TJKL35',
+        'language': 'en',
+        'unit_id': 'RUF531',
+        'kind': 'video'
+    })
+    assert len(errors) == 1
+    card['name'] = 'What is?'
+    card, errors = card.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_canonical(app, db_conn, cards_table):
     """
     Expect a card version canoncial to be a boolean.
     """
-    assert False
+
+    card, errors = Card.insert({
+        'previous_id': 'TJKL35',
+        'language': 'en',
+        'unit_id': 'RUF531',
+        'name': 'What is?',
+        'kind': 'video'
+    })
+    assert len(errors) == 0
+    assert card['canonical'] is False
+    card['canonical'] = True
+    card, errors = card.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_tags(app, db_conn, cards_table):
     """
     Expect a card to allow tags.
     """
-    assert False
+
+    card, errors = Card.insert({
+        'previous_id': 'TJKL35',
+        'language': 'en',
+        'unit_id': 'RUF531',
+        'name': 'What is?',
+        'kind': 'video'
+    })
+    assert len(errors) == 0
+    card['tags'] = ['B', 'A']
+    card, errors = card.save()
+    assert len(errors) == 0
 
 
-@xfail
 def test_kind(app, db_conn, cards_table):
     """
     Expect a card to have a kind.
     """
-    assert False
+
+    card, errors = Card.insert({
+        'previous_id': 'TJKL35',
+        'language': 'en',
+        'unit_id': 'RUF531',
+        'name': 'What is?',
+    })
+    assert len(errors) == 1
+    card['kind'] = 'video'
+    card, errors = card.save()
+    assert len(errors) == 0

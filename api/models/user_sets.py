@@ -15,6 +15,5 @@ class UserSets(Model):
         },
         'set_ids': {
             'validate': (is_required, is_list_of_strings,),
-            'default': [],
         }
     })
