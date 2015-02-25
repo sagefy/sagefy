@@ -1,21 +1,31 @@
-import pytest
-
-xfail = pytest.mark.xfail
+from models.cards.audio_card import AudioCard
 
 
-@xfail
-def test_audio_site(app):
+def test_audio_site(app, cards_table):
     """
     Expect an audio card to require site.
     """
 
-    assert False
+    card, errors = AudioCard.insert({
+        'unit_id': 'RUF531',
+        'name': 'What is?',
+        'audio_id': 'AJkl78',
+    })
+    assert len(errors) == 1
+    card, errors = card.update({'site': 'soundcloud'})
+    assert len(errors) == 0
 
 
-@xfail
-def test_audio_audio_id(app):
+def test_audio_audio_id(app, cards_table):
     """
     Expect an audio card to require audio_id.
     """
 
-    assert False
+    card, errors = AudioCard.insert({
+        'unit_id': 'RUF531',
+        'name': 'What is?',
+        'site': 'soundcloud',
+    })
+    assert len(errors) == 1
+    card, errors = card.update({'audio_id': 'JKfoej89'})
+    assert len(errors) == 0

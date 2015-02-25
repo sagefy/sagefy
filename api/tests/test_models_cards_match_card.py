@@ -1,40 +1,83 @@
-import pytest
-
-xfail = pytest.mark.xfail
+from models.cards.match_card import MatchCard
 
 
-@xfail
-def test_match_body(app):
+def test_match_body(app, cards_table):
     """
     Expect a match card require a body.
     """
 
-    assert False
+    card, errors = MatchCard.insert({
+        'unit_id': 'RUF531',
+        'name': 'What is?',
+        'options': [{
+            'value': 'abadaba',
+            'correct': True,
+            'feedback': 'Bazaaa...'
+        }],
+        'default_incorrect_feedback': 'Boo!',
+    })
+    assert len(errors) == 1
+    card, errors = card.update({'body': 'Testing 1234'})
+    assert len(errors) == 0
 
 
-@xfail
-def test_match_options(app):
+def test_match_options(app, cards_table):
     """
     Expect a match card require a options.
     (value correct feedback)
     """
 
-    assert False
+    card, errors = MatchCard.insert({
+        'unit_id': 'RUF531',
+        'name': 'What is?',
+        'body': 'Testing 1234',
+        'default_incorrect_feedback': 'Boo!',
+    })
+    assert len(errors) == 1
+    card, errors = card.update({'options': [{
+        'value': 'abadaba',
+        'correct': True,
+        'feedback': 'Bazaaa...'
+    }]})
+    assert len(errors) == 0
 
 
-@xfail
-def test_match_default_feedback(app):
+def test_match_default_feedback(app, cards_table):
     """
     Expect a match card require a default feedback.
     """
 
-    assert False
+    card, errors = MatchCard.insert({
+        'unit_id': 'RUF531',
+        'name': 'What is?',
+        'body': 'Testing 1234',
+        'options': [{
+            'value': 'abadaba',
+            'correct': True,
+            'feedback': 'Bazaaa...'
+        }]
+    })
+    assert len(errors) == 1
+    card, errors = card.update({'default_incorrect_feedback': 'Boo!'})
+    assert len(errors) == 0
 
 
-@xfail
-def test_match_casing(app):
+def test_match_casing(app, cards_table):
     """
     Expect a match card to allow case sensitivity.
     """
 
-    assert False
+    card, errors = MatchCard.insert({
+        'unit_id': 'RUF531',
+        'name': 'What is?',
+        'body': 'Testing 1234',
+        'options': [{
+            'value': 'abadaba',
+            'correct': True,
+            'feedback': 'Bazaaa...'
+        }],
+        'default_incorrect_feedback': 'Boo!',
+    })
+    assert len(errors) == 0
+    card, errors = card.update({'case_sensitive': True})
+    assert len(errors) == 0

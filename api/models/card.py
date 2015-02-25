@@ -58,7 +58,9 @@ class Card(EntityMixin, Model):
         },
         'kind': {
             'validate': (is_required, is_string,
-                         (is_one_of, 'video', 'choice'))
+                         (is_one_of, 'video', 'page', 'audio', 'slideshow',
+                                     'choice', 'number', 'match', 'formula',
+                                     'writing', 'upload', 'embed'))
         }
     })
 

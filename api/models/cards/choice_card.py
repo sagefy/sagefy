@@ -16,7 +16,7 @@ def is_list_of_options(options):
             ok = False
         if 'value' not in option or not isinstance(option['value'], str):
             ok = False
-        if 'correct' not in option or not isinstance(options['correct'], bool):
+        if 'correct' not in option or not isinstance(option['correct'], bool):
             ok = False
         if option.get('correct') is True:
             has_correct = True
