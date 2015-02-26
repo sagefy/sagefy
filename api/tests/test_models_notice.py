@@ -147,13 +147,25 @@ def test_mark_as_read(app, db_conn, notices_table):
     assert record['read'] is True
 
 
-@xfail
 def test_notices_kind(app, db_conn, notices_table):
     """
     Expect to filter notices by kind.
     """
 
-    assert False
+    notices_table.insert([
+        {'id': 1, 'user_id': 22, 'kind': 'new_proposal',
+            'tags': ['apple', 'banana']},
+        {'id': 2, 'user_id': 22, 'kind': 'accepted_proposal',
+            'tags': ['orange', 'banana']},
+        {'id': 3, 'user_id': 22, 'kind': 'new_proposal',
+            'tags': ['apple', 'grape']},
+        {'id': 4, 'user_id': 22, 'kind': 'new_topic',
+            'tags': ['apple', 'peach']},
+    ]).run(db_conn)
+    notices = Notice.list(user_id=22, kind='new_proposal')
+    assert len(notices) == 2
+    assert notices[0]['kind'] == 'new_proposal'
+    assert notices[1]['kind'] == 'new_proposal'
 
 
 @xfail
@@ -174,10 +186,20 @@ def test_notice_body_data(app, db_conn, notices_table):
     assert False
 
 
-@xfail
 def test_mark_unread(app, db_conn, notices_table):
     """
     Expect to mark as unread.
     """
 
-    assert False
+    notice, errors = Notice.insert({
+        'user_id': 'abcd1234',
+        'kind': 'new_proposal',
+        'tags': ['test'],
+        'read': True
+    })
+    assert notice['read'] is True
+    notice.mark_as_unread()
+    assert notice['read'] is False
+    record = notices_table.filter({'user_id': 'abcd1234'}).run(db_conn)
+    record = list(record)[0]
+    assert record['read'] is False
