@@ -2,54 +2,87 @@ import pytest
 
 xfail = pytest.mark.xfail
 
+import json
+
 
 @xfail
-def test_follow():
+def test_follow(db_conn, c_user, follows_table):
     """
     Expect to follow an entity.
     """
 
-    assert False
+    response = c_user.post('/api/follows/', data=json.dumps({
+        'entity': {
+            'kind': 'card',
+            'id': 'ABCD',
+        }
+    }), content_type='application/json')
+    response = json.loads(response.data.decode('utf-8'))
+    assert response.status_code == 200
 
 
 @xfail
-def test_follow_401():
+def test_follow_401(db_conn, app, follows_table):
     """
     Expect to fail to follow entity if not logged in.
     """
 
-    assert False
+    response = app.test_client().post('/api/follows/', data=json.dumps({
+        'entity': {
+            'kind': 'card',
+            'id': 'ABCD',
+        }
+    }), content_type='application/json')
+    response = json.loads(response.data.decode('utf-8'))
+    assert response.status_code == 401
 
 
 @xfail
-def test_follow_404():
+def test_follow_404(db_conn, c_user, follows_table):
     """
     Expect to fail to follow entity if not found entity.
     """
 
-    assert False
+    response = c_user.post('/api/follows/', data=json.dumps({
+        'entity': {
+            'kind': 'card',
+            'id': '???',
+        }
+    }), content_type='application/json')
+    response = json.loads(response.data.decode('utf-8'))
+    assert response.status_code == 404
 
 
 @xfail
-def test_follow_409():
+def test_follow_409(db_conn, c_user, follows_table):
     """
     Expect to fail to follow entity if already followed.
     """
 
-    assert False
+    response = c_user.post('/api/follows/', data=json.dumps({
+        'entity': {
+            'kind': 'card',
+            'id': 'ABCD',
+        }
+    }), content_type='application/json')
+    response = json.loads(response.data.decode('utf-8'))
+    assert response.status_code == 409
 
 
 @xfail
-def test_follow_400():
+def test_follow_400(db_conn, c_user, follows_table):
     """
     Expect to fail to follow entity if the request is nonsense.
     """
 
-    assert False
+    response = c_user.post('/api/follows/', data=json.dumps({}),
+                           content_type='application/json')
+    response = json.loads(response.data.decode('utf-8'))
+    assert response.status_code == 400
 
 
 @xfail
-def test_unfollow():
+def test_unfollow(db_conn, c_user, follows_table):
     """
     Expect to unfollow an entity.
     """
@@ -58,7 +91,7 @@ def test_unfollow():
 
 
 @xfail
-def test_unfollow_401():
+def test_unfollow_401(db_conn, c_user, follows_table):
     """
     Expect to fail to unfollow an entity if not logged in.
     """
@@ -67,7 +100,7 @@ def test_unfollow_401():
 
 
 @xfail
-def test_unfollow_404():
+def test_unfollow_404(db_conn, c_user, follows_table):
     """
     Expect to fail to unfollow an entity if no entity.
     """
@@ -76,7 +109,7 @@ def test_unfollow_404():
 
 
 @xfail
-def test_unfollow_409():
+def test_unfollow_409(db_conn, c_user, follows_table):
     """
     Expect to fail to unfollow an entity if not followed.
     """
@@ -85,7 +118,7 @@ def test_unfollow_409():
 
 
 @xfail
-def test_unfollow_400():
+def test_unfollow_400(db_conn, c_user, follows_table):
     """
     Expect to fail to unfollow an entity if request is nonsense.
     """
@@ -94,7 +127,7 @@ def test_unfollow_400():
 
 
 @xfail
-def test_get_follows():
+def test_get_follows(db_conn, c_user, follows_table):
     """
     Expect to get a list of follows for user.
     """
@@ -103,7 +136,7 @@ def test_get_follows():
 
 
 @xfail
-def test_get_follows_401():
+def test_get_follows_401(db_conn, c_user, follows_table):
     """
     Expect fail to to get a list of follows for user if not logged in.
     """
@@ -112,7 +145,7 @@ def test_get_follows_401():
 
 
 @xfail
-def test_get_follows_400():
+def test_get_follows_400(db_conn, c_user, follows_table):
     """
     Expect fail to to get a list of follows for user if nonsense params.
     """
