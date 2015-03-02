@@ -12,10 +12,10 @@ from modules.discuss import instance_post_facade, create_post_facade, \
 from modules.content import get as c
 
 
-topic = Blueprint('topic', __name__, url_prefix='/api/topics')
+topic_routes = Blueprint('topic', __name__, url_prefix='/api/topics')
 
 
-@topic.route('/', methods=['POST'])
+@topic_routes.route('/', methods=['POST'])
 def create_topic():
     """
     Create a new topic. The first post (proposal, flag) must be provided.
@@ -60,7 +60,7 @@ def create_topic():
     return jsonify(topic=topic.deliver(), post=post.deliver())
 
 
-@topic.route('/<topic_id>/', methods=['PUT', 'PATCH'])
+@topic_routes.route('/<topic_id>/', methods=['PUT', 'PATCH'])
 def update_topic(topic_id):
     """
     Update the topic. Only the name can be changed. Only by original author.
@@ -91,7 +91,7 @@ def update_topic(topic_id):
     return jsonify(topic=topic.deliver())
 
 
-@topic.route('/<topic_id>/posts/', methods=['GET'])
+@topic_routes.route('/<topic_id>/posts/', methods=['GET'])
 def get_posts(topic_id):
     """
     Get a reverse chronological listing of posts for given topic.
@@ -129,7 +129,7 @@ def get_posts(topic_id):
     return jsonify(posts=[p.deliver() for p in posts])
 
 
-@topic.route('/<topic_id>/posts/', methods=['POST'])
+@topic_routes.route('/<topic_id>/posts/', methods=['POST'])
 def create_post(topic_id):
     """
     Create a new post on a given topic.
@@ -173,7 +173,7 @@ def create_post(topic_id):
     return jsonify(post=post.deliver())
 
 
-@topic.route('/<topic_id>/posts/<post_id>/', methods=['PUT', 'PATCH'])
+@topic_routes.route('/<topic_id>/posts/<post_id>/', methods=['PUT', 'PATCH'])
 def update_post(topic_id, post_id):
     """
     Update an existing post. Must be one's own post.

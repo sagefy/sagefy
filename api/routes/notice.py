@@ -3,7 +3,7 @@ from flask.ext.login import current_user
 from models.notice import Notice
 from modules.util import parse_args
 
-notice = Blueprint('notice', __name__, url_prefix='/api/notices')
+notice_routes = Blueprint('notice', __name__, url_prefix='/api/notices')
 
 
 def add_body_to_notices(notices):
@@ -15,7 +15,7 @@ def add_body_to_notices(notices):
     return parsed
 
 
-@notice.route('/', methods=['GET'])
+@notice_routes.route('/', methods=['GET'])
 def list_notices():
     """
     List notices for current user.
@@ -32,7 +32,7 @@ def list_notices():
 # TODO: Dry up the mark as read/unread routes
 
 
-@notice.route('/<notice_id>/read/', methods=['PUT'])
+@notice_routes.route('/<notice_id>/read/', methods=['PUT'])
 def mark_notice_as_read(notice_id):
     """
     Mark notice as read.
@@ -53,7 +53,7 @@ def mark_notice_as_read(notice_id):
     return jsonify(notice=notice.deliver(access='private'))
 
 
-@notice.route('/<notice_id>/unread/', methods=['PUT'])
+@notice_routes.route('/<notice_id>/unread/', methods=['PUT'])
 def mark_notice_as_unread(notice_id):
     """
     Mark notice as unread.

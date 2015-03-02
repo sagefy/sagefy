@@ -7,10 +7,11 @@ from redis import StrictRedis
 from elasticsearch import Elasticsearch
 
 from routes.error import setup_errors
-from routes.public import public
-from routes.user import user
-from routes.notice import notice
-from routes.topic import topic
+from routes.public import public_routes
+from routes.user import user_routes
+from routes.notice import notice_routes
+from routes.topic import topic_routes
+from routes.follow import follow_routes
 
 
 def create_app(config, debug=False, testing=False):
@@ -37,10 +38,11 @@ def create_app(config, debug=False, testing=False):
 
     # Add in the routes
     setup_errors(app)
-    app.register_blueprint(public)
-    app.register_blueprint(user)
-    app.register_blueprint(notice)
-    app.register_blueprint(topic)
+    app.register_blueprint(public_routes)
+    app.register_blueprint(user_routes)
+    app.register_blueprint(notice_routes)
+    app.register_blueprint(topic_routes)
+    app.register_blueprint(follow_routes)
 
     return app
 

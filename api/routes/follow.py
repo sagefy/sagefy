@@ -4,10 +4,10 @@ from flask.ext.login import current_user
 from modules.util import parse_args
 
 
-follow = Blueprint('follow', __name__, url_prefix='/api/follows')
+follow_routes = Blueprint('follow', __name__, url_prefix='/api/follows')
 
 
-@follow.route('/', methods=['GET'])
+@follow_routes.route('/', methods=['GET'])
 def get_follows():
     """
     Get a list of the users follows.
@@ -21,7 +21,7 @@ def get_follows():
     return jsonify(follows=follows.deliver(access='private'))
 
 
-@follow.route('/', methods=['POST'])
+@follow_routes.route('/', methods=['POST'])
 def follow():
     """
     Follow a card, unit, or set.
@@ -42,7 +42,7 @@ def follow():
     return jsonify(follow=follow.deliver())
 
 
-@follow.route('/<follow_id>/', methods=['DELETE'])
+@follow_routes.route('/<follow_id>/', methods=['DELETE'])
 def unfollow(follow_id):
     """
     Remove a follow. Must be current user's own follow.

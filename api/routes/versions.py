@@ -3,4 +3,4 @@
 
 from flask import Blueprint
 
-versions = Blueprint('versions', __name__, url_prefix='/api/versions')
+versions_routes = Blueprint('versions', __name__, url_prefix='/api/versions')

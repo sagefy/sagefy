@@ -3,11 +3,11 @@ from flask import Blueprint, abort
 # from models.set import Set
 from flask.ext.login import current_user
 
-# We use `set_` because `set` is a type in Python
-set_ = Blueprint('set_', __name__, url_prefix='/api/sets')
+# Nota Bene: We use `set_` because `set` is a type in Python
+set_routes = Blueprint('set_', __name__, url_prefix='/api/sets')
 
 
-@set_.route('/<set_id>/', methods=['GET'])
+@set_routes.route('/<set_id>/', methods=['GET'])
 def get_set(set_id):
     """TODO
     Get a specific set given an ID.
@@ -15,7 +15,7 @@ def get_set(set_id):
     pass
 
 
-@set_.route('/<set_id>/tree/', methods=['GET'])
+@set_routes.route('/<set_id>/tree/', methods=['GET'])
 def get_set_tree(set_id):
     """TODO
     Render the tree of units that exists within a set.
@@ -25,7 +25,7 @@ def get_set_tree(set_id):
     # TODO For the menu, it must return the name and ID of the set
 
 
-@set_.route('/<set_id>/units/', methods=['GET'])
+@set_routes.route('/<set_id>/units/', methods=['GET'])
 def get_set_units(set_id):
     """TODO
     Render the units that exist within the set.
@@ -39,7 +39,7 @@ def get_set_units(set_id):
     # TODO For the menu, it must return the name and ID of the set
 
 
-@set_.route('/<set_id>/units/<unit_id>/', methods=['POST', 'PUT'])
+@set_routes.route('/<set_id>/units/<unit_id>/', methods=['POST', 'PUT'])
 def choose_unit(set_id, unit_id):
     """TODO
     Updates the learner's information based on the unit they have chosen.

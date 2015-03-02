@@ -1,9 +1,9 @@
 from flask import Blueprint  # , jsonify, request
 
-search = Blueprint('search', __name__, url_prefix='/api/search')
+search_routes = Blueprint('search', __name__, url_prefix='/api/search')
 
 
-@search.route('/', methods=['GET'])
+@search_routes.route('/', methods=['GET'])
 def search():
     """TODO
     Search for entities. Search, filter, sort, paginate.

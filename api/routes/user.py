@@ -4,7 +4,7 @@ from flask.ext.login import login_user, current_user, logout_user
 from modules.content import get as c
 
 
-user = Blueprint('user', __name__, url_prefix='/api/users')
+user_routes = Blueprint('user', __name__, url_prefix='/api/users')
 
 
 def _log_in(user):
@@ -19,7 +19,7 @@ def _log_in(user):
     return resp
 
 
-@user.route('/<user_id>/', methods=['GET'])
+@user_routes.route('/<user_id>/', methods=['GET'])
 def get_user(user_id):
     """
     Get the user by their ID.
@@ -35,7 +35,7 @@ def get_user(user_id):
     return abort(404)
 
 
-@user.route('/current/', methods=['GET'])
+@user_routes.route('/current/', methods=['GET'])
 def get_current_user():
     """
     Get current user's information.
@@ -46,7 +46,7 @@ def get_current_user():
     return abort(401)
 
 
-@user.route('/', methods=['POST'])
+@user_routes.route('/', methods=['POST'])
 def create_user():
     """
     Create user.
@@ -58,7 +58,7 @@ def create_user():
     return _log_in(user)
 
 
-@user.route('/log_in/', methods=['POST'])
+@user_routes.route('/log_in/', methods=['POST'])
 def log_in():
     """
     Log in user.
@@ -78,7 +78,7 @@ def log_in():
     return _log_in(user)
 
 
-@user.route('/log_out/', methods=['POST'])
+@user_routes.route('/log_out/', methods=['POST'])
 def log_out():
     """
     Log out user.
@@ -90,7 +90,7 @@ def log_out():
     return resp, 204
 
 
-@user.route('/<user_id>/', methods=['PUT'])
+@user_routes.route('/<user_id>/', methods=['PUT'])
 def update_user(user_id):
     """
     Update the user. Must be the current user.
@@ -107,7 +107,7 @@ def update_user(user_id):
     return jsonify(user=user.deliver(access='private'))
 
 
-@user.route('/token/', methods=['POST'])
+@user_routes.route('/token/', methods=['POST'])
 def create_token():
     """Create an email token for the user."""
     user = User.get(email=request.json.get('email'))
@@ -117,7 +117,7 @@ def create_token():
     return '', 204
 
 
-@user.route('/password/', methods=['POST'])
+@user_routes.route('/password/', methods=['POST'])
 def create_password():
     """
     Update a user's password if the token is valid.
@@ -133,7 +133,7 @@ def create_password():
     return _log_in(user)
 
 
-@user.route('/<user_id>/sets/', methods=['GET'])
+@user_routes.route('/<user_id>/sets/', methods=['GET'])
 def get_user_sets(user_id):
     """TODO
     Get the list of sets the user has added.
@@ -143,7 +143,7 @@ def get_user_sets(user_id):
         return abort(401)
 
 
-@user.route('/<user_id>/sets/', methods=['POST'])
+@user_routes.route('/<user_id>/sets/', methods=['POST'])
 def add_set(user_id):
     """TODO
     Add a set to the learner's list of sets.
@@ -153,7 +153,7 @@ def add_set(user_id):
         return abort(401)
 
 
-@user.route('/<user_id>/sets/<set_id>/', methods=['DELETE'])
+@user_routes.route('/<user_id>/sets/<set_id>/', methods=['DELETE'])
 def remove_set(user_id, set_id):
     """TODO
     Remove a set from the learner's list of sets.

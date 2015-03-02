@@ -87,16 +87,26 @@ def test_unfollow(db_conn, c_user, follows_table):
     Expect to unfollow an entity.
     """
 
-    assert False
+    follows_table.insert({
+        'id': 'JIkfo034n',
+        'user_id': 'abcd1234',
+        'entity': {
+            'kind': 'card',
+            'id': 'JFlsjFm',
+        },
+    }).run(db_conn)
+    response = c_user.delete('/api/follows/JIkfo034n/')
+    assert response.status_code == 204
 
 
 @xfail
-def test_unfollow_401(db_conn, c_user, follows_table):
+def test_unfollow_401(db_conn, app, follows_table):
     """
     Expect to fail to unfollow an entity if not logged in.
     """
 
-    assert False
+    response = app.test_client().delete('/api/follows/JIkfo034n/')
+    assert response.status_code == 401
 
 
 @xfail
@@ -105,16 +115,8 @@ def test_unfollow_404(db_conn, c_user, follows_table):
     Expect to fail to unfollow an entity if no entity.
     """
 
-    assert False
-
-
-@xfail
-def test_unfollow_409(db_conn, c_user, follows_table):
-    """
-    Expect to fail to unfollow an entity if not followed.
-    """
-
-    assert False
+    response = c_user.delete('/api/follows/JIkfo034n/')
+    assert response.status_code == 404
 
 
 @xfail
@@ -123,7 +125,16 @@ def test_unfollow_400(db_conn, c_user, follows_table):
     Expect to fail to unfollow an entity if request is nonsense.
     """
 
-    assert False
+    follows_table.insert({
+        'id': 'JIkfo034n',
+        'user_id': 'abcd1234',
+        'entity': {
+            'kind': 'card',
+            'id': 'JFlsjFm',
+        },
+    }).run(db_conn)
+    response = c_user.delete('/api/follows/JIkfo034n/')
+    assert response.status_code == 400
 
 
 @xfail
