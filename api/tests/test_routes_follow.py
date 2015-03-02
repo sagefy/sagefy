@@ -131,17 +131,39 @@ def test_get_follows(db_conn, c_user, follows_table):
     """
     Expect to get a list of follows for user.
     """
-
-    assert False
+    follows_table.insert([{
+        'user_id': 'JFldl93k',
+        'entity': {
+            'kind': 'card',
+            'id': 'JFlsjFm',
+        },
+    }, {
+        'user_id': 'abcd1234',
+        'entity': {
+            'kind': 'card',
+            'id': 'JFlsjFm',
+        },
+    }, {
+        'user_id': 'abcd1234',
+        'entity': {
+            'kind': 'unit',
+            'id': 'u39Fdjf0',
+        },
+    }]).run(db_conn)
+    response = c_user.get('/api/follows/')
+    assert response.status_code == 200
+    response = json.loads(response.data.decode('utf-8'))
+    assert len(response['follows']) == 2
 
 
 @xfail
-def test_get_follows_401(db_conn, c_user, follows_table):
+def test_get_follows_401(db_conn, app, follows_table):
     """
     Expect fail to to get a list of follows for user if not logged in.
     """
 
-    assert False
+    response = app.test_client().get('/api/follows/')
+    assert response.status_code == 401
 
 
 @xfail
@@ -150,4 +172,5 @@ def test_get_follows_400(db_conn, c_user, follows_table):
     Expect fail to to get a list of follows for user if nonsense params.
     """
 
-    assert False
+    response = c_user.get('/api/follows/?card=abcd1234')
+    assert response.status_code == 400

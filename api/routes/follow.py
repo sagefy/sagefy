@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request, abort
 from models.follow2 import Follow
 from flask.ext.login import current_user
+from modules.util import parse_args
+
 
 follow = Blueprint('follow', __name__, url_prefix='/api/follows')
 
@@ -14,7 +16,9 @@ def get_follows():
     if not current_user.is_authenticated():
         return abort(401)
 
-    # TODO
+    args = parse_args(request.args)
+    follows = Follow(user_id=current_user.get_id(), **args)
+    return jsonify(follows=follows.deliver(access='private'))
 
 
 @follow.route('/', methods=['POST'])
