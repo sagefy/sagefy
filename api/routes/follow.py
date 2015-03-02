@@ -17,8 +17,9 @@ def get_follows():
         return abort(401)
 
     args = parse_args(request.args)
-    follows = Follow(user_id=current_user.get_id(), **args)
-    return jsonify(follows=follows.deliver(access='private'))
+    follows = Follow.list(user_id=current_user.get_id(), **args)
+    return jsonify(follows=[follow.deliver(access='private')
+                            for follow in follows])
 
 
 @follow_routes.route('/', methods=['POST'])
@@ -30,7 +31,7 @@ def follow():
     if not current_user.is_authenticated():
         return abort(401)
 
-    follow_data = dict(**request.body)
+    follow_data = dict(**request.json)
     follow_data['user_id'] = current_user.get_id()
 
     # TODO validate entity exists, use entity module
