@@ -18,7 +18,8 @@ class Follow(Model):
     })
 
     @classmethod
-    def list(cls, user_id=None, limit=10, skip=0, kind=None, **params):
+    def list(cls, user_id=None, limit=10, skip=0,
+             kind=None, entity_id=None, **params):
         """
         Get a list of models matching the provided arguments.
         Also adds pagination capabilities.
@@ -30,6 +31,8 @@ class Follow(Model):
                     .filter(r.row['user_id'] == user_id)
                     .filter(r.row['entity']['kind'] == kind
                             if kind is not None else True)
+                    .filter(r.row['entity']['id'] == entity_id
+                            if entity_id is not None else True)
                     .skip(skip)
                     .limit(limit))
         fields_list = query.run(g.db_conn)

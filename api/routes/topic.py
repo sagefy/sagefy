@@ -38,6 +38,7 @@ def create_topic():
 
     # Let's create the topic, but not save it until we know we
     # have a valid post
+    # TODO should this validation be part of the model?
     topic_data = dict(**request.json['topic'])
     topic_data['user_id'] = current_user.get_id()
     topic = Topic(topic_data)
@@ -82,6 +83,7 @@ def update_topic(topic_id):
         return abort(403)
 
     # Request must only be for name
+    # TODO should this be part of the model?
     topic, errors = topic.update({
         'name': request.json.get('name')
     })
@@ -116,6 +118,8 @@ def get_posts(topic_id):
         topic_id=topic_id
     )
 
+    # TODO Should the following checks be part of the model?
+
     # TODO For proposals, pull up the proposal entity version
 
     # TODO ...then pull up the proposal latest canonical version
@@ -140,6 +144,8 @@ def create_post(topic_id):
 
     if not current_user.is_authenticated():
         return abort(401)
+
+    # TODO what checks should be moved to the model?
 
     # TODO For proposal or flag, entity must be included and valid
     kind = request.json.get('kind')
@@ -193,6 +199,7 @@ def update_post(topic_id, post_id):
     post = get_post_facade(post_id)
 
     # Must be user's own post
+    # TODO should some of these checks be part of the model?
     if post['user_id'] != current_user.get_id():
         return abort(403)
 

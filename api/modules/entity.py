@@ -13,11 +13,11 @@ def get_latest_canonical(kind, entity_id):
     version out of the database.
     """
 
-    if kind is 'card':
+    if kind == 'card':
         return Card.get_latest_canonical(entity_id)
-    elif kind is 'unit':
+    elif kind == 'unit':
         return Unit.get_latest_canonical(entity_id)
-    elif kind is 'set':
+    elif kind == 'set':
         return Set.get_latest_canonical(entity_id)
 
 

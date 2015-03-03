@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request, abort
-from models.follow2 import Follow
+from models.follow import Follow
 from flask.ext.login import current_user
 from modules.util import parse_args
+from modules.entity import get_latest_canonical
 
 
 follow_routes = Blueprint('follow', __name__, url_prefix='/api/follows')
@@ -34,13 +35,28 @@ def follow():
     follow_data = dict(**request.json)
     follow_data['user_id'] = current_user.get_id()
 
-    # TODO validate entity exists, use entity module
-
-    follow, errors = Follow.insert(follow_data)
+    follow = Follow(follow_data)
+    errors = follow.validate()
     if errors:
         return jsonify(errors=errors), 400
 
-    return jsonify(follow=follow.deliver())
+    # Ensure the entity exists   TODO should this be a model validation?
+    entity = get_latest_canonical(follow['entity']['kind'],
+                                  follow['entity']['id'])
+    if not entity:
+        return abort(404)
+
+    # Ensure we don't already follow   TODO should this be a model validation?
+    prev = Follow.list(user_id=current_user.get_id(),
+                       entity_id=follow_data['entity']['id'])
+    if prev:
+        return abort(409)
+
+    follow, errors = follow.save()
+    if errors:
+        return jsonify(errors=errors), 400
+
+    return jsonify(follow=follow.deliver(access='private'))
 
 
 @follow_routes.route('/<follow_id>/', methods=['DELETE'])

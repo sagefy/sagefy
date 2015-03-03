@@ -1,15 +1,18 @@
 import json
 import rethinkdb as r
-import pytest
-
-xfail = pytest.mark.xfail
 
 
-def test_follow(db_conn, c_user, follows_table):
+def test_follow(db_conn, c_user, cards_table, follows_table):
     """
     Expect to follow an entity.
     """
 
+    cards_table.insert({
+        'entity_id': 'ABCD',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }).run(db_conn)
     response = c_user.post('/api/follows/', data=json.dumps({
         'entity': {
             'kind': 'card',
@@ -33,7 +36,6 @@ def test_follow_401(db_conn, app, follows_table):
     assert response.status_code == 401
 
 
-@xfail
 def test_follow_404(db_conn, c_user, follows_table):
     """
     Expect to fail to follow entity if not found entity.
@@ -48,16 +50,29 @@ def test_follow_404(db_conn, c_user, follows_table):
     assert response.status_code == 404
 
 
-@xfail
-def test_follow_409(db_conn, c_user, follows_table):
+def test_follow_409(db_conn, c_user, cards_table, follows_table):
     """
     Expect to fail to follow entity if already followed.
     """
 
+    follows_table.insert({
+        'id': 'JIkfo034n',
+        'user_id': 'abcd1234',
+        'entity': {
+            'kind': 'card',
+            'id': 'JFlsjFm',
+        },
+    }).run(db_conn)
+    cards_table.insert({
+        'entity_id': 'JFlsjFm',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }).run(db_conn)
     response = c_user.post('/api/follows/', data=json.dumps({
         'entity': {
             'kind': 'card',
-            'id': 'ABCD',
+            'id': 'JFlsjFm',
         }
     }), content_type='application/json')
     assert response.status_code == 409

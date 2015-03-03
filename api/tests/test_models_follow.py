@@ -1,4 +1,4 @@
-from models.follow2 import Follow
+from models.follow import Follow
 
 
 def test_user_id(app, db_conn, follows_table):

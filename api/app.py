@@ -81,7 +81,7 @@ def setup_db(app):
     from models.card import Card
     from models.unit import Unit
     from models.set import Set
-    from models.follow2 import Follow
+    from models.follow import Follow
     from models.user_sets import UserSets
     from models.response import Response
 
