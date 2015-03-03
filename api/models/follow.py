@@ -28,7 +28,8 @@ class Follow(Model):
 
         query = (cls.table
                     .order_by(r.desc('created'))
-                    .filter(r.row['user_id'] == user_id)
+                    .filter(r.row['user_id'] == user_id
+                            if user_id is not None else True)
                     .filter(r.row['entity']['kind'] == kind
                             if kind is not None else True)
                     .filter(r.row['entity']['id'] == entity_id
