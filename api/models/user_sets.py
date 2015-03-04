@@ -17,3 +17,14 @@ class UserSets(Model):
             'validate': (is_required, is_list_of_strings,),
         }
     })
+
+    def list_sets(self, limit=10, skip=0, **params):
+        """
+        Join the user's set_ids with set information.
+        Return empty list when there's no matching documents.
+        """
+
+        return []
+
+        # TODO information per each set - entity_id, name, body, needs review
+        # TODO order by last reviewed time

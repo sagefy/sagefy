@@ -1,4 +1,7 @@
 from models.user_sets import UserSets
+import pytest
+
+xfail = pytest.mark.xfail
 
 
 def test_user(app, db_conn, users_sets_table):
@@ -33,3 +36,12 @@ def test_sets(app, db_conn, users_sets_table):
     ]
     user_sets, errors = user_sets.save()
     assert len(errors) == 0
+
+
+@xfail
+def test_list_sets(app, db_conn, users_sets_table, sets_table):
+    """
+    Expect to list sets a user subscribes to.
+    """
+
+    assert False
