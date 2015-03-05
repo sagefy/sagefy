@@ -1,4 +1,5 @@
 from models.set import Set
+import rethinkdb as r
 
 
 def test_entity(app, db_conn, sets_table):
@@ -141,3 +142,42 @@ def test_members(app, db_conn, sets_table):
     }]
     set_, errors = set_.save()
     assert len(errors) == 0
+
+
+def test_get_by_entity_ids(app, db_conn, sets_table):
+    """
+    Expect to list sets by given entity IDs.
+    """
+
+    sets_table.insert([{
+        'entity_id': 'A1',
+        'name': 'A',
+        'body': 'Apple',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }, {
+        'entity_id': 'B2',
+        'name': 'B',
+        'body': 'Banana',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }, {
+        'entity_id': 'C3',
+        'name': 'C',
+        'body': 'Coconut',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }, {
+        'entity_id': 'D4',
+        'name': 'D',
+        'body': 'Date',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }]).run(db_conn)
+    sets = Set.get_by_entity_ids(['A1', 'C3'])
+    assert sets[0]['body'] in ('Apple', 'Coconut')
+    assert sets[0]['body'] in ('Apple', 'Coconut')

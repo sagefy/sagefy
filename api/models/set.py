@@ -3,6 +3,8 @@ from modules.validations import is_required, is_language, is_string, \
     is_boolean, is_list, is_entity_list_dict
 from modules.util import uniqid
 from models.mixins.entity import EntityMixin
+from flask import g
+import rethinkdb as r
 
 
 class Set(EntityMixin, Model):
@@ -68,5 +70,17 @@ class Set(EntityMixin, Model):
         """
         # TODO
         return []
+
+    @classmethod
+    def get_by_entity_ids(cls, entity_ids):
+        """
+        Get a list of sets by a list of entity IDs.
+        """
+
+        docs = cls.table.filter(
+            lambda set_: r.expr(entity_ids).contains(set_['entity_id'])
+        ).run(g.db_conn)
+        return [cls(fields) for fields in docs]
+        # TODO secondary index
 
     # TODO On set canonical, index (or delete) in Elasticsearch with entity_id

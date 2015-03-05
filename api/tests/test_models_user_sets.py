@@ -1,7 +1,5 @@
 from models.user_sets import UserSets
-import pytest
-
-xfail = pytest.mark.xfail
+import rethinkdb as r
 
 
 def test_user(app, db_conn, users_sets_table):
@@ -38,10 +36,50 @@ def test_sets(app, db_conn, users_sets_table):
     assert len(errors) == 0
 
 
-@xfail
 def test_list_sets(app, db_conn, users_sets_table, sets_table):
     """
     Expect to list sets a user subscribes to.
     """
 
-    assert False
+    sets_table.insert([{
+        'entity_id': 'A1',
+        'name': 'A',
+        'body': 'Apple',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }, {
+        'entity_id': 'B2',
+        'name': 'B',
+        'body': 'Banana',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }, {
+        'entity_id': 'C3',
+        'name': 'C',
+        'body': 'Coconut',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }, {
+        'entity_id': 'D4',
+        'name': 'D',
+        'body': 'Date',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }]).run(db_conn)
+    users_sets_table.insert({
+        'user_id': 'abcd1234',
+        'set_ids': [
+            'A1',
+            'C3',
+        ],
+        'created': r.now(),
+        'modified': r.now(),
+    }).run(db_conn)
+    uset = UserSets.get(user_id='abcd1234')
+    sets = uset.list_sets()
+    assert sets[0]['body'] in ('Apple', 'Coconut')
+    assert sets[0]['body'] in ('Apple', 'Coconut')

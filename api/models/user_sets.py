@@ -1,5 +1,6 @@
 from modules.model import Model
 from modules.validations import is_required, is_string, is_list_of_strings
+from models.set import Set
 
 
 class UserSets(Model):
@@ -24,7 +25,8 @@ class UserSets(Model):
         Return empty list when there's no matching documents.
         """
 
-        return []
+        return Set.get_by_entity_ids(self['set_ids'])
 
-        # TODO information per each set - entity_id, name, body, needs review
+        # TODO each set -- needs review?
         # TODO order by last reviewed time
+        # TODO pagination
