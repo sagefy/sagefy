@@ -1,10 +1,6 @@
 import json
 import rethinkdb as r
 
-import pytest
-
-xfail = pytest.mark.xfail
-
 
 def prep(sets_table, users_sets_table, db_conn):
     sets_table.insert([{
