@@ -86,7 +86,6 @@ def test_follow_400(db_conn, c_user, follows_table):
     response = c_user.post('/api/follows/', data=json.dumps({}),
                            content_type='application/json')
     assert response.status_code == 400
-    response = json.loads(response.data.decode('utf-8'))
 
 
 def test_unfollow(db_conn, c_user, follows_table):

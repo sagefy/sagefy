@@ -22,6 +22,8 @@ util = {}
 util.isUndefined = (a) ->
     return typeof a is 'undefined'
 
+objectConstructor = {}.constructor
+
 util.extend = (target, injects...) ->
     for inject in injects
         for prop, val of inject
@@ -33,7 +35,8 @@ util.extend = (target, injects...) ->
                 when util.isArray(val)
                     target[prop] = [] unless util.isArray(target[prop])
                     util.extend([], target[prop], val)
-                when util.isObject(val)
+                when (util.isObject(val) and
+                      val.constructor is objectConstructor)
                     target[prop] = {} unless util.isObject(target[prop])
                     util.extend({}, target[prop], val)
                 else val # number, boolean, string, regexp, null, function

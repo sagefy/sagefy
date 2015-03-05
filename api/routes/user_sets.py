@@ -5,8 +5,7 @@ from flask import Blueprint, abort, request, jsonify
 from flask.ext.login import current_user
 
 
-user_sets_routes = Blueprint('user_sets', __name__,
-                             url_prefix='/api/users')
+user_sets_routes = Blueprint('user_sets', __name__, url_prefix='/api/users')
 
 
 @user_sets_routes.route('/<user_id>/sets/', methods=['GET'])
@@ -25,7 +24,7 @@ def get_user_sets(user_id):
     uset = UserSets.get(user_id=user_id)
     if not uset:
         return jsonify(sets=[])
-    return jsonify(sets=uset.list_sets(**args))
+    return jsonify(sets=[s.deliver() for s in uset.list_sets(**args)])
 
 
 @user_sets_routes.route('/<user_id>/sets/<set_id>/', methods=['POST'])
@@ -55,7 +54,7 @@ def add_set(user_id, set_id):
         uset['set_ids'].append(set_id)
         uset, errors = uset.save()
     else:
-        uset, errors = uset.insert({
+        uset, errors = UserSets.insert({
             'user_id': user_id,
             'set_ids': [set_id],
         })

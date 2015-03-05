@@ -106,7 +106,6 @@ HTML
 ----
 
 - The least markup possible.
-- TODO: Use `ui-` for classes that interact with JavaScript/Coffeescript; plain classes are styling only.
 
 Writing Tests
 -------------

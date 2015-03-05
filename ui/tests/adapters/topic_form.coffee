@@ -73,15 +73,15 @@ describe('Topic Form Adapter', ->
         )
 
         it.skip('should show card fields', ->
-            # TODO
+
         )
 
         it.skip('should show unit fields', ->
-            # TODO
+
         )
 
         it.skip('should show set fields', ->
-            # TODO
+
         )
     )
 
