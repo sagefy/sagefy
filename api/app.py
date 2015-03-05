@@ -12,6 +12,7 @@ from routes.user import user_routes
 from routes.notice import notice_routes
 from routes.topic import topic_routes
 from routes.follow import follow_routes
+from routes.user_sets import user_sets_routes
 
 
 def create_app(config, debug=False, testing=False):
@@ -43,6 +44,7 @@ def create_app(config, debug=False, testing=False):
     app.register_blueprint(notice_routes)
     app.register_blueprint(topic_routes)
     app.register_blueprint(follow_routes)
+    app.register_blueprint(user_sets_routes)
 
     return app
 
