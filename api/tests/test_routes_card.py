@@ -11,6 +11,13 @@ def test_get_card():
 
     assert False
 
+    # TODO model
+    # TODO get unit data
+    # TODO join through requires both ways
+    # TODO list of topics
+    # TODO list of versions
+    # TODO sequencer data: learners, transit, guess, slip, difficulty
+
 
 @xfail
 def test_get_card_404():

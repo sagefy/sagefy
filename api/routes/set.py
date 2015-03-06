@@ -9,10 +9,16 @@ set_routes = Blueprint('set_', __name__, url_prefix='/api/sets')
 
 @set_routes.route('/<set_id>/', methods=['GET'])
 def get_set(set_id):
-    """TODO
+    """
     Get a specific set given an ID.
     """
     pass
+    
+    # TODO model data
+    # TODO join through units
+    # TODO list of topics
+    # TODO list of versions
+    # TODO sequencer: learners, quality, difficulty
 
 
 @set_routes.route('/<set_id>/tree/', methods=['GET'])
