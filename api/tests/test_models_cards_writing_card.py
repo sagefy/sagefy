@@ -46,6 +46,6 @@ def test_writing_rubric(app, cards_table):
         'name': 'What is?',
         'body': 'Testing 1234',
     })
-    assert len(errors) == 0
+    assert len(errors) == 1
     card, errors = card.update({'rubric': None})
     assert len(errors) == 0

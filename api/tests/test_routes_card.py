@@ -2,16 +2,29 @@ import pytest
 
 xfail = pytest.mark.xfail
 
+import rethinkdb as r
+
 
 @xfail
-def test_get_card():
+def test_get_card(app, db_conn,
+                  cards_table, units_table, topics_table):
     """
     Expect to get the card information for displaying to a contributor.
     """
 
-    assert False
-
-    # TODO model
+    cards_table.insert({
+        'entity_id': 'abcd',
+        'unit_id': 'abcd',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'video',
+    }).run(db_conn)
+    response = app.test_client().get('/api/cards/abcd/')
+    assert response.status_code == 200
+    response = response.data.decode('utf-8')
+    assert response['card']['entity_id'] == 'abcd'
+    assert response['card']['kind'] == 'video'
     # TODO get unit data
     # TODO join through requires both ways
     # TODO list of topics
@@ -19,13 +32,13 @@ def test_get_card():
     # TODO sequencer data: learners, transit, guess, slip, difficulty
 
 
-@xfail
-def test_get_card_404():
+def test_get_card_404(app, db_conn):
     """
     Expect to fail to get an unknown card. (404)
     """
 
-    assert False
+    response = app.test_client().get('/api/cards/abcd/')
+    assert response.status_code == 404
 
 
 @xfail

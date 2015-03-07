@@ -1,16 +1,22 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, abort
 from models.unit import Unit
-from flask.ext.login import current_user
 
 unit_routes = Blueprint('unit', __name__, url_prefix='/api/units')
 
 
-@unit_routes.route('/<unit>/', methods=['GET'])
+@unit_routes.route('/<unit_id>/', methods=['GET'])
 def get_unit(unit_id):
     """
     Get a specific unit given an ID.
     """
-    pass
+
+    unit = Unit.get_latest_canonical(unit_id)
+    if not unit:
+        return abort(404)
+
+    return jsonify(
+        unit=unit.deliver(),
+    )
 
     # TODO provide model data
     # TODO join through requires

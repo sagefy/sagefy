@@ -13,6 +13,11 @@ from routes.notice import notice_routes
 from routes.topic import topic_routes
 from routes.follow import follow_routes
 from routes.user_sets import user_sets_routes
+from routes.card import card_routes
+from routes.unit import unit_routes
+from routes.set import set_routes
+from routes.search import search_routes
+from routes.sequencer import sequencer_routes
 
 
 def create_app(config, debug=False, testing=False):
@@ -45,6 +50,11 @@ def create_app(config, debug=False, testing=False):
     app.register_blueprint(topic_routes)
     app.register_blueprint(follow_routes)
     app.register_blueprint(user_sets_routes)
+    app.register_blueprint(card_routes)
+    app.register_blueprint(unit_routes)
+    app.register_blueprint(set_routes)
+    app.register_blueprint(search_routes)
+    app.register_blueprint(sequencer_routes)
 
     return app
 

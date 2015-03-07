@@ -1,6 +1,5 @@
-from flask import Blueprint, abort
-# , jsonify, request
-# from models.set import Set
+from flask import Blueprint, abort, jsonify
+from models.set import Set
 from flask.ext.login import current_user
 
 # Nota Bene: We use `set_` because `set` is a type in Python
@@ -12,8 +11,15 @@ def get_set(set_id):
     """
     Get a specific set given an ID.
     """
-    pass
-    
+
+    set_ = Set.get_latest_canonical(set_id)
+    if not set_:
+        return abort(404)
+
+    return jsonify(
+        set=set_.deliver(),
+    )
+
     # TODO model data
     # TODO join through units
     # TODO list of topics

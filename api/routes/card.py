@@ -1,5 +1,5 @@
-from flask import Blueprint, abort  # , jsonify, request
-# from models.card import Card
+from flask import Blueprint, abort, jsonify
+from models.card import Card
 from flask.ext.login import current_user
 
 card_routes = Blueprint('card', __name__, url_prefix='/api/cards')
@@ -11,7 +11,14 @@ def get_card(card_id):
     Get a specific card given an ID. Show all relevant data, but
     not used for the learning interface.
     """
-    pass
+
+    card = Card.get_latest_canonical(card_id)
+    if not card:
+        return abort(404)
+
+    return jsonify(
+        card=card.deliver(),
+    )
 
     # TODO model
     # TODO get unit data

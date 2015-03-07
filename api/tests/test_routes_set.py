@@ -4,7 +4,8 @@ xfail = pytest.mark.xfail
 
 
 @xfail
-def test_get_set():
+def test_get_set(app, db_conn,
+                 sets_table, units_table, topics_table):
     """
     Expect to get the set information for displaying to a contributor.
     """
@@ -18,13 +19,13 @@ def test_get_set():
     # TODO sequencer: learners, quality, difficulty
 
 
-@xfail
-def test_get_set_404():
+def test_get_set_404(app, db_conn):
     """
     Expect to fail to get set information if set is unknown. (404)
     """
 
-    assert False
+    response = app.test_client().get('/api/sets/abcd/')
+    assert response.status_code == 404
 
 
 @xfail
