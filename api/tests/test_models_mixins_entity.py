@@ -17,14 +17,17 @@ def test_latest_canonical_card(app, db_conn, cards_table):
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
+        'canonical': True,
     }, {
         'id': 'B2',
         'entity_id': 'A',
         'created': r.time(2005, 11, 3, 'Z'),
+        'canonical': True,
     }, {
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
+        'canonical': True,
     }]).run(db_conn)
 
     card = Card.get_latest_canonical('A')
@@ -40,14 +43,17 @@ def test_latest_canonical(app, db_conn, units_table):
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
+        'canonical': True,
     }, {
         'id': 'B2',
         'entity_id': 'A',
         'created': r.time(2005, 11, 3, 'Z'),
+        'canonical': True,
     }, {
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
+        'canonical': True,
     }]).run(db_conn)
 
     unit = Unit.get_latest_canonical('A')
@@ -63,6 +69,33 @@ def test_latest_canonical_set(app, db_conn, sets_table):
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
+        'canonical': True,
+    }, {
+        'id': 'B2',
+        'entity_id': 'A',
+        'created': r.time(2005, 11, 3, 'Z'),
+        'canonical': True,
+    }, {
+        'id': 'C3',
+        'entity_id': 'B',
+        'created': r.time(2006, 11, 3, 'Z'),
+        'canonical': True,
+    }]).run(db_conn)
+
+    set_ = Set.get_latest_canonical('A')
+    assert set_['id'] == 'B2'
+
+
+def test_get_versions(app, db_conn, cards_table):
+    """
+    Expect to get the latest versions of the card.
+    """
+
+    cards_table.insert([{
+        'id': 'A1',
+        'entity_id': 'A',
+        'created': r.time(2004, 11, 3, 'Z'),
+        'canonical': True,
     }, {
         'id': 'B2',
         'entity_id': 'A',
@@ -71,7 +104,8 @@ def test_latest_canonical_set(app, db_conn, sets_table):
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
+        'canonical': True,
     }]).run(db_conn)
 
-    set_ = Set.get_latest_canonical('A')
-    assert set_['id'] == 'B2'
+    card_versions = Card.get_versions('A')
+    assert len(card_versions) == 2

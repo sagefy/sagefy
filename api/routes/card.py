@@ -1,6 +1,8 @@
 from flask import Blueprint, abort, jsonify
 from models.card import Card
+from models.unit import Unit
 from flask.ext.login import current_user
+from models.topic import Topic
 
 card_routes = Blueprint('card', __name__, url_prefix='/api/cards')
 
@@ -16,15 +18,21 @@ def get_card(card_id):
     if not card:
         return abort(404)
 
+    unit = Unit.get_latest_canonical(entity_id=card['unit_id'])
+    if not unit:
+        return abort(404)
+
+    topics = Topic.list_by_entity_id(entity_id=card_id)
+    versions = Card.get_versions(entity_id=card_id)
+
     return jsonify(
         card=card.deliver(),
+        unit=unit.deliver(),
+        topics=[topic.deliver() for topic in topics],
+        versions=[version.deliver() for version in versions],
     )
 
-    # TODO model
-    # TODO get unit data
     # TODO join through requires both ways
-    # TODO list of topics
-    # TODO list of versions
     # TODO sequencer data: learners, transit, guess, slip, difficulty
 
 

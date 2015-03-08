@@ -19,14 +19,17 @@ def test_get_latest_canonical(app, db_conn, cards_table):
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
+        'canonical': True,
     }, {
         'id': 'B2',
         'entity_id': 'A',
         'created': r.time(2005, 11, 3, 'Z'),
+        'canonical': True,
     }, {
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
+        'canonical': True,
     }]).run(db_conn)
 
     e = entity.get_latest_canonical('card', 'A')

@@ -1,5 +1,6 @@
 from flask import Blueprint, abort, jsonify
 from models.set import Set
+from models.topic import Topic
 from flask.ext.login import current_user
 
 # Nota Bene: We use `set_` because `set` is a type in Python
@@ -16,14 +17,16 @@ def get_set(set_id):
     if not set_:
         return abort(404)
 
+    topics = Topic.list_by_entity_id(entity_id=set_id)
+    versions = Set.get_versions(entity_id=set_id)
+
     return jsonify(
         set=set_.deliver(),
+        topics=[topic.deliver() for topic in topics],
+        versions=[version.deliver() for version in versions],
     )
 
-    # TODO model data
     # TODO join through units
-    # TODO list of topics
-    # TODO list of versions
     # TODO sequencer: learners, quality, difficulty
 
 

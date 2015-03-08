@@ -53,3 +53,31 @@ def test_entity(app, db_conn, topics_table):
     }
     topic, errors = topic.save()
     assert len(errors) == 0
+
+
+def test_list_by_entity_id(app, db_conn, topics_table):
+    topics_table.insert([{
+        'user_id': 'Q',
+        'name': 'A',
+        'entity': {
+            'id': 'A',
+            'kind': 'card',
+        }
+    }, {
+        'user_id': 'Q',
+        'name': 'A',
+        'entity': {
+            'id': 'A',
+            'kind': 'card',
+        }
+    }, {
+        'user_id': 'Q',
+        'name': 'A',
+        'entity': {
+            'id': 'B',
+            'kind': 'card',
+        }
+    }]).run(db_conn)
+
+    topics = Topic.list_by_entity_id('A')
+    assert len(topics) == 2
