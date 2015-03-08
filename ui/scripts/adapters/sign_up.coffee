@@ -3,7 +3,7 @@ UserModel = require('../models/user')
 FormView = require('../views/components/form')
 FormLayoutView = require('../views/layouts/form')
 
-# TODO: move copy to content directory
+# TODO move copy to content directory
 
 class SignUpAdapter extends FormAdapter
     url: '/sign_up'

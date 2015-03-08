@@ -13,7 +13,7 @@ def test_upload_body(app, cards_table):
         'unit_id': 'RUF531',
         'name': 'What is?',
         'file_extensions': ['jpg'],
-        'rubric': True,  # TODO
+        'rubric': True,  # TODO@
     })
     assert len(errors) == 1
     card, errors = card.update({'body': 'Testing 1234'})
@@ -29,7 +29,7 @@ def test_upload_file_extensions(app, cards_table):
         'unit_id': 'RUF531',
         'name': 'What is?',
         'body': 'Testing 1234',
-        'rubric': True,  # TODO
+        'rubric': True,  # TODO@
     })
     assert len(errors) == 1
     card, errors = card.update({'file_extensions': ['jpg']})

@@ -24,11 +24,11 @@ class Set(EntityMixin, Model):
 
     schema = dict(Model.schema.copy(), **{
         'entity_id': {
-            'validate': (is_required, is_string,),  # TODO is valid id?
+            'validate': (is_required, is_string,),  # TODO@ is valid id?
             'default': uniqid
         },
         'previous_id': {
-            'validate': (is_string,),  # TODO is valid id?
+            'validate': (is_string,),  # TODO@ is valid id?
         },
         'language': {
             'validate': (is_required, is_language,),
@@ -54,7 +54,7 @@ class Set(EntityMixin, Model):
         },
         'members': {
             'validate': (is_required, is_entity_list_dict,),
-            # TODO is valid ids?
+            # TODO@ is valid ids?
         }
     })
 
@@ -68,7 +68,7 @@ class Set(EntityMixin, Model):
         """
         Ensure no require cycles form.
         """
-        # TODO
+        # TODO@
         return []
 
     @classmethod
@@ -81,6 +81,6 @@ class Set(EntityMixin, Model):
             lambda set_: r.expr(entity_ids).contains(set_['entity_id'])
         ).run(g.db_conn)
         return [cls(fields) for fields in docs]
-        # TODO secondary index
+        # TODO@ secondary index
 
-    # TODO On set canonical, index (or delete) in Elasticsearch with entity_id
+    # TODO@ On set canonical, index (or delete) in Elasticsearch with entity_id

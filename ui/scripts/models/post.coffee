@@ -19,7 +19,7 @@ class PostModel extends Model
         kind: {
             type: 'select'
             options: [
-                {label: 'Post', value: 'post'}  # TODO label is a view concern
+                {label: 'Post', value: 'post'}  # TODO@ label is a view concern
                 {label: 'Proposal', value: 'proposal'}
                 {label: 'Vote', value: 'vote'}
                 {label: 'Flag', value: 'flag'}

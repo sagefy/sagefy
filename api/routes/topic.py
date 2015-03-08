@@ -38,7 +38,7 @@ def create_topic():
 
     # Let's create the topic, but not save it until we know we
     # have a valid post
-    # TODO should this validation be part of the model?
+    # TODO@ should this validation be part of the model?
     topic_data = dict(**request.json['topic'])
     topic_data['user_id'] = current_user.get_id()
     topic = Topic(topic_data)
@@ -51,7 +51,7 @@ def create_topic():
     if len(errors + errors2):
         return jsonify(errors=errors + errors2), 400
 
-    # TODO validate topic entity is valid
+    # TODO@ validate topic entity is valid
 
     post, errors = post.save()
     topic, errors2 = topic.save()
@@ -83,7 +83,7 @@ def update_topic(topic_id):
         return abort(403)
 
     # Request must only be for name
-    # TODO should this be part of the model?
+    # TODO@ should this be part of the model?
     topic, errors = topic.update({
         'name': request.json.get('name')
     })
@@ -118,16 +118,16 @@ def get_posts(topic_id):
         topic_id=topic_id
     )
 
-    # TODO Should the following checks be part of the model?
+    # TODO@ Should the following checks be part of the model?
 
-    # TODO For proposals, pull up the proposal entity version
+    # TODO@ For proposals, pull up the proposal entity version
 
-    # TODO ...then pull up the proposal latest canonical version
+    # TODO@ ...then pull up the proposal latest canonical version
 
-    # TODO ...if the proposal isn't based off the latest canonical,
+    # TODO@ ...if the proposal isn't based off the latest canonical,
     #       it's invalid
 
-    # TODO Make a diff between the latest canonical
+    # TODO@ Make a diff between the latest canonical
     #       ... and the proposal entity version
 
     return jsonify(posts=[p.deliver() for p in posts])
@@ -145,14 +145,14 @@ def create_post(topic_id):
     if not current_user.is_authenticated():
         return abort(401)
 
-    # TODO what checks should be moved to the model?
+    # TODO@ what checks should be moved to the model?
 
-    # TODO For proposal or flag, entity must be included and valid
+    # TODO@ For proposal or flag, entity must be included and valid
     kind = request.json.get('kind')
     if kind in ('proposal', 'flag',):
         pass
 
-    # TODO For vote, must refer to a valid proposal
+    # TODO@ For vote, must refer to a valid proposal
     if kind == 'vote':
         pass
 
@@ -171,7 +171,7 @@ def create_post(topic_id):
     if len(errors):
         return jsonify(errors=errors), 400
 
-    # TODO If a proposal has sufficient votes, move it to canonical
+    # TODO@ If a proposal has sufficient votes, move it to canonical
     #      ... and close out any prior versions dependent
     if kind == 'vote':
         pass
@@ -199,15 +199,15 @@ def update_post(topic_id, post_id):
     post = get_post_facade(post_id)
 
     # Must be user's own post
-    # TODO should some of these checks be part of the model?
+    # TODO@should some of these checks be part of the model?
     if post['user_id'] != current_user.get_id():
         return abort(403)
 
-    # TODO If proposal, make sure its allowed changes
+    # TODO@ If proposal, make sure its allowed changes
     if post['kind'] in ('proposal', 'flag'):
         pass
 
-    # TODO If vote, make sure its allowed changes
+    # TODO@ If vote, make sure its allowed changes
     if post['kind'] == 'vote':
         pass
 

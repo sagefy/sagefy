@@ -6,7 +6,7 @@ FormLayoutView = require('../views/layouts/form')
 util = require('../framework/utilities')
 queryString = require('../modules/query_string')
 
-# TODO: trans
+# TODO trans
 
 class PasswordAdapter extends FormAdapter
     url: '/password'

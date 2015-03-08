@@ -6,7 +6,7 @@ def is_valid_version(value):
     """
     Ensure this is a valid version of the entity.
     """
-    # TODO
+    # TODO@
 
 
 class Proposal(Post):
@@ -46,6 +46,6 @@ class Proposal(Post):
 
     def is_valid_reply_kind(self):
         """
-        - TODO A proposal can reply to post, proposal, or flag.
+        - TODO@ A proposal can reply to post, proposal, or flag.
         """
         return []

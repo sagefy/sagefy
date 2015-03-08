@@ -1,4 +1,4 @@
-# TODO: move copy to content directory
+# TODO move copy to content directory
 module.exports = ->
     return """
     <h1>Contact Sagefy</h1>

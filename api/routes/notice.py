@@ -29,7 +29,7 @@ def list_notices():
     return jsonify(notices=add_body_to_notices(notices))
 
 
-# TODO: Dry up the mark as read/unread routes
+# TODO Dry up the mark as read/unread routes
 
 
 @notice_routes.route('/<notice_id>/read/', methods=['PUT'])

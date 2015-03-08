@@ -4,7 +4,7 @@ FormView = require('../views/components/form')
 FormLayoutView = require('../views/layouts/form')
 util = require('../framework/utilities')
 
-# TODO: move copy to content directory
+# TODO move copy to content directory
 
 class LogInAdapter extends FormAdapter
     url: '/log_in'

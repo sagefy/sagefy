@@ -27,6 +27,6 @@ class UserSets(Model):
 
         return Set.get_by_entity_ids(self['set_ids'])
 
-        # TODO each set -- needs review?
-        # TODO order by last reviewed time
-        # TODO pagination
+        # TODO@ each set -- needs review?
+        # TODO@ order by last reviewed time
+        # TODO@ pagination

@@ -55,5 +55,5 @@ class ChoiceCard(Card):
         super().__init__(fields)
         self['kind'] = 'choice'
 
-    # TODO When listing options to learner,
-    #      make sure there is at least one correct option
+    # TODO@ When listing options to learner,
+    #       make sure there is at least one correct option

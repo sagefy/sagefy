@@ -166,7 +166,7 @@ def setup_log_in(app):
     Add log in capabilities to our app.
     """
 
-    from models.user import User  # TODO: Avoid this
+    from models.user import User  # TODO Avoid this
 
     login_manager = LoginManager()
     login_manager.init_app(app)

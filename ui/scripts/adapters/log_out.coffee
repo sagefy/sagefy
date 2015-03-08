@@ -2,7 +2,7 @@ PageAdapter = require('./page')
 UserModel = require('../models/user')
 aux = require('../modules/auxiliaries')
 
-# TODO: move copy to content directory
+# TODO move copy to content directory
 
 class LogOutAdapter extends PageAdapter
     url: '/log_out'

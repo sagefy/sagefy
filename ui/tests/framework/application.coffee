@@ -118,7 +118,7 @@ describe('Application', ->
             x = new App(A, B, C)
             x.navigate('/foo')
             x.navigate('/foo/23')
-            # todo: hit back button ???
+            # TODO hit back button ???
             # but we can't actually change the path
             x.remove()
         )

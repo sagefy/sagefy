@@ -12,7 +12,7 @@ class WritingCard(Card):
             'default': 0,
         },
         'rubric': {
-            'validate': (),  # TODO
+            'validate': (),  # TODO@
         }
     })
 

@@ -18,9 +18,9 @@ class UploadCard(Card):
         'file_extensions': {
             'validate': (is_required, is_list, is_list_of_strings,),
         },
-        # TODO What extensions are allowed? For what kind of media?
+        # TODO@ What extensions are allowed? For what kind of media?
         'rubric': {
-            'validate': (),  # TODO
+            'validate': (),  # TODO@
         }
     })
 

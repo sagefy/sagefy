@@ -41,4 +41,4 @@ class Topic(Model):
                         .run(g.db_conn))
         return [cls(data) for data in data_list]
 
-    # TODO On create or update, update index in Elasticsearch
+    # TODO@ On create or update, update index in Elasticsearch

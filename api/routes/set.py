@@ -26,23 +26,23 @@ def get_set(set_id):
         versions=[version.deliver() for version in versions],
     )
 
-    # TODO join through units
-    # TODO sequencer: learners, quality, difficulty
+    # TODO@ join through units
+    # TODO@ sequencer: learners, quality, difficulty
 
 
 @set_routes.route('/<set_id>/tree/', methods=['GET'])
 def get_set_tree(set_id):
-    """TODO
+    """TODO@
     Render the tree of units that exists within a set.
     """
     pass
 
-    # TODO For the menu, it must return the name and ID of the set
+    # TODO@ For the menu, it must return the name and ID of the set
 
 
 @set_routes.route('/<set_id>/units/', methods=['GET'])
 def get_set_units(set_id):
-    """TODO
+    """TODO@
     Render the units that exist within the set.
     Specifically, present a small number of units the learner can choose
     from.
@@ -51,12 +51,12 @@ def get_set_units(set_id):
     if not current_user.is_authenticated():
         return abort(401)
 
-    # TODO For the menu, it must return the name and ID of the set
+    # TODO@ For the menu, it must return the name and ID of the set
 
 
 @set_routes.route('/<set_id>/units/<unit_id>/', methods=['POST', 'PUT'])
 def choose_unit(set_id, unit_id):
-    """TODO
+    """TODO@
     Updates the learner's information based on the unit they have chosen.
     """
 

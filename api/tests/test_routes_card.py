@@ -25,11 +25,11 @@ def test_get_card(app, db_conn,
     response = response.data.decode('utf-8')
     assert response['card']['entity_id'] == 'abcd'
     assert response['card']['kind'] == 'video'
-    # TODO get unit data
-    # TODO join through requires both ways
-    # TODO list of topics
-    # TODO list of versions
-    # TODO sequencer data: learners, transit, guess, slip, difficulty
+    # TODO@ get unit data
+    # TODO@ join through requires both ways
+    # TODO@ list of topics
+    # TODO@ list of versions
+    # TODO@ sequencer data: learners, transit, guess, slip, difficulty
 
 
 def test_get_card_404(app, db_conn):

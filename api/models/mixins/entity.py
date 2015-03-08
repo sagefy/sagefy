@@ -13,7 +13,7 @@ class EntityMixin(object):
         if not entity_id:
             return
 
-        # TODO this query should have an index in card, unit, set
+        # TODO@ this query should have an index in card, unit, set
         query = (cls.table
                     .filter(r.row['entity_id'] == entity_id)
                     .filter(r.row['canonical'].eq(True))
@@ -39,7 +39,7 @@ class EntityMixin(object):
         if not entity_id:
             return
 
-        # TODO this query should have an index in card, unit, set
+        # TODO@ this query should have an index in card, unit, set
         query = (cls.table
                     .filter(r.row['entity_id'] == entity_id)
                     .order_by(r.desc('created'))

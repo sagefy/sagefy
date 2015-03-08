@@ -2,7 +2,7 @@ Model = require('../framework/model')
 util = require('../framework/utilities')
 aux = require('../modules/auxiliaries')
 
-# TODO: move copy to content directory
+# TODO move copy to content directory
 
 class MenuModel extends Model
 

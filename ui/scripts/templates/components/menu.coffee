@@ -1,4 +1,4 @@
-# TODO: move copy to content directory
+# TODO move copy to content directory
 module.exports = ->
     return '''
     <div class="menu__overlay"></div>

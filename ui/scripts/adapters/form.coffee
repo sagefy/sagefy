@@ -25,7 +25,7 @@ class FormAdapter extends PageAdapter
         if util.isArray(errors)
             @form.errorMany(errors)
         else
-            window.alert(errors)  # TODO don't use alert
+            window.alert(errors)  # TODO@ don't use alert
 
     validate: ->
         return if not @model

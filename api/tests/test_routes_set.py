@@ -12,11 +12,11 @@ def test_get_set(app, db_conn,
 
     assert False
 
-    # TODO model data
-    # TODO join through units
-    # TODO list of topics
-    # TODO list of versions
-    # TODO sequencer: learners, quality, difficulty
+    # TODO@ model data
+    # TODO@ join through units
+    # TODO@ list of topics
+    # TODO@ list of versions
+    # TODO@ sequencer: learners, quality, difficulty
 
 
 def test_get_set_404(app, db_conn):

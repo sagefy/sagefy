@@ -30,7 +30,7 @@ aux.escape = (str) ->
     )
 
 # From http://ejohn.org/files/pretty.js
-# TODO: move copy to content directory
+# TODO move copy to content directory
 aux.timeAgo = (str) ->
     diff = (new Date()).getTime() - (new Date(str)).getTime()
     days = Math.floor(diff / 86400000)

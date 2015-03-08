@@ -50,10 +50,10 @@ class Vote(Post):
         Ensure a user can only vote once per proposal.
         """
         return []
-        # TODO
+        # TODO@
 
     def is_valid_reply_kind(self):
         """
-        - TODO A vote can reply to a proposal or flag.
+        - TODO@ A vote can reply to a proposal or flag.
         """
         return []

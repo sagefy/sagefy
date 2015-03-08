@@ -24,18 +24,18 @@ class Card(EntityMixin, Model):
 
     schema = dict(Model.schema.copy(), **{
         'entity_id': {
-            'validate': (is_required, is_string,),  # TODO is valid id?
+            'validate': (is_required, is_string,),  # TODO@ is valid id?
             'default': uniqid
         },
         'previous_id': {
-            'validate': (is_string,),  # TODO is valid id?
+            'validate': (is_string,),  # TODO@ is valid id?
         },
         'language': {
             'validate': (is_required, is_language,),
             'default': 'en'
         },
         'unit_id': {
-            'validate': (is_required, is_string,)  # TODO is valid id?
+            'validate': (is_required, is_string,)  # TODO@ is valid id?
         },
         'name': {
             'validate': (is_required, is_string,)
@@ -53,7 +53,7 @@ class Card(EntityMixin, Model):
             'default': []
         },
         'requires_ids': {
-            'validate': (is_list,),  # TODO is valid ids?
+            'validate': (is_list,),  # TODO@ is valid ids?
             'default': []
         },
         'kind': {
@@ -74,7 +74,7 @@ class Card(EntityMixin, Model):
         """
         Ensure no require cycles form.
         """
-        # TODO
+        # TODO@
         return []
 
-    # TODO On set canonical, index (or delete) in Elasticsearch with entity_id
+    # TODO@ On set canonical, index (or delete) in Elasticsearch with entity_id

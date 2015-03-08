@@ -1,6 +1,6 @@
 require('../../scripts/adapters/post_form')
 
-# TODO should most of these fields be a module?
+# TODO Should most of these fields be a module?
 
 describe('Post Form Adapter', ->
     it.skip('should have "create" in the title in create mode', ->

@@ -32,12 +32,11 @@ class Post(Model):
             errors += self.is_valid_reply_kind()
         return errors
 
-    # TODO On create or update, index in Elasticsearch
+    # TODO@ On create or update, index in Elasticsearch
 
     def is_valid_reply_kind(self):
         """
         Must belong to the same topic
-        - TODO A post can reply to a post.
+        - TODO@ A post can reply to a post.
         """
-        # TODO
         return []

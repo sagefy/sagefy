@@ -8,7 +8,7 @@ class EmbedCard(Card):
             'validate': (is_required, is_string, is_url),
         },
         'rubric': {
-            'validate': (),  # TODO
+            'validate': (),  # TODO@
         }
     })
 

@@ -106,6 +106,6 @@ class User(Model):
         self['password'] = password
         self.save()
 
-    # TODO When creating a new user or updating the user's name or email,
-    #      index in Elasticsearch
-    # TODO When close user, delete in Elasticsearch
+    # TODO@ When creating a new user or updating the user's name or email,
+    #       index in Elasticsearch
+    # TODO@ When close user, delete in Elasticsearch

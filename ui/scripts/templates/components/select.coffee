@@ -8,7 +8,7 @@ module.exports = (data) ->
 
     if data.showOverlay
         html += '<div class="select__selected"></div>'
-        # TODO List options that have already been selected
+        # TODO@ List options that have already been selected
         html += '<div class="select__overlay">'
 
     if data.showClear

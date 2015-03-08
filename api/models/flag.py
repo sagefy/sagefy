@@ -41,10 +41,10 @@ class Flag(Post):
         Only one flag per entity per reason is allowed.
         """
         return []
-        # TODO
+        # TODO@
 
     def is_valid_reply_kind(self):
         """
-        - TODO A flag cannot be a reply.
+        - TODO@ A flag cannot be a reply.
         """
         return []

@@ -4,7 +4,7 @@ template = require('../templates/pages/contact')
 
 class ContactAdapter extends PageAdapter
     url: '/contact'
-    title: 'Contact'  # TODO: move copy to content directory
+    title: 'Contact'  # TODO move copy to content directory
 
     render: ->
         super

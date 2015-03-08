@@ -32,20 +32,20 @@ def get_card(card_id):
         versions=[version.deliver() for version in versions],
     )
 
-    # TODO join through requires both ways
-    # TODO sequencer data: learners, transit, guess, slip, difficulty
+    # TODO@ join through requires both ways
+    # TODO@ sequencer data: learners, transit, guess, slip, difficulty
 
 
 @card_routes.route('/<card_id>/learn/', methods=['GET'])
 def learn_card(card_id):
-    """TODO
+    """TODO@
     Render the card's data, ready for learning.
     """
 
     if not current_user.is_authenticated():
         return abort(401)
 
-    # TODO for the menu, we must include...
+    # TODO@ for the menu, we must include...
     #      set: name and id
     #      unit: name, body, id
     #      card: name and id
@@ -53,7 +53,7 @@ def learn_card(card_id):
 
 @card_routes.route('/<card_id>/responses/', methods=['POST'])
 def respond_to_card(card_id):
-    """TODO
+    """TODO@
     Record and process a learner's response to a card.
     """
 

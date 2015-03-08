@@ -1,4 +1,4 @@
-# TODO: add comments
+# TODO add comments
 
 decode = (s) -> decodeURIComponent(s)
 
