@@ -1,12 +1,20 @@
-# TODO add comments
-
-decode = (s) -> decodeURIComponent(s)
-
-module.exports = ->
-    query = window.location.search.substring(1)
+get = (query) ->
+    query or= window.location.search.substring(1)
     params = query.split('&')
     data = {}
     for param in params
         [key, value] = param.split('=')
-        data[decode(key)] = decode(value)
+        data[decodeURIComponent(key)] = switch
+            when value is 'true'
+                true
+            when value is 'false'
+                false
+            when value.match(/^\d+\.\d+$/)
+                parseFloat(value)
+            when value.match(/^\d+$/)
+                parseInt(value)
+            else
+                decodeURIComponent(value)
     return data
+
+module.exports = {get: get}

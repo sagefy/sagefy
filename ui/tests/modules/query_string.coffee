@@ -1,7 +1,14 @@
-require('../../scripts/modules/query_string')
-
-# TODO outline tests
+queryString = require('../../scripts/modules/query_string')
 
 describe('Query String', ->
-    it.skip('should parse the query string', -> )
+    it('should parse the query string', ->
+        qs = queryString.get('a=1&b=test&c=true&d=false&e=1.1')
+        expect(qs).to.deep.equal({
+            a: 1
+            b: 'test'
+            c: true
+            d: false
+            e: 1.1
+        })
+    )
 )

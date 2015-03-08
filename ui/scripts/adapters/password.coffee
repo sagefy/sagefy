@@ -112,7 +112,7 @@ class PasswordAdapter extends FormAdapter
         if @state is 'email'
             @model.getPasswordToken(@form.getValues())
         else if @state is 'password'
-            qs = queryString()
+            qs = queryString.get()
             @model.createPassword(util.extend({
                 id: qs.id
                 token: qs.token
