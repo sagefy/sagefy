@@ -8,6 +8,7 @@ watchify = require('watchify')
 source = require('vinyl-source-stream')
 prettyHrtime = require('pretty-hrtime')
 sequence = require('run-sequence')
+del = require('del')
 
 ################################################################################
 ### Configuration ##############################################################
@@ -52,9 +53,11 @@ gulp.task('test', (done) ->
 ### Subtasks ###################################################################
 ################################################################################
 
-gulp.task('clean', ->
-    gulp.src(dist, {read: false})
-        .pipe(plugins.rimraf())  # TODO update to use `del`
+gulp.task('clean', (done) ->
+    del(dist, (err, files) ->
+        return console.error(err) if err
+        done()
+    )
 )
 
 gulp.task('static:build', ->
