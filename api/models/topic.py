@@ -39,6 +39,7 @@ class Topic(Model):
                         .limit(10)
                         .order_by(r.desc('created'))
                         .run(g.db_conn))
-        return [cls(data) for data in data_list]
+        documents = [cls(data) for data in data_list]
+        return documents
 
     # TODO@ On create or update, update index in Elasticsearch

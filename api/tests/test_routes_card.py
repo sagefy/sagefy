@@ -3,6 +3,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 import rethinkdb as r
+import json
 
 
 @xfail
@@ -12,23 +13,66 @@ def test_get_card(app, db_conn,
     Expect to get the card information for displaying to a contributor.
     """
 
-    cards_table.insert({
+    cards_table.insert([{
         'entity_id': 'abcd',
-        'unit_id': 'abcd',
+        'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
         'canonical': True,
         'kind': 'video',
+    }, {
+        'entity_id': 'abcd',
+        'unit_id': 'zytx',
+        'created': r.time(1986, 11, 3, 'Z'),
+        'modified': r.time(1986, 11, 3, 'Z'),
+        'canonical': True,
+        'kind': 'video',
+    }]).run(db_conn)
+
+    units_table.insert({
+        'entity_id': 'zytx',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'name': 'Wildwood',
     }).run(db_conn)
+
+    topics_table.insert([{
+        'created': r.now(),
+        'modified': r.now(),
+        'user_id': 'abcd1234',
+        'name': 'A Modest Proposal',
+        'entity': {
+            'id': 'abcd',
+            'kind': 'card'
+        }
+    }, {
+        'created': r.now(),
+        'modified': r.now(),
+        'user_id': 'abcd1234',
+        'name': 'Another Proposal',
+        'entity': {
+            'id': 'abcd',
+            'kind': 'card'
+        }
+    }]).run(db_conn)
+
     response = app.test_client().get('/api/cards/abcd/')
     assert response.status_code == 200
-    response = response.data.decode('utf-8')
+    response = json.loads(response.data.decode('utf-8'))
+    # Model
     assert response['card']['entity_id'] == 'abcd'
     assert response['card']['kind'] == 'video'
-    # TODO@ get unit data
+    # Unit
+    assert response['unit']['name'] == 'Wildwood'
+    # Versions
+    assert len(response['versions']) == 2
+    assert response['versions'][0]['kind'] == 'video'
+    # Topics
+    assert len(response['topics']) == 2
+    assert response['topics'][0]['entity']['id'] == 'abcd'
+
     # TODO@ join through requires both ways
-    # TODO@ list of topics
-    # TODO@ list of versions
     # TODO@ sequencer data: learners, transit, guess, slip, difficulty
 
 
