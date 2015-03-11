@@ -53,8 +53,7 @@
             "Text Inputs",
             "Textarea",
             "Checkboxes and Radios",
-            "Select Menu",
-            "Select Component"
+            "Select"
         ],
         "Grouped Inputs",
         "Horizontal Forms"
@@ -69,23 +68,11 @@
             "Vote"
         ],
         "Notice",
-        "Inline Help",
         "Inline Labels",
         "Audio, Video, & Embedded Objects",
         "Menu",
-        "Overlays & Modals",
-        "Navigation",
         "Progressbars & Spinners",
-        "Tabs",
-        "Tag Cloud",
         "Tooltips"
-    ],
-    "Layouts", [
-        "Basic Page Layout",
-        "Navigated Page Layout",
-        "Object Representation",
-        "Settings Layout",
-        "Search, Sort, & Filter Layout"
     ],
     "More Remarks"
 ] }

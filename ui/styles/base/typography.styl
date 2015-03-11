@@ -14,8 +14,8 @@ html, body, input, textarea, select, button
     line-height ($unit * 2)
 
 body
-    color $gold-20
-    background $gold-99
+    color $gold(20)
+    background $gold(99)
 
 /*
 ---
@@ -38,18 +38,18 @@ example: |
 */
 
 a
-    color $blue-50
+    color $blue(50)
     transition color 0.2s
     text-decoration none
-    border-bottom 1px solid $blue-66
+    border-bottom 1px solid $blue(50)
 
     &:hover, &.hover, &:focus, &.focus
-        color $blue-66
-        border-color $blue-78
+        color $blue(70)
+        border-color $blue(70)
 
     &:active, &.active, &.selected
-        color $blue-20
-        border-color $blue-43
+        color $blue(30)
+        border-color $blue(30)
 
 /*
 ---
@@ -73,7 +73,7 @@ example: |
 ---
 */
 
-for set in (small 14 24) (normal 16 24) (accent 18 24) (large 20 24) (big 26 36) (epic 30 36)
+for set in (small 14 24) (normal 16 24) (accent 18 24) (large 20 24) (big 24 36) (epic 32 36)
     .font-size-{set[0]}
         font-size unit(set[1], "px")
         line-height unit(set[2], "px")
@@ -119,16 +119,22 @@ h1, h2, h3, h4, h5, h6
         font-style normal
 
     strong
-        background-color $gold-95
+        background-color $gold(95)
         border-radius $border-radius
 
     &.subheader
         font-weight normal
-        color $gold-43
+        color $gold(43)
         font-style italic
 
-h3, h4, h5, h6
-    color $gold-43
+h2
+    color $gold(35)
+
+h3, h4, h5
+    color $gold(50)
+
+h6
+    color $gold(65)
 
 hgroup
     :not(:first-child)
@@ -177,7 +183,7 @@ example: |
 
 .leading
     @extend .font-size-accent
-    color $gold-43
+    color $gold(43)
 
 /*
 ---
@@ -202,7 +208,7 @@ example: |
 */
 
 del
-    color $gold-66
+    color $gold(66)
 
 ins
     text-decoration none
@@ -210,11 +216,11 @@ ins
     border-radius $border-radius
 
 mark
-    background $gold-95
+    background $gold(95)
     border-radius $border-radius
 
 abbr
-    border-bottom 1px solid $gold-66
+    border-bottom 1px solid $gold(66)
 
 pre, samp, code, kbd
     @extend .monospace
@@ -224,7 +230,7 @@ small
     @extend .font-size-small
 
 code
-    color $gold-43
+    color $gold(43)
 
 /*
 ---
@@ -250,14 +256,14 @@ q
 cite
     font-style normal
     font-variant small-caps
-    color $gold-43
+    color $gold(43)
 
     &:before
-        color $gold-90
+        color $gold(90)
         content "\2022  "
 
 blockquote
-    border-left 2px solid $gold-90
+    border-left 2px solid $gold(90)
     padding-left $unit
     margin-left $unit
 
@@ -281,7 +287,7 @@ example: |
 
 hr
     border 0
-    background $gold-90
+    background $gold(90)
     height 2px
     margin 1em 0
 
@@ -337,4 +343,3 @@ example: >
     </pre>
 ---
 */
-

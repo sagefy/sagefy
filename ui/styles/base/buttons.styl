@@ -12,9 +12,6 @@ modifiers:
         - secondary
         - danger
         - cancel
-    - Size
-        - large
-        - epic
     - disabled
 example: |
     <ul class="unstyled">
@@ -51,24 +48,6 @@ example: |
     <ul class="inline">
         <li>
             <button class="button--primary">
-                Normal
-            </button>
-        </li>
-        <li>
-            <button class="button--primary button--large">
-                Large
-            </button>
-        </li>
-        <li>
-            <button class="button--primary button--big">
-                Big
-            </button>
-        </li>
-    </ul>
-
-    <ul class="inline">
-        <li>
-            <button class="button--primary">
                 Next Page
                 <i class="fa fa-chevron-right"></i>
             </button>
@@ -92,6 +71,8 @@ example: |
             </button>
         </li>
     </ul>
+
+    <div></div>
 
     <ul class="inline">
         <li>
@@ -122,16 +103,20 @@ example: |
 
     <div class="button-group">
         <button class="button--primary">
-            <i class="fa fa-heart"></i> Primary
+            Next Page
+            <i class="fa fa-chevron-right"></i>
         </button>
         <button class="button--secondary">
-            <i class="fa fa-star"></i> Secondary
+            <i class="fa fa-edit"></i>
+            Edit
         </button>
-        <button class="button">
-            <i class="fa fa-refresh"></i> Refresh
+        <button class="button--danger">
+            <i class="fa fa-trash-o"></i>
+            Delete
         </button>
         <button class="button--cancel">
-            <i class="fa fa-ban"></i> Cancel
+            <i class="fa fa-refresh"></i>
+            Resume
         </button>
     </div>
 ---
@@ -165,95 +150,88 @@ $base-button
         background transparent
         cursor not-allowed
 
-.button--large
-    padding $unit $unit * 2
-
-.button--big
-    @extend .font-size-big
-    padding $unit $unit * 2
-
 .button
 button
 input[type="button"]
     @extend $base-button
 
-    button-background $gold-90
-    color $gold-43
+    button-background $gold(90)
+    color $gold(43)
 
     &:hover, &:focus, &.hover, &.focus
-        color $gold-20
-        button-background $gold-95
+        color $gold(20)
+        button-background $gold(95)
 
     &:active, &.active, &.selected
-        button-background-inv $gold-78
+        button-background-inv $gold(78)
 
     &[disabled], &.button--disabled
-        color $gold-78
+        color $gold(78)
 
         &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
-            color $gold-78
+            color $gold(78)
             background transparent
 
 button[type="submit"],
 .button--primary
     @extend $base-button
 
-    button-background $blue-50
-    color $blue-99
+    button-background $blue(50)
+    color $blue(99)
 
     &:hover, &:focus, &.hover, &.focus
         color $white
-        button-background $blue-66
+        button-background $blue(66)
 
     &:active, &.active, &.selected
-        color $blue-95
-        button-background-inv $blue-43
+        color $blue(95)
+        button-background-inv $blue(43)
 
     &[disabled], &.button--disabled
-        color $blue-78
+        color $blue(78)
 
         &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
-            color $blue-78
+            color $blue(78)
             background transparent
 
 .button--secondary
     @extend $base-button
 
-    button-background $green-90
-    color $green-43
+    button-background $green(90)
+    color $green(43)
 
     &:hover, &:focus, &.hover, &.focus
-        color $green-20
-        button-background $green-95
+        color $green(20)
+        button-background $green(95)
 
     &:active, &.active, &.selected
-        button-background-inv $green-78
+        button-background-inv $green(78)
 
     &[disabled], &.button--disabled
-        color $green-78
+        color $green(78)
 
         &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
-            color $green-78
+            color $green(78)
             background transparent
 
 .button--danger
     @extend $base-button
 
-    button-background $red-90, 3, 2
-    color $red-43
+    button-background $red(90), 3, 2
+    color $red(43)
 
     &:hover, &:focus, &.hover, &.focus
-        color $red-20
-        button-background $red-95, 3, 2
+        color $red(20)
+        button-background $red(95), 3, 2
 
     &:active, &.active, &.selected
-        button-background-inv $red-78, 3, 2
+        button-background-inv $red(78), 3, 2
 
     &[disabled], &.button--disabled
-        color $red-78
+        color $red(78)
 
         &:hover, &:focus, &.hover, &.focus, &:active, &.active, &.selected
-            color $red-78
+            color $red(78)
             background transparent
 
 .button-group

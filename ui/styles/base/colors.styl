@@ -9,7 +9,7 @@ description: |
     - **Green**. 120&deg; -- Useful for success and acceptance states.
     - **Red**. 0&deg; -- Reserved for errors, danger, major issues, or to provide warmth.
 
-    **Lightness**. Any lightness values may be used. Sagefy recommends against values darker than 20%. Default to 20%, 43%, 66%, 78%, 90%, 95%, 97%, and 99% where applicable.
+    **Lightness**. Any lightness values may be used. Sagefy recommends against values darker than 20%.
 
 example: |
     <table class="color-table">
@@ -76,42 +76,16 @@ example: |
 ---
 */
 
-$gold-20 = #343115
-$gold-43 = #6c6733
-$gold-66 = #aba354
-$gold-78 = #ccc375
-$gold-90 = #e7e3c7
-$gold-95 = #f3f1e4
-$gold-97 = #f8f7ef
-$gold-99 = #fdfcfa
+$gold(light)
+    huslp(80, 100, light)
+
+$blue(light)
+    huslp(240, 100, light)
+
+$green(light)
+    huslp(120, 100, light)
+
+$red(light)
+    huslp(0, 100, light)
 
 $white = #ffffff
-
-$blue-20 = #1f3243
-$blue-43 = #456988
-$blue-50 = #517b9e
-$blue-66 = #6fa6d4
-$blue-78 = #90c6f7
-$blue-90 = #d2e4fa
-$blue-95 = #e9f2fc
-$blue-97 = #f2f7fd
-$blue-99 = #fbfcfe
-
-$green-20 = #22351c
-$green-43 = #4c6e3f
-$green-66 = #7aae67
-$green-78 = #99cf87
-$green-90 = #d2e9cc
-$green-95 = #e9f4e6
-$green-97 = #f2f8f0
-$green-99 = #fbfdfa
-
-$red-20 = #45282e
-$red-43 = #8c5661
-$red-66 = #da899a
-$red-78 = #ffa9ba
-$red-90 = #ffd9e0
-$red-95 = #ffecef
-$red-97 = #fff4f6
-$red-99 = #fffbfc
-

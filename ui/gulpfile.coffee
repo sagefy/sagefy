@@ -9,6 +9,7 @@ source = require('vinyl-source-stream')
 prettyHrtime = require('pretty-hrtime')
 sequence = require('run-sequence')
 del = require('del')
+husl = require('husl-stylus')
 
 ################################################################################
 ### Configuration ##############################################################
@@ -79,6 +80,7 @@ gulp.task('styles:build', ->
         .pipe(plugins.stylus({
             'include css': true
             errors: true
+            use: husl()
         }))
         .pipe(gulp.dest(dist))
 )
@@ -88,6 +90,7 @@ gulp.task('styles:build:doc', ->
         .pipe(plugins.stylus({
             'include css': true
             errors: true
+            use: husl()
         }))
         .pipe(gulp.dest('../gh-pages/'))
 )

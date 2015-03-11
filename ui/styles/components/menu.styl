@@ -45,7 +45,7 @@ example: |
 
 .menu__overlay
     display none
-    background rgba($gold-20, 0.95)
+    background rgba($gold(20), 0.95)
     width 100%
     height 100%
     position fixed
@@ -74,14 +74,14 @@ example: |
             background-image url('/astrolabe_light.svg')
 
     &:hover .menu__close
-        color $gold-90
+        color $gold(90)
 
 .menu__close
     position absolute
     top 0
     right 0
     display none
-    color $gold-66
+    color $gold(66)
 
     .selected &
         display inline-block
@@ -102,16 +102,16 @@ example: |
     text-align center
 
     a
-        color $gold-78
+        color $gold(78)
         border 0
 
     i
-        color $gold-90
+        color $gold(90)
         @extend .font-size-epic
 
     &:hover
         a
-            color $gold-90
+            color $gold(90)
 
         i
-            color $gold-97
+            color $gold(97)
