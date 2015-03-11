@@ -2,12 +2,10 @@ import pytest
 
 xfail = pytest.mark.xfail
 
-
 import rethinkdb as r
 import json
 
 
-@xfail
 def test_get_set(app, db_conn,
                  sets_table, units_table, topics_table):
     """

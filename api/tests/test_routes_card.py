@@ -6,7 +6,6 @@ import rethinkdb as r
 import json
 
 
-@xfail
 def test_get_card(app, db_conn,
                   cards_table, units_table, topics_table):
     """
@@ -20,6 +19,7 @@ def test_get_card(app, db_conn,
         'modified': r.now(),
         'canonical': True,
         'kind': 'video',
+        'requires': ['zytx'],
     }, {
         'entity_id': 'abcd',
         'unit_id': 'zytx',
@@ -27,6 +27,21 @@ def test_get_card(app, db_conn,
         'modified': r.time(1986, 11, 3, 'Z'),
         'canonical': True,
         'kind': 'video',
+    }, {
+        'entity_id': 'zxyz',
+        'unit_id': 'zytx',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'video',
+    }, {
+        'entity_id': 'qwer',
+        'unit_id': 'zytx',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'choice',
+        'requires': ['abcd'],
     }]).run(db_conn)
 
     units_table.insert({
@@ -71,8 +86,12 @@ def test_get_card(app, db_conn,
     # Topics
     assert len(response['topics']) == 2
     assert response['topics'][0]['entity']['id'] == 'abcd'
-
-    # TODO@ join through requires both ways
+    # TODO@ Requires
+    # assert len(response['requires']) == 1
+    # assert response['requires'][0]['entity_id'] == 'zytx'
+    # TODO@ Required By
+    # assert len(response['required_by']) == 1
+    # assert response['required_by'][0]['entity_id'] == 'qwer'
     # TODO@ sequencer data: learners, transit, guess, slip, difficulty
 
 

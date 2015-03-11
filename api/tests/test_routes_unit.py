@@ -1,13 +1,7 @@
-import pytest
-
-xfail = pytest.mark.xfail
-
-
 import rethinkdb as r
 import json
 
 
-@xfail
 def test_get_unit(app, db_conn,
                   units_table, sets_table, topics_table):
     """
@@ -20,12 +14,26 @@ def test_get_unit(app, db_conn,
         'modified': r.now(),
         'canonical': True,
         'name': 'Wildwood',
+        'requires': ['ntza'],
     }, {
         'entity_id': 'zytx',
         'created': r.time(1986, 11, 3, 'Z'),
         'modified': r.time(1986, 11, 3, 'Z'),
         'canonical': True,
         'name': 'Umberwood',
+    }, {
+        'entity_id': 'ntza',
+        'created': r.time(1986, 11, 3, 'Z'),
+        'modified': r.time(1986, 11, 3, 'Z'),
+        'canonical': True,
+        'name': 'Limberwood',
+    }, {
+        'entity_id': 'tyui',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'name': 'Wildwood',
+        'requires': ['zytx'],
     }]).run(db_conn)
 
     topics_table.insert([{
@@ -69,8 +77,13 @@ def test_get_unit(app, db_conn,
     # Versions
     assert len(response['versions']) == 2
     assert response['versions'][1]['name'] == 'Umberwood'
+    # TODO@ Requires
+    # assert len(response['requires']) == 1
+    # assert response['requires'][0]['entity_id'] == 'ntza'
+    # TODO@ Required By
+    # assert len(response['required_by']) == 1
+    # assert response['required_by'][0]['entity_id'] == 'tyui'
 
-    # TODO@ join through requires
     # TODO@ join through sets
     # TODO@ sequencer data: learners, quality, difficulty
 
