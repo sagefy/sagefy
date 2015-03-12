@@ -24,12 +24,16 @@ def get_card(card_id):
 
     topics = Topic.list_by_entity_id(entity_id=card_id)
     versions = Card.get_versions(entity_id=card_id)
+    # requires = Card.list_requires(entity_id=card_id)
+    # required_by = Card.list_required_by(entity_id=card_id)
 
     return jsonify(
         card=card.deliver(),
         unit=unit.deliver(),
         topics=[topic.deliver() for topic in topics],
         versions=[version.deliver() for version in versions],
+        # requires=[require.deliver() for require in requires],
+        # required_by=[require.deliver() for require in required_by],
     )
 
     # TODO@ join through requires both ways

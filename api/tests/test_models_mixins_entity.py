@@ -109,3 +109,21 @@ def test_get_versions(app, db_conn, cards_table):
 
     card_versions = Card.get_versions('A')
     assert len(card_versions) == 2
+
+
+@xfail
+def test_list_requires(app, db_conn, cards_table):
+    """
+    Expect to list all the prereqs for the entity.
+    """
+
+    assert False
+
+
+@xfail
+def test_list_required_by(app, db_conn, cards_table):
+    """
+    Expect to list all the entity that require the given one.
+    """
+
+    assert False
