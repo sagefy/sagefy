@@ -111,19 +111,87 @@ def test_get_versions(app, db_conn, cards_table):
     assert len(card_versions) == 2
 
 
-@xfail
 def test_list_requires(app, db_conn, cards_table):
     """
     Expect to list all the prereqs for the entity.
     """
 
-    assert False
+    cards_table.insert([{
+        'entity_id': 'abcd',
+        'unit_id': 'zytx',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'video',
+        'requires': ['zxyz'],
+    }, {
+        'entity_id': 'abcd',
+        'unit_id': 'zytx',
+        'created': r.time(1986, 11, 3, 'Z'),
+        'modified': r.time(1986, 11, 3, 'Z'),
+        'canonical': True,
+        'kind': 'video',
+    }, {
+        'entity_id': 'zxyz',
+        'unit_id': 'zytx',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'video',
+    }, {
+        'entity_id': 'qwer',
+        'unit_id': 'zytx',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'choice',
+        'requires': ['abcd'],
+    }]).run(db_conn)
+
+    cards = Card.list_requires('abcd')
+
+    assert len(cards) == 1
+    assert cards[0]['entity_id'] == 'zxyz'
 
 
-@xfail
 def test_list_required_by(app, db_conn, cards_table):
     """
     Expect to list all the entity that require the given one.
     """
 
-    assert False
+    cards_table.insert([{
+        'entity_id': 'abcd',
+        'unit_id': 'zytx',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'video',
+        'requires': ['zxyz'],
+    }, {
+        'entity_id': 'abcd',
+        'unit_id': 'zytx',
+        'created': r.time(1986, 11, 3, 'Z'),
+        'modified': r.time(1986, 11, 3, 'Z'),
+        'canonical': True,
+        'kind': 'video',
+    }, {
+        'entity_id': 'zxyz',
+        'unit_id': 'zytx',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'video',
+    }, {
+        'entity_id': 'qwer',
+        'unit_id': 'zytx',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'choice',
+        'requires': ['abcd'],
+    }]).run(db_conn)
+
+    cards = Card.list_required_by('abcd')
+
+    assert len(cards) == 1
+    assert cards[0]['entity_id'] == 'qwer'

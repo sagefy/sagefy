@@ -17,8 +17,10 @@ class EntityMixin(object):
         query = (cls.table
                     .filter(r.row['entity_id'] == entity_id)
                     .filter(r.row['canonical'].eq(True))
-                    .order_by(r.desc('created'))
-                    .limit(1))
+                    .group('entity_id')
+                    .max('created')
+                    .ungroup()
+                    .map(r.row['reduction']))
 
         documents = list(query.run(g.db_conn))
         if not documents:
@@ -55,12 +57,14 @@ class EntityMixin(object):
 
         # TODO@ this query should have an index in card and unit
         query = (cls.table
-                    .filter(entity['requires'].contains(r.row['requires']))
                     .filter(r.row['canonical'].eq(True))
-                    .order_by(r.desc('created'))
-                    .distinct(r.row['entity_id'])
-                    .skip(skip)
-                    .limit(limit))
+                    .group('entity_id')
+                    .max('created')
+                    .ungroup()
+                    .map(r.row['reduction'])
+                    .filter(lambda _:
+                            r.expr(entity['requires'])
+                             .contains(_['entity_id'])))
 
         return [cls(fields) for fields in query.run(g.db_conn)]
 
@@ -72,11 +76,11 @@ class EntityMixin(object):
 
         # TODO@ this query should have an index in card and unit
         query = (cls.table
-                    .filter(r.row['requires'].created(entity_id))
                     .filter(r.row['canonical'].eq(True))
-                    .order_by(r.desc('created'))
-                    .distinct(r.row['entity_id'])
-                    .skip(skip)
-                    .limit(limit))
+                    .group('entity_id')
+                    .max('created')
+                    .ungroup()
+                    .map(r.row['reduction'])
+                    .filter(r.row['requires'].contains(entity_id)))
 
         return [cls(fields) for fields in query.run(g.db_conn)]

@@ -19,7 +19,7 @@ def test_get_card(app, db_conn,
         'modified': r.now(),
         'canonical': True,
         'kind': 'video',
-        'requires': ['zytx'],
+        'requires': ['zxyz'],
     }, {
         'entity_id': 'abcd',
         'unit_id': 'zytx',
@@ -86,12 +86,12 @@ def test_get_card(app, db_conn,
     # Topics
     assert len(response['topics']) == 2
     assert response['topics'][0]['entity']['id'] == 'abcd'
-    # TODO@ Requires
-    # assert len(response['requires']) == 1
-    # assert response['requires'][0]['entity_id'] == 'zytx'
-    # TODO@ Required By
-    # assert len(response['required_by']) == 1
-    # assert response['required_by'][0]['entity_id'] == 'qwer'
+    # Requires
+    assert len(response['requires']) == 1
+    assert response['requires'][0]['entity_id'] == 'zxyz'
+    # Required By
+    assert len(response['required_by']) == 1
+    assert response['required_by'][0]['entity_id'] == 'qwer'
     # TODO@ sequencer data: learners, transit, guess, slip, difficulty
 
 

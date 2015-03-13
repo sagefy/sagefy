@@ -77,12 +77,12 @@ def test_get_unit(app, db_conn,
     # Versions
     assert len(response['versions']) == 2
     assert response['versions'][1]['name'] == 'Umberwood'
-    # TODO@ Requires
-    # assert len(response['requires']) == 1
-    # assert response['requires'][0]['entity_id'] == 'ntza'
-    # TODO@ Required By
-    # assert len(response['required_by']) == 1
-    # assert response['required_by'][0]['entity_id'] == 'tyui'
+    # Requires
+    assert len(response['requires']) == 1
+    assert response['requires'][0]['entity_id'] == 'ntza'
+    # Required By
+    assert len(response['required_by']) == 1
+    assert response['required_by'][0]['entity_id'] == 'tyui'
 
     # TODO@ join through sets
     # TODO@ sequencer data: learners, quality, difficulty
