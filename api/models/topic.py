@@ -34,8 +34,7 @@ class Topic(Model):
         """
 
         data_list = (cls.table
-                        .filter(lambda topic:
-                                topic['entity']['id'] == entity_id)
+                        .filter(r.row['entity']['id'] == entity_id)
                         .limit(10)
                         .order_by(r.desc('created'))
                         .run(g.db_conn))

@@ -77,9 +77,16 @@ class Set(EntityMixin, Model):
         Get a list of sets by a list of entity IDs.
         """
 
-        docs = cls.table.filter(
-            lambda set_: r.expr(entity_ids).contains(set_['entity_id'])
-        ).run(g.db_conn)
+        query = (cls.table
+                    .filter(r.row['canonical'].eq(True))
+                    .filter(lambda set_:
+                            r.expr(entity_ids).contains(set_['entity_id']))
+                    .group('entity_id')
+                    .max('created')
+                    .ungroup()
+                    .map(r.row['reduction']))
+
+        docs = query.run(g.db_conn)
         return [cls(fields) for fields in docs]
         # TODO@ secondary index
 

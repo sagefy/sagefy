@@ -217,10 +217,7 @@ class Model(object):
                            .filter(params)
                            .limit(1)
                            .run(g.db_conn))
-            if len(data) > 0:
-                data = data[0]
-            else:
-                data = None
+            data = data[0] if len(data) > 0 else None
         if data:
             return cls(data)
 
@@ -306,8 +303,8 @@ class Model(object):
             if 'unique' not in self.schema[name]:
                 continue
             query = (self.table
-                         .filter(lambda m: (m[name] == value) &
-                                           (m['id'] != self['id'])))
+                         .filter(r.row[name] == value)
+                         .filter(r.row['id'] != self['id']))
             entries = list(query.run(g.db_conn))
             if len(entries) > 0:
                 errors.append({

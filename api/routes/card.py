@@ -36,7 +36,6 @@ def get_card(card_id):
         required_by=[require.deliver() for require in required_by],
     )
 
-    # TODO@ join through requires both ways
     # TODO@ sequencer data: learners, transit, guess, slip, difficulty
 
 

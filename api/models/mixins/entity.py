@@ -23,14 +23,9 @@ class EntityMixin(object):
                     .map(r.row['reduction']))
 
         documents = list(query.run(g.db_conn))
-        if not documents:
-            return
 
-        fields = documents[0]
-        if not fields:
-            return
-
-        return cls(fields)
+        if len(documents) > 0:
+            return cls(documents[0])
 
     @classmethod
     def get_versions(cls, entity_id, limit=10, skip=0):
