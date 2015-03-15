@@ -81,11 +81,18 @@ class Set(EntityMixin, Model):
         # *** First, find the list of sets
         #     directly containing the member ID. ***
 
+        """
+        r.table('sets')
+          .filter(r.row('members').contains(function(m) {
+            return m('id').eq('B');
+          }));
+        """
+
         query = (cls.start_canonicals_query()
-                    .filter(r.row['members'].contains({
-                        'kind': 'unit',
-                        'id': unit_id,
-                    })))
+                    .filter(r.row['members'].contains(
+                        lambda member:
+                            member['id'] == unit_id
+                    )))
         sets = query.run(g.db_conn)
 
         # *** Second, find all the sets containing
@@ -93,14 +100,21 @@ class Set(EntityMixin, Model):
 
         found_sets, all_sets = sets, []
 
+        """
+        r.table('sets')
+          .filter(r.row('members').contains(function(m) {
+            return r.expr(['B']).contains(m('id'));
+          }));
+        """
+
         while found_sets:
             set_ids = set(set_['entity_id'] for set_ in found_sets)
             all_sets += found_sets
             query = (cls.start_canonicals_query()
-                        .filter(r.row['members'].contains({
-                            'kind': 'set',
-                            'id': set_ids,  # TODO@
-                        })))
+                        .filter(r.row['members'].contains(
+                            lambda member:
+                                r.expr(set_ids).contains(member['id'])
+                        )))
             found_sets = query.run(g.db_conn)
 
         return all_sets
