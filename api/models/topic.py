@@ -4,6 +4,7 @@ from flask import g
 import rethinkdb as r
 
 
+# TODO@ On create or update, update index in Elasticsearch
 class Topic(Model):
     """
     A discussion topic.
@@ -40,5 +41,3 @@ class Topic(Model):
                         .run(g.db_conn))
         documents = [cls(data) for data in data_list]
         return documents
-
-    # TODO@ On create or update, update index in Elasticsearch

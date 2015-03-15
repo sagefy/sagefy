@@ -127,6 +127,8 @@ class Model(object):
         Later, we might want an option to throw errors instead.
         """
 
+        # TODO@ how to `pick` for nested dictionaries?
+
         if self.strict:
             self.data = pick(self.data, self.schema.keys())
 

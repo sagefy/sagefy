@@ -1,6 +1,6 @@
 from modules.model import Model
 from modules.validations import is_required, is_string, is_boolean, is_list, \
-    is_one_of
+    is_one_of, is_list_of_strings
 import rethinkdb as r
 from flask import g
 from modules.content import get as c
@@ -24,7 +24,7 @@ class Notice(Model):
             'default': False
         },
         'tags': {
-            'validate': (is_list,),
+            'validate': (is_list, is_list_of_strings),
             'default': []
         }
     })

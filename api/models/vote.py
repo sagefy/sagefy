@@ -53,6 +53,6 @@ class Vote(Post):
 
     def is_valid_reply_kind(self):
         """
-        - TODO@ A vote can reply to a proposal or flag.
+        TODO@ A vote can reply to a proposal or flag.
         """
         return []

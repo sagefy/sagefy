@@ -187,14 +187,90 @@ def test_list_by_entity_ids(app, db_conn, sets_table):
     assert sets[0]['body'] in ('Apple', 'Coconut')
 
 
-@xfail
 def test_list_by_unit_ids(app, db_conn, units_table, sets_table):
     """
     Expect to get a list of sets which contain the given unit ID.
     Recursive.
     """
 
-    assert False
+    units_table.insert([{
+        'entity_id': 'Z',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'name': 'Z',
+    }]).run(db_conn)
+
+    sets_table.insert([{
+        'entity_id': 'A',
+        'name': 'Apple',
+        'body': 'Apple',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'members': [{
+            'kind': 'unit',
+            'id': 'Z',
+        }]
+    }, {
+        'entity_id': 'B1',
+        'name': 'Banana',
+        'body': 'Banana',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'members': [{
+            'kind': 'set',
+            'id': 'A',
+        }]
+    }, {
+        'entity_id': 'B2',
+        'name': 'Blueberry',
+        'body': 'Blueberry',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'members': [{
+            'kind': 'set',
+            'id': 'A',
+        }]
+    }, {
+        'entity_id': 'B3',
+        'name': 'Brazil Nut',
+        'body': 'Brazil Nut',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'members': [{
+            'kind': 'set',
+            'id': 'N',
+        }]
+    }, {
+        'entity_id': 'C',
+        'name': 'Coconut',
+        'body': 'Coconut',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'members': [{
+            'kind': 'set',
+            'id': 'B1',
+        }, {
+            'kind': 'set',
+            'id': 'B2',
+        }]
+    }, {
+        'entity_id': 'D',
+        'name': 'Date',
+        'body': 'Date',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True
+    }]).run(db_conn)
+
+    sets = Set.list_by_unit_id('Z')
+    set_ids = set(set_['entity_id'] for set_ in sets)
+    assert set_ids == {'A', 'B1', 'B2', 'C'}
 
 
 @xfail

@@ -1,10 +1,11 @@
 from modules.model import Model
 from modules.validations import is_required, is_language, is_boolean, \
-    is_list, is_string, is_one_of
+    is_list, is_string, is_one_of, is_list_of_strings
 from modules.util import uniqid
 from models.mixins.entity import EntityMixin
 
 
+# TODO@ On set canonical, index (or delete) in Elasticsearch with entity_id
 class Card(EntityMixin, Model):
     """
     Cards are the smallest entity in the Sagefy data structure system.
@@ -49,7 +50,7 @@ class Card(EntityMixin, Model):
             'default': True
         },
         'tags': {
-            'validate': (is_list,),
+            'validate': (is_list, is_list_of_strings),
             'default': []
         },
         'require_ids': {
@@ -75,5 +76,3 @@ class Card(EntityMixin, Model):
         TODO@ Ensure no require cycles form.
         """
         return []
-
-    # TODO@ On set canonical, index (or delete) in Elasticsearch with entity_id

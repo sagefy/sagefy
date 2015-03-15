@@ -1,7 +1,5 @@
 gulp = require('gulp')
 gutil = require('gulp-util')
-gulpLoadPlugins = require('gulp-load-plugins')
-plugins = gulpLoadPlugins()
 run = require('run-sequence')
 browserify = require('browserify')
 watchify = require('watchify')
@@ -9,7 +7,13 @@ source = require('vinyl-source-stream')
 prettyHrtime = require('pretty-hrtime')
 sequence = require('run-sequence')
 del = require('del')
+stylus = require('gulp-stylus')
 husl = require('husl-stylus')
+minifyCss = require('gulp-minify-css')
+yaml = require('gulp-yaml')
+uglify = require('gulp-uglify')
+coffeelint = require('gulp-coffeelint')
+mochaPhantomjs = require('gulp-mocha-phantomjs')
 
 ################################################################################
 ### Configuration ##############################################################
@@ -77,7 +81,7 @@ gulp.task('static:watch', ['static:build'], ->
 
 gulp.task('styles:build', ->
     gulp.src('styles/index.styl')
-        .pipe(plugins.stylus({
+        .pipe(stylus({
             'include css': true
             errors: true
             use: husl()
@@ -87,7 +91,7 @@ gulp.task('styles:build', ->
 
 gulp.task('styles:build:doc', ->
     gulp.src('../gh-pages/index.styl')
-        .pipe(plugins.stylus({
+        .pipe(stylus({
             'include css': true
             errors: true
             use: husl()
@@ -107,7 +111,7 @@ gulp.task('styles:doc', (done) ->
 
 gulp.task('styles:compress', ['styles:build'], ->
     gulp.src(dist + 'index.css')
-        .pipe(plugins.minifyCss())
+        .pipe(minifyCss())
         .pipe(gulp.dest(dist))
 )
 
@@ -120,7 +124,7 @@ gulp.task('styles:watch', ['styles:build', 'styles:build:doc'], ->
 
 gulp.task('content', ->
     gulp.src('../content/*.yml')
-        .pipe(plugins.yaml())
+        .pipe(yaml())
         .pipe(gulp.dest('./scripts/content/'))
 )
 
@@ -161,7 +165,7 @@ gulp.task('scripts:watch', ['scripts:build'], ->
 
 gulp.task('scripts:compress', ['scripts:build'], ->
     gulp.src(dist + 'index.js')
-        .pipe(plugins.uglify())
+        .pipe(uglify())
         .pipe(gulp.dest(dist))
 )
 
@@ -187,8 +191,8 @@ gulp.task('scripts:test:lint', ->
         .concat(testSrc)
         .concat(['!./scripts/templates/pages/compiled.coffee'])
     gulp.src(src)
-        .pipe(plugins.coffeelint())
-        .pipe(plugins.coffeelint.reporter('fail'))
+        .pipe(coffeelint())
+        .pipe(coffeelint.reporter('fail'))
 )
 
 gulp.task('scripts:test:run', [
@@ -197,7 +201,7 @@ gulp.task('scripts:test:run', [
     'scripts:test:build'
 ], ->
     gulp.src(dist + 'test.html')
-        .pipe(plugins.mochaPhantomjs({
+        .pipe(mochaPhantomjs({
             reporter: 'min'
             phantomjs: {
                 loadImages: false
