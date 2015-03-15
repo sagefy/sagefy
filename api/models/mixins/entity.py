@@ -6,6 +6,10 @@ class EntityMixin(object):
 
     @classmethod
     def start_canonicals_query(cls):
+        """
+
+        """
+
         # TODO@ this query should have an index in card, unit, set
         return (cls.table
                    .filter(r.row['canonical'].eq(True))
@@ -39,6 +43,9 @@ class EntityMixin(object):
         Get a list of entities by a list of entity IDs.
         """
 
+        if not entity_ids:
+            return []
+
         query = (cls.start_canonicals_query()
                     .filter(lambda entity:
                             r.expr(entity_ids)
@@ -53,6 +60,9 @@ class EntityMixin(object):
         """
         Get the latest canonical version of the card.
         """
+
+        if not entity_id:
+            return []
 
         # TODO@ this query should have an index in card, unit, set
         query = (cls.table
@@ -69,6 +79,9 @@ class EntityMixin(object):
         Get the same kind of entity that this one requires.
         """
 
+        if not entity_id:
+            return []
+
         entity = cls.get_latest_canonical(entity_id=entity_id)
 
         # TODO@ this query should have an index in card and unit
@@ -83,6 +96,9 @@ class EntityMixin(object):
         """
         Get the same kind of entity that requires this one.
         """
+
+        if not entity_id:
+            return []
 
         # TODO@ this query should have an index in card and unit
         query = (cls.start_canonicals_query()

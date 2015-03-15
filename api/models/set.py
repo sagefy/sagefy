@@ -86,26 +86,22 @@ class Set(EntityMixin, Model):
                         'kind': 'unit',
                         'id': unit_id,
                     })))
-        all_sets = query.run(g.db_conn)
+        sets = query.run(g.db_conn)
 
         # *** Second, find all the sets containing
         #     those sets... recursively. ***
 
-        set_ids = [set_['entity_id'] for set_ in all_sets]
+        found_sets, all_sets = sets, []
 
-        def find_sets_containing_set_ids(set_ids):
+        while found_sets:
+            set_ids = set(set_['entity_id'] for set_ in found_sets)
+            all_sets += found_sets
             query = (cls.start_canonicals_query()
                         .filter(r.row['members'].contains({
                             'kind': 'set',
                             'id': set_ids,  # TODO@
                         })))
             found_sets = query.run(g.db_conn)
-            if len(found_sets) > 0:
-                set_ids = set(set_['entity_id'] for set_ in found_sets)
-                all_sets.concat(found_sets)
-                find_sets_containing_set_ids(set_ids)
-
-        find_sets_containing_set_ids(set_ids)
 
         return all_sets
 
@@ -118,8 +114,9 @@ class Set(EntityMixin, Model):
         #     the set into a list of known units. ***
 
         unit_ids = set()
+        sets = [self]
 
-        def break_down_sets(sets):
+        while sets:
             set_ids = set()
             for set_ in sets:
                 unit_ids.update(set(member['id']
@@ -128,46 +125,36 @@ class Set(EntityMixin, Model):
                 set_ids.update(set(member['id']
                                    for member in getattr(set_, 'members', ())
                                    if member['kind'] == 'set'))
-            if len(set_ids) > 0:
-                sets = Set.list_by_entity_ids(entity_ids=set_ids)
-                break_down_sets(sets)
-
-        break_down_sets([self])
+            sets = Set.list_by_entity_ids(set_ids)
 
         # *** Second, we need to find all
         #     the required connecting units. ***
 
-        grabbed_units = []
-        unit_requires = {}
+        next_grab, units, unit_requires = unit_ids, [], {}
 
-        def connect(ids):
-            unit_ids.update(ids)
-            next = set(unit_id
-                       for unit_id, require_ids in unit_requires.items()
-                       if unit_id not in unit_ids and require_ids & ids)
-            connect(next)
-
-        def find_connections(given_unit_ids):
-            units = Unit.list_by_entity_ids(given_unit_ids)
-            grabbed_units.concat(units)
+        while next_grab:
+            tier_units = Unit.list_by_entity_ids(next_grab)
+            units += tier_units
             next_grab = set()
 
-            for unit in units:
+            for unit in tier_units:
                 if 'require_ids' not in unit:
                     continue
                 unit_id = unit['entity_id']
                 require_ids = unit_requires[unit_id] = set(unit['require_ids'])
                 for require_id in require_ids:
                     if require_id in unit_ids:
-                        connect({unit_id})
+                        ids = {unit_id}
+                        while ids:
+                            unit_ids.update(ids)
+                            ids = set(unit_id
+                                      for unit_id, require_ids
+                                      in unit_requires.items()
+                                      if unit_id not in unit_ids
+                                      and require_ids & ids)
                     elif require_id not in unit_requires:
                         next_grab.add(require_id)
 
-            if len(next_grab) > 0:
-                find_connections(next_grab)
-
-        find_connections(unit_ids)
-
         return [unit
-                for unit in grabbed_units
+                for unit in units
                 if unit['entity_id'] in unit_ids]
