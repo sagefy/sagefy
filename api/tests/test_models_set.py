@@ -1,6 +1,10 @@
 from models.set import Set
 import rethinkdb as r
 
+import pytest
+
+xfail = pytest.mark.xfail
+
 
 def test_entity(app, db_conn, sets_table):
     """
@@ -144,7 +148,7 @@ def test_members(app, db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_get_by_entity_ids(app, db_conn, sets_table):
+def test_list_by_entity_ids(app, db_conn, sets_table):
     """
     Expect to list sets by given entity IDs.
     """
@@ -178,6 +182,26 @@ def test_get_by_entity_ids(app, db_conn, sets_table):
         'modified': r.now(),
         'canonical': True,
     }]).run(db_conn)
-    sets = Set.get_by_entity_ids(['A1', 'C3'])
+    sets = Set.list_by_entity_ids(['A1', 'C3'])
     assert sets[0]['body'] in ('Apple', 'Coconut')
     assert sets[0]['body'] in ('Apple', 'Coconut')
+
+
+@xfail
+def test_list_by_unit_ids(app, db_conn, units_table, sets_table):
+    """
+    Expect to get a list of sets which contain the given unit ID.
+    Recursive.
+    """
+
+    assert False
+
+
+@xfail
+def test_list_units(app, db_conn, units_table, sets_table):
+    """
+    Expect to get a list of units contained within the set.
+    Recursive.
+    """
+
+    assert False

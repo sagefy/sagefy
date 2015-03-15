@@ -2,19 +2,12 @@ from modules.validations import is_required, is_string, is_one_of
 from models.post import Post
 
 
-def is_valid_version(value):
-    """
-    Ensure this is a valid version of the entity.
-    """
-    # TODO@
-
-
 class Proposal(Post):
     """A proposal to change the discussed entity."""
 
     schema = dict(Post.schema.copy(), **{
         'entity_version_id': {
-            'validate': (is_required, is_string, is_valid_version,)
+            'validate': (is_required, is_string,)
         },
         'name': {
             'validate': (is_required, is_string,)
@@ -42,10 +35,18 @@ class Proposal(Post):
         errors = super().validate()
         if not errors:
             errors += self.is_valid_reply_kind()
+        if not errors:
+            errors += self.is_valid_version()
         return errors
 
     def is_valid_reply_kind(self):
         """
-        - TODO@ A proposal can reply to post, proposal, or flag.
+        TODO@ A proposal can reply to post, proposal, or flag.
+        """
+        return []
+
+    def is_valid_version(self):
+        """
+        TODO@ Ensure this is a valid version of the entity.
         """
         return []

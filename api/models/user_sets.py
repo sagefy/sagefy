@@ -25,7 +25,7 @@ class UserSets(Model):
         Return empty list when there's no matching documents.
         """
 
-        return Set.get_by_entity_ids(self['set_ids'])
+        return Set.list_by_entity_ids(self['set_ids'])
 
         # TODO@ each set -- needs review?
         # TODO@ order by last reviewed time

@@ -1,8 +1,8 @@
 from modules.model import Model
+from models.mixins.entity import EntityMixin
 from modules.validations import is_required, is_language, is_string, \
     is_boolean, is_list
 from modules.util import uniqid
-from models.mixins.entity import EntityMixin
 
 
 class Unit(EntityMixin, Model):
@@ -55,7 +55,7 @@ class Unit(EntityMixin, Model):
             'validate': (is_list,),
             'default': []
         },
-        'requires_ids': {
+        'require_ids': {
             'validate': (is_list,),  # TODO@ is valid id?
             'default': []
         },
@@ -69,9 +69,8 @@ class Unit(EntityMixin, Model):
 
     def ensure_no_cycles(self):
         """
-        Ensure no require cycles form.
+        TODO@ Ensure no require cycles form.
         """
-        # TODO@
         return []
 
     # TODO@ On set canonical, index (or delete) in Elasticsearch with entity_id

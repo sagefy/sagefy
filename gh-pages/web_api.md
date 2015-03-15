@@ -442,7 +442,7 @@ None
         "name": "Lorem ipsum.",
         "body": "Lorem ipsum.",
         "tags": ["analyze"],
-        "requires_ids": ["a5kJ3kj"]
+        "require_ids": ["a5kJ3kj"]
     }
 }
 ```
@@ -527,7 +527,7 @@ None
         "name": "Lorem ipsum.",
         "body": "Lorem ipsum.",
         "tags": ["analyze"],
-        "requires_ids": ["a5kJ3kj"]
+        "require_ids": ["a5kJ3kj"]
     }]
 }
 ```

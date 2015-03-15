@@ -1,4 +1,3 @@
-from modules.model import Model
 from models.post import Post
 from modules.validations import is_required, is_one_of
 
@@ -38,13 +37,12 @@ class Flag(Post):
 
     def is_unique_flag(self):
         """
-        Only one flag per entity per reason is allowed.
+        TODO@ Only one flag per entity per reason is allowed.
         """
         return []
-        # TODO@
 
     def is_valid_reply_kind(self):
         """
-        - TODO@ A flag cannot be a reply.
+        TODO@ A flag cannot be a reply.
         """
         return []

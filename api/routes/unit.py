@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, abort
 from models.unit import Unit
+from models.set import Set
 from models.topic import Topic
 
 unit_routes = Blueprint('unit', __name__, url_prefix='/api/units')
@@ -15,10 +16,11 @@ def get_unit(unit_id):
     if not unit:
         return abort(404)
 
-    topics = Topic.list_by_entity_id(entity_id=unit_id)
-    versions = Unit.get_versions(entity_id=unit_id)
-    requires = Unit.list_requires(entity_id=unit_id)
-    required_by = Unit.list_required_by(entity_id=unit_id)
+    topics = Topic.list_by_entity_id(unit_id)
+    versions = Unit.get_versions(unit_id)
+    requires = Unit.list_requires(unit_id)
+    required_by = Unit.list_required_by(unit_id)
+    sets = Set.list_by_unit_id(unit_id)
 
     return jsonify(
         unit=unit.deliver(),
@@ -26,7 +28,7 @@ def get_unit(unit_id):
         versions=[version.deliver() for version in versions],
         requires=[require.deliver() for require in requires],
         required_by=[require.deliver() for require in required_by],
+        sets=[set_.deliver() for set_ in sets],
     )
 
-    # TODO@ join through sets
     # TODO@ sequencer data: learners, quality, difficulty

@@ -5,8 +5,8 @@ search_routes = Blueprint('search', __name__, url_prefix='/api/search')
 
 @search_routes.route('/', methods=['GET'])
 def search():
-    """TODO@
-    Search for entities. Search, filter, sort, paginate.
+    """
+    TODO@ Search for entities. Search, filter, sort, paginate.
 
     Entities:
     - User
@@ -27,4 +27,3 @@ def search():
     """
 
     pass
-    # TODO@ outline function

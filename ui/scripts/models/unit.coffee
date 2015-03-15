@@ -18,7 +18,7 @@ class UnitModel extends Model
             type: 'select'
             validations: {}
         }
-        requires_ids: {
+        require_ids: {
             type: 'select'
             validations: {}
         }

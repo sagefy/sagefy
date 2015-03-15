@@ -52,7 +52,7 @@ class Card(EntityMixin, Model):
             'validate': (is_list,),
             'default': []
         },
-        'requires_ids': {
+        'require_ids': {
             'validate': (is_list,),  # TODO@ is valid ids?
             'default': []
         },
@@ -72,9 +72,8 @@ class Card(EntityMixin, Model):
 
     def ensure_no_cycles(self):
         """
-        Ensure no require cycles form.
+        TODO@ Ensure no require cycles form.
         """
-        # TODO@
         return []
 
     # TODO@ On set canonical, index (or delete) in Elasticsearch with entity_id

@@ -7,8 +7,8 @@ sequencer_routes = Blueprint('sequencer',
 
 @sequencer_routes.route('/next/', methods=['GET'])
 def next():
-    """TODO@
-    Tell the learner where to go next.
+    """
+    TODO@ Tell the learner where to go next.
     """
 
     if not current_user.is_authenticated():

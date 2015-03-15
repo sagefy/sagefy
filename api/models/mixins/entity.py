@@ -5,6 +5,16 @@ from flask import g
 class EntityMixin(object):
 
     @classmethod
+    def start_canonicals_query(cls):
+        # TODO@ this query should have an index in card, unit, set
+        return (cls.table
+                   .filter(r.row['canonical'].eq(True))
+                   .group('entity_id')
+                   .max('created')
+                   .ungroup()
+                   .map(r.row['reduction']))
+
+    @classmethod
     def get_latest_canonical(cls, entity_id):
         """
         Get the latest canonical version of the card.
@@ -14,18 +24,29 @@ class EntityMixin(object):
             return
 
         # TODO@ this query should have an index in card, unit, set
-        query = (cls.table
+        query = (cls.start_canonicals_query()
                     .filter(r.row['entity_id'] == entity_id)
-                    .filter(r.row['canonical'].eq(True))
-                    .group('entity_id')
-                    .max('created')
-                    .ungroup()
-                    .map(r.row['reduction']))
+                    .limit(1))
 
         documents = list(query.run(g.db_conn))
 
         if len(documents) > 0:
             return cls(documents[0])
+
+    @classmethod
+    def list_by_entity_ids(cls, entity_ids):
+        """
+        Get a list of entities by a list of entity IDs.
+        """
+
+        query = (cls.start_canonicals_query()
+                    .filter(lambda entity:
+                            r.expr(entity_ids)
+                            .contains(entity['entity_id'])))
+
+        docs = query.run(g.db_conn)
+        return [cls(fields) for fields in docs]
+        # TODO@ index in unit and set
 
     @classmethod
     def get_versions(cls, entity_id, limit=10, skip=0):
@@ -51,15 +72,9 @@ class EntityMixin(object):
         entity = cls.get_latest_canonical(entity_id=entity_id)
 
         # TODO@ this query should have an index in card and unit
-        query = (cls.table
-                    .filter(r.row['canonical'].eq(True))
-                    .group('entity_id')
-                    .max('created')
-                    .ungroup()
-                    .map(r.row['reduction'])
-                    .filter(lambda _:
-                            r.expr(entity['requires'])
-                             .contains(_['entity_id'])))
+        query = (cls.start_canonicals_query()
+                    .filter(lambda _: r.expr(entity['requires'])
+                                       .contains(_['entity_id'])))
 
         return [cls(fields) for fields in query.run(g.db_conn)]
 
@@ -70,12 +85,7 @@ class EntityMixin(object):
         """
 
         # TODO@ this query should have an index in card and unit
-        query = (cls.table
-                    .filter(r.row['canonical'].eq(True))
-                    .group('entity_id')
-                    .max('created')
-                    .ungroup()
-                    .map(r.row['reduction'])
+        query = (cls.start_canonicals_query()
                     .filter(r.row['requires'].contains(entity_id)))
 
         return [cls(fields) for fields in query.run(g.db_conn)]

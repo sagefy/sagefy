@@ -47,10 +47,9 @@ class Vote(Post):
 
     def is_unique_vote(self):
         """
-        Ensure a user can only vote once per proposal.
+        TODO@ Ensure a user can only vote once per proposal.
         """
         return []
-        # TODO@
 
     def is_valid_reply_kind(self):
         """

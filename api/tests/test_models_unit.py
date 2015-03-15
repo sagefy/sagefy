@@ -113,6 +113,6 @@ def test_requires(app, db_conn, units_table):
         'body': 'Learn how to do this',
     })
     assert len(errors) == 0
-    unit['requires_ids'] = ['A']
+    unit['require_ids'] = ['A']
     unit, errors = unit.save()
     assert len(errors) == 0

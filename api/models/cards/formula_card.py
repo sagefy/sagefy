@@ -32,10 +32,10 @@ def is_list_of_options(options):
 
 def is_list_of_variables(vars):
     """
-
+    TODO@ Ensure the data provided is a list of variables, with
+    corresponding information.
     """
     pass
-    # TODO@
 
 
 class FormulaCard(Card):

@@ -19,21 +19,22 @@ def get_set(set_id):
 
     topics = Topic.list_by_entity_id(entity_id=set_id)
     versions = Set.get_versions(entity_id=set_id)
+    units = set_.list_units()
 
     return jsonify(
         set=set_.deliver(),
         topics=[topic.deliver() for topic in topics],
         versions=[version.deliver() for version in versions],
+        units=[unit.deliver() for unit in units],
     )
 
-    # TODO@ join through units
     # TODO@ sequencer: learners, quality, difficulty
 
 
 @set_routes.route('/<set_id>/tree/', methods=['GET'])
 def get_set_tree(set_id):
-    """TODO@
-    Render the tree of units that exists within a set.
+    """
+    TODO@ Render the tree of units that exists within a set.
     """
     pass
 
@@ -42,8 +43,8 @@ def get_set_tree(set_id):
 
 @set_routes.route('/<set_id>/units/', methods=['GET'])
 def get_set_units(set_id):
-    """TODO@
-    Render the units that exist within the set.
+    """
+    TODO@ Render the units that exist within the set.
     Specifically, present a small number of units the learner can choose
     from.
     """
@@ -56,8 +57,8 @@ def get_set_units(set_id):
 
 @set_routes.route('/<set_id>/units/<unit_id>/', methods=['POST', 'PUT'])
 def choose_unit(set_id, unit_id):
-    """TODO@
-    Updates the learner's information based on the unit they have chosen.
+    """
+    TODO@ Updates the learner's information based on the unit they have chosen.
     """
 
     if not current_user.is_authenticated():
