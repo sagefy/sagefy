@@ -65,7 +65,9 @@ describe('Application', ->
 
     describe('navigate and route', ->
         beforeEach(->
-            @pushState = sinon.stub(window.history, 'pushState')
+            @paths = []
+            stub = (state, title, route) => @paths.push(route)
+            @pushState = sinon.stub(window.history, 'pushState', stub)
         )
 
         afterEach(->
@@ -113,13 +115,17 @@ describe('Application', ->
             x.remove()
         )
 
-        it.skip('should listen to the forward/back events ' +
+        it('should listen to the forward/back events ' +
                 'and update to match', ->
             x = new App(A, B, C)
             x.navigate('/foo')
             x.navigate('/foo/23')
-            # TODO hit back button ???
-            # but we can't actually change the path
+            x.navigate('/foo')
+            expect(@paths).to.deep.equal([
+                '/foo'
+                '/foo/23'
+                '/foo'
+            ])
             x.remove()
         )
     )
