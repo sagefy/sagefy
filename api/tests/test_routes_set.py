@@ -18,6 +18,10 @@ def test_get_set(app, db_conn,
         'modified': r.now(),
         'canonical': True,
         'name': 'Wildwood',
+        'members': [{
+            'kind': 'unit',
+            'id': 'W'
+        }]
     }, {
         'entity_id': 'zytx',
         'created': r.time(1986, 11, 3, 'Z'),
@@ -25,6 +29,14 @@ def test_get_set(app, db_conn,
         'canonical': True,
         'name': 'Umberwood',
     }]).run(db_conn)
+
+    units_table.insert({
+        'entity_id': 'W',
+        'name': 'Wood',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }).run(db_conn)
 
     topics_table.insert([{
         'created': r.now(),
@@ -67,8 +79,10 @@ def test_get_set(app, db_conn,
     # Versions
     assert len(response['versions']) == 2
     assert response['versions'][1]['name'] == 'Umberwood'
+    # Units
+    assert len(response['units']) == 1
+    assert response['units'][0]['entity_id'] == 'W'
 
-    # TODO@ join through units
     # TODO@ sequencer: learners, quality, difficulty
 
 

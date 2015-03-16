@@ -117,7 +117,7 @@ class Set(EntityMixin, Model):
                         )))
             found_sets = query.run(g.db_conn)
 
-        return all_sets
+        return [Set(data) for data in all_sets]
 
     def list_units(self):
         """
@@ -134,10 +134,10 @@ class Set(EntityMixin, Model):
             set_ids = set()
             for set_ in sets:
                 unit_ids.update(set(member['id']
-                                    for member in getattr(set_, 'members', ())
+                                    for member in set_.data.get('members')
                                     if member['kind'] == 'unit'))
                 set_ids.update(set(member['id']
-                                   for member in getattr(set_, 'members', ())
+                                   for member in set_.data.get('members')
                                    if member['kind'] == 'set'))
             sets = Set.list_by_entity_ids(set_ids)
 

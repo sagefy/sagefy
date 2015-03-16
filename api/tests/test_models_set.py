@@ -193,13 +193,13 @@ def test_list_by_unit_ids(app, db_conn, units_table, sets_table):
     Recursive.
     """
 
-    units_table.insert([{
+    units_table.insert({
         'entity_id': 'Z',
         'created': r.now(),
         'modified': r.now(),
         'canonical': True,
         'name': 'Z',
-    }]).run(db_conn)
+    }).run(db_conn)
 
     sets_table.insert([{
         'entity_id': 'A',
@@ -273,11 +273,78 @@ def test_list_by_unit_ids(app, db_conn, units_table, sets_table):
     assert set_ids == {'A', 'B1', 'B2', 'C'}
 
 
-@xfail
 def test_list_units(app, db_conn, units_table, sets_table):
     """
     Expect to get a list of units contained within the set.
     Recursive.
     """
 
-    assert False
+    units_table.insert([{
+        'entity_id': 'B',
+        'name': 'B',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'require_ids': ['A', 'N']
+    }, {
+        'entity_id': 'V',
+        'name': 'V',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'require_ids': ['Q']
+    }, {
+        'entity_id': 'Q',
+        'name': 'Q',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }, {
+        'entity_id': 'A',
+        'name': 'A',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }, {
+        'entity_id': 'N',
+        'name': 'N',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'require_ids': ['Q', 'A']
+    }]).run(db_conn)
+
+    sets_table.insert([{
+        'entity_id': 'T',
+        'name': 'TRex',
+        'body': 'TRex',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'members': [{
+            'kind': 'unit',
+            'id': 'B',
+        }, {
+            'kind': 'unit',
+            'id': 'V',
+        }]
+    }, {
+        'entity_id': 'S',
+        'name': 'Saurus',
+        'body': 'Saurus',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'members': [{
+            'kind': 'set',
+            'id': 'T',
+        }, {
+            'kind': 'unit',
+            'id': 'Q',
+        }]
+    }]).run(db_conn)
+
+    set_ = Set.get(entity_id='S')
+    cards = set_.list_units()
+    card_ids = set(card['entity_id'] for card in cards)
+    assert card_ids == {'B', 'V', 'Q', 'N'}

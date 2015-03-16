@@ -36,6 +36,18 @@ def test_get_unit(app, db_conn,
         'requires': ['zytx'],
     }]).run(db_conn)
 
+    sets_table.insert({
+        'entity_id': 'W',
+        'name': 'Woods',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'members': [{
+            'kind': 'unit',
+            'id': 'zytx',
+        }]
+    }).run(db_conn)
+
     topics_table.insert([{
         'created': r.now(),
         'modified': r.now(),
@@ -83,8 +95,9 @@ def test_get_unit(app, db_conn,
     # Required By
     assert len(response['required_by']) == 1
     assert response['required_by'][0]['entity_id'] == 'tyui'
-
-    # TODO@ join through sets
+    # Sets
+    assert len(response['sets']) == 1
+    assert response['sets'][0]['entity_id'] == 'W'
     # TODO@ sequencer data: learners, quality, difficulty
 
 
