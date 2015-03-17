@@ -81,13 +81,6 @@ class Set(EntityMixin, Model):
         # *** First, find the list of sets
         #     directly containing the member ID. ***
 
-        """
-        r.table('sets')
-          .filter(r.row('members').contains(function(m) {
-            return m('id').eq('B');
-          }));
-        """
-
         query = (cls.start_canonicals_query()
                     .filter(r.row['members'].contains(
                         lambda member:
@@ -99,13 +92,6 @@ class Set(EntityMixin, Model):
         #     those sets... recursively. ***
 
         found_sets, all_sets = sets, []
-
-        """
-        r.table('sets')
-          .filter(r.row('members').contains(function(m) {
-            return r.expr(['B']).contains(m('id'));
-          }));
-        """
 
         while found_sets:
             set_ids = set(set_['entity_id'] for set_ in found_sets)
