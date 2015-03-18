@@ -1,8 +1,16 @@
 def json_dict_to_html(data):
+    """
+    Prepend HTML output with the two required tags.
+    """
+
     return '<!doctype html><meta charset="utf-8">' + htmlify(data)
 
 
 def htmlify(data, depth=1):
+    """
+    Take a dict in JSONic form and return an HTML document.
+    """
+
     html = ''
 
     depth = 6 if depth > 6 else depth
@@ -30,6 +38,10 @@ def htmlify(data, depth=1):
 
 
 def linkify(value):
+    """
+    Create an HTML link when seeing matching content.
+    """
+
     value = str(value)
     value = value.split(' ')
     for i, v in enumerate(value):
