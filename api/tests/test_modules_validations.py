@@ -1,6 +1,6 @@
 from modules.validations import is_required, is_boolean, is_string, \
     is_number, is_language, is_list, is_email, has_min_length, is_one_of, \
-    is_entity_dict, is_entity_list_dict, is_list_of_strings, is_url
+    is_list_of_strings, is_url, is_string_or_number
 
 
 def test_require(app, db_conn):
@@ -65,6 +65,16 @@ def test_number(app, db_conn):
     assert is_number('1')
 
 
+def test_string_or_number(app, db_conn):
+    """
+    Expect a string or number.
+    """
+    assert is_string_or_number(1) is None
+    assert is_string_or_number(1.1) is None
+    assert is_string_or_number('1.1') is None
+    assert is_string_or_number([])
+
+
 def test_language(app, db_conn):
     """
     Expect two-char language.
@@ -87,22 +97,6 @@ def test_one_of(app, db_conn):
     """
     assert is_one_of('1', '1') is None
     assert is_one_of(1, '1')
-
-
-def test_entity(app, db_conn):
-    """
-    Expect to reference an entity.
-    """
-    assert is_entity_dict({'id': 'a', 'kind': 'card'}) is None
-    assert is_entity_dict({'id': 'a', 'kind': 'Card'})
-
-
-def test_list_entity(app, db_conn):
-    """
-    Expect a list of entity references.
-    """
-    assert is_entity_list_dict([{'id': 'a', 'kind': 'card'}]) is None
-    assert is_entity_list_dict([{'id': 'a', 'kind': 'Card'}])
 
 
 def test_list_string(app, db_conn):

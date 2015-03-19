@@ -1,5 +1,5 @@
 from modules.model import Model
-from modules.validations import is_required, is_string, is_entity_dict
+from modules.validations import is_required, is_string, is_one_of
 from flask import g
 import rethinkdb as r
 
@@ -23,7 +23,17 @@ class Topic(Model):
             'validate': (is_required, is_string,)
         },
         'entity': {
-            'validate': (is_required, is_entity_dict,)
+            'validate': (is_required,),
+            'embed': {
+                'id': {
+                    'validate': (is_required, is_string,),
+                },
+                'kind': {
+                    'validate': (is_required, is_string, (
+                        is_one_of, 'card', 'unit', 'set'
+                    )),
+                }
+            }
         }
     })
 

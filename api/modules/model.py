@@ -127,7 +127,7 @@ class Model(object):
         Later, we might want an option to throw errors instead.
         """
 
-        # TODO@ how to `pick` for nested dictionaries?
+        # TODO@ add consideration of `embed` and `embed_many`
 
         if self.strict:
             self.data = pick(self.data, self.schema.keys())
@@ -138,6 +138,8 @@ class Model(object):
         """
         Iterate over the schema, ensuring that everything matches up.
         """
+
+        # TODO@ add consideration of `embed` and `embed_many`
 
         errors = []
         for name, field_schema in self.schema.items():
@@ -155,10 +157,34 @@ class Model(object):
                         break
         return errors
 
+    def test_unique(self):
+        """
+        Test all top-level fields marked as unique.
+        """
+
+        # TODO@ add consideration of `embed` and `embed_many`
+
+        errors = []
+        for name, value in self.data.items():
+            if 'unique' not in self.schema[name]:
+                continue
+            query = (self.table
+                         .filter(r.row[name] == value)
+                         .filter(r.row['id'] != self['id']))
+            entries = list(query.run(g.db_conn))
+            if len(entries) > 0:
+                errors.append({
+                    'name': name,
+                    'message': c('error', 'unique'),
+                })
+        return errors
+
     def defaults(self):
         """
         Set up defaults for data if not applied.
         """
+
+        # TODO@ add consideration of `embed` and `embed_many`
 
         for name, field_schema in self.schema.items():
             if 'default' in field_schema and self.data.get(name) is None:
@@ -175,6 +201,8 @@ class Model(object):
         in the schema if present.
         """
 
+        # TODO@ add consideration of `embed` and `embed_many`
+
         data = self.data.copy()
 
         for name, field_schema in self.schema.items():
@@ -189,6 +217,8 @@ class Model(object):
         Consider access allowed and will call `deliver`
         in the schema if present.
         """
+
+        # TODO@ add consideration of `embed` and `embed_many`
 
         data = self.data.copy()
 
@@ -294,23 +324,3 @@ class Model(object):
              .delete()
              .run(g.db_conn))
         return self, []
-
-    def test_unique(self):
-        """
-        Test all top-level fields marked as unique.
-        """
-
-        errors = []
-        for name, value in self.data.items():
-            if 'unique' not in self.schema[name]:
-                continue
-            query = (self.table
-                         .filter(r.row[name] == value)
-                         .filter(r.row['id'] != self['id']))
-            entries = list(query.run(g.db_conn))
-            if len(entries) > 0:
-                errors.append({
-                    'name': name,
-                    'message': c('error', 'unique'),
-                })
-        return errors

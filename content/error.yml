@@ -17,6 +17,8 @@ string:
     en: Must be a string.
 number:
     en: Must be a number.
+string_or_number:
+    en: Must be a string or number.
 language:
     en: Must be a language.
 list:
