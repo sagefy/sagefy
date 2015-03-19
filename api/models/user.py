@@ -28,56 +28,80 @@ class User(Model):
         'email': {
             'validate': (is_required, is_email,),
             'unique': True,
-            'access': 'private'
+            'access': ('private',),
         },
         'password': {
             'validate': (is_required, is_string, (has_min_length, 8)),
-            'access': False,
+            'access': (),
             'bundle': encrypt_password,
         },
         'email_frequency': {
             'validate': (is_required, is_string, (
                 is_one_of, 'immediate', 'daily', 'weekly', 'never',
             )),
-            'access': 'private',
-            'default': 'daily'
+            'access': ('private',),
+            'default': 'daily',
         }
     })
 
     def is_password_valid(self, password):
-        """Take an encrypted password, and verifies it. Returns bool."""
+        """
+        Take an encrypted password, and verifies it. Returns bool.
+        """
+
         try:
             return bcrypt.verify(password, self['password'])
         except:
             return False
 
     def is_current_user(self):
-        """Return True if the user is the one logged in."""
+        """
+        Return True if the user is the one logged in.
+        """
+
         return (current_user.is_authenticated() and
                 self['id'] == current_user['id'])
 
     def get_url(self):
-        """Where to get the user's data."""
+        """
+        Where to get the user's data.
+        """
+
         return url_for('user.get_user', user_id=self['id'])
 
     def is_authenticated(self):
-        """For Flask-Login."""
+        """
+        For Flask-Login.
+        """
+
         return True
 
     def is_active(self):
-        """For Flask-Login."""
+        """
+        For Flask-Login.
+        """
+
         return True
 
     def is_anonymous(self):
-        """For Flask-Login."""
+        """
+        For Flask-Login.
+        """
+
         return False
 
     def get_id(self):
-        """For Flask-Login."""
+        """
+        For Flask-Login.
+        """
+
         return self['id']
 
     def get_email_token(self, send_email=True):
-        """Create an email token for the user to reset their password."""
+        """
+        Create an email token for the user to reset their password.
+        """
+
         token = uniqid()
         app.redis.setex(
             'user_password_token_%s' % self['id'],  # key
@@ -97,7 +121,10 @@ class User(Model):
         return token
 
     def is_valid_token(self, token):
-        """Ensure the given token is valid."""
+        """
+        Ensure the given token is valid.
+        """
+
         key = 'user_password_token_%s' % self['id']
         entoken = app.redis.get(key)
         app.redis.delete(key)
@@ -106,6 +133,9 @@ class User(Model):
         return False
 
     def update_password(self, password):
-        """Update the user's password."""
+        """
+        Update the user's password.
+        """
+
         self['password'] = password
         self.save()

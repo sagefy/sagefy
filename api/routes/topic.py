@@ -61,7 +61,7 @@ def create_topic():
     return jsonify(topic=topic.deliver(), post=post.deliver())
 
 
-@topic_routes.route('/<topic_id>/', methods=['PUT', 'PATCH'])
+@topic_routes.route('/<topic_id>/', methods=['PUT'])
 def update_topic(topic_id):
     """
     Update the topic. Only the name can be changed. Only by original author.
@@ -179,7 +179,7 @@ def create_post(topic_id):
     return jsonify(post=post.deliver())
 
 
-@topic_routes.route('/<topic_id>/posts/<post_id>/', methods=['PUT', 'PATCH'])
+@topic_routes.route('/<topic_id>/posts/<post_id>/', methods=['PUT'])
 def update_post(topic_id, post_id):
     """
     Update an existing post. Must be one's own post.

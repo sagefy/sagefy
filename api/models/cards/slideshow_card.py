@@ -15,7 +15,8 @@ class SlideshowCard(Card):
 
     def __init__(self, fields=None):
         """
-
+        Create a new slideshow card instance.
         """
+
         super().__init__(fields)
         self['kind'] = 'slideshow'

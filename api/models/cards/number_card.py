@@ -3,6 +3,9 @@ from modules.validations import is_required, is_string, is_number, is_list
 from modules.content import get as c
 
 
+# TODO@ `correct` and `feedback` should have access of 'view'
+
+
 def is_list_of_options(options):
     """
     Ensure the list of options matches the expected format.
@@ -43,13 +46,15 @@ class NumberCard(Card):
             'default': 0.001,
         },
         'default_incorrect_feedback': {
-            'validate': (is_required, is_string,)
+            'validate': (is_required, is_string,),
+            'access': ('view',),
         },
     })
 
     def __init__(self, fields=None):
         """
-
+        Create a new number card instance.
         """
+
         super().__init__(fields)
         self['kind'] = 'number'

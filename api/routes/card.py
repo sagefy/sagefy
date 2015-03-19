@@ -1,8 +1,11 @@
 from flask import Blueprint, abort, jsonify
+from flask.ext.login import current_user
 from models.card import Card
 from models.unit import Unit
-from flask.ext.login import current_user
 from models.topic import Topic
+from models.response import Response
+from modules.util import pick
+
 
 card_routes = Blueprint('card', __name__, url_prefix='/api/cards')
 
@@ -28,7 +31,7 @@ def get_card(card_id):
     required_by = Card.list_required_by(entity_id=card_id)
 
     return jsonify(
-        card=card.deliver(),
+        card=card.deliver(access='view'),
         unit=unit.deliver(),
         topics=[topic.deliver() for topic in topics],
         versions=[version.deliver() for version in versions],
@@ -48,10 +51,22 @@ def learn_card(card_id):
     if not current_user.is_authenticated():
         return abort(401)
 
+    card = Card.get_latest_canonical(card_id)
+    if not card:
+        return abort(404)
+
+    # TODO@ 400: Does the card make sense, given the context?
+
     # TODO@ for the menu, we must include...
-    #      set: name and id
-    #      unit: name, body, id
-    #      card: name and id
+    #      [ ] set: name and id  (context)
+    #      [ ] unit: name, body, id  (context)
+    #      [x] card: name and id
+
+    # TODO@ return a limited set
+
+    return jsonify(
+        card=card.deliver(access=''),
+    )
 
 
 @card_routes.route('/<card_id>/responses/', methods=['POST'])
@@ -62,3 +77,13 @@ def respond_to_card(card_id):
 
     if not current_user.is_authenticated():
         return abort(401)
+
+    card = Card.get_latest_canonical(card_id)
+    if not card:
+        return abort(404)
+
+    # TODO@ 400a Does the card make sense, given the context?
+
+    # TODO@ 400b Is the response valid?
+
+    return '', 204

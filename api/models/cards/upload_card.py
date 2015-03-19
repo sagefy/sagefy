@@ -26,7 +26,8 @@ class UploadCard(Card):
 
     def __init__(self, fields=None):
         """
-
+        Create a new upload card instance.
         """
+
         super().__init__(fields)
         self['kind'] = 'upload'

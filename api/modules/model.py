@@ -194,7 +194,7 @@ class Model(object):
 
         for name, field_schema in self.schema.items():
             if 'access' in field_schema and data.get(name):
-                if field_schema['access'] != access:
+                if access not in field_schema['access']:
                     del data[name]
 
             if 'deliver' in field_schema and data.get(name):

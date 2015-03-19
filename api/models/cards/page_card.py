@@ -11,7 +11,8 @@ class PageCard(Card):
 
     def __init__(self, fields=None):
         """
-
+        Create a new page card instance.
         """
+
         super().__init__(fields)
         self['kind'] = 'page'

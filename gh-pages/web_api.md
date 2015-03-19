@@ -16,7 +16,7 @@ Errors will appear in the following format, along with the appropriate status co
 }
 ```
 
-Here I use _Request Parameters_ for GET and DELETE and _Request Format_ for POST, PATCH, and PUT.
+Here I use _Request Parameters_ for GET and DELETE and _Request Format_ for POST, and PUT.
 
 Public
 ======

@@ -3,6 +3,9 @@ from modules.validations import is_required, is_string, is_list, is_boolean
 from modules.content import get as c
 
 
+# TODO@ `correct` and `feedback` should have access of 'view'
+
+
 def is_list_of_options(options):
     """
     Ensure the list of options matches the expected format.
@@ -38,7 +41,8 @@ class MatchCard(Card):
             'validate': (is_required, is_list, is_list_of_options,),
         },
         'default_incorrect_feedback': {
-            'validate': (is_required, is_string,)
+            'validate': (is_required, is_string,),
+            'access': ('view',),
         },
         'case_sensitive': {
             'validate': (is_boolean,),
@@ -48,7 +52,8 @@ class MatchCard(Card):
 
     def __init__(self, fields=None):
         """
-
+        Create a new match card instance.
         """
+
         super().__init__(fields)
         self['kind'] = 'match'

@@ -122,22 +122,22 @@ def test_learn_card_relevant():
     assert False
 
 
-@xfail
-def test_learn_card_401():
+def test_learn_card_401(app, db_conn):
     """
     Expect to require log in to get a card for learn mode. (401)
     """
 
-    assert False
+    response = app.test_client().get('/api/cards/abcd/learn/')
+    assert response.status_code == 401
 
 
-@xfail
-def test_learn_card_404():
+def test_learn_card_404(app, db_conn, c_user):
     """
     Expect to fail to get an unknown card for learn mode. (404)
     """
 
-    assert False
+    response = c_user.get('/api/cards/abcd/learn/')
+    assert response.status_code == 404
 
 
 @xfail
@@ -159,28 +159,38 @@ def test_respond_card():
     assert False
 
 
-@xfail
-def test_respond_card_401():
+def test_respond_card_401(app, db_conn):
     """
     Expect to require log in to get an unknown card. (401)
     """
 
-    assert False
+    response = app.test_client().post('/api/cards/abcd/responses/')
+    assert response.status_code == 401
 
 
-@xfail
-def test_respond_card_404():
+def test_respond_card_404(app, db_conn, c_user):
     """
     Expect to fail to respond to an unknown card. (404)
     """
 
+    response = c_user.post('/api/cards/abcd/responses/')
+    assert response.status_code == 404
+
+
+@xfail
+def test_respond_card_400a():
+    """
+    Expect the card being responded to make sense,
+    given the learner context. (400)
+    """
+
     assert False
 
 
 @xfail
-def test_respond_card_400():
+def test_respond_card_400b():
     """
-    Expect respond to a card to make sense. (400)
+    Expect response to a card to make sense. (400)
     """
 
     assert False

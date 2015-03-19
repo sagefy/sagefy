@@ -2,6 +2,8 @@ from models.card import Card
 from modules.validations import is_required, is_string, is_list, is_number
 from modules.content import get as c
 
+# TODO@ `correct` and `feedback` should have access of 'view'
+
 
 def is_list_of_options(options):
     """
@@ -54,13 +56,15 @@ class FormulaCard(Card):
             'default': 0.001,
         },
         'default_incorrect_feedback': {
-            'validate': (is_required, is_string,)
+            'validate': (is_required, is_string,),
+            'access': ('view',),
         },
     })
 
     def __init__(self, fields=None):
         """
-
+        Create a new formula card instance.
         """
+
         super().__init__(fields)
         self['kind'] = 'formula'

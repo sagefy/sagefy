@@ -15,18 +15,17 @@ General REST ideas, but made more practical.
         - Search, sort, filter, fields (embed), paginate...
         - Use SSL if possible.
         - If no resource, pseudo resource or root level verb.
-    - Verbs: GET, POST, PUT, PATCH, DELETE, OPTIONS
+    - Verbs: GET, POST, PUT, DELETE, OPTIONS
         - Get: GET `bunnies/id`
         - List: GET `bunnies/`
         - Create: POST `bunnies/`
         - Update: PUT `bunnies/id`
-        - Update (small): PATCH `bunnies/id`
         - Delete: DELETE `bunnies/id`
         - Methods: OPTIONS `bunnies/`
     - Parameters
         - Use database or HTTP words over invention.
         - Pagination: use `limit` and `skip`.
-        - method=x with POST for PUT, PATCH, and DELETE.
+        - method=x with POST for PUT, and DELETE.
         - Use OAuth latest.
         - Stateless except for authorization.
         - API Version: use `?version=`. Defaults to latest version.
@@ -47,11 +46,11 @@ General REST ideas, but made more practical.
         - 200: Success
     - Success: Wrap objects in type of object. Return `{bunnies:[]}` or `{bunny:{}}`
         - Provide full resources.
-        - Updates (POST, PUT, PATCH) should return object as well.
+        - Updates (POST, PUT) should return object as well.
         - Include links to related requests. [RFC5988](https://tools.ietf.org/html/rfc5988)
             - `{bunnies:[{id:1,links:[]}],links:[]}`
             - Give kind: get, list, create, update, delete, next, prev, self, parent, child
-        - Aim for orthogonal updates and deletes (PUT, PATCH, DELETE).
+        - Aim for orthogonal updates and deletes (PUT, DELETE).
         - Return all parameters under `parameters:`.
     - Errors: return `{errors:[ {message: ""} ]}`.
     - GZip everything.

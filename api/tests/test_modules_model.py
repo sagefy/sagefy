@@ -24,11 +24,11 @@ class User(Model):
         'email': {
             'validate': (is_required, is_email),
             'unique': True,
-            'access': 'private'
+            'access': ('private',),
         },
         'password': {
             'validate': (is_required, (has_min_length, 8)),
-            'access': False,
+            'access': (),
             'bundle': encrypt_password
         }
     })

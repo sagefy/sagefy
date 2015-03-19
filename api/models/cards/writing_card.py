@@ -18,7 +18,8 @@ class WritingCard(Card):
 
     def __init__(self, fields=None):
         """
-
+        Create a new writing card instance.
         """
+
         super().__init__(fields)
         self['kind'] = 'writing'

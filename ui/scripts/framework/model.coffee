@@ -123,7 +123,7 @@ class Model extends Events
 
     ###
     Make an Ajax call given options:
-    - method: one of get, post, put, patch, delete
+    - method: one of get, post, put, delete
     - url: string URL
     - data: data to send to the server
     - done: a function to do on success

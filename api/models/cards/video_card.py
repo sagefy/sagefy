@@ -15,7 +15,8 @@ class VideoCard(Card):
 
     def __init__(self, fields=None):
         """
-
+        Create a new video card instance.
         """
+
         super().__init__(fields)
         self['kind'] = 'video'
