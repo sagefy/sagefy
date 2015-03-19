@@ -72,10 +72,9 @@ sudo apt-get -y install python-software-properties python g++ make
 sudo add-apt-repository -y ppa:chris-lea/node.js
 sudo apt-get -y update
 sudo apt-get -y install nodejs
-sudo npm install -g gulp bower
+sudo npm install -g gulp
 cd /var/www/ui
 sudo npm install
-bower install -F --allow-root
 gulp deploy
 
 #### Server ###################################################################
