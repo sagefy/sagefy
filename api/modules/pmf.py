@@ -1,13 +1,9 @@
-
 """
 PMF, or Probability Mass Function.
 """
 
-import operator
-
 
 class PMF(object):
-
     def __init__(self, hypotheses):
         """
         Create a new PMF, given a list of hypotheses.
@@ -55,7 +51,7 @@ class PMF(object):
                            probability / total
                            for hypothesis, probability
                            in self.hypotheses.items()}
-                           
+
     def get_value(self):
         """
         Turns the distribution into a single value.

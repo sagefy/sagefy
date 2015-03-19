@@ -103,7 +103,7 @@ class Set(EntityMixin, Model):
         found_sets, all_sets = sets, []
 
         while found_sets:
-            set_ids = set(set_['entity_id'] for set_ in found_sets)
+            set_ids = {set_['entity_id'] for set_ in found_sets}
             all_sets += found_sets
             query = (cls.start_canonicals_query()
                         .filter(r.row['members'].contains(
@@ -122,18 +122,20 @@ class Set(EntityMixin, Model):
         # *** First, we need to break down
         #     the set into a list of known units. ***
 
+        # TODO break into smaller functions
+
         unit_ids = set()
         sets = [self]
 
         while sets:
             set_ids = set()
             for set_ in sets:
-                unit_ids.update(set(member['id']
-                                    for member in set_.data.get('members')
-                                    if member['kind'] == 'unit'))
-                set_ids.update(set(member['id']
-                                   for member in set_.data.get('members')
-                                   if member['kind'] == 'set'))
+                unit_ids.update({member['id']
+                                 for member in set_.data.get('members')
+                                 if member['kind'] == 'unit'})
+                set_ids.update({member['id']
+                                for member in set_.data.get('members')
+                                if member['kind'] == 'set'})
             sets = Set.list_by_entity_ids(set_ids)
 
         # *** Second, we need to find all
@@ -156,11 +158,11 @@ class Set(EntityMixin, Model):
                         ids = {unit_id}
                         while ids:
                             unit_ids.update(ids)
-                            ids = set(unit_id
-                                      for unit_id, require_ids
-                                      in unit_requires.items()
-                                      if unit_id not in unit_ids
-                                      and require_ids & ids)
+                            ids = {unit_id
+                                   for unit_id, require_ids
+                                   in unit_requires.items()
+                                   if unit_id not in unit_ids
+                                   and require_ids & ids}
                     elif require_id not in unit_requires:
                         next_grab.add(require_id)
 

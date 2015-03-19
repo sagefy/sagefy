@@ -21,7 +21,7 @@ sudo ln -fs /vagrant /var/www
 sudo apt-get -y install python3-dev
 sudo apt-get -y install python3-setuptools
 sudo apt-get -y install python3-pip
-sudo pip3 install -r /var/www/setup/requirements.txt
+sudo pip3 install -r /var/www/api/requirements.txt
 sudo pip3 install pytest
 sudo pip3 install coverage
 
@@ -84,10 +84,8 @@ sudo apt-get -y install nginx
 sudo apt-get -y install uwsgi
 sudo uwsgi --stop /tmp/uwsgi-master.pid
 sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
-# TO LOG: sudo tail -F /tmp/uwsgi.log
 sudo nginx -s stop
 sudo nginx -c /var/www/setup/nginx.conf
-# TO LOG: sudo tail -F /var/log/nginx/error.log
 
 echo "Hooray! Provisioned."
 echo "For script and style watching, run gulp."

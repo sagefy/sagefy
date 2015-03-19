@@ -11,6 +11,7 @@ class EntityMixin(object):
         """
 
         # TODO@ this query should have an index in card, unit, set
+        # TODO is there a way to avoid the cost of this query?
         return (cls.table
                    .filter(r.row['canonical'].eq(True))
                    .group('entity_id')
