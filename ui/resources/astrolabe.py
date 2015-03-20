@@ -4,14 +4,19 @@ Generates Astrolabe icon.
 
 from jinja2 import Template
 
-### Colors ###
+# Colors ###
 
-light_color = '#AAA354'
-medium_color = '#6C6733'
-dark_color = '#343115'
+light_color = '#ccc7a8'
+medium_color = '#625f4a'
+dark_color = '#323124'
 
+# Light Colors
 
-### Attributes ###
+light_color = '#fcfcfb'
+medium_color = '#ccc7a8'
+dark_color = '#969272'
+
+# Attributes ###
 
 attrs = {
     "main_circle": {
@@ -89,7 +94,7 @@ attrs = {
 }
 
 
-### Methods ###
+# Methods ###
 
 def generate(base=10):
     """
@@ -353,7 +358,7 @@ def get_attrs(base):
         )
 
     def baseify(ats):
-        for key, val in ats.iteritems():
+        for key, val in ats.items():
             if isinstance(val, dict):
                 baseify(val)
             if isinstance(val, (float, int)):
@@ -371,4 +376,4 @@ def get_svg(attrs):
 
 
 if __name__ == "__main__":
-    print generate()
+    print(generate())

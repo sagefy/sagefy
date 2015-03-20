@@ -2,12 +2,12 @@
 ---
 title: Colors
 description: |
-    Four primary hues are used by Sagefy. All are generated via [huslp](http://www.boronine.com/husl/) at 100% saturation.
+    Four primary hues are used by Sagefy. All are generated via [huslp](http://www.boronine.com/husl/).
 
-    - **Gold**. 80&deg; Serves as the base hue. Also ndicates warning.
-    - **Blue**. 240&deg; -- Indicates a clickable element or navigation element. Also an accent color when no other is applicable.
-    - **Green**. 120&deg; -- Useful for success and acceptance states.
-    - **Red**. 0&deg; -- Reserved for errors, danger, major issues, or to provide warmth.
+    - **Gold**. 80&deg;, 50% saturation. Serves as the base hue. Also ndicates warning.
+    - **Blue**. 240&deg;, 100% saturation. Indicates a clickable element or navigation element. Also an accent color when no other is applicable.
+    - **Green**. 120&deg;, 100% saturation. Useful for success and acceptance states.
+    - **Red**. 0&deg;, 100% saturation. Reserved for errors, danger, major issues, or to provide warmth.
 
     **Lightness**. Any lightness values may be used. Sagefy recommends against values darker than 20%.
 
@@ -17,9 +17,9 @@ example: |
             <tr>
                 <th></th>
                 <th>20%</th>
-                <th>43%</th>
-                <th>66%</th>
-                <th>78%</th>
+                <th>40%</th>
+                <th>60%</th>
+                <th>80%</th>
                 <th>90%</th>
                 <th>95%</th>
                 <th>97%</th>
@@ -28,64 +28,64 @@ example: |
         </thead>
         <tbody>
             <tr>
-                <td>Gold</td>
-                <td style="background:#343115"></td>
-                <td style="background:#6c6733"></td>
-                <td style="background:#aba354"></td>
-                <td style="background:#ccc375"></td>
-                <td style="background:#e7e3c7"></td>
-                <td style="background:#f3f1e4"></td>
-                <td style="background:#f8f7ef"></td>
-                <td style="background:#fdfcfa"></td>
+                <td>Base</td>
+                <td class="base-color-20"></td>
+                <td class="base-color-40"></td>
+                <td class="base-color-60"></td>
+                <td class="base-color-80"></td>
+                <td class="base-color-90"></td>
+                <td class="base-color-95"></td>
+                <td class="base-color-97"></td>
+                <td class="base-color-99"></td>
             </tr>
             <tr>
-                <td>Blue</td>
-                <td style="background:#1f3243"></td>
-                <td style="background:#456988"></td>
-                <td style="background:#6fa6d4"></td>
-                <td style="background:#90c6f7"></td>
-                <td style="background:#d2e4fa"></td>
-                <td style="background:#e9f2fc"></td>
-                <td style="background:#f2f7fd"></td>
-                <td style="background:#fbfcfe"></td>
+                <td>Accent</td>
+                <td class="accent-color-20"></td>
+                <td class="accent-color-40"></td>
+                <td class="accent-color-60"></td>
+                <td class="accent-color-80"></td>
+                <td class="accent-color-90"></td>
+                <td class="accent-color-95"></td>
+                <td class="accent-color-97"></td>
+                <td class="accent-color-99"></td>
             </tr>
             <tr>
-                <td>Green</td>
-                <td style="background:#22351c"></td>
-                <td style="background:#4c6e3f"></td>
-                <td style="background:#7aae67"></td>
-                <td style="background:#99cf87"></td>
-                <td style="background:#d2e9cc"></td>
-                <td style="background:#e9f4e6"></td>
-                <td style="background:#f2f8f0"></td>
-                <td style="background:#fbfdfa"></td>
+                <td>Good</td>
+                <td class="good-color-20"></td>
+                <td class="good-color-40"></td>
+                <td class="good-color-60"></td>
+                <td class="good-color-80"></td>
+                <td class="good-color-90"></td>
+                <td class="good-color-95"></td>
+                <td class="good-color-97"></td>
+                <td class="good-color-99"></td>
             </tr>
             <tr>
-                <td>Red</td>
-                <td style="background:#45282e"></td>
-                <td style="background:#8c5661"></td>
-                <td style="background:#da899a"></td>
-                <td style="background:#ffa9ba"></td>
-                <td style="background:#ffd9e0"></td>
-                <td style="background:#ffecef"></td>
-                <td style="background:#fff4f6"></td>
-                <td style="background:#fffbfc"></td>
+                <td>Bad</td>
+                <td class="bad-color-20"></td>
+                <td class="bad-color-40"></td>
+                <td class="bad-color-60"></td>
+                <td class="bad-color-80"></td>
+                <td class="bad-color-90"></td>
+                <td class="bad-color-95"></td>
+                <td class="bad-color-97"></td>
+                <td class="bad-color-99"></td>
             </tr>
         </tbody>
     </table>
 ---
 */
 
-$gold(light)
-    huslp(80, 100, light)
+$base-color(light)
+    huslp(80, 50, light)
 
-$blue(light)
+$accent-color(light)
     huslp(240, 100, light)
 
-$green(light)
+$good-color(light)
     huslp(120, 100, light)
 
-$red(light)
+$bad-color(light)
     huslp(0, 100, light)
 
 $white = #ffffff

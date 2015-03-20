@@ -16,13 +16,26 @@
         font-style italic
 
     .sg-example
-        border 1px solid $gold(90)
+        border 1px solid $base-color(90)
         padding $gutter
 
     .column-demo
         .col-2
-            background $red(95)
+            background $bad-color(95)
 
         .col-6
-            background $blue(90)
+            background $accent-color(90)
 
+
+    for light in 20 40 60 80 90 95 97 99
+        .base-color-{light}
+            background $base-color(light)
+
+        .accent-color-{light}
+            background $accent-color(light)
+
+        .good-color-{light}
+            background $good-color(light)
+
+        .bad-color-{light}
+            background $bad-color(light)

@@ -48,16 +48,16 @@ example: |
 */
 
 ::-webkit-input-placeholder
-    color $gold(90)
+    color $base-color(90)
 
 ::-moz-placeholder
-    color $gold(90)
+    color $base-color(90)
 
 :-ms-input-placeholder
-    color $gold(90)
+    color $base-color(90)
 
 input:-moz-placeholder
-    color $gold(90)
+    color $base-color(90)
 
 /*
 ---
@@ -139,27 +139,27 @@ input[type="time"],
 input[type="search"],
 input[type="tel"],
 textarea
-    border 1px solid $gold(78)
+    border 1px solid $base-color(78)
     background $white
     border-radius $border-radius
     line-height $unit * 2
-    box-shadow inset 0 1px 2px $gold(95), 0 1px 0 $white
+    box-shadow inset 0 1px 2px $base-color(95), 0 1px 0 $white
     transition box-shadow 0.2s
     max-width 100%
 
     &:hover, &:focus, &.hover, &.focus
-        border-color $gold(66)
+        border-color $base-color(66)
         outline 0
 
     &:focus, &.focus
-        box-shadow inset 0 1px 2px $gold(95), 0 0 1px 1px $gold(78)
+        box-shadow inset 0 1px 2px $base-color(95), 0 0 1px 1px $base-color(78)
 
     &[disabled], &.disabled
         background none
         cursor not-allowed
 
         &:hover, &:focus, &.hover, &.focus, &:focus, &.focus
-            border-color $gold(78)
+            border-color $base-color(78)
             box-shadow none
 
 input[type="text"],
@@ -248,33 +248,33 @@ input[type="radio"]
     -webkit-appearance none
     -webkit-user-select none
     background $white
-    border 1px solid $gold(78)
+    border 1px solid $base-color(78)
     margin 0 1px 0 0
     bottom 2px
     height 13px
     position relative
     vertical-align middle
     width 13px
-    box-shadow inset 0 1px 2px $gold(95), 0 1px 0 $white
+    box-shadow inset 0 1px 2px $base-color(95), 0 1px 0 $white
 
     &:checked
-        border 1px solid $blue(78)
+        border 1px solid $accent-color(78)
 
         &::before
             -webkit-user-select none
             content ''
             display block
-            background $blue(66)
+            background $accent-color(66)
             border 1px solid $white
             width 100%
             height 100%
 
     &:focus, &.focus
         outline 0
-        box-shadow inset 0 1px 2px $gold(95), 0 0 1px 1px $gold(78)
+        box-shadow inset 0 1px 2px $base-color(95), 0 0 1px 1px $base-color(78)
 
         &:checked
-            box-shadow inset 0 1px 2px $gold(95), 0 0 1px 1px $blue(78)
+            box-shadow inset 0 1px 2px $base-color(95), 0 0 1px 1px $accent-color(78)
 
     &[disabled], &.disabled
         background none
@@ -337,10 +337,10 @@ form label
         padding 0 ($unit / 4)
 
     .required
-        color $red(60)
+        color $bad-color(60)
 
     .optional
-        color $gold(60)
+        color $base-color(60)
 
 /*
 ---
@@ -379,13 +379,13 @@ example: |
 */
 
 fieldset
-    border 1px solid $gold(78)
+    border 1px solid $base-color(78)
     margin 0
     padding 0 1em
     border-radius $border-radius
 
 legend
-    color $gold(43)
+    color $base-color(43)
 
 /*
 ---
@@ -450,7 +450,7 @@ example: |
 
 .form-description
     @extend .font-size-accent
-    color $gold(43)
+    color $base-color(43)
 
 /*
 ---
@@ -483,7 +483,7 @@ example: |
 
 .form-field__description
     margin 0
-    color $gold(43)
+    color $base-color(43)
     font-style italic
 
 /*
@@ -562,7 +562,7 @@ example: |
 
 .form-field--disabled
     label
-        color $gold(66)
+        color $base-color(66)
 
 /*
 ---
@@ -595,7 +595,7 @@ example: |
 
 .form-field--success
     label
-        color $green(66)
+        color $good-color(66)
 
     input[type="text"],
     input[type="password"],
@@ -608,16 +608,16 @@ example: |
     textarea,
     input[type="checkbox"],
     input[type="radio"]
-        color $green(50)
-        border-color $green(66)
+        color $good-color(50)
+        border-color $good-color(66)
 
     .form-field__feedback
-        background $green(95)
-        color $green(60)
+        background $good-color(95)
+        color $good-color(60)
 
 .form-field--error
     label
-        color $red(66)
+        color $bad-color(66)
 
     input[type="text"],
     input[type="password"],
@@ -630,16 +630,16 @@ example: |
     textarea,
     input[type="checkbox"],
     input[type="radio"]
-        color $red(66)
-        border-color $red(66)
+        color $bad-color(66)
+        border-color $bad-color(66)
 
     .form-field__feedback
-        background $red(95)
-        color $red(60)
+        background $bad-color(95)
+        color $bad-color(60)
 
 .form-field--warning
     label
-        color $gold(66)
+        color $base-color(66)
 
     input[type="text"],
     input[type="password"],
@@ -652,9 +652,9 @@ example: |
     textarea,
     input[type="checkbox"],
     input[type="radio"]
-        color $gold(66)
-        border-color $gold(66)
+        color $base-color(66)
+        border-color $base-color(66)
 
     .form-field__feedback
-        background $gold(95)
-        color $gold(60)
+        background $base-color(95)
+        color $base-color(60)
