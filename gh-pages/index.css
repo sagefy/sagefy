@@ -426,8 +426,11 @@ th {
   padding: 0;
 }
 
+.title-font {
+  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", georgia, serif;
+}
 .base-font {
-  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", serif;
+  font-family: georgia, serif;
 }
 .monospace,
 pre,
@@ -695,7 +698,7 @@ input,
 textarea,
 select,
 button {
-  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", serif;
+  font-family: georgia, serif;
   font-size: 16px;
   line-height: 24px;
 }
@@ -789,6 +792,7 @@ h5,
 h6 {
   margin: 12px 0;
   font-weight: bold;
+  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", georgia, serif;
 }
 h1 em,
 h2 em,
@@ -839,6 +843,7 @@ hgroup :not(:last-child) {
   margin-bottom: 0;
 }
 .leading {
+  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", georgia, serif;
   color: #696650;
 }
 del {
@@ -1779,10 +1784,12 @@ header hgroup {
 }
 header .title {
   margin-top: 12px;
+  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", georgia, serif;
 }
 header .description {
   font-style: italic;
   color: #696650;
+  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", georgia, serif;
 }
 img {
   max-width: 100%;

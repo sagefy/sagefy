@@ -2,17 +2,22 @@
 ---
 title: Fonts
 description: |
-    Sagefy's primary typeface is Palatino. Monospaced typography uses DejaVu Sans Mono derivatives.
+    Sagefy uses Palatino for titles and large copy. Sagefy uses Georgia for body copy. Sagefy uses DejaVu Sans Mono derivatives for monospaced.
 
-    - **Base**: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", serif
+    - **Title**: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", serif
+    - **Base**: georgia, serif
     - **Monospace**: menlo, "dejavu sans mono", "bitstream vera sans mono", consolas, inconsolata, "lucida console", monaco, monospace
 
-    The classes `base-font` and `monospace` can be used to alter the typeface.
+    The classes `title-font`, `base-font` and `monospace` can be used to alter the typeface.
 ---
 */
 
-$base-font-family = "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", serif
+$title-font-family = "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", georgia, serif
+$base-font-family = georgia, serif
 $monospace-font-family = menlo, "dejavu sans mono", "bitstream vera sans mono", consolas, inconsolata, "lucida console", monaco, monospace
+
+.title-font
+    font-family $title-font-family
 
 .base-font
     font-family $base-font-family

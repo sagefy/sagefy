@@ -9,7 +9,7 @@ module.exports = ->
             Adaptive, collaborative, and open learning platform.
         </h3>
     </hgroup>
-    <p class="leading">
+    <p>
         <a href="/log_in">Log In</a> or <a href="/sign_up">Sign Up</a>
     </p>
     <p class="legal">
