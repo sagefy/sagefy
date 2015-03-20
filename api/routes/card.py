@@ -1,10 +1,9 @@
-from flask import Blueprint, abort, jsonify
+from flask import Blueprint, abort, jsonify, request
 from flask.ext.login import current_user
 from models.card import Card
 from models.unit import Unit
 from models.topic import Topic
 from models.response import Response
-from modules.util import pick
 
 
 card_routes = Blueprint('card', __name__, url_prefix='/api/cards')
@@ -55,17 +54,16 @@ def learn_card(card_id):
     if not card:
         return abort(404)
 
-    # TODO@ 400: Does the card make sense, given the context?
+    context = current_user.get_learning_context()
+    if context.get('unit', {}).get('id') != card['unit_id']:
+        return abort(400)
 
-    # TODO@ for the menu, we must include...
-    #      [ ] set: name and id  (context)
-    #      [ ] unit: name, body, id  (context)
-    #      [x] card: name and id
-
-    # TODO@ return a limited set
+    current_user.set_learning_context(card=card)
 
     return jsonify(
         card=card.deliver(access=''),
+        set=context.get('set'),
+        unit=context.get('unit')
     )
 
 
@@ -82,8 +80,18 @@ def respond_to_card(card_id):
     if not card:
         return abort(404)
 
-    # TODO@ 400a Does the card make sense, given the context?
+    context = current_user.get_learning_context()
+    if not context.get('card', {}).get('id') != card['entity_id']:
+        return abort(400)
 
-    # TODO@ 400b Is the response valid?
+    errors = card.is_valid_response(request.json)
+    if errors:
+        return jsonify(errors=errors), 400
 
-    return '', 204
+    response, errors = Response.insert(request.json)
+    if errors:
+        return jsonify(errors=errors), 400
+
+    current_user.set_learning_context(card=None)
+
+    return jsonify(response=response.deliver())

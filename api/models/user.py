@@ -139,3 +139,27 @@ class User(Model):
 
         self['password'] = password
         self.save()
+
+    def set_learning_context(self, **kwargs):
+        """
+        TODO@ Update the learning context.
+        """
+
+        if 'card' in kwargs and kwargs['card'] is None:
+            pass
+
+        if 'card' in kwargs and kwargs['card'].get('entity_id'):
+            pass
+
+        return {}
+
+    def get_learning_context(self):
+        """
+        TODO@ Get the learning context of the user.
+        """
+
+        # [ ] set: name and id  (context)
+        # [ ] unit: name, body, id  (context)
+        # [ ] card: id
+
+        return {}

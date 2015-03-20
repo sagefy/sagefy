@@ -21,7 +21,9 @@ def get(filename, key, language='en'):
         files[filename] = yaml.load(stream)
         stream.close()
 
-    return get_first(files[filename][key], language, language[:2], 'en')
-
+    s = get_first(files[filename][key], language, language[:2], 'en')
+    assert s, "Not Found > {filename} @ {key}".format(filename=filename,
+                                                      key=key)
+    return s
 
 _ = get

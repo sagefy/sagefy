@@ -11,5 +11,6 @@ get = (filename, key, language = 'en') ->
     for lang in [language, language[..1], 'en']
         if k[lang]
             return k[lang]
+    return "Not Found > #{filename} @ #{key}"
 
 module.exports = {get: get}
