@@ -11,7 +11,7 @@ before_install:
     - sudo apt-get -y install rethinkdb
     - rethinkdb --daemon
 install:
-    - pip install -r setup/requirements.txt
+    - pip install -r api/requirements.txt
     - pip install pytest coverage flake8
     - 'npm install -g gulp && cd ui && npm install && cd ..'
 script:
