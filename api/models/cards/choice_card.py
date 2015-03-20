@@ -1,6 +1,6 @@
 from models.card import Card
-from modules.validations import is_required, is_string, is_list, is_number, \
-    is_one_of, is_boolean
+from modules.validations import is_required, is_string, is_list, \
+    is_one_of, is_boolean, is_integer
 from modules.content import get as c
 
 
@@ -46,7 +46,7 @@ class ChoiceCard(Card):
             'access': ('view',),
         },
         'max_options_to_show': {
-            'validate': (is_number,),
+            'validate': (is_integer,),
             'default': 4,
             'access': ('view',),
         }

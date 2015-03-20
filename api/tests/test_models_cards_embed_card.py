@@ -4,6 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
+@xfail
 def test_embed_url(app, cards_table):
     """
     Expect embed card to require URL.

@@ -11,12 +11,16 @@ url:
     en: Must be a full URL.
 minlength:
     en: Must have minimum length of {length}.
+maxlength:
+    en: Must have maximum length of {length}.
 boolean:
     en: Must be true or false.
 string:
     en: Must be a string.
 number:
     en: Must be a number.
+integer:
+    en: Must be an integer.
 string_or_number:
     en: Must be a string or number.
 language:

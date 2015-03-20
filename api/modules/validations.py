@@ -43,8 +43,20 @@ def is_number(value):
     if value is None:
         return
 
-    if not isinstance(value, (int, float, complex)):
+    if not isinstance(value, (int, float)):
         return c('error', 'number')
+
+
+def is_integer(value):
+    """
+    Ensure the given value is a integer.
+    """
+
+    if value is None:
+        return
+
+    if not isinstance(value, int):
+        return c('error', 'integer')
 
 
 def is_string_or_number(value):
@@ -116,6 +128,18 @@ def has_min_length(value, ln):
 
     if not value or len(value) < ln:
         return c('error', 'minlength').replace('{length}', str(ln))
+
+
+def has_max_length(value, ln):
+    """
+    Ensure the given value is a maximum length.
+    """
+
+    if value is None:
+        return
+
+    if not value or len(value) > ln:
+        return c('error', 'maxlength').replace('{length}', str(ln))
 
 
 def is_one_of(value, *options):

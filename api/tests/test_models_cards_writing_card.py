@@ -4,6 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
+@xfail
 def test_writing_body(app, cards_table):
     """
     Expect writing card to require body.
@@ -19,6 +20,7 @@ def test_writing_body(app, cards_table):
     assert len(errors) == 0
 
 
+@xfail
 def test_writing_max_char(app, cards_table):
     """
     Expect writing card to allow max char.

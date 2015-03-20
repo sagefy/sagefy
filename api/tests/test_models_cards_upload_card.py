@@ -4,6 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
+@xfail
 def test_upload_body(app, cards_table):
     """
     Expect an upload card to require a body.
@@ -20,6 +21,7 @@ def test_upload_body(app, cards_table):
     assert len(errors) == 0
 
 
+@xfail
 def test_upload_file_extensions(app, cards_table):
     """
     Expect an upload card to require file_extensions.

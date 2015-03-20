@@ -1,6 +1,6 @@
 from modules.validations import is_required, is_boolean, is_string, \
     is_number, is_language, is_list, is_email, has_min_length, is_one_of, \
-    is_list_of_strings, is_url, is_string_or_number
+    is_list_of_strings, is_url, is_string_or_number, is_integer, has_max_length
 
 
 def test_require(app, db_conn):
@@ -41,6 +41,14 @@ def test_minlength(app, db_conn):
     assert has_min_length('a', 8)
 
 
+def test_maxlength(app, db_conn):
+    """
+    Expect a validation to require a maximum length.
+    """
+    assert has_max_length('abcd1234', 2)
+    assert has_max_length('a', 2) is None
+
+
 def test_boolean(app, db_conn):
     """
     Expect a boolean.
@@ -63,6 +71,15 @@ def test_number(app, db_conn):
     """
     assert is_number(0) is None
     assert is_number('1')
+
+
+def test_integer(app, db_conn):
+    """
+    Expect a number.
+    """
+    assert is_integer(0) is None
+    assert is_integer(1.1)
+    assert is_integer('1')
 
 
 def test_string_or_number(app, db_conn):
