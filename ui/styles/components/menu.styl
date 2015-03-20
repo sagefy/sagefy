@@ -58,9 +58,15 @@ example: |
 .menu__trigger
     position fixed
     display inline-block
-    bottom $unit
-    left $unit
+    bottom 0
+    left 0
+    padding ($unit / 2)
+    background alpha($base-color(99), 0.8)
     border-bottom 0
+    border-top-right-radius 6px
+
+    .selected &
+        background alpha($base-color(20), 0.8)
 
     .menu__logo
         $h = $unit * 6

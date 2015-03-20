@@ -1,9 +1,7 @@
 ---
 layout: default
+title: What is Sagefy?
 ---
-
-What is Sagefy?
-------------------
 
 **Sagefy is an open-content adaptive learning platform.**
 
