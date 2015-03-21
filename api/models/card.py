@@ -75,4 +75,12 @@ class Card(EntityMixin, Model):
         """
         TODO@ Ensure no require cycles form.
         """
+        
+        return []
+
+    def is_valid_response(self, body):
+        """
+        Ensure the given response body is valid, given the card information.
+        """
+
         return []

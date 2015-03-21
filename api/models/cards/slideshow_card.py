@@ -20,3 +20,10 @@ class SlideshowCard(Card):
 
         super().__init__(fields)
         self['kind'] = 'slideshow'
+
+    def is_valid_response(self, body):
+        """
+        Ensure the given response body is valid, given the card information.
+        """
+
+        return [{'message': 'No response is valid.'}]

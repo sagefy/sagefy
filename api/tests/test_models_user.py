@@ -1,4 +1,7 @@
 from models.user import User
+import pytest
+
+xfail = pytest.mark.xfail
 
 
 def test_user_name_required(app, db_conn):
@@ -199,3 +202,21 @@ def test_update_password(app, db_conn, users_table):
     pw1 = user['password']
     user.update_password('1234abcd')
     assert pw1 != user['password']
+
+
+@xfail
+def test_get_learning_context(app, db_conn, users_table):
+    """
+    Expect to get the learning context.
+    """
+
+    assert False
+
+
+@xfail
+def test_set_learning_context(app, db_conn, users_table):
+    """
+    Expect to set the learning context.
+    """
+
+    assert False

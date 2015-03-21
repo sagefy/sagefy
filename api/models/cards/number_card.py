@@ -43,3 +43,11 @@ class NumberCard(Card):
         self['kind'] = 'number'
 
     # TODO@ validate has_correct_options
+
+    def is_valid_response(self, body):
+        """
+        @TODO Ensure the given response body is valid,
+        given the card information.
+        """
+
+        return []

@@ -4,8 +4,9 @@ from modules.validations import is_required, is_email, is_string, \
 from passlib.hash import bcrypt
 from flask import url_for, current_app as app, request
 from flask.ext.login import current_user
-from modules.util import uniqid
+from modules.util import uniqid, pick
 from modules.content import get as c
+import json
 
 
 def encrypt_password(value):
@@ -104,7 +105,7 @@ class User(Model):
 
         token = uniqid()
         app.redis.setex(
-            'user_password_token_%s' % self['id'],  # key
+            'user_password_token_{id}'.format(id=self['id']),  # key
             60 * 10,  # time
             bcrypt.encrypt(self['id'] + token)  # value
         )
@@ -125,7 +126,7 @@ class User(Model):
         Ensure the given token is valid.
         """
 
-        key = 'user_password_token_%s' % self['id']
+        key = 'user_password_token_{id}'.format(id=self['id'])
         entoken = app.redis.get(key)
         app.redis.delete(key)
         if entoken:
@@ -140,26 +141,47 @@ class User(Model):
         self['password'] = password
         self.save()
 
-    def set_learning_context(self, **kwargs):
-        """
-        TODO@ Update the learning context.
-        """
-
-        if 'card' in kwargs and kwargs['card'] is None:
-            pass
-
-        if 'card' in kwargs and kwargs['card'].get('entity_id'):
-            pass
-
-        return {}
-
     def get_learning_context(self):
         """
-        TODO@ Get the learning context of the user.
+        Get the learning context of the user.
         """
 
-        # [ ] set: name and id  (context)
-        # [ ] unit: name, body, id  (context)
-        # [ ] card: id
+        key = 'learning_context_{id}'.format(id=self['id'])
+        context = json.loads(app.redis.get(key) or '{}')
+        return context
 
-        return {}
+    def set_learning_context(self, **kwargs):
+        """
+        Update the learning context.
+        """
+
+        key = 'learning_context_{id}'.format(id=self['id'])
+        context = json.loads(app.redis.get(key) or '{}')
+
+        for kind in ('card', 'unit', 'set'):
+            if kind in kwargs and kwargs[kind] is None:
+                del context[kind]
+
+        card, unit, set_ = (kwargs.get('card'), kwargs.get('unit'),
+                            kwargs.get('set'))
+
+        if card and 'entity_id' in card:
+            context['card'] = {
+                'id': card['entity_id'],
+            }
+
+        if unit and 'entity_id' in unit:
+            context['unit'] = {
+                'id': unit['entity_id'],
+                'name': unit['name'],
+                'body': unit['body'],
+            }
+
+        if set_ and 'entity_id' in set_:
+            context['set'] = {
+                'id': set_['entity_id'],
+                'name': set['name'],
+            }
+
+        app.redis.set(key, json.dumps(context))
+        return context

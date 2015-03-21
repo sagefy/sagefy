@@ -64,3 +64,11 @@ class ChoiceCard(Card):
 
     # TODO@ When listing options to learner,
     #       make sure there is at least one correct option
+
+    def is_valid_response(self, body):
+        """
+        @TODO Ensure the given response body is valid,
+        given the card information.
+        """
+
+        return []
