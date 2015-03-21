@@ -16,7 +16,8 @@
   "author": "Sagefy",
   "license": "AGPL",
   "dependencies": {
-    "normalize.css": "^3.0.1"
+    "normalize.css": "^3.0.1",
+    "font-awesome": "^4.3.0"
   },
   "devDependencies": {
     "browserify": "^9.0.3",
@@ -24,7 +25,6 @@
     "coffee-script": "^1.9.0",
     "coffeeify": "^1.0.0",
     "del": "^1.1.1",
-    "font-awesome": "^4.3.0",
     "gulp": "^3.8.10",
     "gulp-coffeelint": "^0.4.0",
     "gulp-minify-css": "^1.0.0",

@@ -1,4 +1,5 @@
 from models.user import User
+import json
 import pytest
 
 xfail = pytest.mark.xfail
@@ -178,6 +179,7 @@ def test_is_valid_token(app, db_conn, users_table):
     Expect a valid token to be approved.
     Expect an invalid token to not be approved.
     """
+
     users_table.insert({
         'id': 'abcd1234',
         'name': 'Dalton',
@@ -194,6 +196,7 @@ def test_update_password(app, db_conn, users_table):
     """
     Expect to update a user's password.
     """
+
     user, errors = User.insert({
         'name': 'Dalton',
         'email': 'test@example.com',
@@ -204,19 +207,88 @@ def test_update_password(app, db_conn, users_table):
     assert pw1 != user['password']
 
 
-@xfail
 def test_get_learning_context(app, db_conn, users_table):
     """
     Expect to get the learning context.
     """
 
-    assert False
+    users_table.insert({
+        'id': 'abcd1234',
+        'name': 'Dalton',
+        'email': 'test@example.com',
+        'password': 'abcd1234',
+    }).run(db_conn)
+
+    user = User.get(id='abcd1234')
+
+    app.redis.set('learning_context_abcd1234', json.dumps({
+        'card': {'id': 'A'},
+        'unit': {'id': 'B'},
+        'set': {'id': 'C'},
+    }))
+    assert user.get_learning_context() == {
+        'card': {'id': 'A'},
+        'unit': {'id': 'B'},
+        'set': {'id': 'C'},
+    }
+
+    app.redis.delete('learning_context_abcd1234')
+    assert user.get_learning_context() == {}
 
 
-@xfail
 def test_set_learning_context(app, db_conn, users_table):
     """
     Expect to set the learning context.
     """
 
-    assert False
+    users_table.insert({
+        'id': 'abcd1234',
+        'name': 'Dalton',
+        'email': 'test@example.com',
+        'password': 'abcd1234',
+    }).run(db_conn)
+
+    user = User.get(id='abcd1234')
+
+    user.set_learning_context(card={'entity_id': 'A'})
+    assert user.get_learning_context() == {
+        'card': {'id': 'A'}
+    }
+
+    user.set_learning_context(unit={
+        'entity_id': 'B',
+        'name': 'Banana',
+        'body': "Banana",
+    }, set={
+        'entity_id': 'C',
+        'name': 'Coconut',
+    })
+    assert user.get_learning_context() == {
+        'card': {
+            'id': 'A',
+        },
+        'unit': {
+            'id': 'B',
+            'name': 'Banana',
+            'body': "Banana",
+        },
+        'set': {
+            'id': 'C',
+            'name': 'Coconut',
+        }
+    }
+
+    user.set_learning_context(set=None)
+    assert user.get_learning_context() == {
+        'card': {
+            'id': 'A',
+        },
+        'unit': {
+            'id': 'B',
+            'name': 'Banana',
+            'body': "Banana",
+        },
+    }
+
+    user.set_learning_context(card=None, unit=None)
+    assert user.get_learning_context() == {}

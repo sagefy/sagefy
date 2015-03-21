@@ -130,6 +130,7 @@ class User(Model):
         entoken = app.redis.get(key)
         app.redis.delete(key)
         if entoken:
+            entoken = entoken.decode()
             return bcrypt.verify(self['id'] + token, entoken)
         return False
 
@@ -147,8 +148,10 @@ class User(Model):
         """
 
         key = 'learning_context_{id}'.format(id=self['id'])
-        context = json.loads(app.redis.get(key) or '{}')
-        return context
+        try:
+            return json.loads(app.redis.get(key).decode())
+        except:
+            return {}
 
     def set_learning_context(self, **kwargs):
         """
@@ -156,7 +159,10 @@ class User(Model):
         """
 
         key = 'learning_context_{id}'.format(id=self['id'])
-        context = json.loads(app.redis.get(key) or '{}')
+        try:
+            context = json.loads(app.redis.get(key).decode())
+        except:
+            context = {}
 
         for kind in ('card', 'unit', 'set'):
             if kind in kwargs and kwargs[kind] is None:
@@ -180,7 +186,7 @@ class User(Model):
         if set_ and 'entity_id' in set_:
             context['set'] = {
                 'id': set_['entity_id'],
-                'name': set['name'],
+                'name': set_['name'],
             }
 
         app.redis.set(key, json.dumps(context))
