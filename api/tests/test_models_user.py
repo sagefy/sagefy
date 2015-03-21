@@ -259,6 +259,7 @@ def test_set_learning_context(app, db_conn, users_table):
         'entity_id': 'B',
         'name': 'Banana',
         'body': "Banana",
+        'extra': 'Mwahahaha!',
     }, set={
         'entity_id': 'C',
         'name': 'Coconut',
