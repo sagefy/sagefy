@@ -51,7 +51,7 @@ def test_get_user_sets(db_conn, c_user, sets_table, users_sets_table):
     prep(sets_table, users_sets_table, db_conn)
     response = c_user.get('/api/users/abcd1234/sets/')
     assert response.status_code == 200
-    response = json.loads(response.data.decode('utf-8'))
+    response = json.loads(response.data.decode())
     assert len(response['sets']) == 2
     assert response['sets'][0]['body'] in ('Apple', 'Coconut')
 
@@ -90,7 +90,7 @@ def test_add_set(db_conn, c_user, sets_table, users_sets_table):
 
     response = c_user.post('/api/users/abcd1234/sets/A1/')
     assert response.status_code == 200
-    response = json.loads(response.data.decode('utf-8'))
+    response = json.loads(response.data.decode())
     assert 'A1' in response['sets']
 
 

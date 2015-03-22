@@ -24,4 +24,4 @@ def test_404(app):
     """
     error.setup_errors(app)
     response = app.test_client().get('/api/afds')
-    assert '404' in response.data.decode('utf-8')
+    assert '404' in response.data.decode()

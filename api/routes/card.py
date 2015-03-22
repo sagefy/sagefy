@@ -84,14 +84,23 @@ def respond_to_card(card_id):
     if not context.get('card', {}).get('id') != card['entity_id']:
         return abort(400)
 
-    errors = card.is_valid_response(request.json)
+    response = request.json.get('response')
+    errors = card.validate_response(response)
     if errors:
         return jsonify(errors=errors), 400
 
-    response, errors = Response.insert(request.json)
+    score, feedback = card.score_response(response)
+
+    response, errors = Response.insert({
+        'user_id': current_user['id'],
+        'card_id': context['card']['id'],
+        'unit_id': context['unit']['id'],
+        'response': response,
+        'score': score,
+    })
     if errors:
         return jsonify(errors=errors), 400
 
     current_user.set_learning_context(card=None)
 
-    return jsonify(response=response.deliver())
+    return jsonify(response=response.deliver(), feedback=feedback)

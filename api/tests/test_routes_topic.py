@@ -72,7 +72,7 @@ def test_create_topic(app, db_conn, c_user, topics_table, posts_table):
         }
     }), content_type='application/json')
 
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert response.status_code == 200
     assert 'post' in data
     assert 'topic' in data
@@ -100,7 +100,7 @@ def test_create_topic_proposal(app, db_conn, users_table, topics_table,
         }
     }), content_type='application/json')
 
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert response.status_code == 200
     assert 'post' in data
     assert 'topic' in data
@@ -127,7 +127,7 @@ def test_create_topic_flag(app, db_conn, users_table, topics_table,
             'reason': 'duplicate',
         }
     }), content_type='application/json')
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert response.status_code == 200
     assert 'post' in data
     assert 'topic' in data
@@ -154,7 +154,7 @@ def test_create_topic_log_in(app, db_conn, users_table, topics_table,
             }
         }), content_type='application/json')
         assert response.status_code == 401
-        data = json.loads(response.data.decode('utf-8'))
+        data = json.loads(response.data.decode())
         assert 'errors' in data
 
 
@@ -173,7 +173,7 @@ def test_create_topic_no_post(app, db_conn, users_table, topics_table,
         }
     }), content_type='application/json')
     assert response.status_code == 400
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert 'errors' in data
 
 
@@ -187,7 +187,7 @@ def test_topic_update(app, db_conn, users_table, topics_table,
         'name': 'Another entity',
         'topic_id': 'wxyz7890',
     }), content_type='application/json')
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert response.status_code == 200
     assert data['topic']['name'] == 'Another entity'
 
@@ -202,7 +202,7 @@ def test_update_topic_author(app, db_conn, users_table, topics_table,
         'name': 'Another entity',
         'topic_id': 'wxyz7890',
     }), content_type='application/json')
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert response.status_code == 403
     assert 'errors' in data
 
@@ -219,7 +219,7 @@ def test_update_topic_fields(app, db_conn, users_table, topics_table,
             'kind': 'set'
         }
     }), content_type='application/json')
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert response.status_code == 400
     assert 'errors' in data
 
@@ -252,7 +252,7 @@ def test_get_posts(app, db_conn, users_table, topics_table, posts_table):
     with app.test_client() as c:
         response = c.get('/api/topics/wxyz7890/posts/')
         assert response.status_code == 200
-        data = json.loads(response.data.decode('utf-8'))
+        data = json.loads(response.data.decode())
         assert ('Beneficial to the Publick' in data['posts'][0]['body']
                 or 'Beneficial to the Publick' in data['posts'][1]['body'])
 
@@ -287,10 +287,10 @@ def test_get_posts_paginate(app, db_conn, users_table, topics_table,
     with app.test_client() as c:
         response = c.get('/api/topics/wxyz7890/posts/')
         assert response.status_code == 200
-        data = json.loads(response.data.decode('utf-8'))
+        data = json.loads(response.data.decode())
         assert len(data['posts']) == 10
         response = c.get('/api/topics/wxyz7890/posts/?skip=20')
-        data = json.loads(response.data.decode('utf-8'))
+        data = json.loads(response.data.decode())
         assert len(data['posts']) == 5
 
 
@@ -305,7 +305,7 @@ def test_get_posts_proposal(app, db_conn, users_table, topics_table,
     with app.test_client() as c:
         response = c.get('/api/topics/wxyz7890/posts/')
         assert response.status_code == 200
-        data = json.loads(response.data.decode('utf-8'))
+        data = json.loads(response.data.decode())
         assert data['posts'][0]['kind'] == 'proposal'
 
 
@@ -329,7 +329,7 @@ def test_get_posts_votes(app, db_conn, users_table, topics_table, posts_table):
     with app.test_client() as c:
         response = c.get('/api/topics/wxyz7890/posts/')
         assert response.status_code == 200
-        data = json.loads(response.data.decode('utf-8'))
+        data = json.loads(response.data.decode())
         assert data['posts'][0]['kind'] in ('proposal', 'vote')
         assert data['posts'][1]['kind'] in ('proposal', 'vote')
 
@@ -349,7 +349,7 @@ def test_create_post(app, db_conn, users_table, topics_table, posts_table,
         'topic_id': 'wxyz7890',
     }), content_type='application/json')
     assert response.status_code == 200
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert 'Beneficial to the Publick' in data['post']['body']
 
 
@@ -366,7 +366,7 @@ def test_create_post_errors(app, db_conn, users_table, topics_table,
                            }),
                            content_type='application/json')
     assert response.status_code == 400
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert 'errors' in data
 
 
@@ -385,7 +385,7 @@ def test_create_post_log_in(app, db_conn, users_table, topics_table,
             'topic_id': 'wxyz7890',
         }), content_type='application/json')
         assert response.status_code == 401
-        data = json.loads(response.data.decode('utf-8'))
+        data = json.loads(response.data.decode())
         assert 'errors' in data
 
 
@@ -412,7 +412,7 @@ def test_create_post_proposal(app, db_conn, users_table, topics_table,
         },
     }), content_type='application/json')
     assert response.status_code == 200
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert data['post']['kind'] == 'proposal'
 
 
@@ -431,7 +431,7 @@ def test_create_post_vote(app, db_conn, users_table, topics_table,
         'response': True,
     }), content_type='application/json')
     assert response.status_code == 200
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert data['post']['kind'] == 'vote'
 
 
@@ -448,7 +448,7 @@ def test_update_post_log_in(app, db_conn, users_table, topics_table,
             'body': '''Update.''',
         }), content_type='application/json')
         assert response.status_code == 401
-        data = json.loads(response.data.decode('utf-8'))
+        data = json.loads(response.data.decode())
         assert 'errors' in data
 
 
@@ -463,7 +463,7 @@ def test_update_post_author(app, db_conn, users_table, topics_table,
         'body': '''Update.''',
     }), content_type='application/json')
     assert response.status_code == 403
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert 'errors' in data
 
 
@@ -478,7 +478,7 @@ def test_update_post_body(app, db_conn, users_table, topics_table,
         'body': '''Update.''',
     }), content_type='application/json')
     assert response.status_code == 200
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert 'Update' in data['post']['body']
 
 
@@ -492,7 +492,7 @@ def test_update_proposal(app, db_conn, users_table, topics_table,
     response = c_user.put('/api/topics/wxyz7890/posts/jklm/', data=json.dumps({
         'status': 'declined'
     }), content_type='application/json')
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert response.status_code == 200
     assert 'declined' in data['post']['status']
 
@@ -524,6 +524,6 @@ def test_update_vote(app, db_conn, users_table, topics_table,
             'response': True,
         }),
         content_type='application/json')
-    data = json.loads(response.data.decode('utf-8'))
+    data = json.loads(response.data.decode())
     assert response.status_code == 200
     assert True == data['post']['response']

@@ -154,7 +154,7 @@ def test_get_follows(db_conn, c_user, follows_table):
     }]).run(db_conn)
     response = c_user.get('/api/follows/')
     assert response.status_code == 200
-    response = json.loads(response.data.decode('utf-8'))
+    response = json.loads(response.data.decode())
     assert len(response['follows']) == 2
 
 

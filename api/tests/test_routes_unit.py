@@ -79,7 +79,7 @@ def test_get_unit(app, db_conn,
 
     response = app.test_client().get('/api/units/zytx/')
     assert response.status_code == 200
-    response = json.loads(response.data.decode('utf-8'))
+    response = json.loads(response.data.decode())
     # Model
     assert response['unit']['entity_id'] == 'zytx'
     assert response['unit']['name'] == 'Wildwood'

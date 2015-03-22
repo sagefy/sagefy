@@ -84,9 +84,18 @@ def test_choice_max_opts(app, cards_table):
 
 
 @xfail
-def test_is_valid_response(app, db_conn, cards_table):
+def test_validate_response(app, db_conn, cards_table):
     """
     Expect to check if a given response is valid for the card kind.
+    """
+
+    assert False
+
+
+@xfail
+def test_score_response(app, db_conn, cards_table):
+    """
+    Expect to score if a given response is correct for the card kind.
     """
 
     assert False

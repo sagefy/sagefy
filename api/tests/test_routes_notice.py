@@ -16,7 +16,7 @@ def test_list(db_conn, c_user, notices_table):
         })
     response = c_user.get('/api/notices/')
     assert response.status_code == 200
-    response = json.loads(response.data.decode('utf-8'))
+    response = json.loads(response.data.decode())
     assert len(response['notices']) == 10
     assert 'user_id' in response['notices'][0]
 
@@ -41,13 +41,13 @@ def test_list_paginate(app, db_conn, c_user, notices_table):
         })
 
     response = c_user.get('/api/notices/')
-    response = json.loads(response.data.decode('utf-8'))
+    response = json.loads(response.data.decode())
     assert len(response['notices']) == 10
     response = c_user.get('/api/notices/?skip=10')
-    response = json.loads(response.data.decode('utf-8'))
+    response = json.loads(response.data.decode())
     assert len(response['notices']) == 10
     response = c_user.get('/api/notices/?skip=20')
-    response = json.loads(response.data.decode('utf-8'))
+    response = json.loads(response.data.decode())
     assert len(response['notices']) == 5
 
 
@@ -62,7 +62,7 @@ def test_mark(app, db_conn, c_user, notices_table):
     nid = notice['id']
     response = c_user.put('/api/notices/%s/read/' % nid)
     assert response.status_code == 200
-    response = json.loads(response.data.decode('utf-8'))
+    response = json.loads(response.data.decode())
     assert response['notice']['read'] is True
     record = notices_table.get(nid).run(db_conn)
     assert record['read'] is True
@@ -90,7 +90,7 @@ def test_mark_no_notice(app, db_conn, c_user, notices_table):
     """
     response = c_user.put('/api/notices/abcd1234/read/')
     assert response.status_code == 404
-    response = json.loads(response.data.decode('utf-8'))
+    response = json.loads(response.data.decode())
 
 
 def test_mark_not_owned(app, db_conn, c_user, notices_table):

@@ -56,7 +56,7 @@ def test_upload_rubric(app, cards_table):
 
 
 @xfail
-def test_is_valid_response(app, db_conn, cards_table):
+def test_validate_response(app, db_conn, cards_table):
     """
     Expect to check if a given response is valid for the card kind.
     """

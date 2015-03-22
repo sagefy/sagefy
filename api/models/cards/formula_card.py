@@ -55,10 +55,18 @@ class FormulaCard(Card):
 
     # TODO@ validate has_correct_options
 
-    def is_valid_response(self, body):
+    def validate_response(self, body):
         """
-        @TODO Ensure the given response body is valid,
+        TODO@ Ensure the given response body is valid,
         given the card information.
         """
 
         return []
+
+    def score_response(self, response):
+        """
+        TODO@ Score the given response.
+        Returns the score and feedback.
+        """
+
+        return 1, ''

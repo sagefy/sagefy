@@ -24,7 +24,7 @@ class Response(Model):
         'unit_id': {
             'validate': (is_required, is_string,),
         },
-        'answer': {
+        'response': {
             'validate': (is_required,)
         },
         'score': {

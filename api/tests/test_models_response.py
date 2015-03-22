@@ -10,7 +10,7 @@ def test_created(app, db_conn, responses_table):
         'user_id': 'A',
         'card_id': 'BC',
         'unit_id': 'RM',
-        'answer': 42,
+        'response': 42,
         'score': 0.9,
     })
     del response['created']  # should be set to default anywho
@@ -26,7 +26,7 @@ def test_user(app, db_conn, responses_table):
     response, errors = Response.insert({
         'card_id': 'BC',
         'unit_id': 'RM',
-        'answer': 42,
+        'response': 42,
         'score': 0.9,
     })
     assert len(errors) == 1
@@ -43,7 +43,7 @@ def test_card(app, db_conn, responses_table):
     response, errors = Response.insert({
         'user_id': 'A',
         'unit_id': 'RM',
-        'answer': 42,
+        'response': 42,
         'score': 0.9,
     })
     assert len(errors) == 1
@@ -60,7 +60,7 @@ def test_unit(app, db_conn, responses_table):
     response, errors = Response.insert({
         'user_id': 'A',
         'card_id': 'BC',
-        'answer': 42,
+        'response': 42,
         'score': 0.9,
     })
     assert len(errors) == 1
@@ -69,9 +69,9 @@ def test_unit(app, db_conn, responses_table):
     assert len(errors) == 0
 
 
-def test_answer(app, db_conn, responses_table):
+def test_response(app, db_conn, responses_table):
     """
-    Expect to record the user's answer.
+    Expect to record the user's response.
     """
 
     response, errors = Response.insert({
@@ -81,7 +81,7 @@ def test_answer(app, db_conn, responses_table):
         'score': 0.9,
     })
     assert len(errors) == 1
-    response['answer'] = 42
+    response['response'] = 42
     response, errors = response.save()
     assert len(errors) == 0
 
@@ -95,7 +95,7 @@ def test_score(app, db_conn, responses_table):
         'user_id': 'A',
         'card_id': 'BC',
         'unit_id': 'RM',
-        'answer': 42,
+        'response': 42,
     })
     assert len(errors) == 1
     response['score'] = 1.1

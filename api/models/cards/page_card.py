@@ -17,7 +17,7 @@ class PageCard(Card):
         super().__init__(fields)
         self['kind'] = 'page'
 
-    def is_valid_response(self, body):
+    def validate_response(self, body):
         """
         Ensure the given response body is valid, given the card information.
         """

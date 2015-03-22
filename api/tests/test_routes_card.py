@@ -1,9 +1,8 @@
+import rethinkdb as r
+import json
 import pytest
 
 xfail = pytest.mark.xfail
-
-import rethinkdb as r
-import json
 
 
 def test_get_card(app, db_conn,
@@ -74,7 +73,7 @@ def test_get_card(app, db_conn,
 
     response = app.test_client().get('/api/cards/abcd/')
     assert response.status_code == 200
-    response = json.loads(response.data.decode('utf-8'))
+    response = json.loads(response.data.decode())
     # Model
     assert response['card']['entity_id'] == 'abcd'
     assert response['card']['kind'] == 'video'
@@ -105,21 +104,48 @@ def test_get_card_404(app, db_conn):
 
 
 @xfail
-def test_learn_card():
+def test_learn_card(app, db_conn, c_user, cards_table):
     """
     Expect to get a card for learn mode. (200)
     """
 
-    assert False
+    cards_table.insert({
+        'entity_id': 'tyui4567',
+        'unit_id': 'vbnm7890',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'choice',
+        'name': 'Meaning of Life',
+        'body': 'What is the meaning of life?',
+        'options': [{
+            'value': '42',
+            'correct': True,
+            'feedback': 'Yay!',
+        }, {
+            'value': 'love',
+            'correct': False,
+            'feedback': 'Boo!',
+        }],
+        'order': 'set',
+        'max_options_to_show': 4,
+    }).run(db_conn)
 
+    app.redis.set('learning_context_abcd1234', json.dumps({
+        'unit': {'id': 'vbnm7890'},
+        'set': {'id': 'jkl;1234'},
+    }))
 
-@xfail
-def test_learn_card_relevant():
-    """
-    Expect to learn card to only provide relevant data. (200)
-    """
+    response = c_user.get('/api/cards/tyui4567/learn/')
+    assert response.status_code == 200
+    response = json.loads(response.data.decode())
+    assert 'order' not in response['card']
+    assert 'correct' not in response['card']['options'][0]
+    assert 'feedback' not in response['card']['options'][0]
+    assert 'set' in response
+    assert 'unit' in response
 
-    assert False
+    app.redis.delete('learning_context_abcd1234')
 
 
 def test_learn_card_401(app, db_conn):
@@ -140,23 +166,87 @@ def test_learn_card_404(app, db_conn, c_user):
     assert response.status_code == 404
 
 
-@xfail
-def test_learn_card_400():
+def test_learn_card_400(app, db_conn, cards_table, c_user):
     """
     Expect the card for learn mode to make sense,
     given the learner context. (400)
     """
 
-    assert False
+    cards_table.insert({
+        'entity_id': 'tyui4567',
+        'unit_id': 'vbnm7890',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'choice',
+        'name': 'Meaning of Life',
+        'body': 'What is the meaning of life?',
+        'options': [{
+            'value': '42',
+            'correct': True,
+            'feedback': 'Yay!',
+        }, {
+            'value': 'love',
+            'correct': False,
+            'feedback': 'Boo!',
+        }],
+        'order': 'set',
+        'max_options_to_show': 4,
+    }).run(db_conn)
+
+    app.redis.set('learning_context_abcd1234', json.dumps({
+        'unit': {'id': 'gfds6543'},
+        'set': {'id': '6543hgfs'},
+    }))
+
+    response = c_user.get('/api/cards/tyui4567/learn/')
+    assert response.status_code == 400
+    response = json.loads(response.data.decode())
+    app.redis.delete('learning_context_abcd1234')
 
 
 @xfail
-def test_respond_card():
+def test_respond_card(app, db_conn, cards_table, c_user):
     """
     Expect to respond to a card. (200)
     """
 
-    assert False
+    cards_table.insert({
+        'entity_id': 'tyui4567',
+        'unit_id': 'vbnm7890',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'choice',
+        'name': 'Meaning of Life',
+        'body': 'What is the meaning of life?',
+        'options': [{
+            'value': '42',
+            'correct': True,
+            'feedback': 'Yay!',
+        }, {
+            'value': 'love',
+            'correct': False,
+            'feedback': 'Boo!',
+        }],
+        'order': 'set',
+        'max_options_to_show': 4,
+    }).run(db_conn)
+
+    app.redis.set('learning_context_abcd1234', json.dumps({
+        'unit': {'id': 'vbnm7890'},
+        'set': {'id': 'jkl;1234'},
+        'card': {'id': 'tyui4567'},
+    }))
+
+    response = c_user.post('/api/cards/tyui4567/responses/', data=json.dumps({
+        'response': '42'
+    }), content_type='application/json')
+    assert response.status_code == 200
+    response = json.loads(response.data.decode())
+    assert 'response' in response
+    assert 'feedback' in response
+    app.redis.delete('learning_context_abcd1234')
 
 
 def test_respond_card_401(app, db_conn):
@@ -178,19 +268,86 @@ def test_respond_card_404(app, db_conn, c_user):
 
 
 @xfail
-def test_respond_card_400a():
+def test_respond_card_400a(app, db_conn, c_user, cards_table):
     """
     Expect the card being responded to make sense,
     given the learner context. (400)
     """
 
-    assert False
+    cards_table.insert({
+        'entity_id': 'tyui4567',
+        'unit_id': 'vbnm7890',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'choice',
+        'name': 'Meaning of Life',
+        'body': 'What is the meaning of life?',
+        'options': [{
+            'value': '42',
+            'correct': True,
+            'feedback': 'Yay!',
+        }, {
+            'value': 'love',
+            'correct': False,
+            'feedback': 'Boo!',
+        }],
+        'order': 'set',
+        'max_options_to_show': 4,
+    }).run(db_conn)
+
+    app.redis.set('learning_context_abcd1234', json.dumps({
+        'unit': {'id': 'vbnm7890'},
+        'set': {'id': 'jkl;1234'},
+        'card': {'id': 'gfds3456'},
+    }))
+
+    response = c_user.post('/api/cards/tyui4567/responses/', data=json.dumps({
+        'response': '42'
+    }), content_type='application/json')
+    assert response.status_code == 400
+    response = json.loads(response.data.decode())
+    app.redis.delete('learning_context_abcd1234')
 
 
 @xfail
-def test_respond_card_400b():
+def test_respond_card_400b(app, db_conn, c_user, cards_table):
     """
     Expect response to a card to make sense. (400)
     """
 
-    assert False
+    cards_table.insert({
+        'entity_id': 'tyui4567',
+        'unit_id': 'vbnm7890',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+        'kind': 'choice',
+        'name': 'Meaning of Life',
+        'body': 'What is the meaning of life?',
+        'options': [{
+            'value': '42',
+            'correct': True,
+            'feedback': 'Yay!',
+        }, {
+            'value': 'love',
+            'correct': False,
+            'feedback': 'Boo!',
+        }],
+        'order': 'set',
+        'max_options_to_show': 4,
+    }).run(db_conn)
+
+    app.redis.set('learning_context_abcd1234', json.dumps({
+        'unit': {'id': 'vbnm7890'},
+        'set': {'id': 'jkl;1234'},
+        'card': {'id': 'tyui4567'},
+    }))
+
+    response = c_user.post('/api/cards/tyui4567/responses/', data=json.dumps({
+        'response': 'Waffles'
+    }), content_type='application/json')
+    assert response.status_code == 400
+    response = json.loads(response.data.decode())
+    assert 'errors' in response
+    app.redis.delete('learning_context_abcd1234')

@@ -78,10 +78,18 @@ class Card(EntityMixin, Model):
 
         return []
 
-    def is_valid_response(self, body):
+    def validate_response(self, response):
         """
-        Ensure the given response body is valid, given the card information.
+        Ensure the given response is valid, given the card information.
         Returns a list of errors.
+        """
+
+        raise Exception("No method implemented.")
+
+    def score_response(self, response):
+        """
+        Score the given response.
+        Returns the score and feedback.
         """
 
         raise Exception("No method implemented.")
