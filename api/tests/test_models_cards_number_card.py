@@ -1,4 +1,7 @@
 from models.cards.number_card import NumberCard
+import pytest
+
+xfail = pytest.mark.xfail
 
 
 def test_number_body(app, cards_table):
@@ -81,3 +84,12 @@ def test_number_default_feedback(app, cards_table):
     assert len(errors) == 1
     card, errors = card.update({'default_incorrect_feedback': 'Boo!'})
     assert len(errors) == 0
+
+
+@xfail
+def test_is_valid_response(app, db_conn, cards_table):
+    """
+    Expect to check if a given response is valid for the card kind.
+    """
+
+    assert False

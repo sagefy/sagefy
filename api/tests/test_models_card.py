@@ -1,4 +1,7 @@
 from models.card import Card
+import pytest
+
+xfail = pytest.mark.xfail
 
 
 def test_entity_id(app, db_conn, cards_table):
@@ -135,3 +138,12 @@ def test_kind(app, db_conn, cards_table):
     card['kind'] = 'video'
     card, errors = card.save()
     assert len(errors) == 0
+
+
+@xfail
+def test_is_valid_response(app, db_conn, cards_table):
+    """
+    Expect to check if a given response is valid for the card kind.
+    """
+
+    assert False

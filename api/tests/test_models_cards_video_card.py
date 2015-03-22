@@ -1,4 +1,7 @@
 from models.cards.video_card import VideoCard
+import pytest
+
+xfail = pytest.mark.xfail
 
 
 def test_site(app, cards_table):
@@ -29,3 +32,12 @@ def test_video_id(app, cards_table):
     assert len(errors) == 1
     card, errors = card.update({'video_id': 'JFKl94jl'})
     assert len(errors) == 0
+
+
+@xfail
+def test_is_valid_response(app, db_conn, cards_table):
+    """
+    Expect to check if a given response is valid for the card kind.
+    """
+
+    assert False

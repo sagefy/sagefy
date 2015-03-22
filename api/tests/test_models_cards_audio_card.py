@@ -1,4 +1,7 @@
 from models.cards.audio_card import AudioCard
+import pytest
+
+xfail = pytest.mark.xfail
 
 
 def test_audio_site(app, cards_table):
@@ -29,3 +32,12 @@ def test_audio_audio_id(app, cards_table):
     assert len(errors) == 1
     card, errors = card.update({'audio_id': 'JKfoej89'})
     assert len(errors) == 0
+
+
+@xfail
+def test_is_valid_response(app, db_conn, cards_table):
+    """
+    Expect to check if a given response is valid for the card kind.
+    """
+
+    assert False

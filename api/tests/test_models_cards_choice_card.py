@@ -1,4 +1,7 @@
 from models.cards.choice_card import ChoiceCard
+import pytest
+
+xfail = pytest.mark.xfail
 
 
 def test_choice_body(app, cards_table):
@@ -78,3 +81,12 @@ def test_choice_max_opts(app, cards_table):
     assert len(errors) == 0
     card, errors = card.update({'max_options': 2})
     assert len(errors) == 0
+
+
+@xfail
+def test_is_valid_response(app, db_conn, cards_table):
+    """
+    Expect to check if a given response is valid for the card kind.
+    """
+
+    assert False

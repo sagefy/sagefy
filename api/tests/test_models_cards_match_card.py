@@ -1,4 +1,7 @@
 from models.cards.match_card import MatchCard
+import pytest
+
+xfail = pytest.mark.xfail
 
 
 def test_match_body(app, cards_table):
@@ -81,3 +84,12 @@ def test_match_casing(app, cards_table):
     assert len(errors) == 0
     card, errors = card.update({'case_sensitive': True})
     assert len(errors) == 0
+
+
+@xfail
+def test_is_valid_response(app, db_conn, cards_table):
+    """
+    Expect to check if a given response is valid for the card kind.
+    """
+
+    assert False
