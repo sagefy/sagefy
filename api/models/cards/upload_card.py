@@ -50,9 +50,9 @@ class UploadCard(Card):
         super().__init__(fields)
         self['kind'] = 'upload'
 
-    def validate_response(self, body):
+    def validate_response(self, response):
         """
-        @TODO Ensure the given response body is valid,
+        TODO@ Ensure the given response body is valid,
         given the card information.
         """
 

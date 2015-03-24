@@ -43,9 +43,9 @@ class WritingCard(Card):
         super().__init__(fields)
         self['kind'] = 'writing'
 
-    def validate_response(self, body):
+    def validate_response(self, response):
         """
-        @TODO Ensure the given response body is valid,
+        TODO@ Ensure the given response body is valid,
         given the card information.
         """
 
