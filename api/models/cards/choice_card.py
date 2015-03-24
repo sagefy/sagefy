@@ -65,11 +65,16 @@ class ChoiceCard(Card):
     # TODO@ When listing options to learner,
     #       make sure there is at least one correct option
 
-    def validate_response(self, body):
+    def validate_response(self, response):
         """
         TODO@ Ensure the given response body is valid,
         given the card information.
         """
+
+        values = [opt['value'] for opt in self['options']]
+
+        if response not in values:
+            return [{'message': 'Value is not an option.'}]
 
         return []
 

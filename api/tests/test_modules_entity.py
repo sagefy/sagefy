@@ -60,3 +60,12 @@ def test_create_entity(app):
     })
     assert len(errors) == 0
     assert isinstance(e, Card)
+
+
+@xfail
+def test_get_card_by_kind(app, db_conn, cards_table):
+    """
+    Expect to get a card by id and return the proper kind.
+    """
+
+    assert False

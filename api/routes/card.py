@@ -4,6 +4,7 @@ from models.card import Card
 from models.unit import Unit
 from models.topic import Topic
 from models.response import Response
+from modules.entity import get_card_by_kind
 
 
 card_routes = Blueprint('card', __name__, url_prefix='/api/cards')
@@ -16,7 +17,7 @@ def get_card(card_id):
     not used for the learning interface.
     """
 
-    card = Card.get_latest_canonical(card_id)
+    card = get_card_by_kind(card_id)
     if not card:
         return abort(404)
 
@@ -50,7 +51,7 @@ def learn_card(card_id):
     if not current_user.is_authenticated():
         return abort(401)
 
-    card = Card.get_latest_canonical(card_id)
+    card = get_card_by_kind(card_id)
     if not card:
         return abort(404)
 
@@ -76,12 +77,13 @@ def respond_to_card(card_id):
     if not current_user.is_authenticated():
         return abort(401)
 
-    card = Card.get_latest_canonical(card_id)
+    card = get_card_by_kind(card_id)
     if not card:
         return abort(404)
 
     context = current_user.get_learning_context()
-    if not context.get('card', {}).get('id') != card['entity_id']:
+    if (context.get('card', {}).get('id') != card['entity_id'] or
+            context.get('unit', {}).get('id') != card['unit_id']):
         return abort(400)
 
     response = request.json.get('response')

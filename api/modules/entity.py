@@ -6,6 +6,18 @@ from models.card import Card
 from models.unit import Unit
 from models.set import Set
 
+from models.cards.audio_card import AudioCard
+from models.cards.choice_card import ChoiceCard
+from models.cards.embed_card import EmbedCard
+from models.cards.formula_card import FormulaCard
+from models.cards.match_card import MatchCard
+from models.cards.number_card import NumberCard
+from models.cards.page_card import PageCard
+from models.cards.slideshow_card import SlideshowCard
+from models.cards.upload_card import UploadCard
+from models.cards.video_card import VideoCard
+from models.cards.writing_card import WritingCard
+
 
 def get_latest_canonical(kind, entity_id):
     """
@@ -57,3 +69,32 @@ def create_entity(data):
         return Set.insert(data['set'])
 
     return None, []
+
+
+def get_card_by_kind(card_id):
+    """
+    Given a card data, return a new card model to replace it by kind.
+    """
+
+    card = Card.get_latest_canonical(card_id)
+    if not card:
+        return
+
+    data, kind = card.data, card.data.get('kind')
+
+    map = {
+        'audio': AudioCard,
+        'choice': ChoiceCard,
+        'embed': EmbedCard,
+        'formula': FormulaCard,
+        'match': MatchCard,
+        'number': NumberCard,
+        'page': PageCard,
+        'slideshow': SlideshowCard,
+        'upload': UploadCard,
+        'video': VideoCard,
+        'writing': WritingCard,
+    }
+
+    if kind in map:
+        return map[kind](data)
