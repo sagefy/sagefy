@@ -36,12 +36,32 @@ class User(Model):
             'access': (),
             'bundle': encrypt_password,
         },
-        'email_frequency': {
-            'validate': (is_required, is_string, (
-                is_one_of, 'immediate', 'daily', 'weekly', 'never',
-            )),
-            'access': ('private',),
-            'default': 'daily',
+        'settings': {
+            'validate': (is_required,),
+            'default': {},
+            'embed': {
+                'email_frequency': {
+                    'validate': (is_required, is_string, (
+                        is_one_of, 'immediate', 'daily', 'weekly', 'never',
+                    )),
+                    'access': ('private',),
+                    'default': 'daily',
+                },
+                'view_sets': {
+                    'validate': (is_required, is_string, (
+                        is_one_of, 'public', 'private'
+                    )),
+                    'access': ('private',),
+                    'default': 'private',
+                },
+                'view_follows': {
+                    'validate': (is_required, is_string, (
+                        is_one_of, 'public', 'private'
+                    )),
+                    'access': ('private',),
+                    'default': 'private',
+                },
+            }
         }
     })
 

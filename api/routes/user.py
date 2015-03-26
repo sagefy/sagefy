@@ -1,7 +1,11 @@
 from models.user import User
+from models.user_sets import UserSets
+from models.follow import Follow
 from flask import Blueprint, jsonify, request, make_response, abort
 from flask.ext.login import login_user, current_user, logout_user
 from modules.content import get as c
+from modules.util import parse_args
+from modules.discuss import get_posts_facade
 
 
 user_routes = Blueprint('user', __name__, url_prefix='/api/users')
@@ -26,13 +30,28 @@ def get_user(user_id):
     """
 
     user = User.get(id=user_id)
-    if user:
-        return jsonify(
-            user=user.deliver(
-                access='private' if user.is_current_user() else None
-            )
-        )
-    return abort(404)
+    # Posts if in request params
+    # Sets if in request params and allowed
+    # Follows if in request params and allowed
+    if not user:
+        return abort(404)
+
+    args = parse_args(request.args)
+
+    data = {}
+    data['user'] = user.deliver(access='private'
+                                if user.is_current_user()
+                                else None)
+    if 'posts' in args:
+        data['posts'] = [post.deliver() for post in
+                         get_posts_facade(user_id=user['id'])]
+    if 'sets' in args and user['settings']['view_sets'] == 'public':
+        u_sets = UserSets.get(user_id=user['id'])
+        data['sets'] = [set_.deliver() for set_ in u_sets.list_sets()]
+    if 'follows' in args and user['settings']['view_follows'] == 'public':
+        data['follows'] = [follow.deliver() for follow in
+                           Follow.list(user_id=user['id'])]
+    return jsonify(**data)
 
 
 @user_routes.route('/current/', methods=['GET'])
@@ -41,9 +60,9 @@ def get_current_user():
     Get current user's information.
     """
 
-    if current_user.is_authenticated():
-        return jsonify(user=current_user.deliver(access='private'))
-    return abort(401)
+    if not current_user.is_authenticated():
+        return abort(401)
+    return jsonify(user=current_user.deliver(access='private'))
 
 
 @user_routes.route('/', methods=['POST'])

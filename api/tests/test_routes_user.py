@@ -2,6 +2,9 @@ from passlib.hash import bcrypt
 import json
 from models.user import User
 from conftest import create_user_in_db, log_in, log_out
+import pytest
+
+xfail = pytest.mark.xfail
 
 
 def test_user_get(app, db_conn, users_table):
@@ -19,6 +22,30 @@ def test_user_get_failed(app, db_conn, users_table):
     """
     response = app.test_client().get('/api/users/abcd1234/')
     assert 'errors' in response.data.decode()
+
+
+@xfail
+def test_get_user_posts(app, db_conn, users_table, posts_table):
+    """
+    Expect to get user's 10 latest posts when requested in addition.
+    """
+    assert False
+
+
+@xfail
+def test_get_user_sets(app, db_conn, users_table, users_sets_table):
+    """
+    Expect to get user's sets, if requested and allowed.
+    """
+    assert False
+
+
+@xfail
+def test_get_user_follows(app, db_conn, users_table, follows_table):
+    """
+    Expect to get user's follows, if requested and allowed.
+    """
+    assert False
 
 
 def test_user_log_in(app, db_conn, users_table):
