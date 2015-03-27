@@ -187,14 +187,20 @@ class Model(object):
         Set up defaults for data if not applied.
         """
 
-        # TODO@ add consideration of `embed` and `embed_many`
+        def _(data, schema):
+            for name, field in schema.items():
+                if 'default' in field and data.get(name) is None:
+                    if hasattr(field['default'], '__call__'):
+                        data[name] = field['default']()
+                    else:
+                        data[name] = field['default']
+                if 'embed' in field:
+                    _(data.get(name) or {}, field['embed'])
+                if 'embed_many' in field:
+                    for d in data.get(name) or []:
+                        _(d, field['embed_many'])
 
-        for name, field_schema in self.schema.items():
-            if 'default' in field_schema and self.data.get(name) is None:
-                if hasattr(field_schema['default'], '__call__'):
-                    self.data[name] = field_schema['default']()
-                else:
-                    self.data[name] = field_schema['default']
+        _(self.data, self.schema)
         return self.data
 
     def bundle(self):

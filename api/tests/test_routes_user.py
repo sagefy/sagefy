@@ -2,6 +2,7 @@ from passlib.hash import bcrypt
 import json
 from models.user import User
 from conftest import create_user_in_db, log_in, log_out
+import rethinkdb as r
 import pytest
 
 xfail = pytest.mark.xfail
@@ -24,28 +25,112 @@ def test_user_get_failed(app, db_conn, users_table):
     assert 'errors' in response.data.decode()
 
 
-@xfail
-def test_get_user_posts(app, db_conn, users_table, posts_table):
+def test_get_user_posts(app, db_conn, c_user, posts_table):
     """
     Expect to get user's 10 latest posts when requested in addition.
     """
-    assert False
+
+    posts_table.insert([{
+        'created': r.now(),
+        'modified': r.now(),
+        'user_id': 'abcd1234',
+        'topic_id': 'fj2Ojfdskl2',
+        'body': '''A Modest Proposal for Preventing the Children of Poor
+            People From Being a Burthen to Their Parents or Country, and
+            for Making Them Beneficial to the Publick.''',
+        'kind': 'post',
+    }, {
+        'created': r.now(),
+        'modified': r.now(),
+        'user_id': 'gjrklj15431',
+        'topic_id': 'fj2Ojfdskl2',
+        'body': '''A Modest Proposal for Preventing the Children of Poor
+            People From Being a Burthen to Their Parents or Country, and
+            for Making Them Beneficial to the Publick.''',
+        'kind': 'post',
+    }, {
+        'created': r.now(),
+        'modified': r.now(),
+        'user_id': 'abcd1234',
+        'topic_id': 'fj2Ojfdskl2',
+        'body': '''A Modest Proposal for Preventing the Children of Poor
+            People From Being a Burthen to Their Parents or Country, and
+            for Making Them Beneficial to the Publick.''',
+        'kind': 'post',
+    }]).run(db_conn)
+
+    response = c_user.get('/api/users/abcd1234/?posts')
+    response = json.loads(response.data.decode())
+    assert 'posts' in response
+    assert len(response['posts']) == 2
 
 
-@xfail
-def test_get_user_sets(app, db_conn, users_table, users_sets_table):
+def test_get_user_sets(app, db_conn, c_user, users_sets_table,
+                       users_table,  sets_table):
     """
     Expect to get user's sets, if requested and allowed.
     """
-    assert False
+
+    users_table.get('abcd1234').update({
+        'settings': {'view_sets': 'public'}
+    }).run(db_conn)
+
+    sets_table.insert([{
+        'entity_id': 'A1',
+        'name': 'A',
+        'body': 'Apple',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }, {
+        'entity_id': 'B2',
+        'name': 'B',
+        'body': 'Banana',
+        'created': r.now(),
+        'modified': r.now(),
+        'canonical': True,
+    }]).run(db_conn)
+
+    users_sets_table.insert({
+        'user_id': 'abcd1234',
+        'set_ids': [
+            'A1',
+            'B2',
+        ],
+        'created': r.now(),
+        'modified': r.now(),
+    }).run(db_conn)
+
+    response = c_user.get('/api/users/abcd1234/?sets')
+    response = json.loads(response.data.decode())
+    assert 'sets' in response
+    assert len(response['sets']) == 2
 
 
-@xfail
-def test_get_user_follows(app, db_conn, users_table, follows_table):
+def test_get_user_follows(app, db_conn, c_user, users_table, follows_table):
     """
     Expect to get user's follows, if requested and allowed.
     """
-    assert False
+
+    users_table.get('abcd1234').update({
+        'settings': {'view_follows': 'public'}
+    }).run(db_conn)
+
+    follows_table.insert([{
+        'id': 'JIkfo034n',
+        'user_id': 'abcd1234',
+        'entity': {
+            'kind': 'card',
+            'id': 'JFlsjFm',
+        },
+        'created': r.now(),
+        'modified': r.now(),
+    }]).run(db_conn)
+
+    response = c_user.get('/api/users/abcd1234/?follows')
+    response = json.loads(response.data.decode())
+    assert 'follows' in response
+    assert len(response['follows']) == 1
 
 
 def test_user_log_in(app, db_conn, users_table):

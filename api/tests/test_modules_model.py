@@ -234,6 +234,24 @@ def test_enforce_strict(app, db_conn, users_table):
     assert 'extra' not in user.data
 
 
+@xfail
+def test_enforce_strict_embed():
+    """
+    Expect
+    """
+
+    assert False
+
+
+@xfail
+def test_enforce_strict_embed_many():
+    """
+    Expect
+    """
+
+    assert False
+
+
 def test_validate_fields(app, db_conn, users_table):
     """
     Expect to validate a model's fields.
@@ -250,6 +268,24 @@ def test_validate_fields(app, db_conn, users_table):
     assert errors[0]['message']
 
 
+@xfail
+def test_validate_fields_embed():
+    """
+    Expect
+    """
+
+    assert False
+
+
+@xfail
+def test_validate_fields_embed_many():
+    """
+    Expect
+    """
+
+    assert False
+
+
 def test_bundle(app, db_conn, users_table):
     """
     Expect to...
@@ -264,12 +300,48 @@ def test_bundle(app, db_conn, users_table):
     assert user['password'] == 'abcd1234'
 
 
+@xfail
+def test_bundle_embed():
+    """
+    Expect
+    """
+
+    assert False
+
+
+@xfail
+def test_bundle_embed_many():
+    """
+    Expect
+    """
+
+    assert False
+
+
 def test_default(app, db_conn, users_table):
     """
     Expect to set a default value for fields.
     """
     user = User()
     assert isinstance(user['id'], str)
+
+
+@xfail
+def test_default_embed():
+    """
+    Expect
+    """
+
+    assert False
+
+
+@xfail
+def test_default_embed_many():
+    """
+    Expect
+    """
+
+    assert False
 
 
 def test_deliver(app, db_conn, users_table):
@@ -287,6 +359,24 @@ def test_deliver(app, db_conn, users_table):
     data = user.deliver(access='private')
     assert 'email' in data
     assert 'password' not in data
+
+
+@xfail
+def test_deliver_embed():
+    """
+    Expect
+    """
+
+    assert False
+
+
+@xfail
+def test_deliver_embed_many():
+    """
+    Expect
+    """
+
+    assert False
 
 
 def test_insert(app, db_conn, users_table):
