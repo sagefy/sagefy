@@ -46,7 +46,7 @@ def test_entity(app, db_conn, topics_table):
         'user_id': 'Q',
         'name': 'A',
     })
-    assert len(errors) == 1
+    assert len(errors) == 2
     topic['entity'] = {
         'id': 'A',
         'kind': 'card',

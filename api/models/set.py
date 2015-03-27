@@ -4,7 +4,7 @@ from modules.model import Model
 from models.mixins.entity import EntityMixin
 from models.unit import Unit
 from modules.validations import is_required, is_language, is_string, \
-    is_boolean, is_list, is_list_of_strings, is_one_of
+    is_boolean, is_list, is_list_of_strings, is_one_of, has_min_length
 from modules.util import uniqid
 
 
@@ -55,7 +55,7 @@ class Set(EntityMixin, Model):
             'default': []
         },
         'members': {
-            'validate': (is_required,),
+            'validate': (is_required, is_list, (has_min_length, 1)),
             'embed_many': {
                 'id': {  # TODO@ is valid ids?
                     'validate': (is_required, is_string,),

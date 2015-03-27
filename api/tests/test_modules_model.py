@@ -557,3 +557,7 @@ def test_unique(app, db_conn, users_table):
     assert len(errors) == 0
     assert len(errors2) == 1
     assert errors2[0]['name'] == 'name'
+
+
+# TODO@ test_unique_embed
+# TODO@ test_unique_embed_many

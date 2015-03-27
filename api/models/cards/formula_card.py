@@ -1,6 +1,6 @@
 from models.card import Card
 from modules.validations import is_required, is_string, is_list, is_number, \
-    is_string_or_number, is_boolean
+    is_string_or_number, is_boolean, has_min_length
 
 
 def is_list_of_variables(vars):
@@ -17,7 +17,7 @@ class FormulaCard(Card):
             'validate': (is_required, is_string,)
         },
         'options': {  # Available answers
-            'validate': (is_required, is_list,),
+            'validate': (is_required, is_list, (has_min_length, 1)),
             'embed_many': {
                 'value': {
                     'validate': (is_required, is_string_or_number,),

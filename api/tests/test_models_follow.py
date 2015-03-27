@@ -27,7 +27,7 @@ def test_entity(app, db_conn, follows_table):
     follow, errors = Follow.insert({
         'user_id': 'A',
     })
-    assert len(errors) == 1
+    assert len(errors) == 2
     follow['entity'] = {
         'id': 'A',
         'kind': 'card',

@@ -1,6 +1,6 @@
 from models.card import Card
 from modules.validations import is_required, is_string, is_number, is_list, \
-    is_boolean
+    is_boolean, has_min_length
 
 
 class NumberCard(Card):
@@ -9,7 +9,7 @@ class NumberCard(Card):
             'validate': (is_required, is_string,),
         },
         'options': {
-            'validate': (is_required, is_list,),
+            'validate': (is_required, is_list, (has_min_length, 1)),
             'embed_many': {
                 'value': {
                     'validate': (is_required, is_number,),

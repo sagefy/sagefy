@@ -1,6 +1,6 @@
 from models.card import Card
 from modules.validations import is_required, is_string, is_list, \
-    is_one_of, is_boolean, is_integer
+    is_one_of, is_boolean, is_integer, has_min_length
 from modules.content import get as c
 
 
@@ -25,7 +25,7 @@ class ChoiceCard(Card):
             'validate': (is_required, is_string,),
         },
         'options': {  # Available answers
-            'validate': (is_required, is_list,),
+            'validate': (is_required, is_list, (has_min_length, 1)),
             'embed_many': {
                 'value': {
                     'validate': (is_required, is_string,),

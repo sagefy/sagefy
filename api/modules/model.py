@@ -9,6 +9,22 @@ def update_modified(field):
     return r.now()
 
 
+def iter(fn, data, schema, prefix=''):
+    for field_name, field_schema in schema.items():
+        fn(data, field_name, field_schema, prefix)
+
+        if 'embed' in field_schema:
+            data[field_name] = data.get(field_name) or {}
+            iter(fn, data[field_name], field_schema['embed'],
+                 '%s%s.' % (prefix, field_name))
+
+        elif 'embed_many' in field_schema:
+            data[field_name] = data.get(field_name) or []
+            for i, d in enumerate(data[field_name]):
+                iter(fn, d, field_schema['embed_many'],
+                     '%s%s.%i.' % (prefix, field_name, i))
+
+
 class Model(object):
     strict = True
     # strict = True will remove any fields not defined in the schema
@@ -94,152 +110,6 @@ class Model(object):
 
         assert self.tablename, 'You must provide a tablename.'
         return g.db.table(self.tablename)
-
-    def validate(self):
-        """
-        Ensure the data presented matches the validations in the schema.
-        Allow all data that is not specified in the schema.
-
-        To limit database queries, first we do strict checks, which
-        takes no lookups. Then we validate fields, which are unlikely to
-        have lookups. Then we test unique, which we know will have one lookup
-        each.
-
-        To add model-level validations, extend this method, such as:
-
-            def validate(self):
-                errors = super().validate()
-                if not errors:
-                    errors += self.validate_...()
-                return errors
-        """
-
-        errors = []
-        errors += self.enforce_strict_mode()
-        if not errors:
-            errors += self.validate_fields()
-        if not errors:
-            errors += self.test_unique()
-        return errors
-
-    def enforce_strict_mode(self):
-        """
-        If strict mode, remove any fields that aren't part of the schema.
-
-        For now, we'll just remove extra fields.
-        Later, we might want an option to throw errors instead.
-        """
-
-        # TODO@ add consideration of `embed` and `embed_many`
-
-        if self.strict:
-            self.data = pick(self.data, self.schema.keys())
-
-        return []
-
-    def validate_fields(self):
-        """
-        Iterate over the schema, ensuring that everything matches up.
-        """
-
-        # TODO@ add consideration of `embed` and `embed_many`
-
-        errors = []
-        for name, field_schema in self.schema.items():
-            if 'validate' in field_schema:
-                for fn in field_schema['validate']:
-                    if isinstance(fn, (list, tuple)):
-                        error = fn[0](self[name], *fn[1:])
-                    else:
-                        error = fn(self[name])
-                    if error:
-                        errors.append({
-                            'name': name,
-                            'message': error,
-                        })
-                        break
-        return errors
-
-    def test_unique(self):
-        """
-        Test all top-level fields marked as unique.
-        """
-
-        # TODO@ add consideration of `embed` and `embed_many`
-
-        errors = []
-        for name, value in self.data.items():
-            if 'unique' not in self.schema[name]:
-                continue
-            query = (self.table
-                         .filter(r.row[name] == value)
-                         .filter(r.row['id'] != self['id']))
-            entries = list(query.run(g.db_conn))
-            if len(entries) > 0:
-                errors.append({
-                    'name': name,
-                    'message': c('error', 'unique'),
-                })
-        return errors
-
-    def defaults(self):
-        """
-        Set up defaults for data if not applied.
-        """
-
-        def _(data, schema):
-            for name, field in schema.items():
-                if 'default' in field and data.get(name) is None:
-                    if hasattr(field['default'], '__call__'):
-                        data[name] = field['default']()
-                    else:
-                        data[name] = field['default']
-                if 'embed' in field:
-                    _(data.get(name) or {}, field['embed'])
-                if 'embed_many' in field:
-                    for d in data.get(name) or []:
-                        _(d, field['embed_many'])
-
-        _(self.data, self.schema)
-        return self.data
-
-    def bundle(self):
-        """
-        Prepare the data for saving into the database.
-        Consider default values and will call `bundle`
-        in the schema if present.
-        """
-
-        # TODO@ add consideration of `embed` and `embed_many`
-
-        data = self.data.copy()
-
-        for name, field_schema in self.schema.items():
-            if 'bundle' in field_schema and data.get(name):
-                data[name] = field_schema['bundle'](data[name])
-
-        return data
-
-    def deliver(self, access=None):
-        """
-        Prepare the data for consumption.
-        Consider access allowed and will call `deliver`
-        in the schema if present.
-        """
-
-        # TODO@ add consideration of `embed` and `embed_many`
-
-        data = self.data.copy()
-
-        for name, field_schema in self.schema.items():
-            if 'access' in field_schema and data.get(name):
-                if access not in field_schema['access']:
-                    del data[name]
-
-            if 'deliver' in field_schema and data.get(name):
-                data[name] = field_schema['deliver'](data[name])
-
-        return data
 
     @classmethod
     def get(cls, **params):
@@ -333,3 +203,152 @@ class Model(object):
              .delete()
              .run(g.db_conn))
         return self, []
+
+    def validate(self):
+        """
+        Ensure the data presented matches the validations in the schema.
+        Allow all data that is not specified in the schema.
+
+        To limit database queries, first we do strict checks, which
+        takes no lookups. Then we validate fields, which are unlikely to
+        have lookups. Then we test unique, which we know will have one lookup
+        each.
+
+        To add model-level validations, extend this method, such as:
+
+            def validate(self):
+                errors = super().validate()
+                if not errors:
+                    errors += self.validate_...()
+                return errors
+        """
+
+        errors = []
+        errors += self.enforce_strict_mode()
+        if not errors:
+            errors += self.validate_fields()
+        if not errors:
+            errors += self.test_unique()
+        return errors
+
+    def enforce_strict_mode(self):
+        """
+        If strict mode, remove any fields that aren't part of the schema.
+
+        For now, we'll just remove extra fields.
+        Later, we might want an option to throw errors instead.
+        """
+
+        def _(data, schema):
+            for name, field_schema in schema.items():
+                if 'embed' in field_schema and name in data:
+                    data[name] = pick(data[name], field_schema['embed'])
+                elif 'embed_many' in field_schema and name in data:
+                    for i, d in enumerate(data[name]):
+                        data[name][i] = pick(d, field_schema['embed_many'])
+            return pick(data, schema.keys())
+
+        self.data = _(self.data, self.schema)
+        return []
+
+    def validate_fields(self):
+        """
+        Iterate over the schema, ensuring that everything matches up.
+        """
+
+        errors = []
+
+        def _(data, field_name, field_schema, prefix):
+            if 'validate' not in field_schema:
+                return
+
+            error = None
+            for fn in field_schema['validate']:
+                if isinstance(fn, (list, tuple)):
+                    error = fn[0](data.get(field_name), *fn[1:])
+                else:
+                    error = fn(data.get(field_name))
+                if error:
+                    errors.append({
+                        'name': prefix + field_name,
+                        'message': error,
+                    })
+                    break
+
+        iter(_, self.data, self.schema)
+        return errors
+
+    def test_unique(self):
+        """
+        Test all top-level fields marked as unique.
+        """
+
+        errors = []
+
+        def _(data, field_name, field_schema, prefix):
+            if ('unique' not in field_schema or
+                    data.get(field_name) is None):
+                return
+
+            query = (self.table
+                         .filter(r.row[field_name] == data.get(field_name))
+                         .filter(r.row['id'] != self['id']))
+
+            if len(list(query.run(g.db_conn))) > 0:
+                errors.append({
+                    'name': prefix + field_name,
+                    'message': c('error', 'unique'),
+                })
+
+        iter(_, self.data, self.schema)
+        return errors
+
+    def defaults(self):
+        """
+        Set up defaults for data if not applied.
+        """
+
+        def _(data, field_name, field_schema, prefix):
+            if 'default' in field_schema and data.get(field_name) is None:
+                if hasattr(field_schema['default'], '__call__'):
+                    data[field_name] = field_schema['default']()
+                else:
+                    data[field_name] = field_schema['default']
+
+        iter(_, self.data, self.schema)
+        return self.data
+
+    def bundle(self):
+        """
+        Prepare the data for saving into the database.
+        Consider default values and will call `bundle`
+        in the schema if present.
+        """
+
+        def _(data, field_name, field_schema, prefix):
+            if 'bundle' in field_schema and data.get(field_name):
+                data[field_name] = field_schema['bundle'](data[field_name])
+
+        data = self.data.copy()
+        iter(_, data, self.schema)
+        return data
+
+    def deliver(self, access=None):
+        """
+        Prepare the data for consumption.
+        Consider access allowed and will call `deliver`
+        in the schema if present.
+        """
+
+        def _(data, field_name, field_schema, prefix):
+            if ('access' in field_schema and
+                    data.get(field_name) and
+                    access not in field_schema['access']):
+                    del data[field_name]
+
+            elif 'deliver' in field_schema and data.get(field_name):
+                data[field_name] = field_schema['deliver'](data[field_name])
+
+        data = self.data.copy()
+        iter(_, data, self.schema)
+        return data
