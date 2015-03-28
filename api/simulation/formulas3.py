@@ -3,7 +3,7 @@ This document contains the formulas for Sagefy's adaptive learning algorithm.
 """
 
 from math import exp
-from pmf import PMF
+from modules.pmf import PMF
 
 
 init_learned = 0.4
@@ -35,26 +35,9 @@ class SlipPMF(PMF):
                 * calculate_incorrect(guess, hypothesis, learned))
 
 
-class TransitPMF(PMF):
-    def likelihood(self, data, hypothesis):
-        pre_learned = data['pre_learned']
-        next_card_post_learned = data['next_card_post_learned']
-        diff = next_card_post_learned - pre_learned
-
-        """
-        if diff > hypothesis then llh > 1
-        if diff < hypothesis then 0 < llh < 1
-        if diff == hypothesis then llh == 1
-        llh / n cannot be more than 1 / hypothesis
-        llh cannot be 0
-        """
-
-        return 1 - ((diff - hypothesis) / 2) ** 2  # TODO find the real formula
-
-
 def update(score, time, prev_time,
            learned, guess, guess_distro, slip, slip_distro, transit,
-           prev_transit, prev_transit_distro, prev_card_pre_learned):
+           prev_transit, prev_card_pre_learned):
     """
     Given a learner and a card, update both statistics.
 
@@ -115,9 +98,8 @@ def update(score, time, prev_time,
 
     this_card_post_learned = learned = learned2
 
-    prev_transit, prev_transit_distro = update_prev_transit(
+    prev_transit = update_prev_transit(
         prev_transit,
-        prev_transit_distro,
         prev_card_pre_learned,
         this_card_post_learned
     )
@@ -131,7 +113,6 @@ def update(score, time, prev_time,
         'slip': slip,
         'slip_distro': slip_distro,
         'prev_transit': prev_transit,
-        'prev_transit_distro': prev_transit_distro,
     }
 
 
@@ -221,7 +202,6 @@ def update_learned(score, learned, guess, slip, transit,
 
 
 def update_prev_transit(prev_transit,
-                        prev_transit_distro,
                         prev_card_pre_learned,
                         this_card_post_learned):
     """
@@ -246,8 +226,4 @@ def update_prev_transit(prev_transit,
     weight - updated transit weight of the previous card
     """
 
-    prev_transit_distro.update({
-        'pre_learned': prev_card_pre_learned,
-        'next_card_post_learned': this_card_post_learned,
-    })
-    return prev_transit_distro.get_value(), prev_transit_distro
+    return init_transit

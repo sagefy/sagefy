@@ -3,10 +3,20 @@ This document combines the formulas and the mock data, providing for
 'how good' the formulas actually are.
 """
 
+import os
+import sys
+import inspect
+currentdir = os.path.dirname(
+    os.path.abspath(
+        inspect.getfile(
+            inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir)
 
 from mock import main as create_responses
-from formulas import update, init_learned, \
-    init_weight, init_guess, init_slip, init_transit
+from formulas3 import update, init_learned, \
+    init_guess, init_slip, init_transit, \
+    GuessPMF, SlipPMF
 from math import sqrt
 
 
@@ -25,11 +35,14 @@ def main(num_learners=1000, num_cards=50):
     my_cards = [{
         'name': card['name'],
         'guess': init_guess,
-        'guess_weight': init_weight,
+        'guess_distro': GuessPMF({
+            h: 1 - (init_guess - h) ** 2
+            for h in [h / 100 for h in range(1, 100)]}),
         'slip': init_slip,
-        'slip_weight': init_weight,
+        'slip_distro': SlipPMF({
+            h:  1 - (init_slip - h) ** 2
+            for h in [h / 100 for h in range(1, 100)]}),
         'transit': init_transit,
-        'transit_weight': init_weight,
     } for card in cards]
 
     my_learners = [{
@@ -52,7 +65,6 @@ def main(num_learners=1000, num_cards=50):
             }
             prev_card = {
                 'transit': init_transit,
-                'transit_weight': init_weight,
             }
 
         my_learner = get_learner(response['learner'], my_learners)
@@ -62,24 +74,22 @@ def main(num_learners=1000, num_cards=50):
 
         c = update(learned=my_learner['learned'],
                    guess=my_card['guess'],
-                   guess_weight=my_card['guess_weight'],
+                   guess_distro=my_card['guess_distro'],
                    slip=my_card['slip'],
-                   slip_weight=my_card['slip_weight'],
+                   slip_distro=my_card['slip_distro'],
                    transit=my_card['transit'],
                    score=response['score'],
                    time=response['time'],
                    prev_time=prev_response['time'],
                    prev_transit=prev_card['transit'],
-                   prev_transit_weight=prev_card['transit_weight'],
                    prev_card_pre_learned=prev_response['prev_learned'])
 
         my_learner['learned'] = c['learned']
         my_card['guess'] = c['guess']
-        my_card['guess_weight'] = c['guess_weight']
+        my_card['guess_distro'] = c['guess_distro']
         my_card['slip'] = c['slip']
-        my_card['slip_weight'] = c['slip_weight']
+        my_card['slip_distro'] = c['slip_distro']
         prev_card['transit'] = c['prev_transit']
-        prev_card['transit_weight'] = c['prev_transit_weight']
 
         latest_response_per_learner[response['learner']] = response
 
@@ -106,10 +116,11 @@ def main(num_learners=1000, num_cards=50):
     for card in cards:
         guess_error += (init_guess - card['guess']) ** 2
         slip_error += (init_slip - card['slip']) ** 2
+        transit_error += (init_transit - card['transit']) ** 2
 
     print('CONTROL guess_error', sqrt(guess_error / len(my_cards)))
     print('CONTROL slip_error', sqrt(slip_error / len(my_cards)))
-
+    print('CONTROL transit_error', sqrt(transit_error / len(my_cards)))
 
 if __name__ == '__main__':
     main()
