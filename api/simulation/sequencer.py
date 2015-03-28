@@ -14,7 +14,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
 from mock import main as create_responses
-from formulas3 import update, init_learned, \
+from formulas import update, init_learned, \
     init_guess, init_slip, init_transit, \
     GuessPMF, SlipPMF
 from math import sqrt

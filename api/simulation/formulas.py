@@ -3,7 +3,7 @@ This document contains the formulas for Sagefy's adaptive learning algorithm.
 """
 
 from math import exp
-from modules.pmf import PMF
+from modules.sequencer.pmf import PMF
 
 
 init_learned = 0.4
