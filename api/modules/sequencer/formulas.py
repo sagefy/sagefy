@@ -3,7 +3,8 @@ This document contains the formulas for Sagefy's adaptive learning algorithm.
 """
 
 from math import exp
-from modules.sequencer.params import init_transit, belief_factor
+from modules.sequencer.params import init_transit, belief_factor, \
+    adjust_slip, adjust_guess
 
 
 def update(score, time, prev_time,
@@ -118,7 +119,7 @@ def update_guess(score, learned, guess, slip, transit, guess_distro):
         'guess': guess,
         'slip': slip,
     })
-    return guess_distro.get_value() * 0.82, guess_distro
+    return guess_distro.get_value() * adjust_guess, guess_distro
 
 
 def update_slip(score, learned, guess, slip, transit, slip_distro):
@@ -132,7 +133,7 @@ def update_slip(score, learned, guess, slip, transit, slip_distro):
         'guess': guess,
         'slip': slip,
     })
-    return slip_distro.get_value() * 0.6, slip_distro
+    return slip_distro.get_value() * adjust_slip, slip_distro
 
 
 def calculate_belief(learned, time, prev_time):

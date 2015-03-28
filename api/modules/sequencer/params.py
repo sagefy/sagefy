@@ -5,3 +5,5 @@ init_slip = 0.1
 max_weight = 25
 init_transit = 0.05
 belief_factor = 708000
+adjust_guess = 0.82
+adjust_slip = 0.6
