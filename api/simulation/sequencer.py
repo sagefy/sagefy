@@ -14,9 +14,11 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
 from mock import main as create_responses
-from formulas import update, init_learned, \
-    init_guess, init_slip, init_transit, \
-    GuessPMF, SlipPMF
+from modules.sequencer.formulas import update
+from modules.sequencer.guess_pmf import GuessPMF
+from modules.sequencer.slip_pmf import SlipPMF
+from modules.sequencer.params import init_learned, init_guess, \
+    init_slip, init_transit
 from math import sqrt
 
 
@@ -57,14 +59,10 @@ def main(num_learners=1000, num_cards=50):
 
         if response['learner'] in latest_response_per_learner:
             prev_response = latest_response_per_learner[response['learner']]
-            prev_card = get_card(prev_response['card'], my_cards)
         else:
             prev_response = {
                 'time': response['time'],
                 'prev_learned': init_learned,
-            }
-            prev_card = {
-                'transit': init_transit,
             }
 
         my_learner = get_learner(response['learner'], my_learners)
@@ -77,19 +75,15 @@ def main(num_learners=1000, num_cards=50):
                    guess_distro=my_card['guess_distro'],
                    slip=my_card['slip'],
                    slip_distro=my_card['slip_distro'],
-                   transit=my_card['transit'],
                    score=response['score'],
                    time=response['time'],
-                   prev_time=prev_response['time'],
-                   prev_transit=prev_card['transit'],
-                   prev_card_pre_learned=prev_response['prev_learned'])
+                   prev_time=prev_response['time'])
 
         my_learner['learned'] = c['learned']
         my_card['guess'] = c['guess']
         my_card['guess_distro'] = c['guess_distro']
         my_card['slip'] = c['slip']
         my_card['slip_distro'] = c['slip_distro']
-        prev_card['transit'] = c['prev_transit']
 
         latest_response_per_learner[response['learner']] = response
 

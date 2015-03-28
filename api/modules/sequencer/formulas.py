@@ -3,41 +3,11 @@ This document contains the formulas for Sagefy's adaptive learning algorithm.
 """
 
 from math import exp
-from modules.sequencer.pmf import PMF
-
-
-init_learned = 0.4
-max_learned = 0.99
-init_guess = 0.3
-init_slip = 0.1
-max_weight = 25
-init_transit = 0.1
-belief_factor = 708000
-
-
-class GuessPMF(PMF):
-    def likelihood(self, data, hypothesis):
-        score, learned, slip = \
-            data['score'], data['learned'], data['slip']
-        return (score
-                * calculate_correct(hypothesis, slip, learned)
-                + (1 - score)
-                * calculate_incorrect(hypothesis, slip, learned))
-
-
-class SlipPMF(PMF):
-    def likelihood(self, data, hypothesis):
-        score, learned, guess = \
-            data['score'], data['learned'], data['guess']
-        return (score
-                * calculate_correct(guess, hypothesis, learned)
-                + (1 - score)
-                * calculate_incorrect(guess, hypothesis, learned))
+from modules.sequencer.params import init_transit, belief_factor
 
 
 def update(score, time, prev_time,
-           learned, guess, guess_distro, slip, slip_distro, transit,
-           prev_transit, prev_card_pre_learned):
+           learned, guess, guess_distro, slip, slip_distro):
     """
     Given a learner and a card, update both statistics.
 
@@ -78,12 +48,12 @@ def update(score, time, prev_time,
         (should come before learned)
     - Weight [Card] - How much should we consider previous examples?
         (scale before guess, slip, transit, update after)
-    - Transit [Card, 2 Prior] - Given two cards prior,
-        what `learned` was then, and what `learned` is now...
-        how likely is it the learner learned the skill as the result
-        of seeing that card?
+    - Transit [Card (Prior)] - How likely is it the learner
+        learned the skill as the result of seeing that card?
         (after learned)
     """
+
+    transit = init_transit
 
     correct = calculate_correct(guess, slip, learned)
 
@@ -96,13 +66,7 @@ def update(score, time, prev_time,
     slip, slip_distro = update_slip(
         score, learned, guess, slip, transit, slip_distro)
 
-    this_card_post_learned = learned = learned2
-
-    prev_transit = update_prev_transit(
-        prev_transit,
-        prev_card_pre_learned,
-        this_card_post_learned
-    )
+    learned = learned2
 
     return {
         'correct': correct,
@@ -112,7 +76,6 @@ def update(score, time, prev_time,
         'guess_distro': guess_distro,
         'slip': slip,
         'slip_distro': slip_distro,
-        'prev_transit': prev_transit,
     }
 
 
@@ -199,31 +162,3 @@ def update_learned(score, learned, guess, slip, transit,
                  * calculate_incorrect(guess, slip, 1)
                  / calculate_incorrect(guess, slip, learned))
     return posterior + (1 - posterior) * transit
-
-
-def update_prev_transit(prev_transit,
-                        prev_card_pre_learned,
-                        this_card_post_learned):
-    """
-    Determines the update to transit, given the `learned` score
-    before the card, and the `learned` score after the next cards.
-    Note that transit is both on assessment and non-assessment cards.
-
-    Input
-    -----
-    transit - transit of the card to be updated (the previous card)
-    weight - weight of the transit of the card to be updated
-
-    prev_card_pre_learned  (learned before the card to be updated)
-    card (whose transit is updated)
-    prev_card_post_learned  (learned after the card to be updated)
-    card (most recently observed)
-    this_card_post_learned  (learned after the most recent card)
-
-    Output
-    ------
-    transit - updated transit of the previous card
-    weight - updated transit weight of the previous card
-    """
-
-    return init_transit

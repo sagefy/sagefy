@@ -4,7 +4,8 @@ learner models.
 """
 
 from random import uniform, triangular, sample, randrange
-from formulas import max_learned, init_guess, init_slip, init_transit
+from modules.sequencer.params import max_learned, \
+    init_guess, init_slip, init_transit
 
 
 # How many seconds between questions
