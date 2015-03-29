@@ -59,15 +59,15 @@ def update(score, time, prev_time,
     correct = calculate_correct(guess, slip, learned)
 
     belief = calculate_belief(learned, time, prev_time)
+
     learned2 = update_learned(score, learned, guess, slip, transit,
                               time, prev_time)
-
-    guess, guess_distro = update_guess(
+    guess2, guess_distro = update_guess(
         score, learned, guess, slip, transit, guess_distro)
-    slip, slip_distro = update_slip(
+    slip2, slip_distro = update_slip(
         score, learned, guess, slip, transit, slip_distro)
 
-    learned = learned2
+    learned, guess, slip = learned2, guess2, slip2
 
     return {
         'correct': correct,

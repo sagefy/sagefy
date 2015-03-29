@@ -36,13 +36,6 @@ Expect to calculate unit quality.
 Expect to calculate set quality.
 Expect to calculate unit difficulty.
 Expect to calculate set difficulty.
-Expect PMF to take list of hypotheses.
-Expect PMF to update hypotheses with data.
-Expect PMF to normalize itself.
-Expect PMF to require a likelihood function.
-Expect PMF to compute mean.
-Expect PMF to compute mode.
-Expect PMF to compute value.
 Expect to estimate diagnosis duration.
 Expect to show progress in diagnosis.
 Expect diagnosis to not show feedback to responses.

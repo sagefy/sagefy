@@ -34,16 +34,18 @@ def main(num_learners=1000, num_cards=50):
     d = create_responses(num_learners, num_cards)
     responses, learners, cards = d['responses'], d['learners'], d['cards']
 
+    precision = 100
+
     my_cards = [{
         'name': card['name'],
         'guess': init_guess,
         'guess_distro': GuessPMF({
             h: 1 - (init_guess - h) ** 2
-            for h in [h / 100 for h in range(1, 100)]}),
+            for h in [h / precision for h in range(1, precision)]}),
         'slip': init_slip,
         'slip_distro': SlipPMF({
             h:  1 - (init_slip - h) ** 2
-            for h in [h / 100 for h in range(1, 100)]}),
+            for h in [h / precision for h in range(1, precision)]}),
         'transit': init_transit,
     } for card in cards]
 
