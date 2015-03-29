@@ -56,10 +56,6 @@ def update(score, time, prev_time,
 
     transit = init_transit
 
-    correct = calculate_correct(guess, slip, learned)
-
-    belief = calculate_belief(learned, time, prev_time)
-
     learned2 = update_learned(score, learned, guess, slip, transit,
                               time, prev_time)
     guess2, guess_distro = update_guess(
@@ -70,8 +66,6 @@ def update(score, time, prev_time,
     learned, guess, slip = learned2, guess2, slip2
 
     return {
-        'correct': correct,
-        'belief': belief,
         'learned': learned,
         'guess': guess,
         'guess_distro': guess_distro,
@@ -142,8 +136,7 @@ def calculate_belief(learned, time, prev_time):
     has passed?
     """
 
-    return exp(-1 * (time - prev_time) * (1 - learned)
-               / belief_factor)
+    return exp(-1 * (time - prev_time) * (1 - learned) / belief_factor)
 
 
 def update_learned(score, learned, guess, slip, transit,

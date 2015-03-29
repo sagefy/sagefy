@@ -1,23 +1,12 @@
-units_ = (
-    ('A', ('B', 'C'),    0,    0),
-    ('B', ('D', 'E'),    0,    0),
-    ('C', ('F',),     0.25, 0.96),
-    ('D', (),            0,    0),
-    ('E', ('G', 'H'),  1.0,  0.8),
-    ('F', ('H', 'I'),  1.0, 0.96),
-    ('G', (),          1.0, 0.96),
-    ('H', (),            0,    0),
-    ('I', (),            0,    0),
-)
-
-
 required_learned = 0.99
 required_belief = 0.95
 
 
 def get_unit(name, units):
     """
+    Temporary method.
     """
+
     for unit in units:
         if unit[0] == name:
             return unit
@@ -30,6 +19,7 @@ def traverse(units):
 
     Uses depth first search.
     """
+
     buckets = {
         'seen': [],
         'diagnose': [],
@@ -54,6 +44,7 @@ def traverse(units):
 
 def judge(unit, units, buckets):
     """
+    Given a unit, decide how to catergorize it.
     """
 
     name, requires, learned, belief = unit
@@ -79,7 +70,10 @@ def judge(unit, units, buckets):
 
 def filter_to_top(units):
     """
+    Given a collection of units, find the units that have no requires by
+    the other units in the list.
     """
+
     units_left = [unit[0] for unit in units]
 
     for unit in units:
@@ -92,6 +86,7 @@ def filter_to_top(units):
 
 def order_units_by_dependencies(units):
     """
+    Order the given units by the number of dependencies the unit has.
     """
 
     # The algorithm considers how many nodes depend on the given node,
@@ -107,4 +102,15 @@ def order_units_by_dependencies(units):
     return [get_unit(u, units) for u in order]
 
 
-print(traverse(units_))
+if __name__ == "__main__":
+    print(traverse((
+        ('A', ('B', 'C'),    0,    0),
+        ('B', ('D', 'E'),    0,    0),
+        ('C', ('F',),     0.25, 0.96),
+        ('D', (),            0,    0),
+        ('E', ('G', 'H'),  1.0,  0.8),
+        ('F', ('H', 'I'),  1.0, 0.96),
+        ('G', (),          1.0, 0.96),
+        ('H', (),            0,    0),
+        ('I', (),            0,    0),
+    )))

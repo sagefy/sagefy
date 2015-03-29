@@ -4,6 +4,11 @@ from modules.sequencer.formulas import calculate_correct, calculate_incorrect
 
 class GuessPMF(PMF):
     def likelihood(self, data, hypothesis):
+        """
+        Given new data and one of the guess hypotheses, update the probability
+        of that hypothesis.
+        """
+
         score, learned, slip = \
             data['score'], data['learned'], data['slip']
         return (score

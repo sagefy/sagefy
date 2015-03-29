@@ -209,5 +209,5 @@ class User(Model):
                 'name': set_['name'],
             }
 
-        app.redis.set(key, json.dumps(context))
+        app.redis.setex(key, 10 * 60, json.dumps(context))
         return context
