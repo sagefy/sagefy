@@ -4,7 +4,7 @@ PMF, or Probability Mass Function.
 
 
 class PMF(object):
-    def __init__(self, hypotheses):
+    def __init__(self, hypotheses=None):
         """
         Create a new PMF, given a list of hypotheses.
         Internally, hypotheses is a dict of hypo: probability.
