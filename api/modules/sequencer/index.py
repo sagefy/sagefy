@@ -2,6 +2,8 @@
 Primary learning sequencer.
 """
 
+from modules.sequencer.formulas import update as formula_update
+
 
 def main(user_id, context):
     """
@@ -34,5 +36,24 @@ def main(user_id, context):
 
     # [x] set  [x] unit  [x] card
     # TODO@ Direct the learner to respond to the card.
+
+    return {}
+
+
+def update(card, response):
+    """
+    Update the card's parameters (and its parents')
+    when given a response.
+    """
+
+    score = response['score']
+    time = response['created']
+    prev_time = None
+    learned = None
+    guess_distro = None
+    slip_distro = None
+
+    # formula_update(score, time, prev_time,
+    #                learned, guess_distro, slip_distro)
 
     return {}

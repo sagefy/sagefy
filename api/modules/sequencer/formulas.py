@@ -3,12 +3,10 @@ This document contains the formulas for Sagefy's adaptive learning algorithm.
 """
 
 from math import exp
-from modules.sequencer.params import init_transit, belief_factor, \
-    adjust_slip, adjust_guess
+from modules.sequencer.params import init_transit, belief_factor
 
 
-def update(score, time, prev_time,
-           learned, guess, guess_distro, slip, slip_distro):
+def update(score, time, prev_time, learned, guess_distro, slip_distro):
     """
     Given a learner and a card, update both statistics.
 
@@ -29,10 +27,6 @@ def update(score, time, prev_time,
     - Transit [Card] - Before seeing the data,
         how likely did we think the learner would learn the skill by seeing
         the card?
-    - * * *
-    - Transit [Previous Card]
-    - Transit Weight [Previous Card]
-    - Learned [Previous Card, before update]
 
     Output:
 
@@ -54,22 +48,22 @@ def update(score, time, prev_time,
         (after learned)
     """
 
+    guess = guess_distro.get_value()
+    slip = slip_distro.get_value()
     transit = init_transit
 
     learned2 = update_learned(score, learned, guess, slip, transit,
                               time, prev_time)
-    guess2, guess_distro = update_guess(
+    guess_distro = update_guess(
         score, learned, guess, slip, transit, guess_distro)
-    slip2, slip_distro = update_slip(
+    slip_distro = update_slip(
         score, learned, guess, slip, transit, slip_distro)
 
-    learned, guess, slip = learned2, guess2, slip2
+    learned = learned2
 
     return {
         'learned': learned,
-        'guess': guess,
         'guess_distro': guess_distro,
-        'slip': slip,
         'slip_distro': slip_distro,
     }
 
@@ -113,7 +107,7 @@ def update_guess(score, learned, guess, slip, transit, guess_distro):
         'guess': guess,
         'slip': slip,
     })
-    return guess_distro.get_value() * adjust_guess, guess_distro
+    return guess_distro
 
 
 def update_slip(score, learned, guess, slip, transit, slip_distro):
@@ -127,7 +121,7 @@ def update_slip(score, learned, guess, slip, transit, slip_distro):
         'guess': guess,
         'slip': slip,
     })
-    return slip_distro.get_value() * adjust_slip, slip_distro
+    return slip_distro
 
 
 def calculate_belief(learned, time, prev_time):

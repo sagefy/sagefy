@@ -29,6 +29,7 @@ class PMF(object):
                            for hypothesis, probability
                            in self.hypotheses.items()}
         self.normalize()
+        return self
 
     def likelihood(self, data, hypothesis):
         """
@@ -51,6 +52,7 @@ class PMF(object):
                            probability / total
                            for hypothesis, probability
                            in self.hypotheses.items()}
+        return self
 
     def get_value(self):
         """

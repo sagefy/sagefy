@@ -34,15 +34,13 @@ def main(num_learners=1000, num_cards=50):
     d = create_responses(num_learners, num_cards)
     responses, learners, cards = d['responses'], d['learners'], d['cards']
 
-    precision = 100
+    precision = 20
 
     my_cards = [{
         'name': card['name'],
-        'guess': init_guess,
         'guess_distro': GuessPMF({
             h: 1 - (init_guess - h) ** 2
             for h in [h / precision for h in range(1, precision)]}),
-        'slip': init_slip,
         'slip_distro': SlipPMF({
             h:  1 - (init_slip - h) ** 2
             for h in [h / precision for h in range(1, precision)]}),
@@ -73,18 +71,14 @@ def main(num_learners=1000, num_cards=50):
         response['prev_learned'] = my_learner['learned']
 
         c = update(learned=my_learner['learned'],
-                   guess=my_card['guess'],
                    guess_distro=my_card['guess_distro'],
-                   slip=my_card['slip'],
                    slip_distro=my_card['slip_distro'],
                    score=response['score'],
                    time=response['time'],
                    prev_time=prev_response['time'])
 
         my_learner['learned'] = c['learned']
-        my_card['guess'] = c['guess']
         my_card['guess_distro'] = c['guess_distro']
-        my_card['slip'] = c['slip']
         my_card['slip_distro'] = c['slip_distro']
 
         latest_response_per_learner[response['learner']] = response
@@ -95,13 +89,11 @@ def main(num_learners=1000, num_cards=50):
 
     for card in cards:
         my_card = get_card(card['name'], my_cards)
+        my_card['guess'] = my_card['guess_distro'].get_value()
+        my_card['slip'] = my_card['slip_distro'].get_value()
         guess_error += (my_card['guess'] - card['guess']) ** 2
         slip_error += (my_card['slip'] - card['slip']) ** 2
         transit_error += (my_card['transit'] - card['transit']) ** 2
-
-        print('%.2f %.2f   %.2f %.2f   %.2f %.2f' % (
-            my_card['guess'], card['guess'], my_card['slip'], card['slip'],
-            my_card['transit'], card['transit']))
 
     print('guess_error', sqrt(guess_error / len(my_cards)))
     print('slip_error', sqrt(slip_error / len(my_cards)))

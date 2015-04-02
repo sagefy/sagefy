@@ -5,6 +5,7 @@ from models.unit import Unit
 from models.topic import Topic
 from models.response import Response
 from modules.entity import get_card_by_kind
+from modules.sequencer.index import update as seq_update
 
 
 card_routes = Blueprint('card', __name__, url_prefix='/api/cards')
@@ -104,5 +105,6 @@ def respond_to_card(card_id):
         return jsonify(errors=errors), 400
 
     current_user.set_learning_context(card=None)
+    seq_update(card, response)
 
     return jsonify(response=response.deliver(), feedback=feedback)
