@@ -92,6 +92,8 @@ def respond_to_card(card_id):
     if errors:
         return jsonify(errors=errors), 400
 
+    # TODO what of this should move to/from the `seq_update` method?
+
     score, feedback = card.score_response(response)
 
     response, errors = Response.insert({

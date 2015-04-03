@@ -95,6 +95,18 @@ def is_list(value):
         return c('error', 'list')
 
 
+def is_dict(value):
+    """
+    Ensure the given value is a dict.
+    """
+
+    if value is None:
+        return
+
+    if not isinstance(value, dict):
+        return c('error', 'dict')
+
+
 def is_email(value):
     """
     Ensure the given value is formatted as an email.

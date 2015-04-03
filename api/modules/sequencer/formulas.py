@@ -6,7 +6,8 @@ from math import exp
 from modules.sequencer.params import init_transit, belief_factor
 
 
-def update(score, time, prev_time, learned, guess_distro, slip_distro):
+def update(score, time, prev_time, learned,
+           guess_distribution, slip_distribution):
     """
     Given a learner and a card, update both statistics.
 
@@ -48,23 +49,22 @@ def update(score, time, prev_time, learned, guess_distro, slip_distro):
         (after learned)
     """
 
-    guess = guess_distro.get_value()
-    slip = slip_distro.get_value()
+    guess = guess_distribution.get_value()
+    slip = slip_distribution.get_value()
     transit = init_transit
 
-    learned2 = update_learned(score, learned, guess, slip, transit,
+    learned2 = update_learned(score, learned,
+                              guess, slip, transit,
                               time, prev_time)
-    guess_distro = update_guess(
-        score, learned, guess, slip, transit, guess_distro)
-    slip_distro = update_slip(
-        score, learned, guess, slip, transit, slip_distro)
-
-    learned = learned2
+    guess_distribution = update_guess(score, learned, guess,
+                                      slip, transit, guess_distribution)
+    slip_distribution = update_slip(score, learned, guess,
+                                    slip, transit, slip_distribution)
 
     return {
-        'learned': learned,
-        'guess_distro': guess_distro,
-        'slip_distro': slip_distro,
+        'learned': learned2,
+        'guess_distribution': guess_distribution,
+        'slip_distribution': slip_distribution,
     }
 
 
@@ -96,32 +96,32 @@ def calculate_difficulty(guess, slip):
     return calculate_correct(guess, slip, 0.5)
 
 
-def update_guess(score, learned, guess, slip, transit, guess_distro):
+def update_guess(score, learned, guess, slip, transit, guess_distribution):
     """
     Determines how to update guess given a score.
     """
 
-    guess_distro.update({
+    guess_distribution.update({
         'score': score,
         'learned': learned,
         'guess': guess,
         'slip': slip,
     })
-    return guess_distro
+    return guess_distribution
 
 
-def update_slip(score, learned, guess, slip, transit, slip_distro):
+def update_slip(score, learned, guess, slip, transit, slip_distribution):
     """
     Determines how to update slip given a score.
     """
 
-    slip_distro.update({
+    slip_distribution.update({
         'score': score,
         'learned': learned,
         'guess': guess,
         'slip': slip,
     })
-    return slip_distro
+    return slip_distribution
 
 
 def calculate_belief(learned, time, prev_time):

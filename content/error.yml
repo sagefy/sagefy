@@ -27,6 +27,8 @@ language:
     en: Must be a language.
 list:
     en: Must be a list.
+dict:
+    en: Must be a dict.
 options:
     en: Must be one of {options}.
 field:

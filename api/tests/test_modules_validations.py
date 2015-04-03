@@ -1,6 +1,7 @@
 from modules.validations import is_required, is_boolean, is_string, \
     is_number, is_language, is_list, is_email, has_min_length, is_one_of, \
-    is_list_of_strings, is_url, is_string_or_number, is_integer, has_max_length
+    is_list_of_strings, is_url, is_string_or_number, is_integer, \
+    has_max_length, is_dict
 
 
 def test_require(app, db_conn):
@@ -106,6 +107,14 @@ def test_list(app, db_conn):
     """
     assert is_list([]) is None
     assert is_list({})
+
+
+def test_dict(app, db_conn):
+    """
+    Expect a dict.
+    """
+    assert is_dict({}) is None
+    assert is_dict([])
 
 
 def test_one_of(app, db_conn):

@@ -3,6 +3,7 @@ from modules.validations import is_required, is_language, is_boolean, \
     is_list, is_string, is_one_of, is_list_of_strings
 from modules.util import uniqid
 from models.mixins.entity import EntityMixin
+from models.card_parameters import CardParameters
 
 
 # TODO@ On set canonical, index (or delete) in Elasticsearch with entity_id
@@ -93,3 +94,13 @@ class Card(EntityMixin, Model):
         """
 
         raise Exception("No method implemented.")
+
+    def fetch_parameters(self):
+        """
+        Fetches the card's learning analytics parameters.
+        """
+
+        params = CardParameters.get(card_id=self['entity_id'])
+        if params:
+            return params
+        return CardParameters({'card_id': self['entity_id']})

@@ -7,3 +7,4 @@ init_transit = 0.05
 belief_factor = 708000
 adjust_guess = 0.82
 adjust_slip = 0.6
+precision = 20

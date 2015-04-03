@@ -93,14 +93,17 @@ def setup_db(app):
     from models.card import Card
     from models.unit import Unit
     from models.set import Set
+    from models.card_parameters import CardParameters
+    from models.unit_parameters import UnitParameters
+    from models.set_parameters import SetParameters
     from models.follow import Follow
     from models.user_sets import UserSets
     from models.response import Response
 
     models = (User, Notice, Topic, Post, Proposal, Vote, Flag,
               Card, Unit, Set,
-              Follow,
-              UserSets, Response)
+              CardParameters, UnitParameters, SetParameters,
+              Follow, UserSets, Response)
 
     tables = r.db(app.config['RDB_DB']).table_list().run(db_conn)
 

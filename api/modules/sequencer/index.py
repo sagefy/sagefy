@@ -46,14 +46,27 @@ def update(card, response):
     when given a response.
     """
 
+    card_parameters = card.fetch_parameters()
+    # TODO@ get previous response, if available
+
     score = response['score']
     time = response['created']
-    prev_time = None
+    previous_time = None
     learned = None
-    guess_distro = None
-    slip_distro = None
+    guess_distribution = card_parameters.get_distribution('guess')
+    slip_distribution = card_parameters.get_distribution('slip')
 
-    # formula_update(score, time, prev_time,
-    #                learned, guess_distro, slip_distro)
+    # updates = formula_update(score, time, previous_time,
+    #                          learned, guess_distribution, slip_distribution)
 
-    return {}
+    # response, errors = response.update({'learned': updates['learned']})
+    # if errors:
+    #      return learned, errors
+    # card_parameters.set_distribution('guess', updates['guess_distribution'])
+    # card_parameters.set_distribution('slip', updates['slip_distribution'])
+    # card_parameters, errors = card_parameters.save()
+    # if errors:
+    #      return updates['learned'], errors
+
+    return learned, []
+    # return updates['learned'], []
