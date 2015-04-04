@@ -3,7 +3,6 @@ from flask.ext.login import current_user
 from models.card import Card
 from models.unit import Unit
 from models.topic import Topic
-from models.response import Response
 from modules.entity import get_card_by_kind
 from modules.sequencer.index import update as seq_update
 
@@ -87,26 +86,11 @@ def respond_to_card(card_id):
             context.get('unit', {}).get('id') != card['unit_id']):
         return abort(400)
 
-    response = request.json.get('response')
-    errors = card.validate_response(response)
-    if errors:
-        return jsonify(errors=errors), 400
-
-    # TODO what of this should move to/from the `seq_update` method?
-
-    score, feedback = card.score_response(response)
-
-    response, errors = Response.insert({
-        'user_id': current_user['id'],
-        'card_id': context['card']['id'],
-        'unit_id': context['unit']['id'],
-        'response': response,
-        'score': score,
-    })
-    if errors:
-        return jsonify(errors=errors), 400
-
     current_user.set_learning_context(card=None)
-    seq_update(card, response)
+
+    errors, response, feedback = seq_update(current_user, card,
+                                            request.json.get('response'))
+    if errors:
+        return jsonify(errors=errors), 400
 
     return jsonify(response=response.deliver(), feedback=feedback)

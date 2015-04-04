@@ -16,6 +16,7 @@ class EntityMixin(object):
                    .filter(r.row['canonical'].eq(True))
                    .group('entity_id')
                    .max('created')
+                   .default(None)
                    .ungroup()
                    .map(r.row['reduction']))
 

@@ -6,7 +6,7 @@ from math import exp
 from modules.sequencer.params import init_transit, belief_factor
 
 
-def update(score, time, prev_time, learned,
+def update(score, time_delta, learned,
            guess_distribution, slip_distribution):
     """
     Given a learner and a card, update both statistics.
@@ -55,7 +55,7 @@ def update(score, time, prev_time, learned,
 
     learned2 = update_learned(score, learned,
                               guess, slip, transit,
-                              time, prev_time)
+                              time_delta)
     guess_distribution = update_guess(score, learned, guess,
                                       slip, transit, guess_distribution)
     slip_distribution = update_slip(score, learned, guess,
@@ -124,23 +124,23 @@ def update_slip(score, learned, guess, slip, transit, slip_distribution):
     return slip_distribution
 
 
-def calculate_belief(learned, time, prev_time):
+def calculate_belief(learned, time_delta):
     """
     How much should we believe in learned, given the amount of time that
     has passed?
     """
 
-    return exp(-1 * (time - prev_time) * (1 - learned) / belief_factor)
+    return exp(-1 * time_delta * (1 - learned) / belief_factor)
 
 
 def update_learned(score, learned, guess, slip, transit,
-                   time, prev_time):
+                   time_delta):
     """
     Given a learner response,
     determines how likely the learner knows the skill.
     """
 
-    learned *= calculate_belief(learned, time, prev_time)
+    learned *= calculate_belief(learned, time_delta)
     posterior = (score
                  * learned
                  * calculate_correct(guess, slip, 1)

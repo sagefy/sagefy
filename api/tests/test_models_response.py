@@ -1,4 +1,5 @@
 from models.response import Response
+import rethinkdb as r
 
 
 def test_created(app, db_conn, responses_table):
@@ -107,3 +108,25 @@ def test_score(app, db_conn, responses_table):
     response['score'] = 1
     response, errors = response.save()
     assert len(errors) == 0
+
+
+def test_get_latest(app, db_conn, responses_table):
+    """
+    Expect to get the latest response by user and unit.
+    """
+
+    responses_table.insert([{
+        'id': 'A',
+        'user_id': 'abcd1234',
+        'unit_id': 'apple',
+        'created': r.now(),
+        'modified': r.now(),
+    }, {
+        'id': 'B',
+        'user_id': 'abcd1234',
+        'unit_id': 'banana',
+        'created': r.now(),
+        'modified': r.now(),
+    }]).run(db_conn)
+
+    assert Response.get_latest('abcd1234', 'apple')['id'] == 'A'

@@ -74,8 +74,7 @@ def main(num_learners=1000, num_cards=50):
                    guess_distribution=my_card['guess_distribution'],
                    slip_distribution=my_card['slip_distribution'],
                    score=response['score'],
-                   time=response['time'],
-                   prev_time=prev_response['time'])
+                   time_delta=response['time'] - prev_response['time'])
 
         my_learner['learned'] = c['learned']
         my_card['guess_distribution'] = c['guess_distribution']

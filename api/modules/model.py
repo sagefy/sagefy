@@ -242,10 +242,10 @@ class Model(object):
         def _(data, schema):
             for name, field_schema in schema.items():
                 if 'embed' in field_schema and name in data:
-                    data[name] = pick(data[name], field_schema['embed'])
+                    data[name] = _(data[name], field_schema['embed'])
                 elif 'embed_many' in field_schema and name in data:
                     for i, d in enumerate(data[name]):
-                        data[name][i] = pick(d, field_schema['embed_many'])
+                        data[name][i] = _(d, field_schema['embed_many'])
             return pick(data, schema.keys())
 
         self.data = _(self.data, self.schema)
@@ -344,7 +344,7 @@ class Model(object):
             if ('access' in field_schema and
                     data.get(field_name) and
                     access not in field_schema['access']):
-                    del data[field_name]
+                del data[field_name]
 
             elif 'deliver' in field_schema and data.get(field_name):
                 data[field_name] = field_schema['deliver'](data[field_name])
