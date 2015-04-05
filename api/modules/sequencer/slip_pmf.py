@@ -6,8 +6,8 @@ from modules.sequencer.params import adjust_slip
 class SlipPMF(PMF):
     def likelihood(self, data, hypothesis):
         """
-        Given new data and one of the slip hypotheses, update the probability
-        of that hypothesis.
+        Given new data and one of the slip hypotheses,
+        update the probability of that hypothesis.
         """
 
         score, learned, guess = \
@@ -22,6 +22,7 @@ class SlipPMF(PMF):
         The PMF tends to overestimate guess,
         even though correlation is decent,
         so let's trim it down a bit.
+        TODO Why does this PMF overestimate slip?
         """
 
         return super().get_value() * adjust_slip

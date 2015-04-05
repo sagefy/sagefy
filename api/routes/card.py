@@ -42,6 +42,18 @@ def get_card(card_id):
     # TODO@ sequencer data: learners, transit, guess, slip, difficulty
 
 
+@card_routes.route('/<card_id>/versions/', methods=['GET'])
+def get_card_versions(card_id):
+    """
+    Get versions card given an ID. Paginates.
+    """
+
+    # TODO@ add pagination
+    versions = Card.get_versions(entity_id=card_id)
+    return jsonify(versions=[version.deliver(access='view')
+                             for version in versions])
+
+
 @card_routes.route('/<card_id>/learn/', methods=['GET'])
 def learn_card(card_id):
     """
@@ -88,8 +100,9 @@ def respond_to_card(card_id):
 
     current_user.set_learning_context(card=None)
 
-    errors, response, feedback = seq_update(current_user, card,
-                                            request.json.get('response'))
+    r = seq_update(current_user, card, request.json.get('response'))
+    errors, response, feedback = (r.get('errors'), r.get('response'),
+                                  r.get('feedback'))
     if errors:
         return jsonify(errors=errors), 400
 

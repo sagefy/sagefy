@@ -31,12 +31,30 @@ def get_set(set_id):
     # TODO@ sequencer: learners, quality, difficulty
 
 
+@set_routes.route('/<set_id>/versions/', methods=['GET'])
+def get_set_versions(set_id):
+    """
+    Get versions set given an ID. Paginates.
+    """
+
+    # TODO@ add pagination
+    versions = Set.get_versions(entity_id=set_id)
+    return jsonify(versions=[version.deliver(access='view')
+                             for version in versions])
+
+
 @set_routes.route('/<set_id>/tree/', methods=['GET'])
 def get_set_tree(set_id):
     """
     TODO@ Render the tree of units that exists within a set.
     """
     pass
+
+    # Contexts:
+    # - Search set, preview units in set
+    # - Pre diagnosis
+    # - Learner view progress in set
+    # - Set complete
 
     # TODO@ For the menu, it must return the name and ID of the set
 

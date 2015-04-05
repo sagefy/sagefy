@@ -32,3 +32,15 @@ def get_unit(unit_id):
     )
 
     # TODO@ sequencer data: learners, quality, difficulty
+
+
+@unit_routes.route('/<unit_id>/versions/', methods=['GET'])
+def get_unit_versions(unit_id):
+    """
+    Get unit versions given an ID. Paginates.
+    """
+
+    # TODO@ add pagination
+    versions = Unit.get_versions(entity_id=unit_id)
+    return jsonify(versions=[version.deliver(access='view')
+                             for version in versions])

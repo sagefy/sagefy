@@ -43,6 +43,26 @@ def main(user_id, context):
     return {}
 
 
+"""
+Card
+- [x] correct
+- [v] transit  TODO@
+- [x] guess
+- [x] slip
+
+Unit
+- [x] learned
+- [x] belief
+- [ ] unit quality  TODO@
+- [ ] unit difficulty  TODO@
+
+Set
+- [ ] learner-set ability  TODO@
+- [ ] set quality  TODO@
+- [ ] set difficulty  TODO@
+"""
+
+
 def update(user, card, response):
     """
     Update the card's parameters (and its parents')
@@ -51,7 +71,7 @@ def update(user, card, response):
 
     errors = card.validate_response(response)
     if errors:
-        return errors, None, None
+        return {'errors': errors}
 
     score, feedback = card.score_response(response)
     response = Response({
@@ -63,7 +83,7 @@ def update(user, card, response):
     })
     errors = response.validate()
     if errors:
-        return errors, None, feedback
+        return {'errors': errors, 'feedback': feedback}
 
     card_parameters = card.fetch_parameters()
     previous_response = Response.get_latest(user_id=user['id'],
@@ -84,14 +104,12 @@ def update(user, card, response):
     response['learned'] = updates['learned']
     response, errors = response.save()
     if errors:
-        return errors, None, feedback
+        return {'errors': errors, 'feedback': feedback}
 
     card_parameters.set_distribution('guess', updates['guess_distribution'])
     card_parameters.set_distribution('slip', updates['slip_distribution'])
     card_parameters, errors = card_parameters.save()
     if errors:
-        return errors, None, feedback
+        return {'errors': errors, 'feedback': feedback}
 
-    # TODO@ update unit and set parameters
-
-    return [], response, feedback
+    return {'response': response, 'feedback': feedback}
