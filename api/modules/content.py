@@ -25,5 +25,3 @@ def get(filename, key, language='en'):
     assert s, "Not Found > {filename} @ {key}".format(filename=filename,
                                                       key=key)
     return s
-
-_ = get
