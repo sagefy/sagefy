@@ -3,12 +3,19 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-# TODO @outline tests
+@xfail
+def test_likelihood(app):
+    """
+    Expect to update the likelihood of a given hypothesis.
+    """
+
+    assert False
+
 
 @xfail
-def test_x(app):
+def test_scale(app):
     """
-    Expect ...
+    Expect to scale the output of the value.
     """
 
     assert False

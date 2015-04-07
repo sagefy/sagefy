@@ -69,6 +69,8 @@ def update(user, card, response):
     when given a response.
     """
 
+    # TODO split up into smaller methods
+
     errors = card.validate_response(response)
     if errors:
         return {'errors': errors}
