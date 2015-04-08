@@ -1,44 +1,42 @@
-from flask import Blueprint, jsonify, request, abort
+from framework.index import get, post, delete, abort
 from models.follow import Follow
-from flask.ext.login import current_user
-from modules.util import parse_args
+from framework.session import get_current_user
 from modules.entity import get_latest_canonical
 
 
-follow_routes = Blueprint('follow', __name__, url_prefix='/api/follows')
-
-
-@follow_routes.route('/', methods=['GET'])
-def get_follows():
+@get('/api/follows')
+def get_follows_route(request):
     """
     Get a list of the users follows.
     """
 
+    current_user = get_current_user()
     if not current_user.is_authenticated():
         return abort(401)
 
-    args = parse_args(request.args)
-    follows = Follow.list(user_id=current_user.get_id(), **args)
-    return jsonify(follows=[follow.deliver(access='private')
-                            for follow in follows])
+    follows = Follow.list(user_id=current_user.get_id(), **request['params'])
+    return 200, {
+        'follows': [follow.deliver(access='private') for follow in follows]
+    }
 
 
-@follow_routes.route('/', methods=['POST'])
-def follow():
+@post('/api/follows')
+def follow_route(request):
     """
     Follow a card, unit, or set.
     """
 
-    if not current_user.is_authenticated():
+    current_user = get_current_user()
+    if not current_user:
         return abort(401)
 
-    follow_data = dict(**request.json)
+    follow_data = dict(**request['params'])
     follow_data['user_id'] = current_user.get_id()
 
     follow = Follow(follow_data)
     errors = follow.validate()
     if errors:
-        return jsonify(errors=errors), 400
+        return 400, {'errors': errors}
 
     # Ensure the entity exists   TODO should this be a model validation?
     entity = get_latest_canonical(follow['entity']['kind'],
@@ -54,18 +52,19 @@ def follow():
 
     follow, errors = follow.save()
     if errors:
-        return jsonify(errors=errors), 400
+        return 400, {'errors': errors}
 
-    return jsonify(follow=follow.deliver(access='private'))
+    return 200, {'follow': follow.deliver(access='private')}
 
 
-@follow_routes.route('/<follow_id>/', methods=['DELETE'])
-def unfollow(follow_id):
+@delete('/api/follows/{follow_id}')
+def unfollow_route(request, follow_id):
     """
     Remove a follow. Must be current user's own follow.
     """
 
-    if not current_user.is_authenticated():
+    current_user = get_current_user()
+    if not current_user:
         return abort(401)
 
     follow = Follow.get(id=follow_id)
@@ -77,6 +76,6 @@ def unfollow(follow_id):
 
     follow, errors = follow.delete()
     if errors:
-        return jsonify(errors=errors), 400
+        return 400, {'errors': errors}
 
-    return '', 204
+    return 200, {}

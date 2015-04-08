@@ -1,42 +1,41 @@
 from models.user_sets import UserSets
 from models.set import Set
-from modules.util import parse_args
-from flask import Blueprint, abort, request, jsonify
-from flask.ext.login import current_user
+from framework.index import get, post, delete, abort
+from framework.session import get_current_user
 
 
-user_sets_routes = Blueprint('user_sets', __name__, url_prefix='/api/users')
-
-
-@user_sets_routes.route('/<user_id>/sets/', methods=['GET'])
-def get_user_sets(user_id):
+@get('/api/users/{user_id}/sets')
+def get_user_sets_route(request, user_id):
     """
     Get the list of sets the user has added.
     """
 
-    if not current_user.is_authenticated():
+    current_user = get_current_user()
+    if not current_user:
         return abort(401)
 
-    if user_id != current_user.get_id():
+    if user_id != current_user['id']:
         return abort(403)
 
-    args = parse_args(request.args)
     uset = UserSets.get(user_id=user_id)
     if not uset:
-        return jsonify(sets=[])
-    return jsonify(sets=[s.deliver() for s in uset.list_sets(**args)])
+        return 200, {'sets': []}
+    return 200, {
+        'sets': [s.deliver() for s in uset.list_sets(**request['params'])]
+    }
 
 
-@user_sets_routes.route('/<user_id>/sets/<set_id>/', methods=['POST'])
-def add_set(user_id, set_id):
+@post('/api/users/{user_id}/sets/{set_id}')
+def add_set_route(request, user_id, set_id):
     """
     Add a set to the learner's list of sets.
     """
 
-    if not current_user.is_authenticated():
+    current_user = get_current_user()
+    if not current_user:
         return abort(401)
 
-    if user_id != current_user.get_id():
+    if user_id != current_user['id']:
         return abort(403)
 
     set_ = Set.get(entity_id=set_id)
@@ -45,10 +44,10 @@ def add_set(user_id, set_id):
 
     uset = UserSets.get(user_id=user_id)
     if uset and set_id in uset['set_ids']:
-        return jsonify(errors=[{
+        return 400, {'errors': [{
             'name': 'set_id',
             'message': 'Set is already added.',
-        }]), 400
+        }]}
 
     if uset:
         uset['set_ids'].append(set_id)
@@ -60,20 +59,22 @@ def add_set(user_id, set_id):
         })
 
     if errors:
-        return jsonify(errors=errors), 400
-    return jsonify(sets=uset['set_ids'])
+        return 400, {'errors': errors}
+
+    return 200, {'sets': uset['set_ids']}
 
 
-@user_sets_routes.route('/<user_id>/sets/<set_id>/', methods=['DELETE'])
-def remove_set(user_id, set_id):
+@delete('/api/users/{user_id}/sets/{set_id}')
+def remove_set_route(request, user_id, set_id):
     """
     Remove a set from the learner's list of sets.
     """
 
-    if not current_user.is_authenticated():
+    current_user = get_current_user()
+    if not current_user:
         return abort(401)
 
-    if user_id != current_user.get_id():
+    if user_id != current_user['id']:
         return abort(403)
 
     uset = UserSets.get(user_id=user_id)
@@ -84,5 +85,6 @@ def remove_set(user_id, set_id):
     usets, errors = uset.save()
 
     if errors:
-        return jsonify(errors=errors), 400
-    return jsonify(sets=uset['set_ids'])
+        return 400, {'errors': errors}
+
+    return 200, {'sets': uset['set_ids']}

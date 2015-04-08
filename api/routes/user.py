@@ -1,14 +1,11 @@
 from models.user import User
 from models.user_sets import UserSets
 from models.follow import Follow
-from flask import Blueprint, jsonify, request, make_response, abort
-from flask.ext.login import login_user, current_user, logout_user
 from modules.content import get as c
-from modules.util import parse_args
 from modules.discuss import get_posts_facade
 
-
-user_routes = Blueprint('user', __name__, url_prefix='/api/users')
+from framework.index import get, post, put, abort
+from framework.session import get_current_user, login_user, logout_user
 
 
 def _log_in(user):
@@ -17,14 +14,17 @@ def _log_in(user):
     Used by sign up, log in, and reset password.
     """
 
-    login_user(user, remember=True)
-    resp = make_response(jsonify(user=user.deliver(access='private')))
-    resp.set_cookie('logged_in', '1')
-    return resp
+    session_hash = login_user(user)
+    return 200, {
+        'user': user.deliver(access='private'),
+        'cookies': {
+            'session_id': session_hash
+        },
+    }
 
 
-@user_routes.route('/<user_id>/', methods=['GET'])
-def get_user(user_id):
+@get('/api/users/{user_id}')
+def get_user_route(request, user_id):
     """
     Get the user by their ID.
     """
@@ -36,81 +36,84 @@ def get_user(user_id):
     if not user:
         return abort(404)
 
-    args = parse_args(request.args)
-
     data = {}
     data['user'] = user.deliver(access='private'
                                 if user.is_current_user()
                                 else None)
-    if 'posts' in args:
+    if 'posts' in request['params']:
         data['posts'] = [post.deliver() for post in
                          get_posts_facade(user_id=user['id'])]
-    if 'sets' in args and user['settings']['view_sets'] == 'public':
+    if ('sets' in request['params']
+            and user['settings']['view_sets'] == 'public'):
         u_sets = UserSets.get(user_id=user['id'])
         data['sets'] = [set_.deliver() for set_ in u_sets.list_sets()]
-    if 'follows' in args and user['settings']['view_follows'] == 'public':
+    if ('follows' in request['params']
+            and user['settings']['view_follows'] == 'public'):
         data['follows'] = [follow.deliver() for follow in
                            Follow.list(user_id=user['id'])]
-    return jsonify(**data)
+    return 200, data
 
 
-@user_routes.route('/current/', methods=['GET'])
-def get_current_user():
+@get('/api/users/current')
+def get_current_user_route(request):
     """
     Get current user's information.
     """
 
-    if not current_user.is_authenticated():
+    current_user = get_current_user()
+    if not current_user:
         return abort(401)
-    return jsonify(user=current_user.deliver(access='private'))
+    return 200, {'user': current_user.deliver(access='private')}
 
 
-@user_routes.route('/', methods=['POST'])
-def create_user():
+@post('/api/users')
+def create_user_route(request):
     """
     Create user.
     """
 
-    user, errors = User.insert(request.json)
+    user, errors = User.insert(request['params'])
     if len(errors):
-        return jsonify(errors=errors), 400
+        return 400, {'errors', errors}
     return _log_in(user)
 
 
-@user_routes.route('/log_in/', methods=['POST'])
-def log_in():
+@post('/api/users/log_in')
+def log_in_route(request):
     """
     Log in user.
     """
 
-    user = User.get(name=request.json.get('name'))
+    user = User.get(name=request['params'].get('name'))
     if not user:
-        return jsonify(errors=[{
+        return 404, {'errors': [{
             'name': 'name',
             'message': c('user', 'no_user'),
-        }]), 404
-    if not user.is_password_valid(request.json.get('password')):
-        return jsonify(errors=[{
+        }]}
+    if not user.is_password_valid(request['params'].get('password')):
+        return 400, {'errors': [{
             'name': 'password',
             'message': c('user', 'no_match'),
-        }]), 400
+        }]}
     return _log_in(user)
 
 
-@user_routes.route('/log_out/', methods=['POST'])
-def log_out():
+@post('/api/users/log_out')
+def log_out_route(request):
     """
     Log out user.
     """
 
     logout_user()
-    resp = make_response('')
-    resp.set_cookie('logged_in', '0')
-    return resp, 204
+    return 204, {
+        'cookies': {
+            'session_id': None
+        }
+    }
 
 
-@user_routes.route('/<user_id>/', methods=['PUT'])
-def update_user(user_id):
+@put('/api/users/{user_id}')
+def update_user_route(request, user_id):
     """
     Update the user. Must be the current user.
     """
@@ -120,36 +123,36 @@ def update_user(user_id):
         return abort(404)
     if not user.is_current_user():
         return abort(401)
-    user, errors = user.update(request.json)
+    user, errors = user.update(request['params'])
     if len(errors):
-        return jsonify(errors=errors), 400
-    return jsonify(user=user.deliver(access='private'))
+        return 400, {'errors': errors}
+    return 200, {'user': user.deliver(access='private')}
 
 
-@user_routes.route('/token/', methods=['POST'])
-def create_token():
+@post('/api/users/token')
+def create_token_route(request):
     """
     Create an email token for the user.
     """
 
-    user = User.get(email=request.json.get('email'))
+    user = User.get(email=request['params'].get('email'))
     if not user:
         return abort(404)
     user.get_email_token()
-    return '', 204
+    return 200, {}
 
 
-@user_routes.route('/password/', methods=['POST'])
-def create_password():
+@post('/api/users/password')
+def create_password_route(request):
     """
     Update a user's password if the token is valid.
     """
 
-    user = User.get(id=request.json.get('id'))
+    user = User.get(id=request['params'].get('id'))
     if not user:
         return abort(404)
-    valid = user.is_valid_token(request.json.get('token'))
+    valid = user.is_valid_token(request['params'].get('token'))
     if not valid:
         return abort(403)
-    user.update_password(request.json.get('password'))
+    user.update_password(request['params'].get('password'))
     return _log_in(user)

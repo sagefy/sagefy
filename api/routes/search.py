@@ -1,10 +1,8 @@
-from flask import Blueprint  # , jsonify, request
-
-search_routes = Blueprint('search', __name__, url_prefix='/api/search')
+from framework.index import get
 
 
-@search_routes.route('/', methods=['GET'])
-def search():
+@get('/api/search')
+def search_route(request):
     """
     TODO@ Search for entities. Search, filter, sort, paginate.
 

@@ -1,13 +1,11 @@
-from flask import Blueprint, jsonify
+from framework.index import get
 from modules.content import get as c
 
-public_routes = Blueprint('public', __name__, url_prefix='/api')
 
-
-@public_routes.route('/')
-def api_index():
+@get('/api')
+def index_route(request):
     """
     View a documentation page.
     """
 
-    return jsonify(message=c('api', 'welcome'))
+    return 200, {'message': c('api', 'welcome')}

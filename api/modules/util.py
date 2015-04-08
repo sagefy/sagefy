@@ -4,7 +4,6 @@ Short, one-off methods that could potentially be reused anywhere.
 
 import random
 import string
-import re
 
 
 def uniqid():
@@ -39,27 +38,6 @@ def compact(a):
     Return an array with None removed.
     """
     return [b for b in a if b is not None]
-
-
-def parse_args(args):
-    """
-    Return a dict with the args parsed into types.
-    """
-    output = {}
-    if not args:
-        return output
-    for key, value in args.items():
-        if value == 'true':
-            output[key] = True
-        elif value == 'false':
-            output[key] = False
-        elif re.match(r'^\d+$', value):
-            output[key] = int(value)
-        elif re.match(r'^\d+\.\d+$', value):
-            output[key] = float(value)
-        else:
-            output[key] = value
-    return output
 
 
 def get_first(dct, *keys):

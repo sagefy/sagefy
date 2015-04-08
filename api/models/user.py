@@ -83,41 +83,6 @@ class User(Model):
         return (current_user.is_authenticated() and
                 self['id'] == current_user['id'])
 
-    def get_url(self):
-        """
-        Where to get the user's data.
-        """
-
-        return url_for('user.get_user', user_id=self['id'])
-
-    def is_authenticated(self):
-        """
-        For Flask-Login.
-        """
-
-        return True
-
-    def is_active(self):
-        """
-        For Flask-Login.
-        """
-
-        return True
-
-    def is_anonymous(self):
-        """
-        For Flask-Login.
-        """
-
-        return False
-
-    def get_id(self):
-        """
-        For Flask-Login.
-        """
-
-        return self['id']
-
     def get_email_token(self, send_email=True):
         """
         Create an email token for the user to reset their password.

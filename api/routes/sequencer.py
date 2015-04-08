@@ -1,20 +1,20 @@
-from flask import Blueprint, abort, jsonify
-from flask.ext.login import current_user
+from framework.index import get, abort
+from framework.session import get_current_user
 from modules.sequencer.index import main
 
-sequencer_routes = Blueprint('sequencer',
-                             __name__, url_prefix='/api/sequencer')
 
-
-@sequencer_routes.route('/next/', methods=['GET'])
-def next():
+@get('/api/sequencer/next')
+def next_route(request):
     """
     Tell the learner where to go next.
     """
 
-    if not current_user.is_authenticated():
+    current_user = get_current_user()
+    if not current_user:
         return abort(401)
 
     context = current_user.get_learning_context()
 
-    return jsonify(next=main(current_user['id'], context))   # TODO@ args
+    return 200, {
+        'next': main(current_user['id'], context)  # TODO@ args
+    }
