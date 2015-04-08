@@ -3,7 +3,7 @@ Routes for the discussion platform.
 Includes topics, posts, proposals, votes, and flags.
 """
 
-from framework.index import get, post, put, abort
+from framework.routes import get, post, put, abort
 from models.topic import Topic
 from framework.session import get_current_user
 from modules.util import omit

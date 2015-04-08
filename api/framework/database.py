@@ -6,9 +6,9 @@ Rethink was designed to work this way, no reason to be alarmed.
 import rethinkdb as r
 
 config = {
-    'RDB_HOST': 'localhost',
-    'RDB_PORT': 28015,
-    'RDB_DB': 'sagefy',
+    'rdb_host': 'localhost',
+    'rdb_port': 28015,
+    'rdb_db': 'sagefy',
 }
 
 db, db_conn = None, None
@@ -19,8 +19,9 @@ def make_db_connection():
     Create a database connection.
     """
 
-    db_conn = r.connect(config['RDB_HOST'], config['RDB_PORT'])
-    db = r.db(config['RDB_DB'])
+    global db, db_conn
+    db_conn = r.connect(config['rdb_host'], config['rdb_port'])
+    db = r.db(config['rdb_db'])
     return db_conn, db
 
 
@@ -28,7 +29,9 @@ def close_db_connection():
     """
     Close the DB connection.
     """
-    return db_conn.close()
+
+    global db, db_conn
+    db_conn.close()
 
 
 def setup_db():
@@ -38,11 +41,11 @@ def setup_db():
     need to be.
     """
 
-    db_conn = r.connect(config['RDB_HOST'], config['RDB_PORT'])
+    db_conn = r.connect(config['rdb_host'], config['rdb_port'])
 
-    # Add all setup needed here:
-    if config['RDB_DB'] not in r.db_list().run(db_conn):
-        r.db_create(config['RDB_DB']).run(db_conn)
+    # add all setup needed here:
+    if config['rdb_db'] not in r.db_list().run(db_conn):
+        r.db_create(config['rdb_db']).run(db_conn)
 
     from models.user import User
     from models.notice import Notice
@@ -66,24 +69,24 @@ def setup_db():
               CardParameters, UnitParameters, SetParameters,
               Follow, UserSets, Response)
 
-    tables = r.db(config['RDB_DB']).table_list().run(db_conn)
+    tables = r.db(config['rdb_db']).table_list().run(db_conn)
 
-    for modelCls in models:
-        tablename = getattr(modelCls, 'tablename', None)
+    for model_cls in models:
+        tablename = getattr(model_cls, 'tablename', None)
         if tablename and tablename not in tables:
-            (r.db(config['RDB_DB'])
+            (r.db(config['rdb_db'])
               .table_create(tablename)
               .run(db_conn))
             tables.append(tablename)
 
-        existant_indexes = (r.db(config['RDB_DB'])
+        existant_indexes = (r.db(config['rdb_db'])
                              .table(tablename)
                              .index_list()
                              .run(db_conn))
-        indexes = getattr(modelCls, 'indexes', [])
+        indexes = getattr(model_cls, 'indexes', [])
         for index in indexes:
             if index[0] not in existant_indexes:
-                (r.db(config['RDB_DB'])
+                (r.db(config['rdb_db'])
                   .index_create(*index)
                   .run(db_conn))
 

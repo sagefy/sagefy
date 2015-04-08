@@ -1,4 +1,4 @@
-from framework.index import get, put, abort
+from framework.routes import get, put, abort
 from framework.session import get_current_user
 from models.notice import Notice
 

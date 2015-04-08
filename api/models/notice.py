@@ -2,7 +2,7 @@ from modules.model import Model
 from modules.validations import is_required, is_string, is_boolean, is_list, \
     is_one_of, is_list_of_strings
 import rethinkdb as r
-from flask import g
+import framework.database as database
 from modules.content import get as c
 
 
@@ -49,7 +49,7 @@ class Notice(Model):
                             if read is not None else True)
                     .skip(skip)
                     .limit(limit))
-        fields_list = query.run(g.db_conn)
+        fields_list = query.run(database.db_conn)
         return [cls(fields) for fields in fields_list]
 
     def mark_as_read(self):

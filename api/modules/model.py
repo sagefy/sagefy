@@ -1,5 +1,5 @@
 import rethinkdb as r
-from flask import g
+import framework.database as database
 from modules.util import uniqid, omit, pick
 from modules.content import get as c
 from modules.classproperty import classproperty
@@ -109,7 +109,7 @@ class Model(object):
         """
 
         assert self.tablename, 'You must provide a tablename.'
-        return g.db.table(self.tablename)
+        return database.db.table(self.tablename)
 
     @classmethod
     def get(cls, **params):
@@ -122,12 +122,12 @@ class Model(object):
         if params.get('id'):
             data = (cls.table
                        .get(params.get('id'))
-                       .run(g.db_conn))
+                       .run(database.db_conn))
         else:
             data = list(cls.table
                            .filter(params)
                            .limit(1)
-                           .run(g.db_conn))
+                           .run(database.db_conn))
             data = data[0] if len(data) > 0 else None
         if data:
             return cls(data)
@@ -141,7 +141,7 @@ class Model(object):
 
         data_list = (cls.table
                         .filter(params)
-                        .run(g.db_conn))
+                        .run(database.db_conn))
         return [cls(data) for data in data_list]
 
     @classmethod
@@ -178,7 +178,7 @@ class Model(object):
             return self, errors
         data = self.bundle()
         self.id = data['id']
-        self.table.insert(data, conflict='update').run(g.db_conn)
+        self.table.insert(data, conflict='update').run(database.db_conn)
         self.sync()
         return self, []
 
@@ -189,7 +189,7 @@ class Model(object):
 
         data = (self.table
                     .get(self['id'])
-                    .run(g.db_conn))
+                    .run(database.db_conn))
         self.data.update(data)
         return self
 
@@ -201,7 +201,7 @@ class Model(object):
         (self.table
              .get(self['id'])
              .delete()
-             .run(g.db_conn))
+             .run(database.db_conn))
         return self, []
 
     def validate(self):
@@ -294,7 +294,7 @@ class Model(object):
                          .filter(r.row[field_name] == data.get(field_name))
                          .filter(r.row['id'] != self['id']))
 
-            if len(list(query.run(g.db_conn))) > 0:
+            if len(list(query.run(database.db_conn))) > 0:
                 errors.append({
                     'name': prefix + field_name,
                     'message': c('error', 'unique'),

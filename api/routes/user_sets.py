@@ -1,6 +1,6 @@
 from models.user_sets import UserSets
 from models.set import Set
-from framework.index import get, post, delete, abort
+from framework.routes import get, post, delete, abort
 from framework.session import get_current_user
 
 

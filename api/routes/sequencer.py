@@ -1,4 +1,4 @@
-from framework.index import get, abort
+from framework.routes import get, abort
 from framework.session import get_current_user
 from modules.sequencer.index import main
 

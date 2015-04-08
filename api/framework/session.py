@@ -1,4 +1,5 @@
 from models.user import User
+from framework.redis import redis
 
 
 def get_current_user():
@@ -15,6 +16,7 @@ def login_user(user):
     """
 
     assert False
+
 
 def logout_user(user):
     """

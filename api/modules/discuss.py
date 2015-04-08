@@ -7,7 +7,7 @@ from models.post import Post
 from models.proposal import Proposal
 from models.vote import Vote
 from models.flag import Flag
-from flask import g
+import framework.database as database
 from modules.util import omit
 
 
@@ -32,7 +32,7 @@ def get_post_facade(post_id):
     Get the post and the correct kind based on the `kind` field.
     """
 
-    data = g.db.table('posts').get(post_id).run(g.db_conn)
+    data = Post.table.get(post_id).run(database.db_conn)
     return instance(data)
 
 
@@ -42,11 +42,11 @@ def get_posts_facade(limit=10, skip=0, **params):
     post is the correct kind based on the `kind` field.
     """
 
-    data = (g.db.table('posts')
+    data = (Post.table
                 .filter(params)
                 .skip(skip)
                 .limit(limit)
-                .run(g.db_conn))
+                .run(database.db_conn))
     return [instance(d) for d in data]
 
 

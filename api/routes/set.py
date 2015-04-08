@@ -1,4 +1,4 @@
-from framework.index import get, post, abort
+from framework.routes import get, post, abort
 from models.set import Set
 from models.topic import Topic
 from framework.session import get_current_user

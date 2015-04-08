@@ -1,4 +1,4 @@
-from framework.index import get
+from framework.routes import get
 
 
 @get('/api/search')

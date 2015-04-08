@@ -1,5 +1,4 @@
 import rethinkdb as r
-# from flask import g
 
 from models.card import Card
 from modules import entity

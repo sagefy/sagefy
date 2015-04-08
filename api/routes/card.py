@@ -1,5 +1,5 @@
 from framework.session import get_current_user
-from framework.index import get, post, abort
+from framework.routes import get, post, abort
 from models.card import Card
 from models.unit import Unit
 from models.topic import Topic

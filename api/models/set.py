@@ -1,4 +1,4 @@
-from flask import g
+import framework.database as database
 import rethinkdb as r
 from modules.model import Model
 from models.mixins.entity import EntityMixin
@@ -95,7 +95,7 @@ class Set(EntityMixin, Model):
                         lambda member:
                             member['id'] == unit_id
                     )))
-        sets = query.run(g.db_conn)
+        sets = query.run(database.db_conn)
 
         # *** Second, find all the sets containing
         #     those sets... recursively. ***
@@ -110,7 +110,7 @@ class Set(EntityMixin, Model):
                             lambda member:
                                 r.expr(set_ids).contains(member['id'])
                         )))
-            found_sets = query.run(g.db_conn)
+            found_sets = query.run(database.db_conn)
 
         return [Set(data) for data in all_sets]
 

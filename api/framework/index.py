@@ -8,109 +8,104 @@ from traceback import format_exc
 
 # Own imports
 from framework.status_codes import status_codes
+from framework.database import make_db_connection, close_db_connection
+from framework.routes import find_path, abort
+import framework.database
+import framework.mail
 
 
 config = {
     'debug': False
 }
 
-routes = {
-    'GET': [],
-    'POST': [],
-    'PUT': [],
-    'DELETE': [],
-}
 
-error_handlers = []
-
-
-def get(path):
+def update_config(conf_):
     """
-    Register a path and handler for a GET request.
+    Updates configs for various modules.
     """
 
-    def decorator(handler):
-        routes['GET'].append((build_path_pattern(path), handler,))
-        return handler
-    return decorator
+    config.update(conf_)
+    framework.database.update(conf_)
+    framework.mail.update(conf_)
 
 
-def post(path):
+def serve(environ, start_response):
     """
-    Register a path and handler for a POST request.
-    """
-
-    def decorator(handler):
-        routes['POST'].append((build_path_pattern(path), handler,))
-        return handler
-    return decorator
-
-
-def put(path):
-    """
-    Register a path and handler for a PUT request.
+    Handle a WSGI request and response.
     """
 
-    def decorator(handler):
-        routes['PUT'].append((build_path_pattern(path), handler,))
-        return handler
-    return decorator
+    make_db_connection()
+    code, data = call_handler(environ)
+    close_db_connection()
+    response_headers = [('Content-Type', 'application/json; charset=utf-8')]
+    response_headers += pull_cookies_headers(data.pop('cookies', {}))
+    status = str(code) + ' ' + status_codes.get(code, 'Unknown')
+    start_response(status, response_headers)
+    body = json.dumps(data, ensure_ascii=False).encode()
+    return [body]
 
 
-def delete(path):
+def call_handler(environ):
     """
-    Register a path and handler for a DELETE request.
-    """
-
-    def decorator(handler):
-        routes['DELETE'].append((build_path_pattern(path), handler,))
-        return handler
-    return decorator
-
-
-def abort(code):
-    """
-    A standardized way to abort
+    Given a WSGI environment,
+    call the appropriate handler.
+    Return a tuple of code (str), data (dict), and cookies (list).
     """
 
-    return code, {'errors': [{'message': status_codes.get(code, 'Unknown')}]}
+    method = environ['REQUEST_METHOD']
+    if method not in ('GET', 'POST', 'PUT', 'DELETE'):
+        return abort(405)
 
-
-def build_path_pattern(path):
-    """
-    Given a path description string,
-    produce a regexp expression.
-    """
-
-    path = re.sub(r'\{(\w+)\}', r'(?P<\1>[\w\-]+)', path)
-    return re.compile('^' + path + '/?$')
-
-
-def find_path(method, path):
-    """
-    Given a method and a path,
-    find the route that matches.
-    """
-    for pattern, handler in routes[method]:
-        match = pattern.match(path)
-        if match:
-            return handler, match.groupdict()
-    return None, None
-
-
-def pull_body(environ):
-    """
-    Pulls the body out of the WSGI environment.
-    """
+    path = environ['SCRIPT_NAME'] + environ['PATH_INFO']
+    handler, parameters = find_path(method, path)
+    if not handler:
+        return abort(404)
 
     try:
-        content_length = int(environ.get('CONTENT_LENGTH', 0))
-        body = environ['wsgi.input'].read(content_length)
-        body = body.decode()
-        body = json.loads(body, strict=False)
-    except:
-        body = {}
-    return body
+        return handler(request=construct_request(environ), **parameters)
+
+    except Exception as e:
+        if config['debug']:
+            return 500, {'errors': [{
+                'message': str(e),
+                'stack': format_exc()
+            }]}
+        return abort(500)
+
+
+def construct_request(environ):
+    """
+    Produce a request `object`
+    given a body (get), query string (put, post), and cookies.
+    """
+
+    method = environ['REQUEST_METHOD']
+    request = {}
+    if method == 'GET':
+        request['params'] = pull_query_string(environ)
+    elif method in ('PUT', 'POST'):
+        request['params'] = pull_body(environ)
+    request['cookies'] = pull_cookies(environ)
+    return request
+
+
+def pull_query_string(environ):
+    """
+    Pulls and formats query string out of the WSGI environment.
+    """
+
+    args = unquote_plus(environ.get('QUERY_STRING', ''))
+    if not args:
+        return {}
+
+    def _(pair):
+        pair = pair.split('=')
+        if len(pair) == 2:
+            return pair
+        return pair[0], ''
+
+    args = dict(map(_, args.split('&')))
+    return {key: valuefy(value) for key, value in args.items()}
 
 
 def valuefy(value):
@@ -131,25 +126,18 @@ def valuefy(value):
     return value
 
 
-def pull_query_string(environ):
+def pull_body(environ):
     """
-    Pulls and formats query string out of the WSGI environment.
+    Pulls the body out of the WSGI environment.
     """
 
-    args = unquote_plus(environ.get('QUERY_STRING', ''))
-
-    if not args:
+    try:
+        content_length = int(environ.get('CONTENT_LENGTH', 0))
+        body = environ['wsgi.input'].read(content_length)
+        body = body.decode()
+        return json.loads(body, strict=False)
+    except:
         return {}
-
-    def _(pair):
-        pair = pair.split('=')
-        if len(pair) == 2:
-            return pair
-        return pair[0], ''
-
-    args = dict(map(_, args.split('&')))
-
-    return {key: valuefy(value) for key, value in args.items()}
 
 
 def pull_cookies(environ):
@@ -160,52 +148,6 @@ def pull_cookies(environ):
 
     cookie = SimpleCookie(environ.get('HTTP_COOKIE', ''))
     return {key: morsel.value for key, morsel in cookie.items()}
-
-
-def construct_request(environ):
-    """
-    Produce a request `object`
-    given a body (get), query string (put, post), and cookies.
-    """
-
-    method = environ['REQUEST_METHOD']
-    request = {}
-    if method == 'GET':
-        request['params'] = pull_query_string(environ)
-    elif method in ('PUT', 'POST'):
-        request['params'] = pull_body(environ)
-    request['cookies'] = pull_cookies(environ)
-    return request
-
-
-def call_handler(environ):
-    """
-    Given a WSGI environment,
-    call the appropriate handler.
-    Return a tuple of code (str), data (dict), and cookies (list).
-    """
-
-    try:
-        method = environ['REQUEST_METHOD']
-        if method not in ('GET', 'POST', 'PUT', 'DELETE'):
-            return abort(405)
-
-        path = environ['SCRIPT_NAME'] + environ['PATH_INFO']
-        handler, parameters = find_path(method, path)
-        if not handler:
-            return abort(404)
-
-        return handler(request=construct_request(environ), **parameters)
-
-    except Exception as e:
-        for error_handler in error_handlers:
-            error_handler(e, format_exc())
-        if config['debug']:
-            return 500, {'errors': [{
-                'message': str(e),
-                'stack': format_exc()
-            }]}
-        return abort(500)
 
 
 def pull_cookies_headers(cookies):
@@ -223,17 +165,3 @@ def pull_cookies_headers(cookies):
         ]).format(key=key, value=value, expires=expires))
         for key, value in cookies.items()
     ]
-
-
-def serve(environ, start_response):
-    """
-    Handle a WSGI request and response.
-    """
-
-    code, data = call_handler(environ)
-    response_headers = [('Content-Type', 'application/json; charset=utf-8')]
-    response_headers += pull_cookies_headers(data.pop('cookies', {}))
-    status = str(code) + ' ' + status_codes.get(code, '???')
-    start_response(status, response_headers)
-    body = json.dumps(data, ensure_ascii=False).encode()
-    return [body]

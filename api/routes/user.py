@@ -4,7 +4,7 @@ from models.follow import Follow
 from modules.content import get as c
 from modules.discuss import get_posts_facade
 
-from framework.index import get, post, put, abort
+from framework.routes import get, post, put, abort
 from framework.session import get_current_user, login_user, logout_user
 
 
@@ -30,6 +30,7 @@ def get_user_route(request, user_id):
     """
 
     user = User.get(id=user_id)
+    current_user = get_current_user()
     # Posts if in request params
     # Sets if in request params and allowed
     # Follows if in request params and allowed
@@ -38,7 +39,7 @@ def get_user_route(request, user_id):
 
     data = {}
     data['user'] = user.deliver(access='private'
-                                if user.is_current_user()
+                                if user['id'] == current_user['id']
                                 else None)
     if 'posts' in request['params']:
         data['posts'] = [post.deliver() for post in
@@ -119,9 +120,10 @@ def update_user_route(request, user_id):
     """
 
     user = User.get(id=user_id)
+    current_user = get_current_user()
     if not user:
         return abort(404)
-    if not user.is_current_user():
+    if not user['id'] == current_user['id']:
         return abort(401)
     user, errors = user.update(request['params'])
     if len(errors):
