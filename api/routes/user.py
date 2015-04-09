@@ -5,7 +5,7 @@ from modules.content import get as c
 from modules.discuss import get_posts_facade
 
 from framework.routes import get, post, put, abort
-from framework.session import get_current_user, login_user, logout_user
+from framework.session import get_current_user, log_in_user, log_out_user
 
 
 def _log_in(user):
@@ -14,13 +14,26 @@ def _log_in(user):
     Used by sign up, log in, and reset password.
     """
 
-    session_hash = login_user(user)
+    session_id = log_in_user(user)
     return 200, {
         'user': user.deliver(access='private'),
         'cookies': {
-            'session_id': session_hash
+            'session_id': session_id
         },
     }
+
+
+@get('/api/users/current')
+def get_current_user_route(request):
+    """
+    Get current user's information.
+    """
+
+    current_user = get_current_user(request)
+
+    if not current_user:
+        return abort(401)
+    return 200, {'user': current_user.deliver(access='private')}
 
 
 @get('/api/users/{user_id}')
@@ -30,7 +43,7 @@ def get_user_route(request, user_id):
     """
 
     user = User.get(id=user_id)
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     # Posts if in request params
     # Sets if in request params and allowed
     # Follows if in request params and allowed
@@ -39,8 +52,10 @@ def get_user_route(request, user_id):
 
     data = {}
     data['user'] = user.deliver(access='private'
-                                if user['id'] == current_user['id']
+                                if current_user
+                                and user['id'] == current_user['id']
                                 else None)
+
     if 'posts' in request['params']:
         data['posts'] = [post.deliver() for post in
                          get_posts_facade(user_id=user['id'])]
@@ -55,18 +70,6 @@ def get_user_route(request, user_id):
     return 200, data
 
 
-@get('/api/users/current')
-def get_current_user_route(request):
-    """
-    Get current user's information.
-    """
-
-    current_user = get_current_user()
-    if not current_user:
-        return abort(401)
-    return 200, {'user': current_user.deliver(access='private')}
-
-
 @post('/api/users')
 def create_user_route(request):
     """
@@ -75,7 +78,7 @@ def create_user_route(request):
 
     user, errors = User.insert(request['params'])
     if len(errors):
-        return 400, {'errors', errors}
+        return 400, {'errors': errors}
     return _log_in(user)
 
 
@@ -105,7 +108,7 @@ def log_out_route(request):
     Log out user.
     """
 
-    logout_user()
+    log_out_user(request)
     return 204, {
         'cookies': {
             'session_id': None
@@ -120,7 +123,7 @@ def update_user_route(request, user_id):
     """
 
     user = User.get(id=user_id)
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not user:
         return abort(404)
     if not user['id'] == current_user['id']:

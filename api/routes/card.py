@@ -58,7 +58,7 @@ def learn_card_route(request, card_id):
     Render the card's data, ready for learning.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
@@ -85,7 +85,7 @@ def respond_to_card_route(request, card_id):
     Record and process a learner's response to a card.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 

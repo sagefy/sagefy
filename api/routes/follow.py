@@ -10,7 +10,7 @@ def get_follows_route(request):
     Get a list of the users follows.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user.is_authenticated():
         return abort(401)
 
@@ -26,7 +26,7 @@ def follow_route(request):
     Follow a card, unit, or set.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
@@ -63,7 +63,7 @@ def unfollow_route(request, follow_id):
     Remove a follow. Must be current user's own follow.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 

@@ -20,7 +20,7 @@ def create_topic_route(request):
         create a vote there instead.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
@@ -65,7 +65,7 @@ def update_topic_route(request, topic_id):
     Update the topic. Only the name can be changed. Only by original author.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
@@ -139,7 +139,7 @@ def create_post_route(request, topic_id):
     Vote: must refer to a proposal.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
@@ -191,7 +191,7 @@ def update_post_route(request, topic_id, post_id):
     The only fields that can be updated are body and response.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 

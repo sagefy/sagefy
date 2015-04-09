@@ -1,4 +1,4 @@
-from email.MIMEText import MIMEText
+from email.mime.text import MIMEText
 from smtplib import SMTP_SSL as SMTP
 
 config = {

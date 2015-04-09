@@ -68,7 +68,7 @@ def get_set_units_route(request, set_id):
     from.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
     return 400, {}
@@ -82,7 +82,7 @@ def choose_unit_route(request, set_id, unit_id):
     TODO@ Updates the learner's information based on the unit they have chosen.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
     return 400, {}

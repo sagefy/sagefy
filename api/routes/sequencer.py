@@ -9,7 +9,7 @@ def next_route(request):
     Tell the learner where to go next.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 

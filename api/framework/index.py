@@ -25,8 +25,8 @@ def update_config(conf_):
     """
 
     config.update(conf_)
-    framework.database.update(conf_)
-    framework.mail.update(conf_)
+    framework.database.config.update(conf_)
+    framework.mail.config.update(conf_)
 
 
 def serve(environ, start_response):
@@ -41,7 +41,7 @@ def serve(environ, start_response):
     response_headers += pull_cookies_headers(data.pop('cookies', {}))
     status = str(code) + ' ' + status_codes.get(code, 'Unknown')
     start_response(status, response_headers)
-    body = json.dumps(data, ensure_ascii=False).encode()
+    body = json.dumps(data, default=json_serial, ensure_ascii=False).encode()
     return [body]
 
 
@@ -162,6 +162,16 @@ def pull_cookies_headers(cookies):
             '{key}={value}',
             'expires={expires}',
             'Path=/',
+            'HttpOnly',
         ]).format(key=key, value=value, expires=expires))
         for key, value in cookies.items()
     ]
+
+
+def json_serial(val):
+    """
+    Tell `json.dumps` how to convert non-JSON types.
+    """
+
+    if isinstance(val, datetime):
+        return val.isoformat()

@@ -10,7 +10,7 @@ def get_user_sets_route(request, user_id):
     Get the list of sets the user has added.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
@@ -31,7 +31,7 @@ def add_set_route(request, user_id, set_id):
     Add a set to the learner's list of sets.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
@@ -70,7 +70,7 @@ def remove_set_route(request, user_id, set_id):
     Remove a set from the learner's list of sets.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 

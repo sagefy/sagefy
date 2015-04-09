@@ -19,7 +19,7 @@ def list_notices_route(request):
     Take parameters `limit`, `skip`, `tag`, and `read`.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
     notices = Notice.list(user_id=current_user['id'], **request['params'])
@@ -37,7 +37,7 @@ def mark_notice_as_read_route(request, notice_id):
     Return notice.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
     notice = Notice.get(id=notice_id)
@@ -59,7 +59,7 @@ def mark_notice_as_unread_route(request, notice_id):
     Return notice.
     """
 
-    current_user = get_current_user()
+    current_user = get_current_user(request)
     if not current_user:
         return abort(401)
     notice = Notice.get(id=notice_id)
