@@ -2,7 +2,7 @@ from models.follow import Follow
 import rethinkdb as r
 
 
-def test_user_id(app, db_conn, follows_table):
+def test_user_id(db_conn, follows_table):
     """
     A follow should require a user_id.
     """
@@ -19,7 +19,7 @@ def test_user_id(app, db_conn, follows_table):
     assert len(errors) == 0
 
 
-def test_entity(app, db_conn, follows_table):
+def test_entity(db_conn, follows_table):
     """
     Expect a follow to require an entity kind and id.
     """
@@ -36,7 +36,7 @@ def test_entity(app, db_conn, follows_table):
     assert len(errors) == 0
 
 
-def test_list_user(app, db_conn, follows_table):
+def test_list_user(db_conn, follows_table):
     """
     Expect to get follows by user id.
     """
@@ -71,7 +71,7 @@ def test_list_user(app, db_conn, follows_table):
     assert len(Follow.list(user_id='JFldl93k')) == 1
 
 
-def test_list_kind(app, db_conn, follows_table):
+def test_list_kind(db_conn, follows_table):
     """
     Expect to get follows by kind.
     """
@@ -106,7 +106,7 @@ def test_list_kind(app, db_conn, follows_table):
     assert len(Follow.list(kind='unit')) == 1
 
 
-def test_list_id(app, db_conn, follows_table):
+def test_list_id(db_conn, follows_table):
     """
     Expect to list follows by entity id.
     """

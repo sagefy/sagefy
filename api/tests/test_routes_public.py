@@ -1,8 +1,11 @@
+import routes.public
 
 
-def test_welcome(app):
+def test_welcome():
     """
     Ensure the API returns a welcome message.
     """
-    response = app.test_client().get('/api/')
-    assert 'Welcome' in response.data.decode()
+
+    code, response = routes.public.index_route({})
+    assert code == 200
+    assert 'Welcome' in response['message']

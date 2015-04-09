@@ -4,7 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def test_formula_body(app, cards_table):
+def test_formula_body(cards_table):
     """
     Expect a formula card to require a body.
     """
@@ -25,7 +25,7 @@ def test_formula_body(app, cards_table):
     assert len(errors) == 0
 
 
-def test_formula_options(app, cards_table):
+def test_formula_options(cards_table):
     """
     Expect a formula card to require options.
     (value, correct, feedback)
@@ -48,7 +48,7 @@ def test_formula_options(app, cards_table):
 
 
 @xfail
-def test_formula_variables(app, cards_table):
+def test_formula_variables(cards_table):
     """
     Expect a formula card to require variables.
     """
@@ -56,7 +56,7 @@ def test_formula_variables(app, cards_table):
     assert False
 
 
-def test_formula_range(app, cards_table):
+def test_formula_range(cards_table):
     """
     Expect a formula card to require a range.
     """
@@ -78,7 +78,7 @@ def test_formula_range(app, cards_table):
     assert len(errors) == 0
 
 
-def test_formula_default_feedback(app, cards_table):
+def test_formula_default_feedback(cards_table):
     """
     Expect a formula card to require default feedback.
     """
@@ -100,7 +100,7 @@ def test_formula_default_feedback(app, cards_table):
 
 
 @xfail
-def test_validate_response(app, db_conn, cards_table):
+def test_validate_response(db_conn, cards_table):
     """
     Expect to check if a given response is valid for the card kind.
     """
@@ -109,7 +109,7 @@ def test_validate_response(app, db_conn, cards_table):
 
 
 @xfail
-def test_score_response(app, db_conn, cards_table):
+def test_score_response(db_conn, cards_table):
     """
     Expect to score if a given response is correct for the card kind.
     """

@@ -6,7 +6,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def test_entity(app, db_conn, sets_table):
+def test_entity(db_conn, sets_table):
     """
     Expect a set to require an entity_id.
     """
@@ -23,7 +23,7 @@ def test_entity(app, db_conn, sets_table):
     assert set_['entity_id']
 
 
-def test_previous(app, db_conn, sets_table):
+def test_previous(db_conn, sets_table):
     """
     Expect a set to allow a previous version id.
     """
@@ -40,7 +40,7 @@ def test_previous(app, db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_language(app, db_conn, sets_table):
+def test_language(db_conn, sets_table):
     """
     Expect a set to require a language.
     """
@@ -57,7 +57,7 @@ def test_language(app, db_conn, sets_table):
     assert set_['language'] == 'en'
 
 
-def test_name(app, db_conn, sets_table):
+def test_name(db_conn, sets_table):
     """
     Expect a set to require a name.
     """
@@ -75,7 +75,7 @@ def test_name(app, db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_body(app, db_conn, sets_table):
+def test_body(db_conn, sets_table):
     """
     Expect a set to require a body.
     """
@@ -93,7 +93,7 @@ def test_body(app, db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_canonical(app, db_conn, sets_table):
+def test_canonical(db_conn, sets_table):
     """
     Expect a set canonical to be a boolean.
     """
@@ -113,7 +113,7 @@ def test_canonical(app, db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_tags(app, db_conn, sets_table):
+def test_tags(db_conn, sets_table):
     """
     Expect a set to allow tags.
     """
@@ -130,7 +130,7 @@ def test_tags(app, db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_members(app, db_conn, sets_table):
+def test_members(db_conn, sets_table):
     """
     Expect a set to record a list of members.
     """
@@ -148,7 +148,7 @@ def test_members(app, db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_list_by_entity_ids(app, db_conn, sets_table):
+def test_list_by_entity_ids(db_conn, sets_table):
     """
     Expect to list sets by given entity IDs.
     """
@@ -187,7 +187,7 @@ def test_list_by_entity_ids(app, db_conn, sets_table):
     assert sets[0]['body'] in ('Apple', 'Coconut')
 
 
-def test_list_by_unit_ids(app, db_conn, units_table, sets_table):
+def test_list_by_unit_ids(db_conn, units_table, sets_table):
     """
     Expect to get a list of sets which contain the given unit ID.
     Recursive.
@@ -273,7 +273,7 @@ def test_list_by_unit_ids(app, db_conn, units_table, sets_table):
     assert set_ids == {'A', 'B1', 'B2', 'C'}
 
 
-def test_list_units(app, db_conn, units_table, sets_table):
+def test_list_units(db_conn, units_table, sets_table):
     """
     Expect to get a list of units contained within the set.
     Recursive.

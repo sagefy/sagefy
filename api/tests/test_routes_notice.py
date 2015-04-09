@@ -5,7 +5,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def test_list(db_conn, c_user, notices_table):
+def test_list(db_conn, session, notices_table):
     """
     Expect to get a list of 10 notices by user ID.
     """
@@ -14,14 +14,14 @@ def test_list(db_conn, c_user, notices_table):
             'user_id': 'abcd1234',
             'kind': 'new_proposal',
         })
-    response = c_user.get('/api/notices/')
+    response = session.get('/api/notices/')
     assert response.status_code == 200
     response = json.loads(response.data.decode())
     assert len(response['notices']) == 10
     assert 'user_id' in response['notices'][0]
 
 
-def test_list_no_user(app, db_conn):
+def test_list_no_user(db_conn):
     """
     Expect to get an error if not logged in.
     """
@@ -30,7 +30,7 @@ def test_list_no_user(app, db_conn):
         assert response.status_code == 401
 
 
-def test_list_paginate(app, db_conn, c_user, notices_table):
+def test_list_paginate(db_conn, session, notices_table):
     """
     Expect to paginate lists of notices.
     """
@@ -40,18 +40,18 @@ def test_list_paginate(app, db_conn, c_user, notices_table):
             'kind': 'new_proposal',
         })
 
-    response = c_user.get('/api/notices/')
+    response = session.get('/api/notices/')
     response = json.loads(response.data.decode())
     assert len(response['notices']) == 10
-    response = c_user.get('/api/notices/?skip=10')
+    response = session.get('/api/notices/?skip=10')
     response = json.loads(response.data.decode())
     assert len(response['notices']) == 10
-    response = c_user.get('/api/notices/?skip=20')
+    response = session.get('/api/notices/?skip=20')
     response = json.loads(response.data.decode())
     assert len(response['notices']) == 5
 
 
-def test_mark(app, db_conn, c_user, notices_table):
+def test_mark(db_conn, session, notices_table):
     """
     Expect to mark a notice as read.
     """
@@ -60,7 +60,7 @@ def test_mark(app, db_conn, c_user, notices_table):
         'kind': 'new_proposal',
     })
     nid = notice['id']
-    response = c_user.put('/api/notices/%s/read/' % nid)
+    response = session.put('/api/notices/%s/read/' % nid)
     assert response.status_code == 200
     response = json.loads(response.data.decode())
     assert response['notice']['read'] is True
@@ -68,7 +68,7 @@ def test_mark(app, db_conn, c_user, notices_table):
     assert record['read'] is True
 
 
-def test_mark_no_user(app, db_conn, notices_table):
+def test_mark_no_user(db_conn, notices_table):
     """
     Expect to error on not logged in when marking as read.
     """
@@ -84,16 +84,16 @@ def test_mark_no_user(app, db_conn, notices_table):
         assert record['read'] is False
 
 
-def test_mark_no_notice(app, db_conn, c_user, notices_table):
+def test_mark_no_notice(db_conn, session, notices_table):
     """
     Expect to error on no notice in when marking as read.
     """
-    response = c_user.put('/api/notices/abcd1234/read/')
+    response = session.put('/api/notices/abcd1234/read/')
     assert response.status_code == 404
     response = json.loads(response.data.decode())
 
 
-def test_mark_not_owned(app, db_conn, c_user, notices_table):
+def test_mark_not_owned(db_conn, session, notices_table):
     """
     Expect to error when not own notice when marking as read.
     """
@@ -102,14 +102,14 @@ def test_mark_not_owned(app, db_conn, c_user, notices_table):
         'kind': 'new_proposal',
     })
     nid = notice['id']
-    response = c_user.put('/api/notices/%s/read/' % nid)
+    response = session.put('/api/notices/%s/read/' % nid)
     assert response.status_code == 403
     record = notices_table.get(nid).run(db_conn)
     assert record['read'] is False
 
 
 @xfail
-def test_add_notices(app, db_conn, c_user, notices_table):
+def test_add_notices(db_conn, session, notices_table):
     """
     Expect to add body to notices.
     """
@@ -118,7 +118,7 @@ def test_add_notices(app, db_conn, c_user, notices_table):
 
 
 @xfail
-def test_mark_unread(app, db_conn, c_user, notices_table):
+def test_mark_unread(db_conn, session, notices_table):
     """
     Expect to mark as unread.
     """

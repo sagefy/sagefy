@@ -20,7 +20,8 @@ framework.update_config(config)
 
 from framework.database import setup_db, \
     make_db_connection, close_db_connection
-from framework.database import db as g_db
+import framework.database
+import framework.session
 
 setup_db()
 
@@ -36,16 +37,14 @@ def create_user_in_db(users_table, db_conn):
     }).run(db_conn)
 
 
-def log_in(c):
-    return c.post('/api/users/log_in/', data=json.dumps({
-        'name': 'test',
-        'password': 'abcd1234'
-    }), content_type='application/json')
+def log_in():
+    return framework.session.log_in_user({'id': 'abcd1234'})
 
 
-def log_out(c):
-    return c.post('/api/users/log_out/', data=json.dumps({}),
-                  content_type='application/json')
+def log_out(session_id):
+    return framework.session.log_out_user({
+        'cookies': {'session_id': session_id}
+    })
 
 
 @pytest.fixture(scope='session')
@@ -56,18 +55,18 @@ def db_conn(request):
 
 
 @pytest.fixture
-def log_in_user(app, request, db_conn, users_table):
+def session(request, db_conn, users_table):
     create_user_in_db(users_table, db_conn)
-    session_token = log_in()
-    request.addfinalizer(lambda: log_out())
-    return session_token
+    session_id = log_in()
+    request.addfinalizer(lambda: log_out(session_id))
+    return session_id
 
 
 def table(name, request, db_conn):
     """
     Ensure the table is freshly empty after use.
     """
-    table = g_db.table(name)
+    table = framework.database.db.table(name)
     request.addfinalizer(lambda: table.delete().run(db_conn))
     return table
 

@@ -8,7 +8,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def test_user_get(app, db_conn, users_table):
+def test_user_get(db_conn, users_table):
     """
     Ensure a user can be retrieved by ID.
     """
@@ -17,7 +17,7 @@ def test_user_get(app, db_conn, users_table):
     assert 'test' in response.data.decode()
 
 
-def test_user_get_failed(app, db_conn, users_table):
+def test_user_get_failed(db_conn, users_table):
     """
     Ensure a no user is returned when ID doesn't match.
     """
@@ -25,7 +25,7 @@ def test_user_get_failed(app, db_conn, users_table):
     assert 'errors' in response.data.decode()
 
 
-def test_get_user_posts(app, db_conn, c_user, posts_table):
+def test_get_user_posts(db_conn, session, posts_table):
     """
     Expect to get user's 10 latest posts when requested in addition.
     """
@@ -59,13 +59,13 @@ def test_get_user_posts(app, db_conn, c_user, posts_table):
         'kind': 'post',
     }]).run(db_conn)
 
-    response = c_user.get('/api/users/abcd1234/?posts')
+    response = session.get('/api/users/abcd1234/?posts')
     response = json.loads(response.data.decode())
     assert 'posts' in response
     assert len(response['posts']) == 2
 
 
-def test_get_user_sets(app, db_conn, c_user, users_sets_table,
+def test_get_user_sets(db_conn, session, users_sets_table,
                        users_table,  sets_table):
     """
     Expect to get user's sets, if requested and allowed.
@@ -101,13 +101,13 @@ def test_get_user_sets(app, db_conn, c_user, users_sets_table,
         'modified': r.now(),
     }).run(db_conn)
 
-    response = c_user.get('/api/users/abcd1234/?sets')
+    response = session.get('/api/users/abcd1234/?sets')
     response = json.loads(response.data.decode())
     assert 'sets' in response
     assert len(response['sets']) == 2
 
 
-def test_get_user_follows(app, db_conn, c_user, users_table, follows_table):
+def test_get_user_follows(db_conn, session, users_table, follows_table):
     """
     Expect to get user's follows, if requested and allowed.
     """
@@ -127,13 +127,13 @@ def test_get_user_follows(app, db_conn, c_user, users_table, follows_table):
         'modified': r.now(),
     }]).run(db_conn)
 
-    response = c_user.get('/api/users/abcd1234/?follows')
+    response = session.get('/api/users/abcd1234/?follows')
     response = json.loads(response.data.decode())
     assert 'follows' in response
     assert len(response['follows']) == 1
 
 
-def test_user_log_in(app, db_conn, users_table):
+def test_user_log_in(db_conn, users_table):
     """
     Ensure a user can log in.
     """
@@ -143,7 +143,7 @@ def test_user_log_in(app, db_conn, users_table):
         assert 'test@example.com' in response.data.decode()
 
 
-def test_user_log_in_none(app, db_conn, users_table):
+def test_user_log_in_none(db_conn, users_table):
     """
     Ensure a user can't log in if no user by name.
     """
@@ -152,7 +152,7 @@ def test_user_log_in_none(app, db_conn, users_table):
         assert 'errors' in response.data.decode()
 
 
-def test_user_log_in_password_fail(app, db_conn, users_table):
+def test_user_log_in_password_fail(db_conn, users_table):
     """
     Ensure a user can't log in if password is wrong.
     """
@@ -164,7 +164,7 @@ def test_user_log_in_password_fail(app, db_conn, users_table):
     assert 'errors' in response.data.decode()
 
 
-def test_user_log_out(app, db_conn, users_table):
+def test_user_log_out(db_conn, users_table):
     """
     Ensure a user can log out.
     """
@@ -175,15 +175,15 @@ def test_user_log_out(app, db_conn, users_table):
         assert response.status_code == 204
 
 
-def test_user_get_current(c_user):
+def test_user_get_current(session):
     """
     Ensure the current user can be retrieved.
     """
-    response = c_user.get('/api/users/current/')
+    response = session.get('/api/users/current/')
     assert 'test' in response.data.decode()
 
 
-def test_user_get_current_failed(app, db_conn, users_table):
+def test_user_get_current_failed(db_conn, users_table):
     """
     Ensure no user is returned when logged out.
     """
@@ -191,7 +191,7 @@ def test_user_get_current_failed(app, db_conn, users_table):
     assert 'errors' in response.data.decode()
 
 
-def test_user_create(app, db_conn, users_table):
+def test_user_create(db_conn, users_table):
     """
     Ensure a user can be created.
     """
@@ -203,7 +203,7 @@ def test_user_create(app, db_conn, users_table):
     assert 'test' in response.data.decode()
 
 
-def test_user_create_failed(app, db_conn, users_table):
+def test_user_create_failed(db_conn, users_table):
     """
     Ensure a user will fail to create when invalid.
     """
@@ -212,17 +212,17 @@ def test_user_create_failed(app, db_conn, users_table):
     assert 'errors' in response.data.decode()
 
 
-def test_user_update(c_user):
+def test_user_update(session):
     """
     Ensure a user can be updated.
     """
-    response = c_user.put('/api/users/abcd1234/', data=json.dumps({
+    response = session.put('/api/users/abcd1234/', data=json.dumps({
         'email': 'other@example.com'
     }), content_type='application/json')
     assert 'other@example.com' in response.data.decode()
 
 
-def test_user_update_none(app, db_conn, users_table):
+def test_user_update_none(db_conn, users_table):
     """
     Ensure a user won't update if not exist.
     """
@@ -232,7 +232,7 @@ def test_user_update_none(app, db_conn, users_table):
     assert 'errors' in response.data.decode()
 
 
-def test_user_update_self_only(db_conn, users_table, c_user):
+def test_user_update_self_only(db_conn, users_table, session):
     """
     Ensure a user can only update herself.
     """
@@ -242,23 +242,23 @@ def test_user_update_self_only(db_conn, users_table, c_user):
         'email': 'other@example.com',
         'password': bcrypt.encrypt('1234abcd'),
     }).run(db_conn)
-    response = c_user.put('/api/users/1234abcd/', data=json.dumps({
+    response = session.put('/api/users/1234abcd/', data=json.dumps({
         'email': 'other@example.com'
     }), content_type='application/json')
     assert 'errors' in response.data.decode()
 
 
-def test_user_update_invalid(app, db_conn, users_table, c_user):
+def test_user_update_invalid(db_conn, users_table, session):
     """
     Ensure a user won't update if invalid.
     """
-    response = c_user.put('/api/users/abcd1234/', data=json.dumps({
+    response = session.put('/api/users/abcd1234/', data=json.dumps({
         'email': 'other'
     }), content_type='application/json')
     assert 'errors' in response.data.decode()
 
 
-def test_user_token(app, db_conn, users_table):
+def test_user_token(db_conn, users_table):
     """
     Expect to create a token so the user can get a new password.
     """
@@ -274,7 +274,7 @@ def test_user_token(app, db_conn, users_table):
         assert response.status_code == 204
 
 
-def test_user_create_password_fail(app, db_conn, users_table):
+def test_user_create_password_fail(db_conn, users_table):
     """
     Expect a user to be able to reset their password.
     """
@@ -293,7 +293,7 @@ def test_user_create_password_fail(app, db_conn, users_table):
         assert user['password'] == pw1
 
 
-def test_user_create_password_ok(app, db_conn, users_table):
+def test_user_create_password_ok(db_conn, users_table):
     """
     Expect a user to be able to reset their password.
     """

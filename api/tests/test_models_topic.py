@@ -1,7 +1,7 @@
 from models.topic import Topic
 
 
-def test_user_id(app, db_conn, topics_table):
+def test_user_id(db_conn, topics_table):
     """
     Expect a topic to require a user id.
     """
@@ -19,7 +19,7 @@ def test_user_id(app, db_conn, topics_table):
     assert len(errors) == 0
 
 
-def test_name(app, db_conn, topics_table):
+def test_name(db_conn, topics_table):
     """
     Expect a topic to require a name.
     """
@@ -37,7 +37,7 @@ def test_name(app, db_conn, topics_table):
     assert len(errors) == 0
 
 
-def test_entity(app, db_conn, topics_table):
+def test_entity(db_conn, topics_table):
     """
     Expect a topic to require an entity kind and id.
     """
@@ -55,7 +55,7 @@ def test_entity(app, db_conn, topics_table):
     assert len(errors) == 0
 
 
-def test_list_by_entity_id(app, db_conn, topics_table):
+def test_list_by_entity_id(db_conn, topics_table):
     topics_table.insert([{
         'user_id': 'Q',
         'name': 'A',

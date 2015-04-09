@@ -2,7 +2,7 @@ import rethinkdb as r
 import json
 
 
-def test_get_unit(app, db_conn,
+def test_get_unit(db_conn,
                   units_table, sets_table, topics_table):
     """
     Expect to get the unit information for displaying to a contributor.
@@ -101,7 +101,7 @@ def test_get_unit(app, db_conn,
     # TODO@ sequencer data: learners, quality, difficulty
 
 
-def test_get_unit_404(app, db_conn):
+def test_get_unit_404(db_conn):
     """
     Expect to fail to get an unknown unit (404).
     """

@@ -1,7 +1,7 @@
 from modules.json_dict_to_html import htmlify, linkify, json_dict_to_html
 
 
-def test_json_dict_to_html(app):
+def test_json_dict_to_html():
     """
     Expect to prepend HTML output with the two required tags.
     """
@@ -10,7 +10,7 @@ def test_json_dict_to_html(app):
         '<!doctype html><meta charset="utf-8">'
 
 
-def test_htmlify(app):
+def test_htmlify():
     """
     Expect to take a dict in JSONic form and
     return an HTML document.
@@ -41,7 +41,7 @@ def test_htmlify(app):
     ])
 
 
-def test_linkify(app):
+def test_linkify():
     """
     Expect to create an HTML link when seeing matching content.
     """

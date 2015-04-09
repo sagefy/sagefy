@@ -30,7 +30,6 @@ def get_current_user_route(request):
     """
 
     current_user = get_current_user(request)
-
     if not current_user:
         return abort(401)
     return 200, {'user': current_user.deliver(access='private')}

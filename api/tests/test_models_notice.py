@@ -10,7 +10,7 @@ def get_error(errors, name):
             return error
 
 
-def test_create(app, db_conn, notices_table):
+def test_create(db_conn, notices_table):
     """
     Expect to create a notice.
     """
@@ -26,7 +26,7 @@ def test_create(app, db_conn, notices_table):
     assert record['tags'] == ['test']
 
 
-def test_validations(app, db_conn, notices_table):
+def test_validations(db_conn, notices_table):
     """
     Expect to only create valid notices.
     - Fail if no user_id
@@ -45,7 +45,7 @@ def test_validations(app, db_conn, notices_table):
     assert get_error(errors, 'tags')['message'] == 'Must be a list.'
 
 
-def test_list(app, db_conn, notices_table):
+def test_list(db_conn, notices_table):
     """
     Expect to get a list of 10 notices by user ID.
     """
@@ -59,7 +59,7 @@ def test_list(app, db_conn, notices_table):
     assert len(notices) == 4
 
 
-def test_list_user(app, db_conn, notices_table):
+def test_list_user(db_conn, notices_table):
     """
     Expect to get a only notices of user.
     """
@@ -73,7 +73,7 @@ def test_list_user(app, db_conn, notices_table):
     assert len(notices) == 2
 
 
-def test_list_paginate(app, db_conn, notices_table):
+def test_list_paginate(db_conn, notices_table):
     """
     Expect to paginate lists of notices.
     """
@@ -87,7 +87,7 @@ def test_list_paginate(app, db_conn, notices_table):
     assert len(notices) == 5
 
 
-def test_list_unread(app, db_conn, notices_table):
+def test_list_unread(db_conn, notices_table):
     """
     Expect to get a list of unread notices.
     """
@@ -102,7 +102,7 @@ def test_list_unread(app, db_conn, notices_table):
     assert notices[1]['id'] in (3, 4)
 
 
-def test_list_tag(app, db_conn, notices_table):
+def test_list_tag(db_conn, notices_table):
     """
     Expect to get a list of notices by tag.
     """
@@ -122,7 +122,7 @@ def test_list_tag(app, db_conn, notices_table):
     assert 'apple' in notices[1]['tags']
 
 
-def test_list_empty(app, db_conn, notices_table):
+def test_list_empty(db_conn, notices_table):
     """
     Expect to get an empty list when run out of notices.
     """
@@ -130,7 +130,7 @@ def test_list_empty(app, db_conn, notices_table):
     assert len(notices) == 0
 
 
-def test_mark_as_read(app, db_conn, notices_table):
+def test_mark_as_read(db_conn, notices_table):
     """
     Expect to mark a notice as read.
     """
@@ -147,7 +147,7 @@ def test_mark_as_read(app, db_conn, notices_table):
     assert record['read'] is True
 
 
-def test_notices_kind(app, db_conn, notices_table):
+def test_notices_kind(db_conn, notices_table):
     """
     Expect to filter notices by kind.
     """
@@ -169,7 +169,7 @@ def test_notices_kind(app, db_conn, notices_table):
 
 
 @xfail
-def test_notice_body(app, db_conn, notices_table):
+def test_notice_body(db_conn, notices_table):
     """
     Expect to get the notice body.
     """
@@ -178,7 +178,7 @@ def test_notice_body(app, db_conn, notices_table):
 
 
 @xfail
-def test_notice_body_data(app, db_conn, notices_table):
+def test_notice_body_data(db_conn, notices_table):
     """
     Expect to get the notice body with other data added in from the db.
     """
@@ -186,7 +186,7 @@ def test_notice_body_data(app, db_conn, notices_table):
     assert False
 
 
-def test_mark_unread(app, db_conn, notices_table):
+def test_mark_unread(db_conn, notices_table):
     """
     Expect to mark as unread.
     """

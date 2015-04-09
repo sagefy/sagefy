@@ -8,7 +8,7 @@ from models.set import Set
 from models.unit import Unit
 
 
-def test_latest_canonical_card(app, db_conn, cards_table):
+def test_latest_canonical_card(db_conn, cards_table):
     """
     Expect to get the latest canonical card version.
     """
@@ -34,7 +34,7 @@ def test_latest_canonical_card(app, db_conn, cards_table):
     assert card['id'] == 'B2'
 
 
-def test_latest_canonical(app, db_conn, units_table):
+def test_latest_canonical(db_conn, units_table):
     """
     Expect to get the latest canonical unit version.
     """
@@ -60,7 +60,7 @@ def test_latest_canonical(app, db_conn, units_table):
     assert unit['id'] == 'B2'
 
 
-def test_latest_canonical_set(app, db_conn, sets_table):
+def test_latest_canonical_set(db_conn, sets_table):
     """
     Expect to get the latest canonical set version.
     """
@@ -86,7 +86,7 @@ def test_latest_canonical_set(app, db_conn, sets_table):
     assert set_['id'] == 'B2'
 
 
-def test_get_versions(app, db_conn, cards_table):
+def test_get_versions(db_conn, cards_table):
     """
     Expect to get the latest versions of the card.
     """
@@ -111,7 +111,7 @@ def test_get_versions(app, db_conn, cards_table):
     assert len(card_versions) == 2
 
 
-def test_list_requires(app, db_conn, cards_table):
+def test_list_requires(db_conn, cards_table):
     """
     Expect to list all the prereqs for the entity.
     """
@@ -154,7 +154,7 @@ def test_list_requires(app, db_conn, cards_table):
     assert cards[0]['entity_id'] == 'zxyz'
 
 
-def test_list_required_by(app, db_conn, cards_table):
+def test_list_required_by(db_conn, cards_table):
     """
     Expect to list all the entity that require the given one.
     """

@@ -4,7 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def test_choice_body(app, cards_table):
+def test_choice_body(cards_table):
     """
     Expect a choice card to require a body (question).
     """
@@ -23,7 +23,7 @@ def test_choice_body(app, cards_table):
     assert len(errors) == 0
 
 
-def test_choice_options(app, cards_table):
+def test_choice_options(cards_table):
     """
     Expect a choice card to require a options (answers).
     (value, correct, feedback)
@@ -43,7 +43,7 @@ def test_choice_options(app, cards_table):
     assert len(errors) == 0
 
 
-def test_choice_order(app, cards_table):
+def test_choice_order(cards_table):
     """
     Expect a choice card to allow set order.
     """
@@ -63,7 +63,7 @@ def test_choice_order(app, cards_table):
     assert len(errors) == 0
 
 
-def test_choice_max_opts(app, cards_table):
+def test_choice_max_opts(cards_table):
     """
     Expect a choice card to allow max options (question).
     """
@@ -84,7 +84,7 @@ def test_choice_max_opts(app, cards_table):
 
 
 @xfail
-def test_validate_response(app, db_conn, cards_table):
+def test_validate_response(db_conn, cards_table):
     """
     Expect to check if a given response is valid for the card kind.
     """
@@ -93,7 +93,7 @@ def test_validate_response(app, db_conn, cards_table):
 
 
 @xfail
-def test_score_response(app, db_conn, cards_table):
+def test_score_response(db_conn, cards_table):
     """
     Expect to score if a given response is correct for the card kind.
     """

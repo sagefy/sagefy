@@ -8,7 +8,8 @@ def get_current_user(request):
     Get the current user if available, else None.
     """
 
-    session_id = request['cookies'].get('session_id')
+    cookies = request.get('cookies', {})
+    session_id = cookies.get('session_id')
     user_id = redis.get(session_id)
     if user_id:
         user_id = user_id.decode()
@@ -34,6 +35,7 @@ def log_out_user(request):
     Log out the given user.
     """
 
-    session_id = request['cookies'].get('session_id')
+    cookies = request.get('cookies', {})
+    session_id = cookies.get('session_id')
     if session_id:
         redis.delete(session_id)

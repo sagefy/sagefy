@@ -1,12 +1,13 @@
 import rethinkdb as r
 import json
+import routes.card
+from framework.redis import redis
 import pytest
 
 xfail = pytest.mark.xfail
 
 
-def test_get_card(app, db_conn,
-                  cards_table, units_table, topics_table):
+def test_get_card(db_conn, cards_table, units_table, topics_table):
     """
     Expect to get the card information for displaying to a contributor.
     """
@@ -71,9 +72,8 @@ def test_get_card(app, db_conn,
         }
     }]).run(db_conn)
 
-    response = app.test_client().get('/api/cards/abcd/')
-    assert response.status_code == 200
-    response = json.loads(response.data.decode())
+    code, response = routes.card.get_card_route({}, 'abcd')
+    assert code == 200
     # Model
     assert response['card']['entity_id'] == 'abcd'
     assert response['card']['kind'] == 'video'
@@ -94,16 +94,16 @@ def test_get_card(app, db_conn,
     # TODO@ sequencer data: learners, transit, guess, slip, difficulty
 
 
-def test_get_card_404(app, db_conn):
+def test_get_card_404(db_conn):
     """
     Expect to fail to get an unknown card. (404)
     """
 
-    response = app.test_client().get('/api/cards/abcd/')
-    assert response.status_code == 404
+    code, response = routes.card.get_card_route({}, 'abcd')
+    assert code == 404
 
 
-def test_learn_card(app, db_conn, c_user, cards_table):
+def test_learn_card(db_conn, session, cards_table):
     """
     Expect to get a card for learn mode. (200)
     """
@@ -130,12 +130,12 @@ def test_learn_card(app, db_conn, c_user, cards_table):
         'max_options_to_show': 4,
     }).run(db_conn)
 
-    app.redis.set('learning_context_abcd1234', json.dumps({
+    redis.set('learning_context_abcd1234', json.dumps({
         'unit': {'id': 'vbnm7890'},
         'set': {'id': 'jkl;1234'},
     }))
 
-    response = c_user.get('/api/cards/tyui4567/learn/')
+    response = session.get('/api/cards/tyui4567/learn/')
     assert response.status_code == 200
     response = json.loads(response.data.decode())
     assert 'order' not in response['card']
@@ -144,10 +144,10 @@ def test_learn_card(app, db_conn, c_user, cards_table):
     assert 'set' in response
     assert 'unit' in response
 
-    app.redis.delete('learning_context_abcd1234')
+    redis.delete('learning_context_abcd1234')
 
 
-def test_learn_card_401(app, db_conn):
+def test_learn_card_401(db_conn):
     """
     Expect to require log in to get a card for learn mode. (401)
     """
@@ -156,16 +156,16 @@ def test_learn_card_401(app, db_conn):
     assert response.status_code == 401
 
 
-def test_learn_card_404(app, db_conn, c_user):
+def test_learn_card_404(db_conn, session):
     """
     Expect to fail to get an unknown card for learn mode. (404)
     """
 
-    response = c_user.get('/api/cards/abcd/learn/')
+    response = session.get('/api/cards/abcd/learn/')
     assert response.status_code == 404
 
 
-def test_learn_card_400(app, db_conn, cards_table, c_user):
+def test_learn_card_400(db_conn, cards_table, session):
     """
     Expect the card for learn mode to make sense,
     given the learner context. (400)
@@ -193,18 +193,18 @@ def test_learn_card_400(app, db_conn, cards_table, c_user):
         'max_options_to_show': 4,
     }).run(db_conn)
 
-    app.redis.set('learning_context_abcd1234', json.dumps({
+    redis.set('learning_context_abcd1234', json.dumps({
         'unit': {'id': 'gfds6543'},
         'set': {'id': '6543hgfs'},
     }))
 
-    response = c_user.get('/api/cards/tyui4567/learn/')
+    response = session.get('/api/cards/tyui4567/learn/')
     assert response.status_code == 400
     response = json.loads(response.data.decode())
-    app.redis.delete('learning_context_abcd1234')
+    redis.delete('learning_context_abcd1234')
 
 
-def test_respond_card(app, db_conn, cards_table, c_user):
+def test_respond_card(db_conn, cards_table, session):
     """
     Expect to respond to a card. (200)
     """
@@ -231,23 +231,23 @@ def test_respond_card(app, db_conn, cards_table, c_user):
         'max_options_to_show': 4,
     }).run(db_conn)
 
-    app.redis.set('learning_context_abcd1234', json.dumps({
+    redis.set('learning_context_abcd1234', json.dumps({
         'unit': {'id': 'vbnm7890'},
         'set': {'id': 'jkl;1234'},
         'card': {'id': 'tyui4567'},
     }))
 
-    response = c_user.post('/api/cards/tyui4567/responses/', data=json.dumps({
+    response = session.post('/api/cards/tyui4567/responses/', data=json.dumps({
         'response': '42'
     }), content_type='application/json')
     assert response.status_code == 200
     response = json.loads(response.data.decode())
     assert 'response' in response
     assert 'feedback' in response
-    app.redis.delete('learning_context_abcd1234')
+    redis.delete('learning_context_abcd1234')
 
 
-def test_respond_card_401(app, db_conn):
+def test_respond_card_401(db_conn):
     """
     Expect to require log in to get an unknown card. (401)
     """
@@ -256,16 +256,16 @@ def test_respond_card_401(app, db_conn):
     assert response.status_code == 401
 
 
-def test_respond_card_404(app, db_conn, c_user):
+def test_respond_card_404(db_conn, session):
     """
     Expect to fail to respond to an unknown card. (404)
     """
 
-    response = c_user.post('/api/cards/abcd/responses/')
+    response = session.post('/api/cards/abcd/responses/')
     assert response.status_code == 404
 
 
-def test_respond_card_400a(app, db_conn, c_user, cards_table):
+def test_respond_card_400a(db_conn, session, cards_table):
     """
     Expect the card being responded to make sense,
     given the learner context. (400)
@@ -293,21 +293,21 @@ def test_respond_card_400a(app, db_conn, c_user, cards_table):
         'max_options_to_show': 4,
     }).run(db_conn)
 
-    app.redis.set('learning_context_abcd1234', json.dumps({
+    redis.set('learning_context_abcd1234', json.dumps({
         'unit': {'id': 'vbnm7890'},
         'set': {'id': 'jkl;1234'},
         'card': {'id': 'gfds3456'},
     }))
 
-    response = c_user.post('/api/cards/tyui4567/responses/', data=json.dumps({
+    response = session.post('/api/cards/tyui4567/responses/', data=json.dumps({
         'response': '42'
     }), content_type='application/json')
     assert response.status_code == 400
     response = json.loads(response.data.decode())
-    app.redis.delete('learning_context_abcd1234')
+    redis.delete('learning_context_abcd1234')
 
 
-def test_respond_card_400b(app, db_conn, c_user, cards_table):
+def test_respond_card_400b(db_conn, session, cards_table):
     """
     Expect response to a card to make sense. (400)
     """
@@ -334,16 +334,16 @@ def test_respond_card_400b(app, db_conn, c_user, cards_table):
         'max_options_to_show': 4,
     }).run(db_conn)
 
-    app.redis.set('learning_context_abcd1234', json.dumps({
+    redis.set('learning_context_abcd1234', json.dumps({
         'unit': {'id': 'vbnm7890'},
         'set': {'id': 'jkl;1234'},
         'card': {'id': 'tyui4567'},
     }))
 
-    response = c_user.post('/api/cards/tyui4567/responses/', data=json.dumps({
+    response = session.post('/api/cards/tyui4567/responses/', data=json.dumps({
         'response': 'Waffles'
     }), content_type='application/json')
     assert response.status_code == 400
     response = json.loads(response.data.decode())
     assert 'errors' in response
-    app.redis.delete('learning_context_abcd1234')
+    redis.delete('learning_context_abcd1234')

@@ -4,7 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def test_number_body(app, cards_table):
+def test_number_body(cards_table):
     """
     Expect a number card to require a body.
     """
@@ -24,7 +24,7 @@ def test_number_body(app, cards_table):
     assert len(errors) == 0
 
 
-def test_number_options(app, cards_table):
+def test_number_options(cards_table):
     """
     Expect a number card to require a options.
     (value correct feedback)
@@ -45,7 +45,7 @@ def test_number_options(app, cards_table):
     assert len(errors) == 0
 
 
-def test_number_range(app, cards_table):
+def test_number_range(cards_table):
     """
     Expect a number card to allow a range.
     """
@@ -66,7 +66,7 @@ def test_number_range(app, cards_table):
     assert len(errors) == 0
 
 
-def test_number_default_feedback(app, cards_table):
+def test_number_default_feedback(cards_table):
     """
     Expect a number card to require default feedback.
     """
@@ -87,7 +87,7 @@ def test_number_default_feedback(app, cards_table):
 
 
 @xfail
-def test_validate_response(app, db_conn, cards_table):
+def test_validate_response(db_conn, cards_table):
     """
     Expect to check if a given response is valid for the card kind.
     """
@@ -96,7 +96,7 @@ def test_validate_response(app, db_conn, cards_table):
 
 
 @xfail
-def test_score_response(app, db_conn, cards_table):
+def test_score_response(db_conn, cards_table):
     """
     Expect to score if a given response is correct for the card kind.
     """
