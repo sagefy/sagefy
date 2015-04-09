@@ -1,7 +1,7 @@
 from modules.model import Model
 from modules.validations import is_required, is_string, is_one_of
 import rethinkdb as r
-from flask import g
+import framework.database as database
 
 
 class Follow(Model):
@@ -46,5 +46,5 @@ class Follow(Model):
                             if entity_id is not None else True)
                     .skip(skip)
                     .limit(limit))
-        fields_list = query.run(g.db_conn)
+        fields_list = query.run(database.db_conn)
         return [cls(fields) for fields in fields_list]

@@ -4,7 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def test_entity_id(app, db_conn, cards_table):
+def test_entity_id(db_conn, cards_table):
     """
     Expect a card to require an entity_id.
     """
@@ -20,7 +20,7 @@ def test_entity_id(app, db_conn, cards_table):
     assert card['entity_id']
 
 
-def test_previous_version_id(app, db_conn, cards_table):
+def test_previous_version_id(db_conn, cards_table):
     """
     Expect a card to allow a previous version id.
     """
@@ -37,7 +37,7 @@ def test_previous_version_id(app, db_conn, cards_table):
     assert len(errors) == 0
 
 
-def test_language(app, db_conn, cards_table):
+def test_language(db_conn, cards_table):
     """
     Expect a card to require a language.
     """
@@ -52,7 +52,7 @@ def test_language(app, db_conn, cards_table):
     card['language'] = 'en'
 
 
-def test_unit_id(app, db_conn, cards_table):
+def test_unit_id(db_conn, cards_table):
     """
     Expect a card to require a unit id.
     """
@@ -69,7 +69,7 @@ def test_unit_id(app, db_conn, cards_table):
     assert len(errors) == 0
 
 
-def test_name(app, db_conn, cards_table):
+def test_name(db_conn, cards_table):
     """
     Expect a card to require a name.
     """
@@ -86,7 +86,7 @@ def test_name(app, db_conn, cards_table):
     assert len(errors) == 0
 
 
-def test_canonical(app, db_conn, cards_table):
+def test_canonical(db_conn, cards_table):
     """
     Expect a card version canoncial to be a boolean.
     """
@@ -105,7 +105,7 @@ def test_canonical(app, db_conn, cards_table):
     assert len(errors) == 0
 
 
-def test_tags(app, db_conn, cards_table):
+def test_tags(db_conn, cards_table):
     """
     Expect a card to allow tags.
     """
@@ -123,7 +123,7 @@ def test_tags(app, db_conn, cards_table):
     assert len(errors) == 0
 
 
-def test_kind(app, db_conn, cards_table):
+def test_kind(db_conn, cards_table):
     """
     Expect a card to have a kind.
     """
@@ -141,7 +141,7 @@ def test_kind(app, db_conn, cards_table):
 
 
 @xfail
-def test_validate_response(app, db_conn, cards_table):
+def test_validate_response(db_conn, cards_table):
     """
     Expect to check if a given response is valid for the card kind.
     """

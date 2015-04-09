@@ -2,7 +2,7 @@ from models.response import Response
 import rethinkdb as r
 
 
-def test_created(app, db_conn, responses_table):
+def test_created(db_conn, responses_table):
     """
     Expect to have a created date.
     """
@@ -19,7 +19,7 @@ def test_created(app, db_conn, responses_table):
     assert len(errors) == 0
 
 
-def test_user(app, db_conn, responses_table):
+def test_user(db_conn, responses_table):
     """
     Expect to require a user ID.
     """
@@ -36,7 +36,7 @@ def test_user(app, db_conn, responses_table):
     assert len(errors) == 0
 
 
-def test_card(app, db_conn, responses_table):
+def test_card(db_conn, responses_table):
     """
     Expect to require a card ID.
     """
@@ -53,7 +53,7 @@ def test_card(app, db_conn, responses_table):
     assert len(errors) == 0
 
 
-def test_unit(app, db_conn, responses_table):
+def test_unit(db_conn, responses_table):
     """
     Expect to require a unit ID.
     """
@@ -70,7 +70,7 @@ def test_unit(app, db_conn, responses_table):
     assert len(errors) == 0
 
 
-def test_response(app, db_conn, responses_table):
+def test_response(db_conn, responses_table):
     """
     Expect to record the user's response.
     """
@@ -87,7 +87,7 @@ def test_response(app, db_conn, responses_table):
     assert len(errors) == 0
 
 
-def test_score(app, db_conn, responses_table):
+def test_score(db_conn, responses_table):
     """
     Expect to have a score between 0 and 1 (including).
     """
@@ -110,7 +110,7 @@ def test_score(app, db_conn, responses_table):
     assert len(errors) == 0
 
 
-def test_get_latest(app, db_conn, responses_table):
+def test_get_latest(db_conn, responses_table):
     """
     Expect to get the latest response by user and unit.
     """

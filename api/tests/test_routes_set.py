@@ -6,7 +6,7 @@ import rethinkdb as r
 import json
 
 
-def test_get_set(app, db_conn,
+def test_get_set(db_conn,
                  sets_table, units_table, topics_table):
     """
     Expect to get the set information for displaying to a contributor.
@@ -86,7 +86,7 @@ def test_get_set(app, db_conn,
     # TODO@ sequencer: learners, quality, difficulty
 
 
-def test_get_set_404(app, db_conn):
+def test_get_set_404(db_conn):
     """
     Expect to fail to get set information if set is unknown. (404)
     """

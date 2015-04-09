@@ -4,7 +4,7 @@ from modules.validations import is_required, is_boolean, is_string, \
     has_max_length, is_dict
 
 
-def test_require(app, db_conn):
+def test_require(db_conn):
     """
     Expect a validation to require a field.
     """
@@ -12,7 +12,7 @@ def test_require(app, db_conn):
     assert is_required(None)
 
 
-def test_email(app, db_conn):
+def test_email(db_conn):
     """
     Expect a validation to validate email format.
     """
@@ -20,7 +20,7 @@ def test_email(app, db_conn):
     assert is_email('other')
 
 
-def test_url(app, db_conn):
+def test_url(db_conn):
     """
     Expect a valid URL.
     """
@@ -34,7 +34,7 @@ def test_url(app, db_conn):
     assert is_url('//t.')
 
 
-def test_minlength(app, db_conn):
+def test_minlength(db_conn):
     """
     Expect a validation to require a minimum length.
     """
@@ -42,7 +42,7 @@ def test_minlength(app, db_conn):
     assert has_min_length('a', 8)
 
 
-def test_maxlength(app, db_conn):
+def test_maxlength(db_conn):
     """
     Expect a validation to require a maximum length.
     """
@@ -50,7 +50,7 @@ def test_maxlength(app, db_conn):
     assert has_max_length('a', 2) is None
 
 
-def test_boolean(app, db_conn):
+def test_boolean(db_conn):
     """
     Expect a boolean.
     """
@@ -58,7 +58,7 @@ def test_boolean(app, db_conn):
     assert is_boolean('a')
 
 
-def test_string(app, db_conn):
+def test_string(db_conn):
     """
     Expect a string.
     """
@@ -66,7 +66,7 @@ def test_string(app, db_conn):
     assert is_string(0)
 
 
-def test_number(app, db_conn):
+def test_number(db_conn):
     """
     Expect a number.
     """
@@ -74,7 +74,7 @@ def test_number(app, db_conn):
     assert is_number('1')
 
 
-def test_integer(app, db_conn):
+def test_integer(db_conn):
     """
     Expect a number.
     """
@@ -83,7 +83,7 @@ def test_integer(app, db_conn):
     assert is_integer('1')
 
 
-def test_string_or_number(app, db_conn):
+def test_string_or_number(db_conn):
     """
     Expect a string or number.
     """
@@ -93,7 +93,7 @@ def test_string_or_number(app, db_conn):
     assert is_string_or_number([])
 
 
-def test_language(app, db_conn):
+def test_language(db_conn):
     """
     Expect two-char language.
     """
@@ -101,7 +101,7 @@ def test_language(app, db_conn):
     assert is_language('enf')
 
 
-def test_list(app, db_conn):
+def test_list(db_conn):
     """
     Expect a list.
     """
@@ -109,7 +109,7 @@ def test_list(app, db_conn):
     assert is_list({})
 
 
-def test_dict(app, db_conn):
+def test_dict(db_conn):
     """
     Expect a dict.
     """
@@ -117,7 +117,7 @@ def test_dict(app, db_conn):
     assert is_dict([])
 
 
-def test_one_of(app, db_conn):
+def test_one_of(db_conn):
     """
     Expect to be one of a list.
     """
@@ -125,7 +125,7 @@ def test_one_of(app, db_conn):
     assert is_one_of(1, '1')
 
 
-def test_list_string(app, db_conn):
+def test_list_string(db_conn):
     """
     Expect a list of strings.
     """

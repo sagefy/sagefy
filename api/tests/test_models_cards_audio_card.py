@@ -4,7 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def test_audio_site(app, cards_table):
+def test_audio_site(cards_table):
     """
     Expect an audio card to require site.
     """
@@ -19,7 +19,7 @@ def test_audio_site(app, cards_table):
     assert len(errors) == 0
 
 
-def test_audio_audio_id(app, cards_table):
+def test_audio_audio_id(cards_table):
     """
     Expect an audio card to require audio_id.
     """
@@ -35,7 +35,7 @@ def test_audio_audio_id(app, cards_table):
 
 
 @xfail
-def test_validate_response(app, db_conn, cards_table):
+def test_validate_response(db_conn, cards_table):
     """
     Expect to check if a given response is valid for the card kind.
     """

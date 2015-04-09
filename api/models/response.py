@@ -2,7 +2,7 @@ from modules.model import Model
 from modules.validations import is_required, is_string, is_number
 from modules.content import get as c
 import rethinkdb as r
-from flask import g
+import framework.database as database
 
 
 def is_score(val):
@@ -45,6 +45,6 @@ class Response(Model):
                     .filter(r.row['unit_id'].eq(unit_id))
                     .max('created')
                     .default(None))
-        document = query.run(g.db_conn)
+        document = query.run(database.db_conn)
         if document:
             return cls(document)

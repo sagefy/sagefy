@@ -1,11 +1,12 @@
 from models.user import User
 import json
+from framework.redis import redis
 import pytest
 
 xfail = pytest.mark.xfail
 
 
-def test_user_name_required(app, db_conn):
+def test_user_name_required(db_conn):
     """
     Ensure a name is required.
     """
@@ -15,7 +16,7 @@ def test_user_name_required(app, db_conn):
     assert 'name' in [e['name'] for e in errors]
 
 
-def test_user_name_unique(app, db_conn, users_table):
+def test_user_name_unique(db_conn, users_table):
     """
     Ensure a name is unique.
     """
@@ -30,7 +31,7 @@ def test_user_name_unique(app, db_conn, users_table):
     assert 'Must be unique.' in [e['message'] for e in errors]
 
 
-def test_user_email_required(app, db_conn):
+def test_user_email_required(db_conn):
     """
     Ensure an email is required.
     """
@@ -40,7 +41,7 @@ def test_user_email_required(app, db_conn):
     assert 'email' in [e['name'] for e in errors]
 
 
-def test_user_email_unique(app, db_conn, users_table):
+def test_user_email_unique(db_conn, users_table):
     """
     Ensure an email is unique.
     """
@@ -58,7 +59,7 @@ def test_user_email_unique(app, db_conn, users_table):
     assert 'Must be unique.' in [e['message'] for e in errors]
 
 
-def test_user_email_format(app, db_conn):
+def test_user_email_format(db_conn):
     """
     Ensure an email is formatted.
     """
@@ -68,7 +69,7 @@ def test_user_email_format(app, db_conn):
     assert 'Must be an email.' in [e['message'] for e in errors]
 
 
-def test_user_password_required(app, db_conn):
+def test_user_password_required(db_conn):
     """
     Ensure a password is required.
     """
@@ -78,7 +79,7 @@ def test_user_password_required(app, db_conn):
     assert 'password' in [e['name'] for e in errors]
 
 
-def test_user_password_minlength(app, db_conn):
+def test_user_password_minlength(db_conn):
     """
     Ensure an password is long enough.
     """
@@ -88,7 +89,7 @@ def test_user_password_minlength(app, db_conn):
     assert 'Must have minimum length of 8.' in [e['message'] for e in errors]
 
 
-def test_user_no_password(app, db_conn, users_table):
+def test_user_no_password(db_conn, users_table):
     """
     Ensure an password isn't provided ever.
     """
@@ -101,7 +102,7 @@ def test_user_no_password(app, db_conn, users_table):
     assert 'password' not in json
 
 
-def test_user_email_current(app, db_conn, users_table):
+def test_user_email_current(db_conn, users_table):
     """
     Ensure an email is only provided when current user.
     """
@@ -116,7 +117,7 @@ def test_user_email_current(app, db_conn, users_table):
     assert 'email' in json
 
 
-def test_user_password_encrypt(app, db_conn, users_table):
+def test_user_password_encrypt(db_conn, users_table):
     """
     Ensure a password is encrypted before going into db.
     """
@@ -131,7 +132,7 @@ def test_user_password_encrypt(app, db_conn, users_table):
     assert user['password'].startswith('$2a$')
 
 
-def test_user_password_validate(app, db_conn, users_table):
+def test_user_password_validate(db_conn, users_table):
     """
     Ensure a password can be validated.
     """
@@ -145,23 +146,11 @@ def test_user_password_validate(app, db_conn, users_table):
     assert user.is_password_valid('abcd1234')
 
 
-def test_url(app, db_conn, users_table):
-    """
-    Expect a model to provide URLs.
-    """
-    user, errors = User.insert({
-        'name': 'test',
-        'email': 'test@example.com',
-        'password': 'abcd1234'
-    })
-    with app.test_request_context('/'):
-        assert user.get_url().startswith('/api/users/')
-
-
-def test_get_email_token(app, db_conn, users_table):
+def test_get_email_token(db_conn, users_table):
     """
     Expect an email token created so a user can reset their password.
     """
+
     users_table.insert({
         'id': 'abcd1234',
         'name': 'Dalton',
@@ -170,11 +159,11 @@ def test_get_email_token(app, db_conn, users_table):
     }).run(db_conn)
     user = User.get(id='abcd1234')
     token = user.get_email_token(send_email=False)
-    assert app.redis.get('user_password_token_abcd1234')
+    assert redis.get('user_password_token_abcd1234')
     assert token
 
 
-def test_is_valid_token(app, db_conn, users_table):
+def test_is_valid_token(db_conn, users_table):
     """
     Expect a valid token to be approved.
     Expect an invalid token to not be approved.
@@ -192,7 +181,7 @@ def test_is_valid_token(app, db_conn, users_table):
     assert not user.is_valid_token('abcd1234')
 
 
-def test_update_password(app, db_conn, users_table):
+def test_update_password(db_conn, users_table):
     """
     Expect to update a user's password.
     """
@@ -207,7 +196,7 @@ def test_update_password(app, db_conn, users_table):
     assert pw1 != user['password']
 
 
-def test_get_learning_context(app, db_conn, users_table):
+def test_get_learning_context(db_conn, users_table):
     """
     Expect to get the learning context.
     """
@@ -221,7 +210,7 @@ def test_get_learning_context(app, db_conn, users_table):
 
     user = User.get(id='abcd1234')
 
-    app.redis.set('learning_context_abcd1234', json.dumps({
+    redis.set('learning_context_abcd1234', json.dumps({
         'card': {'id': 'A'},
         'unit': {'id': 'B'},
         'set': {'id': 'C'},
@@ -232,11 +221,11 @@ def test_get_learning_context(app, db_conn, users_table):
         'set': {'id': 'C'},
     }
 
-    app.redis.delete('learning_context_abcd1234')
+    redis.delete('learning_context_abcd1234')
     assert user.get_learning_context() == {}
 
 
-def test_set_learning_context(app, db_conn, users_table):
+def test_set_learning_context(db_conn, users_table):
     """
     Expect to set the learning context.
     """

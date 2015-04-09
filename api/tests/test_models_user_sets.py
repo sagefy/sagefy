@@ -2,7 +2,7 @@ from models.user_sets import UserSets
 import rethinkdb as r
 
 
-def test_user(app, db_conn, users_sets_table):
+def test_user(db_conn, users_sets_table):
     """
     Expect to require a user ID.
     """
@@ -19,7 +19,7 @@ def test_user(app, db_conn, users_sets_table):
     assert len(errors) == 0
 
 
-def test_sets(app, db_conn, users_sets_table):
+def test_sets(db_conn, users_sets_table):
     """
     Expect to require a list of set IDs.
     """
@@ -36,7 +36,7 @@ def test_sets(app, db_conn, users_sets_table):
     assert len(errors) == 0
 
 
-def test_list_sets(app, db_conn, users_sets_table, sets_table):
+def test_list_sets(db_conn, users_sets_table, sets_table):
     """
     Expect to list sets a user subscribes to.
     """

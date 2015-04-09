@@ -1,13 +1,11 @@
-from flask import Blueprint, jsonify, abort
+from framework.routes import get, abort
 from models.unit import Unit
 from models.set import Set
 from models.topic import Topic
 
-unit_routes = Blueprint('unit', __name__, url_prefix='/api/units')
 
-
-@unit_routes.route('/<unit_id>/', methods=['GET'])
-def get_unit(unit_id):
+@get('/api/units/{unit_id}')
+def get_unit_route(request, unit_id):
     """
     Get a specific unit given an ID.
     """
@@ -22,25 +20,26 @@ def get_unit(unit_id):
     required_by = Unit.list_required_by(unit_id)
     sets = Set.list_by_unit_id(unit_id)
 
-    return jsonify(
-        unit=unit.deliver(),
-        topics=[topic.deliver() for topic in topics],
-        versions=[version.deliver() for version in versions],
-        requires=[require.deliver() for require in requires],
-        required_by=[require.deliver() for require in required_by],
-        sets=[set_.deliver() for set_ in sets],
-    )
+    return 200, {
+        'unit': unit.deliver(),
+        'topics': [topic.deliver() for topic in topics],
+        'versions': [version.deliver() for version in versions],
+        'requires': [require.deliver() for require in requires],
+        'required_by': [require.deliver() for require in required_by],
+        'sets': [set_.deliver() for set_ in sets],
+    }
 
     # TODO@ sequencer data: learners, quality, difficulty
 
 
-@unit_routes.route('/<unit_id>/versions/', methods=['GET'])
-def get_unit_versions(unit_id):
+@get('/api/units/{unit_id}/versions')
+def get_unit_versions_route(unit_id):
     """
     Get unit versions given an ID. Paginates.
     """
 
     # TODO@ add pagination
     versions = Unit.get_versions(entity_id=unit_id)
-    return jsonify(versions=[version.deliver(access='view')
-                             for version in versions])
+    return 200, {
+        'versions': [version.deliver(access='view') for version in versions]
+    }

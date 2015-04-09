@@ -5,7 +5,7 @@ xfail = pytest.mark.xfail
 
 
 @xfail
-def test_upload_body(app, cards_table):
+def test_upload_body(cards_table):
     """
     Expect an upload card to require a body.
     """
@@ -22,7 +22,7 @@ def test_upload_body(app, cards_table):
 
 
 @xfail
-def test_upload_file_extensions(app, cards_table):
+def test_upload_file_extensions(cards_table):
     """
     Expect an upload card to require file_extensions.
     """
@@ -39,7 +39,7 @@ def test_upload_file_extensions(app, cards_table):
 
 
 @xfail
-def test_upload_rubric(app, cards_table):
+def test_upload_rubric(cards_table):
     """
     Expect an upload card to require a rubric.
     """
@@ -56,7 +56,7 @@ def test_upload_rubric(app, cards_table):
 
 
 @xfail
-def test_validate_response(app, db_conn, cards_table):
+def test_validate_response(db_conn, cards_table):
     """
     Expect to check if a given response is valid for the card kind.
     """

@@ -5,7 +5,7 @@ xfail = pytest.mark.xfail
 
 
 @xfail
-def test_writing_body(app, cards_table):
+def test_writing_body(cards_table):
     """
     Expect writing card to require body.
     """
@@ -21,7 +21,7 @@ def test_writing_body(app, cards_table):
 
 
 @xfail
-def test_writing_max_char(app, cards_table):
+def test_writing_max_char(cards_table):
     """
     Expect writing card to allow max char.
     """
@@ -38,7 +38,7 @@ def test_writing_max_char(app, cards_table):
 
 
 @xfail
-def test_writing_rubric(app, cards_table):
+def test_writing_rubric(cards_table):
     """
     Expect writing card to require a rubric.
     """
@@ -54,7 +54,7 @@ def test_writing_rubric(app, cards_table):
 
 
 @xfail
-def test_validate_response(app, db_conn, cards_table):
+def test_validate_response(db_conn, cards_table):
     """
     Expect to check if a given response is valid for the card kind.
     """

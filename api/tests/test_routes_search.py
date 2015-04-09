@@ -4,7 +4,7 @@ xfail = pytest.mark.xfail
 
 
 @xfail
-def test_search(app, db_conn):
+def test_search(db_conn):
     """
     Expect to search by query.
     """
@@ -12,7 +12,7 @@ def test_search(app, db_conn):
 
 
 @xfail
-def test_search_sort(app, db_conn, users_table, topics_table,
+def test_search_sort(db_conn, users_table, topics_table,
                      posts_table):
     """
     Expect to sort in search.
@@ -21,7 +21,7 @@ def test_search_sort(app, db_conn, users_table, topics_table,
 
 
 @xfail
-def test_search_paginate(app, db_conn, users_table, topics_table,
+def test_search_paginate(db_conn, users_table, topics_table,
                          posts_table):
     """
     Expect to paginate in search.
@@ -30,7 +30,7 @@ def test_search_paginate(app, db_conn, users_table, topics_table,
 
 
 @xfail
-def test_search_blank(app, db_conn, users_table, topics_table,
+def test_search_blank(db_conn, users_table, topics_table,
                       posts_table):
     """
     Expect a blank search result.
@@ -111,7 +111,7 @@ def test_topic_entity_kind(app):
 
 
 @xfail
-def test_topic_user(app):
+def test_topisession(app):
     """
     Expect to filter topics by user.
     """

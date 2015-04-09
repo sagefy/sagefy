@@ -1,5 +1,5 @@
 import rethinkdb as r
-from flask import g
+import framework.database as database
 
 
 class EntityMixin(object):
@@ -34,7 +34,7 @@ class EntityMixin(object):
                     .filter(r.row['entity_id'] == entity_id)
                     .limit(1))
 
-        documents = list(query.run(g.db_conn))
+        documents = list(query.run(database.db_conn))
 
         if len(documents) > 0:
             return cls(documents[0])
@@ -53,7 +53,7 @@ class EntityMixin(object):
                             r.expr(entity_ids)
                             .contains(entity['entity_id'])))
 
-        docs = query.run(g.db_conn)
+        docs = query.run(database.db_conn)
         return [cls(fields) for fields in docs]
         # TODO@ index in unit and set
 
@@ -73,7 +73,7 @@ class EntityMixin(object):
                     .skip(skip)
                     .limit(limit))
 
-        return [cls(fields) for fields in query.run(g.db_conn)]
+        return [cls(fields) for fields in query.run(database.db_conn)]
 
     @classmethod
     def list_requires(cls, entity_id, limit=10, skip=0):
@@ -91,7 +91,7 @@ class EntityMixin(object):
                     .filter(lambda _: r.expr(entity['requires'])
                                        .contains(_['entity_id'])))
 
-        return [cls(fields) for fields in query.run(g.db_conn)]
+        return [cls(fields) for fields in query.run(database.db_conn)]
 
     @classmethod
     def list_required_by(cls, entity_id, limit=10, skip=0):
@@ -106,4 +106,4 @@ class EntityMixin(object):
         query = (cls.start_canonicals_query()
                     .filter(r.row['requires'].contains(entity_id)))
 
-        return [cls(fields) for fields in query.run(g.db_conn)]
+        return [cls(fields) for fields in query.run(database.db_conn)]

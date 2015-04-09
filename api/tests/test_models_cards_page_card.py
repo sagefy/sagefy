@@ -4,7 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def test_page_body(app, cards_table):
+def test_page_body(cards_table):
     """
     Expect a page card to require a body.
     """
@@ -19,7 +19,7 @@ def test_page_body(app, cards_table):
 
 
 @xfail
-def test_validate_response(app, db_conn, cards_table):
+def test_validate_response(db_conn, cards_table):
     """
     Expect to check if a given response is valid for the card kind.
     """

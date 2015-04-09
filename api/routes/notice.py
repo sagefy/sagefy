@@ -1,9 +1,6 @@
-from flask import Blueprint, jsonify, request, abort
-from flask.ext.login import current_user
+from framework.routes import get, put, abort
+from framework.session import get_current_user
 from models.notice import Notice
-from modules.util import parse_args
-
-notice_routes = Blueprint('notice', __name__, url_prefix='/api/notices')
 
 
 def add_body_to_notices(notices):
@@ -15,32 +12,33 @@ def add_body_to_notices(notices):
     return parsed
 
 
-@notice_routes.route('/', methods=['GET'])
-def list_notices():
+@get('/api/notices')
+def list_notices_route(request):
     """
     List notices for current user.
     Take parameters `limit`, `skip`, `tag`, and `read`.
     """
 
-    if not current_user.is_authenticated():
+    current_user = get_current_user(request)
+    if not current_user:
         return abort(401)
-    args = parse_args(request.args)
-    notices = Notice.list(user_id=current_user['id'], **args)
-    return jsonify(notices=add_body_to_notices(notices))
+    notices = Notice.list(user_id=current_user['id'], **request['params'])
+    return 200, {'notices': add_body_to_notices(notices)}
 
 
 # TODO Dry up the mark as read/unread routes
 
 
-@notice_routes.route('/<notice_id>/read/', methods=['PUT'])
-def mark_notice_as_read(notice_id):
+@put('/api/notices/{notice_id}/read')
+def mark_notice_as_read_route(request, notice_id):
     """
     Mark notice as read.
     Must be logged in as user, provide a valid ID, and own the notice.
     Return notice.
     """
 
-    if not current_user.is_authenticated():
+    current_user = get_current_user(request)
+    if not current_user:
         return abort(401)
     notice = Notice.get(id=notice_id)
     if not notice:
@@ -49,19 +47,20 @@ def mark_notice_as_read(notice_id):
         return abort(403)
     notice, errors = notice.mark_as_read()
     if len(errors):
-        return jsonify(errors=errors), 400
-    return jsonify(notice=notice.deliver(access='private'))
+        return 400, {'errors': errors}
+    return 200, {'notice': notice.deliver(access='private')}
 
 
-@notice_routes.route('/<notice_id>/unread/', methods=['PUT'])
-def mark_notice_as_unread(notice_id):
+@put('/api/notices/{notice_id}/unread')
+def mark_notice_as_unread_route(request, notice_id):
     """
     Mark notice as unread.
     Must be logged in as user, provide a valid ID, and own the notice.
     Return notice.
     """
 
-    if not current_user.is_authenticated():
+    current_user = get_current_user(request)
+    if not current_user:
         return abort(401)
     notice = Notice.get(id=notice_id)
     if not notice:
@@ -70,5 +69,5 @@ def mark_notice_as_unread(notice_id):
         return abort(403)
     notice, errors = notice.mark_as_unread()
     if len(errors):
-        return jsonify(errors=errors), 400
-    return jsonify(notice=notice.deliver(access='private'))
+        return 400, {'errors': errors}
+    return 200, {'notice': notice.deliver(access='private')}

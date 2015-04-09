@@ -5,7 +5,7 @@ xfail = pytest.mark.xfail
 
 
 @xfail
-def test_embed_url(app, cards_table):
+def test_embed_url(cards_table):
     """
     Expect embed card to require URL.
     """
@@ -21,7 +21,7 @@ def test_embed_url(app, cards_table):
 
 
 @xfail
-def test_embed_rubric(app, cards_table):
+def test_embed_rubric(cards_table):
     """
     Expect embed card to require a rubric.
     """
@@ -37,7 +37,7 @@ def test_embed_rubric(app, cards_table):
 
 
 @xfail
-def test_validate_response(app, db_conn, cards_table):
+def test_validate_response(db_conn, cards_table):
     """
     Expect to check if a given response is valid for the card kind.
     """

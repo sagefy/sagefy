@@ -1,7 +1,7 @@
 from models.unit import Unit
 
 
-def test_entity_id(app, db_conn, units_table):
+def test_entity_id(db_conn, units_table):
     """
     Expect a unit to require an entity_id.
     """
@@ -16,7 +16,7 @@ def test_entity_id(app, db_conn, units_table):
     assert len(errors) == 0
 
 
-def test_previous(app, db_conn, units_table):
+def test_previous(db_conn, units_table):
     """
     Expect a version previous_id to be a string or None.
     """
@@ -31,7 +31,7 @@ def test_previous(app, db_conn, units_table):
     assert len(errors) == 0
 
 
-def test_language(app, db_conn, units_table):
+def test_language(db_conn, units_table):
     """
     Expect a unit to require a language.
     """
@@ -44,7 +44,7 @@ def test_language(app, db_conn, units_table):
     assert unit['language'] == 'en'
 
 
-def test_name(app, db_conn, units_table):
+def test_name(db_conn, units_table):
     """
     Expect a unit to require a name.
     """
@@ -58,7 +58,7 @@ def test_name(app, db_conn, units_table):
     assert len(errors) == 0
 
 
-def test_body(app, db_conn, units_table):
+def test_body(db_conn, units_table):
     """
     Expect a unit to require a body.
     """
@@ -72,7 +72,7 @@ def test_body(app, db_conn, units_table):
     assert len(errors) == 0
 
 
-def test_canonical(app, db_conn, units_table):
+def test_canonical(db_conn, units_table):
     """
     Expect a unit canonical to be a boolean.
     """
@@ -88,7 +88,7 @@ def test_canonical(app, db_conn, units_table):
     assert len(errors) == 0
 
 
-def test_tags(app, db_conn, units_table):
+def test_tags(db_conn, units_table):
     """
     Expect a unit to allow tags.
     """
@@ -103,7 +103,7 @@ def test_tags(app, db_conn, units_table):
     assert len(errors) == 0
 
 
-def test_requires(app, db_conn, units_table):
+def test_requires(db_conn, units_table):
     """
     Expect a unit to allow requires ids.
     """

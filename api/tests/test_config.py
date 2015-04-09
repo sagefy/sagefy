@@ -1,9 +1,11 @@
-SECRET_KEY = '97zoFXVr47S7seY'
-MAIL_DEFAULT_SENDER = 'support@example.com'
-MAIL_PASSWORD = '3aoxMOOKVobx3xq'
-MAIL_USERNAME = 'admin@example.com'
-MAIL_SERVER = 'smtp.mandrillapp.com'
-MAIL_PORT = 587
-RDB_HOST = 'localhost'
-RDB_PORT = 28015
-RDB_DB = 'sagefy_test'
+config = {
+    'debug': True,
+    'mail_sender': 'support@example.com',
+    'mail_password': '97zofxvr47s7sey',
+    'mail_username': 'admin@example.com',
+    'mail_server': 'smtp.mandrillapp.com',
+    'mail_port': 587,
+    'rdb_host': 'localhost',
+    'rdb_port': 28015,
+    'rdb_db': 'sagefy_test',
+}

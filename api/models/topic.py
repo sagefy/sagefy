@@ -1,6 +1,6 @@
 from modules.model import Model
 from modules.validations import is_required, is_string, is_one_of
-from flask import g
+import framework.database as database
 import rethinkdb as r
 
 
@@ -48,6 +48,6 @@ class Topic(Model):
                         .filter(r.row['entity']['id'] == entity_id)
                         .limit(10)
                         .order_by(r.desc('created'))
-                        .run(g.db_conn))
+                        .run(database.db_conn))
         documents = [cls(data) for data in data_list]
         return documents

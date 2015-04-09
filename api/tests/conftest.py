@@ -10,12 +10,20 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
 import pytest
-from flask import g
-from app import create_app, make_db_connection
-import test_config as config
 import rethinkdb as r
 from passlib.hash import bcrypt
 import json
+
+from test_config import config
+import framework.index as framework
+framework.update_config(config)
+
+from framework.database import setup_db, \
+    make_db_connection, close_db_connection
+import framework.database
+import framework.session
+
+setup_db()
 
 
 def create_user_in_db(users_table, db_conn):
@@ -29,53 +37,36 @@ def create_user_in_db(users_table, db_conn):
     }).run(db_conn)
 
 
-def log_in(c):
-    return c.post('/api/users/log_in/', data=json.dumps({
-        'name': 'test',
-        'password': 'abcd1234'
-    }), content_type='application/json')
+def log_in():
+    return framework.session.log_in_user({'id': 'abcd1234'})
 
 
-def log_out(c):
-    return c.post('/api/users/log_out/', data=json.dumps({}),
-                  content_type='application/json')
-
-
-@pytest.fixture(scope='session')
-def app(request):
-    """
-    Manage app context for testing.
-    Create an application for running the tests.
-    Use a different database for testing.
-    """
-    app = create_app(config, debug=True, testing=True)
-    ctx = app.app_context()
-    ctx.push()
-    request.addfinalizer(lambda: ctx.pop())
-    return app
+def log_out(session_id):
+    return framework.session.log_out_user({
+        'cookies': {'session_id': session_id}
+    })
 
 
 @pytest.fixture(scope='session')
-def db_conn(app, request):
-    g.db_conn, g.db = make_db_connection(app)
-    request.addfinalizer(lambda: g.db_conn.close())
-    return g.db_conn
+def db_conn(request):
+    db_conn, db = make_db_connection()
+    request.addfinalizer(lambda: close_db_connection())
+    return db_conn
 
 
 @pytest.fixture
-def c_user(app, request, db_conn, users_table):
+def session(request, db_conn, users_table):
     create_user_in_db(users_table, db_conn)
-    with app.test_client() as c:
-        log_in(c)
-        request.addfinalizer(lambda: log_out(c))
-        return c
+    session_id = log_in()
+    request.addfinalizer(lambda: log_out(session_id))
+    return session_id
 
 
 def table(name, request, db_conn):
     """
     Ensure the table is freshly empty after use.
     """
-    table = g.db.table(name)
+    table = framework.database.db.table(name)
     request.addfinalizer(lambda: table.delete().run(db_conn))
     return table
 

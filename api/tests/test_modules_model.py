@@ -34,7 +34,7 @@ class User(Model):
     })
 
 
-def test_table_class(app, db_conn, users_table):
+def test_table_class(db_conn, users_table):
     """
     Expect the model to have a table as a class.
     """
@@ -42,7 +42,7 @@ def test_table_class(app, db_conn, users_table):
     assert User.table == users_table
 
 
-def test_create_instance(app, db_conn, users_table):
+def test_create_instance(db_conn, users_table):
     """
     Expect to create a model instance. Be able to pass in data too...
     """
@@ -50,7 +50,7 @@ def test_create_instance(app, db_conn, users_table):
     assert user.data['name'] == 'Test'
 
 
-def test_table_instance(app, db_conn, users_table):
+def test_table_instance(db_conn, users_table):
     """
     Expect the model to have a table as an instance.
     """
@@ -59,7 +59,7 @@ def test_table_instance(app, db_conn, users_table):
     assert user.table == users_table
 
 
-def test_get_item(app, db_conn, users_table):
+def test_get_item(db_conn, users_table):
     """
     Expect to get an item from the model.
     """
@@ -68,7 +68,7 @@ def test_get_item(app, db_conn, users_table):
     assert user['name'] == 'Test'
 
 
-def test_set_item(app, db_conn, users_table):
+def test_set_item(db_conn, users_table):
     """
     Expect to set an item in the model.
     """
@@ -77,7 +77,7 @@ def test_set_item(app, db_conn, users_table):
     assert user.data['name'] == 'Test'
 
 
-def test_del_item(app, db_conn, users_table):
+def test_del_item(db_conn, users_table):
     """
     Expect to remove an item in the model.
     """
@@ -88,7 +88,7 @@ def test_del_item(app, db_conn, users_table):
     assert 'name' not in user.data
 
 
-def test_has_item(app, db_conn, users_table):
+def test_has_item(db_conn, users_table):
     """
     Expect to test if model has an item.
     """
@@ -98,7 +98,7 @@ def test_has_item(app, db_conn, users_table):
     assert 'name' in user
 
 
-def test_get_id(app, db_conn, users_table):
+def test_get_id(db_conn, users_table):
     """
     Expect to be able to retrieve a model by ID.
     """
@@ -111,7 +111,7 @@ def test_get_id(app, db_conn, users_table):
     assert user['name'] == 'test'
 
 
-def test_get_params(app, db_conn, users_table):
+def test_get_params(db_conn, users_table):
     """
     Expect a model to retrieve by params.
     """
@@ -124,7 +124,7 @@ def test_get_params(app, db_conn, users_table):
     assert user['id'] == 'abcdefgh12345678'
 
 
-def test_get_none(app, db_conn, users_table):
+def test_get_none(db_conn, users_table):
     """
     Expect a no model when `get` with no match.
     """
@@ -137,7 +137,7 @@ def test_get_none(app, db_conn, users_table):
     assert user is None
 
 
-def test_list(app, db_conn, users_table):
+def test_list(db_conn, users_table):
     """
     Expect to get a list of models.
     """
@@ -164,7 +164,7 @@ def test_list(app, db_conn, users_table):
     assert users[2]['id'] in ('1', '2', '3')
 
 
-def test_list_params(app, db_conn, users_table):
+def test_list_params(db_conn, users_table):
     """
     Expect to get a list of models by params.
     """
@@ -190,7 +190,7 @@ def test_list_params(app, db_conn, users_table):
     assert users[0]['email'] == 'test1@example.com'
 
 
-def test_list_none(app, db_conn, users_table):
+def test_list_none(db_conn, users_table):
     """
     Expect to get an empty list of models when none.
     """
@@ -198,7 +198,7 @@ def test_list_none(app, db_conn, users_table):
     assert len(users) == 0
 
 
-def test_generate_id(app, db_conn, users_table):
+def test_generate_id(db_conn, users_table):
     """
     Expect to automatically generate an ID.
     """
@@ -208,7 +208,7 @@ def test_generate_id(app, db_conn, users_table):
     assert len(d['id']) == 24
 
 
-def test_validate(app, db_conn, users_table):
+def test_validate(db_conn, users_table):
     """
     Expect to validate a model.
     """
@@ -224,7 +224,7 @@ def test_validate(app, db_conn, users_table):
     assert errors[0]['message']
 
 
-def test_enforce_strict(app, db_conn, users_table):
+def test_enforce_strict(db_conn, users_table):
     """
     Expect to enforce strict mode.
     """
@@ -252,7 +252,7 @@ def test_enforce_strict_embed_many():
     assert False
 
 
-def test_validate_fields(app, db_conn, users_table):
+def test_validate_fields(db_conn, users_table):
     """
     Expect to validate a model's fields.
     """
@@ -286,7 +286,7 @@ def test_validate_fields_embed_many():
     assert False
 
 
-def test_bundle(app, db_conn, users_table):
+def test_bundle(db_conn, users_table):
     """
     Expect to...
     """
@@ -318,7 +318,7 @@ def test_bundle_embed_many():
     assert False
 
 
-def test_default(app, db_conn, users_table):
+def test_default(db_conn, users_table):
     """
     Expect to set a default value for fields.
     """
@@ -344,7 +344,7 @@ def test_default_embed_many():
     assert False
 
 
-def test_deliver(app, db_conn, users_table):
+def test_deliver(db_conn, users_table):
     """
     Expect to...
     """
@@ -379,7 +379,7 @@ def test_deliver_embed_many():
     assert False
 
 
-def test_insert(app, db_conn, users_table):
+def test_insert(db_conn, users_table):
     """
     Expect to create a new model instance.
     """
@@ -395,7 +395,7 @@ def test_insert(app, db_conn, users_table):
     assert record['email'] == 'test@example.com'
 
 
-def test_insert_fail(app, db_conn, users_table):
+def test_insert_fail(db_conn, users_table):
     """
     Expect to error on failed create model.
     """
@@ -411,7 +411,7 @@ def test_insert_fail(app, db_conn, users_table):
     assert errors[0]['message']
 
 
-def test_update(app, db_conn, users_table):
+def test_update(db_conn, users_table):
     """
     Expect to update a model instance.
     """
@@ -430,7 +430,7 @@ def test_update(app, db_conn, users_table):
     assert record['email'] == 'open@example.com'
 
 
-def test_update_fail(app, db_conn, users_table):
+def test_update_fail(db_conn, users_table):
     """
     Expect to error on failed update model instance.
     """
@@ -450,7 +450,7 @@ def test_update_fail(app, db_conn, users_table):
     assert record['email'] == 'test@example.com'
 
 
-def test_save(app, db_conn, users_table):
+def test_save(db_conn, users_table):
     """
     Expect a model to be able to save at any time.
     """
@@ -465,7 +465,7 @@ def test_save(app, db_conn, users_table):
     assert len(records) == 1
 
 
-def test_delete(app, db_conn, users_table):
+def test_delete(db_conn, users_table):
     """
     Expect to delete a model.
     """
@@ -480,7 +480,7 @@ def test_delete(app, db_conn, users_table):
     assert len(records) == 0
 
 
-def test_id_keep(app, db_conn, users_table):
+def test_id_keep(db_conn, users_table):
     """
     Expect a model to maintain an ID.
     """
@@ -496,7 +496,7 @@ def test_id_keep(app, db_conn, users_table):
     assert user['id'] == id
 
 
-def test_created(app, db_conn, users_table):
+def test_created(db_conn, users_table):
     """
     Expect a model to add created time.
     """
@@ -509,7 +509,7 @@ def test_created(app, db_conn, users_table):
     assert record['created'] == user['created']
 
 
-def test_transform(app, db_conn, users_table):
+def test_transform(db_conn, users_table):
     """
     Expect a model to call transform before going into DB.
     """
@@ -522,7 +522,7 @@ def test_transform(app, db_conn, users_table):
     assert user['password'].startswith('$2a$')
 
 
-def test_modified(app, db_conn, users_table):
+def test_modified(db_conn, users_table):
     """
     Expect to sync fields with database.
     """
@@ -540,7 +540,7 @@ def test_modified(app, db_conn, users_table):
     assert user['created'] != user['modified']
 
 
-def test_unique(app, db_conn, users_table):
+def test_unique(db_conn, users_table):
     """
     Expect a validation to test uniqueness.
     """

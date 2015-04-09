@@ -1,7 +1,7 @@
 from models.post import Post
 
 
-def test_user(app, db_conn, posts_table):
+def test_user(db_conn, posts_table):
     """
     Expect a post to require a user id.
     """
@@ -16,7 +16,7 @@ def test_user(app, db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_topic(app, db_conn, posts_table):
+def test_topic(db_conn, posts_table):
     """
     Expect a post to require a topic id.
     """
@@ -31,7 +31,7 @@ def test_topic(app, db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_body(app, db_conn, posts_table):
+def test_body(db_conn, posts_table):
     """
     Expect a post to require a body.
     """
@@ -46,7 +46,7 @@ def test_body(app, db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_kind(app, db_conn, posts_table):
+def test_kind(db_conn, posts_table):
     """
     Expect a post to have a kind.
     """
@@ -64,7 +64,7 @@ def test_kind(app, db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_replies(app, db_conn, posts_table):
+def test_replies(db_conn, posts_table):
     """
     Expect a post to allow a replies to id.
     """

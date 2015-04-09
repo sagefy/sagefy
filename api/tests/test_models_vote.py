@@ -1,7 +1,7 @@
 from models.vote import Vote
 
 
-def test_user(app, db_conn, posts_table):
+def test_user(db_conn, posts_table):
     """
     Expect a vote to require a user id.
     """
@@ -17,7 +17,7 @@ def test_user(app, db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_topic(app, db_conn, posts_table):
+def test_topic(db_conn, posts_table):
     """
     Expect a vote to require a topic id.
     """
@@ -33,7 +33,7 @@ def test_topic(app, db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_body(app, db_conn, posts_table):
+def test_body(db_conn, posts_table):
     """
     Expect a vote to allow, but not require, a body.
     """
@@ -50,7 +50,7 @@ def test_body(app, db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_kind(app, db_conn, posts_table):
+def test_kind(db_conn, posts_table):
     """
     Expect a vote to always have a kind of vote.
     """
@@ -69,7 +69,7 @@ def test_kind(app, db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_replies(app, db_conn, posts_table):
+def test_replies(db_conn, posts_table):
     """
     Expect a vote to require a replies to id.
     """
@@ -85,7 +85,7 @@ def test_replies(app, db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_response(app, db_conn, posts_table):
+def test_response(db_conn, posts_table):
     """
     Expect a vote to require a response (None is okay).
     """
