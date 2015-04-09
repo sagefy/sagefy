@@ -73,7 +73,7 @@ def find_path(method, path):
         match = pattern.match(path)
         if match:
             return handler, match.groupdict()
-    return None, None
+    return None, {}
 
 
 def abort(code):
