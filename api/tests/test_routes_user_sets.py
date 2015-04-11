@@ -1,4 +1,3 @@
-import json
 import routes.user_sets
 import rethinkdb as r
 
@@ -50,7 +49,7 @@ def test_get_user_sets(db_conn, session, sets_table, users_sets_table):
     """
 
     prep(sets_table, users_sets_table, db_conn)
-    request = {'cookies': {'session_id': session}}
+    request = {'cookies': {'session_id': session}, 'params': {}}
     code, response = routes.user_sets.get_user_sets_route(request, 'abcd1234')
     assert code == 200
     assert len(response['sets']) == 2
@@ -72,7 +71,7 @@ def test_get_user_sets_403(db_conn, session, users_sets_table):
     """
 
     request = {'cookies': {'session_id': session}}
-    code, response = routes.user_sets.get_user_sets_route(request, 'abcd1234')
+    code, response = routes.user_sets.get_user_sets_route(request, '1234abcd')
     assert code == 403
 
 
@@ -110,8 +109,9 @@ def test_add_set_403(db_conn, session, users_sets_table):
     Expect to 403 when attempt to add to another user's sets.
     """
 
-    response = session.post('/api/users/1234dbca/sets/2/')
-    assert response.status_code == 403
+    request = {'cookies': {'session_id': session}}
+    code, response = routes.user_sets.add_set_route(request, '1234dbca', '2')
+    assert code == 403
 
 
 def test_add_set_404(db_conn, session, users_sets_table):
@@ -119,8 +119,9 @@ def test_add_set_404(db_conn, session, users_sets_table):
     Expect to 404 if set not found.
     """
 
-    response = session.post('/api/users/abcd1234/sets/Z9/')
-    assert response.status_code == 404
+    request = {'cookies': {'session_id': session}}
+    code, response = routes.user_sets.add_set_route(request, 'abcd1234', 'Z9')
+    assert code == 404
 
 
 def test_add_set_already_added(db_conn, session, sets_table, users_sets_table):
@@ -137,10 +138,11 @@ def test_add_set_already_added(db_conn, session, sets_table, users_sets_table):
         'canonical': True,
     }).run(db_conn)
 
-    response = session.post('/api/users/abcd1234/sets/A1/')
-    assert response.status_code == 200
-    response = session.post('/api/users/abcd1234/sets/A1/')
-    assert response.status_code == 400
+    request = {'cookies': {'session_id': session}}
+    code, response = routes.user_sets.add_set_route(request, 'abcd1234', 'A1')
+    assert code == 200
+    code, response = routes.user_sets.add_set_route(request, 'abcd1234', 'A1')
+    assert code == 400
 
 
 def test_remove_set(db_conn, session, sets_table, users_sets_table):
@@ -160,10 +162,12 @@ def test_remove_set(db_conn, session, sets_table, users_sets_table):
     users_sets_table.insert({
         'user_id': 'abcd1234',
         'set_ids': ['A1'],
-    })
+    }).run(db_conn)
 
-    response = session.delete('/api/users/abcd1234/sets/A1/')
-    assert response.status_code == 404
+    request = {'cookies': {'session_id': session}}
+    code, response = routes.user_sets.remove_set_route(request,
+                                                       'abcd1234', 'A1')
+    assert code == 200
 
 
 def test_remove_set_401(db_conn, users_sets_table):
@@ -171,8 +175,10 @@ def test_remove_set_401(db_conn, users_sets_table):
     Expect to 401 when trying to remove a user set not logged in.
     """
 
-    response = app.test_client().delete('/api/users/abcd1234/sets/2/')
-    assert response.status_code == 401
+    request = {}
+    code, response = routes.user_sets.remove_set_route(request,
+                                                       'abcd1234', 'A1')
+    assert code == 401
 
 
 def test_remove_set_403(db_conn, session, users_sets_table):
@@ -180,8 +186,10 @@ def test_remove_set_403(db_conn, session, users_sets_table):
     Expect forbidden when trying to remove another user's set.
     """
 
-    response = session.delete('/api/users/1234dcba/sets/2/')
-    assert response.status_code == 403
+    request = {'cookies': {'session_id': session}}
+    code, response = routes.user_sets.remove_set_route(request,
+                                                       '1234dcba', '2')
+    assert code == 403
 
 
 def test_remove_set_404(db_conn, session, users_sets_table):
@@ -189,5 +197,7 @@ def test_remove_set_404(db_conn, session, users_sets_table):
     Expect to not found when trying to delete an unadded set.
     """
 
-    response = session.delete('/api/users/abcd1234/sets/A1/')
-    assert response.status_code == 404
+    request = {'cookies': {'session_id': session}}
+    code, response = routes.user_sets.remove_set_route(request,
+                                                       'abcd1234', 'A1')
+    assert code == 404

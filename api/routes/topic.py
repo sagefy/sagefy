@@ -38,10 +38,10 @@ def create_topic_route(request):
     # have a valid post
     # TODO@ should this validation be part of the model?
     topic_data = dict(**request['params']['topic'])
-    topic_data['user_id'] = current_user.get_id()
+    topic_data['user_id'] = current_user['id']
     topic = Topic(topic_data)
     post_data = dict(**request['params']['post'])
-    post_data['user_id'] = current_user.get_id()
+    post_data['user_id'] = current_user['id']
     post_data['topic_id'] = topic['id']
     post = instance_post_facade(post_data)
 
@@ -78,7 +78,7 @@ def update_topic_route(request, topic_id):
         }]}
 
     # Must be logged in as topic's author
-    if topic['user_id'] != current_user.get_id():
+    if topic['user_id'] != current_user['id']:
         return abort(403)
 
     # Request must only be for name
@@ -164,7 +164,7 @@ def create_post_route(request, topic_id):
 
     # Try to save the post (and others)
     post_data = dict(**request['params'])
-    post_data['user_id'] = current_user.get_id()
+    post_data['user_id'] = current_user['id']
     post, errors = create_post_facade(post_data)
     if len(errors):
         return 400, {'errors': errors}
@@ -199,7 +199,7 @@ def update_post_route(request, topic_id, post_id):
 
     # Must be user's own post
     # TODO@should some of these checks be part of the model?
-    if post['user_id'] != current_user.get_id():
+    if post['user_id'] != current_user['id']:
         return abort(403)
 
     # TODO@ If proposal, make sure its allowed changes

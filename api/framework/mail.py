@@ -7,6 +7,7 @@ config = {
     'mail_username': 'admin@example.com',
     'mail_server': 'smtp.mandrillapp.com',
     'mail_port': 587,
+    'test': False,
 }
 
 
@@ -15,6 +16,10 @@ def send_mail(subject, recipient, body):
     Send an email.
     """
 
+    if config['test']:
+        return True
+
+    sent = False
     msg = MIMEText(body, 'plain')
     msg['Subject'] = subject
     msg['From'] = config['mail_sender']
@@ -24,6 +29,8 @@ def send_mail(subject, recipient, body):
         conn.set_debuglevel(False)
         conn.login(config['mail_username'], config['mail_password'])
         conn.sendmail(msg['To'], [recipient], msg.as_string())
+        sent = True
     finally:
         if conn:
             conn.close()
+        return sent

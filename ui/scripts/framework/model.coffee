@@ -176,7 +176,7 @@ class Model extends Events
     # Or just return the error text
     parseAjaxErrors: (r) ->
         return null if not r.responseText
-        errors =  util.parseJSON(r.responseText)
+        errors = util.parseJSON(r.responseText)
         return errors if util.isString(errors)
         return errors.errors
 

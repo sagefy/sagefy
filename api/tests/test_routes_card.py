@@ -135,9 +135,9 @@ def test_learn_card(db_conn, session, cards_table):
         'set': {'id': 'jkl;1234'},
     }))
 
-    response = session.get('/api/cards/tyui4567/learn/')
-    assert response.status_code == 200
-    response = json.loads(response.data.decode())
+    request = {'cookies': {'session_id': session}}
+    code, response = routes.card.learn_card_route(request, 'tyui4567')
+    assert code == 200
     assert 'order' not in response['card']
     # TODO@ assert 'correct' not in response['card']['options'][0]
     # TODO@ assert 'feedback' not in response['card']['options'][0]
@@ -152,8 +152,8 @@ def test_learn_card_401(db_conn):
     Expect to require log in to get a card for learn mode. (401)
     """
 
-    response = app.test_client().get('/api/cards/abcd/learn/')
-    assert response.status_code == 401
+    code, response = routes.card.learn_card_route({}, 'abcd')
+    assert code == 401
 
 
 def test_learn_card_404(db_conn, session):
@@ -161,8 +161,9 @@ def test_learn_card_404(db_conn, session):
     Expect to fail to get an unknown card for learn mode. (404)
     """
 
-    response = session.get('/api/cards/abcd/learn/')
-    assert response.status_code == 404
+    request = {'cookies': {'session_id': session}}
+    code, response = routes.card.learn_card_route(request, 'abcd')
+    assert code == 404
 
 
 def test_learn_card_400(db_conn, cards_table, session):
@@ -198,13 +199,13 @@ def test_learn_card_400(db_conn, cards_table, session):
         'set': {'id': '6543hgfs'},
     }))
 
-    response = session.get('/api/cards/tyui4567/learn/')
-    assert response.status_code == 400
-    response = json.loads(response.data.decode())
+    request = {'cookies': {'session_id': session}}
+    code, response = routes.card.learn_card_route(request, 'tyui4567')
+    assert code == 400
     redis.delete('learning_context_abcd1234')
 
 
-def test_respond_card(db_conn, cards_table, session):
+def test_respond_card(db_conn, cards_table, responses_table, session):
     """
     Expect to respond to a card. (200)
     """
@@ -237,11 +238,13 @@ def test_respond_card(db_conn, cards_table, session):
         'card': {'id': 'tyui4567'},
     }))
 
-    response = session.post('/api/cards/tyui4567/responses/', data=json.dumps({
-        'response': '42'
-    }), content_type='application/json')
-    assert response.status_code == 200
-    response = json.loads(response.data.decode())
+    request = {
+        'params': {'response': '42'},
+        'cookies': {'session_id': session}
+    }
+    code, response = routes.card.respond_to_card_route(request, 'tyui4567')
+
+    assert code == 200
     assert 'response' in response
     assert 'feedback' in response
     redis.delete('learning_context_abcd1234')
@@ -252,8 +255,8 @@ def test_respond_card_401(db_conn):
     Expect to require log in to get an unknown card. (401)
     """
 
-    response = app.test_client().post('/api/cards/abcd/responses/')
-    assert response.status_code == 401
+    code, response = routes.card.respond_to_card_route({}, 'abcd')
+    assert code == 401
 
 
 def test_respond_card_404(db_conn, session):
@@ -261,8 +264,12 @@ def test_respond_card_404(db_conn, session):
     Expect to fail to respond to an unknown card. (404)
     """
 
-    response = session.post('/api/cards/abcd/responses/')
-    assert response.status_code == 404
+    request = {
+        'params': {'response': '42'},
+        'cookies': {'session_id': session},
+    }
+    code, response = routes.card.respond_to_card_route(request, 'abcd')
+    assert code == 404
 
 
 def test_respond_card_400a(db_conn, session, cards_table):
@@ -299,11 +306,12 @@ def test_respond_card_400a(db_conn, session, cards_table):
         'card': {'id': 'gfds3456'},
     }))
 
-    response = session.post('/api/cards/tyui4567/responses/', data=json.dumps({
-        'response': '42'
-    }), content_type='application/json')
-    assert response.status_code == 400
-    response = json.loads(response.data.decode())
+    request = {
+        'params': {'response': '42'},
+        'cookies': {'session_id': session}
+    }
+    code, response = routes.card.respond_to_card_route(request, 'tyui4567')
+    assert code == 400
     redis.delete('learning_context_abcd1234')
 
 
@@ -340,10 +348,11 @@ def test_respond_card_400b(db_conn, session, cards_table):
         'card': {'id': 'tyui4567'},
     }))
 
-    response = session.post('/api/cards/tyui4567/responses/', data=json.dumps({
-        'response': 'Waffles'
-    }), content_type='application/json')
-    assert response.status_code == 400
-    response = json.loads(response.data.decode())
+    request = {
+        'params': {'response': 'Waffles'},
+        'cookies': {'session_id': session}
+    }
+    code, response = routes.card.respond_to_card_route(request, 'tyui4567')
+    assert code == 400
     assert 'errors' in response
     redis.delete('learning_context_abcd1234')

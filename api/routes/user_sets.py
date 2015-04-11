@@ -78,7 +78,10 @@ def remove_set_route(request, user_id, set_id):
         return abort(403)
 
     uset = UserSets.get(user_id=user_id)
-    if not uset or set_id not in uset['set_ids']:
+    if not uset:
+        return 404, {'errors': [{'message': 'User does not have sets.'}]}
+
+    if set_id not in uset['set_ids']:
         return abort(404)
 
     uset['set_ids'].remove(set_id)

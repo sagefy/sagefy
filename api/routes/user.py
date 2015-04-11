@@ -108,7 +108,7 @@ def log_out_route(request):
     """
 
     log_out_user(request)
-    return 204, {
+    return 200, {
         'cookies': {
             'session_id': None
         }

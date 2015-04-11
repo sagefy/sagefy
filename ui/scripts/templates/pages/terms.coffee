@@ -118,8 +118,7 @@ module.exports = ->
     </p>
 
     <p>
-        If your copyright, patent, or trademark has been violated,
-        contact
+        If your copyright, patent, or trademark has been violated, contact
         <a href="mailto:support@sagefy.org">support@sagefy.org</a>.
         Notices and counter-notices must meet statutory requirements
         imposed by the Digital Millennium Copyright Act of 1998.

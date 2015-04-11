@@ -3,7 +3,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 import rethinkdb as r
-import json
+import routes.set
 
 
 def test_get_set(db_conn,
@@ -67,9 +67,8 @@ def test_get_set(db_conn,
         }
     }]).run(db_conn)
 
-    response = app.test_client().get('/api/sets/zytx/')
-    assert response.status_code == 200
-    response = json.loads(response.data.decode())
+    code, response = routes.set.get_set_route({}, 'zytx')
+    assert code == 200
     # Model
     assert response['set']['entity_id'] == 'zytx'
     assert response['set']['name'] == 'Wildwood'
@@ -91,8 +90,8 @@ def test_get_set_404(db_conn):
     Expect to fail to get set information if set is unknown. (404)
     """
 
-    response = app.test_client().get('/api/sets/abcd/')
-    assert response.status_code == 404
+    code, response = routes.set.get_set_route({}, 'abcd')
+    assert code == 404
 
 
 @xfail

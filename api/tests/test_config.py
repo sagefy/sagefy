@@ -1,5 +1,6 @@
 config = {
     'debug': True,
+    'test': True,
     'mail_sender': 'support@example.com',
     'mail_password': '97zofxvr47s7sey',
     'mail_username': 'admin@example.com',

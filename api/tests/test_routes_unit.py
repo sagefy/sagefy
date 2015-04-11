@@ -1,5 +1,6 @@
 import rethinkdb as r
 import json
+import routes.unit
 
 
 def test_get_unit(db_conn,
@@ -77,9 +78,8 @@ def test_get_unit(db_conn,
         }
     }]).run(db_conn)
 
-    response = app.test_client().get('/api/units/zytx/')
-    assert response.status_code == 200
-    response = json.loads(response.data.decode())
+    code, response = routes.unit.get_unit_route({}, 'zytx')
+    assert code == 200
     # Model
     assert response['unit']['entity_id'] == 'zytx'
     assert response['unit']['name'] == 'Wildwood'
@@ -106,5 +106,5 @@ def test_get_unit_404(db_conn):
     Expect to fail to get an unknown unit (404).
     """
 
-    response = app.test_client().get('/api/units/abcd/')
-    assert response.status_code == 404
+    code, response = routes.unit.get_unit_route({}, 'zytx')
+    assert code == 404

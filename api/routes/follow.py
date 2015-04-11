@@ -11,10 +11,10 @@ def get_follows_route(request):
     """
 
     current_user = get_current_user(request)
-    if not current_user.is_authenticated():
+    if not current_user:
         return abort(401)
 
-    follows = Follow.list(user_id=current_user.get_id(), **request['params'])
+    follows = Follow.list(user_id=current_user['id'], **request['params'])
     return 200, {
         'follows': [follow.deliver(access='private') for follow in follows]
     }
@@ -31,7 +31,7 @@ def follow_route(request):
         return abort(401)
 
     follow_data = dict(**request['params'])
-    follow_data['user_id'] = current_user.get_id()
+    follow_data['user_id'] = current_user['id']
 
     follow = Follow(follow_data)
     errors = follow.validate()
@@ -45,7 +45,7 @@ def follow_route(request):
         return abort(404)
 
     # Ensure we don't already follow   TODO should this be a model validation?
-    prev = Follow.list(user_id=current_user.get_id(),
+    prev = Follow.list(user_id=current_user['id'],
                        entity_id=follow_data['entity']['id'])
     if prev:
         return abort(409)
@@ -71,7 +71,7 @@ def unfollow_route(request, follow_id):
     if not follow:
         return abort(404)
 
-    if follow['user_id'] != current_user.get_id():
+    if follow['user_id'] != current_user['id']:
         return abort(403)
 
     follow, errors = follow.delete()

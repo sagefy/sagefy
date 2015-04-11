@@ -1,4 +1,9 @@
 from framework.index import valuefy
+import pytest
+
+xfail = pytest.mark.xfail
+
+# TODO@ outline tests
 
 
 def test_valuefy():

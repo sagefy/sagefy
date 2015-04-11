@@ -2,6 +2,7 @@ import pytest
 
 xfail = pytest.mark.xfail
 
+
 @xfail
 def test_version(app):
     """
