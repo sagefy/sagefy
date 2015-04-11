@@ -6,6 +6,7 @@ xfail = pytest.mark.xfail
 from conftest import create_user_in_db
 import json
 import rethinkdb as r
+import routes.topic
 
 
 def create_topic_in_db(topics_table, db_conn, user_id='abcd1234'):
@@ -58,90 +59,9 @@ def test_create_topic(db_conn, session, topics_table, posts_table):
     """
     Expect to create a topic with post.
     """
-    response = session.post('/api/topics/', data=json.dumps({
-        'topic': {
-            'name': 'An entity',
-            'entity': {
-                'kind': 'unit',
-                'id': 'dfgh4567'
-            },
-        },
-        'post': {
-            'body': 'Here\'s a pear.',
-            'kind': 'post'
-        }
-    }), content_type='application/json')
 
-    data = json.loads(response.data.decode())
-    assert response.status_code == 200
-    assert 'post' in data
-    assert 'topic' in data
-    assert data['topic']['name'] == 'An entity'
-    assert data['post']['body'] == 'Here\'s a pear.'
-
-
-@xfail
-def test_create_topic_proposal(db_conn, users_table, topics_table,
-                               posts_table, session):
-    """
-    Expect to create a topic with proposal.
-    """
-    response = session.post('/api/topics/', data=json.dumps({
-        'topic': {
-            'name': 'An entity',
-            'entity': {
-                'kind': 'unit',
-                'id': 'dfgh4567'
-            },
-        },
-        'post': {
-            'kind': 'proposal',
-            'body': 'Here\'s a pear.'
-        }
-    }), content_type='application/json')
-
-    data = json.loads(response.data.decode())
-    assert response.status_code == 200
-    assert 'post' in data
-    assert 'topic' in data
-    assert data['topic']['name'] == 'An entity'
-    assert data['post']['body'] == 'Here\'s a pear.'
-
-
-@xfail
-def test_create_topic_flag(db_conn, users_table, topics_table,
-                           posts_table, session):
-    """
-    Expect to create topic with a flag.
-    """
-    response = session.post('/api/topics/', data=json.dumps({
-        'topic': {
-            'name': 'An entity',
-            'entity': {
-                'kind': 'unit',
-                'id': 'dfgh4567'
-            },
-        },
-        'post': {
-            'kind': 'flag',
-            'reason': 'duplicate',
-        }
-    }), content_type='application/json')
-    data = json.loads(response.data.decode())
-    assert response.status_code == 200
-    assert 'post' in data
-    assert 'topic' in data
-    assert data['topic']['name'] == 'An entity'
-    assert data['post']['body'] == 'Here\'s a pear.'
-
-
-def test_create_topic_log_in(db_conn, users_table, topics_table,
-                             posts_table):
-    """
-    Expect create topic to fail when logged out.
-    """
-    with app.test_client() as c:
-        response = c.post('/api/topics/', data=json.dumps({
+    request = {
+        'params': {
             'topic': {
                 'name': 'An entity',
                 'entity': {
@@ -150,12 +70,112 @@ def test_create_topic_log_in(db_conn, users_table, topics_table,
                 },
             },
             'post': {
+                'body': 'Here\'s a pear.',
+                'kind': 'post'
+            }
+        },
+        'cookies': {
+            'session_id': session,
+        }
+    }
+    code, response = routes.topic.create_topic_route(request)
+    assert code == 200
+    assert 'post' in response
+    assert 'topic' in response
+    assert response['topic']['name'] == 'An entity'
+    assert response['post']['body'] == 'Here\'s a pear.'
+
+
+@xfail
+def test_create_topic_proposal(db_conn, users_table, topics_table,
+                               posts_table, session):
+    """
+    Expect to create a topic with proposal.
+    """
+
+    request = {
+        'params': {
+            'topic': {
+                'name': 'An entity',
+                'entity': {
+                    'kind': 'unit',
+                    'id': 'dfgh4567'
+                },
+            },
+            'post': {
+                'kind': 'proposal',
                 'body': 'Here\'s a pear.'
             }
-        }), content_type='application/json')
-        assert response.status_code == 401
-        data = json.loads(response.data.decode())
-        assert 'errors' in data
+        },
+        'cookies': {
+            'session_id': session,
+        }
+    }
+    code, response = routes.topic.create_topic_route(request)
+    assert code == 200
+    assert 'post' in response
+    assert 'topic' in response
+    assert response['topic']['name'] == 'An entity'
+    assert response['post']['body'] == 'Here\'s a pear.'
+
+
+@xfail
+def test_create_topic_flag(db_conn, users_table, topics_table,
+                           posts_table, session):
+    """
+    Expect to create topic with a flag.
+    """
+
+    request = {
+        'params': {
+            'topic': {
+                'name': 'An entity',
+                'entity': {
+                    'kind': 'unit',
+                    'id': 'dfgh4567'
+                },
+            },
+            'post': {
+                'kind': 'flag',
+                'reason': 'duplicate',
+            }
+        },
+        'cookies': {
+            'session_id': session,
+        }
+    }
+    code, response = routes.topic.create_topic_route(request)
+    assert code == 200
+    assert 'post' in response
+    assert 'topic' in response
+    assert response['topic']['name'] == 'An entity'
+    assert response['post']['body'] == 'Here\'s a pear.'
+
+
+def test_create_topic_log_in(db_conn, users_table, topics_table,
+                             posts_table):
+    """
+    Expect create topic to fail when logged out.
+    """
+
+    request = {
+        'params': {
+            'topic': {
+                'name': 'An entity',
+                'entity': {
+                    'kind': 'unit',
+                    'id': 'dfgh4567'
+                },
+            },
+            'post': {
+                'body': 'Here\'s a pear.',
+                'kind': 'post'
+            }
+        }
+    }
+    code, response = routes.topic.create_topic_route(request)
+    assert code == 401
+    assert 'errors' in response
 
 
 def test_create_topic_no_post(db_conn, users_table, topics_table,
@@ -163,18 +183,24 @@ def test_create_topic_no_post(db_conn, users_table, topics_table,
     """
     Expect create topic to fail without post.
     """
-    response = session.post('/api/topics/', data=json.dumps({
-        'topic': {
-            'name': 'An entity',
-            'entity': {
-                'kind': 'unit',
-                'id': 'dfgh4567'
+
+    request = {
+        'params': {
+            'topic': {
+                'name': 'An entity',
+                'entity': {
+                    'kind': 'unit',
+                    'id': 'dfgh4567'
+                },
             }
+        },
+        'cookies': {
+            'session_id': session,
         }
-    }), content_type='application/json')
-    assert response.status_code == 400
-    data = json.loads(response.data.decode())
-    assert 'errors' in data
+    }
+    code, response = routes.topic.create_topic_route(request)
+    assert code == 400
+    assert 'errors' in response
 
 
 def test_topic_update(db_conn, users_table, topics_table,
@@ -182,14 +208,20 @@ def test_topic_update(db_conn, users_table, topics_table,
     """
     Expect to update topic name.
     """
+
     create_topic_in_db(topics_table, db_conn)
-    response = session.put('/api/topics/wxyz7890/', data=json.dumps({
-        'name': 'Another entity',
-        'topic_id': 'wxyz7890',
-    }), content_type='application/json')
-    data = json.loads(response.data.decode())
-    assert response.status_code == 200
-    assert data['topic']['name'] == 'Another entity'
+    request = {
+        'cookies': {
+            'session_id': session
+        },
+        'params': {
+            'name': 'Another entity',
+            'topic_id': 'wxyz7890',
+        }
+    }
+    code, response = routes.topic.update_topic_route(request, 'wxyz7890')
+    assert code == 200
+    assert response['topic']['name'] == 'Another entity'
 
 
 def test_update_topic_author(db_conn, users_table, topics_table,
@@ -197,37 +229,52 @@ def test_update_topic_author(db_conn, users_table, topics_table,
     """
     Expect update topic to require original author.
     """
+
     create_topic_in_db(topics_table, db_conn, user_id="qwerty")
-    response = session.put('/api/topics/wxyz7890/', data=json.dumps({
-        'name': 'Another entity',
-        'topic_id': 'wxyz7890',
-    }), content_type='application/json')
-    data = json.loads(response.data.decode())
-    assert response.status_code == 403
-    assert 'errors' in data
+    request = {
+        'cookies': {
+            'session_id': session
+        },
+        'params': {
+            'name': 'Another entity',
+            'topic_id': 'wxyz7890',
+        }
+    }
+    code, response = routes.topic.update_topic_route(request, 'wxyz7890')
+    assert code == 403
+    assert 'errors' in response
 
 
+@xfail
 def test_update_topic_fields(db_conn, users_table, topics_table,
                              posts_table, session):
     """
     Expect update topic to only change name.
     """
+
     create_topic_in_db(topics_table, db_conn)
-    response = session.put('/api/topics/wxyz7890/', data=json.dumps({
-        'topic_id': 'wxyz7890',
-        'entity': {
-            'kind': 'set'
+    request = {
+        'cookies': {
+            'session_id': session
+        },
+        'params': {
+            'name': 'Another entity',
+            'topic_id': 'wxyz7890',
+            'entity': {
+                'kind': 'set'
+            }
         }
-    }), content_type='application/json')
-    data = json.loads(response.data.decode())
-    assert response.status_code == 400
-    assert 'errors' in data
+    }
+    code, response = routes.topic.update_topic_route(request, 'wxyz7890')
+    assert code == 400
+    assert 'errors' in response
 
 
 def test_get_posts(db_conn, users_table, topics_table, posts_table):
     """
     Expect to get posts for given topic.
     """
+
     create_user_in_db(users_table, db_conn)
     create_topic_in_db(topics_table, db_conn)
     posts_table.insert([{
@@ -249,12 +296,12 @@ def test_get_posts(db_conn, users_table, topics_table, posts_table):
         'body': 'A follow up.',
         'kind': 'post',
     }]).run(db_conn)
-    with app.test_client() as c:
-        response = c.get('/api/topics/wxyz7890/posts/')
-        assert response.status_code == 200
-        data = json.loads(response.data.decode())
-        assert ('Beneficial to the Publick' in data['posts'][0]['body']
-                or 'Beneficial to the Publick' in data['posts'][1]['body'])
+
+    request = {'params': {}}
+    code, response = routes.topic.get_posts_route(request, 'wxyz7890')
+    assert code == 200
+    assert ('Beneficial to the Publick' in response['posts'][0]['body']
+            or 'Beneficial to the Publick' in response['posts'][1]['body'])
 
 
 def test_get_posts_not_topic(db_conn, users_table, topics_table,
@@ -262,9 +309,10 @@ def test_get_posts_not_topic(db_conn, users_table, topics_table,
     """
     Expect 404 to get posts for a nonexistant topic.
     """
-    with app.test_client() as c:
-        response = c.get('/api/topics/wxyz7890/posts/')
-        assert response.status_code == 404
+
+    request = {'params': {}}
+    code, response = routes.topic.get_posts_route(request, 'wxyz7890')
+    assert code == 404
 
 
 def test_get_posts_paginate(db_conn, users_table, topics_table,
@@ -284,14 +332,14 @@ def test_get_posts_paginate(db_conn, users_table, topics_table,
             'body': 'test %s' % i,
             'kind': 'post',
         }).run(db_conn)
-    with app.test_client() as c:
-        response = c.get('/api/topics/wxyz7890/posts/')
-        assert response.status_code == 200
-        data = json.loads(response.data.decode())
-        assert len(data['posts']) == 10
-        response = c.get('/api/topics/wxyz7890/posts/?skip=20')
-        data = json.loads(response.data.decode())
-        assert len(data['posts']) == 5
+
+    request = {'params': {}}
+    code, response = routes.topic.get_posts_route(request, 'wxyz7890')
+    assert code == 200
+    assert len(response['posts']) == 10
+    request.update({'params': {'skip': 20}})
+    code, response = routes.topic.get_posts_route(request, 'wxyz7890')
+    assert len(response['posts']) == 5
 
 
 def test_get_posts_proposal(db_conn, users_table, topics_table,
@@ -299,20 +347,22 @@ def test_get_posts_proposal(db_conn, users_table, topics_table,
     """
     Expect get posts for topic to render a proposal correctly.
     """
+
     create_user_in_db(users_table, db_conn)
     create_topic_in_db(topics_table, db_conn)
     create_proposal_in_db(posts_table, db_conn)
-    with app.test_client() as c:
-        response = c.get('/api/topics/wxyz7890/posts/')
-        assert response.status_code == 200
-        data = json.loads(response.data.decode())
-        assert data['posts'][0]['kind'] == 'proposal'
+
+    request = {'params': {}}
+    code, response = routes.topic.get_posts_route(request, 'wxyz7890')
+    assert code == 200
+    assert response['posts'][0]['kind'] == 'proposal'
 
 
 def test_get_posts_votes(db_conn, users_table, topics_table, posts_table):
     """
     Expect get posts for topic to render votes correctly.
     """
+
     create_user_in_db(users_table, db_conn)
     create_topic_in_db(topics_table, db_conn)
     create_proposal_in_db(posts_table, db_conn)
@@ -326,12 +376,13 @@ def test_get_posts_votes(db_conn, users_table, topics_table, posts_table):
         'topic_id': 'wxyz7890',
         'response': True,
     }).run(db_conn)
-    with app.test_client() as c:
-        response = c.get('/api/topics/wxyz7890/posts/')
-        assert response.status_code == 200
-        data = json.loads(response.data.decode())
-        assert data['posts'][0]['kind'] in ('proposal', 'vote')
-        assert data['posts'][1]['kind'] in ('proposal', 'vote')
+
+    request = {'params': {}}
+    code, response = routes.topic.get_posts_route(request, 'wxyz7890')
+
+    assert code == 200
+    assert response['posts'][0]['kind'] in ('proposal', 'vote')
+    assert response['posts'][1]['kind'] in ('proposal', 'vote')
 
 
 def test_create_post(db_conn, users_table, topics_table, posts_table,
@@ -339,18 +390,22 @@ def test_create_post(db_conn, users_table, topics_table, posts_table,
     """
     Expect create post.
     """
+
     create_topic_in_db(topics_table, db_conn)
-    response = session.post('/api/topics/wxyz7890/posts/', data=json.dumps({
-        # Should default to > 'kind': 'post',
-        'body': '''A Modest Proposal for Preventing the Children of Poor
-            People From Being a Burthen to Their Parents or Country, and
-            for Making Them Beneficial to the Publick.''',
-        'kind': 'post',
-        'topic_id': 'wxyz7890',
-    }), content_type='application/json')
-    assert response.status_code == 200
-    data = json.loads(response.data.decode())
-    assert 'Beneficial to the Publick' in data['post']['body']
+    request = {
+        'cookies': {'session_id': session},
+        'params': {
+            # Should default to > 'kind': 'post',
+            'body': '''A Modest Proposal for Preventing the Children of Poor
+                People From Being a Burthen to Their Parents or Country, and
+                for Making Them Beneficial to the Publick.''',
+            'kind': 'post',
+            'topic_id': 'wxyz7890',
+        }
+    }
+    code, response = routes.topic.create_post_route(request, 'wxyz7890')
+    assert code == 200
+    assert 'Beneficial to the Publick' in response['post']['body']
 
 
 def test_create_post_errors(db_conn, users_table, topics_table,
@@ -358,16 +413,18 @@ def test_create_post_errors(db_conn, users_table, topics_table,
     """
     Expect create post missing field to show errors.
     """
+
     create_topic_in_db(topics_table, db_conn)
-    response = session.post('/api/topics/wxyz7890/posts/',
-                           data=json.dumps({
-                               'kind': 'post',
-                               'topic_id': 'wxyz7890',
-                           }),
-                           content_type='application/json')
-    assert response.status_code == 400
-    data = json.loads(response.data.decode())
-    assert 'errors' in data
+    request = {
+        'cookies': {'session_id': session},
+        'params': {
+            'kind': 'post',
+            'topic_id': 'wxyz7890',
+        }
+    }
+    code, response = routes.topic.create_post_route(request, 'wxyz7890')
+    assert code == 400
+    assert 'errors' in response
 
 
 def test_create_post_log_in(db_conn, users_table, topics_table,
@@ -375,18 +432,22 @@ def test_create_post_log_in(db_conn, users_table, topics_table,
     """
     Expect create post to require log in.
     """
+
     create_topic_in_db(topics_table, db_conn)
-    with app.test_client() as c:
-        response = c.post('/api/topics/wxyz7890/posts/', data=json.dumps({
+    request = {
+        'params': {
             # Should default to > 'kind': 'post',
             'body': '''A Modest Proposal for Preventing the Children of Poor
                 People From Being a Burthen to Their Parents or Country, and
                 for Making Them Beneficial to the Publick.''',
+            'kind': 'post',
             'topic_id': 'wxyz7890',
-        }), content_type='application/json')
-        assert response.status_code == 401
-        data = json.loads(response.data.decode())
-        assert 'errors' in data
+        }
+    }
+    code, response = routes.topic.create_post_route(request, 'wxyz7890')
+
+    assert code == 401
+    assert 'errors' in response
 
 
 @xfail
@@ -395,25 +456,28 @@ def test_create_post_proposal(db_conn, users_table, topics_table,
     """
     Expect create post to create a proposal.
     """
+
     create_topic_in_db(topics_table, db_conn)
-    response = session.post('/api/topics/wxyz7890/posts/', data=json.dumps({
-        'kind': 'proposal',
-        'name': 'New Unit',
-        'body': '''A Modest Proposal for Preventing the Children of Poor
-            People From Being a Burthen to Their Parents or Country, and
-            for Making Them Beneficial to the Publick.''',
-        'action': 'create',
-        'unit': {
-            'name': 'Satire',
-            'body': '''Learn the use of humor, irony, exaggeration, or
-            ridicule to expose and criticize people's
-            stupidity or vices.''',
-            'tags': ['literature']
-        },
-    }), content_type='application/json')
-    assert response.status_code == 200
-    data = json.loads(response.data.decode())
-    assert data['post']['kind'] == 'proposal'
+    request = {
+        'params': {
+            'kind': 'proposal',
+            'name': 'New Unit',
+            'body': '''A Modest Proposal for Preventing the Children of Poor
+                People From Being a Burthen to Their Parents or Country, and
+                for Making Them Beneficial to the Publick.''',
+            'action': 'create',
+            'unit': {
+                'name': 'Satire',
+                'body': '''Learn the use of humor, irony, exaggeration, or
+                ridicule to expose and criticize people's
+                stupidity or vices.''',
+                'tags': ['literature']
+            },
+        }
+    }
+    code, response = routes.topic.create_post_route(request, 'wxyz7890')
+    assert code == 200
+    assert response['post']['kind'] == 'proposal'
 
 
 @xfail
@@ -422,17 +486,19 @@ def test_create_post_vote(db_conn, users_table, topics_table,
     """
     Expect create post to create a vote.
     """
+
     create_topic_in_db(topics_table, db_conn)
-    create_proposal_in_db(posts_table, db_conn)
-    response = session.post('/api/topics/wxyz7890/posts/', data=json.dumps({
-        'kind': 'vote',
-        'body': 'Hooray!',
-        'proposal_id': 'jklm',
-        'response': True,
-    }), content_type='application/json')
-    assert response.status_code == 200
-    data = json.loads(response.data.decode())
-    assert data['post']['kind'] == 'vote'
+    request = {
+        'params': {
+            'kind': 'vote',
+            'body': 'Hooray!',
+            'proposal_id': 'jklm',
+            'response': True,
+        }
+    }
+    code, response = routes.topic.create_post_route(request, 'wxyz7890')
+    assert code == 200
+    assert response['post']['kind'] == 'vote'
 
 
 def test_update_post_log_in(db_conn, users_table, topics_table,
@@ -440,16 +506,20 @@ def test_update_post_log_in(db_conn, users_table, topics_table,
     """
     Expect update post to require log in.
     """
+
     create_user_in_db(users_table, db_conn)
     create_topic_in_db(topics_table, db_conn)
     create_post_in_db(posts_table, db_conn)
-    with app.test_client() as c:
-        response = c.put('/api/topics/wxyz7890/posts/jklm/', data=json.dumps({
-            'body': '''Update.''',
-        }), content_type='application/json')
-        assert response.status_code == 401
-        data = json.loads(response.data.decode())
-        assert 'errors' in data
+    request = {
+        'params': {
+            'body': 'Update.'
+        }
+    }
+    code, response = routes.topic.update_post_route(request,
+                                                    'wxyz7890', 'jklm')
+
+    assert code == 401
+    assert 'errors' in response
 
 
 def test_update_post_author(db_conn, users_table, topics_table,
@@ -457,14 +527,19 @@ def test_update_post_author(db_conn, users_table, topics_table,
     """
     Expect update post to require own post.
     """
+
     create_topic_in_db(topics_table, db_conn)
     create_post_in_db(posts_table, db_conn, user_id='1234yuio')
-    response = session.put('/api/topics/wxyz7890/posts/jklm/', data=json.dumps({
-        'body': '''Update.''',
-    }), content_type='application/json')
-    assert response.status_code == 403
-    data = json.loads(response.data.decode())
-    assert 'errors' in data
+    request = {
+        'cookies': {'session_id': session},
+        'params': {
+            'body': 'Update.'
+        }
+    }
+    code, response = routes.topic.update_post_route(request,
+                                                    'wxyz7890', 'jklm')
+    assert code == 403
+    assert 'errors' in response
 
 
 def test_update_post_body(db_conn, users_table, topics_table,
@@ -472,14 +547,19 @@ def test_update_post_body(db_conn, users_table, topics_table,
     """
     Expect update post to change body for general post.
     """
+
     create_topic_in_db(topics_table, db_conn)
     create_post_in_db(posts_table, db_conn)
-    response = session.put('/api/topics/wxyz7890/posts/jklm/', data=json.dumps({
-        'body': '''Update.''',
-    }), content_type='application/json')
-    assert response.status_code == 200
-    data = json.loads(response.data.decode())
-    assert 'Update' in data['post']['body']
+    request = {
+        'cookies': {'session_id': session},
+        'params': {
+            'body': 'Update.'
+        }
+    }
+    code, response = routes.topic.update_post_route(request,
+                                                    'wxyz7890', 'jklm')
+    assert code == 200
+    assert 'Update' in response['post']['body']
 
 
 def test_update_proposal(db_conn, users_table, topics_table,
@@ -487,14 +567,21 @@ def test_update_proposal(db_conn, users_table, topics_table,
     """
     Expect update post to handle proposals correctly.
     """
+
     create_topic_in_db(topics_table, db_conn)
     create_proposal_in_db(posts_table, db_conn)
-    response = session.put('/api/topics/wxyz7890/posts/jklm/', data=json.dumps({
-        'status': 'declined'
-    }), content_type='application/json')
-    data = json.loads(response.data.decode())
-    assert response.status_code == 200
-    assert 'declined' in data['post']['status']
+
+    request = {
+        'cookies': {'session_id': session},
+        'params': {
+            'status': 'declined'
+        }
+    }
+    code, response = routes.topic.update_post_route(request,
+                                                    'wxyz7890', 'jklm')
+
+    assert code == 200
+    assert 'declined' in response['post']['status']
 
 
 def test_update_vote(db_conn, users_table, topics_table,
@@ -502,6 +589,7 @@ def test_update_vote(db_conn, users_table, topics_table,
     """
     Expect update vote to handle proposals correctly.
     """
+
     create_user_in_db(users_table, db_conn)
     create_topic_in_db(topics_table, db_conn)
     create_proposal_in_db(posts_table, db_conn)
@@ -517,13 +605,15 @@ def test_update_vote(db_conn, users_table, topics_table,
         'kind': 'vote',
         'replies_to_id': 'val2345t',
     }).run(db_conn)
-    response = session.put(
-        '/api/topics/wxyz7890/posts/vbnm1234/',
-        data=json.dumps({
+
+    request = {
+        'cookies': {'session_id': session},
+        'params': {
             'body': 'Yay!',
             'response': True,
-        }),
-        content_type='application/json')
-    data = json.loads(response.data.decode())
-    assert response.status_code == 200
-    assert True == data['post']['response']
+        }
+    }
+    code, response = routes.topic.update_post_route(request,
+                                                    'wxyz7890', 'vbnm1234')
+    assert code == 200
+    assert True is response['post']['response']
