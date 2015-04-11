@@ -8,6 +8,8 @@ files.select = require('../content/select.json')
 # provide the appropriate content.
 get = (filename, key, language = 'en') ->
     k = files[filename][key]
+    if not k
+        return "No Key > #{filename} @ #{key}"
     for lang in [language, language[..1], 'en']
         if k[lang]
             return k[lang]
