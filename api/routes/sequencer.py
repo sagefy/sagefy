@@ -16,5 +16,5 @@ def next_route(request):
     context = current_user.get_learning_context()
 
     return 200, {
-        'next': main(current_user['id'], context)  # TODO@ args
+        'next': next(current_user['id'], context)  # TODO@ args
     }

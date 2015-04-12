@@ -8,13 +8,13 @@ from models.response import Response
 from time import time
 
 
-def main(user_id, context):
+def next(user_id, context):
     """
-    TODO@ Returns what should be displayed next.
-    TODO@ Also should return progress.
+    Returns what should be displayed next.
+    Also should return `learned` progress.
     Should return in format:
     {
-        'path': '/api/path/',
+        'path': '/api/path',
         'method': 'GET',
         'learned': 0.89,
     } or empty dictionary.
@@ -24,31 +24,39 @@ def main(user_id, context):
     # Direct the learner to my sets page.
     if 'set' not in context:
         return {
-            'path': '/api/users/{user_id}/sets/'.format(user_id=user_id),
+            'path': '/api/users/{user_id}/sets'.format(user_id=user_id),
             'method': 'GET',
         }
 
     # [x] set  [ ] unit  [ ] card
-    # TODO@ If the learner hasn't seen the tree, show the tree.
-    # TODO@ If need diagnosis, auto choose the unit and mode.
-    # TODO@ Else, go to choose unit.
+    if 'unit' not in context:
+        pass
+        # TODO@ If the learner hasn't seen the tree, show the tree.
+        # TODO@ If need diagnosis, auto choose the unit and mode.
+        # TODO@ Else, go to choose unit.
 
     # [x] set  [x] unit  [ ] card
-    # TODO@ If the unit still needs work, choose a card.
-    # TODO@ Otherwise, clear the unit and go back to tree.
+    if 'card' not in context:
+        pass
+        # TODO@ If the unit still needs work, choose a card. `learned`
+        # TODO@ Otherwise, clear the unit and go back to tree. `learned`
 
     # [x] set  [x] unit  [x] card
-    # TODO@ Direct the learner to respond to the card.
-
-    return {}
+    # Direct the learner to respond to the card.
+    card_id = context['card']['id']
+    return {
+        'method': 'POST',
+        'path': '/api/cards/{card_id}/responses'.format(card_id=card_id),
+        # TODO@ add `learned`
+    }
 
 
 """
 Card
 - [x] correct
-- [v] transit  TODO@
 - [x] guess
 - [x] slip
+- [_] transit  TODO@
 
 Unit
 - [x] learned

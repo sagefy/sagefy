@@ -19,7 +19,6 @@ We Use
 - API
     - [pip](https://pypi.python.org/pypi/pip)
     - [Python 2.7](http:/.python.org/2.7/)
-    - [Flask](http://flask.pocoo.org/)
     - [Mandrill](http://mandrill.com/)
     - Testing
         - [py.test](http://pytest.org/latest/)

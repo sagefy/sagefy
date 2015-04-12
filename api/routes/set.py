@@ -43,7 +43,7 @@ def get_set_versions_route(request, set_id):
     }
 
 
-@get('/api/sets/{set_id}/tree/')
+@get('/api/sets/{set_id}/tree')
 def get_set_tree_route(request, set_id):
     """
     TODO@ Render the tree of units that exists within a set.

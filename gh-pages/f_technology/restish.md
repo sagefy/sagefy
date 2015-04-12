@@ -16,12 +16,12 @@ General REST ideas, but made more practical.
         - Use SSL if possible.
         - If no resource, pseudo resource or root level verb.
     - Verbs: GET, POST, PUT, DELETE, OPTIONS
-        - Get: GET `bunnies/id`
-        - List: GET `bunnies/`
-        - Create: POST `bunnies/`
-        - Update: PUT `bunnies/id`
-        - Delete: DELETE `bunnies/id`
-        - Methods: OPTIONS `bunnies/`
+        - Get: GET `/bunnies/id`
+        - List: GET `/bunnies`
+        - Create: POST `/bunnies`
+        - Update: PUT `/bunnies/id`
+        - Delete: DELETE `/bunnies/id`
+        - Methods: OPTIONS `/bunnies`
     - Parameters
         - Use database or HTTP words over invention.
         - Pagination: use `limit` and `skip`.
