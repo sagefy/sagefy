@@ -57,6 +57,7 @@ def learn_card_route(request, card_id):
     if context.get('unit', {}).get('id') != card['unit_id']:
         return abort(400)
 
+    # TODO@ leverage `state` in context for easier logic
     current_user.set_learning_context(card=card)
 
     return 200, {
@@ -98,6 +99,7 @@ def respond_to_card_route(request, card_id):
             context.get('unit', {}).get('id') != card['unit_id']):
         return abort(400)
 
+    # TODO@ leverage `state` in context for easier logic
     current_user.set_learning_context(card=None)
 
     r = seq_update(current_user, card, request['params'].get('response'))
