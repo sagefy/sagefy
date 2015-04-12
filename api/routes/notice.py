@@ -29,10 +29,10 @@ def list_notices_route(request):
 # TODO Dry up the mark as read/unread routes
 
 
-@put('/api/notices/{notice_id}/read')
-def mark_notice_as_read_route(request, notice_id):
+@put('/api/notices/{notice_id}')
+def mark_notice_route(request, notice_id):
     """
-    Mark notice as read.
+    Mark notice as read or unread.
     Must be logged in as user, provide a valid ID, and own the notice.
     Return notice.
     """
@@ -45,29 +45,17 @@ def mark_notice_as_read_route(request, notice_id):
         return abort(404)
     if notice['user_id'] != current_user['id']:
         return abort(403)
-    notice, errors = notice.mark_as_read()
+
+    if 'read' not in request['params']:
+        errors = [{
+            'name': 'read',
+            'message': 'You must specify read or unread.',
+        }]
+    elif request['params'].get('read') is True:
+        notice, errors = notice.mark_as_read()
+    elif request['params'].get('read') is False:
+        notice, errors = notice.mark_as_unread()
     if len(errors):
         return 400, {'errors': errors}
-    return 200, {'notice': notice.deliver(access='private')}
 
-
-@put('/api/notices/{notice_id}/unread')
-def mark_notice_as_unread_route(request, notice_id):
-    """
-    Mark notice as unread.
-    Must be logged in as user, provide a valid ID, and own the notice.
-    Return notice.
-    """
-
-    current_user = get_current_user(request)
-    if not current_user:
-        return abort(401)
-    notice = Notice.get(id=notice_id)
-    if not notice:
-        return abort(404)
-    if notice['user_id'] != current_user['id']:
-        return abort(403)
-    notice, errors = notice.mark_as_unread()
-    if len(errors):
-        return 400, {'errors': errors}
     return 200, {'notice': notice.deliver(access='private')}

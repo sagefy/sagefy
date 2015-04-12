@@ -4,7 +4,7 @@ from models.follow import Follow
 from modules.content import get as c
 from modules.discuss import get_posts_facade
 
-from framework.routes import get, post, put, abort
+from framework.routes import get, post, put, delete, abort
 from framework.session import get_current_user, log_in_user, log_out_user
 
 
@@ -81,7 +81,7 @@ def create_user_route(request):
     return _log_in(user)
 
 
-@post('/api/users/log_in')
+@post('/api/sessions')
 def log_in_route(request):
     """
     Log in user.
@@ -101,7 +101,7 @@ def log_in_route(request):
     return _log_in(user)
 
 
-@post('/api/users/log_out')
+@delete('/api/sessions')
 def log_out_route(request):
     """
     Log out user.
@@ -133,7 +133,7 @@ def update_user_route(request, user_id):
     return 200, {'user': user.deliver(access='private')}
 
 
-@post('/api/users/token')
+@post('/api/password_tokens')
 def create_token_route(request):
     """
     Create an email token for the user.
@@ -146,13 +146,13 @@ def create_token_route(request):
     return 200, {}
 
 
-@post('/api/users/password')
-def create_password_route(request):
+@post('/api/users/{user_id}/password')
+def create_password_route(request, user_id):
     """
     Update a user's password if the token is valid.
     """
 
-    user = User.get(id=request['params'].get('id'))
+    user = User.get(id=user_id)
     if not user:
         return abort(404)
     valid = user.is_valid_token(request['params'].get('token'))

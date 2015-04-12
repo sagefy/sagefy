@@ -3,7 +3,7 @@ from framework.session import get_current_user
 from modules.sequencer.index import main
 
 
-@get('/api/sequencer/next')
+@get('/api/next')  # TODO@ get more RESTy
 def next_route(request):
     """
     Tell the learner where to go next.

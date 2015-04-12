@@ -361,12 +361,11 @@ def test_user_create_password_fail(db_conn, users_table):
 
     request = {
         'params': {
-            'id': 'abcd1234',
             'token': 'qza',
             'password': 'qwer1234'
         }
     }
-    code, response = routes.user.create_password_route(request)
+    code, response = routes.user.create_password_route(request, 'abcd1234')
     assert code == 403
     user.sync()
     assert user['password'] == pw1
@@ -384,12 +383,11 @@ def test_user_create_password_ok(db_conn, users_table):
 
     request = {
         'params': {
-            'id': 'abcd1234',
             'token': token,
             'password': 'qwer1234'
         }
     }
-    code, response = routes.user.create_password_route(request)
+    code, response = routes.user.create_password_route(request, 'abcd1234')
     assert code == 200
     user.sync()
     assert user['password'] != pw1

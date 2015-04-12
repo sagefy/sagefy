@@ -76,7 +76,7 @@ def get_set_units_route(request, set_id):
     # TODO@ For the menu, it must return the name and ID of the set
 
 
-@post('/api/sets/{set_id}/units/{unit_id}',)
+@post('/api/sets/{set_id}/units/{unit_id}')
 def choose_unit_route(request, set_id, unit_id):
     """
     TODO@ Updates the learner's information based on the unit they have chosen.

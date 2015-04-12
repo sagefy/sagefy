@@ -1,4 +1,3 @@
-import json
 from models.notice import Notice
 import routes.notice
 import pytest
@@ -65,8 +64,8 @@ def test_mark(db_conn, session, notices_table):
     })
     nid = notice['id']
 
-    request = {'cookies': {'session_id': session}, 'params': {}}
-    code, response = routes.notice.mark_notice_as_read_route(request, nid)
+    request = {'cookies': {'session_id': session}, 'params': {'read': True}}
+    code, response = routes.notice.mark_notice_route(request, nid)
     assert code == 200
     assert response['notice']['read'] is True
     record = notices_table.get(nid).run(db_conn)
@@ -83,8 +82,8 @@ def test_mark_no_user(db_conn, notices_table):
     })
     nid = notice['id']
 
-    request = {'params': {}}
-    code, response = routes.notice.mark_notice_as_read_route(request, nid)
+    request = {'params': {'read': True}}
+    code, response = routes.notice.mark_notice_route(request, nid)
     assert code == 401
     record = notices_table.get(nid).run(db_conn)
     assert record['read'] is False
@@ -95,9 +94,9 @@ def test_mark_no_notice(db_conn, session, notices_table):
     Expect to error on no notice in when marking as read.
     """
 
-    request = {'cookies': {'session_id': session}}
+    request = {'cookies': {'session_id': session}, 'params': {'read': True}}
     code, response = (routes.notice
-                      .mark_notice_as_read_route(request, 'abcd1234'))
+                      .mark_notice_route(request, 'abcd1234'))
     assert code == 404
 
 
@@ -111,8 +110,8 @@ def test_mark_not_owned(db_conn, session, notices_table):
     })
     nid = notice['id']
 
-    request = {'cookies': {'session_id': session}}
-    code, response = routes.notice.mark_notice_as_read_route(request, nid)
+    request = {'cookies': {'session_id': session}, 'params': {'read': True}}
+    code, response = routes.notice.mark_notice_route(request, nid)
     assert code == 403
     record = notices_table.get(nid).run(db_conn)
     assert record['read'] is False
@@ -122,15 +121,6 @@ def test_mark_not_owned(db_conn, session, notices_table):
 def test_add_notices(db_conn, session, notices_table):
     """
     Expect to add body to notices.
-    """
-
-    assert False
-
-
-@xfail
-def test_mark_unread(db_conn, session, notices_table):
-    """
-    Expect to mark as unread.
     """
 
     assert False
