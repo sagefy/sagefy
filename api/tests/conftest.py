@@ -12,7 +12,6 @@ sys.path.insert(0, parentdir)
 import pytest
 import rethinkdb as r
 from passlib.hash import bcrypt
-import json
 
 from test_config import config
 import framework.index as framework
