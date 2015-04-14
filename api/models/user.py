@@ -126,20 +126,18 @@ class User(Model):
 
         key = 'learning_context_{id}'.format(id=self['id'])
         try:
-            return json.loads(redis.get(key).decode())
+            context = json.loads(redis.get(key).decode())
         except:
-            return {}
+            context = {}
+        context['state'] = context.get('state') or 'choose_set'
+        return context
 
     def set_learning_context(self, **kwargs):
         """
         Update the learning context.
         """
 
-        key = 'learning_context_{id}'.format(id=self['id'])
-        try:
-            context = json.loads(redis.get(key).decode())
-        except:
-            context = {}
+        context = self.get_learning_context()
 
         for kind in ('card', 'unit', 'set'):
             if kind in kwargs and kwargs[kind] is None:
@@ -158,6 +156,8 @@ class User(Model):
                 'id': unit['entity_id'],
                 'name': unit['name'],
                 'body': unit['body'],
+                'start_time': None,  # TODO@
+                'init_learned': None,  # TODO@
             }
 
         if set_ and 'entity_id' in set_:
@@ -166,5 +166,21 @@ class User(Model):
                 'name': set_['name'],
             }
 
+        if 'state' in kwargs:
+            context['state'] = kwargs.get('state')
+
+        if 'mode' in kwargs:
+            context['mode'] = kwargs.get('mode')
+
+        """
+        State options:
+        - choose_set
+        - tree
+        - choose_unit
+        - learn_card  (mode: learn or diagnose)
+        - respond_card  (mode: learn or diagnose)
+        """
+
+        key = 'learning_context_{id}'.format(id=self['id'])
         redis.setex(key, 10 * 60, json.dumps(context))
         return context
