@@ -77,3 +77,12 @@ def test_learned(app):
     """
 
     assert False
+
+
+"""
+Expect to estimate learner-set ability.
+Expect to calculate unit quality.
+Expect to calculate set quality.
+Expect to calculate unit difficulty.
+Expect to calculate set difficulty.
+"""
