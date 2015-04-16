@@ -356,3 +356,12 @@ def test_respond_card_400b(db_conn, session, cards_table):
     assert code == 400
     assert 'errors' in response
     redis.delete('learning_context_abcd1234')
+
+
+@xfail
+def test_respond_card_diag():
+    """
+    Expect diagnosis to not show feedback to responses.
+    """
+
+    assert False

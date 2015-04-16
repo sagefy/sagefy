@@ -201,3 +201,30 @@ def test_choose_unit_400():
     """
 
     assert False
+
+
+@xfail
+def test_choose_unit_extra():
+    """
+    Expect choose unit to show time estimate and learning objective.
+    """
+
+    assert False
+
+
+@xfail
+def test_choose_unit_avail():
+    """
+    Expect choose unit to only show available units. (No requires remaining.)
+    """
+
+    assert False
+
+
+@xfail
+def test_choose_unit_ordering():
+    """
+    Expect to prefer units with more dependencies in choose unit.
+    """
+
+    assert False

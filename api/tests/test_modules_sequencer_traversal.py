@@ -19,4 +19,5 @@ Expect to add no known ability to "diagnose".
 Expect to add low ability to "ready".
 Expect to add high ability to "review".
 Expect to show "done".
+Expect to track number of units that depend on the given unit.
 """
