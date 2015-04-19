@@ -8,7 +8,7 @@ from modules.validations import is_required, is_language, is_string, \
 from modules.util import uniqid
 
 
-# TODO@ On set canonical, index (or delete) in Elasticsearch with entity_id
+# TODO@ On set accepted, index (or delete) in Elasticsearch with entity_id
 class Set(EntityMixin, Model):
     """
     A set is a collection of units and other sets.
@@ -42,7 +42,7 @@ class Set(EntityMixin, Model):
         'body': {
             'validate': (is_required, is_string,)
         },
-        'canonical': {
+        'accepted': {
             'validate': (is_boolean,),
             'default': False
         },
@@ -90,7 +90,7 @@ class Set(EntityMixin, Model):
         # *** First, find the list of sets
         #     directly containing the member ID. ***
 
-        query = (cls.start_canonicals_query()
+        query = (cls.start_accepteds_query()
                     .filter(r.row['members'].contains(
                         lambda member:
                             member['id'] == unit_id
@@ -105,7 +105,7 @@ class Set(EntityMixin, Model):
         while found_sets:
             set_ids = {set_['entity_id'] for set_ in found_sets}
             all_sets += found_sets
-            query = (cls.start_canonicals_query()
+            query = (cls.start_accepteds_query()
                         .filter(r.row['members'].contains(
                             lambda member:
                                 r.expr(set_ids).contains(member['id'])

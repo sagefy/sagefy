@@ -6,7 +6,7 @@ from models.mixins.entity import EntityMixin
 from models.card_parameters import CardParameters
 
 
-# TODO@ On set canonical, index (or delete) in Elasticsearch with entity_id
+# TODO@ On set accepted, index (or delete) in Elasticsearch with entity_id
 class Card(EntityMixin, Model):
     """
     Cards are the smallest entity in the Sagefy data structure system.
@@ -42,7 +42,7 @@ class Card(EntityMixin, Model):
         'name': {
             'validate': (is_required, is_string,)
         },
-        'canonical': {
+        'accepted': {
             'validate': (is_boolean,),
             'default': False
         },

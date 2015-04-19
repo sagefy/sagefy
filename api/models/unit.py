@@ -5,7 +5,7 @@ from modules.validations import is_required, is_language, is_string, \
 from modules.util import uniqid
 
 
-# TODO@ On set canonical, index (or delete) in Elasticsearch with entity_id
+# TODO@ On set accepted, index (or delete) in Elasticsearch with entity_id
 class Unit(EntityMixin, Model):
     """
     A unit is the medium size in the Sagefy data structure system.
@@ -44,7 +44,7 @@ class Unit(EntityMixin, Model):
         'body': {
             'validate': (is_required, is_string,)
         },
-        'canonical': {
+        'accepted': {
             'validate': (is_boolean,),
             'default': False
         },

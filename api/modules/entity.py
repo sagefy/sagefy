@@ -19,18 +19,18 @@ from models.cards.video_card import VideoCard
 from models.cards.writing_card import WritingCard
 
 
-def get_latest_canonical(kind, entity_id):
+def get_latest_accepted(kind, entity_id):
     """
-    Given a kind and an entity_id, pull the latest canonical
+    Given a kind and an entity_id, pull the latest accepted
     version out of the database.
     """
 
     if kind == 'card':
-        return Card.get_latest_canonical(entity_id)
+        return Card.get_latest_accepted(entity_id)
     elif kind == 'unit':
-        return Unit.get_latest_canonical(entity_id)
+        return Unit.get_latest_accepted(entity_id)
     elif kind == 'set':
-        return Set.get_latest_canonical(entity_id)
+        return Set.get_latest_accepted(entity_id)
 
 
 def get_kind(data):
@@ -76,7 +76,7 @@ def get_card_by_kind(card_id):
     Given a card data, return a new card model to replace it by kind.
     """
 
-    card = Card.get_latest_canonical(card_id)
+    card = Card.get_latest_accepted(card_id)
     if not card:
         return
 

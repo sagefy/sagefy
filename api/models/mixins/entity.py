@@ -5,7 +5,7 @@ import framework.database as database
 class EntityMixin(object):
 
     @classmethod
-    def start_canonicals_query(cls):
+    def start_accepteds_query(cls):
         """
 
         """
@@ -13,7 +13,7 @@ class EntityMixin(object):
         # TODO@ this query should have an index in card, unit, set
         # TODO is there a way to avoid the cost of this query?
         return (cls.table
-                   .filter(r.row['canonical'].eq(True))
+                   .filter(r.row['accepted'].eq(True))
                    .group('entity_id')
                    .max('created')
                    .default(None)
@@ -21,16 +21,16 @@ class EntityMixin(object):
                    .map(r.row['reduction']))
 
     @classmethod
-    def get_latest_canonical(cls, entity_id):
+    def get_latest_accepted(cls, entity_id):
         """
-        Get the latest canonical version of the card.
+        Get the latest accepted version of the card.
         """
 
         if not entity_id:
             return
 
         # TODO@ this query should have an index in card, unit, set
-        query = (cls.start_canonicals_query()
+        query = (cls.start_accepteds_query()
                     .filter(r.row['entity_id'] == entity_id)
                     .limit(1))
 
@@ -48,7 +48,7 @@ class EntityMixin(object):
         if not entity_ids:
             return []
 
-        query = (cls.start_canonicals_query()
+        query = (cls.start_accepteds_query()
                     .filter(lambda entity:
                             r.expr(entity_ids)
                             .contains(entity['entity_id'])))
@@ -60,7 +60,7 @@ class EntityMixin(object):
     @classmethod
     def get_versions(cls, entity_id, limit=10, skip=0):
         """
-        Get the latest canonical version of the card.
+        Get the latest accepted version of the card.
         """
 
         if not entity_id:
@@ -84,10 +84,10 @@ class EntityMixin(object):
         if not entity_id:
             return []
 
-        entity = cls.get_latest_canonical(entity_id=entity_id)
+        entity = cls.get_latest_accepted(entity_id=entity_id)
 
         # TODO@ this query should have an index in card and unit
-        query = (cls.start_canonicals_query()
+        query = (cls.start_accepteds_query()
                     .filter(lambda _: r.expr(entity['requires'])
                                        .contains(_['entity_id'])))
 
@@ -103,7 +103,7 @@ class EntityMixin(object):
             return []
 
         # TODO@ this query should have an index in card and unit
-        query = (cls.start_canonicals_query()
+        query = (cls.start_accepteds_query()
                     .filter(r.row['requires'].contains(entity_id)))
 
         return [cls(fields) for fields in query.run(database.db_conn)]

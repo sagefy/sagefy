@@ -8,81 +8,81 @@ from models.set import Set
 from models.unit import Unit
 
 
-def test_latest_canonical_card(db_conn, cards_table):
+def test_latest_accepted_card(db_conn, cards_table):
     """
-    Expect to get the latest canonical card version.
+    Expect to get the latest accepted card version.
     """
 
     cards_table.insert([{
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }, {
         'id': 'B2',
         'entity_id': 'A',
         'created': r.time(2005, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }, {
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }]).run(db_conn)
 
-    card = Card.get_latest_canonical('A')
+    card = Card.get_latest_accepted('A')
     assert card['id'] == 'B2'
 
 
-def test_latest_canonical(db_conn, units_table):
+def test_latest_accepted(db_conn, units_table):
     """
-    Expect to get the latest canonical unit version.
+    Expect to get the latest accepted unit version.
     """
 
     units_table.insert([{
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }, {
         'id': 'B2',
         'entity_id': 'A',
         'created': r.time(2005, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }, {
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }]).run(db_conn)
 
-    unit = Unit.get_latest_canonical('A')
+    unit = Unit.get_latest_accepted('A')
     assert unit['id'] == 'B2'
 
 
-def test_latest_canonical_set(db_conn, sets_table):
+def test_latest_accepted_set(db_conn, sets_table):
     """
-    Expect to get the latest canonical set version.
+    Expect to get the latest accepted set version.
     """
 
     sets_table.insert([{
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }, {
         'id': 'B2',
         'entity_id': 'A',
         'created': r.time(2005, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }, {
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }]).run(db_conn)
 
-    set_ = Set.get_latest_canonical('A')
+    set_ = Set.get_latest_accepted('A')
     assert set_['id'] == 'B2'
 
 
@@ -95,7 +95,7 @@ def test_get_versions(db_conn, cards_table):
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }, {
         'id': 'B2',
         'entity_id': 'A',
@@ -104,7 +104,7 @@ def test_get_versions(db_conn, cards_table):
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }]).run(db_conn)
 
     card_versions = Card.get_versions('A')
@@ -121,7 +121,7 @@ def test_list_requires(db_conn, cards_table):
         'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'kind': 'video',
         'requires': ['zxyz'],
     }, {
@@ -129,21 +129,21 @@ def test_list_requires(db_conn, cards_table):
         'unit_id': 'zytx',
         'created': r.time(1986, 11, 3, 'Z'),
         'modified': r.time(1986, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
         'kind': 'video',
     }, {
         'entity_id': 'zxyz',
         'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'kind': 'video',
     }, {
         'entity_id': 'qwer',
         'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'kind': 'choice',
         'requires': ['abcd'],
     }]).run(db_conn)
@@ -164,7 +164,7 @@ def test_list_required_by(db_conn, cards_table):
         'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'kind': 'video',
         'requires': ['zxyz'],
     }, {
@@ -172,21 +172,21 @@ def test_list_required_by(db_conn, cards_table):
         'unit_id': 'zytx',
         'created': r.time(1986, 11, 3, 'Z'),
         'modified': r.time(1986, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
         'kind': 'video',
     }, {
         'entity_id': 'zxyz',
         'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'kind': 'video',
     }, {
         'entity_id': 'qwer',
         'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'kind': 'choice',
         'requires': ['abcd'],
     }]).run(db_conn)

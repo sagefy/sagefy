@@ -9,28 +9,28 @@ def prep(sets_table, users_sets_table, db_conn):
         'body': 'Apple',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }, {
         'entity_id': 'B2',
         'name': 'B',
         'body': 'Banana',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }, {
         'entity_id': 'C3',
         'name': 'C',
         'body': 'Coconut',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }, {
         'entity_id': 'D4',
         'name': 'D',
         'body': 'Date',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }]).run(db_conn)
     users_sets_table.insert({
         'user_id': 'abcd1234',
@@ -86,7 +86,7 @@ def test_add_set(db_conn, session, sets_table, users_sets_table):
         'body': 'Apple',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }).run(db_conn)
 
     request = {'cookies': {'session_id': session}}
@@ -135,7 +135,7 @@ def test_add_set_already_added(db_conn, session, sets_table, users_sets_table):
         'body': 'Apple',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }).run(db_conn)
 
     request = {'cookies': {'session_id': session}}
@@ -156,7 +156,7 @@ def test_remove_set(db_conn, session, sets_table, users_sets_table):
         'body': 'Apple',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }).run(db_conn)
 
     users_sets_table.insert({

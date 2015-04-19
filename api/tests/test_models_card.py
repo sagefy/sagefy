@@ -86,7 +86,7 @@ def test_name(db_conn, cards_table):
     assert len(errors) == 0
 
 
-def test_canonical(db_conn, cards_table):
+def test_accepted(db_conn, cards_table):
     """
     Expect a card version canoncial to be a boolean.
     """
@@ -99,8 +99,8 @@ def test_canonical(db_conn, cards_table):
         'kind': 'video'
     })
     assert len(errors) == 0
-    assert card['canonical'] is False
-    card['canonical'] = True
+    assert card['accepted'] is False
+    card['accepted'] = True
     card, errors = card.save()
     assert len(errors) == 0
 

@@ -16,7 +16,7 @@ def test_get_set(db_conn,
         'entity_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'name': 'Wildwood',
         'members': [{
             'kind': 'unit',
@@ -26,7 +26,7 @@ def test_get_set(db_conn,
         'entity_id': 'zytx',
         'created': r.time(1986, 11, 3, 'Z'),
         'modified': r.time(1986, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
         'name': 'Umberwood',
     }]).run(db_conn)
 
@@ -35,7 +35,7 @@ def test_get_set(db_conn,
         'name': 'Wood',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }).run(db_conn)
 
     topics_table.insert([{

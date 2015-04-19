@@ -93,9 +93,9 @@ def test_body(db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_canonical(db_conn, sets_table):
+def test_accepted(db_conn, sets_table):
     """
-    Expect a set canonical to be a boolean.
+    Expect a set accepted to be a boolean.
     """
 
     set_, errors = Set.insert({
@@ -107,8 +107,8 @@ def test_canonical(db_conn, sets_table):
         }],
     })
     assert len(errors) == 0
-    assert set_['canonical'] is False
-    set_['canonical'] = True
+    assert set_['accepted'] is False
+    set_['accepted'] = True
     set_, errors = set_.save()
     assert len(errors) == 0
 
@@ -159,28 +159,28 @@ def test_list_by_entity_ids(db_conn, sets_table):
         'body': 'Apple',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }, {
         'entity_id': 'B2',
         'name': 'B',
         'body': 'Banana',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }, {
         'entity_id': 'C3',
         'name': 'C',
         'body': 'Coconut',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }, {
         'entity_id': 'D4',
         'name': 'D',
         'body': 'Date',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }]).run(db_conn)
     sets = Set.list_by_entity_ids(['A1', 'C3'])
     assert sets[0]['body'] in ('Apple', 'Coconut')
@@ -197,7 +197,7 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'entity_id': 'Z',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'name': 'Z',
     }).run(db_conn)
 
@@ -207,7 +207,7 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'body': 'Apple',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'members': [{
             'kind': 'unit',
             'id': 'Z',
@@ -218,7 +218,7 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'body': 'Banana',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'members': [{
             'kind': 'set',
             'id': 'A',
@@ -229,7 +229,7 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'body': 'Blueberry',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'members': [{
             'kind': 'set',
             'id': 'A',
@@ -240,7 +240,7 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'body': 'Brazil Nut',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'members': [{
             'kind': 'set',
             'id': 'N',
@@ -251,7 +251,7 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'body': 'Coconut',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'members': [{
             'kind': 'set',
             'id': 'B1',
@@ -265,7 +265,7 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'body': 'Date',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True
+        'accepted': True
     }]).run(db_conn)
 
     sets = Set.list_by_unit_id('Z')
@@ -284,33 +284,33 @@ def test_list_units(db_conn, units_table, sets_table):
         'name': 'B',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'require_ids': ['A', 'N']
     }, {
         'entity_id': 'V',
         'name': 'V',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'require_ids': ['Q']
     }, {
         'entity_id': 'Q',
         'name': 'Q',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }, {
         'entity_id': 'A',
         'name': 'A',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }, {
         'entity_id': 'N',
         'name': 'N',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'require_ids': ['Q', 'A']
     }]).run(db_conn)
 
@@ -320,7 +320,7 @@ def test_list_units(db_conn, units_table, sets_table):
         'body': 'TRex',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'members': [{
             'kind': 'unit',
             'id': 'B',
@@ -334,7 +334,7 @@ def test_list_units(db_conn, units_table, sets_table):
         'body': 'Saurus',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
         'members': [{
             'kind': 'set',
             'id': 'T',

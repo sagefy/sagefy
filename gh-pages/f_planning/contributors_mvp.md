@@ -16,7 +16,7 @@ Contributor Models
 - language
 - unit
 - name (e.g. title)
-- versioning (canonical)
+- versioning (accepted)
 - tags
 - requires
 - Videos
@@ -38,7 +38,7 @@ Contributor Models
 - created
 - modified
 - language
-- versioning (canonical)
+- versioning (accepted)
 - name (title)
 - body (objective, goal, description)
 - requires

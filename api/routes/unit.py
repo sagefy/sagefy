@@ -10,7 +10,7 @@ def get_unit_route(request, unit_id):
     Get a specific unit given an ID.
     """
 
-    unit = Unit.get_latest_canonical(unit_id)
+    unit = Unit.get_latest_accepted(unit_id)
     if not unit:
         return abort(404)
 

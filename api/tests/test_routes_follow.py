@@ -12,7 +12,7 @@ def test_follow(db_conn, session, cards_table, follows_table):
         'entity_id': 'ABCD',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }).run(db_conn)
 
     request = {
@@ -80,7 +80,7 @@ def test_follow_409(db_conn, session, cards_table, follows_table):
         'entity_id': 'JFlsjFm',
         'created': r.now(),
         'modified': r.now(),
-        'canonical': True,
+        'accepted': True,
     }).run(db_conn)
 
     request = {

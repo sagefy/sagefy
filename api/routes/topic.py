@@ -119,12 +119,12 @@ def get_posts_route(request, topic_id):
 
     # TODO@ For proposals, pull up the proposal entity version
 
-    # TODO@ ...then pull up the proposal latest canonical version
+    # TODO@ ...then pull up the proposal latest accepted version
 
-    # TODO@ ...if the proposal isn't based off the latest canonical,
+    # TODO@ ...if the proposal isn't based off the latest accepted,
     #       it's invalid
 
-    # TODO@ Make a diff between the latest canonical
+    # TODO@ Make a diff between the latest accepted
     #       ... and the proposal entity version
 
     return 200, {'posts': [p.deliver() for p in posts]}
@@ -169,7 +169,7 @@ def create_post_route(request, topic_id):
     if len(errors):
         return 400, {'errors': errors}
 
-    # TODO@ If a proposal has sufficient votes, move it to canonical
+    # TODO@ If a proposal has sufficient votes, move it to accepted
     #      ... and close out any prior versions dependent
     if kind == 'vote':
         pass

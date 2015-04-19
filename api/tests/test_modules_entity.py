@@ -8,9 +8,9 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def test_get_latest_canonical(db_conn, cards_table):
+def test_get_latest_accepted(db_conn, cards_table):
     """
-    Expect to pull the latest canonical
+    Expect to pull the latest accepted
     version out of the database, given a kind and an entity_id.
     """
 
@@ -18,20 +18,20 @@ def test_get_latest_canonical(db_conn, cards_table):
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }, {
         'id': 'B2',
         'entity_id': 'A',
         'created': r.time(2005, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }, {
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
-        'canonical': True,
+        'accepted': True,
     }]).run(db_conn)
 
-    e = entity.get_latest_canonical('card', 'A')
+    e = entity.get_latest_accepted('card', 'A')
 
     assert isinstance(e, Card)
 

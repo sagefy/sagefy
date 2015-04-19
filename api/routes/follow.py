@@ -1,7 +1,7 @@
 from framework.routes import get, post, delete, abort
 from models.follow import Follow
 from framework.session import get_current_user
-from modules.entity import get_latest_canonical
+from modules.entity import get_latest_accepted
 
 
 @get('/api/follows')
@@ -39,7 +39,7 @@ def follow_route(request):
         return 400, {'errors': errors}
 
     # Ensure the entity exists   TODO should this be a model validation?
-    entity = get_latest_canonical(follow['entity']['kind'],
+    entity = get_latest_accepted(follow['entity']['kind'],
                                   follow['entity']['id'])
     if not entity:
         return abort(404)

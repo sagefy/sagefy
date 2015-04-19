@@ -72,9 +72,9 @@ def test_body(db_conn, units_table):
     assert len(errors) == 0
 
 
-def test_canonical(db_conn, units_table):
+def test_accepted(db_conn, units_table):
     """
-    Expect a unit canonical to be a boolean.
+    Expect a unit accepted to be a boolean.
     """
 
     unit, errors = Unit.insert({
@@ -82,8 +82,8 @@ def test_canonical(db_conn, units_table):
         'body': 'Learn how to do this',
     })
     assert len(errors) == 0
-    assert unit['canonical'] is False
-    unit['canonical'] = True
+    assert unit['accepted'] is False
+    unit['accepted'] = True
     unit, errors = unit.save()
     assert len(errors) == 0
 

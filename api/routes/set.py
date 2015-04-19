@@ -12,7 +12,7 @@ def get_set_route(request, set_id):
     Get a specific set given an ID.
     """
 
-    set_ = Set.get_latest_canonical(set_id)
+    set_ = Set.get_latest_accepted(set_id)
     if not set_:
         return abort(404)
 

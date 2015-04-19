@@ -36,8 +36,8 @@ def test_version_entity_kind(app):
 
 
 @xfail
-def test_version_canonical(app):
+def test_version_accepted(app):
     """
-    Expect to filter version by canonical.
+    Expect to filter version by accepted.
     """
     assert False

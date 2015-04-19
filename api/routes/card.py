@@ -18,7 +18,7 @@ def get_card_route(request, card_id):
     if not card:
         return abort(404)
 
-    unit = Unit.get_latest_canonical(entity_id=card['unit_id'])
+    unit = Unit.get_latest_accepted(entity_id=card['unit_id'])
     if not unit:
         return abort(404)
 

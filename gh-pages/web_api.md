@@ -359,7 +359,7 @@ None
 }
 ```
 
-Always returns the latest canonical version. 404 if card not found.
+Always returns the latest accepted version. 404 if card not found.
 
 Render Card for Learner
 -----------------------
@@ -447,7 +447,7 @@ None
 }
 ```
 
-Always returns the latest canonical version. 404 if card not found.
+Always returns the latest accepted version. 404 if card not found.
 
 Sets
 ====
@@ -604,7 +604,7 @@ as_learner | false     |
 user       | null      |
 topic      | null      | When entity is "post"
 unit       | null      | When entity is "card"
-canonical  | null      | When entity is "card", "unit", "set"
+accepted  | null      | When entity is "card", "unit", "set"
 tag        | null      |
 ...        | ...       | ...
 
