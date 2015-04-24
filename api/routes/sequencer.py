@@ -1,6 +1,6 @@
 from framework.routes import get, abort
 from framework.session import get_current_user
-from modules.sequencer.index import main
+from modules.sequencer.index import next
 
 
 @get('/api/next')  # TODO@ get more RESTy

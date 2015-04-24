@@ -193,7 +193,7 @@ gulp.task('scripts:test:lint', ->
         .pipe(coffeelint.reporter('fail'))
 )
 
-gulp.task('scripts:test:run', ['content'], (done) ->
+gulp.task('scripts:test:run', ['styles:doc', 'content'], (done) ->
     mocha = new Mocha({
         reporter: 'min'
         compilers: 'coffee:coffee-script/register'
