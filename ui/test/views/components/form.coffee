@@ -2,6 +2,7 @@ Form = require('../../../scripts/views/components/form')
 
 describe('Form (Component)', ->
     it('should format data from an HTML form', ->
+        test = document.createElement('div')
         form = new Form({
             region: test
         })

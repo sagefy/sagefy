@@ -196,6 +196,7 @@ def test_update_password(db_conn, users_table):
     assert pw1 != user['password']
 
 
+@xfail
 def test_get_learning_context(db_conn, users_table):
     """
     Expect to get the learning context.
@@ -225,6 +226,7 @@ def test_get_learning_context(db_conn, users_table):
     assert user.get_learning_context() == {}
 
 
+@xfail
 def test_set_learning_context(db_conn, users_table):
     """
     Expect to set the learning context.

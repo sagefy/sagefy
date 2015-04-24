@@ -13,7 +13,7 @@ minifyCss = require('gulp-minify-css')
 yaml = require('gulp-yaml')
 uglify = require('gulp-uglify')
 coffeelint = require('gulp-coffeelint')
-mochaPhantomjs = require('gulp-mocha-phantomjs')
+Mocha = require('mocha')
 
 ################################################################################
 ### Configuration ##############################################################
@@ -23,7 +23,7 @@ dist = 'distribution/'
 staticSrc = ['images/*', 'statics/*']
 hbsSrc = 'templates/**/*.hbs'
 coffeeSrc = ['scripts/*.coffee', 'scripts/**/*.coffee']
-testSrc = ['tests/*.coffee', 'tests/**/*.coffee']
+testSrc = ['test/*.coffee', 'test/**/*.coffee']
 
 ################################################################################
 ### Main Tasks #################################################################
@@ -47,12 +47,10 @@ gulp.task('deploy', (done) ->
     ], done)
 )
 
-gulp.task('test', (done) ->
-    sequence('clean', [
-        'scripts:test:lint'
-        'scripts:test:run'
-    ], done)
-)
+gulp.task('test', [
+    'scripts:test:lint'
+    'scripts:test:run'
+])
 
 ################################################################################
 ### Subtasks ###################################################################
@@ -177,7 +175,7 @@ gulp.task('scripts:test:build', ['styles:doc', 'content'], ->
         .pipe(gulp.dest(dist))
 
     browserify({
-        entries: ['./tests/index.coffee']
+        entries: ['./test/index.coffee']
         extensions: ['.js', '.coffee']
         debug: true
     })
@@ -195,16 +193,11 @@ gulp.task('scripts:test:lint', ->
         .pipe(coffeelint.reporter('fail'))
 )
 
-gulp.task('scripts:test:run', [
-    'styles:build'
-    'static:build'
-    'scripts:test:build'
-], ->
-    gulp.src(dist + 'test.html')
-        .pipe(mochaPhantomjs({
-            reporter: 'min'
-            phantomjs: {
-                loadImages: false
-            }
-        }))
+gulp.task('scripts:test:run', (done) ->
+    mocha = new Mocha({
+        reporter: 'min'
+        compilers: 'coffee:coffee-script/register'
+    })
+    mocha.addFile('test/index.coffee')
+    mocha.run(done)
 )

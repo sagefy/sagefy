@@ -36,7 +36,7 @@ describe('View', ->
         v = new View()
         region = document.createElement('div')
         v.setRegion(region)
-        expect(v.region.contains(v.el)).to.be.true
+        expect(v.region.contains(v.el)).to.be.ok
         v.remove()
     )
 

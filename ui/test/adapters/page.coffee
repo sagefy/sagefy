@@ -3,7 +3,7 @@ PageAdapter = require('../../scripts/adapters/page')
 describe('Page Adapter', ->
     beforeEach(->
         @page = document.createElement('div')
-        @page.classList.add('page')
+        @page.setAttribute('class', 'page')
         @page.innerHTML = 'test'
         document.body.appendChild(@page)
     )
