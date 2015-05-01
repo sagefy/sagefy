@@ -1,3 +1,8 @@
+###
+Validations are functions which return string if there's an issue
+or a nothing if okay.
+###
+
 util = require('./utilities')
 c = require('../modules/content').get
 
@@ -5,7 +10,7 @@ c = require('../modules/content').get
 # or return nothing if there is no problem.
 validations = {}
 
-# Require there to be content
+# Require there to be content.
 validations.required = (val) ->
     if val is null or val is undefined or
        (util.isString(val) and val is '')

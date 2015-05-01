@@ -1,12 +1,9 @@
 ###
-One-off functions that are used throughout the framework.
+Utilities are one-off functions that are used throughout the framework.
 ###
-
-
-require('./matches_polyfill')
-
 util = {}
 
+# Test for types.
 [
     'Object'
     'Array'
@@ -24,6 +21,7 @@ util.isUndefined = (a) ->
 
 objectConstructor = {}.constructor
 
+# Add the properties of the injects into the target.
 util.extend = (target, injects...) ->
     for inject in injects
         for prop, val of inject
@@ -42,7 +40,7 @@ util.extend = (target, injects...) ->
                 else val # number, boolean, string, regexp, null, function
     return target
 
-# Makes a copy of the array or object
+# Makes a copy of the array or object.
 util.copy = (obj) ->
     if util.isObject(obj)
         return util.extend({}, obj)
@@ -52,15 +50,15 @@ util.copy = (obj) ->
         return new Date(obj)
     return obj
 
-# Try to parse a string as JSON
-# Otherwise just return the string
+# Try to parse a string as JSON, otherwise just return the string.
 util.parseJSON = (str) ->
     try
         return JSON.parse(str)
     catch e
         return str
 
-# Find the closest element matching the given selector
+# Find the closest element matching the given selector.
+require('./matches_polyfill')
 util.closest = (element, top, selector) ->
     while not element.matches(selector)
         element = element.parentNode

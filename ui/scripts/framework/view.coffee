@@ -1,24 +1,26 @@
 ###
 Views are responsible for:
-- Create a DOM element to contain the view contents
-- Rendering data
-- Binding to content events
+- Create a DOM element to contain the view contents.
+- Rendering data.
+- Binding to content events.
+
+Views have no direct knowledge of stores.
 ###
 
-Events = require('./events')
 util = require('./utilities')
 eventRegExp = /^(\S+) (.*)$/
+Listener = require('./listener')
 
-class View extends Events
-    # On creating a new view, create the element and possibly set the region
-    constructor: ->
+class View extends Listener
+    # On creating a new view, create the element and possibly set the region.
+    constructor: (@options = {}) ->
         super
         @setElement(@options.element)
         @setRegion(@options.region) if @options.region
         @template = @options.template if @options.template
         @myDelegatedEvent = @delegatedEvent.bind(this)
 
-    # Places the element inside of the provided region
+    # Places the element inside of the provided region.
     setRegion: (@region) ->
         @region.innerHTML = ''
         @region.appendChild(@el)
@@ -27,19 +29,16 @@ class View extends Events
     # instance properties `id`, `className`, `tagName`, and `attributes`.
     # Can also receive a DOM element directly.
     setElement: (element) ->
-        if element
-            @el = element
-        else
-            @el = @createElement({
-                tagName: @options.tagName or @tagName
-                id: @options.id or @id
-                className: @options.className or @className
-                attributes: @options.attributes or @attributes
-            })
+        @el = element or @createElement({
+            tagName: @options.tagName or @tagName
+            id: @options.id or @id
+            className: @options.className or @className
+            attributes: @options.attributes or @attributes
+        })
         return @el
 
     # Create a DOM element, based on options
-    # `id`, `className`, `tagName`, and `attributes`
+    # `id`, `className`, `tagName`, and `attributes`.
     createElement: (options) ->
         el = document.createElement(options.tagName or 'div')
         if options.id
@@ -63,14 +62,14 @@ class View extends Events
 
     # If the user has entered `elements` on the view
     # in a `key: selector` hash,
-    # we will go ahead and select those elements at store them at key
+    # we will go ahead and select those elements at store them at key.
     selectElements: ->
         for key, selector of @elements or {}
             @[key] = @el.querySelectorAll(selector)
             if @[key].length is 1
                 @[key] = @[key][0]
 
-    # Remove all elements stored as a result of `selectElements`
+    # Remove all elements stored as a result of `selectElements`.
     unselectElements: ->
         for key in Object.keys(@elements or {})
             delete @[key]
@@ -96,14 +95,14 @@ class View extends Events
             @el.addEventListener(key, @myDelegatedEvent)
         return this
 
-    # Clears all events in `domEvents`
+    # Clears all events in `domEvents`.
     undelegateEvents: ->
         for key in @domEventKeys or []
             @el.removeEventListener(key, @myDelegatedEvent)
         @domEventKeys = []
         return this
 
-    # Looks through the events, and calls any matching functions
+    # Looks through the events, and calls any matching functions.
     delegatedEvent: (e) ->
         for query, methodName of @domEvents or {}
             match = query.match(eventRegExp)
