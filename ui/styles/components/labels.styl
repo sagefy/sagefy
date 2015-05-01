@@ -5,16 +5,16 @@ description: Labels are available in each of the basic hues. It is typically use
 elements:
     - span (root)
 modifiers:
-    - error
-    - warn
-    - accept
-    - info
+    - (default)
+    - good
+    - bad
+    - accent
 example: |
     <ul>
-        <li>Error or Danger: <span class="label--error">label</span> and numeric label: <span class="label--error">100</span></li>
-        <li>Default, Base or Warn: <span class="label--warn">label</span> and numeric label: <span class="label--warn">100</span></li>
-        <li>Success or Accept: <span class="label--accept">label</span> and numeric label: <span class="label--accept">100</span></li>
-        <li>Accent or Info: <span class="label--info">label</span> and numeric label: <span class="label--info">100</span></li>
+        <li>Default: <span class="label">label</span> and numeric label: <span class="label">100</span></li>
+        <li>Good: <span class="label--good">label</span> and numeric label: <span class="label--good">100</span></li>
+        <li>Bad: <span class="label--bad">label</span> and numeric label: <span class="label--bad">100</span></li>
+        <li>Accent: <span class="label--accent">label</span> and numeric label: <span class="label--accent">100</span></li>
     </ul>
 ---
 */
@@ -25,24 +25,20 @@ example: |
     display inline-block
     padding 0 ($unit / 2)
     font-weight bold
+    color $base-color(43)
+    background $base-color(90)
 
-.label--error, .label--danger
+.label--bad
     @extend .label
     color $bad-color(43)
     background $bad-color(90)
 
-.label--default, .label--base, .label--warn
-    @extend .label
-    color $base-color(43)
-    background $base-color(90)
-
-.label--success, .label--accept
+.label--good
     @extend .label
     color $good-color(43)
     background $good-color(90)
 
-.label--accent, .label--info
+.label--accent
     @extend .label
     color $accent-color(43)
     background $accent-color(90)
-

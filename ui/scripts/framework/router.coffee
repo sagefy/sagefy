@@ -17,8 +17,7 @@ class Router extends Listener
         super
         @routes = @options.routes or @routes
         @region = @options.region
-        @on('route', @route.bind(this))
-        @route(window.location.pathname)
+        @on('navigate', @navigate.bind(this))
 
     # When the user uses their back and forward buttons,
     # we need to listen to those events.
@@ -27,7 +26,8 @@ class Router extends Listener
         prev = window.onpopstate if window.onpopstate
         window.onpopstate = (event) =>
             prev(event) if prev
-            @emit('route', window.location.pathname)
+            @emit('navigate', window.location.pathname)
+        @route(window.location.pathname)
         return this
 
     # Route to a new view, given a path.

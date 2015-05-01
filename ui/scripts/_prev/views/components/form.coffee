@@ -131,11 +131,11 @@ class FormView extends View
 
     updateFieldStatus: (field, valid = true) ->
         if valid
-            field.classList.remove('form-field--error')
-            field.classList.add('form-field--success')
+            field.classList.remove('form-field--bad')
+            field.classList.add('form-field--good')
         else
-            field.classList.add('form-field--error')
-            field.classList.remove('form-field--success')
+            field.classList.add('form-field--bad')
+            field.classList.remove('form-field--good')
         feedback = field.querySelector('.form-field__feedback')
         field.removeChild(feedback) if feedback
 

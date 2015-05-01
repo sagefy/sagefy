@@ -29,7 +29,7 @@ class Listener
             index = @listeners[name].indexOf(fn)
             if index > -1
                 @listeners[name].splice(index, 1)
-                broker.off(name, fn)
+            broker.off(name, fn)
 
         # If only name is provided, all events under that name are removed.
         else if name

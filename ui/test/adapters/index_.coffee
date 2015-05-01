@@ -1,4 +1,4 @@
-require('../../scripts/adapters/index')
+require('../../scripts/adapters/home')
 
 describe('Index Adapter', ->
     it.skip('should redirect to my sets if logged in', ->

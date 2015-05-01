@@ -81,7 +81,7 @@ example: |
             <input type="text" placeholder="Example disabled" disabled="disabled" />
         </div>
 
-        <div class="form-field form-field--text form-field--success">
+        <div class="form-field form-field--text form-field--good">
             <label>Success</label>
             <input type="text" placeholder="Example success" />
             <span class="form-field__feedback">
@@ -90,20 +90,11 @@ example: |
             </span>
         </div>
 
-        <div class="form-field form-field--text form-field--warning">
-            <label>Warning</label>
-            <input type="text" placeholder="Example warning" />
-            <span class="form-field__feedback">
-                <i class="fa fa-exclamation"></i>
-                This is a warning
-            </span>
-        </div>
-
-        <div class="form-field form-field--text form-field--error">
+        <div class="form-field form-field--text form-field--bad">
             <label>Error</label>
             <input type="text" placeholder="Example error" />
             <span class="form-field__feedback">
-                <i class="fa fa-ban"></i>
+            <i class="fa fa-exclamation"></i>
                 This is an error
             </span>
         </div>
@@ -140,10 +131,10 @@ input[type="search"],
 input[type="tel"],
 textarea
     border 1px solid $base-color(78)
-    background $white
+    background white
     border-radius $border-radius
     line-height $unit * 2
-    box-shadow inset 0 1px 2px $base-color(95), 0 1px 0 $white
+    box-shadow inset 0 1px 2px $base-color(95), 0 1px 0 white
     transition box-shadow 0.2s
     max-width 100%
 
@@ -247,7 +238,7 @@ input[type="checkbox"],
 input[type="radio"]
     -webkit-appearance none
     -webkit-user-select none
-    background $white
+    background white
     border 1px solid $base-color(78)
     margin 0 1px 0 0
     bottom 2px
@@ -255,7 +246,7 @@ input[type="radio"]
     position relative
     vertical-align middle
     width 13px
-    box-shadow inset 0 1px 2px $base-color(95), 0 1px 0 $white
+    box-shadow inset 0 1px 2px $base-color(95), 0 1px 0 white
 
     &:checked
         border 1px solid $accent-color(78)
@@ -265,7 +256,7 @@ input[type="radio"]
             content ''
             display block
             background $accent-color(66)
-            border 1px solid $white
+            border 1px solid white
             width 100%
             height 100%
 
@@ -571,12 +562,11 @@ description: Forms typically have validation messages to the right of the field.
 elements:
     - form-field__feedback
 modifiers:
-    - --success
-    - --error
-    - --warning
+    - --good
+    - --bad
 example: |
     <form>
-        <div class="form-field form-field--text form-field--success">
+        <div class="form-field form-field--text form-field--good">
             <label>Success</label>
             <input type="text" placeholder="Example success" />
             <span class="form-field__feedback">
@@ -593,7 +583,7 @@ example: |
     border-radius $border-radius
     padding 0 ($unit / 2)
 
-.form-field--success
+.form-field--good
     label
         color $good-color(66)
 
@@ -615,7 +605,7 @@ example: |
         background $good-color(95)
         color $good-color(60)
 
-.form-field--error
+.form-field--bad
     label
         color $bad-color(66)
 
@@ -636,25 +626,3 @@ example: |
     .form-field__feedback
         background $bad-color(95)
         color $bad-color(60)
-
-.form-field--warning
-    label
-        color $base-color(66)
-
-    input[type="text"],
-    input[type="password"],
-    input[type="number"],
-    input[type="email"],
-    input[type="url"],
-    input[type="time"],
-    input[type="search"],
-    input[type="tel"],
-    textarea,
-    input[type="checkbox"],
-    input[type="radio"]
-        color $base-color(66)
-        border-color $base-color(66)
-
-    .form-field__feedback
-        background $base-color(95)
-        color $base-color(60)

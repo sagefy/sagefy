@@ -1,7 +1,7 @@
 require('./page')
 require('./menu')
 
-require('./index_')
+require('./home')
 require('./contact')
 require('./error')
 require('./log_in')

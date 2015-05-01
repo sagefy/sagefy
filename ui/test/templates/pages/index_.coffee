@@ -1,7 +1,7 @@
-require('../../../scripts/templates/pages/index')
+require('../../../scripts/templates/pages/home')
 
 # TODO outline tests
 
-describe('Index Template', ->
+describe('Home Template', ->
     it.skip('should test', -> )
 )

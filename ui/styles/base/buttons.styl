@@ -8,36 +8,36 @@ elements:
     - .button-group (wrapper)
 modifiers:
     - Roles
-        - primary
-        - secondary
-        - danger
-        - cancel
+        - accent
+        - good
+        - bad
+        - (base)
     - disabled
 example: |
     <ul class="unstyled">
         <li>
-            <button class="button--primary">
-                Primary
+            <button class="button--accent">
+                Accent
             </button>
 
             Navigation, Next
         </li>
         <li>
-            <button class="button--secondary">
+            <button class="button--good">
                 Secondary
             </button>
 
             Success, Accept
         </li>
         <li>
-            <button class="button--danger">
+            <button class="button--bad">
                 Danger
             </button>
 
             Error, Delete
         </li>
         <li>
-            <button class="button--cancel">
+            <button class="button">
                 Cancel
             </button>
 
@@ -47,25 +47,25 @@ example: |
 
     <ul class="inline">
         <li>
-            <button class="button--primary">
+            <button class="button--accent">
                 Next Page
                 <i class="fa fa-chevron-right"></i>
             </button>
         </li>
         <li>
-            <button class="button--secondary">
+            <button class="button--good">
                 <i class="fa fa-edit"></i>
                 Edit
             </button>
         </li>
         <li>
-            <button class="button--danger">
+            <button class="button--bad">
                 <i class="fa fa-trash-o"></i>
                 Delete
             </button>
         </li>
         <li>
-            <button class="button--cancel">
+            <button class="button">
                 <i class="fa fa-refresh"></i>
                 Resume
             </button>
@@ -76,25 +76,25 @@ example: |
 
     <ul class="inline">
         <li>
-            <button class="button--primary" disabled>
+            <button class="button--accent" disabled>
                 Next Page
                 <i class="fa fa-chevron-right"></i>
             </button>
         </li>
         <li>
-            <button class="button--secondary" disabled>
+            <button class="button--good" disabled>
                 <i class="fa fa-edit"></i>
                 Edit
             </button>
         </li>
         <li>
-            <button class="button--danger" disabled>
+            <button class="button--bad" disabled>
                 <i class="fa fa-trash-o"></i>
                 Delete
             </button>
         </li>
         <li>
-            <button class="button--cancel" disabled>
+            <button class="button" disabled>
                 <i class="fa fa-refresh"></i>
                 Resume
             </button>
@@ -102,19 +102,19 @@ example: |
     </ul>
 
     <div class="button-group">
-        <button class="button--primary">
+        <button class="button--accent">
             Next Page
             <i class="fa fa-chevron-right"></i>
         </button>
-        <button class="button--secondary">
+        <button class="button--good">
             <i class="fa fa-edit"></i>
             Edit
         </button>
-        <button class="button--danger">
+        <button class="button--bad">
             <i class="fa fa-trash-o"></i>
             Delete
         </button>
-        <button class="button--cancel">
+        <button class="button">
             <i class="fa fa-refresh"></i>
             Resume
         </button>
@@ -173,14 +173,14 @@ input[type="button"]
             background transparent
 
 button[type="submit"],
-.button--primary
+.button--accent
     @extend $base-button
 
     button-background $accent-color(50)
     color $accent-color(99)
 
     &:hover, &:focus, &.hover, &.focus
-        color $white
+        color white
         button-background $accent-color(66)
 
     &:active, &.active, &.selected
@@ -194,7 +194,7 @@ button[type="submit"],
             color $accent-color(78)
             background transparent
 
-.button--secondary
+.button--good
     @extend $base-button
 
     button-background $good-color(90)
@@ -214,7 +214,7 @@ button[type="submit"],
             color $good-color(78)
             background transparent
 
-.button--danger
+.button--bad
     @extend $base-button
 
     button-background $bad-color(90), 3, 2

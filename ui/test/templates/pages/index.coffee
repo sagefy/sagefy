@@ -1,5 +1,5 @@
 require('./contact')
 require('./error')
-require('./index_')
+require('./home')
 require('./styleguide')
 require('./terms')

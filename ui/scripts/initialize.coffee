@@ -9,12 +9,24 @@ createPage = ->
 
 createMenu = ->  # TODO
 
-createStores = ->  # TODO
+createStores = ->
+    return {
+        card: new require('./stores/card')()
+        follow: new require('./stores/follow')()
+        notice: new require('./stores/notice')()
+        post: new require('./stores/post')()
+        search: new require('./stores/search')()
+        set: new require('./stores/set')()
+        topic: new require('./stores/topic')()
+        unit: new require('./stores/unit')()
+        user: new require('./stores/user')()
+    }
+
 
 bindLinks = ->
     # When we click an internal link, use `navigate` instead
     # TODO update to new framework
-    document.body.addEventListener('click', (e) =>
+    return document.body.addEventListener('click', (e) =>
         el = util.closest(e.target, document.body, 'a')
         if not el
             return
@@ -31,9 +43,9 @@ bindLinks = ->
             el.target = '_blank'
     )
 
-createRouter = ->
+createRouter = (page) ->
     return new Router({
-        region: createPage()
+        region: page
         routes: [
             ['/sign_up', require('./views/pages/sign_up')]
             ['/log_in', require('./views/pages/log_in')]
@@ -49,7 +61,10 @@ createRouter = ->
                 /^\/topics\/(create|[\d\w]+\/update)$/
                 require('./views/pages/topic_form')
             ]  # Must be before `topic`
-            ['/posts/create', require('./views/pages/post_form')]
+            [
+                /^\/posts\/(create|[\d\w]+\/update)$/
+                require('./views/pages/post_form')
+            ]
             ['/topics/{id}', require('./views/pages/topic')]
             ['/cards/{id}', require('./views/pages/card')]
             ['/units/{id}', require('./views/pages/unit')]
@@ -58,7 +73,7 @@ createRouter = ->
             ['/my_sets', require('./views/pages/my_sets')]
             ['/choose_unit', require('./views/pages/choose_unit')]
             ['/cards/{id}/learn', require('./views/pages/card_learn')]
-            [/^\/?$/, require('./views/pages/index')]  # Must be 2nd to last
+            [/^\/?$/, require('./views/pages/home')]  # Must be 2nd to last
             [/.*/, require('./views/pages/error')]  # Must be last
         ]
     })
@@ -66,8 +81,10 @@ createRouter = ->
 go = ->
     bindLinks()
     createStores()
-    createRouter()
+    router = createRouter(createPage())
+    router.activate()
     createMenu()
+    return true
 
 modules.exports = {
     createPage: createPage

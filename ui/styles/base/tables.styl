@@ -5,10 +5,9 @@ description: Tables are zebra-striped, and common elements such as header and fo
 elements:
     - table, caption, thead, tr, th, td, tfoot
 modifiers:
-    - row--accept
+    - row--good
     - row--accent
-    - row--error
-    - row--warn
+    - row--bad
 example:
     <table>
         <caption>An example table with a header row and a caption.</caption>
@@ -45,13 +44,13 @@ example:
                 <td>jasmine@example.com</td>
                 <td><a href="#">Contact</a></td>
             </tr>
-            <tr class="row--accept">
+            <tr class="row--good">
                 <td>5</td>
                 <td>Jacob</td>
                 <td>jacob@example.com</td>
                 <td><a href="#">Contact</a></td>
             </tr>
-            <tr class="row--accept">
+            <tr class="row--good">
                 <td>6</td>
                 <td>Alexander</td>
                 <td>alexander@example.com</td>
@@ -69,28 +68,16 @@ example:
                 <td>sophie@example.com</td>
                 <td><a href="#">Contact</a></td>
             </tr>
-            <tr class="row--error">
+            <tr class="row--bad">
                 <td>9</td>
                 <td>Kadri</td>
                 <td>kadri@example.com</td>
                 <td><a href="#">Contact</a></td>
             </tr>
-            <tr class="row--error">
+            <tr class="row--bad">
                 <td>10</td>
                 <td>Dalton</td>
                 <td>dalton@example.com</td>
-                <td><a href="#">Contact</a></td>
-            </tr>
-            <tr class="row--warn">
-                <td>13</td>
-                <td>Iris</td>
-                <td>iris@example.com</td>
-                <td><a href="#">Contact</a></td>
-            </tr>
-            <tr class="row--warn">
-                <td>14</td>
-                <td>Frederico</td>
-                <td>frederico@example.com</td>
                 <td><a href="#">Contact</a></td>
             </tr>
         </tbody>
@@ -111,7 +98,7 @@ table
         text-align left
 
     tbody tr
-        &.row--accept
+        &.row--good
             background $good-color(95)
             color $good-color(20)
 
@@ -119,25 +106,18 @@ table
             background $accent-color(95)
             color $accent-color(20)
 
-        &.row--error
+        &.row--bad
             background $bad-color(95)
             color $bad-color(20)
-
-        &.row--warn
-            background $base-color(95)
-            color $base-color(20)
 
         &:nth-child(2n+2)
             background $base-color(97)
 
-            &.row--accept
+            &.row--good
                 background $good-color(90)
 
             &.row--accent
                 background $accent-color(90)
 
-            &.row--error
+            &.row--bad
                 background $bad-color(90)
-
-            &.row--warn
-                background $base-color(90)
