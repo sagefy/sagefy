@@ -21,9 +21,8 @@ Mocha = require('mocha')
 
 dist = 'distribution/'
 staticSrc = ['images/*', 'statics/*']
-hbsSrc = 'templates/**/*.hbs'
-coffeeSrc = ['scripts/*.coffee', 'scripts/**/*.coffee']
-testSrc = ['test/*.coffee', 'test/**/*.coffee']
+coffeeSrc = ['scripts/**/*.coffee']
+testSrc = ['test/**/*.coffee']
 
 ################################################################################
 ### Main Tasks #################################################################
@@ -33,24 +32,28 @@ gulp.task('default', ['watch'])
 
 gulp.task('watch', (done) ->
     sequence('clean', [
-        'static:watch'
-        'styles:watch'
-        'scripts:watch'
+        'watch statics'
+        'copy fonts'
+        'watch styles'
+        'watch scripts'
     ], done)
 )
 
 gulp.task('deploy', (done) ->
     sequence('clean', [
-        'static:build'
-        'styles:compress'
-        'scripts:compress'
+        'copy statics'
+        'copy fonts'
+        'compress styles'
+        'compress scripts'
     ], done)
 )
 
-gulp.task('test', [
-    'scripts:test:lint'
-    'scripts:test:run'
-])
+gulp.task('test', (done) ->
+    sequence('clean', [
+        'lint scripts'
+        'run tests'
+    ], done)
+)
 
 ################################################################################
 ### Subtasks ###################################################################
@@ -63,21 +66,24 @@ gulp.task('clean', (done) ->
     )
 )
 
-gulp.task('static:build', ->
+gulp.task('copy statics', ->
     gulp.src(staticSrc)
         .pipe(gulp.dest(dist))
+)
+
+gulp.task('copy fonts', ->
     gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.woff')
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('static:watch', ['static:build'], ->
+gulp.task('watch statics', ['copy statics'], ->
     gulp.watch(
         staticSrc
-        ['static:build']
+        ['copy statics']
     )
 )
 
-gulp.task('styles:build', ->
+gulp.task('build styles', ->
     gulp.src('styles/index.styl')
         .pipe(stylus({
             'include css': true
@@ -87,7 +93,7 @@ gulp.task('styles:build', ->
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('styles:build:doc', ->
+gulp.task('build styles for docs', ->
     gulp.src('../gh-pages/index.styl')
         .pipe(stylus({
             'include css': true
@@ -97,7 +103,7 @@ gulp.task('styles:build:doc', ->
         .pipe(gulp.dest('../gh-pages/'))
 )
 
-gulp.task('styles:doc', (done) ->
+gulp.task('build styleguide', (done) ->
     yms = require('ym-styleguide')
     fs = require('fs')
     yms.build('styles/', (html) ->
@@ -107,26 +113,26 @@ gulp.task('styles:doc', (done) ->
     )
 )
 
-gulp.task('styles:compress', ['styles:build'], ->
+gulp.task('compress styles', ['build styles'], ->
     gulp.src(dist + 'index.css')
         .pipe(minifyCss())
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('styles:watch', ['styles:build', 'styles:build:doc'], ->
+gulp.task('watch styles', ['build styles', 'build styles for docs'], ->
     gulp.watch(
         ['styles/*.styl', 'styles/**/*.styl']
-        ['styles:build', 'styles:build:doc', 'scripts:build']
+        ['build styles', 'build styles for docs', 'build scripts']
     )
 )
 
-gulp.task('content', ->
+gulp.task('compile content', ->
     gulp.src('../content/*.yml')
         .pipe(yaml())
         .pipe(gulp.dest('./scripts/content/'))
 )
 
-gulp.task('scripts:build', ['styles:doc', 'content'], ->
+gulp.task('build scripts', ['build styleguide', 'compile content'], ->
     browserify({
         entries: ['./scripts/index.coffee']
         extensions: ['.js', '.coffee']
@@ -137,7 +143,7 @@ gulp.task('scripts:build', ['styles:doc', 'content'], ->
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('scripts:watch', ['scripts:build'], ->
+gulp.task('watch scripts', ['build scripts'], ->
     bundle = watchify(browserify({
         entries: ['./scripts/index.coffee']
         extensions: ['.js', '.coffee']
@@ -154,24 +160,21 @@ gulp.task('scripts:watch', ['scripts:build'], ->
             .pipe(gulp.dest(dist))
         endTime = prettyHrtime(process.hrtime(startTime))
         gutil.log(
-            'Finished', gutil.colors.cyan("'scripts:watch'"),
+            'Finished', gutil.colors.cyan("'watch scripts'"),
             'after', gutil.colors.magenta(endTime)
         )
     bundle.on('update', rebundle)
     return rebundle()
 )
 
-gulp.task('scripts:compress', ['scripts:build'], ->
+gulp.task('compress scripts', ['build scripts'], ->
     gulp.src(dist + 'index.js')
         .pipe(uglify())
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('scripts:test:build', ['styles:doc', 'content'], ->
-    gulp.src([
-        'node_modules/mocha/mocha.css'
-        'node_modules/mocha/mocha.js'
-    ])
+gulp.task('build test scripts', ['build styleguide', 'compile content'], ->
+    gulp.src(['node_modules/mocha/mocha.js'])
         .pipe(gulp.dest(dist))
 
     browserify({
@@ -184,7 +187,7 @@ gulp.task('scripts:test:build', ['styles:doc', 'content'], ->
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('scripts:test:lint', ->
+gulp.task('lint scripts', ->
     src = coffeeSrc
         .concat(testSrc)
         .concat(['!./scripts/templates/pages/compiled.coffee'])
@@ -193,7 +196,7 @@ gulp.task('scripts:test:lint', ->
         .pipe(coffeelint.reporter('fail'))
 )
 
-gulp.task('scripts:test:run', ['styles:doc', 'content'], (done) ->
+gulp.task('run tests', ['build test scripts'], (done) ->
     mocha = new Mocha({
         reporter: 'min'
         compilers: 'coffee:coffee-script/register'

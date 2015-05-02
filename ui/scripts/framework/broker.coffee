@@ -6,7 +6,7 @@ broker = {}
 # Stores all handlers for all events.
 broker.events = events = {}
 
-# Triggers the event, where `name` is a string, and `args` will
+# Emits the event, where `name` is a string, and `args` will
 # be passed to any handlers.
 broker.emit = (name, args...) ->
     # If anything is stored under `all`, call those callbacks every time.

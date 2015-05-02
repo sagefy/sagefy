@@ -1,6 +1,10 @@
 Store = require('../framework/store')
 
 class UserStore extends Store
+    constructor: ->
+        super
+        @on('requested log out user', @logOut.bind(this))
+
     url: (options) ->
         id = options.id or @get('id') or null
         return "/api/users/#{id}/" if id
@@ -9,44 +13,44 @@ class UserStore extends Store
     logIn: (data) ->
         return @ajax({
             method: 'POST'
-            url: '/api/users/log_in/'
+            url: '/api/sessions'
             data: data
             done: =>
-                @trigger('logged in user')
+                @emit('logged in user')
             fail: (errors) =>
-                @trigger('log in user error', errors)
+                @emit('log in user error', errors)
         })
 
     logOut: ->
         return @ajax({
-            method: 'POST'
-            url: '/api/users/log_out/'
+            method: 'DELETE'
+            url: '/api/sessions'
             done: =>
-                @trigger('logged out user')
+                @emit('logged out user')
             fail: (errors) =>
-                @trigger('log out user error', errors)
+                @emit('log out user error', errors)
         })
 
     getPasswordToken: (data) ->
         return @ajax({
             method: 'POST'
-            url: '/api/users/token/'
+            url: '/api/password_tokens'
             data: data
             done: =>
-                @trigger('obtained password token')
+                @emit('obtained password token')
             fail: (errors) =>
-                @trigger('password token error', errors)
+                @emit('password token error', errors)
         })
 
     createPassword: (data) ->
         @ajax({
             method: 'POST'
-            url: '/api/users/password/'
+            url: "/api/users/#{data.id}/password"
             data: data
             done: =>
-                @trigger('created password')
+                @emit('created password')
             fail: (errors) =>
-                @trigger('create password error', errors)
+                @emit('create password error', errors)
         })
 
 module.exports = UserStore

@@ -57,7 +57,7 @@ describe('Model', ->
         })
     )
 
-    it('should trigger change when attributes set', ->
+    it('should emit change when attributes set', ->
         m = new Model()
         foo = false
         m.on('change', -> foo = true)

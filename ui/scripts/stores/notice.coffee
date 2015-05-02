@@ -22,7 +22,7 @@ class NoticeStore extends Store
             method: 'PUT'
             url: "/api/notices/#{id}/read/"
             done: =>
-                @trigger('marked notice read', id)
+                @emit('marked notice read', id)
         })
 
 module.exports = NoticeStore

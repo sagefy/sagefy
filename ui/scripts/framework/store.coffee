@@ -5,7 +5,6 @@ Schemas should be stored separate of their stores.
 ###
 
 Listener = require('./listener')
-validations = require('./validations')
 util = require('./utilities')
 
 class Store extends Listener
@@ -70,25 +69,24 @@ class Store extends Listener
 
     # Validate the entry with the given ID against the schema.
     # Returns a list of errors.
-    # Triggers `invalid` if errors are found.
+    # Emits `invalid` if errors are found.
     # Use this method for any sort of `create` or `update` call.
     validate: (id) ->
         entry = @get(id)
         errors = []
         for fieldName in (fields or Object.keys(@schema))
-            for name in schema.validations
-                if util.isArray(name)
-                    error = validations[name[0]](entry[fieldName],
-                                                 name.slice(1))
+            for fn in schema.validations
+                if util.isArray(fn)
+                    error = fn[0](entry[fieldName], fn.slice(1)...)
                 else
-                    error = validations[name](entry[fieldName])
+                    error = fn(entry[fieldName])
                 if error
                     errors.push({
                         name: name
                         message: error
                     })
                     break
-        @trigger("#{@name} invalid", id, errors) if errors.length
+        @emit("#{@name} invalid", id, errors) if errors.length
         return errors
 
     # Convert an object to a query string for GET requests.

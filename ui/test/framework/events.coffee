@@ -25,22 +25,22 @@ describe('Events', ->
         expect(@e.events.poke).to.have.length(1)
     )
 
-    it('should trigger an event', ->
+    it('should emit an event', ->
         @e.on('poke', @f)
         expect(@ting).to.be.false
-        @e.trigger('poke')
+        @e.emit('poke')
         expect(@ting).to.be.true
     )
 
-    it('should ignore triggering an event with no handlers', ->
-        @e.trigger('poke')
+    it('should ignore emitting an event with no handlers', ->
+        @e.emit('poke')
         expect(@ting).to.be.false
     )
 
-    it('should provide arguments when triggering an event', ->
+    it('should provide arguments when emitting an event', ->
         @e.on('poke', @f)
         expect(@ting).to.be.false
-        @e.trigger('poke', 'mushroom')
+        @e.emit('poke', 'mushroom')
         expect(@ting).to.equal('mushroom')
     )
 

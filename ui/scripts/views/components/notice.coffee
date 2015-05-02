@@ -16,7 +16,7 @@ class NoticeView extends View
 
     requestMark: ->
         if @el.classList.contains('notice--unread')
-            @options.parent.trigger('requestMark', @data.id)
+            @options.parent.emit('requestMark', @data.id)
 
     mark: ->
         @el.classList.remove('notice--unread')

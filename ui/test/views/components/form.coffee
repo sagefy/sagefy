@@ -50,7 +50,7 @@ describe('Form (Component)', ->
 
     )
 
-    it.skip('should trigger submit event', ->
+    it.skip('should emit submit event', ->
 
     )
 

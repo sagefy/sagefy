@@ -83,7 +83,7 @@ class FormView extends View
     submit: (e) ->
         e.preventDefault() if e
         @disable()
-        @trigger('submit', @getValues())
+        @emit('submit', @getValues())
 
     disable: ->
         @el.querySelector('[type="submit"]')
@@ -94,7 +94,7 @@ class FormView extends View
             .removeAttribute('disabled')
 
     change: util.debounce((e) ->
-        @trigger('change', e.target.name, e.target.value)
+        @emit('change', e.target.name, e.target.value)
     , 200)
 
     error: (fieldName, error) ->
