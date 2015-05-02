@@ -2,7 +2,7 @@ c = require('../../modules/content').get
 
 module.exports = (data) ->
     if not data.options or data.options.length is 0
-        return c('select', 'no_options')
+        return c('no_options')
 
     html = ''
 
@@ -15,7 +15,7 @@ module.exports = (data) ->
         html += """
         <a class="clear" href="#">
             <i class="fa fa-ban"></i>
-            #{c('select', 'clear')}
+            #{c('clear')}
         </a>
         """
 

@@ -1,18 +1,13 @@
 files = {}
-files.error = require('../content/error.json')
-files.form = require('../content/form.json')
-files.user = require('../content/user.json')
-files.select = require('../content/select.json')
+files.en = require('../content/en.json')
+files.eo = require('../content/eo.json')
 
-# Given a filename, a key, and the language,
-# provide the appropriate content.
-get = (filename, key, language = 'en') ->
-    k = files[filename][key]
-    if not k
-        return "No Key > #{filename} @ #{key}"
-    for lang in [language, language[..1], 'en']
-        if k[lang]
-            return k[lang]
-    return "Not Found > #{filename} @ #{key}"
+# Given a key and the language, provide the appropriate content.
+get = (key, language = 'en') ->
+    if not files[language]
+        return "No Language > #{language}"
+    if not files[language][key]
+        return "Not Found > #{language} @ #{key}"
+    return files[language][key]
 
 module.exports = {get: get}

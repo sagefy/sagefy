@@ -7,10 +7,6 @@ util = require('../framework/utilities')
 
 class TopicFormAdapter extends FormAdapter
 
-    title: ->
-        return 'Update a Topic' if @getTopicID()
-        return 'Create a New Topic'
-
     render: ->
         return if @requireLogIn()
         super

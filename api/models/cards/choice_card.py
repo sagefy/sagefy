@@ -16,7 +16,7 @@ def has_correct_options(options):
             has_correct = True
 
     if not has_correct:
-        return c('card', 'error_need_correct')
+        return c('error_need_correct')
 
 
 class ChoiceCard(Card):

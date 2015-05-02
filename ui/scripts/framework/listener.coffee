@@ -7,7 +7,6 @@ broker = require('./broker')
 
 class Listener
     constructor: ->
-        super
         @listeners = {}
 
     # Pass along any emit call to the broker.
@@ -17,8 +16,8 @@ class Listener
 
     # Keep track of when this object listens to events on the broker.
     on: (name, fn) ->
-        @listeners[key] or= []
-        @listeners[key].push(fn)
+        @listeners[name] or= []
+        @listeners[name].push(fn)
         broker.on(name, fn)
         return this
 
@@ -47,6 +46,5 @@ class Listener
     # On remove, clear out all the listeners.
     remove: ->
         @off()
-        super
 
 module.exports = Listener

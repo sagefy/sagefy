@@ -90,7 +90,7 @@ class User(Model):
             send_mail(
                 subject='Sagefy - Reset Password',
                 recipient=self['email'],
-                body=c('user', 'change_password_url').replace(
+                body=c('change_password_url').replace(
                     '{url}',
                     '%spassword?id=%s&token=%s' %
                     ('https://sagefy.org/', self['id'], token)

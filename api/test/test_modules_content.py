@@ -6,14 +6,14 @@ xfail = pytest.mark.xfail
 
 def test_get():
     # Expect to get content in the right language
-    assert content.get('error', 'required') == 'Required.'
-    assert content.get('error', 'required', 'eo') == 'Postulo.'
+    assert content.get('required') == 'Required.'
+    assert content.get('required', 'eo') == 'Postulo.'
 
 
 def test_get_default():
     # Expect to show English if language isn't available.
-    assert (content.get('error', 'required') ==
-            content.get('error', 'required', 'en'))
+    assert (content.get('required') ==
+            content.get('required', 'en'))
 
 
 @xfail

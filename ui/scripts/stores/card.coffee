@@ -1,4 +1,4 @@
-Store = require('./framework/store')
+Store = require('../framework/store')
 
 class CardStore extends Store
 

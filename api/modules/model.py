@@ -297,7 +297,7 @@ class Model(object):
             if len(list(query.run(database.db_conn))) > 0:
                 errors.append({
                     'name': prefix + field_name,
-                    'message': c('error', 'unique'),
+                    'message': c('unique'),
                 })
 
         iter(_, self.data, self.schema)

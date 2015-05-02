@@ -7,8 +7,6 @@ util = require('../framework/utilities')
 # TODO move copy to content directory
 
 class SettingsAdapter extends FormAdapter
-    title: 'Settings'
-
     render: ->
         return if @requireLogIn()
         super

@@ -7,7 +7,7 @@ import framework.database as database
 
 def is_score(val):
     if val > 1 or val < 0:
-        return c('error', 'number')
+        return c('number')
 
 
 class Response(Model):

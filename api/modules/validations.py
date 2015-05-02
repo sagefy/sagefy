@@ -8,7 +8,7 @@ def is_required(value):
     """
 
     if value is None:
-        return c('error', 'required')
+        return c('required')
 
 
 def is_boolean(value):
@@ -20,7 +20,7 @@ def is_boolean(value):
         return
 
     if not isinstance(value, bool):
-        return c('error', 'boolean')
+        return c('boolean')
 
 
 def is_string(value):
@@ -32,7 +32,7 @@ def is_string(value):
         return
 
     if not isinstance(value, str):
-        return c('error', 'string')
+        return c('string')
 
 
 def is_number(value):
@@ -44,7 +44,7 @@ def is_number(value):
         return
 
     if not isinstance(value, (int, float)):
-        return c('error', 'number')
+        return c('number')
 
 
 def is_integer(value):
@@ -56,7 +56,7 @@ def is_integer(value):
         return
 
     if not isinstance(value, int):
-        return c('error', 'integer')
+        return c('integer')
 
 
 def is_string_or_number(value):
@@ -68,7 +68,7 @@ def is_string_or_number(value):
         return
 
     if not isinstance(value, (str, int, float, complex)):
-        return c('error', 'string_or_number')
+        return c('string_or_number')
 
 
 def is_language(value):
@@ -80,7 +80,7 @@ def is_language(value):
         return
 
     if not isinstance(value, str) or len(value) != 2:
-        return c('error', 'language')
+        return c('language')
 
 
 def is_list(value):
@@ -92,7 +92,7 @@ def is_list(value):
         return
 
     if not isinstance(value, list):
-        return c('error', 'list')
+        return c('list')
 
 
 def is_dict(value):
@@ -104,7 +104,7 @@ def is_dict(value):
         return
 
     if not isinstance(value, dict):
-        return c('error', 'dict')
+        return c('dict')
 
 
 def is_email(value):
@@ -116,7 +116,7 @@ def is_email(value):
         return
 
     if not re.match(r'\S+@\S+\.\S+', value):
-        return c('error', 'email')
+        return c('email')
 
 
 def is_url(value):
@@ -128,7 +128,7 @@ def is_url(value):
         return
 
     if not re.match(r'^(http(s)?:)?//[^.]+\..+$', value):
-        return c('error', 'url')
+        return c('url')
 
 
 def has_min_length(value, ln):
@@ -139,7 +139,7 @@ def has_min_length(value, ln):
         return
 
     if not value or len(value) < ln:
-        return c('error', 'minlength').replace('{length}', str(ln))
+        return c('minlength').replace('{length}', str(ln))
 
 
 def has_max_length(value, ln):
@@ -151,7 +151,7 @@ def has_max_length(value, ln):
         return
 
     if not value or len(value) > ln:
-        return c('error', 'maxlength').replace('{length}', str(ln))
+        return c('maxlength').replace('{length}', str(ln))
 
 
 def is_one_of(value, *options):
@@ -163,7 +163,7 @@ def is_one_of(value, *options):
 
     if value not in options:
         str_options = [str(o) for o in options]
-        return (c('error', 'options')
+        return (c('options')
                 .replace('{options}', ', '.join(str_options)))
 
 
@@ -176,8 +176,8 @@ def is_list_of_strings(value):
         return
 
     if not isinstance(value, list):
-        return c('error', 'list')
+        return c('list')
 
     for v in value:
         if not isinstance(v, str):
-            return c('error', 'string')
+            return c('string')

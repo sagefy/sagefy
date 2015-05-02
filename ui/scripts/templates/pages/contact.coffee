@@ -10,7 +10,7 @@ module.exports = ->
         </li>
         <li>
             <strong>I have an idea for content</strong>:
-            Discuss it in the module.
+            Discuss it in the site.
         </li>
         <li>
             <strong>I have an idea for the software</strong>:
@@ -31,10 +31,6 @@ module.exports = ->
         <li>
             <strong>I'm a media person</strong>:
             <a href="http://sagefy.totemapp.com/">Media page</a>.
-        </li>
-        <li>
-            <strong>I'm a school or a corporation</strong>:
-            Sagefy is not intended for school or corporate use.
         </li>
     </ul>
     """

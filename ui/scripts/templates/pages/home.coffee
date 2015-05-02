@@ -6,7 +6,7 @@ module.exports = ->
     <hgroup>
         <h1>Sagefy</h1>
         <h3 class="subheader">
-            Adaptive, collaborative, and open learning platform.
+            Open-content adaptive learning platform.
         </h3>
     </hgroup>
     <p>

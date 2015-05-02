@@ -73,4 +73,4 @@ class Notice(Model):
         Get the copy associated with this notice.
         """
 
-        return c('notice', self['kind']).format(**{})
+        return c(self['kind']).format(**{})

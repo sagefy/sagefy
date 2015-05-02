@@ -1,9 +1,8 @@
 FormAdapter = require('./form')
 UserModel = require('../models/user')
-View = require('../framework/view')
 FormView = require('../views/components/form')
 FormLayoutView = require('../views/layouts/form')
-util = require('../framework/utilities')
+util = require('../../framework/utilities')
 queryString = require('../modules/query_string')
 
 # TODO trans

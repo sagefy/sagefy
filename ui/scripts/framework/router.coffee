@@ -4,7 +4,7 @@ to them when the URL changes.
 ###
 
 Listener = require('./listener')
-util = require('./util')
+util = require('./utilities')
 history = window.history
 
 class Router extends Listener
@@ -17,7 +17,7 @@ class Router extends Listener
         super
         @routes = @options.routes or @routes
         @region = @options.region
-        @on('navigate', @navigate.bind(this))
+        @on('route', @route.bind(this))
 
     # When the user uses their back and forward buttons,
     # we need to listen to those events.
@@ -26,8 +26,8 @@ class Router extends Listener
         prev = window.onpopstate if window.onpopstate
         window.onpopstate = (event) =>
             prev(event) if prev
-            @emit('navigate', window.location.pathname)
-        @route(window.location.pathname)
+            @emit('route', window.location.pathname)
+        window.onpopstate()
         return this
 
     # Route to a new view, given a path.
@@ -40,12 +40,12 @@ class Router extends Listener
         if not View
             throw new Error("No matching view for path: #{path}")
 
-        # Remove previous view instance.
-        @view.remove() if @view
-
         # Update the display of the URL.
         if path isnt window.location.pathname
             history.pushState({}, '', path)
+
+        # Remove previous view instance.
+        @view.remove() if @view
 
         # Create a new view instance.
         @view = new View({region: @region})
@@ -68,14 +68,25 @@ class Router extends Listener
                 viewPath.replace(/\{([\d\w\_\$]+)\}/g, '([^/]+)') +
                 '$'
             )
-        match = viewPath.match(docPath)
+        match = docPath.match(viewPath)
         return if match then match.slice(1) else false
 
-    # Navigate the application to a specific URL.
-    navigate: (path) ->
-        # Don't navigate if we're already on the path.
-        if path is window.location.pathname
-            return null
-        return @route(path)
+    # When we click an internal link, use `route` instead
+    bindLinks: ->
+        return document.body.addEventListener('click', (e) =>
+            el = util.closest(e.target, document.body, 'a')
+            return if not el
+
+            # Navigate to in-app URLs instead of new page
+            if el.matches('[href^="/"]')
+                e.preventDefault()
+                @emit('route', el.pathname)
+            # Do nothing on empty links
+            else if el.matches('[href="#"]')
+                e.preventDefault()
+            # Open external URLs in new windows
+            else if el.matches('[href*="//"]')
+                el.target = '_blank'
+        )
 
 module.exports = Router

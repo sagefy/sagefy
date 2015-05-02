@@ -3,8 +3,6 @@ NoticesView = require('../views/lists/notices')
 NoticesCollection = require('../collections/notices')
 
 class NoticesAdapter extends PageAdapter
-    title: 'Notices'  # TODO move copy to content directory
-
     render: ->
         super
         @collection = new NoticesCollection()

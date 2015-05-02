@@ -5,8 +5,6 @@ aux = require('../modules/auxiliaries')
 # TODO move copy to content directory
 
 class LogOutAdapter extends PageAdapter
-    title: 'Logging out...'
-
     render: ->
         super
         if aux.isLoggedIn()

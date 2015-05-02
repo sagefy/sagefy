@@ -1,6 +1,0 @@
-# Body copy for notice; as in the notice model/routes.
-# Not used for site or page alerts or messaging.
-# The keys must be the same as the `kind` field on the notice model.
-
-new_proposal:
-    en: There is a new proposal.

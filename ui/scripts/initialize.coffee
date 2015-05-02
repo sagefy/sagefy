@@ -1,47 +1,38 @@
 Router = require('./framework/router')
 util = require('./framework/utilities')
+broker = require('./framework/broker')
+
+CardStore = require('./stores/card')
+FollowStore = require('./stores/follow')
+NoticeStore = require('./stores/notice')
+PostStore = require('./stores/post')
+SearchStore = require('./stores/search')
+SetStore = require('./stores/set')
+TopicStore = require('./stores/topic')
+UnitStore = require('./stores/unit')
+UserStore = require('./stores/user')
+
+logAllEvents = ->
+    broker.on('all', (args...) -> console.log(args...))
+
+createStores = ->
+    return {
+        card: new CardStore()
+        follow: new FollowStore()
+        notice: new NoticeStore()
+        post: new PostStore()
+        search: new SearchStore()
+        set: new SetStore()
+        topic: new TopicStore()
+        unit: new UnitStore()
+        user: new UserStore()
+    }
 
 createPage = ->
     page = document.createElement('div')
     page.classList.add('page')
     document.body.appendChild(page)
     return page
-
-createMenu = ->  # TODO
-
-createStores = ->
-    return {
-        card: new require('./stores/card')()
-        follow: new require('./stores/follow')()
-        notice: new require('./stores/notice')()
-        post: new require('./stores/post')()
-        search: new require('./stores/search')()
-        set: new require('./stores/set')()
-        topic: new require('./stores/topic')()
-        unit: new require('./stores/unit')()
-        user: new require('./stores/user')()
-    }
-
-
-bindLinks = ->
-    # When we click an internal link, use `navigate` instead
-    # TODO update to new framework
-    return document.body.addEventListener('click', (e) =>
-        el = util.closest(e.target, document.body, 'a')
-        if not el
-            return
-
-        # Navigate to in-app URLs instead of new page
-        if el.matches('[href^="/"]')
-            e.preventDefault()
-            @navigate(el.pathname)
-        # Do nothing on empty links
-        else if el.matches('[href="#"]')
-            e.preventDefault()
-        # Open external URLs in new windows
-        else if el.matches('[href*="//"]')
-            el.target = '_blank'
-    )
 
 createRouter = (page) ->
     return new Router({
@@ -78,18 +69,22 @@ createRouter = (page) ->
         ]
     })
 
+createMenu = ->  # TODO
+
 go = ->
-    bindLinks()
+    logAllEvents()
     createStores()
     router = createRouter(createPage())
     router.activate()
+    router.bindLinks()
     createMenu()
     return true
 
-modules.exports = {
+module.exports = {
+    logAllEvents: logAllEvents
+    createStores: createStores
     createPage: createPage
-    createMenu: createMenu
-    bindLinks: bindLinks
     createRouter: createRouter
+    createMenu: createMenu
     go: go
 }

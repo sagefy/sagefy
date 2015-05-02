@@ -45,8 +45,12 @@ aux.timeAgo = (str) ->
     return 'Just now'
 
 
-# Return a variable friendly name of the title
+# Return a variable friendly name of the title.
 aux.slugify = (s) ->
     return s.toLowerCase().replace(/[-\s]+/g, '_')
+
+# Set the page title.
+aux.setTitle = (title = 'FIX ME') ->
+    document.title = "#{title} – Sagefy"
 
 module.exports = aux

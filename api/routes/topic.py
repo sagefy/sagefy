@@ -74,7 +74,7 @@ def update_topic_route(request, topic_id):
     if not topic:
         return 404, {'errors': [{
             'name': 'topic_id',
-            'message': c('discuss', 'no_topic'),
+            'message': c('no_topic'),
         }]}
 
     # Must be logged in as topic's author
@@ -105,7 +105,7 @@ def get_posts_route(request, topic_id):
     if not topic:
         return 404, {'errors': [{
             'name': 'topic_id',
-            'message': c('discuss', 'no_topic'),
+            'message': c('no_topic'),
         }]}
 
     # Pull all kinds of posts
@@ -159,7 +159,7 @@ def create_post_route(request, topic_id):
     if not request['params'].get('topic_id') or not topic:
         return 404, {'errors': [{
             'name': 'topic_id',
-            'message': c('discuss', 'no_topic'),
+            'message': c('no_topic'),
         }]}
 
     # Try to save the post (and others)

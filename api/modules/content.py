@@ -12,16 +12,16 @@ files = {}
 dirname = os.path.dirname(__file__).replace('/api/modules', '')
 
 
-def get(filename, key, language='en'):
+def get(key, language='en'):
     """
     Given a filename, key and language, get the matching content.
     """
-    if filename not in files:
-        stream = open('%s/content/%s.yml' % (dirname, filename), 'r')
-        files[filename] = yaml.load(stream)
+    if language not in files:
+        stream = open('%s/content/%s.yml' % (dirname, language), 'r')
+        files[language] = yaml.load(stream)[language]
         stream.close()
 
-    s = get_first(files[filename][key], language, language[:2], 'en')
-    assert s, "Not Found > {filename} @ {key}".format(filename=filename,
-                                                      key=key)
+    s = files[language][key]
+    assert s, "Not Found > {lang} @ {key}".format(lang=language,
+                                                  key=key)
     return s

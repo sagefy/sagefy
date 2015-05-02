@@ -91,12 +91,12 @@ def log_in_route(request):
     if not user:
         return 404, {'errors': [{
             'name': 'name',
-            'message': c('user', 'no_user'),
+            'message': c('no_user'),
         }]}
     if not user.is_password_valid(request['params'].get('password')):
         return 400, {'errors': [{
             'name': 'password',
-            'message': c('user', 'no_match'),
+            'message': c('no_match'),
         }]}
     return _log_in(user)
 

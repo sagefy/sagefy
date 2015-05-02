@@ -10,13 +10,12 @@ broker.events = events = {}
 # be passed to any handlers.
 broker.emit = (name, args...) ->
     # If anything is stored under `all`, call those callbacks every time.
-    if events.all
-        broker.emit('all', name, args...)
+    for fn in events.all or []
+        fn.apply(this, [name].concat(args))
 
     # If callbacks registered under name, call all of them.
-    if events[name]
-        for fn in events[name]
-            fn.apply(this, args...)
+    for fn in events[name] or []
+        fn.apply(this, args)
 
     return this
 

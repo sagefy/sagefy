@@ -1,0 +1,37 @@
+en:
+    boolean: Must be true or false.
+    change_password_url: To change your password, please visit {url}
+    clear: Clear
+    dict: Must be a dict.
+    email: Must be an email.
+    en_us: American English
+    en: English
+    entity_id: Must be an entity ID.
+    entity_kind: Must be an entity kind.
+    eo: Esperanto
+    error_need_correct: At least one option must be correct.
+    error_options: All options must have value, correct, and feedback.
+    es: Spanish
+    field: No such field.
+    integer: Must be an integer.
+    ko: Korean
+    language: Must be a language.
+    list: Must be a list.
+    maxlength: Must have maximum length of {length}.
+    minlength: Must have minimum length of {length}.
+    new_proposal: There is a new proposal.
+    no_match: Username and password do not match.
+    no_options: No options avaliable.
+    no_topic: Cannot find topic.
+    no_user: No user by that name.
+    not_found: Not found.
+    number: Must be a number.
+    optional: Optional.
+    options: Must be one of {options}.
+    required: Required.
+    self_efficacy: You are fully in control of your results. To learn faster, own your victories and mistakes.
+    string_or_number: Must be a string or number.
+    string: Must be a string.
+    unique: Must be unique.
+    url: Must be a full URL.
+    welcome: Welcome to the Sagefy API.
