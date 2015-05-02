@@ -1,22 +1,22 @@
 module.exports = {
     language: {
         type: 'select'
-        validations: {}
+        validations: []
     }
     name: {
         type: 'text'
-        validations: {}
+        validations: []
     }
     body: {
         type: 'textarea'
-        validations: {}
+        validations: []
     }
     tags: {
         type: 'select'
-        validations: {}
+        validations: []
     }
     require_ids: {
         type: 'select'
-        validations: {}
+        validations: []
     }
 }

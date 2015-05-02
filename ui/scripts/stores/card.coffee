@@ -1,4 +1,5 @@
 Store = require('../framework/store')
+cardSchema = require('../schemas/card')
 
 class CardStore extends Store
 

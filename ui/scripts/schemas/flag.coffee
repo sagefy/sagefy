@@ -4,14 +4,14 @@ util = require('../framework/utilities')
 module.exports = util.extend({}, post, {
     status: {
         type: 'hidden'
-        validations: {}
+        validations: []
     }
     entity_version_id: {
         type: 'hidden'
-        validations: {}
+        validations: []
     }
     reason: {
         type: 'select'
-        validations: {}
+        validations: []
     }
 })

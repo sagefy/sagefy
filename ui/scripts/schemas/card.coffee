@@ -1,26 +1,26 @@
 module.exports = {
     language: {
         type: 'select'
-        validations: {}
+        validations: []
     }
     unit_id: {
         type: 'select'
-        validations: {}
+        validations: []
     }
     name: {
         type: 'text'
-        validations: {}
+        validations: []
     }
     tags: {
         type: 'select'
-        validations: {}
+        validations: []
     }
     require_ids: {
         type: 'select'
-        validations: {}
+        validations: []
     }
     kind: {
         type: 'select'
-        validations: {}
+        validations: []
     }
 }

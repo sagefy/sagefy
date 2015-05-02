@@ -1,17 +1,19 @@
+validations = require('../modules/validations')
+
 module.exports = {
     user_id: {
         type: 'hidden'
-        validations: {}
+        validations: []
     }
     topic_id: {
         type: 'hidden'
-        validations: {}
+        validations: []
     }
     body: {
         type: 'textarea'
-        validations: {
-            required: true
-        }
+        validations: [
+            validations.required
+        ]
     }
     kind: {
         type: 'select'
@@ -22,12 +24,12 @@ module.exports = {
             {label: 'Flag', value: 'flag'}
         ]
         default: 'post'
-        validations: {
-            required: true
-        }
+        validations: [
+            validations.required
+        ]
     }
     replies_to_id: {
         type: 'hidden'
-        validations: {}
+        validations: []
     }
 }

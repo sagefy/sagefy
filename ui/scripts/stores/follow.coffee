@@ -1,4 +1,5 @@
 Store = require('../framework/store')
+followSchema = require('../schemas/follow')
 
 class FollowStore extends Store
     limit: 20

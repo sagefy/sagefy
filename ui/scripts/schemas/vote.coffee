@@ -4,14 +4,14 @@ util = require('../framework/utilities')
 module.exports = util.extend({}, post, {
     body: {
         type: 'textarea'
-        validations: {}
+        validations: []
     }
     replies_to_id: {
         type: 'hidden'
-        validations: {}
+        validations: []
     }
     response: {
         type: 'select'
-        validations: {}
+        validations: []
     }
 })

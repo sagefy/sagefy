@@ -1,4 +1,5 @@
 Store = require('../framework/store')
+noticeSchema = ('../schemas/notice')
 
 class NoticeStore extends Store
     limit: 20

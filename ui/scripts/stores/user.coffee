@@ -1,4 +1,5 @@
 Store = require('../framework/store')
+userSchema = require('../schemas/user')
 
 class UserStore extends Store
     constructor: ->

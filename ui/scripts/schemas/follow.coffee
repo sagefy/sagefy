@@ -1,10 +1,10 @@
 module.exports = {
     user_id: {
         type: 'hidden'
-        validations: {}
+        validations: []
     }
     entity: {
         type: 'hidden'
-        validations: {}
+        validations: []
     }
 }
