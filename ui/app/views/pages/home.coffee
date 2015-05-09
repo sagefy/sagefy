@@ -1,4 +1,4 @@
-View = require('../../framework/view')
+View = require('../../modules/view')
 aux = require('../../modules/auxiliaries')
 
 class HomePageView extends View

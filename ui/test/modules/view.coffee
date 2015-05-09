@@ -1,4 +1,4 @@
-View = require('../../app/framework/view')
+View = require('../../app/modules/view')
 
 describe('View', ->
     it('should call setElement on create', ->

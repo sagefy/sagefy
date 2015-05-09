@@ -1,5 +1,5 @@
 post = require('./post')
-util = require('../framework/utilities')
+util = require('../modules/utilities')
 
 module.exports = util.extend({}, post, {
     status: {

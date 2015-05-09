@@ -3,7 +3,7 @@ Validations are functions which return string if there's an issue
 or a nothing if okay.
 ###
 
-util = require('../framework/utilities')
+util = require('../modules/utilities')
 c = require('../modules/content').get
 
 isBlank = (val) ->

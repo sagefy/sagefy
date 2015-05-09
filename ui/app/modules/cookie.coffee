@@ -1,6 +1,6 @@
 # Read, create, update, and delete cookies.
 
-_ = require('../framework/utilities')
+_ = require('../modules/utilities')
 cookie = {}
 
 encode = encodeURIComponent

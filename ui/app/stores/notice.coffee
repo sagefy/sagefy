@@ -1,4 +1,4 @@
-Store = require('../framework/store')
+Store = require('../modules/store')
 noticeSchema = ('../schemas/notice')
 
 class NoticeStore extends Store

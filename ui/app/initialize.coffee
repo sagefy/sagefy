@@ -1,6 +1,6 @@
-Router = require('./framework/router')
-util = require('./framework/utilities')
-broker = require('./framework/broker')
+Router = require('./modules/router')
+util = require('./modules/utilities')
+broker = require('./modules/broker')
 
 CardStore = require('./stores/card')
 FollowStore = require('./stores/follow')

@@ -1,7 +1,7 @@
 FormPageView = require('./_form')
 queryString = require('../../modules/query_string')
 FormView = require('../components/form')
-util = require('../../framework/utilities')
+util = require('../../modules/utilities')
 
 class PasswordPageView extends FormPageView
     id: 'password'

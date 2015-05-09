@@ -1,5 +1,5 @@
-View = require('../../framework/view')
-util = require('../../framework/utilities')
+View = require('../../modules/view')
+util = require('../../modules/utilities')
 aux = require('../../modules/auxiliaries')
 
 template = require('./select.tmpl')

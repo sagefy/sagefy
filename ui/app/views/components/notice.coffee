@@ -1,4 +1,4 @@
-View = require('../../framework/view')
+View = require('../../modules/view')
 template = require('./notice.tmpl')
 
 class NoticeView extends View

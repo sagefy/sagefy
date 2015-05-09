@@ -1,4 +1,4 @@
-View = require('../../framework/view')
+View = require('../../modules/view')
 
 class FormPageView extends View
     template: require('./form_layout.tmpl')

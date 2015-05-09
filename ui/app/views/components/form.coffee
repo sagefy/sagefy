@@ -1,7 +1,7 @@
-View = require('../../framework/view')
+View = require('../../modules/view')
 SelectView = require('./select')
 fieldTemplate = require('./form_field.tmpl')
-util = require('../../framework/utilities')
+util = require('../../modules/utilities')
 
 # Generic Form View
 # Designed to be extended

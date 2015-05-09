@@ -1,4 +1,4 @@
-Store = require('../framework/store')
+Store = require('../modules/store')
 postSchema = require('../schemas/post')
 proposalSchema = require('../schemas/proposal')
 voteSchema = require('../schemas/vote')

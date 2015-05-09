@@ -9,7 +9,7 @@ global.sinon = require('sinon')
 chai.use(require('sinon-chai'))
 
 require('./basic')
+
 require('./modules')
-# require('./framework')
-# require('./stores')
+require('./stores')
 require('./views')

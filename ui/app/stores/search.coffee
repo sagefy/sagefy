@@ -1,4 +1,4 @@
-Store = require('../framework/store')
+Store = require('../modules/store')
 
 class SearchStore extends Store
     limit: 20

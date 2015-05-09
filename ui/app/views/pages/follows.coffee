@@ -1,4 +1,4 @@
-View = require('../../framework/view')
+View = require('../../modules/view')
 
 class FollowsPageView extends View
 

@@ -1,7 +1,7 @@
-View = require('../../framework/view')
+View = require('../../modules/view')
 template = require('./menu.tmpl')
 itemTemplate = require('./menu_item.tmpl')
-util = require('../framework/utilities')
+util = require('../modules/utilities')
 aux = require('../modules/auxiliaries')
 
 # A menu component, creates an icon and on click, displays list of options.

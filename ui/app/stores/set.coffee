@@ -1,4 +1,4 @@
-Store = require('../framework/store')
+Store = require('../modules/store')
 setSchema = require('../schemas/set')
 
 class SetStore extends Store
