@@ -1,4 +1,4 @@
-PageAdapter = require('../../scripts/adapters/page')
+PageAdapter = require('../../app/adapters/page')
 
 describe('Page Adapter', ->
     beforeEach(->

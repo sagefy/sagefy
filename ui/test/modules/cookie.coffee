@@ -1,4 +1,4 @@
-cookie = require('../../scripts/modules/cookie')
+cookie = require('../../app/modules/cookie')
 
 describe('Cookie', ->
     it('should parse a cookie value', ->

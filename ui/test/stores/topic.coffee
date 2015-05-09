@@ -1,4 +1,4 @@
-require('../../scripts/models/topic')
+require('../../app/models/topic')
 
 # TODO outline tests
 

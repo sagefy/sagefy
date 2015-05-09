@@ -20,8 +20,8 @@ Mocha = require('mocha')
 ################################################################################
 
 dist = 'distribution/'
-staticSrc = ['images/*', 'statics/*']
-coffeeSrc = ['scripts/**/*.coffee']
+staticSrc = ['app/images/*', 'app/*.{html,txt,ico}']
+coffeeSrc = ['app/**/*.coffee']
 testSrc = ['test/**/*.coffee']
 
 ################################################################################
@@ -84,7 +84,7 @@ gulp.task('watch statics', ['copy statics'], ->
 )
 
 gulp.task('build styles', ->
-    gulp.src('styles/index.styl')
+    gulp.src('app/index.styl')
         .pipe(stylus({
             'include css': true
             errors: true
@@ -106,9 +106,9 @@ gulp.task('build styles for docs', ->
 gulp.task('build styleguide', (done) ->
     yms = require('ym-styleguide')
     fs = require('fs')
-    yms.build('styles/', (html) ->
+    yms.build('app/', (html) ->
         coffee = 'module.exports="""\n' + html + '\n"""\n'
-        fs.writeFileSync('scripts/templates/pages/compiled.coffee', coffee)
+        fs.writeFileSync('app/views/pages/styleguide.compiled.coffee', coffee)
         done()
     )
 )
@@ -121,7 +121,7 @@ gulp.task('compress styles', ['build styles'], ->
 
 gulp.task('watch styles', ['build styles', 'build styles for docs'], ->
     gulp.watch(
-        ['styles/*.styl', 'styles/**/*.styl']
+        ['app/**/*.styl']
         ['build styles', 'build styles for docs', 'build scripts']
     )
 )
@@ -129,12 +129,12 @@ gulp.task('watch styles', ['build styles', 'build styles for docs'], ->
 gulp.task('compile content', ->
     gulp.src('../content/*.yml')
         .pipe(yaml())
-        .pipe(gulp.dest('./scripts/content/'))
+        .pipe(gulp.dest('./app/content/'))
 )
 
 gulp.task('build scripts', ['build styleguide', 'compile content'], ->
     browserify({
-        entries: ['./scripts/index.coffee']
+        entries: ['./app/index.coffee']
         extensions: ['.js', '.coffee']
         debug: true
     })
@@ -145,7 +145,7 @@ gulp.task('build scripts', ['build styleguide', 'compile content'], ->
 
 gulp.task('watch scripts', ['build scripts'], ->
     bundle = watchify(browserify({
-        entries: ['./scripts/index.coffee']
+        entries: ['./app/index.coffee']
         extensions: ['.js', '.coffee']
         debug: true
         cache: {}
@@ -190,7 +190,7 @@ gulp.task('build test scripts', ['build styleguide', 'compile content'], ->
 gulp.task('lint scripts', ->
     src = coffeeSrc
         .concat(testSrc)
-        .concat(['!./scripts/templates/pages/compiled.coffee'])
+        .concat(['!./app/views/pages/styleguide.compiled.coffee'])
     gulp.src(src)
         .pipe(coffeelint())
         .pipe(coffeelint.reporter('fail'))

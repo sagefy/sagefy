@@ -1,0 +1,5 @@
+require('./contact.tmpl')
+require('./error.tmpl')
+require('./home.tmpl')
+require('./styleguide.tmpl')
+require('./terms.tmpl')

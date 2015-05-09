@@ -1,4 +1,4 @@
-require('../../../scripts/views/components/menu')
+require('../../../app/views/components/menu')
 
 describe('Menu View', ->
     beforeEach(->

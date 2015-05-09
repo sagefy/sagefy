@@ -1,5 +1,0 @@
-require('./contact')
-require('./error')
-require('./home')
-require('./styleguide')
-require('./terms')

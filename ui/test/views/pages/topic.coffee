@@ -1,4 +1,4 @@
-require('../../scripts/adapters/topic')
+require('../../app/adapters/topic')
 
 describe('Topic Adapter', ->
     it.skip('should show the kind and name of the entity', ->

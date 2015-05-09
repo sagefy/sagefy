@@ -1,4 +1,4 @@
-require('../../scripts/adapters/topic_form')
+require('../../app/adapters/topic_form')
 
 describe('Topic Form Adapter', ->
     it.skip('should have "create" in the title in create mode', ->

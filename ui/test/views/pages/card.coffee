@@ -1,4 +1,4 @@
-require('../../scripts/adapters/card')
+require('../../app/adapters/card')
 
 # TODO outline tests
 

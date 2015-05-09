@@ -1,4 +1,4 @@
-require('../../scripts/adapters/terms')
+require('../../app/adapters/terms')
 
 describe('Terms Adapter', ->
     it.skip('should create and render the view', ->

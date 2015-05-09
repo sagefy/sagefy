@@ -1,4 +1,4 @@
-require('../../scripts/models/post')
+require('../../app/models/post')
 
 # TODO outline tests
 

@@ -1,4 +1,4 @@
-require('../../scripts/adapters/error')
+require('../../app/adapters/error')
 
 describe('Error Adapter', ->
     it.skip('should create and render an error view', ->

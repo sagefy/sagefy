@@ -1,4 +1,4 @@
-Select = require('../../../scripts/views/components/select')
+Select = require('../../../app/views/components/select')
 
 describe('Select', ->
     it.skip('should say no options are available', ->

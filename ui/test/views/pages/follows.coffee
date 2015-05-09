@@ -1,4 +1,4 @@
-require('../../scripts/adapters/follows')
+require('../../app/adapters/follows')
 
 # TODO outline tests
 

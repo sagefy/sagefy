@@ -1,4 +1,4 @@
-require('../../scripts/adapters/my_sets')
+require('../../app/adapters/my_sets')
 
 # TODO outline tests
 

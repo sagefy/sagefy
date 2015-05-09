@@ -1,4 +1,4 @@
-require('../../scripts/adapters/post_form')
+require('../../app/adapters/post_form')
 
 # TODO Should most of these fields be a module?
 

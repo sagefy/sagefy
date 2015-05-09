@@ -1,4 +1,4 @@
-queryString = require('../../scripts/modules/query_string')
+queryString = require('../../app/modules/query_string')
 
 describe('Query String', ->
     it('should parse the query string', ->

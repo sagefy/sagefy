@@ -1,4 +1,4 @@
-require('../../scripts/adapters/styleguide')
+require('../../app/adapters/styleguide')
 
 describe('Styleguide Adapter', ->
     it.skip('should create the styleguide view', ->

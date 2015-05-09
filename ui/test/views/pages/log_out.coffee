@@ -1,4 +1,4 @@
-require('../../scripts/adapters/log_out')
+require('../../app/adapters/log_out')
 
 # TODO outline tests
 

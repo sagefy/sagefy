@@ -1,4 +1,4 @@
-require('../../scripts/adapters/sign_up')
+require('../../app/adapters/sign_up')
 
 # TODO outline tests
 

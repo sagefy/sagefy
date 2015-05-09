@@ -1,4 +1,4 @@
-require('../../scripts/adapters/card_learn')
+require('../../app/adapters/card_learn')
 
 # TODO outline tests
 

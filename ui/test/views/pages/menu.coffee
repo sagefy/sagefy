@@ -1,4 +1,4 @@
-require('../../scripts/adapters/menu')
+require('../../app/adapters/menu')
 
 describe('Menu Adapter', ->
     it.skip('should create the menu view', ->

@@ -1,4 +1,4 @@
-_ = require('../../scripts/framework/utilities')
+_ = require('../../app/framework/utilities')
 extend = _.extend
 
 describe('Utilities', ->

@@ -1,4 +1,4 @@
-require('../../scripts/adapters/password')
+require('../../app/adapters/password')
 
 # TODO outline tests
 

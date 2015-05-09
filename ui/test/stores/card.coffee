@@ -1,4 +1,4 @@
-require('../../scripts/models/card')
+require('../../app/models/card')
 
 # TODO outline tests
 

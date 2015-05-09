@@ -1,4 +1,4 @@
-require('../../scripts/adapters/form')
+require('../../app/adapters/form')
 
 describe('Form Adapter', ->
     it.skip('should cleanup form, model, and view on remove', ->

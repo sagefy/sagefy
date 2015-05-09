@@ -1,5 +1,5 @@
-aux = require('../../scripts/modules/auxiliaries')
-cookie = require('../../scripts/modules/cookie')
+aux = require('../../app/modules/auxiliaries')
+cookie = require('../../app/modules/cookie')
 
 describe('Auxiliaries', ->
     it('should detect log in', ->

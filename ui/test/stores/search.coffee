@@ -1,4 +1,4 @@
-require('../../scripts/collections/search')
+require('../../app/collections/search')
 
 # TODO outline tests
 

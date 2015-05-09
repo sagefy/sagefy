@@ -1,4 +1,4 @@
-validations = require('../../scripts/modules/validations')
+validations = require('../../app/modules/validations')
 
 describe('Validations', ->
     it('should require a field', ->

@@ -1,4 +1,4 @@
-UserModel = require('../../scripts/models/user')
+UserModel = require('../../app/models/user')
 
 validate = (model, search) ->
     errors = model.validate()

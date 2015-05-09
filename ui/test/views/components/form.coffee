@@ -1,4 +1,4 @@
-Form = require('../../../scripts/views/components/form')
+Form = require('../../../app/views/components/form')
 
 describe('Form (Component)', ->
     it('should format data from an HTML form', ->

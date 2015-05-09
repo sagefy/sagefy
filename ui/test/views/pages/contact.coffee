@@ -1,4 +1,4 @@
-require('../../scripts/adapters/contact')
+require('../../app/adapters/contact')
 
 describe('Contact Adapter', ->
     it.skip('should create new view and render it', ->

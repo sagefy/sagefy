@@ -1,4 +1,4 @@
-require('../../scripts/models/follow')
+require('../../app/models/follow')
 
 # TODO outline tests
 

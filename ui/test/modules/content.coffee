@@ -1,4 +1,4 @@
-content = require('../../scripts/modules/content')
+content = require('../../app/modules/content')
 
 describe('Content', ->
     it('should get content', ->
