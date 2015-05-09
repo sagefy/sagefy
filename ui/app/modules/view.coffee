@@ -65,9 +65,8 @@ class View extends Listener
     # we will go ahead and select those elements at store them at key.
     selectElements: ->
         for key, selector of @elements or {}
-            @[key] = @el.querySelectorAll(selector)
-            if @[key].length is 1
-                @[key] = @[key][0]
+            el = @el.querySelectorAll(selector)
+            @[key] = el[0] if el.length is 1
 
     # Remove all elements stored as a result of `selectElements`.
     unselectElements: ->

@@ -42,7 +42,7 @@
     "stylus": "^0.50.0",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.2.1",
-    "ym-styleguide": "^0.1.6"
+    "ym-styleguide": "git+https://github.com/heiskr/ym-styleguide.git"
   },
   "browserify": {
     "transform": [

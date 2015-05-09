@@ -2,6 +2,7 @@ View = require('../../modules/view')
 SelectView = require('./select')
 fieldTemplate = require('./form_field.tmpl')
 util = require('../../modules/utilities')
+aux = require('../../modules/auxiliaries')
 
 # Generic Form View
 # Designed to be extended
@@ -83,7 +84,7 @@ class FormView extends View
     submit: (e) ->
         e.preventDefault() if e
         @disable()
-        @emit('submit', @getValues())
+        @emit('form submit', @getValues())
 
     disable: ->
         @el.querySelector('[type="submit"]')
@@ -93,8 +94,8 @@ class FormView extends View
         @el.querySelector('[type="submit"]')
             .removeAttribute('disabled')
 
-    change: util.debounce((e) ->
-        @emit('change', e.target.name, e.target.value)
+    change: aux.debounce((e) ->
+        @emit('form change', e.target.name, e.target.value)
     , 200)
 
     error: (fieldName, error) ->

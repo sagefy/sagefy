@@ -1,3 +1,7 @@
+###
+Auxiliaries are utlity functions that are specific to Sagefy.
+###
+
 cookie = require('./cookie')
 
 aux = {}
@@ -52,5 +56,15 @@ aux.slugify = (s) ->
 # Set the page title.
 aux.setTitle = (title = 'FIX ME') ->
     document.title = "#{title} – Sagefy"
+
+# Wait for function to stop being called for `delay`
+# milliseconds, and then finally call the real function.
+aux.debounce = (fn, delay) ->
+    timer = null
+    return (args...) ->
+        clearTimeout(timer)
+        timer = setTimeout(=>
+            fn.apply(this, args)
+        , delay)
 
 module.exports = aux

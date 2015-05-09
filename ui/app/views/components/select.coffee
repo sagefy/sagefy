@@ -64,7 +64,7 @@ class SelectView extends View
                 '[type="search"]'
             ].join(', '))
 
-    searchOptions: util.debounce((e) ->
+    searchOptions: aux.debounce((e) ->
         if @options.url
             true  # TODO@
         else

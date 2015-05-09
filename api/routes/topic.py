@@ -198,7 +198,7 @@ def update_post_route(request, topic_id, post_id):
     post = get_post_facade(post_id)
 
     # Must be user's own post
-    # TODO@should some of these checks be part of the model?
+    # TODO@ Should some of these checks be part of the model?
     if post['user_id'] != current_user['id']:
         return abort(403)
 

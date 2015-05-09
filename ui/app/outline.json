@@ -59,7 +59,6 @@
     ],
     "Tables",
     "Components", [
-        "Details & Summary",
         "Alerts & Errors",
         "Breadcrumbs, Wizards, & Pagination",
         "Discussion", [

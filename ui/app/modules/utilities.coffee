@@ -66,14 +66,4 @@ util.closest = (element, top, selector) ->
             return null
     return element
 
-# Wait for function to stop being called for `delay`
-# milliseconds, and then finally call the real function.
-util.debounce = (fn, delay) ->
-    timer = null
-    return (args...) ->
-        clearTimeout(timer)
-        timer = setTimeout(=>
-            fn.apply(this, args)
-        , delay)
-
 module.exports = util

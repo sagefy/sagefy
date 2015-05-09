@@ -12,6 +12,8 @@ TopicStore = require('./stores/topic')
 UnitStore = require('./stores/unit')
 UserStore = require('./stores/user')
 
+MenuView = require('./views/components/menu')
+
 logAllEvents = ->
     broker.on('all', (args...) -> console.log(args...))
 
@@ -70,6 +72,7 @@ createRouter = (page) ->
     })
 
 createMenu = ->  # TODO
+    new MenuView({body: document.body})
 
 go = ->
     logAllEvents()

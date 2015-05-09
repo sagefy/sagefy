@@ -1,8 +1,8 @@
 View = require('../../modules/view')
 template = require('./menu.tmpl')
 itemTemplate = require('./menu_item.tmpl')
-util = require('../modules/utilities')
-aux = require('../modules/auxiliaries')
+util = require('../../modules/utilities')
+aux = require('../../modules/auxiliaries')
 
 # A menu component, creates an icon and on click, displays list of options.
 class MenuView extends View
@@ -56,6 +56,7 @@ class MenuView extends View
         @_items = @_itemsBoilerplate(@_items)
         # Sets current state
         @updateState()
+        @render(@items())
 
     # Render the layout if needed
     # then render data

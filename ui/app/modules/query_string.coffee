@@ -9,6 +9,8 @@ get = (query) ->
                 true
             when value is 'false'
                 false
+            when value is 'null'
+                null
             when value.match(/^\d+\.\d+$/)
                 parseFloat(value)
             when value.match(/^\d+$/)

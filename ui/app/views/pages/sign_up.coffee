@@ -1,21 +1,38 @@
 FormPageView = require('./_form')
 aux = require('../../modules/auxiliaries')
+userSchema = require('../../schemas/user')
 
 class SignUpPageView extends FormPageView
+    id: 'sign-up'
+    className: 'col-6'
+
+    schema: [{
+        name: 'name'
+        label: 'Username'
+        placeholder: 'ex: Unicorn'
+    }, {
+        name: 'email'
+        label: 'Email'
+        description: 'We need your email to send notices ' +
+                     '<br />and reset password.'
+        placeholder: 'ex: unicorn@example.com'
+    }, {
+        name: 'password'
+        label: 'Password'
+    }, {
+        name: 'submit'
+        label: 'Sign Up'
+        type: 'submit'
+        icon: 'user'
+    }]
+
+    modelSchema: userSchema
+
     constructor: ->
         super
+        # TODO@ return @emit('route', '/my_sets') if @requireLogOut()
         aux.setTitle('Sign Up')
-
-    render: ->
-        return if @requireLogOut()
-        super
-        @model = new UserModel()
-        @view = new FormLayoutView({
-            id: 'sign-up'
-            className: 'col-6'
-            region: @page
-        })
-        @view.render({
+        @render({
             title: 'Sign Up for Sagefy'
             description: '''
                 Already have an account?
@@ -25,37 +42,9 @@ class SignUpPageView extends FormPageView
                 you agree to our <a href="/terms">Terms of Service</a>.
             '''
         })
-        @form = new FormView({
-            schema: @getSchema()
-            region: @view.form
-        })
-        @form.render()
-        @bindEvents()
-
-    bindEvents: ->
-        super
-        @listenTo(@model, 'sync', @toMySets.bind(this))
-
-    getSchema: ->
-        return @addModelSchema([{
-            name: 'name'
-            label: 'Username'
-            placeholder: 'ex: Unicorn'
-        }, {
-            name: 'email'
-            label: 'Email'
-            description: 'We need your email to send notices ' +
-                         '<br />and reset password.'
-            placeholder: 'ex: unicorn@example.com'
-        }, {
-            name: 'password'
-            label: 'Password'
-        }, {
-            name: 'submit'
-            label: 'Sign Up'
-            type: 'submit'
-            icon: 'user'
-        }])
+        @on('form submit', => @emit('request create user'))
+        @on('created user', @toMySets.bind(this))
+        @on('create user error', @form.errorMany.bind(@form))
 
     toMySets: ->
         # Hard redirect to get the cookie

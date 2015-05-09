@@ -22,8 +22,11 @@ class LogInPageView extends FormPageView
         icon: 'sign-in'
     }]
 
+    modelSchema: userSchema
+
     constructor: ->
         super
+        # TODO@ return @emit('route', '/my_sets') if @requireLogOut()
         aux.setTitle('Log In')
         # If the user is already logged in, redirect to my sets
         @render({
@@ -36,16 +39,12 @@ class LogInPageView extends FormPageView
                 <a href="/password"><i class="fa fa-refresh"></i> Reset</a>.
             '''
         })
+        @on('form submit', => @emit('request log in user'))
+        @on('logged in user', @toMySets.bind(this))
+        @on('log in user error', @form.errorMany.bind(@form))
 
-        @form = new FormView({
-            schema: @getSchema()
-            region: @view.form
-        })
-        @form.render()
-
-        # @listenTo(@model, 'logIn', @toMySets.bind(this))
-
-    validate: ->
-        # @model.logIn(@form.getValues())
+    toMySets: ->
+        # Hard redirect to get the cookie
+        window.location = '/my_sets'
 
 module.exports = LogInPageView
