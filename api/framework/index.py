@@ -38,7 +38,7 @@ def serve(environ, start_response):
     code, data = call_handler(environ)
     close_db_connection()
     response_headers = [('Content-Type', 'application/json; charset=utf-8')]
-    response_headers += pull_cookies_headers(data.pop('cookies', {}))
+    response_headers += set_cookie_headers(data.pop('cookies', {}))
     status = str(code) + ' ' + status_codes.get(code, 'Unknown')
     start_response(status, response_headers)
     body = json.dumps(data, default=json_serial, ensure_ascii=False).encode()
@@ -150,7 +150,7 @@ def pull_cookies(environ):
     return {key: morsel.value for key, morsel in cookie.items()}
 
 
-def pull_cookies_headers(cookies):
+def set_cookie_headers(cookies):
     """
     Given a list of cookies... create the headers to set them.
     """

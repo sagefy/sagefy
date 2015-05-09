@@ -1,43 +1,67 @@
-from framework.index import valuefy
+from framework.index import valuefy, serve, call_handler, construct_request, \
+    pull_query_string, pull_body, pull_cookies, set_cookie_headers, \
+    json_serial
+import datetime
 import pytest
 
 xfail = pytest.mark.xfail
 
 
-@xfail
 def test_serve():
     """
     Expect to handle a WSGI call.
     """
 
-    assert False
+    def start_response(status, headers):
+        pass
+
+    response = serve({
+        'REQUEST_METHOD': 'GET',
+        'SCRIPT_NAME': '/foo',
+        'PATH_INFO': '',
+    }, start_response)
+
+    assert isinstance(response, list)
+    assert isinstance(response[0], bytes)
 
 
-@xfail
 def test_call_handler():
     """
     Expect to call the handler matching the path.
     """
 
-    assert False
+    code, response = call_handler({
+        'REQUEST_METHOD': 'GET',
+        'SCRIPT_NAME': '/foo',
+        'PATH_INFO': '',
+    })
+
+    assert code == 404
+    assert 'errors' in response
 
 
-@xfail
 def test_construct_request():
     """
     Expect to contruct a request dictionary.
     """
 
-    assert False
+    request = construct_request({
+        'REQUEST_METHOD': 'WAFFLE'
+    })
+    assert isinstance(request, dict)
 
 
-@xfail
 def test_pull_query_string():
     """
     Expect to pull and format a query string.
     """
 
-    assert False
+    assert pull_query_string({
+        'QUERY_STRING': 'foo=1&bar=baz'
+    }) == {
+        'foo': 1,
+        'bar': 'baz',
+    }
 
 
 def test_valuefy():
@@ -54,37 +78,51 @@ def test_valuefy():
     assert valuefy('3.14') == 3.14
 
 
-@xfail
 def test_pull_body():
     """
     Expect to pull and parse request body.
     """
 
-    assert False
+    class Input(object):
+        def read(self, length):
+            return b'{"foo":1}'
+
+    assert pull_body({
+        'CONTENT_LENGTH': 9,
+        'wsgi.input': Input()
+    }) == {
+        'foo': 1,
+    }
 
 
-@xfail
 def test_pull_cookies():
     """
     Expect to pull and format cookies.
     """
 
-    assert False
+    assert pull_cookies({
+        'HTTP_COOKIE': 'theme=light',
+    }) == {
+        'theme': 'light',
+    }
 
 
-@xfail
-def test_pull_cookies_headers():
+def test_set_cookie_headers():
     """
     Expect to create headers to set cookies.
     """
 
-    assert False
+    headers = set_cookie_headers({'theme': 'light'})
+    assert isinstance(headers, list)
+    assert headers[0][0] == 'Set-Cookie'
+    assert 'theme=light' in headers[0][1]
+    assert 'Path=/' in headers[0][1]
+    assert 'HttpOnly' in headers[0][1]
 
 
-@xfail
 def test_json_serial():
     """
     Expect to tell JSON how to format non-JSON types.
     """
 
-    assert False
+    assert isinstance(json_serial(datetime.datetime.now()), str)
