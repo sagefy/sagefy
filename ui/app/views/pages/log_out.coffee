@@ -10,7 +10,7 @@ class LogOutPageView extends View
 
         if aux.isLoggedIn()
             @on('logged out user', @toIndex)
-            @emit('requested log out user')
+            @emit('request log out user')
         else
             @toIndex()
 

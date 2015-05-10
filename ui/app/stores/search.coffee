@@ -6,7 +6,7 @@ class SearchStore extends Store
     constructor: ->
         super
         @skip = 0
-        @on('fetched results', @increment.bind(this))
+        @on('fetch results', @increment.bind(this))
 
     url: ->
         return "/api/search/?limit=#{@limit}&skip=#{@skip}"

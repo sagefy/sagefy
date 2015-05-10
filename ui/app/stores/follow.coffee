@@ -7,7 +7,7 @@ class FollowStore extends Store
     constructor: ->
         super
         @skip = 0
-        @on('fetched follows', @increment.bind(this))
+        @on('fetch follows', @increment.bind(this))
 
     url: ->
         return "/api/follows/?limit=#{@limit}&skip=#{@skip}"

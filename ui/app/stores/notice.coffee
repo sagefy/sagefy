@@ -7,7 +7,7 @@ class NoticeStore extends Store
     constructor: ->
         super
         @skip = 0
-        @on('fetched notices', @increment.bind(this))
+        @on('fetch notices', @increment.bind(this))
 
     url: ->
         return "/api/notices/?limit=#{@limit}&skip=#{@skip}"
@@ -23,7 +23,7 @@ class NoticeStore extends Store
             method: 'PUT'
             url: "/api/notices/#{id}/read/"
             done: =>
-                @emit('marked notice read', id)
+                @emit('mark notice read', id)
         })
 
 module.exports = NoticeStore

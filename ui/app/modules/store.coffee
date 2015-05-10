@@ -86,7 +86,7 @@ class Store extends Listener
                         message: error
                     })
                     break
-        @emit("#{@name} invalid", id, errors) if errors.length
+        @emit("invalid #{@name}", id, errors) if errors.length
         return errors
 
     # Convert an object to a query string for GET requests.

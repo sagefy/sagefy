@@ -118,7 +118,7 @@ class MenuView extends View
     # Will vary based on logged in, logged out, and current user page
     updateState: ->
         @state = if @isLoggedIn() then 'loggedIn' else 'loggedOut'
-        @emit('changeState', @state)
+        @emit('change menu state', @state)
 
     # Returns the list of items for the menu
     # This should be the primary method used by other components

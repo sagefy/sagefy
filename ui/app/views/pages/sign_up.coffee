@@ -42,9 +42,9 @@ class SignUpPageView extends FormPageView
                 you agree to our <a href="/terms">Terms of Service</a>.
             '''
         })
-        @on('form submit', => @emit('request create user'))
-        @on('created user', @toMySets.bind(this))
-        @on('create user error', @form.errorMany.bind(@form))
+        @on('submit form', => @emit('request create user'))
+        @on('create user', @toMySets.bind(this))
+        @on('error on create user', @form.errorMany.bind(@form))
 
     toMySets: ->
         # Hard redirect to get the cookie
