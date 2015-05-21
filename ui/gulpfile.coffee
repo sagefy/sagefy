@@ -29,7 +29,7 @@ testSrc = ['test/**/*.coffee']
 ################################################################################
 
 gulp.task('default', ['watch'])
-
+gulp.task('develop', ['watch'])
 gulp.task('watch', (done) ->
     sequence('clean', [
         'watch statics'
@@ -39,6 +39,7 @@ gulp.task('watch', (done) ->
     ], done)
 )
 
+gulp.task('build', ['deploy'])
 gulp.task('deploy', (done) ->
     sequence('clean', [
         'copy statics'

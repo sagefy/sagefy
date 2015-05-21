@@ -85,39 +85,41 @@ example:
 ---
 */
 
-table
-    th, td
-        padding 0 ($unit / 2)
+th
+    @extend strong
 
-    caption
-        font-style italic
+th, td
+    padding 0 ($unit / 2)
 
-    thead
-        background $base-color(90)
-        border-bottom 1px solid $base-color(78)
-        text-align left
+table caption
+    font-style italic
 
-    tbody tr
+thead
+    background $base-color(90)
+    border-bottom 1px solid $base-color(78)
+    text-align left
+
+tbody tr
+    &.row--good
+        background $good-color(95)
+        color $good-color(20)
+
+    &.row--accent
+        background $accent-color(95)
+        color $accent-color(20)
+
+    &.row--bad
+        background $bad-color(95)
+        color $bad-color(20)
+
+    &:nth-child(2n+2)
+        background $base-color(97)
+
         &.row--good
-            background $good-color(95)
-            color $good-color(20)
+            background $good-color(90)
 
         &.row--accent
-            background $accent-color(95)
-            color $accent-color(20)
+            background $accent-color(90)
 
         &.row--bad
-            background $bad-color(95)
-            color $bad-color(20)
-
-        &:nth-child(2n+2)
-            background $base-color(97)
-
-            &.row--good
-                background $good-color(90)
-
-            &.row--accent
-                background $accent-color(90)
-
-            &.row--bad
-                background $bad-color(90)
+            background $bad-color(90)

@@ -843,6 +843,13 @@ hgroup :not(:last-child) {
   font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", georgia, serif;
   color: #696650;
 }
+b,
+strong,
+dt,
+th {
+  font-family: "palatino linotype", palatino, palladio, "urw palladio l", "book antiqua", georgia, serif;
+  font-weight: bold;
+}
 del {
   color: #a6a27f;
 }
@@ -971,9 +978,6 @@ ul.list--with-thumbnails h4 + p,
 ol.list--with-thumbnails h4 + p,
 table.list--with-thumbnails h4 + p {
   margin-top: 0;
-}
-dt {
-  font-weight: bold;
 }
 dd {
   margin: 0;
@@ -1702,40 +1706,40 @@ legend {
   background: #ffecef;
   color: #c57c8b;
 }
-table th,
-table td {
+th,
+td {
   padding: 0 6px;
 }
 table caption {
   font-style: italic;
 }
-table thead {
+thead {
   background: #e5e3d5;
   border-bottom: 1px solid #c7c29f;
   text-align: left;
 }
-table tbody tr.row--good {
+tbody tr.row--good {
   background: #e9f4e6;
   color: #22351c;
 }
-table tbody tr.row--accent {
+tbody tr.row--accent {
   background: #e9f2fc;
   color: #1f3243;
 }
-table tbody tr.row--bad {
+tbody tr.row--bad {
   background: #ffecef;
   color: #45282e;
 }
-table tbody tr:nth-child(2n+2) {
+tbody tr:nth-child(2n+2) {
   background: #f7f7f3;
 }
-table tbody tr:nth-child(2n+2).row--good {
+tbody tr:nth-child(2n+2).row--good {
   background: #d2e9cc;
 }
-table tbody tr:nth-child(2n+2).row--accent {
+tbody tr:nth-child(2n+2).row--accent {
   background: #d2e4fa;
 }
-table tbody tr:nth-child(2n+2).row--bad {
+tbody tr:nth-child(2n+2).row--bad {
   background: #ffd9e0;
 }
 aside {
