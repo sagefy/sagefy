@@ -134,3 +134,4 @@ Learning platforms
 - [Articulate Storyline](http://www.articulate.com/products/storyline-overview.php)
 - [Captivate](http://www.adobe.com/products/captivate.html)
 - [brightbytes](http://www.brightbytes.net/)
+- [AltSchool](https://www.altschool.com/education)
