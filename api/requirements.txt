@@ -2,6 +2,6 @@ uwsgi==2.0.7
 redis==2.10.3
 py-bcrypt==0.4
 passlib==1.6.2
-rethinkdb>=1.16.0
+rethinkdb>=2.0.0,<3.0.0
 pyyaml==3.11
 elasticsearch>=1.0.0,<2.0.0
