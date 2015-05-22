@@ -14,11 +14,13 @@ class Store extends Listener
 
     # Creates a simple object to store entries.
     # Format is `{id: entry}`.
+    # If the data is ordered, overwrite this method using `@data = []`.
     constructor: ->
         super
         @data = {}
 
     # Get the entry with the provided ID, if available.
+    # If the data is ordered, overwrite this method.
     get: (id) ->
         return @data[id] if id in @data
 

@@ -52,7 +52,7 @@ class UserStore extends Store
 
     createPassword: (data) ->
         # TODO validate
-        @ajax({
+        return @ajax({
             method: 'POST'
             url: "/api/users/#{data.id}/password"
             data: data

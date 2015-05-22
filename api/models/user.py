@@ -129,7 +129,6 @@ class User(Model):
             context = json.loads(redis.get(key).decode())
         except:
             context = {}
-        context['state'] = context.get('state') or 'choose_set'
         return context
 
     def set_learning_context(self, **kwargs):
@@ -166,14 +165,11 @@ class User(Model):
                 'name': set_['name'],
             }
 
-        if 'state' in kwargs:
-            context['state'] = kwargs.get('state')
-
-        if 'mode' in kwargs:
-            context['mode'] = kwargs.get('mode')
+        if 'next' in kwargs:
+            context['next'] = kwargs.get('next')
 
         """
-        State options:
+        Next options:
         - choose_set
         - tree
         - choose_unit
