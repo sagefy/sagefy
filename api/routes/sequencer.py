@@ -15,6 +15,11 @@ def next_route(request):
 
     context = current_user.get_learning_context()
 
+    # TODO@
+    # GET Next
+    #     -> Just in case, sends the next endpoint, or...
+    #     -> GET Choose Set
+
     return 200, {
         'next': next(current_user, context)  # TODO@ args
     }

@@ -49,6 +49,12 @@ def get_set_tree_route(request, set_id):
     TODO@ Render the tree of units that exists within a set.
     """
 
+    # TODO@
+    # GET View Set Tree
+    #     -> GET Choose Set
+    #     -> GET Choose Unit
+    #     -> GET Learn Card (Unit auto chosen)
+
     return 400, {}
 
     # Contexts:
@@ -73,6 +79,10 @@ def get_set_units_route(request, set_id):
         return abort(401)
     return 400, {}
 
+    # TODO@
+    # GET Choose Unit   (Update Learner Context)
+    #     -> POST Choose Unit
+
     # TODO@ For the menu, it must return the name and ID of the set
 
 
@@ -81,6 +91,10 @@ def choose_unit_route(request, set_id, unit_id):
     """
     TODO@ Updates the learner's information based on the unit they have chosen.
     """
+
+    # TODO@
+    # POST Chosen Unit
+    #     -> GET Learn Card
 
     current_user = get_current_user(request)
     if not current_user:

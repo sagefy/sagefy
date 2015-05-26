@@ -60,6 +60,10 @@ def learn_card_route(request, card_id):
     # TODO@ leverage `next` in context for easier logic
     current_user.set_learning_context(card=card)
 
+    # TODO@
+    # GET Learn Card
+    #     -> POST Respond Card
+
     return 200, {
         'card': card.deliver(access=''),
         'set': context.get('set'),
@@ -107,6 +111,12 @@ def respond_to_card_route(request, card_id):
                                   r.get('feedback'))
     if errors:
         return 400, {'errors': errors}
+
+    # TODO@
+    # POST Respond Card
+    #     -> GET Learn Card
+    #     -> GET Choose Unit
+    #     -> GET View Set Tree
 
     return 200, {
         'response': response.deliver(),

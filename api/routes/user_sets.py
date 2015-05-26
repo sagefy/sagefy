@@ -1,6 +1,6 @@
 from models.user_sets import UserSets
 from models.set import Set
-from framework.routes import get, post, delete, abort
+from framework.routes import get, post, put, delete, abort
 from framework.session import get_current_user
 
 
@@ -9,6 +9,10 @@ def get_user_sets_route(request, user_id):
     """
     Get the list of sets the user has added.
     """
+
+    # TODO@
+    # GET Choose Set
+    #     -> POST Choose Set
 
     current_user = get_current_user(request)
     if not current_user:
@@ -62,6 +66,17 @@ def add_set_route(request, user_id, set_id):
         return 400, {'errors': errors}
 
     return 200, {'sets': uset['set_ids']}
+
+
+@put('/api/users/{user_id}/sets/{set_id}')
+def select_set_route(request, user_id, set_id):
+    """
+    Select the set to work on.
+    """
+
+    # TODO@
+    # POST Choose Set   (Update Learner Context)
+    #    -> GET View Set Tree
 
 
 @delete('/api/users/{user_id}/sets/{set_id}')
