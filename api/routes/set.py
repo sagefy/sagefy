@@ -1,6 +1,7 @@
 from framework.routes import get, post, abort
 from models.set import Set
 from models.topic import Topic
+from models.unit import Unit
 from framework.session import get_current_user
 
 # Nota Bene: We use `set_` because `set` is a type in Python
@@ -89,14 +90,23 @@ def get_set_units_route(request, set_id):
 @post('/api/sets/{set_id}/units/{unit_id}')
 def choose_unit_route(request, set_id, unit_id):
     """
-    TODO@ Updates the learner's information based on the unit they have chosen.
+    Updates the learner's information based on the unit they have chosen.
     """
+
+    current_user = get_current_user(request)
+    if not current_user:
+        return abort(401)
+
+    unit = Unit.get_latest_accepted(unit_id)
+    if not unit:
+        return abort(404)
+
+    # TODO@ If the unit isn't in the set, or doesn't need to be learned...
+    # ... return 400, {}
 
     # TODO@
     # POST Chosen Unit
     #     -> GET Learn Card
 
-    current_user = get_current_user(request)
-    if not current_user:
-        return abort(401)
-    return 400, {}
+    current_user.set_learning_context(unit=unit)
+    return 200, {}

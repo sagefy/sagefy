@@ -5,24 +5,8 @@ Primary learning sequencer.
 from modules.sequencer.formulas import update as formula_update
 from modules.sequencer.params import init_learned
 from models.response import Response
-from modules.sequencer.traversal import traverse
+# from modules.sequencer.traversal import traverse
 from time import time
-
-
-def next(user, context):
-    """
-    Returns what should be displayed next.
-    Also should return `learned` progress.
-    Should return in format:
-    {'next': {
-        'path': '/api/path',
-        'method': 'GET',
-        'learned': 0.89,
-    }}
-    """
-
-    return False
-
 
 """
 Card

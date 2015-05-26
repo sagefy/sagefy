@@ -40,7 +40,7 @@ def follow_route(request):
 
     # Ensure the entity exists   TODO should this be a model validation?
     entity = get_latest_accepted(follow['entity']['kind'],
-                                  follow['entity']['id'])
+                                 follow['entity']['id'])
     if not entity:
         return abort(404)
 
