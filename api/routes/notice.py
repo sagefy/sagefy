@@ -3,15 +3,6 @@ from framework.session import get_current_user
 from models.notice import Notice
 
 
-def add_body_to_notices(notices):
-    parsed = []
-    for notice in notices:
-        n = notice.deliver(access='private')
-        n['body'] = notice.get_body()
-        parsed.append(n)
-    return parsed
-
-
 @get('/api/notices')
 def list_notices_route(request):
     """
@@ -23,10 +14,8 @@ def list_notices_route(request):
     if not current_user:
         return abort(401)
     notices = Notice.list(user_id=current_user['id'], **request['params'])
-    return 200, {'notices': add_body_to_notices(notices)}
-
-
-# TODO Dry up the mark as read/unread routes
+    return 200, {'notices': [notice.deliver(access='private')
+                             for notice in notices]}
 
 
 @put('/api/notices/{notice_id}')

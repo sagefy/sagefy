@@ -74,3 +74,12 @@ class Notice(Model):
         """
 
         return c(self['kind']).format(**{})
+
+    def deliver(self, access=None):
+        """
+        Add the notice body to the notice before delivering.
+        """
+
+        data = super().deliver(access)
+        data['body'] = self.get_body()
+        return data
