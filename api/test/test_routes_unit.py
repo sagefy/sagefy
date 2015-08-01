@@ -1,5 +1,4 @@
 import rethinkdb as r
-import json
 import routes.unit
 
 

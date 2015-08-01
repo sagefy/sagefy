@@ -21,7 +21,6 @@ def test_scale(app):
     assert False
 
 
-
 """
 Expect to calculate transit.
 Expect transit to increase with correct answer.

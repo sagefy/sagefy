@@ -2,7 +2,7 @@ import pytest
 
 xfail = pytest.mark.xfail
 
-from conftest import create_user_in_db, log_in, log_out
+from conftest import create_user_in_db, log_in
 from framework.session import get_current_user, log_in_user, log_out_user
 from models.user import User
 from framework.redis import redis

@@ -1,7 +1,6 @@
 from passlib.hash import bcrypt
-import json
 from models.user import User
-from conftest import create_user_in_db, log_in, log_out
+from conftest import create_user_in_db
 import rethinkdb as r
 import routes.user
 import pytest

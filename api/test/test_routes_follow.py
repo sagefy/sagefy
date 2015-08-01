@@ -1,4 +1,3 @@
-import json
 import rethinkdb as r
 import routes.follow
 

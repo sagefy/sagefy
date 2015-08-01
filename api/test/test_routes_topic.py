@@ -4,7 +4,6 @@ xfail = pytest.mark.xfail
 
 
 from conftest import create_user_in_db
-import json
 import rethinkdb as r
 import routes.topic
 

@@ -1,6 +1,6 @@
-from modules.sequencer.formulas import update, calculate_correct, \
-    calculate_incorrect, calculate_difficulty, update_guess, update_slip, \
-    calculate_belief, update_learned
+# from modules.sequencer.formulas import update, calculate_correct, \
+#     calculate_incorrect, calculate_difficulty, update_guess, update_slip, \
+#     calculate_belief, update_learned
 
 import pytest
 
