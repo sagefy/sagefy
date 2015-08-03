@@ -16,13 +16,6 @@ class Set(EntityMixin, Model):
     """
     tablename = 'sets'
 
-    """
-    The model represents a **version** of a set, not a set itself.
-    The `entity_id` attribute is what refers to a particular set.
-    The `id` attribute refers to a specific version of the set.
-    The `previous_id` attribute refers to the version based off.
-    """
-
     schema = dict(EntityMixin.schema.copy(), **{
         'body': {
             'validate': (is_required, is_string,)

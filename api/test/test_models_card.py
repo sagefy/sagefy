@@ -86,9 +86,9 @@ def test_name(db_conn, cards_table):
     assert len(errors) == 0
 
 
-def test_accepted(db_conn, cards_table):
+def test_status(db_conn, cards_table):
     """
-    Expect a card version canoncial to be a boolean.
+    Expect a card version status to be a string.
     """
 
     card, errors = Card.insert({
@@ -99,8 +99,8 @@ def test_accepted(db_conn, cards_table):
         'kind': 'video'
     })
     assert len(errors) == 0
-    assert card['accepted'] is False
-    card['accepted'] = True
+    assert card['status'] == 'pending'
+    card['status'] = 'accepted'
     card, errors = card.save()
     assert len(errors) == 0
 

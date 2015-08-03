@@ -18,17 +18,17 @@ def test_get_latest_accepted(db_conn, cards_table):
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'id': 'B2',
         'entity_id': 'A',
         'created': r.time(2005, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }]).run(db_conn)
 
     e = entity.get_latest_accepted('card', 'A')

@@ -13,12 +13,6 @@ class Flag(Post):
                            'unpublished', 'duplicate', 'inaccessible'
             ))
         },
-        'status': {
-            'validate': (is_required, (
-                is_one_of, 'pending', 'blocked', 'accepted', 'declined'
-            )),
-            'default': 'pending'
-        }
     })
 
     def __init__(self, fields=None):

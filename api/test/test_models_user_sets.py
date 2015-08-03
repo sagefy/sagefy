@@ -47,28 +47,28 @@ def test_list_sets(db_conn, users_sets_table, sets_table):
         'body': 'Apple',
         'created': r.now(),
         'modified': r.now(),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'entity_id': 'B2',
         'name': 'B',
         'body': 'Banana',
         'created': r.now(),
         'modified': r.now(),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'entity_id': 'C3',
         'name': 'C',
         'body': 'Coconut',
         'created': r.now(),
         'modified': r.now(),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'entity_id': 'D4',
         'name': 'D',
         'body': 'Date',
         'created': r.now(),
         'modified': r.now(),
-        'accepted': True,
+        'status': 'accepted',
     }]).run(db_conn)
     users_sets_table.insert({
         'user_id': 'abcd1234',

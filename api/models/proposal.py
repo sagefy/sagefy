@@ -1,4 +1,4 @@
-from modules.validations import is_required, is_string, is_one_of
+from modules.validations import is_required, is_string
 from models.post import Post
 
 
@@ -11,12 +11,6 @@ class Proposal(Post):
         },
         'name': {
             'validate': (is_required, is_string,)
-        },
-        'status': {  # TODO@ does this belong in versions instead?
-            'validate': (is_required, (
-                is_one_of, 'pending', 'blocked', 'accepted', 'declined'
-            )),
-            'default': 'pending'
         },
     })
 

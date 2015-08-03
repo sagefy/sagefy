@@ -88,14 +88,14 @@ def test_get_user_sets(db_conn, session, users_sets_table,
         'body': 'Apple',
         'created': r.now(),
         'modified': r.now(),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'entity_id': 'B2',
         'name': 'B',
         'body': 'Banana',
         'created': r.now(),
         'modified': r.now(),
-        'accepted': True,
+        'status': 'accepted',
     }]).run(db_conn)
 
     users_sets_table.insert({

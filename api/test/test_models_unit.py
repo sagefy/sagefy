@@ -72,9 +72,9 @@ def test_body(db_conn, units_table):
     assert len(errors) == 0
 
 
-def test_accepted(db_conn, units_table):
+def test_status(db_conn, units_table):
     """
-    Expect a unit accepted to be a boolean.
+    Expect a unit status to be a string.
     """
 
     unit, errors = Unit.insert({
@@ -82,8 +82,8 @@ def test_accepted(db_conn, units_table):
         'body': 'Learn how to do this',
     })
     assert len(errors) == 0
-    assert unit['accepted'] is False
-    unit['accepted'] = True
+    assert unit['status'] == 'pending'
+    unit['status'] = 'accepted'
     unit, errors = unit.save()
     assert len(errors) == 0
 

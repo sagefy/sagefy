@@ -15,13 +15,6 @@ class Card(EntityMixin, Model):
     """
     tablename = 'cards'
 
-    """
-    The model represents a **version** of a card, not a card itself.
-    The `entity_id` attribute is what refers to a particular card.
-    The `id` attribute refers to a specific version of the card.
-    The `previous_id` attribute refers to the version based off.
-    """
-
     schema = dict(EntityMixin.schema.copy(), **{
         'unit_id': {
             'validate': (is_required, is_string,)  # TODO@ is valid id?

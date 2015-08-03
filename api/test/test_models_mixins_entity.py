@@ -17,17 +17,17 @@ def test_latest_accepted_card(db_conn, cards_table):
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'id': 'B2',
         'entity_id': 'A',
         'created': r.time(2005, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }]).run(db_conn)
 
     card = Card.get_latest_accepted('A')
@@ -43,17 +43,17 @@ def test_latest_accepted(db_conn, units_table):
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'id': 'B2',
         'entity_id': 'A',
         'created': r.time(2005, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }]).run(db_conn)
 
     unit = Unit.get_latest_accepted('A')
@@ -69,17 +69,17 @@ def test_latest_accepted_set(db_conn, sets_table):
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'id': 'B2',
         'entity_id': 'A',
         'created': r.time(2005, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }]).run(db_conn)
 
     set_ = Set.get_latest_accepted('A')
@@ -95,7 +95,7 @@ def test_get_versions(db_conn, cards_table):
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }, {
         'id': 'B2',
         'entity_id': 'A',
@@ -104,7 +104,7 @@ def test_get_versions(db_conn, cards_table):
         'id': 'C3',
         'entity_id': 'B',
         'created': r.time(2006, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
     }]).run(db_conn)
 
     card_versions = Card.get_versions('A')
@@ -121,7 +121,7 @@ def test_list_requires(db_conn, cards_table):
         'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'accepted': True,
+        'status': 'accepted',
         'kind': 'video',
         'requires': ['zxyz'],
     }, {
@@ -129,21 +129,21 @@ def test_list_requires(db_conn, cards_table):
         'unit_id': 'zytx',
         'created': r.time(1986, 11, 3, 'Z'),
         'modified': r.time(1986, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
         'kind': 'video',
     }, {
         'entity_id': 'zxyz',
         'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'accepted': True,
+        'status': 'accepted',
         'kind': 'video',
     }, {
         'entity_id': 'qwer',
         'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'accepted': True,
+        'status': 'accepted',
         'kind': 'choice',
         'requires': ['abcd'],
     }]).run(db_conn)
@@ -164,7 +164,7 @@ def test_list_required_by(db_conn, cards_table):
         'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'accepted': True,
+        'status': 'accepted',
         'kind': 'video',
         'requires': ['zxyz'],
     }, {
@@ -172,21 +172,21 @@ def test_list_required_by(db_conn, cards_table):
         'unit_id': 'zytx',
         'created': r.time(1986, 11, 3, 'Z'),
         'modified': r.time(1986, 11, 3, 'Z'),
-        'accepted': True,
+        'status': 'accepted',
         'kind': 'video',
     }, {
         'entity_id': 'zxyz',
         'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'accepted': True,
+        'status': 'accepted',
         'kind': 'video',
     }, {
         'entity_id': 'qwer',
         'unit_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
-        'accepted': True,
+        'status': 'accepted',
         'kind': 'choice',
         'requires': ['abcd'],
     }]).run(db_conn)

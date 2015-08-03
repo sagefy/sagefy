@@ -10,7 +10,6 @@ def test_user_id(db_conn, posts_table):
         'topic_id': 'B',
         'body': 'C',
         'reason': 'offensive',
-        'status': 'pending',
     })
     assert len(errors) == 1
     flag['user_id'] = 'A'
@@ -27,7 +26,6 @@ def test_topic_id(db_conn, posts_table):
         'user_id': 'A',
         'body': 'C',
         'reason': 'offensive',
-        'status': 'pending',
     })
     assert len(errors) == 1
     flag['topic_id'] = 'B'
@@ -44,7 +42,6 @@ def test_body(db_conn, posts_table):
         'user_id': 'A',
         'topic_id': 'B',
         'reason': 'offensive',
-        'status': 'pending',
     })
     assert len(errors) == 1
     flag['body'] = 'C'
@@ -62,7 +59,6 @@ def test_kind(db_conn, posts_table):
         'topic_id': 'B',
         'body': 'C',
         'reason': 'offensive',
-        'status': 'pending',
     })
     del flag['kind']
     flag, errors = flag.save()
@@ -82,7 +78,6 @@ def test_replies(db_conn, posts_table):
         'topic_id': 'B',
         'body': 'C',
         'reason': 'offensive',
-        'status': 'pending',
     })
     assert len(errors) == 0
     flag['replies_to_id'] = 'D'
@@ -99,27 +94,8 @@ def test_reason(db_conn, posts_table):
         'user_id': 'A',
         'topic_id': 'B',
         'body': 'C',
-        'status': 'pending',
     })
     assert len(errors) == 1
     flag['reason'] = 'offensive'
     flag, errors = flag.save()
     assert len(errors) == 0
-
-
-def test_status(db_conn, posts_table):
-    """
-    Expect a flag to require a status.
-    """
-
-    flag, errors = Flag.insert({
-        'user_id': 'A',
-        'topic_id': 'B',
-        'body': 'C',
-        'reason': 'offensive',
-    })
-    assert flag['status'] == 'pending'  # Default value
-    assert len(errors) == 0
-    del flag['status']
-    flag, errors = flag.save()
-    assert len(errors) == 1

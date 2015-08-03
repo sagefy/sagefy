@@ -2,11 +2,18 @@ import rethinkdb as r
 import framework.database as database
 from modules.model import Model
 from modules.validations import is_required, is_language, is_boolean, \
-    is_list, is_string, is_list_of_strings
+    is_list, is_string, is_list_of_strings, is_one_of
 from modules.util import uniqid
 
 
 class EntityMixin(object):
+    """
+    The model represents a **version** of an entity, not an entity itself.
+    The `entity_id` attribute is what refers to a particular entity.
+    The `id` attribute refers to a specific version of the entity.
+    The `previous_id` attribute refers to the version based off.
+    """
+
     schema = dict(Model.schema.copy(), **{
         'entity_id': {
             'validate': (is_required, is_string,),  # TODO@ is valid id?
@@ -22,9 +29,11 @@ class EntityMixin(object):
         'name': {
             'validate': (is_required, is_string,)
         },
-        'accepted': {
-            'validate': (is_boolean,),
-            'default': False
+        'status': {
+            'validate': (is_required, (
+                is_one_of, 'pending', 'blocked', 'accepted', 'declined'
+            )),
+            'default': 'pending'
         },
         'available': {
             'validate': (is_boolean,),
@@ -45,7 +54,7 @@ class EntityMixin(object):
         # TODO@ this query should have an index in card, unit, set
         # TODO is there a way to avoid the cost of this query?
         return (cls.table
-                   .filter(r.row['accepted'].eq(True))
+                   .filter(r.row['status'].eq('accepted'))
                    .group('entity_id')
                    .max('created')
                    .default(None)

@@ -559,6 +559,7 @@ def test_update_post_body(db_conn, users_table, topics_table,
     assert 'Update' in response['post']['body']
 
 
+@xfail
 def test_update_proposal(db_conn, users_table, topics_table,
                          posts_table, session):
     """
