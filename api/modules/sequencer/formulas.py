@@ -56,10 +56,18 @@ def update(score, time_delta, learned,
     learned2 = update_learned(score, learned,
                               guess, slip, transit,
                               time_delta)
-    guess_distribution = update_guess(score, learned, guess,
-                                      slip, transit, guess_distribution)
-    slip_distribution = update_slip(score, learned, guess,
-                                    slip, transit, slip_distribution)
+    guess_distribution.update({
+        'score': score,
+        'learned': learned,
+        'guess': guess,
+        'slip': slip,
+    })
+    slip_distribution.update({
+        'score': score,
+        'learned': learned,
+        'guess': guess,
+        'slip': slip,
+    })
 
     return {
         'learned': learned2,
@@ -94,34 +102,6 @@ def calculate_difficulty(guess, slip):
     if guess + slip > 1:
         return float("inf")
     return calculate_correct(guess, slip, 0.5)
-
-
-def update_guess(score, learned, guess, slip, transit, guess_distribution):
-    """
-    Determines how to update guess given a score.
-    """
-
-    guess_distribution.update({
-        'score': score,
-        'learned': learned,
-        'guess': guess,
-        'slip': slip,
-    })
-    return guess_distribution
-
-
-def update_slip(score, learned, guess, slip, transit, slip_distribution):
-    """
-    Determines how to update slip given a score.
-    """
-
-    slip_distribution.update({
-        'score': score,
-        'learned': learned,
-        'guess': guess,
-        'slip': slip,
-    })
-    return slip_distribution
 
 
 def calculate_belief(learned, time_delta):
