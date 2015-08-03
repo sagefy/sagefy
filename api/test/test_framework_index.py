@@ -1,7 +1,5 @@
 from framework.index import valuefy, serve, call_handler, construct_request, \
-    pull_query_string, pull_body, pull_cookies, set_cookie_headers, \
-    json_serial
-import datetime
+    pull_query_string, pull_body, pull_cookies, set_cookie_headers
 import pytest
 
 xfail = pytest.mark.xfail
@@ -118,11 +116,3 @@ def test_set_cookie_headers():
     assert 'theme=light' in headers[0][1]
     assert 'Path=/' in headers[0][1]
     assert 'HttpOnly' in headers[0][1]
-
-
-def test_json_serial():
-    """
-    Expect to tell JSON how to format non-JSON types.
-    """
-
-    assert isinstance(json_serial(datetime.datetime.now()), str)

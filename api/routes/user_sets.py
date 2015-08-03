@@ -8,11 +8,11 @@ from framework.session import get_current_user
 def get_user_sets_route(request, user_id):
     """
     Get the list of sets the user has added.
-    """
 
-    # TODO@
-    # GET Choose Set
-    #     -> POST Choose Set
+    NEXT STATE
+    GET Choose Set
+        -> POST Choose Set
+    """
 
     current_user = get_current_user(request)
     if not current_user:
@@ -21,11 +21,20 @@ def get_user_sets_route(request, user_id):
     if user_id != current_user['id']:
         return abort(403)
 
+    next = {
+        'method': 'POST',
+        'path': '/api/users/{user_id}/sets/{set_id}'
+                .format(user_id=current_user['id'],
+                        set_id='{set_id}'),
+    }
+    current_user.set_learning_context(next=next)
+
     uset = UserSets.get(user_id=user_id)
     if not uset:
-        return 200, {'sets': []}
+        return 200, {'sets': [], 'next': next}
     return 200, {
-        'sets': [s.deliver() for s in uset.list_sets(**request['params'])]
+        'sets': [s.deliver() for s in uset.list_sets(**request['params'])],
+        'next': next,
     }
 
 
@@ -72,11 +81,25 @@ def add_set_route(request, user_id, set_id):
 def select_set_route(request, user_id, set_id):
     """
     Select the set to work on.
+
+    NEXT STATE
+    POST Choose Set   (Update Learner Context)
+        -> GET View Set Tree
     """
 
-    # TODO@
-    # POST Choose Set   (Update Learner Context)
-    #    -> GET View Set Tree
+    current_user = get_current_user(request)
+    if not current_user:
+        return abort(401)
+
+    set_ = Set.get_latest_accepted(set_id)
+    next = {
+        'method': 'GET',
+        'path': '/api/sets/{set_id}/tree'
+                .format(set_id=set_id),
+    }
+    current_user.set_learning_context(set=set_.bundle(), next=next)
+
+    return 200, {'next': next}
 
 
 @delete('/api/users/{user_id}/sets/{set_id}')

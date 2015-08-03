@@ -551,15 +551,15 @@ None
 
 401 if not logged in. 404 if set or unit not found. 400 if it doesn't make sense
 
-Sequencer
+Next
 =========
 
-The sequencer is an abstract resource which only determines one thing: where to go next.
+Next is an abstract resource which only determines one thing: where to go next.
 
 Next
 ----
 
-`GET https://sagefy.org/api/sequencer/next/`
+`GET https://sagefy.org/api/next/`
 
 Tell the learner where to go next.
 

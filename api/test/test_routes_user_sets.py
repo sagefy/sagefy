@@ -145,6 +145,28 @@ def test_add_set_already_added(db_conn, session, sets_table, users_sets_table):
     assert code == 400
 
 
+def test_select_set_route(db_conn, session, sets_table, users_sets_table):
+    """
+    Expect to select a set.
+    """
+
+    sets_table.insert({
+        'entity_id': 'A1',
+        'name': 'A',
+        'body': 'Apple',
+        'created': r.now(),
+        'modified': r.now(),
+        'accepted': True,
+    }).run(db_conn)
+
+    request = {'cookies': {'session_id': session}}
+    code, response = routes.user_sets.select_set_route(request,
+                                                       'abcd1234',
+                                                       'A1')
+    assert code == 200
+    assert response['next']['path'] == '/api/sets/A1/tree'
+
+
 def test_remove_set(db_conn, session, sets_table, users_sets_table):
     """
     Expect to remove a set from the user's list.

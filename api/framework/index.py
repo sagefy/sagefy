@@ -12,6 +12,7 @@ from framework.database import make_db_connection, close_db_connection
 from framework.routes import find_path, abort
 import framework.database
 import framework.mail
+from modules.util import json_serial
 
 
 config = {
@@ -166,12 +167,3 @@ def set_cookie_headers(cookies):
         ]).format(key=key, value=value, expires=expires))
         for key, value in cookies.items()
     ]
-
-
-def json_serial(val):
-    """
-    Tell `json.dumps` how to convert non-JSON types.
-    """
-
-    if isinstance(val, datetime):
-        return val.isoformat()

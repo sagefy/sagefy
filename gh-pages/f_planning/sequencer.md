@@ -150,6 +150,8 @@ Flow
 
 ![Flowchart](https://docs.google.com/drawings/d/1fmdT0vqWPsq-oUG0IPRprckGw8wn9_QmO9tCe63yS80/pub?w=850&h=699)
 
+![Endpoint Flowchart](/f_planning/sequencer_endpoints.png)
+
 ### Set Selection
 
 I come to the site, I sign in. Brings me to empty list of sets. Links to search sets.

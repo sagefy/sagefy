@@ -4,6 +4,7 @@ Short, one-off methods that could potentially be reused anywhere.
 
 import random
 import string
+from datetime import datetime
 
 
 def uniqid():
@@ -40,6 +41,13 @@ def compact(a):
     return [b for b in a if b is not None]
 
 
+def compact_dict(d):
+    """
+    Return a dict with None removed.
+    """
+    return {k: v for k, v in d.items() if v is not None}
+
+
 def get_first(dct, *keys):
     """
     Given a dictionary, find the value for the first available key in the
@@ -49,3 +57,12 @@ def get_first(dct, *keys):
         if key in dct:
             return dct[key]
     return None
+
+
+def json_serial(val):
+    """
+    Tell `json.dumps` how to convert non-JSON types.
+    """
+
+    if isinstance(val, datetime):
+        return val.isoformat()

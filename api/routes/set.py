@@ -48,49 +48,99 @@ def get_set_versions_route(request, set_id):
 def get_set_tree_route(request, set_id):
     """
     TODO@ Render the tree of units that exists within a set.
+
+    Contexts:
+    - Search set, preview units in set
+    - Pre diagnosis
+    - Learner view progress in set
+    - Set complete
+
+    NEXT STATE
+    GET View Set Tree
+        -> GET Choose Set    ...when set is complete
+        -> GET Choose Unit   ...when in learn mode
+        -> GET Learn Card    ...when in diagnosis
+            (Unit auto chosen)
     """
 
-    # TODO@
-    # GET View Set Tree
-    #     -> GET Choose Set
-    #     -> GET Choose Unit
-    #     -> GET Learn Card (Unit auto chosen)
+    current_user = get_current_user(request)
+    context = current_user.get_learning_context() if current_user else {}
 
-    return 400, {}
+    # If we are just previewing, don't update anything
+    if set_id != context.get('set', {}).get('entity_id'):
+        return 200, {}
 
-    # Contexts:
-    # - Search set, preview units in set
-    # - Pre diagnosis
-    # - Learner view progress in set
-    # - Set complete
+    # If the set is complete, lead the learner to choose another set.
+    elif False:  # TODO@ how do I know the set is complete?
+        next = {
+            'method': 'GET',
+            'path': '/api/users/{user_id}/sets'
+                    .format(user_id=current_user['id']),
+        }
+        current_user.set_learning_context(next=next, unit=None, set=None)
+
+    # When in diagnosis, choose the unit and card automagically.
+    elif False:  # TODO@ when am I in diagnosis mode?
+        next = {
+            'method': 'GET',
+            'path': '/api/cards/{card_id}/learn'
+                    .format(card_id=None),  # TODO@ pick a card
+        }
+        current_user.set_learning_context(next=next, unit=None, card=None)
+        # TODO@ choose a unit and a card
+
+    # When in learn mode, lead me to choose a unit.
+    else:
+        next = {
+            'method': 'GET',
+            'path': '/api/sets/{set_id}/units'
+                    .format(set_id=set_id),
+        }
+        current_user.set_learning_context(next=next)
 
     # TODO@ For the menu, it must return the name and ID of the set
+    return 200, {
+        'next': next,
+    }
 
 
 @get('/api/sets/{set_id}/units')
 def get_set_units_route(request, set_id):
     """
-    TODO@ Render the units that exist within the set.
-    Specifically, present a small number of units the learner can choose
-    from.
+    TODO@ Present a small number of units the learner can choose from.
+
+    NEXT STATE
+    GET Choose Unit
+        -> POST Choose Unit
     """
 
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    return 400, {}
 
-    # TODO@
-    # GET Choose Unit   (Update Learner Context)
-    #     -> POST Choose Unit
+    context = current_user.get_learning_context()
+    next = {
+        'method': 'POST',
+        'path': '/api/sets/{set_id}/units/{unit_id}'
+                  .format(set_id=context.get('set', {}).get('entity_id'),
+                          unit_id='{unit_id}'),
+    }
+    current_user.set_learning_context(next=next)
 
     # TODO@ For the menu, it must return the name and ID of the set
+    return 200, {
+        'next': next,
+    }
 
 
 @post('/api/sets/{set_id}/units/{unit_id}')
 def choose_unit_route(request, set_id, unit_id):
     """
     Updates the learner's information based on the unit they have chosen.
+
+    NEXT STATE
+    POST Chosen Unit
+        -> GET Learn Card
     """
 
     current_user = get_current_user(request)
@@ -102,11 +152,13 @@ def choose_unit_route(request, set_id, unit_id):
         return abort(404)
 
     # TODO@ If the unit isn't in the set, or doesn't need to be learned...
-    # ... return 400, {}
+    # ... return abort(400)
 
-    # TODO@
-    # POST Chosen Unit
-    #     -> GET Learn Card
+    next = {
+        'method': 'GET',
+        'path': '/api/cards/{card_id}/learn'
+                .format(card_id=None),  # TODO@
+    }
+    current_user.set_learning_context(unit=unit.bundle(), next=next)
 
-    current_user.set_learning_context(unit=unit)
-    return 200, {}
+    return 200, {'next': next}

@@ -43,6 +43,10 @@ def get_card_route(request, card_id):
 def learn_card_route(request, card_id):
     """
     Render the card's data, ready for learning.
+
+    NEXT STATE
+    GET Learn Card
+        -> POST Respond Card
     """
 
     current_user = get_current_user(request)
@@ -53,21 +57,24 @@ def learn_card_route(request, card_id):
     if not card:
         return abort(404)
 
+    # Make sure the current unit id matches the card
     context = current_user.get_learning_context()
-    if context.get('unit', {}).get('id') != card['unit_id']:
+    if context.get('unit', {}).get('entity_id') != card['unit_id']:
         return abort(400)
 
-    # TODO@ leverage `next` in context for easier logic
-    current_user.set_learning_context(card=card)
 
-    # TODO@
-    # GET Learn Card
-    #     -> POST Respond Card
+    next = {
+        'method': 'POST',
+        'path': '/api/cards/{card_id}/responses'
+                .format(card_id=card['entity_id'])
+    }
+    current_user.set_learning_context(card=card.bundle(), next=next)
 
     return 200, {
         'card': card.deliver(access=''),
         'set': context.get('set'),
-        'unit': context.get('unit')
+        'unit': context.get('unit'),
+        'next': next,
     }
 
 
@@ -88,6 +95,12 @@ def get_card_versions_route(request, card_id):
 def respond_to_card_route(request, card_id):
     """
     Record and process a learner's response to a card.
+
+    NEXT STATE
+    POST Respond Card
+        -> GET Learn Card      ...when not ready
+        -> GET Choose Unit     ...when ready, but still units
+        -> GET View Set Tree   ...when ready and done
     """
 
     current_user = get_current_user(request)
@@ -98,13 +111,10 @@ def respond_to_card_route(request, card_id):
     if not card:
         return abort(404)
 
+    # Make sure the card is the current one
     context = current_user.get_learning_context()
-    if (context.get('card', {}).get('id') != card['entity_id'] or
-            context.get('unit', {}).get('id') != card['unit_id']):
+    if context.get('card', {}).get('entity_id') != card['entity_id']:
         return abort(400)
-
-    # TODO@ leverage `next` in context for easier logic
-    current_user.set_learning_context(card=None)
 
     r = seq_update(current_user, card, request['params'].get('response'))
     errors, response, feedback = (r.get('errors'), r.get('response'),
@@ -112,13 +122,35 @@ def respond_to_card_route(request, card_id):
     if errors:
         return 400, {'errors': errors}
 
-    # TODO@
-    # POST Respond Card
-    #     -> GET Learn Card
-    #     -> GET Choose Unit
-    #     -> GET View Set Tree
+    # If we are ready and done, view tree.
+    if False:  # TODO@ how do I know this state?
+        next = {
+            'method': 'GET',
+            'path': '/api/sets/{set_id}/tree'
+                    .format(set_id=context.get('set', {}).get('entity_id')),
+        }
+        current_user.set_learning_context(card=None, unit=None, next=next)
+
+    # If we are ready and still units, choose unit.
+    elif False:  # TODO@ how do I know this state?
+        next = {
+            'method': 'GET',
+            'path': '/api/sets/{set_id}/units'
+                    .format(set_id=context.get('set', {}).get('entity_id')),
+        }
+        current_user.set_learning_context(card=None, unit=None, next=next)
+
+    # If we aren't ready, learn another card.
+    else:
+        next = {
+            'method': 'GET',
+            'path': '/api/cards/{card_id}/learn'
+                    .format(card_id=None),  # TODO@ pick a card
+        }
+        current_user.set_learning_context(card=None, next=next)
 
     return 200, {
         'response': response.deliver(),
-        'feedback': feedback
+        'feedback': feedback,
+        'next': next,
     }

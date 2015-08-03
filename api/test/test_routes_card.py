@@ -131,8 +131,8 @@ def test_learn_card(db_conn, session, cards_table):
     }).run(db_conn)
 
     redis.set('learning_context_abcd1234', json.dumps({
-        'unit': {'id': 'vbnm7890'},
-        'set': {'id': 'jkl;1234'},
+        'unit': {'entity_id': 'vbnm7890'},
+        'set': {'entity_id': 'jkl;1234'},
     }))
 
     request = {'cookies': {'session_id': session}}
@@ -195,8 +195,8 @@ def test_learn_card_400(db_conn, cards_table, session):
     }).run(db_conn)
 
     redis.set('learning_context_abcd1234', json.dumps({
-        'unit': {'id': 'gfds6543'},
-        'set': {'id': '6543hgfs'},
+        'unit': {'entity_id': 'gfds6543'},
+        'set': {'entity_id': '6543hgfs'},
     }))
 
     request = {'cookies': {'session_id': session}}
@@ -233,9 +233,9 @@ def test_respond_card(db_conn, cards_table, responses_table, session):
     }).run(db_conn)
 
     redis.set('learning_context_abcd1234', json.dumps({
-        'unit': {'id': 'vbnm7890'},
-        'set': {'id': 'jkl;1234'},
-        'card': {'id': 'tyui4567'},
+        'unit': {'entity_id': 'vbnm7890'},
+        'set': {'entity_id': 'jkl;1234'},
+        'card': {'entity_id': 'tyui4567'},
     }))
 
     request = {
@@ -301,9 +301,9 @@ def test_respond_card_400a(db_conn, session, cards_table):
     }).run(db_conn)
 
     redis.set('learning_context_abcd1234', json.dumps({
-        'unit': {'id': 'vbnm7890'},
-        'set': {'id': 'jkl;1234'},
-        'card': {'id': 'gfds3456'},
+        'unit': {'entity_id': 'vbnm7890'},
+        'set': {'entity_id': 'jkl;1234'},
+        'card': {'entity_id': 'gfds3456'},
     }))
 
     request = {
@@ -343,9 +343,9 @@ def test_respond_card_400b(db_conn, session, cards_table):
     }).run(db_conn)
 
     redis.set('learning_context_abcd1234', json.dumps({
-        'unit': {'id': 'vbnm7890'},
-        'set': {'id': 'jkl;1234'},
-        'card': {'id': 'tyui4567'},
+        'unit': {'entity_id': 'vbnm7890'},
+        'set': {'entity_id': 'jkl;1234'},
+        'card': {'entity_id': 'tyui4567'},
     }))
 
     request = {

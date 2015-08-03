@@ -19,6 +19,6 @@ import routes.card  # flake8: noqa
 import routes.unit  # flake8: noqa
 import routes.set  # flake8: noqa
 import routes.search  # flake8: noqa
-import routes.sequencer  # flake8: noqa
+import routes.next  # flake8: noqa
 
 from framework.index import serve  # flake8: noqa

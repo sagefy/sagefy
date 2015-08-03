@@ -196,7 +196,6 @@ def test_update_password(db_conn, users_table):
     assert pw1 != user['password']
 
 
-@xfail
 def test_get_learning_context(db_conn, users_table):
     """
     Expect to get the learning context.
@@ -212,21 +211,20 @@ def test_get_learning_context(db_conn, users_table):
     user = User.get(id='abcd1234')
 
     redis.set('learning_context_abcd1234', json.dumps({
-        'card': {'id': 'A'},
-        'unit': {'id': 'B'},
-        'set': {'id': 'C'},
+        'card': {'entity_id': 'A'},
+        'unit': {'entity_id': 'B'},
+        'set': {'entity_id': 'C'},
     }))
     assert user.get_learning_context() == {
-        'card': {'id': 'A'},
-        'unit': {'id': 'B'},
-        'set': {'id': 'C'},
+        'card': {'entity_id': 'A'},
+        'unit': {'entity_id': 'B'},
+        'set': {'entity_id': 'C'},
     }
 
     redis.delete('learning_context_abcd1234')
     assert user.get_learning_context() == {}
 
 
-@xfail
 def test_set_learning_context(db_conn, users_table):
     """
     Expect to set the learning context.
@@ -243,29 +241,28 @@ def test_set_learning_context(db_conn, users_table):
 
     user.set_learning_context(card={'entity_id': 'A'})
     assert user.get_learning_context() == {
-        'card': {'id': 'A'}
+        'card': {'entity_id': 'A'}
     }
 
     user.set_learning_context(unit={
         'entity_id': 'B',
         'name': 'Banana',
         'body': "Banana",
-        'extra': 'Mwahahaha!',
     }, set={
         'entity_id': 'C',
         'name': 'Coconut',
     })
     assert user.get_learning_context() == {
         'card': {
-            'id': 'A',
+            'entity_id': 'A',
         },
         'unit': {
-            'id': 'B',
+            'entity_id': 'B',
             'name': 'Banana',
             'body': "Banana",
         },
         'set': {
-            'id': 'C',
+            'entity_id': 'C',
             'name': 'Coconut',
         }
     }
@@ -273,10 +270,10 @@ def test_set_learning_context(db_conn, users_table):
     user.set_learning_context(set=None)
     assert user.get_learning_context() == {
         'card': {
-            'id': 'A',
+            'entity_id': 'A',
         },
         'unit': {
-            'id': 'B',
+            'entity_id': 'B',
             'name': 'Banana',
             'body': "Banana",
         },

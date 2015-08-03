@@ -2,7 +2,7 @@ from modules.model import Model
 from modules.validations import is_required, is_email, is_string, \
     has_min_length, is_one_of
 from passlib.hash import bcrypt
-from modules.util import uniqid
+from modules.util import uniqid, pick, compact_dict, json_serial
 from modules.content import get as c
 import json
 from framework.redis import redis
@@ -131,52 +131,18 @@ class User(Model):
             context = {}
         return context
 
-    def set_learning_context(self, **kwargs):
+    def set_learning_context(self, **d):
         """
-        Update the learning context.
+        Update the learning context of the user.
+
+        Keys: `card`, `unit`, `set`
+            `next`: `method` and `path`
         """
 
         context = self.get_learning_context()
-
-        for kind in ('card', 'unit', 'set'):
-            if kind in kwargs and kwargs[kind] is None:
-                del context[kind]
-
-        card, unit, set_ = (kwargs.get('card'), kwargs.get('unit'),
-                            kwargs.get('set'))
-
-        if card and 'entity_id' in card:
-            context['card'] = {
-                'id': card['entity_id'],
-            }
-
-        if unit and 'entity_id' in unit:
-            context['unit'] = {
-                'id': unit['entity_id'],
-                'name': unit['name'],
-                'body': unit['body'],
-                'start_time': None,  # TODO@
-                'init_learned': None,  # TODO@
-            }
-
-        if set_ and 'entity_id' in set_:
-            context['set'] = {
-                'id': set_['entity_id'],
-                'name': set_['name'],
-            }
-
-        if 'next' in kwargs:
-            context['next'] = kwargs.get('next')
-
-        """
-        Next options:
-        - choose_set
-        - tree
-        - choose_unit
-        - learn_card  (mode: learn or diagnose)
-        - respond_card  (mode: learn or diagnose)
-        """
-
+        d = pick(d, ('card', 'unit', 'set', 'next'))
+        context.update(d)
+        context = compact_dict(context)
         key = 'learning_context_{id}'.format(id=self['id'])
-        redis.setex(key, 10 * 60, json.dumps(context))
+        redis.setex(key, 10 * 60, json.dumps(context, default=json_serial))
         return context
