@@ -83,8 +83,11 @@ cd /var/www
 sudo apt-get -y install nginx
 sudo apt-get -y install uwsgi
 sudo uwsgi --stop /tmp/uwsgi-master.pid
+sleep 1
 sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
+sleep 1
 sudo nginx -s stop
+sleep 1
 sudo nginx -c /var/www/setup/nginx.conf
 
 echo "Hooray! Provisioned."
