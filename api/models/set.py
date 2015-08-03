@@ -56,10 +56,9 @@ class Set(EntityMixin, Model):
         # *** First, find the list of sets
         #     directly containing the member ID. ***
 
-        query = (cls.start_accepteds_query()
+        query = (cls.start_accepted_query()
                     .filter(r.row['members'].contains(
-                        lambda member:
-                            member['id'] == unit_id
+                        lambda member: member['id'] == unit_id
                     )))
         sets = query.run(database.db_conn)
 
@@ -71,7 +70,7 @@ class Set(EntityMixin, Model):
         while found_sets:
             set_ids = {set_['entity_id'] for set_ in found_sets}
             all_sets += found_sets
-            query = (cls.start_accepteds_query()
+            query = (cls.start_accepted_query()
                         .filter(r.row['members'].contains(
                             lambda member:
                                 r.expr(set_ids).contains(member['id'])

@@ -46,7 +46,7 @@ class EntityMixin(object):
     })
 
     @classmethod
-    def start_accepteds_query(cls):
+    def start_accepted_query(cls):
         """
 
         """
@@ -71,7 +71,7 @@ class EntityMixin(object):
             return
 
         # TODO@ this query should have an index in card, unit, set
-        query = (cls.start_accepteds_query()
+        query = (cls.start_accepted_query()
                     .filter(r.row['entity_id'] == entity_id)
                     .limit(1))
 
@@ -89,7 +89,7 @@ class EntityMixin(object):
         if not entity_ids:
             return []
 
-        query = (cls.start_accepteds_query()
+        query = (cls.start_accepted_query()
                     .filter(lambda entity:
                             r.expr(entity_ids)
                             .contains(entity['entity_id'])))
@@ -128,7 +128,7 @@ class EntityMixin(object):
         entity = cls.get_latest_accepted(entity_id=entity_id)
 
         # TODO@ this query should have an index in card and unit
-        query = (cls.start_accepteds_query()
+        query = (cls.start_accepted_query()
                     .filter(lambda _: r.expr(entity['requires'])
                                        .contains(_['entity_id'])))
 
@@ -144,7 +144,7 @@ class EntityMixin(object):
             return []
 
         # TODO@ this query should have an index in card and unit
-        query = (cls.start_accepteds_query()
+        query = (cls.start_accepted_query()
                     .filter(r.row['requires'].contains(entity_id)))
 
         return [cls(fields) for fields in query.run(database.db_conn)]
