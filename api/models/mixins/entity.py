@@ -1,8 +1,40 @@
 import rethinkdb as r
 import framework.database as database
+from modules.model import Model
+from modules.validations import is_required, is_language, is_boolean, \
+    is_list, is_string, is_one_of, is_list_of_strings
+from modules.util import uniqid
 
 
 class EntityMixin(object):
+    schema = dict(Model.schema.copy(), **{
+        'entity_id': {
+            'validate': (is_required, is_string,),  # TODO@ is valid id?
+            'default': uniqid
+        },
+        'previous_id': {
+            'validate': (is_string,),  # TODO@ is valid id?
+        },
+        'language': {
+            'validate': (is_required, is_language,),
+            'default': 'en'
+        },
+        'name': {
+            'validate': (is_required, is_string,)
+        },
+        'accepted': {
+            'validate': (is_boolean,),
+            'default': False
+        },
+        'available': {
+            'validate': (is_boolean,),
+            'default': True
+        },
+        'tags': {
+            'validate': (is_list, is_list_of_strings),
+            'default': []
+        },
+    })
 
     @classmethod
     def start_accepteds_query(cls):

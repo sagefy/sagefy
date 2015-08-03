@@ -26,35 +26,9 @@ class Unit(EntityMixin, Model):
     The `previous_id` attribute refers to the version based off.
     """
 
-    schema = dict(Model.schema.copy(), **{
-        'entity_id': {
-            'validate': (is_required, is_string,),  # TODO@ is valid id?
-            'default': uniqid
-        },
-        'previous_id': {
-            'validate': (is_string,),  # TODO@ is valid id?
-        },
-        'language': {
-            'validate': (is_required, is_language,),
-            'default': 'en'
-        },
-        'name': {
-            'validate': (is_required, is_string,)
-        },
+    schema = dict(EntityMixin.schema.copy(), **{
         'body': {
             'validate': (is_required, is_string,)
-        },
-        'accepted': {
-            'validate': (is_boolean,),
-            'default': False
-        },
-        'available': {
-            'validate': (is_boolean,),
-            'default': True
-        },
-        'tags': {
-            'validate': (is_list, is_list_of_strings),
-            'default': []
         },
         'require_ids': {
             'validate': (is_list,),  # TODO@ is valid id?
