@@ -1,8 +1,6 @@
 from modules.model import Model
 from models.mixins.entity import EntityMixin
-from modules.validations import is_required, is_language, is_string, \
-    is_boolean, is_list, is_list_of_strings
-from modules.util import uniqid
+from modules.validations import is_required, is_string, is_list
 
 
 # TODO@ On set accepted, index (or delete) in Elasticsearch with entity_id

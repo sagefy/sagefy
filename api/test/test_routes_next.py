@@ -1,4 +1,3 @@
-import pytest
 import routes.next
 from models.user import User
 

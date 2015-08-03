@@ -1,6 +1,7 @@
 from models.post import Post
 from modules.validations import is_required, is_one_of
 
+
 # TODO@ Should flags just be a proposal instead?
 class Flag(Post):
     """A proposal to delete a property."""

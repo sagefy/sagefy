@@ -2,7 +2,7 @@ import rethinkdb as r
 import framework.database as database
 from modules.model import Model
 from modules.validations import is_required, is_language, is_boolean, \
-    is_list, is_string, is_one_of, is_list_of_strings
+    is_list, is_string, is_list_of_strings
 from modules.util import uniqid
 
 

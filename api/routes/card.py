@@ -62,7 +62,6 @@ def learn_card_route(request, card_id):
     if context.get('unit', {}).get('entity_id') != card['unit_id']:
         return abort(400)
 
-
     next = {
         'method': 'POST',
         'path': '/api/cards/{card_id}/responses'
