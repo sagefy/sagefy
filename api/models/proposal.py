@@ -12,16 +12,12 @@ class Proposal(Post):
         'name': {
             'validate': (is_required, is_string,)
         },
-        'status': {  # TODO does this belong in versions instead?
+        'status': {  # TODO@ does this belong in versions instead?
             'validate': (is_required, (
                 is_one_of, 'pending', 'blocked', 'accepted', 'declined'
             )),
             'default': 'pending'
         },
-        'action': {  # TODO does this belong in versions instead?
-            'validate': (is_required, (
-                is_one_of, 'create', 'update', 'delete')),
-        }
     })
 
     def __init__(self, fields=None):

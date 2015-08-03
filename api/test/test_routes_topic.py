@@ -50,7 +50,6 @@ def create_proposal_in_db(posts_table, db_conn):
         'entity_version_id': '1',
         'name': 'New Unit',
         'status': 'pending',
-        'action': 'create'
     }).run(db_conn)
 
 
@@ -464,7 +463,6 @@ def test_create_post_proposal(db_conn, users_table, topics_table,
             'body': '''A Modest Proposal for Preventing the Children of Poor
                 People From Being a Burthen to Their Parents or Country, and
                 for Making Them Beneficial to the Publick.''',
-            'action': 'create',
             'unit': {
                 'name': 'Satire',
                 'body': '''Learn the use of humor, irony, exaggeration, or
