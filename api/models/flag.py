@@ -2,7 +2,7 @@ from models.post import Post
 from modules.validations import is_required, is_one_of
 
 
-# TODO@ Should flags just be a proposal instead?
+# TODO Should flags just be a proposal instead?
 class Flag(Post):
     """A proposal to delete a property."""
 
@@ -32,12 +32,12 @@ class Flag(Post):
 
     def is_unique_flag(self):
         """
-        TODO@ Only one flag per entity per reason is allowed.
+        TODO Only one flag per entity per reason is allowed.
         """
         return []
 
     def is_valid_reply_kind(self):
         """
-        TODO@ A flag cannot be a reply.
+        TODO A flag cannot be a reply.
         """
         return []

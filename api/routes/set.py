@@ -107,7 +107,7 @@ def get_set_tree_route(request, set_id):
 @get('/api/sets/{set_id}/units')
 def get_set_units_route(request, set_id):
     """
-    TODO@ Present a small number of units the learner can choose from.
+    Present a small number of units the learner can choose from.
 
     NEXT STATE
     GET Choose Unit
@@ -127,9 +127,17 @@ def get_set_units_route(request, set_id):
     }
     current_user.set_learning_context(next=next)
 
-    # TODO@ For the menu, it must return the name and ID of the set
+    set_ = Set.get_latest_accepted(set_id)
+
+    # TODO@ Pull a list of 3 or 4 units to choose from
+    #       based on priority
+    units = []
+
     return 200, {
         'next': next,
+        'units': [unit.deliver() for unit in units],
+        # For the menu, it must return the name and ID of the set
+        'set': set_.deliver(),
     }
 
 
@@ -151,8 +159,15 @@ def choose_unit_route(request, set_id, unit_id):
     if not unit:
         return abort(404)
 
-    # TODO@ If the unit isn't in the set, or doesn't need to be learned...
-    # ... return abort(400)
+    # TODO@ If the unit isn't in the set...
+    if False:
+        return abort(400)
+
+    # TODO@ Or, the unit doesn't need to be learned...
+    if False:
+        return abort(400)
+
+    # TODO@ Choose a card for the learner to learn
 
     next = {
         'method': 'GET',
