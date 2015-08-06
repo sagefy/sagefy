@@ -5,6 +5,9 @@ from models.mixins.entity import EntityMixin
 from models.unit import Unit
 from modules.validations import is_required, is_string, is_list, is_one_of, \
     has_min_length
+from framework.redis import redis
+import json
+from modules.util import json_serial
 
 
 # TODO@ On set accepted, index (or delete) in Elasticsearch with entity_id
@@ -82,12 +85,21 @@ class Set(EntityMixin, Model):
     def list_units(self):
         """
         Get the list of units contained within the set. Recursive. Connecting.
+
+        TODO OMG break into smaller functions
         """
+
+        # If we already have it stored, use that
+        key = 'set_units_{id}'.format(id=self['entity_id'])
+        try:
+            units = json.loads(redis.get(key).decode())
+            if units:
+                return [Unit(unit) for unit in units]
+        except:
+            pass
 
         # *** First, we need to break down
         #     the set into a list of known units. ***
-
-        # TODO break into smaller functions
 
         unit_ids = set()
         sets = [self]
@@ -131,6 +143,12 @@ class Set(EntityMixin, Model):
                     elif require_id not in unit_requires:
                         next_grab.add(require_id)
 
-        return [unit
-                for unit in units
-                if unit['entity_id'] in unit_ids]
+        units = [unit for unit in units if unit['entity_id'] in unit_ids]
+
+        # Store the results in Redis
+        redis.setex(key, 24 * 60 * 60, json.dumps(
+            [unit.bundle() for unit in units],
+            default=json_serial,
+            ensure_ascii=False))
+
+        return units
