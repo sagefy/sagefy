@@ -54,31 +54,35 @@ class Set(EntityMixin, Model):
         Get a list of sets which contain the given member ID. Recursive.
         """
 
-        # *** First, find the list of sets
-        #     directly containing the member ID. ***
+        def _():
+            # *** First, find the list of sets
+            #     directly containing the member ID. ***
 
-        query = (cls.start_accepted_query()
-                    .filter(r.row['members'].contains(
-                        lambda member: member['id'] == unit_id
-                    )))
-        sets = query.run(database.db_conn)
-
-        # *** Second, find all the sets containing
-        #     those sets... recursively. ***
-
-        found_sets, all_sets = sets, []
-
-        while found_sets:
-            set_ids = {set_['entity_id'] for set_ in found_sets}
-            all_sets += found_sets
             query = (cls.start_accepted_query()
                         .filter(r.row['members'].contains(
-                            lambda member:
-                                r.expr(set_ids).contains(member['id'])
+                            lambda member: member['id'] == unit_id
                         )))
-            found_sets = query.run(database.db_conn)
+            sets = query.run(database.db_conn)
 
-        return [Set(data) for data in all_sets]
+            # *** Second, find all the sets containing
+            #     those sets... recursively. ***
+
+            found_sets, all_sets = sets, []
+
+            while found_sets:
+                set_ids = {set_['entity_id'] for set_ in found_sets}
+                all_sets += found_sets
+                query = (cls.start_accepted_query()
+                            .filter(r.row['members'].contains(
+                                lambda member:
+                                    r.expr(set_ids).contains(member['id'])
+                            )))
+                found_sets = query.run(database.db_conn)
+
+            return all_sets
+
+        key = 'list_sets_by_unit_id_{id}'.format(id=unit_id)
+        return [Set(data) for data in memoize_redis(key, _)]
 
     def list_units(self):
         """
@@ -142,4 +146,4 @@ class Set(EntityMixin, Model):
 
         # If we already have it stored, use that
         key = 'set_units_{id}'.format(id=self['entity_id'])
-        return [Unit(unit) for unit in memoize_redis(key, _)]
+        return [Unit(data) for data in memoize_redis(key, _)]
