@@ -174,6 +174,6 @@ def choose_unit_route(request, set_id, unit_id):
         'path': '/api/cards/{card_id}/learn'
                 .format(card_id=None),  # TODO@
     }
-    current_user.set_learning_context(unit=unit.bundle(), next=next)
+    current_user.set_learning_context(unit=unit.data, next=next)
 
     return 200, {'next': next}

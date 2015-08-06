@@ -97,7 +97,7 @@ def select_set_route(request, user_id, set_id):
         'path': '/api/sets/{set_id}/tree'
                 .format(set_id=set_id),
     }
-    current_user.set_learning_context(set=set_.bundle(), next=next)
+    current_user.set_learning_context(set=set_.data, next=next)
 
     return 200, {'next': next}
 

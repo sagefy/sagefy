@@ -5,9 +5,7 @@ from models.mixins.entity import EntityMixin
 from models.unit import Unit
 from modules.validations import is_required, is_string, is_list, is_one_of, \
     has_min_length
-from framework.redis import redis
-import json
-from modules.util import json_serial
+from modules.memoize_redis import memoize_redis
 
 
 # TODO@ On set accepted, index (or delete) in Elasticsearch with entity_id
@@ -89,66 +87,59 @@ class Set(EntityMixin, Model):
         TODO OMG break into smaller functions
         """
 
+        def _():
+            # *** First, we need to break down
+            #     the set into a list of known units. ***
+
+            unit_ids = set()
+            sets = [self]
+
+            while sets:
+                set_ids = set()
+                for set_ in sets:
+                    unit_ids.update({member['id']
+                                     for member in set_.data.get('members')
+                                     if member['kind'] == 'unit'})
+                    set_ids.update({member['id']
+                                    for member in set_.data.get('members')
+                                    if member['kind'] == 'set'})
+                sets = Set.list_by_entity_ids(set_ids)
+
+            # *** Second, we need to find all
+            #     the required connecting units. ***
+
+            next_grab, units, unit_requires = unit_ids, [], {}
+
+            while next_grab:
+                tier_units = Unit.list_by_entity_ids(next_grab)
+                units += tier_units
+                next_grab = set()
+
+                for unit in tier_units:
+                    if 'require_ids' not in unit:
+                        continue
+                    unit_id = unit['entity_id']
+                    require_ids = unit_requires[unit_id] = \
+                        set(unit['require_ids'])
+                    for require_id in require_ids:
+                        if require_id in unit_ids:
+                            ids = {unit_id}
+                            while ids:
+                                unit_ids.update(ids)
+                                ids = {unit_id
+                                       for unit_id, require_ids
+                                       in unit_requires.items()
+                                       if unit_id not in unit_ids
+                                       and require_ids & ids}
+                        elif require_id not in unit_requires:
+                            next_grab.add(require_id)
+
+            units = [unit.data
+                     for unit in units
+                     if unit['entity_id'] in unit_ids]
+
+            return units
+
         # If we already have it stored, use that
         key = 'set_units_{id}'.format(id=self['entity_id'])
-        try:
-            units = json.loads(redis.get(key).decode())
-            if units:
-                return [Unit(unit) for unit in units]
-        except:
-            pass
-
-        # *** First, we need to break down
-        #     the set into a list of known units. ***
-
-        unit_ids = set()
-        sets = [self]
-
-        while sets:
-            set_ids = set()
-            for set_ in sets:
-                unit_ids.update({member['id']
-                                 for member in set_.data.get('members')
-                                 if member['kind'] == 'unit'})
-                set_ids.update({member['id']
-                                for member in set_.data.get('members')
-                                if member['kind'] == 'set'})
-            sets = Set.list_by_entity_ids(set_ids)
-
-        # *** Second, we need to find all
-        #     the required connecting units. ***
-
-        next_grab, units, unit_requires = unit_ids, [], {}
-
-        while next_grab:
-            tier_units = Unit.list_by_entity_ids(next_grab)
-            units += tier_units
-            next_grab = set()
-
-            for unit in tier_units:
-                if 'require_ids' not in unit:
-                    continue
-                unit_id = unit['entity_id']
-                require_ids = unit_requires[unit_id] = set(unit['require_ids'])
-                for require_id in require_ids:
-                    if require_id in unit_ids:
-                        ids = {unit_id}
-                        while ids:
-                            unit_ids.update(ids)
-                            ids = {unit_id
-                                   for unit_id, require_ids
-                                   in unit_requires.items()
-                                   if unit_id not in unit_ids
-                                   and require_ids & ids}
-                    elif require_id not in unit_requires:
-                        next_grab.add(require_id)
-
-        units = [unit for unit in units if unit['entity_id'] in unit_ids]
-
-        # Store the results in Redis
-        redis.setex(key, 24 * 60 * 60, json.dumps(
-            [unit.bundle() for unit in units],
-            default=json_serial,
-            ensure_ascii=False))
-
-        return units
+        return [Unit(unit) for unit in memoize_redis(key, _)]

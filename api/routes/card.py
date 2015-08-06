@@ -67,7 +67,7 @@ def learn_card_route(request, card_id):
         'path': '/api/cards/{card_id}/responses'
                 .format(card_id=card['entity_id'])
     }
-    current_user.set_learning_context(card=card.bundle(), next=next)
+    current_user.set_learning_context(card=card.data, next=next)
 
     return 200, {
         'card': card.deliver(access=''),
