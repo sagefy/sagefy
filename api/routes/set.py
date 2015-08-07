@@ -131,6 +131,7 @@ def get_set_units_route(request, set_id):
 
     # TODO@ Pull a list of 3 or 4 units to choose from
     #       based on priority
+    # TODO Time estimates per unit for mastery
     units = []
 
     return 200, {
@@ -138,6 +139,7 @@ def get_set_units_route(request, set_id):
         'units': [unit.deliver() for unit in units],
         # For the menu, it must return the name and ID of the set
         'set': set_.deliver(),
+        'current_unit_id': context.get('unit', {}).get('entity_id'),
     }
 
 
@@ -159,8 +161,10 @@ def choose_unit_route(request, set_id, unit_id):
     if not unit:
         return abort(404)
 
-    # TODO@ If the unit isn't in the set...
-    if False:
+    # If the unit isn't in the set...
+    context = current_user.get_learning_context()
+    set_ids = [set_['entity_id'] for set_ in Set.list_by_unit_id(unit_id)]
+    if context.get('set', {}).get('entity_id') not in set_ids:
         return abort(400)
 
     # TODO@ Or, the unit doesn't need to be learned...
