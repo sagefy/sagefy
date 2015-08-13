@@ -99,7 +99,7 @@ class EntityMixin(object):
         # TODO@ index in unit and set
 
     @classmethod
-    def get_versions(cls, entity_id, limit=10, skip=0):
+    def get_versions(cls, entity_id, limit=10, skip=0, **params):
         """
         Get the latest accepted version of the card.
         """
@@ -117,7 +117,7 @@ class EntityMixin(object):
         return [cls(fields) for fields in query.run(database.db_conn)]
 
     @classmethod
-    def list_requires(cls, entity_id, limit=10, skip=0):
+    def list_requires(cls, entity_id, limit=10, skip=0, **params):
         """
         Get the same kind of entity that this one requires.
         """
@@ -130,12 +130,15 @@ class EntityMixin(object):
         # TODO@ this query should have an index in card and unit
         query = (cls.start_accepted_query()
                     .filter(lambda _: r.expr(entity['requires'])
-                                       .contains(_['entity_id'])))
+                                       .contains(_['entity_id']))
+                    .order_by(r.desc('created'))
+                    .skip(skip)
+                    .limit(limit))
 
         return [cls(fields) for fields in query.run(database.db_conn)]
 
     @classmethod
-    def list_required_by(cls, entity_id, limit=10, skip=0):
+    def list_required_by(cls, entity_id, limit=10, skip=0, **params):
         """
         Get the same kind of entity that requires this one.
         """
@@ -145,6 +148,9 @@ class EntityMixin(object):
 
         # TODO@ this query should have an index in card and unit
         query = (cls.start_accepted_query()
-                    .filter(r.row['requires'].contains(entity_id)))
+                    .filter(r.row['requires'].contains(entity_id))
+                    .order_by(r.desc('created'))
+                    .skip(skip)
+                    .limit(limit))
 
         return [cls(fields) for fields in query.run(database.db_conn)]

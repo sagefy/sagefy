@@ -37,8 +37,7 @@ def get_set_versions_route(request, set_id):
     Get versions set given an ID. Paginates.
     """
 
-    # TODO@ add pagination
-    versions = Set.get_versions(entity_id=set_id)
+    versions = Set.get_versions(entity_id=set_id, **request['params'])
     return 200, {
         'versions': [version.deliver(access='view') for version in versions]
     }

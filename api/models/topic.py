@@ -38,7 +38,7 @@ class Topic(Model):
     })
 
     @classmethod
-    def list_by_entity_id(cls, entity_id, limit=10, **params):
+    def list_by_entity_id(cls, entity_id, limit=10, skip=0, **params):
         """
         Get a list of models matching the provided keyword arguments.
         Return empty array when no models match.
@@ -46,8 +46,9 @@ class Topic(Model):
 
         data_list = (cls.table
                         .filter(r.row['entity']['id'] == entity_id)
-                        .limit(10)
                         .order_by(r.desc('created'))
+                        .limit(limit)
+                        .skip(skip)
                         .run(database.db_conn))
         documents = [cls(data) for data in data_list]
         return documents

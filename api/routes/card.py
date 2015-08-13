@@ -39,7 +39,7 @@ def get_card_route(request, card_id):
     # TODO@ sequencer data: learners, transit, guess, slip, difficulty
 
 
-@get('/api/cards/{card_id}/learn')  # TODO@ merge with main GET route
+@get('/api/cards/{card_id}/learn')  # TODO merge with main GET route
 def learn_card_route(request, card_id):
     """
     Render the card's data, ready for learning.
@@ -83,8 +83,7 @@ def get_card_versions_route(request, card_id):
     Get versions card given an ID. Paginates.
     """
 
-    # TODO@ add pagination
-    versions = Card.get_versions(entity_id=card_id)
+    versions = Card.get_versions(entity_id=card_id, **request['params'])
     return 200, {
         'versions': [version.deliver(access='view') for version in versions]
     }
