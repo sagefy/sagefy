@@ -65,6 +65,8 @@ class Card(EntityMixin, Model):
         Fetches the card's learning analytics parameters.
         """
 
+        # TODO@ sequencer data: learners, transit, guess, slip, difficulty
+
         params = CardParameters.get(card_id=self['entity_id'])
         if params:
             return params

@@ -2,9 +2,13 @@ from framework.session import get_current_user
 from framework.routes import get, post, abort
 from models.card import Card
 from models.unit import Unit
+from models.set import Set
 from models.topic import Topic
 from modules.entity import get_card_by_kind
 from modules.sequencer.index import update as seq_update
+from modules.sequencer.traversal import traverse
+from modules.sequencer.card_chooser import choose_card
+# from modules.sequencer.params import max_learned
 
 
 @get('/api/cards/{card_id}')
@@ -29,14 +33,13 @@ def get_card_route(request, card_id):
 
     return 200, {
         'card': card.deliver(access='view'),
+        'card_parameters': card.fetch_parameters(),
         'unit': unit.deliver(),
         'topics': [topic.deliver() for topic in topics],
         'versions': [version.deliver() for version in versions],
         'requires': [require.deliver() for require in requires],
         'required_by': [require.deliver() for require in required_by],
     }
-
-    # TODO@ sequencer data: learners, transit, guess, slip, difficulty
 
 
 @get('/api/cards/{card_id}/learn')  # TODO merge with main GET route
@@ -120,32 +123,48 @@ def respond_to_card_route(request, card_id):
     if errors:
         return 400, {'errors': errors}
 
-    # If we are ready and done, view tree.
-    if False:  # TODO@ how do I know this state?
-        next = {
-            'method': 'GET',
-            'path': '/api/sets/{set_id}/tree'
-                    .format(set_id=context.get('set', {}).get('entity_id')),
-        }
-        current_user.set_learning_context(card=None, unit=None, next=next)
+    set_ = Set(context.get('set'))
+    unit = Unit(context.get('unit'))
 
-    # If we are ready and still units, choose unit.
-    elif False:  # TODO@ how do I know this state?
-        next = {
-            'method': 'GET',
-            'path': '/api/sets/{set_id}/units'
-                    .format(set_id=context.get('set', {}).get('entity_id')),
-        }
-        current_user.set_learning_context(card=None, unit=None, next=next)
+    status, units = traverse(current_user, set_)
+
+    if False:  # TODO@  unit user learned > max_learned
+        # If we are ready and done, view tree.
+        if status == 'done':
+            next = {
+                'method': 'GET',
+                'path': '/api/sets/{set_id}/tree'
+                        .format(set_id=set_.get('entity_id')),
+            }
+            current_user.set_learning_context(card=None, unit=None, next=next)
+
+        # If we are ready and still units, choose unit.
+        elif status == 'learn' or status == 'review':
+            next = {
+                'method': 'GET',
+                'path': '/api/sets/{set_id}/units'
+                        .format(set_id=set_.get('entity_id')),
+            }
+            current_user.set_learning_context(card=None, unit=None, next=next)
+
+        else:  # Status == diagnose
+            next_card = choose_card(current_user, units[0])
+            next = {
+                'method': 'GET',
+                'path': '/api/cards/{card_id}/learn'
+                        .format(card_id=next_card['id']),
+            }
+            current_user.set_learning_context(card=next_card, next=next)
 
     # If we aren't ready, learn another card.
     else:
+        next_card = choose_card(current_user, unit)
         next = {
             'method': 'GET',
             'path': '/api/cards/{card_id}/learn'
-                    .format(card_id=None),  # TODO@ pick a card
+                    .format(card_id=next_card['id']),
         }
-        current_user.set_learning_context(card=None, next=next)
+        current_user.set_learning_context(card=next_card, next=next)
 
     return 200, {
         'response': response.deliver(),
