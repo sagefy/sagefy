@@ -1,19 +1,4 @@
 describe('Router', ->
-    it('should have a default URL', ->
-        a = new Adapter()
-        expect(a.url).to.equal('')
-    )
-
-    it('should have a constructor', ->
-        class A extends Adapter
-            constructor: ->
-                super
-                @a = true
-        a = new A
-        expect(a.events).to.be.an('object')
-        expect(a.a).to.be.true
-    )
-
     it('should convert a url string to a regexp', ->
         url1 = /.*/
         url2 = '/foo'
@@ -47,69 +32,6 @@ describe('Router', ->
         expect(A::matches('/foo/23/bar/52/w')).to.be.false
         expect(A::matches('/foo/23/bar/ww'))
             .to.deep.equal(['23', 'ww'])
-    )
-
-    it('should have a remove function', ->
-        a = new Adapter()
-        expect(a.remove).to.be.a('function')
-    )
-
-    it('should be an instance of Events', ->
-        expect(Adapter::).to.be.an.instanceof(Events)
-    )
-
-    it('should store all provided adapters on create', ->
-        x = new App(A, B, C)
-        expect(x.Adapters).to.deep.equal([A, B, C])
-        x.remove()
-    )
-
-    it('should bind all provided adapters on create', ->
-        spy = sinon.spy(App::, 'bindAdapter')
-        x = new App(A)
-        expect(spy).to.be.called
-        spy.restore()
-        x.remove()
-    )
-
-    it('should call bindpopstate on create', ->
-        spy = sinon.spy(App::, 'bindPopState')
-        x = new App(A, B, C)
-        expect(spy).to.be.called
-        spy.restore()
-        x.remove()
-    )
-
-    it('should set an adapter to use its `navigate` function', ->
-        x = new App(A, B)
-        expect(x.Adapters[0]::navigate).to.be.a('function')
-        x.bindAdapter(C)
-        expect(C::navigate).to.be.a('function')
-        x.unbindAdapter(C)
-        x.remove()
-    )
-
-    it('should unset an adapter\'s navigate function', ->
-        x = new App(A)
-        expect(A::navigate).to.be.a('function')
-        x.unbindAdapter(A)
-        expect(A::navigate).to.not.exist
-        x.remove()
-    )
-
-    it('should unbind navigate from adapters when removing the app', ->
-        x = new App(A)
-        expect(A::navigate).to.be.a('function')
-        x.remove()
-        expect(A::navigate).to.not.exist
-    )
-
-    it('should find an adapter, given a path', ->
-        x = new App(A, B, C)
-        expect(x.findAdapter('/bar')).to.equal(C)
-        expect(x.findAdapter('/foo')).to.equal(B)
-        expect(x.findAdapter('/foo/23')).to.equal(A)
-        x.remove()
     )
 
     describe('navigate and route', ->

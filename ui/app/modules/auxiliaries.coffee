@@ -67,4 +67,16 @@ aux.debounce = (fn, delay) ->
             fn.apply(this, args)
         , delay)
 
+# Determine if a given path matches this router.
+# Returns either false or array, where array is matches parameters.
+aux.matchesRoute = (docPath, viewPath) ->
+    if util.isString(viewPath)
+        viewPath = new RegExp(
+            '^' +
+            viewPath.replace(/\{([\d\w\_\$]+)\}/g, '([^/]+)') +
+            '$'
+        )
+    match = docPath.match(viewPath)
+    return if match then match.slice(1) else false
+
 module.exports = aux

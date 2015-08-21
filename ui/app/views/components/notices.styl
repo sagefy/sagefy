@@ -1,6 +1,6 @@
 /*
 ---
-title: Notice
+title: Notices
 description: |
     TBD
 example: |
@@ -26,22 +26,3 @@ example: |
 .notices
     padding 0
     list-style none
-
-.notice
-    padding $unit
-
-    &:hover
-        background $base-color(97)
-
-.notice--unread
-    background $accent-color(95)
-    @extend strong
-    cursor pointer
-
-    &:hover
-        background $accent-color(97)
-
-.notice__when
-    float right
-    @extend .font-size-small
-    color $base-color(66)
