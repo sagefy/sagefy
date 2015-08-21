@@ -1,52 +1,30 @@
-###
-A broker is a singleton which defines and manages the events system.
-###
-broker = {}
+require('matches_polyfill')
+diff = require('virtual-dom/diff')
+patch = require('virtual-dom/patch')
+createElement = require('virtual-dom/create-element')
 
-# Stores all handlers for all events.
-broker.events = events = {}
+module.exports = {
+    events: {}
 
-# Emits the event, where `name` is a string, and `args` will
-# be passed to any handlers.
-broker.emit = (name, args...) ->
-    # If anything is stored under `all`, call those callbacks every time.
-    for fn in events.all or []
-        fn.apply(this, [name].concat(args))
+    init: (fn) ->
+        fn.call(this)
 
-    # If callbacks registered under name, call all of them.
-    for fn in events[name] or []
-        fn.apply(this, args)
+    add: (obj) ->
+        for query, fn of obj
+            match = query.match(eventRegExp)
+            type = if match then match[1] else query
+            selector = if match then match[2] else ''
+            @events[type][selector] = fn
+        return obj
 
-    return this
-
-# Bind to events.
-# If arguments are `name` (string) and `fn` (function)
-# then it will add it to the functions to be called on `name`.
-broker.on = (name, fn) ->
-    events[name] ||= []
-
-    # Ensure this function isn't already added before adding it.
-    if events[name].indexOf(fn) is -1
-        events[name].push(fn)
-
-    return this
-
-# Removes events.
-broker.off = (name, fn) ->
-    # If a name and function is provided, it will remove that function.
-    if name and events[name] and fn
-        index = events[name].indexOf(fn)
-        if index > -1
-            events[name].splice(index, 1)
-
-    # If only name is provided, all events under that name are removed.
-    else if name
-        events[name] = []
-
-    # If no name is provided, it removes all events.
-    else
-        events = {}
-
-    return this
-
-module.exports = broker
+    delegate: (type) ->
+        return (e) =>
+            el = e.currentTarget
+            loop
+                for selector, fn of @events[type]
+                    if el.matches(selector)
+                        fn.call(this, e, el)
+                        return
+                el = el.parentNode
+                return if el is @el
+}

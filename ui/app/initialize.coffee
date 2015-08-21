@@ -1,0 +1,4 @@
+
+go = ->
+
+module.exports = {go}

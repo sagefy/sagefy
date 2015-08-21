@@ -1,5 +1,5 @@
 
-describe('Broker', ->
+describe('Mediator', ->
     beforeEach(->
         @e = new Events()
         @ting = false
