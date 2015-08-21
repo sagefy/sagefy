@@ -15,6 +15,8 @@ uglify = require('gulp-uglify')
 coffeelint = require('gulp-coffeelint')
 Mocha = require('mocha')
 
+fillTests = require('./fill_tests')
+
 ################################################################################
 ### Configuration ##############################################################
 ################################################################################
@@ -204,4 +206,8 @@ gulp.task('run tests', ['build test scripts'], (done) ->
     })
     mocha.addFile('test/index.coffee')
     mocha.run(done)
+)
+
+gulp.task('fill tests', (done) ->
+    fillTests(done)
 )

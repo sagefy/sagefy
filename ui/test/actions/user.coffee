@@ -6,7 +6,7 @@ validate = (model, search) ->
         if error.name is search
             return error
 
-describe('User Model', ->
+describe('user actions', ->
     beforeEach(->
         @xhr = sinon.useFakeXMLHttpRequest()
         @requests = []
