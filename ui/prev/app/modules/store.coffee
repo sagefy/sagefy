@@ -1,29 +1,3 @@
-###
-Stores are a collection of entries. Stores are single, persistent objects
-with no knowledge of views.
-Schemas should be stored separate of their stores.
-###
-
-Listener = require('./listener')
-util = require('./utilities')
-
-class Store extends Listener
-    # Overwrite the name for events.
-    # Should be like `user`, `notice`, etc.
-    name: 'unknown'
-
-    # Creates a simple object to store entries.
-    # Format is `{id: entry}`.
-    # If the data is ordered, overwrite this method using `@data = []`.
-    constructor: ->
-        super
-        @data = {}
-
-    # Get the entry with the provided ID, if available.
-    # If the data is ordered, overwrite this method.
-    get: (id) ->
-        return @data[id] if id in @data
-
     ###
     Make an Ajax call given options:
     - method: one of get, post, put, delete
@@ -63,11 +37,6 @@ class Store extends Listener
             @request.send(JSON.stringify(options.data or {}))
         return @request
 
-    # The parse function determines what to do when the response comes back
-    # from the server. Overwrite per entry.
-    # Use this for any sort of `get` or `list` call.
-    parse: (obj) ->
-        return obj
 
     # Validate the entry with the given ID against the schema.
     # Returns a list of errors.
@@ -109,5 +78,3 @@ class Store extends Listener
         errors = util.parseJSON(r.responseText)
         return errors if util.isString(errors)
         return errors.errors
-
-module.exports = Store

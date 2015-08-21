@@ -1,4 +1,4 @@
-h = require('virtual-dom/h')
+{div, a} = require('./tags')
 
 {init, store, broker} = require('./framework')
 
@@ -15,15 +15,15 @@ store.add({
 
 render = (data) ->
     return (
-        h('div'
+        div(
             {className: 'foo'}
-            h('a'
+            a(
                 {href: 'http://google.com'}
                 'Google'
             )
         )
     )
-    
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 actions = store.actions
