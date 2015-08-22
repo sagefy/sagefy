@@ -1,67 +1,61 @@
+it.skip('should trigger a delegated event', ->
+    class V extends View
+        domEvents: {
+            'click .button': 'make'
+        }
+        make: ->
 
-describe('Broker', ->
-    beforeEach(->
-        @e = new Events()
-        @ting = false
-        @f = (a) =>
-            @ting = a or true
-        @z = new Events()
-    )
+    spy = sinon.spy(V::, 'make')
+    region = document.createElement('div')
+    document.body.appendChild(region)
+    v = new V({
+        template: -> '<a class="button"></a>'
+        region: region
+    })
+    v.render()
+    #####
+    # This is the deprecated form, but Phantom doesn't like the updated
+    # https://github.com/ariya/phantomjs/issues/11289
+    evt = document.createEvent('MouseEvent')
+    evt.initEvent('click', true, true)
+    v.el.querySelector('.button').dispatchEvent(evt)
+    #####
+    expect(spy).to.be.called  # Why not triggered click?
+    v.remove()
+    spy.restore()
+    document.body.removeChild(region)
+)
 
-    after(->
-        delete @e
-    )
+it.skip('should ensure child selector is correct ' +
+   'when triggering a delegated event', ->
+    class V extends View
+        domEvents: {
+            'click .button': 'make'
+            'click .nottub': 'ekam'
+        }
+        make: ->
+        ekam: ->
 
-    it('should register an event', ->
-        @e.on('poke', @f)
-        expect(@e.events.poke).to.be.an('array')
-        expect(@e.events.poke[0]).to.be.a('function')
-    )
-
-    it('should register only one binding per event', ->
-        @e.on('poke', @f)
-        @e.on('poke', @f)
-        expect(@e.events.poke).to.have.length(1)
-    )
-
-    it('should emit an event', ->
-        @e.on('poke', @f)
-        expect(@ting).to.be.false
-        @e.emit('poke')
-        expect(@ting).to.be.true
-    )
-
-    it('should ignore emitting an event with no handlers', ->
-        @e.emit('poke')
-        expect(@ting).to.be.false
-    )
-
-    it('should provide arguments when emitting an event', ->
-        @e.on('poke', @f)
-        expect(@ting).to.be.false
-        @e.emit('poke', 'mushroom')
-        expect(@ting).to.equal('mushroom')
-    )
-
-    it('should remove an event', ->
-        @e.on('poke', @f)
-        expect(@e.events.poke).to.have.length(1)
-        @e.off('poke', @f)
-        expect(@e.events.poke).to.be.empty
-    )
-
-    it('should remove all events', ->
-        @e.on('poke', @f)
-        expect(@e.events).to.not.be.empty
-        @e.off()
-        expect(@e.events).to.be.empty
-    )
-
-    it('should remove all events of a given type', ->
-        @e.on('poke', @f)
-        @e.on('sway', @f)
-        @e.off('poke')
-        expect(@e.events.poke).to.be.empty
-        expect(@e.events.sway).to.have.length(1)
-    )
+    region = document.createElement('div')
+    document.body.appendChild(region)
+    spy1 = sinon.spy(V::, 'make')
+    spy2 = sinon.spy(V::, 'ekam')
+    v = new V({
+        template: -> '<a class="button"></a><a class="nottub"></a>'
+        region: region
+    })
+    v.render()
+    #####
+    # This is the deprecated form, but Phantom doesn't like the updated
+    # https://github.com/ariya/phantomjs/issues/11289
+    evt = document.createEvent('MouseEvent')
+    evt.initEvent('click', true, true)
+    v.el.querySelector('.button').dispatchEvent(evt)
+    #####
+    expect(spy2).to.not.be.called
+    expect(spy1).to.be.called
+    v.remove()
+    spy1.restore()
+    spy2.restore()
+    document.body.removeChild(region)
 )

@@ -44,16 +44,13 @@ example: |
     @extend .menu
 
 .menu__overlay
-    display none
+    display block
     background rgba($base-color(20), 0.95)
     width 100%
     height 100%
     position fixed
     top 0
     left 0
-
-    .selected &
-        display block
 
 .menu__trigger
     position fixed
@@ -68,56 +65,31 @@ example: |
     .selected &
         background transparent
 
-    .menu__logo
-        $h = $unit * 6
-        height $h
-        width ($h * 270.0 / 365.0)
-        display block
-        background-image url('/astrolabe.svg')
-        background-size contain
-
-        .selected &
-            background-image url('/astrolabe_light.svg')
-
     &:hover .menu__close
         color $base-color(90)
+
+.menu__logo
+    $h = $unit * 6
+    height $h
+    width ($h * 270.0 / 365.0)
+    display block
+    background-image url('/astrolabe.svg')
+    background-size contain
+
+    .selected &
+        background-image url('/astrolabe_light.svg')
 
 .menu__close
     position absolute
     top 0
     right 0
-    display none
+    display inline-block
     color $base-color(66)
-
-    .selected &
-        display inline-block
 
 .menu__items
     @extend .row
     padding $unit
-    display none
+    display flex
     position relative
     list-style none
     width 100%
-
-    .selected &
-        display flex
-
-.menu__item
-    @extend .col-2
-    text-align center
-
-    a
-        color $base-color(78)
-        border 0
-
-    i
-        color $base-color(90)
-        @extend .font-size-epic
-
-    &:hover
-        a
-            color $base-color(90)
-
-        i
-            color $base-color(97)

@@ -1,4 +1,3 @@
-require('../../../app/views/components/form_field_textarea.tmpl')
 
 # TODO outline tests
 

@@ -1,52 +1,31 @@
-###
-A broker is a singleton which defines and manages the events system.
-###
-broker = {}
+require('./matches_polyfill')
 
-# Stores all handlers for all events.
-broker.events = events = {}
+eventRegExp = /^(\S+) (.*)$/
 
-# Emits the event, where `name` is a string, and `args` will
-# be passed to any handlers.
-broker.emit = (name, args...) ->
-    # If anything is stored under `all`, call those callbacks every time.
-    for fn in events.all or []
-        fn.apply(this, [name].concat(args))
+module.exports = {
+    events: {
+        click: {}
+        change: {}
+        keydown: {}
+        submit: {}
+    }
 
-    # If callbacks registered under name, call all of them.
-    for fn in events[name] or []
-        fn.apply(this, args)
+    init: (fn) ->
+        fn.call(this)
 
-    return this
+    add: (obj) ->
+        for query, fn of obj
+            match = query.match(eventRegExp)
+            type = if match then match[1] else query
+            selector = if match then match[2] else ''
+            @events[type][selector] = fn
+        return obj
 
-# Bind to events.
-# If arguments are `name` (string) and `fn` (function)
-# then it will add it to the functions to be called on `name`.
-broker.on = (name, fn) ->
-    events[name] ||= []
-
-    # Ensure this function isn't already added before adding it.
-    if events[name].indexOf(fn) is -1
-        events[name].push(fn)
-
-    return this
-
-# Removes events.
-broker.off = (name, fn) ->
-    # If a name and function is provided, it will remove that function.
-    if name and events[name] and fn
-        index = events[name].indexOf(fn)
-        if index > -1
-            events[name].splice(index, 1)
-
-    # If only name is provided, all events under that name are removed.
-    else if name
-        events[name] = []
-
-    # If no name is provided, it removes all events.
-    else
-        events = {}
-
-    return this
-
-module.exports = broker
+    delegate: (type) ->
+        return (e) =>
+            el = e.target
+            while el and el isnt @el
+                for selector, fn of @events[type]
+                    fn.call(this, e, el) if el.matches(selector)
+                el = el.parentNode
+}

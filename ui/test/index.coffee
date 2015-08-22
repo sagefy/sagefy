@@ -8,8 +8,5 @@ global.expect = chai.expect
 global.sinon = require('sinon')
 chai.use(require('sinon-chai'))
 
-require('./basic')
-
-require('./modules')
-require('./stores')
-require('./views')
+# Require all test files
+require('require-dir')('./', {recurse: true})

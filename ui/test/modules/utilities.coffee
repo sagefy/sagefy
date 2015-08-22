@@ -298,4 +298,61 @@ describe('Utilities', ->
         expect(_.parseJSON('{"a":1}')).to.eql({a: 1})
         expect(_.parseJSON('bowling')).to.equal('bowling')
     )
+
+    describe.skip('validate', ->
+        beforeEach(->
+            class @M extends Model
+                schema: {
+                    name: {
+                        type: 'text'
+                        validations: {
+                            required: true
+                        }
+                    }
+                    email: {
+                        type: 'email'
+                        validations: {
+                            required: true
+                            email: true
+                        }
+                    }
+                    password: {
+                        type: 'password'
+                        validations: {
+                            required: true
+                            minlength: 8
+                        }
+                    }
+                }
+        )
+
+        afterEach(->
+            delete @M
+        )
+
+        it('should validate a model', ->
+            m = new @M()
+            m.set({
+                name: 'me'
+                email: 'a@b.c'
+                password: 'abcd1234'
+            })
+            expect(m.validate()).to.deep.equal([])
+        )
+
+        it('should provide validation errors', ->
+            m = new @M()
+            expect(m.validate()).to.have.length(3)
+            m.set('name', 'me')
+            expect(m.validate()).to.have.length(2)
+            m.set('email', 'a')
+            expect(m.validate()).to.have.length(2)
+            m.set('email', 'a@b.c')
+            expect(m.validate()).to.have.length(1)
+            m.set('password', 'abcd')
+            expect(m.validate()).to.have.length(1)
+            m.set('password', 'abcd1234')
+            expect(m.validate()).to.have.length(0)
+        )
+    )
 )

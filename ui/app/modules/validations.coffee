@@ -12,25 +12,24 @@ isBlank = (val) ->
 
 # Validation functions should return a string on error,
 # or return nothing if there is no problem.
-validations = {}
 
 # Require there to be content.
-validations.required = (val) ->
+required = (val) ->
     return c('required') if isBlank(val)
 
 
 # Require the field to be an email address if value is present.
-validations.email = (val) ->
+email = (val) ->
     return c('email') if (not isBlank(val) and (
         not util.isString(val) or
         not val.match(/^\S+@\S+\.\S+$/)
     ))
 
 # Require the field to contain a minimum length if value is present.
-validations.minlength = (val, len) ->
+minlength = (val, len) ->
     return c('minlength').replace('{length}', len) if(not isBlank(val) and (
         (util.isString(val) or util.isArray(val)) and
         val.length < len
     ))
 
-module.exports = validations
+module.exports = {required, email, minlength}

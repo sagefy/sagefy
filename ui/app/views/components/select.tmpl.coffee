@@ -1,33 +1,54 @@
+###
+- name           required, what to send to the API
+- count          required, number of options to expect
+- url            default: null
+- multiple       default: false
+- showInline     default: false
+- showClear      default: false
+- showOverlay    default: false 0-6, true 7+
+- showSearch     default: false 0-20 and not url, true 21+ or url
+- options:
+    either options or url are required .. [{value: '', label: ''}]
+###
+
 c = require('../../modules/content').get
 
 module.exports = (data) ->
+    return span(
+        {className: 'select'}
+        m()
+    )
+
+m = ->
     if not data.options or data.options.length is 0
         return c('no_options')
 
-    html = ''
+    html = []
 
     if data.showOverlay
-        html += '<div class="select__selected"></div>'
-        # TODO@ List options that have already been selected
-        html += '<div class="select__overlay">'
+        html.push(
+            div({className: 'select__selected'})
+            # TODO@ List options that have already been selected
+            div({className: 'select__overlay'})
+        )
 
     if data.showClear
-        html += """
-        <a class="clear" href="#">
-            <i class="fa fa-ban"></i>
-            #{c('clear')}
-        </a>
-        """
+        html.push(
+            a(
+                {className: 'clear', href: '#'}
+                i({className: 'fa fa-ban'})
+                c('clear')
+            )
+        )
 
     if data.showSearch
-        html += '<input type="search" name="search">'
+        html.push(
+            input({type: 'search', name: 'search'})
+        )
 
     if data.showInline
-        html += '<ul class="inline unstyled"></ul>'
+        html.push(ul({className: 'inline unstyled'}))
     else
-        html += '<ul class="unstyled"></ul>'
-
-    if data.showOverlay
-        html += '</div>'  # .select__overlay
+        html.push(ul({className: 'unstyled'}))
 
     return html

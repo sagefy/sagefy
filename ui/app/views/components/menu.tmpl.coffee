@@ -1,10 +1,25 @@
 # TODO move copy to content directory
-module.exports = ->
-    return '''
-    <div class="menu__overlay"></div>
-    <a href="#" class="menu__trigger" data-title="Menu">
-        <div class="menu__logo"></div>
-        <i class="menu__close fa fa-times-circle"></i>
-    </a>
-    <ul class="menu__items"></ul>
-    '''
+{nav, div, a, i, ul} = require('../../modules/tags')
+menuItem = require('./menu_item.tmpl')
+module.exports = (data) ->
+    return nav(
+        {className: if data.open then 'menu selected' else 'menu'}
+        [
+            div(
+                {className: 'menu__overlay'}
+            ) if data.open
+            a(
+                {
+                    href: '#'
+                    className: 'menu__trigger'
+                    'data-title': 'Menu'
+                }
+                div({className: 'menu__logo'})
+                i({className: 'menu__close fa fa-times-circle'}) if data.open
+            )
+            ul(
+                {className: 'menu__items'}
+                menuItem(d) for d in data.items
+            ) if data.open
+        ]
+    )

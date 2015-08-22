@@ -1,7 +1,12 @@
+{li, span} = require('../../modules/tags')
 timeAgo = require('../../modules/auxiliaries').timeAgo
 
 module.exports = (data) ->
-    return """
-        <span class="notice__when">#{timeAgo(data.created)}</span>
-        #{data.body}
-    """
+    return li(
+        {className: if data.read then 'notice' else 'notice notice--unread'}
+        span(
+            {className: 'notice__when'}
+            timeAgo(data.created)
+        )
+        data.body
+    )

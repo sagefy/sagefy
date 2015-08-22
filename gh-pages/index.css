@@ -1203,13 +1203,13 @@ button[type="submit"].button--disabled.selected,
   background-color: #d2e9cc;
   background-image: -webkit-linear-gradient(#e2f1de, #c2e1ba);
   background-image: linear-gradient(#e2f1de, #c2e1ba);
-  color: #4c6e3f;
+  color: #4c6e40;
 }
 .button--good:hover,
 .button--good:focus,
 .button--good.hover,
 .button--good.focus {
-  color: #22351c;
+  color: #23351c;
   background-color: #e9f4e6;
   background-image: -webkit-linear-gradient(#f9fcf8, #d9ecd4);
   background-image: linear-gradient(#f9fcf8, #d9ecd4);
@@ -1614,7 +1614,7 @@ form label .required {
   color: #c57c8b;
 }
 form label .optional {
-  color: #969272;
+  color: #969273;
 }
 fieldset {
   border: 1px solid #c7c29f;
@@ -1643,7 +1643,7 @@ legend {
 }
 .form-field__description {
   margin: 0;
-  color: #969272;
+  color: #969273;
   font-style: italic;
 }
 .form-field--grouped .form-field {
@@ -1683,7 +1683,7 @@ legend {
 }
 .form-field--good .form-field__feedback {
   background: #e9f4e6;
-  color: #6e9d5d;
+  color: #6e9d5c;
 }
 .form-field--bad label {
   color: #da899a;
@@ -1720,7 +1720,7 @@ thead {
 }
 tbody tr.row--good {
   background: #e9f4e6;
-  color: #22351c;
+  color: #23351c;
 }
 tbody tr.row--accent {
   background: #e9f2fc;
@@ -1731,13 +1731,13 @@ tbody tr.row--bad {
   color: #45282e;
 }
 tbody tr:nth-child(2n+2) {
-  background: #f7f7f3;
+  background: #f7f6f3;
 }
 tbody tr:nth-child(2n+2).row--good {
   background: #d2e9cc;
 }
 tbody tr:nth-child(2n+2).row--accent {
-  background: #d2e4fa;
+  background: #d2e5fa;
 }
 tbody tr:nth-child(2n+2).row--bad {
   background: #ffd9e0;

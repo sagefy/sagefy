@@ -15,4 +15,4 @@ get = (query) ->
         data[decodeURIComponent(key)] = valuefy(value)
     return data
 
-module.exports = {get: get}
+module.exports = {valuefy, get}

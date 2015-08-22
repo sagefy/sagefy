@@ -1,12 +1,12 @@
-validations = require('../modules/validations')
+{required} = require('../modules/validations')
 
 module.exports = {
     name: {
         type: 'text'
-        validations: [validations.required]
+        validations: [required]
     }
     entity: {
         type: 'hidden'
-        validations: [validations.required]
+        validations: [required]
     }
 }

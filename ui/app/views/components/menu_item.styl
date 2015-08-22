@@ -1,0 +1,25 @@
+/*
+---
+title: Menu Item
+---
+*/
+
+
+.menu__item
+    @extend .col-2
+    text-align center
+
+    a
+        color $base-color(78)
+        border 0
+
+    i
+        color $base-color(90)
+        @extend .font-size-epic
+
+    &:hover
+        a
+            color $base-color(90)
+
+        i
+            color $base-color(97)

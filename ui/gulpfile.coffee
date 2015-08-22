@@ -7,13 +7,17 @@ source = require('vinyl-source-stream')
 prettyHrtime = require('pretty-hrtime')
 sequence = require('run-sequence')
 del = require('del')
-stylus = require('gulp-stylus')
-husl = require('husl-stylus')
+stylus = require('stylus')
+husl = require('husl')
 minifyCss = require('gulp-minify-css')
 yaml = require('gulp-yaml')
 uglify = require('gulp-uglify')
 coffeelint = require('gulp-coffeelint')
 Mocha = require('mocha')
+mkdirp = require('mkdirp')
+
+fillTests = require('./fill_tests')
+grabStyleMeta = require('./grab_style_meta')
 
 ################################################################################
 ### Configuration ##############################################################
@@ -84,33 +88,45 @@ gulp.task('watch statics', ['copy statics'], ->
     )
 )
 
-gulp.task('build styles', ->
-    gulp.src('app/index.styl')
-        .pipe(stylus({
-            'include css': true
-            errors: true
-            use: husl()
-        }))
-        .pipe(gulp.dest(dist))
+stylus2css = (from, to, done) ->
+    require('fs').readFile(from, 'utf8', (err, styl) ->
+        stylus(styl)
+            .set('filename', from)
+            .set('include css', true)
+            .define('huslp', (h, s, l, a) ->
+                [r, g, b] = husl.p.toRGB(h.val, s.val, l.val)
+                a ?= 1
+                return new stylus.nodes.RGBA(r * 255, g * 255, b * 255, a)
+            )
+            .render((err, css) ->
+                throw err if err
+                mkdirp(to.split('/').slice(0, -1).join('/'), ->
+                    require('fs').writeFile(to, css, done)
+                )
+            )
+    )
+
+gulp.task('build styles', (done) ->
+    from = './app/index.styl'
+    to = dist + 'index.css'
+    stylus2css(from, to, done)
 )
 
-gulp.task('build styles for docs', ->
-    gulp.src('../gh-pages/index.styl')
-        .pipe(stylus({
-            'include css': true
-            errors: true
-            use: husl()
-        }))
-        .pipe(gulp.dest('../gh-pages/'))
+gulp.task('build styles for docs', (done) ->
+    from = '../gh-pages/index.styl'
+    to = '../gh-pages/index.css'
+    stylus2css(from, to, done)
 )
 
 gulp.task('build styleguide', (done) ->
-    yms = require('ym-styleguide')
     fs = require('fs')
-    yms.build('app/', (html) ->
-        coffee = 'module.exports="""\n' + html + '\n"""\n'
-        fs.writeFileSync('app/views/pages/styleguide.compiled.coffee', coffee)
-        done()
+    grabStyleMeta('./**/*.styl', (data) ->
+        content = JSON.stringify(data)
+        fs.writeFile(
+            './app/views/pages/styleguide.data.json'
+            content
+            done
+        )
     )
 )
 
@@ -204,4 +220,8 @@ gulp.task('run tests', ['build test scripts'], (done) ->
     })
     mocha.addFile('test/index.coffee')
     mocha.run(done)
+)
+
+gulp.task('fill tests', (done) ->
+    fillTests(done)
 )

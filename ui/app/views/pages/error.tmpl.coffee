@@ -1,5 +1,11 @@
+{div, h1, p} = require('../../modules/tags')
+c = require('../../modules/content').get
+
 module.exports = (data) ->
-    html = "<h1>#{data.code}</h1>"
-    if data.message
-        html += "<p>#{data.message}"
-    return html
+    return div(
+        {id: 'error', className: 'col-4'}
+        [
+            h1('404')
+            p(c('not_found'))
+        ]
+    )
