@@ -4,22 +4,20 @@ Auxiliaries are utlity functions that are specific to Sagefy.
 
 cookie = require('./cookie')
 
-aux = {}
-
 # Determine if the user is logged in
-aux.isLoggedIn = ->
+isLoggedIn = ->
     return cookie.get('logged_in') is '1'
 
 # Capitalizes the first letter of a string
-aux.ucfirst = (str) ->
+ucfirst = (str) ->
     return str.charAt(0).toUpperCase() + str.slice(1)
 
 # Replaces dashes and spaces with underscores, ready to be used in an URL
-aux.underscored = (str) ->
+underscored = (str) ->
     return str.replace(/[-\s]+/g, '_').toLowerCase()
 
 # From Handlebars
-aux.escape = (str) ->
+escape = (str) ->
     chars = {
         '&': '&amp;'
         '<': '&lt;'
@@ -35,7 +33,7 @@ aux.escape = (str) ->
 
 # From http://ejohn.org/files/pretty.js
 # TODO move copy to content directory
-aux.timeAgo = (str) ->
+timeAgo = (str) ->
     diff = (new Date()).getTime() - (new Date(str)).getTime()
     days = Math.floor(diff / 86400000)
     hours = Math.floor(diff / 3600000)
@@ -50,16 +48,16 @@ aux.timeAgo = (str) ->
 
 
 # Return a variable friendly name of the title.
-aux.slugify = (s) ->
+slugify = (s) ->
     return s.toLowerCase().replace(/[-\s]+/g, '_')
 
 # Set the page title.
-aux.setTitle = (title = 'FIX ME') ->
+setTitle = (title = 'FIX ME') ->
     document.title = "#{title} – Sagefy"
 
 # Wait for function to stop being called for `delay`
 # milliseconds, and then finally call the real function.
-aux.debounce = (fn, delay) ->
+debounce = (fn, delay) ->
     timer = null
     return (args...) ->
         clearTimeout(timer)
@@ -69,7 +67,7 @@ aux.debounce = (fn, delay) ->
 
 # Determine if a given path matches this router.
 # Returns either false or array, where array is matches parameters.
-aux.matchesRoute = (docPath, viewPath) ->
+matchesRoute = (docPath, viewPath) ->
     if util.isString(viewPath)
         viewPath = new RegExp(
             '^' +
@@ -79,4 +77,14 @@ aux.matchesRoute = (docPath, viewPath) ->
     match = docPath.match(viewPath)
     return if match then match.slice(1) else false
 
-module.exports = aux
+module.exports = {
+    isLoggedIn
+    ucfirst
+    underscored
+    escape
+    timeAgo
+    slugify
+    setTitle
+    debounce
+    matchesRoute
+}

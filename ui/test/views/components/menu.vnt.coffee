@@ -1,4 +1,4 @@
-describe('menu.vnt', ->
+describe.skip('menu.vnt', ->
     beforeEach(->
 
     )

@@ -1,7 +1,5 @@
 store = require('./store')
 
-eventRegExp = /^(\S+) (.*)$/
-
 init = ->
     prev = window.onpopstate if window.onpopstate
     window.onpopstate = (event) =>

@@ -1,4 +1,3 @@
-require('../../../app/views/components/form_field.tmpl')
 
 # TODO outline tests
 

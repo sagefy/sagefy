@@ -1,3 +1,4 @@
+Events = require('../../app/modules/events')
 
 describe('Events', ->
     beforeEach(->

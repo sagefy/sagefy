@@ -3,6 +3,8 @@ diff = require('virtual-dom/diff')
 patch = require('virtual-dom/patch')
 createElement = require('virtual-dom/create-element')
 
+eventRegExp = /^(\S+) (.*)$/
+
 module.exports = {
     events: {}
 
@@ -19,12 +21,8 @@ module.exports = {
 
     delegate: (type) ->
         return (e) =>
-            el = e.currentTarget
-            loop
+            while el isnt @el
+                el = if el then el.parentNode else e.currentTarget
                 for selector, fn of @events[type]
-                    if el.matches(selector)
-                        fn.call(this, e, el)
-                        return
-                el = el.parentNode
-                return if el is @el
+                    fn.call(this, e, el) if el.matches(selector)
 }

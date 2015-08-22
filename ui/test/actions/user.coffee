@@ -1,12 +1,10 @@
-UserModel = require('../../app/models/user')
-
 validate = (model, search) ->
     errors = model.validate()
     for error in errors
         if error.name is search
             return error
 
-describe('user actions', ->
+describe.skip('user actions', ->
     beforeEach(->
         @xhr = sinon.useFakeXMLHttpRequest()
         @requests = []

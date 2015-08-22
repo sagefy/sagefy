@@ -299,7 +299,7 @@ describe('Utilities', ->
         expect(_.parseJSON('bowling')).to.equal('bowling')
     )
 
-    describe('validate', ->
+    describe.skip('validate', ->
         beforeEach(->
             class @M extends Model
                 schema: {

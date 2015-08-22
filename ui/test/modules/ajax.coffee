@@ -1,5 +1,5 @@
 
-describe('ajax', ->
+describe.skip('ajax', ->
     beforeEach(->
         @xhr = sinon.useFakeXMLHttpRequest()
         @requests = []
@@ -43,7 +43,7 @@ describe('ajax', ->
     )
 )
 
-it('should parse an Ajax error', ->
+it.skip('should parse an Ajax error', ->
     expect(Model::parseAjaxErrors({
         responseText: '{"errors":[{"name":"a"}]}'
     })).to.eql([{name: 'a'}])
