@@ -14,18 +14,6 @@ FormView = require('../components/form')
 util = require('../../modules/utilities')
 
 class PasswordPageView extends FormPageView
-    id: 'password'
-    className: 'col-8'
-
-    constructor: ->
-        super
-
-        @render({title: 'Create a New Password'})
-
-    render: ->
-        super
-        @changeState(@getState())
-
     getState: ->
         qs = window.location.search
         if qs.indexOf('token') > -1
@@ -83,27 +71,6 @@ class PasswordPageView extends FormPageView
                 icon: 'check'
             }]
         return @addModelSchema(schema)
-
-    getDescription: (state) ->
-        # TODO should this be a template?
-        steps = [{
-            name: 'email'
-            title: '1. Enter Email'
-        }, {
-            name: 'inbox'
-            title: '2. Check Inbox'
-        }, {
-            name: 'password'
-            title: '3. Change Password'
-        }]
-        html = '<nav class="wizard"><ol>'
-        for step in steps
-            className = if step.name is state then 'selected' else ''
-            html += "<li class=\"#{className}\">"
-            html += step.title
-            html += '</li>'
-        html += '</ol></nav>'
-        return html
 
     toInbox: ->
         @changeState('inbox')

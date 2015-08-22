@@ -13,7 +13,7 @@ module.exports = store.add({
 
     logInUser: (data) ->
         # TODO validate
-        return @ajax({
+        return ajax({
             method: 'POST'
             url: '/api/sessions'
             data: data
@@ -24,7 +24,7 @@ module.exports = store.add({
         })
 
     logOutUser: ->
-        return @ajax({
+        return ajax({
             method: 'DELETE'
             url: '/api/sessions'
             done: ->
@@ -36,7 +36,7 @@ module.exports = store.add({
 
     getUserPasswordToken: (data) ->
         # TODO validate
-        return @ajax({
+        return ajax({
             method: 'POST'
             url: '/api/password_tokens'
             data: data
@@ -48,7 +48,7 @@ module.exports = store.add({
 
     createUserPassword: (data) ->
         # TODO validate
-        return @ajax({
+        return ajax({
             method: 'POST'
             url: "/api/users/#{data.id}/password"
             data: data

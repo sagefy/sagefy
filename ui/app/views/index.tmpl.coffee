@@ -2,13 +2,12 @@
 {div, main} = require('../modules/tags')
 
 routes = [
-    # ['/sign_up', require('./pages/sign_up.tmpl')]
-    # ['/log_in', require('./pages/log_in.tmpl')]
-    # ['/log_out', require('./pages/log_out.tmpl')]
-    # ['/password', require('./pages/password.tmpl')]
+    ['/sign_up', require('./pages/sign_up.tmpl'), 'Sign Up']
+    ['/log_in', require('./pages/log_in.tmpl'), 'Log In']
+    ['/password', require('./pages/password.tmpl'), 'Password']
     # ['/styleguide', require('./pages/styleguide.tmpl')]
     ['/terms', require('./pages/terms.tmpl'), 'Privacy & Terms']
-    # ['/contact', require('./pages/contact.tmpl')]
+    ['/contact', require('./pages/contact.tmpl'), 'Contact']
     # ['/settings', require('./pages/settings.tmpl')]
     # ['/notices', require('./pages/notices.tmpl')]
     # ['/search', require('./pages/search.tmpl')]
@@ -44,10 +43,10 @@ findRouteTmpl = (data) ->
             return route[1]
 
 module.exports = (data) ->
-    return div([
+    return div(
         main(
             {className: 'page'}
             findRouteTmpl(data)(data)
         )
-        require('./components/menu.tmpl')(data)
-    ])
+        require('./components/menu.tmpl')(data.menu)
+    )

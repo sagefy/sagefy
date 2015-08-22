@@ -68,16 +68,19 @@ Sagefy is not responsible for content or agreements on
 external websites, even if Sagefy links to them.
 
 If your copyright, patent, or trademark has been violated, contact
-support@sagefy.org.
+<support@sagefy.org>.
 Notices and counter-notices must meet statutory requirements
 imposed by the Digital Millennium Copyright Act of 1998.
+
+Sagefy's software is licensed under AGPL3.
+<http://www.gnu.org/licenses/agpl-3.0.html>
+
+If you have questions about these terms, contact Sagefy at <support@sagefy.org>.
 """
 
 module.exports = ->
     return div(
         {id: 'terms', className: 'col-10'}
-        [
-            h1('Sagefy Privacy Policy & Terms of Service')
-            pre(terms)
-        ]
+        h1('Sagefy Privacy Policy & Terms of Service')
+        pre(terms)
     )

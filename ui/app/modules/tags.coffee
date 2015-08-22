@@ -32,9 +32,14 @@ names = [
 ]
 
 tags = {}
+objConstructor = {}.constructor
 names.forEach((name) ->
-    tags[name] = (props, content) ->
-        return h(name, props, content)
+    tags[name] = (args...) ->
+        if args.length is 0
+            return h(name)
+        if args[0].constructor is objConstructor
+            return h(name, args[0], args.slice(1))
+        return h(name, args)
 )
 
 module.exports = tags

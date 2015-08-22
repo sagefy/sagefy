@@ -6,8 +6,8 @@ module.exports = {
         fn.call(this)
 
     add: (obj) ->
-        for key, value of obj
-            @actions[key] = value
+        for key, fn of obj
+            @actions[key] = fn.bind(this)
         return obj
 
     bind: (fn) ->

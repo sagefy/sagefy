@@ -60,7 +60,8 @@
     "Tables",
     "Components", [
         "Alerts & Errors",
-        "Breadcrumbs, Wizards, & Pagination",
+        "Breadcrumbs & Pagination",
+        "Wizards",
         "Discussion", [
             "Proposal",
             "Vote"
