@@ -8,6 +8,8 @@ Make an Ajax call given options:
 - fail: a function to do on fail
     - (json, request) ->
 ###
+util = require('./utilities')
+
 ajax = (options) ->
     method = options.method.toUpperCase()
     url = options.url

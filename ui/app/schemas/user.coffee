@@ -1,24 +1,24 @@
-validations = require('../modules/validations')
+{required, email, minlength} = require('../modules/validations')
 
 module.exports = {
     name: {
         type: 'text'
         validations: [
-            validations.required
+            required
         ]
     }
     email: {
         type: 'email'
         validations: [
-            validations.required
-            validations.email
+            required
+            email
         ]
     }
     password: {
         type: 'password'
         validations: [
-            validations.required
-            [validations.minlength, 8]
+            required
+            [minlength, 8]
         ]
     }
 }

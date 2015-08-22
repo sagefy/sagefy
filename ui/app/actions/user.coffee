@@ -1,6 +1,6 @@
 store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
-mediator = require('../modules/mediator')
+recorder = require('../modules/recorder')
 
 module.exports = store.add({
     createUser: (data) ->
@@ -18,9 +18,9 @@ module.exports = store.add({
             url: '/api/sessions'
             data: data
             done: ->
-                mediator.emit('log in user')
+                recorder.emit('log in user')
             fail: (errors) ->
-                mediator.emit('error on log in user', errors)
+                recorder.emit('error on log in user', errors)
         })
 
     logOutUser: ->
@@ -28,9 +28,10 @@ module.exports = store.add({
             method: 'DELETE'
             url: '/api/sessions'
             done: ->
-                mediator.emit('log out user')
+                window.location = '/'  # Hard refresh for cookie
+                recorder.emit('log out user')
             fail: (errors) ->
-                mediator.emit('error on log out user', errors)
+                recorder.emit('error on log out user', errors)
         })
 
     getUserPasswordToken: (data) ->
@@ -40,9 +41,9 @@ module.exports = store.add({
             url: '/api/password_tokens'
             data: data
             done: ->
-                mediator.emit('obtain password token')
+                recorder.emit('obtain password token')
             fail: (errors) ->
-                mediator.emit('error on password token', errors)
+                recorder.emit('error on password token', errors)
         })
 
     createUserPassword: (data) ->
@@ -52,8 +53,8 @@ module.exports = store.add({
             url: "/api/users/#{data.id}/password"
             data: data
             done: ->
-                mediator.emit('create password')
+                recorder.emit('create password')
             fail: (errors) ->
-                mediator.emit('error on create password', errors)
+                recorder.emit('error on create password', errors)
         })
 })

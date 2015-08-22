@@ -1,6 +1,6 @@
 store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
-mediator = require('../modules/mediator')
+recorder = require('../modules/recorder')
 
 module.exports = store.add({
     markNotice: (id) ->
@@ -12,7 +12,7 @@ module.exports = store.add({
                     if notice.id is id
                         @data.notices[index] = data.notice
                         break
-                mediator.emit('mark notice read', id)
+                recorder.emit('mark notice read', id)
                 @change()
         })
 

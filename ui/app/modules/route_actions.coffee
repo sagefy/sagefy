@@ -14,7 +14,6 @@ route = (path) ->
         history.pushState({}, '', path)
 
 store.init(init)
-
 store.add(route)
 
 module.exports = {init, route}

@@ -1,5 +1,5 @@
 broker = require('../modules/broker')
-actions = require('../modules/store').actions
+actions = require('../modules/actions')
 
 module.exports = broker.add({
     # When we click an internal link, use `route` instead

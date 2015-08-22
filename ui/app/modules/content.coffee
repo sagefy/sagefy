@@ -11,4 +11,4 @@ get = (key, language) ->
         return "Not Found > #{language} @ #{key}"
     return files[language][key]
 
-module.exports = {get: get}
+module.exports = {get}

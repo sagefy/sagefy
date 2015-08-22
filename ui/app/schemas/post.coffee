@@ -1,4 +1,4 @@
-validations = require('../modules/validations')
+{required} = require('../modules/validations')
 
 module.exports = {
     user_id: {
@@ -12,7 +12,7 @@ module.exports = {
     body: {
         type: 'textarea'
         validations: [
-            validations.required
+            required
         ]
     }
     kind: {
@@ -25,7 +25,7 @@ module.exports = {
         ]
         default: 'post'
         validations: [
-            validations.required
+            required
         ]
     }
     replies_to_id: {

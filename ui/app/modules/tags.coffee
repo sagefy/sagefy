@@ -1,7 +1,5 @@
 h = require('virtual-dom/h')
 
-tags = {}
-
 names = [
     # Super elements
     'meta',
@@ -33,6 +31,7 @@ names = [
     'mark', 'span'
 ]
 
+tags = {}
 for name in names
     tags[name] = (props, content) ->
         return h(name, props, content)

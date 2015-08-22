@@ -1,4 +1,4 @@
-mediator = require('./modules/mediator')
+recorder = require('./modules/recorder')
 
 # Require all actions
 require('./actions/card')
@@ -12,13 +12,14 @@ require('./actions/unit')
 require('./actions/user')
 
 # Require all broker events
+require('./components/form.vnt.coffee')
 
-# Log all mediator events to the console and analytics
-logAllMediatorEvents = ->
-    mediator.on('all', (args...) -> console.log(args...))
+# Log all recorder events to the console and analytics
+logAllRecorderEvents = ->
+    recorder.on('all', (args...) -> console.log(args...))
 
 # Start up the application
 go = ->
-    logAllMediatorEvents()
+    logAllRecorderEvents()
 
-module.exports = {go, logAllMediatorEvents}
+module.exports = {go, logAllRecorderEvents}

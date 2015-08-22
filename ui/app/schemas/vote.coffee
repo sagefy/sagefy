@@ -1,7 +1,7 @@
 post = require('./post')
-util = require('../modules/utilities')
+{extend} = require('../modules/utilities')
 
-module.exports = util.extend({}, post, {
+module.exports = extend({}, post, {
     body: {
         type: 'textarea'
         validations: []
