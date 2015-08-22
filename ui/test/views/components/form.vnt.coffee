@@ -1,0 +1,84 @@
+Form = require('../../../app/views/components/form')
+
+describe('form.vnt', ->
+    it('should format data from an HTML form', ->
+        test = document.createElement('div')
+        form = new Form({
+            region: test
+        })
+        form.el.innerHTML = '''
+            <input name="name" value="Moogle" />
+            <textarea name="description">Chocobo</textarea>
+        '''
+        expect(form.getValues()).to.deep.equal({
+            name: 'Moogle'
+            description: 'Chocobo'
+        })
+        form.remove()
+    )
+
+    it.skip('should listen to form submit', ->
+
+    )
+
+    it.skip('should listen to field changes', ->
+
+    )
+
+    it('should setup schema', ->
+        f = new Form({schema: [{}]})
+        expect(f.schema).to.be.an('array')
+    )
+
+    it.skip('should create the fields html', ->
+
+    )
+
+    it.skip('should produce a hash of values', ->
+
+    )
+
+    it.skip('should get a field value', ->
+
+    )
+
+    it.skip('should get the input fields', ->
+
+    )
+
+    it.skip('should get a form field wrapper', ->
+
+    )
+
+    it.skip('should emit submit event', ->
+
+    )
+
+    it.skip('should disable submit button', ->
+
+    )
+
+    it.skip('should enable submit button', ->
+
+    )
+
+    it.skip('should debounce change events', ->
+
+    )
+
+    it.skip('should show a list of errors', ->
+
+    )
+
+    it.skip('should show an error', ->
+
+    )
+
+    it.skip('should clear an error', ->
+
+    )
+
+    it.skip('should clear all error', ->
+
+    )
+)
