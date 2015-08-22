@@ -1,5 +1,4 @@
 store = require('../modules/store')
-ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
 
 store.init(-> @data.menu or= {})
