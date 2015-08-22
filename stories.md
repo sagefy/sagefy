@@ -24,19 +24,19 @@ I want to change my email address.
 As a user
 to control my inbox
 I want to change my email frequency.
-- [x]
+- [ ]
 As a user
 to troubleshoot or provide feedback
 I want to get help.
-- [x]
+- [ ]
 As a user
 to understand the service agreement
 I want to view terms and privacy policy.
-- [x]
+- [ ]
 As a user
 in order to navigate Sagefy
 I want to use the menu.
-- [x]
+- [ ]
 As a user
 to perform relevant actions
 I want the menu to show items relevant to being logged out.

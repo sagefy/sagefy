@@ -1,5 +1,5 @@
-{matchesRoute} = require('../modules/auxiliaries')
-{div} = require('../modules/tags')
+{matchesRoute, setTitle} = require('../modules/auxiliaries')
+{div, main} = require('../modules/tags')
 
 routes = [
     # ['/sign_up', require('./pages/sign_up.tmpl')]
@@ -7,7 +7,7 @@ routes = [
     # ['/log_out', require('./pages/log_out.tmpl')]
     # ['/password', require('./pages/password.tmpl')]
     # ['/styleguide', require('./pages/styleguide.tmpl')]
-    # ['/terms', require('./pages/terms.tmpl')]
+    ['/terms', require('./pages/terms.tmpl'), 'Privacy & Terms']
     # ['/contact', require('./pages/contact.tmpl')]
     # ['/settings', require('./pages/settings.tmpl')]
     # ['/notices', require('./pages/notices.tmpl')]
@@ -28,17 +28,26 @@ routes = [
     # ['/my_sets', require('./pages/my_sets.tmpl')]
     # ['/choose_unit', require('./pages/choose_unit.tmpl')]
     # ['/cards/{id}/learn', require('./pages/card_learn.tmpl')]
-    [/^\/?$/, require('./pages/home.tmpl')]  # Must be 2nd to last
-    [/.*/, require('./pages/error.tmpl')]  # Must be last
+    [/^\/?$/, require('./pages/home.tmpl'), 'Home']  # Must be 2nd to last
+    [/.*/, require('./pages/error.tmpl'), '404']  # Must be last
 ]
+
+###
+TODO distribute routing, something like...
+    module.exports = route(/^\/?$/, 'Home', (data) ->)
+###
 
 findRouteTmpl = (data) ->
     for route in routes
         if matchesRoute(data.route, route[0])
+            setTitle(route[2])
             return route[1]
 
 module.exports = (data) ->
-    return div(
-        {className: 'page'}
-        findRouteTmpl(data)(data)
-    )
+    return div([
+        main(
+            {className: 'page'}
+            findRouteTmpl(data)(data)
+        )
+        require('./components/menu.tmpl')(data)
+    ])

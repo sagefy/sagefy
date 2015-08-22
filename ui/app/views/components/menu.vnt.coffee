@@ -3,9 +3,7 @@ actions = require('../../modules/actions')
 
 module.exports = broker.add({
     'click .menu__overlay, .menu__trigger, .menu__item a': (e, el) ->
-        if e
-            e.preventDefault()
-            e.stopPropagation()
+        e.preventDefault() if e
         actions.toggleMenu()
 })
 
@@ -14,7 +12,7 @@ module.exports = broker.add({
 
 
 # A menu component, creates an icon and on click, displays list of options.
-class MenuView extends View
+class MenuView
     # For each state, a list of the menu items to appear
     menus: {
         loggedOut: [
@@ -43,14 +41,6 @@ class MenuView extends View
         settings: { icon: 'cog' }
         log_out: { title: 'Log Out', icon: 'sign-out' }
     }
-
-    template: template
-    itemTemplate: itemTemplate
-    selected: false
-    ucfirst: aux.ucfirst
-    underscored: aux.underscored
-    isLoggedIn: aux.isLoggedIn
-
 
     # Produces the data specific HTML
     renderItems: (data) ->

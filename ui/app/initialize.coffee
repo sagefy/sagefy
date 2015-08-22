@@ -4,6 +4,7 @@ init = require('./modules/init')
 # Require all actions
 require('./actions/card')
 require('./actions/follow')
+require('./actions/menu')
 require('./actions/notice')
 require('./actions/post')
 require('./actions/search')
@@ -13,7 +14,8 @@ require('./actions/unit')
 require('./actions/user')
 
 # Require all broker events
-# require('./views/components/form.vnt.coffee')
+require('./views/index.vnt')
+require('./views/components/menu.vnt')
 
 # Log all recorder events to the console and analytics
 logAllRecorderEvents = ->

@@ -23,8 +23,9 @@ module.exports = {
 
     delegate: (type) ->
         return (e) =>
-            while el isnt @el
-                el = if el then el.parentNode else e.currentTarget
+            el = e.target
+            while el and el isnt @el
                 for selector, fn of @events[type]
                     fn.call(this, e, el) if el.matches(selector)
+                el = el.parentNode
 }

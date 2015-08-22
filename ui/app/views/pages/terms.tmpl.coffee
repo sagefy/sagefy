@@ -1,157 +1,83 @@
 # TODO move copy to content directory
-{div, h1, p} = require('../../modules/tags')
+{div, h1, pre} = require('../../modules/tags')
 
-html = """
-<p>
-    By using Sagefy, you agree to these terms.
-</p>
+terms = """
+By using Sagefy, you agree to these terms.
 
-<p>
-    This statement is effective as of February 1, 2015.
-</p>
+This statement is effective as of February 1, 2015.
 
-<p>
-    Sagefy may change this document at any time without notice.
-</p>
+Sagefy may change this document at any time without notice.
 
-<p>
-    <strong>SAGEFY IS PROVIDED AS-IS AND AS-AVAILABLE.</strong>
-    <strong>SAGEFY MAKES NO WARRANTIES.</strong>
-    SAGEFY DOES NOT OFFER WARRANTIES
-    ON MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR USE,
-    OR NON-INFRINGEMENT OF INTELLECTUAL PROPERTY.
-</p>
+SAGEFY IS PROVIDED AS-IS AND AS-AVAILABLE.
+SAGEFY MAKES NO WARRANTIES.
+SAGEFY DOES NOT OFFER WARRANTIES ON MERCHANTABILITY,
+FITNESS FOR A PARTICULAR USE,
+OR NON-INFRINGEMENT OF INTELLECTUAL PROPERTY.
 
-<p>
-    <strong>SAGEFY IS NOT LIABLE FOR ANY DAMAGES COMING FROM USE
-            OF SAGEFY.</strong>
-</p>
+SAGEFY IS NOT LIABLE FOR ANY DAMAGES COMING FROM USE OF SAGEFY.
 
-<p>
-    Sagefy may contact you by your provided email address.
-</p>
+Sagefy may contact you by your provided email address.
 
-<p>
-    Sagefy may use cookies to keep you logged in and
-    to personalize the service.
-</p>
+Sagefy may use cookies to keep you logged in and to personalize the service.
 
-<p>
-    Sagefy may collect personally identifying information,
-    including your name, email address, IP address,
-    browser time, access times, websites and pages visited, and referring
-    websites. Sagefy uses this information to provide services.
-</p>
+Sagefy may collect personally identifying information to provide services.
 
-<p>
-    Sagefy may send personally identifying information to trusted
-    affiliates, such as Google Analytics and UserVoice.
-    Sagefy does not sell, rent, or lease your information to
-    third parties.
-</p>
+Sagefy may send personally identifying information to trusted
+affiliates, such as Google Analytics and UserVoice.
 
-<p>
-    Sagefy may disclose information to law enforcement without notice
+Sagefy may disclose information to law enforcement without notice
     a) if required by law,
     b) to defend Sagefy's rights and property, or
     c) to ensure personal safety or public safety.
-</p>
 
-<p>
-    You cannot spam to other users of Sagefy.
-    You cannot impersonate any person or entity on Sagefy.
-    You cannot defame, harrass, abuse, threaten, or defraud
-    other users of Sagefy.
-    You cannot use Sagefy to collect information
-    about other users without their consent.
-</p>
+You cannot spam to other users of Sagefy.
+You cannot impersonate any person or entity on Sagefy.
+You cannot defame, harrass, abuse, threaten, or defraud
+other users of Sagefy.
+You cannot use Sagefy to collect information
+about other users without their consent.
 
-<p>
-    You cannot share a single account with multiple people.
-    You cannot make or use more than one account.
-</p>
+You cannot share a single account with multiple people.
+You cannot make or use more than one account.
 
-<p>
-    If you are under the age of thirteen,
-    you must ask a parent or guardian before using Sagefy.
-</p>
+If you are under the age of thirteen,
+you must ask a parent or guardian before using Sagefy.
 
-<p>
-    You cannot interfere with security features of Sagefy.
-    You cannot interfere with any other user's use of Sagefy.
-    You cannot use any sort of automated means to access Sagefy.
-    You cannot bypass measures to restrict access to Sagefy.
-</p>
+You cannot interfere with security features of Sagefy.
+You cannot interfere with any other user's use of Sagefy.
+You cannot use any sort of automated means to access Sagefy.
+You cannot bypass measures to restrict access to Sagefy.
 
-<p>
-    You are solely responsible for maintaining
-    the confidentiality of your account and any passwords or tokens.
-    Sagefy is not liable for any damages resulting from
-    unauthorized use of your account.
-</p>
+You are solely responsible for maintaining
+the confidentiality of your account and any passwords or tokens.
+Sagefy is not liable for any damages resulting from
+unauthorized use of your account.
 
-<p>
-    Sagefy may close accounts and cancel service
-    in Sagefy's sole discretion.
-</p>
+Sagefy may close accounts and cancel service
+in Sagefy's sole discretion.
 
-<p>
-    By providing content to Sagefy, you agree you own the rights
-    to the content and the legal ability to provide the content.
-    By providing content to Sagefy, Sagefy may use this content.
-    No compensation will be given for user-provided content.
-</p>
+By providing content to Sagefy, you agree you own the rights
+to the content and the legal ability to provide the content.
+By providing content to Sagefy, Sagefy may use this content.
+No compensation will be given for user-provided content.
 
-<p>
-    Sagefy may update and remove user-submitted content,
-    but Sagefy does not make any commitment to update content.
-</p>
+Sagefy may update and remove user-submitted content,
+but Sagefy does not make any commitment to update content.
 
-<p>
-    Sagefy is not responsible for content or agreements on
-    external websites, even if Sagefy links to them.
-</p>
+Sagefy is not responsible for content or agreements on
+external websites, even if Sagefy links to them.
 
-<p>
-    If your copyright, patent, or trademark has been violated, contact
-    <a href="mailto:support@sagefy.org">support@sagefy.org</a>.
-    Notices and counter-notices must meet statutory requirements
-    imposed by the Digital Millennium Copyright Act of 1998.
-</p>
-
-<p>
-    Sagefy is licensed under AGPL3.
-    <a href="http://www.gnu.org/licenses/agpl-3.0.html">
-        View the full license</a>.
-</p>
-
-<pre><code>Sagefy, learner-generated algorithmic adaptive learning.
-Copyright (C) 2015  Kevin Heis and contributors.
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
-</code></pre>
-
-<p>
-    If you have questions about these terms, contact Sagefy at
-    <a href="mailto:support@sagefy.org">support@sagefy.org</a>.
-</p>
+If your copyright, patent, or trademark has been violated, contact
+support@sagefy.org.
+Notices and counter-notices must meet statutory requirements
+imposed by the Digital Millennium Copyright Act of 1998.
 """
 
 module.exports = ->
     return div(
         {id: 'terms', className: 'col-10'}
-        'Sagefy Privacy Policy &amp; Terms of Service'
-        html
+        [
+            h1('Sagefy Privacy Policy & Terms of Service')
+            pre(terms)
+        ]
     )

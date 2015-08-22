@@ -54,7 +54,9 @@ slugify = (s) ->
 
 # Set the page title.
 setTitle = (title = 'FIX ME') ->
-    document.title = "#{title} – Sagefy"
+    title = "#{title} – Sagefy"
+    if document.title isnt title
+        document.title = title
 
 # Wait for function to stop being called for `delay`
 # milliseconds, and then finally call the real function.
