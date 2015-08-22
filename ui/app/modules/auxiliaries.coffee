@@ -3,6 +3,7 @@ Auxiliaries are utlity functions that are specific to Sagefy.
 ###
 
 cookie = require('./cookie')
+{isString} = require('./utilities')
 
 # Determine if the user is logged in
 isLoggedIn = ->
@@ -68,7 +69,7 @@ debounce = (fn, delay) ->
 # Determine if a given path matches this router.
 # Returns either false or array, where array is matches parameters.
 matchesRoute = (docPath, viewPath) ->
-    if util.isString(viewPath)
+    if isString(viewPath)
         viewPath = new RegExp(
             '^' +
             viewPath.replace(/\{([\d\w\_\$]+)\}/g, '([^/]+)') +

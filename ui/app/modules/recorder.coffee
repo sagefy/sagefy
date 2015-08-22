@@ -1,1 +1,2 @@
-module.exports = new require('events')()
+Events = require('./events')
+module.exports = new Events()

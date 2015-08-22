@@ -7,16 +7,12 @@ module.exports = broker.add({
 
 
 
-
-View = require('../../modules/view')
-SelectView = require('./select')
-fieldTemplate = require('./form_field.tmpl')
 util = require('../../modules/utilities')
 aux = require('../../modules/auxiliaries')
 
 # Generic Form View
 # Designed to be extended
-class FormView extends View
+class FormView
     # Validates schema on submit
     # Validates single field on change
     domEvents: {

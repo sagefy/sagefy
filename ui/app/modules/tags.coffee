@@ -10,7 +10,7 @@ names = [
     # Other block-level elements
     'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'main', 'address',
     'p', 'hr', 'pre', 'blockquote', 'ol', 'ul', 'li', 'dl', 'dt', 'dd',
-    'figure', 'figcaption', 'div', 'br',
+    'figure', 'figcaption', 'div', 'br', 'hgroup',
 
     # Table elements
     'table', 'caption', 'thead', 'tbody', 'tfoot',
@@ -32,8 +32,9 @@ names = [
 ]
 
 tags = {}
-for name in names
+names.forEach((name) ->
     tags[name] = (props, content) ->
         return h(name, props, content)
+)
 
 module.exports = tags

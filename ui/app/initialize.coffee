@@ -1,4 +1,5 @@
 recorder = require('./modules/recorder')
+init = require('./modules/init')
 
 # Require all actions
 require('./actions/card')
@@ -12,7 +13,7 @@ require('./actions/unit')
 require('./actions/user')
 
 # Require all broker events
-require('./components/form.vnt.coffee')
+# require('./views/components/form.vnt.coffee')
 
 # Log all recorder events to the console and analytics
 logAllRecorderEvents = ->
@@ -21,5 +22,9 @@ logAllRecorderEvents = ->
 # Start up the application
 go = ->
     logAllRecorderEvents()
+    init({
+        view: require('./views/index.tmpl')
+        el: document.body
+    })
 
 module.exports = {go, logAllRecorderEvents}

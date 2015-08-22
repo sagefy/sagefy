@@ -1,12 +1,14 @@
-require('matches_polyfill')
-diff = require('virtual-dom/diff')
-patch = require('virtual-dom/patch')
-createElement = require('virtual-dom/create-element')
+require('./matches_polyfill')
 
 eventRegExp = /^(\S+) (.*)$/
 
 module.exports = {
-    events: {}
+    events: {
+        click: {}
+        change: {}
+        keydown: {}
+        submit: {}
+    }
 
     init: (fn) ->
         fn.call(this)

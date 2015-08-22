@@ -2,10 +2,10 @@ store = require('./store')
 
 init = ->
     prev = window.onpopstate if window.onpopstate
+    @data.route = window.location.pathname
     window.onpopstate = (event) =>
         prev(event) if prev
         @data.route = window.location.pathname
-    @data.route = window.location.pathname
 
 route = (path) ->
     if path isnt window.location.pathname
