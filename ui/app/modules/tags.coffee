@@ -37,7 +37,7 @@ names.forEach((name) ->
     tags[name] = (args...) ->
         if args.length is 0
             return h(name)
-        if args[0].constructor is objConstructor
+        if args[0] and args[0].constructor is objConstructor
             return h(name, args[0], args.slice(1))
         return h(name, args)
 )

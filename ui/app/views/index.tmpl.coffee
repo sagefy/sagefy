@@ -5,7 +5,7 @@ routes = [
     ['/sign_up', require('./pages/sign_up.tmpl'), 'Sign Up']
     ['/log_in', require('./pages/log_in.tmpl'), 'Log In']
     ['/password', require('./pages/password.tmpl'), 'Password']
-    # ['/styleguide', require('./pages/styleguide.tmpl')]
+    ['/styleguide', require('./pages/styleguide.tmpl'), 'Styleguide']
     ['/terms', require('./pages/terms.tmpl'), 'Privacy & Terms']
     ['/contact', require('./pages/contact.tmpl'), 'Contact']
     # ['/settings', require('./pages/settings.tmpl')]

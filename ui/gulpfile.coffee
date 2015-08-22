@@ -17,6 +17,7 @@ Mocha = require('mocha')
 mkdirp = require('mkdirp')
 
 fillTests = require('./fill_tests')
+grabStyleMeta = require('./grab_style_meta')
 
 ################################################################################
 ### Configuration ##############################################################
@@ -118,12 +119,14 @@ gulp.task('build styles for docs', (done) ->
 )
 
 gulp.task('build styleguide', (done) ->
-    yms = require('ym-styleguide')
     fs = require('fs')
-    yms.build('app/', (html) ->
-        coffee = 'module.exports="""\n' + html + '\n"""\n'
-        fs.writeFileSync('app/views/pages/styleguide.compiled.coffee', coffee)
-        done()
+    grabStyleMeta('./**/*.styl', (data) ->
+        content = JSON.stringify(data)
+        fs.writeFile(
+            './app/views/pages/styleguide.data.json'
+            content
+            done
+        )
     )
 )
 
