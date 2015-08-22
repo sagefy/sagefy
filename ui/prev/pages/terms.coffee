@@ -2,8 +2,7 @@ View = require('../../modules/view')
 aux = require('../../modules/auxiliaries')
 
 class TermsPageView extends View
-    id: 'terms'
-    className: 'col-10'
+    
     template: require('./terms.tmpl')
 
     constructor: ->

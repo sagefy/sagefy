@@ -6,8 +6,7 @@ template = require('./select.tmpl')
 optTemplate = require('./select_option.tmpl')
 
 class SelectView extends View
-    className: 'select'
-    tagName: 'span'
+
     domEvents: {
         'click .clear': 'clearOptions'
         'change input[type="search"]': 'searchOptions'

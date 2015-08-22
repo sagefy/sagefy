@@ -6,7 +6,7 @@ aux = require('../../modules/auxiliaries')
 
 # A menu component, creates an icon and on click, displays list of options.
 class MenuView extends View
-    className: 'menu'
+
     domEvents: {
         'click .menu__overlay': 'toggle'
         'click .menu__trigger': 'toggle'
