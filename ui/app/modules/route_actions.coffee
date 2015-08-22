@@ -3,11 +3,19 @@ recorder = require('./recorder')
 
 store.data.route = window.location.pathname
 
-module.exports = store.add({
+route = (path) ->
+    recorder.emit('route', path)
+    store.data.route = path
+    store.change()
+
+window.onpopstate = ->
+    route(window.location.pathname)
+
+store.add({
     route: (path) ->
         if path isnt window.location.pathname
-            recorder.emit('route', path)
             history.pushState({}, '', path)
-            store.data.route = path
-            store.change()
+            route(path)
 })
+
+module.exports = {route}
