@@ -8,25 +8,27 @@ routes = [
     ['/styleguide', require('./pages/styleguide.tmpl'), 'Styleguide']
     ['/terms', require('./pages/terms.tmpl'), 'Privacy & Terms']
     ['/contact', require('./pages/contact.tmpl'), 'Contact']
-    # ['/settings', require('./pages/settings.tmpl')]
-    # ['/notices', require('./pages/notices.tmpl')]
-    # ['/search', require('./pages/search.tmpl')]
-    # [
-    #     /^\/topics\/(create|[\d\w]+\/update)$/
-    #     require('./pages/topic_form.tmpl')
-    # ]  # Must be before `topic`
-    # [
-    #     /^\/posts\/(create|[\d\w]+\/update)$/
-    #     require('./pages/post_form.tmpl')
-    # ]
-    # ['/topics/{id}', require('./pages/topic.tmpl')]
-    # ['/cards/{id}', require('./pages/card.tmpl')]
-    # ['/units/{id}', require('./pages/unit.tmpl')]
-    # ['/sets/{id}', require('./pages/set.tmpl')]
-    # ['/follows', require('./pages/follows.tmpl')]
-    # ['/my_sets', require('./pages/my_sets.tmpl')]
-    # ['/choose_unit', require('./pages/choose_unit.tmpl')]
-    # ['/cards/{id}/learn', require('./pages/card_learn.tmpl')]
+    ['/settings', require('./pages/settings.tmpl'), 'Settings']
+    ['/notices', require('./pages/notices.tmpl'), 'Notices']
+    ['/search', require('./pages/search.tmpl'), 'Search']
+    [
+        /^\/topics\/(create|[\d\w]+\/update)$/
+        require('./pages/topic_form.tmpl')
+        'Topic'
+    ]  # Must be before `topic`
+    [
+        /^\/posts\/(create|[\d\w]+\/update)$/
+        require('./pages/post_form.tmpl')
+        'Post'
+    ]
+    ['/topics/{id}', require('./pages/topic.tmpl'), 'Topic']
+    ['/cards/{id}', require('./pages/card.tmpl'), 'Card']
+    ['/units/{id}', require('./pages/unit.tmpl'), 'Unit']
+    ['/sets/{id}', require('./pages/set.tmpl'), 'Set']
+    ['/follows', require('./pages/follows.tmpl'), 'Follow']
+    ['/my_sets', require('./pages/my_sets.tmpl'), 'My Sets']
+    ['/choose_unit', require('./pages/choose_unit.tmpl'), 'Choose Unit']
+    ['/cards/{id}/learn', require('./pages/card_learn.tmpl'), 'Learn']
     [/^\/?$/, require('./pages/home.tmpl'), 'Home']  # Must be 2nd to last
     [/.*/, require('./pages/error.tmpl'), '404']  # Must be last
 ]

@@ -1,5 +1,5 @@
 # TODO move copy to content directory
-{div, h1, pre} = require('../../modules/tags')
+{div, h1, p} = require('../../modules/tags')
 
 terms = """
 By using Sagefy, you agree to these terms.
@@ -82,5 +82,5 @@ module.exports = ->
     return div(
         {id: 'terms', className: 'col-10'}
         h1('Sagefy Privacy Policy & Terms of Service')
-        pre(terms)
+        terms.split('\n\n').map((t) -> p(t))
     )
