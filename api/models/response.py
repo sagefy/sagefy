@@ -31,6 +31,9 @@ class Response(Model):
         },
         'score': {
             'validate': (is_required, is_number, is_score,),
+        },
+        'learned': {
+            'validate': (is_required, is_number,)
         }
     })
 

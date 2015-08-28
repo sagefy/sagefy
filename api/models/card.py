@@ -66,8 +66,25 @@ class Card(EntityMixin, Model):
         """
 
         # TODO@ sequencer data: learners, transit, guess, slip, difficulty
+        # TODO@ cache in redis
+        # TODO@ move to entity mixin
 
         params = CardParameters.get(card_id=self['entity_id'])
         if params:
             return params
         return CardParameters({'card_id': self['entity_id']})
+
+    def has_assessment(self):
+        """
+        Is this card kind an assessment type?
+        """
+
+        return self['kind'] in ('choice', 'number', 'match', 'formula',
+                                'writing', 'upload', 'embed')
+
+    def has_asynchronous(self):
+        """
+        Is this card kind an assessment type?
+        """
+
+        return self['kind'] in ('writing', 'upload', 'embed')

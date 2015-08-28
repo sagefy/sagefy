@@ -5,7 +5,6 @@ Primary learning sequencer.
 from modules.sequencer.formulas import update as formula_update
 from modules.sequencer.params import init_learned
 from models.response import Response
-# from modules.sequencer.traversal import traverse
 from time import time
 
 """
@@ -48,9 +47,9 @@ def update(user, card, response):
         'response': response,
         'score': score,
     })
-    errors = response.validate()
-    if errors:
-        return {'errors': errors, 'feedback': feedback}
+    # errors = response.validate()
+    # if errors:
+    #     return {'errors': errors, 'feedback': feedback}
 
     card_parameters = card.fetch_parameters()
     previous_response = Response.get_latest(user_id=user['id'],
@@ -60,7 +59,7 @@ def update(user, card, response):
     time_delta = now - (previous_response['created'].to_epoch_time()
                         if previous_response else now)
 
-    learned = (previous_response['learner']
+    learned = (previous_response['learned']
                if previous_response else init_learned)
     guess_distribution = card_parameters.get_distribution('guess')
     slip_distribution = card_parameters.get_distribution('slip')

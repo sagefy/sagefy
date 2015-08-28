@@ -13,6 +13,7 @@ def test_created(db_conn, responses_table):
         'unit_id': 'RM',
         'response': 42,
         'score': 0.9,
+        'learned': 0.9,
     })
     del response['created']  # should be set to default anywho
     response, errors = response.save()
@@ -29,6 +30,7 @@ def test_user(db_conn, responses_table):
         'unit_id': 'RM',
         'response': 42,
         'score': 0.9,
+        'learned': 0.9,
     })
     assert len(errors) == 1
     response['user_id'] = 'A'
@@ -46,6 +48,7 @@ def test_card(db_conn, responses_table):
         'unit_id': 'RM',
         'response': 42,
         'score': 0.9,
+        'learned': 0.9,
     })
     assert len(errors) == 1
     response['card_id'] = 'AFJ'
@@ -63,6 +66,7 @@ def test_unit(db_conn, responses_table):
         'card_id': 'BC',
         'response': 42,
         'score': 0.9,
+        'learned': 0.9,
     })
     assert len(errors) == 1
     response['unit_id'] = 'A24JLD'
@@ -80,6 +84,7 @@ def test_response(db_conn, responses_table):
         'card_id': 'BC',
         'unit_id': 'RM',
         'score': 0.9,
+        'learned': 0.9,
     })
     assert len(errors) == 1
     response['response'] = 42
@@ -97,6 +102,7 @@ def test_score(db_conn, responses_table):
         'card_id': 'BC',
         'unit_id': 'RM',
         'response': 42,
+        'learned': 0.9,
     })
     assert len(errors) == 1
     response['score'] = 1.1
