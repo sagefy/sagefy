@@ -3,5 +3,9 @@ ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
 
 module.exports = store.add({
+    listFollows: ->
 
+    follow: ->
+
+    unfollow: ->
 })

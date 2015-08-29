@@ -6,10 +6,22 @@ module.exports = store.add({
     createUser: (data) ->
         # TODO validate
         # '/api/users/'
+        return ajax({
+            method: 'POST'
+            url: '/api/users'
+            data: data
+            done: ->
+
+            fail: (errors) ->
+        })
 
     updateUser: (data) ->
         # TODO
         # return "/api/users/#{id}/" if id
+
+    getCurrentUser: ->
+
+    getUser: (id) ->
 
     logInUser: (data) ->
         # TODO validate

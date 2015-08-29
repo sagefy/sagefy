@@ -4,6 +4,10 @@ recorder = require('../modules/recorder')
 {ucfirst, underscored} = require('../modules/auxiliaries')
 
 store.init(->
+    # TODO@ Derivative data should be created in the view layer,
+    #       not the store unless there is a significant CPU
+    #       concern
+
     @data.menu = {open: false}
 
     # A list of all menu items and their configurations

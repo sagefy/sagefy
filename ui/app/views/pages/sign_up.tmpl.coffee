@@ -1,4 +1,30 @@
 {div, h1, p, a, i, br} = require('../../modules/tags')
+form = require('../components/form.tmpl')
+userSchema = require('../../schemas/user')
+{extend} = require('../../modules/utilities')
+
+fields = [{
+    name: 'name'
+    label: 'Username'
+    placeholder: 'ex: Unicorn'
+}, {
+    name: 'email'
+    label: 'Email'
+    description: 'We need your email to send notices ' +
+                 'and reset password.'
+    placeholder: 'ex: unicorn@example.com'
+}, {
+    name: 'password'
+    label: 'Password'
+}, {
+    name: 'submit'
+    label: 'Sign Up'
+    type: 'submit'
+    icon: 'user'
+}]
+
+for i, field of fields
+    fields[i] = extend({}, userSchema[field.name], field)
 
 module.exports = ->
     return div(
@@ -20,4 +46,5 @@ module.exports = ->
             )
             '.'
         )
+        form({fields})
     )

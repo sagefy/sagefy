@@ -3,5 +3,11 @@ ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
 
 module.exports = store.add({
-    search: (params) ->
+    listUserSets: ->
+
+    addUserSet: ->
+
+    chooseSet: ->
+
+    removeUserSet: ->
 })
