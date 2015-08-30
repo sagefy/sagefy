@@ -1,5 +1,6 @@
 {matchesRoute, setTitle} = require('../modules/auxiliaries')
 {div, main} = require('../modules/tags')
+{copy} = require('../modules/utilities')
 
 routes = [
     ['/sign_up', require('./pages/sign_up.tmpl'), 'Sign Up']
@@ -45,10 +46,13 @@ findRouteTmpl = (data) ->
             return route[1]
 
 module.exports = (data) ->
+    menuData = copy(data.menu)
+    menuData.kind = if data.currentUserID then 'loggedIn' else 'loggedOut'
+
     return div(
         main(
             {className: 'page'}
             findRouteTmpl(data)(data)
         )
-        require('./components/menu.tmpl')(data.menu)
+        require('./components/menu.tmpl')(menuData)
     )
