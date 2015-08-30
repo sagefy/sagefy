@@ -1,6 +1,30 @@
 {div, h1, p, br, a, i} = require('../../modules/tags')
+form = require('../components/form.tmpl')
+userSchema = require('../../schemas/user')
+{extend} = require('../../modules/utilities')
+{mergeFieldsData} = require('../../modules/auxiliaries')
 
-module.exports = ->
+fields = [{
+    name: 'name'
+    label: 'Name'
+    placeholder: 'e.g. Unicorn'
+}, {
+    name: 'password'
+    label: 'Password'
+    placeholder: ''
+}, {
+    type: 'submit'
+    name: 'log-in'
+    label: 'Log In'
+    icon: 'sign-in'
+}]
+
+for index, field of fields
+    fields[index] = extend({}, userSchema[field.name], field)
+
+module.exports = (data) ->
+    fields_ = mergeFieldsData(fields, data)
+
     return div(
         {id: 'log-in', className: 'col-6'}
         h1('Log In')
@@ -21,4 +45,5 @@ module.exports = ->
             )
             '.'
         )
+        form(fields_)
     )

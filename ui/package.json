@@ -46,8 +46,7 @@
     "sinon-chai": "2.8.0",
     "stylus": "^0.52.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "2.2.1",
-    "ym-styleguide": "git+https://github.com/heiskr/ym-styleguide.git"
+    "watchify": "2.2.1"
   },
   "browserify": {
     "transform": [

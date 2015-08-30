@@ -68,19 +68,18 @@ util.closest = (element, top, selector) ->
 
 # Validate the entry with the given ID against the schema.
 # Returns a list of errors.
-# Emits `invalid` if errors are found.
 # Use this method for any sort of `create` or `update` call.
-util.validate = (entry, schema) ->
+util.validateFormData = (data, schema, fields) ->
     errors = []
     for fieldName in (fields or Object.keys(schema))
-        for fn in schema.validations
-            if util.isArray(fn)
-                error = fn[0](entry[fieldName], fn.slice(1)...)
+        for fn in schema[fieldName].validations
+            error = if util.isArray(fn)
+                fn[0](data[fieldName], fn.slice(1)...)
             else
-                error = fn(entry[fieldName])
+                fn(data[fieldName])
             if error
                 errors.push({
-                    name: name
+                    name: fieldName
                     message: error
                 })
                 break

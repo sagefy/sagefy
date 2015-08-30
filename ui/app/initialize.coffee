@@ -16,6 +16,7 @@ require('./actions/user')
 # Require all broker events
 require('./views/index.vnt')
 require('./views/components/menu.vnt')
+require('./views/pages/log_in.vnt')
 require('./views/pages/sign_up.vnt')
 
 # Log all recorder events to the console and analytics

@@ -6,7 +6,7 @@ module.exports = {
     events: {
         click: {}
         change: {}
-        keydown: {}
+        keyup: {}
         submit: {}
     }
 

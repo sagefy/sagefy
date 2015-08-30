@@ -29,10 +29,13 @@ ajax = (options) ->
     request.onload = ->
         if 400 > @status >= 200
             options.done(util.parseJSON(@responseText), this)
+            options.always?()
         else
-            options.fail(Store::parseAjaxErrors(this), this)
+            options.fail(parseAjaxErrors(this), this)
+            options.always?()
     request.onerror = ->
         options.fail(null, this)
+        options.always?()
     if options.method is 'GET'
         request.send()
     else

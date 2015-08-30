@@ -1,3 +1,5 @@
+{input} = require('../../modules/tags')
+
 module.exports = (data) ->
     return input({
         id: data.name
@@ -5,5 +7,5 @@ module.exports = (data) ->
         placeholder: data.placeholder or ''
         type: data.type
         value: data.value or ''
-        size: data.size or ''
+        size: data.size or 40
     })

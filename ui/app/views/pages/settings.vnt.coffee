@@ -49,7 +49,7 @@ class SettingsPageView extends FormPageView
     getSchema: ->
         return @addModelSchema([{
             name: 'name'
-            label: 'Username'
+            label: 'Name'
             placeholder: 'ex: Unicorn'
         }, {
             name: 'email'

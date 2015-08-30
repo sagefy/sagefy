@@ -3,7 +3,7 @@ Auxiliaries are utlity functions that are specific to Sagefy.
 ###
 
 cookie = require('./cookie')
-{isString} = require('./utilities')
+{copy, isString} = require('./utilities')
 
 # Determine if the user is logged in
 isLoggedIn = ->
@@ -47,7 +47,6 @@ timeAgo = (str) ->
     return '1 minute ago' if minutes is 1
     return 'Just now'
 
-
 # Return a variable friendly name of the title.
 slugify = (s) ->
     return s.toLowerCase().replace(/[-\s]+/g, '_')
@@ -80,6 +79,30 @@ matchesRoute = (docPath, viewPath) ->
     match = docPath.match(viewPath)
     return if match then match.slice(1) else false
 
+# Returns an object of the fields' value
+getFormValues = (form) ->
+    data = {}
+    for field in form.querySelectorAll('input, textarea')
+        data[field.name] = field.value
+    return data
+
+mergeFieldsData = (fields, data) ->
+    fields_ = copy(fields)
+
+    for error in data.errors or []
+        field = fields_.filter((f) -> f.name is error.name)?[0]
+        field.error = error.message if field
+
+    for name, value of data.formData or {}
+        field = fields_.filter((f) -> f.name is name)?[0]
+        field.value = value
+
+    if data.sending
+        field = fields_.filter((f) -> f.type is 'submit')?[0]
+        field.disabled = true
+
+    return fields_
+
 module.exports = {
     isLoggedIn
     ucfirst
@@ -90,4 +113,6 @@ module.exports = {
     setTitle
     debounce
     matchesRoute
+    getFormValues
+    mergeFieldsData
 }

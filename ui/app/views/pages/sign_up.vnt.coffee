@@ -1,12 +1,6 @@
 broker = require('../../modules/broker')
 actions = require('../../modules/actions')
-
-# Returns an object of the fields' value
-getFormValues = (form) ->
-    data = {}
-    for field in form.querySelectorAll('input, textarea')
-        data[field.name] = field.value
-    return data
+{getFormValues} = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
     'submit #sign-up form': (e, el) ->

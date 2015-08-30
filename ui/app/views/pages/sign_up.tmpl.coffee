@@ -2,16 +2,17 @@
 form = require('../components/form.tmpl')
 userSchema = require('../../schemas/user')
 {extend} = require('../../modules/utilities')
+{mergeFieldsData} = require('../../modules/auxiliaries')
 
 fields = [{
     name: 'name'
-    label: 'Username'
+    label: 'Name'
     placeholder: 'ex: Unicorn'
 }, {
     name: 'email'
     label: 'Email'
     description: 'We need your email to send notices ' +
-                 'and reset password.'
+                 'and to reset your password.'
     placeholder: 'ex: unicorn@example.com'
 }, {
     name: 'password'
@@ -23,10 +24,12 @@ fields = [{
     icon: 'user'
 }]
 
-for i, field of fields
-    fields[i] = extend({}, userSchema[field.name], field)
+for index, field of fields
+    fields[index] = extend({}, userSchema[field.name], field)
 
-module.exports = ->
+module.exports = (data) ->
+    fields_ = mergeFieldsData(fields, data)
+
     return div(
         {id: 'sign-up', className: 'col-6'}
         h1('Sign Up')
@@ -46,5 +49,5 @@ module.exports = ->
             )
             '.'
         )
-        form({fields})
+        form(fields_)
     )

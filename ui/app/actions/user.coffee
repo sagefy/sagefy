@@ -1,72 +1,187 @@
 store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
+userSchema = require('../schemas/user')
+{validateFormData} = require('../modules/utilities')
 
 module.exports = store.add({
     createUser: (data) ->
-        # TODO validate
-        # '/api/users/'
-        return ajax({
+        @data.formData = data
+        @data.errors = validateFormData(data, userSchema,
+                                        ['name', 'email', 'password'])
+        if @data.errors.length
+            recorder.emit('invalid create user', @data.errors)
+            return @change()
+
+        @data.sending = true
+        @change()
+        ajax({
             method: 'POST'
             url: '/api/users'
             data: data
-            done: ->
-
-            fail: (errors) ->
+            done: (response) =>
+                @data.formData = {}
+                @data.currentUserID = response.user.id
+                recorder.emit('create user')
+                window.location = '/my_sets'
+                # Hard redirect to get the HTTP_ONLY cookie
+            fail: (errors) =>
+                @data.errors = errors
+                recorder.emit('error on create user', errors)
+            always: =>
+                @data.sending = false
+                @change()
         })
 
     updateUser: (data) ->
-        # TODO
-        # return "/api/users/#{id}/" if id
+        @data.formData = data
+        @data.errors = validateFormData(data, userSchema)
+        if @data.errors.length
+            recorder.emit('invalid update user')
+            return @change()
+
+        @data.sending = true
+        @change()
+        ajax({
+            method: 'PUT'
+            url: "/api/users/#{data.id}"
+            data: data
+            done: (response) =>
+                @data.formData = {}
+                @data.users ?= {}
+                @data.users[id] = response.user
+                recorder.emit('update user')
+            fail: (errors) =>
+                @data.errors = errors
+                recorder.emit('error on update user', errors)
+            always: =>
+                @data.sending = false
+                @change()
+        })
 
     getCurrentUser: ->
+        ajax({
+            method: 'GET'
+            url: '/api/users/current'
+            done: (response) =>
+                @data.currentUserID = response.user.id
+                @data.users ?= {}
+                @data.users[id] = response.user
+            fail: (errors) =>
+                @data.errors = errors
+                recorder.emit('fail get current user', errors)
+            always: =>
+                @change()
+        })
 
     getUser: (id) ->
+        ajax({
+            method: 'GET'
+            url: "/api/users/#{id}"
+            done: (response) =>
+                @data.users ?= {}
+                @data.users[id] = response.user
+            fail: (errors) =>
+                @data.errors = errors
+                recorder.emit('fail get user', id, errors)
+            always: =>
+                @change()
+        })
 
     logInUser: (data) ->
-        # TODO validate
-        return ajax({
+        @data.formData = data
+        @data.errors = validateFormData(data, userSchema, ['name', 'password'])
+        if @data.errors.length
+            recorder.emit('invalid log in user')
+            return @change()
+
+        @data.sending = true
+        @change()
+        ajax({
             method: 'POST'
             url: '/api/sessions'
             data: data
-            done: ->
+            done: (response) =>
+                @data.formData = {}
+                @data.currentUserID = response.user.id
                 recorder.emit('log in user')
-            fail: (errors) ->
+                # Hard redirect to get the HTTP_ONLY cookie
+                window.location = '/my_sets'
+            fail: (errors) =>
+                @data.errors = errors
                 recorder.emit('error on log in user', errors)
+            always: =>
+                @data.sending = false
+                @change()
         })
 
     logOutUser: ->
-        return ajax({
+        @data.sending = true
+        @change()
+        ajax({
             method: 'DELETE'
             url: '/api/sessions'
-            done: ->
-                window.location = '/'  # Hard refresh for cookie
+            done: =>
+                @data.currentUserID = null
+                window.location = '/'
+                # Hard redirect to delete the HTTP_ONLY cookie
                 recorder.emit('log out user')
-            fail: (errors) ->
+            fail: (errors) =>
+                @data.errors = errors
                 recorder.emit('error on log out user', errors)
+            always: =>
+                @data.sending = false
+                @change()
         })
 
     getUserPasswordToken: (data) ->
-        # TODO validate
-        return ajax({
+        @data.formData = data
+        @data.errors = validateFormData(data, userSchema, ['email'])
+        if @data.errors.length
+            recorder.emit('invalid get password token')
+            return @change()
+
+        @data.sending = true
+        @change()
+        ajax({
             method: 'POST'
             url: '/api/password_tokens'
             data: data
-            done: ->
+            done: (response) ->
+                @data.formData = {}
                 recorder.emit('obtain password token')
-            fail: (errors) ->
+            fail: (errors) =>
+                @data.errors = errors
                 recorder.emit('error on password token', errors)
+            always: =>
+                @data.sending = false
+                @change()
         })
 
     createUserPassword: (data) ->
-        # TODO validate
-        return ajax({
+        @data.formData = data
+        @data.errors = validateFormData(data, userSchema, ['password'])
+        if @data.errors.length
+            recorder.emit('invalid create password')
+            return @change()
+
+        @data.sending = true
+        @change()
+        ajax({
             method: 'POST'
             url: "/api/users/#{data.id}/password"
             data: data
-            done: ->
+            done: (response) =>
+                @data.formData = {}
+                @data.currentUserID = response.user.id
                 recorder.emit('create password')
-            fail: (errors) ->
+                # Hard redirect to get the HTTP_ONLY cookie
+                window.location = '/my_sets'
+            fail: (errors) =>
+                @data.errors = errors
                 recorder.emit('error on create password', errors)
+            always: =>
+                @data.sending = false
+                @change()
         })
 })

@@ -1,7 +1,9 @@
 c = require('../../modules/content').get
-requiredFn = require('../../modules/validations').required
+{required} = require('../../modules/validations')
+{label, span} = require('../../modules/tags')
 
 module.exports = (data) ->
+    isRequired = required in data.validations
     return label(
         {for: data.name}
         data.label or ''

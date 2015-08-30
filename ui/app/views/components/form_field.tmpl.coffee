@@ -1,8 +1,12 @@
+{div, p, i, span} = require('../../modules/tags')
+
 module.exports = (data) ->
     classes = [
         'form-field'
         'form-field--' + data.type
         'form-field--' + data.name
+        'form-field--bad' if data.error
+        'form-field--good' if data.good
     ].join(' ')
 
     return div(
@@ -11,18 +15,33 @@ module.exports = (data) ->
     )
 
 m = (data) ->
-    if data.label and data.type not in ['button', 'submit']
-        return require('./form_field_label.tmpl')(data)
+    nodes = []
 
-    switch data.type
-        when 'text', 'email', 'password'
-            return require('./form_field_input.tmpl')(data)
-        when 'textarea'
-            return require('./form_field_textarea.tmpl')(data)
-        when 'submit', 'button'
-            return require('./form_field_button.tmpl')(data)
-        when 'select'
-            return div({className: 'select-wrap'})
+    if data.label and data.type not in ['button', 'submit']
+        nodes.push(require('./form_field_label.tmpl')(data))
+
+    nodes.push(
+        switch data.type
+            when 'text', 'email', 'password'
+                require('./form_field_input.tmpl')(data)
+            when 'textarea'
+                require('./form_field_textarea.tmpl')(data)
+            when 'submit', 'button'
+                require('./form_field_button.tmpl')(data)
+            when 'select'
+                div({className: 'select-wrap'})
+    )
+
+    if data.error
+        nodes.push(span(
+            {className: 'form-field__feedback'}
+            i({className: 'fa fa-ban'})
+            data.error
+        ))
 
     if data.description
-        return p({className: 'form-field__description'}, data.description)
+        nodes.push(
+            p({className: 'form-field__description'}, data.description)
+        )
+
+    return nodes

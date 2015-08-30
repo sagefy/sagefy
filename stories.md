@@ -1,10 +1,10 @@
 ### 1) Accounts
 
-- [ ]
+- [x]
 As a user
 to use Sagefy
 I want to sign up.
-- [ ]
+- [x]
 As a user
 to use Sagefy
 I want to log in.
