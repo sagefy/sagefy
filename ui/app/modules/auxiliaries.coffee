@@ -95,11 +95,11 @@ mergeFieldsData = (fields, data) ->
 
     for name, value of data.formData or {}
         field = fields_.filter((f) -> f.name is name)?[0]
-        field.value = value
+        field.value = value if field
 
     if data.sending
         field = fields_.filter((f) -> f.type is 'submit')?[0]
-        field.disabled = true
+        field.disabled = true if field
 
     return fields_
 
