@@ -3,6 +3,7 @@ ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
 userSchema = require('../schemas/user')
 {validateFormData} = require('../modules/utilities')
+cookie = require('../modules/cookie')
 
 module.exports = store.add({
     createUser: (data) ->
@@ -22,6 +23,7 @@ module.exports = store.add({
             done: (response) =>
                 @data.formData = {}
                 @data.currentUserID = response.user.id
+                cookie.set('currentUserID', response.user.id)
                 recorder.emit('create user')
                 window.location = '/my_sets'
                 # Hard redirect to get the HTTP_ONLY cookie
@@ -65,6 +67,7 @@ module.exports = store.add({
             url: '/api/users/current'
             done: (response) =>
                 @data.currentUserID = response.user.id
+                cookie.set('currentUserID', response.user.id)
                 @data.users ?= {}
                 @data.users[id] = response.user
             fail: (errors) =>
@@ -104,6 +107,7 @@ module.exports = store.add({
             done: (response) =>
                 @data.formData = {}
                 @data.currentUserID = response.user.id
+                cookie.set('currentUserID', response.user.id)
                 recorder.emit('log in user')
                 # Hard redirect to get the HTTP_ONLY cookie
                 window.location = '/my_sets'
@@ -123,6 +127,7 @@ module.exports = store.add({
             url: '/api/sessions'
             done: =>
                 @data.currentUserID = null
+                cookie.unset('currentUserID')
                 window.location = '/'
                 # Hard redirect to delete the HTTP_ONLY cookie
                 recorder.emit('log out user')
@@ -174,6 +179,7 @@ module.exports = store.add({
             done: (response) =>
                 @data.formData = {}
                 @data.currentUserID = response.user.id
+                cookie.set('currentUserID', response.user.id)
                 recorder.emit('create password')
                 # Hard redirect to get the HTTP_ONLY cookie
                 window.location = '/my_sets'

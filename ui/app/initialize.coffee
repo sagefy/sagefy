@@ -1,5 +1,7 @@
 recorder = require('./modules/recorder')
+store = require('./modules/store')
 init = require('./modules/init')
+cookie = require('./modules/cookie')
 
 # Require all actions
 require('./actions/card')
@@ -26,6 +28,9 @@ logAllRecorderEvents = ->
 # Start up the application
 go = ->
     logAllRecorderEvents()
+    store.init(->
+        @data.currentUserID = cookie.get('currentUserID')
+    )
     init({
         view: require('./views/index.tmpl')
         el: document.body

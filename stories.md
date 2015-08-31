@@ -8,7 +8,7 @@ I want to sign up.
 As a user
 to use Sagefy
 I want to log in.
-- [ ]
+- [x]
 As a user
 to secure my account
 I want to log out.
@@ -40,7 +40,7 @@ I want to use the menu.
 As a user
 to perform relevant actions
 I want the menu to show items relevant to being logged out.
-- [ ]
+- [x]
 As a user
 to perform relevant actions
 I want the menu to show items relevant to being logged in.

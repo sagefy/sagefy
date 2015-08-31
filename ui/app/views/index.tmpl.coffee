@@ -2,6 +2,8 @@
 {div, main} = require('../modules/tags')
 {copy} = require('../modules/utilities')
 
+# TODO@ Some views require log in, some views require logged out
+
 routes = [
     ['/sign_up', require('./pages/sign_up.tmpl'), 'Sign Up']
     ['/log_in', require('./pages/log_in.tmpl'), 'Log In']

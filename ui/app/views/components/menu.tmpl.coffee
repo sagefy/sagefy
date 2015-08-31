@@ -14,7 +14,7 @@ items = {
     contact: { icon: 'envelope' }
     notices: { icon: 'tachometer' }
     settings: { icon: 'cog' }
-    log_out: { title: 'Log Out', icon: 'sign-out' }
+    log_out: { url: '#log_out', title: 'Log Out', icon: 'sign-out' }
 }
 
 # For items that don't have them
