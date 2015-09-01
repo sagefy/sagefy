@@ -1,6 +1,7 @@
 from modules.model import Model
 from models.mixins.entity import EntityMixin
 from modules.validations import is_required, is_string, is_list
+from models.unit_parameters import UnitParameters
 
 
 # TODO@ On set accepted, index (or delete) in Elasticsearch with entity_id
@@ -16,6 +17,8 @@ class Unit(EntityMixin, Model):
     30-60 minutes of practice to gain proficiency.
     """
     tablename = 'units'
+
+    parametersCls = UnitParameters
 
     schema = dict(EntityMixin.schema.copy(), **{
         'body': {

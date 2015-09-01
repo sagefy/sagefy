@@ -22,14 +22,13 @@ def get_unit_route(request, unit_id):
 
     return 200, {
         'unit': unit.deliver(),
+        'unit_parameters': unit.fetch_parameters(),
         'topics': [topic.deliver() for topic in topics],
         'versions': [version.deliver() for version in versions],
         'requires': [require.deliver() for require in requires],
         'required_by': [require.deliver() for require in required_by],
         'sets': [set_.deliver() for set_ in sets],
     }
-
-    # TODO@ sequencer data: learners, quality, difficulty
 
 
 @get('/api/units/{unit_id}/versions')

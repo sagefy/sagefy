@@ -6,6 +6,7 @@ from models.unit import Unit
 from modules.validations import is_required, is_string, is_list, is_one_of, \
     has_min_length
 from modules.memoize_redis import memoize_redis
+from models.set_parameters import SetParameters
 
 
 # TODO@ On set accepted, index (or delete) in Elasticsearch with entity_id
@@ -16,6 +17,8 @@ class Set(EntityMixin, Model):
     A graph is automatically formed based on the units and sets specified.
     """
     tablename = 'sets'
+
+    parametersCls = SetParameters
 
     schema = dict(EntityMixin.schema.copy(), **{
         'body': {

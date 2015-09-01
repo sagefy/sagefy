@@ -15,6 +15,8 @@ class Card(EntityMixin, Model):
     """
     tablename = 'cards'
 
+    parametersCls = CardParameters
+
     schema = dict(EntityMixin.schema.copy(), **{
         'unit_id': {
             'validate': (is_required, is_string,)  # TODO@ is valid id?
@@ -59,20 +61,6 @@ class Card(EntityMixin, Model):
         """
 
         raise Exception("No method implemented.")
-
-    def fetch_parameters(self):
-        """
-        Fetches the card's learning analytics parameters.
-        """
-
-        # TODO@ sequencer data: learners, transit, guess, slip, difficulty
-        # TODO@ cache in redis
-        # TODO@ move to entity mixin
-
-        params = CardParameters.get(card_id=self['entity_id'])
-        if params:
-            return params
-        return CardParameters({'card_id': self['entity_id']})
 
     def has_assessment(self):
         """

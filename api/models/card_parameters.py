@@ -9,7 +9,7 @@ class CardParameters(Model):
     tablename = 'cards_parameters'
 
     schema = dict(Model.schema.copy(), **{
-        'card_id': {
+        'entity_id': {
             'validate': (is_required, is_string),  # TODO@ validate foreign
         },
         'guess_distribution': {
@@ -50,3 +50,23 @@ class CardParameters(Model):
         key = '{kind}_distribution'.format(kind=kind)
         self[key] = {str(k): v for k, v in distribution.hypotheses.items()}
         return self
+
+    def get_guess(self):
+        """
+
+        """
+
+    def get_slip(self):
+        """
+
+        """
+
+    def get_transit(self):
+        """
+
+        """
+
+    def get_num_learners(self):
+        """
+
+        """

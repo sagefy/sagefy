@@ -102,6 +102,7 @@ I want to manage what I'm following.
 As a contributor
 to find things to work on
 I want to be able to search entities.
+(Needs API.)
 - [ ]
 As a contributor
 to identity areas to work on
@@ -118,10 +119,12 @@ I want to view set information.
 As a contributor
 to improve Sagefy
 I want to propose changes.
+(Needs API.)
 - [ ]
 As a contributor
 to help improve Sagefy
 I want to vote a on proposal.
+(Needs API.)
 
 ### 4) Learn
 
@@ -141,6 +144,7 @@ I want to view the list of my sets.
 As a learner
 to find new sets
 I want to search through sets.
+(Needs API.)
 - [ ]
 As a learner
 to start new courses
@@ -149,46 +153,29 @@ I want to add a set to my sets.
 As a learner
 to evaluate sets I might add
 I want to view units in the set.
+(Needs API.)
 - [ ]
 As a learner
 to stay motivated
 I want to see my progress in the set.
+(Needs API.)
 - [ ]
 As a learner
 to feel in control of my learning
 I want to choose which unit to work on next.
+(Needs API.)
 - [ ]
 As a learner
 to learn
 I want to use a (non-assessment) card.
+(Needs API.)
 - [ ]
 As a learner
 to learn
 I want to use an assessment type card.
+(Needs API.)
 - [ ]
 As a learner
 to stay motivated
 I want to see my progress in the unit as I work on cards.
-
-### Post MVP
-
-- [ ]
-As a learner
-to learn topics that require it
-I want to be able to write and receive feedback.
-- [ ]
-As a learner
-to learn topics that require it
-I want to be able to upload a file and receive feedback.
-- [ ]
-As learner
-to learn with rich experiences
-I want to learn with an embedded object.
-- [ ]
-As Sagefy
-to stay running and collect funds
-I want learners to see a donation card.
-- [ ]
-As a learner
-to learn in another way
-I want to be able to learn with my friends.
+(Needs API.)

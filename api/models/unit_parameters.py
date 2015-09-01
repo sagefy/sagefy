@@ -6,7 +6,22 @@ class UnitParameters(Model):
     tablename = 'units_parameters'
 
     schema = dict(Model.schema.copy(), **{
-        'unit_id': {
+        'entity_id': {
             'validate': (is_required, is_string),  # TODO@ validate foreign
         },
     })
+
+    def get_learners(self):
+        """
+
+        """
+
+    def get_difficulty(self):
+        """
+
+        """
+
+    def get_quality(self):
+        """
+
+        """

@@ -154,3 +154,15 @@ class EntityMixin(object):
                     .limit(limit))
 
         return [cls(fields) for fields in query.run(database.db_conn)]
+
+    def fetch_parameters(self):
+        """
+        Fetches the card's learning analytics parameters.
+        """
+
+        # TODO@ cache in redis
+
+        params = self.parametersCls.get(entity_id=self['entity_id'])
+        if params:
+            return params
+        return self.parametersCls({'entity_id': self['entity_id']})
