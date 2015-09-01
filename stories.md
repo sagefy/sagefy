@@ -18,6 +18,10 @@ to secure my account
 I want to change my password.
 - [ ]
 As a user
+to better represent myself
+I want to change my name.
+- [ ]
+As a user
 to keep using my account
 I want to change my email address.
 - [ ]

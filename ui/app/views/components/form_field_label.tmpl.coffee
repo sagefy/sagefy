@@ -3,7 +3,9 @@ c = require('../../modules/content').get
 {label, span} = require('../../modules/tags')
 
 module.exports = (data) ->
-    isRequired = required in data.validations
+    isRequired = if data.validations \
+                 then required in data.validations \
+                 else false
     return label(
         {for: data.name}
         data.label or ''

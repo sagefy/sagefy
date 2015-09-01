@@ -37,7 +37,7 @@ module.exports = store.add({
 
     updateUser: (data) ->
         @data.formData = data
-        @data.errors = validateFormData(data, userSchema)
+        @data.errors = validateFormData(data, userSchema, ['name', 'email'])
         if @data.errors.length
             recorder.emit('invalid update user')
             return @change()

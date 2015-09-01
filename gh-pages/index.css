@@ -509,6 +509,9 @@ body {
   justify-content: center;
   margin: -12px;
 }
+.page {
+  margin-bottom: 36px;
+}
 .col-1 {
   -webkit-flex-basis: 48px;
   -moz-flex-basis: 48px;

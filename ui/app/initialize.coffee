@@ -21,6 +21,7 @@ require('./views/components/menu.vnt')
 require('./views/pages/log_in.vnt')
 require('./views/pages/sign_up.vnt')
 require('./views/pages/password.vnt')
+require('./views/pages/settings.vnt')
 
 # Log all recorder events to the console and analytics
 logAllRecorderEvents = ->
