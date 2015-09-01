@@ -2,7 +2,7 @@ from modules.model import Model
 from modules.validations import is_required, is_email, is_string, \
     has_min_length, is_one_of
 from passlib.hash import bcrypt
-from modules.util import uniqid, pick, compact_dict, json_serial
+from modules.util import uniqid, pick, compact_dict, json_serial, omit
 from modules.content import get as c
 import json
 from framework.redis import redis
@@ -12,6 +12,7 @@ from framework.mail import send_mail
 def encrypt_password(value):
     if value and not value.startswith('$2a$'):
         return bcrypt.encrypt(value)
+    return value
 
 
 # TODO@ When creating a new user or updating the user's name or email,
@@ -65,6 +66,14 @@ class User(Model):
         }
     })
 
+    def update(self, data):
+        """
+        Overwrite update method to remove password.
+        """
+
+        data = omit(data, ('password',))
+        return super().update(data)
+
     def is_password_valid(self, password):
         """
         Take an encrypted password, and verifies it. Returns bool.
@@ -110,14 +119,6 @@ class User(Model):
             entoken = entoken.decode()
             return bcrypt.verify(self['id'] + token, entoken)
         return False
-
-    def update_password(self, password):
-        """
-        Update the user's password.
-        """
-
-        self['password'] = password
-        self.save()
 
     def get_learning_context(self):
         """

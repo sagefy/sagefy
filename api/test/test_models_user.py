@@ -192,7 +192,8 @@ def test_update_password(db_conn, users_table):
         'password': 'abcd1234',
     })
     pw1 = user['password']
-    user.update_password('1234abcd')
+    user['password'] = '1234abcd'
+    user.save()
     assert pw1 != user['password']
 
 

@@ -51,8 +51,8 @@ module.exports = store.add({
             done: (response) =>
                 @data.formData = {}
                 @data.users ?= {}
-                @data.users[id] = response.user
-                recorder.emit('update user')
+                @data.users[response.user.id] = response.user
+                recorder.emit('update user', response.user.id)
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on update user', errors)
@@ -69,7 +69,7 @@ module.exports = store.add({
                 @data.currentUserID = response.user.id
                 cookie.set('currentUserID', response.user.id)
                 @data.users ?= {}
-                @data.users[id] = response.user
+                @data.users[response.user.id] = response.user
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('fail get current user', errors)
@@ -83,7 +83,7 @@ module.exports = store.add({
             url: "/api/users/#{id}"
             done: (response) =>
                 @data.users ?= {}
-                @data.users[id] = response.user
+                @data.users[response.user.id] = response.user
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('fail get user', id, errors)

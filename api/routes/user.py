@@ -158,5 +158,6 @@ def create_password_route(request, user_id):
     valid = user.is_valid_token(request['params'].get('token'))
     if not valid:
         return abort(403)
-    user.update_password(request['params'].get('password'))
+    user['password'] = request['params'].get('password')
+    user.save()
     return _log_in(user)

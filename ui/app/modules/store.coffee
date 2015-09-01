@@ -13,5 +13,5 @@ module.exports = {
         return @callback = fn
 
     change: ->
-        return @callback(@data)
+        return @callback(@data) if @callback
 }

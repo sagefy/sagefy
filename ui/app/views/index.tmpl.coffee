@@ -4,37 +4,94 @@
 
 # TODO@ Some views require log in, some views require logged out
 
-routes = [
-    ['/sign_up', require('./pages/sign_up.tmpl'), 'Sign Up']
-    ['/log_in', require('./pages/log_in.tmpl'), 'Log In']
-    ['/password', require('./pages/password.tmpl'), 'Password']
-    ['/styleguide', require('./pages/styleguide.tmpl'), 'Styleguide']
-    ['/terms', require('./pages/terms.tmpl'), 'Privacy & Terms']
-    ['/contact', require('./pages/contact.tmpl'), 'Contact']
-    ['/settings', require('./pages/settings.tmpl'), 'Settings']
-    ['/notices', require('./pages/notices.tmpl'), 'Notices']
-    ['/search', require('./pages/search.tmpl'), 'Search']
-    [
-        /^\/topics\/(create|[\d\w]+\/update)$/
-        require('./pages/topic_form.tmpl')
-        'Topic'
-    ]  # Must be before `topic`
-    [
-        /^\/posts\/(create|[\d\w]+\/update)$/
-        require('./pages/post_form.tmpl')
-        'Post'
-    ]
-    ['/topics/{id}', require('./pages/topic.tmpl'), 'Topic']
-    ['/cards/{id}', require('./pages/card.tmpl'), 'Card']
-    ['/units/{id}', require('./pages/unit.tmpl'), 'Unit']
-    ['/sets/{id}', require('./pages/set.tmpl'), 'Set']
-    ['/follows', require('./pages/follows.tmpl'), 'Follow']
-    ['/my_sets', require('./pages/my_sets.tmpl'), 'My Sets']
-    ['/choose_unit', require('./pages/choose_unit.tmpl'), 'Choose Unit']
-    ['/cards/{id}/learn', require('./pages/card_learn.tmpl'), 'Learn']
-    [/^\/?$/, require('./pages/home.tmpl'), 'Home']  # Must be 2nd to last
-    [/.*/, require('./pages/error.tmpl'), '404']  # Must be last
-]
+routes = [{
+    path: '/sign_up'
+    tmpl: require('./pages/sign_up.tmpl')
+    title: 'Sign Up'
+}, {
+    path: '/log_in'
+    tmpl: require('./pages/log_in.tmpl')
+    title: 'Log In'
+}, {
+    path: '/password'
+    tmpl: require('./pages/password.tmpl')
+    title: 'Password'
+}, {
+    path: '/styleguide'
+    tmpl: require('./pages/styleguide.tmpl')
+    title: 'Styleguide'
+}, {
+    path: '/terms'
+    tmpl: require('./pages/terms.tmpl')
+    title: 'Privacy & Terms'
+}, {
+    path: '/contact'
+    tmpl: require('./pages/contact.tmpl')
+    title: 'Contact'
+}, {
+    path: '/settings'
+    tmpl: require('./pages/settings.tmpl')
+    title: 'Settings'
+}, {
+    path: '/notices'
+    tmpl: require('./pages/notices.tmpl')
+    title: 'Notices'
+}, {
+    path: '/search'
+    tmpl: require('./pages/search.tmpl')
+    title: 'Search'
+}, {
+    path: /^\/topics\/(create|[\d\w]+\/update)$/
+    tmpl: require('./pages/topic_form.tmpl')
+    title: 'Topic'
+    # Must be before `topic`
+}, {
+    path: /^\/posts\/(create|[\d\w]+\/update)$/
+    tmpl: require('./pages/post_form.tmpl')
+    title: 'Post'
+}, {
+    path: '/topics/{id}'
+    tmpl: require('./pages/topic.tmpl')
+    title: 'Topic'
+}, {
+    path: '/cards/{id}'
+    tmpl: require('./pages/card.tmpl')
+    title: 'Card'
+}, {
+    path: '/units/{id}'
+    tmpl: require('./pages/unit.tmpl')
+    title: 'Unit'
+}, {
+    path: '/sets/{id}'
+    tmpl: require('./pages/set.tmpl')
+    title: 'Set'
+}, {
+    path: '/follows'
+    tmpl: require('./pages/follows.tmpl')
+    title: 'Follow'
+}, {
+    path: '/my_sets'
+    tmpl: require('./pages/my_sets.tmpl')
+    title: 'My Sets'
+}, {
+    path: '/choose_unit'
+    tmpl: require('./pages/choose_unit.tmpl')
+    title: 'Choose Unit'
+}, {
+    path: '/cards/{id}/learn'
+    tmpl: require('./pages/card_learn.tmpl')
+    title: 'Learn'
+}, {
+    path: /^\/?$/
+    tmpl: require('./pages/home.tmpl')
+    title: 'Home'
+    # Must be 2nd to last
+}, {
+    path: /.*/
+    tmpl: require('./pages/error.tmpl')
+    title: '404'
+    # Must be last
+}]
 
 ###
 TODO distribute routing, something like...
@@ -43,9 +100,9 @@ TODO distribute routing, something like...
 
 findRouteTmpl = (data) ->
     for route in routes
-        if matchesRoute(data.route, route[0])
-            setTitle(route[2])
-            return route[1]
+        if matchesRoute(data.route, route.path)
+            setTitle(route.title)
+            return route.tmpl
 
 module.exports = (data) ->
     menuData = copy(data.menu)

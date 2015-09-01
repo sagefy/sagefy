@@ -22,7 +22,7 @@ m = (data) ->
 
     nodes.push(
         switch data.type
-            when 'text', 'email', 'password'
+            when 'text', 'email', 'password', 'hidden'
                 require('./form_field_input.tmpl')(data)
             when 'textarea'
                 require('./form_field_textarea.tmpl')(data)

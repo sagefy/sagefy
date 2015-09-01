@@ -6,6 +6,9 @@ form = require('../components/form.tmpl')
 {mergeFieldsData} = require('../../modules/auxiliaries')
 
 fields = [{
+    name: 'id'
+    type: 'hidden'
+}, {
     name: 'name'
     label: 'Name'
     placeholder: 'ex: Unicorn'
@@ -40,8 +43,13 @@ for index, field of fields
     fields[index] = extend({}, userSchema[field.name], field)
 
 module.exports = (data) ->
-    # TODO@ mix in existing user data
-    fields_ = mergeFieldsData(fields, data)
+    user = data.users?[data.currentUserID]
+    return div({className: 'spinner'}) unless user
+
+    fields_ = mergeFieldsData(
+        fields
+        extend({formData: user}, data)
+    )
 
     return div(
         {id: 'settings', className: 'col-6'}

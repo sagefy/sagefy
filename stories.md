@@ -16,11 +16,11 @@ I want to log out.
 As a user
 to secure my account
 I want to change my password.
-- [ ]
+- [x]
 As a user
 to better represent myself
 I want to change my name.
-- [ ]
+- [x]
 As a user
 to keep using my account
 I want to change my email address.

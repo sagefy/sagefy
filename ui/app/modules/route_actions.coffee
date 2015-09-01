@@ -1,11 +1,11 @@
 store = require('./store')
+actions = store.actions
 recorder = require('./recorder')
-
-store.data.route = window.location.pathname
 
 route = (path) ->
     recorder.emit('route', path)
     store.data.route = path
+    actions.onRoute(path) if actions.onRoute
     store.change()
 
 window.onpopstate = ->

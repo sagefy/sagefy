@@ -4,7 +4,6 @@ createElement = require('virtual-dom/create-element')
 
 store = require('./store')
 broker = require('./broker')
-require('./route_actions')
 
 module.exports = (options) ->
     {view, el} = options
