@@ -152,8 +152,9 @@ module.exports = store.add({
             method: 'POST'
             url: '/api/password_tokens'
             data: data
-            done: (response) ->
+            done: (response) =>
                 @data.formData = {}
+                @data.passwordPageState = 'inbox'
                 recorder.emit('obtain password token')
             fail: (errors) =>
                 @data.errors = errors

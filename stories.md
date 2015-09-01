@@ -12,7 +12,7 @@ I want to log in.
 As a user
 to secure my account
 I want to log out.
-- [ ]
+- [x]
 As a user
 to secure my account
 I want to change my password.
@@ -165,3 +165,26 @@ I want to use an assessment type card.
 As a learner
 to stay motivated
 I want to see my progress in the unit as I work on cards.
+
+### Post MVP
+
+- [ ]
+As a learner
+to learn topics that require it
+I want to be able to write and receive feedback.
+- [ ]
+As a learner
+to learn topics that require it
+I want to be able to upload a file and receive feedback.
+- [ ]
+As learner
+to learn with rich experiences
+I want to learn with an embedded object.
+- [ ]
+As Sagefy
+to stay running and collect funds
+I want learners to see a donation card.
+- [ ]
+As a learner
+to learn in another way
+I want to be able to learn with my friends.
