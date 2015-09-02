@@ -17,6 +17,7 @@ require('./actions/set')
 require('./actions/topic')
 require('./actions/unit')
 require('./actions/user')
+require('./actions/user_sets')
 
 # Require all broker events
 require('./views/index.vnt')

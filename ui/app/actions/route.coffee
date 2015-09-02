@@ -1,5 +1,6 @@
 store = require('../modules/store')
 actions = store.actions
+{matchesRoute} = require('../modules/auxiliaries')
 
 store.add({
     onRoute: (path) ->
@@ -7,6 +8,10 @@ store.add({
             actions.openSettingsRoute()
         if path is '/notices'
             actions.openNoticesRoute()
+        if args = matchesRoute(path, '/users/{id}')
+            actions.openProfileRoute(args[0])
+        if path is '/my_sets'
+            actions.listUserSets()
 
     openSettingsRoute: ->
         if not @data.currentUserID or not @data.users?[@data.currentUserID]
@@ -14,4 +19,7 @@ store.add({
 
     openNoticesRoute: ->
         actions.listNotices()
+
+    openProfileRoute: (id) ->
+        actions.getUser(id)
 })

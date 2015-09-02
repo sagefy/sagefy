@@ -58,6 +58,10 @@ routes = [{
     tmpl: require('./pages/card.tmpl')
     title: 'Card'
 }, {
+    path: '/users/{id}'
+    tmpl: require('./pages/profile.tmpl')
+    title: 'Profile'
+}, {
     path: '/units/{id}'
     tmpl: require('./pages/unit.tmpl')
     title: 'Unit'
@@ -100,18 +104,22 @@ TODO distribute routing, something like...
 
 findRouteTmpl = (data) ->
     for route in routes
-        if matchesRoute(data.route, route.path)
+        if args = matchesRoute(data.route, route.path)
             setTitle(route.title)
-            return route.tmpl
+            return [route.tmpl, args]
 
 module.exports = (data) ->
     menuData = copy(data.menu)
     menuData.kind = if data.currentUserID then 'loggedIn' else 'loggedOut'
 
+    [route, args] = findRouteTmpl(data)
+    data = copy(data)
+    data.routeArgs = args
+
     return div(
         main(
             {className: 'page'}
-            findRouteTmpl(data)(data)
+            route(data)
         )
         require('./components/menu.tmpl')(menuData)
     )
