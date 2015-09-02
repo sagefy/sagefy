@@ -12,9 +12,10 @@ items = {
     log_in: { title: 'Log In', icon: 'sign-in' }
     terms: { icon: 'pencil-square-o' }
     contact: { icon: 'envelope' }
-    notices: { icon: 'tachometer' }
+    notices: { icon: 'tachometer' }   # TODO poll and show unread count
     settings: { icon: 'cog' }
     log_out: { url: '#log_out', title: 'Log Out', icon: 'sign-out' }
+    search: { }
 }
 
 # For items that don't have them
@@ -38,6 +39,7 @@ menus = {
     ]
     loggedIn: [
         'my_sets'
+        'search'
         'notices'
         'settings'
         'contact'

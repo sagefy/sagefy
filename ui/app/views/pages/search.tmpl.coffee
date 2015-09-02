@@ -5,4 +5,5 @@ module.exports = (data) ->
     return div(
         {id: 'search', className: 'col-10'}
         h1('Search')
+        div({className: 'spinner'})
     )

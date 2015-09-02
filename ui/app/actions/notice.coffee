@@ -3,20 +3,28 @@ ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
 
 module.exports = store.add({
-    listNotices: ->
-        # TODO@
-        # limit: 20
-        # skip: 0
-        # "/api/notices/?limit=#{@limit}&skip=#{@skip}"
+    listNotices: (limit = 50, skip = 0) ->
+        ajax({
+            method: 'GET'
+            data: {limit, skip}
+            url: '/api/notices'
+            done: (response) =>
+                @data.notices ?= []
+                @data.notices = response.notices
+                # TODO merge in response notices by id, maintaining order
+                recorder.emit('list notices', limit, skip)
+                @change()
+        })
 
     markNotice: (id, read = true) ->
-        return ajax({
+        ajax({
             method: 'PUT'
-            url: "/api/notices/#{id}?read=#{read}"
-            done: (data) =>
+            url: "/api/notices/#{id}"
+            data: {read}
+            done: (response) =>
                 for index, notice of @data.notices
                     if notice.id is id
-                        @data.notices[index] = data.notice
+                        @data.notices[index] = response.notice
                         break
                 recorder.emit('mark notice', id, read)
                 @change()

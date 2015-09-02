@@ -51,11 +51,11 @@ I want the menu to show items relevant to being logged in.
 
 ### 2) Discussion
 
-- [ ]
+- [x]
 As a contributor
 to stay on top of things
 I want to view my notices
-- [ ]
+- [x]
 As a contributor
 to manage my notices
 I want to mark a notice as read.

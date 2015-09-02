@@ -39,7 +39,6 @@ class Notice(Model):
         """
 
         query = (cls.table
-                    .order_by(r.desc('created'))
                     .filter(r.row['user_id'] == user_id)
                     .filter(r.row['kind'] == kind
                             if kind is not None else True)
@@ -47,6 +46,7 @@ class Notice(Model):
                             if tag is not None else True)
                     .filter(r.row['read'] == read
                             if read is not None else True)
+                    .order_by(r.desc('created'))
                     .skip(skip)
                     .limit(limit))
         fields_list = query.run(database.db_conn)
