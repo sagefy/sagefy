@@ -1,0 +1,65 @@
+/*
+---
+title: Post
+description: TBD
+example: |
+    <li class="post">
+        <div class="post__avatar">
+            <img src="https://placekitten.com/g/48/48" data-title="username" />
+        </div>
+        <div class="post__content">
+            <div class="post__when">
+                52 minutes ago
+            </div>
+            <div class="post__name">
+                username
+            </div>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+            </p>
+            <div class="post__footer">
+                <a href="#"><i class="fa fa-edit"></i> Edit</a>
+                <a href="#"><i class="fa fa-share"></i> Share</a>
+                <a href="#"><i class="fa fa-flag"></i> Flag</a>
+            </div>
+        </div>
+    </li>
+---
+*/
+
+.post
+    @extend .row
+
+    &:hover
+        background $base-color(97)
+
+.post__avatar
+    @extend .col-1
+    padding $unit 0
+
+.post__content
+    @extend .col-7
+
+.post__name
+    color $base-color(43)
+    margin 0
+
+.post__when
+    float right
+    @extend .font-size-small
+    color $base-color(66)
+    margin 0 $unit $unit 0
+
+.post__footer
+    @extend .font-size-small
+    opacity 0.2
+    margin-top -1 * $unit
+    transition opacity 0.2s linear
+
+    .post:hover &
+        opacity 1
+
+    a
+        margin-right $unit

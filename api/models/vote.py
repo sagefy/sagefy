@@ -1,5 +1,5 @@
 from models.post import Post
-from modules.validations import is_required, is_string, is_one_of
+from modules.validations import is_required, is_string, is_boolean
 
 
 class Vote(Post):
@@ -21,9 +21,9 @@ class Vote(Post):
         },
 
         # The only true unique field of a vote...
-        # Where True is yes, None is discuss, False is no
+        # Where True is yes, False is no
         'response': {
-            'validate': ((is_one_of, True, None, False),),
+            'validate': (is_boolean,),
             'default': None
         }
     })
