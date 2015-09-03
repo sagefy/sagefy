@@ -5,11 +5,15 @@ module.exports = (data) ->
     user = data.users?[id]
     return div(
         {id: 'terms', className: 'col-10'}
-        h1('Profile')
         if user \
             then content(user) \
             else div({className: 'spinner'})
     )
 
 content = (user) ->
-    div(user.name)
+    # TODO avatar
+    h1(user.name)
+    # TODO created (ago)
+    # TODO sets - if available   and link to search
+    # TODO follows - if available   and link to search
+    # TODO posts - always   and link to search

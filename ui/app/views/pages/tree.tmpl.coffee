@@ -3,8 +3,6 @@ c = require('../../modules/content').get
 
 module.exports = (data) ->
     return div(
-        {id: 'follows', className: 'col-10'}
-        h1('Follows')
+        {id: 'tree', className: 'col-10'}
+        h1('Set Tree')
     )
-
-    # TODO link back notices

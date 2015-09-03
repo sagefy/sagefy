@@ -2,6 +2,8 @@
 c = require('../../modules/content').get
 notices = require('../components/notices.tmpl')
 
+# TODO@ include a link to follows
+
 module.exports = (data) ->
     return div(
         {id: 'notices', className: 'col-6'}

@@ -2,7 +2,11 @@
 {div, main} = require('../modules/tags')
 {copy} = require('../modules/utilities')
 
-# TODO@ Some views require log in, some views require logged out
+###
+TODO@ Some views require log in, some views require logged out
+TODO distribute routing, something like...
+     module.exports = route(/^\/?$/, 'Home', (data) ->)
+###
 
 routes = [{
     path: '/sign_up'
@@ -54,13 +58,13 @@ routes = [{
     tmpl: require('./pages/topic.tmpl')
     title: 'Topic'
 }, {
-    path: '/cards/{id}'
-    tmpl: require('./pages/card.tmpl')
-    title: 'Card'
-}, {
     path: '/users/{id}'
     tmpl: require('./pages/profile.tmpl')
     title: 'Profile'
+}, {
+    path: '/cards/{id}'
+    tmpl: require('./pages/card.tmpl')
+    title: 'Card'
 }, {
     path: '/units/{id}'
     tmpl: require('./pages/unit.tmpl')
@@ -70,13 +74,21 @@ routes = [{
     tmpl: require('./pages/set.tmpl')
     title: 'Set'
 }, {
+    path: /^\/(card|unit|set)\/([\w\d]+)\/versions$/
+    tmpl: require('./pages/versions.tmpl')
+    title: 'Versions'
+}, {
     path: '/follows'
     tmpl: require('./pages/follows.tmpl')
-    title: 'Follow'
+    title: 'Follows'
 }, {
     path: '/my_sets'
     tmpl: require('./pages/my_sets.tmpl')
     title: 'My Sets'
+}, {
+    path: '/set/{id}/tree'
+    tmpl: require('./pages/tree.tmpl')
+    title: 'Set Tree'
 }, {
     path: '/choose_unit'
     tmpl: require('./pages/choose_unit.tmpl')
@@ -96,11 +108,6 @@ routes = [{
     title: '404'
     # Must be last
 }]
-
-###
-TODO distribute routing, something like...
-    module.exports = route(/^\/?$/, 'Home', (data) ->)
-###
 
 findRouteTmpl = (data) ->
     for route in routes

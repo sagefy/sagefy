@@ -5,6 +5,8 @@ userSchema = require('../schemas/user')
 {validateFormData} = require('../modules/utilities')
 cookie = require('../modules/cookie')
 
+# TODO@ move setting and unsetting of currentUserID back to the server
+
 module.exports = store.add({
     createUser: (data) ->
         @data.formData = data

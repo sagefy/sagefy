@@ -4,6 +4,7 @@ actions = store.actions
 
 store.add({
     onRoute: (path) ->
+        # TODO remove duplicated effort with index.tmpl
         if path is '/settings'
             actions.openSettingsRoute()
         if path is '/notices'
