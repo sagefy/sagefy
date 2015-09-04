@@ -22,4 +22,4 @@ script:
     - coverage run --module py.test api
     - 'cd ui && gulp test && cd ..'
 after_success:
-    - coverage report --omit="api/test/*,*site-packages*"
+    - coverage report --omit="api/test/*,*site-packages*,*distutils*"
