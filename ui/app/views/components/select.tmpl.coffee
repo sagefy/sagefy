@@ -46,9 +46,13 @@ m = ->
             input({type: 'search', name: 'search'})
         )
 
-    if data.showInline
-        html.push(ul({className: 'inline unstyled'}))
+    if data.showInlinew
+        html.push(ul(
+            {className: 'inline unstyled'}
+        ))
     else
-        html.push(ul({className: 'unstyled'}))
+        html.push(ul(
+            {className: 'unstyled'}
+        ))
 
     return html

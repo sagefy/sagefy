@@ -63,3 +63,93 @@ example: |
 
     a
         margin-right $unit
+
+/*
+---
+title: Proposal
+description: |
+    A proposal to create, update, delete, merge, or split an entity.
+example: |
+    <div class="proposal">
+        <div class="proposal__avatar">
+            <img src="https://placekitten.com/g/48/48" data-title="username" />
+        </div>
+        <div class="proposal__content">
+            <div class="proposal__when">
+                3 hours ago
+            </div>
+            <div class="proposal__name">
+                username
+            </div>
+            <p class="proposal__subject">
+                Kind: Object Name
+                <span class="proposal__status--pending">Pending</span>
+            </p>
+            <div class="proposal__body">
+                <p>
+                    Changes block TBD.
+                </p>
+            </div>
+        </div>
+    </div>
+---
+*/
+
+.proposal__subject
+    @extend strong
+    margin 0
+
+.proposal__status--pending
+    @extend .label
+
+.proposal__status--blocked
+    @extend .label--bad
+
+.proposal__status--accepted
+    @extend .label--good
+
+.proposal__status--declined
+    @extend .label
+
+/*
+---
+title: Vote
+description: |
+    A vote from a user on a proposal.
+example: |
+    <div class="vote">
+        <div class="vote__header">
+            <span class="vote__response--yes">Yes</span>
+            by
+            <img src="https://placekitten.com/g/24/24" data-title="username" />
+            <span class="vote__name">
+                username
+            </span>
+            <span class="vote__when">
+                3 hours ago
+            </span>
+        </div>
+        <div class="vote__body">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt.
+            </p>
+        </div>
+    </div>
+---
+*/
+
+.vote__header
+    margin $unit 0
+
+.vote__response--yes
+    @extend .label--good
+
+.vote__response--no
+    @extend .label--bad
+
+.vote__header img
+    vertical-align middle
+
+.vote__body
+    padding-left $gutter

@@ -7,11 +7,6 @@ description: |
     Lists can be unstyled using the `unstyled` class. Margins still count on lower level lists.
 
     Horizontal, or inline, lists are also supported. Often used as simple navigational menus. Subitems do not appear.
-elements:
-    - ul, ol, li
-modifiers:
-    - unstyled
-    - horizontal
 example: |
     <ul>
         <li>Item 1
@@ -83,11 +78,6 @@ ul, ol
 ---
 title: Lists with Thumbnails
 description: A very common on the internet is a list featuring thumbnails. These lists are zebra-striped and can be marked up either as actual lists, or for convienence, tables. Lists with thumbnails use the <code>with-thumbnails</code> class.
-elements:
-    - table, tr...
-    - ul, li...
-modifiers:
-    - with-thumbnails
 example: |
     <table class="list--with-thumbnails">
         <tr>
@@ -137,8 +127,6 @@ ul, ol, table
 ---
 title: Definition Lists
 description: Definition lists are useful for glossaries, dictionaries, and outlines. The tags <code>dl</code>, <code>dt</code>, and <code>dd</code> are used together to form the definition list. Definition lists are also used for marking up metadata.
-elements:
-    - dl, dt, dd
 example: |
     <dl>
         <dt>RSS</dt>

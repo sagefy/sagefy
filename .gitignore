@@ -36,5 +36,5 @@ tmp
 distribution
 npm-debug.log
 ui/app/content
-*.compiled.coffee
+*.data.json
 var
