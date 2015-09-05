@@ -1,6 +1,6 @@
 import rethinkdb as r
 import framework.database as database
-from modules.util import uniqid, omit, pick
+from modules.util import uniqid, omit, pick, extend
 from modules.content import get as c
 from modules.classproperty import classproperty
 
@@ -164,7 +164,7 @@ class Model(object):
 
         assert isinstance(data, dict)
         data = omit(data, ('id', 'created', 'modified'))
-        self.data.update(data)
+        extend(self.data, data)
         return self.save()
 
     def save(self):
@@ -190,7 +190,7 @@ class Model(object):
         data = (self.table
                     .get(self['id'])
                     .run(database.db_conn))
-        self.data.update(data)
+        extend(self.data, data)
         return self
 
     def delete(self):

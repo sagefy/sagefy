@@ -1,4 +1,4 @@
-{required, email, minlength} = require('../modules/validations')
+{required, email, minlength, isOneOf} = require('../modules/validations')
 
 module.exports = {
     name: {
@@ -19,6 +19,23 @@ module.exports = {
         validations: [
             required
             [minlength, 8]
+        ]
+    }
+    'settings.email_frequency': {
+        type: 'select'
+        multiple: false
+        options: [{
+            value: 'immediate'
+        }, {
+            value: 'daily'
+        }, {
+            value: 'weekly'
+        }, {
+            value: 'never'
+        }]
+        validations: [
+            required
+            [isOneOf, 'immediate', 'daily', 'weekly', 'never']
         ]
     }
 }

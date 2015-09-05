@@ -24,7 +24,7 @@ I want to change my name.
 As a user
 to keep using my account
 I want to change my email address.
-- [ ]
+- [x]
 As a user
 to control my inbox
 I want to change my email frequency.

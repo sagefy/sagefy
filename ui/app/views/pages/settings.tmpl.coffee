@@ -1,4 +1,4 @@
-{div, h1, a} = require('../../modules/tags')
+{div, h1, p, a, hr} = require('../../modules/tags')
 c = require('../../modules/content').get
 userSchema = require('../../schemas/user')
 {extend} = require('../../modules/utilities')
@@ -17,21 +17,18 @@ fields = [{
     label: 'Email'
     placeholder: 'ex: unicorn@example.com'
 }, {
-    name: 'password'
-    label: 'Password'
-    type: 'message'
-    description: a(
-        {href: '/password'}
-        'Change your password here.'
-    )
-}, {
-    name: 'avatar'
-    label: 'Avatar'
-    type: 'message'
-    description: a(
-        {href: 'http://gravatar.com'}
-        'Update your avatar on Gravatar.'
-    )
+    name: 'settings.email_frequency'
+    label: 'Email Frequency'
+    options: [{
+        label: 'Immediate'
+    }, {
+        label: 'Daily'
+    }, {
+        label: 'Weekly'
+    }, {
+        label: 'Never'
+    }]
+    inline: true
 }, {
     name: 'submit'
     type: 'submit'
@@ -48,11 +45,27 @@ module.exports = (data) ->
 
     fields_ = mergeFieldsData(
         fields
-        extend({formData: user}, data)
+        extend({
+            formData: {
+                id: user.id
+                name: user.name
+                email: user.email
+                'settings.email_frequency': user.settings.email_frequency
+            }
+        }, data)
     )
 
     return div(
         {id: 'settings', className: 'col-6'}
         h1('Settings')
         form(fields_)
+        hr()
+        p(a(
+            {href: '/password'}
+            'Change my password.'
+        ))
+        p(a(
+            {href: 'http://gravatar.com'}
+            'Update my avatar on Gravatar.'
+        ))
     )

@@ -32,4 +32,9 @@ minlength = (val, len) ->
         val.length < len
     ))
 
-module.exports = {required, email, minlength}
+# Require the value to be one of defined options
+isOneOf = (val, opts...) ->
+    if(not isBlank(val) and val not in opts)
+        return c('options').replace('{options}', opts.join(' '))
+
+module.exports = {required, email, minlength, isOneOf}

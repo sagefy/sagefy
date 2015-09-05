@@ -32,7 +32,10 @@ source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_
 wget -qO- http://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
 sudo apt-get -y update
 sudo apt-get -y install rethinkdb
-rethinkdb --daemon --bind all
+# Restart with init.d
+sudo chmod -R 777 /var/run
+sudo cp /var/www/setup/rethinkdb.conf /etc/rethinkdb/instances.d/instance1.conf
+sudo /etc/init.d/rethinkdb restart
 
 #### Elasticsearch ############################################################
 

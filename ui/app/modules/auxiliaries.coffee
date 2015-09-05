@@ -82,10 +82,37 @@ matchesRoute = (docPath, viewPath) ->
 # Returns an object of the fields' value
 getFormValues = (form) ->
     data = {}
-    for field in form.querySelectorAll('input, textarea')
-        data[field.name] = field.value
+    for el in form.querySelectorAll([
+        'input[type="text"]'
+        'input[type="email"]'
+        'input[type="password"]'
+        'input[type="hidden"]'
+        'textarea'
+    ].join(', '))
+        data[el.name] = el.value
+
+    for el in form.querySelectorAll('[type=radio]')
+        data[el.name] = el.value if el.checked
+
+    for el in form.querySelectorAll('[type=checkbox]')
+        data[el.name] ?= []
+        data[el.name].push(el.value) if el.checked
+
+    for key, value of data
+        if key.indexOf('.') > -1
+            prev = data
+            names = key.split('.')
+            for n, i in names
+                if i is names.length - 1
+                    prev[n] = value
+                else
+                    prev[n] ?= {}
+                    prev = prev[n]
+            delete data[key]
+
     return data
 
+# ...
 mergeFieldsData = (fields, data) ->
     fields_ = copy(fields)
 

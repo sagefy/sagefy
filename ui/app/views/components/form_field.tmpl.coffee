@@ -29,7 +29,7 @@ m = (data) ->
             when 'submit', 'button'
                 require('./form_field_button.tmpl')(data)
             when 'select'
-                div({className: 'select-wrap'})
+                require('./form_field_select.tmpl')(data)
     )
 
     if data.error

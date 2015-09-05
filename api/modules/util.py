@@ -5,6 +5,7 @@ Short, one-off methods that could potentially be reused anywhere.
 import random
 import string
 from datetime import datetime
+import collections
 
 
 def uniqid():
@@ -66,3 +67,19 @@ def json_serial(val):
 
     if isinstance(val, datetime):
         return val.isoformat()
+
+
+def extend(base, *injects):
+    """
+    Do a recursive extension of an object.
+    http://stackoverflow.com/a/3233356
+    """
+
+    for injector in injects:
+        for key, value in injector.items():
+            if isinstance(value, collections.Mapping):
+                _ = extend(base.get(key, {}), value)
+                base[key] = _
+            else:
+                base[key] = injector[key]
+    return base

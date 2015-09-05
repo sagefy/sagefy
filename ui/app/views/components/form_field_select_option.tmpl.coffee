@@ -7,7 +7,9 @@ module.exports = (data) ->
                 type: if data.multiple then 'checkbox' else 'radio'
                 value: data.value or ''
                 name: data.name
+                checked: data.checked
             })
+            ' '
             data.label
         )
     )

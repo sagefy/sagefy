@@ -1,4 +1,4 @@
-require('../../../app/views/components/select.tmpl')
+require('../../../app/views/components/form_field_select.tmpl')
 
 # TODO outline tests
 
