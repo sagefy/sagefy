@@ -1,4 +1,4 @@
-sudo: false
+sudo: required
 language: python
 python:
     - 3.4
@@ -6,12 +6,11 @@ services:
     - redis-server
     - elasticsearch
 before_install:
-    - wget http://download.rethinkdb.com/dist/rethinkdb-2.1.2.tgz
-    - tar xf rethinkdb-2.1.2.tgz
-    - cd rethinkdb-2.1.2
-    - ./configure --allow-fetch
-    - make
-    - make install
+    - 'source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | sudo tee /etc/apt/sources.list.d/rethinkdb.list'
+    - wget -qO- http://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
+    - sudo apt-get -y update
+    - sudo apt-get -y install rethinkdb
+    - rethinkdb --daemon
 install:
     - pip install -r api/requirements.txt
     - pip install pytest coverage flake8
