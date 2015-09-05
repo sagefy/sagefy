@@ -15,6 +15,7 @@ sudo apt-get -y install git
 
 sudo rm -rf /var/www
 sudo ln -fs /vagrant /var/www
+cd /var/www
 
 #### Python ###################################################################
 
@@ -42,8 +43,6 @@ sudo apt-get -y update
 sudo apt-get -y install elasticsearch
 sudo update-rc.d elasticsearch defaults 95 10
 sudo /etc/init.d/elasticsearch start
-# cd /usr/share/elasticsearch
-# bin/plugin --install river-rethinkdb --url http://goo.gl/UkBm47
 cd /var/www
 
 #### Kibana ###################################################################
