@@ -125,6 +125,10 @@ As a contributor
 to help improve Sagefy
 I want to vote a on proposal.
 (Needs API.)
+- [ ]
+As a contributor
+to get context
+I want to view an entity's change history.
 
 ### 4) Learn
 

@@ -82,8 +82,9 @@ gulp deploy
 #### Server ###################################################################
 
 cd /var/www
-sudo apt-get -y install nginx
 sudo apt-get -y install uwsgi
+sudo apt-get -y install nginx
+sleep 1
 sudo uwsgi --stop /tmp/uwsgi-master.pid
 sleep 1
 sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
