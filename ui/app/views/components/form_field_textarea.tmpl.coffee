@@ -6,5 +6,5 @@ module.exports = (data) ->
         name: data.name
         placeholder: data.placeholder or ''
         cols: data.cols or 40
-        rows: data.rows or 3
+        rows: data.rows or 4
     }, data.value or '')
