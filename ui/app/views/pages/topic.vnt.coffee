@@ -2,8 +2,15 @@ broker = require('../../modules/broker')
 actions = require('../../modules/actions')
 
 module.exports = broker.add({
-    # link : entity
-    # follow/unfollow toggle
-    # load more posts
-    # link : new post
+    'click #topic .follow': (e, el) ->
+        e.preventDefault() if e
+        # TODO el
+
+    'click #topic .unfollow': (e, el) ->
+        e.preventDefault() if e
+        # TODO el
+
+    'click #topic .load-more': (e, el) ->
+        e.preventDefault() if e
+        # TODO el
 })

@@ -3,7 +3,10 @@ timeAgo = require('../../modules/auxiliaries').timeAgo
 
 module.exports = (data) ->
     li(
-        {className: 'post'}
+        {
+            id: data.id
+            className: 'post'
+        }
         div(
             {className: 'post__avatar'}
             img(
@@ -13,27 +16,39 @@ module.exports = (data) ->
         div(
             {className: 'post__content'}
             div({className: 'post__when'}, timeAgo(data.when))
-            div({className: 'post__name'}, data.name)
+            a(
+                {
+                    className: 'post__name'
+                    href: "/users/#{data.userID}"
+                }
+                data.name
+            )
+            p(
+                a(
+                    {href: "/topics/#{data.topicID}##{data.replies_to_id}"}
+                    'In Reply'
+                )
+            ) if data.replies_to_id
             p(data.body)
             div(
                 {className: 'post__footer'}
                 a(
-                    {href: '#'}
+                    {href: "/posts/#{data.id}/update"}
                     i({className: 'fa fa-edit'})
                     ' Edit'
                 )  # if current user
                 a(
-                    {href: '#'}
+                    {href: "/posts/create?replies_to_id=#{data.id}"}
                     i({className: 'fa fa-reply'})
                     ' Reply'
                 )
                 a(
-                    {href: '#'}
+                    {href: "/posts/create?replies_to_id=#{data.id}"}
                     i({className: 'fa fa-vote'})
                     ' Vote'
                 )  # if proposal or flag
                 a(
-                    {href: '#'}
+                    {href: "/topics/#{data.topicID}##{data.id}"}
                     i({className: 'fa fa-share'})
                     ' Share'
                 )

@@ -10,7 +10,7 @@ module.exports = store.add({
             data: {}
             done: (response) =>
                 @data.posts = response.posts
-                # TODO merge based on id and created
+                # TODO merge based on id and created  x topic
                 recorder.emit('list posts')
             fail: (errors) =>
                 @data.errors = errors
@@ -25,11 +25,11 @@ module.exports = store.add({
             url: "/api/topics/#{data.topic_id}/posts"
             data: {}
             done: (response) =>
-                @data.posts.push(response.post)
+                @data.posts.push(response.post)   # TODO x topic
                 recorder.emit('create post')
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on ....', errors)
+                recorder.emit('error on create post', errors)
             always: =>
                 @change()
         })
@@ -40,11 +40,12 @@ module.exports = store.add({
             url: "/api/topics/#{data.topic_id}/posts/#{data.id}"
             data: {}
             done: (response) =>
-                # @data.posts TODO findIndex and update
-                recorder.emit('........')
+                # @data.posts TODO findIndex and update   x topic
+                @data.posts.push(response.post)
+                recorder.emit('update post')
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on ....', errors)
+                recorder.emit('error on update post', errors)
             always: =>
                 @change()
         })
