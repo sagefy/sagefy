@@ -13,6 +13,10 @@ module.exports = {
     init: (fn) ->
         fn.call(this)
 
+    observe: (@el) ->
+        for type in Object.keys(@events)
+            @el.addEventListener(type, @delegate(type))
+
     add: (obj) ->
         for query, fn of obj
             match = query.match(eventRegExp)

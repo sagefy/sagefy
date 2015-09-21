@@ -18,6 +18,4 @@ module.exports = (options) ->
         tree = next
     )
 
-    broker.el = el
-    for type in Object.keys(broker.events)
-        el.addEventListener(type, broker.delegate(type))
+    broker.observe(el)
