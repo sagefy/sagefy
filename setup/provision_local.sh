@@ -71,8 +71,7 @@ sudo apt-get -y install redis-server
 sudo apt-get -y update
 sudo apt-get -y install software-properties-common
 sudo apt-get -y install python-software-properties python g++ make
-sudo add-apt-repository -y ppa:chris-lea/node.js
-sudo apt-get -y update
+curl -sL https://deb.nodesource.com/setup | sudo bash -
 sudo apt-get -y install nodejs
 sudo npm install -g gulp
 cd /var/www/ui

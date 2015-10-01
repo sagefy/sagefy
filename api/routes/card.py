@@ -6,7 +6,7 @@ from models.set import Set
 from models.topic import Topic
 from modules.entity import get_card_by_kind
 from modules.sequencer.index import update as seq_update
-from modules.sequencer.traversal import traverse
+from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
 # from modules.sequencer.params import max_learned
 
@@ -126,20 +126,26 @@ def respond_to_card_route(request, card_id):
     set_ = Set(context.get('set'))
     unit = Unit(context.get('unit'))
 
-    status, units = traverse(current_user, set_)
+    status = judge(unit, current_user)
 
-    if False:  # TODO@  unit user learned > max_learned
-        # If we are ready and done, view tree.
-        if status == 'done':
+    # If we are done with this current unit...
+    if status == "done":
+        buckets = traverse(current_user, set_)
+
+        # If there are units to be diagnosed...
+        if buckets['diagnose']:
+            unit = buckets['diagnose'][0]
+            next_card = choose_card(current_user, unit)
             next = {
                 'method': 'GET',
-                'path': '/api/sets/{set_id}/tree'
-                        .format(set_id=set_.get('entity_id')),
+                'path': '/api/cards/{card_id}/learn'
+                        .format(card_id=next_card['id']),
             }
-            current_user.set_learning_context(card=None, unit=None, next=next)
+            current_user.set_learning_context(
+                card=next_card, unit=unit, next=next)
 
-        # If we are ready and still units, choose unit.
-        elif status == 'learn' or status == 'review':
+        # If there are units to be learned or reviewed...
+        elif buckets['learn'] or buckets['review']:
             next = {
                 'method': 'GET',
                 'path': '/api/sets/{set_id}/units'
@@ -147,18 +153,21 @@ def respond_to_card_route(request, card_id):
             }
             current_user.set_learning_context(card=None, unit=None, next=next)
 
-        else:  # Status == diagnose
-            next_card = choose_card(current_user, units[0])
+        # If we are out of units...
+        else:
             next = {
                 'method': 'GET',
-                'path': '/api/cards/{card_id}/learn'
-                        .format(card_id=next_card['id']),
+                'path': '/api/sets/{set_id}/tree'
+                        .format(set_id=set_.get('entity_id')),
             }
-            current_user.set_learning_context(card=next_card, next=next)
+            current_user.set_learning_context(card=None, unit=None, next=next)
 
-    # If we aren't ready, learn another card.
+    # If we are still reviewing, learning or diagnosing this unit...
     else:
-        next_card = choose_card(current_user, unit)
+        # next_card = choose_card(current_user, unit)
+        next_card = {
+            'id': '1234'
+        }
         next = {
             'method': 'GET',
             'path': '/api/cards/{card_id}/learn'

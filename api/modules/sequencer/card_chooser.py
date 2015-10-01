@@ -1,6 +1,7 @@
 from models.card import Card
 import framework.database as database
 from modules.sequencer.formulas import calculate_correct
+from modules.sequencer.params import init_learned
 from random import shuffle, random
 from math import floor
 from functools import reduce
@@ -45,7 +46,10 @@ def choose_card(user, unit):
 
     previous_response = Response.get_latest(user_id=user['id'],
                                             unit_id=unit_id)
-    learned = previous_response['learned']
+    if previous_response:
+        learned = previous_response['learned']
+    else:
+        learned = init_learned
 
     choose_assessment = random() < p_assessment_map[floor(learned * 10)]
 

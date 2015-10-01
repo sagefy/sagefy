@@ -1,5 +1,6 @@
 _site
 __pycache__
+.cache
 .coverage
 .DS_Store
 .installed.cfg

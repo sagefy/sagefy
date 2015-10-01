@@ -205,7 +205,8 @@ def test_learn_card_400(db_conn, cards_table, session):
     redis.delete('learning_context_abcd1234')
 
 
-def test_respond_card(db_conn, cards_table, responses_table, session):
+def test_respond_card(db_conn, units_table, cards_table,
+                      responses_table, session):
     """
     Expect to respond to a card. (200)
     """
@@ -232,8 +233,12 @@ def test_respond_card(db_conn, cards_table, responses_table, session):
         'max_options_to_show': 4,
     }).run(db_conn)
 
+    units_table.insert({
+        'entity_id': 'vbnm7890',
+        'created': r.now(),
+    }).run(db_conn)
+
     redis.set('learning_context_abcd1234', json.dumps({
-        'unit': {'entity_id': 'vbnm7890'},
         'set': {'entity_id': 'jkl;1234'},
         'card': {'entity_id': 'tyui4567'},
     }))

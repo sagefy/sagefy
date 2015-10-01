@@ -56,7 +56,7 @@ def update(user, card, response):
                                             unit_id=card['unit_id'])
 
     now = time()
-    time_delta = now - (previous_response['created'].to_epoch_time()
+    time_delta = now - (int(previous_response['created'].strftime("%s"))
                         if previous_response else now)
 
     learned = (previous_response['learned']
