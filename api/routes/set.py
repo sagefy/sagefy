@@ -3,6 +3,7 @@ from models.set import Set
 from models.topic import Topic
 from models.unit import Unit
 from framework.session import get_current_user
+from modules.sequencer.traversal import traverse
 
 # Nota Bene: We use `set_` because `set` is a type in Python
 
@@ -127,10 +128,10 @@ def get_set_units_route(request, set_id):
 
     set_ = Set.get_latest_accepted(set_id)
 
-    # TODO@ Pull a list of 3 or 4 units to choose from
-    #       based on priority
-    # TODO Time estimates per unit for mastery
-    units = []
+    # Pull a list of up to 5 units to choose from based on priority.
+    buckets = traverse(current_user, set_)
+    units = buckets['learn'][:5]
+    # TODO Time estimates per unit for mastery.
 
     return 200, {
         'next': next,

@@ -167,7 +167,6 @@ I want to see my progress in the set.
 As a learner
 to feel in control of my learning
 I want to choose which unit to work on next.
-(Needs API.)
 - [ ]
 As a learner
 to learn
