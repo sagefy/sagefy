@@ -45,6 +45,16 @@ class EntityMixin(object):
         },
     })
 
+    def __repr__(self):
+        """
+        View an easy to read format when debugging.
+        """
+
+        return "{class_name}<{entity_id}>".format(
+            class_name=self.__class__.__name__,
+            entity_id=self['entity_id']
+        )
+
     @classmethod
     def start_accepted_query(cls):
         """

@@ -6,7 +6,7 @@ from time import time
 
 def traverse(user, set_):
     """
-    TODO@ Given a user and a set, sort all the units in the set based on need.
+    Given a user and a set, sort all the units in the set based on need.
     Return status of (diagnose, learn, review, done) and list of units.
 
     Routes that use this:
@@ -23,11 +23,12 @@ def traverse(user, set_):
         'diagnose': [],
         'learn': [],
         'review': [],
+        'done': [],
     }
 
     units = set_.list_units()
     for unit in units:
-        status = judge(unit)
+        status = judge(unit, user)
         buckets[status].append(unit)
 
     # Make sure the buckets are in the correct orderings
@@ -59,7 +60,7 @@ def order_units_by_need(units):
     dependents = match_unit_dependents(units)
     dependents = {unit_id: len(deps) for unit_id, deps in dependents.items()}
     ids = sorted(dependents, key=dependents.get, reverse=True)
-    return [ids_to_units[id_] for id_ in ids]
+    return [ids_to_units[id_] for id_ in ids if id_ in ids_to_units]
 
 
 def match_unit_dependents(units):
@@ -72,9 +73,12 @@ def match_unit_dependents(units):
 
     def _(unit, dep):
         for required_id in unit['require_ids']:
+            if required_id not in dependents:
+                dependents[required_id] = set()
             dependents[required_id].add(dep)
-            required_unit = ids_to_units[required_id]
-            _(required_unit, dep)
+            if required_id in ids_to_units:
+                required_unit = ids_to_units[required_id]
+                _(required_unit, dep)
 
     for unit in units:
         _(unit, unit)
@@ -94,7 +98,6 @@ def judge(unit, user):
     if response:
         learned = response['learned']
         now = time()
-        print(response['created'])
         time_delta = now - (int(response['created'].strftime("%s"))
                             if response else now)
         belief = calculate_belief(learned, time_delta)

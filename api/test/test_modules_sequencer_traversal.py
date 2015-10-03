@@ -2,97 +2,181 @@ import pytest
 
 xfail = pytest.mark.xfail
 
-from modules.sequencer.traversal import traverse
+from modules.sequencer.traversal import traverse, \
+    match_unit_dependents, order_units_by_need, judge
 from models.user import User
+from models.unit import Unit
 from models.set import Set
 import rethinkdb as r
 
 
-@xfail
+def add_test_set(db_conn,
+                 users_table=None, units_table=None, responses_table=None,
+                 sets_table=None):
+
+    if users_table:
+        users_table.insert({
+            'id': 'user'
+        }).run(db_conn)
+
+    if units_table:
+        units_table.insert([{
+            'entity_id': 'add',
+            'status': 'accepted',
+            'created': r.now()
+        }, {
+            'entity_id': 'subtract',
+            'require_ids': ['add'],
+            'status': 'accepted',
+            'created': r.now()
+        }, {
+            'entity_id': 'multiply',
+            'require_ids': ['add'],
+            'status': 'accepted',
+            'created': r.now()
+        }, {
+            'entity_id': 'divide',
+            'require_ids': ['multiply', 'subtract'],
+            'status': 'accepted',
+            'created': r.now()
+        }]).run(db_conn)
+
+    if responses_table:
+        responses_table.insert([{
+            'user_id': 'user', 'unit_id': 'add', 'learned': 0.99,
+            'created': r.now()
+        }, {
+            'user_id': 'user', 'unit_id': 'multiply', 'learned': 0.0,
+            'created': r.now()
+        }, {
+            'user_id': 'user', 'unit_id': 'subtract', 'learned': 0.99,
+            'created': r.time(2004, 11, 3, 'Z')
+        }]).run(db_conn)
+
+    if sets_table:
+        sets_table.insert({
+            'entity_id': 'set',
+            'status': 'accepted',
+            'members': [
+                {'id': 'add', 'kind': 'unit'},
+                {'id': 'subtract', 'kind': 'unit'},
+                {'id': 'multiply', 'kind': 'unit'},
+                {'id': 'divide', 'kind': 'unit'},
+            ]
+        }).run(db_conn)
+
+
 def test_traverse(db_conn, units_table, users_table, responses_table,
                   sets_table):
     """
     Expect to take a list of units and traverse them correctly.
 
-    A requires B
-    A requires C
-    B requires D
-    B requires E
-    C requires E
-    C requires F
+    Basic test.
+    Add doesn't require anything.
+    Multiply requires add.
+    Subtract requires add.
+    Divide requires multiply.
 
-    A needs to be diagnosed.
-    B needs to be learned.
-    C needs to be learned.
-    E needs to be learned.
-    F is learned and needs review.
-    D is learned and does not need review.
-
-    The function should then return...
-    diagnose: A
-    learn: E, {B, C}
-    review: F
+    Add is done,
+    Subtract needs review,
+    Multiply needs to be learned,
+    Divide needs to be diagnosed.
     """
 
-    users_table.insert({
-        'id': 'A'
-    }).run(db_conn)
+    add_test_set(db_conn,
+                 users_table, units_table, responses_table, sets_table)
 
-    units_table.insert([{
-        'entity_id': 'A'
-    }, {
-        'entity_id': 'B'
-    }, {
-        'entity_id': 'C'
-    }, {
-        'entity_id': 'D'
-    }, {
-        'entity_id': 'E'
-    }, {
-        'entity_id': 'F'
-    }]).run(db_conn)
-
-    sets_table.insert({
-        'entity_id': 'A',
-        'members': [
-            {'id': 'A', 'kind': 'unit'},
-            {'id': 'B', 'kind': 'unit'},
-            {'id': 'C', 'kind': 'unit'},
-            {'id': 'D', 'kind': 'unit'},
-            {'id': 'E', 'kind': 'unit'},
-            {'id': 'F', 'kind': 'unit'},
-        ]
-    }).run(db_conn)
-
-    responses_table.insert([{
-        'user_id': 'A', 'unit_id': 'B', 'learned': 0.0, 'created': r.now()
-    }, {
-        'user_id': 'A', 'unit_id': 'C', 'learned': 0.0, 'created': r.now()
-    }, {
-        'user_id': 'A', 'unit_id': 'D', 'learned': 1.0, 'created': r.now()
-    }, {
-        'user_id': 'A', 'unit_id': 'E', 'learned': 0.0, 'created': r.now()
-    }, {
-        'user_id': 'A', 'unit_id': 'F', 'learned': 1.0,
-        'created': r.time(2004, 11, 3, 'Z')
-    }]).run(db_conn)
-
-    set_ = Set.get(entity_id='A')
-    user = User.get(id='A')
+    set_ = Set.get(entity_id='set')
+    user = User.get(id='user')
     buckets = traverse(user, set_)
-    assert len(buckets['diagnose']) == 1
-    assert buckets['diagnose'][0]['entity_id'] == 'A'
-    assert len(buckets['learn']) == 3
-    assert buckets['learn'][0]['entity_id'] == 'E'
-    assert len(buckets['review']) == 1
-    assert buckets['review'][0]['entity_id'] == 'F'
+    assert buckets['diagnose'][0]['entity_id'] == 'divide'
+    assert buckets['learn'][0]['entity_id'] == 'multiply'
+    assert buckets['review'][0]['entity_id'] == 'subtract'
 
 
 """
-TODO @outline tests
-Expect to add no known ability to "diagnose".
-Expect to add low ability to "ready".
-Expect to add high ability to "review".
-Expect to show "done".
-Expect to track number of units that depend on the given unit.
+TODO@ more traversal tests
+
+traverse
+--------
+Expect if a node is done, any nodes it requires are left out.
+If one node is done, and one is not, continue to the lower node.
+Traverse should output units in order.
 """
+
+
+def test_judge_diagnose(db_conn, users_table, units_table, responses_table):
+    """
+    Expect to add no known ability to "diagnose".
+    """
+
+    add_test_set(db_conn, users_table, units_table, responses_table)
+    unit = Unit.get(entity_id='divide')
+    user = User.get(id='user')
+    assert judge(unit, user) == "diagnose"
+
+
+def test_judge_review(db_conn, users_table, units_table, responses_table):
+    """
+    Expect to add older, high ability to "review".
+    """
+
+    add_test_set(db_conn, users_table, units_table, responses_table)
+    unit = Unit.get(entity_id='subtract')
+    user = User.get(id='user')
+    assert judge(unit, user) == "review"
+
+
+def test_judge_learn(db_conn, units_table, users_table, responses_table):
+    """
+    Expect to add known low ability to "learn".
+    """
+
+    add_test_set(db_conn, users_table, units_table, responses_table)
+    unit = Unit.get(entity_id='multiply')
+    user = User.get(id='user')
+    assert judge(unit, user) == "learn"
+
+
+def test_judge_done(db_conn, units_table, users_table, responses_table):
+    """
+    Expect to show "done".
+    """
+
+    add_test_set(db_conn, users_table, units_table, responses_table)
+    unit = Unit.get(entity_id='add')
+    user = User.get(id='user')
+    assert judge(unit, user) == "done"
+
+
+def test_match_unit_dependents(db_conn, units_table):
+    """
+    Expect to order units by the number of depending units.
+    """
+
+    add_test_set(db_conn, units_table=units_table)
+    units = Unit.list_by_entity_ids([
+        'add', 'subtract', 'multiply', 'divide',
+    ])
+    deps = match_unit_dependents(units)
+    assert len(deps['add']) == 3
+    assert len(deps['multiply']) == 1
+    assert len(deps['subtract']) == 1
+    assert len(deps['divide']) == 0
+
+
+def test_order(db_conn, units_table):
+    """
+    Expect to order units by the number of depending units.
+    """
+
+    add_test_set(db_conn, units_table=units_table)
+    units = Unit.list_by_entity_ids([
+        'add', 'subtract', 'multiply', 'divide',
+    ])
+    units = order_units_by_need(units)
+    entity_ids = [unit['entity_id'] for unit in units]
+    assert entity_ids[0] == 'add'
+    assert entity_ids[1] in ('subtract', 'multiply')
+    assert entity_ids[2] in ('subtract', 'multiply')
+    assert entity_ids[3] == 'divide'
