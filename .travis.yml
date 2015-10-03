@@ -18,11 +18,13 @@ install:
     - pip install pytest coverage flake8
     - ls ~/virtualenv/
     - source ~/virtualenv/python2.7/bin/activate
+    - nvm use 4.1.1
     - 'npm install -g gulp && cd ui && npm install && cd ..'
     - source ~/virtualenv/python3.4/bin/activate
 script:
     - flake8 api/**.py
     - coverage run --module py.test api
+    - nvm use 4.1.1
     - 'cd ui && gulp test && cd ..'
 after_success:
     - coverage report --omit="api/test/*,*site-packages*,*distutils*"
