@@ -4,9 +4,12 @@ describe('index.tmpl', ->
     )
 )
 
+App = {}
+
+###
 describe.skip('Router', ->
     it('should convert a url string to a regexp', ->
-        url1 = /.*/
+        url1 = /./
         url2 = '/foo'
         url3 = '/foo/{id}'
         expect(Adapter::getUrlRegExp(url1))
@@ -43,7 +46,7 @@ describe.skip('Router', ->
             .to.deep.equal(['23', 'ww'])
     )
 
-    describe('navigate and route', ->
+    describe.skip('navigate and route', ->
         beforeEach(->
             @paths = []
             stub = (state, title, route) => @paths.push(route)
@@ -110,3 +113,4 @@ describe.skip('Router', ->
         )
     )
 )
+###

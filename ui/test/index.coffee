@@ -1,5 +1,5 @@
 global.document = require('jsdom').jsdom()
-global.window = document.parentWindow
+global.window = document.defaultView
 global.Element = window.Element
 global.XMLHttpRequest = window.XMLHttpRequest
 
