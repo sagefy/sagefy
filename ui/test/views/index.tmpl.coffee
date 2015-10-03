@@ -20,6 +20,7 @@ describe.skip('Router', ->
     it('should match a path to a regexp url', ->
         class A extends Adapter
             url: /^\/foo\/(\d+)$/
+
         expect(A::matches('/foo')).to.be.false
         expect(A::matches('/foo/3')).to.deep.equal(['3'])
     )
@@ -27,12 +28,14 @@ describe.skip('Router', ->
     it('should match a path to a plain string url', ->
         class A extends Adapter
             url: '/foo'
+
         expect(A::matches('/foo')).to.deep.equal([])
     )
 
     it('should match a path to a templated url string', ->
         class A extends Adapter
             url: '/foo/{id}/bar/{slug}'
+
         expect(A::matches('/foo')).to.be.false
         expect(A::matches('/foo/23')).to.be.false
         expect(A::matches('/foo/23/bar/52/w')).to.be.false
@@ -52,7 +55,7 @@ describe.skip('Router', ->
         )
 
         it('should do nothing if navigate ' +
-           'is called with the current path', ->
+            'is called with the current path', ->
             spy = sinon.spy(App::, 'route')
             x = new App()
             x.navigate(window.location.pathname)
@@ -74,7 +77,7 @@ describe.skip('Router', ->
         )
 
         it('should throw an error ' +
-           'if there\'s no adapter matching the path', ->
+            'if there\'s no adapter matching the path', ->
             x = new App(A, B)
             expect(-> x.navigate('/bar')).to.throw
             expect(@pushState).to.not.be.called

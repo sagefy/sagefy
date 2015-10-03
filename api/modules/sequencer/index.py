@@ -39,6 +39,7 @@ def update(user, card, response):
     if errors:
         return {'errors': errors}
 
+    # TODO@ what if the card is non-assessment?
     score, feedback = card.score_response(response)
     response = Response({
         'user_id': user['id'],
