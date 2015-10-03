@@ -26,8 +26,8 @@ it.skip('should trigger a delegated event', ->
     document.body.removeChild(region)
 )
 
-it.skip('should ensure child selector is correct ' +
-   'when triggering a delegated event', ->
+it.skip('should ensure child selector is correct when ' +
+        'triggering a delegated event', ->
     class V extends View
         domEvents: {
             'click .button': 'make'

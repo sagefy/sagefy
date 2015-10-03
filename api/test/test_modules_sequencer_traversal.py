@@ -13,6 +13,17 @@ import rethinkdb as r
 def add_test_set(db_conn,
                  users_table=None, units_table=None, responses_table=None,
                  sets_table=None):
+    """
+    Add doesn't require anything.
+    Multiply requires add.
+    Subtract requires add.
+    Divide requires multiply.
+
+    Add is done,
+    Subtract needs review,
+    Multiply needs to be learned,
+    Divide needs to be diagnosed.
+    """
 
     if users_table:
         users_table.insert({
@@ -70,17 +81,7 @@ def test_traverse(db_conn, units_table, users_table, responses_table,
                   sets_table):
     """
     Expect to take a list of units and traverse them correctly.
-
     Basic test.
-    Add doesn't require anything.
-    Multiply requires add.
-    Subtract requires add.
-    Divide requires multiply.
-
-    Add is done,
-    Subtract needs review,
-    Multiply needs to be learned,
-    Divide needs to be diagnosed.
     """
 
     add_test_set(db_conn,
