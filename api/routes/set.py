@@ -3,7 +3,8 @@ from models.set import Set
 from models.topic import Topic
 from models.unit import Unit
 from framework.session import get_current_user
-from modules.sequencer.traversal import traverse
+from modules.sequencer.traversal import traverse, judge
+from modules.sequencer.card_chooser import choose_card
 
 # Nota Bene: We use `set_` because `set` is a type in Python
 
@@ -46,7 +47,7 @@ def get_set_versions_route(request, set_id):
 @get('/api/sets/{set_id}/tree')
 def get_set_tree_route(request, set_id):
     """
-    TODO@ Render the tree of units that exists within a set.
+    Render the tree of units that exists within a set.
 
     Contexts:
     - Search set, preview units in set
@@ -57,49 +58,71 @@ def get_set_tree_route(request, set_id):
     NEXT STATE
     GET View Set Tree
         -> GET Choose Set    ...when set is complete
-        -> GET Choose Unit   ...when in learn mode
+        -> GET Choose Unit   ...when in learn or review mode
         -> GET Learn Card    ...when in diagnosis
             (Unit auto chosen)
+
+    TODO merge with get_set_units_route
     """
 
     current_user = get_current_user(request)
     context = current_user.get_learning_context() if current_user else {}
+    set_ = Set.get(entity_id=set_id)
+    units = set_.list_units()
+    buckets = traverse(current_user, set_)
 
     # If we are just previewing, don't update anything
     if set_id != context.get('set', {}).get('entity_id'):
-        return 200, {}
-
-    # If the set is complete, lead the learner to choose another set.
-    elif False:  # TODO@ how do I know the set is complete?
-        next = {
-            'method': 'GET',
-            'path': '/api/users/{user_id}/sets'
-                    .format(user_id=current_user['id']),
-        }
-        current_user.set_learning_context(next=next, unit=None, set=None)
+        next_ = {}
 
     # When in diagnosis, choose the unit and card automagically.
-    elif False:  # TODO@ when am I in diagnosis mode?
-        next = {
+    elif buckets['diagnose']:
+        unit = buckets['diagnose'][0]
+        card = choose_card(current_user, unit)
+        next_ = {
             'method': 'GET',
             'path': '/api/cards/{card_id}/learn'
-                    .format(card_id=None),  # TODO@ pick a card
+                    .format(card_id=card['entity_id']),
         }
-        current_user.set_learning_context(next=next, unit=None, card=None)
-        # TODO@ choose a unit and a card
+        current_user.set_learning_context(next=next, unit=unit, card=card)
 
     # When in learn mode, lead me to choose a unit.
-    else:
-        next = {
+    elif buckets['review']:
+        next_ = {
             'method': 'GET',
             'path': '/api/sets/{set_id}/units'
                     .format(set_id=set_id),
         }
         current_user.set_learning_context(next=next)
 
-    # TODO@ For the menu, it must return the name and ID of the set
+    # When in learn mode, lead me to choose a unit.
+    elif buckets['learn']:
+        next_ = {
+            'method': 'GET',
+            'path': '/api/sets/{set_id}/units'
+                    .format(set_id=set_id),
+        }
+        current_user.set_learning_context(next=next)
+
+    # If the set is complete, lead the learner to choose another set.
+    else:
+        next_ = {
+            'method': 'GET',
+            'path': '/api/users/{user_id}/sets'
+                    .format(user_id=current_user['id']),
+        }
+        current_user.set_learning_context(next=next, unit=None, set=None)
+
+    # For the menu, it must return the name and ID of the set
     return 200, {
-        'next': next,
+        'next': next_,
+        'units': [u.deliver() for u in units],
+        'set': set_.deliver(),
+        'buckets': {
+            'diagnose': [u['entity_id'] for u in buckets['diagnose']],
+            'review': [u['entity_id'] for u in buckets['review']],
+            'learn': [u['entity_id'] for u in buckets['learn']],
+        },
     }
 
 
@@ -166,17 +189,20 @@ def choose_unit_route(request, set_id, unit_id):
     if context.get('set', {}).get('entity_id') not in set_ids:
         return abort(400)
 
-    # TODO@ Or, the unit doesn't need to be learned...
-    if False:
+    status = judge(unit, current_user)
+    # Or, the unit doesn't need to be learned...
+    if status == "done":
         return abort(400)
 
-    # TODO@ Choose a card for the learner to learn
+    # Choose a card for the learner to learn
+    card = choose_card(current_user, unit)
 
-    next = {
+    next_ = {
         'method': 'GET',
         'path': '/api/cards/{card_id}/learn'
-                .format(card_id=None),  # TODO@
+                .format(card_id=card['entity_id']),
     }
-    current_user.set_learning_context(unit=unit.data, next=next)
+    current_user.set_learning_context(
+        unit=unit.data, card=card.data, next=next_)
 
-    return 200, {'next': next}
+    return 200, {'next': next_}

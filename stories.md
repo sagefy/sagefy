@@ -157,12 +157,10 @@ I want to add a set to my sets.
 As a learner
 to evaluate sets I might add
 I want to view units in the set.
-(Needs API: Tree)
 - [ ]
 As a learner
 to stay motivated
 I want to see my progress in the set.
-(Needs API: Tree)
 - [ ]
 As a learner
 to feel in control of my learning
