@@ -18,6 +18,7 @@ def encrypt_password(value):
 # TODO@ When creating a new user or updating the user's name or email,
 #       index in Elasticsearch
 # TODO@ When close user, delete in Elasticsearch
+# http://bit.ly/1VxHoBv
 
 class User(Model):
     tablename = 'users'

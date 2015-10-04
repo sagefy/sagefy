@@ -6,7 +6,7 @@ watchify = require('watchify')
 source = require('vinyl-source-stream')
 prettyHrtime = require('pretty-hrtime')
 sequence = require('run-sequence')
-del = require('del')
+rimraf = require('rimraf')
 stylus = require('stylus')
 husl = require('husl')
 minifyCss = require('gulp-minify-css')
@@ -65,10 +65,7 @@ gulp.task('test', (done) ->
 ################################################################################
 
 gulp.task('clean', (done) ->
-    del(dist, (err, files) ->
-        return console.error(err) if err
-        done()
-    )
+    rimraf(dist, done)
 )
 
 gulp.task('copy statics', ->

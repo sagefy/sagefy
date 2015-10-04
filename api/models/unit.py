@@ -5,6 +5,7 @@ from models.unit_parameters import UnitParameters
 
 
 # TODO@ On set accepted, index (or delete) in Elasticsearch with entity_id
+# http://bit.ly/1VxHoBv
 class Unit(EntityMixin, Model):
     """
     A unit is the medium size in the Sagefy data structure system.

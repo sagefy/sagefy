@@ -5,6 +5,7 @@ from models.card_parameters import CardParameters
 
 
 # TODO@ On set accepted, index (or delete) in Elasticsearch with entity_id
+# http://bit.ly/1VxHoBv
 class Card(EntityMixin, Model):
     """
     Cards are the smallest entity in the Sagefy data structure system.

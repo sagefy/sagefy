@@ -3,6 +3,7 @@ from modules.validations import is_required, is_string, is_one_of
 
 
 # TODO@ On create or update, index in Elasticsearch
+# http://bit.ly/1VxHoBv
 class Post(Model):
     """A discussion post."""
     tablename = 'posts'

@@ -5,6 +5,7 @@ import rethinkdb as r
 
 
 # TODO@ On create or update, update index in Elasticsearch
+# http://bit.ly/1VxHoBv
 class Topic(Model):
     """
     A discussion topic.
