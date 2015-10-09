@@ -6,7 +6,7 @@ layout: default
 General REST ideas, but made more practical.
 
 - Requests
-    - URL format is `/api/noun/id/noun/id?params`
+    - URL format is `/s/noun/id/noun/id?params`
         - Use plural, all lowercase, nouns.
         - Concrete is better than abstract.
         - ID can be reference.
@@ -28,7 +28,7 @@ General REST ideas, but made more practical.
         - method=x with POST for PUT, and DELETE.
         - Use OAuth latest.
         - Stateless except for authorization.
-        - API Version: use `?version=`. Defaults to latest version.
+        - Version: use `?version=`. Defaults to latest version.
 - Responses
     - Assume JSON.
     - Fields in lower camelCase.

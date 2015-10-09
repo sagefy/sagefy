@@ -15,7 +15,7 @@ __pycache__
 *.py[cod]
 *.pyc
 *.so
-api/config.py
+server/config.py
 bin
 build
 config.py
@@ -36,6 +36,6 @@ sdist
 tmp
 distribution
 npm-debug.log
-ui/app/content
+client/app/content
 *.data.json
 var

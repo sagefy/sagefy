@@ -22,7 +22,7 @@ cd /var/www
 sudo apt-get -y install python3-dev
 sudo apt-get -y install python3-setuptools
 sudo apt-get -y install python3-pip
-sudo pip3 install -r /var/www/api/requirements.txt
+sudo pip3 install -r /var/www/server/requirements.txt
 sudo pip3 install pytest
 sudo pip3 install coverage
 
@@ -66,7 +66,7 @@ cd /var/www
 
 sudo apt-get -y install redis-server
 
-#### UI Tooling ###############################################################
+#### Client Tooling ###########################################################
 
 sudo apt-get -y update
 sudo apt-get -y install software-properties-common
@@ -74,7 +74,7 @@ sudo apt-get -y install python-software-properties python g++ make
 curl -sL https://deb.nodesource.com/setup | sudo bash -
 sudo apt-get -y install nodejs
 sudo npm install -g gulp
-cd /var/www/ui
+cd /var/www/client
 sudo npm install
 gulp deploy
 

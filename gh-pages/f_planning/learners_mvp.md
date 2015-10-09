@@ -30,18 +30,18 @@ Learner Models
 Learner Endpoints
 -----------------
 
-- GET `/api/users/{id}/sets/`
-- POST `/api/users/{id}/sets/` <- Add to my sets
-- DELETE `/api/users/{id}/sets/{id}` <- Remove from my sets
-- GET `/api/sequencer/next`
+- GET `/s/users/{id}/sets/`
+- POST `/s/users/{id}/sets/` <- Add to my sets
+- DELETE `/s/users/{id}/sets/{id}` <- Remove from my sets
+- GET `/s/sequencer/next`
     - parameters: set_id
     - returns: reference to one of the following endpoints
-- GET `/api/sets/{id}/tree` <- Show tree
+- GET `/s/sets/{id}/tree` <- Show tree
     - returns: what would be the next action?
-- GET `/api/sets/{id}/units` <- Choose Unit screen
-- PUT `/api/sets/{id}/units/{id}` <- Unit chosen
-- GET `/api/cards/{id}/learn` <- Render card
-- POST `/api/cards/{id}/responses` <- Respond to card
+- GET `/s/sets/{id}/units` <- Choose Unit screen
+- PUT `/s/sets/{id}/units/{id}` <- Unit chosen
+- GET `/s/cards/{id}/learn` <- Render card
+- POST `/s/cards/{id}/responses` <- Respond to card
 
 Learner Screen Requirements and Wireframes
 ------------------------------------------

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Sagefy Web API
+title: Sagefy Web Service Description
 ---
 
 This document outlines the endpoints for Sagefy and their specifications.
@@ -26,9 +26,9 @@ Not much to see here, move along.
 Welcome
 -------
 
-`GET https://sagefy.org/api/`
+`GET https://sagefy.org/s/`
 
-Welcome the developer to the API.
+Welcome the developer to the service.
 
 ### Request Parameters
 
@@ -50,7 +50,7 @@ The users endpoints are largely around CRUD operations for the users table, and 
 Get User By ID
 --------------
 
-`GET https://sagefy.org/api/users/{id}/`
+`GET https://sagefy.org/s/users/{id}/`
 
 Get the user information given a user ID.
 
@@ -77,7 +77,7 @@ Returns a 404 if user is not found.
 Get Current User
 ----------------
 
-`GET https://sagefy.org/api/users/current/`
+`GET https://sagefy.org/s/users/current/`
 
 Get the current user's information, if available.
 
@@ -104,7 +104,7 @@ Returns a 401 if a user is not logged in.
 Create User
 -----------
 
-`POST https://sagefy.org/api/users/`
+`POST https://sagefy.org/s/users/`
 
 Create a new user account.
 
@@ -135,7 +135,7 @@ Returns a 400 if there are errors, such as email already used or password too sh
 Log In User
 -----------
 
-`POST https://sagefy.org/api/users/log_in/`
+`POST https://sagefy.org/s/users/log_in/`
 
 Log in as an existing user.
 
@@ -165,7 +165,7 @@ Returns 404 if the user by name is not found. Returns a 400 if the password is n
 Log Out User
 ------------
 
-`POST https://sagefy.org/api/users/log_out/`
+`POST https://sagefy.org/s/users/log_out/`
 
 Log out of the current user.
 
@@ -180,7 +180,7 @@ None
 Update User
 -----------
 
-`PUT https://sagefy.org/api/users/{id}/`
+`PUT https://sagefy.org/s/users/{id}/`
 
 Update the user. Must be the current user.
 
@@ -211,7 +211,7 @@ Return a 404 if no user matching that ID. Return 401 if not the current user. Re
 Create Password Token
 ---------------------
 
-`POST https://sagefy.org/api/users/token/`
+`POST https://sagefy.org/s/users/token/`
 
 Email a token to be able to reset the password.
 
@@ -232,7 +232,7 @@ Return a 404 if it cannot find the user's email.
 Create Password
 ---------------
 
-`POST https://sagefy.org/api/users/password/`
+`POST https://sagefy.org/s/users/password/`
 
 Update the user's password. Must have a matching and timely token.
 
@@ -263,7 +263,7 @@ Update the user's password. Must have a matching and timely token.
 Get User Sets
 -------------
 
-`GET https://sagefy.org/api/users/{id}/sets/`
+`GET https://sagefy.org/s/users/{id}/sets/`
 
 Get the list of learner's sets.
 
@@ -285,7 +285,7 @@ None
 Add User Set
 ------------
 
-`POST https://sagefy.org/api/users/{id}/sets/{id}`
+`POST https://sagefy.org/s/users/{id}/sets/{id}`
 
 Add a set to the learner's list.
 
@@ -308,7 +308,7 @@ None
 Remove User Set
 ---------------
 
-`DELETE https://sagefy.org/api/users/{id}/sets/{id}/`
+`DELETE https://sagefy.org/s/users/{id}/sets/{id}/`
 
 Remove a set from the learner's list.
 
@@ -335,7 +335,7 @@ Cards are the smallest entity in the Sagefy data structure system. A card repres
 Get Card Information
 --------------------
 
-`GET https://sagefy.org/api/cards/{id}/`
+`GET https://sagefy.org/s/cards/{id}/`
 
 Get a specific card given an ID. Show all relevant data, but
 not used for the learning interface.
@@ -364,7 +364,7 @@ Always returns the latest accepted version. 404 if card not found.
 Render Card for Learner
 -----------------------
 
-`GET https://sagefy.org/api/cards/{id}/learn/`
+`GET https://sagefy.org/s/cards/{id}/learn/`
 
 Render the card's data, ready for learning.
 
@@ -391,7 +391,7 @@ Some data is filtered out, such as feedback and which answer is correct.
 Respond to Card
 ---------------
 
-`POST https://sagefy.org/api/cards/{id}/responses/`
+`POST https://sagefy.org/s/cards/{id}/responses/`
 
 Record and process a learner's response to a card.
 
@@ -425,7 +425,7 @@ A unit is the medium size in the Sagefy data structure system. A unit represents
 Get Unit Information
 --------------------
 
-`GET https://sagefy.org/api/units/{id}/`
+`GET https://sagefy.org/s/units/{id}/`
 
 Get a specific unit given an ID.
 
@@ -457,7 +457,7 @@ A set is a collection of units and other sets.
 Get Set Information
 -------------------
 
-`GET https://sagefy.org/api/sets/{id}/`
+`GET https://sagefy.org/s/sets/{id}/`
 
 Get a specific set given an ID.
 
@@ -485,7 +485,7 @@ None
 Get Set Tree
 ------------
 
-`GET https://sagefy.org/api/sets/{id}/tree/`
+`GET https://sagefy.org/s/sets/{id}/tree/`
 
 Render the tree of units that exists within a set.
 
@@ -508,7 +508,7 @@ None
 Show Available Units from Set
 -----------------------------
 
-`GET https://sagefy.org/api/sets/{id}/units/`
+`GET https://sagefy.org/s/sets/{id}/units/`
 
 Render the units that exist within the set.
 Specifically, present a small number of units the learner can choose
@@ -537,7 +537,7 @@ None
 Choose Unit
 -----------
 
-`POST https://sagefy.org/api/sets/{id}/units/{id}/`
+`POST https://sagefy.org/s/sets/{id}/units/{id}/`
 
 Updates the learner's information based on the unit they have chosen.
 
@@ -559,7 +559,7 @@ Next is an abstract resource which only determines one thing: where to go next.
 Next
 ----
 
-`GET https://sagefy.org/api/next/`
+`GET https://sagefy.org/s/next/`
 
 Tell the learner where to go next.
 
@@ -586,7 +586,7 @@ Site-wide search for cards, units, sets, users, topics, and posts.
 Search
 ------
 
-`GET https://sagefy.org/api/search/`
+`GET https://sagefy.org/s/search/`
 
 Search for entities.
 
@@ -623,12 +623,12 @@ tag        | null      |
 Topic
 =====
 
-Topics, or threads, are the entity that hold a conversation, a list of posts. The Topic API handles both topics and posts, as posts always belong to a single topic.
+Topics, or threads, are the entity that hold a conversation, a list of posts. The Topic service handles both topics and posts, as posts always belong to a single topic.
 
 Create Topic
 ------------
 
-`POST https://sagefy.org/api/topics/`
+`POST https://sagefy.org/s/topics/`
 
 Create a new topic. The first post (proposal, flag) must be provided.
 Flag: if a flag for the same reason exists for the entity, create a vote there instead.
@@ -681,7 +681,7 @@ Returns 400 if missing or invalid topic or post information. Return 401 if not l
 Update Topic Name
 -----------------
 
-`PUT https://sagefy.org/api/topics/{id}/`
+`PUT https://sagefy.org/s/topics/{id}/`
 
 Update the topic. Only the name can be changed. Only by original author.
 
@@ -713,7 +713,7 @@ Update the topic. Only the name can be changed. Only by original author.
 Get Posts
 ---------
 
-`GET https://sagefy.org/api/topics/{id}/posts/`
+`GET https://sagefy.org/s/topics/{id}/posts/`
 
 Get a reverse chronological listing of posts for given topic.
 Includes topic meta data and posts (proposals, votes, flags).
@@ -745,7 +745,7 @@ Returns 404 if topic not found. Posts can be one of post, proposal, vote, or fla
 Create Post
 -----------
 
-`POST https://sagefy.org/api/topics/{id}/posts/`
+`POST https://sagefy.org/s/topics/{id}/posts/`
 
 Create a new post on a given topic.
 Accounts for posts, proposals, votes, and flags.
@@ -780,7 +780,7 @@ Vote: must refer to a proposal.
 Update Post
 -----------
 
-`PUT https://sagefy.org/api/topics/{id}/post/{id}/`
+`PUT https://sagefy.org/s/topics/{id}/post/{id}/`
 
 Update an existing post. Must be one's own post.
 For proposals:
@@ -819,7 +819,7 @@ Follows allow users to subscribe to updates on cards, units, and sets.
 Follow
 ------
 
-`POST https://sagefy.org/api/follows/`
+`POST https://sagefy.org/s/follows/`
 
 Current user follows an entity, topic, or proposal.
 
@@ -852,7 +852,7 @@ Return 401 if not logged in. Return 400 if content issues.
 Unfollow
 --------
 
-`DELETE https://sagefy.org/api/follows/{id}/`
+`DELETE https://sagefy.org/s/follows/{id}/`
 
 Remove a follow. Must be current user's own follow.
 
@@ -874,7 +874,7 @@ Notices provide updates to users on cards, units, and sets they follow.
 List Notices
 ------------
 
-`GET https://sagefy.org/api/notices/`
+`GET https://sagefy.org/s/notices/`
 
 List notices for current user.
 
@@ -906,7 +906,7 @@ Returns a 401 if there's no user currently logged in.
 Mark Notice as Read
 -------------------
 
-`PUT https://sagefy.org/api/notices/{id}/read/`
+`PUT https://sagefy.org/s/notices/{id}/read/`
 
 Mark notice as read.
 Must be logged in as user, provide a valid ID, and own the notice.
@@ -935,7 +935,7 @@ Returns 401 if not logged in. Returns 404 if notice not found. Returns 403 if no
 Mark Notice as Unread
 ---------------------
 
-`PUT https://sagefy.org/api/notices/{id}/unread/`
+`PUT https://sagefy.org/s/notices/{id}/unread/`
 
 Mark notice as unread.
 Must be logged in as user, provide a valid ID, and own the notice.

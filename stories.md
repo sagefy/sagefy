@@ -102,7 +102,7 @@ I want to manage what I'm following.
 As a contributor
 to find things to work on
 I want to be able to search entities.
-(Needs API: Search)
+(Needs Service: Search)
 - [ ]
 As a contributor
 to identity areas to work on
@@ -119,12 +119,12 @@ I want to view set information.
 As a contributor
 to improve Sagefy
 I want to propose changes.
-(Needs API: Propose)
+(Needs Service: Propose)
 - [ ]
 As a contributor
 to help improve Sagefy
 I want to vote a on proposal.
-(Needs API: Propose)
+(Needs Service: Propose)
 - [ ]
 As a contributor
 to get context
@@ -148,7 +148,7 @@ I want to view the list of my sets.
 As a learner
 to find new sets
 I want to search through sets.
-(Needs API: Search)
+(Needs Service: Search)
 - [ ]
 As a learner
 to start new courses
@@ -169,14 +169,14 @@ I want to choose which unit to work on next.
 As a learner
 to learn
 I want to use a (non-assessment) card.
-(Needs API: Seq update non-assessment)
+(Needs Service: Seq update non-assessment)
 - [ ]
 As a learner
 to learn
 I want to use an assessment type card.
-(Needs API: Choice card score feedback)
+(Needs Service: Choice card score feedback)
 - [ ]
 As a learner
 to stay motivated
 I want to see my progress in the unit as I work on cards.
-(Needs API: Choice card score feedback)
+(Needs Service: Choice card score feedback)

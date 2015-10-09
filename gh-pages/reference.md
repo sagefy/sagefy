@@ -60,7 +60,7 @@ Data Visualization
 
 - [Interactive Data Visualization for the Web](http://chimera.labs.oreilly.com/books/1230000000345/index.html) by Scott Murray
 
-API Development
+Server Development
 ---------------
 
 - [Hypertext Application Language](http://stateless.co/hal_specification.html)
@@ -77,7 +77,7 @@ API Development
     - [Text](http://www.mediawiki.org/wiki/Manual:Text_table)
 - [Writing RESTful Web Services With Flask](https://speakerdeck.com/miguelgrinberg/writing-restful-web-services-with-flask-pycon-2014) – PyCon 2014 by Miguel Grinberg
 
-Web UI development
+Web Client development
 ------------------
 
 - [W3C CSS2 documentation](http://www.w3.org/TR/CSS2/cover.html#minitoc)
