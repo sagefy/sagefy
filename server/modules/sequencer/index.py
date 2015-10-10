@@ -12,18 +12,18 @@ Card
 - [x] correct
 - [x] guess
 - [x] slip
-- [_] transit  TODO@
+- [_] transit  TODO
 
 Unit
 - [x] learned
 - [x] belief
-- [ ] unit quality  TODO@
-- [ ] unit difficulty  TODO@
+- [ ] unit quality  TODO
+- [ ] unit difficulty  TODO
 
 Set
-- [ ] learner-set ability  TODO@
-- [ ] set quality  TODO@
-- [ ] set difficulty  TODO@
+- [ ] learner-set ability  TODO
+- [ ] set quality  TODO
+- [ ] set difficulty  TODO
 """
 
 

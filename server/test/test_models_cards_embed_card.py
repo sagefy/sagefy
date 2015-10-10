@@ -13,7 +13,7 @@ def test_embed_url(cards_table):
     card, errors = EmbedCard.insert({
         'unit_id': 'RUF531',
         'name': 'What is?',
-        'rubric': True,  # TODO@
+        'rubric': True,  # TODO
     })
     assert len(errors) == 1
     card, errors = card.update({'url': 'http://google.com'})
