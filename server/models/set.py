@@ -9,8 +9,6 @@ from modules.memoize_redis import memoize_redis
 from models.set_parameters import SetParameters
 
 
-# TODO@ On set accepted, index (or delete) in Elasticsearch with entity_id
-# http://bit.ly/1VxHoBv
 class Set(EntityMixin, Model):
     """
     A set is a collection of units and other sets.

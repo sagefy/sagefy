@@ -1,3 +1,8 @@
+User Stories
+============
+
+This document serves as a list of major use cases for Sagefy's functionality. It can be used for checking progress or for validation. These stories should remain high level and not get into edge cases, scenarios, or details.
+
 ### 1) Accounts
 
 - [x]
@@ -102,7 +107,6 @@ I want to manage what I'm following.
 As a contributor
 to find things to work on
 I want to be able to search entities.
-(Needs Service: Search)
 - [ ]
 As a contributor
 to identity areas to work on
@@ -148,7 +152,6 @@ I want to view the list of my sets.
 As a learner
 to find new sets
 I want to search through sets.
-(Needs Service: Search)
 - [ ]
 As a learner
 to start new courses
@@ -169,7 +172,7 @@ I want to choose which unit to work on next.
 As a learner
 to learn
 I want to use a (non-assessment) card.
-(Needs Service: Seq update non-assessment)
+(Needs Service: Sequencer update non-assessment)
 - [ ]
 As a learner
 to learn

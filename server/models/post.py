@@ -1,9 +1,9 @@
 from modules.model import Model
 from modules.validations import is_required, is_string, is_one_of
+from framework.elasticsearch import es
+from modules.util import json_prep
 
 
-# TODO@ On create or update, index in Elasticsearch
-# http://bit.ly/1VxHoBv
 class Post(Model):
     """A discussion post."""
     tablename = 'posts'
@@ -40,3 +40,16 @@ class Post(Model):
         - TODO@ A post can reply to a post.
         """
         return []
+
+    def save(self):
+        """
+        Overwrite save method to add to Elasticsearch.
+        """
+
+        es.index(
+            index='entity',
+            doc_type='post',
+            body=json_prep(self.deliver()),
+            id=self['id'],
+        )
+        return super().save()

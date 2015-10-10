@@ -4,6 +4,8 @@ from modules.model import Model
 from modules.validations import is_required, is_language, is_boolean, \
     is_list, is_string, is_list_of_strings, is_one_of
 from modules.util import uniqid
+from framework.elasticsearch import es
+from modules.util import json_prep
 
 
 class EntityMixin(object):
@@ -170,9 +172,28 @@ class EntityMixin(object):
         Fetches the card's learning analytics parameters.
         """
 
-        # TODO@ cache in redis
+        # TODO cache in redis
 
         params = self.parametersCls.get(entity_id=self['entity_id'])
         if params:
             return params
         return self.parametersCls({'entity_id': self['entity_id']})
+
+    def save(self):
+        """
+        Overwrite save method to add to Elasticsearch.
+        """
+
+        doc_type = self.__class__.__name__.lower()
+
+        if 'card' in doc_type:
+            doc_type = 'card'
+
+        if self['status'] == 'accepted':
+            es.index(
+                index='entity',
+                doc_type=doc_type,
+                body=json_prep(self.deliver()),
+                id=self['entity_id'],
+            )
+        return super().save()

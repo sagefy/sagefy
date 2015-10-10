@@ -1,11 +1,11 @@
 from modules.model import Model
 from modules.validations import is_required, is_string, is_one_of
+from modules.util import json_prep
 import framework.database as database
 import rethinkdb as r
+from framework.elasticsearch import es
 
 
-# TODO@ On create or update, update index in Elasticsearch
-# http://bit.ly/1VxHoBv
 class Topic(Model):
     """
     A discussion topic.
@@ -53,3 +53,16 @@ class Topic(Model):
                         .run(database.db_conn))
         documents = [cls(data) for data in data_list]
         return documents
+
+    def save(self):
+        """
+        Overwrite save method to add to Elasticsearch.
+        """
+
+        es.index(
+            index='entity',
+            doc_type='topic',
+            body=json_prep(self.deliver()),
+            id=self['id'],
+        )
+        return super().save()

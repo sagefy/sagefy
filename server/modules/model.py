@@ -3,6 +3,7 @@ import framework.database as database
 from modules.util import uniqid, omit, pick, extend
 from modules.content import get as c
 from modules.classproperty import classproperty
+from copy import deepcopy
 
 
 def update_modified(field):
@@ -329,7 +330,7 @@ class Model(object):
             if 'bundle' in field_schema and data.get(field_name):
                 data[field_name] = field_schema['bundle'](data[field_name])
 
-        data = self.data.copy()
+        data = deepcopy(self.data)
         iter(_, data, self.schema)
         return data
 
@@ -349,6 +350,6 @@ class Model(object):
             elif 'deliver' in field_schema and data.get(field_name):
                 data[field_name] = field_schema['deliver'](data[field_name])
 
-        data = self.data.copy()
+        data = deepcopy(self.data)
         iter(_, data, self.schema)
         return data

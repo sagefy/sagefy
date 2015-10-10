@@ -2,11 +2,13 @@ from modules.model import Model
 from modules.validations import is_required, is_email, is_string, \
     has_min_length, is_one_of
 from passlib.hash import bcrypt
-from modules.util import uniqid, pick, compact_dict, json_serial, omit
+from modules.util import uniqid, pick, compact_dict, json_serial, omit, \
+    json_prep
 from modules.content import get as c
 import json
 from framework.redis import redis
 from framework.mail import send_mail
+from framework.elasticsearch import es
 
 
 def encrypt_password(value):
@@ -14,11 +16,6 @@ def encrypt_password(value):
         return bcrypt.encrypt(value)
     return value
 
-
-# TODO@ When creating a new user or updating the user's name or email,
-#       index in Elasticsearch
-# TODO@ When close user, delete in Elasticsearch
-# http://bit.ly/1VxHoBv
 
 class User(Model):
     tablename = 'users'
@@ -74,6 +71,31 @@ class User(Model):
 
         data = omit(data, ('password',))
         return super().update(data)
+
+    def save(self):
+        """
+        Overwrite save method to add to Elasticsearch.
+        """
+
+        es.index(
+            index='entity',
+            doc_type='user',
+            body=json_prep(self.deliver()),
+            id=self['id'],
+        )
+        return super().save()
+
+    def delete(self):
+        """
+        Overwrite delete method to delete in Elasticsearch.
+        """
+
+        es.delete(
+            index='entity',
+            doc_type='user',
+            id=self['id'],
+        )
+        return super().delete()
 
     def is_password_valid(self, password):
         """
