@@ -177,9 +177,7 @@ I want to use a (non-assessment) card.
 As a learner
 to learn
 I want to use an assessment type card.
-(Needs Service: Choice card score feedback)
 - [ ]
 As a learner
 to stay motivated
 I want to see my progress in the unit as I work on cards.
-(Needs Service: Choice card score feedback)

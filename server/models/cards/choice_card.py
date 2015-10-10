@@ -60,14 +60,21 @@ class ChoiceCard(Card):
         super().__init__(fields)
         self['kind'] = 'choice'
 
-    # TODO@ validate has_correct_options
+    def validate(self):
+        """
+        Overwrite validate method to check options.
+        """
 
-    # TODO@ When listing options to learner,
-    #       make sure there is at least one correct option
+        errors = super().validate()
+        if not errors:
+            error = has_correct_options(self['options'])
+            if error:
+                errors.append(error)
+        return errors
 
     def validate_response(self, response):
         """
-        TODO@ Ensure the given response body is valid,
+        Ensure the given response body is valid,
         given the card information.
         """
 
@@ -80,8 +87,15 @@ class ChoiceCard(Card):
 
     def score_response(self, response):
         """
-        TODO@ Score the given response.
+        Score the given response.
         Returns the score and feedback.
         """
 
-        return 1, ''
+        for opt in self['options']:
+            if response == opt['value']:
+                if opt['correct']:
+                    return 1.0, opt['feedback']
+                else:
+                    return 0.0, opt['feedback']
+
+        return 0.0, 'Default error ajflsdvco'
