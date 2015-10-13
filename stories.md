@@ -172,7 +172,6 @@ I want to choose which unit to work on next.
 As a learner
 to learn
 I want to use a (non-assessment) card.
-(Needs Service: Sequencer update non-assessment)
 - [ ]
 As a learner
 to learn

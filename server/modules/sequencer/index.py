@@ -35,11 +35,16 @@ def update(user, card, response):
 
     # TODO split up into smaller methods
 
+    if not card.has_assessment():
+        return {
+            'response': Response({}),
+            'feedback': '',
+        }
+
     errors = card.validate_response(response)
     if errors:
         return {'errors': errors}
 
-    # TODO@ what if the card is non-assessment?
     score, feedback = card.score_response(response)
     response = Response({
         'user_id': user['id'],
@@ -48,9 +53,6 @@ def update(user, card, response):
         'response': response,
         'score': score,
     })
-    # errors = response.validate()
-    # if errors:
-    #     return {'errors': errors, 'feedback': feedback}
 
     card_parameters = card.fetch_parameters()
     previous_response = Response.get_latest(user_id=user['id'],
