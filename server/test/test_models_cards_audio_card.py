@@ -4,6 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
+@xfail
 def test_audio_site(cards_table):
     """
     Expect an audio card to require site.
@@ -19,6 +20,7 @@ def test_audio_site(cards_table):
     assert len(errors) == 0
 
 
+@xfail
 def test_audio_audio_id(cards_table):
     """
     Expect an audio card to require audio_id.

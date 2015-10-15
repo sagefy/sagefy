@@ -4,6 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
+@xfail
 def test_slideshow_site(cards_table):
     """
     Expect a slideshow card to require a site.
@@ -19,6 +20,7 @@ def test_slideshow_site(cards_table):
     assert len(errors) == 0
 
 
+@xfail
 def test_slideshow_id(cards_table):
     """
     Expect a slideshow card to require a slideshow_id.

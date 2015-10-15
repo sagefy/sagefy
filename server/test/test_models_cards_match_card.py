@@ -4,6 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
+@xfail
 def test_match_body(cards_table):
     """
     Expect a match card require a body.
@@ -24,6 +25,7 @@ def test_match_body(cards_table):
     assert len(errors) == 0
 
 
+@xfail
 def test_match_options(cards_table):
     """
     Expect a match card require a options.
@@ -45,6 +47,7 @@ def test_match_options(cards_table):
     assert len(errors) == 0
 
 
+@xfail
 def test_match_default_feedback(cards_table):
     """
     Expect a match card require a default feedback.
@@ -65,6 +68,7 @@ def test_match_default_feedback(cards_table):
     assert len(errors) == 0
 
 
+@xfail
 def test_match_casing(cards_table):
     """
     Expect a match card to allow case sensitivity.

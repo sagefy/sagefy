@@ -4,6 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
+@xfail
 def test_formula_body(cards_table):
     """
     Expect a formula card to require a body.
@@ -25,6 +26,7 @@ def test_formula_body(cards_table):
     assert len(errors) == 0
 
 
+@xfail
 def test_formula_options(cards_table):
     """
     Expect a formula card to require options.
@@ -56,6 +58,7 @@ def test_formula_variables(cards_table):
     assert False
 
 
+@xfail
 def test_formula_range(cards_table):
     """
     Expect a formula card to require a range.
@@ -78,6 +81,7 @@ def test_formula_range(cards_table):
     assert len(errors) == 0
 
 
+@xfail
 def test_formula_default_feedback(cards_table):
     """
     Expect a formula card to require default feedback.

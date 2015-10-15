@@ -115,16 +115,13 @@ def get_posts_route(request, topic_id):
         topic_id=topic_id
     )
 
-    # TODO@ Should the following checks be part of the model?
+    # TODO Should the following checks be part of the model?
 
     # TODO@ For proposals, pull up the proposal entity version
 
-    # TODO@ ...then pull up the proposal latest accepted version
+    # TODO@ ...then pull up the previous version
 
-    # TODO@ ...if the proposal isn't based off the latest accepted,
-    #       it's invalid
-
-    # TODO@ Make a diff between the latest accepted
+    # TODO@ Make a diff between the previous
     #       ... and the proposal entity version
 
     return 200, {'posts': [p.deliver() for p in posts]}
@@ -201,6 +198,8 @@ def update_post_route(request, topic_id, post_id):
     # TODO@ Should some of these checks be part of the model?
     if post['user_id'] != current_user['id']:
         return abort(403)
+
+    # TODO@ update version status
 
     # TODO@ If proposal, make sure its allowed changes
     if post['kind'] in ('proposal', 'flag'):

@@ -4,6 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
+@xfail
 def test_number_body(cards_table):
     """
     Expect a number card to require a body.
@@ -24,6 +25,7 @@ def test_number_body(cards_table):
     assert len(errors) == 0
 
 
+@xfail
 def test_number_options(cards_table):
     """
     Expect a number card to require a options.
@@ -45,6 +47,7 @@ def test_number_options(cards_table):
     assert len(errors) == 0
 
 
+@xfail
 def test_number_range(cards_table):
     """
     Expect a number card to allow a range.
@@ -66,6 +69,7 @@ def test_number_range(cards_table):
     assert len(errors) == 0
 
 
+@xfail
 def test_number_default_feedback(cards_table):
     """
     Expect a number card to require default feedback.

@@ -4,6 +4,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
+@xfail
 def test_page_body(cards_table):
     """
     Expect a page card to require a body.
