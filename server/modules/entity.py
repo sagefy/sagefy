@@ -33,6 +33,15 @@ def get_latest_accepted(kind, entity_id):
         return Set.get_latest_accepted(entity_id)
 
 
+def get_version(kind, id_):
+    if kind == 'card':
+        return Card.get(id=id_)
+    elif kind == 'unit':
+        return Unit.get(id=id_)
+    elif kind == 'set':
+        return Set.get(id=id_)
+
+
 def get_kind(data):
     """
     Given the JSON data, figure out what kind of entity lies within.
@@ -69,6 +78,20 @@ def create_entity(data):
         return Set.insert(data['set'])
 
     return None, []
+
+
+def instance(data):
+    """
+    Given a kind and some json, call insert on that kind
+    and return the results.
+    """
+
+    if 'card' in data:
+        return Card(data['card'])
+    elif 'unit' in data:
+        return Unit(data['unit'])
+    elif 'set' in data:
+        return Set(data['set'])
 
 
 def get_card_by_kind(card_id):

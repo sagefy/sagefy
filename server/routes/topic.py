@@ -5,11 +5,37 @@ Includes topics, posts, proposals, votes, and flags.
 
 from framework.routes import get, post, put, abort
 from models.topic import Topic
+from models.post import Post
 from framework.session import get_current_user
 from modules.util import omit
-from modules.discuss import instance_post_facade, create_post_facade, \
+from modules.discuss import instance_post_facade, \
     get_post_facade, get_posts_facade
 from modules.content import get as c
+from modules.entity import create_entity, get_version
+
+# TODO most of this junk should be moved into the models and modules...
+#      these methods are waaay too complicated.
+
+
+def object_diff(prev, next_):
+    """
+    Return a description of the differences between two dicts.
+    Assume the keys are the same either way.
+    """
+
+    diffs = []
+
+    def _(p, n, pre=''):
+        for key, value in p.items():
+            if p[key] != n[key]:
+                if isinstance(value, dict):
+                    _(p[key], n[key], pre + key)
+                else:
+                    diffs.append(pre + key)
+
+    _(prev, next_)
+
+    return diffs
 
 
 @post('/s/topics')
@@ -36,7 +62,6 @@ def create_topic_route(request):
 
     # Let's create the topic, but not save it until we know we
     # have a valid post
-    # TODO@ should this validation be part of the model?
     topic_data = dict(**request['params']['topic'])
     topic_data['user_id'] = current_user['id']
     topic = Topic(topic_data)
@@ -49,7 +74,11 @@ def create_topic_route(request):
     if len(errors + errors2):
         return 400, {'errors': errors + errors2}
 
-    # TODO@ validate topic entity is valid
+    # Validate topic entity is valid
+    if post['kind'] == 'proposal':
+        entity, errors = create_entity(request['params'])
+        if errors:
+            return 400, {'errors': errors}
 
     post, errors = post.save()
     topic, errors2 = topic.save()
@@ -82,7 +111,7 @@ def update_topic_route(request, topic_id):
         return abort(403)
 
     # Request must only be for name
-    # TODO@ should this be part of the model?
+    # TODO should this be part of the model?
     topic, errors = topic.update({
         'name': request['params'].get('name')
     })
@@ -115,16 +144,22 @@ def get_posts_route(request, topic_id):
         topic_id=topic_id
     )
 
-    # TODO Should the following checks be part of the model?
+    # For proposals, pull up the proposal entity version
+    # ...then pull up the previous version
+    # ...make a diff between the previous and the proposal entity version
+    diffs = {}
+    for post_ in posts:
+        if post_['type'] == 'proposal':
+            kind = post_['entity_version']['kind']
+            entity_version = get_version(kind,
+                                         post_['entity_version']['id'])
+            previous_version = get_version(kind,
+                                           entity_version['previous_id'])
+            diff = object_diff(previous_version.deliver(),
+                               entity_version.deliver())
+            diffs[post_['id']] = diff
 
-    # TODO@ For proposals, pull up the proposal entity version
-
-    # TODO@ ...then pull up the previous version
-
-    # TODO@ Make a diff between the previous
-    #       ... and the proposal entity version
-
-    return 200, {'posts': [p.deliver() for p in posts]}
+    return 200, {'posts': [p.deliver() for p in posts], 'diffs': diffs}
 
 
 @post('/s/topics/{topic_id}/posts')
@@ -140,36 +175,49 @@ def create_post_route(request, topic_id):
     if not current_user:
         return abort(401)
 
-    # TODO@ what checks should be moved to the model?
+    # TODO what checks should be moved to the model?
 
-    # TODO@ For proposal or flag, entity must be included and valid
-    kind = request['params'].get('kind')
-    if kind in ('proposal', 'flag',):
-        pass
-
-    # TODO@ For vote, must refer to a valid proposal
-    if kind == 'vote':
-        pass
+    post_data = request['params']['post']
+    kind = post_data.get('kind')
 
     # The topic must be valid
-    topic = Topic.get(id=request['params'].get('topic_id'))
-    if not request['params'].get('topic_id') or not topic:
+    topic_id = post_data.get('topic_id')
+    topic = Topic.get(id=topic_id)
+    if not topic_id or not topic:
         return 404, {'errors': [{
             'name': 'topic_id',
             'message': c('no_topic'),
         }]}
 
+    # For proposal or flag, entity must be included and valid
+    if kind == 'proposal':
+        entity, errors = create_entity(request['params'])
+        if errors:
+            return 400, {'errors': errors}
+
     # Try to save the post (and others)
-    post_data = dict(**request['params'])
+    post_data = dict(**post_data)
     post_data['user_id'] = current_user['id']
-    post, errors = create_post_facade(post_data)
+    post_data['topic_id'] = topic['id']
+    post = instance_post_facade(post_data)
+
+    errors = post.validate()
     if len(errors):
         return 400, {'errors': errors}
 
-    # TODO@ If a proposal has sufficient votes, move it to accepted
-    #      ... and close out any prior versions dependent
+    # If a proposal has sufficient votes, move it to accepted
+    # ... and close out any prior versions dependent
     if kind == 'vote':
-        pass
+        proposal_id = post['replies_to_id']
+        proposal = Post.get(id=proposal_id)
+        entity = get_version(proposal['entity_version']['kind'],
+                             proposal['entity_version']['id'])
+        entity['status'] = 'accepted'
+        # TODO actually count the votes first
+        # TODO block if negative response
+        entity.save()
+
+    post.save()
 
     return 200, {'post': post.deliver()}
 
@@ -193,25 +241,46 @@ def update_post_route(request, topic_id, post_id):
         return abort(401)
 
     post = get_post_facade(post_id)
-
-    # Must be user's own post
-    # TODO@ Should some of these checks be part of the model?
-    if post['user_id'] != current_user['id']:
-        return abort(403)
-
-    # TODO@ update version status
-
-    # TODO@ If proposal, make sure its allowed changes
-    if post['kind'] in ('proposal', 'flag'):
-        pass
-
-    # TODO@ If vote, make sure its allowed changes
-    if post['kind'] == 'vote':
-        pass
+    kind = post['kind']
 
     post_data = dict(**request['params'])
     post_data = omit(post_data, ('user_id', 'topic_id', 'kind'))
+
+    # Must be user's own post
+    # TODO Should some of these checks be part of the model?
+    if post['user_id'] != current_user['id']:
+        return abort(403)
+
+    # If proposal, make sure its allowed changes
+    if post['kind'] == 'proposal':
+        if post_data['status'] == 'declined':
+            post_data = {
+                'status': 'declined'
+            }
+        else:
+            post_data = {}
+
+    # If vote, make sure its allowed changes
+    if post['kind'] == 'vote':
+        post_data = {
+            'body': post['body'],
+            'response': post['response'],
+        }
+
     post, errors = post.update(post_data)
     if errors:
         return 400, {'errors': errors}
+
+    # If a proposal has sufficient votes, move it to accepted
+    # ... and close out any prior versions dependent
+    if kind == 'vote':
+        proposal_id = post['replies_to_id']
+        proposal = Post.get(id=proposal_id)
+        entity = get_version(proposal['entity_version']['kind'],
+                             proposal['entity_version']['id'])
+        entity['status'] = 'accepted'
+        # TODO actually count the votes first
+        # TODO block if negative response
+        entity.save()
+
     return 200, {'post': post.deliver()}

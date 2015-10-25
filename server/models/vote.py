@@ -18,7 +18,7 @@ class Vote(Post):
         # But a vote does require a proposal
         'replies_to_id': {
             'validate': (is_required, is_string,)
-        },
+        },   # TODO@ Validate this is for a valid proposal
 
         # The only true unique field of a vote...
         # Where True is yes, False is no

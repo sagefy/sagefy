@@ -123,12 +123,10 @@ I want to view set information.
 As a contributor
 to improve Sagefy
 I want to propose changes.
-(Needs Service: Propose)
 - [ ]
 As a contributor
 to help improve Sagefy
 I want to vote a on proposal.
-(Needs Service: Propose)
 - [ ]
 As a contributor
 to get context

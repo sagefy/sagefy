@@ -6,6 +6,7 @@ from modules.validations import is_required, is_language, is_boolean, \
 from modules.util import uniqid
 from framework.elasticsearch import es
 from modules.util import json_prep
+from modules.util import omit
 
 
 class EntityMixin(object):
@@ -178,6 +179,23 @@ class EntityMixin(object):
         if params:
             return params
         return self.parametersCls({'entity_id': self['entity_id']})
+
+    @classmethod
+    def insert(cls, data):
+        """
+        When a user creates a new version,
+        don't accept certain fields.
+
+        Also, find the previous_id.
+        """
+
+        data = omit(data, ('status', 'available'))
+
+        if 'entity_id' in data:
+            latest = cls.get_latest_accepted(data['entity_id'])
+            data['previous_id'] = latest['id']
+
+        return super().insert(data)
 
     def save(self):
         """

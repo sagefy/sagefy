@@ -1,4 +1,4 @@
-from modules.validations import is_required, is_string
+from modules.validations import is_required, is_string, is_one_of, is_dict
 from models.post import Post
 
 
@@ -6,8 +6,18 @@ class Proposal(Post):
     """A proposal to change the discussed entity."""
 
     schema = dict(Post.schema.copy(), **{
-        'entity_version_id': {
-            'validate': (is_required, is_string,)
+        'entity_version': {
+            'validate': (is_required, is_dict,),
+            'embed': {
+                'id': {  # TODO@ is valid ids?
+                    'validate': (is_required, is_string,),
+                },
+                'kind': {
+                    'validate': (is_required, is_string, (
+                        is_one_of, 'card', 'unit', 'set',
+                    )),
+                }
+            }
         },
         'name': {
             'validate': (is_required, is_string,)

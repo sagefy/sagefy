@@ -9,7 +9,10 @@ def test_user_id(db_conn, posts_table):
     proposal, errors = Proposal.insert({
         'topic_id': 'B',
         'body': 'C',
-        'entity_version_id': 'D',
+        'entity_version': {
+            'id': 'D',
+            'kind': 'unit'
+        },
         'name': 'E',
     })
     assert len(errors) == 1
@@ -26,7 +29,10 @@ def test_topic(db_conn, posts_table):
     proposal, errors = Proposal.insert({
         'user_id': 'A',
         'body': 'C',
-        'entity_version_id': 'D',
+        'entity_version': {
+            'id': 'D',
+            'kind': 'unit'
+        },
         'name': 'E',
     })
     assert len(errors) == 1
@@ -43,7 +49,10 @@ def test_body(db_conn, posts_table):
     proposal, errors = Proposal.insert({
         'user_id': 'A',
         'topic_id': 'B',
-        'entity_version_id': 'D',
+        'entity_version': {
+            'id': 'D',
+            'kind': 'unit'
+        },
         'name': 'E',
     })
     assert len(errors) == 1
@@ -61,7 +70,10 @@ def test_kind(db_conn, posts_table):
         'user_id': 'A',
         'topic_id': 'B',
         'body': 'C',
-        'entity_version_id': 'D',
+        'entity_version': {
+            'id': 'D',
+            'kind': 'unit'
+        },
         'name': 'E',
     })
     del proposal['kind']
@@ -81,7 +93,10 @@ def test_replies(db_conn, posts_table):
         'user_id': 'A',
         'topic_id': 'B',
         'body': 'C',
-        'entity_version_id': 'D',
+        'entity_version': {
+            'id': 'D',
+            'kind': 'unit'
+        },
         'name': 'E',
         'replies_to_id': 'A',
     })
@@ -99,8 +114,11 @@ def test_entity(db_conn, posts_table):
         'body': 'C',
         'name': 'E',
     })
-    assert len(errors) == 1
-    proposal['entity_version_id'] = 'D'
+    assert len(errors) == 2
+    proposal['entity_version'] = {
+        'id': 'D',
+        'kind': 'unit'
+    }
     proposal, errors = proposal.save()
     assert len(errors) == 0
 
@@ -114,7 +132,10 @@ def test_name(db_conn, posts_table):
         'user_id': 'A',
         'topic_id': 'B',
         'body': 'C',
-        'entity_version_id': 'D',
+        'entity_version': {
+            'id': 'D',
+            'kind': 'unit'
+        }
     })
     assert len(errors) == 1
     proposal['name'] = 'E'

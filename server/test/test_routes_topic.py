@@ -394,11 +394,13 @@ def test_create_post(db_conn, users_table, topics_table, posts_table,
         'cookies': {'session_id': session},
         'params': {
             # Should default to > 'kind': 'post',
-            'body': '''A Modest Proposal for Preventing the Children of Poor
-                People From Being a Burthen to Their Parents or Country, and
-                for Making Them Beneficial to the Publick.''',
-            'kind': 'post',
-            'topic_id': 'wxyz7890',
+            'post': {
+                'body': '''A Modest Proposal for Preventing the Children of
+                    Poor People From Being a Burthen to Their Parents or
+                    Country, and for Making Them Beneficial to the Publick.''',
+                'kind': 'post',
+                'topic_id': 'wxyz7890',
+            }
         }
     }
     code, response = routes.topic.create_post_route(request, 'wxyz7890')
@@ -416,8 +418,10 @@ def test_create_post_errors(db_conn, users_table, topics_table,
     request = {
         'cookies': {'session_id': session},
         'params': {
-            'kind': 'post',
-            'topic_id': 'wxyz7890',
+            'post': {
+                'kind': 'post',
+                'topic_id': 'wxyz7890',
+            }
         }
     }
     code, response = routes.topic.create_post_route(request, 'wxyz7890')
@@ -458,11 +462,13 @@ def test_create_post_proposal(db_conn, users_table, topics_table,
     create_topic_in_db(topics_table, db_conn)
     request = {
         'params': {
-            'kind': 'proposal',
-            'name': 'New Unit',
-            'body': '''A Modest Proposal for Preventing the Children of Poor
-                People From Being a Burthen to Their Parents or Country, and
-                for Making Them Beneficial to the Publick.''',
+            'post': {
+                'kind': 'proposal',
+                'name': 'New Unit',
+                'body': '''A Modest Proposal for Preventing the Children of
+                    Poor People From Being a Burthen to Their Parents or
+                    Country, and for Making Them Beneficial to the Publick.''',
+            },
             'unit': {
                 'name': 'Satire',
                 'body': '''Learn the use of humor, irony, exaggeration, or
@@ -582,6 +588,7 @@ def test_update_proposal(db_conn, users_table, topics_table,
     assert 'declined' in response['post']['status']
 
 
+@xfail
 def test_update_vote(db_conn, users_table, topics_table,
                      posts_table, session):
     """

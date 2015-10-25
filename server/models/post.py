@@ -24,7 +24,7 @@ class Post(Model):
             'default': 'post'
         },
         'replies_to_id': {
-            'validate': (is_string,)
+            'validate': (is_string,)  # TODO@ validate id is real & in topic
         }
     })
 
