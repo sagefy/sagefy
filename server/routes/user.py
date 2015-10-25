@@ -78,7 +78,10 @@ def create_user_route(request):
 
     user, errors = User.insert(request['params'])
     if len(errors):
-        return 400, {'errors': errors}
+        return 400, {
+            'errors': errors,
+            'ref': 'YEcBnqf4vyA2pckIy70R789B',
+        }
     return _log_in(user)
 
 
@@ -92,15 +95,21 @@ def log_in_route(request):
     if not user:
         user = User.get(email=request['params'].get('name'))
     if not user:
-        return 404, {'errors': [{
-            'name': 'name',
-            'message': c('no_user'),
-        }]}
+        return 404, {
+            'errors': [{
+                'name': 'name',
+                'message': c('no_user'),
+            }],
+            'ref': 'FYIPOI8g2nzrIEcJYSDAfmti'
+        }
     if not user.is_password_valid(request['params'].get('password')):
-        return 400, {'errors': [{
-            'name': 'password',
-            'message': c('no_match'),
-        }]}
+        return 400, {
+            'errors': [{
+                'name': 'password',
+                'message': c('no_match'),
+            }],
+            'ref': 'UwCRydZ7Agi7LYKv9c1y07ft'
+        }
     return _log_in(user)
 
 
@@ -132,7 +141,10 @@ def update_user_route(request, user_id):
         return abort(401)
     user, errors = user.update(request['params'])
     if len(errors):
-        return 400, {'errors': errors}
+        return 400, {
+            'errors': errors,
+            'ref': 'AS7LCAWiOOyeEbNOrbsegVY9',
+        }
     return 200, {'user': user.deliver(access='private')}
 
 

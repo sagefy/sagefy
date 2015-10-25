@@ -1,16 +1,35 @@
 {div, h1} = require('../../modules/tags')
 c = require('../../modules/content').get
 form = require('../components/form.tmpl')
+postSchema = require('../../schemas/post')
+{extend} = require('../../modules/utilities')
 
 getFields = (postID) ->
-    fields = [{
-        name: 'topic_id'
-    }, {
-        name: 'replies_to_id'
-    }, {
-        name: 'kind'
-    }, {
-        name: 'body'
+    fields = [extend({
+        name: 'post.topic_id'
+    }, postSchema.topic_id), extend({
+        name: 'post.replies_to_id'
+    }, postSchema.replies_to_id), extend({
+        name: 'post.kind'
+        options: [{
+
+        }, {
+            disabled: true
+        }, {
+            disabled: true
+        }, {
+            disabled: true
+        }]
+        inline: true
+        label: 'Kind'
+    }, postSchema.kind), extend({
+        name: 'post.body'
+        label: 'Body'
+    }, postSchema.body), {
+        type: 'submit'
+        name: 'submit'
+        label: if postID then 'Update Post' else 'Create Post'
+        icon: 'plus'
     }]
 
     return fields
@@ -24,7 +43,10 @@ module.exports = (data) ->
     postID = getPostID(data)
 
     return div(
-        {id: 'post-form', className: 'col-10'}
+        {
+            id: 'post-form'
+            className: (if postID then 'update' else 'create') + ' col-6'
+        }
         h1(if postID then 'Update Post' else 'Create Post')
         form(getFields(postID))
     )

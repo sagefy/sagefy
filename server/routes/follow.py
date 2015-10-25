@@ -36,7 +36,10 @@ def follow_route(request):
     follow = Follow(follow_data)
     errors = follow.validate()
     if errors:
-        return 400, {'errors': errors}
+        return 400, {
+            'errors': errors,
+            'ref': '4Qn9oWVWiGKvXSONQKHSy1T6'
+        }
 
     # Ensure the entity exists   TODO should this be a model validation?
     entity = get_latest_accepted(follow['entity']['kind'],
@@ -52,7 +55,10 @@ def follow_route(request):
 
     follow, errors = follow.save()
     if errors:
-        return 400, {'errors': errors}
+        return 400, {
+            'errors': errors,
+            'ref': 'gKU6wgTItxpKyDs0eAlonCmi',
+        }
 
     return 200, {'follow': follow.deliver(access='private')}
 
@@ -76,6 +82,9 @@ def unfollow_route(request, follow_id):
 
     follow, errors = follow.delete()
     if errors:
-        return 400, {'errors': errors}
+        return 400, {
+            'errors': errors,
+            'ref': 'iGmpx8UwoFcKNmSKq9Aocy1a'
+        }
 
     return 200, {}

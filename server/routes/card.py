@@ -121,7 +121,10 @@ def respond_to_card_route(request, card_id):
     errors, response, feedback = (r.get('errors'), r.get('response'),
                                   r.get('feedback'))
     if errors:
-        return 400, {'errors': errors}
+        return 400, {
+            'errors': errors,
+            'ref': 'wtyOJPoy4bh76OIbYp8mS3LP',
+        }
 
     set_ = Set(context.get('set'))
     unit = Unit(context.get('unit'))

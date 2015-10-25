@@ -45,6 +45,9 @@ def mark_notice_route(request, notice_id):
     elif request['params'].get('read') is False:
         notice, errors = notice.mark_as_unread()
     if len(errors):
-        return 400, {'errors': errors}
+        return 400, {
+            'errors': errors,
+            'ref': 'qR4CBtcfcYfWDTqK9JOXXLhO',
+        }
 
     return 200, {'notice': notice.deliver(access='private')}

@@ -51,14 +51,22 @@ def create_topic_route(request):
         return abort(401)
 
     if 'topic' not in request['params']:
-        return 400, {'errors': [{
-            'name': 'topic'
-        }]}
+        return 400, {
+            'errors': [{
+                'name': 'topic',
+                'message': 'Missing topic data.'
+            }],
+            'ref': 'zknSd46f2hRNjSjVHCg6YLwN'
+        }
 
     if 'post' not in request['params']:
-        return 400, {'errors': [{
-            'name': 'post'
-        }]}
+        return 400, {
+            'errors': [{
+                'name': 'post',
+                'message': 'Missing post data.'
+            }],
+            'ref': 'Qki4oWX4nTdNAjYI8z5iNawr'
+        }
 
     # Let's create the topic, but not save it until we know we
     # have a valid post
@@ -68,24 +76,33 @@ def create_topic_route(request):
     post_data = dict(**request['params']['post'])
     post_data['user_id'] = current_user['id']
     post_data['topic_id'] = topic['id']
-    post = instance_post_facade(post_data)
+    post_ = instance_post_facade(post_data)
 
-    errors, errors2 = topic.validate(), post.validate()
+    errors, errors2 = topic.validate(), post_.validate()
     if len(errors + errors2):
-        return 400, {'errors': errors + errors2}
+        return 400, {
+            'errors': errors + errors2,
+            'ref': 'dr1vX0A7kE8RItHBGeObXWkZ'
+        }
 
     # Validate topic entity is valid
-    if post['kind'] == 'proposal':
+    if post_['kind'] == 'proposal':
         entity, errors = create_entity(request['params'])
         if errors:
-            return 400, {'errors': errors}
+            return 400, {
+                'errors': errors,
+                'ref': 'TiIBxS9pPWOcIuFUF5IAUi9o'
+            }
 
-    post, errors = post.save()
+    post_, errors = post_.save()
     topic, errors2 = topic.save()
     if len(errors + errors2):
-        return 400, {'errors': errors + errors2}
+        return 400, {
+            'errors': errors + errors2,
+            'ref': 'hWZwyUUN8MuyPPMYi0iUwYxm'
+        }
 
-    return 200, {'topic': topic.deliver(), 'post': post.deliver()}
+    return 200, {'topic': topic.deliver(), 'post': post_.deliver()}
 
 
 @put('/s/topics/{topic_id}')
@@ -101,10 +118,13 @@ def update_topic_route(request, topic_id):
     # Must be a valid topic_id
     topic = Topic.get(id=request['params'].get('topic_id'))
     if not topic:
-        return 404, {'errors': [{
-            'name': 'topic_id',
-            'message': c('no_topic'),
-        }]}
+        return 404, {
+            'errors': [{
+                'name': 'topic_id',
+                'message': c('no_topic'),
+            }],
+            'ref': 'Uwn359F67hC66d66I8lkUwpE'
+        }
 
     # Must be logged in as topic's author
     if topic['user_id'] != current_user['id']:
@@ -116,7 +136,10 @@ def update_topic_route(request, topic_id):
         'name': request['params'].get('name')
     })
     if errors:
-        return 400, {'errors': errors}
+        return 400, {
+            'errors': errors,
+            'ref': 'k7ItNedf0I0vXfiIUcDtvHgQ',
+        }
 
     return 200, {'topic': topic.deliver()}
 
@@ -132,10 +155,13 @@ def get_posts_route(request, topic_id):
     # Is the topic valid?
     topic = Topic.get(id=topic_id)
     if not topic:
-        return 404, {'errors': [{
-            'name': 'topic_id',
-            'message': c('no_topic'),
-        }]}
+        return 404, {
+            'errors': [{
+                'name': 'topic_id',
+                'message': c('no_topic'),
+            }],
+            'ref': 'pgnNbqSP1VUWkOYq8MVGPrSS',
+        }
 
     # Pull all kinds of posts
     posts = get_posts_facade(
@@ -177,6 +203,15 @@ def create_post_route(request, topic_id):
 
     # TODO what checks should be moved to the model?
 
+    if not request['params'].get('post'):
+        return 400, {
+            'errors': [{
+                'name': 'post',
+                'message': 'Missing post data.',
+            }],
+            'ref': 'ykQpZwJKq54MTCxgkx0p6baW'
+        }
+
     post_data = request['params']['post']
     kind = post_data.get('kind')
 
@@ -184,31 +219,40 @@ def create_post_route(request, topic_id):
     topic_id = post_data.get('topic_id')
     topic = Topic.get(id=topic_id)
     if not topic_id or not topic:
-        return 404, {'errors': [{
-            'name': 'topic_id',
-            'message': c('no_topic'),
-        }]}
+        return 404, {
+            'errors': [{
+                'name': 'topic_id',
+                'message': c('no_topic'),
+            }],
+            'ref': 'uTmChkRuUng5fpf8c51iVela',
+        }
 
     # For proposal or flag, entity must be included and valid
     if kind == 'proposal':
         entity, errors = create_entity(request['params'])
         if errors:
-            return 400, {'errors': errors}
+            return 400, {
+                'errors': errors,
+                'ref': 'mlTfMLy4PTdLedrWFRzrDEax'
+            }
 
     # Try to save the post (and others)
     post_data = dict(**post_data)
     post_data['user_id'] = current_user['id']
     post_data['topic_id'] = topic['id']
-    post = instance_post_facade(post_data)
+    post_ = instance_post_facade(post_data)
 
-    errors = post.validate()
+    errors = post_.validate()
     if len(errors):
-        return 400, {'errors': errors}
+        return 400, {
+            'errors': errors,
+            'ref': 'tux33ztgFj9ittSpS7WKIkq7'
+        }
 
     # If a proposal has sufficient votes, move it to accepted
     # ... and close out any prior versions dependent
     if kind == 'vote':
-        proposal_id = post['replies_to_id']
+        proposal_id = post_['replies_to_id']
         proposal = Post.get(id=proposal_id)
         entity = get_version(proposal['entity_version']['kind'],
                              proposal['entity_version']['id'])
@@ -217,9 +261,9 @@ def create_post_route(request, topic_id):
         # TODO block if negative response
         entity.save()
 
-    post.save()
+    post_.save()
 
-    return 200, {'post': post.deliver()}
+    return 200, {'post': post_.deliver()}
 
 
 @put('/s/topics/{topic_id}/posts/{post_id}')
@@ -240,19 +284,19 @@ def update_post_route(request, topic_id, post_id):
     if not current_user:
         return abort(401)
 
-    post = get_post_facade(post_id)
-    kind = post['kind']
+    post_ = get_post_facade(post_id)
+    kind = post_['kind']
 
     post_data = dict(**request['params'])
     post_data = omit(post_data, ('user_id', 'topic_id', 'kind'))
 
     # Must be user's own post
     # TODO Should some of these checks be part of the model?
-    if post['user_id'] != current_user['id']:
+    if post_['user_id'] != current_user['id']:
         return abort(403)
 
     # If proposal, make sure its allowed changes
-    if post['kind'] == 'proposal':
+    if post_['kind'] == 'proposal':
         if post_data['status'] == 'declined':
             post_data = {
                 'status': 'declined'
@@ -261,20 +305,23 @@ def update_post_route(request, topic_id, post_id):
             post_data = {}
 
     # If vote, make sure its allowed changes
-    if post['kind'] == 'vote':
+    if post_['kind'] == 'vote':
         post_data = {
-            'body': post['body'],
-            'response': post['response'],
+            'body': post_['body'],
+            'response': post_['response'],
         }
 
-    post, errors = post.update(post_data)
+    post_, errors = post_.update(post_data)
     if errors:
-        return 400, {'errors': errors}
+        return 400, {
+            'errors': errors,
+            'ref': 'E4LFwRv2WEJZks7use7TCpww'
+        }
 
     # If a proposal has sufficient votes, move it to accepted
     # ... and close out any prior versions dependent
     if kind == 'vote':
-        proposal_id = post['replies_to_id']
+        proposal_id = post_['replies_to_id']
         proposal = Post.get(id=proposal_id)
         entity = get_version(proposal['entity_version']['kind'],
                              proposal['entity_version']['id'])
@@ -283,4 +330,4 @@ def update_post_route(request, topic_id, post_id):
         # TODO block if negative response
         entity.save()
 
-    return 200, {'post': post.deliver()}
+    return 200, {'post': post_.deliver()}

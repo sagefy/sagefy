@@ -17,14 +17,14 @@ def instance(data):
     based on the `kind` field.
     """
 
-    if data.get('kind') == 'post':
-        return Post(data)
     if data.get('kind') == 'proposal':
         return Proposal(data)
     if data.get('kind') == 'vote':
         return Vote(data)
     if data.get('kind') == 'flag':
         return Flag(data)
+
+    return Post(data)
 
 
 def get_post_facade(post_id):

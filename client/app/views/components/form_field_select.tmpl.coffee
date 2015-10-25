@@ -37,6 +37,7 @@ m = (data) ->
             value: o.value
             checked: o.value is data.value
             label: o.label
+            disabled: o.disabled
         }) for o in data.options
     ))
 

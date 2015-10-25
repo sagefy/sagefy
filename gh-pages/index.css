@@ -1619,6 +1619,9 @@ form label .required {
 form label .optional {
   color: #969273;
 }
+form label.disabled {
+  color: #b1ac88;
+}
 fieldset {
   border: 1px solid #c7c29f;
   margin: 0;
@@ -1637,6 +1640,9 @@ legend {
 }
 .select label {
   cursor: pointer;
+}
+.select label.disabled {
+  cursor: not-allowed;
 }
 .form-description {
   color: #696650;

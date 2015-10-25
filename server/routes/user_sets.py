@@ -57,10 +57,13 @@ def add_set_route(request, user_id, set_id):
 
     uset = UserSets.get(user_id=user_id)
     if uset and set_id in uset['set_ids']:
-        return 400, {'errors': [{
-            'name': 'set_id',
-            'message': 'Set is already added.',
-        }]}
+        return 400, {
+            'errors': [{
+                'name': 'set_id',
+                'message': 'Set is already added.',
+            }],
+            'ref': 'kPZ95zM3oxFDGGl8vBdR3J3o',
+        }
 
     if uset:
         uset['set_ids'].append(set_id)
@@ -72,7 +75,10 @@ def add_set_route(request, user_id, set_id):
         })
 
     if errors:
-        return 400, {'errors': errors}
+        return 400, {
+            'errors': errors,
+            'ref': 'zCFUbLBTg9n2DnTkQYbqO4X9'
+        }
 
     return 200, {'sets': uset['set_ids']}
 
@@ -117,7 +123,10 @@ def remove_set_route(request, user_id, set_id):
 
     uset = UserSets.get(user_id=user_id)
     if not uset:
-        return 404, {'errors': [{'message': 'User does not have sets.'}]}
+        return 404, {
+            'errors': [{'message': 'User does not have sets.'}],
+            'ref': '8huZbvEAYOP8LcZb2sXbqNOC'
+        }
 
     if set_id not in uset['set_ids']:
         return abort(404)
@@ -126,6 +135,9 @@ def remove_set_route(request, user_id, set_id):
     usets, errors = uset.save()
 
     if errors:
-        return 400, {'errors': errors}
+        return 400, {
+            'errors': errors,
+            'ref': 'qIfll1e7dbP9V9jmC8FkCwsa'
+        }
 
     return 200, {'sets': uset['set_ids']}

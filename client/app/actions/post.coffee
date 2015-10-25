@@ -23,7 +23,7 @@ module.exports = store.add({
         ajax({
             method: 'POST'
             url: "/s/topics/#{data.topic_id}/posts"
-            data: {}
+            data: data
             done: (response) =>
                 @data.posts.push(response.post)   # TODO x topic
                 recorder.emit('create post')
@@ -38,7 +38,7 @@ module.exports = store.add({
         ajax({
             method: 'PUT'
             url: "/s/topics/#{data.topic_id}/posts/#{data.id}"
-            data: {}
+            data: data
             done: (response) =>
                 # @data.posts TODO findIndex and update   x topic
                 @data.posts.push(response.post)

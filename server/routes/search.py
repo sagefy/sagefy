@@ -17,14 +17,14 @@ def search_route(request):
     """
 
     # elasticsearch doc: http://bit.ly/1NdvIoi
-    result = es.search(**{
-        'index': "entity",
-        'doc_type': request['params'].get('kind') or
+    result = es.search(
+        index="entity",
+        doc_type=request['params'].get('kind') or
         "user,card,unit,set,topic,post",
-        'q': request['params'].get('q'),
-        'size': request['params'].get('limit') or 10,
-        'from': request['params'].get('skip') or 0,
-        'sort': request['params'].get('order')
-    })
+        q=request['params'].get('q'),
+        size=request['params'].get('limit') or 10,
+        from_=request['params'].get('skip') or 0,
+        # TODO sort=request['params'].get('order') or 'score:desc',
+    )
 
-    return 200, result
+    return 200, result['hits']
