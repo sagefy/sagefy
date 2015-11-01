@@ -5,7 +5,7 @@ module.exports = (data) ->
         id: data.name
         name: data.name
         placeholder: data.placeholder or ''
-        type: data.type
+        type: data.type or 'text'
         value: data.value or ''
         size: data.size or 40
     })

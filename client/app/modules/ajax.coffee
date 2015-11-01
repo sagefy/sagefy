@@ -8,15 +8,14 @@ Make an Ajax call given options:
 - fail: a function to do on fail
     - (json, request) ->
 ###
-util = require('./utilities')
+{extend, parseJSON, copy, isString} = require('./utilities')
 
-ajax = (options) ->
-    method = options.method.toUpperCase()
-    url = options.url
-    if options.method is 'GET'
+ajax = ({method, url, data, done, fail, always}) ->
+    method = method.toUpperCase()
+    if method is 'GET'
         url += if url.indexOf('?') > -1 then '&' else '?'
-        url += parameterize(util.extend(
-            options.data or {}
+        url += parameterize(extend(
+            data or {}
             {_: (+new Date())}  # Cachebreaker
         ))
     request = new XMLHttpRequest()
@@ -28,23 +27,23 @@ ajax = (options) ->
     )
     request.onload = ->
         if 400 > @status >= 200
-            options.done(util.parseJSON(@responseText), this)
-            options.always?()
+            done(parseJSON(@responseText), this)
+            always?()
         else
-            options.fail(parseAjaxErrors(this), this)
-            options.always?()
+            fail(parseAjaxErrors(this), this)
+            always?()
     request.onerror = ->
-        options.fail(null, this)
-        options.always?()
-    if options.method is 'GET'
+        fail(null, this)
+        always?()
+    if method is 'GET'
         request.send()
     else
-        request.send(JSON.stringify(options.data or {}))
+        request.send(JSON.stringify(data or {}))
     return request
 
 # Convert an object to a query string for GET requests.
 parameterize = (obj) ->
-    obj = util.copy(obj)
+    obj = copy(obj)
     pairs = []
     for key, value of obj
         pairs.push(
@@ -57,8 +56,8 @@ parameterize = (obj) ->
 # Try to parse the errors array or just return the error text.
 parseAjaxErrors = (r) ->
     return null if not r.responseText
-    errors = util.parseJSON(r.responseText)
-    return errors if util.isString(errors)
+    errors = parseJSON(r.responseText)
+    return errors if isString(errors)
     return errors.errors
 
 module.exports = {ajax, parameterize, parseAjaxErrors}

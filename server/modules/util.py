@@ -99,3 +99,24 @@ def extend(base, *injects):
             else:
                 base[key] = injector[key]
     return base
+
+
+def object_diff(prev, next_):
+    """
+    Return a description of the differences between two dicts.
+    Assume the keys are the same either way.
+    """
+
+    diffs = set()
+
+    def _(p, n, pre=''):
+        for key, value in p.items():
+            if p[key] != n[key]:
+                if isinstance(value, collections.Mapping):
+                    _(p[key], n[key], pre + key + '.')
+                else:
+                    diffs.add(pre + key)
+
+    _(prev, next_)
+
+    return diffs

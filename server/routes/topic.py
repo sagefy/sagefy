@@ -7,7 +7,7 @@ from framework.routes import get, post, put, abort
 from models.topic import Topic
 from models.post import Post
 from framework.session import get_current_user
-from modules.util import omit
+from modules.util import omit, object_diff
 from modules.discuss import instance_post_facade, \
     get_post_facade, get_posts_facade
 from modules.content import get as c
@@ -16,26 +16,7 @@ from modules.entity import create_entity, get_version
 # TODO most of this junk should be moved into the models and modules...
 #      these methods are waaay too complicated.
 
-
-def object_diff(prev, next_):
-    """
-    Return a description of the differences between two dicts.
-    Assume the keys are the same either way.
-    """
-
-    diffs = []
-
-    def _(p, n, pre=''):
-        for key, value in p.items():
-            if p[key] != n[key]:
-                if isinstance(value, dict):
-                    _(p[key], n[key], pre + key)
-                else:
-                    diffs.append(pre + key)
-
-    _(prev, next_)
-
-    return diffs
+# TODO send out notifications!
 
 
 @post('/s/topics')

@@ -4,10 +4,10 @@ recorder = require('../modules/recorder')
 
 module.exports = store.add({
     listUserSets: (limit = 50, skip = 0) ->
-        user_id = @data.currentUserID
+        userID = @data.currentUserID
         ajax({
             method: 'GET'
-            url: "/s/users/#{user_id}/sets"
+            url: "/s/users/#{userID}/sets"
             data: {limit, skip}
             done: (response) =>
                 # TODO merge based on ...?
@@ -21,6 +21,7 @@ module.exports = store.add({
         })
 
     addUserSet: ->
+        userID = @data.currentUserID
         ajax({
             method: 'POST'
             url: "/s/users/#{userID}/sets/#{setID}"
@@ -35,14 +36,15 @@ module.exports = store.add({
                 @change()
         })
 
-    chooseSet: ->
+    chooseSet: (setID) ->
+        userID = @data.currentUserID
         ajax({
             method: 'PUT'
             url: "/s/users/#{userID}/sets/#{setID}"
             data: {}
             done: (response) =>
                 # @data  TODO
-                recorder.emit('choose set')
+                recorder.emit('choose set', setID)
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on choose set', errors)
@@ -51,6 +53,7 @@ module.exports = store.add({
         })
 
     removeUserSet: ->
+        userID = @data.currentUserID
         ajax({
             method: 'DELETE'
             url: "/s/users/#{userID}/sets/#{setID}"
