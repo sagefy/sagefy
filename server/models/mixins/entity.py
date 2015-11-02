@@ -6,7 +6,7 @@ from modules.validations import is_required, is_language, is_boolean, \
 from modules.util import uniqid
 from framework.elasticsearch import es
 from modules.util import json_prep
-from modules.util import omit
+from modules.util import omit, pick
 
 
 class EntityMixin(object):
@@ -61,7 +61,8 @@ class EntityMixin(object):
     @classmethod
     def start_accepted_query(cls):
         """
-
+        Begins the query by reducing the table down
+        to the latest accepted versions for each.
         """
 
         # TODO this query should have an index in card, unit, set
@@ -196,6 +197,14 @@ class EntityMixin(object):
             data['previous_id'] = latest['id']
 
         return super().insert(data)
+
+    def update(self, data):
+        """
+        Only allow changes to the status on update.
+        """
+
+        data = pick(data, ('status', 'available'))
+        return super().update(data)
 
     def save(self):
         """

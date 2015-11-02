@@ -27,6 +27,10 @@ module.exports = (data) ->
         h1('My Sets')
         div({className: 'spinner'}) unless data.userSets
         ul(userSet(set) for set in data.userSets) if data.userSets
+        p(
+            a({href: '/search?find_set'}, 'Find a set')
+            ' to get started.'
+        ) if data.userSets?.length is 0
     )
 
 userSet = (data) ->

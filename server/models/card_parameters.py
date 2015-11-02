@@ -2,7 +2,8 @@ from modules.model import Model
 from modules.validations import is_required, is_string, is_dict
 from modules.sequencer.guess_pmf import GuessPMF
 from modules.sequencer.slip_pmf import SlipPMF
-from modules.sequencer.params import init_guess, init_slip, precision
+from modules.sequencer.params import init_guess, init_slip, precision, \
+    init_transit
 
 
 class CardParameters(Model):
@@ -53,20 +54,44 @@ class CardParameters(Model):
 
     def get_guess(self):
         """
-
+        Gets the guess value for the card.
         """
+
+        guess_distribution = self.get_distribution('guess')
+        return guess_distribution.get_value()
 
     def get_slip(self):
         """
-
+        Gets the slip value for the card.
         """
+
+        slip_distribution = self.get_distribution('slip')
+        return slip_distribution.get_value()
 
     def get_transit(self):
         """
-
+        Gets the transit value for the card.
+        TODO use a formulation for transit.
         """
+
+        return init_transit
 
     def get_num_learners(self):
         """
-
+        Gets the number of learners who interact with the card.
+        TODO calculate based on the responses table.
         """
+
+        return 0
+
+    def get_values(self):
+        """
+        Get the value outputs for the card parameters.
+        """
+
+        return {
+            'guess': self.guess(),
+            'slip': self.slip(),
+            'transit': self.transit(),
+            'num_learners': self.num_learners(),
+        }
