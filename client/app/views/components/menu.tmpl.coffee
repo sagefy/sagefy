@@ -5,6 +5,9 @@ menuItem = require('./menu_item.tmpl')
 {ucfirst, underscored} = require('../../modules/auxiliaries')
 
 
+# TODO add unread count to notices icon
+
+
 # A list of all menu items and their configurations
 items = {
     home: { url: '/' }

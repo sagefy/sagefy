@@ -2,6 +2,7 @@ import rethinkdb as r
 import framework.database as database
 from framework.database import setup_db, make_db_connection, \
     close_db_connection
+from framework.elasticsearch import es
 from passlib.hash import bcrypt
 from modules.sequencer.params import precision
 
@@ -42,6 +43,14 @@ for kind in (
         }
     }])
     .run(database.db_conn))
+
+# TODO
+# es.index(
+#     index='entity',
+#     doc_type=doc_type,
+#     body=json_prep(self.deliver()),
+#     id=self['entity_id'],
+# )
 
 # id, created, modified
 # entity_id, previous_id, language, name, status, available, tags
@@ -154,6 +163,14 @@ for kind in (
     }])
     .run(database.db_conn))
 
+# TODO
+# es.index(
+#     index='entity',
+#     doc_type=doc_type,
+#     body=json_prep(self.deliver()),
+#     id=self['entity_id'],
+# )
+
 # id, created, modified
 # entity_id
 (database.db.table('units_parameters')
@@ -251,6 +268,14 @@ for kind in (
     }])
     .run(database.db_conn))
 
+# TODO
+# es.index(
+#     index='entity',
+#     doc_type=doc_type,
+#     body=json_prep(self.deliver()),
+#     id=self['entity_id'],
+# )
+
 # id, created, modified
 # entity_id, guess_distribution, slip_distribution
 (database.db.table('cards_parameters')
@@ -320,6 +345,14 @@ for kind in (
     }])
     .run(database.db_conn))
 
+# TODO
+# es.index(
+#     index='entity',
+#     doc_type=doc_type,
+#     body=json_prep(self.deliver()),
+#     id=self['entity_id'],
+# )
+
 # id, created, modified
 # entity_id
 (database.db.table('sets_parameters')
@@ -331,15 +364,60 @@ for kind in (
     }])
     .run(database.db_conn))
 
-# TODO
 # id, created, modified
 # user_id, name, entity.id, entity.kind
 (database.db.table('topics')
     .insert([{
+        'id': 'basic-math-posts',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'user_id': 'doris',
+        'name': 'Basic math is fun',
+        'entity': {
+            'id': 'basic-math',
+            'kind': 'set',
+        }
+    }, {
+        'id': 'plus-changes',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'user_id': 'eileen',
+        'name': 'Lets do some changes with plus',
+        'entity': {
+            'id': 'plus',
+            'kind': 'unit',
+        }
+    }, {
+        'id': 'minus-changes',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'user_id': 'eileen',
+        'name': 'Lets make some changes with minus',
+        'entity': {
+            'id': 'minus',
+            'kind': 'unit',
+        }
+    }, {
+        'id': 'slash-changes',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'user_id': 'eileen',
+        'name': 'Lets block some changes with slash',
+        'entity': {
+            'id': 'slash',
+            'kind': 'unit',
+        }
     }])
     .run(database.db_conn))
 
-# TODO proposal .. vote .. flag
+# TODO
+# es.index(
+#     index='entity',
+#     doc_type=doc_type,
+#     body=json_prep(self.deliver()),
+#     id=self['entity_id'],
+# )
+
 # id, created, modified
 # post: user_id, topic_id, body, kind, replies_to_id
 # proposal: entity_version.id, entity_version.kind, name
@@ -347,8 +425,130 @@ for kind in (
 # vote: body, replies_to_id, response
 (database.db.table('posts')
     .insert([{
+        'id': 'basic-math-fun-1',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'user_id': 'doris',
+        'topic_id': 'basic-math-posts',
+        'body': 'OMG basic math is such learning funness.' +
+                'I dream about math all day long.' +
+                'What could be better?',
+        'kind': 'post',
+        'replies_to_id': None,
+    }, {
+        'id': 'basic-math-fun-2',
+        'created': r.time(2014, 1, 2, 'Z'),
+        'modified': r.time(2014, 1, 2, 'Z'),
+        'user_id': 'eileen',
+        'topic_id': 'basic-math-posts',
+        'body': 'I suppose.',
+        'kind': 'post',
+        'replies_to_id': 'basic-math-fun-1',
+    }, {
+        'id': 'basic-math-fun-3',
+        'created': r.time(2014, 1, 3, 'Z'),
+        'modified': r.time(2014, 1, 3, 'Z'),
+        'user_id': 'doris',
+        'topic_id': 'basic-math-posts',
+        'body': 'I really love math.',
+        'kind': 'post',
+        'replies_to_id': None,
+    }, {
+        'id': 'minus-proposal-pending',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'user_id': 'doris',
+        'topic_id': 'minus-changes',
+        'body': 'I think we should make subtracting more fun.',
+        'kind': 'proposal',
+        'replies_to_id': None,
+        'entity_version': {
+            'id': 'minus-2',
+            'kind': 'unit',
+        },
+        'name': 'Subtracting fun.',
+    }, {
+        'id': 'plus-proposal-accepted',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 2, 'Z'),
+        'user_id': 'eileen',
+        'topic_id': 'plus-changes',
+        'body': 'Yeah, totally! Lets make adding more fun.',
+        'kind': 'proposal',
+        'replies_to_id': None,
+        'entity_version': {
+            'id': 'plus-2',
+            'kind': 'unit',
+        },
+        'name': 'Adding funness.',
+    }, {
+        'id': 'plus-vote-accept',
+        'created': r.time(2014, 1, 2, 'Z'),
+        'modified': r.time(2014, 1, 2, 'Z'),
+        'user_id': 'doris',
+        'topic_id': 'plus-changes',
+        'body': 'I agree.',
+        'kind': 'vote',
+        'replies_to_id': 'plus-proposal-accepted',
+        'response': False,
+    }, {
+        'id': 'plus-proposal-declined',
+        'created': r.time(2014, 1, 2, 'Z'),
+        'modified': r.time(2014, 1, 3, 'Z'),
+        'user_id': 'doris',
+        'topic_id': 'plus-changes',
+        'body': 'Let\'s make it even more fun!',
+        'kind': 'proposal',
+        'replies_to_id': None,
+        'entity_version': {
+            'id': 'plus-3',
+            'kind': 'unit',
+        },
+        'name': 'Funner!',
+    }, {
+        'id': 'plus-vote-block',
+        'created': r.time(2014, 1, 3, 'Z'),
+        'modified': r.time(2014, 1, 3, 'Z'),
+        'user_id': 'eileen',
+        'topic_id': 'plus-changes',
+        'body': 'Boo!',
+        'kind': 'vote',
+        'replies_to_id': 'plus-proposal-declined',
+        'response': False,
+    }, {
+        'id': 'slash-proposal-blocked',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 2, 'Z'),
+        'user_id': 'doris',
+        'topic_id': 'slash-changes',
+        'body': 'More serious!',
+        'kind': 'proposal',
+        'replies_to_id': None,
+        'entity_version': {
+            'id': 'slash-2',
+            'kind': 'unit',
+        },
+        'name': 'Let\'s make dividing more serious.',
+    }, {
+        'id': 'slash-vote-block',
+        'created': r.time(2014, 1, 2, 'Z'),
+        'modified': r.time(2014, 1, 2, 'Z'),
+        'user_id': 'eileen',
+        'topic_id': 'slash-changes',
+        'body': 'I hate this.',
+        'kind': 'vote',
+        'replies_to_id': 'slash-proposal-blocked',
+        'response': False,
     }])
     .run(database.db_conn))
+
+# TODO
+# es.index(
+#     index='entity',
+#     doc_type=doc_type,
+#     body=json_prep(self.deliver()),
+#     id=self['entity_id'],
+# )
 
 # id, created, modified
 # user_id, entity.id, entity.kind
