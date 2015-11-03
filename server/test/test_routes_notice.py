@@ -12,7 +12,7 @@ def test_list(db_conn, session, notices_table):
     for i in range(0, 10):
         Notice.insert({
             'user_id': 'abcd1234',
-            'kind': 'new_proposal',
+            'kind': 'create_proposal',
         })
 
     request = {'cookies': {'session_id': session}, 'params': {}}
@@ -40,7 +40,7 @@ def test_list_paginate(db_conn, session, notices_table):
     for i in range(0, 25):
         Notice.insert({
             'user_id': 'abcd1234',
-            'kind': 'new_proposal',
+            'kind': 'create_proposal',
         })
 
     request = {'cookies': {'session_id': session}, 'params': {}}
@@ -60,7 +60,7 @@ def test_mark(db_conn, session, notices_table):
     """
     notice, errors = Notice.insert({
         'user_id': 'abcd1234',
-        'kind': 'new_proposal',
+        'kind': 'create_proposal',
     })
     nid = notice['id']
 
@@ -78,7 +78,7 @@ def test_mark_no_user(db_conn, notices_table):
     """
     notice, errors = Notice.insert({
         'user_id': 'abcd1234',
-        'kind': 'new_proposal',
+        'kind': 'create_proposal',
     })
     nid = notice['id']
 
@@ -106,7 +106,7 @@ def test_mark_not_owned(db_conn, session, notices_table):
     """
     notice, errors = Notice.insert({
         'user_id': '1234abcd',
-        'kind': 'new_proposal',
+        'kind': 'create_proposal',
     })
     nid = notice['id']
 

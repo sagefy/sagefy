@@ -16,7 +16,7 @@ def test_create(db_conn, notices_table):
     """
     notice, errors = Notice.insert({
         'user_id': 'abcd1234',
-        'kind': 'new_proposal',
+        'kind': 'create_proposal',
         'tags': ['test']
     })
     record = notices_table.filter({'user_id': 'abcd1234'}).run(db_conn)
@@ -50,10 +50,10 @@ def test_list(db_conn, notices_table):
     Expect to get a list of 10 notices by user ID.
     """
     notices_table.insert([
-        {'id': 1, 'user_id': 22, 'kind': 'new_proposal'},
-        {'id': 2, 'user_id': 22, 'kind': 'new_proposal'},
-        {'id': 3, 'user_id': 22, 'kind': 'new_proposal'},
-        {'id': 4, 'user_id': 22, 'kind': 'new_proposal'},
+        {'id': 1, 'user_id': 22, 'kind': 'create_proposal'},
+        {'id': 2, 'user_id': 22, 'kind': 'create_proposal'},
+        {'id': 3, 'user_id': 22, 'kind': 'create_proposal'},
+        {'id': 4, 'user_id': 22, 'kind': 'create_proposal'},
     ]).run(db_conn)
     notices = Notice.list(user_id=22)
     assert len(notices) == 4
@@ -64,10 +64,10 @@ def test_list_user(db_conn, notices_table):
     Expect to get a only notices of user.
     """
     notices_table.insert([
-        {'id': 1, 'user_id': 22, 'kind': 'new_proposal'},
-        {'id': 2, 'user_id': 22, 'kind': 'new_proposal'},
-        {'id': 3, 'user_id': 24, 'kind': 'new_proposal'},
-        {'id': 4, 'user_id': 25, 'kind': 'new_proposal'},
+        {'id': 1, 'user_id': 22, 'kind': 'create_proposal'},
+        {'id': 2, 'user_id': 22, 'kind': 'create_proposal'},
+        {'id': 3, 'user_id': 24, 'kind': 'create_proposal'},
+        {'id': 4, 'user_id': 25, 'kind': 'create_proposal'},
     ]).run(db_conn)
     notices = Notice.list(user_id=22)
     assert len(notices) == 2
@@ -79,7 +79,7 @@ def test_list_paginate(db_conn, notices_table):
     """
     for i in range(0, 25):
         notices_table.insert({
-            'id': i, 'user_id': 22, 'kind': 'new_proposal',
+            'id': i, 'user_id': 22, 'kind': 'create_proposal',
         }).run(db_conn)
     notices = Notice.list(user_id=22)
     assert len(notices) == 10
@@ -92,9 +92,9 @@ def test_list_unread(db_conn, notices_table):
     Expect to get a list of unread notices.
     """
     notices_table.insert([
-        {'id': 1, 'user_id': 22, 'kind': 'new_proposal', 'read': True},
-        {'id': 3, 'user_id': 22, 'kind': 'new_proposal', 'read': False},
-        {'id': 4, 'user_id': 22, 'kind': 'new_proposal', 'read': False},
+        {'id': 1, 'user_id': 22, 'kind': 'create_proposal', 'read': True},
+        {'id': 3, 'user_id': 22, 'kind': 'create_proposal', 'read': False},
+        {'id': 4, 'user_id': 22, 'kind': 'create_proposal', 'read': False},
     ]).run(db_conn)
     notices = Notice.list(user_id=22, read=False)
     assert len(notices) == 2
@@ -107,13 +107,13 @@ def test_list_tag(db_conn, notices_table):
     Expect to get a list of notices by tag.
     """
     notices_table.insert([
-        {'id': 1, 'user_id': 22, 'kind': 'new_proposal',
+        {'id': 1, 'user_id': 22, 'kind': 'create_proposal',
             'tags': ['apple', 'banana']},
-        {'id': 2, 'user_id': 22, 'kind': 'new_proposal',
+        {'id': 2, 'user_id': 22, 'kind': 'create_proposal',
             'tags': ['orange', 'banana']},
-        {'id': 3, 'user_id': 23, 'kind': 'new_proposal',
+        {'id': 3, 'user_id': 23, 'kind': 'create_proposal',
             'tags': ['apple', 'grape']},
-        {'id': 4, 'user_id': 22, 'kind': 'new_proposal',
+        {'id': 4, 'user_id': 22, 'kind': 'create_proposal',
             'tags': ['apple', 'peach']},
     ]).run(db_conn)
     notices = Notice.list(user_id=22, tag='apple')
@@ -136,7 +136,7 @@ def test_mark_as_read(db_conn, notices_table):
     """
     notice, errors = Notice.insert({
         'user_id': 'abcd1234',
-        'kind': 'new_proposal',
+        'kind': 'create_proposal',
         'tags': ['test']
     })
     assert notice['read'] is False
@@ -153,19 +153,19 @@ def test_notices_kind(db_conn, notices_table):
     """
 
     notices_table.insert([
-        {'id': 1, 'user_id': 22, 'kind': 'new_proposal',
+        {'id': 1, 'user_id': 22, 'kind': 'create_proposal',
             'tags': ['apple', 'banana']},
         {'id': 2, 'user_id': 22, 'kind': 'accepted_proposal',
             'tags': ['orange', 'banana']},
-        {'id': 3, 'user_id': 22, 'kind': 'new_proposal',
+        {'id': 3, 'user_id': 22, 'kind': 'create_proposal',
             'tags': ['apple', 'grape']},
         {'id': 4, 'user_id': 22, 'kind': 'new_topic',
             'tags': ['apple', 'peach']},
     ]).run(db_conn)
-    notices = Notice.list(user_id=22, kind='new_proposal')
+    notices = Notice.list(user_id=22, kind='create_proposal')
     assert len(notices) == 2
-    assert notices[0]['kind'] == 'new_proposal'
-    assert notices[1]['kind'] == 'new_proposal'
+    assert notices[0]['kind'] == 'create_proposal'
+    assert notices[1]['kind'] == 'create_proposal'
 
 
 @xfail
@@ -193,7 +193,7 @@ def test_mark_unread(db_conn, notices_table):
 
     notice, errors = Notice.insert({
         'user_id': 'abcd1234',
-        'kind': 'new_proposal',
+        'kind': 'create_proposal',
         'tags': ['test'],
         'read': True
     })

@@ -1,9 +1,19 @@
 from modules.model import Model
 from modules.validations import is_required, is_string, is_boolean, is_list, \
-    is_one_of, is_list_of_strings
+    is_one_of, is_list_of_strings, is_dict
 import rethinkdb as r
 import framework.database as database
 from modules.content import get as c
+
+# Notice types:
+# ------------
+# Entity: A new topic
+# Entity: A new proposal/flag (pending)
+# Entity/Own: A proposal/flag was blocked
+# Entity/Own: A proposal/flag was declined
+# Entity/Own: A proposal/flag was accepted
+# Topic: A new post
+# All: Reminder to come back after 48 hours of inactivity
 
 
 class Notice(Model):
@@ -16,8 +26,22 @@ class Notice(Model):
         'kind': {
             'validate': (is_required, is_string, (
                 is_one_of,
-                'new_proposal'
+                'create_topic',
+                'create_proposal',
+                'create_flag',
+                'block_proposal',
+                'block_flag',
+                'decline_proposal',
+                'decline_flag',
+                'accept_proposal',
+                'accept_flag',
+                'create_post',
+                'come_back',
             ))
+        },
+        'data': {
+            'validate': (is_dict),
+            'default': {},
         },
         'read': {
             'validate': (is_boolean,),
@@ -73,7 +97,7 @@ class Notice(Model):
         Get the copy associated with this notice.
         """
 
-        return c(self['kind']).format(**{})
+        return c('notice_' + self['kind']).format(**self['data'])
 
     def deliver(self, access=None):
         """

@@ -362,14 +362,95 @@ for kind in (
             'id': 'basic-math',
             'kind': 'set',
         }
+    }, {
+        'id': 'doris-follows-plus',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'user_id': 'doris',
+        'entity': {
+            'id': 'plus',
+            'kind': 'unit',
+        }
+    }, {
+        'id': 'doris-follows-minus',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'user_id': 'doris',
+        'entity': {
+            'id': 'minus',
+            'kind': 'unit',
+        }
+    }, {
+        'id': 'doris-follows-slash',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'user_id': 'doris',
+        'entity': {
+            'id': 'slash',
+            'kind': 'unit',
+        }
     }])
     .run(database.db_conn))
 
-# TODO
 # id, created, modified
 # user_id, kind, read, tags
 (database.db.table('notices')
     .insert([{
+        'id': 'doris-new-topic-basic-math',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'user_id': 'doris',
+        'kind': 'create_topic',
+        'data': {
+            'user_name': 'Eileen',
+            'topic_name': 'Basic math is fun.',
+            'entity_kind': 'set',
+            'entity_name': 'Basic Math',
+        },
+        'read': False,
+        'tags': [],
+    }, {
+        'id': 'doris-create-proposal-minus',
+        'created': r.time(2014, 1, 2, 'Z'),
+        'modified': r.time(2014, 1, 2, 'Z'),
+        'user_id': 'eileen',
+        'kind': 'create_proposal',
+        'data': {
+            'user_name': 'Eileen',
+            'proposal_name': 'To subtract or not to subtract.',
+            'entity_kind': 'unit',
+            'entity_name': 'Subtracting two numbers',
+        },
+        'read': False,
+        'tags': [],
+    }, {
+        'id': 'doris-block-proposal-slash',
+        'created': r.time(2014, 1, 3, 'Z'),
+        'modified': r.time(2014, 1, 3, 'Z'),
+        'user_id': 'eileen',
+        'kind': 'block_proposal',
+        'data': {
+            'user_name': 'Eileen',
+            'proposal_name': 'Division is stupid.',
+            'entity_kind': 'unit',
+            'entity_name': 'Dividing two numbers',
+        },
+        'read': False,
+        'tags': [],
+    }, {
+        'id': 'doris-accept-proposal-plus',
+        'created': r.time(2014, 1, 2, 'Z'),
+        'modified': r.time(2014, 1, 2, 'Z'),
+        'user_id': 'eileen',
+        'kind': 'accept_proposal',
+        'data': {
+            'user_name': 'Eileen',
+            'proposal_name': 'Adding is fun.',
+            'entity_kind': 'unit',
+            'entity_name': 'Adding two numbers',
+        },
+        'read': False,
+        'tags': [],
     }])
     .run(database.db_conn))
 

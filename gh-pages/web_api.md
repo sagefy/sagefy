@@ -894,7 +894,7 @@ read  | null    | Filter by read or unread notices.
     "notices": [{
         "id": "abcd1234",
         "user_id": "fjskl234",
-        "kind": "new_proposal",
+        "kind": "create_proposal",
         "read": false,
         "tags": ["analyze"]
     }]
@@ -923,7 +923,7 @@ None
     "notice": {
         "id": "abcd1234",
         "user_id": "fjskl234",
-        "kind": "new_proposal",
+        "kind": "create_proposal",
         "read": false,
         "tags": ["analyze"]
     }
@@ -952,7 +952,7 @@ None
     "notice": {
         "id": "abcd1234",
         "user_id": "fjskl234",
-        "kind": "new_proposal",
+        "kind": "create_proposal",
         "read": false,
         "tags": ["analyze"]
     }
