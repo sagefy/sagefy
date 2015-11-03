@@ -265,11 +265,11 @@ for kind in (
         'modifed': r.time(2014, 1, 1, 'Z'),
         'entity_id': 'plus-choice-a',
         'guess_distribution': {
-            h: 1 - (0.5 - h) ** 2
+            str(h): 1 - (0.5 - h) ** 2
             for h in [h / precision for h in range(1, precision)]
         },
         'slip_distribution': {
-            h: 1 - (0.25 - h) ** 2
+            str(h): 1 - (0.25 - h) ** 2
             for h in [h / precision for h in range(1, precision)]
         }
     }, {
@@ -278,11 +278,11 @@ for kind in (
         'modifed': r.time(2014, 1, 1, 'Z'),
         'entity_id': 'plus-choice-b',
         'guess_distribution': {
-            h: 1 - (0.5 - h) ** 2
+            str(h): 1 - (0.5 - h) ** 2
             for h in [h / precision for h in range(1, precision)]
         },
         'slip_distribution': {
-            h: 1 - (0.25 - h) ** 2
+            str(h): 1 - (0.25 - h) ** 2
             for h in [h / precision for h in range(1, precision)]
         }
     }])
@@ -413,7 +413,7 @@ for kind in (
         'id': 'doris-create-proposal-minus',
         'created': r.time(2014, 1, 2, 'Z'),
         'modified': r.time(2014, 1, 2, 'Z'),
-        'user_id': 'eileen',
+        'user_id': 'doris',
         'kind': 'create_proposal',
         'data': {
             'user_name': 'Eileen',
@@ -427,7 +427,7 @@ for kind in (
         'id': 'doris-block-proposal-slash',
         'created': r.time(2014, 1, 3, 'Z'),
         'modified': r.time(2014, 1, 3, 'Z'),
-        'user_id': 'eileen',
+        'user_id': 'doris',
         'kind': 'block_proposal',
         'data': {
             'user_name': 'Eileen',
@@ -441,7 +441,7 @@ for kind in (
         'id': 'doris-accept-proposal-plus',
         'created': r.time(2014, 1, 2, 'Z'),
         'modified': r.time(2014, 1, 2, 'Z'),
-        'user_id': 'eileen',
+        'user_id': 'doris',
         'kind': 'accept_proposal',
         'data': {
             'user_name': 'Eileen',

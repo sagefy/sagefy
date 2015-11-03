@@ -40,7 +40,7 @@ class Notice(Model):
             ))
         },
         'data': {
-            'validate': (is_dict),
+            'validate': (is_dict,),
             'default': {},
         },
         'read': {
