@@ -26,7 +26,7 @@ Errors will appear in the following format, along with the appropriate status co
 - [ ] Search
 - [ ] Topic
 
-## Welcome [/s/]
+## Welcome [/s]
 
 ### Welcome Message [GET]
 
@@ -110,7 +110,7 @@ Return a 404 if no user matching that ID. Return 401 if not the current user. Re
             }
         }
 
-## Log in or out user [/s/sessions/]
+## Log in or out user [/s/sessions]
 
 ### Log in as user [POST]
 
@@ -141,7 +141,7 @@ Log out of the current user.
 
 + Response 204
 
-## Password Token [/s/password_tokens/]
+## Password Token [/s/password_tokens]
 
 ### Create Password Token [POST]
 
@@ -157,7 +157,7 @@ Return a 404 if it cannot find the user's email.
 
 + Response 204
 
-## Create Password [/s/users/{user_id}/password/]
+## Create Password [/s/users/{user_id}/password]
 
 ### Create a password [POST]
 
@@ -183,7 +183,7 @@ Update the user's password. Must have a matching and timely token.
             }
         }
 
-## User Sets [/s/users/{id}/sets/]
+## User Sets [/s/users/{id}/sets]
 
 ### Get all of users' sets [GET]
 
