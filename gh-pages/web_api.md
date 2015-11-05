@@ -1,10 +1,10 @@
-FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
-
 ---
 layout: default
 title: Sagefy Web Service API
 ---
+
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
 
 # Sagefy Web Service API
 
