@@ -269,7 +269,7 @@ Render the card's data, ready for learning.
             }
         }
 
-## Card Responses [s/cards/{id}/responses]
+## Card Responses [/s/cards/{id}/responses]
 
 ### Create a card response [POST]
 
@@ -335,7 +335,7 @@ A set is a collection of units and other sets.
 
 Get a specific set given an ID.
 
-+ Response
++ Response 200
 
         {
             "set": {
