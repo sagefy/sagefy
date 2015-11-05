@@ -1,6 +1,11 @@
 FORMAT: 1A
 HOST: http://polls.apiblueprint.org/
 
+---
+layout: default
+title: Sagefy Web Service API
+---
+
 # Sagefy Web Service API
 
 This document outlines the endpoints for Sagefy and their specifications.
