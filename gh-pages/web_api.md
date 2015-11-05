@@ -19,18 +19,6 @@ Errors will appear in the following format, along with the appropriate status co
             }]
         }
 
-- [x] Public
-- [x] User
-- [x] User Sets
-- [ ] Card
-- [ ] Unit
-- [ ] Set
-- [ ] Follow
-- [ ] Next
-- [ ] Notice
-- [ ] Search
-- [ ] Topic
-
 ## Welcome [/s]
 
 ### Welcome Message [GET]
@@ -85,9 +73,9 @@ Returns a 404 if user is not found.
 
         {
             "user": {
-                    "name": "test",
-                    "email": "test@example.com",
-                    "email_frequency": "immediate"
+                "name": "test",
+                "email": "test@example.com",
+                "email_frequency": "immediate"
             }
         }
 
@@ -123,22 +111,22 @@ Log in as an existing user.
 
 Returns 404 if the user by name is not found. Returns a 400 if the password is not valid.
 
-+ Request
++ Request (application/json)
 
         {
             "name": "test",
             "password": "abcd1234"
         }
 
-+ Response 200
++ Response 200 (application/json)
 
-    {
-        "user": {
-            "name": "test",
-            "email": "test@example.com",
-            "email_frequency": "immediate"
+        {
+            "user": {
+                "name": "test",
+                "email": "test@example.com",
+                "email_frequency": "immediate"
+            }
         }
-    }
 
 ### Log out as user [DELETE]
 
@@ -154,13 +142,13 @@ Email a token to be able to reset the password.
 
 Return a 404 if it cannot find the user's email.
 
-+ Request
++ Request (application/json)
 
         {
             "email": "test@example.com"
         }
 
-+ Response 204
++ Response 204 (application/json)
 
 ## Create Password [/s/users/{user_id}/password]
 
@@ -170,7 +158,7 @@ Update the user's password. Must have a matching and timely token.
 
 200 also logs in user. 404 if not a valid user ID. 403 if the token doesn't match.
 
-+ Request
++ Request (application/json)
 
         {
             "id": "ABCD1234",
@@ -178,7 +166,7 @@ Update the user's password. Must have a matching and timely token.
             "password": "abcd1234"
         }
 
-+ Response 200
++ Response 200 (application/json)
 
         {
             "user": {
@@ -196,7 +184,7 @@ Get the list of learner's sets.
 
 401 if not logged in. 403 if not current user.
 
-+ Response 200
++ Response 200 (application/json)
 
         {
             "user_id": "fnsLJIoel",
@@ -211,12 +199,12 @@ Add a set to the learner's list.
 
 401 if not logged in. 403 if not current user. 404 if set not found. 409 if already added.
 
-+ Response 200
++ Response 200 (application/json)
 
-    {
-        "user_id": "fnsLJIoel",
-        "set_ids": ["fjkOTJRLEf"]
-    }
+        {
+            "user_id": "fnsLJIoel",
+            "set_ids": ["fjkOTJRLEf"]
+        }
 
 ### Remove a user set [DELETE]
 
@@ -224,7 +212,7 @@ Remove a set from the learner's list.
 
 401 if not logged in. 403 if not current user. 404 if set not found.
 
-+ Response 200
++ Response 200 (application/json)
 
         {
             "user_id": "fnsLJIoel",
@@ -237,470 +225,361 @@ Selects a set for the user to engage.
 
 + Response 200
 
-
-----------------------
-
-
-
-
-
-
-
-
-Cards
-=====
+## Card [/s/cards/{id}]
 
 Cards are the smallest entity in the Sagefy data structure system. A card represents a single learner activity.
 
-Get Card Information
---------------------
-
-`GET https://sagefy.org/s/cards/{id}/`
+### Get card [GET]
 
 Get a specific card given an ID. Show all relevant data, but
 not used for the learning interface.
 
-### Request Parameters
-
-None
-
-### Response Format
-
-```json
-{
-    "card": {
-        "name": "Lorem ipsum.",
-        "body": "Lorem ipsum.",
-        "options": [{
-            "body": "Details...",
-            "correct": false
-        }]
-    }
-}
-```
-
 Always returns the latest accepted version. 404 if card not found.
 
-Render Card for Learner
------------------------
++ Response 200 (application/json)
 
-`GET https://sagefy.org/s/cards/{id}/learn/`
+        {
+            "card": {
+                "name": "Lorem ipsum.",
+                "body": "Lorem ipsum.",
+                "options": [{
+                    "body": "Details...",
+                    "correct": false
+                }]
+            }
+        }
 
-Render the card's data, ready for learning.
-
-### Request Parameters
-
-None
-
-### Response Format
-
-```json
-{
-    "card": {
-        "name": "Lorem ipsum.",
-        "body": "Lorem ipsum.",
-        "options": [{
-            "body": "Details..."
-        }]
-    }
-}
-```
+## Card for Learning [/s/cards/{id}/learn]
 
 Some data is filtered out, such as feedback and which answer is correct.
 
-Respond to Card
----------------
+### Get card [GET]
 
-`POST https://sagefy.org/s/cards/{id}/responses/`
+Render the card's data, ready for learning.
+
++ Response 200 (application/json)
+
+        {
+            "card": {
+                "name": "Lorem ipsum.",
+                "body": "Lorem ipsum.",
+                "options": [{
+                    "body": "Details..."
+                }]
+            }
+        }
+
+## Card Responses [s/cards/{id}/responses]
+
+### Create a card response [POST]
 
 Record and process a learner's response to a card.
 
-### Request Format
++ Request
 
-```json
-{
-    "card_id": "zFK2201",
-    "response": 3
-}
-```
+        {
+            "card_id": "zFK2201",
+            "response": 3
+        }
 
-### Response Format (200)
++ Response 200
 
-```json
-{
-    "response": {
-        "user_id": "Fj2Fo3L",
-        "card_id": "zFK2201",
-        "unit_id": "Y2o081l",
-        "score": 1
-    }
-}
-```
+        {
+            "response": {
+                "user_id": "Fj2Fo3L",
+                "card_id": "zFK2201",
+                "unit_id": "Y2o081l",
+                "score": 1
+            }
+        }
 
-Units
-=====
+## Card Versions [/s/cards/{card_id}/versions]
+
+### Get card versions [GET]
+
++ Response 200
+
+## Unit [/s/units/{id}]
 
 A unit is the medium size in the Sagefy data structure system. A unit represents a unit of learning activity.
 
-Get Unit Information
---------------------
-
-`GET https://sagefy.org/s/units/{id}/`
+### Get unit info [GET]
 
 Get a specific unit given an ID.
 
-### Request Parameters
-
-None
-
-### Response Format
-
-```json
-{
-    "unit": {
-        "language": "en",
-        "name": "Lorem ipsum.",
-        "body": "Lorem ipsum.",
-        "tags": ["analyze"],
-        "require_ids": ["a5kJ3kj"]
-    }
-}
-```
-
 Always returns the latest accepted version. 404 if card not found.
 
-Sets
-====
++ Response 200
+
+        {
+            "unit": {
+                "language": "en",
+                "name": "Lorem ipsum.",
+                "body": "Lorem ipsum.",
+                "tags": ["analyze"],
+                "require_ids": ["a5kJ3kj"]
+            }
+        }
+
+## Unit Versions [/s/units/{unit_id}/versions]
+
+### Get unit versions [GET]
+
++ Response 200
+
+## Set [/s/sets/{id}]
 
 A set is a collection of units and other sets.
 
-Get Set Information
--------------------
-
-`GET https://sagefy.org/s/sets/{id}/`
+### Get set information [GET]
 
 Get a specific set given an ID.
 
-### Request Parameters
++ Response
 
-None
+        {
+            "set": {
+                "language": "en",
+                "name": "Lorem ipsum.",
+                "body": "Lorem ipsum.",
+                "tags": ["Y950fnNo"],
+                "members": [{
+                    "id": "9JmFKI04",
+                    "kind": "unit"
+                }]
+            }
+        }
 
-### Response Format
+## Set Versions [/s/sets/{set_id}/versions]
 
-```json
-{
-    "set": {
-        "language": "en",
-        "name": "Lorem ipsum.",
-        "body": "Lorem ipsum.",
-        "tags": ["Y950fnNo"]
-        "members": [{
-            "id": "9JmFKI04",
-            "kind": "unit"
-        }]
-    }
-}
-```
+### Get set versions [GET]
 
-Get Set Tree
-------------
++ Response 200
 
-`GET https://sagefy.org/s/sets/{id}/tree/`
+## Set Tree [/s/sets/{id}/tree]
+
+### Get set tree [GET]
 
 Render the tree of units that exists within a set.
 
-### Request Parameters
-
-None
-
-### Response Format
-
-```json
-{
-    "units": {
-        "fRjglO0": ["59JkflsoT", "Jn34NFKo0"]
-    }
-}
-```
-
 404 if set not found.
 
-Show Available Units from Set
------------------------------
++ Response 200
 
-`GET https://sagefy.org/s/sets/{id}/units/`
+        {
+            "units": {
+                "fRjglO0": ["59JkflsoT", "Jn34NFKo0"]
+            }
+        }
+
+## Set' Units [/s/sets/{id}/units]
+
+### Get set units [GET]
 
 Render the units that exist within the set.
-Specifically, present a small number of units the learner can choose
-from.
 
-### Request Parameters
-
-None
-
-### Response Format
-
-```json
-{
-    "units": [{
-        "language": "en",
-        "name": "Lorem ipsum.",
-        "body": "Lorem ipsum.",
-        "tags": ["analyze"],
-        "require_ids": ["a5kJ3kj"]
-    }]
-}
-```
+Specifically, present a small number of units the learner can choose from.
 
 401 if not logged in. 404 if set not found. 400 if it doesn't make sense.
 
-Choose Unit
------------
++ Response 200
 
-`POST https://sagefy.org/s/sets/{id}/units/{id}/`
+        {
+            "units": [{
+                "language": "en",
+                "name": "Lorem ipsum.",
+                "body": "Lorem ipsum.",
+                "tags": ["analyze"],
+                "require_ids": ["a5kJ3kj"]
+            }]
+        }
+
+## Set' Unit [/s/sets/{id}/units/{id}]
+
+### Choose unit [POST]
 
 Updates the learner's information based on the unit they have chosen.
 
-### Request Format
+401 if not logged in. 404 if set or unit not found. 400 if it doesn't make sense.
 
-None
++ Response 204
 
-### Response Format (204)
-
-None
-
-401 if not logged in. 404 if set or unit not found. 400 if it doesn't make sense
-
-Next
-=========
+## Next [/s/next]
 
 Next is an abstract resource which only determines one thing: where to go next.
 
-Next
-----
-
-`GET https://sagefy.org/s/next/`
+### Next [GET]
 
 Tell the learner where to go next.
 
-### Request Parameters
-
-None
-
-### Response Format
-
-```json
-{
-    "kind": "card",
-    "card_id": "aFN03O2m"
-}
-```
-
 Can lead to a card, tree, or choose unit screen.
 
-Search
-======
++ Response 200
+
+        {
+            "kind": "card",
+            "card_id": "aFN03O2m"
+        }
+
+## Search [/s/search]
 
 Site-wide search for cards, units, sets, users, topics, and posts.
 
-Search
-------
-
-`GET https://sagefy.org/s/search/`
+### Search [GET]
 
 Search for entities.
 
-### Request Parameters
++ Parameters
+    + q (optional) - Text index based search query.
+    + skip (optional) - Offset results by count.
+    + limit (optional) - Maximum number of results to return.
+    + order
+    + kind (optional) - the kind of entity to search for (e.g. set, card, unit)
+    + as_learner (optional)
 
-Name       | Default   | Description
------------|-----------|------------
-q          | null      | Text index based search query.
-skip       | 0         | Offset results by count.
-limit      | null      | Maximum number of results to return.
-entity     | null      |
-language   | null      |
-order      | relevance |
-as_learner | false     |
-user       | null      |
-topic      | null      | When entity is "post"
-unit       | null      | When entity is "card"
-accepted  | null      | When entity is "card", "unit", "set"
-tag        | null      |
-...        | ...       | ...
++ Response 200
 
-### Response Format
-
-```json
-{
-    "results": [{
         {
-            "table": "card",
+            "results": [{
+                {
+                    "table": "card",
+                }
+            }]
         }
-    }]
-}
-```
 
-Topic
-=====
+## Topics [/s/topics]
 
 Topics, or threads, are the entity that hold a conversation, a list of posts. The Topic service handles both topics and posts, as posts always belong to a single topic.
 
-Create Topic
-------------
-
-`POST https://sagefy.org/s/topics/`
+### Create topic [POST]
 
 Create a new topic. The first post (proposal, flag) must be provided.
 Flag: if a flag for the same reason exists for the entity, create a vote there instead.
 
-### Request Format
-
-```json
-{
-    "topic": {
-        "name": "Lorem ipsum.",
-        "entity": {
-            "kind": "card",
-            "id": "fj204lasZ"
-        }
-    },
-    "post": {
-        "body": "Lorem ipsum.",
-        "kind": "post",
-        "replies_to_id": "a42lf9"
-    }
-}
-```
-
 When creating a topic, you must also submit information for a valid post. There are four post kinds. All require the "kind" field filled out. Replies to ID is optional. Proposals also require an entity version ID, name, status, and action. Votes have optional bodies, but require "replies_to_id" and "response". Flag requires entity version ID, name, reason, and status.
-
-### Response Format
-
-```json
-{
-    "topic": {
-        "id": "fjkls234",
-        "name": "Lorem ipsum.",
-        "entity": {
-            "kind": "card",
-            "id": "fj204lasZ"
-        }
-    },
-    "post": {
-        "user_id": "ajfkl234",
-        "body": "Lorem ipsum.",
-        "kind": "post",
-        "replies_to_id": "a42lf9",
-        "topic_id": "fjkls234"
-    }
-}
-```
 
 Returns 400 if missing or invalid topic or post information. Return 401 if not logged in as a user.
 
-Update Topic Name
------------------
++ Request
 
-`PUT https://sagefy.org/s/topics/{id}/`
+        {
+            "topic": {
+                "name": "Lorem ipsum.",
+                "entity": {
+                    "kind": "card",
+                    "id": "fj204lasZ"
+                }
+            },
+            "post": {
+                "body": "Lorem ipsum.",
+                "kind": "post",
+                "replies_to_id": "a42lf9"
+            }
+        }
+
++ Response 200
+
+        {
+            "topic": {
+                "id": "fjkls234",
+                "name": "Lorem ipsum.",
+                "entity": {
+                    "kind": "card",
+                    "id": "fj204lasZ"
+                }
+            },
+            "post": {
+                "user_id": "ajfkl234",
+                "body": "Lorem ipsum.",
+                "kind": "post",
+                "replies_to_id": "a42lf9",
+                "topic_id": "fjkls234"
+            }
+        }
+
+## Topic [/s/topics/{id}]
+
+### Update topic [PUT]
 
 Update the topic. Only the name can be changed. Only by original author.
 
-### Request Format
-
-```json
-{
-    "name": "Neo name."
-}
-```
-
-### Response Format
-
-```json
-{
-    "topic": {
-        "id": "fjkls234",
-        "name": "Neo name.",
-        "entity": {
-            "kind": "card",
-            "id": "fj204lasZ"
-        }
-    }
-}
-```
-
 401 if not logged in. 404 if topic by ID not found. 403 if not user's own topic. 400 if there's issues with the name field.
 
-Get Posts
----------
++ Request
 
-`GET https://sagefy.org/s/topics/{id}/posts/`
+        {
+            "name": "Neo name."
+        }
+
++ Response 200
+
+        {
+            "topic": {
+                "id": "fjkls234",
+                "name": "Neo name.",
+                "entity": {
+                    "kind": "card",
+                    "id": "fj204lasZ"
+                }
+            }
+        }
+
+## Posts [/s/topics/{id}/posts]
+
+### Get posts [GET]
 
 Get a reverse chronological listing of posts for given topic.
 Includes topic meta data and posts (proposals, votes, flags).
 Paginates.
 
-### Request Parameters
-
-Name     | Default | Description
----------|---------|------------
-limit    | null    | Maximum number of posts to return.
-skip     | 0       | Offset the return by count.
-
-### Response Format
-
-```json
-{
-    "posts": [{
-        "user_id": "ajfkl234",
-        "body": "Lorem ipsum.",
-        "kind": "post",
-        "replies_to_id": "a42lf9",
-        "topic_id": "fjkls234"
-    }]
-}
-```
-
 Returns 404 if topic not found. Posts can be one of post, proposal, vote, or flag. The kind changes the field available.
 
-Create Post
------------
++ Parameters
+    + skip - Maximum number of posts to return.
+    + limit - Offset the return by count.
 
-`POST https://sagefy.org/s/topics/{id}/posts/`
++ Response 200
+
+        {
+            "posts": [{
+                "user_id": "ajfkl234",
+                "body": "Lorem ipsum.",
+                "kind": "post",
+                "replies_to_id": "a42lf9",
+                "topic_id": "fjkls234"
+            }]
+        }
+
+### Create post [POST]
 
 Create a new post on a given topic.
 Accounts for posts, proposals, votes, and flags.
 Proposal: must include entity (card, unit, set) information.
 Vote: must refer to a proposal.
 
-### Request Format
-
-```json
-{
-    "body": "Lorem ipsum.",
-    "kind": "post",
-    "replies_to_id": "a42lf9"
-}
-```
-
-### Response Format
-
-
-```json
-{
-    "user_id": "ajfkl234",
-    "body": "Lorem ipsum.",
-    "kind": "post",
-    "replies_to_id": "a42lf9",
-    "topic_id": "fjkls234"
-}
-```
-
 401 if not logged in. 404 if topic not found. 400 if issue presented with content.
 
-Update Post
------------
++ Request
 
-`PUT https://sagefy.org/s/topics/{id}/post/{id}/`
+        {
+            "body": "Lorem ipsum.",
+            "kind": "post",
+            "replies_to_id": "a42lf9"
+        }
+
++ Response 200
+
+        {
+            "user_id": "ajfkl234",
+            "body": "Lorem ipsum.",
+            "kind": "post",
+            "replies_to_id": "a42lf9",
+            "topic_id": "fjkls234"
+        }
+
+## Post [/s/topics/{id}/post/{id}]
+
+### Update post [PUT]
 
 Update an existing post. Must be one's own post.
 For proposals:
@@ -708,175 +587,114 @@ The only field that can be updated is the status;
 the status can only be changed to declined, and only when
 the current status is pending or blocked.
 
-### Request Format
-
-```json
-{
-    "body": "Neo body."
-}
-```
-
-### Response Format
-
-
-```json
-{
-    "user_id": "ajfkl234",
-    "body": "Neo body.",
-    "kind": "post",
-    "replies_to_id": "a42lf9",
-    "topic_id": "fjkls234"
-}
-```
-
 401 if not logged in. 403 if not own post. 400 if issues with content.
 
-Follow
-======
++ Request
+
+        {
+            "body": "Neo body."
+        }
+
++ Response 200
+
+        {
+            "user_id": "ajfkl234",
+            "body": "Neo body.",
+            "kind": "post",
+            "replies_to_id": "a42lf9",
+            "topic_id": "fjkls234"
+        }
+
+## Follows [/s/follows]
 
 Follows allow users to subscribe to updates on cards, units, and sets.
 
-Follow
-------
+### List follows [GET]
 
-`POST https://sagefy.org/s/follows/`
++ Response 200
+
+### Follow [POST]
 
 Current user follows an entity, topic, or proposal.
 
-### Request Format
-
-```json
-{
-    "entity": {
-        "kind": "card",
-        "id": "fjk20tnJF"
-    }
-}
-```
-
-### Response Format
-
-
-```json
-{
-    "user_id": "abcd1234",
-    "entity": {
-        "kind": "card",
-        "id": "fjk20tnJF"
-    }
-}
-```
-
 Return 401 if not logged in. Return 400 if content issues.
 
-Unfollow
---------
 
-`DELETE https://sagefy.org/s/follows/{id}/`
++ Request
+
+        {
+            "entity": {
+                "kind": "card",
+                "id": "fjk20tnJF"
+            }
+        }
+
++ Response 200
+
+        {
+            "user_id": "abcd1234",
+            "entity": {
+                "kind": "card",
+                "id": "fjk20tnJF"
+            }
+        }
+
+## Follow [/s/follows/{id}]
+
+### Unfollow [DELETE]
 
 Remove a follow. Must be current user's own follow.
 
-### Request Format
-
-None
-
-### Response Format (204)
-
-None
-
 Return 404 if it doesn't find that follow. Return 401 if not logged in. Return 403 if not own follow. Return 400 if other errors.
 
-Notices
-=======
++ Response 204
+
+## Notices [/s/notices]
 
 Notices provide updates to users on cards, units, and sets they follow.
 
-List Notices
-------------
-
-`GET https://sagefy.org/s/notices/`
+### List notices [GET]
 
 List notices for current user.
 
-### Request Parameters
-
-Name  | Default | Description
-------|---------|------------
-limit | null    | Maximum number of notices to return.
-skip  | 0       | Offset in returned set.
-tag   | ''      | Filter by a specific tag.
-read  | null    | Filter by read or unread notices.
-
-### Response Format
-
-```json
-{
-    "notices": [{
-        "id": "abcd1234",
-        "user_id": "fjskl234",
-        "kind": "create_proposal",
-        "read": false,
-        "tags": ["analyze"]
-    }]
-}
-```
-
 Returns a 401 if there's no user currently logged in.
 
-Mark Notice as Read
--------------------
++ Parameters
+    + limit - Maximum number of notices to return.
+    + skip - Offset in returned set.
+    + tag - Filter by a specific tag.
+    + read - Filter by read or unread notices.
 
-`PUT https://sagefy.org/s/notices/{id}/read/`
++ Response 200
+
+        {
+            "notices": [{
+                "id": "abcd1234",
+                "user_id": "fjskl234",
+                "kind": "create_proposal",
+                "read": false,
+                "tags": ["analyze"]
+            }]
+        }
+
+## Notice [/s/notices/{id}]
+
+### Mark notice as read/unread [PUT]
 
 Mark notice as read.
 Must be logged in as user, provide a valid ID, and own the notice.
 Return notice.
 
-### Request Format
-
-None
-
-### Response Format
-
-```json
-{
-    "notice": {
-        "id": "abcd1234",
-        "user_id": "fjskl234",
-        "kind": "create_proposal",
-        "read": false,
-        "tags": ["analyze"]
-    }
-}
-```
-
 Returns 401 if not logged in. Returns 404 if notice not found. Returns 403 if not user's own notice. Returns 400 if issues saving to the database.
 
-Mark Notice as Unread
----------------------
++ Response 200
 
-`PUT https://sagefy.org/s/notices/{id}/unread/`
-
-Mark notice as unread.
-Must be logged in as user, provide a valid ID, and own the notice.
-Return notice.
-
-### Request Format
-
-None
-
-### Response Format
-
-```json
-{
-    "notice": {
-        "id": "abcd1234",
-        "user_id": "fjskl234",
-        "kind": "create_proposal",
-        "read": false,
-        "tags": ["analyze"]
-    }
-}
-```
-
-Returns 401 if not logged in. Returns 404 if notice not found. Returns 403 if not user's own notice. Returns 400 if issues saving to the database.
+        {
+            "notice": {
+                "id": "abcd1234",
+                "user_id": "fjskl234",
+                "kind": "create_proposal",
+                "read": false,
+                "tags": ["analyze"]
+            }
+        }
