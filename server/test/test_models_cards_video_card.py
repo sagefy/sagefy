@@ -15,7 +15,8 @@ def test_site(cards_table):
         'video_id': 'Ajklfjl4',
     })
     assert len(errors) == 1
-    card, errors = card.update({'site': 'youtube'})
+    card['site'] = 'youtube'
+    errors = card.validate()
     assert len(errors) == 0
 
 
@@ -30,7 +31,8 @@ def test_video_id(cards_table):
         'site': 'youtube'
     })
     assert len(errors) == 1
-    card, errors = card.update({'video_id': 'JFKl94jl'})
+    card['video_id'] = 'JFKl94jl'
+    errors = card.validate()
     assert len(errors) == 0
 
 

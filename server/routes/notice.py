@@ -14,8 +14,9 @@ def list_notices_route(request):
     if not current_user:
         return abort(401)
     notices = Notice.list(user_id=current_user['id'], **request['params'])
-    return 200, {'notices': [notice.deliver(access='private')
-                             for notice in notices]}
+    output = {'notices': [notice.deliver(access='private')
+                          for notice in notices]}
+    return 200, output
 
 
 @put('/s/notices/{notice_id}')

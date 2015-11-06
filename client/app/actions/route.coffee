@@ -13,6 +13,8 @@ store.add({
             actions.openProfileRoute(args[0])
         if path is '/my_sets'
             actions.listUserSets()
+        if path is '/follows'
+            actions.listFollows()
 
     openSettingsRoute: ->
         if not @data.currentUserID or not @data.users?[@data.currentUserID]

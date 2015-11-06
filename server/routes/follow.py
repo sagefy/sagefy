@@ -2,6 +2,7 @@ from framework.routes import get, post, delete, abort
 from models.follow import Follow
 from framework.session import get_current_user
 from modules.entity import get_latest_accepted
+from modules.entity import flush_entities
 
 
 @get('/s/follows')
@@ -15,9 +16,17 @@ def get_follows_route(request):
         return abort(401)
 
     follows = Follow.list(user_id=current_user['id'], **request['params'])
-    return 200, {
+
+    output = {
         'follows': [follow.deliver(access='private') for follow in follows]
     }
+
+    if 'entities' in request['params']:
+        entities = flush_entities(follow['entity'] for follow in follows)
+        output['entities'] = [entity.deliver() if entity else None
+                              for entity in entities]
+
+    return 200, output
 
 
 @post('/s/follows')

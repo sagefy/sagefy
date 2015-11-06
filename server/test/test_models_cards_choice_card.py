@@ -19,7 +19,8 @@ def test_choice_body(cards_table):
         }],
     })
     assert len(errors) == 1
-    card, errors = card.update({'body': 'Testing 1234'})
+    card['body'] = 'Testing 1234'
+    errors = card.validate()
     assert len(errors) == 0
 
 
@@ -35,11 +36,12 @@ def test_choice_options(cards_table):
         'body': 'Testing 1234',
     })
     assert len(errors) == 1
-    card, errors = card.update({'options': [{
+    card['options'] = [{
         'value': 'abadaba',
         'correct': True,
         'feedback': 'Bazaaa...'
-    }]})
+    }]
+    errors = card.validate()
     assert len(errors) == 0
 
 
@@ -59,7 +61,8 @@ def test_choice_order(cards_table):
         }],
     })
     assert len(errors) == 0
-    card, errors = card.update({'order': 'set'})
+    card['order'] = 'set'
+    errors = card.validate()
     assert len(errors) == 0
 
 
@@ -79,7 +82,8 @@ def test_choice_max_opts(cards_table):
         }],
     })
     assert len(errors) == 0
-    card, errors = card.update({'max_options': 2})
+    card['max_options'] = 2
+    errors = card.validate()
     assert len(errors) == 0
 
 

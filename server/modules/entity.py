@@ -121,3 +121,24 @@ def get_card_by_kind(card_id):
 
     if kind in map:
         return map[kind](data)
+
+
+def flush_entities(descs):
+    """
+    Given a list of kinds and entity_ids,
+    return a list filled out with entities.
+    """
+
+    output = []
+
+    for desc in descs:
+        if desc['kind'] == 'card':
+            output.append(Card.get_latest_accepted(entity_id=desc['id']))
+        elif desc['kind'] == 'unit':
+            output.append(Unit.get_latest_accepted(entity_id=desc['id']))
+        elif desc['kind'] == 'set':
+            output.append(Set.get_latest_accepted(entity_id=desc['id']))
+        else:
+            output.append(None)
+
+    return output

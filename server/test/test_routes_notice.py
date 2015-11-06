@@ -13,6 +13,12 @@ def test_list(db_conn, session, notices_table):
         Notice.insert({
             'user_id': 'abcd1234',
             'kind': 'create_proposal',
+            'data': {
+                'user_name': '',
+                'proposal_name': '',
+                'entity_kind': '',
+                'entity_name': '',
+            }
         })
 
     request = {'cookies': {'session_id': session}, 'params': {}}
@@ -41,6 +47,12 @@ def test_list_paginate(db_conn, session, notices_table):
         Notice.insert({
             'user_id': 'abcd1234',
             'kind': 'create_proposal',
+            'data': {
+                'user_name': '',
+                'proposal_name': '',
+                'entity_kind': '',
+                'entity_name': '',
+            }
         })
 
     request = {'cookies': {'session_id': session}, 'params': {}}
@@ -61,6 +73,12 @@ def test_mark(db_conn, session, notices_table):
     notice, errors = Notice.insert({
         'user_id': 'abcd1234',
         'kind': 'create_proposal',
+        'data': {
+            'user_name': '',
+            'proposal_name': '',
+            'entity_kind': '',
+            'entity_name': '',
+        }
     })
     nid = notice['id']
 
@@ -79,6 +97,12 @@ def test_mark_no_user(db_conn, notices_table):
     notice, errors = Notice.insert({
         'user_id': 'abcd1234',
         'kind': 'create_proposal',
+        'data': {
+            'user_name': '',
+            'proposal_name': '',
+            'entity_kind': '',
+            'entity_name': '',
+        }
     })
     nid = notice['id']
 
@@ -107,6 +131,12 @@ def test_mark_not_owned(db_conn, session, notices_table):
     notice, errors = Notice.insert({
         'user_id': '1234abcd',
         'kind': 'create_proposal',
+        'data': {
+            'user_name': '',
+            'proposal_name': '',
+            'entity_kind': '',
+            'entity_name': '',
+        }
     })
     nid = notice['id']
 
