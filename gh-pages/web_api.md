@@ -4,7 +4,7 @@ title: Sagefy Web Service API
 ---
 
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://sagefy.org/
 
 # Sagefy Web Service API
 

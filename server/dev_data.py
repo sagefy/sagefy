@@ -5,6 +5,7 @@ from framework.database import setup_db, make_db_connection, \
 from framework.elasticsearch import es
 from passlib.hash import bcrypt
 from modules.sequencer.params import precision
+from modules.util import json_prep
 
 setup_db()
 make_db_connection()
@@ -28,6 +29,8 @@ for kind in (
         .delete()
         .run(database.db_conn))
 
+es.indices.delete(index='entity', ignore=[400, 404])
+
 (database.db.table('users')
     .insert([{
         'id': 'doris',
@@ -44,17 +47,15 @@ for kind in (
     }])
     .run(database.db_conn))
 
-# TODO
-# es.index(
-#     index='entity',
-#     doc_type=doc_type,
-#     body=json_prep(self.deliver()),
-#     id=self['entity_id'],
-# )
+users = database.db.table('users').run(database.db_conn)
+for user in users:
+    es.index(
+        index='entity',
+        doc_type='user',
+        body=json_prep(user),
+        id=user['id'],
+    )
 
-# id, created, modified
-# entity_id, previous_id, language, name, status, available, tags
-# body, require_ids
 (database.db.table('units')
     .insert([{
         'id': 'plus-1',
@@ -163,16 +164,18 @@ for kind in (
     }])
     .run(database.db_conn))
 
-# TODO
-# es.index(
-#     index='entity',
-#     doc_type=doc_type,
-#     body=json_prep(self.deliver()),
-#     id=self['entity_id'],
-# )
+units = (database.db.table('units')
+                 .filter(r.row['id'] in (
+                     'plus-2', 'minus-1', 'times-1', 'slash-1'
+                 )).run(database.db_conn))
+for unit in units:
+    es.index(
+        index='entity',
+        doc_type='unit',
+        body=json_prep(unit),
+        id=unit['entity_id'],
+    )
 
-# id, created, modified
-# entity_id
 (database.db.table('units_parameters')
     .insert([{
         'id': 'plus-params',
@@ -182,12 +185,7 @@ for kind in (
     }])
     .run(database.db_conn))
 
-# id, created, modified
-# entity_id, previous_id, language, name, status, available, tags
-# unit_id, require_ids, kind
-# video: site, video_id
-# choice: body, options[value, correct, feedback], order:'random',
-#         max_options_to_show:4
+
 (database.db.table('cards')
     .insert([{
         'id': 'plus-video-a-1',
@@ -268,16 +266,15 @@ for kind in (
     }])
     .run(database.db_conn))
 
-# TODO
-# es.index(
-#     index='entity',
-#     doc_type=doc_type,
-#     body=json_prep(self.deliver()),
-#     id=self['entity_id'],
-# )
+cards = database.db.table('cards').run(database.db_conn)
+for card in cards:
+    es.index(
+        index='entity',
+        doc_type='card',
+        body=json_prep(card),
+        id=card['entity_id'],
+    )
 
-# id, created, modified
-# entity_id, guess_distribution, slip_distribution
 (database.db.table('cards_parameters')
     .insert([{
         'id': 'plus-video-a-params',
@@ -313,9 +310,6 @@ for kind in (
     }])
     .run(database.db_conn))
 
-# id, created, modified
-# entity_id, previous_id, language, name, status, available, tags
-# body, members#id, members#kind
 (database.db.table('sets')
     .insert([{
         'id': 'basic-math-1',
@@ -345,16 +339,15 @@ for kind in (
     }])
     .run(database.db_conn))
 
-# TODO
-# es.index(
-#     index='entity',
-#     doc_type=doc_type,
-#     body=json_prep(self.deliver()),
-#     id=self['entity_id'],
-# )
+sets = database.db.table('sets').run(database.db_conn)
+for set_ in sets:
+    es.index(
+        index='entity',
+        doc_type='set',
+        body=json_prep(set_),
+        id=set_['entity_id'],
+    )
 
-# id, created, modified
-# entity_id
 (database.db.table('sets_parameters')
     .insert([{
         'id': 'basic-math-params',
@@ -364,8 +357,6 @@ for kind in (
     }])
     .run(database.db_conn))
 
-# id, created, modified
-# user_id, name, entity.id, entity.kind
 (database.db.table('topics')
     .insert([{
         'id': 'basic-math-posts',
@@ -410,19 +401,15 @@ for kind in (
     }])
     .run(database.db_conn))
 
-# TODO
-# es.index(
-#     index='entity',
-#     doc_type=doc_type,
-#     body=json_prep(self.deliver()),
-#     id=self['entity_id'],
-# )
+topics = database.db.table('topics').run(database.db_conn)
+for topic in topics:
+    es.index(
+        index='entity',
+        doc_type='topic',
+        body=json_prep(topic),
+        id=topic['id'],
+    )
 
-# id, created, modified
-# post: user_id, topic_id, body, kind, replies_to_id
-# proposal: entity_version.id, entity_version.kind, name
-# flag: reason: irrelevant
-# vote: body, replies_to_id, response
 (database.db.table('posts')
     .insert([{
         'id': 'basic-math-fun-1',
@@ -542,16 +529,15 @@ for kind in (
     }])
     .run(database.db_conn))
 
-# TODO
-# es.index(
-#     index='entity',
-#     doc_type=doc_type,
-#     body=json_prep(self.deliver()),
-#     id=self['entity_id'],
-# )
+posts = database.db.table('posts').run(database.db_conn)
+for post in posts:
+    es.index(
+        index='entity',
+        doc_type='post',
+        body=json_prep(post),
+        id=post['id'],
+    )
 
-# id, created, modified
-# user_id, entity.id, entity.kind
 (database.db.table('follows')
     .insert([{
         'id': 'doris-follows-basic-math',
@@ -592,8 +578,6 @@ for kind in (
     }])
     .run(database.db_conn))
 
-# id, created, modified
-# user_id, kind, read, tags
 (database.db.table('notices')
     .insert([{
         'id': 'doris-new-topic-basic-math',
@@ -654,8 +638,6 @@ for kind in (
     }])
     .run(database.db_conn))
 
-# id, created, modified
-# user_id, set_ids
 (database.db.table('users_sets')
     .insert([{
         'id': 'doris-sets',
