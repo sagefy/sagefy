@@ -29,7 +29,7 @@ writeStyleguide = ->
             h2(o.title)
             p(o.description) if o.description
             pre(o.example) if o.example
-        )
+        ) if o
 
     return tags
 

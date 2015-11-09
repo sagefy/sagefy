@@ -5,7 +5,7 @@ from framework.database import setup_db, make_db_connection, \
 from framework.elasticsearch import es
 from passlib.hash import bcrypt
 from modules.sequencer.params import precision
-from modules.util import json_prep
+from modules.util import json_prep, pick
 
 setup_db()
 make_db_connection()
@@ -52,7 +52,7 @@ for user in users:
     es.index(
         index='entity',
         doc_type='user',
-        body=json_prep(user),
+        body=pick(json_prep(user), 'id', 'name'),
         id=user['id'],
     )
 

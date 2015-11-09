@@ -4,6 +4,8 @@ notices = require('../components/notices.tmpl')
 
 
 module.exports = (data) ->
+    return div({className: 'spinner'}) unless data.notices
+
     return div(
         {id: 'notices', className: 'col-6'}
         h1('Notices')
@@ -12,7 +14,5 @@ module.exports = (data) ->
             i({className: 'fa fa-cog'})
             ' Manage what I follow'
         ))
-        if data.notices \
-            then notices(data.notices) \
-            else div({className: 'spinner'})
+        notices(data.notices)
     )

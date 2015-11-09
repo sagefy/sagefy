@@ -3,6 +3,8 @@ c = require('../../modules/content').get
 {ucfirst} = require('../../modules/auxiliaries')
 
 module.exports = (data) ->
+    return div({className: 'spinner'}) unless data.follows
+
     return div(
         {id: 'follows', className: 'col-6'}
         h1('Follows')
@@ -11,9 +13,7 @@ module.exports = (data) ->
             i({className: 'fa fa-chevron-left'})
             ' Back to notices.'
         )
-        if data.follows \
-            then follows(data.follows) \
-            else div({className: 'spinner'})
+        follows(data.follows)
     )
 
 follows = (data) ->

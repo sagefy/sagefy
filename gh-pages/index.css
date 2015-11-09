@@ -475,8 +475,7 @@ kbd {
 .push-left-gutter {
   margin-left: 24px;
 }
-.push-right,
-.form--horizontal > * {
+.push-right {
   margin-right: 12px;
 }
 .push-right-gutter {
@@ -3693,6 +3692,7 @@ legend {
 }
 .form--horizontal > * {
   display: inline-block;
+  margin-right: 12px;
 }
 .form-field--disabled label {
   color: #a6a27f;

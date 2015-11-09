@@ -23,6 +23,8 @@ for index, field of fields
     fields[index] = extend({}, userSchema[field.name], field)
 
 module.exports = (data) ->
+    return div('Logged in already.') if data.currentUserID
+
     fields_ = mergeFieldsData(fields, data)
 
     return div(

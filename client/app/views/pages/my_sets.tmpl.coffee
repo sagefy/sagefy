@@ -22,15 +22,16 @@ r.db('sagefy').table('users_sets').insert([{
 ###
 
 module.exports = (data) ->
+    return div({className: 'spinner'}) unless data.userSets
+
     return div(
         {id: 'my-sets', className: 'col-10'}
         h1('My Sets')
-        div({className: 'spinner'}) unless data.userSets
-        ul(userSet(set) for set in data.userSets) if data.userSets
+        ul(userSet(set) for set in data.userSets)
         p(
             a({href: '/search?find_set'}, 'Find a set')
             ' to get started.'
-        ) if data.userSets?.length is 0
+        ) if data.userSets.length is 0
     )
 
 userSet = (data) ->

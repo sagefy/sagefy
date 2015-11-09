@@ -99,7 +99,7 @@ I want to follow a topic.
 
 ### 3) Contribution
 
-- [ ]
+- [x]
 As a contributor
 to manage my notices
 I want to manage what I'm following.

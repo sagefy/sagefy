@@ -41,6 +41,7 @@ getPostID = (data) ->
 
 module.exports = (data) ->
     postID = getPostID(data)
+    # TODO return div({className: 'spinner'}) unless ...
 
     return div(
         {

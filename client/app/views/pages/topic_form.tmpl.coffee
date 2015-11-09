@@ -52,6 +52,8 @@ getTopicID = (data) ->
 module.exports = (data) ->
     topicID = getTopicID(data)
 
+    # TODO return div({className: 'spinner'}) unless ...
+
     return div(
         {
             id: 'topic-form'

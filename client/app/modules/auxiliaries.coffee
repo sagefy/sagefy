@@ -130,6 +130,11 @@ mergeFieldsData = (fields, data) ->
 
     return fields_
 
+truncate = (str, len) ->
+    return str if str.length <= len
+    return str.slice(0, len) + '...'
+
+
 module.exports = {
     isLoggedIn
     ucfirst
@@ -142,4 +147,5 @@ module.exports = {
     matchesRoute
     getFormValues
     mergeFieldsData
+    truncate
 }

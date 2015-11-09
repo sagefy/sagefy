@@ -32,7 +32,7 @@ class User(Model):
         },
         'password': {
             'validate': (is_required, is_string, (has_min_length, 8)),
-            'access': (),
+            'access': ('PaSsWoRd',),
             'bundle': encrypt_password,
         },
         'settings': {

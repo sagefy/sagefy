@@ -3,6 +3,8 @@ c = require('../../modules/content').get
 post = require('../components/post.tmpl')
 
 module.exports = (data) ->
+    return div({className: 'spinner'}) unless data.posts
+
     return div(
         {id: 'topic', className: 'col-10'}
         h1('Topic')

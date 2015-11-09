@@ -3,17 +3,14 @@
 module.exports = (data) ->
     [id] = data.routeArgs
     user = data.users?[id]
+    return div({className: 'spinner'}) unless user
+
     return div(
         {id: 'terms', className: 'col-10'}
-        if user \
-            then content(user) \
-            else div({className: 'spinner'})
+        # TODO avatar
+        h1(user.name)
+        # TODO created (ago)
+        # TODO sets - if available   and link to search
+        # TODO follows - if available   and link to search
+        # TODO posts - always   and link to search
     )
-
-content = (user) ->
-    # TODO avatar
-    h1(user.name)
-    # TODO created (ago)
-    # TODO sets - if available   and link to search
-    # TODO follows - if available   and link to search
-    # TODO posts - always   and link to search

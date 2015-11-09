@@ -50,18 +50,15 @@
         "Grouped Inputs",
         "Horizontal Forms",
         "Tables",
-        "Alerts & Errors",
-        "Breadcrumbs & Pagination",
+        "Alert",
+        "Pagination",
         "Wizard",
-        "Discussion",
         "Proposal",
         "Vote",
         "Notice",
         "Inline Labels",
-        "Audio, Video, & Embedded Objects",
         "Menu",
-        "Progressbars",
         "Spinners",
-        "Tooltips"
+        "Tooltip"
     ]
 }
