@@ -1,10 +1,9 @@
-{div, h1, form, input, button,
- i, ul, li, strong, a} = require('../../modules/tags')
+{div, h1, form, input, button, img,
+ i, ul, li, strong, a, p, span} = require('../../modules/tags')
 c = require('../../modules/content').get
-{truncate} = require('../../modules/auxiliaries')
+{truncate, timeAgo} = require('../../modules/auxiliaries')
 
 # TODO When search for entity's topic, show create topic button
-# TODO When `as_learner`, add the 'add to my sets' button
 
 module.exports = (data) ->
     loading = data.searchQuery and not data.searchResults
@@ -35,8 +34,8 @@ module.exports = (data) ->
             li(
                 r[result._type + 'Result'](result)
             ) for result in data.searchResults
-        ) if data.searchResults
-        # TODO no results found message
+        ) if data.searchResults?.length
+        p('No results found.') if data.searchResults?.length is 0
     )
 
 r = {}
@@ -47,9 +46,10 @@ r.userResult = (result) ->
         ': '
         a(
             {href: "/users/#{result._source.id}"}
+            img({className: 'avatar', src: result._source.avatar})
+            ' '
             result._source.name
         )
-        # TODO avatar
     ]
 
 r.topicResult = (result) ->
@@ -60,10 +60,16 @@ r.topicResult = (result) ->
             {href: "/topics/#{result._source.id}"}
             result._source.name
         )
-        # TODO entity name     result._source.entity ???
-        # TODO entity kind     result._source.entity kind
+        ', '
+        a(
+            {href: "/#{result._source.entity.kind}/#{result._source.entity.id}"}
+            result._source.entity.name
+        )
         # TODO no of posts     ???
-        # TODO time ago        result._source.created
+        span(
+            {className: 'time-ago'}
+            timeAgo(result._source.created)
+        )
     ]
 
 r.postResult = (result) ->
@@ -75,11 +81,17 @@ r.postResult = (result) ->
             {href}
             truncate(result._source.body, 40)
         )
-        # TODO username/profile   result._source.user_id
+        ' by '
+        a(
+            {href: "/users/#{result._source.user_id}"}
+        )
         # TODO topic name        result._source.topic_id ???
         # TODO entity kind       result._source.topic_id > ????
         # TODO entity name       result._source.topic_id > ????
-        # TODO time ago          result._source.created
+        span(
+            {className: 'time-ago'}
+            timeAgo(result._source.created)
+        )
     ]
 
 r.cardResult = (result) ->
@@ -102,17 +114,20 @@ r.unitResult = (result) ->
             {href: "/units/#{result._source.id}"}
             result._source.name
         )
-        # TODO body         result._source.body
+        ' – '
+        truncate(result._source.body, 40)
     ]
 
 r.setResult = (result) ->
     return [
+        # TODO Add to my sets   (as learner)   result._source.id
         strong('Set')
         ': '
         a(
             {href: "/sets/#{result._source.id}"}
             result._source.name
         )
-        # TODO body         result._source.body
-        # TODO Add to my sets / view units (as learner)   result._source.id
+        ' – '
+        truncate(result._source.body, 40)
+        # TODO view units (as learner)   result._source.id
     ]

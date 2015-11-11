@@ -6,6 +6,7 @@ from framework.elasticsearch import es
 from passlib.hash import bcrypt
 from modules.sequencer.params import precision
 from modules.util import json_prep, pick
+from models.user import get_avatar
 
 setup_db()
 make_db_connection()
@@ -49,10 +50,12 @@ es.indices.delete(index='entity', ignore=[400, 404])
 
 users = database.db.table('users').run(database.db_conn)
 for user in users:
+    data = pick(json_prep(user), ('id', 'name'))
+    data['avatar'] = get_avatar(user['email'])
     es.index(
         index='entity',
         doc_type='user',
-        body=pick(json_prep(user), 'id', 'name'),
+        body=data,
         id=user['id'],
     )
 

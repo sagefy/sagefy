@@ -9,12 +9,25 @@ import json
 from framework.redis import redis
 from framework.mail import send_mail
 from framework.elasticsearch import es
+import urllib
+import hashlib
 
 
 def encrypt_password(value):
     if value and not value.startswith('$2a$'):
         return bcrypt.encrypt(value)
     return value
+
+
+def get_avatar(email, size=24):
+    """
+    Gets the avatar for the given user.
+    """
+
+    hash_ = hashlib.md5(email.lower().encode('utf-8')).hexdigest()
+    params = urllib.parse.urlencode({'d': 'mm', 's': str(size)})
+    gravatar_url = "http://www.gravatar.com/avatar/" + hash_ + "?" + params
+    return gravatar_url
 
 
 class User(Model):
@@ -77,10 +90,13 @@ class User(Model):
         Overwrite save method to add to Elasticsearch.
         """
 
+        data = json_prep(self.deliver())
+        data['avatar'] = self.get_avatar()
+
         es.index(
             index='entity',
             doc_type='user',
-            body=json_prep(self.deliver()),
+            body=data,
             id=self['id'],
         )
         return super().save()
@@ -96,6 +112,13 @@ class User(Model):
             id=self['id'],
         )
         return super().delete()
+
+    def get_avatar(self, size=24):
+        """
+        Gets the avatar for the given user.
+        """
+
+        return get_avatar(self['email'], size)
 
     def is_password_valid(self, password):
         """
