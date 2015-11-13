@@ -3565,14 +3565,14 @@ input[type="radio"] {
 }
 input[type="checkbox"]:checked,
 input[type="radio"]:checked {
-  border: 1px solid #90c6f7;
+  border: 1px solid #6396c0;
 }
 input[type="checkbox"]:checked::before,
 input[type="radio"]:checked::before {
   -webkit-user-select: none;
   content: '';
   display: block;
-  background: #6fa6d4;
+  background: #517b9e;
   border: 1px solid #fff;
   width: 100%;
   height: 100%;

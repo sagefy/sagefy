@@ -1,7 +1,7 @@
 {div, h1, form, input, button, img,
  i, ul, li, strong, a, p, span} = require('../../modules/tags')
 c = require('../../modules/content').get
-{truncate, timeAgo} = require('../../modules/auxiliaries')
+{truncate, timeAgo, ucfirst} = require('../../modules/auxiliaries')
 
 # TODO@ When search for entity's topic, show create topic button
 
@@ -77,7 +77,7 @@ r.topicResult = (result) ->
 r.postResult = (result) ->
     href = "/topics/#{result._source.topic_id}##{result._source.id}"
     return [
-        strong('Post')
+        strong(ucfirst(result._source.kind))
         ': '
         a(
             {href}

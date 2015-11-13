@@ -6,5 +6,5 @@ module.exports = (data) ->
 
     return div(
         {id: 'set', className: 'col-10'}
-        h1('set')
+        h1('Set')
     )
