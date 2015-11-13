@@ -87,8 +87,9 @@ module.exports = store.add({
             done: (response) =>
                 @data.users ?= {}
                 user = response.user
-                user.avatar = response.avatar if response.avatar
-                # TODO@ handle posts, sets, follows...
+                ['avatar', 'posts', 'sets', 'follows'].forEach((t) ->
+                    user[t] = response[t] if response[t]
+                )
                 @data.users[response.user.id] = user
             fail: (errors) =>
                 @data.errors = errors

@@ -2,7 +2,6 @@
 {div, img, hgroup, h1, h3, p, a, i} = require('../../modules/tags')
 
 module.exports = (data) ->
-    console.log(data)
     return (
         div(
             {id: 'home', className: 'col-8'}
