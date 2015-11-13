@@ -908,8 +908,8 @@ hr {
   height: 2px;
   margin: 1em 0;
 }
+.frame,
 figure {
-  display: inline-block;
   padding: 6px;
   border: 1px solid #f2f1ea;
   background: #fff;
@@ -918,6 +918,9 @@ figure {
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px;
+}
+figure {
+  display: inline-block;
 }
 figure img {
   display: block;

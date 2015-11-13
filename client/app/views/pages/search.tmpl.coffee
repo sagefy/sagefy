@@ -3,7 +3,7 @@
 c = require('../../modules/content').get
 {truncate, timeAgo} = require('../../modules/auxiliaries')
 
-# TODO When search for entity's topic, show create topic button
+# TODO@ When search for entity's topic, show create topic button
 
 module.exports = (data) ->
     loading = data.searchQuery and not data.searchResults
@@ -11,7 +11,7 @@ module.exports = (data) ->
     return div(
         {id: 'search', className: 'col-8'}
         h1('Search')
-        # TODO  add search filtering / ordering
+        # TODO@  add search filtering / ordering
         form(
             {className: 'form--horizontal'}
             div(
@@ -37,6 +37,8 @@ module.exports = (data) ->
         ) if data.searchResults?.length
         p('No results found.') if data.searchResults?.length is 0
     )
+
+    # TODO pagination
 
 r = {}
 
@@ -85,7 +87,7 @@ r.postResult = (result) ->
         a(
             {href: "/users/#{result._source.user_id}"}
         )
-        # TODO topic name        result._source.topic_id ???
+        # TODO@ topic name        result._source.topic_id ???
         # TODO entity kind       result._source.topic_id > ????
         # TODO entity name       result._source.topic_id > ????
         span(
@@ -120,7 +122,7 @@ r.unitResult = (result) ->
 
 r.setResult = (result) ->
     return [
-        # TODO Add to my sets   (as learner)   result._source.id
+        # TODO@ Add to my sets   (as learner)   result._source.id
         strong('Set')
         ': '
         a(
@@ -129,5 +131,5 @@ r.setResult = (result) ->
         )
         ' – '
         truncate(result._source.body, 40)
-        # TODO view units (as learner)   result._source.id
+        # TODO@ view units (as learner)   result._source.id
     ]

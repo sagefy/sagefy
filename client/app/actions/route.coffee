@@ -24,5 +24,10 @@ store.add({
         actions.listNotices()
 
     openProfileRoute: (id) ->
-        actions.getUser(id)
+        actions.getUser(id, {
+            avatar: 12 * 10
+            sets: true
+            follows: true
+            posts: true
+        })
 })

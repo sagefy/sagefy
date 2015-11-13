@@ -79,13 +79,17 @@ module.exports = store.add({
                 @change()
         })
 
-    getUser: (id) ->
+    getUser: (id, opts = {}) ->
         ajax({
             method: 'GET'
             url: "/s/users/#{id}"
+            data: opts
             done: (response) =>
                 @data.users ?= {}
-                @data.users[response.user.id] = response.user
+                user = response.user
+                user.avatar = response.avatar if response.avatar
+                # TODO@ handle posts, sets, follows...
+                @data.users[response.user.id] = user
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('fail get user', id, errors)

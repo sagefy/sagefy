@@ -67,6 +67,10 @@ def get_user_route(request, user_id):
             and user['settings']['view_follows'] == 'public'):
         data['follows'] = [follow.deliver() for follow in
                            Follow.list(user_id=user['id'])]
+    if 'avatar' in request['params']:
+        size = int(request['params']['avatar'])
+        data['avatar'] = user.get_avatar(size if size else None)
+
     return 200, data
 
 

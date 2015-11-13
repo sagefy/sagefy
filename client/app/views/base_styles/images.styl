@@ -24,12 +24,16 @@ example:
 ---
 */
 
-figure
-    display inline-block
+.frame
     padding ($unit / 2)
     border 1px solid $base-color(95)
     background white
     border-radius $border-radius
+
+
+figure
+    display inline-block
+    @extend .frame
 
     img
         display block
