@@ -56,7 +56,7 @@ r.userResult = (result) ->
 r.topicResult = (result) ->
     return [
         span(
-            {className: 'time-ago'}
+            {className: 'timeago'}
             timeAgo(result._source.created)
         )
         strong('Topic')
@@ -77,7 +77,7 @@ r.postResult = (result) ->
     href = "/topics/#{result._source.topic_id}##{result._source.id}"
     return [
         span(
-            {className: 'time-ago'}
+            {className: 'timeago'}
             timeAgo(result._source.created)
         )
         strong(ucfirst(result._source.kind))
@@ -105,7 +105,7 @@ r.cardResult = (result) ->
         strong('Card')
         ': '
         a(
-            {href: "/cards/#{result._source.id}"}
+            {href: "/cards/#{result._source.entity_id}"}
             result._source.name
         )
         # TODO unit name   result._source.unit_id > ???
@@ -117,7 +117,7 @@ r.unitResult = (result) ->
         strong('Unit')
         ': '
         a(
-            {href: "/units/#{result._source.id}"}
+            {href: "/units/#{result._source.entity_id}"}
             result._source.name
         )
         ' – '

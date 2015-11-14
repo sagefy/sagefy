@@ -5,7 +5,7 @@ module.exports = broker.add({
     # When we click an internal link, use `route` instead
     'click a[href^="/"]': (e, el) ->
         e.preventDefault()
-        actions.route(el.pathname)
+        actions.route(el.pathname + el.search)
 
     # Do nothing on empty links
     'click a[href="#"]': (e, el) ->

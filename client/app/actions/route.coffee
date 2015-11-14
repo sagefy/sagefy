@@ -15,6 +15,9 @@ store.add({
             actions.listUserSets()
         if path is '/follows'
             actions.listFollows()
+        if args = matchesRoute(path, '/units/{id}')
+            actions.getUnit(args[0])
+            actions.askFollow(args[0])
 
     openSettingsRoute: ->
         if not @data.currentUserID or not @data.users?[@data.currentUserID]

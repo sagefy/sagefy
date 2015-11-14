@@ -59,7 +59,7 @@ module.exports = store.add({
             method: 'DELETE'
             url: "/s/users/#{userID}/sets/#{setID}"
             data: {}
-            done: (response) =>
+            done: (response) ->
                 # @data TODO
                 recorder.emit('remove user set')
             fail: (errors) =>

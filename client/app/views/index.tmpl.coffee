@@ -3,7 +3,6 @@
 {copy} = require('../modules/utilities')
 
 ###
-TODO@ Some views require log in, some views require logged out
 TODO distribute routing, something like...
      module.exports = route(/^\/?$/, 'Home', (data) ->)
 ###
@@ -74,7 +73,7 @@ routes = [{
     tmpl: require('./pages/set.tmpl')
     title: 'Set'
 }, {
-    path: /^\/(card|unit|set)\/([\w\d]+)\/versions$/
+    path: /^\/(cards|units|sets)\/([\w\d]+)\/versions$/
     tmpl: require('./pages/versions.tmpl')
     title: 'Versions'
 }, {

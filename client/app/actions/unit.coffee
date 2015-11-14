@@ -10,7 +10,18 @@ module.exports = store.add({
             data: {}
             done: (response) =>
                 @data.units ?= {}
-                @data.units[id] = response.unit
+                unit = response.unit
+                ['topics', 'versions'].forEach((r) -> unit[r] = response[r])
+                unit.relationships = []
+                ['belongs_to', 'requires', 'required_by'].forEach((r) ->
+                    response[r].forEach((e) ->
+                        unit.relationships.push({
+                            kind: r
+                            entity: e
+                        })
+                    )
+                )
+                @data.units[id] = unit
                 recorder.emit('get unit')
             fail: (errors) =>
                 @data.errors = errors

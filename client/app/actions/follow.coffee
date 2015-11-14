@@ -23,15 +23,36 @@ module.exports = store.add({
                 @change()
         })
 
+    askFollow: (entityID) ->
+        ajax({
+            method: 'GET'
+            url: '/s/follows'
+            data: {'entity_id': entityID}
+            done: (response) =>
+                return if response.follows.length is 0
+                follow = response.follows[0]
+                @data.follows ?= []
+                index = @data.follows.findIndex((f) -> f.entity.id is entityID)
+                if index > -1
+                    @data.follows[index] = follow
+                else
+                    @data.follows.push(follow)
+            fail: (errors) =>
+                @data.errors = errors
+                recorder.emit('error on ask follow', errors)
+            always: =>
+                @change()
+        })
+
     follow: (data) ->
         ajax({
             method: 'POST'
             url: '/s/follows'
             data: data
             done: (response) =>
-                # TODO should it be a prepend?
+                @data.follows ?= []
                 @data.follows.push(response.follow)
-                recorder.emit('follow')
+                recorder.emit('follow', data.entity.id)
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on follow', errors)
@@ -44,6 +65,7 @@ module.exports = store.add({
             method: 'DELETE'
             url: "/s/follows/#{id}"
             done: (response) =>
+                @data.follows ?= []
                 i = @data.follows.findIndex((follow) -> follow.id is id)
                 @data.follows.splice(i, 1)
                 recorder.emit('unfollow', id)

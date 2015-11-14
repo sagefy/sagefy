@@ -95,8 +95,8 @@ def test_get_unit(db_conn,
     assert len(response['required_by']) == 1
     assert response['required_by'][0]['entity_id'] == 'tyui'
     # Sets
-    assert len(response['sets']) == 1
-    assert response['sets'][0]['entity_id'] == 'W'
+    assert len(response['belongs_to']) == 1
+    assert response['belongs_to'][0]['entity_id'] == 'W'
     # TODO sequencer data: learners, quality, difficulty
 
 

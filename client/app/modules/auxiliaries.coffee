@@ -70,11 +70,12 @@ debounce = (fn, delay) ->
 # Determine if a given path matches this router.
 # Returns either false or array, where array is matches parameters.
 matchesRoute = (docPath, viewPath) ->
+    docPath = docPath.split('?')[0]  # Only match the pre-query params
     if isString(viewPath)
         viewPath = new RegExp(
             '^' +
             viewPath.replace(/\{([\d\w\_\$]+)\}/g, '([^/]+)') +
-            '(\\?.*)?$'
+            '$'
         )
     match = docPath.match(viewPath)
     return if match then match.slice(1) else false
