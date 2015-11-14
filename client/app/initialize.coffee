@@ -60,7 +60,7 @@ logAllRecorderEvents = ->
 go = ->
     logAllRecorderEvents()
     store.init(-> @data.currentUserID = cookie.get('currentUserID'))
-    route(window.location.pathname)
+    route(window.location.pathname + window.location.search)
     init({
         view: require('./views/index.tmpl')
         el: document.body

@@ -211,6 +211,8 @@ class EntityMixin(object):
         Overwrite save method to add to Elasticsearch.
         """
 
+        # TODO should we validate the save worked before going to ES?
+
         doc_type = self.__class__.__name__.lower()
 
         if 'card' in doc_type:

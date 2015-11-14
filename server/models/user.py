@@ -24,6 +24,9 @@ def get_avatar(email, size=24):
     Gets the avatar for the given user.
     """
 
+    if not email:
+        return ''
+
     hash_ = hashlib.md5(email.lower().encode('utf-8')).hexdigest()
     params = urllib.parse.urlencode({'d': 'mm', 's': str(size)})
     gravatar_url = "http://www.gravatar.com/avatar/" + hash_ + "?" + params
@@ -90,6 +93,8 @@ class User(Model):
         Overwrite save method to add to Elasticsearch.
         """
 
+        # TODO should we validate the save worked before going to ES?
+
         data = json_prep(self.deliver())
         data['avatar'] = self.get_avatar()
 
@@ -105,6 +110,8 @@ class User(Model):
         """
         Overwrite delete method to delete in Elasticsearch.
         """
+
+        # TODO should we validate the delete worked before going to ES?
 
         es.delete(
             index='entity',

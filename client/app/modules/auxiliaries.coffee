@@ -74,7 +74,7 @@ matchesRoute = (docPath, viewPath) ->
         viewPath = new RegExp(
             '^' +
             viewPath.replace(/\{([\d\w\_\$]+)\}/g, '([^/]+)') +
-            '$'
+            '(\\?.*)?$'
         )
     match = docPath.match(viewPath)
     return if match then match.slice(1) else false

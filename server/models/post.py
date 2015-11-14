@@ -46,10 +46,23 @@ class Post(Model):
         Overwrite save method to add to Elasticsearch.
         """
 
+        # TODO should we validate the save worked before going to ES?
+
+        from models.topic import Topic
+        from models.user import User
+
+        data = json_prep(self.deliver())
+        topic = Topic.get(id=self['topic_id'])
+        if topic:
+            data['topic'] = json_prep(topic.deliver())
+        user = User.get(id=self['user_id'])
+        if user:
+            data['user'] = json_prep(user.deliver())
+
         es.index(
             index='entity',
             doc_type='post',
-            body=json_prep(self.deliver()),
+            body=data,
             id=self['id'],
         )
         return super().save()

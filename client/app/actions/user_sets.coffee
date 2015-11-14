@@ -20,7 +20,7 @@ module.exports = store.add({
                 @change()
         })
 
-    addUserSet: ->
+    addUserSet: (setID) ->
         userID = @data.currentUserID
         ajax({
             method: 'POST'
@@ -29,6 +29,7 @@ module.exports = store.add({
             done: (response) =>
                 @data.userSets.push(response.set)
                 recorder.emit('add user set')
+                @actions.route('/my_sets')
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on add user set', errors)
@@ -42,7 +43,7 @@ module.exports = store.add({
             method: 'PUT'
             url: "/s/users/#{userID}/sets/#{setID}"
             data: {}
-            done: (response) =>
+            done: (response) ->
                 # @data  TODO
                 recorder.emit('choose set', setID)
             fail: (errors) =>

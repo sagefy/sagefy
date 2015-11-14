@@ -2,6 +2,9 @@ store = require('./store')
 actions = store.actions
 recorder = require('./recorder')
 
+request = ->
+    return window.location.pathname + window.location.search
+
 route = (path) ->
     recorder.emit('route', path)
     store.data.route = path
@@ -9,11 +12,11 @@ route = (path) ->
     store.change()
 
 window.onpopstate = ->
-    route(window.location.pathname)
+    route(request())
 
 store.add({
     route: (path) ->
-        if path isnt window.location.pathname
+        if path isnt request()
             history.pushState({}, '', path)
             route(path)
 })

@@ -37,8 +37,20 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'id': 'doris',
         'created': r.time(2014, 1, 1, 'Z'),
         'modified': r.time(2014, 1, 1, 'Z'),
-        'name': 'doris',
+        'name': 'Doris',
         'email': 'doris@example.com',
+        'password': bcrypt.encrypt('example1'),
+        'settings': {
+            'email_frequency': 'daily',
+            'view_sets': 'public',
+            'view_follows': 'public',
+        }
+    }, {
+        'id': 'eileen',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'name': 'Eileen',
+        'email': 'eileen@example.com',
         'password': bcrypt.encrypt('example1'),
         'settings': {
             'email_frequency': 'daily',
@@ -534,10 +546,19 @@ for topic in topics:
 
 posts = database.db.table('posts').run(database.db_conn)
 for post in posts:
+    data = json_prep(post)
+    topic = (database.db.table('topics')
+                     .get(data['topic_id'])
+                     .run(database.db_conn))
+    user = (database.db.table('users')
+                    .get(data['user_id'])
+                    .run(database.db_conn))
+    data['topic'] = json_prep(topic)
+    data['user'] = json_prep(user)
     es.index(
         index='entity',
         doc_type='post',
-        body=json_prep(post),
+        body=data,
         id=post['id'],
     )
 
