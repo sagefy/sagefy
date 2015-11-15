@@ -1,4 +1,5 @@
 from models.card import Card
+from models.card_parameters import CardParameters
 import framework.database as database
 from modules.sequencer.formulas import calculate_correct
 from modules.sequencer.params import init_learned
@@ -57,7 +58,7 @@ def choose_card(user, unit):
         if not len(assessment):
             return nonassessment[0]
         for card in assessment:
-            params = card.fetch_parameters()
+            params = CardParameters.get(entity_id=card['entity_id'])
             guess = params.get_distribution('guess').get_value()
             slip = params.get_distribution('slip').get_value()
             correct = calculate_correct(guess, slip, learned)

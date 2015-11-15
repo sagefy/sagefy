@@ -1,6 +1,7 @@
 from framework.session import get_current_user
 from framework.routes import get, post, abort
 from models.card import Card
+from models.card_parameters import CardParameters
 from models.unit import Unit
 from models.set import Set
 from models.topic import Topic
@@ -30,10 +31,11 @@ def get_card_route(request, card_id):
     versions = Card.get_versions(entity_id=card_id)
     requires = Card.list_requires(entity_id=card_id)
     required_by = Card.list_required_by(entity_id=card_id)
+    params = CardParameters.get(entity_id=card_id)
 
     return 200, {
         'card': card.deliver(access='view'),
-        'card_parameters': card.fetch_parameters(),
+        'card_parameters': params.get_values(),
         'unit': unit.deliver(),
         'topics': [topic.deliver() for topic in topics],
         'versions': [version.deliver() for version in versions],

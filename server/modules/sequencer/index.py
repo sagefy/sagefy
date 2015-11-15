@@ -2,6 +2,7 @@
 Primary learning sequencer.
 """
 
+from models.card_parameters import CardParameters
 from modules.sequencer.formulas import update as formula_update
 from modules.sequencer.params import init_learned
 from models.response import Response
@@ -48,13 +49,13 @@ def update(user, card, response):
     score, feedback = card.score_response(response)
     response = Response({
         'user_id': user['id'],
-        'card_id': card['id'],
+        'card_id': card['entity_id'],
         'unit_id': card['unit_id'],
         'response': response,
         'score': score,
     })
 
-    card_parameters = card.fetch_parameters()
+    card_parameters = CardParameters.get(entity_id=card['entity_id'])
     previous_response = Response.get_latest(user_id=user['id'],
                                             unit_id=card['unit_id'])
 

@@ -90,8 +90,8 @@ class CardParameters(Model):
         """
 
         return {
-            'guess': self.guess(),
-            'slip': self.slip(),
-            'transit': self.transit(),
-            'num_learners': self.num_learners(),
+            'guess': self.get_guess(),
+            'slip': self.get_slip(),
+            'transit': self.get_transit(),
+            'num_learners': self.get_num_learners(),
         }

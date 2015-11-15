@@ -21,6 +21,9 @@ store.add({
         if args = matchesRoute(path, '/sets/{id}')
             actions.getSet(args[0])
             actions.askFollow(args[0])
+        if args = matchesRoute(path, '/cards/{id}')
+            actions.getCard(args[0])
+            actions.askFollow(args[0])
 
     openSettingsRoute: ->
         if not @data.currentUserID or not @data.users?[@data.currentUserID]

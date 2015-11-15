@@ -7,7 +7,8 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def test_get_card(db_conn, cards_table, units_table, topics_table):
+def test_get_card(db_conn, cards_table, cards_parameters_table, units_table,
+                  topics_table):
     """
     Expect to get the card information for displaying to a contributor.
     """
@@ -43,6 +44,10 @@ def test_get_card(db_conn, cards_table, units_table, topics_table):
         'kind': 'choice',
         'requires': ['abcd'],
     }]).run(db_conn)
+
+    cards_parameters_table.insert({
+        'entity_id': 'abcd',
+    }).run(db_conn)
 
     units_table.insert({
         'entity_id': 'zytx',
@@ -206,6 +211,7 @@ def test_learn_card_400(db_conn, cards_table, session):
 
 
 def test_respond_card(db_conn, units_table, cards_table,
+                      cards_parameters_table,
                       responses_table, session):
     """
     Expect to respond to a card. (200)
@@ -231,6 +237,10 @@ def test_respond_card(db_conn, units_table, cards_table,
         }],
         'order': 'set',
         'max_options_to_show': 4,
+    }).run(db_conn)
+
+    cards_parameters_table.insert({
+        'entity_id': 'tyui4567'
     }).run(db_conn)
 
     units_table.insert({

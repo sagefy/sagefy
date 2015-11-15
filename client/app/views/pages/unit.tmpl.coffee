@@ -5,13 +5,7 @@ followButton = require('../components/follow_button.tmpl')
 entityHeader = require('../components/entity_header.tmpl')
 entityTopics = require('../components/entity_topics.tmpl')
 entityVersions = require('../components/entity_versions.tmpl')
-
-verbage = {
-    requires: 'Requires'
-    required_by: 'Required by'
-    belongs_to: 'Belongs to'
-}
-
+entityRelationships = require('../components/entity_relationships.tmpl')
 
 module.exports = (data) ->
     id = data.routeArgs[0]
@@ -35,20 +29,7 @@ module.exports = (data) ->
             li('Difficulty: ???')
         )
 
-        h2('Relationships')
-        ul(
-            for relation in unit.relationships
-                kind = if relation.kind is 'belongs_to' then 'set' else 'unit'
-                li(
-                    verbage[relation.kind]
-                    ': '
-                    a(
-                        {href: "/#{kind}s/#{relation.entity.id}"}
-                        relation.entity.name
-                    )
-                )
-        )
-
+        entityRelationships('unit', unit)
         entityTopics('unit', unit.entity_id, unit.topics)
         entityVersions('unit', unit.entity_id, unit.versions)
     )

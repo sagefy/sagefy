@@ -10,7 +10,23 @@ module.exports = store.add({
             data: {}
             done: (response) =>
                 @data.cards ?= {}
-                @data.cards[id] = response.card
+                card = response.card
+                ['topics', 'versions', 'card_parameters'].forEach((r) ->
+                    card[r] = response[r]
+                )
+                card.relationships = [{
+                    kind: 'belongs_to'
+                    entity: response.unit
+                }]
+                ['requires', 'required_by'].forEach((r) ->
+                    response[r].forEach((e) ->
+                        card.relationships.push({
+                            kind: r
+                            entity: e
+                        })
+                    )
+                )
+                @data.cards[id] = card
                 recorder.emit('get card', id)
             fail: (errors) =>
                 @data.errors = errors

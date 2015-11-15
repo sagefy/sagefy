@@ -1,7 +1,6 @@
 from modules.model import Model
 from modules.validations import is_required, is_list, is_string, is_one_of
 from models.mixins.entity import EntityMixin
-from models.card_parameters import CardParameters
 
 
 class Card(EntityMixin, Model):
@@ -13,8 +12,6 @@ class Card(EntityMixin, Model):
     or create other cards.
     """
     tablename = 'cards'
-
-    parametersCls = CardParameters
 
     schema = dict(EntityMixin.schema.copy(), **{
         'unit_id': {

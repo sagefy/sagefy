@@ -96,6 +96,11 @@ def cards_table(request, db_conn):
 
 
 @pytest.fixture
+def cards_parameters_table(request, db_conn):
+    return table('cards_parameters', request, db_conn)
+
+
+@pytest.fixture
 def units_table(request, db_conn):
     return table('units', request, db_conn)
 
