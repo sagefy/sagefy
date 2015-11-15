@@ -49,7 +49,7 @@ userSet = (data) ->
             h3(data.name)
             p(data.body)
             a(
-                {href: "/set/#{data.entity_id}/tree"}
+                {href: "/sets/#{data.entity_id}/tree"}
                 'View Units'
             )
         )

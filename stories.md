@@ -38,7 +38,7 @@ This document serves as a list of major use cases for Sagefy's functionality. It
 - [x] As a contributor to find my topic I want to search users, topics, and posts.
 - [ ] As a contributor to identity areas to work on I want to view card information.
 - [x] As a contributor to identify areas to work on I want to view unit information.
-- [ ] As a contributor to identify areas to work on I want to view set information.
+- [x] As a contributor to identify areas to work on I want to view set information.
 - [ ] As a contributor to improve Sagefy I want to propose changes.
 - [ ] As a contributor to help improve Sagefy I want to vote a on proposal.
 - [ ] As a contributor to get context I want to view an entity's change history.

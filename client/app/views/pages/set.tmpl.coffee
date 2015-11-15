@@ -1,36 +1,48 @@
-{div, h1} = require('../../modules/tags')
+{div, h1, p, h2, ul, li, a, i} = require('../../modules/tags')
 c = require('../../modules/content').get
+followButton = require('../components/follow_button.tmpl')
+entityHeader = require('../components/entity_header.tmpl')
+entityTopics = require('../components/entity_topics.tmpl')
+entityVersions = require('../components/entity_versions.tmpl')
+
 
 module.exports = (data) ->
-    return div({className: 'spinner'}) unless data.set
+    id = data.routeArgs[0]
+    set = data.sets?[id]
+
+    return div({className: 'spinner'}) unless set
+
+    following = data.follows?.find((f) -> f.entity.id is set.entity_id)
 
     return div(
-        {id: 'set', className: 'col-10'}
-        h1('Set')
+        {id: 'set', className: 'col-8 entity-page'}
+
+        # TODO Flag button
+        followButton('set', set.entity_id, data.follows)
+        entityHeader('set', set)
+
+        p({className: 'leading'}, set.body)
+
+        h2('Stats')
+        ul(
+            li('Number of Learners: ???')
+            li('Quality: ???')
+            li('Difficulty: ???')
+        )
+
+        h2('List of Units')
+        ul(
+            li(a(
+                {href: "/units/#{unit.entity_id}"}
+                unit.name
+            )) for unit in set.units
+        )
+        a(
+            {href: "/sets/#{set.entity_id}/tree"}
+            i({className: 'fa fa-tree'})
+            ' View Tree'
+        )
+
+        entityTopics('set', set.entity_id, set.topics)
+        entityVersions('set', set.entity_id, set.versions)
     )
-
-    # TODO@ show create topic button
-
-
-    # Follow button
-    # Flag button
-    # Entity name
-    # Entity kind and subkind
-    # Language
-    # Tags
-    # Contents
-        # Card - unique
-        # Unit body
-        # Set body, members
-    # Stats section
-        # Card - num learner, quality, diffulcty, guess, slip
-        # Unit - num learner, quality, difficulty
-        # Set - num learner, quality, difficulty
-    # Relationships (Card, Unit only)
-        # Belongs to, requires, required by
-    # Topics
-        # Name, posts, timeAgo
-        # See more
-    # Versions
-        # Name, status, timeAgo
-        # See More

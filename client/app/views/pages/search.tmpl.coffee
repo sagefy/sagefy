@@ -3,6 +3,8 @@
 c = require('../../modules/content').get
 {truncate, timeAgo, ucfirst} = require('../../modules/auxiliaries')
 
+# TODO@ populate using location query parameters
+
 module.exports = (data) ->
     loading = data.searchQuery and not data.searchResults
     asLearner = data.route.indexOf('as_learner') > -1

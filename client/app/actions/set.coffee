@@ -9,8 +9,12 @@ module.exports = store.add({
             url: "/s/sets/#{id}"
             data: {}
             done: (response) =>
+                set = response.set
                 @data.sets ?= {}
-                @data.sets[id] = response.set
+                @data.sets[id] = set
+                ['topics', 'versions', 'units'].forEach((r) ->
+                    set[r] = response[r]
+                )
                 recorder.emit('get set')
             fail: (errors) =>
                 @data.errors = errors

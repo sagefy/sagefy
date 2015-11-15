@@ -25,7 +25,7 @@ def get_set_route(request, set_id):
 
     return 200, {
         'set': set_.deliver(),
-        'set_parameters': set_.fetch_parameters(),
+        # 'set_parameters': set_.fetch_parameters(),
         'topics': [topic.deliver() for topic in topics],
         'versions': [version.deliver() for version in versions],
         'units': [unit.deliver() for unit in units],

@@ -85,7 +85,7 @@ routes = [{
     tmpl: require('./pages/my_sets.tmpl')
     title: 'My Sets'
 }, {
-    path: '/set/{id}/tree'
+    path: '/sets/{id}/tree'
     tmpl: require('./pages/tree.tmpl')
     title: 'Set Tree'
 }, {
