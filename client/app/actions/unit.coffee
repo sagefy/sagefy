@@ -32,7 +32,7 @@ module.exports = store.add({
                 @change()
         })
 
-    listUnitVersion: (id) ->
+    listUnitVersions: (id) ->
         ajax({
             method: 'GET'
             url: "/s/units/#{id}/versions"

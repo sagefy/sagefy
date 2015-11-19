@@ -34,7 +34,6 @@ require('./views/components/pagination.vnt')
 require('./views/components/post.vnt')
 require('./views/components/query.vnt')
 require('./views/components/tree.vnt')
-require('./views/components/version.vnt')
 
 require('./views/pages/card_learn.vnt')
 require('./views/pages/card.vnt')

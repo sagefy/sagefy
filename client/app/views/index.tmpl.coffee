@@ -73,7 +73,7 @@ routes = [{
     tmpl: require('./pages/set.tmpl')
     title: 'Set'
 }, {
-    path: /^\/(cards|units|sets)\/([\w\d]+)\/versions$/
+    path: /^\/(card|unit|set)s\/([\w\d-]+)\/versions$/
     tmpl: require('./pages/versions.tmpl')
     title: 'Versions'
 }, {

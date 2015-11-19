@@ -1,0 +1,16 @@
+#versions
+    .timeago
+        float right
+        margin-left $unit
+
+    > ul
+        @extend ul.unstyled
+
+        > li
+            padding $unit
+
+            &:nth-child(even)
+                background-color $base-color(97)
+
+    .avail, .language, .status
+        margin-right $unit

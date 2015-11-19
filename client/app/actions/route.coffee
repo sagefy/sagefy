@@ -1,6 +1,6 @@
 store = require('../modules/store')
 actions = store.actions
-{matchesRoute} = require('../modules/auxiliaries')
+{matchesRoute, ucfirst} = require('../modules/auxiliaries')
 
 store.add({
     onRoute: (path) ->
@@ -24,6 +24,8 @@ store.add({
         if args = matchesRoute(path, '/cards/{id}')
             actions.getCard(args[0])
             actions.askFollow(args[0])
+        if args = matchesRoute(path, '/{kind}s/{id}/versions')
+            actions["list#{ucfirst(args[0])}Versions"](args[1])
 
     openSettingsRoute: ->
         if not @data.currentUserID or not @data.users?[@data.currentUserID]
