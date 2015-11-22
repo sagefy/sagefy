@@ -36,9 +36,9 @@ escape = (str) ->
 # TODO move copy to content directory
 timeAgo = (str) ->
     diff = (new Date()).getTime() - (new Date(str)).getTime()
-    days = Math.floor(diff / 86400000)
-    hours = Math.floor(diff / 3600000)
-    minutes = Math.floor(diff / 60000)
+    days = Math.floor(diff / (24 * 60 * 60 * 1000))
+    hours = Math.floor(diff / (60 * 60 * 1000))
+    minutes = Math.floor(diff / (60 * 1000))
     return "#{days} days ago" if days > 1
     return 'Yesterday' if days is 1
     return "#{hours} hours ago" if hours > 1
