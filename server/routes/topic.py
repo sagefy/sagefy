@@ -6,12 +6,13 @@ Includes topics, posts, proposals, votes, and flags.
 from framework.routes import get, post, put, abort
 from models.topic import Topic
 from models.post import Post
+from models.user import User
 from framework.session import get_current_user
 from modules.util import omit, object_diff
 from modules.discuss import instance_post_facade, \
     get_post_facade, get_posts_facade
 from modules.content import get as c
-from modules.entity import create_entity, get_version
+from modules.entity import create_entity, get_version, get_latest_accepted
 
 # TODO most of this junk should be moved into the models and modules...
 #      these methods are waaay too complicated.
@@ -144,6 +145,11 @@ def get_posts_route(request, topic_id):
             'ref': 'pgnNbqSP1VUWkOYq8MVGPrSS',
         }
 
+    # Pull the entity
+    entity_kind = topic['entity']['kind']
+    entity = get_latest_accepted(entity_kind,
+                                 topic['entity']['id'])
+
     # Pull all kinds of posts
     posts = get_posts_facade(
         limit=request['params'].get('limit') or 10,
@@ -166,7 +172,23 @@ def get_posts_route(request, topic_id):
                                entity_version.deliver())
             diffs[post_['id']] = diff
 
-    return 200, {'posts': [p.deliver() for p in posts], 'diffs': diffs}
+    users = {}
+    for post_ in posts:
+        user_id = post_['user_id']
+        if user_id not in users:
+            user = User.get(id=user_id)
+            users[user_id] = {
+                'name': user['name'],
+                'avatar': user.get_avatar(48)
+            }
+
+    return 200, {
+        'topic': topic.deliver(),
+        'posts': [p.deliver() for p in posts],
+        'diffs': diffs,
+        entity_kind: entity.deliver(),
+        'users': users,
+    }
 
 
 @post('/s/topics/{topic_id}/posts')

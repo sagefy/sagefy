@@ -2,37 +2,29 @@ store = require('../modules/store')
 actions = store.actions
 {matchesRoute, ucfirst} = require('../modules/auxiliaries')
 
-store.add({
+routes = [
+    {path: '/settings', action: 'openSettingsRoute'}
+    {path: '/notices', action: 'listNotices'}
+    {path: '/users/{id}', action: 'openProfileRoute'}
+    {path: '/my_sets', action: 'listUserSets'}
+    {path: '/follows', action: 'listFollows'}
+    {path: '/units/{id}', action: 'openUnitRoute'}
+    {path: '/sets/{id}', action: 'openSetRoute'}
+    {path: '/cards/{id}', action: 'openCardRoute'}
+    {path: '/{kind}s/{id}/versions', action: 'openVersionsRoute'}
+    {path: '/topics/{id}', action: 'openTopicRoute'}
+]
+
+
+module.exports = store.add({
     onRoute: (path) ->
-        # TODO remove duplicated effort with index.tmpl
-        if path is '/settings'
-            actions.openSettingsRoute()
-        if path is '/notices'
-            actions.openNoticesRoute()
-        if args = matchesRoute(path, '/users/{id}')
-            actions.openProfileRoute(args[0])
-        if path is '/my_sets'
-            actions.listUserSets()
-        if path is '/follows'
-            actions.listFollows()
-        if args = matchesRoute(path, '/units/{id}')
-            actions.getUnit(args[0])
-            actions.askFollow(args[0])
-        if args = matchesRoute(path, '/sets/{id}')
-            actions.getSet(args[0])
-            actions.askFollow(args[0])
-        if args = matchesRoute(path, '/cards/{id}')
-            actions.getCard(args[0])
-            actions.askFollow(args[0])
-        if args = matchesRoute(path, '/{kind}s/{id}/versions')
-            actions["list#{ucfirst(args[0])}Versions"](args[1])
+        for route in routes
+            if args = matchesRoute(path, route.path)
+                return actions[route.action].apply(null, args)
 
     openSettingsRoute: ->
         if not @data.currentUserID or not @data.users?[@data.currentUserID]
             actions.getCurrentUser()
-
-    openNoticesRoute: ->
-        actions.listNotices()
 
     openProfileRoute: (id) ->
         actions.getUser(id, {
@@ -41,4 +33,23 @@ store.add({
             follows: true
             posts: true
         })
+
+    openUnitRoute: (id) ->
+        actions.getUnit(id)
+        actions.askFollow(id)
+
+    openSetRoute: (id) ->
+        actions.getSet(id)
+        actions.askFollow(id)
+
+    openCardRoute: (id) ->
+        actions.getCard(id)
+        actions.askFollow(id)
+
+    openVersionsRoute: (kind, id) ->
+        actions["list#{ucfirst(kind)}Versions"](id)
+
+    openTopicRoute: (id) ->
+        actions.listPosts(id)
+        actions.askFollow(id)
 })

@@ -23,13 +23,14 @@ This document serves as a list of major use cases for Sagefy's functionality. It
 - [x] As a contributor to stay on top of things I want to view my notices
 - [x] As a contributor to manage my notices I want to mark a notice as read.
 - [x] As a contributor to help guide my interactions with other users I want to view a user profile.
+- [x] As a contributor to know the latest conversation I want to read a topic.
 - [ ] As a contributor to collaborate with others I want to start a topic.
 - [ ] As a contributor to participate I want to write a post.
 - [ ] As a contributor to keep it relevant I want to edit my post.
 - [ ] As a contributor to forward the conversation I want to reply to a post.
 - [ ] As a contributor to promote relevant information I want to share a post.
 - [ ] As a contributor to keep the discussion on track I want to flag a post.
-- [ ] As a contributor to stay with a discussion I want to follow a topic.
+- [x] As a contributor to stay with a discussion I want to follow a topic.
 
 ### 3) Contribution
 

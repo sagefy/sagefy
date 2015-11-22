@@ -11,6 +11,7 @@ from framework.mail import send_mail
 from framework.elasticsearch import es
 import urllib
 import hashlib
+import rethinkdb as r
 
 
 def encrypt_password(value):
@@ -33,10 +34,19 @@ def get_avatar(email, size=24):
     return gravatar_url
 
 
+def update_modified(field):
+    return r.now()
+
+
 class User(Model):
     tablename = 'users'
 
     schema = dict(Model.schema.copy(), **{
+        'modified': {
+            'default': r.now(),
+            'bundle': update_modified,
+            'access': ('private',),
+        },
         'name': {
             'validate': (is_required, is_string,),
             'unique': True,
@@ -54,6 +64,7 @@ class User(Model):
         'settings': {
             'validate': (is_required,),
             'default': {},
+            'access': ('private',),
             'embed': {
                 'email_frequency': {
                     'validate': (is_required, is_string, (

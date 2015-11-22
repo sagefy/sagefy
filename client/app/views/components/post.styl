@@ -30,39 +30,47 @@ example: |
 */
 
 .post
-    @extend .row
+    padding $unit 0
 
     &:hover
         background $base-color(97)
 
 .post__avatar
-    @extend .col-1
-    padding $unit 0
+    float left
+
+    a
+        border-bottom none
 
 .post__content
-    @extend .col-7
+    margin-left $unit * 5
 
 .post__name
-    color $base-color(43)
+    color $base-color(60)
     margin 0
+    border-bottom none
 
 .post__when
     float right
     @extend .font-size-small
     color $base-color(66)
-    margin 0 $unit $unit 0
+    margin 0 0 $unit $unit
 
 .post__footer
     @extend .font-size-small
     opacity 0.2
-    margin-top -1 * $unit
     transition opacity 0.2s linear
+    text-align right
 
     .post:hover &
         opacity 1
 
     a
-        margin-right $unit
+        margin-left $unit
+
+.post__in-reply
+    @extend .font-size-small
+    @extend .label
+    border-bottom none
 
 /*
 ---

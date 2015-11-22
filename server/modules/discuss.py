@@ -9,6 +9,7 @@ from models.vote import Vote
 from models.flag import Flag
 import framework.database as database
 from modules.util import omit
+import rethinkdb as r
 
 
 def instance(data):
@@ -44,6 +45,7 @@ def get_posts_facade(limit=10, skip=0, **params):
 
     data = (Post.table
                 .filter(params)
+                .order_by(r.asc('created'))
                 .skip(skip)
                 .limit(limit)
                 .run(database.db_conn))

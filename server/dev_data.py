@@ -432,8 +432,8 @@ for topic in topics:
         'modified': r.time(2014, 1, 1, 'Z'),
         'user_id': 'doris',
         'topic_id': 'basic-math-posts',
-        'body': 'OMG basic math is such learning funness.' +
-                'I dream about math all day long.' +
+        'body': 'OMG basic math is such learning funness. ' +
+                'I dream about math all day long. ' +
                 'What could be better?',
         'kind': 'post',
         'replies_to_id': None,

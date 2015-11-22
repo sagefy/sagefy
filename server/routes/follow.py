@@ -3,6 +3,7 @@ from models.follow import Follow
 from framework.session import get_current_user
 from modules.entity import get_latest_accepted
 from modules.entity import flush_entities
+from models.topic import Topic
 
 
 @get('/s/follows')
@@ -51,8 +52,11 @@ def follow_route(request):
         }
 
     # Ensure the entity exists   TODO should this be a model validation?
-    entity = get_latest_accepted(follow['entity']['kind'],
-                                 follow['entity']['id'])
+    if follow['entity']['kind'] == 'topic':
+        entity = Topic.get(id=follow['entity']['id'])
+    else:
+        entity = get_latest_accepted(follow['entity']['kind'],
+                                     follow['entity']['id'])
     if not entity:
         return abort(404)
 

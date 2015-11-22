@@ -9,9 +9,32 @@ module.exports = store.add({
             url: "/s/topics/#{id}/posts"
             data: {}
             done: (response) =>
-                @data.posts = response.posts
+                @data.topics ?= {}
+                @data.topics[id] = response.topic
+
+                @data.topicPosts ?= {}
+                @data.topicPosts[id] ?= []
+                posts = response.posts
+                for post in posts
+                    user = response.users[post.user_id]
+                    post.user_name = user.name
+                    post.user_avatar = user.avatar
+                @data.topicPosts[id] = posts
+
+                if 'card' of response
+                    @data.cards ?= {}
+                    @data.cards[response.card.entity_id] = response.card
+
+                else if 'unit' of response
+                    @data.units ?= {}
+                    @data.units[response.unit.entity_id] = response.unit
+
+                else if 'set' of response
+                    @data.sets ?= {}
+                    @data.sets[response.set.entity_id] = response.set
+
                 # TODO merge based on id and created  x topic
-                recorder.emit('list posts')
+                recorder.emit('list posts', id)
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on list posts', errors)
