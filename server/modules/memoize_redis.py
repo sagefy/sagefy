@@ -3,7 +3,7 @@ from framework.redis import redis
 from modules.util import json_serial
 
 
-def memoize_redis(key, fn,  *args, time=24 * 60 * 60, **kwargs):
+def memoize_redis(key, fn, time=24 * 60 * 60, *args, **kwargs):
     """
     Memoize the results of a function into Redis.
     """

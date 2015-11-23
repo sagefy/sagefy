@@ -34,6 +34,8 @@ def choose_card(user, unit):
     Return a card instance.
     """
 
+    # TODO simplify this method
+
     unit_id = unit['entity_id']
     query = (Card.start_accepted_query()
                  .filter({'unit_id': unit_id})

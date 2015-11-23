@@ -25,10 +25,11 @@ This document serves as a list of major use cases for Sagefy's functionality. It
 - [x] As a contributor to help guide my interactions with other users I want to view a user profile.
 - [x] As a contributor to know the latest conversation I want to read a topic.
 - [ ] As a contributor to collaborate with others I want to start a topic.
+- [ ] As a contributor to reflect recent activity I want to change the name of my topic.
 - [ ] As a contributor to participate I want to write a post.
 - [ ] As a contributor to keep it relevant I want to edit my post.
 - [ ] As a contributor to forward the conversation I want to reply to a post.
-- [ ] As a contributor to promote relevant information I want to share a post.
+- [x] As a contributor to promote relevant information I want to share a post.
 - [ ] As a contributor to keep the discussion on track I want to flag a post.
 - [x] As a contributor to stay with a discussion I want to follow a topic.
 
@@ -41,7 +42,8 @@ This document serves as a list of major use cases for Sagefy's functionality. It
 - [x] As a contributor to identify areas to work on I want to view unit information.
 - [x] As a contributor to identify areas to work on I want to view set information.
 - [x] As a contributor to get context I want to view an entity's change history.
-- [ ] As a contributor to improve Sagefy I want to propose changes.
+- [ ] As a contributor to improve Sagefy I want to propose a new entity.
+- [ ] As a contributor to improve Sagefy I want to propose changes to an existing entity.
 - [ ] As a contributor to help improve Sagefy I want to vote a on proposal.
 
 ### 4) Learn

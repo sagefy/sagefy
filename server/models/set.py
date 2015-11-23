@@ -54,6 +54,8 @@ class Set(EntityMixin, Model):
     def list_by_unit_id(cls, unit_id):
         """
         Get a list of sets which contain the given member ID. Recursive.
+
+        # TODO is there a way to simplify this method?
         """
 
         def _():
@@ -91,6 +93,8 @@ class Set(EntityMixin, Model):
         Get the list of units contained within the set. Recursive. Connecting.
 
         TODO OMG break into smaller functions
+        TODO Should this method be part of the Unit class/module,
+             as it returns units?
         """
 
         def _():

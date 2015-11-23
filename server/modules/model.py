@@ -5,6 +5,9 @@ from modules.content import get as c
 from modules.classproperty import classproperty
 from copy import deepcopy
 
+# TODO Remove OOP based model. Instead, just use simple functions,
+#      preferring pure functions where possible.
+
 
 def update_modified(field):
     return r.now()

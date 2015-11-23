@@ -22,6 +22,7 @@ def get_follows_route(request):
         'follows': [follow.deliver(access='private') for follow in follows]
     }
 
+    # TODO SPLITUP should this be a different endpoint?
     if 'entities' in request['params']:
         entities = flush_entities(follow['entity'] for follow in follows)
         output['entities'] = [entity.deliver() if entity else None
@@ -35,6 +36,8 @@ def follow_route(request):
     """
     Follow a card, unit, or set.
     """
+
+    # TODO simplify this method. does some of this belong in the model?
 
     current_user = get_current_user(request)
     if not current_user:

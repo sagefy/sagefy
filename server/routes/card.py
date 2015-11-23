@@ -27,6 +27,7 @@ def get_card_route(request, card_id):
     if not unit:
         return abort(404)
 
+    # TODO SPLITUP create new endpoints for these instead
     topics = Topic.list_by_entity_id(entity_id=card_id)
     versions = Card.get_versions(entity_id=card_id)
     requires = Card.list_requires(entity_id=card_id)
@@ -105,6 +106,9 @@ def respond_to_card_route(request, card_id):
         -> GET Choose Unit     ...when ready, but still units
         -> GET View Set Tree   ...when ready and done
     """
+
+    # TODO simplify this method.
+    #      perhaps smaller methods or move to model layer?
 
     current_user = get_current_user(request)
     if not current_user:

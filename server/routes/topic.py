@@ -172,23 +172,28 @@ def get_posts_route(request, topic_id):
                                entity_version.deliver())
             diffs[post_['id']] = diff
 
+    # TODO SPLITUP create new endpoint for this instead
     users = {}
     for post_ in posts:
         user_id = post_['user_id']
         if user_id not in users:
             user = User.get(id=user_id)
-            users[user_id] = {
-                'name': user['name'],
-                'avatar': user.get_avatar(48)
-            }
+            if user:
+                users[user_id] = {
+                    'name': user['name'],
+                    'avatar': user.get_avatar(48)
+                }
 
-    return 200, {
+    # TODO SPLITUP create new endpoints for these instead
+    output = {
         'topic': topic.deliver(),
         'posts': [p.deliver() for p in posts],
         'diffs': diffs,
-        entity_kind: entity.deliver(),
         'users': users,
     }
+    if entity:
+        output[entity_kind] = entity.deliver()
+    return 200, output
 
 
 @post('/s/topics/{topic_id}/posts')

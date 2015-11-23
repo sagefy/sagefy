@@ -19,6 +19,7 @@ def get_set_route(request, set_id):
     if not set_:
         return abort(404)
 
+    # TODO SPLITUP create new endpoints for these instead
     topics = Topic.list_by_entity_id(entity_id=set_id)
     versions = Set.get_versions(entity_id=set_id)
     units = set_.list_units()
@@ -63,6 +64,7 @@ def get_set_tree_route(request, set_id):
             (Unit auto chosen)
 
     TODO merge with get_set_units_route
+    TODO simplify this method
     """
 
     current_user = get_current_user(request)
@@ -136,6 +138,8 @@ def get_set_units_route(request, set_id):
         -> POST Choose Unit
     """
 
+    # TODO simplify this method. should it be part of the models?
+
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
@@ -174,6 +178,8 @@ def choose_unit_route(request, set_id, unit_id):
     POST Chosen Unit
         -> GET Learn Card
     """
+
+    # TODO simplify this method. should it be broken up or moved to model?
 
     current_user = get_current_user(request)
     if not current_user:

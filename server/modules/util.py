@@ -114,6 +114,7 @@ def object_diff(prev, next_):
             if p[key] != n[key]:
                 if isinstance(value, collections.Mapping):
                     _(p[key], n[key], pre + key + '.')
+                # TODO handle lists/tuples
                 else:
                     diffs.add(pre + key)
 
