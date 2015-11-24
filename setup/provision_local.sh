@@ -23,8 +23,7 @@ sudo apt-get -y install python3-dev
 sudo apt-get -y install python3-setuptools
 sudo apt-get -y install python3-pip
 sudo pip3 install -r /var/www/server/requirements.txt
-sudo pip3 install pytest
-sudo pip3 install coverage
+sudo pip3 install pytest coverage flake8
 
 #### Rethink ##################################################################
 

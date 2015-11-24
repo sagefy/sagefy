@@ -13,6 +13,7 @@ routes = [
     {path: '/cards/{id}', action: 'openCardRoute'}
     {path: '/{kind}s/{id}/versions', action: 'openVersionsRoute'}
     {path: '/topics/{id}', action: 'openTopicRoute'}
+    {path: '/sets/{id}/tree', action: 'openTreeRoute'}
 ]
 
 
@@ -52,4 +53,7 @@ module.exports = store.add({
     openTopicRoute: (id) ->
         actions.listPosts(id)
         actions.askFollow(id)
+
+    openTreeRoute: (id) ->
+        actions.getSetTree(id)
 })

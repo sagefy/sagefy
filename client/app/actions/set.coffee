@@ -43,11 +43,12 @@ module.exports = store.add({
     getSetTree: (id) ->
         ajax({
             method: 'GET'
-            url: '/s/sets/{set_id}/tree'
+            url: "/s/sets/#{id}/tree"
             data: {}
             done: (response) =>
-                # @data
-                recorder.emit('get set tree')
+                @data.setTrees ?= {}
+                @data.setTrees[id] = response
+                recorder.emit('get set tree', id)
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on get set tree', errors)
