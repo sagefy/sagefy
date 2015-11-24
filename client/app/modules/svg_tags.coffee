@@ -2,7 +2,7 @@ h = require('virtual-dom/virtual-hyperscript/svg')
 
 # https://developer.mozilla.org/en-US/docs/Web/SVG/Element
 names = [
-    'svg', 'defs', 'circle', 'marker', 'path', 'line', 'text', 'rect'
+    'svg', 'circle', 'line', 'text'
 ]
 
 tags = {}

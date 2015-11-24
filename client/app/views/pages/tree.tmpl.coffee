@@ -1,19 +1,21 @@
-{div, h1} = require('../../modules/tags')
-{svg, circle, line, text, rect} = require('../../modules/svg_tags')
+{div, h1, strong} = require('../../modules/tags')
+{svg, circle, line, text} = require('../../modules/svg_tags')
 {copy} = require('../../modules/utilities')
 
-# TODO@ Set Progress (or num learner & quality if contrib)
-# TODO@ Click Units:
-# TODO@ - Unit name
-# TODO@ - Link to unit (not learner)
-# TODO@ - Progress, state
-# TODO@ Responsive
-# TODO Pan
-# TODO Zoom
+
+###
+TODO@
+If learner:
+    Set progress
+    Nodes colored by status
+
+If contrib:
+    Link to set page
+###
+
 
 radius = 9
 distance = 36
-gap = 3
 
 module.exports = (data) ->
     id = data.routeArgs[0]
@@ -25,8 +27,12 @@ module.exports = (data) ->
     nodeHeight = layers.length
     nodeWidth = Math.max.apply(null, layers.map((l) -> l.length))
     width = nodeWidth * radius * 2 + (nodeWidth + 1) * distance
+    width += 12 * (6 * 2 + 5) if data.currentTreeUnit
     height = nodeHeight * radius * 2 + (nodeHeight + 1) * distance
     layers = calculatePoints(layers, nodeWidth)
+
+    currentUnit = treeData.units.find((u) ->
+        u.entity_id is data.currentTreeUnit)
 
     return div(
         {id: 'tree', className: 'col-10'}
@@ -41,20 +47,20 @@ module.exports = (data) ->
                 height: height
             }
 
-            renderLayers(layers)
+            renderLayers(layers, currentUnit)
         )
     )
 
 putUnitsInLayers = (units) ->
+    ids = (unit.entity_id for unit in units)
+
     us = ({
         id: unit.entity_id
-        requires: copy(unit.require_ids)
+        requires: unit.require_ids.filter((id) -> id in ids)
     } for unit in units)
 
     layers = []
     layer = 0
-
-    # TODO@ what if theres a require_id not in the list of units?
 
     while us.length
         for i, u of us
@@ -87,7 +93,7 @@ calculatePoints = (layers, nodeWidth) ->
             unit.y = i * (distance + radius * 2) + distance + radius
     return layers
 
-renderLayers = (layers) ->
+renderLayers = (layers, currentUnit) ->
     nodes = []
     # This is done twice to ensure a line never covers over a circle
     for i, layer of layers
@@ -102,7 +108,19 @@ renderLayers = (layers) ->
                 ))
     for i, layer of layers
         for unit in layer
-            nodes.push(unitPoint(unit.x, unit.y))
+            nodes.push(unitPoint(unit, currentUnit?.entity_id))
+    if currentUnit
+        for i, layer of layers
+            for unit in layer
+                if unit.id is currentUnit.entity_id
+                    nodes.push(text(
+                        {
+                            class: 'tree__current-unit'
+                            x: unit.x + radius + 6
+                            y: unit.y + 6
+                        }
+                        currentUnit.name
+                    ))
     return nodes
 
 findUnit = (layers, id) ->
@@ -111,14 +129,26 @@ findUnit = (layers, id) ->
             if unit.id is id
                 return unit
 
-unitPoint = (x, y) ->
-    return circle({cx: x, cy: y, r: radius})
+findLayer = (layers, id) ->
+    for i, layer of layers
+        for unit in layer
+            if unit.id is id
+                return i
+
+unitPoint = ({id, x, y}, currentTreeUnit) ->
+    return circle({
+        class: if currentTreeUnit is id then 'selected'
+        id: id
+        cx: x
+        cy: y
+        r: radius
+    })
 
 unitLine = (x1, y1, x2, y2) ->
     return line({
         x1: x1
-        y1: y1 + radius + gap
+        y1: y1
         x2: x2
-        y2: y2 - radius - gap
+        y2: y2
         'stroke-width': 2
     })

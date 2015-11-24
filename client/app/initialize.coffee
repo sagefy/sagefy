@@ -50,6 +50,7 @@ require('./views/pages/settings.vnt')
 require('./views/pages/sign_up.vnt')
 require('./views/pages/topic_form.vnt')
 require('./views/pages/topic.vnt')
+require('./views/pages/tree.vnt')
 require('./views/pages/unit.vnt')
 
 # Log all recorder events to the console and analytics

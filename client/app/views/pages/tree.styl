@@ -1,13 +1,30 @@
+#tree
+    text-align center
+
 .tree
+    vertical-align top
     background $accent-color(45)
     box-shadow 0 0 10px $accent-color(45)
     border-radius $border-radius
 
     circle
-        fill $base-color(97)
+        stroke $base-color(75)
+        stroke-width 2px
+        fill $accent-color(45)
+        cursor pointer
+
+        &:hover
+            stroke $base-color(80)
+
+        &.selected
+            fill $base-color(97)
+            stroke $base-color(80)
 
     path
         fill $accent-color(70)
 
     line
         stroke $accent-color(70)
+
+.tree__current-unit
+    fill $good-color(97)

@@ -56,6 +56,10 @@ module.exports = store.add({
                 @change()
         })
 
+    selectTreeUnit: (id) ->
+        @data.currentTreeUnit = id
+        @change()
+
     getSetUnits: (id) ->
         ajax({
             method: 'GET'
