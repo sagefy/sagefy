@@ -65,6 +65,7 @@ def get_set_tree_route(request, set_id):
 
     TODO merge with get_set_units_route
     TODO simplify this method
+    TODO@ contributor/public view as well
     """
 
     current_user = get_current_user(request)
@@ -124,6 +125,7 @@ def get_set_tree_route(request, set_id):
             'diagnose': [u['entity_id'] for u in buckets['diagnose']],
             'review': [u['entity_id'] for u in buckets['review']],
             'learn': [u['entity_id'] for u in buckets['learn']],
+            'done': [u['entity_id'] for u in buckets['done']],
         },
     }
 

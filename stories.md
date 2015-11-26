@@ -50,10 +50,10 @@ This document serves as a list of major use cases for Sagefy's functionality. It
 
 - [ ] As a learner to perform relevant actions I want the menu to show items relevant to my selected set.
 - [ ] As a learner to perform relevant actions I want the menu to show items relevant to my current unit and card.
-- [ ] As a learner to manage my sets (courses) I want to view the list of my sets.
-- [ ] As a learner to find new sets I want to search through sets.
-- [ ] As a learner to start new courses I want to add a set to my sets.
-- [ ] As a learner to evaluate sets I might add I want to view units in the set.
+- [x] As a learner to manage my sets (courses) I want to view the list of my sets.
+- [x] As a learner to find new sets I want to search through sets.
+- [x] As a learner to start new courses I want to add a set to my sets.
+- [x] As a learner to evaluate sets I might add I want to view units in the set.
 - [ ] As a learner to stay motivated I want to see my progress in the set.
 - [ ] As a learner to feel in control of my learning I want to choose which unit to work on next.
 - [ ] As a learner to learn I want to use a (non-assessment) card.

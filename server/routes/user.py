@@ -15,12 +15,14 @@ def _log_in(user):
     """
 
     session_id = log_in_user(user)
-    return 200, {
-        'user': user.deliver(access='private'),
-        'cookies': {
-            'session_id': session_id
-        },
-    }
+    if session_id:
+        return 200, {
+            'user': user.deliver(access='private'),
+            'cookies': {
+                'session_id': session_id
+            },
+        }
+    return abort(401)
 
 
 @get('/s/users/current')
