@@ -146,7 +146,10 @@ r.setResult = (result, asLearner = false) ->
         truncate(result._source.body, 40)
         ' ' if asLearner
         a(
-            {href: "/sets/#{result._source.id}/tree", className: 'view-units'}
+            {
+                href: "/sets/#{result._source.entity_id}/tree"
+                className: 'view-units'
+            }
             'View Units'
         ) if asLearner
     ]
