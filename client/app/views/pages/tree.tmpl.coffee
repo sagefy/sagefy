@@ -58,6 +58,9 @@ module.exports = (data) ->
         )
     )
 
+    # TODO@ if matchesRoute(data.next.path, '/s/sets/{id}/units')
+    #           @actions.route("/sets/#{id}/choose_unit")
+
 renderLayers = (layers, currentUnit, preWidth, buckets) ->
     nodes = []
     # TODO break into smaller functions, and there's lots of repetition..

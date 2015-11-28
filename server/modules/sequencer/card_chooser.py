@@ -42,8 +42,12 @@ def choose_card(user, unit):
                  .sample(10))  # TODO index
     # TODO does this belong as a model method?
     # TODO is the sample value decent?
+    # TODO has the learner seen this card recently?
 
     cards = [Card(d) for d in query.run(database.db_conn)]
+    if not len(cards):
+        return None
+
     shuffle(cards)
     assessment, nonassessment = partition(cards, lambda c: c.has_assessment())
 
@@ -68,6 +72,10 @@ def choose_card(user, unit):
                 return card
         return assessment[0]
 
-    if not len(nonassessment):
+    if len(nonassessment):
+        return nonassessment[0]
+
+    if len(assessment):
         return assessment[0]
-    return nonassessment[0]
+
+    return None

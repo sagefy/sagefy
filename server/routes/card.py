@@ -68,18 +68,18 @@ def learn_card_route(request, card_id):
     if context.get('unit', {}).get('entity_id') != card['unit_id']:
         return abort(400)
 
-    next = {
+    next_ = {
         'method': 'POST',
         'path': '/s/cards/{card_id}/responses'
                 .format(card_id=card['entity_id'])
     }
-    current_user.set_learning_context(card=card.data, next=next)
+    current_user.set_learning_context(card=card.data, next=next_)
 
     return 200, {
         'card': card.deliver(access=''),
         'set': context.get('set'),
         'unit': context.get('unit'),
-        'next': next,
+        'next': next_,
     }
 
 
@@ -145,31 +145,31 @@ def respond_to_card_route(request, card_id):
         if buckets['diagnose']:
             unit = buckets['diagnose'][0]
             next_card = choose_card(current_user, unit)
-            next = {
+            next_ = {
                 'method': 'GET',
                 'path': '/s/cards/{card_id}/learn'
                         .format(card_id=next_card['id']),
             }
             current_user.set_learning_context(
-                card=next_card, unit=unit, next=next)
+                card=next_card, unit=unit, next=next_)
 
         # If there are units to be learned or reviewed...
         elif buckets['learn'] or buckets['review']:
-            next = {
+            next_ = {
                 'method': 'GET',
                 'path': '/s/sets/{set_id}/units'
                         .format(set_id=set_.get('entity_id')),
             }
-            current_user.set_learning_context(card=None, unit=None, next=next)
+            current_user.set_learning_context(card=None, unit=None, next=next_)
 
         # If we are out of units...
         else:
-            next = {
+            next_ = {
                 'method': 'GET',
                 'path': '/s/sets/{set_id}/tree'
                         .format(set_id=set_.get('entity_id')),
             }
-            current_user.set_learning_context(card=None, unit=None, next=next)
+            current_user.set_learning_context(card=None, unit=None, next=next_)
 
     # If we are still reviewing, learning or diagnosing this unit...
     else:
@@ -177,15 +177,15 @@ def respond_to_card_route(request, card_id):
         next_card = {
             'id': '1234'
         }
-        next = {
+        next_ = {
             'method': 'GET',
             'path': '/s/cards/{card_id}/learn'
                     .format(card_id=next_card['id']),
         }
-        current_user.set_learning_context(card=next_card, next=next)
+        current_user.set_learning_context(card=next_card, next=next_)
 
     return 200, {
         'response': response.deliver(),
         'feedback': feedback,
-        'next': next,
+        'next': next_,
     }

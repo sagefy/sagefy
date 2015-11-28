@@ -43,9 +43,11 @@ module.exports = store.add({
             method: 'PUT'
             url: "/s/users/#{userID}/sets/#{setID}"
             data: {}
-            done: (response) ->
-                # @data  TODO
+            done: (response) =>
+                @actions.route("/sets/#{setID}/tree")
                 recorder.emit('choose set', setID)
+                recorder.emit('next', response.next)
+                @data.next = response.next
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on choose set', errors)

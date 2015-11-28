@@ -55,7 +55,7 @@ This document serves as a list of major use cases for Sagefy's functionality. It
 - [x] As a learner to start new courses I want to add a set to my sets.
 - [x] As a learner to evaluate sets I might add I want to view units in the set.
 - [ ] As a learner to stay motivated I want to see my progress in the set.
-- [ ] As a learner to feel in control of my learning I want to choose which unit to work on next.
+- [x] As a learner to feel in control of my learning I want to choose which unit to work on next.
 - [ ] As a learner to learn I want to use a (non-assessment) card.
 - [ ] As a learner to learn I want to use an assessment type card.
 - [ ] As a learner to stay motivated I want to see my progress in the unit as I work on cards.

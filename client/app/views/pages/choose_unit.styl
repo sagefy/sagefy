@@ -1,0 +1,24 @@
+#choose-unit
+    .units
+        list-style none
+        padding 0
+
+        .engage
+            float left
+
+        > li
+            padding $unit
+
+            > div
+                margin-left cols(2)
+
+            h3
+                display inline-block
+                margin-right $unit
+
+        li:nth-child(even)
+            background $base-color(97)
+
+    .recommended
+        background $good-color(95)
+        border-radius $border-radius

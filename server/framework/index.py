@@ -39,10 +39,15 @@ def serve(environ, start_response):
     code, data = call_handler(environ)
     close_db_connection()
     response_headers = [('Content-Type', 'application/json; charset=utf-8')]
-    response_headers += set_cookie_headers(data.pop('cookies', {}))
+    if isinstance(data, dict):
+        response_headers += set_cookie_headers(data.pop('cookies', {}))
     status = str(code) + ' ' + status_codes.get(code, 'Unknown')
     start_response(status, response_headers)
-    body = json.dumps(data, default=json_serial, ensure_ascii=False).encode()
+    if isinstance(data, str):
+        body = data.encode()
+    elif isinstance(data, dict):
+        body = json.dumps(data, default=json_serial, ensure_ascii=False)
+        body = body.encode()
     return [body]
 
 
@@ -65,12 +70,9 @@ def call_handler(environ):
     try:
         return handler(request=construct_request(environ), **parameters)
 
-    except Exception as e:
+    except Exception:
         if config['debug']:
-            return 500, {'errors': [{
-                'message': str(e),
-                'stack': format_exc()
-            }]}
+            return 500, format_exc()
         return abort(500)
 
 

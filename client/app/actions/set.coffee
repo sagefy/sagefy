@@ -1,6 +1,7 @@
 store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
+{matchesRoute} = require('../modules/auxiliaries')
 
 module.exports = store.add({
     getSet: (id) ->
@@ -49,6 +50,9 @@ module.exports = store.add({
                 @data.setTrees ?= {}
                 @data.setTrees[id] = response
                 recorder.emit('get set tree', id)
+                if response.next?.path
+                    recorder.emit('next', response.next)
+                    @data.next = response.next
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on get set tree', errors)
@@ -66,9 +70,10 @@ module.exports = store.add({
             url: "/s/sets/#{id}/units"
             data: {}
             done: (response) =>
-                @data.trees ?= {}
-                @data.trees[id] = response.set
-                recorder.emit('get set units')
+                @data.chooseUnit = response
+                recorder.emit('get set units', id)
+                recorder.emit('next', response.next)
+                @data.next = response.next
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on get set units', errors)
@@ -82,8 +87,9 @@ module.exports = store.add({
             url: "/s/sets/#{setId}/units/#{unitId}"
             data: {}
             done: (response) =>
-                # @data TODO
-                recorder.emit('choose unit')
+                recorder.emit('choose unit', setId, unitId)
+                @data.next = response.next
+                # TODO@ handle route to card
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on choose unit', errors)

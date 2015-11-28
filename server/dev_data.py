@@ -7,6 +7,7 @@ from passlib.hash import bcrypt
 from modules.sequencer.params import precision
 from modules.util import json_prep, pick
 from models.user import get_avatar
+from sys import argv
 
 setup_db()
 make_db_connection()
@@ -674,9 +675,49 @@ for post in posts:
 
 # id, created, modified
 # user_id, card_id, unit_id, response, score, learned
-# (database.db.table('responses')
-#     .insert([{
-#     }])
-#     .run(database.db_conn))
+if argv[1] == 'learn_mode':
+    (database.db.table('responses')
+        .insert([{
+            'id': 'response1',
+            'created': r.now(),
+            'modified': r.now(),
+            'user_id': 'doris',
+            'card_id': 'plus-choice-a',
+            'unit_id': 'plus',
+            'response': 1,
+            'score': 1,
+            'learned': 1,
+        }, {
+            'id': 'response2',
+            'created': r.now(),
+            'modified': r.now(),
+            'user_id': 'doris',
+            'card_id': 'minus-choice-a',
+            'unit_id': 'minus',
+            'response': 1,
+            'score': 1,
+            'learned': 0.5,
+        }, {
+            'id': 'response3',
+            'created': r.now(),
+            'modified': r.now(),
+            'user_id': 'doris',
+            'card_id': 'times-choice-a',
+            'unit_id': 'times',
+            'response': 1,
+            'score': 1,
+            'learned': 1,
+        }, {
+            'id': 'response4',
+            'created': r.now(),
+            'modified': r.now(),
+            'user_id': 'doris',
+            'card_id': 'slash-choice-a',
+            'unit_id': 'slash',
+            'response': 1,
+            'score': 1,
+            'learned': 0.5
+        }])
+        .run(database.db_conn))
 
 close_db_connection()

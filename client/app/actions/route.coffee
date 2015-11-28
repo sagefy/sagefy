@@ -14,6 +14,7 @@ routes = [
     {path: '/{kind}s/{id}/versions', action: 'openVersionsRoute'}
     {path: '/topics/{id}', action: 'openTopicRoute'}
     {path: '/sets/{id}/tree', action: 'openTreeRoute'}
+    {path: '/sets/{id}/choose_unit', action: 'openChooseUnit'}
 ]
 
 
@@ -56,4 +57,7 @@ module.exports = store.add({
 
     openTreeRoute: (id) ->
         actions.getSetTree(id)
+
+    openChooseUnit: (setID) ->
+        actions.getSetUnits(setID)
 })

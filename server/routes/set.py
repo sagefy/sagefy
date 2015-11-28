@@ -73,10 +73,11 @@ def get_set_tree_route(request, set_id):
     set_ = Set.get(entity_id=set_id)
     units = set_.list_units()
     buckets = traverse(current_user, set_)
+    next_ = {}
 
     # If we are just previewing, don't update anything
     if set_id != context.get('set', {}).get('entity_id'):
-        next_ = {}
+        pass
 
     # When in diagnosis, choose the unit and card automagically.
     elif buckets['diagnose']:
@@ -87,7 +88,7 @@ def get_set_tree_route(request, set_id):
             'path': '/s/cards/{card_id}/learn'
                     .format(card_id=card['entity_id']),
         }
-        current_user.set_learning_context(next=next, unit=unit, card=card)
+        current_user.set_learning_context(next=next_, unit=unit, card=card)
 
     # When in learn mode, lead me to choose a unit.
     elif buckets['review']:
@@ -96,7 +97,7 @@ def get_set_tree_route(request, set_id):
             'path': '/s/sets/{set_id}/units'
                     .format(set_id=set_id),
         }
-        current_user.set_learning_context(next=next)
+        current_user.set_learning_context(next=next_)
 
     # When in learn mode, lead me to choose a unit.
     elif buckets['learn']:
@@ -105,7 +106,7 @@ def get_set_tree_route(request, set_id):
             'path': '/s/sets/{set_id}/units'
                     .format(set_id=set_id),
         }
-        current_user.set_learning_context(next=next)
+        current_user.set_learning_context(next=next_)
 
     # If the set is complete, lead the learner to choose another set.
     else:
@@ -114,7 +115,7 @@ def get_set_tree_route(request, set_id):
             'path': '/s/users/{user_id}/sets'
                     .format(user_id=current_user['id']),
         }
-        current_user.set_learning_context(next=next, unit=None, set=None)
+        current_user.set_learning_context(next=next_, unit=None, set=None)
 
     # For the menu, it must return the name and ID of the set
     return 200, {
@@ -147,13 +148,13 @@ def get_set_units_route(request, set_id):
         return abort(401)
 
     context = current_user.get_learning_context()
-    next = {
+    next_ = {
         'method': 'POST',
         'path': '/s/sets/{set_id}/units/{unit_id}'
                   .format(set_id=context.get('set', {}).get('entity_id'),
                           unit_id='{unit_id}'),
     }
-    current_user.set_learning_context(next=next)
+    current_user.set_learning_context(next=next_)
 
     set_ = Set.get_latest_accepted(set_id)
 
@@ -163,7 +164,7 @@ def get_set_units_route(request, set_id):
     # TODO Time estimates per unit for mastery.
 
     return 200, {
-        'next': next,
+        'next': next_,
         'units': [unit.deliver() for unit in units],
         # For the menu, it must return the name and ID of the set
         'set': set_.deliver(),
@@ -205,12 +206,19 @@ def choose_unit_route(request, set_id, unit_id):
     # Choose a card for the learner to learn
     card = choose_card(current_user, unit)
 
-    next_ = {
-        'method': 'GET',
-        'path': '/s/cards/{card_id}/learn'
-                .format(card_id=card['entity_id']),
-    }
+    if card:
+        next_ = {
+            'method': 'GET',
+            'path': '/s/cards/{card_id}/learn'
+                    .format(card_id=card['entity_id']),
+        }
+    else:
+        next_ = {}
+
     current_user.set_learning_context(
-        unit=unit.data, card=card.data, next=next_)
+        unit=unit.data,
+        card=card.data if card else None,
+        next=next_
+    )
 
     return 200, {'next': next_}

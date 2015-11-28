@@ -21,20 +21,20 @@ def get_user_sets_route(request, user_id):
     if user_id != current_user['id']:
         return abort(403)
 
-    next = {
+    next_ = {
         'method': 'POST',
         'path': '/s/users/{user_id}/sets/{set_id}'
                 .format(user_id=current_user['id'],
                         set_id='{set_id}'),
     }
-    current_user.set_learning_context(next=next)
+    current_user.set_learning_context(next=next_)
 
     uset = UserSets.get(user_id=user_id)
     if not uset:
-        return 200, {'sets': [], 'next': next}
+        return 200, {'sets': [], 'next': next_}
     return 200, {
         'sets': [s.deliver() for s in uset.list_sets(**request['params'])],
-        'next': next,
+        'next': next_,
     }
 
 
@@ -98,14 +98,14 @@ def select_set_route(request, user_id, set_id):
         return abort(401)
 
     set_ = Set.get_latest_accepted(set_id)
-    next = {
+    next_ = {
         'method': 'GET',
         'path': '/s/sets/{set_id}/tree'
                 .format(set_id=set_id),
     }
-    current_user.set_learning_context(set=set_.data, next=next)
+    current_user.set_learning_context(set=set_.data, next=next_)
 
-    return 200, {'next': next}
+    return 200, {'next': next_}
 
 
 @delete('/s/users/{user_id}/sets/{set_id}')

@@ -89,7 +89,7 @@ routes = [{
     tmpl: require('./pages/tree.tmpl')
     title: 'Set Tree'
 }, {
-    path: '/choose_unit'
+    path: '/sets/{id}/choose_unit'
     tmpl: require('./pages/choose_unit.tmpl')
     title: 'Choose Unit'
 }, {
