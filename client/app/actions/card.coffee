@@ -1,6 +1,7 @@
 store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
+{mergeArraysByKey} = require('../modules/auxiliaries')
 
 module.exports = store.add({
     getCard: (id) ->
@@ -59,8 +60,11 @@ module.exports = store.add({
             done: (response) =>
                 @data.cardVersions ?= {}
                 @data.cardVersions[id] ?= []
-                @data.cardVersions[id] = response.versions
-                # TODO@ merge in array based on id and created
+                @data.cardVersions[id] = mergeArraysByKey(
+                    @data.cardVersions[id]
+                    response.versions
+                    'entity_id'
+                )
                 recorder.emit('list card versions')
             fail: (errors) =>
                 @data.errors = errors

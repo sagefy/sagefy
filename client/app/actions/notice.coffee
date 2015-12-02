@@ -1,6 +1,7 @@
 store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
+{mergeArraysByKey} = require('../modules/auxiliaries')
 
 module.exports = store.add({
     listNotices: (limit = 50, skip = 0) ->
@@ -10,8 +11,11 @@ module.exports = store.add({
             url: '/s/notices'
             done: (response) =>
                 @data.notices ?= []
-                @data.notices = response.notices
-                # TODO merge in response notices by id, maintaining order
+                @data.notices = mergeArraysByKey(
+                    @data.notices
+                    response.notices
+                    'id'
+                )
                 recorder.emit('list notices', limit, skip)
                 @change()
         })

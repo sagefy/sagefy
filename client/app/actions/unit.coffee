@@ -1,6 +1,7 @@
 store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
+{mergeArraysByKey} = require('../modules/auxiliaries')
 
 module.exports = store.add({
     getUnit: (id) ->
@@ -40,8 +41,11 @@ module.exports = store.add({
             done: (response) =>
                 @data.unitVersions ?= {}
                 @data.unitVersions[id] ?= []
-                # TODO merge based on id and created
-                @data.unitVersions[id] = response.versions
+                @data.unitVersions[id] = mergeArraysByKey(
+                    @data.unitVersions[id]
+                    response.versions
+                    'id'
+                )
                 recorder.emit('list unit version')
             fail: (errors) =>
                 @data.errors = errors

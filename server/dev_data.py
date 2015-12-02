@@ -202,6 +202,7 @@ for unit in units:
     .run(database.db_conn))
 
 
+# TODO@ create at least one video and one choice per unit
 (database.db.table('cards')
     .insert([{
         'id': 'plus-video-a-1',

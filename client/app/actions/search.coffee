@@ -1,19 +1,24 @@
 store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
+{mergeArraysByKey} = require('../modules/auxiliaries')
 
 module.exports = store.add({
     search: ({q, skip = 0, limit = 10, order}) ->
+        if q isnt @data.searchQuery
+            @data.searchResults = []
         @data.searchQuery = q
-        @data.searchResults = []  # TODO only if new query...
         ajax({
             method: 'GET'
             url: '/s/search'
             data: {q, skip, limit, order}
             done: (response) =>
                 @data.searchResults ?= []
-                # TODO@ merge or replace as appropriate
-                @data.searchResults = response.hits
+                @data.searchResults = mergeArraysByKey(
+                    @data.searchResults
+                    response.hits
+                    'id'
+                )
                 recorder.emit('search', response.hits.length)
             fail: (errors) =>
                 @data.errors = errors

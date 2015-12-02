@@ -2,6 +2,7 @@ store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
 {extend} = require('../modules/utilities')
+{mergeArraysByKey} = require('../modules/auxiliaries')
 
 module.exports = store.add({
     listFollows: (skip = 0, limit = 50) ->
@@ -11,8 +12,11 @@ module.exports = store.add({
             data: {skip, limit, entities: true}
             done: (response) =>
                 @data.follows ?= []
-                # TODO@ merge into array by id and created
-                @data.follows = response.follows
+                @data.follows = mergeArraysByKey(
+                    @data.follows
+                    response.follows
+                    'id'
+                )
                 for i, follow of @data.follows
                     extend(follow['entity'], response.entities[i])
                 recorder.emit('list follows')
@@ -37,6 +41,7 @@ module.exports = store.add({
                     @data.follows[index] = follow
                 else
                     @data.follows.push(follow)
+                # TODO will this cause a bug with mergeArraysByKey later?
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on ask follow', errors)
@@ -53,6 +58,7 @@ module.exports = store.add({
                 @data.follows ?= []
                 @data.follows.push(response.follow)
                 recorder.emit('follow', data.entity.id)
+                # TODO will this cause a bug with mergeArraysByKey later?
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on follow', errors)

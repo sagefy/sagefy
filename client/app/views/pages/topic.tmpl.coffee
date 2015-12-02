@@ -41,8 +41,8 @@ module.exports = (data) ->
 entity = (topic, data) ->
     entityKind = topic.entity.kind
     entityID = topic.entity.id
-    entity = if entityKind is 'card' then data.cards[entityID] \
-             else if entityKind is 'unit' then data.units[entityID] \
-             else if entityKind is 'set' then data.sets[entityID] \
-             else ''
-    return h3("#{ucfirst(entityKind)}: #{entity.name}")
+    entity_ = if entityKind is 'card' then data.cards[entityID] \
+              else if entityKind is 'unit' then data.units[entityID] \
+              else if entityKind is 'set' then data.sets[entityID] \
+              else ''
+    return h3("#{ucfirst(entityKind)}: #{entity_.name}")

@@ -1,6 +1,7 @@
 store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
+{mergeArraysByKey} = require('../modules/auxiliaries')
 
 module.exports = store.add({
     listUserSets: (limit = 50, skip = 0) ->
@@ -10,8 +11,12 @@ module.exports = store.add({
             url: "/s/users/#{userID}/sets"
             data: {limit, skip}
             done: (response) =>
-                # TODO merge based on ...?
-                @data.userSets = response.sets
+                @data.userSets ?= []
+                @data.userSets = mergeArraysByKey(
+                    @data.userSets
+                    response.sets
+                    'id'
+                )
                 recorder.emit('list user sets')
             fail: (errors) =>
                 @data.errors = errors

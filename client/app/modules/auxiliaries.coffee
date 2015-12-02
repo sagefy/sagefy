@@ -136,6 +136,36 @@ truncate = (str, len) ->
     return str.slice(0, len) + '...'
 
 
+mergeArraysByKey = (A, B, key = 'id') ->
+    a = 0
+    b = 0
+    C = []
+
+    while a < A.length
+        b2 = b
+        found = false
+
+        while b2 < B.length
+            if A[a][key] is B[b2][key]
+                while b <= b2
+                    C.push(B[b])
+                    b++
+                found = true
+                break
+            b2++
+
+        if not found
+            C.push(A[a])
+
+        a++
+
+    while b < B.length
+        C.push(B[b])
+        b++
+
+    return C
+
+
 module.exports = {
     isLoggedIn
     ucfirst
@@ -149,4 +179,5 @@ module.exports = {
     getFormValues
     mergeFieldsData
     truncate
+    mergeArraysByKey
 }

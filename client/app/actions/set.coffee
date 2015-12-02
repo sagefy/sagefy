@@ -2,6 +2,7 @@ store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
 {matchesRoute} = require('../modules/auxiliaries')
+{mergeArraysByKey} = require('../modules/auxiliaries')
 
 module.exports = store.add({
     getSet: (id) ->
@@ -31,8 +32,12 @@ module.exports = store.add({
             data: {}
             done: (response) =>
                 @data.setVersions ?= {}
-                # TODO merge based on id and created
-                @data.setVersions[id] = response.versions
+                @data.setVersions[id] ?= []
+                @data.setVersions[id] = mergeArraysByKey(
+                    @data.setVersions[id]
+                    response.versions
+                    'id'
+                )
                 recorder.emit('list set versions')
             fail: (errors) =>
                 @data.errors = errors

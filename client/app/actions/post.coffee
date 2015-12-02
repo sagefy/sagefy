@@ -1,6 +1,7 @@
 store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
+{mergeArraysByKey} = require('../modules/auxiliaries')
 
 module.exports = store.add({
     listPosts: (id) ->
@@ -14,12 +15,19 @@ module.exports = store.add({
 
                 @data.topicPosts ?= {}
                 @data.topicPosts[id] ?= []
+
                 posts = response.posts
                 for post in posts
                     user = response.users[post.user_id]
                     post.user_name = user.name
                     post.user_avatar = user.avatar
-                @data.topicPosts[id] = posts
+
+                @data.topicPosts[id] ?= []
+                @data.topicPosts[id] = mergeArraysByKey(
+                    @data.topicPosts[id]
+                    posts
+                    'id'
+                )
 
                 if 'card' of response
                     @data.cards ?= {}
@@ -33,7 +41,6 @@ module.exports = store.add({
                     @data.sets ?= {}
                     @data.sets[response.set.entity_id] = response.set
 
-                # TODO merge based on id and created  x topic
                 recorder.emit('list posts', id)
             fail: (errors) =>
                 @data.errors = errors
