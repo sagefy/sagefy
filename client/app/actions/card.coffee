@@ -73,14 +73,14 @@ module.exports = store.add({
                 @change()
         })
 
-    respondToCard: (id) ->
+    respondToCard: (id, data) ->
         @data.sending = true
         @change()
 
         ajax({
             method: 'POST'
             url: "/s/cards/#{id}/responses"
-            data: {}
+            data: data
             done: (response) =>
                 @data.cardResponse = response.response
                 recorder.emit('respond to card')
