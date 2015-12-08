@@ -87,6 +87,7 @@ Stylus
 - Use the least amount of syntax possible.
 - Add comments in [YM Styleguide](https://github.com/heiskr/ym-styleguide).
 - Use the [BEM](http://bem.info/method/) naming convention where appropriate.
+- Mobile is the first and default styling. Use `@media (min-width...)` and never use `@media (max-width...)`.
 - General guidelines:
     - Lowercase selectors.
     - Use extend first.
