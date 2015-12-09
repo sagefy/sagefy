@@ -39,3 +39,4 @@ npm-debug.log
 client/app/content
 *.data.json
 var
+sagefy_rsa.pub

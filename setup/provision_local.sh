@@ -35,6 +35,7 @@ sudo apt-get -y install rethinkdb
 sudo chmod -R 777 /var/run
 sudo cp /var/www/setup/rethinkdb.conf /etc/rethinkdb/instances.d/instance1.conf
 sudo /etc/init.d/rethinkdb restart
+# TODO secure
 
 #### Elasticsearch ############################################################
 
@@ -46,6 +47,7 @@ sudo apt-get -y install elasticsearch
 sudo update-rc.d elasticsearch defaults 95 10
 sudo /etc/init.d/elasticsearch start
 cd /var/www
+# TODO secure
 
 #### Kibana ###################################################################
 
@@ -60,10 +62,12 @@ cd /var/www/kibana
 ulimit -v unlimited
 # TO RUN: ./bin/kibana
 cd /var/www
+# TODO secure
 
 #### Redis ####################################################################
 
 sudo apt-get -y install redis-server
+# TODO secure
 
 #### Client Tooling ###########################################################
 
