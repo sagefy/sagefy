@@ -68,6 +68,10 @@ By providing content to Sagefy, you agree Sagefy may use this content.
 By providing content to Sagefy, you agree you own the rights
 to the content and the legal ability to provide the content.
 
+By providing content to Sagefy, you confirm that the content is licensed
+under a Creative Commons license <http://creativecommons.org/>
+or similar license.
+
 No compensation will be given for user-provided content.
 
 Sagefy may update and remove user-submitted content,
