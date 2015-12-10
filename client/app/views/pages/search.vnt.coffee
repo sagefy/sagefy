@@ -1,5 +1,5 @@
 broker = require('../../modules/broker')
-actions = require('../../modules/actions')
+tasks = require('../../modules/tasks')
 {closest} = require('../../modules/utilities')
 
 module.exports = broker.add({
@@ -7,9 +7,9 @@ module.exports = broker.add({
         e.preventDefault() if e
         form = closest(el, document.body, 'form')
         input = form.querySelector('input')
-        actions.search({q: input.value})
+        tasks.search({q: input.value})
 
     'click .add-to-my-sets': (e, el) ->
         e.preventDefault() if e
-        actions.addUserSet(el.id)
+        tasks.addUserSet(el.id)
 })

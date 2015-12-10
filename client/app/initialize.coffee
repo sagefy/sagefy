@@ -5,19 +5,19 @@ cookie = require('./modules/cookie')
 
 {route} = require('./modules/route_actions')
 
-# Require all actions
-require('./actions/card')
-require('./actions/follow')
-require('./actions/menu')
-require('./actions/notice')
-require('./actions/post')
-require('./actions/route')
-require('./actions/search')
-require('./actions/set')
-require('./actions/topic')
-require('./actions/unit')
-require('./actions/user')
-require('./actions/user_sets')
+# Require all tasks
+require('./tasks/card')
+require('./tasks/follow')
+require('./tasks/menu')
+require('./tasks/notice')
+require('./tasks/post')
+require('./tasks/route')
+require('./tasks/search')
+require('./tasks/set')
+require('./tasks/topic')
+require('./tasks/unit')
+require('./tasks/user')
+require('./tasks/user_sets')
 
 # Require all broker events
 require('./views/index.vnt')

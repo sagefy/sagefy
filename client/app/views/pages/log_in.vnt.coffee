@@ -1,9 +1,9 @@
 broker = require('../../modules/broker')
-actions = require('../../modules/actions')
+tasks = require('../../modules/tasks')
 {getFormValues} = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
     'submit #log-in form': (e, el) ->
         e.preventDefault() if e
-        actions.logInUser(getFormValues(el))
+        tasks.logInUser(getFormValues(el))
 })

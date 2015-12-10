@@ -1,13 +1,13 @@
 broker = require('../../modules/broker')
-actions = require('../../modules/actions')
+tasks = require('../../modules/tasks')
 {getFormValues} = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
     'submit #topic-form.create form': (e, el) ->
         e.preventDefault() if e
-        actions.createTopic(getFormValues(el))
+        tasks.createTopic(getFormValues(el))
 
     'submit #topic-form.update form': (e, el) ->
         e.preventDefault() if e
-        actions.updateTopic(getFormValues(el))
+        tasks.updateTopic(getFormValues(el))
 })

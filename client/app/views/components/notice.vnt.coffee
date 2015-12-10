@@ -1,8 +1,8 @@
 broker = require('../../modules/broker')
-actions = require('../../modules/actions')
+tasks = require('../../modules/tasks')
 
 module.exports = broker.add({
     'click .notice': (e, el) ->
         if el.classList.contains('notice--unread')
-            actions.markNotice(el.id)
+            tasks.markNotice(el.id)
 })

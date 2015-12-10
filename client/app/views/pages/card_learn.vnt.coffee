@@ -1,9 +1,9 @@
 broker = require('../../modules/broker')
-actions = require('../../modules/actions')
+tasks = require('../../modules/tasks')
 
 module.exports = broker.add({
-    '#card-learn .continue': (e, el) ->
+    'click #card-learn .continue': (e, el) ->
         e.preventDefault if e
-        actions.respondToCard(id, data)
+        tasks.respondToCard(id, data)
         # TODO@ unless positive feedback already received...
 })

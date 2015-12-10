@@ -34,7 +34,7 @@ module.exports = store.add({
             done: (response) =>
                 @data.userSets.push(response.set)
                 recorder.emit('add user set')
-                @actions.route('/my_sets')
+                @tasks.route('/my_sets')
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on add user set', errors)
@@ -49,7 +49,7 @@ module.exports = store.add({
             url: "/s/users/#{userID}/sets/#{setID}"
             data: {}
             done: (response) =>
-                @actions.route("/sets/#{setID}/tree")
+                @tasks.route("/sets/#{setID}/tree")
                 recorder.emit('choose set', setID)
                 recorder.emit('next', response.next)
                 @data.next = response.next

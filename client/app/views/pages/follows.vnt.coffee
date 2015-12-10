@@ -1,10 +1,10 @@
 broker = require('../../modules/broker')
-actions = require('../../modules/actions')
+tasks = require('../../modules/tasks')
 
 module.exports = broker.add({
     'click .unfollow': (e, el) ->
         e.preventDefault() if e
         if window.confirm('Unfollow?')
-            actions.unfollow(el.id)
+            tasks.unfollow(el.id)
 
 })

@@ -1,11 +1,11 @@
 broker = require('../../modules/broker')
-actions = require('../../modules/actions')
+tasks = require('../../modules/tasks')
 
 module.exports = broker.add({
     'click .follow': (e, el) ->
         e.preventDefault() if e
         [kind, id] = el.id.split('_')
-        actions.follow({
+        tasks.follow({
             entity: {
                 id: id
                 kind: kind

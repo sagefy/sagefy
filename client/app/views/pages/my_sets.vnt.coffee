@@ -1,9 +1,9 @@
 broker = require('../../modules/broker')
-actions = require('../../modules/actions')
+tasks = require('../../modules/tasks')
 
 module.exports = broker.add({
     'click .engage-set': (e, el) ->
         e.preventDefault if e
         entityID = e.target.id
-        actions.chooseSet(entityID)
+        tasks.chooseSet(entityID)
 })

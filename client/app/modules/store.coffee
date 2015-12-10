@@ -1,12 +1,12 @@
 module.exports = {
     data: window.preload or {}
-    actions: {}
+    tasks: {}
 
     init: (fn) ->
         fn.call(this)
 
     add: (obj) ->
-        @actions[key] = fn.bind(this) for key, fn of obj
+        @tasks[key] = fn.bind(this) for key, fn of obj
         return obj
 
     bind: (fn) ->

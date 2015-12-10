@@ -1,5 +1,5 @@
 store = require('./store')
-actions = store.actions
+tasks = store.tasks
 recorder = require('./recorder')
 
 request = ->
@@ -8,7 +8,7 @@ request = ->
 route = (path) ->
     recorder.emit('route', path)
     store.data.route = path
-    actions.onRoute(path) if actions.onRoute
+    tasks.onRoute(path) if tasks.onRoute
     store.change()
 
 window.onpopstate = ->

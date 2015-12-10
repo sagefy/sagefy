@@ -1,12 +1,12 @@
 broker = require('../../modules/broker')
-actions = require('../../modules/actions')
+tasks = require('../../modules/tasks')
 
 module.exports = broker.add({
     'click .menu__overlay, .menu__trigger, .menu__item a': (e, el) ->
         e.preventDefault() if e
-        actions.toggleMenu()
+        tasks.toggleMenu()
 
     'click [href="#log_out"]': (e, el) ->
         e.preventDefault() if e
-        actions.logOutUser()
+        tasks.logOutUser()
 })

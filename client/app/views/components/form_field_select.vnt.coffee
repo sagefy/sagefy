@@ -1,5 +1,5 @@
 broker = require('../../modules/broker')
-actions = require('../../modules/actions')
+tasks = require('../../modules/tasks')
 {debounce} = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
