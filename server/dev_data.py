@@ -38,7 +38,7 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'id': 'doris',
         'created': r.time(2014, 1, 1, 'Z'),
         'modified': r.time(2014, 1, 1, 'Z'),
-        'name': 'Doris',
+        'name': 'doris',
         'email': 'doris@example.com',
         'password': bcrypt.encrypt('example1'),
         'settings': {
@@ -50,7 +50,7 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'id': 'eileen',
         'created': r.time(2014, 1, 1, 'Z'),
         'modified': r.time(2014, 1, 1, 'Z'),
-        'name': 'Eileen',
+        'name': 'eileen',
         'email': 'eileen@example.com',
         'password': bcrypt.encrypt('example1'),
         'settings': {
@@ -676,7 +676,7 @@ for post in posts:
 
 # id, created, modified
 # user_id, card_id, unit_id, response, score, learned
-if argv[1] == 'learn_mode':
+if len(argv) > 1 and argv[1] == 'learn_mode':
     (database.db.table('responses')
         .insert([{
             'id': 'response1',

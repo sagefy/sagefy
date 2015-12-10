@@ -98,7 +98,10 @@ def log_in_route(request):
     Log in user.
     """
 
-    user = User.get(name=request['params'].get('name'))
+    name = request['params'].get('name') or ''
+    name = name.lower()
+
+    user = User.get(name=name)
     if not user:
         user = User.get(email=request['params'].get('name'))
     if not user:

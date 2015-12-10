@@ -38,6 +38,10 @@ def update_modified(field):
     return r.now()
 
 
+def lowercase(s):
+    return s.lower()
+
+
 class User(Model):
     tablename = 'users'
 
@@ -49,6 +53,7 @@ class User(Model):
         },
         'name': {
             'validate': (is_required, is_string,),
+            'bundle': lowercase,
             'unique': True,
         },
         'email': {
