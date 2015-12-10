@@ -68,10 +68,11 @@ def get_set_tree_route(request, set_id):
     TODO@ contributor/public view as well
     """
 
-    current_user = get_current_user(request)
-    context = current_user.get_learning_context() if current_user else {}
     set_ = Set.get(entity_id=set_id)
     units = set_.list_units()
+
+    current_user = get_current_user(request)
+    context = current_user.get_learning_context() if current_user else {}
     buckets = traverse(current_user, set_)
     next_ = {}
 
@@ -88,7 +89,8 @@ def get_set_tree_route(request, set_id):
             'path': '/s/cards/{card_id}/learn'
                     .format(card_id=card['entity_id']),
         }
-        current_user.set_learning_context(next=next_, unit=unit, card=card)
+        current_user.set_learning_context(
+            next=next_, unit=unit.data, card=card.data)
 
     # When in learn mode, lead me to choose a unit.
     elif buckets['review']:

@@ -82,8 +82,11 @@ module.exports = store.add({
             url: "/s/cards/#{id}/responses"
             data: data
             done: (response) =>
+                if response.next
+                    recorder.emit('next', response.next)
+                    @data.next = response.next
                 @data.cardResponse = response.response
-                recorder.emit('respond to card')
+                recorder.emit('respond to card', id)
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on respond to card', errors)

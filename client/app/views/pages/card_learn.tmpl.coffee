@@ -2,20 +2,24 @@
 c = require('../../modules/content').get
 
 module.exports = (data) ->
-    card = data.learnCards?[data.routeArgs[1]]
+    id = data.routeArgs[0]
+    card = data.learnCards?[id]
 
     return div({className: 'spinner'}) unless card
 
     return div(
         {
             id: 'card-learn'
-            className: 'col-10'
+            className: "card-learn-#{card.kind} col-10"
         }
 
         kind(card)
 
         a(
-            {className: 'continue button button--accent'}
+            {
+                id: id
+                className: 'continue button button--accent'
+            }
             'Continue '
             i({className: 'fa fa-chevron-right'})
         )

@@ -8,6 +8,7 @@
     findUnit
     findLayer
 } = require('./tree.fn')
+{matchesRoute} = require('../../modules/auxiliaries')
 
 
 # TODO show the learner their overall set progress as a percent or bar
@@ -35,6 +36,9 @@ module.exports = (data) ->
     currentUnit = treeData.units.find((u) ->
         u.entity_id is data.currentTreeUnit)
 
+    [chooseUnitID] = matchesRoute(data.next.path, '/s/sets/{id}/units')
+    [cardID] = matchesRoute(data.next.path, '/s/cards/{id}/learn')
+
     return div(
         {id: 'tree', className: 'col-10'}
         h1("Tree: #{treeData.set.name}")
@@ -56,10 +60,19 @@ module.exports = (data) ->
 
             renderLayers(layers, currentUnit, preWidth, treeData.buckets)
         )
-    )
 
-    # TODO@ if matchesRoute(data.next.path, '/s/sets/{id}/units')
-    #           @tasks.route("/sets/#{id}/choose_unit")
+        p(a(
+            {className: 'button--accent', href: "/sets/#{nextID}/choose_unit"}
+            'Next '
+            i({className: 'fa fa-chevron-right'})
+        )) if chooseUnitID
+
+        p(a(
+            {className: 'button--accent', href: "/cards/#{cardID}/learn"}
+            'Next '
+            i({className: 'fa fa-chevron-right'})
+        )) if cardID
+    )
 
 renderLayers = (layers, currentUnit, preWidth, buckets) ->
     nodes = []
