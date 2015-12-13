@@ -10,8 +10,8 @@ module.exports = (data) ->
                      then "https://www.youtube.com/embed/#{data.video_id}" \
                      else if data.site is 'vimeo' \
                      then "https://player.vimeo.com/video/#{data.video_id}"
-                width: 560
-                height: 325
+                width: 672
+                height: 336
                 allowfullscreen: true
             }
         )

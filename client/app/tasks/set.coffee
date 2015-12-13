@@ -93,8 +93,11 @@ module.exports = store.add({
             data: {}
             done: (response) =>
                 recorder.emit('choose unit', setId, unitId)
-                @data.next = response.next
-                # TODO@ handle route to card
+                {next} = response
+                @data.next = next
+                recorder.emit('next', next)
+                if args = matchesRoute(next.path, '/s/cards/{id}/learn')
+                    @tasks.route("/cards/#{args[0]}/learn")
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on choose unit', errors)

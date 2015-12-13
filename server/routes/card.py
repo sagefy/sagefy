@@ -148,10 +148,10 @@ def respond_to_card_route(request, card_id):
             next_ = {
                 'method': 'GET',
                 'path': '/s/cards/{card_id}/learn'
-                        .format(card_id=next_card['id']),
+                        .format(card_id=next_card['entity_id']),
             }
             current_user.set_learning_context(
-                card=next_card, unit=unit, next=next_)
+                card=next_card.data, unit=unit.data, next=next_)
 
         # If there are units to be learned or reviewed...
         elif buckets['learn'] or buckets['review']:
@@ -173,16 +173,13 @@ def respond_to_card_route(request, card_id):
 
     # If we are still reviewing, learning or diagnosing this unit...
     else:
-        # next_card = choose_card(current_user, unit)
-        next_card = {
-            'id': '1234'
-        }
+        next_card = choose_card(current_user, unit)
         next_ = {
             'method': 'GET',
             'path': '/s/cards/{card_id}/learn'
-                    .format(card_id=next_card['id']),
+                    .format(card_id=next_card['entity_id']),
         }
-        current_user.set_learning_context(card=next_card, next=next_)
+        current_user.set_learning_context(card=next_card.data, next=next_)
 
     return 200, {
         'response': response.deliver(),

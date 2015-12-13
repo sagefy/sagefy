@@ -1,30 +1,41 @@
 {div, ul, li, input, label} = require('../../modules/tags')
 c = require('../../modules/content').get
 
-module.exports = (data) ->
+module.exports = (data, mode) ->
+    {options} = data
+    options = options.map((o) -> o.value)
+
     if data.order is 'random'
-        options = fisherYates(data.options).map((o) -> o.value)
+        options = fisherYates(options)
 
     if data.max_options_to_show
         options = options.slice(0, data.max_options_to_show)
 
-    # TODO@ add feedback, state management
+    disabled = mode is 'next-please'
 
-    return div(
-        {className: 'card-learn-choice'}
+    return [
         div(
             {className: 'leading'}
             data.body
-            ul(
-                li(
-                    label(
-                        input({type: 'radio', value: option})
-                        option
-                    )
-                ) for option in options
-            )
         )
-    )
+        ul(
+            {className: 'options unstyled'}
+            li(
+                {className: if disabled then 'disabled' else ''}
+                input({
+                    type: 'radio'
+                    name: 'choice'
+                    value: option
+                    id: i
+                    disabled: disabled
+                })
+                label({
+                    htmlFor: i
+                    disabled: disabled
+                }, option)
+            ) for option, i in options
+        )
+    ]
 
 fisherYates = (arr) ->
     i = arr.length

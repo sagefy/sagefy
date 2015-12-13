@@ -3595,6 +3595,7 @@ input[type="radio"][disabled],
 input[type="checkbox"].disabled,
 input[type="radio"].disabled {
   background: none;
+  box-shadow: none;
   cursor: not-allowed;
 }
 input[type="checkbox"][disabled]:focus,

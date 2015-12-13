@@ -62,7 +62,10 @@ module.exports = (data) ->
         )
 
         p(a(
-            {className: 'button--accent', href: "/sets/#{nextID}/choose_unit"}
+            {
+                className: 'button--accent'
+                href: "/sets/#{chooseUnitID}/choose_unit"
+            }
             'Next '
             i({className: 'fa fa-chevron-right'})
         )) if chooseUnitID

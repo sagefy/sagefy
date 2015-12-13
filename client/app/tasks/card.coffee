@@ -1,7 +1,7 @@
 store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
-{mergeArraysByKey} = require('../modules/auxiliaries')
+{mergeArraysByKey, matchesRoute} = require('../modules/auxiliaries')
 
 module.exports = store.add({
     getCard: (id) ->
@@ -37,6 +37,8 @@ module.exports = store.add({
         })
 
     getCardForLearn: (id) ->
+        delete @data.cardResponse
+        delete @data.cardFeedback
         ajax({
             method: 'GET'
             url: "/s/cards/#{id}/learn"
@@ -73,7 +75,7 @@ module.exports = store.add({
                 @change()
         })
 
-    respondToCard: (id, data) ->
+    respondToCard: (id, data, goNext = false) ->
         @data.sending = true
         @change()
 
@@ -86,6 +88,7 @@ module.exports = store.add({
                     recorder.emit('next', response.next)
                     @data.next = response.next
                 @data.cardResponse = response.response
+                @data.cardFeedback = response.feedback
                 recorder.emit('respond to card', id)
             fail: (errors) =>
                 @data.errors = errors
@@ -93,5 +96,16 @@ module.exports = store.add({
             always: =>
                 @data.sending = false
                 @change()
+                if goNext
+                    @tasks.nextState()
         })
+
+    nextState: () ->
+        path = @data.next.path
+        if args = matchesRoute(path, '/s/cards/{id}/learn')
+            @tasks.route("/cards/#{args[0]}/learn")
+
+    needAnAnswer: () ->
+        @data.cardFeedback = 'Please provide an answer.'
+        @change()
 })

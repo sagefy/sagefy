@@ -1,4 +1,4 @@
-{div, h1, a, i} = require('../../modules/tags')
+{div, h1, a, i, p} = require('../../modules/tags')
 c = require('../../modules/content').get
 
 module.exports = (data) ->
@@ -7,26 +7,50 @@ module.exports = (data) ->
 
     return div({className: 'spinner'}) unless card
 
+    mode = if card.kind is 'video'
+        'next-please'
+    else if card.kind is 'choice'
+        if data.cardResponse
+            'next-please'
+        else
+            'answer'
+
+    feedbackLabel = if data.cardResponse
+        if data.cardResponse.score is 1
+            'good'
+        else
+            'bad'
+    else
+        'accent'
+
     return div(
         {
             id: 'card-learn'
-            className: "card-learn-#{card.kind} col-10"
+            className: "#{card.kind} col-8 #{mode}"
         }
 
-        kind(card)
+        kind(card, mode)
 
-        a(
-            {
-                id: id
-                className: 'continue button button--accent'
-            }
-            'Continue '
-            i({className: 'fa fa-chevron-right'})
+        p(
+            {className: "label--#{feedbackLabel}"}
+            data.cardFeedback
+        ) if data.cardFeedback
+
+        p(
+            {className: 'continue-wrap'}
+            a(
+                {
+                    id: id
+                    className: 'continue button button--accent'
+                }
+                'Continue '
+                i({className: 'fa fa-chevron-right'})
+            )
         )
     )
 
-kind = (card) ->
+kind = (card, mode) ->
     if card.kind is 'video'
-        return require('./card_learn_video.tmpl')(card)
+        return require('./card_learn_video.tmpl')(card, mode)
     if card.kind is 'choice'
-        return require('./card_learn_choice.tmpl')(card)
+        return require('./card_learn_choice.tmpl')(card, mode)

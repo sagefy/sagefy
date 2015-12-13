@@ -35,6 +35,7 @@ def choose_card(user, unit):
     """
 
     # TODO simplify this method
+    # TODO@ do not allow the previous card.. there's nothing to go to
 
     unit_id = unit['entity_id']
     query = (Card.start_accepted_query()

@@ -207,7 +207,7 @@ for unit in units:
     .insert([{
         'id': 'plus-video-a-1',
         'created': r.time(2014, 1, 1, 'Z'),
-        'modifed': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
         'entity_id': 'plus-video-a',
         'previous_id': None,
         'language': 'en',
@@ -223,7 +223,7 @@ for unit in units:
     }, {
         'id': 'plus-choice-a-1',
         'created': r.time(2014, 1, 1, 'Z'),
-        'modifed': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
         'entity_id': 'plus-choice-a',
         'previous_id': None,
         'language': 'en',
@@ -253,7 +253,7 @@ for unit in units:
     }, {
         'id': 'plus-choice-b-1',
         'created': r.time(2014, 1, 1, 'Z'),
-        'modifed': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
         'entity_id': 'plus-choice-b',
         'previous_id': None,
         'language': 'en',
@@ -281,9 +281,85 @@ for unit in units:
         'order': 'random',
         'max_options_to_show': 4,
     }, {
+        'id': 'minus-video-a-1',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'minus-video-a',
+        'previous_id': None,
+        'language': 'en',
+        'name': 'How to subtract by...',
+        'status': 'accepted',
+        'available': True,
+        'tags': ['video'],
+        'unit_id': 'minus',
+        'require_ids': [],
+        'kind': 'video',
+        'site': 'youtube',
+        'video_id': 'PS5p9caXS4U'
+    }, {
+        'id': 'minus-choice-a-1',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'minus-choice-a',
+        'previous_id': None,
+        'language': 'en',
+        'name': 'Let\'s do 2 - 2',
+        'status': 'accepted',
+        'available': True,
+        'tags': [],
+        'unit_id': 'minus',
+        'require_ids': [],
+        'kind': 'choice',
+        'body': 'What is 2 - 2?',
+        'options': [{
+            'value': '2',
+            'correct': False,
+            'feedback': 'There are two numbers.',
+        }, {
+            'value': '0',
+            'correct': True,
+            'feedback': 'We are not subtracting.',
+        }, {
+            'value': '1',
+            'correct': False,
+            'feedback': 'We are not dividing.',
+        }],
+        'order': 'random',
+        'max_options_to_show': 4,
+    }, {
+        'id': 'minus-choice-b-1',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'minus-choice-b',
+        'previous_id': None,
+        'language': 'en',
+        'name': 'Let\'s do 3 - 1',
+        'status': 'accepted',
+        'available': True,
+        'tags': [],
+        'unit_id': 'minus',
+        'require_ids': [],
+        'kind': 'choice',
+        'body': 'What is 3 - 1?',
+        'options': [{
+            'value': '2',
+            'correct': True,
+            'feedback': 'Yes.',
+        }, {
+            'value': '1',
+            'correct': False,
+            'feedback': 'There are two numbers.',
+        }, {
+            'value': '4',
+            'correct': False,
+            'feedback': 'There are two numbers.',
+        }],
+        'order': 'random',
+        'max_options_to_show': 4,
+    }, {
         'id': 'slash-video-a-1',
         'created': r.time(2014, 1, 1, 'Z'),
-        'modifed': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
         'entity_id': 'slash-video-a',
         'previous_id': None,
         'language': 'en',
@@ -299,7 +375,7 @@ for unit in units:
     }, {
         'id': 'slash-choice-a-1',
         'created': r.time(2014, 1, 1, 'Z'),
-        'modifed': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
         'entity_id': 'slash-choice-a',
         'previous_id': None,
         'language': 'en',
@@ -329,7 +405,7 @@ for unit in units:
     }, {
         'id': 'slash-choice-b-1',
         'created': r.time(2014, 1, 1, 'Z'),
-        'modifed': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
         'entity_id': 'slash-choice-b',
         'previous_id': None,
         'language': 'en',
@@ -370,14 +446,107 @@ for card in cards:
 
 (database.db.table('cards_parameters')
     .insert([{
+        'id': 'plus-video-a-params',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'plus-video-a',
+    }, {
+        'id': 'plus-choice-a-params',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'plus-choice-a',
+        'guess_distribution': {
+            str(h): 1 - (0.5 - h) ** 2
+            for h in [h / precision for h in range(1, precision)]
+        },
+        'slip_distribution': {
+            str(h): 1 - (0.25 - h) ** 2
+            for h in [h / precision for h in range(1, precision)]
+        }
+    }, {
+        'id': 'plus-choice-b-params',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'plus-choice-b',
+        'guess_distribution': {
+            str(h): 1 - (0.5 - h) ** 2
+            for h in [h / precision for h in range(1, precision)]
+        },
+        'slip_distribution': {
+            str(h): 1 - (0.25 - h) ** 2
+            for h in [h / precision for h in range(1, precision)]
+        }
+    }, {
+        'id': 'minus-video-a-params',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'minus-video-a',
+    }, {
+        'id': 'minus-choice-a-params',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'minus-choice-a',
+        'guess_distribution': {
+            str(h): 1 - (0.5 - h) ** 2
+            for h in [h / precision for h in range(1, precision)]
+        },
+        'slip_distribution': {
+            str(h): 1 - (0.25 - h) ** 2
+            for h in [h / precision for h in range(1, precision)]
+        }
+    }, {
+        'id': 'minus-choice-b-params',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'minus-choice-b',
+        'guess_distribution': {
+            str(h): 1 - (0.5 - h) ** 2
+            for h in [h / precision for h in range(1, precision)]
+        },
+        'slip_distribution': {
+            str(h): 1 - (0.25 - h) ** 2
+            for h in [h / precision for h in range(1, precision)]
+        }
+    }, {
+        'id': 'times-video-a-params',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'times-video-a',
+    }, {
+        'id': 'times-choice-a-params',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'times-choice-a',
+        'guess_distribution': {
+            str(h): 1 - (0.5 - h) ** 2
+            for h in [h / precision for h in range(1, precision)]
+        },
+        'slip_distribution': {
+            str(h): 1 - (0.25 - h) ** 2
+            for h in [h / precision for h in range(1, precision)]
+        }
+    }, {
+        'id': 'times-choice-b-params',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'times-choice-b',
+        'guess_distribution': {
+            str(h): 1 - (0.5 - h) ** 2
+            for h in [h / precision for h in range(1, precision)]
+        },
+        'slip_distribution': {
+            str(h): 1 - (0.25 - h) ** 2
+            for h in [h / precision for h in range(1, precision)]
+        }
+    }, {
         'id': 'slash-video-a-params',
         'created': r.time(2014, 1, 1, 'Z'),
-        'modifed': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
         'entity_id': 'slash-video-a',
     }, {
         'id': 'slash-choice-a-params',
         'created': r.time(2014, 1, 1, 'Z'),
-        'modifed': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
         'entity_id': 'slash-choice-a',
         'guess_distribution': {
             str(h): 1 - (0.5 - h) ** 2
@@ -390,7 +559,7 @@ for card in cards:
     }, {
         'id': 'slash-choice-b-params',
         'created': r.time(2014, 1, 1, 'Z'),
-        'modifed': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
         'entity_id': 'slash-choice-b',
         'guess_distribution': {
             str(h): 1 - (0.5 - h) ** 2
