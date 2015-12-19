@@ -89,8 +89,8 @@ If your copyright, patent, or trademark has been violated, contact
 Notices and counter-notices must meet statutory requirements
 imposed by the Digital Millennium Copyright Act of 1998.
 
-Sagefy's software is licensed under AGPL3.
-<http://www.gnu.org/licenses/agpl-3.0.html>
+Sagefy's software is licensed under the Apache 2.0 license.
+<http://www.apache.org/licenses/LICENSE-2.0>
 
 If you have questions about these terms, contact Sagefy at <support@sagefy.org>.
 """

@@ -16,7 +16,7 @@ Issues
 Contributing To Sagefy
 ----------------------
 
-To get started, <a href="https://www.clahub.com/agreements/heiskr/sagefy">sign the Contributor License Agreement</a>.
+Before you raise a pull request to Sagefy, please review the terms in the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0). If you do not agree to these terms, do not raise a pull request.
 
 Pull Request Checklist
 ----------------------
