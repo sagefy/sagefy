@@ -19,6 +19,23 @@ items = {
     settings: { icon: 'cog' }
     log_out: { url: '#log_out', title: 'Log Out', icon: 'sign-out' }
     search: { }
+    current_set: { url: '/sets/{id}/tree', title: 'Current Set', icon: 'tree' }
+    current_unit: { url: '/units/{id}', title: 'Current Unit', icon: 'circle' }
+    discuss_set: {
+        url: '/search?kind=topic&entity.id={id}'
+        title: 'Discuss Set'
+        icon: 'comment'
+    }
+    discuss_unit: {
+        url: '/search?kind=topic&entity.id={id}'
+        title: 'Discuss Unit'
+        icon: 'comment'
+    }
+    discuss_card: {
+        url: '/search?kind=topic&entity.id={id}'
+        title: 'Discuss Card'
+        icon: 'comment'
+    }
 }
 
 # For items that don't have them
@@ -51,8 +68,35 @@ menus = {
     ]
 }
 
+addContextItems = (menuItems, {card, unit, set}) ->
+    add = []
+
+    if set
+        discuss = extend(items['discuss_set'])
+        current = extend(items['current_set'])
+        discuss.url = discuss.url.replace('{id}', set)
+        current.url = current.url.replace('{id}', set)
+        add.push(discuss)
+        add.push(current)
+
+    if unit
+        discuss = extend(items['discuss_unit'])
+        current = extend(items['current_unit'])
+        discuss.url = discuss.url.replace('{id}', unit)
+        current.url = current.url.replace('{id}', unit)
+        add.push(discuss)
+        add.push(current)
+
+    if card
+        discuss = extend(items['discuss_card'])
+        discuss.url = discuss.url.replace('{id}', card)
+        add.push(discuss)
+
+    return add.concat(menuItems)
+
 module.exports = (data) ->
     menuItems = menus[data.kind].map((name) -> items[name])
+    menuItems = addContextItems(menuItems, data.context)
     return nav(
         {className: if data.open then 'menu selected' else 'menu'}
         [

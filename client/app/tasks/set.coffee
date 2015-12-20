@@ -96,6 +96,11 @@ module.exports = store.add({
                 {next} = response
                 @data.next = next
                 recorder.emit('next', next)
+                @tasks.updateMenuContext({
+                    set: setId
+                    unit: unitId
+                    card: false
+                })
                 if args = matchesRoute(next.path, '/s/cards/{id}/learn')
                     @tasks.route("/cards/#{args[0]}/learn")
             fail: (errors) =>

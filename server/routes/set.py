@@ -69,6 +69,10 @@ def get_set_tree_route(request, set_id):
     """
 
     set_ = Set.get(entity_id=set_id)
+
+    if not set_:
+        return abort(404)
+
     units = set_.list_units()
 
     current_user = get_current_user(request)

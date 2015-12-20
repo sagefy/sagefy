@@ -52,6 +52,7 @@ module.exports = store.add({
                 @tasks.route("/sets/#{setID}/tree")
                 recorder.emit('choose set', setID)
                 recorder.emit('next', response.next)
+                @tasks.updateMenuContext({set: setID, unit: false, card: false})
                 @data.next = response.next
             fail: (errors) =>
                 @data.errors = errors

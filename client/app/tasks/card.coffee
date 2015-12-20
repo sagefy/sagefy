@@ -46,6 +46,7 @@ module.exports = store.add({
             done: (response) =>
                 @data.learnCards ?= {}
                 @data.learnCards[id] = response.card
+                @tasks.updateMenuContext({card: id})
                 recorder.emit('learn card')
             fail: (errors) =>
                 @data.errors = errors
@@ -89,6 +90,7 @@ module.exports = store.add({
                     @data.next = response.next
                 @data.cardResponse = response.response
                 @data.cardFeedback = response.feedback
+                @tasks.updateMenuContext({card: false})
                 recorder.emit('respond to card', id)
             fail: (errors) =>
                 @data.errors = errors
