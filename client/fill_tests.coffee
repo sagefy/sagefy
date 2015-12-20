@@ -20,13 +20,13 @@ module.exports = ->
                 .pop()
                 .toLowerCase()
                 .replace('.coffee', '')
-                .replace('_', ' ')
+                .replace(/_./g, ' ')
 
             moduleName = file.split('/')
                 .pop()
                 .toLowerCase()
                 .replace('.coffee', '')
-                .replace(/_([a-z])/g, (g) -> g[1].toUpperCase())
+                .replace(/[_.]{1}([a-z])/g, (g) -> g[1].toUpperCase())
 
             mkdirp(testPath, ->
                 fs.writeFile(testFile, """
