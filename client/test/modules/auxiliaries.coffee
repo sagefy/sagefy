@@ -24,14 +24,6 @@ describe('Auxiliaries', ->
             .to.equal('hip_po_potu_mus')
     )
 
-    it.skip('should escape HTML', ->
-
-    )
-
-    it.skip('should show time ago', ->
-
-    )
-
     it('should merge two arrays by a key', ->
         A = [{k: 0, v: 1}, {k: 1, v: 1}, {k: 3, v: 1}, {k: 7, v: 1}]
         B = [{k: 1, v: 2}, {k: 2, v: 2}, {k: 7, v: 2}, {k: 8, v: 2}]

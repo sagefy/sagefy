@@ -5,12 +5,4 @@ describe('Content', ->
         expect(content.get('required')).to.equal('Required.')
         expect(content.get('required', 'eo')).to.equal('Postulo.')
     )
-
-    it.skip('should default content to English', ->
-
-    )
-
-    it.skip('should show the base language if missing country-specific', ->
-
-    )
 )
