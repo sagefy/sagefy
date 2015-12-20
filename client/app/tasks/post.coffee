@@ -50,13 +50,16 @@ module.exports = store.add({
         })
 
     createPost: (data) ->
+        {topic_id} = data.post
         ajax({
             method: 'POST'
-            url: "/s/topics/#{data.topic_id}/posts"
+            url: "/s/topics/#{topic_id}/posts"
             data: data
             done: (response) =>
-                @data.posts.push(response.post)   # TODO x topic
+                if @data.topicPosts?[topic_id]
+                    @data.topicPosts[topic_id].push(response.post)
                 recorder.emit('create post')
+                @tasks.route("/topics/#{topic_id}")
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on create post', errors)
@@ -65,14 +68,17 @@ module.exports = store.add({
         })
 
     updatePost: (data) ->
+        {topic_id, id} = data.post
         ajax({
             method: 'PUT'
-            url: "/s/topics/#{data.topic_id}/posts/#{data.id}"
+            url: "/s/topics/#{topic_id}/posts/#{id}"
             data: data
             done: (response) =>
-                # @data.posts TODO findIndex and update   x topic
-                @data.posts.push(response.post)
+                if topic = @data.topicPosts?[topic_id]
+                    index = topic.findIndex((post) -> post.id is id)
+                    topic[index] = response.post
                 recorder.emit('update post')
+                @tasks.route("/topics/#{topic_id}")
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on update post', errors)

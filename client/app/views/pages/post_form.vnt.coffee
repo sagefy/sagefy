@@ -10,5 +10,7 @@ module.exports = broker.add({
 
     'submit #post-form.update form': (e, el) ->
         e.preventDefault() if e
-        tasks.updatePost(getFormValues(el))
+        values = getFormValues(el)
+        values.post.id = el.querySelector('button').id
+        tasks.updatePost(values)
 })

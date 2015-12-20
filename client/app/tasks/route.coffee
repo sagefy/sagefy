@@ -16,6 +16,7 @@ routes = [
     {path: '/sets/{id}/tree', task: 'openTreeRoute'}
     {path: '/sets/{id}/choose_unit', task: 'openChooseUnit'}
     {path: '/cards/{id}/learn', task: 'openLearnCard'}
+    {path: '/topics/{id}/posts/{id}/update', task: 'openUpdatePost'}
 ]
 
 
@@ -64,4 +65,7 @@ module.exports = store.add({
 
     openLearnCard: (id) ->
         tasks.getCardForLearn(id)
+
+    openUpdatePost: (topicID, postID) ->
+        tasks.listPosts(topicID)
 })

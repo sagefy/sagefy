@@ -46,7 +46,7 @@ module.exports = (data, currentUserID) ->
             div(
                 {className: 'post__footer'}
                 a(
-                    {href: "/posts/#{data.id}/update"}
+                    {href: "/topics/#{data.topic_id}/posts/#{data.id}/update"}
                     i({className: 'fa fa-edit'})
                     ' Edit'
                 ) if currentUserID is data.user_id

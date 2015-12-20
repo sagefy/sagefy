@@ -295,8 +295,8 @@ def update_post_route(request, topic_id, post_id):
     post_ = get_post_facade(post_id)
     kind = post_['kind']
 
-    post_data = dict(**request['params'])
-    post_data = omit(post_data, ('user_id', 'topic_id', 'kind'))
+    post_data = dict(**request['params']['post'])
+    post_data = omit(post_data, ('id', 'user_id', 'topic_id', 'kind'))
 
     # Must be user's own post
     # TODO Should some of these checks be part of the model?
