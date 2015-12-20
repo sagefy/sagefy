@@ -6,17 +6,38 @@ mkdirp = require('mkdirp')
 
 module.exports = ->
     glob('app/**/*.coffee').on('match', (file) ->
-        file = file.replace('app/', 'test/')
-        fs.readFile(file, (err, data) ->
-            return if not err
-            name = file.split('/').pop().replace('.coffee', '')
-            mkdirp(file.split('/').slice(0, -1).join('/'), ->
-                fs.writeFile(file, """
-                describe('#{name}', ->
-                    it.skip('needs tests', ->
+        testFile = file.replace('app/', 'test/')
 
+        fs.readFile(testFile, (err, data) ->
+            return unless err
+
+            testPath = file.split('/').slice(0, -1).join('/')
+
+            len = file.split('/').length
+            originalFile = (new Array(len)).join('../') + file
+
+            contextName = file.split('/')
+                .pop()
+                .toLowerCase()
+                .replace('.coffee', '')
+                .replace('_', ' ')
+
+            moduleName = file.split('/')
+                .pop()
+                .toLowerCase()
+                .replace('.coffee', '')
+                .replace(/_([a-z])/g, (g) -> g[1].toUpperCase())
+
+            mkdirp(testPath, ->
+                fs.writeFile(testFile, """
+                    #{moduleName} = require('#{originalFile}')
+                    expect = require('chai').expect
+
+                    describe('#{contextName}', ->
+                        it.skip('needs tests', ->
+                            expect(false).to.be.true
+                        )
                     )
-                )
 
                 """)
             )
