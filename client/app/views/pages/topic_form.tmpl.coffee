@@ -7,7 +7,7 @@ topicSchema = require('../../schemas/topic')
 {mergeFieldsData, ucfirst} = require('../../modules/auxiliaries')
 getPostFields = require('./post_form.fn').getFields
 
-getFields = ({topicID, entityID, entityKind}) ->
+getFields = ({topicID, entityID, entityKind, postKind = 'post'}) ->
     fields = [extend({
         name: 'topic.entity.id'
         value: entityID
@@ -20,7 +20,10 @@ getFields = ({topicID, entityID, entityKind}) ->
     }, topicSchema.name)]
 
     unless topicID
-        fields = fields.concat(getPostFields({}))
+        fields = fields.concat(getPostFields({
+            editKind: true
+            postKind
+        }))
 
     fields.push({
         id: topicID
@@ -67,7 +70,12 @@ module.exports = (data) ->
         entity = getEntity(data, entityKind, entityID)
         entityName = entity?.name
 
-    fields = getFields({topicID, entityID, entityKind})
+    fields = getFields({
+        topicID
+        entityID
+        entityKind
+        postKind: data.postKind
+    })
 
     fields_ = if topicID
         mergeFieldsData(fields, {formData: {

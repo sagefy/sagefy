@@ -10,7 +10,13 @@ module.exports = (data) ->
 
     return div({className: 'spinner'}) if postID and not post
 
-    fields = getFields({topicID, postID, repliesToID})
+    fields = getFields({
+        topicID
+        postID
+        repliesToID
+        editKind: not postID
+        postKind: data.postKind or (post and post.kind)
+    })
 
     if postID
         fields_ = mergeFieldsData(fields, {formData})

@@ -1,17 +1,25 @@
 post = require('./post')
 {extend} = require('../modules/utilities')
+{required} = require('../modules/validations')
+
+noop = ->
 
 module.exports = extend({}, post, {
     body: {
         type: 'textarea'
-        validations: []
+        validations: [noop]
     }
     replies_to_id: {
         type: 'hidden'
-        validations: []
+        validations: [required]
     }
     response: {
         type: 'select'
-        validations: []
+        validations: [required]
+        options: [
+            {value: 'true'}
+            {value: 'false'}
+        ]
+        default: 'post'
     }
 })

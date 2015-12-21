@@ -1,5 +1,18 @@
-{li, div, img, p, a, i} = require('../../modules/tags')
+{li, div, img, p, a, i, span} = require('../../modules/tags')
 timeAgo = require('../../modules/auxiliaries').timeAgo
+
+voteResponse = (response) ->
+    return unless response?
+    return [
+        span(
+            {
+                className: "label--#{if response then 'good' else 'bad'}"
+            }
+            i({className: "fa fa-thumbs-#{if response then 'up' else 'down'}"})
+            if response then ' Yes' else ' No'
+        )
+        ' '
+    ]
 
 module.exports = (data, currentUserID) ->
     {topic_id} = data
@@ -42,6 +55,9 @@ module.exports = (data, currentUserID) ->
                     ' In Reply'
                 ) if data.replies_to_id
                 ' ' if data.replies_to_id
+
+                voteResponse(data.response)
+
                 data.body
             )
             div(

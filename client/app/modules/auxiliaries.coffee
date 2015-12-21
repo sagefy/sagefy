@@ -80,6 +80,14 @@ matchesRoute = (docPath, viewPath) ->
     match = docPath.match(viewPath)
     return if match then match.slice(1) else false
 
+valuefy = (value) ->
+    return true if value is 'true'
+    return false if value is 'false'
+    return null if value is 'null'
+    return parseFloat(value) if value.match(/^\d+\.\d+$/)
+    return parseInt(value) if value.match(/^\d+$/)
+    return decodeURIComponent(value)
+
 # Returns an object of the fields' value
 getFormValues = (form) ->
     data = {}
@@ -90,14 +98,14 @@ getFormValues = (form) ->
         'input[type="hidden"]'
         'textarea'
     ].join(', '))
-        data[el.name] = el.value
+        data[el.name] = valuefy(el.value)
 
     for el in form.querySelectorAll('[type=radio]')
-        data[el.name] = el.value if el.checked
+        data[el.name] = valuefy(el.value) if el.checked
 
     for el in form.querySelectorAll('[type=checkbox]')
         data[el.name] ?= []
-        data[el.name].push(el.value) if el.checked
+        data[el.name].push(valuefy(el.value)) if el.checked
 
     for key, value of data
         if key.indexOf('.') > -1
@@ -180,4 +188,5 @@ module.exports = {
     mergeFieldsData
     truncate
     mergeArraysByKey
+    valuefy
 }

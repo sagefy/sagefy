@@ -1,10 +1,4 @@
-valuefy = (value) ->
-    return true if value is 'true'
-    return false if value is 'false'
-    return null if value is 'null'
-    return parseFloat(value) if value.match(/^\d+\.\d+$/)
-    return parseInt(value) if value.match(/^\d+$/)
-    return decodeURIComponent(value)
+{valuefy} = require('./auxiliaries')
 
 get = (query) ->
     query or= window.location.search.substring(1)

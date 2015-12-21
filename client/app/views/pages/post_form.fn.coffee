@@ -1,38 +1,63 @@
-postSchema = require('../../schemas/post')
 {extend} = require('../../modules/utilities')
+postSchema = require('../../schemas/post')
+voteSchema = require('../../schemas/vote')
+proposalSchema = require('../../schemas/proposal')
 
-getFields = ({topicID, repliesToID}) ->
+schemas = {
+    post: postSchema
+    vote: voteSchema
+    proposal: proposalSchema
+}
+
+getFields = ({topicID, repliesToID, editKind, postKind = 'post'}) ->
     fields = []
 
     if topicID
         fields.push(extend({
             name: 'post.topic_id'
             value: topicID
-        }, postSchema.topic_id))
+        }, schemas[postKind].topic_id))
 
     if repliesToID
         fields.push(extend({
             name: 'post.replies_to_id'
             value: repliesToID
-        }, postSchema.replies_to_id))
+        }, schemas[postKind].replies_to_id))
 
     fields.push(extend({
         name: 'post.kind'
         options: [{
-
+            # Post
+            disabled: not editKind
         }, {
-            disabled: true
+            # Proposal
+            disabled: not editKind
         }, {
-            disabled: true
+            # Vote
+            disabled: not (editKind and repliesToID)
         }, {
+            # Flag
             disabled: true
         }]
         inline: true
         label: 'Kind'
-    }, postSchema.kind), extend({
+    }, schemas[postKind].kind))
+
+    if postKind is 'vote'
+        fields.push(extend({
+            name: 'post.response'
+            options: [
+                {label: 'Yes, I agree'}
+                {label: 'No, I dissent'}
+            ]
+            inline: true
+            label: 'Response'
+        }, schemas[postKind].response))
+
+    fields.push(extend({
         name: 'post.body'
         label: 'Body'
-    }, postSchema.body))
+    }, schemas[postKind].body))
 
     return fields
 
@@ -49,6 +74,7 @@ parseData = (data) ->
         'post.replies_to_id': repliesToID
         'post.kind': post.kind
         'post.body': post.body
+        'post.response': '' + post.response
     } else {}
 
     return {topicID, postID, repliesToID, post, formData}

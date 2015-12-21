@@ -259,6 +259,7 @@ def create_post_route(request, topic_id):
 
     # If a proposal has sufficient votes, move it to accepted
     # ... and close out any prior versions dependent
+    # TODO@ only allow one vote per proposal per user
     if kind == 'vote':
         proposal_id = post_['replies_to_id']
         proposal = Post.get(id=proposal_id)
@@ -315,8 +316,8 @@ def update_post_route(request, topic_id, post_id):
     # If vote, make sure its allowed changes
     if post_['kind'] == 'vote':
         post_data = {
-            'body': post_['body'],
-            'response': post_['response'],
+            'body': post_data['body'],
+            'response': post_data['response'],
         }
 
     post_, errors = post_.update(post_data)

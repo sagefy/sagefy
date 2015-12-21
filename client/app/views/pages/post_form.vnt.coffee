@@ -13,4 +13,7 @@ module.exports = broker.add({
         values = getFormValues(el)
         values.post.id = el.querySelector('button').id
         tasks.updatePost(values)
+
+    'change #post-form.create [name="post.kind"]': (e, el) ->
+        tasks.changePostKind(el.value)
 })
