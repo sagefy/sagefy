@@ -2,6 +2,7 @@
 timeAgo = require('../../modules/auxiliaries').timeAgo
 
 module.exports = (data, currentUserID) ->
+    {topic_id} = data
     return li(
         {
             id: data.id
@@ -46,17 +47,19 @@ module.exports = (data, currentUserID) ->
             div(
                 {className: 'post__footer'}
                 a(
-                    {href: "/topics/#{data.topic_id}/posts/#{data.id}/update"}
+                    {href: "/topics/#{topic_id}/posts/#{data.id}/update"}
                     i({className: 'fa fa-edit'})
                     ' Edit'
                 ) if currentUserID is data.user_id
                 a(
-                    {href: "/posts/create?replies_to_id=#{data.id}"}
+                    {href: "/topics/#{topic_id}/posts/create?" +
+                           "replies_to_id=#{data.id}"}
                     i({className: 'fa fa-reply'})
                     ' Reply'
                 ) if currentUserID isnt data.user_id
                 a(
-                    {href: "/posts/create?replies_to_id=#{data.id}&kind=vote"}
+                    {href: "/topics/#{topic_id}/posts/create?" +
+                           "replies_to_id=#{data.id}&kind=vote"}
                     i({className: 'fa fa-check'})
                     ' Vote'
                 ) if data.kind in ['proposal', 'flag']
@@ -66,7 +69,8 @@ module.exports = (data, currentUserID) ->
                     ' Share'
                 )
                 a(
-                    {href: "/posts/create?replies_to_id=#{data.id}&kind=flag"}
+                    {href: "/topics/#{topic_id}/posts/create?" +
+                           "replies_to_id=#{data.id}&kind=flag"}
                     i({className: 'fa fa-flag'})
                     ' Flag'
                 ) if currentUserID isnt data.user_id

@@ -49,7 +49,7 @@ routes = [{
     title: 'Topic'
     # Must be before `topic`
 }, {
-    path: '/posts/create'
+    path: '/topics/{id}/posts/create'
     tmpl: require('./pages/post_form.tmpl')
     title: 'Create Post'
 }, {

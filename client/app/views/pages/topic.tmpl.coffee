@@ -29,7 +29,7 @@ module.exports = (data) ->
             a(
                 {
                     className: 'button--good'
-                    href: "/posts/create?topic_id=#{id}"
+                    href: "/topics/#{id}/posts/create"
                 }
                 i({className: 'fa fa-plus'})
                 ' Create a new post'
