@@ -1,5 +1,6 @@
 from modules.model import Model
-from modules.validations import is_required, is_string, is_one_of
+from modules.validations import is_required, is_string, is_one_of, \
+    has_min_length
 from modules.util import json_prep
 import framework.database as database
 import rethinkdb as r
@@ -21,7 +22,7 @@ class Topic(Model):
             'validate': (is_required, is_string,)
         },
         'name': {
-            'validate': (is_required, is_string,)
+            'validate': (is_required, is_string, (has_min_length, 1),)
         },
         'entity': {
             'validate': (is_required,),

@@ -1,5 +1,6 @@
 from modules.model import Model
-from modules.validations import is_required, is_string, is_one_of
+from modules.validations import is_required, is_string, is_one_of, \
+    has_min_length
 from framework.elasticsearch import es
 from modules.util import json_prep
 
@@ -10,13 +11,13 @@ class Post(Model):
 
     schema = dict(Model.schema.copy(), **{
         'user_id': {
-            'validate': (is_required, is_string,)
+            'validate': (is_required, is_string,)  # TODO validate foreign
         },
         'topic_id': {
-            'validate': (is_required, is_string,)
+            'validate': (is_required, is_string,)  # TODO validate foreign
         },
         'body': {
-            'validate': (is_required, is_string,)
+            'validate': (is_required, is_string, (has_min_length, 1),)
         },
         'kind': {
             'validate': (is_required, is_string,

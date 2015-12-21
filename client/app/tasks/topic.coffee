@@ -12,6 +12,7 @@ module.exports = store.add({
                 @data.topics ?= {}
                 @data.topics[response.topic.id] = response.topic
                 recorder.emit('create topic')
+                @tasks.route("/topics/#{response.topic.id}")
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on create topic', errors)
@@ -22,12 +23,13 @@ module.exports = store.add({
     updateTopic: (data) ->
         ajax({
             method: 'PUT'
-            url: "/s/topics/#{data.id}"
+            url: "/s/topics/#{data.topic.id}"
             data: data
             done: (response) =>
                 @data.topics ?= {}
-                @data.topics[data.id] = response.topic
+                @data.topics[data.topic.id] = response.topic
                 recorder.emit('update topic')
+                @tasks.route("/topics/#{data.topic.id}")
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on update topic', errors)

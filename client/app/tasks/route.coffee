@@ -12,6 +12,8 @@ routes = [
     {path: '/sets/{id}', task: 'openSetRoute'}
     {path: '/cards/{id}', task: 'openCardRoute'}
     {path: '/{kind}s/{id}/versions', task: 'openVersionsRoute'}
+    {path: '/topics/create', task: 'openCreateTopic'}
+    {path: '/topics/{id}/update', task: 'openUpdateTopic'}
     {path: '/topics/{id}', task: 'openTopicRoute'}
     {path: '/sets/{id}/tree', task: 'openTreeRoute'}
     {path: '/sets/{id}/choose_unit', task: 'openChooseUnit'}
@@ -52,6 +54,13 @@ module.exports = store.add({
 
     openVersionsRoute: (kind, id) ->
         tasks["list#{ucfirst(kind)}Versions"](id)
+
+    openCreateTopic: ->
+        {kind, id} = @data.routeQuery
+        tasks["get#{ucfirst(kind)}"](id)
+
+    openUpdateTopic: (id) ->
+        tasks.listPosts(id)
 
     openTopicRoute: (id) ->
         tasks.listPosts(id)

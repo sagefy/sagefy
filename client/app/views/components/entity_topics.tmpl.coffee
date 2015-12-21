@@ -6,7 +6,7 @@ module.exports = (kind, entityID, topics) ->
         a(
             {
                 className: 'font-size-small pull-right'
-                href: "/topics/create?kind=unit&id=#{entityID}"
+                href: "/topics/create?kind=#{kind}&id=#{entityID}"
             }
             i({className: 'fa fa-plus'})
             ' Create a new topic'

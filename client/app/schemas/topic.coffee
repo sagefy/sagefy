@@ -5,7 +5,11 @@ module.exports = {
         type: 'text'
         validations: [required]
     }
-    entity: {
+    'entity.id': {
+        type: 'hidden'
+        validations: [required]
+    }
+    'entity.kind': {
         type: 'hidden'
         validations: [required]
     }

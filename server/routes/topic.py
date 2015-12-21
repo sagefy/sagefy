@@ -61,7 +61,7 @@ def create_topic_route(request):
     post_ = instance_post_facade(post_data)
 
     errors, errors2 = topic.validate(), post_.validate()
-    if len(errors + errors2):
+    if errors + errors2:
         return 400, {
             'errors': errors + errors2,
             'ref': 'dr1vX0A7kE8RItHBGeObXWkZ'
@@ -98,7 +98,7 @@ def update_topic_route(request, topic_id):
         return abort(401)
 
     # Must be a valid topic_id
-    topic = Topic.get(id=request['params'].get('topic_id'))
+    topic = Topic.get(id=topic_id)
     if not topic:
         return 404, {
             'errors': [{
@@ -115,7 +115,7 @@ def update_topic_route(request, topic_id):
     # Request must only be for name
     # TODO should this be part of the model?
     topic, errors = topic.update({
-        'name': request['params'].get('name')
+        'name': request['params'].get('topic', {}).get('name')
     })
     if errors:
         return 400, {

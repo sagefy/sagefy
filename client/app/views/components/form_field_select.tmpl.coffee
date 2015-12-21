@@ -44,7 +44,7 @@ m = (data) ->
     # if data.showOverlay
     #     html.push(
     #         div({className: 'select__selected'})
-    #         # TODO@ List options that have already been selected
+    #         # TODO List options that have already been selected
     #         div({className: 'select__overlay'})
     #     )
     #

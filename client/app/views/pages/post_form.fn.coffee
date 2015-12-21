@@ -1,14 +1,22 @@
 postSchema = require('../../schemas/post')
 {extend} = require('../../modules/utilities')
 
-getFields = ({topicID, postID, repliesToID}) ->
-    return [extend({
-        name: 'post.topic_id'
-        value: topicID
-    }, postSchema.topic_id), extend({
-        name: 'post.replies_to_id'
-        value: repliesToID
-    }, postSchema.replies_to_id), extend({
+getFields = ({topicID, repliesToID}) ->
+    fields = []
+
+    if topicID
+        fields.push(extend({
+            name: 'post.topic_id'
+            value: topicID
+        }, postSchema.topic_id))
+
+    if repliesToID
+        fields.push(extend({
+            name: 'post.replies_to_id'
+            value: repliesToID
+        }, postSchema.replies_to_id))
+
+    fields.push(extend({
         name: 'post.kind'
         options: [{
 
@@ -24,21 +32,24 @@ getFields = ({topicID, postID, repliesToID}) ->
     }, postSchema.kind), extend({
         name: 'post.body'
         label: 'Body'
-    }, postSchema.body)]
+    }, postSchema.body))
+
+    return fields
 
 parseData = (data) ->
     [topicID, postID] = data.routeArgs
-    repliesToID = data.routeQuery.replies_to_id
+
     if postID
         post = data.topicPosts?[topicID].find((post) -> post.id is postID)
-    if post
-        formData = {
-            'post.replies_to_id': post.replies_to_id
-            'post.kind': post.kind
-            'post.body': post.body
-        }
-    else
-        formData = {}
+
+    repliesToID = if post then post.replies_to_id \
+                  else data.routeQuery.replies_to_id
+
+    formData = if post then {
+        'post.replies_to_id': repliesToID
+        'post.kind': post.kind
+        'post.body': post.body
+    } else {}
 
     return {topicID, postID, repliesToID, post, formData}
 
