@@ -8,11 +8,16 @@ module.exports = extend({}, post, {
         validations: [required]
     }
     'entity.id': {
-        type: 'text'
-        validations: [required]
+        type: 'hidden'
+        validations: []
     }
     'entity.kind': {
-        type: 'text'
+        type: 'select'
+        options: [
+            {value: 'card'}
+            {value: 'unit'}
+            {value: 'set'}
+        ]
         validations: [required]
     }
 })

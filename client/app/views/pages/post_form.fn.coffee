@@ -2,11 +2,13 @@
 postSchema = require('../../schemas/post')
 voteSchema = require('../../schemas/vote')
 proposalSchema = require('../../schemas/proposal')
+unitSchema = require('../../schemas/unit')
 
 schemas = {
     post: postSchema
     vote: voteSchema
     proposal: proposalSchema
+    unit: unitSchema
 }
 
 getFields = ({topicID, repliesToID, editKind, postKind = 'post'}) ->
@@ -51,7 +53,12 @@ getFields = ({topicID, repliesToID, editKind, postKind = 'post'}) ->
 
     fields.push(extend({
         name: 'post.body'
-        label: 'Post Body'
+        label: if postKind is 'proposal' \
+               then 'Proposal Summary' \
+               else 'Post Body'
+        description: (if postKind is 'proposal' then \
+                      'Describe the value of this proposal.'
+                      else null)
     }, schemas[postKind].body))
 
     if postKind is 'proposal'
@@ -73,19 +80,66 @@ getFieldsVote = () ->
 getProposalName = () ->
     return extend({
         name: 'post.name'
-        label: 'Post Name'
+        label: 'Proposal Name'
+        description: 'Briefly state the goal of this proposal.'
     }, schemas.proposal.name)
 
-getProposalFields = () ->
+getProposalFields = (entityKind) ->
     # TODO all proposal fields should lock after creating proposal
-    # Entity Kind (all)
-    # Entity ID (all, not on create entity)
-    # Entity Name (all)
-    # Entity Language (en only option)
-    # Entity Body (unit or set)
+
+    fields = []
+
+    fields.push(extend({
+        label: 'Entity Kind'
+        options: [
+            {label: 'Card'}
+            {label: 'Unit'}
+            {label: 'Set'}
+        ]
+        inline: true
+        name: 'entity.kind'
+    }, schemas.proposal['entity.kind']))
+
+    # TODO Entity ID not on create entity
+    fields.push(extend({
+
+    }, schemas.proposal['entity.id']))
+
+    ###########################################################
+    if not entityKind
+        return fields
+
+    fields.push(extend({
+        label: 'Entity Name'
+    }, schemas[entityKind].name))
+
+    fields.push(extend({
+        label: 'Entity Language'
+        options: [
+            {label: 'English'}
+        ]
+        value: 'en'
+    }, schemas[entityKind].language))
+
+    # TODO Tags (all)
+
+    if entityKind in ['unit', 'set']
+        fields.push(extend({
+            label: 'Entity Goal'
+            description: 'Start with a verb, such as: Compute the value of ' +
+                         'dividing two whole numbers.'
+        }, schemas[entityKind].body))
+
     # Unit Belongs To (card only, should be provided by qs)
-    # Tags (all)
-    # Requires (card or unit)
+
+    # TODO input method for requires?
+    if entityKind in ['card', 'unit']
+        fields.push(extend({
+            label: 'Entity Requires'
+            description: "List the #{entityKind}s required " +
+                         "before this #{entityKind}."
+        }, schemas[entityKind].requires))
+
     # Members [id, kind] (set)
     # Card Kind (card)
     # Video Site (video card)
@@ -95,7 +149,7 @@ getProposalFields = () ->
     # Choice Feedback (choice card)
     # Choice Order (choice card)
     # Choice Max Options to Show (choice card)
-    return []
+    return fields
 
 parseData = (data) ->
     [topicID, postID] = data.routeArgs
