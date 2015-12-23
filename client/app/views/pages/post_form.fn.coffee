@@ -40,26 +40,62 @@ getFields = ({topicID, repliesToID, editKind, postKind = 'post'}) ->
             disabled: true
         }]
         inline: true
-        label: 'Kind'
+        label: 'Post Kind'
     }, schemas[postKind].kind))
 
     if postKind is 'vote'
-        fields.push(extend({
-            name: 'post.response'
-            options: [
-                {label: 'Yes, I agree'}
-                {label: 'No, I dissent'}
-            ]
-            inline: true
-            label: 'Response'
-        }, schemas[postKind].response))
+        fields.push(getFieldsVote())
+
+    if postKind is 'proposal'
+        fields.push(getProposalName())
 
     fields.push(extend({
         name: 'post.body'
-        label: 'Body'
+        label: 'Post Body'
     }, schemas[postKind].body))
 
+    if postKind is 'proposal'
+        fields = fields.concat(getProposalFields())
+
     return fields
+
+getFieldsVote = () ->
+    return extend({
+        name: 'post.response'
+        options: [
+            {label: 'Yes, I agree'}
+            {label: 'No, I dissent'}
+        ]
+        inline: true
+        label: 'Response'
+    }, schemas.vote.response)
+
+getProposalName = () ->
+    return extend({
+        name: 'post.name'
+        label: 'Post Name'
+    }, schemas.proposal.name)
+
+getProposalFields = () ->
+    # TODO all proposal fields should lock after creating proposal
+    # Entity Kind (all)
+    # Entity ID (all, not on create entity)
+    # Entity Name (all)
+    # Entity Language (en only option)
+    # Entity Body (unit or set)
+    # Unit Belongs To (card only, should be provided by qs)
+    # Tags (all)
+    # Requires (card or unit)
+    # Members [id, kind] (set)
+    # Card Kind (card)
+    # Video Site (video card)
+    # Video ID (video card)
+    # Choice Question [Body] (choice card)
+    # Choice Options [value, correct, feedback] (choice card)
+    # Choice Feedback (choice card)
+    # Choice Order (choice card)
+    # Choice Max Options to Show (choice card)
+    return []
 
 parseData = (data) ->
     [topicID, postID] = data.routeArgs

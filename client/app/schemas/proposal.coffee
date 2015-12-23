@@ -3,11 +3,15 @@ post = require('./post')
 {required} = require('../modules/validations')
 
 module.exports = extend({}, post, {
-    entity_version_id: {
-        type: 'hidden'
-        validations: []
-    }
     name: {
+        type: 'text'
+        validations: [required]
+    }
+    'entity.id': {
+        type: 'text'
+        validations: [required]
+    }
+    'entity.kind': {
         type: 'text'
         validations: [required]
     }
