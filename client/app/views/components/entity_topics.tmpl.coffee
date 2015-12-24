@@ -22,13 +22,15 @@ module.exports = (kind, entityID, topics) ->
                 )
                 # TODO number of posts
             ) for topic in topics
+            li(
+                a(
+                    {href: "/search?kind=topic&q=#{entityID}"}
+                    '... See more topics '
+                    i({className: 'fa fa-chevron-right'})
+                )
+            )
         ) if topics?.length
         p(
             'No topics yet.'
         ) unless topics?.length
-        p(a(
-            {href: "/search?kind=topic&q=#{entityID}"}
-            'See more topics '
-            i({className: 'fa fa-chevron-right'})
-        ))
     ]

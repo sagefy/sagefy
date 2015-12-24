@@ -10,8 +10,4 @@ module.exports = (kind, entity) ->
     return header(
         span({className: 'label--accent font-size-accent'}, title)
         h1(entity.name)
-        ul(
-            li("Language: #{c(entity.language)}")
-            li("Tags: #{entity.tags.join(', ')}")
-        )
     )

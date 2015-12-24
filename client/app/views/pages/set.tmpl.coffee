@@ -23,6 +23,11 @@ module.exports = (data) ->
 
         p({className: 'leading'}, set.body)
 
+        ul(
+            li("Language: #{c(set.language)}")
+            li("Tags: #{set.tags.join(', ')}")
+        )
+
         h2('Stats')
         ul(
             li('Number of Learners: ???')

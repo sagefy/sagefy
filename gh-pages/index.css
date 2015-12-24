@@ -3547,6 +3547,7 @@ input[type="tel"] {
   padding: 6px 12px;
 }
 textarea {
+  display: block;
   padding: 6px 12px;
 }
 input[type="checkbox"],

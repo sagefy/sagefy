@@ -18,7 +18,7 @@ module.exports = (kind, entity) ->
                     verbage[relation.kind]
                     ': '
                     a(
-                        {href: "/#{kind}s/#{relation.entity.id}"}
+                        {href: "/#{kind}s/#{relation.entity.entity_id}"}
                         relation.entity.name
                     )
                 )

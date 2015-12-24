@@ -30,6 +30,8 @@ m = (data) ->
                 require('./form_field_button.tmpl')(data)
             when 'select'
                 require('./form_field_select.tmpl')(data)
+            when 'list'
+                require('./form_field_list.tmpl')(data)
     )
 
     if data.error

@@ -7,13 +7,19 @@ topicSchema = require('../../schemas/topic')
 {mergeFieldsData, ucfirst} = require('../../modules/auxiliaries')
 getPostFields = require('./post_form.fn').getFields
 
-getFields = ({topicID, entityID, entityKind, postKind = 'post'}) ->
+getFields = ({
+    topicID
+    entityID
+    topicEntityKind
+    postKind = 'post'
+    entityKind
+}) ->
     fields = [extend({
         name: 'topic.entity.id'
         value: entityID
     }, topicSchema['entity.id']), extend({
         name: 'topic.entity.kind'
-        value: entityKind
+        value: topicEntityKind
     }, topicSchema['entity.kind']), extend({
         name: 'topic.name'
         label: 'Topic Name'
@@ -22,6 +28,7 @@ getFields = ({topicID, entityID, entityKind, postKind = 'post'}) ->
     unless topicID
         fields = fields.concat(getPostFields({
             editKind: true
+            entityKind
             postKind
         }))
 
@@ -50,7 +57,6 @@ getEntity = (data, kind, id) ->
     if kind is 'set'
         return data.sets?[id]
 
-
 spinner = ->
     return div({className: 'spinner'})
 
@@ -60,21 +66,22 @@ module.exports = (data) ->
     if topicID
         topic = data.topics?[topicID]
         return spinner() if not topic
-        entityKind = topic.entity.kind
+        topicEntityKind = topic.entity.kind
         entityID = topic.entity.id
-        entity = getEntity(data, entityKind, entityID)
+        entity = getEntity(data, topicEntityKind, entityID)
         entityName = entity?.name
     else
-        entityKind = data.routeQuery.kind
+        topicEntityKind = data.routeQuery.kind
         entityID = data.routeQuery.id
-        entity = getEntity(data, entityKind, entityID)
+        entity = getEntity(data, topicEntityKind, entityID)
         entityName = entity?.name
 
     fields = getFields({
         topicID
         entityID
-        entityKind
+        topicEntityKind
         postKind: data.postKind
+        entityKind: data.entityKind
     })
 
     fields_ = if topicID
@@ -92,7 +99,7 @@ module.exports = (data) ->
         h1(if topicID then 'Update Topic' else 'Create Topic')
         p(
             {className: 'leading'}
-            strong(ucfirst(entityKind))
+            strong(ucfirst(topicEntityKind))
             ": #{entityName}"
         )
         form(fields_)

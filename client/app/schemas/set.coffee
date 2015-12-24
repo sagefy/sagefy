@@ -1,22 +1,27 @@
+{required} = require('../modules/validations')
+
 module.exports = {
     language: {
         type: 'select'
-        validations: []
+        validations: [required]
+        options: [
+            {value: 'en'}
+        ]
     }
     name: {
         type: 'text'
-        validations: []
+        validations: [required]
     }
     body: {
         type: 'textarea'
-        validations: []
+        validations: [required]
     }
     tags: {
-        type: 'select'
+        type: 'list'
         validations: []
     }
     members: {
-        type: 'select'
-        validations: []
+        type: 'list'
+        validations: [required]
     }
 }

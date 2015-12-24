@@ -3,15 +3,25 @@ postSchema = require('../../schemas/post')
 voteSchema = require('../../schemas/vote')
 proposalSchema = require('../../schemas/proposal')
 unitSchema = require('../../schemas/unit')
+setSchema = require('../../schemas/set')
+cardSchema = require('../../schemas/card')
 
 schemas = {
     post: postSchema
     vote: voteSchema
     proposal: proposalSchema
     unit: unitSchema
+    set: setSchema
+    card: cardSchema
 }
 
-getFields = ({topicID, repliesToID, editKind, postKind = 'post'}) ->
+getFields = ({
+    topicID
+    repliesToID
+    editKind
+    postKind = 'post'
+    entityKind
+}) ->
     fields = []
 
     if topicID
@@ -62,7 +72,7 @@ getFields = ({topicID, repliesToID, editKind, postKind = 'post'}) ->
     }, schemas[postKind].body))
 
     if postKind is 'proposal'
-        fields = fields.concat(getProposalFields())
+        fields = fields.concat(getProposalFields(entityKind))
 
     return fields
 
@@ -130,7 +140,7 @@ getProposalFields = (entityKind) ->
                          'dividing two whole numbers.'
         }, schemas[entityKind].body))
 
-    # Unit Belongs To (card only, should be provided by qs)
+    # TODO Unit Belongs To (card only, should be provided by qs)
 
     # TODO input method for requires?
     if entityKind in ['card', 'unit']
@@ -140,16 +150,45 @@ getProposalFields = (entityKind) ->
                          "before this #{entityKind}."
         }, schemas[entityKind].requires))
 
-    # Members [id, kind] (set)
-    # Card Kind (card)
-    # Video Site (video card)
-    # Video ID (video card)
-    # Choice Question [Body] (choice card)
-    # Choice Options [value, correct, feedback] (choice card)
-    # Choice Feedback (choice card)
-    # Choice Order (choice card)
-    # Choice Max Options to Show (choice card)
+    if entityKind is 'set'
+        fields.push(extend({
+            label: 'Set Members'
+            description: 'Choose a list of units and sets. ' +
+                         'Cycles are not allowed.'
+        }, schemas.set.members))
+
+
+    if entityKind is 'card'
+        fields = fields.concat(getFieldsCardKind(entityKind))
+
+    # TODO Video Site (video card)
+    # TODO Video ID (video card)
+
+    # TODO Choice Question [Body] (choice card)
+    # TODO Choice Options [value, correct, feedback] (choice card)
+    # TODO Choice Feedback (choice card)
+    # TODO Choice Order (choice card)
+    # TODO Choice Max Options to Show (choice card)
+
     return fields
+
+getFieldsCardKind = (entityKind) ->
+    # TODO Card Kind (card)
+    fields = []
+
+    fields.push(extend({
+        label: 'Card Kind'
+        name: 'entity.card_kind'
+        options: [
+            {label: 'Video'}
+            {label: 'Choice'}
+        ]
+        inline: true
+    }, schemas.card.kind))
+
+
+    return fields
+
 
 parseData = (data) ->
     [topicID, postID] = data.routeArgs

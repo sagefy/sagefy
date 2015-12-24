@@ -24,10 +24,12 @@ module.exports = (kind, entityID, versions) ->
                 ' '
                 version.name
             ) for version in versions
+            li(
+                a(
+                    {href: "/#{kind}s/#{entityID}/versions"}
+                    '... See more version history '
+                    i({className: 'fa fa-chevron-right'})
+                )
+            )
         )
-        p(a(
-            {href: "/#{kind}s/#{entityID}/versions"}
-            'See more version history '
-            i({className: 'fa fa-chevron-right'})
-        ))
     ]

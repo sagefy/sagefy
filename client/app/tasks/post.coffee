@@ -89,4 +89,8 @@ module.exports = store.add({
     changePostKind: (kind) ->
         @data.postKind = kind
         @change()
+
+    changeEntityKind: (kind) ->
+        @data.entityKind = kind
+        @change()
 })

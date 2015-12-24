@@ -20,6 +20,5 @@ module.exports = extend({}, post, {
             {value: 'true'}
             {value: 'false'}
         ]
-        default: 'post'
     }
 })

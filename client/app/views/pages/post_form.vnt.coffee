@@ -16,4 +16,7 @@ module.exports = broker.add({
 
     'change #post-form.create [name="post.kind"]': (e, el) ->
         tasks.changePostKind(el.value)
+
+    'change #post-form.create [name="entity.kind"]': (e, el) ->
+        tasks.changeEntityKind(el.value)
 })

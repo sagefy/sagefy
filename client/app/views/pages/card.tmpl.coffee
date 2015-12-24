@@ -34,6 +34,11 @@ module.exports = (data) ->
             k[card.kind](card)
         )
 
+        ul(
+            li("Language: #{c(card.language)}")
+            li("Tags: #{card.tags.join(', ')}")
+        )
+
         h2('Stats')
         ul(
             li("Number of Learners: #{params.num_learners}")

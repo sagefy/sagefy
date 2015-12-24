@@ -16,6 +16,7 @@ module.exports = (data) ->
         repliesToID
         editKind: not postID
         postKind: data.postKind or (post and post.kind)
+        entityKind: data.entityKind
     })
 
     if postID

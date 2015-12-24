@@ -1,6 +1,5 @@
 {required} = require('../modules/validations')
 
-
 module.exports = {
     language: {
         type: 'select'
@@ -18,11 +17,11 @@ module.exports = {
         validations: [required]
     }
     tags: {
-        type: 'select'
+        type: 'list'
         validations: []
     }
     require_ids: {
-        type: 'select'
+        type: 'list'
         validations: []
     }
 }
