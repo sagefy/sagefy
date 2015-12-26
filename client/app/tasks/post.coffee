@@ -87,10 +87,20 @@ module.exports = store.add({
         })
 
     changePostKind: (kind) ->
+        # TODO maybe this should go into a `pageData` object
+        #      that gets cleared on route
         @data.postKind = kind
         @change()
 
     changeEntityKind: (kind) ->
+        # TODO maybe this should go into a `pageData` object
+        #      that gets cleared on route
         @data.entityKind = kind
+        @change()
+
+    changeCardKind: (kind) ->
+        # TODO maybe this should go into a `pageData` object
+        #      that gets cleared on route
+        @data.cardKind = kind
         @change()
 })

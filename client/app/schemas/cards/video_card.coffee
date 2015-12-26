@@ -1,6 +1,6 @@
 {required} = require('../../modules/validations')
 {extend} = require('../../modules/utilities')
-cardSchema = require('../../card')
+cardSchema = require('../card')
 
 module.exports = extend({}, cardSchema, {
     video_id: {

@@ -13,6 +13,7 @@ getFields = ({
     topicEntityKind
     postKind = 'post'
     entityKind
+    cardKind
 }) ->
     fields = [extend({
         name: 'topic.entity.id'
@@ -30,6 +31,7 @@ getFields = ({
             editKind: true
             entityKind
             postKind
+            cardKind
         }))
 
     fields.push({
@@ -82,6 +84,7 @@ module.exports = (data) ->
         topicEntityKind
         postKind: data.postKind
         entityKind: data.entityKind
+        cardKind: data.cardKind
     })
 
     fields_ = if topicID

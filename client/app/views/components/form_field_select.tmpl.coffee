@@ -35,7 +35,9 @@ m = (data) ->
             name: data.name
             muliple: data.multiple
             value: o.value
-            checked: o.value is data.value
+            checked: if data.value \
+                     then o.value is data.value \
+                     else o.value is data.default
             label: o.label
             disabled: o.disabled
         }) for o in data.options

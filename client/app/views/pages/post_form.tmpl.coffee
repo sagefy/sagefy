@@ -17,6 +17,7 @@ module.exports = (data) ->
         editKind: not postID
         postKind: data.postKind or (post and post.kind)
         entityKind: data.entityKind
+        cardKind: data.cardKind
     })
 
     if postID

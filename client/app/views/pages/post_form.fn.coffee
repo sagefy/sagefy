@@ -1,3 +1,17 @@
+
+###
+TODO@ modes:
+          topic    post
+create ------------------
+- card    [ ]      [ ]
+- unit    [ ]      [ ]
+- set     [ ]      [ ]
+update (view only) ------
+- card    -x-      [ ]
+- unit    -x-      [ ]
+- set     -x-      [ ]
+###
+
 {extend} = require('../../modules/utilities')
 postSchema = require('../../schemas/post')
 voteSchema = require('../../schemas/vote')
@@ -5,6 +19,8 @@ proposalSchema = require('../../schemas/proposal')
 unitSchema = require('../../schemas/unit')
 setSchema = require('../../schemas/set')
 cardSchema = require('../../schemas/card')
+videoCardSchema = require('../../schemas/cards/video_card')
+choiceCardSchema = require('../../schemas/cards/choice_card')
 
 schemas = {
     post: postSchema
@@ -13,6 +29,8 @@ schemas = {
     unit: unitSchema
     set: setSchema
     card: cardSchema
+    videoCard: videoCardSchema
+    choiceCard: choiceCardSchema
 }
 
 getFields = ({
@@ -21,6 +39,7 @@ getFields = ({
     editKind
     postKind = 'post'
     entityKind
+    cardKind
 }) ->
     fields = []
 
@@ -72,7 +91,7 @@ getFields = ({
     }, schemas[postKind].body))
 
     if postKind is 'proposal'
-        fields = fields.concat(getProposalFields(entityKind))
+        fields = fields.concat(getProposalFields(entityKind, cardKind))
 
     return fields
 
@@ -94,8 +113,8 @@ getProposalName = () ->
         description: 'Briefly state the goal of this proposal.'
     }, schemas.proposal.name)
 
-getProposalFields = (entityKind) ->
-    # TODO all proposal fields should lock after creating proposal
+getProposalFields = (entityKind, cardKind) ->
+    # TODO@ all proposal fields should lock after creating proposal
 
     fields = []
 
@@ -107,10 +126,10 @@ getProposalFields = (entityKind) ->
             {label: 'Set'}
         ]
         inline: true
-        name: 'entity.kind'
+        name: 'entity_kind'  # We rename to avoid conflict with card kind
     }, schemas.proposal['entity.kind']))
 
-    # TODO Entity ID not on create entity
+    # TODO@ Entity ID not on create entity
     fields.push(extend({
 
     }, schemas.proposal['entity.id']))
@@ -140,9 +159,8 @@ getProposalFields = (entityKind) ->
                          'dividing two whole numbers.'
         }, schemas[entityKind].body))
 
-    # TODO Unit Belongs To (card only, should be provided by qs)
+    # TODO@ Unit Belongs To (card only, should be provided by qs)
 
-    # TODO input method for requires?
     if entityKind in ['card', 'unit']
         fields.push(extend({
             label: 'Entity Requires'
@@ -159,26 +177,16 @@ getProposalFields = (entityKind) ->
 
 
     if entityKind is 'card'
-        fields = fields.concat(getFieldsCardKind(entityKind))
-
-    # TODO Video Site (video card)
-    # TODO Video ID (video card)
-
-    # TODO Choice Question [Body] (choice card)
-    # TODO Choice Options [value, correct, feedback] (choice card)
-    # TODO Choice Feedback (choice card)
-    # TODO Choice Order (choice card)
-    # TODO Choice Max Options to Show (choice card)
+        fields = fields.concat(getFieldsCardKind(cardKind))
 
     return fields
 
-getFieldsCardKind = (entityKind) ->
-    # TODO Card Kind (card)
+getFieldsCardKind = (cardKind) ->
     fields = []
 
     fields.push(extend({
         label: 'Card Kind'
-        name: 'entity.card_kind'
+        name: 'entity.kind'
         options: [
             {label: 'Video'}
             {label: 'Choice'}
@@ -186,9 +194,48 @@ getFieldsCardKind = (entityKind) ->
         inline: true
     }, schemas.card.kind))
 
+    if cardKind is 'video'
+        fields.push(extend({
+            label: 'Video Site'
+            name: 'entity.site'
+            options: [
+                {label: 'YouTube'}
+                {label: 'Vimeo'}
+            ]
+        }, schemas.videoCard.site))
+
+        fields.push(extend({
+            label: 'Video ID'
+            name: 'entity.video_id'
+            description: 'You can find the video ID in the URL.'
+        }, schemas.videoCard.video_id))
+
+    if cardKind is 'choice'
+        fields.push(extend({
+            label: 'Question or Prompt'
+            name: 'entity.body'
+        }, schemas.choiceCard.body))
+
+        fields.push(extend({
+            label: 'Response Options'
+            name: 'entity.options'
+        }, schemas.choiceCard.options))
+
+        fields.push(extend({
+            label: 'Order'
+            name: 'entity.order'
+            options: [
+                {label: 'Random'}
+                {label: 'Set'}
+            ]
+        }, schemas.choiceCard.order))
+
+        fields.push(extend({
+            label: 'Max Options to Show'
+            name: 'entity.max_options_to_show'
+        }, schemas.choiceCard.max_options_to_show))
 
     return fields
-
 
 parseData = (data) ->
     [topicID, postID] = data.routeArgs

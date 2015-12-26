@@ -6,6 +6,6 @@ module.exports = (data) ->
         name: data.name
         placeholder: data.placeholder or ''
         type: data.type or 'text'
-        value: data.value or ''
+        value: data.value or data.default or ''
         size: data.size or 40
     })
