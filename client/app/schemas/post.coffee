@@ -18,10 +18,10 @@ module.exports = {
     kind: {
         type: 'select'
         options: [
-            {label: 'Post', value: 'post'}  # TODO@ label is a view concern
-            {label: 'Proposal', value: 'proposal'}
-            {label: 'Vote', value: 'vote'}
-            {label: 'Flag', value: 'flag'}
+            {value: 'post'}
+            {value: 'proposal'}
+            {value: 'vote'}
+            {value: 'flag'}
         ]
         default: 'post'
         validations: [

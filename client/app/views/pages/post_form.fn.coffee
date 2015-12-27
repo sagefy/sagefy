@@ -7,7 +7,7 @@ create ------------------
 - unit    [ ]      [ ]
 - set     [ ]      [ ]
 update (view only) ------
-- card    -x-      [ ]
+- card    -x-      [ ]   - TODO@ how to decline proposal?
 - unit    -x-      [ ]
 - set     -x-      [ ]
 ###
@@ -58,16 +58,16 @@ getFields = ({
     fields.push(extend({
         name: 'post.kind'
         options: [{
-            # Post
+            label: 'Post'
             disabled: not editKind
         }, {
-            # Proposal
+            label: 'Proposal'
             disabled: not editKind
         }, {
-            # Vote
+            label: 'Vote'
             disabled: not (editKind and repliesToID)
         }, {
-            # Flag
+            label: 'Flag'
             disabled: true
         }]
         inline: true
