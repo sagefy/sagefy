@@ -8,11 +8,11 @@ Sagefy is _open-content_. Anyone can contribute. A _consensus decision-making pr
 
 Sagefy is open-source. The content and the code are freely available.
 
-- [Site], [Docs], [Twitter]
+- [Site], [Wiki], [Twitter]
 
 [Site]: https://sagefy.org
 [Twitter]: https://twitter.com/sagefyorg
-[Docs]: https://docs.sagefy.org/
+[Wiki]: https://github.com/heiskr/sagefy/wiki
 
 [![Setup](https://img.shields.io/badge/get-setup-brightgreen.svg?style=flat)](https://github.com/heiskr/sagefy/blob/master/setup/setup.md) [![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy) [![Gitter](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg?style=flat)](https://gitter.im/heiskr/sagefy)
 
