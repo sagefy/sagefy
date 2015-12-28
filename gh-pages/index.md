@@ -1,3 +1,8 @@
+---
+layout: default
+title: Sagefy
+---
+
 Something is coming...
 
 [Github](https://github.com/heiskr/sagefy)
