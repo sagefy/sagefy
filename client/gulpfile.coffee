@@ -109,12 +109,6 @@ gulp.task('build styles', (done) ->
     stylus2css(from, to, done)
 )
 
-gulp.task('build styles for docs', (done) ->
-    from = '../gh-pages/index.styl'
-    to = '../gh-pages/index.css'
-    stylus2css(from, to, done)
-)
-
 gulp.task('build styleguide', (done) ->
     fs = require('fs')
     grabStyleMeta('./**/*.styl', (data) ->
@@ -133,10 +127,10 @@ gulp.task('compress styles', ['build styles'], ->
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('watch styles', ['build styles', 'build styles for docs'], ->
+gulp.task('watch styles', ['build styles'], ->
     gulp.watch(
         ['app/**/*.styl']
-        ['build styles', 'build styles for docs', 'build scripts']
+        ['build styles', 'build scripts']
     )
 )
 
