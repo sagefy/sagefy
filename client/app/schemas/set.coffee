@@ -19,9 +19,11 @@ module.exports = {
     tags: {
         type: 'list'
         validations: []
+        columns: ['tag']
     }
     members: {
         type: 'list'
         validations: [required]
+        columns: ['kind', 'id']
     }
 }

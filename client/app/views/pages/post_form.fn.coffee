@@ -163,10 +163,11 @@ getProposalFields = (entityKind, cardKind) ->
 
     if entityKind in ['card', 'unit']
         fields.push(extend({
+            name: 'entity.require_ids'
             label: 'Entity Requires'
             description: "List the #{entityKind}s required " +
                          "before this #{entityKind}."
-        }, schemas[entityKind].requires))
+        }, schemas[entityKind].require_ids))
 
     if entityKind is 'set'
         fields.push(extend({
