@@ -45,6 +45,7 @@ This document serves as a list of major use cases for Sagefy's functionality. It
 - [ ] As a contributor to improve Sagefy I want to propose a new entity.
 - [ ] As a contributor to improve Sagefy I want to propose changes to an existing entity.
 - [ ] As a contributor to help improve Sagefy I want to vote a on proposal.
+- [ ] As a contributor to improve Sagefy I want to flag an entity for removal.
 
 ### 4) Learn
 
@@ -58,4 +59,6 @@ This document serves as a list of major use cases for Sagefy's functionality. It
 - [x] As a learner to feel in control of my learning I want to choose which unit to work on next.
 - [x] As a learner to learn I want to use a (non-assessment) card.
 - [x] As a learner to learn I want to use an assessment type card.
+- [ ] As a learner to stay motivated I want to remember which unit I'm currently working on.
 - [ ] As a learner to stay motivated I want to see my progress in the unit as I work on cards.
+- [ ] As a learner to review my past I would like to see my previous responses for a given unit.
