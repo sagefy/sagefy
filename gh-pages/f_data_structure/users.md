@@ -7,6 +7,10 @@ This document covers how users will interact with the types of entities in the S
 
 Before reading this, read [Data Structure](/data_structure).
 
+
+**TODO move this to user stories.**
+
+
 Cards
 -----
 
