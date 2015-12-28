@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/heiskr/sagefy/master/client/app/images/astrolabe.png" height="72">
+
 # Sagefy
 
 **Sagefy is an open-content adaptive learning platform.**
