@@ -13,6 +13,7 @@ update (view only) ------
 ###
 
 {extend} = require('../../modules/utilities')
+{ucfirst} = require('../../modules/auxiliaries')
 postSchema = require('../../schemas/post')
 voteSchema = require('../../schemas/vote')
 proposalSchema = require('../../schemas/proposal')
@@ -139,11 +140,11 @@ getProposalFields = (entityKind, cardKind) ->
         return fields
 
     fields.push(extend({
-        label: 'Entity Name'
+        label: "#{ucfirst(entityKind)} Name"
     }, schemas[entityKind].name))
 
     fields.push(extend({
-        label: 'Entity Language'
+        label: "#{ucfirst(entityKind)} Language"
         options: [
             {label: 'English'}
         ]
@@ -154,7 +155,7 @@ getProposalFields = (entityKind, cardKind) ->
 
     if entityKind in ['unit', 'set']
         fields.push(extend({
-            label: 'Entity Goal'
+            label: "#{ucfirst(entityKind)} Goal"
             description: 'Start with a verb, such as: Compute the value of ' +
                          'dividing two whole numbers.'
         }, schemas[entityKind].body))
@@ -164,16 +165,24 @@ getProposalFields = (entityKind, cardKind) ->
     if entityKind in ['card', 'unit']
         fields.push(extend({
             name: 'entity.require_ids'
-            label: 'Entity Requires'
+            label: "#{ucfirst(entityKind)} Requires"
             description: "List the #{entityKind}s required " +
                          "before this #{entityKind}."
         }, schemas[entityKind].require_ids))
 
     if entityKind is 'set'
         fields.push(extend({
+            name: 'entity.members'
             label: 'Set Members'
             description: 'Choose a list of units and sets. ' +
                          'Cycles are not allowed.'
+            columns: [
+                {options: [
+                    {label: 'Unit'}
+                    {label: 'Set'}
+                ]}
+                {}
+            ]
         }, schemas.set.members))
 
 
@@ -220,6 +229,14 @@ getFieldsCardKind = (cardKind) ->
         fields.push(extend({
             label: 'Response Options'
             name: 'entity.options'
+            columns: [
+                {options: [
+                    {label: 'Yes'}
+                    {label: 'No'}
+                ]}
+                {}
+                {}
+            ]
         }, schemas.choiceCard.options))
 
         fields.push(extend({

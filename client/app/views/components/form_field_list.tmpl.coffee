@@ -1,7 +1,27 @@
-{table, thead, tbody, tr, th, td, a, i} = require('../../modules/tags')
+{table, thead, tfoot, tbody, tr, th, td, a, i} = require('../../modules/tags')
 c = require('../../modules/content').get
 {ucfirst} = require('../../modules/auxiliaries')
 formFieldInput = require('./form_field_input.tmpl')
+formFieldSelect = require('./form_field_select.tmpl')
+
+
+field = ({name, index, col, row, lock}) ->
+    return row[col.name] if lock
+
+    return formFieldSelect({
+        name: "#{name}.#{index}.#{col.name}"
+        value: row[col.name]
+        options: col.options
+    }) if col.type is 'select'
+
+    return formFieldInput({
+        type: 'text'
+        size: 10
+        name: "#{name}.#{index}.#{col.name}"
+        value: row[col.name]
+        # TODO placeholder
+        # TODO default
+    }) if col.type is 'text'
 
 module.exports = (data) ->
     ###
@@ -21,25 +41,34 @@ module.exports = (data) ->
     return table(
         thead(
             tr(
-                th(ucfirst(col)) for col in columns
+                th(ucfirst(col.name)) for col in columns
                 # TODO th()  # For reordering
                 th()  # For deleting
+            )
+        )
+        tfoot(
+            tr(
+                {className: 'add-row-tr'}
+                td(
+                    {colSpan: columns.length + 1}  # TODO +2 reordering
+                    a(
+                        {href: '#', className: 'add-row'}
+                        i({className: 'fa fa-plus'})
+                        ' Add Row'
+                    )
+                )
             )
         )
         tbody(
             tr(
                 td(
-                    # TODO@ allow select/boolean
-                    #       for `correct` and `kind` columns
-                    formFieldInput({
-                        type: 'text'
-                        size: 10
-                        name: "#{data.name}.#{index}.#{col}"
-                        value: row[col]
-                        # TODO placeholder
-                        # TODO default
-                    }) if not data.lock
-                    row[col] if data.lock
+                    field({
+                        name: data.name
+                        index
+                        col
+                        row
+                        lock: data.lock
+                    })
                 ) for col, index in columns
                 # TODO move row td(
                 #     a(
@@ -54,16 +83,5 @@ module.exports = (data) ->
                     )
                 )
             ) for row in values
-            tr(
-                {className: 'add-row-tr'}
-                td(
-                    {colSpan: columns.length + 1}
-                    a(
-                        {href: '#', className: 'add-row'}
-                        i({className: 'fa fa-plus'})
-                        ' Add Row'
-                    )
-                )
-            )
         )
     )

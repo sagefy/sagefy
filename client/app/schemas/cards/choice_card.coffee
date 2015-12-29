@@ -10,7 +10,14 @@ module.exports = extend({}, cardSchema, {
     options: {
         type: 'list'
         validations: [required]
-        columns: ['correct', 'value', 'feedback']
+        columns: [
+            {name: 'correct', type: 'select', options: [
+                {value: 'true'}
+                {value: 'false'}
+            ]}
+            {name: 'value', type: 'text'}
+            {name: 'feedback', type: 'text'}
+        ]
     }
     order: {
         type: 'select'

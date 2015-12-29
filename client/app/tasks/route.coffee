@@ -24,6 +24,8 @@ routes = [
 
 module.exports = store.add({
     onRoute: (path) ->
+        @data.formData = {}
+        @data.pageData = {}
         for route in routes
             if args = matchesRoute(path, route.path)
                 return tasks[route.task].apply(null, args)

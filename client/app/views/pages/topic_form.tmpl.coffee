@@ -62,6 +62,16 @@ getEntity = (data, kind, id) ->
 spinner = ->
     return div({className: 'spinner'})
 
+classes = (topicID, data) ->
+    {postKind, entityKind, cardKind} = data
+    return [
+        'col-6'
+        if topicID then 'update' else 'create'
+        if postKind then "post-#{postKind}" else ''
+        if entityKind then "entity-#{entityKind}" else ''
+        if cardKind then "card-#{cardKind}" else ''
+    ].join(' ')
+
 module.exports = (data) ->
     topicID = getTopicID(data)
 
@@ -97,7 +107,7 @@ module.exports = (data) ->
     return div(
         {
             id: 'topic-form'
-            className: (if topicID then 'update' else 'create') + ' col-8'
+            className: classes(topicID, data)
         }
         h1(if topicID then 'Update Topic' else 'Create Topic')
         p(

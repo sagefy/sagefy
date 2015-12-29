@@ -23,7 +23,6 @@ module.exports = store.add({
             url: '/s/users'
             data: data
             done: (response) =>
-                @data.formData = {}
                 @data.currentUserID = response.user.id
                 cookie.set('currentUserID', response.user.id)
                 recorder.emit('create user')
@@ -51,7 +50,6 @@ module.exports = store.add({
             url: "/s/users/#{data.id}"
             data: data
             done: (response) =>
-                @data.formData = {}
                 @data.users ?= {}
                 @data.users[response.user.id] = response.user
                 recorder.emit('update user', response.user.id)
@@ -112,7 +110,6 @@ module.exports = store.add({
             url: '/s/sessions'
             data: data
             done: (response) =>
-                @data.formData = {}
                 @data.currentUserID = response.user.id
                 cookie.set('currentUserID', response.user.id)
                 recorder.emit('log in user')
@@ -160,7 +157,6 @@ module.exports = store.add({
             url: '/s/password_tokens'
             data: data
             done: (response) =>
-                @data.formData = {}
                 @data.passwordPageState = 'inbox'
                 recorder.emit('obtain password token')
             fail: (errors) =>
@@ -185,7 +181,6 @@ module.exports = store.add({
             url: "/s/users/#{data.id}/password"
             data: data
             done: (response) =>
-                @data.formData = {}
                 @data.currentUserID = response.user.id
                 cookie.set('currentUserID', response.user.id)
                 recorder.emit('create password')

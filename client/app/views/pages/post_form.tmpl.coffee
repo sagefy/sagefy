@@ -5,6 +5,16 @@ form = require('../components/form.tmpl')
 {mergeFieldsData} = require('../../modules/auxiliaries')
 {getFields, parseData} = require('./post_form.fn')
 
+classes = (postID, data) ->
+    {postKind, entityKind, cardKind} = data
+    return [
+        'col-6'
+        if postID then 'update' else 'create'
+        if postKind then "post-#{postKind}" else ''
+        if entityKind then "entity-#{entityKind}" else ''
+        if cardKind then "card-#{cardKind}" else ''
+    ].join(' ')
+
 module.exports = (data) ->
     {topicID, postID, repliesToID, post, formData} = parseData(data)
 
@@ -36,7 +46,7 @@ module.exports = (data) ->
     return div(
         {
             id: 'post-form'
-            className: (if postID then 'update' else 'create') + ' col-6'
+            className: classes(postID, data)
         }
         h1(if postID then 'Update Post' else 'Create Post')
         form(fields_)
