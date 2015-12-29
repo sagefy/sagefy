@@ -125,10 +125,6 @@ If it needs to work under a variety of conditions, isolate it. If it has a hard 
 
 We don't want issues to recur. That also means we can write fewer tests up-front if we know new tests will be created as needed later.
 
-**4) Describe the tests, write the code, write the tests**
-
-It's hard to know how we implement things ahead of time. Describe the tests that matter first, then write the code, then write the test. It sounds a little backwards, but it takes less time and produces the same result.
-
 Ansible and Configuration
 -------------------------
 
