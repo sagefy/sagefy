@@ -199,22 +199,6 @@ def test_proposal_action(app):
 
 
 @xfail
-def test_flag(app):
-    """
-    Expect to filter to flags.
-    """
-    assert False
-
-
-@xfail
-def test_flag_status(app):
-    """
-    Expect to filter flags by status.
-    """
-    assert False
-
-
-@xfail
 def test_vote(app):
     """
     Expect to filter to votes.

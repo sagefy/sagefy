@@ -1,12 +1,11 @@
 """
 Facade functions for discussion models, in particular
-for post (sub: proposal, vote, flag).
+for post (proposal, vote).
 """
 
 from models.post import Post
 from models.proposal import Proposal
 from models.vote import Vote
-from models.flag import Flag
 import framework.database as database
 from modules.util import omit
 import rethinkdb as r
@@ -22,8 +21,6 @@ def instance(data):
         return Proposal(data)
     if data.get('kind') == 'vote':
         return Vote(data)
-    if data.get('kind') == 'flag':
-        return Flag(data)
 
     return Post(data)
 

@@ -25,7 +25,6 @@ module.exports = (data) ->
     return div(
         {id: 'card', className: 'col-8 entity-page'}
 
-        # TODO Flag button
         followButton('card', card.entity_id, data.follows)
         entityHeader('card', card)
 

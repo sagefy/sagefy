@@ -8,10 +8,10 @@ from modules.content import get as c
 # Notice types:
 # ------------
 # Entity: A new topic
-# Entity: A new proposal/flag (pending)
-# Entity/Own: A proposal/flag was blocked
-# Entity/Own: A proposal/flag was declined
-# Entity/Own: A proposal/flag was accepted
+# Entity: A new proposal (pending)
+# Entity/Own: A proposal was blocked
+# Entity/Own: A proposal was declined
+# Entity/Own: A proposal was accepted
 # Topic: A new post
 # All: Reminder to come back after 48 hours of inactivity
 
@@ -28,13 +28,9 @@ class Notice(Model):
                 is_one_of,
                 'create_topic',
                 'create_proposal',
-                'create_flag',
                 'block_proposal',
-                'block_flag',
                 'decline_proposal',
-                'decline_flag',
                 'accept_proposal',
-                'accept_flag',
                 'create_post',
                 'come_back',
             ))

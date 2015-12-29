@@ -21,7 +21,7 @@ class Post(Model):
         },
         'kind': {
             'validate': (is_required, is_string,
-                         (is_one_of, 'post', 'proposal', 'vote', 'flag')),
+                         (is_one_of, 'post', 'proposal', 'vote')),
             'default': 'post'
         },
         'replies_to_id': {

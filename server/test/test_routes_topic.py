@@ -117,39 +117,6 @@ def test_create_topic_proposal(db_conn, users_table, topics_table,
     assert response['post']['body'] == 'Here\'s a pear.'
 
 
-@xfail
-def test_create_topic_flag(db_conn, users_table, topics_table,
-                           posts_table, session):
-    """
-    Expect to create topic with a flag.
-    """
-
-    request = {
-        'params': {
-            'topic': {
-                'name': 'An entity',
-                'entity': {
-                    'kind': 'unit',
-                    'id': 'dfgh4567'
-                },
-            },
-            'post': {
-                'kind': 'flag',
-                'reason': 'duplicate',
-            }
-        },
-        'cookies': {
-            'session_id': session,
-        }
-    }
-    code, response = routes.topic.create_topic_route(request)
-    assert code == 200
-    assert 'post' in response
-    assert 'topic' in response
-    assert response['topic']['name'] == 'An entity'
-    assert response['post']['body'] == 'Here\'s a pear.'
-
-
 def test_create_topic_log_in(db_conn, users_table, topics_table,
                              posts_table):
     """

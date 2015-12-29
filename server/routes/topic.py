@@ -1,6 +1,6 @@
 """
 Routes for the discussion platform.
-Includes topics, posts, proposals, votes, and flags.
+Includes topics, posts, proposals, and votes.
 """
 
 from framework.routes import get, post, put, abort
@@ -23,9 +23,7 @@ from modules.entity import create_entity, get_version, get_latest_accepted
 @post('/s/topics')
 def create_topic_route(request):
     """
-    Create a new topic. The first post (proposal, flag) must be provided.
-    Flag: if a flag for the same reason exists for the entity,
-        create a vote there instead.
+    Create a new topic. The first post (or proposal) must be provided.
     """
 
     current_user = get_current_user(request)
@@ -130,7 +128,7 @@ def update_topic_route(request, topic_id):
 def get_posts_route(request, topic_id):
     """
     Get a reverse chronological listing of posts for given topic.
-    Includes topic meta data and posts (proposals, votes, flags).
+    Includes topic meta data and posts (or proposals or votes).
     Paginates.
     """
 
@@ -200,7 +198,7 @@ def get_posts_route(request, topic_id):
 def create_post_route(request, topic_id):
     """
     Create a new post on a given topic.
-    Accounts for posts, proposals, votes, and flags.
+    Accounts for posts, proposals, and votes.
     Proposal: must include entity (card, unit, set) information.
     Vote: must refer to a proposal.
     """
@@ -235,7 +233,7 @@ def create_post_route(request, topic_id):
             'ref': 'uTmChkRuUng5fpf8c51iVela',
         }
 
-    # For proposal or flag, entity must be included and valid
+    # For proposal, entity must be included and valid
     if kind == 'proposal':
         entity, errors = create_entity(request['params'])
         if errors:
@@ -280,7 +278,7 @@ def update_post_route(request, topic_id, post_id):
     """
     Update an existing post. Must be one's own post.
 
-    For proposals and flags:
+    For proposals:
     The only field that can be updated is the status;
     the status can only be changed to declined, and only when
     the current status is pending or blocked.

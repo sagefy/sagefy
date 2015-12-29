@@ -41,7 +41,7 @@ class Proposal(Post):
 
     def is_valid_reply_kind(self):
         """
-        TODO@ A proposal can reply to post, proposal, or flag.
+        TODO@ A proposal can reply to post or proposal.
         """
         return []
 

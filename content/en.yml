@@ -21,13 +21,9 @@ en:
     minlength: Must have minimum length of {length}.
     notice_create_topic: "{user_name} created a new topic, {topic_name}, for {entity_kind} {entity_name}."
     notice_create_proposal: "{user_name} created a new proposal, {proposal_name}, for {entity_kind} {entity_name}."
-    notice_create_flag: "{user_name} flagged {entity_kind} {entity_name}."
     notice_block_proposal: "{user_name} blocked proposal {proposal_name}, for {entity_kind} {entity_name}."
-    notice_block_flag: "{user_name} blocked flag {proposal_name}, for {entity_kind} {entity_name}."
     notice_decline_proposal: "{user_name} declined proposal {proposal_name}, for {entity_kind}: {entity_name}."
-    notice_decline_flag: "{user_name} declined flag {proposal_name}, for {entity_kind} {entity_name}."
     notice_accept_proposal: "Sagefy accepted proposal {proposal_name}, for {entity_kind} {entity_name}."
-    notice_accept_flag: "Sagefy accepted flag {proposal_name}, for {entity_kind} {entity_name}, and it is no longer visible to users."
     notice_create_post: "{user_name} created a new post under topic {topic_name}, for {entity_kind} {entity_name}."
     notice_come_back: It has been awhile. Come back and learn more with us!
     no_match: Username and password do not match.

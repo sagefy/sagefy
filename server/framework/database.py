@@ -53,7 +53,6 @@ def setup_db():
     from models.post import Post
     from models.proposal import Proposal
     from models.vote import Vote
-    from models.flag import Flag
     from models.card import Card
     from models.unit import Unit
     from models.set import Set
@@ -64,7 +63,7 @@ def setup_db():
     from models.user_sets import UserSets
     from models.response import Response
 
-    models = (User, Notice, Topic, Post, Proposal, Vote, Flag,
+    models = (User, Notice, Topic, Post, Proposal, Vote,
               Card, Unit, Set,
               CardParameters, UnitParameters, SetParameters,
               Follow, UserSets, Response)

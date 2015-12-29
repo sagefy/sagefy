@@ -67,9 +67,6 @@ getFields = ({
         }, {
             label: 'Vote'
             disabled: not (editKind and repliesToID)
-        }, {
-            label: 'Flag'
-            disabled: true
         }]
         inline: true
         label: 'Post Kind'

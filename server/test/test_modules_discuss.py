@@ -2,7 +2,6 @@ import modules.discuss as discuss
 from models.post import Post
 from models.proposal import Proposal
 from models.vote import Vote
-from models.flag import Flag
 
 
 def test_instance(db_conn):
@@ -12,7 +11,6 @@ def test_instance(db_conn):
     assert isinstance(discuss.instance({'kind': 'post'}), Post)
     assert isinstance(discuss.instance({'kind': 'proposal'}), Proposal)
     assert isinstance(discuss.instance({'kind': 'vote'}), Vote)
-    assert isinstance(discuss.instance({'kind': 'flag'}), Flag)
 
 
 def test_get_post_facade(db_conn, posts_table):

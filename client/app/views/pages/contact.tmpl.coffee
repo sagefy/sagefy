@@ -12,7 +12,7 @@ module.exports = ->
             li(
                 strong('I have a problem with content.')
                 br()
-                'Flag it or discuss it.'
+                'Flag it, discuss it, or propose removing it.'
             )
             li(
                 strong('I have an idea for content.')
@@ -44,7 +44,7 @@ module.exports = ->
             li(
                 strong('My copyright has been violated.')
                 br()
-                'Flag it. If that doesn\'t work, '
+                'Propose to remove the item. If that doesn\'t work, '
                 a(
                     {href: 'mailto:support@sagefy.com'}
                     'send us an email'

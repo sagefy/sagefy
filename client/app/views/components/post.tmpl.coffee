@@ -99,18 +99,17 @@ module.exports = (data, currentUserID) ->
                            "replies_to_id=#{data.id}&kind=vote"}
                     i({className: 'fa fa-check'})
                     ' Vote'
-                ) if data.kind in ['proposal', 'flag']
+                ) if data.kind is 'proposal'
                 a(
                     {href: "/topics/#{data.topicID}##{data.id}"}
                     i({className: 'fa fa-share'})
                     ' Share'
                 )
-                a(
-                    {href: "/topics/#{topic_id}/posts/create?" +
-                           "replies_to_id=#{data.id}&kind=flag"}
-                    i({className: 'fa fa-flag'})
-                    ' Flag'
-                ) if currentUserID isnt data.user_id
+                # TODO a(
+                #     {href: '#'}
+                #     i({className: 'fa fa-flag'})
+                #     ' Flag'
+                # ) if currentUserID isnt data.user_id
             )
         )
     )

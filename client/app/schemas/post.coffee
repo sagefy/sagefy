@@ -21,7 +21,6 @@ module.exports = {
             {value: 'post'}
             {value: 'proposal'}
             {value: 'vote'}
-            {value: 'flag'}
         ]
         default: 'post'
         validations: [
