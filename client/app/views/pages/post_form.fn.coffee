@@ -131,7 +131,7 @@ getProposalFields = (entityKind, cardKind) ->
 
     # TODO@ Entity ID not on create entity
     fields.push(extend({
-
+        name: 'entity.id'
     }, schemas.proposal['entity.id']))
 
     ###########################################################
@@ -140,10 +140,12 @@ getProposalFields = (entityKind, cardKind) ->
 
     fields.push(extend({
         label: "#{ucfirst(entityKind)} Name"
+        name: 'entity.name'
     }, schemas[entityKind].name))
 
     fields.push(extend({
         label: "#{ucfirst(entityKind)} Language"
+        name: 'entity.language'
         options: [
             {label: 'English'}
         ]
@@ -157,6 +159,7 @@ getProposalFields = (entityKind, cardKind) ->
             label: "#{ucfirst(entityKind)} Goal"
             description: 'Start with a verb, such as: Compute the value of ' +
                          'dividing two whole numbers.'
+            name: 'entity.body'
         }, schemas[entityKind].body))
 
     # TODO@ Unit Belongs To (card only, should be provided by qs)

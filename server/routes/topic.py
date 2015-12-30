@@ -12,7 +12,8 @@ from modules.util import omit, object_diff
 from modules.discuss import instance_post_facade, \
     get_post_facade, get_posts_facade
 from modules.content import get as c
-from modules.entity import create_entity, get_version, get_latest_accepted
+from modules.entity import create_entity, get_version, get_latest_accepted, \
+    get_kind
 
 # TODO most of this junk should be moved into the models and modules...
 #      these methods are waaay too complicated.
@@ -68,6 +69,11 @@ def create_topic_route(request):
     # Validate topic entity is valid
     if post_['kind'] == 'proposal':
         entity, errors = create_entity(request['params'])
+        kind = get_kind(request['params'])[0]
+        post['entity_version'] = {
+            'id': entity['id'],
+            'kind': kind,
+        }
         if errors:
             return 400, {
                 'errors': errors,
@@ -236,6 +242,11 @@ def create_post_route(request, topic_id):
     # For proposal, entity must be included and valid
     if kind == 'proposal':
         entity, errors = create_entity(request['params'])
+        kind = get_kind(request['params'])[0]
+        post['entity_version'] = {
+            'id': entity['id'],
+            'kind': kind,
+        }
         if errors:
             return 400, {
                 'errors': errors,

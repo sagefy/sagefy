@@ -5,7 +5,13 @@ tasks = require('../../modules/tasks')
 module.exports = broker.add({
     'submit #topic-form.create form': (e, el) ->
         e.preventDefault() if e
-        tasks.createTopic(getFormValues(el))
+
+        if values.post.kind is 'proposal'
+            values[values.entity_kind] = values.entity
+            delete values.entity
+            delete values.entity_kind
+
+        tasks.createTopic(values)
 
     'submit #topic-form.update form': (e, el) ->
         e.preventDefault() if e

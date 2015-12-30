@@ -8,6 +8,7 @@ cookie = require('./modules/cookie')
 # Require all tasks
 require('./tasks/card')
 require('./tasks/follow')
+require('./tasks/form')
 require('./tasks/menu')
 require('./tasks/notice')
 require('./tasks/post')
