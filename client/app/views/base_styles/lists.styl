@@ -76,55 +76,6 @@ ul, ol
 
 /*
 ---
-title: Lists with Thumbnails
-description: A very common on the internet is a list featuring thumbnails. These lists are zebra-striped and can be marked up either as actual lists, or for convienence, tables. Lists with thumbnails use the <code>with-thumbnails</code> class.
-example: |
-    <table class="list--with-thumbnails">
-        <tr>
-            <td>
-                <img src="https://placekitten.com/g/40/40" data-title="40x40" />
-            </td>
-            <td>
-                <h4>List Item 1</h4>
-                <p>A description of list item 1.</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <img src="https://placekitten.com/g/40/40" data-title="40x40" />
-            </td>
-            <td>
-                <h4>List Item 1</h4>
-                <p>A description of list item 1.</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <img src="https://placekitten.com/g/40/40" data-title="40x40" />
-            </td>
-            <td>
-                <h4>List Item 1</h4>
-                <p>A description of list item 1.</p>
-            </td>
-        </tr>
-    </table>
----
-*/
-
-ul, ol, table
-    &.list--with-thumbnails
-
-        td:first-child, .list__thumbnail
-            padding-right $gutter
-
-        h4
-            margin-bottom 0
-
-        h4 + p
-            margin-top 0
-
-/*
----
 title: Definition Lists
 description: Definition lists are useful for glossaries, dictionaries, and outlines. The tags <code>dl</code>, <code>dt</code>, and <code>dd</code> are used together to form the definition list. Definition lists are also used for marking up metadata.
 example: |
