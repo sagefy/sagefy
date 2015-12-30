@@ -202,7 +202,6 @@ for unit in units:
     .run(database.db_conn))
 
 
-# TODO@ create at least one video and one choice per unit
 (database.db.table('cards')
     .insert([{
         'id': 'plus-video-a-1',
@@ -343,6 +342,82 @@ for unit in units:
         'body': 'What is 3 - 1?',
         'options': [{
             'value': '2',
+            'correct': True,
+            'feedback': 'Yes.',
+        }, {
+            'value': '1',
+            'correct': False,
+            'feedback': 'There are two numbers.',
+        }, {
+            'value': '4',
+            'correct': False,
+            'feedback': 'There are two numbers.',
+        }],
+        'order': 'random',
+        'max_options_to_show': 4,
+    }, {
+        'id': 'times-video-a-1',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'times-video-a',
+        'previous_id': None,
+        'language': 'en',
+        'name': 'How to multiple by...',
+        'status': 'accepted',
+        'available': True,
+        'tags': ['video'],
+        'unit_id': 'times',
+        'require_ids': [],
+        'kind': 'video',
+        'site': 'youtube',
+        'video_id': 'PS5p9caXS4U'
+    }, {
+        'id': 'times-choice-a-1',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'times-choice-a',
+        'previous_id': None,
+        'language': 'en',
+        'name': 'Let\'s do 2 * 2',
+        'status': 'accepted',
+        'available': True,
+        'tags': [],
+        'unit_id': 'times',
+        'require_ids': [],
+        'kind': 'choice',
+        'body': 'What is 2 / 2?',
+        'options': [{
+            'value': '2',
+            'correct': False,
+            'feedback': 'There are two numbers.',
+        }, {
+            'value': '0',
+            'correct': False,
+            'feedback': 'We are not subtracting.',
+        }, {
+            'value': '4',
+            'correct': True,
+            'feedback': 'Yes, 2 * 2 = 4.',
+        }],
+        'order': 'random',
+        'max_options_to_show': 4,
+    }, {
+        'id': 'times-choice-b-1',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'times-choice-b',
+        'previous_id': None,
+        'language': 'en',
+        'name': 'Let\'s do 3 * 1',
+        'status': 'accepted',
+        'available': True,
+        'tags': [],
+        'unit_id': 'times',
+        'require_ids': [],
+        'kind': 'choice',
+        'body': 'What is 3 * 1?',
+        'options': [{
+            'value': '3',
             'correct': True,
             'feedback': 'Yes.',
         }, {

@@ -38,7 +38,7 @@ class Post(Model):
     def is_valid_reply_kind(self):
         """
         Must belong to the same topic
-        - TODO@ A post can reply to a post.
+        - TODO@ A post can reply to a post or proposal.
         """
         return []
 

@@ -12,6 +12,8 @@ update (view only) ------
 - set     -x-      [ ]
 ###
 
+# TODO add `available` field
+
 {extend} = require('../../modules/utilities')
 {ucfirst} = require('../../modules/auxiliaries')
 postSchema = require('../../schemas/post')

@@ -3,7 +3,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-# TODO @outline tests
+# TODO outline tests
 
 @xfail
 def test_x(app):

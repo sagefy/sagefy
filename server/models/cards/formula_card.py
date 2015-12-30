@@ -1,3 +1,5 @@
+# TODO is this just an extension of the number card?
+
 from models.card import Card
 from modules.validations import is_required, is_string, is_list, is_number, \
     is_string_or_number, is_boolean, has_min_length
