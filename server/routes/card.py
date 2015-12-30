@@ -174,12 +174,16 @@ def respond_to_card_route(request, card_id):
     # If we are still reviewing, learning or diagnosing this unit...
     else:
         next_card = choose_card(current_user, unit)
-        next_ = {
-            'method': 'GET',
-            'path': '/s/cards/{card_id}/learn'
-                    .format(card_id=next_card['entity_id']),
-        }
-        current_user.set_learning_context(card=next_card.data, next=next_)
+        if next_card:
+            next_ = {
+                'method': 'GET',
+                'path': '/s/cards/{card_id}/learn'
+                        .format(card_id=next_card['entity_id']),
+            }
+            current_user.set_learning_context(card=next_card.data, next=next_)
+        else:
+            next_ = {}
+            current_user.set_learning_context(next=next_)
 
     return 200, {
         'response': response.deliver(),

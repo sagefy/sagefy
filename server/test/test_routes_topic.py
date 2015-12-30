@@ -180,8 +180,10 @@ def test_topic_update(db_conn, users_table, topics_table,
             'session_id': session
         },
         'params': {
-            'name': 'Another entity',
-            'topic_id': 'wxyz7890',
+            'topic': {
+                'name': 'Another entity',
+                'topic_id': 'wxyz7890',
+            }
         }
     }
     code, response = routes.topic.update_topic_route(request, 'wxyz7890')
@@ -201,8 +203,10 @@ def test_update_topic_author(db_conn, users_table, topics_table,
             'session_id': session
         },
         'params': {
-            'name': 'Another entity',
-            'topic_id': 'wxyz7890',
+            'topic': {
+                'name': 'Another entity',
+                'topic_id': 'wxyz7890',
+            }
         }
     }
     code, response = routes.topic.update_topic_route(request, 'wxyz7890')
@@ -482,7 +486,9 @@ def test_update_post_log_in(db_conn, users_table, topics_table,
     create_post_in_db(posts_table, db_conn)
     request = {
         'params': {
-            'body': 'Update.'
+            'post': {
+                'body': 'Update.'
+            }
         }
     }
     code, response = routes.topic.update_post_route(request,
@@ -503,7 +509,9 @@ def test_update_post_author(db_conn, users_table, topics_table,
     request = {
         'cookies': {'session_id': session},
         'params': {
-            'body': 'Update.'
+            'post': {
+                'body': 'Update.'
+            }
         }
     }
     code, response = routes.topic.update_post_route(request,
@@ -523,7 +531,9 @@ def test_update_post_body(db_conn, users_table, topics_table,
     request = {
         'cookies': {'session_id': session},
         'params': {
-            'body': 'Update.'
+            'post': {
+                'body': 'Update.'
+            }
         }
     }
     code, response = routes.topic.update_post_route(request,
