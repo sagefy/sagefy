@@ -1,4 +1,5 @@
-formFieldListVnt = require('../../../app/views/components/form_field_list.vnt.coffee')
+formFieldListVnt =
+    require('../../../app/views/components/form_field_list.vnt.coffee')
 expect = require('chai').expect
 
 describe('form field list vnt', ->
