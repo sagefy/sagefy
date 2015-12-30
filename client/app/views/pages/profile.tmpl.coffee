@@ -1,4 +1,4 @@
-{div, h1, p, img, figure, h3, header,
+{div, h1, p, img, h3, header,
  ul, li, a, strong, span} = require('../../modules/tags')
 {timeAgo, truncate, ucfirst} = require('../../modules/auxiliaries')
 

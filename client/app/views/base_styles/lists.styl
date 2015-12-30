@@ -6,7 +6,7 @@ description: |
 
     Lists can be unstyled using the `unstyled` class. Margins still count on lower level lists.
 
-    Horizontal, or inline, lists are also supported. Often used as simple navigational menus. Subitems do not appear.
+    Inline lists are also supported. Often used as simple navigational menus. Subitems do not appear.
 example: |
     <ul>
         <li>Item 1
@@ -44,7 +44,7 @@ example: |
         <li>Item 3</li>
     </ul>
 
-    <ul class="horizontal">
+    <ul class="inline">
         <li>Item 1</li>
         <li>Item 2</li>
         <li>Item 3</li>
@@ -55,7 +55,7 @@ example: |
 ul, ol
     padding-left $gutter
 
-    &.inline, &.horizontal
+    &.inline
         padding-left 0
 
         li
