@@ -52,9 +52,11 @@ def create_topic_route(request):
     # Let's create the topic, but not save it until we know we
     # have a valid post
     topic_data = dict(**request['params']['topic'])
+    topic_data = omit(topic_data, ('id', 'created', 'modified'))
     topic_data['user_id'] = current_user['id']
     topic = Topic(topic_data)
     post_data = dict(**request['params']['post'])
+    post_data = omit(post_data, ('id', 'created', 'modified'))
     post_data['user_id'] = current_user['id']
     post_data['topic_id'] = topic['id']
     post_ = instance_post_facade(post_data)

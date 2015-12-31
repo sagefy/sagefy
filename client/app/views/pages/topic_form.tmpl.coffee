@@ -20,6 +20,25 @@ classes = (formData) ->
         if cardKind then "card-#{cardKind}" else ''
     ].join(' ')
 
+getFields = (formData) ->
+    fields = []
+
+    if formData['topic.id']
+        fields.push({
+            name: 'topic.id'
+        })
+
+    fields = fields.concat([{
+        name: 'topic.entity.id'
+    }, {
+        name: 'topic.entity.kind'
+    }, {
+        name: 'topic.name'
+        label: 'Topic Name'
+    }])
+    
+    return fields
+
 getTopicID = (data) ->
     match = data.route.match(/^\/topics\/([\d\w]+)\/update$/)
     return match[1] if match
@@ -59,27 +78,14 @@ module.exports = (data) ->
         topic = data.topics?[topicID]
     return div({className: 'spinner'}) if topicID and not topic
 
-    post = null
-
     formData = extend({}, data.formData, {
-        'post.id': post?.id
-        'post.topic_id': post?.topic_id
-        'post.kind': post?.kind
-        'post.body': post?.body
-        'post.response': if post then '' + post.response
+        'topic.id': topic?.id
         'topic.name': topic?.name
+        'topic.entity.kind': topic?.entity.kind or data.routeQuery.kind
+        'topic.entity.id': topic?.entity.kind or data.routeQuery.id
     })
 
-    fields = [{
-        name: 'topic.id'
-    }, {
-        name: 'topic.entity.id'
-    }, {
-        name: 'topic.entity.kind'
-    }, {
-        name: 'topic.name'
-        label: 'Topic Name'
-    }]
+    fields = getFields(formData)
 
     schema = prefixObjectKeys('topic.', topicSchema)
 
