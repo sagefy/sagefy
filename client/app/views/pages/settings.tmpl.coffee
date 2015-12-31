@@ -2,8 +2,8 @@
 c = require('../../modules/content').get
 userSchema = require('../../schemas/user')
 {extend} = require('../../modules/utilities')
+{createFieldsData} = require('../../modules/auxiliaries')
 form = require('../components/form.tmpl')
-{mergeFieldsData} = require('../../modules/auxiliaries')
 
 fields = [{
     name: 'id'
@@ -43,22 +43,23 @@ module.exports = (data) ->
     user = data.users?[data.currentUserID]
     return div({className: 'spinner'}) unless user
 
-    fields_ = mergeFieldsData(
-        fields
-        extend({
-            formData: {
-                id: user.id
-                name: user.name
-                email: user.email
-                'settings.email_frequency': user.settings.email_frequency
-            }
-        }, data)
-    )
+    instanceFields = createFieldsData({
+        schema: userSchema
+        fields: fields
+        errors: data.errors
+        formData: extend({}, {
+            id: user.id
+            name: user.name
+            email: user.email
+            'settings.email_frequency': user.settings.email_frequency
+        }, data.formData)
+        sending: data.sending
+    })
 
     return div(
         {id: 'settings', className: 'col-6'}
         h1('Settings')
-        form(fields_)
+        form(instanceFields)
         hr()
         p(a(
             {href: '/password'}

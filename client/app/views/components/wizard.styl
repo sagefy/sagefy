@@ -11,9 +11,6 @@ example: |
                 Home
             </a>
         </li>
-        <li>
-            <i class="fa fa-chevron-right"></i>
-        </li>
         <li class="selected">
             <a href="#">
                 2.
@@ -21,16 +18,10 @@ example: |
             </a>
         </li>
         <li class="disabled">
-            <i class="fa fa-chevron-right"></i>
-        </li>
-        <li class="disabled">
             <a href="#">
                 3.
                 Propose
             </a>
-        </li>
-        <li class="disabled">
-            <i class="fa fa-chevron-right"></i>
         </li>
         <li class="disabled">
             <a href="#">
@@ -51,13 +42,15 @@ example: |
         display inline-block
         margin-right $unit
         counter-increment item
+        padding 0 ($unit / 2)
 
         &:before
             content counter(item, decimal) ". "
+            font-weight bold
 
         &.selected
-            background $accent-color(95)
-            border-bottom 1px solid $base-color(50)
+            background $accent-color(90)
+            border-radius $border-radius
 
             &.disabled
                 &, a, i

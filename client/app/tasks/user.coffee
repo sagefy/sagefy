@@ -1,21 +1,12 @@
 store = require('../modules/store')
 ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
-userSchema = require('../schemas/user')
-{validateFormData} = require('../modules/utilities')
 cookie = require('../modules/cookie')
 
 # TODO move setting and unsetting of currentUserID back to the server
 
 module.exports = store.add({
     createUser: (data) ->
-        @data.formData = data
-        @data.errors = validateFormData(data, userSchema,
-                                        ['name', 'email', 'password'])
-        if @data.errors.length
-            recorder.emit('invalid create user', @data.errors)
-            return @change()
-
         @data.sending = true
         @change()
         ajax({
@@ -37,12 +28,6 @@ module.exports = store.add({
         })
 
     updateUser: (data) ->
-        @data.formData = data
-        @data.errors = validateFormData(data, userSchema, ['name', 'email'])
-        if @data.errors.length
-            recorder.emit('invalid update user')
-            return @change()
-
         @data.sending = true
         @change()
         ajax({
@@ -97,12 +82,6 @@ module.exports = store.add({
         })
 
     logInUser: (data) ->
-        @data.formData = data
-        @data.errors = validateFormData(data, userSchema, ['name', 'password'])
-        if @data.errors.length
-            recorder.emit('invalid log in user')
-            return @change()
-
         @data.sending = true
         @change()
         ajax({
@@ -144,12 +123,6 @@ module.exports = store.add({
         })
 
     getUserPasswordToken: (data) ->
-        @data.formData = data
-        @data.errors = validateFormData(data, userSchema, ['email'])
-        if @data.errors.length
-            recorder.emit('invalid get password token')
-            return @change()
-
         @data.sending = true
         @change()
         ajax({
@@ -168,12 +141,6 @@ module.exports = store.add({
         })
 
     createUserPassword: (data) ->
-        @data.formData = data
-        @data.errors = validateFormData(data, userSchema, ['password'])
-        if @data.errors.length
-            recorder.emit('invalid create password')
-            return @change()
-
         @data.sending = true
         @change()
         ajax({

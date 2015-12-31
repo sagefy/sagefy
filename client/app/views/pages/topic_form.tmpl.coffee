@@ -1,55 +1,31 @@
 {div, h1, p, strong} = require('../../modules/tags')
-c = require('../../modules/content').get
 form = require('../components/form.tmpl')
-postSchema = require('../../schemas/post')
-topicSchema = require('../../schemas/topic')
-{extend} = require('../../modules/utilities')
-{mergeFieldsData, ucfirst} = require('../../modules/auxiliaries')
 getPostFields = require('./post_form.fn').getFields
+getPostSchema = require('./post_form.fn').getSchema
+{createFieldsData, prefixObjectKeys, ucfirst} =
+    require('../../modules/auxiliaries')
+{extend} = require('../../modules/utilities')
+topicSchema = require('../../schemas/topic')
 
-getFields = ({
-    topicID
-    entityID
-    topicEntityKind
-    postKind = 'post'
-    entityKind
-    cardKind
-}) ->
-    fields = [extend({
-        name: 'topic.entity.id'
-        value: entityID
-    }, topicSchema['entity.id']), extend({
-        name: 'topic.entity.kind'
-        value: topicEntityKind
-    }, topicSchema['entity.kind']), extend({
-        name: 'topic.name'
-        label: 'Topic Name'
-    }, topicSchema.name)]
-
-    unless topicID
-        fields = fields.concat(getPostFields({
-            editKind: true
-            entityKind
-            postKind
-            cardKind
-        }))
-
-    fields.push({
-        id: topicID
-        type: 'submit'
-        name: 'submit'
-        label: if topicID then 'Update Topic' else 'Create Topic'
-        icon: 'plus'
-    })
-
-    return fields
+classes = (formData) ->
+    postID = formData['post.id']
+    postKind = formData['post.kind']
+    entityKind = formData['entity_kind']
+    cardKind = formData['entity.kind']
+    return [
+        'col-6'
+        if postID then 'update' else 'create'
+        if postKind then "post-#{postKind}" else ''
+        if entityKind then "entity-#{entityKind}" else ''
+        if cardKind then "card-#{cardKind}" else ''
+    ].join(' ')
 
 getTopicID = (data) ->
     match = data.route.match(/^\/topics\/([\d\w]+)\/update$/)
     return match[1] if match
     return null
 
-getEntity = (data, kind, id) ->
+getEntityByKind = (data, kind, id) ->
     if kind is 'card'
         return data.cards?[id]
 
@@ -59,61 +35,85 @@ getEntity = (data, kind, id) ->
     if kind is 'set'
         return data.sets?[id]
 
-spinner = ->
-    return div({className: 'spinner'})
-
-classes = (topicID, data) ->
-    {postKind, entityKind, cardKind} = data
-    return [
-        'col-6'
-        if topicID then 'update' else 'create'
-        if postKind then "post-#{postKind}" else ''
-        if entityKind then "entity-#{entityKind}" else ''
-        if cardKind then "card-#{cardKind}" else ''
-    ].join(' ')
-
-module.exports = (data) ->
+getEntitySummary = (data) ->
     topicID = getTopicID(data)
 
     if topicID
         topic = data.topics?[topicID]
-        return spinner() if not topic
-        topicEntityKind = topic.entity.kind
-        entityID = topic.entity.id
-        entity = getEntity(data, topicEntityKind, entityID)
-        entityName = entity?.name
+        kind = topic.entity.kind
+        id = topic.entity.id
     else
-        topicEntityKind = data.routeQuery.kind
-        entityID = data.routeQuery.id
-        entity = getEntity(data, topicEntityKind, entityID)
-        entityName = entity?.name
+        kind = data.routeQuery.kind
+        id = data.routeQuery.id
 
-    fields = getFields({
-        topicID
-        entityID
-        topicEntityKind
-        postKind: data.postKind
-        entityKind: data.entityKind
-        cardKind: data.cardKind
+    entity = getEntityByKind(data, kind, id)
+
+    return {
+        name: entity?.name
+        kind: kind
+    }
+
+module.exports = (data) ->
+    topicID = getTopicID(data)
+    if topicID
+        topic = data.topics?[topicID]
+    return div({className: 'spinner'}) if topicID and not topic
+
+    post = null
+
+    formData = extend({}, data.formData, {
+        'post.id': post?.id
+        'post.topic_id': post?.topic_id
+        'post.kind': post?.kind
+        'post.body': post?.body
+        'post.response': if post then '' + post.response
+        'topic.name': topic?.name
     })
 
-    fields_ = if topicID
-        mergeFieldsData(fields, {formData: {
-            'topic.name': topic.name
-        }})
-    else
-        fields
+    fields = [{
+        name: 'topic.id'
+    }, {
+        name: 'topic.entity.id'
+    }, {
+        name: 'topic.entity.kind'
+    }, {
+        name: 'topic.name'
+        label: 'Topic Name'
+    }]
+
+    schema = prefixObjectKeys('topic.', topicSchema)
+
+    if not formData['topic.id']
+        fields = fields.concat(getPostFields(formData))
+        extend(schema, getPostSchema(formData))
+
+    fields.push({
+        type: 'submit'
+        name: 'submit'
+        label: if topicID then 'Update Topic' else 'Create Topic'
+        icon: 'plus'
+    })
+
+    instanceFields = createFieldsData({
+        schema: schema
+        fields: fields
+        errors: data.errors
+        formData: formData
+        sending: data.sending
+    })
+
+    entity = getEntitySummary(data)
 
     return div(
         {
             id: 'topic-form'
-            className: classes(topicID, data)
+            className: classes(formData)
         }
         h1(if topicID then 'Update Topic' else 'Create Topic')
         p(
             {className: 'leading'}
-            strong(ucfirst(topicEntityKind))
-            ": #{entityName}"
+            strong(ucfirst(entity?.kind or ''))
+            ": #{entity?.name}"
         )
-        form(fields_)
+        form(instanceFields)
     )

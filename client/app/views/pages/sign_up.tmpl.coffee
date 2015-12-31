@@ -2,7 +2,7 @@
 form = require('../components/form.tmpl')
 userSchema = require('../../schemas/user')
 {extend} = require('../../modules/utilities')
-{mergeFieldsData} = require('../../modules/auxiliaries')
+{createFieldsData} = require('../../modules/auxiliaries')
 
 fields = [{
     name: 'name'
@@ -29,8 +29,14 @@ for index, field of fields
 
 module.exports = (data) ->
     return div('Logged in already.') if data.currentUserID
-    
-    fields_ = mergeFieldsData(fields, data)
+
+    instanceFields = createFieldsData({
+        schema: userSchema
+        fields: fields
+        errors: data.errors
+        formData: data.formData
+        sending: data.sending
+    })
 
     return div(
         {id: 'sign-up', className: 'col-6'}
@@ -51,5 +57,5 @@ module.exports = (data) ->
             )
             '.'
         )
-        form(fields_)
+        form(instanceFields)
     )

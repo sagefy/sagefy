@@ -50,6 +50,8 @@ module.exports = store.add({
         })
 
     createPost: (data) ->
+        @data.sending = true
+        @change()
         {topic_id} = data.post
         ajax({
             method: 'POST'
@@ -64,10 +66,13 @@ module.exports = store.add({
                 @data.errors = errors
                 recorder.emit('error on create post', errors)
             always: =>
+                @data.sending = false
                 @change()
         })
 
     updatePost: (data) ->
+        @data.sending = true
+        @change()
         {topic_id, id} = data.post
         ajax({
             method: 'PUT'
@@ -83,24 +88,7 @@ module.exports = store.add({
                 @data.errors = errors
                 recorder.emit('error on update post', errors)
             always: =>
+                @data.sending = false
                 @change()
         })
-
-    changePostKind: (kind) ->
-        # TODO maybe this should go into a `pageData` object
-        #      that gets cleared on route
-        @data.postKind = kind
-        @change()
-
-    changeEntityKind: (kind) ->
-        # TODO maybe this should go into a `pageData` object
-        #      that gets cleared on route
-        @data.entityKind = kind
-        @change()
-
-    changeCardKind: (kind) ->
-        # TODO maybe this should go into a `pageData` object
-        #      that gets cleared on route
-        @data.cardKind = kind
-        @change()
 })

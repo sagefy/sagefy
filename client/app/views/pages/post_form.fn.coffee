@@ -1,4 +1,3 @@
-
 ###
 TODO@ modes:
           topic    post
@@ -15,10 +14,12 @@ update (view only) ------
 # TODO add `available` field
 
 {extend} = require('../../modules/utilities')
-{ucfirst} = require('../../modules/auxiliaries')
+{ucfirst, prefixObjectKeys} = require('../../modules/auxiliaries')
+
 postSchema = require('../../schemas/post')
 voteSchema = require('../../schemas/vote')
 proposalSchema = require('../../schemas/proposal')
+
 unitSchema = require('../../schemas/unit')
 setSchema = require('../../schemas/set')
 cardSchema = require('../../schemas/card')
@@ -29,6 +30,7 @@ schemas = {
     post: postSchema
     vote: voteSchema
     proposal: proposalSchema
+
     unit: unitSchema
     set: setSchema
     card: cardSchema
@@ -36,89 +38,80 @@ schemas = {
     choiceCard: choiceCardSchema
 }
 
-getFields = ({
-    topicID
-    repliesToID
-    editKind
-    postKind = 'post'
-    entityKind
-    cardKind
-}) ->
+getFields = (formData) ->
     fields = []
 
-    if topicID
-        fields.push(extend({
+    if formData['post.id']
+        fields.push({
+            name: 'post.id'
+        })
+
+    if formData['post.topic_id']
+        fields.push({
             name: 'post.topic_id'
-            value: topicID
-        }, schemas[postKind].topic_id))
+        })
 
-    if repliesToID
-        fields.push(extend({
+    if formData['post.replies_to_id']
+        fields.push({
             name: 'post.replies_to_id'
-            value: repliesToID
-        }, schemas[postKind].replies_to_id))
+        })
 
-    fields.push(extend({
+    fields.push({
         name: 'post.kind'
         options: [{
             label: 'Post'
-            disabled: not editKind
+            disabled: !! formData['post.id']
         }, {
             label: 'Proposal'
-            disabled: not editKind
+            disabled: !! formData['post.id']
         }, {
             label: 'Vote'
-            disabled: not (editKind and repliesToID)
+            disabled: !! formData['post.id'] or \
+                      not formData['post.replies_to_id']
         }]
         inline: true
         label: 'Post Kind'
-    }, schemas[postKind].kind))
+    })
 
-    if postKind is 'vote'
-        fields.push(getFieldsVote())
+    if formData['post.kind'] is 'vote'
+        fields.push({
+            name: 'post.response'
+            options: [
+                {label: 'Yes, I agree'}
+                {label: 'No, I dissent'}
+            ]
+            inline: true
+            label: 'Response'
+        })
 
-    if postKind is 'proposal'
-        fields.push(getProposalName())
+    if formData['post.kind'] is 'proposal'
+        fields.push({
+            name: 'post.name'
+            label: 'Proposal Name'
+            description: 'Briefly state the goal of this proposal.'
+        })
 
-    fields.push(extend({
+    fields.push({
         name: 'post.body'
-        label: if postKind is 'proposal' \
+        label: if formData['post.kind'] is 'proposal' \
                then 'Proposal Summary' \
                else 'Post Body'
-        description: (if postKind is 'proposal' then \
+        description: (if formData['post.kind'] is 'proposal' then \
                       'Describe the value of this proposal.'
                       else null)
-    }, schemas[postKind].body))
+    })
 
-    if postKind is 'proposal'
-        fields = fields.concat(getProposalFields(entityKind, cardKind))
+    if formData['post.kind'] is 'proposal'
+        fields = fields.concat(getProposalFields(formData))
 
     return fields
 
-getFieldsVote = () ->
-    return extend({
-        name: 'post.response'
-        options: [
-            {label: 'Yes, I agree'}
-            {label: 'No, I dissent'}
-        ]
-        inline: true
-        label: 'Response'
-    }, schemas.vote.response)
-
-getProposalName = () ->
-    return extend({
-        name: 'post.name'
-        label: 'Proposal Name'
-        description: 'Briefly state the goal of this proposal.'
-    }, schemas.proposal.name)
-
-getProposalFields = (entityKind, cardKind) ->
+getProposalFields = (formData) ->
     # TODO@ all proposal fields should lock after creating proposal
-
     fields = []
 
-    fields.push(extend({
+    fields.push({
+        name: 'post.entity_version.kind'
         label: 'Entity Kind'
         options: [
             {label: 'Card'}
@@ -126,54 +119,54 @@ getProposalFields = (entityKind, cardKind) ->
             {label: 'Set'}
         ]
         inline: true
-        name: 'entity_kind'  # We rename to avoid conflict with card kind
-    }, schemas.proposal['entity.kind']))
-
-    # TODO@ Entity ID not on create entity
-    fields.push(extend({
-        name: 'entity.id'
-    }, schemas.proposal['entity.id']))
+    })
 
     ###########################################################
+    entityKind = formData['post.entity_version.kind']
     if not entityKind
         return fields
 
-    fields.push(extend({
+    if formData['entity.id']
+        fields.push({
+            name: 'entity.id'
+        })
+
+    fields.push({
         label: "#{ucfirst(entityKind)} Name"
         name: 'entity.name'
-    }, schemas[entityKind].name))
+    })
 
-    fields.push(extend({
+    fields.push({
         label: "#{ucfirst(entityKind)} Language"
         name: 'entity.language'
         options: [
             {label: 'English'}
         ]
         value: 'en'
-    }, schemas[entityKind].language))
+    })
 
     # TODO Tags (all)
 
     if entityKind in ['unit', 'set']
-        fields.push(extend({
+        fields.push({
             label: "#{ucfirst(entityKind)} Goal"
             description: 'Start with a verb, such as: Compute the value of ' +
                          'dividing two whole numbers.'
             name: 'entity.body'
-        }, schemas[entityKind].body))
+        })
 
     # TODO@ Unit Belongs To (card only, should be provided by qs)
 
     if entityKind in ['card', 'unit']
-        fields.push(extend({
+        fields.push({
             name: 'entity.require_ids'
             label: "#{ucfirst(entityKind)} Requires"
             description: "List the #{entityKind}s required " +
                          "before this #{entityKind}."
-        }, schemas[entityKind].require_ids))
+        })
 
     if entityKind is 'set'
-        fields.push(extend({
+        fields.push({
             name: 'entity.members'
             label: 'Set Members'
             description: 'Choose a list of units and sets. ' +
@@ -185,18 +178,18 @@ getProposalFields = (entityKind, cardKind) ->
                 ]}
                 {}
             ]
-        }, schemas.set.members))
-
+        })
 
     if entityKind is 'card'
-        fields = fields.concat(getFieldsCardKind(cardKind))
+        fields = fields.concat(getFieldsCardKind(formData))
 
     return fields
 
-getFieldsCardKind = (cardKind) ->
+getFieldsCardKind = (formData) ->
+    cardKind = formData['entity.kind']
     fields = []
 
-    fields.push(extend({
+    fields.push({
         label: 'Card Kind'
         name: 'entity.kind'
         options: [
@@ -204,31 +197,31 @@ getFieldsCardKind = (cardKind) ->
             {label: 'Choice'}
         ]
         inline: true
-    }, schemas.card.kind))
+    })
 
     if cardKind is 'video'
-        fields.push(extend({
+        fields.push({
             label: 'Video Site'
             name: 'entity.site'
             options: [
                 {label: 'YouTube'}
                 {label: 'Vimeo'}
             ]
-        }, schemas.videoCard.site))
+        })
 
-        fields.push(extend({
+        fields.push({
             label: 'Video ID'
             name: 'entity.video_id'
             description: 'You can find the video ID in the URL.'
-        }, schemas.videoCard.video_id))
+        })
 
     if cardKind is 'choice'
-        fields.push(extend({
+        fields.push({
             label: 'Question or Prompt'
             name: 'entity.body'
-        }, schemas.choiceCard.body))
+        })
 
-        fields.push(extend({
+        fields.push({
             label: 'Response Options'
             name: 'entity.options'
             columns: [
@@ -239,40 +232,52 @@ getFieldsCardKind = (cardKind) ->
                 {}
                 {}
             ]
-        }, schemas.choiceCard.options))
+        })
 
-        fields.push(extend({
+        fields.push({
             label: 'Order'
             name: 'entity.order'
             options: [
                 {label: 'Random'}
                 {label: 'Set'}
             ]
-        }, schemas.choiceCard.order))
+        })
 
-        fields.push(extend({
+        fields.push({
             label: 'Max Options to Show'
             name: 'entity.max_options_to_show'
-        }, schemas.choiceCard.max_options_to_show))
+        })
 
     return fields
 
-parseData = (data) ->
-    [topicID, postID] = data.routeArgs
+getSchema = (formData) ->
+    schema = {}
 
-    if postID
-        post = data.topicPosts?[topicID].find((post) -> post.id is postID)
+    switch formData['post.kind']
+        when 'proposal'
+            extend(schema, prefixObjectKeys('post.', schemas.proposal))
+        when 'vote'
+            extend(schema, prefixObjectKeys('post.', schemas.vote))
+        else
+            extend(schema, prefixObjectKeys('post.', schemas.post))
 
-    repliesToID = if post then post.replies_to_id \
-                  else data.routeQuery.replies_to_id
+    switch formData['post.entity_version.kind']
+        when 'unit'
+            extend(schema, prefixObjectKeys('entity.', schemas.unit))
+        when 'set'
+            extend(schema, prefixObjectKeys('entity.', schemas.set))
+        when 'card'
+            switch formData['entity.kind']
+                when 'video'
+                    extend(schema,
+                           prefixObjectKeys('entity.', schemas.videoCard))
+                when 'choice'
+                    extend(schema,
+                           prefixObjectKeys('entity.', schemas.choiceCard))
+                else
+                    extend(schema,
+                           prefixObjectKeys('entity.', schemas.card))
 
-    formData = if post then {
-        'post.replies_to_id': repliesToID
-        'post.kind': post.kind
-        'post.body': post.body
-        'post.response': '' + post.response
-    } else {}
+    return schema
 
-    return {topicID, postID, repliesToID, post, formData}
-
-module.exports = {getFields, parseData}
+module.exports = {getFields, getSchema}

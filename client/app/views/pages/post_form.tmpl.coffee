@@ -1,12 +1,15 @@
 {div, h1} = require('../../modules/tags')
 c = require('../../modules/content').get
 form = require('../components/form.tmpl')
+{extend} = require('../../modules/utilities')
+{createFieldsData} = require('../../modules/auxiliaries')
+{getFields, getSchema} = require('./post_form.fn')
 
-{mergeFieldsData} = require('../../modules/auxiliaries')
-{getFields, parseData} = require('./post_form.fn')
-
-classes = (postID, data) ->
-    {postKind, entityKind, cardKind} = data
+classes = (formData) ->
+    postID = formData['post.id']
+    postKind = formData['post.kind']
+    entityKind = formData['entity_kind']
+    cardKind = formData['entity.kind']
     return [
         'col-6'
         if postID then 'update' else 'create'
@@ -16,38 +19,43 @@ classes = (postID, data) ->
     ].join(' ')
 
 module.exports = (data) ->
-    {topicID, postID, repliesToID, post, formData} = parseData(data)
+    [topicID, postID] = data.routeArgs
+    if postID
+        post = data.topicPosts?[topicID].find((post) -> post.id is postID)
 
     return div({className: 'spinner'}) if postID and not post
 
-    fields = getFields({
-        topicID
-        postID
-        repliesToID
-        editKind: not postID
-        postKind: data.postKind or (post and post.kind)
-        entityKind: data.entityKind
-        cardKind: data.cardKind
+    formData = extend({}, data.formData, {
+        'post.id': postID
+        'post.topic_id': topicID
+        'post.replies_to_id': post?.replies_to_id \
+                              or data.routeQuery.replies_to_id
+        'post.kind': post?.kind
+        'post.body': post?.body
+        'post.response': if post then '' + post.response
     })
 
-    if postID
-        fields_ = mergeFieldsData(fields, {formData})
-    else
-        fields_ = fields
-
-    fields_.push({
-        id: postID
+    fields = getFields(formData)
+    fields.push({
         type: 'submit'
         name: 'submit'
         label: if postID then 'Update Post' else 'Create Post'
         icon: 'plus'
     })
 
+    instanceFields = createFieldsData({
+        schema: getSchema(formData)
+        fields: fields
+        errors: data.errors
+        formData: formData
+        sending: data.sending
+    })
+
     return div(
         {
             id: 'post-form'
-            className: classes(postID, data)
+            className: classes(formData)
         }
         h1(if postID then 'Update Post' else 'Create Post')
-        form(fields_)
+        form(instanceFields)
     )

@@ -7,11 +7,11 @@ module.exports = extend({}, post, {
         type: 'text'
         validations: [required]
     }
-    'entity.id': {
+    'entity_version.id': {
         type: 'hidden'
         validations: []
     }
-    'entity.kind': {
+    'entity_version.kind': {
         type: 'select'
         options: [
             {value: 'card'}

@@ -1,6 +1,10 @@
 {required} = require('../modules/validations')
 
 module.exports = {
+    id: {
+        type: 'hidden'
+        validations: []
+    }
     user_id: {
         type: 'hidden'
         validations: []

@@ -2,7 +2,7 @@
 form = require('../components/form.tmpl')
 userSchema = require('../../schemas/user')
 {extend} = require('../../modules/utilities')
-{mergeFieldsData} = require('../../modules/auxiliaries')
+{createFieldsData} = require('../../modules/auxiliaries')
 qs = require('../../modules/query_string')
 
 emailFields = [{
@@ -71,8 +71,22 @@ module.exports = (data) ->
 
 getNodesForState = (state, data) ->
     if state is 'email'
-        return form(mergeFieldsData(emailFields, data))
+        instanceFields = createFieldsData({
+            schema: userSchema
+            fields: emailFields
+            errors: data.errors
+            formData: data.formData
+            sending: data.sending
+        })
+        return form(instanceFields)
     if state is 'inbox'
         return p('Check your inbox. Be sure to check your spam folder.')
     if state is 'password'
-        return form(mergeFieldsData(passwordFields, data))
+        instanceFields = createFieldsData({
+            schema: userSchema
+            fields: passwordFields
+            errors: data.errors
+            formData: data.formData
+            sending: data.sending
+        })
+        return form(instanceFields)

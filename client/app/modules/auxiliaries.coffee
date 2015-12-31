@@ -3,7 +3,7 @@ Auxiliaries are utlity functions that are specific to Sagefy.
 ###
 
 cookie = require('./cookie')
-{copy, isString} = require('./utilities')
+{extend, copy, isString, isArray} = require('./utilities')
 
 # Determine if the user is logged in
 isLoggedIn = ->
@@ -88,61 +88,9 @@ valuefy = (value) ->
     return parseInt(value) if value.match(/^\d+$/)
     return decodeURIComponent(value)
 
-# Returns an object of the fields' value
-getFormValues = (form) ->
-    data = {}
-    for el in form.querySelectorAll([
-        'input[type="text"]'
-        'input[type="email"]'
-        'input[type="password"]'
-        'input[type="hidden"]'
-        'textarea'
-    ].join(', '))
-        data[el.name] = valuefy(el.value)
-
-    for el in form.querySelectorAll('[type=radio]')
-        data[el.name] = valuefy(el.value) if el.checked
-
-    for el in form.querySelectorAll('[type=checkbox]')
-        data[el.name] ?= []
-        data[el.name].push(valuefy(el.value)) if el.checked
-
-    for key, value of data
-        if key.indexOf('.') > -1
-            prev = data
-            names = key.split('.')
-            for n, i in names
-                if i is names.length - 1
-                    prev[n] = value
-                else
-                    prev[n] ?= {}
-                    prev = prev[n]
-            delete data[key]
-
-    return data
-
-# ...
-mergeFieldsData = (fields, data) ->
-    fields_ = copy(fields)
-
-    for error in data.errors or []
-        field = fields_.filter((f) -> f.name is error.name)?[0]
-        field.error = error.message if field
-
-    for name, value of data.formData or {}
-        field = fields_.filter((f) -> f.name is name)?[0]
-        field.value = value if field
-
-    if data.sending
-        field = fields_.filter((f) -> f.type is 'submit')?[0]
-        field.disabled = true if field
-
-    return fields_
-
 truncate = (str, len) ->
     return str if str.length <= len
     return str.slice(0, len) + '...'
-
 
 mergeArraysByKey = (A, B, key = 'id') ->
     a = 0
@@ -173,6 +121,97 @@ mergeArraysByKey = (A, B, key = 'id') ->
 
     return C
 
+# Returns an object of the fields' value
+getFormValues = (form) ->
+    data = {}
+    for el in form.querySelectorAll([
+        'input[type="text"]'
+        'input[type="email"]'
+        'input[type="password"]'
+        'input[type="hidden"]'
+        'textarea'
+    ].join(', '))
+        data[el.name] = valuefy(el.value)
+
+    for el in form.querySelectorAll('[type=radio]')
+        data[el.name] = valuefy(el.value) if el.checked
+
+    for el in form.querySelectorAll('[type=checkbox]')
+        data[el.name] ?= []
+        data[el.name].push(valuefy(el.value)) if el.checked
+
+    return data
+
+# Given a forms values as an object, parse any fields with `.`
+# in them to create a save-able object for the service
+parseFormValues = (data) ->
+    for key, value of data
+        if key.indexOf('.') > -1
+            prev = data
+            names = key.split('.')
+            for n, i in names
+                if i is names.length - 1
+                    prev[n] = value
+                else
+                    prev[n] ?= {}
+                    prev = prev[n]
+            delete data[key]
+
+    return data
+
+# Validate the entry with the given ID against the schema.
+# Returns a list of errors.
+# Use this method for any sort of `create` or `update` call.
+validateFormData = (data, schema, fields) ->
+    errors = []
+    for fieldName in (fields or Object.keys(schema))
+        for fn in schema[fieldName].validations
+            error = if isArray(fn)
+                fn[0](data[fieldName], fn.slice(1)...)
+            else
+                fn(data[fieldName])
+            if error
+                errors.push({
+                    name: fieldName
+                    message: error
+                })
+                break
+    return errors
+
+# Given a schema, fields, errors, formData, and sending boolean (optional)
+# create a list of fields with all the data needed to create the form
+# correctly.
+createFieldsData = ({
+    schema
+    fields
+    errors = []
+    formData = {}
+    sending = false
+}) ->
+    fields = copy(fields)
+
+    for field, i in fields
+        fields[i] = extend({}, schema[field.name], field)
+
+    for error in errors
+        field = fields.filter((f) -> f.name is error.name)?[0]
+        field.error = error.message if field
+
+    for name, value of formData
+        field = fields.filter((f) -> f.name is name)?[0]
+        field.value = value if field
+
+    if sending
+        field = fields.filter((f) -> f.type is 'submit')?[0]
+        field.disabled = true if field
+
+    return fields
+
+prefixObjectKeys = (prefix, obj) ->
+    next = {}
+    for name, value of obj
+        next[prefix + name] = value
+    return next
 
 module.exports = {
     isLoggedIn
@@ -184,9 +223,14 @@ module.exports = {
     setTitle
     debounce
     matchesRoute
-    getFormValues
-    mergeFieldsData
     truncate
     mergeArraysByKey
     valuefy
+
+    getFormValues
+    parseFormValues
+    validateFormData
+    createFieldsData
+
+    prefixObjectKeys
 }

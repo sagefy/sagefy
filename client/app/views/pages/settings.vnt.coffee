@@ -1,9 +1,17 @@
 broker = require('../../modules/broker')
 tasks = require('../../modules/tasks')
-{getFormValues} = require('../../modules/auxiliaries')
+{getFormValues, parseFormValues} = require('../../modules/auxiliaries')
+userSchema = require('../../schemas/user')
 
 module.exports = broker.add({
     'submit #settings form': (e, el) ->
         e.preventDefault() if e
-        tasks.updateUser(getFormValues(el))
+
+        values = getFormValues(el)
+        tasks.updateFormData(values)
+        errors = tasks.validateForm(values, userSchema, ['name', 'email'])
+        unless errors?.length
+            values = parseFormValues(values)
+            tasks.updateUser(values)
+
 })

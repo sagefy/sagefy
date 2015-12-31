@@ -4,6 +4,8 @@ recorder = require('../modules/recorder')
 
 module.exports = store.add({
     createTopic: (data) ->
+        @data.sending = true
+        @change()
         ajax({
             method: 'POST'
             url: '/s/topics'
@@ -17,10 +19,13 @@ module.exports = store.add({
                 @data.errors = errors
                 recorder.emit('error on create topic', errors)
             always: =>
+                @sending = false
                 @change()
         })
 
     updateTopic: (data) ->
+        @data.sending = true
+        @change()
         ajax({
             method: 'PUT'
             url: "/s/topics/#{data.topic.id}"
@@ -34,6 +39,7 @@ module.exports = store.add({
                 @data.errors = errors
                 recorder.emit('error on update topic', errors)
             always: =>
+                @data.sending = false
                 @change()
         })
 
