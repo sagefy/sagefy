@@ -7,4 +7,4 @@ module.exports = (data) ->
         {className: 'notices col-6'}
         notice(n) for n in data
     )
-    # TODO request more notices
+    # TODO-2 request more notices

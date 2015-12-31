@@ -13,18 +13,18 @@ Card
 - [x] correct
 - [x] guess
 - [x] slip
-- [_] transit  TODO
+- [_] transit  TODO-3
 
 Unit
 - [x] learned
 - [x] belief
-- [ ] unit quality  TODO
-- [ ] unit difficulty  TODO
+- [ ] unit quality  TODO-3
+- [ ] unit difficulty  TODO-3
 
 Set
-- [ ] learner-set ability  TODO
-- [ ] set quality  TODO
-- [ ] set difficulty  TODO
+- [ ] learner-set ability  TODO-3
+- [ ] set quality  TODO-3
+- [ ] set difficulty  TODO-3
 """
 
 
@@ -34,7 +34,7 @@ def update(user, card, response):
     when given a response.
     """
 
-    # TODO split up into smaller methods
+    # TODO-3 split up into smaller methods
 
     if not card.has_assessment():
         return {

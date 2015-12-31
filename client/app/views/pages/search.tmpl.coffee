@@ -3,7 +3,7 @@
 c = require('../../modules/content').get
 {truncate, timeAgo, ucfirst} = require('../../modules/auxiliaries')
 
-# TODO@ populate using location query parameters
+# TODO-0 populate using location query parameters
 
 module.exports = (data) ->
     loading = data.searchQuery and not data.searchResults
@@ -12,7 +12,7 @@ module.exports = (data) ->
     return div(
         {id: 'search', className: 'col-8'}
         h1('Search')
-        # TODO add search filtering / ordering
+        # TODO-2 add search filtering / ordering
         form(
             {className: 'form--horizontal'}
             div(
@@ -39,7 +39,7 @@ module.exports = (data) ->
         p('No results found.') if data.searchResults?.length is 0
     )
 
-    # TODO pagination
+    # TODO-2 pagination
 
 r = {}
 
@@ -72,7 +72,7 @@ r.topicResult = (result) ->
             {href: "/#{result._source.entity.kind}/#{result._source.entity.id}"}
             result._source.entity.name
         )
-        # TODO no of posts     ???
+        # TODO-2 no of posts     ???
     ]
 
 r.postResult = (result) ->
@@ -98,8 +98,8 @@ r.postResult = (result) ->
             {href: "/topics/#{result._source.topic.id}"}
             result._source.topic.name
         )
-        # TODO entity kind       result._source.topic_id > ????
-        # TODO entity name       result._source.topic_id > ????
+        # TODO-3 entity kind       result._source.topic_id > ????
+        # TODO-3 entity name       result._source.topic_id > ????
     ]
 
 r.cardResult = (result) ->
@@ -110,8 +110,8 @@ r.cardResult = (result) ->
             {href: "/cards/#{result._source.entity_id}"}
             result._source.name
         )
-        # TODO unit name   result._source.unit_id > ???
-        # TODO contents    ???
+        # TODO-3 unit name   result._source.unit_id > ???
+        # TODO-3 contents    ???
     ]
 
 r.unitResult = (result) ->
@@ -128,7 +128,7 @@ r.unitResult = (result) ->
 
 r.setResult = (result, asLearner = false) ->
     return [
-        a(  # TODO if already in sets, don't show this button
+        a(  # TODO-2 if already in sets, don't show this button
             {
                 id: result._source.entity_id
                 href: '#'

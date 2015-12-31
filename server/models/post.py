@@ -11,10 +11,10 @@ class Post(Model):
 
     schema = dict(Model.schema.copy(), **{
         'user_id': {
-            'validate': (is_required, is_string,)  # TODO validate foreign
+            'validate': (is_required, is_string,)  # TODO-1 validate foreign
         },
         'topic_id': {
-            'validate': (is_required, is_string,)  # TODO validate foreign
+            'validate': (is_required, is_string,)  # TODO-1 validate foreign
         },
         'body': {
             'validate': (is_required, is_string, (has_min_length, 1),)
@@ -25,7 +25,7 @@ class Post(Model):
             'default': 'post'
         },
         'replies_to_id': {
-            'validate': (is_string,)  # TODO@ validate id is real & in topic
+            'validate': (is_string,)  # TODO-1 validate id is real & in topic
         }
     })
 
@@ -38,7 +38,7 @@ class Post(Model):
     def is_valid_reply_kind(self):
         """
         Must belong to the same topic
-        - TODO@ A post can reply to a post or proposal.
+        - TODO-1 A post can reply to a post or proposal.
         """
         return []
 
@@ -47,7 +47,7 @@ class Post(Model):
         Overwrite save method to add to Elasticsearch.
         """
 
-        # TODO should we validate the save worked before going to ES?
+        # TODO-2 should we validate the save worked before going to ES?
 
         from models.topic import Topic
         from models.user import User

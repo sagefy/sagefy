@@ -29,7 +29,7 @@ sets = (user, sets) ->
             )) for set in sets
         )
     ]
-    # TODO and link to search
+    # TODO-2 and link to search
 
 follows = (user, follows) ->
     return [
@@ -40,12 +40,12 @@ follows = (user, follows) ->
                 ': '
                 a(
                     {href: "/#{follow.entity.kind}s/#{follow.entity.id}"}
-                    'TODO follow.entity.name'
+                    'TODO-2 follow.entity.name'
                 )
             ) for follow in follows
         )
     ]
-    # TODO and link to search
+    # TODO-2 and link to search
 
 posts = (user, posts) ->
     return [
@@ -63,8 +63,8 @@ posts = (user, posts) ->
                     {className: 'timeago'}
                     timeAgo(post.created)
                 )
-                # TODO add topic info
+                # TODO-2 add topic info
             ) for post in posts
         )
     ]
-    # TODO and link to search
+    # TODO-2 and link to search

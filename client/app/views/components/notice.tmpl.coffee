@@ -1,7 +1,7 @@
 {li, span} = require('../../modules/tags')
 timeAgo = require('../../modules/auxiliaries').timeAgo
 
-# TODO add a link around the notice, and go to the appropriate page on click.
+# TODO-2 add a link around the notice, and go to the appropriate page on click.
 
 module.exports = (data) ->
     return li(

@@ -109,7 +109,7 @@ class User(Model):
         Overwrite save method to add to Elasticsearch.
         """
 
-        # TODO should we validate the save worked before going to ES?
+        # TODO-2 should we validate the save worked before going to ES?
 
         data = json_prep(self.deliver())
         data['avatar'] = self.get_avatar()
@@ -127,7 +127,7 @@ class User(Model):
         Overwrite delete method to delete in Elasticsearch.
         """
 
-        # TODO should we validate the delete worked before going to ES?
+        # TODO-2 should we validate the delete worked before going to ES?
 
         es.delete(
             index='entity',

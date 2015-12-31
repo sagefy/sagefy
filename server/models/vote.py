@@ -18,7 +18,7 @@ class Vote(Post):
         # But a vote does require a proposal
         'replies_to_id': {
             'validate': (is_required, is_string,)
-        },   # TODO@ Validate this is for a valid proposal
+        },   # TODO-1 Validate this is for a valid proposal
 
         # The only true unique field of a vote...
         # Where True is yes, False is no
@@ -47,12 +47,12 @@ class Vote(Post):
 
     def is_unique_vote(self):
         """
-        TODO@ Ensure a user can only vote once per proposal.
+        TODO-1 Ensure a user can only vote once per proposal.
         """
         return []
 
     def is_valid_reply_kind(self):
         """
-        TODO@ A vote can reply to a proposal.
+        TODO-1 A vote can reply to a proposal.
         """
         return []

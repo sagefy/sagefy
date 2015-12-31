@@ -9,7 +9,7 @@ module.exports = {
         ]
     }
     unit_id: {
-        type: 'select'
+        type: 'text'
         validations: [required]
     }
     name: {

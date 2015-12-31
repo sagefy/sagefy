@@ -1,4 +1,4 @@
-# TODO move copy to content directory
+# TODO-3 move copy to content directory
 {div, h1, p} = require('../../modules/tags')
 
 terms = """

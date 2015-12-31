@@ -19,8 +19,8 @@ field = ({name, index, col, row, lock}) ->
         size: 10
         name: "#{name}.#{index}.#{col.name}"
         value: row[col.name]
-        # TODO placeholder
-        # TODO default
+        # TODO-3 placeholder
+        # TODO-3 default
     }) if col.type is 'text'
 
 module.exports = (data) ->
@@ -42,7 +42,7 @@ module.exports = (data) ->
         thead(
             tr(
                 th(ucfirst(col.name)) for col in columns
-                # TODO th()  # For reordering
+                # TODO-2 th()  # For reordering
                 th()  # For deleting
             )
         )
@@ -50,7 +50,7 @@ module.exports = (data) ->
             tr(
                 {className: 'add-row-tr'}
                 td(
-                    {colSpan: columns.length + 1}  # TODO +2 reordering
+                    {colSpan: columns.length + 1}  # TODO-2 +2 reordering
                     a(
                         {href: '#', className: 'add-row'}
                         i({className: 'fa fa-plus'})
@@ -70,7 +70,7 @@ module.exports = (data) ->
                         lock: data.lock
                     })
                 ) for col, index in columns
-                # TODO move row td(
+                # TODO-2 move row td(
                 #     a(
                 #         {title: 'Reorder', href: '#', className: 'move-row'}
                 #         i({className: 'fa fa-arrows-v'})

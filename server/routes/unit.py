@@ -14,7 +14,7 @@ def get_unit_route(request, unit_id):
     if not unit:
         return abort(404)
 
-    # TODO SPLITUP create new endpoints for these instead
+    # TODO-2 SPLITUP create new endpoints for these instead
     topics = Topic.list_by_entity_id(unit_id)
     versions = Unit.get_versions(unit_id)
     requires = Unit.list_requires(unit_id)

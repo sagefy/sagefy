@@ -1,4 +1,4 @@
-# TODO move copy to content directory
+# TODO-3 move copy to content directory
 {div, img, hgroup, h1, h3, p, a, i} = require('../../modules/tags')
 
 module.exports = (data) ->

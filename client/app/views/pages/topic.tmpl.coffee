@@ -35,7 +35,7 @@ module.exports = (data) ->
                 ' Create a new post'
             )
         )
-        # TODO Pagination
+        # TODO-2 Pagination
     )
 
 entity = (topic, data) ->

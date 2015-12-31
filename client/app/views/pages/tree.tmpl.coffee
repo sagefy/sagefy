@@ -11,7 +11,7 @@
 {matchesRoute} = require('../../modules/auxiliaries')
 
 
-# TODO show the learner their overall set progress as a percent or bar
+# TODO-2 show the learner their overall set progress as a percent or bar
 
 radius = 9
 distance = 36
@@ -79,7 +79,7 @@ module.exports = (data) ->
 
 renderLayers = (layers, currentUnit, preWidth, buckets) ->
     nodes = []
-    # TODO break into smaller functions, and there's lots of repetition..
+    # TODO-3 break into smaller functions, and there's lots of repetition..
     # This is done twice to ensure a line never covers over a circle
     nodes = nodes.concat(renderLines(layers))
     nodes = nodes.concat(renderPoints(layers, buckets, currentUnit))

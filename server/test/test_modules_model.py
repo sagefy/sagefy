@@ -559,5 +559,5 @@ def test_unique(db_conn, users_table):
     assert errors2[0]['name'] == 'name'
 
 
-# TODO test_unique_embed
-# TODO test_unique_embed_many
+# TODO-3 test_unique_embed
+# TODO-3 test_unique_embed_many

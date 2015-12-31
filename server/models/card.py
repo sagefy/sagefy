@@ -15,10 +15,10 @@ class Card(EntityMixin, Model):
 
     schema = dict(EntityMixin.schema.copy(), **{
         'unit_id': {
-            'validate': (is_required, is_string,)  # TODO@ is valid id?
+            'validate': (is_required, is_string,)  # TODO-1 is valid id?
         },
         'require_ids': {
-            'validate': (is_list,),  # TODO@ is valid ids?
+            'validate': (is_list,),  # TODO-1 is valid ids?
             'default': []
         },
         'kind': {
@@ -39,7 +39,7 @@ class Card(EntityMixin, Model):
 
     def ensure_no_cycles(self):
         """
-        TODO@ Ensure no require cycles form.
+        TODO-1 Ensure no require cycles form.
         """
 
         return []

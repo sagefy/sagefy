@@ -1,11 +1,11 @@
-# TODO move copy to content directory
+# TODO-3 move copy to content directory
 {nav, div, a, i, ul} = require('../../modules/tags')
 menuItem = require('./menu_item.tmpl')
 {extend} = require('../../modules/utilities')
 {ucfirst, underscored} = require('../../modules/auxiliaries')
 
 
-# TODO add unread count to notices icon
+# TODO-2 add unread count to notices icon
 
 
 # A list of all menu items and their configurations
@@ -15,7 +15,7 @@ items = {
     log_in: { title: 'Log In', icon: 'sign-in' }
     terms: { icon: 'pencil-square-o' }
     contact: { icon: 'envelope' }
-    notices: { icon: 'tachometer' }   # TODO poll and show unread count
+    notices: { icon: 'tachometer' }   # TODO-2 poll and show unread count
     settings: { icon: 'cog' }
     log_out: { url: '#log_out', title: 'Log Out', icon: 'sign-out' }
     search: { }

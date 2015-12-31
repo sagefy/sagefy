@@ -1,8 +1,6 @@
-# TODO add `available` field
-# TODO how to decline proposal?
-# TODO@ all proposal fields should lock after creating proposal
-# TODO Tags (all)
-# TODO@ Unit Belongs To (card only, should be provided by qs)
+# TODO-2 add `available` field
+# TODO-2 how to decline proposal?
+# TODO-3 Tags (all)
 
 {extend} = require('../../modules/utilities')
 {ucfirst, prefixObjectKeys} = require('../../modules/auxiliaries')
@@ -32,20 +30,14 @@ schemas = {
 getFields = (formData) ->
     fields = []
 
-    if formData['post.id']
-        fields.push({
-            name: 'post.id'
-        })
-
-    if formData['post.topic_id']
-        fields.push({
-            name: 'post.topic_id'
-        })
-
-    if formData['post.replies_to_id']
-        fields.push({
-            name: 'post.replies_to_id'
-        })
+    [
+        'post.id'
+        'post.topic_id'
+        'post.replies_to_id'
+    ].forEach((name) ->
+        if formData[name]
+            fields.push({name})
+    )
 
     fields.push({
         name: 'post.kind'
@@ -73,6 +65,7 @@ getFields = (formData) ->
             ]
             inline: true
             label: 'Response'
+            disabled: !! formData['post.id']
         })
 
     if formData['post.kind'] is 'proposal'
@@ -92,7 +85,7 @@ getFields = (formData) ->
                       else null)
     })
 
-    if formData['post.kind'] is 'proposal'
+    if formData['post.kind'] is 'proposal' and not formData['post.id']
         fields = fields.concat(getProposalFields(formData))
 
     return fields
@@ -134,6 +127,14 @@ getProposalFields = (formData) ->
         ]
         value: 'en'
     })
+
+    if entityKind is 'card'
+        fields.push({
+            name: 'entity.unit_id'
+            label: 'Card\'s Unit ID'
+            description: 'Add the ID of the unit the card belongs to. ' +
+                         'You can find this in the URL of the unit.'
+        })
 
     if entityKind in ['unit', 'set']
         fields.push({

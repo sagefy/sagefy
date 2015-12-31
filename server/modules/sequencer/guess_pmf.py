@@ -22,7 +22,7 @@ class GuessPMF(PMF):
         The PMF tends to overestimate guess,
         even though correlation is decent,
         so let's trim it down a bit.
-        TODO Why does this PMF overestimate guess?
+        TODO-3 Why does this PMF overestimate guess?
         """
 
         return super().get_value() * adjust_guess

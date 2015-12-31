@@ -18,7 +18,7 @@ class UploadCard(Card):
         'file_extensions': {
             'validate': (is_required, is_list, is_list_of_strings,),
         },
-        # TODO What extensions are allowed? For what kind of media?
+        # TODO-3 What extensions are allowed? For what kind of media?
         'rubric': {
             'validate': (is_required, is_list, (has_max_length, 5)),
             'embed_many': {
@@ -52,7 +52,7 @@ class UploadCard(Card):
 
     def validate_response(self, response):
         """
-        TODO Ensure the given response body is valid,
+        TODO-3 Ensure the given response body is valid,
         given the card information.
         """
 

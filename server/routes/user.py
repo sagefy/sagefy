@@ -57,8 +57,7 @@ def get_user_route(request, user_id):
                                 and user['id'] == current_user['id']
                                 else None)
 
-    # TODO if request params, include md5 hash of email
-    # TODO SPLITUP create new endpoints for these instead
+    # TODO-2 SPLITUP create new endpoints for these instead
     if 'posts' in request['params']:
         data['posts'] = [post.deliver() for post in
                          get_posts_facade(user_id=user['id'])]

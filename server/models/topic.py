@@ -60,7 +60,7 @@ class Topic(Model):
         Overwrite save method to add to Elasticsearch.
         """
 
-        # TODO should we validate the save worked before going to ES?
+        # TODO-2 should we validate the save worked before going to ES?
 
         es.index(
             index='entity',

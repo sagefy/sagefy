@@ -33,7 +33,7 @@ escape = (str) ->
     )
 
 # From http://ejohn.org/files/pretty.js
-# TODO move copy to content directory
+# TODO-3 move copy to content directory
 timeAgo = (str) ->
     diff = (new Date()).getTime() - (new Date(str)).getTime()
     days = Math.floor(diff / (24 * 60 * 60 * 1000))

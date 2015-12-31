@@ -82,7 +82,7 @@ def test_get_set(db_conn,
     assert len(response['units']) == 1
     assert response['units'][0]['entity_id'] == 'W'
 
-    # TODO sequencer: learners, quality, difficulty
+    # TODO-3 sequencer: learners, quality, difficulty
 
 
 def test_get_set_404(db_conn):

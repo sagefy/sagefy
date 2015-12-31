@@ -42,11 +42,11 @@ class NumberCard(Card):
         super().__init__(fields)
         self['kind'] = 'number'
 
-    # TODO validate has_correct_options
+    # TODO-3 validate has_correct_options
 
     def validate_response(self, body):
         """
-        TODO Ensure the given response body is valid,
+        TODO-3 Ensure the given response body is valid,
         given the card information.
         """
 
@@ -54,7 +54,7 @@ class NumberCard(Card):
 
     def score_response(self, response):
         """
-        TODO Score the given response.
+        TODO-3 Score the given response.
         Returns the score and feedback.
         """
 

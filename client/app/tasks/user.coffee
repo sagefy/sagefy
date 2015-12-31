@@ -3,7 +3,7 @@ ajax = require('../modules/ajax').ajax
 recorder = require('../modules/recorder')
 cookie = require('../modules/cookie')
 
-# TODO move setting and unsetting of currentUserID back to the server
+# TODO-2 move setting and unsetting of currentUserID back to the server
 
 module.exports = store.add({
     createUser: (data) ->

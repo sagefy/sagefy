@@ -26,7 +26,7 @@ class Set(EntityMixin, Model):
         'members': {
             'validate': (is_required, is_list, (has_min_length, 1)),
             'embed_many': {
-                'id': {  # TODO@ is valid ids?
+                'id': {  # TODO-1 is valid ids?
                     'validate': (is_required, is_string,),
                 },
                 'kind': {
@@ -46,7 +46,7 @@ class Set(EntityMixin, Model):
 
     def ensure_no_cycles(self):
         """
-        TODO@ Ensure no require cycles form.
+        TODO-1 Ensure no require cycles form.
         """
         return []
 
@@ -55,7 +55,7 @@ class Set(EntityMixin, Model):
         """
         Get a list of sets which contain the given member ID. Recursive.
 
-        # TODO is there a way to simplify this method?
+        # TODO-2 is there a way to simplify this method?
         """
 
         def _():
@@ -92,8 +92,8 @@ class Set(EntityMixin, Model):
         """
         Get the list of units contained within the set. Recursive. Connecting.
 
-        TODO OMG break into smaller functions
-        TODO Should this method be part of the Unit class/module,
+        TODO-2 OMG break into smaller functions
+        TODO-2 Should this method be part of the Unit class/module,
              as it returns units?
         """
 

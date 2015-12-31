@@ -28,7 +28,7 @@ module.exports = (data) ->
                         ' Recommended'
                     ) if index is 0
                     p(unit.body)
-                    # TODO % learned
+                    # TODO-2 % learned
                 )
             ) for unit, index in data.chooseUnit.units.slice(0, 5)
         )

@@ -2,7 +2,7 @@
 timeAgo = require('../../modules/auxiliaries').timeAgo
 
 
-# TODO@ proposal fields
+# TODO-0 proposal fields
 # Entity Kind (all)
 # Entity ID (all, not on create entity)
 # Entity Name (all)
@@ -20,7 +20,7 @@ timeAgo = require('../../modules/auxiliaries').timeAgo
 # Choice Feedback (choice card)
 # Choice Order (choice card)
 # Choice Max Options to Show (choice card)
-# TODO diff from previous version
+# TODO-2 diff from previous version
 
 voteResponse = (response) ->
     return unless response?
@@ -105,7 +105,7 @@ module.exports = (data, currentUserID) ->
                     i({className: 'fa fa-share'})
                     ' Share'
                 )
-                # TODO a(
+                # TODO-3 a(
                 #     {href: '#'}
                 #     i({className: 'fa fa-flag'})
                 #     ' Flag'

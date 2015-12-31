@@ -33,5 +33,5 @@ writeStyleguide = ->
 
     return tags
 
-# TODO render description markdown -> vdom
-# TODO render example using .tmpl file instead of html examples
+# TODO-2 render description markdown -> vdom
+# TODO-2 render example using .tmpl file instead of html examples

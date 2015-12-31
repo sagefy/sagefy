@@ -41,7 +41,7 @@ module.exports = store.add({
                     @data.follows[index] = follow
                 else
                     @data.follows.push(follow)
-                # TODO will this cause a bug with mergeArraysByKey later?
+                # TODO-3 will this cause a bug with mergeArraysByKey later?
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on ask follow', errors)
@@ -58,7 +58,7 @@ module.exports = store.add({
                 @data.follows ?= []
                 @data.follows.push(response.follow)
                 recorder.emit('follow', data.entity.id)
-                # TODO will this cause a bug with mergeArraysByKey later?
+                # TODO-3 will this cause a bug with mergeArraysByKey later?
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on follow', errors)

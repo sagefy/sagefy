@@ -34,16 +34,16 @@ def choose_card(user, unit):
     Return a card instance.
     """
 
-    # TODO simplify this method
-    # TODO@ do not allow the previous card.. there's nothing to go to
+    # TODO-3 simplify this method
+    # TODO-0 do not allow the previous card.. there's nothing to go to
 
     unit_id = unit['entity_id']
     query = (Card.start_accepted_query()
                  .filter({'unit_id': unit_id})
-                 .sample(10))  # TODO index
-    # TODO does this belong as a model method?
-    # TODO is the sample value decent?
-    # TODO has the learner seen this card recently?
+                 .sample(10))  # TODO-2 index
+    # TODO-3 does this belong as a model method?
+    # TODO-2 is the sample value decent?
+    # TODO-2 has the learner seen this card recently?
 
     cards = [Card(d) for d in query.run(database.db_conn)]
     if not len(cards):

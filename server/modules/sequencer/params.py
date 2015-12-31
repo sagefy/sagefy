@@ -1,4 +1,4 @@
-# TODO write comments explaining each parameter
+# TODO-3 write comments explaining each parameter
 
 init_learned = 0.4
 max_learned = 0.99

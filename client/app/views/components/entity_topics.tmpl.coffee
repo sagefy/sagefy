@@ -15,12 +15,12 @@ module.exports = (kind, entityID, topics) ->
         ul(
             li(
                 span({className: 'timeago'}, timeAgo(topic.created))
-                # TODO update time ago to latest post time
+                # TODO-2 update time ago to latest post time
                 a(
                     {href: "/topics/#{topic.id}"}
                     topic.name
                 )
-                # TODO number of posts
+                # TODO-3 number of posts
             ) for topic in topics
             li(
                 a(

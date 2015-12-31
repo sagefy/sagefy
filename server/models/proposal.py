@@ -9,7 +9,7 @@ class Proposal(Post):
         'entity_version': {
             'validate': (is_required, is_dict,),
             'embed': {
-                'id': {  # TODO@ is valid ids?
+                'id': {  # TODO-1 is valid ids?
                     'validate': (is_required, is_string,),
                 },
                 'kind': {
@@ -41,12 +41,12 @@ class Proposal(Post):
 
     def is_valid_reply_kind(self):
         """
-        TODO@ A proposal can reply to post or proposal.
+        TODO-1 A proposal can reply to post or proposal.
         """
         return []
 
     def is_valid_version(self):
         """
-        TODO@ Ensure this is a valid version of the entity.
+        TODO-1 Ensure this is a valid version of the entity.
         """
         return []

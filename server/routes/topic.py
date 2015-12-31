@@ -15,10 +15,10 @@ from modules.content import get as c
 from modules.entity import create_entity, get_version, get_latest_accepted, \
     get_kind
 
-# TODO most of this junk should be moved into the models and modules...
+# TODO-2 most of this junk should be moved into the models and modules...
 #      these methods are waaay too complicated.
 
-# TODO send out notifications!
+# TODO-1 send out notifications!
 
 
 @post('/s/topics')
@@ -119,7 +119,7 @@ def update_topic_route(request, topic_id):
         return abort(403)
 
     # Request must only be for name
-    # TODO should this be part of the model?
+    # TODO-3 should this be part of the model?
     topic, errors = topic.update({
         'name': request['params'].get('topic', {}).get('name')
     })
@@ -178,7 +178,7 @@ def get_posts_route(request, topic_id):
                                entity_version.deliver())
             diffs[post_['id']] = diff
 
-    # TODO SPLITUP create new endpoint for this instead
+    # TODO-2 SPLITUP create new endpoint for this instead
     users = {}
     for post_ in posts:
         user_id = post_['user_id']
@@ -190,7 +190,7 @@ def get_posts_route(request, topic_id):
                     'avatar': user.get_avatar(48)
                 }
 
-    # TODO SPLITUP create new endpoints for these instead
+    # TODO-2 SPLITUP create new endpoints for these instead
     output = {
         'topic': topic.deliver(),
         'posts': [p.deliver() for p in posts],
@@ -215,7 +215,7 @@ def create_post_route(request, topic_id):
     if not current_user:
         return abort(401)
 
-    # TODO what checks should be moved to the model?
+    # TODO-3 what checks should be moved to the model?
 
     if not request['params'].get('post'):
         return 400, {
@@ -270,15 +270,15 @@ def create_post_route(request, topic_id):
 
     # If a proposal has sufficient votes, move it to accepted
     # ... and close out any prior versions dependent
-    # TODO@ only allow one vote per proposal per user
+    # TODO-0 only allow one vote per proposal per user
     if kind == 'vote':
         proposal_id = post_['replies_to_id']
         proposal = Post.get(id=proposal_id)
         entity = get_version(proposal['entity_version']['kind'],
                              proposal['entity_version']['id'])
         entity['status'] = 'accepted'
-        # TODO actually count the votes first
-        # TODO block if negative response
+        # TODO-2 actually count the votes first
+        # TODO-1 block if negative response
         entity.save()
 
     post_.save()
@@ -311,7 +311,7 @@ def update_post_route(request, topic_id, post_id):
     post_data = omit(post_data, ('id', 'user_id', 'topic_id', 'kind'))
 
     # Must be user's own post
-    # TODO Should some of these checks be part of the model?
+    # TODO-3 Should some of these checks be part of the model?
     if post_['user_id'] != current_user['id']:
         return abort(403)
 
@@ -346,8 +346,8 @@ def update_post_route(request, topic_id, post_id):
         entity = get_version(proposal['entity_version']['kind'],
                              proposal['entity_version']['id'])
         entity['status'] = 'accepted'
-        # TODO actually count the votes first
-        # TODO block if negative response
+        # TODO-2 actually count the votes first
+        # TODO-1 block if negative response
         entity.save()
 
     return 200, {'post': post_.deliver()}

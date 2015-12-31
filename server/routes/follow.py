@@ -22,7 +22,7 @@ def get_follows_route(request):
         'follows': [follow.deliver(access='private') for follow in follows]
     }
 
-    # TODO SPLITUP should this be a different endpoint?
+    # TODO-3 SPLITUP should this be a different endpoint?
     if 'entities' in request['params']:
         entities = flush_entities(follow['entity'] for follow in follows)
         output['entities'] = [entity.deliver() if entity else None
@@ -37,7 +37,7 @@ def follow_route(request):
     Follow a card, unit, or set.
     """
 
-    # TODO simplify this method. does some of this belong in the model?
+    # TODO-3 simplify this method. does some of this belong in the model?
 
     current_user = get_current_user(request)
     if not current_user:
@@ -54,7 +54,7 @@ def follow_route(request):
             'ref': '4Qn9oWVWiGKvXSONQKHSy1T6'
         }
 
-    # Ensure the entity exists   TODO should this be a model validation?
+    # Ensure the entity exists   TODO-3 should this be a model validation?
     if follow['entity']['kind'] == 'topic':
         entity = Topic.get(id=follow['entity']['id'])
     else:
@@ -63,7 +63,7 @@ def follow_route(request):
     if not entity:
         return abort(404)
 
-    # Ensure we don't already follow   TODO should this be a model validation?
+    # Ensure we don't already follow   TODO-3 should this be a model validation?
     prev = Follow.list(user_id=current_user['id'],
                        entity_id=follow_data['entity']['id'])
     if prev:

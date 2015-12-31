@@ -5,12 +5,12 @@ tasks = require('../../modules/tasks')
 module.exports = broker.add({
     'click .select .clear': (e, el) ->
         e.preventDefault()
-        # TODO clear options
+        # TODO-3 clear options
 
     # 'change input[type="search"]': debounce((e, el) ->
-        # TODO search options
+        # TODO-3 search options
     # , 200)
 
     'change input[type="radio"], input[type="checkbox"]': (e, el) ->
-        # TODO update .select__selected to show list of selected names
+        # TODO-3 update .select__selected to show list of selected names
 })

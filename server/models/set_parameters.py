@@ -7,7 +7,7 @@ class SetParameters(Model):
 
     schema = dict(Model.schema.copy(), **{
         'entity_id': {
-            'validate': (is_required, is_string),  # TODO@ validate foreign
+            'validate': (is_required, is_string),  # TODO-1 validate foreign
         },
     })
 

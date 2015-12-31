@@ -15,7 +15,4 @@ module.exports = broker.add({
         unless errors?.length
             values = parseFormValues(values)
             tasks.createUser(values)
-
-    'keyup #sign-up input': (e, el) ->
-        # TODO tasks.validateFormField({})
 })

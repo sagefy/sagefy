@@ -19,11 +19,11 @@ class EntityMixin(object):
 
     schema = dict(Model.schema.copy(), **{
         'entity_id': {
-            'validate': (is_required, is_string,),  # TODO@ is valid id?
+            'validate': (is_required, is_string,),  # TODO-1 is valid id?
             'default': uniqid
         },
         'previous_id': {
-            'validate': (is_string,),  # TODO@ is valid id?
+            'validate': (is_string,),  # TODO-1 is valid id?
         },
         'language': {
             'validate': (is_required, is_language,),
@@ -65,8 +65,8 @@ class EntityMixin(object):
         to the latest accepted versions for each.
         """
 
-        # TODO this query should have an index in card, unit, set
-        # TODO is there a way to avoid the cost of this query?
+        # TODO-2 this query should have an index in card, unit, set
+        # TODO-2 is there a way to avoid the cost of this query?
         return (cls.table
                    .filter(r.row['status'].eq('accepted'))
                    .group('entity_id')
@@ -84,7 +84,7 @@ class EntityMixin(object):
         if not entity_id:
             return
 
-        # TODO this query should have an index in card, unit, set
+        # TODO-2 this query should have an index in card, unit, set
         query = (cls.start_accepted_query()
                     .filter(r.row['entity_id'] == entity_id)
                     .limit(1))
@@ -110,7 +110,7 @@ class EntityMixin(object):
 
         docs = query.run(database.db_conn)
         return [cls(fields) for fields in docs]
-        # TODO index in unit and set
+        # TODO-2 index in unit and set
 
     @classmethod
     def get_versions(cls, entity_id, limit=10, skip=0, **params):
@@ -121,7 +121,7 @@ class EntityMixin(object):
         if not entity_id:
             return []
 
-        # TODO this query should have an index in card, unit, set
+        # TODO-2 this query should have an index in card, unit, set
         query = (cls.table
                     .filter(r.row['entity_id'] == entity_id)
                     .order_by(r.desc('created'))
@@ -141,7 +141,7 @@ class EntityMixin(object):
 
         entity = cls.get_latest_accepted(entity_id=entity_id)
 
-        # TODO this query should have an index in card and unit
+        # TODO-2 this query should have an index in card and unit
         query = (cls.start_accepted_query()
                     .filter(lambda _: r.expr(entity['requires'])
                                        .contains(_['entity_id']))
@@ -160,7 +160,7 @@ class EntityMixin(object):
         if not entity_id:
             return []
 
-        # TODO this query should have an index in card and unit
+        # TODO-2 this query should have an index in card and unit
         query = (cls.start_accepted_query()
                     .filter(r.row['requires'].contains(entity_id))
                     .order_by(r.desc('created'))
@@ -199,7 +199,7 @@ class EntityMixin(object):
         Overwrite save method to add to Elasticsearch.
         """
 
-        # TODO should we validate the save worked before going to ES?
+        # TODO-2 should we validate the save worked before going to ES?
 
         doc_type = self.__class__.__name__.lower()
 

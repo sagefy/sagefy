@@ -27,7 +27,7 @@ def get_card_route(request, card_id):
     if not unit:
         return abort(404)
 
-    # TODO SPLITUP create new endpoints for these instead
+    # TODO-2 SPLITUP create new endpoints for these instead
     topics = Topic.list_by_entity_id(entity_id=card_id)
     versions = Card.get_versions(entity_id=card_id)
     requires = Card.list_requires(entity_id=card_id)
@@ -45,7 +45,7 @@ def get_card_route(request, card_id):
     }
 
 
-@get('/s/cards/{card_id}/learn')  # TODO merge with main GET route
+@get('/s/cards/{card_id}/learn')  # TODO-3 merge with main GET route
 def learn_card_route(request, card_id):
     """
     Render the card's data, ready for learning.
@@ -107,7 +107,7 @@ def respond_to_card_route(request, card_id):
         -> GET View Set Tree   ...when ready and done
     """
 
-    # TODO simplify this method.
+    # TODO-3 simplify this method.
     #      perhaps smaller methods or move to model layer?
 
     current_user = get_current_user(request)

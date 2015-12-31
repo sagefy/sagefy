@@ -24,7 +24,7 @@ class Unit(EntityMixin, Model):
             'validate': (is_required, is_string,)
         },
         'require_ids': {
-            'validate': (is_list,),  # TODO@ is valid id?
+            'validate': (is_list,),  # TODO-1 is valid id?
             'default': []
         },
     })
@@ -37,6 +37,6 @@ class Unit(EntityMixin, Model):
 
     def ensure_no_cycles(self):
         """
-        TODO@ Ensure no require cycles form.
+        TODO-1 Ensure no require cycles form.
         """
         return []

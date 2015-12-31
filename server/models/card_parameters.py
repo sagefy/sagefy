@@ -11,7 +11,7 @@ class CardParameters(Model):
 
     schema = dict(Model.schema.copy(), **{
         'entity_id': {
-            'validate': (is_required, is_string),  # TODO@ validate foreign
+            'validate': (is_required, is_string),  # TODO-1 validate foreign
         },
         'guess_distribution': {
             'validate': (is_required, is_dict,),
@@ -71,7 +71,7 @@ class CardParameters(Model):
     def get_transit(self):
         """
         Gets the transit value for the card.
-        TODO use a formulation for transit.
+        TODO-2 use a formulation for transit.
         """
 
         return init_transit
@@ -79,7 +79,7 @@ class CardParameters(Model):
     def get_num_learners(self):
         """
         Gets the number of learners who interact with the card.
-        TODO calculate based on the responses table.
+        TODO-3 calculate based on the responses table.
         """
 
         return 0

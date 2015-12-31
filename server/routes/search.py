@@ -24,7 +24,7 @@ def search_route(request):
         q=request['params'].get('q'),
         size=request['params'].get('limit') or 10,
         from_=request['params'].get('skip') or 0,
-        # TODO sort=request['params'].get('order') or 'score:desc',
+        # TODO-2 sort=request['params'].get('order') or 'score:desc',
     )
 
     return 200, result['hits']

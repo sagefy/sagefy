@@ -97,7 +97,7 @@ def test_get_unit(db_conn,
     # Sets
     assert len(response['belongs_to']) == 1
     assert response['belongs_to'][0]['entity_id'] == 'W'
-    # TODO sequencer data: learners, quality, difficulty
+    # TODO-3 sequencer data: learners, quality, difficulty
 
 
 def test_get_unit_404(db_conn):

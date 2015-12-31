@@ -96,7 +96,7 @@ def test_traverse(db_conn, units_table, users_table, responses_table,
 
 
 """
-TODO more traversal tests
+TODO-3 more traversal tests
 
 traverse
 --------

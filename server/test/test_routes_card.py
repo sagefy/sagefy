@@ -96,7 +96,7 @@ def test_get_card(db_conn, cards_table, cards_parameters_table, units_table,
     # Required By
     assert len(response['required_by']) == 1
     assert response['required_by'][0]['entity_id'] == 'qwer'
-    # TODO sequencer data: learners, transit, guess, slip, difficulty
+    # TODO-3 sequencer data: learners, transit, guess, slip, difficulty
 
 
 def test_get_card_404(db_conn):
@@ -144,8 +144,8 @@ def test_learn_card(db_conn, session, cards_table):
     code, response = routes.card.learn_card_route(request, 'tyui4567')
     assert code == 200
     assert 'order' not in response['card']
-    # TODO assert 'correct' not in response['card']['options'][0]
-    # TODO assert 'feedback' not in response['card']['options'][0]
+    # TODO-3 assert 'correct' not in response['card']['options'][0]
+    # TODO-3 assert 'feedback' not in response['card']['options'][0]
     assert 'set' in response
     assert 'unit' in response
 

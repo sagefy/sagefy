@@ -34,7 +34,7 @@ for index, field of passwordFields
     passwordFields[index] = extend({}, userSchema[field.name], field)
 
 module.exports = (data) ->
-    # TODO the state should be provided solely by data,
+    # TODO-3 the state should be provided solely by data,
     #      the view should not be looking at the window query string
     {token, id} = qs.get()
     state = if token and id then 'password' \

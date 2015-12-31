@@ -32,7 +32,7 @@ putUnitsInLayers = (units) ->
     return layers
 
 orderLayers = (layers) ->
-    # TODO reorder the layers to make the lines more efficient
+    # TODO-2 reorder the layers to make the lines more efficient
     return layers
 
 calculatePoints = (layers, nodeWidth) ->
