@@ -12,9 +12,8 @@ module.exports = broker.add({
         # unless errors?.length, (...tab)
         values = parseFormValues(values)
         if values.post?.kind is 'proposal'
-            values[values.entity_kind] = values.entity
+            values[values.post.entity_version.kind] = values.entity
             delete values.entity
-            delete values.entity_kind
         tasks.createTopic(values)
 
     'submit #topic-form.update form': (e, el) ->

@@ -10,7 +10,7 @@ topicSchema = require('../../schemas/topic')
 classes = (formData) ->
     postID = formData['post.id']
     postKind = formData['post.kind']
-    entityKind = formData['entity_kind']
+    entityKind = formData['post.entity_version.kind']
     cardKind = formData['entity.kind']
     return [
         'col-6'
@@ -36,7 +36,7 @@ getFields = (formData) ->
         name: 'topic.name'
         label: 'Topic Name'
     }])
-    
+
     return fields
 
 getTopicID = (data) ->

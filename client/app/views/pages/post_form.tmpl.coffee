@@ -8,7 +8,7 @@ form = require('../components/form.tmpl')
 classes = (formData) ->
     postID = formData['post.id']
     postKind = formData['post.kind']
-    entityKind = formData['entity_kind']
+    entityKind = formData['post.entity_version.kind']
     cardKind = formData['entity.kind']
     return [
         'col-6'

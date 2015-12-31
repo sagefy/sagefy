@@ -1,17 +1,8 @@
-###
-TODO@ modes:
-          topic    post
-create ------------------
-- card    [ ]      [ ]
-- unit    [ ]      [ ]
-- set     [ ]      [ ]
-update (view only) ------
-- card    -x-      [ ]   - TODO@ how to decline proposal?
-- unit    -x-      [ ]
-- set     -x-      [ ]
-###
-
 # TODO add `available` field
+# TODO how to decline proposal?
+# TODO@ all proposal fields should lock after creating proposal
+# TODO Tags (all)
+# TODO@ Unit Belongs To (card only, should be provided by qs)
 
 {extend} = require('../../modules/utilities')
 {ucfirst, prefixObjectKeys} = require('../../modules/auxiliaries')
@@ -107,7 +98,6 @@ getFields = (formData) ->
     return fields
 
 getProposalFields = (formData) ->
-    # TODO@ all proposal fields should lock after creating proposal
     fields = []
 
     fields.push({
@@ -145,8 +135,6 @@ getProposalFields = (formData) ->
         value: 'en'
     })
 
-    # TODO Tags (all)
-
     if entityKind in ['unit', 'set']
         fields.push({
             label: "#{ucfirst(entityKind)} Goal"
@@ -154,8 +142,6 @@ getProposalFields = (formData) ->
                          'dividing two whole numbers.'
             name: 'entity.body'
         })
-
-    # TODO@ Unit Belongs To (card only, should be provided by qs)
 
     if entityKind in ['card', 'unit']
         fields.push({
