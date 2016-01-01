@@ -29,6 +29,20 @@ module.exports = (data) ->
                 a({href: '/sign_up'}, i({className: 'fa fa-user'}), ' Sign Up')
             ) unless data.currentUserID
             p(
+                {style: {
+                    background: 'rgb(255, 236, 239)'
+                    color: 'rgb(197, 124, 139)'
+                    borderRadius: '2px'
+                    padding: '12px'
+                }}
+                '''
+                Sagefy is very new. You will likely find bugs
+                and other strange behaviors, as well as a general lack of
+                content. Please help by creating content and reporting issues
+                to <support@sagefy.org>. Thank you!
+                '''
+            ) # TODO Delete this warning message
+            p(
                 {className: 'legal'}
                 '© Copyright 2015 Sagefy. '
                 a({href: '/terms'}, 'Privacy & Terms')
