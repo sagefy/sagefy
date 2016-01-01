@@ -14,7 +14,7 @@ class Post(Model):
             'validate': (is_required, is_string,)  # TODO-1 validate foreign
         },
         'topic_id': {
-            'validate': (is_required, is_string,)  # TODO-1 validate foreign
+            'validate': (is_required, is_string,)
         },
         'body': {
             'validate': (is_required, is_string, (has_min_length, 1),)
@@ -32,10 +32,21 @@ class Post(Model):
     def validate(self):
         errors = super().validate()
         if not errors:
-            errors += self.is_valid_reply_kind()
+            errors += self.is_valid_topic_id()
+        if not errors:
+            errors += self.is_valid_reply()
         return errors
 
-    def is_valid_reply_kind(self):
+    def is_valid_topic_id(self):
+        """
+        TODO-3 Ensure the topic is valid.
+               Is there a way to allow for 'in memory only' topic?
+        (We're currently validating this in the route for now...)
+        """
+
+        return []
+
+    def is_valid_reply(self):
         """
         Must belong to the same topic
         - TODO-1 A post can reply to a post or proposal.

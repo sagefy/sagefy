@@ -2,36 +2,34 @@
 Routes for the discussion platform.
 Includes topics, posts, proposals, and votes.
 """
-
+# TODO-3 what checks should be moved to models?
 from framework.routes import get, post, put, abort
-from models.topic import Topic
-from models.post import Post
-from models.user import User
 from framework.session import get_current_user
-from modules.util import omit, object_diff
 from modules.discuss import instance_post_facade, \
     get_post_facade, get_posts_facade
+from modules.util import pick, omit, object_diff
+from modules.entity import get_kind, get_latest_accepted, get_version, \
+    instance_new_entity
+from models.topic import Topic
+from models.user import User
 from modules.content import get as c
-from modules.entity import create_entity, get_version, get_latest_accepted, \
-    get_kind
-
-# TODO-2 most of this junk should be moved into the models and modules...
-#      these methods are waaay too complicated.
-
-# TODO-1 send out notifications!
 
 
 @post('/s/topics')
 def create_topic_route(request):
     """
-    Create a new topic. The first post (or proposal) must be provided.
+    Create a new topic.
+    The first post (or proposal) must be provided.
     """
 
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
-    if 'topic' not in request['params']:
+    # ## STEP 1) Create post and topic (and entity) instances
+    topic_data = request['params'].get('topic')
+    post_data = request['params'].get('post')
+    if not topic_data:
         return 400, {
             'errors': [{
                 'name': 'topic',
@@ -39,8 +37,7 @@ def create_topic_route(request):
             }],
             'ref': 'zknSd46f2hRNjSjVHCg6YLwN'
         }
-
-    if 'post' not in request['params']:
+    if not post_data:
         return 400, {
             'errors': [{
                 'name': 'post',
@@ -48,87 +45,76 @@ def create_topic_route(request):
             }],
             'ref': 'Qki4oWX4nTdNAjYI8z5iNawr'
         }
-
-    # Let's create the topic, but not save it until we know we
-    # have a valid post
-    topic_data = dict(**request['params']['topic'])
     topic_data = omit(topic_data, ('id', 'created', 'modified'))
     topic_data['user_id'] = current_user['id']
     topic = Topic(topic_data)
-    post_data = dict(**request['params']['post'])
-    post_data = omit(post_data, ('id', 'created', 'modified'))
+    post_data = omit(post_data, ('id', 'created', 'modified',))
     post_data['user_id'] = current_user['id']
     post_data['topic_id'] = topic['id']
     post_ = instance_post_facade(post_data)
-
-    errors, errors2 = topic.validate(), post_.validate()
-    if errors + errors2:
-        return 400, {
-            'errors': errors + errors2,
-            'ref': 'dr1vX0A7kE8RItHBGeObXWkZ'
-        }
-
-    # Validate topic entity is valid
-    if post_['kind'] == 'proposal':
-        entity, errors = create_entity(request['params'])
-        kind = get_kind(request['params'])[0]
+    post_kind = post_['kind']
+    if post_kind == 'proposal':
+        entity = instance_new_entity(request['params'])
+        entity_kind = get_kind(request['params'])[0]
         post['entity_version'] = {
             'id': entity['id'],
-            'kind': kind,
+            'kind': entity_kind,
         }
-        if errors:
-            return 400, {
-                'errors': errors,
-                'ref': 'TiIBxS9pPWOcIuFUF5IAUi9o'
-            }
 
-    post_, errors = post_.save()
-    topic, errors2 = topic.save()
-    if len(errors + errors2):
+    # ## STEP 2) Validate post and topic (and entity) instances
+    errors = topic.validate() + post_.validate()
+    if post_kind == 'proposal':
+        errors = errors + entity.validate()
+    if len(errors):
         return 400, {
-            'errors': errors + errors2,
-            'ref': 'hWZwyUUN8MuyPPMYi0iUwYxm'
+            'errors': errors,
+            'ref': 'TAY5pX3ghWBkSIVGTHzpQySa'
         }
 
+    # ## STEP 3) Save post and topic (and entity)
+    topic.save()
+    post_.save()
+    if post_kind == 'proposal':
+        entity.save()
+
+    # TODO-0 ## STEP 4) Send out any needed notifications
+
+    # ## STEP 5) Return response
     return 200, {'topic': topic.deliver(), 'post': post_.deliver()}
 
 
 @put('/s/topics/{topic_id}')
 def update_topic_route(request, topic_id):
     """
-    Update the topic. Only the name can be changed. Only by original author.
+    Update the topic.
+    - Only the name can be changed.
+    - Only by original author.
     """
 
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
-    # Must be a valid topic_id
+    # ## STEP 1) Find existing topic instance ## #
     topic = Topic.get(id=topic_id)
     if not topic:
-        return 404, {
-            'errors': [{
-                'name': 'topic_id',
-                'message': c('no_topic'),
-            }],
-            'ref': 'Uwn359F67hC66d66I8lkUwpE'
-        }
-
-    # Must be logged in as topic's author
+        return abort(404)
     if topic['user_id'] != current_user['id']:
         return abort(403)
 
-    # Request must only be for name
-    # TODO-3 should this be part of the model?
-    topic, errors = topic.update({
-        'name': request['params'].get('topic', {}).get('name')
-    })
+    # ## STEP 2) Limit the scope of changes ## #
+    topic_data = request['params']['topic']
+    topic_data = pick(topic_data, ('name',))
+
+    # ## STEP 3) Validate and save topic instance ## #
+    topic, errors = topic.update(topic_data)
     if errors:
         return 400, {
             'errors': errors,
             'ref': 'k7ItNedf0I0vXfiIUcDtvHgQ',
         }
 
+    # ## STEP 4) Return response ## #
     return 200, {'topic': topic.deliver()}
 
 
@@ -206,18 +192,27 @@ def get_posts_route(request, topic_id):
 def create_post_route(request, topic_id):
     """
     Create a new post on a given topic.
-    Accounts for posts, proposals, and votes.
-    Proposal: must include entity (card, unit, set) information.
-    Vote: must refer to a proposal.
+    Proposal: must include entity (card, unit, or set) information.
+    Vote: must refer to a valid proposal.
     """
 
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
-    # TODO-3 what checks should be moved to the model?
+    topic = Topic.get(id=topic_id)
+    if not topic:
+        return 404, {
+            'errors': [{
+                'name': 'topic_id',
+                'message': c('no_topic'),
+            }],
+            'ref': 'PCSFCxsJtnlP0x9WzbPoKcwM',
+        }
 
-    if not request['params'].get('post'):
+    # ## STEP 1) Create post (and entity) instances
+    post_data = request['params'].get('post')
+    if not post_data:
         return 400, {
             'errors': [{
                 'name': 'post',
@@ -225,65 +220,39 @@ def create_post_route(request, topic_id):
             }],
             'ref': 'ykQpZwJKq54MTCxgkx0p6baW'
         }
-
-    post_data = request['params']['post']
-    kind = post_data.get('kind')
-
-    # The topic must be valid
-    topic_id = post_data.get('topic_id')
-    topic = Topic.get(id=topic_id)
-    if not topic_id or not topic:
-        return 404, {
-            'errors': [{
-                'name': 'topic_id',
-                'message': c('no_topic'),
-            }],
-            'ref': 'uTmChkRuUng5fpf8c51iVela',
-        }
-
-    # For proposal, entity must be included and valid
-    if kind == 'proposal':
-        entity, errors = create_entity(request['params'])
-        kind = get_kind(request['params'])[0]
+    post_data = omit(post_data, ('id', 'created', 'modified',))
+    post_data['user_id'] = current_user['id']
+    post_data['topic_id'] = topic_id
+    post_ = instance_post_facade(post_data)
+    post_kind = post_['kind']
+    if post_kind == 'proposal':
+        entity = instance_new_entity(request['params'])
+        entity_kind = get_kind(request['params'])[0]
         post['entity_version'] = {
             'id': entity['id'],
-            'kind': kind,
+            'kind': entity_kind,
         }
-        if errors:
-            return 400, {
-                'errors': errors,
-                'ref': 'mlTfMLy4PTdLedrWFRzrDEax'
-            }
 
-    # Try to save the post (and others)
-    post_data = dict(**post_data)
-    post_data['user_id'] = current_user['id']
-    post_data['topic_id'] = topic['id']
-    post_ = instance_post_facade(post_data)
-
+    # ## STEP 2) Validate post (and entity) instances
     errors = post_.validate()
+    if post_kind == 'proposal':
+        errors = errors + entity.validate()
     if len(errors):
         return 400, {
             'errors': errors,
             'ref': 'tux33ztgFj9ittSpS7WKIkq7'
         }
 
-    # If a proposal has sufficient votes, move it to accepted
-    # ... and close out any prior versions dependent
-    # TODO-0 only allow one vote per proposal per user
-    # TODO-0 don't allow votes on closed proposals
-    if kind == 'vote':
-        proposal_id = post_['replies_to_id']
-        proposal = Post.get(id=proposal_id)
-        entity = get_version(proposal['entity_version']['kind'],
-                             proposal['entity_version']['id'])
-        entity['status'] = 'accepted'
-        # TODO-2 actually count the votes first
-        # TODO-1 block if negative response
+    # ## STEP 3) Save post (and entity)
+    post_.save()
+    if post_kind == 'proposal':
         entity.save()
 
-    post_.save()
+    # TODO-0 ## STEP 4) Make updates based on proposal / vote status
 
+    # TODO-0 ## STEP 5) Send out any needed notifications
+
+    # ## STEP 6) Return response
     return 200, {'post': post_.deliver()}
 
 
@@ -292,46 +261,43 @@ def update_post_route(request, topic_id, post_id):
     """
     Update an existing post. Must be one's own post.
 
+    For post:
+    - Only the body field may be changed.
+
     For proposals:
-    The only field that can be updated is the status;
-    the status can only be changed to declined, and only when
-    the current status is pending or blocked.
+    - Only the name, body, and status fields can be changed.
+    - The status can only be changed to declined, and only when
+      the current status is pending or blocked.
 
     For votes:
-    The only fields that can be updated are body and response.
+    - The only fields that can be updated are body and response.
     """
 
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
+    # ## STEP 1) Find existing post instance ## #
     post_ = get_post_facade(post_id)
-    kind = post_['kind']
-
-    post_data = dict(**request['params']['post'])
-    post_data = omit(post_data, ('id', 'user_id', 'topic_id', 'kind'))
-
-    # Must be user's own post
-    # TODO-3 Should some of these checks be part of the model?
+    if not post_:
+        return abort(404)
     if post_['user_id'] != current_user['id']:
         return abort(403)
+    kind = post_['kind']
 
-    # If proposal, make sure its allowed changes
-    if post_['kind'] == 'proposal':
-        if post_data['status'] == 'declined':
-            post_data = {
-                'status': 'declined'
-            }
-        else:
-            post_data = {}
+    # ## STEP 2) Limit the scope of changes ## #
+    post_data = request['params']['post']
+    if kind is 'post':
+        post_data = pick(post_data, ('body',))
+    elif kind is 'proposal':
+        post_data = pick(post_data, ('name', 'body', 'status',))
+        if (post_data.get('status') != 'declined' or
+                post_data.get('status') not in ('pending', 'blocked',)):
+            del post_data['status']
+    elif kind is 'vote':
+        post_data = pick(post_data, ('body', 'response',))
 
-    # If vote, make sure its allowed changes
-    if post_['kind'] == 'vote':
-        post_data = {
-            'body': post_data['body'],
-            'response': post_data['response'],
-        }
-
+    # ## STEP 3) Validate and save post instance ## #
     post_, errors = post_.update(post_data)
     if errors:
         return 400, {
@@ -339,16 +305,9 @@ def update_post_route(request, topic_id, post_id):
             'ref': 'E4LFwRv2WEJZks7use7TCpww'
         }
 
-    # If a proposal has sufficient votes, move it to accepted
-    # ... and close out any prior versions dependent
-    if kind == 'vote':
-        proposal_id = post_['replies_to_id']
-        proposal = Post.get(id=proposal_id)
-        entity = get_version(proposal['entity_version']['kind'],
-                             proposal['entity_version']['id'])
-        entity['status'] = 'accepted'
-        # TODO-2 actually count the votes first
-        # TODO-1 block if negative response
-        entity.save()
+    # TODO-0 ## STEP 4) Make updates based on proposal / vote status ## #
 
+    # TODO-0 ## STEP 5) Send out any needed notifications ## #
+
+    # ## STEP 6) Return response ## #
     return 200, {'post': post_.deliver()}

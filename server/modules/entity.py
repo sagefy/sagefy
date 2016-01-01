@@ -18,6 +18,8 @@ from models.cards.upload_card import UploadCard
 from models.cards.video_card import VideoCard
 from models.cards.writing_card import WritingCard
 
+from modules.util import omit
+
 
 def get_latest_accepted(kind, entity_id):
     """
@@ -92,6 +94,21 @@ def instance(data):
         return Unit(data['unit'])
     elif 'set' in data:
         return Set(data['set'])
+
+
+def instance_new_entity(data):
+    """
+    Save as above, but a little safer.
+    """
+
+    fields = ('id', 'created', 'modified',
+              'entity_id', 'previous_id', 'status', 'available')
+    if 'card' in data:
+        return Card(omit(data['card'], fields))
+    elif 'unit' in data:
+        return Unit(omit(data['unit'], fields))
+    elif 'set' in data:
+        return Set(omit(data['set'], fields))
 
 
 def get_card_by_kind(card_id):
