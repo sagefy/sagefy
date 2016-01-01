@@ -28,13 +28,12 @@ ajax = ({method, url, data, done, fail, always}) ->
     request.onload = ->
         if 400 > @status >= 200
             done(parseJSON(@responseText), this)
-            always?()
         else
             fail(parseAjaxErrors(this), this)
-            always?()
+        if always then always()
     request.onerror = ->
         fail(null, this)
-        always?()
+        if always then always()
     if method is 'GET'
         request.send()
     else

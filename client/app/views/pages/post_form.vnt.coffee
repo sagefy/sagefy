@@ -12,8 +12,12 @@ module.exports = broker.add({
         # unless errors?.length, (...tab)
         values = parseFormValues(values)
         if values.post?.kind is 'proposal'
-            values[values.post.entity_version.kind] = values.entity
-            delete values.entity
+            if values.entity?.require_ids
+                values.entity.require_ids = values.entity.require_ids
+                    .map((r) -> r.id)
+            if values.post?.entity_version?.kind
+                values[values.post.entity_version.kind] = values.entity
+                delete values.entity
         tasks.createPost(values)
 
     'submit #post-form.update form': (e, el) ->

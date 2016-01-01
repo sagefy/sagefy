@@ -145,19 +145,27 @@ getFormValues = (form) ->
 # Given a forms values as an object, parse any fields with `.`
 # in them to create a save-able object for the service
 parseFormValues = (data) ->
-    for key, value of data
-        if key.indexOf('.') > -1
-            prev = data
-            names = key.split('.')
-            for n, i in names
-                if i is names.length - 1
-                    prev[n] = value
-                else
-                    prev[n] ?= {}
-                    prev = prev[n]
-            delete data[key]
+    output = {}
 
-    return data
+    for key, value of data
+        if key.indexOf('.') is -1
+            output[key] = value
+        else
+            prev = output
+            names = key.split('.').map((n) ->
+                if (/^\d+$/).test(n) then parseInt(n) else n)
+            for name, i in names
+                if i is names.length - 1
+                    prev[name] = value
+                else
+                    next = names[i + 1]
+                    if typeof next is 'string'
+                        prev[name] ?= {}
+                    else if typeof next is 'number'
+                        prev[name] ?= []
+                    prev = prev[name]
+
+    return output
 
 # Validate the entry with the given ID against the schema.
 # Returns a list of errors.

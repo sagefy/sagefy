@@ -2,7 +2,7 @@ import rethinkdb as r
 import framework.database as database
 from modules.model import Model
 from modules.validations import is_required, is_language, is_boolean, \
-    is_list, is_string, is_list_of_strings, is_one_of
+    is_list, is_string, is_list_of_strings, is_one_of, has_min_length
 from modules.util import uniqid
 from framework.elasticsearch import es
 from modules.util import json_prep
@@ -30,7 +30,7 @@ class EntityMixin(object):
             'default': 'en'
         },
         'name': {
-            'validate': (is_required, is_string,)
+            'validate': (is_required, is_string, (has_min_length, 1),)
         },
         'status': {
             'validate': (is_required, (

@@ -19,7 +19,7 @@ module.exports = store.add({
                 @data.errors = errors
                 recorder.emit('error on create topic', errors)
             always: =>
-                @sending = false
+                @data.sending = false
                 @change()
         })
 

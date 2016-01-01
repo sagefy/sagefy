@@ -123,8 +123,8 @@ def create_topic_route(request):
     post_kind = post_['kind']
     if post_kind == 'proposal':
         entity = instance_new_entity(request['params'])
-        entity_kind = get_kind(request['params'])[0]
-        post['entity_version'] = {
+        entity_kind = get_kind(request['params'])
+        post_['entity_version'] = {
             'id': entity['id'],
             'kind': entity_kind,
         }
@@ -306,8 +306,8 @@ def create_post_route(request, topic_id):
     post_kind = post_['kind']
     if post_kind == 'proposal':
         entity = instance_new_entity(request['params'])
-        entity_kind = get_kind(request['params'])[0]
-        post['entity_version'] = {
+        entity_kind = get_kind(request['params'])
+        post_['entity_version'] = {
             'id': entity['id'],
             'kind': entity_kind,
         }

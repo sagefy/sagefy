@@ -1,6 +1,7 @@
 from modules.model import Model
 from models.mixins.entity import EntityMixin
-from modules.validations import is_required, is_string, is_list
+from modules.validations import is_required, is_string, is_list, \
+    has_min_length
 from models.unit_parameters import UnitParameters
 
 
@@ -21,7 +22,7 @@ class Unit(EntityMixin, Model):
 
     schema = dict(EntityMixin.schema.copy(), **{
         'body': {
-            'validate': (is_required, is_string,)
+            'validate': (is_required, is_string, (has_min_length, 1),)
         },
         'require_ids': {
             'validate': (is_list,),  # TODO-1 is valid id?

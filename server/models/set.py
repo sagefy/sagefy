@@ -21,7 +21,7 @@ class Set(EntityMixin, Model):
 
     schema = dict(EntityMixin.schema.copy(), **{
         'body': {
-            'validate': (is_required, is_string,)
+            'validate': (is_required, is_string, (has_min_length, 1),)
         },
         'members': {
             'validate': (is_required, is_list, (has_min_length, 1)),

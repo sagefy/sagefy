@@ -3,7 +3,7 @@ timeAgo = require('../../modules/auxiliaries').timeAgo
 
 
 renderProposal = (data) ->
-    return unless data.kind is proposal
+    return unless data.kind is 'proposal'
 
     return div(
         {className: 'post--proposal'}
