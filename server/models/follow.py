@@ -48,3 +48,11 @@ class Follow(Model):
                     .limit(limit))
         fields_list = query.run(database.db_conn)
         return [cls(fields) for fields in fields_list]
+
+    @classmethod
+    def get_user_ids_by_entity(cls, entity_id, entity_kind):
+        query = (cls.table
+                    .filter(r.row['entity']['id'] == entity_id)
+                    .filter(r.row['entity']['kind'] == entity_kind))
+        fields_list = query.run(database.db_conn)
+        return [fields['user_id'] for fields in fields_list]

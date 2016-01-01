@@ -13,6 +13,7 @@ from modules.entity import get_kind, get_latest_accepted, get_version, \
 from models.topic import Topic
 from models.user import User
 from modules.content import get as c
+from modules.notices import send_notices
 
 
 @post('/s/topics')
@@ -77,7 +78,18 @@ def create_topic_route(request):
     if post_kind == 'proposal':
         entity.save()
 
-    # TODO-0 ## STEP 4) Send out any needed notifications
+    # ## STEP 4) Send out any needed notifications
+    send_notices(
+        entity_id=topic['entity']['id'],
+        entity_kind=topic['entity']['kind'],
+        notice_kind='create_topic',
+        notice_data={
+            'user_name': current_user['name'],
+            'topic_name': topic['name'],
+            'entity_kind': topic['entity']['kind'],
+            'entity_name': topic['entity']['id'],
+        }
+    )
 
     # ## STEP 5) Return response
     return 200, {'topic': topic.deliver(), 'post': post_.deliver()}
@@ -250,7 +262,7 @@ def create_post_route(request, topic_id):
 
     # TODO-0 ## STEP 4) Make updates based on proposal / vote status
 
-    # TODO-0 ## STEP 5) Send out any needed notifications
+    # TODO-1 ## STEP 5) Send out any needed notifications
 
     # ## STEP 6) Return response
     return 200, {'post': post_.deliver()}
@@ -307,7 +319,7 @@ def update_post_route(request, topic_id, post_id):
 
     # TODO-0 ## STEP 4) Make updates based on proposal / vote status ## #
 
-    # TODO-0 ## STEP 5) Send out any needed notifications ## #
+    # TODO-1 ## STEP 5) Send out any needed notifications ## #
 
     # ## STEP 6) Return response ## #
     return 200, {'post': post_.deliver()}

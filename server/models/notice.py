@@ -9,11 +9,23 @@ from modules.content import get as c
 # ------------
 # Entity: A new topic
 # Entity: A new proposal (pending)
-# Entity/Own: A proposal was blocked
-# Entity/Own: A proposal was declined
-# Entity/Own: A proposal was accepted
+# Entity: A proposal was blocked
+# Entity: A proposal was declined
+# Entity: A proposal was accepted
 # Topic: A new post
 # All: Reminder to come back after 48 hours of inactivity
+
+"""
+Required data fields per kind:
+
+create_topic: user_name, topic_name, entity_kind, entity_name
+create_proposal: user_name, proposal_name, entity_kind, entity_name
+block_proposal: user_name, proposal_name, entity_kind, entity_name
+decline_proposal: user_name, proposal_name, entity_kind, entity_name
+accept_proposal: proposal_name, entity_kind, entity_name
+create_post: user_name, topic_name, entity_kind, entity_name
+come_back: -
+"""
 
 
 class Notice(Model):
