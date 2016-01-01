@@ -69,7 +69,7 @@ module.exports = (data) ->
                         row
                         lock: data.lock
                     })
-                ) for col, index in columns
+                ) for col in columns
                 # TODO-2 move row td(
                 #     a(
                 #         {title: 'Reorder', href: '#', className: 'move-row'}
@@ -82,6 +82,6 @@ module.exports = (data) ->
                         i({className: 'fa fa-times-circle'})
                     )
                 )
-            ) for row in values
+            ) for row, index in values
         )
     )
