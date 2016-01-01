@@ -11,7 +11,7 @@ listOfObjectsToString = (list) ->
 renderProposal = (data) ->
     return unless data.kind is 'proposal'
     evKind = data.entity_version.kind
-    ev = data.ev
+    ev = data.ev or {}
     return div(
         {className: 'post--proposal'}
         # TODO-2 this is super ugly
@@ -38,6 +38,7 @@ renderProposal = (data) ->
     )
 
 renderCardProposal = (data) ->
+    ev = data.ev or {}
     return ul(
         li('Card Kind: ' + ev.kind)
         li('Video Site: ' + ev.site) if ev.kind is 'video'
