@@ -33,6 +33,7 @@ module.exports = (data) ->
         'post.kind': post?.kind
         'post.body': post?.body
         'post.response': if post then '' + post.response
+        'post.name': post?.name
     })
 
     fields = getFields(formData)

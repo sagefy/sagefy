@@ -20,6 +20,12 @@ from modules.content import get as c
 from modules.notices import send_notices
 
 
+def prefix_error_names(prefix, errors):
+    for error in errors:
+        error['name'] = prefix + error['name']
+    return errors
+
+
 def update_entity_status(proposal):
     """
     Update the entity's status based on the vote power received.
@@ -56,13 +62,13 @@ def update_entity_status(proposal):
         entity_version['status'] = 'blocked'
         entity_version.save()
         send_notices(
-            entity_id=proposal['entity']['id'],
-            entity_kind=proposal['entity']['kind'],
+            entity_id=proposal['entity_version']['id'],
+            entity_kind=proposal['entity_version']['kind'],
             notice_kind='block_proposal',
             notice_data={
                 'user_name': '???',  # TODO-2
                 'proposal_name': proposal['name'],
-                'entity_kind': proposal['entity']['kind'],
+                'entity_kind': proposal['entity_version']['kind'],
                 'entity_name': entity_version['name'],
             }
         )
@@ -72,12 +78,12 @@ def update_entity_status(proposal):
         entity_version['status'] = 'accepted'
         entity_version.save()
         send_notices(
-            entity_id=proposal['entity']['id'],
-            entity_kind=proposal['entity']['kind'],
+            entity_id=proposal['entity_version']['id'],
+            entity_kind=proposal['entity_version']['kind'],
             notice_kind='accept_proposal',
             notice_data={
                 'proposal_name': proposal['name'],
-                'entity_kind': proposal['entity']['kind'],
+                'entity_kind': proposal['entity_version']['kind'],
                 'entity_name': entity_version['name'],
             }
         )
@@ -130,9 +136,10 @@ def create_topic_route(request):
         }
 
     # ## STEP 2) Validate post and topic (and entity) instances
-    errors = topic.validate() + post_.validate()
+    errors = prefix_error_names('topic.', topic.validate())
+    errors = errors + prefix_error_names('post.', post_.validate())
     if post_kind == 'proposal':
-        errors = errors + entity.validate()
+        errors = errors + prefix_error_names('entity.', entity.validate())
     if len(errors):
         return 400, {
             'errors': errors,
@@ -188,6 +195,7 @@ def update_topic_route(request, topic_id):
     # ## STEP 3) Validate and save topic instance ## #
     topic, errors = topic.update(topic_data)
     if errors:
+        errors = prefix_error_names('topic.', errors)
         return 400, {
             'errors': errors,
             'ref': 'k7ItNedf0I0vXfiIUcDtvHgQ',
@@ -313,9 +321,9 @@ def create_post_route(request, topic_id):
         }
 
     # ## STEP 2) Validate post (and entity) instances
-    errors = post_.validate()
+    errors = prefix_error_names('post.', post_.validate())
     if post_kind == 'proposal':
-        errors = errors + entity.validate()
+        errors = errors + prefix_error_names('entity.', entity.validate())
     if len(errors):
         return 400, {
             'errors': errors,
@@ -382,6 +390,7 @@ def update_post_route(request, topic_id, post_id):
     # ## STEP 3) Validate and save post instance ## #
     post_, errors = post_.update(post_data)
     if errors:
+        errors = prefix_error_names('post.', errors)
         return 400, {
             'errors': errors,
             'ref': 'E4LFwRv2WEJZks7use7TCpww'
