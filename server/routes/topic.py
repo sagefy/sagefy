@@ -2,7 +2,9 @@
 Routes for the discussion platform.
 Includes topics, posts, proposals, and votes.
 """
+
 # TODO-3 what checks should be moved to models?
+
 from framework.routes import get, post, put, abort
 from framework.session import get_current_user
 from modules.discuss import instance_post_facade, \
@@ -12,8 +14,73 @@ from modules.entity import get_kind, get_latest_accepted, get_version, \
     instance_new_entity
 from models.topic import Topic
 from models.user import User
+from models.proposal import Proposal
+from models.vote import Vote
 from modules.content import get as c
 from modules.notices import send_notices
+
+
+def update_entity_status(proposal):
+    """
+    Update the entity's status based on the vote power received.
+    Move to accepted or blocked if qualified.
+    TODO-2 Update this to work as described in:
+        https://github.com/heiskr/sagefy/wiki/Planning%3A-Contributor-Ratings
+        This requires knowing two things:
+        - Number of learners the entity impacts
+        - The vote and proposal history of the contributor
+    """
+
+    # Get the entity version
+    entity_version = get_version(proposal['entity_version']['kind'],
+                                 proposal['entity_version']['id'])
+
+    # Make sure the entity version status is not declined or accepted
+    if entity_version['status'] in ('accepted', 'declined'):
+        return
+
+    # Count the "no" and "yes" vote power
+    no_vote_power = 0
+    yes_vote_power = 1
+    # For now, we will assume the proposer is one "yes" vote until
+    # contributor vote power is calculated
+    votes = Vote.list(replies_to_id=proposal['id'])
+    for vote in votes:
+        if vote['response']:
+            yes_vote_power = yes_vote_power + 1
+        else:
+            no_vote_power = no_vote_power + 1
+
+    # If no power is great enough, then block the version
+    if no_vote_power >= 1:
+        entity_version['status'] = 'blocked'
+        entity_version.save()
+        send_notices(
+            entity_id=proposal['entity']['id'],
+            entity_kind=proposal['entity']['kind'],
+            notice_kind='block_proposal',
+            notice_data={
+                'user_name': '???',  # TODO-2
+                'proposal_name': proposal['name'],
+                'entity_kind': proposal['entity']['kind'],
+                'entity_name': entity_version['name'],
+            }
+        )
+
+    # If yes power is great enough, then accept the version
+    if yes_vote_power >= 3:
+        entity_version['status'] = 'accepted'
+        entity_version.save()
+        send_notices(
+            entity_id=proposal['entity']['id'],
+            entity_kind=proposal['entity']['kind'],
+            notice_kind='accept_proposal',
+            notice_data={
+                'proposal_name': proposal['name'],
+                'entity_kind': proposal['entity']['kind'],
+                'entity_name': entity_version['name'],
+            }
+        )
 
 
 @post('/s/topics')
@@ -260,11 +327,14 @@ def create_post_route(request, topic_id):
     if post_kind == 'proposal':
         entity.save()
 
-    # TODO-0 ## STEP 4) Make updates based on proposal / vote status
+    # ## STEP 4) Make updates based on proposal / vote status
+    if post_kind == 'proposal':
+        update_entity_status(post_)
+    if post_kind == 'vote':
+        proposal = Proposal.get(id=post_['replies_to_id'])
+        update_entity_status(proposal)
 
-    # TODO-1 ## STEP 5) Send out any needed notifications
-
-    # ## STEP 6) Return response
+    # ## STEP 5) Return response
     return 200, {'post': post_.deliver()}
 
 
@@ -295,18 +365,18 @@ def update_post_route(request, topic_id, post_id):
         return abort(404)
     if post_['user_id'] != current_user['id']:
         return abort(403)
-    kind = post_['kind']
+    post_kind = post_['kind']
 
     # ## STEP 2) Limit the scope of changes ## #
     post_data = request['params']['post']
-    if kind is 'post':
+    if post_kind is 'post':
         post_data = pick(post_data, ('body',))
-    elif kind is 'proposal':
+    elif post_kind is 'proposal':
         post_data = pick(post_data, ('name', 'body', 'status',))
         if (post_data.get('status') != 'declined' or
                 post_data.get('status') not in ('pending', 'blocked',)):
             del post_data['status']
-    elif kind is 'vote':
+    elif post_kind is 'vote':
         post_data = pick(post_data, ('body', 'response',))
 
     # ## STEP 3) Validate and save post instance ## #
@@ -317,9 +387,12 @@ def update_post_route(request, topic_id, post_id):
             'ref': 'E4LFwRv2WEJZks7use7TCpww'
         }
 
-    # TODO-0 ## STEP 4) Make updates based on proposal / vote status ## #
+    # ## STEP 4) Make updates based on proposal / vote status ## #
+    if post_kind == 'proposal':
+        update_entity_status(post_)
+    if post_kind == 'vote':
+        proposal = Proposal.get(id=post_['replies_to_id'])
+        update_entity_status(proposal)
 
-    # TODO-1 ## STEP 5) Send out any needed notifications ## #
-
-    # ## STEP 6) Return response ## #
+    # ## STEP 5) Return response ## #
     return 200, {'post': post_.deliver()}

@@ -5,15 +5,14 @@ import rethinkdb as r
 import framework.database as database
 from modules.content import get as c
 
-# Notice types:
-# ------------
-# Entity: A new topic
-# Entity: A new proposal (pending)
-# Entity: A proposal was blocked
-# Entity: A proposal was declined
-# Entity: A proposal was accepted
-# Topic: A new post
-# All: Reminder to come back after 48 hours of inactivity
+# done-- implement create_topic notice
+# TODO-1 implement create_proposal notice
+# done-- implement block_proposal notice
+# TODO-1 implement decline_proposal notice
+# done-- implement accept_proposal notice
+# TODO-2 implement create_post notice
+# TODO-2 implement come_back notice
+
 
 """
 Required data fields per kind:
