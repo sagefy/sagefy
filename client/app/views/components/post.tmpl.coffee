@@ -2,25 +2,32 @@
 timeAgo = require('../../modules/auxiliaries').timeAgo
 
 
-# TODO-0 proposal fields
-# Entity Kind (all)
-# Entity ID (all, not on create entity)
-# Entity Name (all)
-# Entity Language (en only option)
-# Entity Body (unit or set)
-# Unit Belongs To (card only, should be provided by qs)
-# Tags (all)
-# Requires (card or unit)
-# Members [id, kind] (set)
-# Card Kind (card)
-# Video Site (video card)
-# Video ID (video card)
-# Choice Question [Body] (choice card)
-# Choice Options [value, correct, feedback] (choice card)
-# Choice Feedback (choice card)
-# Choice Order (choice card)
-# Choice Max Options to Show (choice card)
-# TODO-2 diff from previous version
+renderProposal = (data) ->
+    return unless data.kind is proposal
+
+    return div(
+        {className: 'post--proposal'}
+    )
+
+    # TODO-0 proposal fields
+    # Entity Kind (all)
+    # Entity ID (all, not on create entity)
+    # Entity Name (all)
+    # Entity Language (en only option)
+    # Entity Body (unit or set)
+    # Unit Belongs To (card only)
+    # Tags (all)
+    # Requires (card or unit)
+    # Members [id, kind] (set)
+    # Card Kind (card)
+    # Video Site (video card)
+    # Video ID (video card)
+    # Choice Question [Body] (choice card)
+    # Choice Options [value, correct, feedback] (choice card)
+    # Choice Feedback (choice card)
+    # Choice Order (choice card)
+    # Choice Max Options to Show (choice card)
+    # TODO-2 diff from previous version
 
 voteResponse = (response) ->
     return unless response?
@@ -81,6 +88,7 @@ module.exports = (data, currentUserID) ->
 
                 data.body
             )
+            renderProposal(data) if data.kind is 'proposal'
             div(
                 {className: 'post__footer'}
                 a(

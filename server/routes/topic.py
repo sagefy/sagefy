@@ -271,6 +271,7 @@ def create_post_route(request, topic_id):
     # If a proposal has sufficient votes, move it to accepted
     # ... and close out any prior versions dependent
     # TODO-0 only allow one vote per proposal per user
+    # TODO-0 don't allow votes on closed proposals
     if kind == 'vote':
         proposal_id = post_['replies_to_id']
         proposal = Post.get(id=proposal_id)

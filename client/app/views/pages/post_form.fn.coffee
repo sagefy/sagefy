@@ -1,5 +1,5 @@
 # TODO-2 add `available` field
-# TODO-2 how to decline proposal?
+# TODO-2 on update: how to decline a proposal?
 # TODO-3 Tags (all)
 
 {extend} = require('../../modules/utilities')
