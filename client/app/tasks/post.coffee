@@ -21,6 +21,8 @@ module.exports = store.add({
                     user = response.users[post.user_id]
                     post.user_name = user.name
                     post.user_avatar = user.avatar
+                    if ev = response.entity_versions[post.id]
+                        post.ev = ev
 
                 @data.topicPosts[id] ?= []
                 @data.topicPosts[id] = mergeArraysByKey(

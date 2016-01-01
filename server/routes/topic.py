@@ -240,16 +240,20 @@ def get_posts_route(request, topic_id):
     # ...then pull up the previous version
     # ...make a diff between the previous and the proposal entity version
     diffs = {}
+    entity_versions = {}
     for post_ in posts:
-        if post_['type'] == 'proposal':
-            kind = post_['entity_version']['kind']
-            entity_version = get_version(kind,
-                                         post_['entity_version']['id'])
-            previous_version = get_version(kind,
-                                           entity_version['previous_id'])
-            diff = object_diff(previous_version.deliver(),
-                               entity_version.deliver())
-            diffs[post_['id']] = diff
+        if post_['kind'] == 'proposal':
+            entity_version = entity_versions[post_['id']] = get_version(
+                post_['entity_version']['kind'],
+                post_['entity_version']['id']
+            )
+            previous_version = get_version(
+                post_['entity_version']['kind'],
+                entity_version['previous_id']
+            )
+            if previous_version:
+                diffs[post_['id']] = object_diff(previous_version.deliver(),
+                                                 entity_version.deliver())
 
     # TODO-2 SPLITUP create new endpoint for this instead
     users = {}
@@ -267,6 +271,10 @@ def get_posts_route(request, topic_id):
     output = {
         'topic': topic.deliver(),
         'posts': [p.deliver() for p in posts],
+        'entity_versions': {
+            p: ev.deliver()
+            for p, ev in entity_versions.items()
+        },
         'diffs': diffs,
         'users': users,
     }

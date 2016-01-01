@@ -1,32 +1,57 @@
-{li, div, img, p, a, i, span} = require('../../modules/tags')
-timeAgo = require('../../modules/auxiliaries').timeAgo
+{li, div, img, p, a, i, span, ul, li, h3} = require('../../modules/tags')
+{timeAgo, ucfirst} = require('../../modules/auxiliaries')
 
+listOfObjectsToString = (list) ->
+    return list.map((member) ->
+        Object.keys(member).map((key) ->
+            "#{key}: #{member[key]}"
+        ).join(', ')
+    ).join('; ')
 
 renderProposal = (data) ->
     return unless data.kind is 'proposal'
-
+    evKind = data.entity_version.kind
+    ev = data.ev
     return div(
         {className: 'post--proposal'}
+        # TODO-2 this is super ugly
+        ul(
+            li(
+                'Status: '
+                span(
+                    {className: "proposal__status--#{ev.status}"}
+                    ucfirst(ev.status)
+                )
+            )
+            li('Kind: ' + ucfirst(evKind))
+            li('Name: ' + ev.name)
+            li('Language: ' + ev.language)
+            li('Body: ' + ev.body) if evKind in ['unit', 'set']
+            li('Unit ID: ' + ev.unit_id) if evKind is 'card'
+            li('Require IDs: ' + ev.require_ids) if evKind in ['card', 'unit']
+            li(
+                'Members: ' + listOfObjectsToString(ev.members)
+            ) if evKind is 'set'
+            # TODO-3 Tags (all)
+        )
+        renderCardProposal(data) if evKind is 'card'
     )
 
-    # TODO-0 proposal fields
-    # Entity Kind (all)
-    # Entity ID (all, not on create entity)
-    # Entity Name (all)
-    # Entity Language (en only option)
-    # Entity Body (unit or set)
-    # Unit Belongs To (card only)
-    # Tags (all)
-    # Requires (card or unit)
-    # Members [id, kind] (set)
-    # Card Kind (card)
-    # Video Site (video card)
-    # Video ID (video card)
-    # Choice Question [Body] (choice card)
-    # Choice Options [value, correct, feedback] (choice card)
-    # Choice Feedback (choice card)
-    # Choice Order (choice card)
-    # Choice Max Options to Show (choice card)
+renderCardProposal = (data) ->
+    return ul(
+        li('Card Kind: ' + ev.kind)
+        li('Video Site: ' + ev.site) if ev.kind is 'video'
+        li('Video ID: ' + ev.video_id) if ev.kind is 'video'
+        li('Question: ' + ev.body) if ev.kind is 'choice'
+        li(
+            'Options: ' + listOfObjectsToString(ev.options)
+        ) if ev.kind is 'choice'
+        li('Order: ' + ev.order) if ev.kind is 'choice'
+        li(
+            'Max Options to Show: ' + ev.max_options_to_show
+        ) if ev.kind is 'choice'
+    )
+
     # TODO-2 diff from previous version
 
 voteResponse = (response) ->
@@ -83,6 +108,8 @@ module.exports = (data, currentUserID) ->
                     ' In Reply'
                 ) if data.replies_to_id
                 ' ' if data.replies_to_id
+
+                h3('Proposal: ' + data.name) if data.kind is 'proposal'
 
                 voteResponse(data.response)
 
