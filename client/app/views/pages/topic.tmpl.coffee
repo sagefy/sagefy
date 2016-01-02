@@ -4,6 +4,8 @@ post = require('../components/post.tmpl')
 followButton = require('../components/follow_button.tmpl')
 {ucfirst} = require('../../modules/auxiliaries')
 
+# TODO-2 User doesn't show right after creating a new post in the topic view
+
 module.exports = (data) ->
     id = data.routeArgs[0]
     posts = data.topicPosts?[id]
@@ -19,6 +21,7 @@ module.exports = (data) ->
             hgroup(
                 entity(topic, data)
                 h1(topic.name)
+                # TODO-0 add a link if user to edit the topic name
             )
         )
 

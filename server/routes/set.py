@@ -66,6 +66,13 @@ def get_set_tree_route(request, set_id):
     TODO-2 merge with get_set_units_route
     TODO-2 simplify this method
     TODO-0 contributor/public view as well
+    TODO-1 When engage basic math as doris, it doesn't find a card
+        error on get set tree Traceback (most recent call last):
+          File "/var/www/server/framework/index.py", line 71, in call_handler
+            return handler(request=construct_request(environ), **parameters)
+          File "/var/www/server/routes/set.py", line 94, in get_set_tree_route
+            .format(card_id=card['entity_id']),
+        TypeError: 'NoneType' object is not subscriptable
     """
 
     set_ = Set.get(entity_id=set_id)

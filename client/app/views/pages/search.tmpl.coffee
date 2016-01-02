@@ -4,6 +4,7 @@ c = require('../../modules/content').get
 {truncate, timeAgo, ucfirst} = require('../../modules/auxiliaries')
 
 # TODO-0 populate using location query parameters
+# TODO-0 "result._source.topic is undefined" when searching for "doris"
 
 module.exports = (data) ->
     loading = data.searchQuery and not data.searchResults

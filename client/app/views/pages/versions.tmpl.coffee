@@ -9,6 +9,9 @@ labelClasses = {
     accepted: 'label--good'
 }
 
+# TODO-2 Version history and proposal view should have the same layout,
+#        and be similar to the page
+
 module.exports = (data) ->
     [kind, id] = data.routeArgs
 

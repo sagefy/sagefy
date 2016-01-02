@@ -3,6 +3,11 @@ On each request, we create and close a new connection.
 Rethink was designed to work this way, no reason to be alarmed.
 """
 
+# TODO-1 Random connection errors:
+# Exception: rethinkdb.errors.ReqlDriverError:
+# Error sending to localhost:28015 - 'NoneType' object has no attribute 'send'
+
+
 import rethinkdb as r
 
 config = {

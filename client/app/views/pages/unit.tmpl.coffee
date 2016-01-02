@@ -7,6 +7,8 @@ entityTopics = require('../components/entity_topics.tmpl')
 entityVersions = require('../components/entity_versions.tmpl')
 entityRelationships = require('../components/entity_relationships.tmpl')
 
+# TODO-2 This page should show a list of cards that the unit contains
+
 module.exports = (data) ->
     id = data.routeArgs[0]
     unit = data.units?[id]

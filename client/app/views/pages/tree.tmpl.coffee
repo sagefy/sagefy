@@ -11,6 +11,7 @@
 {matchesRoute} = require('../../modules/auxiliaries')
 
 
+# TODO-0 Unable to view set tree when not in learning process
 # TODO-2 show the learner their overall set progress as a percent or bar
 
 radius = 9

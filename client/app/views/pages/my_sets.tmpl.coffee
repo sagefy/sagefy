@@ -29,7 +29,7 @@ module.exports = (data) ->
         h1('My Sets')
         ul(userSet(set) for set in data.userSets)
         p(
-            a({href: '/search?find_set'}, 'Find a set')
+            a({href: '/search?mode=as_learner'}, 'Find a set')
             ' to get started.'
         ) if data.userSets.length is 0
     )
