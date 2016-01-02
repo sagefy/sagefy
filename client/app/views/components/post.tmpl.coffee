@@ -1,7 +1,7 @@
 {li, div, img, p, a, i, span, ul, li, h3} = require('../../modules/tags')
 {timeAgo, ucfirst} = require('../../modules/auxiliaries')
 
-listOfObjectsToString = (list) ->
+listOfObjectsToString = (list = []) ->
     return list.map((member) ->
         Object.keys(member).map((key) ->
             "#{key}: #{member[key]}"

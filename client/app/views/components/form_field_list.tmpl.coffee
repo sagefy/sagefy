@@ -31,17 +31,21 @@ module.exports = (data) ->
     data.name
     ###
 
-    values = if data.values and data.values.length
-        data.values
+    value = if data.value and data.value.length
+        data.value
     else
         [{}]
 
     columns = data.columns or []
 
     return table(
+        {attributes: {'data-name': data.name}}
         thead(
             tr(
-                th(ucfirst(col.name)) for col in columns
+                th(
+                    {attributes: {'data-col': col.name}}
+                    ucfirst(col.name)
+                ) for col in columns
                 # TODO-2 th()  # For reordering
                 th()  # For deleting
             )
@@ -78,10 +82,17 @@ module.exports = (data) ->
                 # )
                 td(
                     a(
-                        {title: 'Remove', href: '#', className: 'remove-row'}
+                        {
+                            title: 'Remove'
+                            href: '#'
+                            className: 'remove-row'
+                            attributes: {
+                                'data-index': index
+                            }
+                        }
                         i({className: 'fa fa-times-circle'})
                     )
                 )
-            ) for row, index in values
+            ) for row, index in value
         )
     )

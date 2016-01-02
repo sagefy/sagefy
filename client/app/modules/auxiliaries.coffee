@@ -206,8 +206,18 @@ createFieldsData = ({
         field.error = error.message if field
 
     for name, value of formData
-        field = fields.filter((f) -> f.name is name)?[0]
-        field.value = value if field
+        # All of this for the list input type
+        if matches = name.match(/^(.*)\.(\d+)\.(.*)$/)
+            [full, pre, index, col] = matches
+            field = fields.filter((f) -> f.name is pre)?[0]
+            if field
+                field.value ?= []
+                field.value[index] ?= {}
+                field.value[index][col] = value
+        # For every other kind of field...
+        else
+            field = fields.filter((f) -> f.name is name)?[0]
+            field.value = value if field
 
     if sending
         field = fields.filter((f) -> f.type is 'submit')?[0]
