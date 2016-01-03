@@ -4,7 +4,6 @@ Includes topics, posts, proposals, and votes.
 """
 
 # TODO-3 what checks should be moved to models?
-# TODO-0 update topic says it needs post data
 # TODO-0 test plan doesn't generate any notices
 
 from framework.routes import get, post, put, abort

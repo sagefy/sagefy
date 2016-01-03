@@ -9,12 +9,13 @@ topicSchema = require('../../schemas/topic')
 
 classes = (formData) ->
     postID = formData['post.id']
+    topicID = formData['topic.id']
     postKind = formData['post.kind']
     entityKind = formData['post.entity_version.kind']
     cardKind = formData['entity.kind']
     return [
         'col-6'
-        if postID then 'update' else 'create'
+        if topicID then 'update' else 'create'
         if postKind then "post-#{postKind}" else ''
         if entityKind then "entity-#{entityKind}" else ''
         if cardKind then "card-#{cardKind}" else ''

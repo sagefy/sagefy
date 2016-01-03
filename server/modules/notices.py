@@ -1,6 +1,8 @@
 from models.follow import Follow
 from models.notice import Notice
 
+# TODO-2 send out notices via email per user preference
+
 
 def send_notices(entity_id, entity_kind, notice_kind, notice_data):
     """

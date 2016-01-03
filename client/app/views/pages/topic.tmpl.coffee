@@ -21,7 +21,11 @@ module.exports = (data) ->
             hgroup(
                 entity(topic, data)
                 h1(topic.name)
-                # TODO-0 add a link if user to edit the topic name
+                a(
+                    {href: "/topics/#{topic.id}/update"}
+                    i({className: 'fa fa-edit'})
+                    ' Update name'
+                )if data.currentUserID is topic.user_id
             )
         )
 
