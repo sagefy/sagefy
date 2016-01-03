@@ -157,7 +157,7 @@ def create_topic_route(request):
     Follow.insert({
         'user_id': current_user['id'],
         'entity': {
-            'id': topic.id,
+            'id': topic['id'],
             'kind': 'topic',
         }
     })
@@ -286,7 +286,7 @@ def get_posts_route(request, topic_id):
             p: ev.deliver()
             for p, ev in entity_versions.items()
         },
-        'diffs': diffs,
+        # 'diffs': diffs,  TODO-2 this causes a circular dependency
         'users': users,
     }
     if entity:
@@ -358,7 +358,7 @@ def create_post_route(request, topic_id):
     Follow.insert({
         'user_id': current_user['id'],
         'entity': {
-            'id': topic.id,
+            'id': topic['id'],
             'kind': 'topic',
         }
     })

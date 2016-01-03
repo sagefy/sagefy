@@ -814,7 +814,7 @@ for topic in topics:
         'body': 'I agree.',
         'kind': 'vote',
         'replies_to_id': 'plus-proposal-accepted',
-        'response': False,
+        'response': True,
     }, {
         'id': 'plus-proposal-declined',
         'created': r.time(2014, 1, 2, 'Z'),
