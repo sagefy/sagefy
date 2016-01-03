@@ -4,7 +4,6 @@ Includes topics, posts, proposals, and votes.
 """
 
 # TODO-3 what checks should be moved to models?
-# TODO-0 test plan doesn't generate any notices
 
 from framework.routes import get, post, put, abort
 from framework.session import get_current_user
@@ -17,6 +16,7 @@ from models.topic import Topic
 from models.user import User
 from models.proposal import Proposal
 from models.vote import Vote
+from models.follow import Follow
 from modules.content import get as c
 from modules.notices import send_notices
 
@@ -153,7 +153,17 @@ def create_topic_route(request):
     if post_kind == 'proposal':
         entity.save()
 
-    # ## STEP 4) Send out any needed notifications
+    # ## STEP 4) Add author as a follower
+    Follow.insert({
+        'user_id': current_user['id'],
+        'entity': {
+            'id': topic.id,
+            'kind': 'topic',
+        }
+    })
+    # TODO-2 also follow the entity automatically IF needed
+
+    # ## STEP 5) Send out any needed notifications
     send_notices(
         entity_id=topic['entity']['id'],
         entity_kind=topic['entity']['kind'],
@@ -344,14 +354,24 @@ def create_post_route(request, topic_id):
     if post_kind == 'proposal':
         entity.save()
 
-    # ## STEP 4) Make updates based on proposal / vote status
+    # ## STEP 4) Add author as a follower
+    Follow.insert({
+        'user_id': current_user['id'],
+        'entity': {
+            'id': topic.id,
+            'kind': 'topic',
+        }
+    })
+    # TODO-2 also follow the entity
+
+    # ## STEP 5) Make updates based on proposal / vote status
     if post_kind == 'proposal':
         update_entity_status(post_)
     if post_kind == 'vote':
         proposal = Proposal.get(id=post_['replies_to_id'])
         update_entity_status(proposal)
 
-    # ## STEP 5) Return response
+    # ## STEP 6) Return response
     return 200, {'post': post_.deliver()}
 
 

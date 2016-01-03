@@ -3,6 +3,9 @@ from modules.validations import is_required, is_string, is_one_of
 import rethinkdb as r
 import framework.database as database
 
+# TODO-1 Ensure the user is not already following the entity BEFORE
+#        insert (validation).
+
 
 class Follow(Model):
     """A following of an entity, topic, or proposal."""
