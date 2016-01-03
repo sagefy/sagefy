@@ -1,6 +1,8 @@
 {div, h1, a, i, p} = require('../../modules/tags')
 c = require('../../modules/content').get
 
+# TODO-0 Add bar showing `p(learned)` in unit
+
 module.exports = (data) ->
     id = data.routeArgs[0]
     card = data.learnCards?[id]

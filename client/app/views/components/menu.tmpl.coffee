@@ -22,17 +22,17 @@ items = {
     current_set: { url: '/sets/{id}/tree', title: 'Current Set', icon: 'tree' }
     current_unit: { url: '/units/{id}', title: 'Current Unit', icon: 'circle' }
     discuss_set: {
-        url: '/search?kind=topic&entity.id={id}'
+        url: '/search?kind=topic&q={id}'
         title: 'Discuss Set'
         icon: 'comment'
     }
     discuss_unit: {
-        url: '/search?kind=topic&entity.id={id}'
+        url: '/search?kind=topic&q={id}'
         title: 'Discuss Unit'
         icon: 'comment'
     }
     discuss_card: {
-        url: '/search?kind=topic&entity.id={id}'
+        url: '/search?kind=topic&q={id}'
         title: 'Discuss Card'
         icon: 'comment'
     }

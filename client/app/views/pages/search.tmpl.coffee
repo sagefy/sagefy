@@ -3,12 +3,21 @@
 c = require('../../modules/content').get
 {truncate, timeAgo, ucfirst} = require('../../modules/auxiliaries')
 
-# TODO-0 populate using location query parameters
-# TODO-0 "result._source.topic is undefined" when searching for "doris"
+# TODO-2 when receiving ?kind={kind}, then search using that as well.
 
 module.exports = (data) ->
     loading = data.searchQuery and not data.searchResults
     asLearner = data.route.indexOf('as_learner') > -1
+
+    inputOpts = {
+        type: 'search'
+        placeholder: 'Search'
+        name: 'search'
+        size: 40
+    }
+
+    if q = data.routeQuery.q or data.searchQuery
+        inputOpts.value = 1
 
     return div(
         {id: 'search', className: 'col-8'}
@@ -18,12 +27,7 @@ module.exports = (data) ->
             {className: 'form--horizontal'}
             div(
                 {className: 'form-field form-field--search'}
-                input({
-                    type: 'search'
-                    placeholder: 'Search'
-                    name: 'search'
-                    size: 40
-                })
+                input(inputOpts)
             )
             button(
                 {type: 'submit'}
@@ -98,7 +102,7 @@ r.postResult = (result) ->
         a(
             {href: "/topics/#{result._source.topic.id}"}
             result._source.topic.name
-        )
+        ) if result._source.topic
         # TODO-3 entity kind       result._source.topic_id > ????
         # TODO-3 entity name       result._source.topic_id > ????
     ]
