@@ -35,7 +35,6 @@ def choose_card(user, unit):
     """
 
     # TODO-3 simplify this method
-    # TODO-0 do not allow the previous card.. there's nothing to go to
 
     unit_id = unit['entity_id']
     query = (Card.start_accepted_query()
@@ -49,16 +48,21 @@ def choose_card(user, unit):
     if not len(cards):
         return None
 
-    shuffle(cards)
-    assessment, nonassessment = partition(cards, lambda c: c.has_assessment())
-
     previous_response = Response.get_latest(user_id=user['id'],
                                             unit_id=unit_id)
     if previous_response:
         learned = previous_response['learned']
+        # Don't allow the previous card as the next card
+        cards = [
+            card
+            for card in cards
+            if card['entity_id'] != previous_response['card_id']
+        ]
     else:
         learned = init_learned
 
+    shuffle(cards)
+    assessment, nonassessment = partition(cards, lambda c: c.has_assessment())
     choose_assessment = random() < p_assessment_map[floor(learned * 10)]
 
     if choose_assessment:
