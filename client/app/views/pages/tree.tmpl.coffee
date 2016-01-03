@@ -10,8 +10,6 @@
 } = require('./tree.fn')
 {matchesRoute} = require('../../modules/auxiliaries')
 
-
-# TODO-0 Unable to view set tree when not in learning process
 # TODO-2 show the learner their overall set progress as a percent or bar
 
 radius = 9
@@ -37,8 +35,9 @@ module.exports = (data) ->
     currentUnit = treeData.units.find((u) ->
         u.entity_id is data.currentTreeUnit)
 
-    [chooseUnitID] = matchesRoute(data.next.path, '/s/sets/{id}/units')
-    [cardID] = matchesRoute(data.next.path, '/s/cards/{id}/learn')
+    if data.next
+        [chooseUnitID] = matchesRoute(data.next.path, '/s/sets/{id}/units')
+        [cardID] = matchesRoute(data.next.path, '/s/cards/{id}/learn')
 
     return div(
         {id: 'tree', className: 'col-10'}

@@ -65,14 +65,6 @@ def get_set_tree_route(request, set_id):
 
     TODO-2 merge with get_set_units_route
     TODO-2 simplify this method
-    TODO-0 contributor/public view as well
-    TODO-1 When engage basic math as doris, it doesn't find a card
-        error on get set tree Traceback (most recent call last):
-          File "/var/www/server/framework/index.py", line 71, in call_handler
-            return handler(request=construct_request(environ), **parameters)
-          File "/var/www/server/routes/set.py", line 94, in get_set_tree_route
-            .format(card_id=card['entity_id']),
-        TypeError: 'NoneType' object is not subscriptable
     """
 
     set_ = Set.get(entity_id=set_id)
@@ -82,17 +74,32 @@ def get_set_tree_route(request, set_id):
 
     units = set_.list_units()
 
+    # For the menu, it must return the name and ID of the set
+    output = {
+        'set': set_.deliver(),
+        'units': [u.deliver() for u in units],
+    }
+
     current_user = get_current_user(request)
+
+    if not current_user:
+        return 200, output
+
     context = current_user.get_learning_context() if current_user else {}
     buckets = traverse(current_user, set_)
-    next_ = {}
+    output['buckets'] = {
+        'diagnose': [u['entity_id'] for u in buckets['diagnose']],
+        'review': [u['entity_id'] for u in buckets['review']],
+        'learn': [u['entity_id'] for u in buckets['learn']],
+        'done': [u['entity_id'] for u in buckets['done']],
+    }
 
     # If we are just previewing, don't update anything
     if set_id != context.get('set', {}).get('entity_id'):
-        pass
+        return 200, output
 
     # When in diagnosis, choose the unit and card automagically.
-    elif buckets['diagnose']:
+    if buckets['diagnose']:
         unit = buckets['diagnose'][0]
         card = choose_card(current_user, unit)
         next_ = {
@@ -103,17 +110,8 @@ def get_set_tree_route(request, set_id):
         current_user.set_learning_context(
             next=next_, unit=unit.data, card=card.data)
 
-    # When in learn mode, lead me to choose a unit.
-    elif buckets['review']:
-        next_ = {
-            'method': 'GET',
-            'path': '/s/sets/{set_id}/units'
-                    .format(set_id=set_id),
-        }
-        current_user.set_learning_context(next=next_)
-
-    # When in learn mode, lead me to choose a unit.
-    elif buckets['learn']:
+    # When in learn or review mode, lead me to choose a unit.
+    elif buckets['review'] or buckets['learn']:
         next_ = {
             'method': 'GET',
             'path': '/s/sets/{set_id}/units'
@@ -130,18 +128,8 @@ def get_set_tree_route(request, set_id):
         }
         current_user.set_learning_context(next=next_, unit=None, set=None)
 
-    # For the menu, it must return the name and ID of the set
-    return 200, {
-        'next': next_,
-        'units': [u.deliver() for u in units],
-        'set': set_.deliver(),
-        'buckets': {
-            'diagnose': [u['entity_id'] for u in buckets['diagnose']],
-            'review': [u['entity_id'] for u in buckets['review']],
-            'learn': [u['entity_id'] for u in buckets['learn']],
-            'done': [u['entity_id'] for u in buckets['done']],
-        },
-    }
+    output['next'] = next_
+    return 200, output
 
 
 @get('/s/sets/{set_id}/units')
