@@ -16,8 +16,7 @@ module.exports = (data) ->
         size: 40
     }
 
-    if q = data.routeQuery.q or data.searchQuery
-        inputOpts.value = 1
+    inputOpts.value = data.searchQuery if data.searchQuery
 
     return div(
         {id: 'search', className: 'col-8'}

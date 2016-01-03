@@ -89,6 +89,9 @@ module.exports = store.add({
                     recorder.emit('next', response.next)
                     @data.next = response.next
                 @data.cardResponse = response.response
+                @data.unitLearned ?= {}
+                @data.unitLearned[response.response.unit_id] =
+                    response.response.learned
                 @data.cardFeedback = response.feedback
                 @tasks.updateMenuContext({card: false})
                 recorder.emit('respond to card', id)

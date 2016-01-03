@@ -19,6 +19,7 @@ routes = [
     {path: '/sets/{id}/choose_unit', task: 'openChooseUnit'}
     {path: '/cards/{id}/learn', task: 'openLearnCard'}
     {path: '/topics/{id}/posts/{id}/update', task: 'openUpdatePost'}
+    {path: '/search', task: 'openSearch'}
 ]
 
 
@@ -79,4 +80,8 @@ module.exports = store.add({
 
     openUpdatePost: (topicID, postID) ->
         tasks.listPosts(topicID)
+
+    openSearch: ->
+        if q = @data.routeQuery.q
+            tasks.search({q})
 })

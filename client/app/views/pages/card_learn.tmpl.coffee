@@ -1,13 +1,13 @@
 {div, h1, a, i, p} = require('../../modules/tags')
 c = require('../../modules/content').get
 
-# TODO-0 Add bar showing `p(learned)` in unit
-
 module.exports = (data) ->
     id = data.routeArgs[0]
     card = data.learnCards?[id]
 
     return div({className: 'spinner'}) unless card
+
+    pLearned = data.unitLearned?[card.unit_id]
 
     mode = if card.kind is 'video'
         'next-please'
@@ -49,6 +49,16 @@ module.exports = (data) ->
                 i({className: 'fa fa-chevron-right'})
             )
         )
+
+        div(
+            {
+                key: '0Xe4fksADWwm9qWOMuTl7thD'
+                className: 'card-learn--progress'
+                style: {
+                    width: pLearned * 100 + '%'
+                }
+            }
+        ) if pLearned
     )
 
 kind = (card, mode) ->

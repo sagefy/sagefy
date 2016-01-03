@@ -19,7 +19,7 @@ module.exports = store.add({
                     response.hits
                     'id'
                 )
-                recorder.emit('search', response.hits.length)
+                recorder.emit('search', q, response.hits.length)
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('error on search', errors)
