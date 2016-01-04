@@ -158,7 +158,7 @@ def respond_to_card_route(request, card_id):
             next_ = {
                 'method': 'GET',
                 'path': '/s/sets/{set_id}/units'
-                        .format(set_id=set_.get('entity_id')),
+                        .format(set_id=set_['entity_id']),
             }
             current_user.set_learning_context(card=None, unit=None, next=next_)
 
@@ -167,7 +167,7 @@ def respond_to_card_route(request, card_id):
             next_ = {
                 'method': 'GET',
                 'path': '/s/sets/{set_id}/tree'
-                        .format(set_id=set_.get('entity_id')),
+                        .format(set_id=set_['entity_id']),
             }
             current_user.set_learning_context(card=None, unit=None, next=next_)
 

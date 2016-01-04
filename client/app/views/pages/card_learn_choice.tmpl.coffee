@@ -1,6 +1,8 @@
 {div, ul, li, input, label} = require('../../modules/tags')
 c = require('../../modules/content').get
 
+# TODO-1 why is this preselecting an option?
+
 module.exports = (data, mode) ->
     {options} = data
     options = options.map((o) -> o.value)

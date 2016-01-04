@@ -109,6 +109,10 @@ module.exports = store.add({
         path = @data.next.path
         if args = matchesRoute(path, '/s/cards/{id}/learn')
             @tasks.route("/cards/#{args[0]}/learn")
+        if args = matchesRoute(path, '/s/sets/{id}/units')
+            @tasks.route("/sets/#{args[0]}/choose_unit")
+        if args = matchesRoute(path, '/s/sets/{id}/tree')
+            @tasks.route("/sets/#{args[0]}/tree")
 
     needAnAnswer: () ->
         @data.cardFeedback = 'Please provide an answer.'

@@ -385,7 +385,7 @@ for unit in units:
         'unit_id': 'times',
         'require_ids': [],
         'kind': 'choice',
-        'body': 'What is 2 / 2?',
+        'body': 'What is 2 * 2?',
         'options': [{
             'value': '2',
             'correct': False,
