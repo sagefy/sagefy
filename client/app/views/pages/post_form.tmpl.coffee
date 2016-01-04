@@ -5,6 +5,9 @@ form = require('../components/form.tmpl')
 {createFieldsData} = require('../../modules/auxiliaries')
 {getFields, getSchema} = require('./post_form.fn')
 
+# TODO-1 Currently there is no way to update an existing entity from the UI,
+#        you can only propose a new entity.
+
 classes = (formData) ->
     postID = formData['post.id']
     postKind = formData['post.kind']
