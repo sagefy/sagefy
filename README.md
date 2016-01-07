@@ -4,11 +4,11 @@
 
 **Sagefy is an open-content adaptive learning platform.**
 
-Sagefy is an _adaptive learning system_. It does not have planned and structured courses. Instead, Sagefy organizes tiny bits of information and practice by _learning objectives_. Learning objectives are then grouped in sets. _Adaptive learning algorithms_ decide optimal ordering. The algorithms ensure the content matches the learner's skill level and goals. Sagefy uses learning science research in determining its [structure](https://github.com/heiskr/sagefy/wiki/Data-Structure) and [ideas](https://github.com/heiskr/sagefy/wiki/Ideas).
+Sagefy is an _adaptive learning system_. Instead of planned and structured courses, small objects of learning content are joined through relationships. Adaptive learning algorithms decide optimal ordering. Sagefy optimizes for learner knowledge and goals. No more learning things you already know. No more learning things you aren’t ready for. Sagefy stays focused on what you want to learn.
 
-Sagefy is _open-content_. Anyone can contribute. A _consensus decision-making process_ determines the content. Learners, teachers, and anyone in the world can create and edit content. Open-content, consensus-based models succeed in generating large volumes of high quality content.
+Open-content systems allow anyone to view, share, create, and edit content. Like most open-content systems, Sagefy works through consensus-driven decision making. Sagefy is open source and freely available.
 
-Sagefy is open-source. The content and the code are freely available.
+Sagefy uses learning science research in its [structure](https://github.com/heiskr/sagefy/wiki/Data-Structure) and [ideas](https://github.com/heiskr/sagefy/wiki/Ideas).
 
 - [Site], [Wiki], [Twitter]
 
