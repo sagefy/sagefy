@@ -3,6 +3,11 @@ Contributing
 
 Thank you for contributing to Sagefy! This document covers basic guidelines for contributing to Sagefy.
 
+Content
+-------
+
+Create and edit content through the discussion section within the Sagefy interface. You will want to get familiar with the [[Data Structure]].
+
 Issues
 ------
 
@@ -13,8 +18,8 @@ Issues
     - Logs, as available.
 - For feature requests, consider adding it to [UserVoice](http://sagefy.uservoice.com/) instead. On UserVoice, the feature can be discussed and prioritized more easily.
 
-Contributing To Sagefy
-----------------------
+Contributing Code To Sagefy
+---------------------------
 
 Before you raise a pull request to Sagefy, please review the terms in the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0). If you do not agree to these terms, do not raise a pull request.
 
