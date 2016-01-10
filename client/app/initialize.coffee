@@ -5,6 +5,8 @@ cookie = require('./modules/cookie')
 
 {route} = require('./modules/route_actions')
 
+# TODO-1 Add google analytics
+
 # Require all tasks
 require('./tasks/card')
 require('./tasks/follow')
