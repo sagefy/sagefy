@@ -90,6 +90,7 @@ def extend(base, *injects):
     """
     Do a recursive extension of an object.
     http://stackoverflow.com/a/3233356
+    TODO-2 Update so it doesn't change any input arguments
     """
 
     for injector in injects:
