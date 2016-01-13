@@ -14,11 +14,11 @@ class Card(EntityMixin, Model):
     tablename = 'cards'
 
     schema = dict(EntityMixin.schema.copy(), **{
-        'unit_id': {
-            'validate': (is_required, is_string,)  # TODO-1 is valid id?
+        'unit_id': {  # TODO-1 is valid id?
+            'validate': (is_required, is_string,)
         },
-        'require_ids': {
-            'validate': (is_list,),  # TODO-1 is valid ids?
+        'require_ids': {  # TODO-1 is valid ids?
+            'validate': (is_list,),
             'default': []
         },
         'kind': {

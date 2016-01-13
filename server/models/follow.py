@@ -9,13 +9,13 @@ class Follow(Model):
     tablename = 'follows'
 
     schema = dict(Model.schema.copy(), **{
-        'user_id': {
+        'user_id': {  # TODO-2 validate foreign
             'validate': (is_required, is_string,)
         },
         'entity': {
             'validate': (is_required,),
             'embed': {
-                'id': {
+                'id': {  # TODO-1 validate foreign
                     'validate': (is_required, is_string,),
                 },
                 'kind': {

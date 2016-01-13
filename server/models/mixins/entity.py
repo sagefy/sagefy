@@ -19,11 +19,11 @@ class EntityMixin(object):
 
     schema = dict(Model.schema.copy(), **{
         'entity_id': {
-            'validate': (is_required, is_string,),  # TODO-1 is valid id?
+            'validate': (is_required, is_string,),
             'default': uniqid
         },
-        'previous_id': {
-            'validate': (is_string,),  # TODO-1 is valid id?
+        'previous_id': {  # TODO-1 is valid id?
+            'validate': (is_string,),
         },
         'language': {
             'validate': (is_required, is_language,),

@@ -10,8 +10,8 @@ class Post(Model):
     tablename = 'posts'
 
     schema = dict(Model.schema.copy(), **{
-        'user_id': {
-            'validate': (is_required, is_string,)  # TODO-1 validate foreign
+        'user_id': {  # TODO-2 validate foreign
+            'validate': (is_required, is_string,)
         },
         'topic_id': {
             'validate': (is_required, is_string,)
@@ -24,8 +24,8 @@ class Post(Model):
                          (is_one_of, 'post', 'proposal', 'vote')),
             'default': 'post'
         },
-        'replies_to_id': {
-            'validate': (is_string,)  # TODO-1 validate id is real & in topic
+        'replies_to_id': {  # TODO-1 validate id is real & in topic
+            'validate': (is_string,)
         }
     })
 
@@ -48,8 +48,8 @@ class Post(Model):
 
     def is_valid_reply(self):
         """
-        Must belong to the same topic
-        - TODO-1 A post can reply to a post or proposal.
+        TODO-1 A reply must belong to the same topic.
+        A post can reply to a post, proposal, or vote.
         """
         return []
 

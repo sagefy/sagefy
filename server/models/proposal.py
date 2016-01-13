@@ -41,7 +41,8 @@ class Proposal(Post):
 
     def is_valid_reply_kind(self):
         """
-        TODO-1 A proposal can reply to post or proposal.
+        TODO-1 A reply must be in the same topic.
+        A proposal can reply to post, proposal, or vote.
         """
         return []
 

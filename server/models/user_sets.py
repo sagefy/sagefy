@@ -11,7 +11,7 @@ class UserSets(Model):
     tablename = 'users_sets'
 
     schema = dict(Model.schema.copy(), **{
-        'user_id': {
+        'user_id': {  # TODO-2 validate foreign
             'validate': (is_required, is_string,),
         },
         'set_ids': {

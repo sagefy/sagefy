@@ -10,8 +10,8 @@ class CardParameters(Model):
     tablename = 'cards_parameters'
 
     schema = dict(Model.schema.copy(), **{
-        'entity_id': {
-            'validate': (is_required, is_string),  # TODO-1 validate foreign
+        'entity_id': {  # TODO-3 validate foreign
+            'validate': (is_required, is_string),
         },
         'guess_distribution': {
             'validate': (is_required, is_dict,),
