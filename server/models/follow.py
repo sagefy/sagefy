@@ -3,9 +3,6 @@ from modules.validations import is_required, is_string, is_one_of
 import rethinkdb as r
 import framework.database as database
 
-# TODO-1 Ensure the user is not already following the entity BEFORE
-#        insert (validation).
-
 
 class Follow(Model):
     """A following of an entity, topic, or proposal."""
@@ -29,6 +26,27 @@ class Follow(Model):
             }
         }
     })
+
+    def validate(self):
+        """
+        Overwrite validate method to check options.
+        """
+
+        errors = super().validate()
+        if not errors:
+            errors = self.validate_uniqueness()
+        return errors
+
+    def validate_uniqueness(self):
+        """
+        Ensure the user is not already following the entity BEFORE insert.
+        """
+
+        prev = Follow.list(user_id=self['user_id'],
+                           entity_id=self['entity']['id'])
+        if prev:
+            return [{'message': 'Already followed.'}]
+        return []
 
     @classmethod
     def list(cls, user_id=None, limit=10, skip=0,

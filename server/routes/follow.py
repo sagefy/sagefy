@@ -63,12 +63,6 @@ def follow_route(request):
     if not entity:
         return abort(404)
 
-    # Ensure we don't already follow   TODO-3 should this be a model validation?
-    prev = Follow.list(user_id=current_user['id'],
-                       entity_id=follow_data['entity']['id'])
-    if prev:
-        return abort(409)
-
     follow, errors = follow.save()
     if errors:
         return 400, {

@@ -92,7 +92,7 @@ def test_follow_409(db_conn, session, cards_table, follows_table):
         }
     }
     code, response = routes.follow.follow_route(request)
-    assert code == 409
+    assert code == 400
 
 
 def test_follow_400(db_conn, session, follows_table):

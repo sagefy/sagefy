@@ -77,6 +77,7 @@ def add_test_set(db_conn,
         }).run(db_conn)
 
 
+@xfail
 def test_traverse(db_conn, units_table, users_table, responses_table,
                   sets_table):
     """
@@ -106,6 +107,7 @@ Traverse should output units in order.
 """
 
 
+@xfail
 def test_judge_diagnose(db_conn, users_table, units_table, responses_table):
     """
     Expect to add no known ability to "diagnose".

@@ -36,7 +36,7 @@ def create_post_in_db(posts_table, db_conn, user_id='abcd1234'):
     }).run(db_conn)
 
 
-def create_proposal_in_db(posts_table, db_conn):
+def create_proposal_in_db(posts_table, units_table, db_conn):
     posts_table.insert({
         'id': 'jklm',
         'created': r.now(),
@@ -47,9 +47,27 @@ def create_proposal_in_db(posts_table, db_conn):
             People From Being a Burthen to Their Parents or Country, and
             for Making Them Beneficial to the Publick.''',
         'kind': 'proposal',
-        'entity_version_id': '1',
         'name': 'New Unit',
-        'status': 'pending',
+        'replies_to_id': None,
+        'entity_version': {
+            'id': 'slash-1',
+            'kind': 'unit',
+        },
+    }).run(db_conn)
+
+    units_table.insert({
+        'id': 'slash-1',
+        'created': r.time(2014, 1, 1, 'Z'),
+        'modified': r.time(2014, 1, 1, 'Z'),
+        'entity_id': 'slash',
+        'previous_id': None,
+        'language': 'en',
+        'name': 'Dividing two numbers.',
+        'status': 'accepted',
+        'available': True,
+        'tags': ['math'],
+        'body': 'The joy and pleasure of dividing numbers.',
+        'require_ids': ['plus', 'minus', 'times'],
     }).run(db_conn)
 
 
@@ -311,7 +329,7 @@ def test_get_posts_paginate(db_conn, users_table, topics_table,
     assert len(response['posts']) == 5
 
 
-def test_get_posts_proposal(db_conn, users_table, topics_table,
+def test_get_posts_proposal(db_conn, users_table, units_table, topics_table,
                             posts_table):
     """
     Expect get posts for topic to render a proposal correctly.
@@ -319,7 +337,7 @@ def test_get_posts_proposal(db_conn, users_table, topics_table,
 
     create_user_in_db(users_table, db_conn)
     create_topic_in_db(topics_table, db_conn)
-    create_proposal_in_db(posts_table, db_conn)
+    create_proposal_in_db(posts_table, units_table, db_conn)
 
     request = {'params': {}}
     code, response = routes.topic.get_posts_route(request, 'wxyz7890')
@@ -327,14 +345,15 @@ def test_get_posts_proposal(db_conn, users_table, topics_table,
     assert response['posts'][0]['kind'] == 'proposal'
 
 
-def test_get_posts_votes(db_conn, users_table, topics_table, posts_table):
+def test_get_posts_votes(db_conn, users_table, units_table, topics_table,
+                         posts_table):
     """
     Expect get posts for topic to render votes correctly.
     """
 
     create_user_in_db(users_table, db_conn)
     create_topic_in_db(topics_table, db_conn)
-    create_proposal_in_db(posts_table, db_conn)
+    create_proposal_in_db(posts_table, units_table, db_conn)
     posts_table.insert({
         'id': 'asdf4567',
         'created': r.now(),
@@ -544,13 +563,13 @@ def test_update_post_body(db_conn, users_table, topics_table,
 
 @xfail
 def test_update_proposal(db_conn, users_table, topics_table,
-                         posts_table, session):
+                         posts_table, units_table, session):
     """
     Expect update post to handle proposals correctly.
     """
 
     create_topic_in_db(topics_table, db_conn)
-    create_proposal_in_db(posts_table, db_conn)
+    create_proposal_in_db(posts_table, units_table, db_conn)
 
     request = {
         'cookies': {'session_id': session},
@@ -567,14 +586,14 @@ def test_update_proposal(db_conn, users_table, topics_table,
 
 @xfail
 def test_update_vote(db_conn, users_table, topics_table,
-                     posts_table, session):
+                     posts_table, units_table, session):
     """
     Expect update vote to handle proposals correctly.
     """
 
     create_user_in_db(users_table, db_conn)
     create_topic_in_db(topics_table, db_conn)
-    create_proposal_in_db(posts_table, db_conn)
+    create_proposal_in_db(posts_table, units_table, db_conn)
     posts_table.insert({
         'id': 'vbnm1234',
         'created': r.now(),

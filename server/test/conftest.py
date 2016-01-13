@@ -66,6 +66,7 @@ def table(name, request, db_conn):
     Ensure the table is freshly empty after use.
     """
     table = framework.database.db.table(name)
+    table.delete().run(db_conn)
     request.addfinalizer(lambda: table.delete().run(db_conn))
     return table
 

@@ -23,14 +23,14 @@ adduser --disabled-password --gecos "" annina
 # Add user to sudo group
 gpasswd -a annina sudo
 
-# TODO-1 check for sagefy_rsa.pub, and if not, then exit and say `run ssh-keygen ...`
+# TODO-3 check for sagefy_rsa.pub, and if not, then exit and say `run ssh-keygen ...`
 
 # Add SSH public key to user
 su - annina
 mkdir .ssh
 chmod 700 .ssh
 touch .ssh/authorized_keys
-cat /var/www/setup/sagefy_rsa.pub >> .ssh/authorized_keys  # TODO-1 file exists?
+cat /var/www/setup/sagefy_rsa.pub >> .ssh/authorized_keys  # TODO-3 file exists?
 chmod 600 .ssh/authorized_keys
 exit
 
@@ -70,4 +70,4 @@ sudo mkswap /swapfile
 sudo swapon /swapfile
 sudo sh -c 'echo "/swapfile none swap sw 0 0" >> /etc/fstab'
 
-# TODO-1 Install stuff from provision local...
+# TODO-3 Install stuff from provision local...
