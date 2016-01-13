@@ -68,41 +68,11 @@ def get_kind(data):
     return kinds
 
 
-def create_entity(data):
-    """
-    Given a kind and some json, call insert on that kind
-    and return the results.
-    """
-
-    if 'card' in data:
-        return Card.insert(data['card'])
-        # TODO-1 This needs to also get the right card kind...
-    elif 'unit' in data:
-        return Unit.insert(data['unit'])
-    elif 'set' in data:
-        return Set.insert(data['set'])
-
-    return None, []
-
-
-def instance(data):
-    """
-    Given a kind and some json, call insert on that kind
-    and return the results.
-    """
-
-    if 'card' in data:
-        return Card(data['card'])
-        # TODO-1 This needs to also get the right card kind...
-    elif 'unit' in data:
-        return Unit(data['unit'])
-    elif 'set' in data:
-        return Set(data['set'])
-
-
 def instance_new_entity(data):
     """
-    Save as above, but a little safer.
+    Given a kind and some json, call insert on that kind
+    and return the results.
+    A little safer.
     """
 
     fields = ('id', 'created', 'modified',

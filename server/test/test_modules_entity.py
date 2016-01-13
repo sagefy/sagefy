@@ -45,22 +45,6 @@ def test_get_kind():
     assert kind == 'card'
 
 
-def test_create_entity():
-    """
-    Expect to save a model to the DB given fields.
-    """
-
-    e, errors = entity.create_entity({
-        'card': {
-            'unit_id': 'A',
-            'name': 'B',
-            'kind': 'video',
-        }
-    })
-    assert len(errors) == 0
-    assert isinstance(e, Card)
-
-
 @xfail
 def test_get_card_by_kind(db_conn, cards_table):
     """
