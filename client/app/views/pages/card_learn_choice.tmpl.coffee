@@ -1,8 +1,6 @@
 {div, ul, li, input, label} = require('../../modules/tags')
 c = require('../../modules/content').get
 
-# TODO-1 why is this preselecting an option?
-
 module.exports = (data, mode) ->
     {options} = data
     options = options.map((o) -> o.value)
@@ -30,6 +28,9 @@ module.exports = (data, mode) ->
                     value: option
                     id: i
                     disabled: disabled
+                    key: "#{data.id}-#{option}"
+                    # The key ensures the input doesn't stay selected
+                    # when changing questions
                 })
                 label({
                     htmlFor: i
