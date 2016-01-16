@@ -4,6 +4,8 @@ Includes topics, posts, proposals, and votes.
 """
 
 # TODO-3 what checks should be moved to models?
+# TODO-2 perhaps, these endpoints are too large
+#        can they be split up while maintaining guarantees?
 
 from framework.routes import get, post, put, abort
 from framework.session import get_current_user
@@ -163,7 +165,7 @@ def create_topic_route(request):
     })
     # TODO-2 also follow the entity automatically IF needed
 
-    # ## STEP 5) Send out any needed notifications
+    # ## STEP 5) Send out any needed notices
     send_notices(
         entity_id=topic['entity']['id'],
         entity_kind=topic['entity']['kind'],
@@ -175,6 +177,19 @@ def create_topic_route(request):
             'entity_name': topic['entity']['id'],
         }
     )
+
+    if post_kind == 'proposal':
+        send_notices(
+            entity_id=topic['entity']['id'],
+            entity_kind=topic['entity']['kind'],
+            notice_kind='create_proposal',
+            notice_data={
+                'user_name': current_user['name'],
+                'topic_name': topic['name'],
+                'entity_kind': topic['entity']['kind'],
+                'entity_name': topic['entity']['id'],
+            }
+        )
 
     # ## STEP 5) Return response
     return 200, {'topic': topic.deliver(), 'post': post_.deliver()}
@@ -371,7 +386,21 @@ def create_post_route(request, topic_id):
         proposal = Proposal.get(id=post_['replies_to_id'])
         update_entity_status(proposal)
 
-    # ## STEP 6) Return response
+    # ## STEP 6) Send notices
+    if post_kind == 'proposal':
+        send_notices(
+            entity_id=topic['entity']['id'],
+            entity_kind=topic['entity']['kind'],
+            notice_kind='create_proposal',
+            notice_data={
+                'user_name': current_user['name'],
+                'topic_name': topic['name'],
+                'entity_kind': topic['entity']['kind'],
+                'entity_name': topic['entity']['id'],
+            }
+        )
+
+    # ## STEP 7) Return response
     return 200, {'post': post_.deliver()}
 
 
