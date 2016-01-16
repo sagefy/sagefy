@@ -5,10 +5,11 @@ startGoogleAnalytics = ->
     window.GoogleAnalyticsObject = 'ga'
     window.ga.l = 1 * new Date()
     a = document.createElement('script')
-    m = document.getElementsByTagName('script')[0]
     a.async = 1
     a.src = '//www.google-analytics.com/analytics.js'
-    m.parentNode.insertBefore(a, m)
+    m = document.getElementsByTagName('script')[0]
+    m.parentNode.insertBefore(a, m) if m
+    document.body.appendChild(a) unless m
 
     ga('create', 'UA-40497674-1', 'auto')
     ga('send', 'pageview')
