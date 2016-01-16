@@ -29,7 +29,7 @@ def get_latest_accepted(kind, entity_id):
 
     if kind == 'card':
         return Card.get_latest_accepted(entity_id)
-        # TODO-1 This needs to also get the right card kind...
+        # TODO-0 This needs to also get the right card kind...
     elif kind == 'unit':
         return Unit.get_latest_accepted(entity_id)
     elif kind == 'set':
@@ -39,7 +39,7 @@ def get_latest_accepted(kind, entity_id):
 def get_version(kind, id_):
     if kind == 'card':
         return Card.get(id=id_)
-        # TODO-1 This needs to also get the right card kind...
+        # TODO-0 This needs to also get the right card kind...
     elif kind == 'unit':
         return Unit.get(id=id_)
     elif kind == 'set':
@@ -79,7 +79,7 @@ def instance_new_entity(data):
               'entity_id', 'previous_id', 'status', 'available')
     if 'card' in data:
         return Card(omit(data['card'], fields))
-        # TODO-1 This needs to also get the right card kind...
+        # TODO-0 This needs to also get the right card kind...
     elif 'unit' in data:
         return Unit(omit(data['unit'], fields))
     elif 'set' in data:
@@ -126,7 +126,7 @@ def flush_entities(descs):
     for desc in descs:
         if desc['kind'] == 'card':
             output.append(Card.get_latest_accepted(entity_id=desc['id']))
-            # TODO-1 This needs to also get the right card kind...
+            # TODO-0 This needs to also get the right card kind...
         elif desc['kind'] == 'unit':
             output.append(Unit.get_latest_accepted(entity_id=desc['id']))
         elif desc['kind'] == 'set':

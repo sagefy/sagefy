@@ -15,7 +15,7 @@ class Follow(Model):
         'entity': {
             'validate': (is_required,),
             'embed': {
-                'id': {  # TODO-1 validate foreign
+                'id': {  # TODO-0 validate foreign
                     'validate': (is_required, is_string,),
                 },
                 'kind': {

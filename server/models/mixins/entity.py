@@ -22,7 +22,7 @@ class EntityMixin(object):
             'validate': (is_required, is_string,),
             'default': uniqid
         },
-        'previous_id': {  # TODO-1 is valid id?
+        'previous_id': {  # TODO-0 is valid id?
             'validate': (is_string,),
         },
         'language': {

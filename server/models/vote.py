@@ -16,7 +16,7 @@ class Vote(Post):
         },
 
         # But a vote does require a proposal
-        'replies_to_id': {  # TODO-1 Validate this is for a valid proposal
+        'replies_to_id': {  # TODO-0 Validate this is for a valid proposal
             'validate': (is_required, is_string,)
         },
 
@@ -47,13 +47,13 @@ class Vote(Post):
 
     def is_unique_vote(self):
         """
-        TODO-1 Ensure a user can only vote once per proposal.
+        TODO-0 Ensure a user can only vote once per proposal.
         """
         return []
 
     def is_valid_reply_kind(self):
         """
-        TODO-1 A vote can reply to a proposal.
-        TODO-1 A vote cannot reply to a proposal that is accepted or declined.
+        TODO-0 A vote can reply to a proposal.
+        TODO-0 A vote cannot reply to a proposal that is accepted or declined.
         """
         return []

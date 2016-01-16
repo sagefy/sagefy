@@ -6,9 +6,9 @@ import framework.database as database
 from modules.content import get as c
 
 # done-- implement create_topic notice
-# TODO-1 implement create_proposal notice
+# TODO-0 implement create_proposal notice
 # done-- implement block_proposal notice
-# TODO-1 implement decline_proposal notice
+# TODO-0 implement decline_proposal notice
 # done-- implement accept_proposal notice
 # TODO-2 implement create_post notice
 # TODO-2 implement come_back notice

@@ -26,7 +26,7 @@ class Set(EntityMixin, Model):
         'members': {
             'validate': (is_required, is_list, (has_min_length, 1)),
             'embed_many': {
-                'id': {  # TODO-1 is valid ids?
+                'id': {  # TODO-0 is valid ids?
                     'validate': (is_required, is_string,),
                 },
                 'kind': {
@@ -46,7 +46,7 @@ class Set(EntityMixin, Model):
 
     def ensure_no_cycles(self):
         """
-        TODO-1 Ensure no require cycles form.
+        TODO-0 Ensure no require cycles form.
         """
         return []
 

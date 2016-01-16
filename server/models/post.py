@@ -24,7 +24,7 @@ class Post(Model):
                          (is_one_of, 'post', 'proposal', 'vote')),
             'default': 'post'
         },
-        'replies_to_id': {  # TODO-1 validate id is real & in topic
+        'replies_to_id': {  # TODO-0 validate id is real & in topic
             'validate': (is_string,)
         }
     })
@@ -48,7 +48,7 @@ class Post(Model):
 
     def is_valid_reply(self):
         """
-        TODO-1 A reply must belong to the same topic.
+        TODO-0 A reply must belong to the same topic.
         A post can reply to a post, proposal, or vote.
         """
         return []
