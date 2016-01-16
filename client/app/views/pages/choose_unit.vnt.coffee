@@ -5,6 +5,6 @@ tasks = require('../../modules/tasks')
 module.exports = broker.add({
     'click #choose-unit .engage': (e, el) ->
         e.preventDefault() if e
-        ul = closest(el, document.body, 'ul')
+        ul = closest(el, 'ul')
         tasks.chooseUnit(ul.id, el.id)
 })

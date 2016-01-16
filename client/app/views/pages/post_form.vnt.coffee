@@ -30,17 +30,17 @@ module.exports = broker.add({
         tasks.updatePost(values)
 
     'change #post-form.create [name="post.kind"]': (e, el) ->
-        form = closest(el, document.body, 'form')
+        form = closest(el, 'form')
         values = getFormValues(form)
         tasks.updateFormData(values)
 
     'change #post-form.create [name="post.entity_version.kind"]': (e, el) ->
-        form = closest(el, document.body, 'form')
+        form = closest(el, 'form')
         values = getFormValues(form)
         tasks.updateFormData(values)
 
     'change #post-form.create [name="entity.kind"]': (e, el) ->
-        form = closest(el, document.body, 'form')
+        form = closest(el, 'form')
         values = getFormValues(form)
         tasks.updateFormData(values)
 })

@@ -7,11 +7,11 @@ module.exports = broker.add({
     'click .form-field--list .remove-row': (e, el) ->
         e.preventDefault() if e
 
-        form = closest(el, document.body, 'form')
+        form = closest(el, 'form')
         values = getFormValues(form)
         tasks.updateFormData(values)
 
-        table = closest(el, document.body, 'table')
+        table = closest(el, 'table')
         name = table.dataset.name
         index = parseInt(el.dataset.index)
         tasks.removeListFieldRow(name, index)
@@ -19,11 +19,11 @@ module.exports = broker.add({
     'click .form-field--list .add-row': (e, el) ->
         e.preventDefault() if e
 
-        form = closest(el, document.body, 'form')
+        form = closest(el, 'form')
         values = getFormValues(form)
         tasks.updateFormData(values)
 
-        table = closest(el, document.body, 'table')
+        table = closest(el, 'table')
         name = table.dataset.name
         columns = Array.prototype.map.call(
             table.querySelectorAll('th')

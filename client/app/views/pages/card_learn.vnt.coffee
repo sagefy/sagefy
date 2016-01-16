@@ -5,7 +5,7 @@ tasks = require('../../modules/tasks')
 module.exports = broker.add({
     'click #card-learn.choice.answer .continue': (e, el) ->
         e.preventDefault if e
-        container = closest(el, document.body, '#card-learn')
+        container = closest(el, '#card-learn')
         response = container
                         .querySelector('[name=choice]:checked')
                         ?.value

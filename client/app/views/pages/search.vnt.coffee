@@ -5,7 +5,7 @@ tasks = require('../../modules/tasks')
 module.exports = broker.add({
     'click #search [type="submit"]': (e, el) ->
         e.preventDefault() if e
-        form = closest(el, document.body, 'form')
+        form = closest(el, 'form')
         input = form.querySelector('input')
         tasks.search({q: input.value})
 
