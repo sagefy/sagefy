@@ -5,15 +5,17 @@ recorder = require('../modules/recorder')
 
 module.exports = store.add({
     updateFormData: (data) ->
+        recorder.emit('update form data')
         @data.formData = data
         @change()
 
     validateForm: (data, schema, fields) ->
         @data.errors = validateFormData(data, schema, fields)
         if @data.errors.length
-            recorder.emit('invalid form', @data.errors)
+            recorder.emit('validate form - invalid', @data.errors)
             @change()
             return @data.errors
+        recorder.emit('validate form - valid')
 
     addListFieldRow: (name, columns) ->
         recorder.emit('add list field row', name, columns)

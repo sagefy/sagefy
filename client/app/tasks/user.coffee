@@ -9,6 +9,7 @@ module.exports = store.add({
     createUser: (data) ->
         @data.sending = true
         @change()
+        recorder.emit('create user')
         ajax({
             method: 'POST'
             url: '/s/users'
@@ -16,7 +17,7 @@ module.exports = store.add({
             done: (response) =>
                 @data.currentUserID = response.user.id
                 cookie.set('currentUserID', response.user.id)
-                recorder.emit('create user')
+                recorder.emit('create user success')
                 window.location = '/my_sets'
                 # Hard redirect to get the HTTP_ONLY cookie
             fail: (errors) =>
@@ -30,6 +31,7 @@ module.exports = store.add({
     updateUser: (data) ->
         @data.sending = true
         @change()
+        recorder.emit('update user', response.user.id)
         ajax({
             method: 'PUT'
             url: "/s/users/#{data.id}"
@@ -37,16 +39,17 @@ module.exports = store.add({
             done: (response) =>
                 @data.users ?= {}
                 @data.users[response.user.id] = response.user
-                recorder.emit('update user', response.user.id)
+                recorder.emit('update user success', response.user.id)
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on update user', errors)
+                recorder.emit('update user failure', errors)
             always: =>
                 @data.sending = false
                 @change()
         })
 
     getCurrentUser: ->
+        recorder.emit('get current user')
         ajax({
             method: 'GET'
             url: '/s/users/current'
@@ -55,14 +58,16 @@ module.exports = store.add({
                 cookie.set('currentUserID', response.user.id)
                 @data.users ?= {}
                 @data.users[response.user.id] = response.user
+                recorder.emit('get current user success')
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('fail get current user', errors)
+                recorder.emit('get current user failure', errors)
             always: =>
                 @change()
         })
 
     getUser: (id, opts = {}) ->
+        recorder.emit('get user', id)
         ajax({
             method: 'GET'
             url: "/s/users/#{id}"
@@ -74,9 +79,10 @@ module.exports = store.add({
                     user[t] = response[t] if response[t]
                 )
                 @data.users[response.user.id] = user
+                recorder.emit('get user success', id)
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('fail get user', id, errors)
+                recorder.emit('get user failure', id, errors)
             always: =>
                 @change()
         })
@@ -84,6 +90,7 @@ module.exports = store.add({
     logInUser: (data) ->
         @data.sending = true
         @change()
+        recorder.emit('log in user')
         ajax({
             method: 'POST'
             url: '/s/sessions'
@@ -91,12 +98,12 @@ module.exports = store.add({
             done: (response) =>
                 @data.currentUserID = response.user.id
                 cookie.set('currentUserID', response.user.id)
-                recorder.emit('log in user')
+                recorder.emit('log in user success')
                 # Hard redirect to get the HTTP_ONLY cookie
                 window.location = '/my_sets'
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on log in user', errors)
+                recorder.emit('log in user failure', errors)
             always: =>
                 @data.sending = false
                 @change()
@@ -105,6 +112,7 @@ module.exports = store.add({
     logOutUser: ->
         @data.sending = true
         @change()
+        recorder.emit('log out user')
         ajax({
             method: 'DELETE'
             url: '/s/sessions'
@@ -113,10 +121,10 @@ module.exports = store.add({
                 cookie.unset('currentUserID')
                 window.location = '/'
                 # Hard redirect to delete the HTTP_ONLY cookie
-                recorder.emit('log out user')
+                recorder.emit('log out user success')
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on log out user', errors)
+                recorder.emit('log out user failure', errors)
             always: =>
                 @data.sending = false
                 @change()
@@ -125,16 +133,17 @@ module.exports = store.add({
     getUserPasswordToken: (data) ->
         @data.sending = true
         @change()
+        recorder.emit('get password token')
         ajax({
             method: 'POST'
             url: '/s/password_tokens'
             data: data
             done: (response) =>
                 @data.passwordPageState = 'inbox'
-                recorder.emit('obtain password token')
+                recorder.emit('get password token success')
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on password token', errors)
+                recorder.emit('get password token failure', errors)
             always: =>
                 @data.sending = false
                 @change()
@@ -143,6 +152,7 @@ module.exports = store.add({
     createUserPassword: (data) ->
         @data.sending = true
         @change()
+        recorder.emit('create password')
         ajax({
             method: 'POST'
             url: "/s/users/#{data.id}/password"
@@ -150,12 +160,12 @@ module.exports = store.add({
             done: (response) =>
                 @data.currentUserID = response.user.id
                 cookie.set('currentUserID', response.user.id)
-                recorder.emit('create password')
+                recorder.emit('create password success')
                 # Hard redirect to get the HTTP_ONLY cookie
                 window.location = '/my_sets'
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on create password', errors)
+                recorder.emit('create password failure', errors)
             always: =>
                 @data.sending = false
                 @change()

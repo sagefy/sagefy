@@ -5,6 +5,7 @@ recorder = require('../modules/recorder')
 
 module.exports = store.add({
     search: ({q, skip = 0, limit = 10, order}) ->
+        recorder.emit('search', q)
         if q isnt @data.searchQuery
             @data.searchResults = []
         @data.searchQuery = q
@@ -19,10 +20,10 @@ module.exports = store.add({
                     response.hits
                     'id'
                 )
-                recorder.emit('search', q, response.hits.length)
+                recorder.emit('search success', q, response.hits.length)
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on search', errors)
+                recorder.emit('search failure', errors)
             always: =>
                 @change()
         })

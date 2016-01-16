@@ -5,6 +5,7 @@ recorder = require('../modules/recorder')
 
 module.exports = store.add({
     getCard: (id) ->
+        recorder.emit('get card', id)
         ajax({
             method: 'GET'
             url: "/s/cards/#{id}"
@@ -28,10 +29,10 @@ module.exports = store.add({
                     )
                 )
                 @data.cards[id] = card
-                recorder.emit('get card', id)
+                recorder.emit('get card success', id)
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on get card', errors)
+                recorder.emit('get card failure', errors)
             always: =>
                 @change()
         })
@@ -39,6 +40,7 @@ module.exports = store.add({
     getCardForLearn: (id) ->
         delete @data.cardResponse
         delete @data.cardFeedback
+        recorder.emit('learn card', id)
         ajax({
             method: 'GET'
             url: "/s/cards/#{id}/learn"
@@ -47,15 +49,16 @@ module.exports = store.add({
                 @data.learnCards ?= {}
                 @data.learnCards[id] = response.card
                 @tasks.updateMenuContext({card: id})
-                recorder.emit('learn card')
+                recorder.emit('learn card success', id)
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on learn card', errors)
+                recorder.emit('learn card failure', errors)
             always: =>
                 @change()
         })
 
     listCardVersions: (id) ->
+        recorder.emit('list card versions', id)
         ajax({
             method: 'GET'
             url: "/s/cards/#{id}/versions"
@@ -68,10 +71,10 @@ module.exports = store.add({
                     response.versions
                     'entity_id'
                 )
-                recorder.emit('list card versions')
+                recorder.emit('list card versions success', id)
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on list card versions', errors)
+                recorder.emit('list card versions failure', errors)
             always: =>
                 @change()
         })
@@ -79,7 +82,7 @@ module.exports = store.add({
     respondToCard: (id, data, goNext = false) ->
         @data.sending = true
         @change()
-
+        recorder.emit('respond to card', id)
         ajax({
             method: 'POST'
             url: "/s/cards/#{id}/responses"
@@ -94,10 +97,10 @@ module.exports = store.add({
                     response.response.learned
                 @data.cardFeedback = response.feedback
                 @tasks.updateMenuContext({card: false})
-                recorder.emit('respond to card', id)
+                recorder.emit('respond to card success', id)
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on respond to card', errors)
+                recorder.emit('respond to card failure', errors)
             always: =>
                 @data.sending = false
                 @change()
@@ -106,6 +109,7 @@ module.exports = store.add({
         })
 
     nextState: () ->
+        recorder.emit('next state')
         path = @data.next.path
         if args = matchesRoute(path, '/s/cards/{id}/learn')
             @tasks.route("/cards/#{args[0]}/learn")
@@ -115,6 +119,7 @@ module.exports = store.add({
             @tasks.route("/sets/#{args[0]}/tree")
 
     needAnAnswer: () ->
+        recorder.emit('need an answer')
         @data.cardFeedback = 'Please provide an answer.'
         @change()
 })

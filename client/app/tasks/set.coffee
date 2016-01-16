@@ -6,6 +6,7 @@ recorder = require('../modules/recorder')
 
 module.exports = store.add({
     getSet: (id) ->
+        recorder.emit('get set', id)
         ajax({
             method: 'GET'
             url: "/s/sets/#{id}"
@@ -17,15 +18,16 @@ module.exports = store.add({
                 ['topics', 'versions', 'units'].forEach((r) ->
                     set[r] = response[r]
                 )
-                recorder.emit('get set')
+                recorder.emit('get set success', id)
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on get set', errors)
+                recorder.emit('get set failure', errors)
             always: =>
                 @change()
         })
 
     listSetVersions: (id) ->
+        recorder.emit('list set versions', id)
         ajax({
             method: 'GET'
             url: "/s/sets/#{id}/versions"
@@ -38,15 +40,16 @@ module.exports = store.add({
                     response.versions
                     'id'
                 )
-                recorder.emit('list set versions')
+                recorder.emit('list set versions success', id)
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on list set versions', errors)
+                recorder.emit('list set versions failure', errors)
             always: =>
                 @change()
         })
 
     getSetTree: (id) ->
+        recorder.emit('get set tree', id)
         ajax({
             method: 'GET'
             url: "/s/sets/#{id}/tree"
@@ -54,45 +57,48 @@ module.exports = store.add({
             done: (response) =>
                 @data.setTrees ?= {}
                 @data.setTrees[id] = response
-                recorder.emit('get set tree', id)
+                recorder.emit('get set tree success', id)
                 if response.next?.path
                     recorder.emit('next', response.next)
                     @data.next = response.next
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on get set tree', errors)
+                recorder.emit('get set tree failure', errors)
             always: =>
                 @change()
         })
 
     selectTreeUnit: (id) ->
+        recorder.emit('select tree unit', id)
         @data.currentTreeUnit = id
         @change()
 
     getSetUnits: (id) ->
+        recorder.emit('get set units', id)
         ajax({
             method: 'GET'
             url: "/s/sets/#{id}/units"
             data: {}
             done: (response) =>
                 @data.chooseUnit = response
-                recorder.emit('get set units', id)
+                recorder.emit('get set units success', id)
                 recorder.emit('next', response.next)
                 @data.next = response.next
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on get set units', errors)
+                recorder.emit('get set units failure', errors)
             always: =>
                 @change()
         })
 
     chooseUnit: (setId, unitId) ->
+        recorder.emit('choose unit', setId, unitId)
         ajax({
             method: 'POST'
             url: "/s/sets/#{setId}/units/#{unitId}"
             data: {}
             done: (response) =>
-                recorder.emit('choose unit', setId, unitId)
+                recorder.emit('choose unit success', setId, unitId)
                 {next} = response
                 @data.next = next
                 recorder.emit('next', next)
@@ -105,7 +111,7 @@ module.exports = store.add({
                     @tasks.route("/cards/#{args[0]}/learn")
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on choose unit', errors)
+                recorder.emit('choose unit failure', errors)
             always: =>
                 @change()
         })

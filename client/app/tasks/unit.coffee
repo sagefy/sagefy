@@ -5,6 +5,7 @@ recorder = require('../modules/recorder')
 
 module.exports = store.add({
     getUnit: (id) ->
+        recorder.emit('get unit', id)
         ajax({
             method: 'GET'
             url: "/s/units/#{id}"
@@ -25,15 +26,16 @@ module.exports = store.add({
                     )
                 )
                 @data.units[id] = unit
-                recorder.emit('get unit')
+                recorder.emit('get unit success', id)
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on get unit', errors)
+                recorder.emit('get unit failure', errors)
             always: =>
                 @change()
         })
 
     listUnitVersions: (id) ->
+        recorder.emit('list unit versions', id)
         ajax({
             method: 'GET'
             url: "/s/units/#{id}/versions"
@@ -46,10 +48,10 @@ module.exports = store.add({
                     response.versions
                     'id'
                 )
-                recorder.emit('list unit version')
+                recorder.emit('list unit versions success', id)
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on list unit version', errors)
+                recorder.emit('list unit versions failure', errors)
             always: =>
                 @change()
         })

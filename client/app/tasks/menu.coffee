@@ -15,6 +15,7 @@ module.exports = store.add({
         @change()
 
     updateMenuContext: ({card, unit, set}) ->
+        recorder.emit('update menu context', {card, unit, set})
         @data.menu.context ?= {}
         @data.menu.context.card = card if card?
         @data.menu.context.unit = unit if unit?

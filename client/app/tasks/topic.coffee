@@ -6,6 +6,7 @@ module.exports = store.add({
     createTopic: (data) ->
         @data.sending = true
         @change()
+        recorder.emit('create topic')
         ajax({
             method: 'POST'
             url: '/s/topics'
@@ -13,11 +14,11 @@ module.exports = store.add({
             done: (response) =>
                 @data.topics ?= {}
                 @data.topics[response.topic.id] = response.topic
-                recorder.emit('create topic')
+                recorder.emit('create topic success')
                 @tasks.route("/topics/#{response.topic.id}")
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on create topic', errors)
+                recorder.emit('create topic failure', errors)
             always: =>
                 @data.sending = false
                 @change()
@@ -26,6 +27,7 @@ module.exports = store.add({
     updateTopic: (data) ->
         @data.sending = true
         @change()
+        recorder.emit('update topic')
         ajax({
             method: 'PUT'
             url: "/s/topics/#{data.topic.id}"
@@ -33,11 +35,11 @@ module.exports = store.add({
             done: (response) =>
                 @data.topics ?= {}
                 @data.topics[data.topic.id] = response.topic
-                recorder.emit('update topic')
+                recorder.emit('update topic success')
                 @tasks.route("/topics/#{data.topic.id}")
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on update topic', errors)
+                recorder.emit('update topic failure', errors)
             always: =>
                 @data.sending = false
                 @change()

@@ -5,7 +5,10 @@ cookie = require('./modules/cookie')
 
 {route} = require('./modules/route_actions')
 
-# TODO-1 Add google analytics
+# Add google analytics
+{startGoogleAnalytics, trackEvent} = require('./modules/analytics')
+startGoogleAnalytics()
+recorder.on('all', trackEvent)
 
 # Require all tasks
 require('./tasks/card')

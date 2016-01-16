@@ -5,6 +5,7 @@ recorder = require('../modules/recorder')
 
 module.exports = store.add({
     listNotices: (limit = 50, skip = 0) ->
+        recorder.emit('list notices')
         ajax({
             method: 'GET'
             data: {limit, skip}
@@ -16,11 +17,16 @@ module.exports = store.add({
                     response.notices
                     'id'
                 )
-                recorder.emit('list notices', limit, skip)
+                recorder.emit('list notices success', limit, skip)
+            fail: (errors) =>
+                @data.errors = errors
+                recorder.emit('list notices failure', errors)
+            always: =>
                 @change()
         })
 
     markNotice: (id, read = true) ->
+        recorder.emit('mark notice', id, read)
         ajax({
             method: 'PUT'
             url: "/s/notices/#{id}"
@@ -30,7 +36,11 @@ module.exports = store.add({
                     if notice.id is id
                         @data.notices[index] = response.notice
                         break
-                recorder.emit('mark notice', id, read)
+                recorder.emit('mark notice success', id, read)
+            fail: (errors) =>
+                @data.errors = errors
+                recorder.emit('mark notice failure', errors)
+            always: =>
                 @change()
         })
 })

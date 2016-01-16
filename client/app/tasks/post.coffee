@@ -5,6 +5,7 @@ recorder = require('../modules/recorder')
 
 module.exports = store.add({
     listPosts: (id) ->
+        recorder.emit('list posts', id)
         ajax({
             method: 'GET'
             url: "/s/topics/#{id}/posts"
@@ -43,10 +44,10 @@ module.exports = store.add({
                     @data.sets ?= {}
                     @data.sets[response.set.entity_id] = response.set
 
-                recorder.emit('list posts', id)
+                recorder.emit('list posts success', id)
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on list posts', errors)
+                recorder.emit('list posts failure', errors)
             always: =>
                 @change()
         })
@@ -55,6 +56,7 @@ module.exports = store.add({
         @data.sending = true
         @change()
         {topic_id} = data.post
+        recorder.emit('create post')
         ajax({
             method: 'POST'
             url: "/s/topics/#{topic_id}/posts"
@@ -62,11 +64,11 @@ module.exports = store.add({
             done: (response) =>
                 if @data.topicPosts?[topic_id]
                     @data.topicPosts[topic_id].push(response.post)
-                recorder.emit('create post')
+                recorder.emit('create post success')
                 @tasks.route("/topics/#{topic_id}")
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on create post', errors)
+                recorder.emit('create post failure', errors)
             always: =>
                 @data.sending = false
                 @change()
@@ -76,6 +78,7 @@ module.exports = store.add({
         @data.sending = true
         @change()
         {topic_id, id} = data.post
+        recorder.emit('update post')
         ajax({
             method: 'PUT'
             url: "/s/topics/#{topic_id}/posts/#{id}"
@@ -84,11 +87,11 @@ module.exports = store.add({
                 if topic = @data.topicPosts?[topic_id]
                     index = topic.findIndex((post) -> post.id is id)
                     topic[index] = response.post
-                recorder.emit('update post')
+                recorder.emit('update post success')
                 @tasks.route("/topics/#{topic_id}")
             fail: (errors) =>
                 @data.errors = errors
-                recorder.emit('error on update post', errors)
+                recorder.emit('update post failure', errors)
             always: =>
                 @data.sending = false
                 @change()
