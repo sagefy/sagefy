@@ -64,7 +64,6 @@ Database
 
 - Table names are plural.
 - Field names are singular, unless an array.
-- Model names are singular.
 - Join tables should use both names, and both in plural form.
 - Don't use negative named booleans. Stay positive.
 - IDs are always randomly generated strings.
@@ -73,7 +72,6 @@ Database
 - Use `body` for body, message, description.
 - Use `kind` for kind or type.
 - When the number of kinds is unknown, use `tags` instead.
-- Use `_tablename` to refer to the name of another table.
 - When the relationship is...
     - 1 to 1: Should probably use embedding. Otherwise, use the same ID for both.
     - 1 to many: Put the "1" ID into the "many" rows.
