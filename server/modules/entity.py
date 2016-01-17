@@ -21,6 +21,21 @@ from models.cards.writing_card import WritingCard
 from modules.util import omit
 
 
+card_map = {
+    'audio': AudioCard,
+    'choice': ChoiceCard,
+    'embed': EmbedCard,
+    'formula': FormulaCard,
+    'match': MatchCard,
+    'number': NumberCard,
+    'page': PageCard,
+    'slideshow': SlideshowCard,
+    'upload': UploadCard,
+    'video': VideoCard,
+    'writing': WritingCard,
+}
+
+
 def get_latest_accepted(kind, entity_id):
     """
     Given a kind and an entity_id, pull the latest accepted
@@ -28,8 +43,8 @@ def get_latest_accepted(kind, entity_id):
     """
 
     if kind == 'card':
-        return Card.get_latest_accepted(entity_id)
-        # TODO-0 This needs to also get the right card kind...
+        card = Card.get_latest_accepted(entity_id)
+        return flip_card_into_kind(card)
     elif kind == 'unit':
         return Unit.get_latest_accepted(entity_id)
     elif kind == 'set':
@@ -38,8 +53,8 @@ def get_latest_accepted(kind, entity_id):
 
 def get_version(kind, id_):
     if kind == 'card':
-        return Card.get(id=id_)
-        # TODO-0 This needs to also get the right card kind...
+        card = Card.get(id=id_)
+        return flip_card_into_kind(card)
     elif kind == 'unit':
         return Unit.get(id=id_)
     elif kind == 'set':
@@ -78,8 +93,9 @@ def instance_new_entity(data):
     fields = ('id', 'created', 'modified',
               'entity_id', 'previous_id', 'status', 'available')
     if 'card' in data:
-        return Card(omit(data['card'], fields))
-        # TODO-0 This needs to also get the right card kind...
+        kind = data['card'].get('kind')
+        if kind in card_map:
+            return card_map[kind](omit(data['card'], fields))
     elif 'unit' in data:
         return Unit(omit(data['unit'], fields))
     elif 'set' in data:
@@ -92,27 +108,20 @@ def get_card_by_kind(card_id):
     """
 
     card = Card.get_latest_accepted(card_id)
+    return flip_card_into_kind(card)
+
+
+def flip_card_into_kind(card):
+    """
+    Given a general card model (before removing extra fields),
+    return a card model in its kind.
+    """
+
     if not card:
-        return
-
-    data, kind = card.data, card.data.get('kind')
-
-    map = {
-        'audio': AudioCard,
-        'choice': ChoiceCard,
-        'embed': EmbedCard,
-        'formula': FormulaCard,
-        'match': MatchCard,
-        'number': NumberCard,
-        'page': PageCard,
-        'slideshow': SlideshowCard,
-        'upload': UploadCard,
-        'video': VideoCard,
-        'writing': WritingCard,
-    }
-
-    if kind in map:
-        return map[kind](data)
+        return None
+    kind = card.data.get('kind')
+    if kind in card_map:
+        return card_map[kind](card.data)
 
 
 def flush_entities(descs):
@@ -125,8 +134,10 @@ def flush_entities(descs):
 
     for desc in descs:
         if desc['kind'] == 'card':
-            output.append(Card.get_latest_accepted(entity_id=desc['id']))
-            # TODO-0 This needs to also get the right card kind...
+            card = Card.get_latest_accepted(entity_id=desc['id'])
+            card = flip_card_into_kind(card)
+            if card:
+                output.append(card)
         elif desc['kind'] == 'unit':
             output.append(Unit.get_latest_accepted(entity_id=desc['id']))
         elif desc['kind'] == 'set':
