@@ -346,7 +346,7 @@ class Model(object):
 
         def _(data, field_name, field_schema, prefix):
             if ('access' in field_schema and
-                    data.get(field_name) and
+                    data.get(field_name) is not None and
                     access not in field_schema['access']):
                 del data[field_name]
 

@@ -298,7 +298,7 @@ def get_posts_route(request, topic_id):
         'topic': topic.deliver(),
         'posts': [p.deliver() for p in posts],
         'entity_versions': {
-            p: ev.deliver()
+            p: ev.deliver('view')
             for p, ev in entity_versions.items()
         },
         # 'diffs': diffs,  TODO-2 this causes a circular dependency
