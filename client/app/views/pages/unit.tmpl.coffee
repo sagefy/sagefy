@@ -6,6 +6,7 @@ entityHeader = require('../components/entity_header.tmpl')
 entityTopics = require('../components/entity_topics.tmpl')
 entityVersions = require('../components/entity_versions.tmpl')
 entityRelationships = require('../components/entity_relationships.tmpl')
+spinner = require('../components/spinner.tmpl')
 
 # TODO-2 This page should show a list of cards that the unit contains
 
@@ -13,15 +14,15 @@ module.exports = (data) ->
     id = data.routeArgs[0]
     unit = data.units?[id]
 
-    return div({className: 'spinner'}) unless unit
+    return spinner() unless unit
 
     return div(
-        {id: 'unit', className: 'col-8 entity-page'}
+        {id: 'unit'}
 
         followButton('unit', unit.entity_id, data.follows)
         entityHeader('unit', unit)
 
-        p({className: 'leading'}, unit.body)
+        p(unit.body)
 
         ul(
             li("Language: #{c(unit.language)}")

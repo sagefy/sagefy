@@ -1,10 +1,21 @@
 #choose-unit
+    @extend $col-10
+
+.choose-unit__engage
+    @extend $button--good
+    float left
+
+    &.choose-unit__engage--first
+        @extend $button--accent
+
+.choose-unit__recommended
+    @extend $label--accent
+
+// TODO-2 Migrate this all to BEM syntax
+#choose-unit
     .units
         list-style none
         padding 0
-
-        .engage
-            float left
 
         > li
             padding $unit

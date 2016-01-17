@@ -2,7 +2,7 @@
 
 module.exports = (data) ->
     return textarea({
-        id: data.name
+        id: "ff-#{data.name}"
         name: data.name
         placeholder: data.placeholder or ''
         cols: data.cols or 40

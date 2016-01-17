@@ -4,6 +4,7 @@ userSchema = require('../../schemas/user')
 {extend} = require('../../modules/utilities')
 {createFieldsData} = require('../../modules/auxiliaries')
 qs = require('../../modules/query_string')
+wizard = require('../components/wizard.tmpl')
 
 emailFields = [{
     name: 'email'
@@ -42,30 +43,17 @@ module.exports = (data) ->
     return div(
         {
             id: 'password'
-            className: 'col-8 ' + state
+            className: state
         }
         h1('Create a New Password')
-        ol(
-            {className: 'wizard'}
-            li(
-                {href: '#', className: 'email' +
-                    if state is 'email'
-                    then ' selected' else ''}
-                'Enter Email'
-            )
-            li(
-                {href: '#', className: 'inbox' +
-                    if state is 'inbox'
-                    then ' selected' else ''}
-                'Check Inbox'
-            )
-            li(
-                {href: '#', className: 'password' +
-                    if state is 'password'
-                    then ' selected' else ''}
-                'Change Password'
-            )
-        )
+        wizard({
+            options: [
+                {name: 'email', label: 'Enter Email'}
+                {name: 'inbox', label: 'Check Inbox'}
+                {name: 'password', label: 'Change Password'}
+            ]
+            state
+        })
         getNodesForState(state, data)
     )
 

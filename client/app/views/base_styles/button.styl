@@ -1,0 +1,116 @@
+/*
+---
+title: Buttons
+description: Buttons are one of the most recognized elements of web design. Sagefy provides buttons in a variety of styles. In most places, where there are multiple buttons, one and only one button should be emphasized.
+---
+*/
+
+button-background($color, $raise = 5, $reduce = 5)
+    background-color $color
+    background-image -webkit-linear-gradient(lighten($color, $raise), darken($color, $reduce))
+    background-image linear-gradient(lighten($color, $raise), darken($color, $reduce))
+
+button-background-inv($color, $raise = 5, $reduce = 5)
+    background-color $color
+    background-image -webkit-linear-gradient(darken($color, $reduce), lighten($color, $raise))
+    background-image linear-gradient(darken($color, $reduce), lighten($color, $raise))
+
+$base-button
+    border 0
+    border-radius $border-radius
+    padding ($unit / 2) ($unit * 4 / 3)
+    margin 0 auto
+    display inline-block
+    margin $unit 0
+    cursor pointer
+    transition all 0.2s
+
+    &:focus
+        outline 0
+
+    &[disabled]
+        background transparent
+        cursor default
+
+button
+input[type="button"]
+    @extend $base-button
+
+    button-background $base-color(90)
+    color $base-color(43)
+
+    &:hover, &:focus
+        color $base-color(20)
+        button-background $base-color(95)
+
+    &:active
+        button-background-inv $base-color(78)
+
+    &[disabled]
+        color $base-color(78)
+
+        &:hover, &:focus, &:active
+            color $base-color(78)
+            background transparent
+
+button[type="submit"]
+$button--accent
+    @extend $base-button
+
+    button-background $accent-color(50)
+    color $accent-color(99)
+
+    &:hover, &:focus
+        color white
+        button-background $accent-color(66)
+
+    &:active
+        color $accent-color(95)
+        button-background-inv $accent-color(43)
+
+    &[disabled]
+        color $accent-color(78)
+
+        &:hover, &:focus, &:active
+            color $accent-color(78)
+            background transparent
+
+$button--good
+    @extend $base-button
+
+    button-background $good-color(90)
+    color $good-color(43)
+
+    &:hover, &:focus
+        color $good-color(20)
+        button-background $good-color(95)
+
+    &:active
+        button-background-inv $good-color(78)
+
+    &[disabled]
+        color $good-color(78)
+
+        &:hover, &:focus, &:active
+            color $good-color(78)
+            background transparent
+
+$button--bad
+    @extend $base-button
+
+    button-background $bad-color(90), 3, 2
+    color $bad-color(43)
+
+    &:hover, &:focus
+        color $bad-color(20)
+        button-background $bad-color(95), 3, 2
+
+    &:active
+        button-background-inv $bad-color(78), 3, 2
+
+    &[disabled]
+        color $bad-color(78)
+
+        &:hover, &:focus, &:active
+            color $bad-color(78)
+            background transparent

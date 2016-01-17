@@ -1,5 +1,6 @@
 {div, h1, h2, ul, li, iframe, i, strong, em} = require('../../modules/tags')
 c = require('../../modules/content').get
+spinner = require('../components/spinner.tmpl')
 
 followButton = require('../components/follow_button.tmpl')
 entityHeader = require('../components/entity_header.tmpl')
@@ -17,19 +18,19 @@ module.exports = (data) ->
     id = data.routeArgs[0]
     card = data.cards?[id]
 
-    return div({className: 'spinner'}) unless card
+    return spinner() unless card
 
     params = card.card_parameters
     assess = card.kind in assessments
 
     return div(
-        {id: 'card', className: 'col-8 entity-page'}
+        {id: 'card'}
 
         followButton('card', card.entity_id, data.follows)
         entityHeader('card', card)
 
         div(
-            {className: 'preview'}
+            {className: 'card__preview'}
             k[card.kind](card)
         )
 
@@ -65,14 +66,13 @@ k.choice = (card) ->
     return ul(
         li('Question: ', card.body)
         li('Options: ', ul(
-            {className: 'unstyled'}
             li(
                 i({className: if option.correct then 'fa fa-check-circle' \
                               else 'fa fa-times-circle'})
                 ' '
                 strong(option.value)
                 ' '
-                em({className: 'font-size-small'}, option.feedback)
+                em(option.feedback)
             ) for option in card.options
         ))
         li('Order: ', card.order)

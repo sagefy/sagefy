@@ -1,0 +1,14 @@
+/*
+---
+title: Clearfix
+description: |
+    Clearfix clears any floats within the element so it doesn't impact neighboring elements.
+---
+*/
+$clearfix
+    &:before, &:after
+        content " "
+        display table
+
+    &:after
+        clear both

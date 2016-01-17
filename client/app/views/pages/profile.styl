@@ -1,13 +1,11 @@
 #profile
-    header
-        text-align center
-        border-bottom 1px solid $base-color(90)
-        margin-bottom $unit * 2
-        background linear-gradient(transparent, $base-color(96))
+    @extend $col-6
 
-    .avatar
-        @extend .frame
-        margin 0
-
-    .posts .timeago
-        float right
+.profile__avatar
+    margin 0
+    
+.profile__header
+    text-align center
+    border-bottom 1px solid $base-color(90)
+    margin-bottom $unit * 2
+    background linear-gradient(transparent, $base-color(96))

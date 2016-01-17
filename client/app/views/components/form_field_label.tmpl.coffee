@@ -7,10 +7,19 @@ module.exports = (data) ->
                  then required in data.validations \
                  else false
     return label(
-        {for: data.name}
+        {
+            className: 'form-field__label'
+            for: "ff-#{data.name}"
+        }
         data.label or ''
         span(
-            {className: if isRequired then 'required' else 'optional'}
+            {
+                className: (
+                    if isRequired \
+                        then 'form-field__required'
+                        else 'form-field__optional'
+                )
+            }
             if isRequired then c('required') else c('optional')
         ) unless data.type is 'message'
     )

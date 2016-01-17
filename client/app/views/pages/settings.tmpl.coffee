@@ -4,6 +4,7 @@ userSchema = require('../../schemas/user')
 {extend} = require('../../modules/utilities')
 {createFieldsData} = require('../../modules/auxiliaries')
 form = require('../components/form.tmpl')
+spinner = require('../components/spinner.tmpl')
 
 fields = [{
     name: 'id'
@@ -41,7 +42,7 @@ for index, field of fields
 
 module.exports = (data) ->
     user = data.users?[data.currentUserID]
-    return div({className: 'spinner'}) unless user
+    return spinner() unless user
 
     instanceFields = createFieldsData({
         schema: userSchema
@@ -57,7 +58,7 @@ module.exports = (data) ->
     })
 
     return div(
-        {id: 'settings', className: 'col-6'}
+        {id: 'settings'}
         h1('Settings')
         form(instanceFields)
         hr()

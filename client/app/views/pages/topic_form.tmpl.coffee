@@ -6,6 +6,7 @@ getPostSchema = require('./post_form.fn').getSchema
     require('../../modules/auxiliaries')
 {extend} = require('../../modules/utilities')
 topicSchema = require('../../schemas/topic')
+spinner = require('../components/spinner.tmpl')
 
 classes = (formData) ->
     postID = formData['post.id']
@@ -14,7 +15,6 @@ classes = (formData) ->
     entityKind = formData['post.entity_version.kind']
     cardKind = formData['entity.kind']
     return [
-        'col-6'
         if topicID then 'update' else 'create'
         if postKind then "post-#{postKind}" else ''
         if entityKind then "entity-#{entityKind}" else ''
@@ -77,7 +77,7 @@ module.exports = (data) ->
     topicID = getTopicID(data)
     if topicID
         topic = data.topics?[topicID]
-    return div({className: 'spinner'}) if topicID and not topic
+    return spinner() if topicID and not topic
 
     formData = extend({}, data.formData, {
         'topic.id': topic?.id
@@ -118,7 +118,6 @@ module.exports = (data) ->
         }
         h1(if topicID then 'Update Topic' else 'Create Topic')
         p(
-            {className: 'leading'}
             strong(ucfirst(entity?.kind or ''))
             ": #{entity?.name}"
         )

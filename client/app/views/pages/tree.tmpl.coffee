@@ -9,6 +9,7 @@
     findLayer
 } = require('./tree.fn')
 {matchesRoute} = require('../../modules/auxiliaries')
+spinner = require('../components/spinner.tmpl')
 
 # TODO-2 show the learner their overall set progress as a percent or bar
 
@@ -19,7 +20,7 @@ module.exports = (data) ->
     id = data.routeArgs[0]
     treeData = data.setTrees?[id]
 
-    return div({className: 'spinner'}) unless treeData
+    return spinner() unless treeData
 
     asLearner = data.route.indexOf('as_learner') > -1
     asContrib = not asLearner
@@ -40,7 +41,7 @@ module.exports = (data) ->
         [cardID] = matchesRoute(data.next.path, '/s/cards/{id}/learn')
 
     return div(
-        {id: 'tree', className: 'col-10'}
+        {id: 'tree'}
         h1("Tree: #{treeData.set.name}")
 
         p(a(
@@ -63,7 +64,7 @@ module.exports = (data) ->
 
         p(a(
             {
-                className: 'button--accent'
+                className: 'tree__continue'
                 href: "/sets/#{chooseUnitID}/choose_unit"
             }
             'Next '
@@ -71,7 +72,7 @@ module.exports = (data) ->
         )) if chooseUnitID
 
         p(a(
-            {className: 'button--accent', href: "/cards/#{cardID}/learn"}
+            {className: 'tree__continue', href: "/cards/#{cardID}/learn"}
             'Next '
             i({className: 'fa fa-chevron-right'})
         )) if cardID

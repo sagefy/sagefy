@@ -18,19 +18,15 @@ c = require('../../modules/content').get
 {isArray} = require('../../modules/utilities')
 
 module.exports = (data) ->
-    return div(
-        {className: 'select'}
-        m(data)
-    )
-
-m = (data) ->
     if not data.options or data.options.length is 0
         return c('no_options')
 
     html = []
 
     html.push(ul(
-        {className: 'unstyled' + (if data.inline then ' inline' else '')}
+        {className: 'form-field--select__ul' +
+            (if data.inline then ' form-field--select__ul--inline' else '')
+        }
         require('./form_field_select_option.tmpl')({
             name: data.name
             muliple: data.multiple

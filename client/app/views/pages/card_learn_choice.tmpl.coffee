@@ -15,11 +15,10 @@ module.exports = (data, mode) ->
 
     return [
         div(
-            {className: 'leading'}
             data.body
         )
         ul(
-            {className: 'options unstyled'}
+            {className: 'options card-learn__options'}
             li(
                 {className: if disabled then 'disabled' else ''}
                 input({

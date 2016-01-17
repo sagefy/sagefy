@@ -1,0 +1,22 @@
+/*
+---
+title: Form Field Label
+description: The label may contain a <code>span</code> with either <code>optional</code> or <code>required</code> as the class and copy to indicate the field is either required or optional. More useful for forms with more than three fields or several sections.
+---
+*/
+
+.form-field__label
+    display block
+
+.form-field__required
+.form-field__optional
+    @extend $font-size-small
+    border-radius $border-radius
+    margin-left $gutter
+    padding 0 ($unit / 4)
+
+.form-field__required
+        color $bad-color(60)
+
+.form-field__optional
+        color $base-color(60)

@@ -7,13 +7,13 @@ module.exports = (kind, entity_id, follows) ->
             {
                 id: "#{kind}_#{entity_id}"
                 href: '#'
-                className: 'follow button button--good pull-right'
+                className: 'follow-button'
             }
             i({className: 'fa fa-heart'})
             ' Follow'
         ) if not following
         p(
-            {className: 'label--good pull-right'}
+            {className: 'follow-button__following'}
             i({className: 'fa fa-check'})
             ' Following'
         ) if following

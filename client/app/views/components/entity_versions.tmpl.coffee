@@ -1,24 +1,16 @@
 {h2, ul, li, span, p, a, i} = require('../../modules/tags')
 {timeAgo, ucfirst} = require('../../modules/auxiliaries')
-
-
-labelClasses = {
-    pending: 'label'
-    blocked: 'label--bad'
-    declined: 'label'
-    accepted: 'label--good'
-}
-
+timeago = require('./timeago.tmpl')
 
 module.exports = (kind, entityID, versions) ->
     return [
         h2('Versions')
         ul(
-            {className: 'versions'}
+            {className: 'entity-versions'}
             li(
-                span({className: 'timeago'}, timeAgo(version.created))
+                timeago(version.created, {right: true})
                 span(
-                    {className: labelClasses[version.status]}
+                    {className: 'entity-versions__status--' + version.status}
                     ucfirst(version.status)
                 )
                 ' '

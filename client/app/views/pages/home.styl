@@ -1,8 +1,5 @@
 #home
-    #logo
-        margin $gutter auto 0
-        height $unit * 10
-        display block
+    @extend $col-8
 
     h1
         font-weight normal
@@ -11,9 +8,17 @@
         text-align center
 
     h3
+        @extend $subheader
+
+    h3
         margin-bottom $unit * 2
 
-    .legal
-        @extend .font-size-small
-        color $base-color(43)
-        margin-top $unit * 4
+.home__logo
+        margin $gutter auto 0
+        height $unit * 10
+        display block
+
+.home__legal
+    @extend $font-size-small
+    color $base-color(43)
+    margin-top $unit * 4

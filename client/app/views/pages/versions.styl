@@ -1,10 +1,22 @@
 #versions
-    .timeago
-        float right
-        margin-left $unit
+    @extend $col-10
 
+.versions__status--pending
+    @extend $label
+
+.versions__status--blocked
+    @extend $label--bad
+
+.versions__status--declined
+    @extend $label
+
+.versions__status--accepted
+    @extend $label--good
+
+// TODO-2 Migrate this all to BEM syntax
+#versions
     > ul
-        @extend ul.unstyled
+        @extend $ul--unstyled
 
         > li
             padding $unit

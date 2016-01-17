@@ -1,20 +1,21 @@
-{a, i, h2, ul, li, span, p} = require('../../modules/tags')
-{timeAgo, ucfirst} = require('../../modules/auxiliaries')
+{div, a, i, h2, ul, li, span, p} = require('../../modules/tags')
+timeago = require('./timeago.tmpl')
+{ucfirst} = require('../../modules/auxiliaries')
 
 module.exports = (kind, entityID, topics) ->
-    return [
+    return div(
+        {className: 'entity-topics'}
+        h2('Topics')
         a(
             {
-                className: 'font-size-small pull-right'
                 href: "/topics/create?kind=#{kind}&id=#{entityID}"
             }
             i({className: 'fa fa-plus'})
             ' Create a new topic'
         )
-        h2('Topics')
         ul(
             li(
-                span({className: 'timeago'}, timeAgo(topic.created))
+                timeago(topic.created, {right: true})
                 # TODO-2 update time ago to latest post time
                 a(
                     {href: "/topics/#{topic.id}"}
@@ -33,4 +34,4 @@ module.exports = (kind, entityID, topics) ->
         p(
             'No topics yet.'
         ) unless topics?.length
-    ]
+    )

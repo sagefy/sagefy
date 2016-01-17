@@ -1,7 +1,9 @@
 {div, h1, form, input, button, img,
  i, ul, li, strong, a, p, span} = require('../../modules/tags')
 c = require('../../modules/content').get
-{truncate, timeAgo, ucfirst} = require('../../modules/auxiliaries')
+{truncate, ucfirst} = require('../../modules/auxiliaries')
+spinner = require('../components/spinner.tmpl')
+timeago = require('../components/timeago.tmpl')
 
 # TODO-2 when receiving ?kind={kind}, then search using that as well.
 
@@ -19,7 +21,7 @@ module.exports = (data) ->
     inputOpts.value = data.searchQuery if data.searchQuery
 
     return div(
-        {id: 'search', className: 'col-8'}
+        {id: 'search'}
         h1('Search')
         # TODO-2 add search filtering / ordering
         form(
@@ -34,7 +36,7 @@ module.exports = (data) ->
                 ' Search'
             )
         )
-        div({className: 'spinner'}) if loading
+        spinner() if loading
         ul(
             li(
                 r[result._type + 'Result'](result, asLearner)
@@ -61,10 +63,7 @@ r.userResult = (result) ->
 
 r.topicResult = (result) ->
     return [
-        span(
-            {className: 'timeago'}
-            timeAgo(result._source.created)
-        )
+        timeago(result._source.created, {right: true})
         strong('Topic')
         ': '
         a(
@@ -82,10 +81,7 @@ r.topicResult = (result) ->
 r.postResult = (result) ->
     href = "/topics/#{result._source.topic_id}##{result._source.id}"
     return [
-        span(
-            {className: 'timeago'}
-            timeAgo(result._source.created)
-        )
+        timeago(result._source.created, {right: true})
         strong(ucfirst(result._source.kind))
         ': '
         a(

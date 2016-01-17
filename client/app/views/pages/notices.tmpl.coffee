@@ -1,13 +1,14 @@
 {div, h1, p, a, i} = require('../../modules/tags')
 c = require('../../modules/content').get
 notices = require('../components/notices.tmpl')
+spinner = require('../components/spinner.tmpl')
 
 
 module.exports = (data) ->
-    return div({className: 'spinner'}) unless data.notices
+    return spinner() unless data.notices
 
     return div(
-        {id: 'notices', className: 'col-6'}
+        {id: 'notices'}
         h1('Notices')
         p(a(
             {href: '/follows'},

@@ -1,11 +1,12 @@
 {div, h1, ul, li, a, h3, p, span, i, div} = require('../../modules/tags')
 c = require('../../modules/content').get
+spinner = require('../components/spinner.tmpl')
 
 module.exports = (data) ->
-    return div({className: 'spinner'}) unless data.chooseUnit
+    return spinner() unless data.chooseUnit
 
     return div(
-        {id: 'choose-unit', className: 'col-10'}
+        {id: 'choose-unit'}
         h1('Choose a Unit')
         ul(
             {id: data.chooseUnit.set.entity_id, className: 'units'}
@@ -14,16 +15,18 @@ module.exports = (data) ->
                 a(
                     {
                         id: unit.entity_id
-                        className: 'engage ' + if index is 0 \
-                                then 'button--accent' \
-                                else 'button--good'
+                        className: 'choose-unit__engage' + (
+                            if index is 0 \
+                                then ' choose-unit__engage--first'
+                                else ''
+                        )
                     }
                     'Engage!'
                 )
                 div(
                     h3(unit.name)
                     span(
-                        {className: 'label--accent'}
+                        {className: 'choose-unit__recommended'}
                         i({className: 'fa fa-star'})
                         ' Recommended'
                     ) if index is 0

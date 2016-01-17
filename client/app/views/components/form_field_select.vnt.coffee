@@ -11,6 +11,6 @@ module.exports = broker.add({
         # TODO-3 search options
     # , 200)
 
-    'change input[type="radio"], input[type="checkbox"]': (e, el) ->
+    # 'change input[type="radio"], input[type="checkbox"]': (e, el) ->
         # TODO-3 update .select__selected to show list of selected names
 })

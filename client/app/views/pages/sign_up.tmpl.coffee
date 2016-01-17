@@ -39,7 +39,7 @@ module.exports = (data) ->
     })
 
     return div(
-        {id: 'sign-up', className: 'col-6'}
+        {id: 'sign-up'}
         h1('Sign Up')
         p(
             'Already have an account? '

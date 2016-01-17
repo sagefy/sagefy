@@ -31,7 +31,7 @@ module.exports = store.add({
     updateUser: (data) ->
         @data.sending = true
         @change()
-        recorder.emit('update user', response.user.id)
+        recorder.emit('update user', data.id)
         ajax({
             method: 'PUT'
             url: "/s/users/#{data.id}"

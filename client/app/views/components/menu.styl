@@ -3,25 +3,6 @@
 title: Menu
 description: |
     Sagefy's most common navigational element is a simple menu. The user clicks on the Sagefy icon, and a pane of menu options provides the user with more functionality. This helps to prevent cognitive overload.
-example: |
-    <div class="menu">
-        <div class="menu__overlay"></div>
-        <a href="#" class="menu__trigger">
-            <div class="menu__logo"></div>
-            <i class="menu__close fa fa-times-circle" style="display:none"></i>
-        </a>
-        <a href="#" class="menu__close"></a>
-        <ul class="menu_items">
-            <li>
-                <a href="#">
-                    <i class="fa fa-square"></i>
-                    <div class="menu__item__title">
-                        Menu Item
-                    </div>
-                </a>
-            </li>
-        </ul>
-    </div>
 ---
 */
 
@@ -87,7 +68,7 @@ example: |
     color $base-color(66)
 
 .menu__items
-    @extend .row
+    @extend $row
     padding $unit
     display flex
     position relative

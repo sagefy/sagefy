@@ -13,13 +13,13 @@ renderProposal = (data) ->
     evKind = data.entity_version.kind
     ev = data.ev or {}
     return div(
-        {className: 'post--proposal'}
+        {className: 'post__proposal'}
         # TODO-2 this is super ugly
         ul(
             li(
                 'Status: '
                 span(
-                    {className: "proposal__status--#{ev.status}"}
+                    {className: "post__proposal-status--#{ev.status}"}
                     ucfirst(ev.status)
                 )
             )
@@ -60,7 +60,7 @@ voteResponse = (response) ->
     return [
         span(
             {
-                className: "label--#{if response then 'good' else 'bad'}"
+                className: "post__vote--#{if response then 'good' else 'bad'}"
             }
             i({className: "fa fa-thumbs-#{if response then 'up' else 'down'}"})
             if response then ' Yes' else ' No'
@@ -84,7 +84,6 @@ module.exports = (data, currentUserID) ->
                         src: data.user_avatar or ''
                         width: 48
                         height: 48
-                        'data-title': 'username'
                     }
                 )
             )

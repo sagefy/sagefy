@@ -8,6 +8,7 @@ module.exports = (kind, entity) ->
         title = ucfirst(entity.kind) + ' ' + title
 
     return header(
-        span({className: 'label--accent font-size-accent'}, title)
+        {className: 'entity-header'}
+        span({className: 'entity-header__kind'}, title)
         h1(entity.name)
     )

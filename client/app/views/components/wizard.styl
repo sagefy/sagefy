@@ -3,56 +3,21 @@
 title: Wizard
 description: |
     TBD
-example: |
-    <ol class="wizard">
-        <li>
-            <a href="#">
-                1.
-                Home
-            </a>
-        </li>
-        <li class="selected">
-            <a href="#">
-                2.
-                Learn
-            </a>
-        </li>
-        <li class="disabled">
-            <a href="#">
-                3.
-                Propose
-            </a>
-        </li>
-        <li class="disabled">
-            <a href="#">
-                4.
-                Analyze
-            </a>
-        </li>
-    </ol>
 ---
 */
 
 .wizard
-    margin $unit 0
-    padding-left 0
+    @extend $ul--inline
     counter-reset item
 
-    li
-        display inline-block
-        margin-right $unit
-        counter-increment item
-        padding 0 ($unit / 2)
+.wizard__li
+    counter-increment item
+    padding 0 ($unit / 2)
 
-        &:before
-            content counter(item, decimal) ". "
-            font-weight bold
+    &:before
+        content counter(item, decimal) ". "
+        font-weight bold
 
-        &.selected
-            background $accent-color(90)
-            border-radius $border-radius
-
-            &.disabled
-                &, a, i
-                    border-color transparent
-                    color $base-color(90)
+.wizard__li--selected
+        background $accent-color(90)
+        border-radius $border-radius

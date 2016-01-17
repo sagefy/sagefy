@@ -3,6 +3,7 @@ c = require('../../modules/content').get
 post = require('../components/post.tmpl')
 followButton = require('../components/follow_button.tmpl')
 {ucfirst} = require('../../modules/auxiliaries')
+spinner = require('../components/spinner.tmpl')
 
 # TODO-2 User doesn't show right after creating a new post in the topic view
 
@@ -11,10 +12,10 @@ module.exports = (data) ->
     posts = data.topicPosts?[id]
     topic = data.topics?[id]
 
-    return div({className: 'spinner'}) unless topic and posts
+    return spinner() unless topic and posts
 
     return div(
-        {id: 'topic', className: 'col-8'}
+        {id: 'topic'}
 
         header(
             followButton('topic', id, data.follows)
@@ -35,7 +36,7 @@ module.exports = (data) ->
             {className: 'topic__actions'}
             a(
                 {
-                    className: 'button--good'
+                    className: 'topic__create'
                     href: "/topics/#{id}/posts/create"
                 }
                 i({className: 'fa fa-plus'})

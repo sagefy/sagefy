@@ -128,7 +128,6 @@ module.exports = (data) ->
 
     return div(
         main(
-            {className: 'page'}
             route(data)
         )
         require('./components/menu.tmpl')(menuData)

@@ -1,13 +1,8 @@
 {div, h1, ul, li, span, strong, br, p, a, i} = require('../../modules/tags')
 c = require('../../modules/content').get
 {timeAgo, ucfirst} = require('../../modules/auxiliaries')
-
-labelClasses = {
-    pending: 'label'
-    blocked: 'label--bad'
-    declined: 'label'
-    accepted: 'label--good'
-}
+spinner = require('../components/spinner.tmpl')
+timeago = require('../components/timeago.tmpl')
 
 # TODO-2 Version history and proposal view should have the same layout,
 #        and be similar to the page
@@ -17,15 +12,14 @@ module.exports = (data) ->
 
     versions = data["#{kind}Versions"]?[id]
 
-    return div({className: 'spinner'}) unless versions
+    return spinner() unless versions
 
     latestAccepted = versions.find((v) -> v.status is 'accepted')
 
     return div(
-        {id: 'versions', className: 'col-10'}
+        {id: 'versions'}
         h1("Versions: #{latestAccepted.name}")
         p(
-            {className: 'leading'}
             a(
                 {href: "/#{kind}s/#{id}"}
                 i({className: 'fa fa-chevron-left'})
@@ -42,10 +36,10 @@ module.exports = (data) ->
 row = (kind, version) ->
     return [
         # Created ago
-        span({className: 'timeago'}, timeAgo(version.created))
+        timeago(version.created, {right: true})
         # Status
         span(
-            {className: 'status ' + labelClasses[version.status]}
+            {className: 'versions__status--' + version.status}
             ucfirst(version.status)
         )
         # Name
@@ -89,7 +83,7 @@ row = (kind, version) ->
 
         # Available
         if not version.available \
-            then span({className: 'avail label--bad'}, 'Hidden')
+            then span({className: 'avail'}, 'Hidden')
 
         # Language
         span({className: 'language'}, c(version.language))

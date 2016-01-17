@@ -2,7 +2,7 @@
 
 module.exports = (data) ->
     return input({
-        id: data.name
+        id: "ff-#{data.name}"
         name: data.name
         placeholder: data.placeholder or ''
         type: data.type or 'text'

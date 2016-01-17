@@ -4,7 +4,11 @@ module.exports = (data) ->
     return li(
         label(
             {
-                className: if data.disabled then 'disabled' else ''
+                className: 'form-field--select__label' + (
+                    if data.disabled \
+                        then ' form-field--select__label--disabled'
+                        else ''
+                )
             }
             input({
                 type: if data.multiple then 'checkbox' else 'radio'

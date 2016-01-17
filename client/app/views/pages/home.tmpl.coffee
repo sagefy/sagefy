@@ -4,14 +4,13 @@
 module.exports = (data) ->
     return (
         div(
-            {id: 'home', className: 'col-8'}
+            {id: 'home'}
             img(
-                {src: '/astrolabe.svg', id: 'logo'}
+                {src: '/astrolabe.svg', className: 'home__logo'}
             )
             hgroup(
                 h1('Sagefy')
                 h3(
-                    {className: 'subheader'}
                     'Open-content adaptive learning platform.'
                 )
             )
@@ -43,7 +42,7 @@ module.exports = (data) ->
                 '''
             ) # TODO Delete this warning message
             p(
-                {className: 'legal'}
+                {className: 'home__legal'}
                 '© Copyright 2015 Sagefy. '
                 a({href: '/terms'}, 'Privacy & Terms')
                 '.'

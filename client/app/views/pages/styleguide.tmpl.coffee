@@ -3,12 +3,11 @@
 
 module.exports = ->
     return div(
-        {id: 'styleguide', className: 'col-10'}
+        {id: 'styleguide'}
         h1(
             'Style Guide & Component Library'
         )
         p(
-            {className: 'leading'}
             '''
             Welcome to the Sagefy Style Guide. This page covers the styling and
             conventions of Sagefy user interfaces. This guide also include
@@ -19,19 +18,17 @@ module.exports = ->
     )
 
 writeStyleguide = ->
-    {outline} = require('./styleguide.outline.json')
     data = require('./styleguide.data.json')
 
     tags = []
-    for title in outline
+    for title of data
         o = data[title]
         tags.push(
-            h2(o.title)
+            h2(title)
             p(o.description) if o.description
-            pre(o.example) if o.example
         ) if o
 
     return tags
 
 # TODO-2 render description markdown -> vdom
-# TODO-2 render example using .tmpl file instead of html examples
+# TODO-2 render example using .tmpl file

@@ -107,7 +107,6 @@ module.exports = (data) ->
                 {
                     href: '#'
                     className: 'menu__trigger'
-                    'data-title': 'Menu'
                 }
                 div({className: 'menu__logo'})
                 i({className: 'menu__close fa fa-times-circle'}) if data.open

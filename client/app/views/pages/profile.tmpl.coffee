@@ -1,18 +1,21 @@
 {div, h1, p, img, h3, header,
  ul, li, a, strong, span} = require('../../modules/tags')
 {timeAgo, truncate, ucfirst} = require('../../modules/auxiliaries')
+spinner = require('../components/spinner.tmpl')
+timeago = require('../components/timeago.tmpl')
 
 module.exports = (data) ->
     [id] = data.routeArgs
     user = data.users?[id]
-    return div({className: 'spinner'}) unless user
+    return spinner() unless user
 
     return div(
-        {id: 'profile', className: 'col-6'}
+        {id: 'profile'}
         header(
-            img({src: user.avatar, className: 'avatar'})
+            {className: 'profile__header'}
+            img({src: user.avatar, className: 'profile__avatar'})
             h1(user.name)
-            p({className: 'timeago'}, 'Joined ' + timeAgo(user.created))
+            p('Joined ' + timeAgo(user.created))
         )
         sets(user, user.sets) if user.sets
         follows(user, user.follows) if user.follows
@@ -59,10 +62,7 @@ posts = (user, posts) ->
                     {href: "/topics/#{post.topic_id}##{post.id}"}
                     truncate(post.body, 40)
                 )
-                span(
-                    {className: 'timeago'}
-                    timeAgo(post.created)
-                )
+                timeago(post.created, {right: true})
                 # TODO-2 add topic info
             ) for post in posts
         )

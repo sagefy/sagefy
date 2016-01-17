@@ -14,7 +14,6 @@ classes = (formData) ->
     entityKind = formData['post.entity_version.kind']
     cardKind = formData['entity.kind']
     return [
-        'col-6'
         if postID then 'update' else 'create'
         if postKind then "post-#{postKind}" else ''
         if entityKind then "entity-#{entityKind}" else ''
@@ -26,7 +25,7 @@ module.exports = (data) ->
     if postID
         post = data.topicPosts?[topicID].find((post) -> post.id is postID)
 
-    return div({className: 'spinner'}) if postID and not post
+    return spinner() if postID and not post
 
     formData = extend({}, data.formData, {
         'post.id': postID

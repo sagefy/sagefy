@@ -3,7 +3,7 @@ c = require('../../modules/content').get
 
 module.exports = (data) ->
     return div(
-        {id: 'error', className: 'col-4'}
+        {id: 'error'}
         [
             h1('404')
             p(c('not_found'))

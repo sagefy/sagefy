@@ -1,5 +1,6 @@
 {div, h1, ul, li, h3, p, button, a} = require('../../modules/tags')
 c = require('../../modules/content').get
+spinner = require('../components/spinner.tmpl')
 
 ###
 r.db('sagefy').table('users_sets').insert([{
@@ -22,10 +23,10 @@ r.db('sagefy').table('users_sets').insert([{
 ###
 
 module.exports = (data) ->
-    return div({className: 'spinner'}) unless data.userSets
+    return spinner() unless data.userSets
 
     return div(
-        {id: 'my-sets', className: 'col-10'}
+        {id: 'my-sets'}
         h1('My Sets')
         ul(userSet(set) for set in data.userSets)
         p(

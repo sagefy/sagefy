@@ -52,11 +52,10 @@ module.exports = (data) ->
         )
         tfoot(
             tr(
-                {className: 'add-row-tr'}
                 td(
                     {colSpan: columns.length + 1}  # TODO-2 +2 reordering
                     a(
-                        {href: '#', className: 'add-row'}
+                        {href: '#', className: 'form-field--list__add-row'}
                         i({className: 'fa fa-plus'})
                         ' Add Row'
                     )
@@ -85,7 +84,7 @@ module.exports = (data) ->
                         {
                             title: 'Remove'
                             href: '#'
-                            className: 'remove-row'
+                            className: 'form-field--list__remove-row'
                             attributes: {
                                 'data-index': index
                             }

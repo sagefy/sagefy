@@ -1,11 +1,12 @@
 {div, h1, a, i, p} = require('../../modules/tags')
+spinner = require('../components/spinner.tmpl')
 c = require('../../modules/content').get
 
 module.exports = (data) ->
     id = data.routeArgs[0]
     card = data.learnCards?[id]
 
-    return div({className: 'spinner'}) unless card
+    return spinner() unless card
 
     pLearned = data.unitLearned?[card.unit_id]
 
@@ -28,22 +29,21 @@ module.exports = (data) ->
     return div(
         {
             id: 'card-learn'
-            className: "#{card.kind} col-8 #{mode}"
+            className: "#{card.kind} #{mode}"
         }
 
         kind(card, mode)
 
         p(
-            {className: "label--#{feedbackLabel}"}
+            {className: "card-learner__feedback--#{feedbackLabel}"}
             data.cardFeedback
         ) if data.cardFeedback
 
         p(
-            {className: 'continue-wrap'}
             a(
                 {
                     id: id
-                    className: 'continue button button--accent'
+                    className: 'continue card-learner__continue'
                 }
                 'Continue '
                 i({className: 'fa fa-chevron-right'})
@@ -53,7 +53,7 @@ module.exports = (data) ->
         div(
             {
                 key: '0Xe4fksADWwm9qWOMuTl7thD'
-                className: 'card-learn--progress'
+                className: 'card-learn__progress'
                 style: {
                     width: pLearned * 100 + '%'
                 }

@@ -1,0 +1,77 @@
+/*
+---
+title: Form Fields
+description: Form fields are wrapped in a class of <code>form-field</code> and the type of the form field, such as <code>form-field--text</code>.
+---
+*/
+
+.form-field
+    margin $unit 0
+
+/*
+---
+title: Field Descriptions
+description: In the standard vertical layout, each form field may have a short description below the field. These descriptions are particularly useful when the user may not understand the expected input, or has reservations about why the field is necessary or beneficial. Fields typically have descriptions below the field.
+---
+*/
+
+.form-field__description
+    margin 0
+    color $base-color(60)
+    font-style italic
+
+/*
+---
+title: Form Feedback
+description: Forms typically have validation messages to the right of the field.
+---
+*/
+
+.form-field__feedback
+    display inline-block
+    border-radius $border-radius
+    padding 0 ($unit / 2)
+
+.form-field--good
+    label
+        color $good-color(66)
+
+    input[type="text"]
+    input[type="password"]
+    input[type="number"]
+    input[type="email"]
+    input[type="url"]
+    input[type="time"]
+    input[type="search"]
+    input[type="tel"]
+    textarea
+    input[type="checkbox"]
+    input[type="radio"]
+        color $good-color(50)
+        border-color $good-color(66)
+
+    .form-field__feedback
+        background $good-color(95)
+        color $good-color(60)
+
+.form-field--bad
+    label
+        color $bad-color(66)
+
+    input[type="text"]
+    input[type="password"]
+    input[type="number"]
+    input[type="email"]
+    input[type="url"]
+    input[type="time"]
+    input[type="search"]
+    input[type="tel"]
+    textarea
+    input[type="checkbox"]
+    input[type="radio"]
+        color $bad-color(66)
+        border-color $bad-color(66)
+
+    .form-field__feedback
+        background $bad-color(95)
+        color $bad-color(60)

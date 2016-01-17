@@ -4,7 +4,7 @@ tasks = require('../../modules/tasks')
 {getFormValues} = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
-    'click .form-field--list .remove-row': (e, el) ->
+    'click .form-field--list__remove-row': (e, el) ->
         e.preventDefault() if e
 
         form = closest(el, 'form')
@@ -16,7 +16,7 @@ module.exports = broker.add({
         index = parseInt(el.dataset.index)
         tasks.removeListFieldRow(name, index)
 
-    'click .form-field--list .add-row': (e, el) ->
+    'click .form-field--list__add-row': (e, el) ->
         e.preventDefault() if e
 
         form = closest(el, 'form')
@@ -31,6 +31,6 @@ module.exports = broker.add({
         ).filter((c) -> c)
         tasks.addListFieldRow(name, columns)
 
-    # TODO-3 'dragstart .form-field--list .move-row': (e, el) ->
-    # TODO-3 'drop .form-field--list .move-row': (e, el) ->
+    # TODO-3 'dragstart .form-field--list__move-row': (e, el) ->
+    # TODO-3 'drop form-field--list__move-row': (e, el) ->
 })

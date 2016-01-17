@@ -97,7 +97,7 @@ If you have questions about these terms, contact Sagefy at <support@sagefy.org>.
 
 module.exports = ->
     return div(
-        {id: 'terms', className: 'col-10'}
+        {id: 'terms'}
         h1('Sagefy Privacy Policy & Terms of Service')
         terms.split('\n\n').map((t) -> p(t))
     )

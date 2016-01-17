@@ -1,12 +1,18 @@
+#follows
+    @extend $col-6
+
+.follows__unfollow-button
+    @extend $button--bad
+    float left
+
+
+// TODO-2 Migrate this all to BEM syntax
 #follows ul
     list-style none
     padding 0
 
-    .unfollow
-        float left
-
     > li
-        @extend .clearfix
+        @extend $clearfix
 
         div
             margin $unit 0 $unit cols(2)
