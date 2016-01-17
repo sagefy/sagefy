@@ -26,14 +26,14 @@ Before you raise a pull request to Sagefy, please review the terms in the [Apach
 Pull Request Checklist
 ----------------------
 
-For each pull request, ensure:
+For each pull request:
 
-- ...the code passes linters as documented below.
-- ...the code passes existing automated tests.
-- ...each method is documented according to the given domain.
-- ...the code follows the code styleguide below.
-- ...the code has some basic test coverage, where appropriate.
-- ...another person has reviewed the code.
+- Pass the linters, as documented below.
+- Pass existing automated tests.
+- Document each function.
+- Follow the code styleguide, as documented below.
+- Write at least one test per function.
+- Let another person review the code.
 
 Global Code Styling
 -------------------
