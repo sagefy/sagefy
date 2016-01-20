@@ -28,3 +28,5 @@ script:
     - 'cd client && gulp test && cd ..'
 after_success:
     - coverage report --omit="server/test/*,*site-packages*,*distutils*"
+notifications:
+  email: true
