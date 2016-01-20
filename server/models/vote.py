@@ -1,5 +1,8 @@
 from models.post import Post
 from modules.validations import is_required, is_string, is_boolean
+import rethinkdb as r
+import framework.database as database
+from modules.entity import get_version  # TODO-2 this may cause a problem
 
 
 class Vote(Post):
@@ -47,13 +50,35 @@ class Vote(Post):
 
     def is_unique_vote(self):
         """
-        TODO-0 Ensure a user can only vote once per proposal.
+        Ensure a user can only vote once per proposal.
         """
+
+        query = (self.table
+                     .filter(r.row['user_id'] == self['user_id'])
+                     .filter(r.row['replies_to_id'] == self['replies_to_id'])
+                     .filter(r.row['kind'] == 'vote'))
+        documents = [doc for doc in query.run(database.db_conn)]
+        if documents:
+            return [{'message': 'You already have a vote on this proposal.'}]
         return []
 
     def is_valid_reply_kind(self):
         """
-        TODO-0 A vote can reply to a proposal.
-        TODO-0 A vote cannot reply to a proposal that is accepted or declined.
+        A vote can reply to a proposal.
+        A vote cannot reply to a proposal that is accepted or declined.
         """
+
+        query = (self.table
+                     .get(self['replies_to_id']))
+        proposal_data = query.run(database.db_conn)
+        if not proposal_data:
+            return [{'message': 'No proposal found.'}]
+        if proposal_data['kind'] != 'proposal':
+            return [{'message': 'A vote must reply to a proposal.'}]
+        entity_version = get_version(proposal_data['entity_version']['kind'],
+                                     proposal_data['entity_version']['id'])
+        if not entity_version:
+            return [{'message': 'No entity version for proposal.'}]
+        if entity_version['status'] in ('accepted', 'declined'):
+            return [{'message': 'Proposal is already complete.'}]
         return []

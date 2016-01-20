@@ -6,6 +6,7 @@ Rethink was designed to work this way, no reason to be alarmed.
 # TODO-0 Random connection errors:
 # Exception: rethinkdb.errors.ReqlDriverError:
 # Error sending to localhost:28015 - 'NoneType' object has no attribute 'send'
+# Maybe related? https://github.com/rethinkdb/rethinkdb/issues/2427
 
 
 import rethinkdb as r

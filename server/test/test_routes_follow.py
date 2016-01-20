@@ -12,6 +12,7 @@ def test_follow(db_conn, session, cards_table, follows_table):
         'created': r.now(),
         'modified': r.now(),
         'status': 'accepted',
+        'kind': 'video',
     }).run(db_conn)
 
     request = {

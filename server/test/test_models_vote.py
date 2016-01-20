@@ -1,11 +1,33 @@
 from models.vote import Vote
 
 
-def test_user(db_conn, posts_table):
+def create_proposal(posts_table, units_table, db_conn):
+    posts_table.insert({
+        'id': 'D',
+        'user_id': 'C',
+        'topic_id': 'B',
+        'body': '_',
+        'kind': 'proposal',
+        'entity_version': {
+            'id': 'E',
+            'kind': 'unit',
+        },
+        'name': 'make unit'
+    }).run(db_conn)
+
+    units_table.insert({
+        'id': 'E',
+        'entity_id': 'F',
+        'status': 'pending',
+    }).run(db_conn)
+
+
+def test_user(db_conn, posts_table, units_table):
     """
     Expect a vote to require a user id.
     """
 
+    create_proposal(posts_table, units_table, db_conn)
     vote, errors = Vote.insert({
         'topic_id': 'B',
         'replies_to_id': 'D',
@@ -17,11 +39,12 @@ def test_user(db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_topic(db_conn, posts_table):
+def test_topic(db_conn, posts_table, units_table):
     """
     Expect a vote to require a topic id.
     """
 
+    create_proposal(posts_table, units_table, db_conn)
     vote, errors = Vote.insert({
         'user_id': 'A',
         'replies_to_id': 'D',
@@ -33,11 +56,12 @@ def test_topic(db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_body(db_conn, posts_table):
+def test_body(db_conn, posts_table, units_table):
     """
     Expect a vote to allow, but not require, a body.
     """
 
+    create_proposal(posts_table, units_table, db_conn)
     vote, errors = Vote.insert({
         'user_id': 'A',
         'topic_id': 'B',
@@ -50,11 +74,12 @@ def test_body(db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_kind(db_conn, posts_table):
+def test_kind(db_conn, posts_table, units_table):
     """
     Expect a vote to always have a kind of vote.
     """
 
+    create_proposal(posts_table, units_table, db_conn)
     vote = Vote({
         'user_id': 'A',
         'topic_id': 'B',
@@ -69,11 +94,12 @@ def test_kind(db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_replies(db_conn, posts_table):
+def test_replies(db_conn, posts_table, units_table):
     """
     Expect a vote to require a replies to id.
     """
 
+    create_proposal(posts_table, units_table, db_conn)
     vote, errors = Vote.insert({
         'user_id': 'A',
         'topic_id': 'B',
@@ -85,11 +111,12 @@ def test_replies(db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_response(db_conn, posts_table):
+def test_response(db_conn, posts_table, units_table):
     """
-    Expect a vote to require a response (None is okay).
+    Expect a vote to require a response.
     """
 
+    create_proposal(posts_table, units_table, db_conn)
     vote = Vote({
         'user_id': 'A',
         'topic_id': 'B',
