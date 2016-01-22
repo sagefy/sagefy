@@ -66,6 +66,7 @@ class Vote(Post):
         """
         A vote can reply to a proposal.
         A vote cannot reply to a proposal that is accepted or declined.
+        A user cannot vote on their own proposal.
         """
 
         query = (self.table
@@ -75,6 +76,8 @@ class Vote(Post):
             return [{'message': 'No proposal found.'}]
         if proposal_data['kind'] != 'proposal':
             return [{'message': 'A vote must reply to a proposal.'}]
+        if proposal_data['user_id'] == self['user_id']:
+            return [{'message': 'You cannot vote on your own proposal.'}]
         entity_version = get_version(proposal_data['entity_version']['kind'],
                                      proposal_data['entity_version']['id'])
         if not entity_version:
