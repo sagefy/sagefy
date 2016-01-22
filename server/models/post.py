@@ -49,7 +49,9 @@ class Post(Model):
     def is_valid_reply(self):
         """
         TODO-0 A reply must belong to the same topic.
-        A post can reply to a post, proposal, or vote.
+        - A post can reply to a post, proposal, or vote.
+        - A proposal can reply to a post, proposal, or vote.
+        - A vote may only reply to a proposal.
         """
         return []
 

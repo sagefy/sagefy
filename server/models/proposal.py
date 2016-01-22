@@ -34,17 +34,8 @@ class Proposal(Post):
     def validate(self):
         errors = super().validate()
         if not errors:
-            errors += self.is_valid_reply_kind()
-        if not errors:
             errors += self.is_valid_version()
         return errors
-
-    def is_valid_reply_kind(self):
-        """
-        TODO-0 A reply must be in the same topic.
-        A proposal can reply to post, proposal, or vote.
-        """
-        return []
 
     def is_valid_version(self):
         """
