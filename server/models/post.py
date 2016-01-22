@@ -3,6 +3,8 @@ from modules.validations import is_required, is_string, is_one_of, \
     has_min_length
 from framework.elasticsearch import es
 from modules.util import json_prep
+import rethinkdb as r
+import framework.database as database
 
 
 class Post(Model):
@@ -48,11 +50,18 @@ class Post(Model):
 
     def is_valid_reply(self):
         """
-        TODO-0 A reply must belong to the same topic.
+        A reply must belong to the same topic.
         - A post can reply to a post, proposal, or vote.
         - A proposal can reply to a post, proposal, or vote.
         - A vote may only reply to a proposal.
         """
+
+        if self['replies_to_id']:
+            query = (self.table
+                         .get(self['replies_to_id']))
+            post_data = query.run(database.db_conn)
+            if post_data['topic_id'] != self['topic_id']:
+                return [{'message': 'A reply must be in the same topic.'}]
         return []
 
     def save(self):
