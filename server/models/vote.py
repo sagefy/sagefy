@@ -19,7 +19,7 @@ class Vote(Post):
         },
 
         # But a vote does require a proposal
-        'replies_to_id': {  # TODO-0 Validate this is for a valid proposal
+        'replies_to_id': {
             'validate': (is_required, is_string,)
         },
 
