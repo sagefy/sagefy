@@ -26,7 +26,7 @@ class Post(Model):
                          (is_one_of, 'post', 'proposal', 'vote')),
             'default': 'post'
         },
-        'replies_to_id': {  # TODO-0 validate id is real & in topic
+        'replies_to_id': {  # TODO-0 validate id is real
             'validate': (is_string,)
         }
     })
@@ -56,7 +56,7 @@ class Post(Model):
         - A vote may only reply to a proposal.
         """
 
-        if self['replies_to_id']:
+        if self.data.get('replies_to_id'):
             query = (self.table
                          .get(self['replies_to_id']))
             post_data = query.run(database.db_conn)
