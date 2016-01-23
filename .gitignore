@@ -40,3 +40,4 @@ client/app/content
 *.data.json
 var
 sagefy_rsa.pub
+elasticsearch-*

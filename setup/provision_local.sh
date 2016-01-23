@@ -40,17 +40,14 @@ sudo /etc/init.d/rethinkdb restart
 
 #### Elasticsearch ############################################################
 
-sudo apt-get -y install openjdk-7-jre-headless
-wget -qO - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
-echo "deb http://packages.elasticsearch.org/elasticsearch/1.4/debian stable main" | sudo tee --append /etc/apt/sources.list
-sudo apt-get -y update
-sudo apt-get -y install elasticsearch
-sudo update-rc.d elasticsearch defaults 95 10
-sudo /etc/init.d/elasticsearch start
-cd /var/www
 # Securing ElasticSearch: do.co/1JsVB2O
-# TODO-0 network.bind_host
-# TODO-0 script.disable_dynamic
+sudo apt-get -y install openjdk-7-jre-headless
+wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb
+sudo dpkg -i elasticsearch-1.7.2.deb
+sudo update-rc.d elasticsearch defaults
+echo "network.bind_host: localhost" | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo "script.disable_dynamic: true" | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+sudo service elasticsearch start
 
 #### Kibana ###################################################################
 
@@ -71,16 +68,31 @@ cd /var/www
 
 # Securing Redis: do.co/1nfZxt2
 sudo apt-get -y install redis-server
-# TODO-0 Renaming Dangerous Commands
-# TODO-0 Setting Data Directory Ownership and File Permissions
+# Renaming Dangerous Commands
+sudo tee -a /etc/redis/redis.conf <<- EOM
+rename-command FLUSHDB ""
+rename-command FLUSHALL ""
+rename-command KEYS ""
+rename-command CONFIG ""
+rename-command SHUTDOWN ""
+rename-command BGREWRITEAOF ""
+rename-command BGSAVE ""
+rename-command SAVE ""
+rename-command DEBUG ""
+EOM
+# Setting Data Directory Ownership and File Permissions
+sudo chmod 700 /var/lib/redis
+sudo chown redis:root /etc/redis/redis.conf
+sudo chmod 600 /etc/redis/redis.conf
+sudo service redis-server restart
 
 #### Client Tooling ###########################################################
 
 sudo apt-get -y update
 sudo apt-get -y install software-properties-common
 sudo apt-get -y install python-software-properties python g++ make
-curl -sL https://deb.nodesource.com/setup | sudo bash -
-sudo apt-get -y install nodejs
+curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+sudo apt-get install -y nodejs
 sudo npm install -g gulp
 cd /var/www/client
 sudo npm install
