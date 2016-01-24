@@ -26,30 +26,32 @@ module.exports = (data) ->
     else
         'accent'
 
-    return div(
-        {
-            id: 'card-learn'
-            className: "#{card.kind} #{mode}"
-        }
+    return [
+        div(
+            {
+                id: 'card-learn'
+                className: "#{card.kind} #{mode}"
+                key: 'WbrGhHy5aUCmBVtHnlmTdJ1x'
+            }
 
-        kind(card, mode)
+            kind(card, mode)
 
-        p(
-            {className: "card-learner__feedback--#{feedbackLabel}"}
-            data.cardFeedback
-        ) if data.cardFeedback
+            p(
+                {className: "card-learner__feedback--#{feedbackLabel}"}
+                data.cardFeedback
+            ) if data.cardFeedback
 
-        p(
-            a(
-                {
-                    id: id
-                    className: 'continue card-learner__continue'
-                }
-                'Continue '
-                i({className: 'fa fa-chevron-right'})
+            p(
+                a(
+                    {
+                        id: id
+                        className: 'continue card-learner__continue'
+                    }
+                    'Continue '
+                    i({className: 'fa fa-chevron-right'})
+                )
             )
         )
-
         div(
             {
                 key: '0Xe4fksADWwm9qWOMuTl7thD'
@@ -59,7 +61,7 @@ module.exports = (data) ->
                 }
             }
         ) if pLearned
-    )
+    ]
 
 kind = (card, mode) ->
     if card.kind is 'video'
