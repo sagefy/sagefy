@@ -36,29 +36,29 @@ card_map = {
 }
 
 
-def get_latest_accepted(kind, entity_id):
+def get_latest_accepted(db_conn, kind, entity_id):
     """
     Given a kind and an entity_id, pull the latest accepted
     version out of the database.
     """
 
     if kind == 'card':
-        card = Card.get_latest_accepted(entity_id)
+        card = Card.get_latest_accepted(db_conn, entity_id)
         return flip_card_into_kind(card)
     elif kind == 'unit':
-        return Unit.get_latest_accepted(entity_id)
+        return Unit.get_latest_accepted(db_conn, entity_id)
     elif kind == 'set':
-        return Set.get_latest_accepted(entity_id)
+        return Set.get_latest_accepted(db_conn, entity_id)
 
 
-def get_version(kind, id_):
+def get_version(db_conn, kind, id_):
     if kind == 'card':
-        card = Card.get(id=id_)
+        card = Card.get(db_conn, id=id_)
         return flip_card_into_kind(card)
     elif kind == 'unit':
-        return Unit.get(id=id_)
+        return Unit.get(db_conn, id=id_)
     elif kind == 'set':
-        return Set.get(id=id_)
+        return Set.get(db_conn, id=id_)
 
 
 def get_kind(data):
@@ -102,12 +102,12 @@ def instance_new_entity(data):
         return Set(omit(data['set'], fields))
 
 
-def get_card_by_kind(card_id):
+def get_card_by_kind(db_conn, card_id):
     """
     Given a card data, return a new card model to replace it by kind.
     """
 
-    card = Card.get_latest_accepted(card_id)
+    card = Card.get_latest_accepted(db_conn, card_id)
     return flip_card_into_kind(card)
 
 
@@ -124,7 +124,7 @@ def flip_card_into_kind(card):
         return card_map[kind](card.data)
 
 
-def flush_entities(descs):
+def flush_entities(db_conn, descs):
     """
     Given a list of kinds and entity_ids,
     return a list filled out with entities.
@@ -134,14 +134,20 @@ def flush_entities(descs):
 
     for desc in descs:
         if desc['kind'] == 'card':
-            card = Card.get_latest_accepted(entity_id=desc['id'])
+            card = Card.get_latest_accepted(db_conn, entity_id=desc['id'])
             card = flip_card_into_kind(card)
             if card:
                 output.append(card)
         elif desc['kind'] == 'unit':
-            output.append(Unit.get_latest_accepted(entity_id=desc['id']))
+            output.append(Unit.get_latest_accepted(
+                db_conn,
+                entity_id=desc['id']
+            ))
         elif desc['kind'] == 'set':
-            output.append(Set.get_latest_accepted(entity_id=desc['id']))
+            output.append(Set.get_latest_accepted(
+                db_conn,
+                entity_id=desc['id']
+            ))
         else:
             output.append(None)
 

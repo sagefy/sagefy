@@ -49,7 +49,11 @@ def test_get_user_sets(db_conn, session, sets_table, users_sets_table):
     """
 
     prep(sets_table, users_sets_table, db_conn)
-    request = {'cookies': {'session_id': session}, 'params': {}}
+    request = {
+        'cookies': {'session_id': session},
+        'params': {},
+        'db_conn': db_conn,
+    }
     code, response = routes.user_sets.get_user_sets_route(request, 'abcd1234')
     assert code == 200
     assert len(response['sets']) == 2
@@ -61,7 +65,9 @@ def test_get_user_sets_401(db_conn, users_sets_table):
     Expect get user sets to 401 when not logged in.
     """
 
-    code, response = routes.user_sets.get_user_sets_route({}, 'abcd1234')
+    code, response = routes.user_sets.get_user_sets_route({
+        'db_conn': db_conn
+    }, 'abcd1234')
     assert code == 401
 
 
@@ -70,7 +76,10 @@ def test_get_user_sets_403(db_conn, session, users_sets_table):
     Expect to 403 if trying to get other user's sets.
     """
 
-    request = {'cookies': {'session_id': session}}
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn,
+    }
     code, response = routes.user_sets.get_user_sets_route(request, '1234abcd')
     assert code == 403
 
@@ -89,7 +98,10 @@ def test_add_set(db_conn, session, sets_table, users_sets_table):
         'status': 'accepted',
     }).run(db_conn)
 
-    request = {'cookies': {'session_id': session}}
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn
+    }
     code, response = routes.user_sets.add_set_route(request, 'abcd1234', 'A1')
     assert code == 200
     assert 'A1' in response['sets']
@@ -100,7 +112,9 @@ def test_add_set_401(db_conn, users_sets_table):
     Expect to 401 when trying to add a set but not logged in.
     """
 
-    code, response = routes.user_sets.add_set_route({}, 'abcd1234', 'A1')
+    code, response = routes.user_sets.add_set_route({
+        'db_conn': db_conn
+    }, 'abcd1234', 'A1')
     assert code == 401
 
 
@@ -109,7 +123,10 @@ def test_add_set_403(db_conn, session, users_sets_table):
     Expect to 403 when attempt to add to another user's sets.
     """
 
-    request = {'cookies': {'session_id': session}}
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn,
+    }
     code, response = routes.user_sets.add_set_route(request, '1234dbca', '2')
     assert code == 403
 
@@ -119,7 +136,10 @@ def test_add_set_404(db_conn, session, users_sets_table):
     Expect to 404 if set not found.
     """
 
-    request = {'cookies': {'session_id': session}}
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn,
+    }
     code, response = routes.user_sets.add_set_route(request, 'abcd1234', 'Z9')
     assert code == 404
 
@@ -138,7 +158,10 @@ def test_add_set_already_added(db_conn, session, sets_table, users_sets_table):
         'status': 'accepted',
     }).run(db_conn)
 
-    request = {'cookies': {'session_id': session}}
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn,
+    }
     code, response = routes.user_sets.add_set_route(request, 'abcd1234', 'A1')
     assert code == 200
     code, response = routes.user_sets.add_set_route(request, 'abcd1234', 'A1')
@@ -159,7 +182,10 @@ def test_select_set_route(db_conn, session, sets_table, users_sets_table):
         'status': 'accepted',
     }).run(db_conn)
 
-    request = {'cookies': {'session_id': session}}
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn,
+    }
     code, response = routes.user_sets.select_set_route(request,
                                                        'abcd1234',
                                                        'A1')
@@ -186,7 +212,10 @@ def test_remove_set(db_conn, session, sets_table, users_sets_table):
         'set_ids': ['A1'],
     }).run(db_conn)
 
-    request = {'cookies': {'session_id': session}}
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn,
+    }
     code, response = routes.user_sets.remove_set_route(request,
                                                        'abcd1234', 'A1')
     assert code == 200
@@ -197,7 +226,9 @@ def test_remove_set_401(db_conn, users_sets_table):
     Expect to 401 when trying to remove a user set not logged in.
     """
 
-    request = {}
+    request = {
+        'db_conn': db_conn,
+    }
     code, response = routes.user_sets.remove_set_route(request,
                                                        'abcd1234', 'A1')
     assert code == 401
@@ -208,7 +239,10 @@ def test_remove_set_403(db_conn, session, users_sets_table):
     Expect forbidden when trying to remove another user's set.
     """
 
-    request = {'cookies': {'session_id': session}}
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn,
+    }
     code, response = routes.user_sets.remove_set_route(request,
                                                        '1234dcba', '2')
     assert code == 403
@@ -219,7 +253,10 @@ def test_remove_set_404(db_conn, session, users_sets_table):
     Expect to not found when trying to delete an unadded set.
     """
 
-    request = {'cookies': {'session_id': session}}
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn,
+    }
     code, response = routes.user_sets.remove_set_route(request,
                                                        'abcd1234', 'A1')
     assert code == 404

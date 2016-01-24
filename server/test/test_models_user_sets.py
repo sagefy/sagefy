@@ -7,7 +7,7 @@ def test_user(db_conn, users_sets_table):
     Expect to require a user ID.
     """
 
-    user_sets, errors = UserSets.insert({
+    user_sets, errors = UserSets.insert(db_conn, {
         'set_ids': [
             'A',
             'B',
@@ -15,7 +15,7 @@ def test_user(db_conn, users_sets_table):
     })
     assert len(errors) == 1
     user_sets['user_id'] = 'A'
-    user_sets, errors = user_sets.save()
+    user_sets, errors = user_sets.save(db_conn)
     assert len(errors) == 0
 
 
@@ -24,7 +24,7 @@ def test_sets(db_conn, users_sets_table):
     Expect to require a list of set IDs.
     """
 
-    user_sets, errors = UserSets.insert({
+    user_sets, errors = UserSets.insert(db_conn, {
         'user_id': 'A'
     })
     assert len(errors) == 1
@@ -32,7 +32,7 @@ def test_sets(db_conn, users_sets_table):
         'A',
         'B',
     ]
-    user_sets, errors = user_sets.save()
+    user_sets, errors = user_sets.save(db_conn)
     assert len(errors) == 0
 
 
@@ -79,7 +79,7 @@ def test_list_sets(db_conn, users_sets_table, sets_table):
         'created': r.now(),
         'modified': r.now(),
     }).run(db_conn)
-    uset = UserSets.get(user_id='abcd1234')
-    sets = uset.list_sets()
+    uset = UserSets.get(db_conn, user_id='abcd1234')
+    sets = uset.list_sets(db_conn)
     assert sets[0]['body'] in ('Apple', 'Coconut')
     assert sets[0]['body'] in ('Apple', 'Coconut')

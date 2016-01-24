@@ -67,7 +67,9 @@ def test_get_set(db_conn,
         }
     }]).run(db_conn)
 
-    code, response = routes.set.get_set_route({}, 'zytx')
+    code, response = routes.set.get_set_route({
+        'db_conn': db_conn
+    }, 'zytx')
     assert code == 200
     # Model
     assert response['set']['entity_id'] == 'zytx'
@@ -90,7 +92,9 @@ def test_get_set_404(db_conn):
     Expect to fail to get set information if set is unknown. (404)
     """
 
-    code, response = routes.set.get_set_route({}, 'abcd')
+    code, response = routes.set.get_set_route({
+        'db_conn': db_conn
+    }, 'abcd')
     assert code == 404
 
 

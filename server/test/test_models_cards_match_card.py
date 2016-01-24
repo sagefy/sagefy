@@ -5,12 +5,12 @@ xfail = pytest.mark.xfail
 
 
 @xfail
-def test_match_body(cards_table):
+def test_match_body(db_conn, cards_table):
     """
     Expect a match card require a body.
     """
 
-    card, errors = MatchCard.insert({
+    card, errors = MatchCard.insert(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'options': [{
@@ -21,25 +21,25 @@ def test_match_body(cards_table):
         'default_incorrect_feedback': 'Boo!',
     })
     assert len(errors) == 1
-    card, errors = card.update({'body': 'Testing 1234'})
+    card, errors = card.update(db_conn, {'body': 'Testing 1234'})
     assert len(errors) == 0
 
 
 @xfail
-def test_match_options(cards_table):
+def test_match_options(db_conn, cards_table):
     """
     Expect a match card require a options.
     (value correct feedback)
     """
 
-    card, errors = MatchCard.insert({
+    card, errors = MatchCard.insert(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'body': 'Testing 1234',
         'default_incorrect_feedback': 'Boo!',
     })
     assert len(errors) == 1
-    card, errors = card.update({'options': [{
+    card, errors = card.update(db_conn, {'options': [{
         'value': 'abadaba',
         'correct': True,
         'feedback': 'Bazaaa...'
@@ -48,12 +48,12 @@ def test_match_options(cards_table):
 
 
 @xfail
-def test_match_default_feedback(cards_table):
+def test_match_default_feedback(db_conn, cards_table):
     """
     Expect a match card require a default feedback.
     """
 
-    card, errors = MatchCard.insert({
+    card, errors = MatchCard.insert(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'body': 'Testing 1234',
@@ -64,17 +64,17 @@ def test_match_default_feedback(cards_table):
         }]
     })
     assert len(errors) == 1
-    card, errors = card.update({'default_incorrect_feedback': 'Boo!'})
+    card, errors = card.update(db_conn, {'default_incorrect_feedback': 'Boo!'})
     assert len(errors) == 0
 
 
 @xfail
-def test_match_casing(cards_table):
+def test_match_casing(db_conn, cards_table):
     """
     Expect a match card to allow case sensitivity.
     """
 
-    card, errors = MatchCard.insert({
+    card, errors = MatchCard.insert(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'body': 'Testing 1234',
@@ -86,7 +86,7 @@ def test_match_casing(cards_table):
         'default_incorrect_feedback': 'Boo!',
     })
     assert len(errors) == 0
-    card, errors = card.update({'case_sensitive': True})
+    card, errors = card.update(db_conn, {'case_sensitive': True})
     assert len(errors) == 0
 
 

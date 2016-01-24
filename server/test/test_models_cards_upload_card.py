@@ -5,53 +5,53 @@ xfail = pytest.mark.xfail
 
 
 @xfail
-def test_upload_body(cards_table):
+def test_upload_body(db_conn, cards_table):
     """
     Expect an upload card to require a body.
     """
 
-    card, errors = UploadCard.insert({
+    card, errors = UploadCard.insert(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'file_extensions': ['jpg'],
         'rubric': True,  # TODO
     })
     assert len(errors) == 1
-    card, errors = card.update({'body': 'Testing 1234'})
+    card, errors = card.update(db_conn, {'body': 'Testing 1234'})
     assert len(errors) == 0
 
 
 @xfail
-def test_upload_file_extensions(cards_table):
+def test_upload_file_extensions(db_conn, cards_table):
     """
     Expect an upload card to require file_extensions.
     """
 
-    card, errors = UploadCard.insert({
+    card, errors = UploadCard.insert(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'body': 'Testing 1234',
         'rubric': True,  # TODO
     })
     assert len(errors) == 1
-    card, errors = card.update({'file_extensions': ['jpg']})
+    card, errors = card.update(db_conn, {'file_extensions': ['jpg']})
     assert len(errors) == 0
 
 
 @xfail
-def test_upload_rubric(cards_table):
+def test_upload_rubric(db_conn, cards_table):
     """
     Expect an upload card to require a rubric.
     """
 
-    card, errors = UploadCard.insert({
+    card, errors = UploadCard.insert(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'body': 'Testing 1234',
         'file_extensions': ['jpg'],
     })
     assert len(errors) == 1
-    card, errors = card.update({'rubric': None})
+    card, errors = card.update(db_conn, {'rubric': None})
     assert len(errors) == 0
 
 

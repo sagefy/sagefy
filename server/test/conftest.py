@@ -19,7 +19,6 @@ framework.update_config(config)
 
 from framework.database import setup_db, \
     make_db_connection, close_db_connection
-import framework.database
 import framework.session
 
 setup_db()
@@ -48,8 +47,8 @@ def log_out(session_id):
 
 @pytest.fixture(scope='session')
 def db_conn(request):
-    db_conn, db = make_db_connection()
-    request.addfinalizer(lambda: close_db_connection())
+    db_conn = make_db_connection()
+    request.addfinalizer(lambda: close_db_connection(db_conn))
     return db_conn
 
 
@@ -65,7 +64,7 @@ def table(name, request, db_conn):
     """
     Ensure the table is freshly empty after use.
     """
-    table = framework.database.db.table(name)
+    table = r.table(name)
     table.delete().run(db_conn)
     request.addfinalizer(lambda: table.delete().run(db_conn))
     return table

@@ -28,7 +28,7 @@ Set
 """
 
 
-def update(user, card, response):
+def update(db_conn, user, card, response):
     """
     Update the card's parameters (and its parents')
     when given a response.
@@ -55,8 +55,9 @@ def update(user, card, response):
         'score': score,
     })
 
-    card_parameters = CardParameters.get(entity_id=card['entity_id'])
-    previous_response = Response.get_latest(user_id=user['id'],
+    card_parameters = CardParameters.get(db_conn, entity_id=card['entity_id'])
+    previous_response = Response.get_latest(db_conn,
+                                            user_id=user['id'],
                                             unit_id=card['unit_id'])
 
     now = time()
@@ -72,13 +73,13 @@ def update(user, card, response):
                              learned, guess_distribution, slip_distribution)
 
     response['learned'] = updates['learned']
-    response, errors = response.save()
+    response, errors = response.save(db_conn)
     if errors:
         return {'errors': errors, 'feedback': feedback}
 
     card_parameters.set_distribution('guess', updates['guess_distribution'])
     card_parameters.set_distribution('slip', updates['slip_distribution'])
-    card_parameters, errors = card_parameters.save()
+    card_parameters, errors = card_parameters.save(db_conn)
     if errors:
         return {'errors': errors, 'feedback': feedback}
 

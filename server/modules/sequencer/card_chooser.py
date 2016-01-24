@@ -1,6 +1,5 @@
 from models.card import Card
 from models.card_parameters import CardParameters
-import framework.database as database
 from modules.sequencer.formulas import calculate_correct
 from modules.sequencer.params import init_learned
 from random import shuffle, random
@@ -28,7 +27,7 @@ def partition(l, p):
     return reduce(lambda x, y: x[not p(y)].append(y) or x, l, ([], []))
 
 
-def choose_card(user, unit):
+def choose_card(db_conn, user, unit):
     """
     Given a user and a unit, choose an appropriate card.
     Return a card instance.
@@ -44,11 +43,12 @@ def choose_card(user, unit):
     # TODO-2 is the sample value decent?
     # TODO-2 has the learner seen this card recently?
 
-    cards = [Card(d) for d in query.run(database.db_conn)]
+    cards = [Card(d) for d in query.run(db_conn)]
     if not len(cards):
         return None
 
-    previous_response = Response.get_latest(user_id=user['id'],
+    previous_response = Response.get_latest(db_conn,
+                                            user_id=user['id'],
                                             unit_id=unit_id)
     if previous_response:
         learned = previous_response['learned']
@@ -69,7 +69,7 @@ def choose_card(user, unit):
         if not len(assessment):
             return nonassessment[0]
         for card in assessment:
-            params = CardParameters.get(entity_id=card['entity_id'])
+            params = CardParameters.get(db_conn, entity_id=card['entity_id'])
             guess = params.get_distribution('guess').get_value()
             slip = params.get_distribution('slip').get_value()
             correct = calculate_correct(guess, slip, learned)

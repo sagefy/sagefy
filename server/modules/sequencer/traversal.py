@@ -4,7 +4,7 @@ from modules.sequencer.formulas import calculate_belief
 from time import time
 
 
-def traverse(user, set_):
+def traverse(db_conn, user, set_):
     """
     Given a user and a set, sort all the units in the set based on need.
     Return status of (diagnose, learn, review, done) and list of units.
@@ -26,9 +26,9 @@ def traverse(user, set_):
         'done': [],
     }
 
-    units = set_.list_units()
+    units = set_.list_units(db_conn)
     for unit in units:
-        status = judge(unit, user)
+        status = judge(db_conn, unit, user)
         buckets[status].append(unit)
 
     # Make sure the buckets are in the correct orderings
@@ -86,12 +86,13 @@ def match_unit_dependents(units):
     return dependents
 
 
-def judge(unit, user):
+def judge(db_conn, unit, user):
     """
     Given a unit and a user, pass judgement on which bucket to file it under.
     """
 
     response = Response.get_latest(
+        db_conn,
         user_id=user['id'],
         unit_id=unit['entity_id']
     )

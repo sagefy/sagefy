@@ -5,17 +5,17 @@ xfail = pytest.mark.xfail
 
 
 @xfail
-def test_page_body(cards_table):
+def test_page_body(db_conn, cards_table):
     """
     Expect a page card to require a body.
     """
 
-    card, errors = PageCard.insert({
+    card, errors = PageCard.insert(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
     })
     assert len(errors) == 1
-    card, errors = card.update({'body': 'Testing 1234'})
+    card, errors = card.update(db_conn, {'body': 'Testing 1234'})
     assert len(errors) == 0
 
 

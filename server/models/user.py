@@ -96,15 +96,15 @@ class User(Model):
         }
     })
 
-    def update(self, data):
+    def update(self, db_conn, data):
         """
         Overwrite update method to remove password.
         """
 
         data = omit(data, ('password',))
-        return super().update(data)
+        return super().update(db_conn, data)
 
-    def save(self):
+    def save(self, db_conn):
         """
         Overwrite save method to add to Elasticsearch.
         """
@@ -120,9 +120,9 @@ class User(Model):
             body=data,
             id=self['id'],
         )
-        return super().save()
+        return super().save(db_conn)
 
-    def delete(self):
+    def delete(self, db_conn):
         """
         Overwrite delete method to delete in Elasticsearch.
         """
@@ -134,7 +134,7 @@ class User(Model):
             doc_type='user',
             id=self['id'],
         )
-        return super().delete()
+        return super().delete(db_conn)
 
     def get_avatar(self, size=24):
         """

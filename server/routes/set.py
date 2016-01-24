@@ -15,14 +15,15 @@ def get_set_route(request, set_id):
     Get a specific set given an ID.
     """
 
-    set_ = Set.get_latest_accepted(set_id)
+    db_conn = request['db_conn']
+    set_ = Set.get_latest_accepted(db_conn, set_id)
     if not set_:
         return abort(404)
 
     # TODO-2 SPLITUP create new endpoints for these instead
-    topics = Topic.list_by_entity_id(entity_id=set_id)
-    versions = Set.get_versions(entity_id=set_id)
-    units = set_.list_units()
+    topics = Topic.list_by_entity_id(db_conn, entity_id=set_id)
+    versions = Set.get_versions(db_conn, entity_id=set_id)
+    units = set_.list_units(db_conn)
 
     return 200, {
         'set': set_.deliver(),
@@ -39,7 +40,8 @@ def get_set_versions_route(request, set_id):
     Get versions set given an ID. Paginates.
     """
 
-    versions = Set.get_versions(entity_id=set_id, **request['params'])
+    db_conn = request['db_conn']
+    versions = Set.get_versions(db_conn, entity_id=set_id, **request['params'])
     return 200, {
         'versions': [version.deliver(access='view') for version in versions]
     }
@@ -67,12 +69,14 @@ def get_set_tree_route(request, set_id):
     TODO-2 simplify this method
     """
 
-    set_ = Set.get(entity_id=set_id)
+    db_conn = request['db_conn']
+
+    set_ = Set.get(db_conn, entity_id=set_id)
 
     if not set_:
         return abort(404)
 
-    units = set_.list_units()
+    units = set_.list_units(db_conn)
 
     # For the menu, it must return the name and ID of the set
     output = {
@@ -86,7 +90,7 @@ def get_set_tree_route(request, set_id):
         return 200, output
 
     context = current_user.get_learning_context() if current_user else {}
-    buckets = traverse(current_user, set_)
+    buckets = traverse(db_conn, current_user, set_)
     output['buckets'] = {
         'diagnose': [u['entity_id'] for u in buckets['diagnose']],
         'review': [u['entity_id'] for u in buckets['review']],
@@ -101,7 +105,7 @@ def get_set_tree_route(request, set_id):
     # When in diagnosis, choose the unit and card automagically.
     if buckets['diagnose']:
         unit = buckets['diagnose'][0]
-        card = choose_card(current_user, unit)
+        card = choose_card(db_conn, current_user, unit)
         next_ = {
             'method': 'GET',
             'path': '/s/cards/{card_id}/learn'
@@ -142,6 +146,8 @@ def get_set_units_route(request, set_id):
         -> POST Choose Unit
     """
 
+    db_conn = request['db_conn']
+
     # TODO-3 simplify this method. should it be part of the models?
 
     current_user = get_current_user(request)
@@ -157,10 +163,10 @@ def get_set_units_route(request, set_id):
     }
     current_user.set_learning_context(next=next_)
 
-    set_ = Set.get_latest_accepted(set_id)
+    set_ = Set.get_latest_accepted(db_conn, set_id)
 
     # Pull a list of up to 5 units to choose from based on priority.
-    buckets = traverse(current_user, set_)
+    buckets = traverse(db_conn, current_user, set_)
     units = buckets['learn'][:5]
     # TODO-3 Time estimates per unit for mastery.
 
@@ -184,28 +190,30 @@ def choose_unit_route(request, set_id, unit_id):
     """
 
     # TODO-3 simplify this method. should it be broken up or moved to model?
+    db_conn = request['db_conn']
 
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
-    unit = Unit.get_latest_accepted(unit_id)
+    unit = Unit.get_latest_accepted(db_conn, unit_id)
     if not unit:
         return abort(404)
 
     # If the unit isn't in the set...
     context = current_user.get_learning_context()
-    set_ids = [set_['entity_id'] for set_ in Set.list_by_unit_id(unit_id)]
+    set_ids = [set_['entity_id']
+               for set_ in Set.list_by_unit_id(db_conn, unit_id)]
     if context.get('set', {}).get('entity_id') not in set_ids:
         return abort(400)
 
-    status = judge(unit, current_user)
+    status = judge(db_conn, unit, current_user)
     # Or, the unit doesn't need to be learned...
     if status == "done":
         return abort(400)
 
     # Choose a card for the learner to learn
-    card = choose_card(current_user, unit)
+    card = choose_card(db_conn, current_user, unit)
 
     if card:
         next_ = {

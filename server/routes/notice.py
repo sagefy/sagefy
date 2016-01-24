@@ -10,10 +10,14 @@ def list_notices_route(request):
     Take parameters `limit`, `skip`, `tag`, and `read`.
     """
 
+    db_conn = request['db_conn']
+
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    notices = Notice.list(user_id=current_user['id'], **request['params'])
+    notices = Notice.list(db_conn,
+                          user_id=current_user['id'],
+                          **request['params'])
     output = {'notices': [notice.deliver(access='private')
                           for notice in notices]}
     return 200, output
@@ -27,10 +31,12 @@ def mark_notice_route(request, notice_id):
     Return notice.
     """
 
+    db_conn = request['db_conn']
+
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    notice = Notice.get(id=notice_id)
+    notice = Notice.get(db_conn, id=notice_id)
     if not notice:
         return abort(404)
     if notice['user_id'] != current_user['id']:
@@ -42,9 +48,9 @@ def mark_notice_route(request, notice_id):
             'message': 'You must specify read or unread.',
         }]
     elif request['params'].get('read') is True:
-        notice, errors = notice.mark_as_read()
+        notice, errors = notice.mark_as_read(db_conn)
     elif request['params'].get('read') is False:
-        notice, errors = notice.mark_as_unread()
+        notice, errors = notice.mark_as_unread(db_conn)
     if len(errors):
         return 400, {
             'errors': errors,

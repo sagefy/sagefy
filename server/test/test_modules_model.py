@@ -107,7 +107,7 @@ def test_get_id(db_conn, users_table):
         'name': 'test',
         'email': 'test@example.com',
     }).run(db_conn)
-    user = User.get(id='abcdefgh12345678')
+    user = User.get(db_conn, id='abcdefgh12345678')
     assert user['name'] == 'test'
 
 
@@ -120,7 +120,7 @@ def test_get_params(db_conn, users_table):
         'name': 'test',
         'email': 'test@example.com',
     }).run(db_conn)
-    user = User.get(name='test', email='test@example.com')
+    user = User.get(db_conn, name='test', email='test@example.com')
     assert user['id'] == 'abcdefgh12345678'
 
 
@@ -133,7 +133,7 @@ def test_get_none(db_conn, users_table):
         'name': 'test',
         'email': 'test@example.com',
     }).run(db_conn)
-    user = User.get(id='87654321hgfedcba')
+    user = User.get(db_conn, id='87654321hgfedcba')
     assert user is None
 
 
@@ -158,7 +158,7 @@ def test_list(db_conn, users_table):
             'email': 'test3@example.com',
         },
     ]).run(db_conn)
-    users = User.list()
+    users = User.list(db_conn)
     assert len(users) == 3
     assert isinstance(users[0], User)
     assert users[2]['id'] in ('1', '2', '3')
@@ -185,7 +185,7 @@ def test_list_params(db_conn, users_table):
             'email': 'test3@example.com',
         },
     ]).run(db_conn)
-    users = User.list(id='1', name='test1')
+    users = User.list(db_conn, id='1', name='test1')
     assert len(users) == 1
     assert users[0]['email'] == 'test1@example.com'
 
@@ -194,7 +194,7 @@ def test_list_none(db_conn, users_table):
     """
     Expect to get an empty list of models when none.
     """
-    users = User.list()
+    users = User.list(db_conn)
     assert len(users) == 0
 
 
@@ -218,7 +218,7 @@ def test_validate(db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd'
     })
-    errors = user.validate()
+    errors = user.validate(db_conn)
     assert isinstance(errors, list)
     assert errors[0]['name'] == 'password'
     assert errors[0]['message']
@@ -383,7 +383,7 @@ def test_insert(db_conn, users_table):
     """
     Expect to create a new model instance.
     """
-    user, errors = User.insert({
+    user, errors = User.insert(db_conn, {
         'name': 'test',
         'email': 'test@example.com',
         'password': 'abcd1234'
@@ -400,7 +400,7 @@ def test_insert_fail(db_conn, users_table):
     Expect to error on failed create model.
     """
     assert len(list(users_table.run(db_conn))) == 0
-    user, errors = User.insert({
+    user, errors = User.insert(db_conn, {
         'email': 'test@example.com'
     })
     assert user['name'] is None
@@ -415,13 +415,13 @@ def test_update(db_conn, users_table):
     """
     Expect to update a model instance.
     """
-    user, errors = User.insert({
+    user, errors = User.insert(db_conn, {
         'name': 'test',
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
     assert len(errors) == 0
-    user, errors = user.update({
+    user, errors = user.update(db_conn, {
         'email': 'open@example.com'
     })
     assert len(errors) == 0
@@ -434,13 +434,13 @@ def test_update_fail(db_conn, users_table):
     """
     Expect to error on failed update model instance.
     """
-    user, errors = User.insert({
+    user, errors = User.insert(db_conn, {
         'name': 'test',
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
     assert len(errors) == 0
-    user, errors = user.update({
+    user, errors = user.update(db_conn, {
         'email': 'open'
     })
     record = list(users_table.filter({'name': 'test'}).run(db_conn))[0]
@@ -459,7 +459,7 @@ def test_save(db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    user, errors = user.save()
+    user, errors = user.save(db_conn)
     assert len(errors) == 0
     records = list(users_table.filter({'name': 'test'}).run(db_conn))
     assert len(records) == 1
@@ -469,13 +469,13 @@ def test_delete(db_conn, users_table):
     """
     Expect to delete a model.
     """
-    user, errors = User.insert({
+    user, errors = User.insert(db_conn, {
         'name': 'test',
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
     assert len(errors) == 0
-    user.delete()
+    user.delete(db_conn)
     records = list(users_table.filter({'name': 'test'}).run(db_conn))
     assert len(records) == 0
 
@@ -484,13 +484,13 @@ def test_id_keep(db_conn, users_table):
     """
     Expect a model to maintain an ID.
     """
-    user, errors = User.insert({
+    user, errors = User.insert(db_conn, {
         'name': 'test',
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
     id = user['id']
-    user.update({
+    user.update(db_conn, {
         'name': 'other'
     })
     assert user['id'] == id
@@ -500,7 +500,7 @@ def test_created(db_conn, users_table):
     """
     Expect a model to add created time.
     """
-    user, errors = User.insert({
+    user, errors = User.insert(db_conn, {
         'name': 'test',
         'email': 'test@example.com',
         'password': 'abcd1234'
@@ -513,7 +513,7 @@ def test_transform(db_conn, users_table):
     """
     Expect a model to call transform before going into DB.
     """
-    user, errors = User.insert({
+    user, errors = User.insert(db_conn, {
         'name': 'test',
         'email': 'test@example.com',
         'password': 'abcd1234'
@@ -526,12 +526,12 @@ def test_modified(db_conn, users_table):
     """
     Expect to sync fields with database.
     """
-    user, errors = User.insert({
+    user, errors = User.insert(db_conn, {
         'name': 'test',
         'email': 'test@example.com',
         'password': 'abcd1234'
     })
-    user, errors = user.update({
+    user, errors = user.update(db_conn, {
         'email': 'other@example.com'
     })
     record = list(users_table.filter({'name': 'test'}).run(db_conn))[0]
@@ -544,12 +544,12 @@ def test_unique(db_conn, users_table):
     """
     Expect a validation to test uniqueness.
     """
-    user, errors = User.insert({
+    user, errors = User.insert(db_conn, {
         'name': 'test',
         'email': 'test@example.com',
         'password': 'abcd1234',
     })
-    user2, errors2 = User.insert({
+    user2, errors2 = User.insert(db_conn, {
         'name': 'test',
         'email': 'coin@example.com',
         'password': '1234abcd',

@@ -22,7 +22,8 @@ def test_follow(db_conn, session, cards_table, follows_table):
                 'kind': 'card',
                 'id': 'ABCD',
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.follow.follow_route(request)
     assert code == 200
@@ -39,7 +40,8 @@ def test_follow_401(db_conn, follows_table):
                 'kind': 'card',
                 'id': 'ABCD',
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.follow.follow_route(request)
     assert code == 401
@@ -57,7 +59,8 @@ def test_follow_404(db_conn, session, follows_table):
                 'kind': 'card',
                 'id': '???',
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.follow.follow_route(request)
     assert code == 404
@@ -90,7 +93,8 @@ def test_follow_409(db_conn, session, cards_table, follows_table):
                 'kind': 'card',
                 'id': 'JFlsjFm',
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.follow.follow_route(request)
     assert code == 400
@@ -103,7 +107,8 @@ def test_follow_400(db_conn, session, follows_table):
 
     request = {
         'cookies': {'session_id': session},
-        'params': {}
+        'params': {},
+        'db_conn': db_conn,
     }
     code, response = routes.follow.follow_route(request)
     assert code == 400
@@ -123,7 +128,10 @@ def test_unfollow(db_conn, session, follows_table):
         },
     }).run(db_conn)
 
-    request = {'cookies': {'session_id': session}}
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn
+    }
     code, response = routes.follow.unfollow_route(request, 'JIkfo034n')
     assert code == 200
 
@@ -133,7 +141,9 @@ def test_unfollow_401(db_conn, follows_table):
     Expect to fail to unfollow an entity if not logged in.
     """
 
-    code, response = routes.follow.unfollow_route({}, 'JIkfo034n')
+    code, response = routes.follow.unfollow_route({
+        'db_conn': db_conn
+    }, 'JIkfo034n')
     assert code == 401
 
 
@@ -142,7 +152,10 @@ def test_unfollow_404(db_conn, session, follows_table):
     Expect to fail to unfollow an entity if no entity.
     """
 
-    request = {'cookies': {'session_id': session}}
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn
+    }
     code, response = routes.follow.unfollow_route(request, 'JIkfo034n')
     assert code == 404
 
@@ -177,7 +190,11 @@ def test_get_follows(db_conn, session, follows_table):
         },
     }]).run(db_conn)
 
-    request = {'cookies': {'session_id': session}, 'params': {}}
+    request = {
+        'cookies': {'session_id': session},
+        'params': {},
+        'db_conn': db_conn,
+    }
     code, response = routes.follow.get_follows_route(request)
 
     assert code == 200
@@ -189,5 +206,8 @@ def test_get_follows_401(db_conn, follows_table):
     Expect fail to to get a list of follows for user if not logged in.
     """
 
-    code, response = routes.follow.get_follows_route({'params': {}})
+    code, response = routes.follow.get_follows_route({
+        'params': {},
+        'db_conn': db_conn,
+    })
     assert code == 401

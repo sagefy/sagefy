@@ -30,7 +30,7 @@ def test_latest_accepted_card(db_conn, cards_table):
         'status': 'accepted',
     }]).run(db_conn)
 
-    card = Card.get_latest_accepted('A')
+    card = Card.get_latest_accepted(db_conn, 'A')
     assert card['id'] == 'B2'
 
 
@@ -56,7 +56,7 @@ def test_latest_accepted(db_conn, units_table):
         'status': 'accepted',
     }]).run(db_conn)
 
-    unit = Unit.get_latest_accepted('A')
+    unit = Unit.get_latest_accepted(db_conn, 'A')
     assert unit['id'] == 'B2'
 
 
@@ -82,7 +82,7 @@ def test_latest_accepted_set(db_conn, sets_table):
         'status': 'accepted',
     }]).run(db_conn)
 
-    set_ = Set.get_latest_accepted('A')
+    set_ = Set.get_latest_accepted(db_conn, 'A')
     assert set_['id'] == 'B2'
 
 
@@ -107,7 +107,7 @@ def test_get_versions(db_conn, cards_table):
         'status': 'accepted',
     }]).run(db_conn)
 
-    card_versions = Card.get_versions('A')
+    card_versions = Card.get_versions(db_conn, 'A')
     assert len(card_versions) == 2
 
 
@@ -148,7 +148,7 @@ def test_list_requires(db_conn, cards_table):
         'requires': ['abcd'],
     }]).run(db_conn)
 
-    cards = Card.list_requires('abcd')
+    cards = Card.list_requires(db_conn, 'abcd')
 
     assert len(cards) == 1
     assert cards[0]['entity_id'] == 'zxyz'
@@ -191,7 +191,7 @@ def test_list_required_by(db_conn, cards_table):
         'requires': ['abcd'],
     }]).run(db_conn)
 
-    cards = Card.list_required_by('abcd')
+    cards = Card.list_required_by(db_conn, 'abcd')
 
     assert len(cards) == 1
     assert cards[0]['entity_id'] == 'qwer'

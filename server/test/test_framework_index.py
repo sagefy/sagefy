@@ -29,9 +29,8 @@ def test_call_handler():
     """
 
     code, response = call_handler({
-        'REQUEST_METHOD': 'GET',
-        'SCRIPT_NAME': '/foo',
-        'PATH_INFO': '',
+        'method': 'GET',
+        'path': '/foo',
     })
 
     assert code == 404
@@ -44,8 +43,10 @@ def test_construct_request():
     """
 
     request = construct_request({
-        'REQUEST_METHOD': 'WAFFLE'
-    })
+        'REQUEST_METHOD': 'WAFFLE',
+        'PATH_INFO': '/waffle',
+        'SCRIPT_NAME': '',
+    }, {})
     assert isinstance(request, dict)
 
 

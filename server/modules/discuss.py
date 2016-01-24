@@ -6,7 +6,6 @@ for post (proposal, vote).
 from models.post import Post
 from models.proposal import Proposal
 from models.vote import Vote
-import framework.database as database
 from modules.util import omit
 import rethinkdb as r
 
@@ -25,16 +24,16 @@ def instance(data):
     return Post(data)
 
 
-def get_post_facade(post_id):
+def get_post_facade(db_conn, post_id):
     """
     Get the post and the correct kind based on the `kind` field.
     """
 
-    data = Post.table.get(post_id).run(database.db_conn)
+    data = Post.table.get(post_id).run(db_conn)
     return instance(data)
 
 
-def get_posts_facade(limit=10, skip=0, **params):
+def get_posts_facade(db_conn, limit=10, skip=0, **params):
     """
     Get posts, and return an array where each
     post is the correct kind based on the `kind` field.
@@ -45,18 +44,18 @@ def get_posts_facade(limit=10, skip=0, **params):
                 .order_by(r.asc('created'))
                 .skip(skip)
                 .limit(limit)
-                .run(database.db_conn))
+                .run(db_conn))
     return [instance(d) for d in data]
 
 
-def create_post_facade(data):
+def create_post_facade(db_conn, data):
     """
     Create the correct kind of post based on the `kind` field.
     """
 
     data = omit(data, ('id', 'created', 'modified'))
     model = instance(data)
-    return model.save()
+    return model.save(db_conn)
 
 
 def instance_post_facade(data):

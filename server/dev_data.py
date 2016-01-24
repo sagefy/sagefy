@@ -1,5 +1,4 @@
 import rethinkdb as r
-import framework.database as database
 from framework.database import setup_db, make_db_connection, \
     close_db_connection
 from framework.elasticsearch import es
@@ -10,7 +9,7 @@ from models.user import get_avatar
 from sys import argv
 
 setup_db()
-make_db_connection()
+db_conn = make_db_connection()
 
 for kind in (
     'users',
@@ -27,13 +26,13 @@ for kind in (
     'users_sets',
     'responses',
 ):
-    (database.db.table(kind)
-        .delete()
-        .run(database.db_conn))
+    (r.table(kind)
+      .delete()
+      .run(db_conn))
 
 es.indices.delete(index='entity', ignore=[400, 404])
 
-(database.db.table('users')
+(r.table('users')
     .insert([{
         'id': 'doris',
         'created': r.time(2014, 1, 1, 'Z'),
@@ -59,9 +58,9 @@ es.indices.delete(index='entity', ignore=[400, 404])
             'view_follows': 'public',
         }
     }])
-    .run(database.db_conn))
+    .run(db_conn))
 
-users = database.db.table('users').run(database.db_conn)
+users = r.table('users').run(db_conn)
 for user in users:
     data = pick(json_prep(user), ('id', 'name'))
     data['avatar'] = get_avatar(user['email'])
@@ -72,7 +71,7 @@ for user in users:
         id=user['id'],
     )
 
-(database.db.table('units')
+(r.table('units')
     .insert([{
         'id': 'plus-1',
         'created': r.time(2014, 1, 1, 'Z'),
@@ -178,12 +177,12 @@ for user in users:
         'body': 'The joy and pleasure of dividing numbers.',
         'require_ids': ['minus', 'times'],
     }])
-    .run(database.db_conn))
+    .run(db_conn))
 
-units = (database.db.table('units')
-                 .filter(r.row['id'] in (
-                     'plus-2', 'minus-1', 'times-1', 'slash-1'
-                 )).run(database.db_conn))
+units = (r.table('units')
+          .filter(r.row['id'] in (
+              'plus-2', 'minus-1', 'times-1', 'slash-1'
+          )).run(db_conn))
 for unit in units:
     es.index(
         index='entity',
@@ -192,17 +191,17 @@ for unit in units:
         id=unit['entity_id'],
     )
 
-(database.db.table('units_parameters')
+(r.table('units_parameters')
     .insert([{
         'id': 'plus-params',
         'created': r.time(2014, 2, 1, 'Z'),
         'modified': r.time(2014, 2, 1, 'Z'),
         'entity_id': 'plus',
     }])
-    .run(database.db_conn))
+    .run(db_conn))
 
 
-(database.db.table('cards')
+(r.table('cards')
     .insert([{
         'id': 'plus-video-a-1',
         'created': r.time(2014, 1, 1, 'Z'),
@@ -508,9 +507,9 @@ for unit in units:
         'order': 'random',
         'max_options_to_show': 4,
     }])
-    .run(database.db_conn))
+    .run(db_conn))
 
-cards = database.db.table('cards').run(database.db_conn)
+cards = r.table('cards').run(db_conn)
 for card in cards:
     es.index(
         index='entity',
@@ -519,7 +518,7 @@ for card in cards:
         id=card['entity_id'],
     )
 
-(database.db.table('cards_parameters')
+(r.table('cards_parameters')
     .insert([{
         'id': 'plus-video-a-params',
         'created': r.time(2014, 1, 1, 'Z'),
@@ -645,9 +644,9 @@ for card in cards:
             for h in [h / precision for h in range(1, precision)]
         }
     }])
-    .run(database.db_conn))
+    .run(db_conn))
 
-(database.db.table('sets')
+(r.table('sets')
     .insert([{
         'id': 'basic-math-1',
         'created': r.time(2014, 1, 1, 'Z'),
@@ -674,9 +673,9 @@ for card in cards:
             'kind': 'unit',
         }]
     }])
-    .run(database.db_conn))
+    .run(db_conn))
 
-sets = database.db.table('sets').run(database.db_conn)
+sets = r.table('sets').run(db_conn)
 for set_ in sets:
     es.index(
         index='entity',
@@ -685,16 +684,16 @@ for set_ in sets:
         id=set_['entity_id'],
     )
 
-(database.db.table('sets_parameters')
+(r.table('sets_parameters')
     .insert([{
         'id': 'basic-math-params',
         'created': r.time(2014, 1, 1, 'Z'),
         'modified': r.time(2014, 1, 1, 'Z'),
         'entity_id': 'basic-math',
     }])
-    .run(database.db_conn))
+    .run(db_conn))
 
-(database.db.table('topics')
+(r.table('topics')
     .insert([{
         'id': 'basic-math-posts',
         'created': r.time(2014, 1, 1, 'Z'),
@@ -736,9 +735,9 @@ for set_ in sets:
             'kind': 'unit',
         }
     }])
-    .run(database.db_conn))
+    .run(db_conn))
 
-topics = database.db.table('topics').run(database.db_conn)
+topics = r.table('topics').run(db_conn)
 for topic in topics:
     es.index(
         index='entity',
@@ -747,7 +746,7 @@ for topic in topics:
         id=topic['id'],
     )
 
-(database.db.table('posts')
+(r.table('posts')
     .insert([{
         'id': 'basic-math-fun-1',
         'created': r.time(2014, 1, 1, 'Z'),
@@ -864,17 +863,17 @@ for topic in topics:
         'replies_to_id': 'slash-proposal-blocked',
         'response': False,
     }])
-    .run(database.db_conn))
+    .run(db_conn))
 
-posts = database.db.table('posts').run(database.db_conn)
+posts = r.table('posts').run(db_conn)
 for post in posts:
     data = json_prep(post)
-    topic = (database.db.table('topics')
-                     .get(data['topic_id'])
-                     .run(database.db_conn))
-    user = (database.db.table('users')
-                    .get(data['user_id'])
-                    .run(database.db_conn))
+    topic = (r.table('topics')
+             .get(data['topic_id'])
+             .run(db_conn))
+    user = (r.table('users')
+             .get(data['user_id'])
+             .run(db_conn))
     data['topic'] = json_prep(topic)
     data['user'] = json_prep(user)
     es.index(
@@ -884,7 +883,7 @@ for post in posts:
         id=post['id'],
     )
 
-(database.db.table('follows')
+(r.table('follows')
     .insert([{
         'id': 'doris-follows-basic-math',
         'created': r.time(2014, 1, 1, 'Z'),
@@ -922,9 +921,9 @@ for post in posts:
             'kind': 'unit',
         }
     }])
-    .run(database.db_conn))
+    .run(db_conn))
 
-(database.db.table('notices')
+(r.table('notices')
     .insert([{
         'id': 'doris-new-topic-basic-math',
         'created': r.time(2014, 1, 1, 'Z'),
@@ -982,9 +981,9 @@ for post in posts:
         'read': False,
         'tags': [],
     }])
-    .run(database.db_conn))
+    .run(db_conn))
 
-(database.db.table('users_sets')
+(r.table('users_sets')
     .insert([{
         'id': 'doris-sets',
         'created': r.time(2014, 1, 1, 'Z'),
@@ -992,12 +991,12 @@ for post in posts:
         'user_id': 'doris',
         'set_ids': ['basic-math'],
     }])
-    .run(database.db_conn))
+    .run(db_conn))
 
 # id, created, modified
 # user_id, card_id, unit_id, response, score, learned
 if len(argv) > 1 and argv[1] == 'learn_mode':
-    (database.db.table('responses')
+    (r.table('responses')
         .insert([{
             'id': 'response1',
             'created': r.now(),
@@ -1039,6 +1038,6 @@ if len(argv) > 1 and argv[1] == 'learn_mode':
             'score': 1,
             'learned': 0.5
         }])
-        .run(database.db_conn))
+        .run(db_conn))
 
 close_db_connection()

@@ -77,7 +77,9 @@ def test_get_card(db_conn, cards_table, cards_parameters_table, units_table,
         }
     }]).run(db_conn)
 
-    code, response = routes.card.get_card_route({}, 'abcd')
+    code, response = routes.card.get_card_route({
+        'db_conn': db_conn
+    }, 'abcd')
     assert code == 200
     # Model
     assert response['card']['entity_id'] == 'abcd'
@@ -104,7 +106,9 @@ def test_get_card_404(db_conn):
     Expect to fail to get an unknown card. (404)
     """
 
-    code, response = routes.card.get_card_route({}, 'abcd')
+    code, response = routes.card.get_card_route({
+        'db_conn': db_conn
+    }, 'abcd')
     assert code == 404
 
 
@@ -140,7 +144,7 @@ def test_learn_card(db_conn, session, cards_table):
         'set': {'entity_id': 'jkl;1234'},
     }))
 
-    request = {'cookies': {'session_id': session}}
+    request = {'cookies': {'session_id': session}, 'db_conn': db_conn}
     code, response = routes.card.learn_card_route(request, 'tyui4567')
     assert code == 200
     assert 'order' not in response['card']
@@ -157,7 +161,9 @@ def test_learn_card_401(db_conn):
     Expect to require log in to get a card for learn mode. (401)
     """
 
-    code, response = routes.card.learn_card_route({}, 'abcd')
+    code, response = routes.card.learn_card_route({
+        'db_conn': db_conn
+    }, 'abcd')
     assert code == 401
 
 
@@ -166,7 +172,7 @@ def test_learn_card_404(db_conn, session):
     Expect to fail to get an unknown card for learn mode. (404)
     """
 
-    request = {'cookies': {'session_id': session}}
+    request = {'cookies': {'session_id': session}, 'db_conn': db_conn}
     code, response = routes.card.learn_card_route(request, 'abcd')
     assert code == 404
 
@@ -204,7 +210,7 @@ def test_learn_card_400(db_conn, cards_table, session):
         'set': {'entity_id': '6543hgfs'},
     }))
 
-    request = {'cookies': {'session_id': session}}
+    request = {'cookies': {'session_id': session}, 'db_conn': db_conn}
     code, response = routes.card.learn_card_route(request, 'tyui4567')
     assert code == 400
     redis.delete('learning_context_abcd1234')
@@ -255,7 +261,8 @@ def test_respond_card(db_conn, units_table, cards_table,
 
     request = {
         'params': {'response': '42'},
-        'cookies': {'session_id': session}
+        'cookies': {'session_id': session},
+        'db_conn': db_conn,
     }
     code, response = routes.card.respond_to_card_route(request, 'tyui4567')
 
@@ -270,7 +277,9 @@ def test_respond_card_401(db_conn):
     Expect to require log in to get an unknown card. (401)
     """
 
-    code, response = routes.card.respond_to_card_route({}, 'abcd')
+    code, response = routes.card.respond_to_card_route({
+        'db_conn': db_conn
+    }, 'abcd')
     assert code == 401
 
 
@@ -282,6 +291,7 @@ def test_respond_card_404(db_conn, session):
     request = {
         'params': {'response': '42'},
         'cookies': {'session_id': session},
+        'db_conn': db_conn,
     }
     code, response = routes.card.respond_to_card_route(request, 'abcd')
     assert code == 404
@@ -323,7 +333,8 @@ def test_respond_card_400a(db_conn, session, cards_table):
 
     request = {
         'params': {'response': '42'},
-        'cookies': {'session_id': session}
+        'cookies': {'session_id': session},
+        'db_conn': db_conn,
     }
     code, response = routes.card.respond_to_card_route(request, 'tyui4567')
     assert code == 400
@@ -365,7 +376,8 @@ def test_respond_card_400b(db_conn, session, cards_table):
 
     request = {
         'params': {'response': 'Waffles'},
-        'cookies': {'session_id': session}
+        'cookies': {'session_id': session},
+        'db_conn': db_conn
     }
     code, response = routes.card.respond_to_card_route(request, 'tyui4567')
     assert code == 400

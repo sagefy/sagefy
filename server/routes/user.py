@@ -43,7 +43,8 @@ def get_user_route(request, user_id):
     Get the user by their ID.
     """
 
-    user = User.get(id=user_id)
+    db_conn = request['db_conn']
+    user = User.get(db_conn, id=user_id)
     current_user = get_current_user(request)
     # Posts if in request params
     # Sets if in request params and allowed
@@ -60,15 +61,15 @@ def get_user_route(request, user_id):
     # TODO-2 SPLITUP create new endpoints for these instead
     if 'posts' in request['params']:
         data['posts'] = [post.deliver() for post in
-                         get_posts_facade(user_id=user['id'])]
+                         get_posts_facade(db_conn, user_id=user['id'])]
     if ('sets' in request['params']
             and user['settings']['view_sets'] == 'public'):
-        u_sets = UserSets.get(user_id=user['id'])
-        data['sets'] = [set_.deliver() for set_ in u_sets.list_sets()]
+        u_sets = UserSets.get(db_conn, user_id=user['id'])
+        data['sets'] = [set_.deliver() for set_ in u_sets.list_sets(db_conn)]
     if ('follows' in request['params']
             and user['settings']['view_follows'] == 'public'):
         data['follows'] = [follow.deliver() for follow in
-                           Follow.list(user_id=user['id'])]
+                           Follow.list(db_conn, user_id=user['id'])]
     if 'avatar' in request['params']:
         size = int(request['params']['avatar'])
         data['avatar'] = user.get_avatar(size if size else None)
@@ -82,7 +83,8 @@ def create_user_route(request):
     Create user.
     """
 
-    user, errors = User.insert(request['params'])
+    db_conn = request['db_conn']
+    user, errors = User.insert(db_conn, request['params'])
     if len(errors):
         return 400, {
             'errors': errors,
@@ -97,12 +99,13 @@ def log_in_route(request):
     Log in user.
     """
 
+    db_conn = request['db_conn']
     name = request['params'].get('name') or ''
     name = name.lower()
 
-    user = User.get(name=name)
+    user = User.get(db_conn, name=name)
     if not user:
-        user = User.get(email=request['params'].get('name'))
+        user = User.get(db_conn, email=request['params'].get('name'))
     if not user:
         return 404, {
             'errors': [{
@@ -142,13 +145,14 @@ def update_user_route(request, user_id):
     Update the user. Must be the current user.
     """
 
-    user = User.get(id=user_id)
+    db_conn = request['db_conn']
+    user = User.get(db_conn, id=user_id)
     current_user = get_current_user(request)
     if not user:
         return abort(404)
     if not user['id'] == current_user['id']:
         return abort(401)
-    user, errors = user.update(request['params'])
+    user, errors = user.update(db_conn, request['params'])
     if len(errors):
         return 400, {
             'errors': errors,
@@ -163,7 +167,8 @@ def create_token_route(request):
     Create an email token for the user.
     """
 
-    user = User.get(email=request['params'].get('email'))
+    db_conn = request['db_conn']
+    user = User.get(db_conn, email=request['params'].get('email'))
     if not user:
         return abort(404)
     user.get_email_token()
@@ -176,12 +181,13 @@ def create_password_route(request, user_id):
     Update a user's password if the token is valid.
     """
 
-    user = User.get(id=user_id)
+    db_conn = request['db_conn']
+    user = User.get(db_conn, id=user_id)
     if not user:
         return abort(404)
     valid = user.is_valid_token(request['params'].get('token'))
     if not valid:
         return abort(403)
     user['password'] = request['params'].get('password')
-    user.save()
+    user.save(db_conn)
     return _log_in(user)

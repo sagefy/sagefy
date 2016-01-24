@@ -25,11 +25,12 @@ from modules.notices import send_notices
 
 def prefix_error_names(prefix, errors):
     for error in errors:
-        error['name'] = prefix + error['name']
+        if 'name' in error:
+            error['name'] = prefix + error['name']
     return errors
 
 
-def update_entity_status(proposal):
+def update_entity_status(db_conn, proposal):
     """
     Update the entity's status based on the vote power received.
     Move to accepted or blocked if qualified.
@@ -41,7 +42,8 @@ def update_entity_status(proposal):
     """
 
     # Get the entity version
-    entity_version = get_version(proposal['entity_version']['kind'],
+    entity_version = get_version(db_conn,
+                                 proposal['entity_version']['kind'],
                                  proposal['entity_version']['id'])
 
     # Make sure the entity version status is not declined or accepted
@@ -53,7 +55,7 @@ def update_entity_status(proposal):
     yes_vote_power = 1
     # For now, we will assume the proposer is one "yes" vote until
     # contributor vote power is calculated
-    votes = Vote.list(replies_to_id=proposal['id'])
+    votes = Vote.list(db_conn, replies_to_id=proposal['id'])
     for vote in votes:
         if vote['response']:
             yes_vote_power = yes_vote_power + 1
@@ -63,8 +65,9 @@ def update_entity_status(proposal):
     # If no power is great enough, then block the version
     if no_vote_power >= 1:
         entity_version['status'] = 'blocked'
-        entity_version.save()
+        entity_version.save(db_conn)
         send_notices(
+            db_conn,
             entity_id=proposal['entity_version']['id'],
             entity_kind=proposal['entity_version']['kind'],
             notice_kind='block_proposal',
@@ -79,8 +82,9 @@ def update_entity_status(proposal):
     # If yes power is great enough, then accept the version
     if yes_vote_power >= 3:
         entity_version['status'] = 'accepted'
-        entity_version.save()
+        entity_version.save(db_conn)
         send_notices(
+            db_conn,
             entity_id=proposal['entity_version']['id'],
             entity_kind=proposal['entity_version']['kind'],
             notice_kind='accept_proposal',
@@ -98,6 +102,8 @@ def create_topic_route(request):
     Create a new topic.
     The first post (or proposal) must be provided.
     """
+
+    db_conn = request['db_conn']
 
     current_user = get_current_user(request)
     if not current_user:
@@ -139,10 +145,11 @@ def create_topic_route(request):
         }
 
     # ## STEP 2) Validate post and topic (and entity) instances
-    errors = prefix_error_names('topic.', topic.validate())
-    errors = errors + prefix_error_names('post.', post_.validate())
+    errors = prefix_error_names('topic.', topic.validate(db_conn))
+    errors = errors + prefix_error_names('post.', post_.validate(db_conn))
     if post_kind == 'proposal':
-        errors = errors + prefix_error_names('entity.', entity.validate())
+        errors = (errors +
+                  prefix_error_names('entity.', entity.validate(db_conn)))
     if len(errors):
         return 400, {
             'errors': errors,
@@ -150,13 +157,13 @@ def create_topic_route(request):
         }
 
     # ## STEP 3) Save post and topic (and entity)
-    topic.save()
-    post_.save()
+    topic.save(db_conn)
+    post_.save(db_conn)
     if post_kind == 'proposal':
-        entity.save()
+        entity.save(db_conn)
 
     # ## STEP 4) Add author as a follower
-    Follow.insert({
+    Follow.insert(db_conn, {
         'user_id': current_user['id'],
         'entity': {
             'id': topic['id'],
@@ -167,6 +174,7 @@ def create_topic_route(request):
 
     # ## STEP 5) Send out any needed notices
     send_notices(
+        db_conn,
         entity_id=topic['entity']['id'],
         entity_kind=topic['entity']['kind'],
         notice_kind='create_topic',
@@ -180,6 +188,7 @@ def create_topic_route(request):
 
     if post_kind == 'proposal':
         send_notices(
+            db_conn,
             entity_id=topic['entity']['id'],
             entity_kind=topic['entity']['kind'],
             notice_kind='create_proposal',
@@ -203,12 +212,14 @@ def update_topic_route(request, topic_id):
     - Only by original author.
     """
 
+    db_conn = request['db_conn']
+
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
     # ## STEP 1) Find existing topic instance ## #
-    topic = Topic.get(id=topic_id)
+    topic = Topic.get(db_conn, id=topic_id)
     if not topic:
         return abort(404)
     if topic['user_id'] != current_user['id']:
@@ -219,7 +230,7 @@ def update_topic_route(request, topic_id):
     topic_data = pick(topic_data, ('name',))
 
     # ## STEP 3) Validate and save topic instance ## #
-    topic, errors = topic.update(topic_data)
+    topic, errors = topic.update(db_conn, topic_data)
     if errors:
         errors = prefix_error_names('topic.', errors)
         return 400, {
@@ -239,8 +250,10 @@ def get_posts_route(request, topic_id):
     Paginates.
     """
 
+    db_conn = request['db_conn']
+
     # Is the topic valid?
-    topic = Topic.get(id=topic_id)
+    topic = Topic.get(db_conn, id=topic_id)
     if not topic:
         return 404, {
             'errors': [{
@@ -252,11 +265,13 @@ def get_posts_route(request, topic_id):
 
     # Pull the entity
     entity_kind = topic['entity']['kind']
-    entity = get_latest_accepted(entity_kind,
+    entity = get_latest_accepted(db_conn,
+                                 entity_kind,
                                  topic['entity']['id'])
 
     # Pull all kinds of posts
     posts = get_posts_facade(
+        db_conn,
         limit=request['params'].get('limit') or 10,
         skip=request['params'].get('skip') or 0,
         topic_id=topic_id
@@ -270,10 +285,12 @@ def get_posts_route(request, topic_id):
     for post_ in posts:
         if post_['kind'] == 'proposal':
             entity_version = entity_versions[post_['id']] = get_version(
+                db_conn,
                 post_['entity_version']['kind'],
                 post_['entity_version']['id']
             )
             previous_version = get_version(
+                db_conn,
                 post_['entity_version']['kind'],
                 entity_version['previous_id']
             )
@@ -286,7 +303,7 @@ def get_posts_route(request, topic_id):
     for post_ in posts:
         user_id = post_['user_id']
         if user_id not in users:
-            user = User.get(id=user_id)
+            user = User.get(db_conn, id=user_id)
             if user:
                 users[user_id] = {
                     'name': user['name'],
@@ -317,11 +334,13 @@ def create_post_route(request, topic_id):
     Vote: must refer to a valid proposal.
     """
 
+    db_conn = request['db_conn']
+
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
-    topic = Topic.get(id=topic_id)
+    topic = Topic.get(db_conn, id=topic_id)
     if not topic:
         return 404, {
             'errors': [{
@@ -355,9 +374,10 @@ def create_post_route(request, topic_id):
         }
 
     # ## STEP 2) Validate post (and entity) instances
-    errors = prefix_error_names('post.', post_.validate())
+    errors = prefix_error_names('post.', post_.validate(db_conn))
     if post_kind == 'proposal':
-        errors = errors + prefix_error_names('entity.', entity.validate())
+        errors = (errors +
+                  prefix_error_names('entity.', entity.validate(db_conn)))
     if len(errors):
         return 400, {
             'errors': errors,
@@ -365,12 +385,12 @@ def create_post_route(request, topic_id):
         }
 
     # ## STEP 3) Save post (and entity)
-    post_.save()
+    post_.save(db_conn)
     if post_kind == 'proposal':
-        entity.save()
+        entity.save(db_conn)
 
     # ## STEP 4) Add author as a follower
-    Follow.insert({
+    Follow.insert(db_conn, {
         'user_id': current_user['id'],
         'entity': {
             'id': topic['id'],
@@ -381,14 +401,15 @@ def create_post_route(request, topic_id):
 
     # ## STEP 5) Make updates based on proposal / vote status
     if post_kind == 'proposal':
-        update_entity_status(post_)
+        update_entity_status(db_conn, post_)
     if post_kind == 'vote':
         proposal = Proposal.get(id=post_['replies_to_id'])
-        update_entity_status(proposal)
+        update_entity_status(db_conn, proposal)
 
     # ## STEP 6) Send notices
     if post_kind == 'proposal':
         send_notices(
+            db_conn,
             entity_id=topic['entity']['id'],
             entity_kind=topic['entity']['kind'],
             notice_kind='create_proposal',
@@ -421,12 +442,14 @@ def update_post_route(request, topic_id, post_id):
     - The only fields that can be updated are body and response.
     """
 
+    db_conn = request['db_conn']
+
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
     # ## STEP 1) Find existing post instance ## #
-    post_ = get_post_facade(post_id)
+    post_ = get_post_facade(db_conn, post_id)
     if not post_:
         return abort(404)
     if post_['user_id'] != current_user['id']:
@@ -446,7 +469,7 @@ def update_post_route(request, topic_id, post_id):
         post_data = pick(post_data, ('body', 'response',))
 
     # ## STEP 3) Validate and save post instance ## #
-    post_, errors = post_.update(post_data)
+    post_, errors = post_.update(db_conn, post_data)
     if errors:
         errors = prefix_error_names('post.', errors)
         return 400, {
@@ -456,10 +479,10 @@ def update_post_route(request, topic_id, post_id):
 
     # ## STEP 4) Make updates based on proposal / vote status ## #
     if post_kind == 'proposal':
-        update_entity_status(post_)
+        update_entity_status(db_conn, post_)
     if post_kind == 'vote':
-        proposal = Proposal.get(id=post_['replies_to_id'])
-        update_entity_status(proposal)
+        proposal = Proposal.get(db_conn, id=post_['replies_to_id'])
+        update_entity_status(db_conn, proposal)
 
     # ## STEP 5) Return response ## #
     return 200, {'post': post_.deliver()}

@@ -1,5 +1,4 @@
 import rethinkdb as r
-import framework.database as database
 from modules.model import Model
 from modules.validations import is_required, is_language, is_boolean, \
     is_list, is_string, is_list_of_strings, is_one_of, has_min_length
@@ -76,7 +75,7 @@ class EntityMixin(object):
                    .map(r.row['reduction']))
 
     @classmethod
-    def get_latest_accepted(cls, entity_id):
+    def get_latest_accepted(cls, db_conn, entity_id):
         """
         Get the latest accepted version of the card.
         """
@@ -89,13 +88,13 @@ class EntityMixin(object):
                     .filter(r.row['entity_id'] == entity_id)
                     .limit(1))
 
-        documents = list(query.run(database.db_conn))
+        documents = list(query.run(db_conn))
 
         if len(documents) > 0:
             return cls(documents[0])
 
     @classmethod
-    def list_by_entity_ids(cls, entity_ids):
+    def list_by_entity_ids(cls, db_conn, entity_ids):
         """
         Get a list of entities by a list of entity IDs.
         """
@@ -108,12 +107,12 @@ class EntityMixin(object):
                             r.expr(entity_ids)
                             .contains(entity['entity_id'])))
 
-        docs = query.run(database.db_conn)
+        docs = query.run(db_conn)
         return [cls(fields) for fields in docs]
         # TODO-2 index in unit and set
 
     @classmethod
-    def get_versions(cls, entity_id, limit=10, skip=0, **params):
+    def get_versions(cls, db_conn, entity_id, limit=10, skip=0, **params):
         """
         Get the latest accepted version of the card.
         """
@@ -128,10 +127,10 @@ class EntityMixin(object):
                     .skip(skip)
                     .limit(limit))
 
-        return [cls(fields) for fields in query.run(database.db_conn)]
+        return [cls(fields) for fields in query.run(db_conn)]
 
     @classmethod
-    def list_requires(cls, entity_id, limit=10, skip=0, **params):
+    def list_requires(cls, db_conn, entity_id, limit=10, skip=0, **params):
         """
         Get the same kind of entity that this one requires.
         """
@@ -139,7 +138,7 @@ class EntityMixin(object):
         if not entity_id:
             return []
 
-        entity = cls.get_latest_accepted(entity_id=entity_id)
+        entity = cls.get_latest_accepted(db_conn, entity_id=entity_id)
 
         # TODO-2 this query should have an index in card and unit
         query = (cls.start_accepted_query()
@@ -149,10 +148,10 @@ class EntityMixin(object):
                     .skip(skip)
                     .limit(limit))
 
-        return [cls(fields) for fields in query.run(database.db_conn)]
+        return [cls(fields) for fields in query.run(db_conn)]
 
     @classmethod
-    def list_required_by(cls, entity_id, limit=10, skip=0, **params):
+    def list_required_by(cls, db_conn, entity_id, limit=10, skip=0, **params):
         """
         Get the same kind of entity that requires this one.
         """
@@ -167,10 +166,10 @@ class EntityMixin(object):
                     .skip(skip)
                     .limit(limit))
 
-        return [cls(fields) for fields in query.run(database.db_conn)]
+        return [cls(fields) for fields in query.run(db_conn)]
 
     @classmethod
-    def insert(cls, data):
+    def insert(cls, db_conn, data):
         """
         When a user creates a new version,
         don't accept certain fields.
@@ -181,20 +180,20 @@ class EntityMixin(object):
         data = omit(data, ('status', 'available'))
 
         if 'entity_id' in data:
-            latest = cls.get_latest_accepted(data['entity_id'])
+            latest = cls.get_latest_accepted(db_conn, data['entity_id'])
             data['previous_id'] = latest['id']
 
-        return super().insert(data)
+        return super().insert(db_conn, data)
 
-    def update(self, data):
+    def update(self, db_conn, data):
         """
         Only allow changes to the status on update.
         """
 
         data = pick(data, ('status', 'available'))
-        return super().update(data)
+        return super().update(db_conn, data)
 
-    def save(self):
+    def save(self, db_conn):
         """
         Overwrite save method to add to Elasticsearch.
         """
@@ -213,4 +212,4 @@ class EntityMixin(object):
                 body=json_prep(self.deliver()),
                 id=self['entity_id'],
             )
-        return super().save()
+        return super().save(db_conn)

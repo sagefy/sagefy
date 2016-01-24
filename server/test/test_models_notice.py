@@ -14,7 +14,7 @@ def test_create(db_conn, notices_table):
     """
     Expect to create a notice.
     """
-    notice, errors = Notice.insert({
+    notice, errors = Notice.insert(db_conn, {
         'user_id': 'abcd1234',
         'kind': 'create_proposal',
         'tags': ['test']
@@ -34,7 +34,7 @@ def test_validations(db_conn, notices_table):
     - Fail if read not boolean.
     - Fail if tags not list.
     """
-    notice, errors = Notice.insert({
+    notice, errors = Notice.insert(db_conn, {
         'read': 1234,
         'tags': 'test'
     })
@@ -55,7 +55,7 @@ def test_list(db_conn, notices_table):
         {'id': 3, 'user_id': 22, 'kind': 'create_proposal'},
         {'id': 4, 'user_id': 22, 'kind': 'create_proposal'},
     ]).run(db_conn)
-    notices = Notice.list(user_id=22)
+    notices = Notice.list(db_conn, user_id=22)
     assert len(notices) == 4
 
 
@@ -69,7 +69,7 @@ def test_list_user(db_conn, notices_table):
         {'id': 3, 'user_id': 24, 'kind': 'create_proposal'},
         {'id': 4, 'user_id': 25, 'kind': 'create_proposal'},
     ]).run(db_conn)
-    notices = Notice.list(user_id=22)
+    notices = Notice.list(db_conn, user_id=22)
     assert len(notices) == 2
 
 
@@ -81,9 +81,9 @@ def test_list_paginate(db_conn, notices_table):
         notices_table.insert({
             'id': i, 'user_id': 22, 'kind': 'create_proposal',
         }).run(db_conn)
-    notices = Notice.list(user_id=22)
+    notices = Notice.list(db_conn, user_id=22)
     assert len(notices) == 10
-    notices = Notice.list(user_id=22, skip=20)
+    notices = Notice.list(db_conn, user_id=22, skip=20)
     assert len(notices) == 5
 
 
@@ -96,7 +96,7 @@ def test_list_unread(db_conn, notices_table):
         {'id': 3, 'user_id': 22, 'kind': 'create_proposal', 'read': False},
         {'id': 4, 'user_id': 22, 'kind': 'create_proposal', 'read': False},
     ]).run(db_conn)
-    notices = Notice.list(user_id=22, read=False)
+    notices = Notice.list(db_conn, user_id=22, read=False)
     assert len(notices) == 2
     assert notices[0]['id'] in (3, 4)
     assert notices[1]['id'] in (3, 4)
@@ -116,7 +116,7 @@ def test_list_tag(db_conn, notices_table):
         {'id': 4, 'user_id': 22, 'kind': 'create_proposal',
             'tags': ['apple', 'peach']},
     ]).run(db_conn)
-    notices = Notice.list(user_id=22, tag='apple')
+    notices = Notice.list(db_conn, user_id=22, tag='apple')
     assert len(notices) == 2
     assert 'apple' in notices[0]['tags']
     assert 'apple' in notices[1]['tags']
@@ -126,7 +126,7 @@ def test_list_empty(db_conn, notices_table):
     """
     Expect to get an empty list when run out of notices.
     """
-    notices = Notice.list(user_id=22)
+    notices = Notice.list(db_conn, user_id=22)
     assert len(notices) == 0
 
 
@@ -134,13 +134,13 @@ def test_mark_as_read(db_conn, notices_table):
     """
     Expect to mark a notice as read.
     """
-    notice, errors = Notice.insert({
+    notice, errors = Notice.insert(db_conn, {
         'user_id': 'abcd1234',
         'kind': 'create_proposal',
         'tags': ['test']
     })
     assert notice['read'] is False
-    notice.mark_as_read()
+    notice.mark_as_read(db_conn)
     assert notice['read'] is True
     record = notices_table.filter({'user_id': 'abcd1234'}).run(db_conn)
     record = list(record)[0]
@@ -162,7 +162,7 @@ def test_notices_kind(db_conn, notices_table):
         {'id': 4, 'user_id': 22, 'kind': 'new_topic',
             'tags': ['apple', 'peach']},
     ]).run(db_conn)
-    notices = Notice.list(user_id=22, kind='create_proposal')
+    notices = Notice.list(db_conn, user_id=22, kind='create_proposal')
     assert len(notices) == 2
     assert notices[0]['kind'] == 'create_proposal'
     assert notices[1]['kind'] == 'create_proposal'
@@ -191,14 +191,14 @@ def test_mark_unread(db_conn, notices_table):
     Expect to mark as unread.
     """
 
-    notice, errors = Notice.insert({
+    notice, errors = Notice.insert(db_conn, {
         'user_id': 'abcd1234',
         'kind': 'create_proposal',
         'tags': ['test'],
         'read': True
     })
     assert notice['read'] is True
-    notice.mark_as_unread()
+    notice.mark_as_unread(db_conn)
     assert notice['read'] is False
     record = notices_table.filter({'user_id': 'abcd1234'}).run(db_conn)
     record = list(record)[0]

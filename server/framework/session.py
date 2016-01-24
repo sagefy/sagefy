@@ -13,7 +13,7 @@ def get_current_user(request):
     user_id = redis.get(session_id)
     if user_id:
         user_id = user_id.decode()
-        return User.get(id=user_id)
+        return User.get(request['db_conn'], id=user_id)
 
 
 def log_in_user(user):

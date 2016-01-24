@@ -1,5 +1,4 @@
 import rethinkdb as r
-import framework.database as database
 from modules.util import uniqid, omit, pick, extend
 from modules.content import get as c
 from modules.classproperty import classproperty
@@ -113,10 +112,10 @@ class Model(object):
         """
 
         assert self.tablename, 'You must provide a tablename.'
-        return database.db.table(self.tablename)
+        return r.table(self.tablename)
 
     @classmethod
-    def get(cls, **params):
+    def get(cls, db_conn, **params):
         """
         Get one model which matches the provided keyword arguments.
         Return None when there's no matching document.
@@ -126,18 +125,18 @@ class Model(object):
         if params.get('id'):
             data = (cls.table
                        .get(params.get('id'))
-                       .run(database.db_conn))
+                       .run(db_conn))
         else:
             data = list(cls.table
                            .filter(params)
                            .limit(1)
-                           .run(database.db_conn))
+                           .run(db_conn))
             data = data[0] if len(data) > 0 else None
         if data:
             return cls(data)
 
     @classmethod
-    def list(cls, **params):
+    def list(cls, db_conn, **params):
         """
         Get a list of models matching the provided keyword arguments.
         Return empty array when no models match.
@@ -145,11 +144,11 @@ class Model(object):
 
         data_list = (cls.table
                         .filter(params)
-                        .run(database.db_conn))
+                        .run(db_conn))
         return [cls(data) for data in data_list]
 
     @classmethod
-    def insert(cls, data):
+    def insert(cls, db_conn, data):
         """
         Create a new model instance.
         Return model and errors if failed.
@@ -158,9 +157,9 @@ class Model(object):
         assert isinstance(data, dict)
         data = omit(data, ('id', 'created', 'modified'))
         instance = cls(data)
-        return instance.save()
+        return instance.save(db_conn)
 
-    def update(self, data):
+    def update(self, db_conn, data):
         """
         Update the model in the database.
         Return model and errors if failed.
@@ -169,35 +168,35 @@ class Model(object):
         assert isinstance(data, dict)
         data = omit(data, ('id', 'created', 'modified'))
         extend(self.data, data)
-        return self.save()
+        return self.save(db_conn)
 
-    def save(self):
+    def save(self, db_conn):
         """
         Insert the model in the database.
         Return model and errors if failed.
         """
 
-        errors = self.validate()
+        errors = self.validate(db_conn)
         if len(errors):
             return self, errors
         data = self.bundle()
         self.id = data['id']
-        self.table.insert(data, conflict='update').run(database.db_conn)
-        self.sync()
+        self.table.insert(data, conflict='update').run(db_conn)
+        self.sync(db_conn)
         return self, []
 
-    def sync(self):
+    def sync(self, db_conn):
         """
         Pull the fields from the database.
         """
 
         data = (self.table
                     .get(self['id'])
-                    .run(database.db_conn))
+                    .run(db_conn))
         extend(self.data, data)
         return self
 
-    def delete(self):
+    def delete(self, db_conn):
         """
         Remove the model from the database.
         """
@@ -205,10 +204,10 @@ class Model(object):
         (self.table
              .get(self['id'])
              .delete()
-             .run(database.db_conn))
+             .run(db_conn))
         return self, []
 
-    def validate(self):
+    def validate(self, db_conn):
         """
         Ensure the data presented matches the validations in the schema.
         Allow all data that is not specified in the schema.
@@ -221,7 +220,7 @@ class Model(object):
         To add model-level validations, extend this method, such as:
 
             def validate(self):
-                errors = super().validate()
+                errors = super().validate(db_conn)
                 if not errors:
                     errors += self.validate_...()
                 return errors
@@ -232,7 +231,7 @@ class Model(object):
         if not errors:
             errors += self.validate_fields()
         if not errors:
-            errors += self.test_unique()
+            errors += self.test_unique(db_conn)
         return errors
 
     def enforce_strict_mode(self):
@@ -282,7 +281,7 @@ class Model(object):
         iter(_, self.data, self.schema)
         return errors
 
-    def test_unique(self):
+    def test_unique(self, db_conn):
         """
         Test all top-level fields marked as unique.
         """
@@ -298,7 +297,7 @@ class Model(object):
                          .filter(r.row[field_name] == data.get(field_name))
                          .filter(r.row['id'] != self['id']))
 
-            if len(list(query.run(database.db_conn))) > 0:
+            if len(list(query.run(db_conn))) > 0:
                 errors.append({
                     'name': prefix + field_name,
                     'message': c('unique'),

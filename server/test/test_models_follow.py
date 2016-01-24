@@ -7,7 +7,7 @@ def test_user_id(db_conn, follows_table):
     A follow should require a user_id.
     """
 
-    follow, errors = Follow.insert({
+    follow, errors = Follow.insert(db_conn, {
         'entity': {
             'id': 'A',
             'kind': 'card',
@@ -15,7 +15,7 @@ def test_user_id(db_conn, follows_table):
     })
     assert len(errors) == 1
     follow['user_id'] = 'A'
-    follow, errors = follow.save()
+    follow, errors = follow.save(db_conn)
     assert len(errors) == 0
 
 
@@ -24,7 +24,7 @@ def test_entity(db_conn, follows_table):
     Expect a follow to require an entity kind and id.
     """
 
-    follow, errors = Follow.insert({
+    follow, errors = Follow.insert(db_conn, {
         'user_id': 'A',
     })
     assert len(errors) == 2
@@ -32,7 +32,7 @@ def test_entity(db_conn, follows_table):
         'id': 'A',
         'kind': 'card',
     }
-    follow, errors = follow.save()
+    follow, errors = follow.save(db_conn)
     assert len(errors) == 0
 
 
@@ -67,8 +67,8 @@ def test_list_user(db_conn, follows_table):
         },
     }]).run(db_conn)
 
-    assert len(Follow.list(user_id='abcd1234')) == 2
-    assert len(Follow.list(user_id='JFldl93k')) == 1
+    assert len(Follow.list(db_conn, user_id='abcd1234')) == 2
+    assert len(Follow.list(db_conn, user_id='JFldl93k')) == 1
 
 
 def test_list_kind(db_conn, follows_table):
@@ -102,8 +102,8 @@ def test_list_kind(db_conn, follows_table):
         },
     }]).run(db_conn)
 
-    assert len(Follow.list(kind='card')) == 2
-    assert len(Follow.list(kind='unit')) == 1
+    assert len(Follow.list(db_conn, kind='card')) == 2
+    assert len(Follow.list(db_conn, kind='unit')) == 1
 
 
 def test_list_id(db_conn, follows_table):
@@ -137,5 +137,5 @@ def test_list_id(db_conn, follows_table):
         },
     }]).run(db_conn)
 
-    assert len(Follow.list(entity_id='JFlsjFm')) == 2
-    assert len(Follow.list(entity_id='u39Fdjf0')) == 1
+    assert len(Follow.list(db_conn, entity_id='JFlsjFm')) == 2
+    assert len(Follow.list(db_conn, entity_id='u39Fdjf0')) == 1

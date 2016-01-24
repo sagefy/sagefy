@@ -35,9 +35,10 @@ def serve(environ, start_response):
     Handle a WSGI request and response.
     """
 
-    make_db_connection()
-    code, data = call_handler(environ)
-    close_db_connection()
+    db_conn = make_db_connection()
+    request = construct_request(environ, db_conn)
+    code, data = call_handler(request)
+    close_db_connection(db_conn)
     response_headers = [('Content-Type', 'application/json; charset=utf-8')]
     if isinstance(data, dict):
         response_headers += set_cookie_headers(data.pop('cookies', {}))
@@ -51,45 +52,49 @@ def serve(environ, start_response):
     return [body]
 
 
-def call_handler(environ):
-    """
-    Given a WSGI environment,
-    call the appropriate handler.
-    Return a tuple of code (str), data (dict), and cookies (list).
-    """
-
-    method = environ['REQUEST_METHOD']
-    if method not in ('GET', 'POST', 'PUT', 'DELETE'):
-        return abort(405)
-
-    path = environ['SCRIPT_NAME'] + environ['PATH_INFO']
-    handler, parameters = find_path(method, path)
-    if not handler:
-        return abort(404)
-
-    try:
-        return handler(request=construct_request(environ), **parameters)
-
-    except Exception:
-        if config['debug']:
-            return 500, format_exc()
-        return abort(500)
-
-
-def construct_request(environ):
+def construct_request(environ, db_conn):
     """
     Produce a request `object`
     given a body (get), query string (put, post), and cookies.
     """
 
-    method = environ['REQUEST_METHOD']
     request = {}
-    if method == 'GET':
-        request['params'] = pull_query_string(environ)
-    elif method in ('PUT', 'POST'):
-        request['params'] = pull_body(environ)
+
+    request['method'] = environ['REQUEST_METHOD']
+    request['path'] = environ['SCRIPT_NAME'] + environ['PATH_INFO']
+    request['db_conn'] = db_conn
     request['cookies'] = pull_cookies(environ)
+
+    if request['method'] == 'GET':
+        request['params'] = pull_query_string(environ)
+    elif request['method'] in ('PUT', 'POST'):
+        request['params'] = pull_body(environ)
+
     return request
+
+
+def call_handler(request):
+    """
+    Given a request dictionary, call the appropriate handler.
+    Return a tuple of code (str), data (dict), and cookies (list).
+    """
+
+    method = request['method']
+    if method not in ('GET', 'POST', 'PUT', 'DELETE'):
+        return abort(405)
+
+    path = request['path']
+    handler, parameters = find_path(method, path)
+    if not handler:
+        return abort(404)
+
+    try:
+        return handler(request=request, **parameters)
+
+    except Exception:
+        if config['debug']:
+            return 500, format_exc()
+        return abort(500)
 
 
 def pull_query_string(environ):

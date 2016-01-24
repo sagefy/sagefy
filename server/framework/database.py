@@ -3,12 +3,6 @@ On each request, we create and close a new connection.
 Rethink was designed to work this way, no reason to be alarmed.
 """
 
-# TODO-0 Random connection errors:
-# Exception: rethinkdb.errors.ReqlDriverError:
-# Error sending to localhost:28015 - 'NoneType' object has no attribute 'send'
-# Maybe related? https://github.com/rethinkdb/rethinkdb/issues/2427
-
-
 import rethinkdb as r
 
 config = {
@@ -17,26 +11,25 @@ config = {
     'rdb_db': 'sagefy',
 }
 
-db, db_conn = None, None
-
 
 def make_db_connection():
     """
     Create a database connection.
     """
 
-    global db, db_conn
-    db_conn = r.connect(config['rdb_host'], config['rdb_port'])
-    db = r.db(config['rdb_db'])
-    return db_conn, db
+    return r.connect(
+        host=config['rdb_host'],
+        port=config['rdb_port'],
+        db=config['rdb_db'],
+        timeout=60
+    )
 
 
-def close_db_connection():
+def close_db_connection(db_conn):
     """
     Close the DB connection.
     """
 
-    global db, db_conn
     db_conn.close()
 
 
@@ -47,7 +40,7 @@ def setup_db():
     need to be.
     """
 
-    db_conn = r.connect(config['rdb_host'], config['rdb_port'])
+    db_conn = make_db_connection()
 
     # add all setup needed here:
     if config['rdb_db'] not in r.db_list().run(db_conn):
@@ -95,4 +88,4 @@ def setup_db():
                   .index_create(*index)
                   .run(db_conn))
 
-    db_conn.close()
+    close_db_connection(db_conn)

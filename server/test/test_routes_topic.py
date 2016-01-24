@@ -92,7 +92,8 @@ def test_create_topic(db_conn, session, topics_table, posts_table):
         },
         'cookies': {
             'session_id': session,
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.create_topic_route(request)
     assert code == 200
@@ -125,7 +126,8 @@ def test_create_topic_proposal(db_conn, users_table, topics_table,
         },
         'cookies': {
             'session_id': session,
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.create_topic_route(request)
     assert code == 200
@@ -154,7 +156,8 @@ def test_create_topic_log_in(db_conn, users_table, topics_table,
                 'body': 'Here\'s a pear.',
                 'kind': 'post'
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.create_topic_route(request)
     assert code == 401
@@ -179,7 +182,8 @@ def test_create_topic_no_post(db_conn, users_table, topics_table,
         },
         'cookies': {
             'session_id': session,
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.create_topic_route(request)
     assert code == 400
@@ -202,7 +206,8 @@ def test_topic_update(db_conn, users_table, topics_table,
                 'name': 'Another entity',
                 'topic_id': 'wxyz7890',
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.update_topic_route(request, 'wxyz7890')
     assert code == 200
@@ -225,7 +230,8 @@ def test_update_topic_author(db_conn, users_table, topics_table,
                 'name': 'Another entity',
                 'topic_id': 'wxyz7890',
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.update_topic_route(request, 'wxyz7890')
     assert code == 403
@@ -250,7 +256,8 @@ def test_update_topic_fields(db_conn, users_table, topics_table,
             'entity': {
                 'kind': 'set'
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.update_topic_route(request, 'wxyz7890')
     assert code == 400
@@ -284,7 +291,10 @@ def test_get_posts(db_conn, users_table, topics_table, posts_table):
         'kind': 'post',
     }]).run(db_conn)
 
-    request = {'params': {}}
+    request = {
+        'params': {},
+        'db_conn': db_conn
+    }
     code, response = routes.topic.get_posts_route(request, 'wxyz7890')
     assert code == 200
     assert ('Beneficial to the Publick' in response['posts'][0]['body']
@@ -297,7 +307,10 @@ def test_get_posts_not_topic(db_conn, users_table, topics_table,
     Expect 404 to get posts for a nonexistant topic.
     """
 
-    request = {'params': {}}
+    request = {
+        'params': {},
+        'db_conn': db_conn
+    }
     code, response = routes.topic.get_posts_route(request, 'wxyz7890')
     assert code == 404
 
@@ -320,7 +333,10 @@ def test_get_posts_paginate(db_conn, users_table, topics_table,
             'kind': 'post',
         }).run(db_conn)
 
-    request = {'params': {}}
+    request = {
+        'params': {},
+        'db_conn': db_conn
+    }
     code, response = routes.topic.get_posts_route(request, 'wxyz7890')
     assert code == 200
     assert len(response['posts']) == 10
@@ -339,7 +355,10 @@ def test_get_posts_proposal(db_conn, users_table, units_table, topics_table,
     create_topic_in_db(topics_table, db_conn)
     create_proposal_in_db(posts_table, units_table, db_conn)
 
-    request = {'params': {}}
+    request = {
+        'params': {},
+        'db_conn': db_conn,
+    }
     code, response = routes.topic.get_posts_route(request, 'wxyz7890')
     assert code == 200
     assert response['posts'][0]['kind'] == 'proposal'
@@ -365,7 +384,10 @@ def test_get_posts_votes(db_conn, users_table, units_table, topics_table,
         'response': True,
     }).run(db_conn)
 
-    request = {'params': {}}
+    request = {
+        'params': {},
+        'db_conn': db_conn
+    }
     code, response = routes.topic.get_posts_route(request, 'wxyz7890')
 
     assert code == 200
@@ -391,7 +413,8 @@ def test_create_post(db_conn, users_table, topics_table, posts_table,
                 'kind': 'post',
                 'topic_id': 'wxyz7890',
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.create_post_route(request, 'wxyz7890')
     assert code == 200
@@ -412,7 +435,8 @@ def test_create_post_errors(db_conn, users_table, topics_table,
                 'kind': 'post',
                 'topic_id': 'wxyz7890',
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.create_post_route(request, 'wxyz7890')
     assert code == 400
@@ -434,7 +458,8 @@ def test_create_post_log_in(db_conn, users_table, topics_table,
                 for Making Them Beneficial to the Publick.''',
             'kind': 'post',
             'topic_id': 'wxyz7890',
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.create_post_route(request, 'wxyz7890')
 
@@ -466,7 +491,8 @@ def test_create_post_proposal(db_conn, users_table, topics_table,
                 stupidity or vices.''',
                 'tags': ['literature']
             },
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.create_post_route(request, 'wxyz7890')
     assert code == 200
@@ -487,7 +513,8 @@ def test_create_post_vote(db_conn, users_table, topics_table,
             'body': 'Hooray!',
             'proposal_id': 'jklm',
             'response': True,
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.create_post_route(request, 'wxyz7890')
     assert code == 200
@@ -508,7 +535,8 @@ def test_update_post_log_in(db_conn, users_table, topics_table,
             'post': {
                 'body': 'Update.'
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.update_post_route(request,
                                                     'wxyz7890', 'jklm')
@@ -531,7 +559,8 @@ def test_update_post_author(db_conn, users_table, topics_table,
             'post': {
                 'body': 'Update.'
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.update_post_route(request,
                                                     'wxyz7890', 'jklm')
@@ -553,7 +582,8 @@ def test_update_post_body(db_conn, users_table, topics_table,
             'post': {
                 'body': 'Update.'
             }
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.update_post_route(request,
                                                     'wxyz7890', 'jklm')
@@ -575,7 +605,8 @@ def test_update_proposal(db_conn, users_table, topics_table,
         'cookies': {'session_id': session},
         'params': {
             'status': 'declined'
-        }
+        },
+        'db_conn': db_conn,
     }
     code, response = routes.topic.update_post_route(request,
                                                     'wxyz7890', 'jklm')
@@ -612,7 +643,8 @@ def test_update_vote(db_conn, users_table, topics_table,
         'params': {
             'body': 'Yay!',
             'response': True,
-        }
+        },
+        'db_conn': db_conn
     }
     code, response = routes.topic.update_post_route(request,
                                                     'wxyz7890', 'vbnm1234')

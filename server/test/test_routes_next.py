@@ -7,8 +7,11 @@ def test_seq_next(db_conn, session):
     Expect sequencer route to say where to go next.
     """
 
-    request = {'cookies': {'session_id': session}}
-    user = User.get(id='abcd1234')
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn,
+    }
+    user = User.get(db_conn, id='abcd1234')
     user.set_learning_context(next={
         'method': 'DANCE',
         'path': '/s/unicorns'
@@ -24,7 +27,10 @@ def test_seq_next_default(db_conn, session):
     Expect sequencer route to say where to go next if no current state.
     """
 
-    request = {'cookies': {'session_id': session}}
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn,
+    }
     code, response = routes.next.next_route(request)
     assert code == 200
     assert response == {

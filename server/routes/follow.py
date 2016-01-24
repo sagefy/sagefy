@@ -12,11 +12,15 @@ def get_follows_route(request):
     Get a list of the users follows.
     """
 
+    db_conn = request['db_conn']
+
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
-    follows = Follow.list(user_id=current_user['id'], **request['params'])
+    follows = Follow.list(db_conn,
+                          user_id=current_user['id'],
+                          **request['params'])
 
     output = {
         'follows': [follow.deliver(access='private') for follow in follows]
@@ -24,7 +28,8 @@ def get_follows_route(request):
 
     # TODO-3 SPLITUP should this be a different endpoint?
     if 'entities' in request['params']:
-        entities = flush_entities(follow['entity'] for follow in follows)
+        entities = flush_entities(db_conn,
+                                  [follow['entity'] for follow in follows])
         output['entities'] = [entity.deliver() if entity else None
                               for entity in entities]
 
@@ -39,6 +44,7 @@ def follow_route(request):
 
     # TODO-3 simplify this method. does some of this belong in the model?
 
+    db_conn = request['db_conn']
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
@@ -47,7 +53,7 @@ def follow_route(request):
     follow_data['user_id'] = current_user['id']
 
     follow = Follow(follow_data)
-    errors = follow.validate()
+    errors = follow.validate(db_conn)
     if errors:
         return 400, {
             'errors': errors,
@@ -56,14 +62,15 @@ def follow_route(request):
 
     # Ensure the entity exists   TODO-3 should this be a model validation?
     if follow['entity']['kind'] == 'topic':
-        entity = Topic.get(id=follow['entity']['id'])
+        entity = Topic.get(db_conn, id=follow['entity']['id'])
     else:
-        entity = get_latest_accepted(follow['entity']['kind'],
+        entity = get_latest_accepted(db_conn,
+                                     follow['entity']['kind'],
                                      follow['entity']['id'])
     if not entity:
         return abort(404)
 
-    follow, errors = follow.save()
+    follow, errors = follow.save(db_conn)
     if errors:
         return 400, {
             'errors': errors,
@@ -79,18 +86,20 @@ def unfollow_route(request, follow_id):
     Remove a follow. Must be current user's own follow.
     """
 
+    db_conn = request['db_conn']
+
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
-    follow = Follow.get(id=follow_id)
+    follow = Follow.get(db_conn, id=follow_id)
     if not follow:
         return abort(404)
 
     if follow['user_id'] != current_user['id']:
         return abort(403)
 
-    follow, errors = follow.delete()
+    follow, errors = follow.delete(db_conn)
     if errors:
         return 400, {
             'errors': errors,

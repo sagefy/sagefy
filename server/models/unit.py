@@ -30,13 +30,13 @@ class Unit(EntityMixin, Model):
         },
     })
 
-    def validate(self):
-        errors = super().validate()
+    def validate(self, db_conn):
+        errors = super().validate(db_conn)
         if not errors:
-            errors += self.ensure_no_cycles()
+            errors += self.ensure_no_cycles(db_conn)
         return errors
 
-    def ensure_no_cycles(self):
+    def ensure_no_cycles(self, db_conn):
         """
         TODO-0 Ensure no require cycles form.
         """

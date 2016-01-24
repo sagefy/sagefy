@@ -1,7 +1,6 @@
 from models.post import Post
 from modules.validations import is_required, is_string, is_boolean
 import rethinkdb as r
-import framework.database as database
 from modules.entity import get_version  # TODO-2 this may cause a problem
 
 
@@ -40,15 +39,15 @@ class Vote(Post):
         super().__init__(fields)
         self.kind = 'vote'
 
-    def validate(self):
-        errors = super().validate()
+    def validate(self, db_conn):
+        errors = super().validate(db_conn)
         if not errors:
-            errors += self.is_unique_vote()
+            errors += self.is_unique_vote(db_conn)
         if not errors:
-            errors += self.is_valid_reply_kind()
+            errors += self.is_valid_reply_kind(db_conn)
         return errors
 
-    def is_unique_vote(self):
+    def is_unique_vote(self, db_conn):
         """
         Ensure a user can only vote once per proposal.
         """
@@ -57,12 +56,12 @@ class Vote(Post):
                      .filter(r.row['user_id'] == self['user_id'])
                      .filter(r.row['replies_to_id'] == self['replies_to_id'])
                      .filter(r.row['kind'] == 'vote'))
-        documents = [doc for doc in query.run(database.db_conn)]
+        documents = [doc for doc in query.run(db_conn)]
         if documents:
             return [{'message': 'You already have a vote on this proposal.'}]
         return []
 
-    def is_valid_reply_kind(self):
+    def is_valid_reply_kind(self, db_conn):
         """
         A vote can reply to a proposal.
         A vote cannot reply to a proposal that is accepted or declined.
@@ -71,14 +70,15 @@ class Vote(Post):
 
         query = (self.table
                      .get(self['replies_to_id']))
-        proposal_data = query.run(database.db_conn)
+        proposal_data = query.run(db_conn)
         if not proposal_data:
             return [{'message': 'No proposal found.'}]
         if proposal_data['kind'] != 'proposal':
             return [{'message': 'A vote must reply to a proposal.'}]
         if proposal_data['user_id'] == self['user_id']:
             return [{'message': 'You cannot vote on your own proposal.'}]
-        entity_version = get_version(proposal_data['entity_version']['kind'],
+        entity_version = get_version(db_conn,
+                                     proposal_data['entity_version']['kind'],
                                      proposal_data['entity_version']['id'])
         if not entity_version:
             return [{'message': 'No entity version for proposal.'}]

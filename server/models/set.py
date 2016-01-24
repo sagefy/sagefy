@@ -1,4 +1,3 @@
-import framework.database as database
 import rethinkdb as r
 from modules.model import Model
 from models.mixins.entity import EntityMixin
@@ -38,20 +37,20 @@ class Set(EntityMixin, Model):
         }
     })
 
-    def validate(self):
-        errors = super().validate()
+    def validate(self, db_conn):
+        errors = super().validate(db_conn)
         if not errors:
-            errors += self.ensure_no_cycles()
+            errors += self.ensure_no_cycles(db_conn)
         return errors
 
-    def ensure_no_cycles(self):
+    def ensure_no_cycles(self, db_conn):
         """
         TODO-0 Ensure no require cycles form.
         """
         return []
 
     @classmethod
-    def list_by_unit_id(cls, unit_id):
+    def list_by_unit_id(cls, db_conn, unit_id):
         """
         Get a list of sets which contain the given member ID. Recursive.
 
@@ -66,7 +65,7 @@ class Set(EntityMixin, Model):
                         .filter(r.row['members'].contains(
                             lambda member: member['id'] == unit_id
                         )))
-            sets = query.run(database.db_conn)
+            sets = query.run(db_conn)
 
             # *** Second, find all the sets containing
             #     those sets... recursively. ***
@@ -81,14 +80,14 @@ class Set(EntityMixin, Model):
                                 lambda member:
                                     r.expr(set_ids).contains(member['id'])
                             )))
-                found_sets = query.run(database.db_conn)
+                found_sets = query.run(db_conn)
 
             return all_sets
 
         key = 'list_sets_by_unit_id_{id}'.format(id=unit_id)
         return [Set(data) for data in memoize_redis(key, _)]
 
-    def list_units(self):
+    def list_units(self, db_conn):
         """
         Get the list of units contained within the set. Recursive. Connecting.
 
@@ -113,7 +112,7 @@ class Set(EntityMixin, Model):
                     set_ids.update({member['id']
                                     for member in set_.data.get('members')
                                     if member['kind'] == 'set'})
-                sets = Set.list_by_entity_ids(set_ids)
+                sets = Set.list_by_entity_ids(db_conn, set_ids)
 
             # *** Second, we need to find all
             #     the required connecting units. ***
@@ -121,7 +120,7 @@ class Set(EntityMixin, Model):
             next_grab, units, unit_requires = unit_ids, [], {}
 
             while next_grab:
-                tier_units = Unit.list_by_entity_ids(next_grab)
+                tier_units = Unit.list_by_entity_ids(db_conn, next_grab)
                 units += tier_units
                 next_grab = set()
 

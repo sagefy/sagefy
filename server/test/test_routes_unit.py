@@ -77,7 +77,9 @@ def test_get_unit(db_conn,
         }
     }]).run(db_conn)
 
-    code, response = routes.unit.get_unit_route({}, 'zytx')
+    code, response = routes.unit.get_unit_route({
+        'db_conn': db_conn
+    }, 'zytx')
     assert code == 200
     # Model
     assert response['unit']['entity_id'] == 'zytx'
@@ -105,5 +107,7 @@ def test_get_unit_404(db_conn):
     Expect to fail to get an unknown unit (404).
     """
 
-    code, response = routes.unit.get_unit_route({}, 'zytx')
+    code, response = routes.unit.get_unit_route({
+        'db_conn': db_conn
+    }, 'zytx')
     assert code == 404

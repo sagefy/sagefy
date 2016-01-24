@@ -2,7 +2,6 @@ from modules.model import Model
 from modules.validations import is_required, is_string, is_boolean, is_list, \
     is_one_of, is_list_of_strings, is_dict
 import rethinkdb as r
-import framework.database as database
 from modules.content import get as c
 
 # done-- implement create_topic notice
@@ -61,7 +60,7 @@ class Notice(Model):
     })
 
     @classmethod
-    def list(cls, user_id=None, limit=10, skip=0, read=None, tag=None,
+    def list(cls, db_conn, user_id=None, limit=10, skip=0, read=None, tag=None,
              kind=None, **params):
         """
         Get a list of models matching the provided arguments.
@@ -80,24 +79,24 @@ class Notice(Model):
                     .order_by(r.desc('created'))
                     .skip(skip)
                     .limit(limit))
-        fields_list = query.run(database.db_conn)
+        fields_list = query.run(db_conn)
         return [cls(fields) for fields in fields_list]
 
-    def mark_as_read(self):
+    def mark_as_read(self, db_conn):
         """
         Marks the notice as read.
         """
 
         self['read'] = True
-        return self.save()
+        return self.save(db_conn)
 
-    def mark_as_unread(self):
+    def mark_as_unread(self, db_conn):
         """
         Marks the notice as unread.
         """
 
         self['read'] = False
-        return self.save()
+        return self.save(db_conn)
 
     def get_body(self):
         """

@@ -14,6 +14,8 @@ def get_user_sets_route(request, user_id):
         -> POST Choose Set
     """
 
+    db_conn = request['db_conn']
+
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
@@ -29,11 +31,14 @@ def get_user_sets_route(request, user_id):
     }
     current_user.set_learning_context(next=next_)
 
-    uset = UserSets.get(user_id=user_id)
+    uset = UserSets.get(db_conn, user_id=user_id)
     if not uset:
         return 200, {'sets': [], 'next': next_}
     return 200, {
-        'sets': [s.deliver() for s in uset.list_sets(**request['params'])],
+        'sets': [s.deliver()
+                 for s in uset.list_sets(
+                     db_conn,
+                     **request['params'])],
         'next': next_,
     }
 
@@ -44,6 +49,8 @@ def add_set_route(request, user_id, set_id):
     Add a set to the learner's list of sets.
     """
 
+    db_conn = request['db_conn']
+
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
@@ -51,11 +58,11 @@ def add_set_route(request, user_id, set_id):
     if user_id != current_user['id']:
         return abort(403)
 
-    set_ = Set.get(entity_id=set_id)
+    set_ = Set.get(db_conn, entity_id=set_id)
     if not set_:
         return abort(404)
 
-    uset = UserSets.get(user_id=user_id)
+    uset = UserSets.get(db_conn, user_id=user_id)
     if uset and set_id in uset['set_ids']:
         return 400, {
             'errors': [{
@@ -67,9 +74,9 @@ def add_set_route(request, user_id, set_id):
 
     if uset:
         uset['set_ids'].append(set_id)
-        uset, errors = uset.save()
+        uset, errors = uset.save(db_conn)
     else:
-        uset, errors = UserSets.insert({
+        uset, errors = UserSets.insert(db_conn, {
             'user_id': user_id,
             'set_ids': [set_id],
         })
@@ -93,11 +100,13 @@ def select_set_route(request, user_id, set_id):
         -> GET View Set Tree
     """
 
+    db_conn = request['db_conn']
+
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
 
-    set_ = Set.get_latest_accepted(set_id)
+    set_ = Set.get_latest_accepted(db_conn, set_id)
     next_ = {
         'method': 'GET',
         'path': '/s/sets/{set_id}/tree'
@@ -114,6 +123,8 @@ def remove_set_route(request, user_id, set_id):
     Remove a set from the learner's list of sets.
     """
 
+    db_conn = request['db_conn']
+
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
@@ -121,7 +132,7 @@ def remove_set_route(request, user_id, set_id):
     if user_id != current_user['id']:
         return abort(403)
 
-    uset = UserSets.get(user_id=user_id)
+    uset = UserSets.get(db_conn, user_id=user_id)
     if not uset:
         return 404, {
             'errors': [{'message': 'User does not have sets.'}],
@@ -132,7 +143,7 @@ def remove_set_route(request, user_id, set_id):
         return abort(404)
 
     uset['set_ids'].remove(set_id)
-    usets, errors = uset.save()
+    usets, errors = uset.save(db_conn)
 
     if errors:
         return 400, {

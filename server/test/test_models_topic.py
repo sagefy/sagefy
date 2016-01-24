@@ -6,7 +6,7 @@ def test_user_id(db_conn, topics_table):
     Expect a topic to require a user id.
     """
 
-    topic, errors = Topic.insert({
+    topic, errors = Topic.insert(db_conn, {
         'name': 'A',
         'entity': {
             'id': 'A',
@@ -15,7 +15,7 @@ def test_user_id(db_conn, topics_table):
     })
     assert len(errors) == 1
     topic['user_id'] = 'Q'
-    topic, errors = topic.save()
+    topic, errors = topic.save(db_conn)
     assert len(errors) == 0
 
 
@@ -24,7 +24,7 @@ def test_name(db_conn, topics_table):
     Expect a topic to require a name.
     """
 
-    topic, errors = Topic.insert({
+    topic, errors = Topic.insert(db_conn, {
         'user_id': 'Q',
         'entity': {
             'id': 'A',
@@ -33,7 +33,7 @@ def test_name(db_conn, topics_table):
     })
     assert len(errors) == 1
     topic['name'] = 'A'
-    topic, errors = topic.save()
+    topic, errors = topic.save(db_conn)
     assert len(errors) == 0
 
 
@@ -42,7 +42,7 @@ def test_entity(db_conn, topics_table):
     Expect a topic to require an entity kind and id.
     """
 
-    topic, errors = Topic.insert({
+    topic, errors = Topic.insert(db_conn, {
         'user_id': 'Q',
         'name': 'A',
     })
@@ -51,7 +51,7 @@ def test_entity(db_conn, topics_table):
         'id': 'A',
         'kind': 'card',
     }
-    topic, errors = topic.save()
+    topic, errors = topic.save(db_conn)
     assert len(errors) == 0
 
 
@@ -79,5 +79,5 @@ def test_list_by_entity_id(db_conn, topics_table):
         }
     }]).run(db_conn)
 
-    topics = Topic.list_by_entity_id('A')
+    topics = Topic.list_by_entity_id(db_conn, 'A')
     assert len(topics) == 2

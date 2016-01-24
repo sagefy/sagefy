@@ -28,14 +28,14 @@ def test_user(db_conn, posts_table, units_table):
     """
 
     create_proposal(posts_table, units_table, db_conn)
-    vote, errors = Vote.insert({
+    vote, errors = Vote.insert(db_conn, {
         'topic_id': 'B',
         'replies_to_id': 'D',
         'response': True,
     })
     assert len(errors) == 1
     vote['user_id'] = 'A'
-    vote, errors = vote.save()
+    vote, errors = vote.save(db_conn)
     assert len(errors) == 0
 
 
@@ -45,14 +45,14 @@ def test_topic(db_conn, posts_table, units_table):
     """
 
     create_proposal(posts_table, units_table, db_conn)
-    vote, errors = Vote.insert({
+    vote, errors = Vote.insert(db_conn, {
         'user_id': 'A',
         'replies_to_id': 'D',
         'response': True,
     })
     assert len(errors) == 1
     vote['topic_id'] = 'B'
-    vote, errors = vote.save()
+    vote, errors = vote.save(db_conn)
     assert len(errors) == 0
 
 
@@ -62,7 +62,7 @@ def test_body(db_conn, posts_table, units_table):
     """
 
     create_proposal(posts_table, units_table, db_conn)
-    vote, errors = Vote.insert({
+    vote, errors = Vote.insert(db_conn, {
         'user_id': 'A',
         'topic_id': 'B',
         'replies_to_id': 'D',
@@ -70,7 +70,7 @@ def test_body(db_conn, posts_table, units_table):
     })
     assert len(errors) == 0
     vote['body'] = 'A'
-    vote, errors = vote.save()
+    vote, errors = vote.save(db_conn)
     assert len(errors) == 0
 
 
@@ -87,10 +87,10 @@ def test_kind(db_conn, posts_table, units_table):
         'response': True,
     })
     del vote['kind']
-    vote, errors = vote.save()
+    vote, errors = vote.save(db_conn)
     assert len(errors) == 1
     vote['kind'] = 'vote'
-    vote, errors = vote.save()
+    vote, errors = vote.save(db_conn)
     assert len(errors) == 0
 
 
@@ -100,14 +100,14 @@ def test_replies(db_conn, posts_table, units_table):
     """
 
     create_proposal(posts_table, units_table, db_conn)
-    vote, errors = Vote.insert({
+    vote, errors = Vote.insert(db_conn, {
         'user_id': 'A',
         'topic_id': 'B',
         'response': True,
     })
     assert len(errors) == 1
     vote['replies_to_id'] = 'D'
-    vote, errors = vote.save()
+    vote, errors = vote.save(db_conn)
     assert len(errors) == 0
 
 
@@ -123,8 +123,8 @@ def test_response(db_conn, posts_table, units_table):
         'replies_to_id': 'D',
     })
     del vote['response']
-    vote, errors = vote.save()
+    vote, errors = vote.save(db_conn)
     assert len(errors) == 0
     vote['response'] = True
-    vote, errors = vote.save()
+    vote, errors = vote.save(db_conn)
     assert len(errors) == 0

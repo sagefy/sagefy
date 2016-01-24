@@ -2,7 +2,6 @@ from modules.model import Model
 from modules.validations import is_required, is_string, is_number
 from modules.content import get as c
 import rethinkdb as r
-import framework.database as database
 
 
 def is_score(val):
@@ -38,7 +37,7 @@ class Response(Model):
     })
 
     @classmethod
-    def get_latest(cls, user_id, unit_id):
+    def get_latest(cls, db_conn, user_id, unit_id):
         """
         Get the latest response given a user ID and a unit ID.
         """
@@ -48,6 +47,6 @@ class Response(Model):
                     .filter(r.row['unit_id'].eq(unit_id))
                     .max('created')
                     .default(None))
-        document = query.run(database.db_conn)
+        document = query.run(db_conn)
         if document:
             return cls(document)

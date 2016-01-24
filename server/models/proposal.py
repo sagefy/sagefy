@@ -31,8 +31,8 @@ class Proposal(Post):
         super().__init__(fields)
         self.kind = 'proposal'
 
-    def validate(self):
-        errors = super().validate()
+    def validate(self, db_conn):
+        errors = super().validate(db_conn)
         if not errors:
             errors += self.is_valid_version()
         return errors

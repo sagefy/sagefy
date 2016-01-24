@@ -60,12 +60,12 @@ class ChoiceCard(Card):
         super().__init__(fields)
         self['kind'] = 'choice'
 
-    def validate(self):
+    def validate(self, db_conn):
         """
         Overwrite validate method to check options.
         """
 
-        errors = super().validate()
+        errors = super().validate(db_conn)
         if not errors:
             error = has_correct_options(self['options'])
             if error:

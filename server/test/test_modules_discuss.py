@@ -24,7 +24,7 @@ def test_get_post_facade(db_conn, posts_table):
         'body': 'abcd',
         'kind': 'post',
     }).run(db_conn)
-    assert isinstance(discuss.get_post_facade('fghj4567'), Post)
+    assert isinstance(discuss.get_post_facade(db_conn, 'fghj4567'), Post)
 
 
 def test_get_posts_facade(db_conn, posts_table):
@@ -44,7 +44,7 @@ def test_get_posts_facade(db_conn, posts_table):
         'kind': 'vote',
         'replies_to_id': 'fghj4567',
     }]).run(db_conn)
-    posts = discuss.get_posts_facade(topic_id='wxyz7890')
+    posts = discuss.get_posts_facade(db_conn, topic_id='wxyz7890')
     assert isinstance(posts[0], Vote) or isinstance(posts[1], Vote)
     assert isinstance(posts[0], Post) and isinstance(posts[1], Post)
 
@@ -59,6 +59,6 @@ def test_create_post_facade(db_conn):
         'body': 'abcd',
         'kind': 'post',
     }
-    post, errors = discuss.create_post_facade(data)
+    post, errors = discuss.create_post_facade(db_conn, data)
     assert len(errors) == 0
     assert isinstance(post, Post)

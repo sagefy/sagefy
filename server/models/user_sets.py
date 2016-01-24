@@ -19,13 +19,13 @@ class UserSets(Model):
         }
     })
 
-    def list_sets(self, limit=10, skip=0, **params):
+    def list_sets(self, db_conn, limit=10, skip=0, **params):
         """
         Join the user's set_ids with set information.
         Return empty list when there's no matching documents.
         """
 
-        return Set.list_by_entity_ids(self['set_ids'])
+        return Set.list_by_entity_ids(db_conn, self['set_ids'])
 
         # TODO-2 each set -- needs review?
         # TODO-2 order by last reviewed time

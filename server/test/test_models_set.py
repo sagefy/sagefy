@@ -11,7 +11,7 @@ def test_entity(db_conn, sets_table):
     Expect a set to require an entity_id.
     """
 
-    set_, errors = Set.insert({
+    set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -28,7 +28,7 @@ def test_previous(db_conn, sets_table):
     Expect a set to allow a previous version id.
     """
 
-    set_, errors = Set.insert({
+    set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -45,7 +45,7 @@ def test_language(db_conn, sets_table):
     Expect a set to require a language.
     """
 
-    set_, errors = Set.insert({
+    set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -62,7 +62,7 @@ def test_name(db_conn, sets_table):
     Expect a set to require a name.
     """
 
-    set_, errors = Set.insert({
+    set_, errors = Set.insert(db_conn, {
         'body': 'A beginning course focused on probability.',
         'members': [{
             'id': 'A',
@@ -71,7 +71,7 @@ def test_name(db_conn, sets_table):
     })
     assert len(errors) == 1
     set_['name'] = 'Statistics'
-    set_, errors = set_.save()
+    set_, errors = set_.save(db_conn)
     assert len(errors) == 0
 
 
@@ -80,7 +80,7 @@ def test_body(db_conn, sets_table):
     Expect a set to require a body.
     """
 
-    set_, errors = Set.insert({
+    set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'members': [{
             'id': 'A',
@@ -89,7 +89,7 @@ def test_body(db_conn, sets_table):
     })
     assert len(errors) == 1
     set_['body'] = 'A beginning course focused on probability.'
-    set_, errors = set_.save()
+    set_, errors = set_.save(db_conn)
     assert len(errors) == 0
 
 
@@ -98,7 +98,7 @@ def test_status(db_conn, sets_table):
     Expect a set status to be a string.
     """
 
-    set_, errors = Set.insert({
+    set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -109,7 +109,7 @@ def test_status(db_conn, sets_table):
     assert len(errors) == 0
     assert set_['status'] == 'pending'
     set_['status'] = 'accepted'
-    set_, errors = set_.save()
+    set_, errors = set_.save(db_conn)
     assert len(errors) == 0
 
 
@@ -118,7 +118,7 @@ def test_tags(db_conn, sets_table):
     Expect a set to allow tags.
     """
 
-    set_, errors = Set.insert({
+    set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -135,7 +135,7 @@ def test_members(db_conn, sets_table):
     Expect a set to record a list of members.
     """
 
-    set_, errors = Set.insert({
+    set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
     })
@@ -144,7 +144,7 @@ def test_members(db_conn, sets_table):
         'id': 'A',
         'kind': 'unit',
     }]
-    set_, errors = set_.save()
+    set_, errors = set_.save(db_conn)
     assert len(errors) == 0
 
 
@@ -182,7 +182,7 @@ def test_list_by_entity_ids(db_conn, sets_table):
         'modified': r.now(),
         'status': 'accepted',
     }]).run(db_conn)
-    sets = Set.list_by_entity_ids(['A1', 'C3'])
+    sets = Set.list_by_entity_ids(db_conn, ['A1', 'C3'])
     assert sets[0]['body'] in ('Apple', 'Coconut')
     assert sets[0]['body'] in ('Apple', 'Coconut')
 
@@ -268,7 +268,7 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'status': 'accepted'
     }]).run(db_conn)
 
-    sets = Set.list_by_unit_id('Z')
+    sets = Set.list_by_unit_id(db_conn, 'Z')
     set_ids = set(set_['entity_id'] for set_ in sets)
     assert set_ids == {'A', 'B1', 'B2', 'C'}
 
@@ -344,7 +344,7 @@ def test_list_units(db_conn, units_table, sets_table):
         }]
     }]).run(db_conn)
 
-    set_ = Set.get(entity_id='S')
-    cards = set_.list_units()
+    set_ = Set.get(db_conn, entity_id='S')
+    cards = set_.list_units(db_conn)
     card_ids = set(card['entity_id'] for card in cards)
     assert card_ids == {'B', 'V', 'Q', 'N'}

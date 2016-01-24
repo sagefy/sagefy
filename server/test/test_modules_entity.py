@@ -34,7 +34,7 @@ def test_get_latest_accepted(db_conn, cards_table):
         'kind': 'video'
     }]).run(db_conn)
 
-    e = entity.get_latest_accepted('card', 'A')
+    e = entity.get_latest_accepted(db_conn, 'card', 'A')
 
     assert isinstance(e, Card)
 

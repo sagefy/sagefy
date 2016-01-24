@@ -88,9 +88,9 @@ def test_traverse(db_conn, units_table, users_table, responses_table,
     add_test_set(db_conn,
                  users_table, units_table, responses_table, sets_table)
 
-    set_ = Set.get(entity_id='set')
-    user = User.get(id='user')
-    buckets = traverse(user, set_)
+    set_ = Set.get(db_conn, entity_id='set')
+    user = User.get(db_conn, id='user')
+    buckets = traverse(db_conn, user, set_)
     assert buckets['diagnose'][0]['entity_id'] == 'divide'
     assert buckets['learn'][0]['entity_id'] == 'multiply'
     assert buckets['review'][0]['entity_id'] == 'subtract'
@@ -114,9 +114,9 @@ def test_judge_diagnose(db_conn, users_table, units_table, responses_table):
     """
 
     add_test_set(db_conn, users_table, units_table, responses_table)
-    unit = Unit.get(entity_id='divide')
-    user = User.get(id='user')
-    assert judge(unit, user) == "diagnose"
+    unit = Unit.get(db_conn, entity_id='divide')
+    user = User.get(db_conn, id='user')
+    assert judge(db_conn, unit, user) == "diagnose"
 
 
 def test_judge_review(db_conn, users_table, units_table, responses_table):
@@ -125,9 +125,9 @@ def test_judge_review(db_conn, users_table, units_table, responses_table):
     """
 
     add_test_set(db_conn, users_table, units_table, responses_table)
-    unit = Unit.get(entity_id='subtract')
-    user = User.get(id='user')
-    assert judge(unit, user) == "review"
+    unit = Unit.get(db_conn, entity_id='subtract')
+    user = User.get(db_conn, id='user')
+    assert judge(db_conn, unit, user) == "review"
 
 
 def test_judge_learn(db_conn, units_table, users_table, responses_table):
@@ -136,9 +136,9 @@ def test_judge_learn(db_conn, units_table, users_table, responses_table):
     """
 
     add_test_set(db_conn, users_table, units_table, responses_table)
-    unit = Unit.get(entity_id='multiply')
-    user = User.get(id='user')
-    assert judge(unit, user) == "learn"
+    unit = Unit.get(db_conn, entity_id='multiply')
+    user = User.get(db_conn, id='user')
+    assert judge(db_conn, unit, user) == "learn"
 
 
 def test_judge_done(db_conn, units_table, users_table, responses_table):
@@ -147,9 +147,9 @@ def test_judge_done(db_conn, units_table, users_table, responses_table):
     """
 
     add_test_set(db_conn, users_table, units_table, responses_table)
-    unit = Unit.get(entity_id='add')
-    user = User.get(id='user')
-    assert judge(unit, user) == "done"
+    unit = Unit.get(db_conn, entity_id='add')
+    user = User.get(db_conn, id='user')
+    assert judge(db_conn, unit, user) == "done"
 
 
 def test_match_unit_dependents(db_conn, units_table):
@@ -158,7 +158,7 @@ def test_match_unit_dependents(db_conn, units_table):
     """
 
     add_test_set(db_conn, units_table=units_table)
-    units = Unit.list_by_entity_ids([
+    units = Unit.list_by_entity_ids(db_conn, [
         'add', 'subtract', 'multiply', 'divide',
     ])
     deps = match_unit_dependents(units)
@@ -174,7 +174,7 @@ def test_order(db_conn, units_table):
     """
 
     add_test_set(db_conn, units_table=units_table)
-    units = Unit.list_by_entity_ids([
+    units = Unit.list_by_entity_ids(db_conn, [
         'add', 'subtract', 'multiply', 'divide',
     ])
     units = order_units_by_need(units)

@@ -5,34 +5,34 @@ xfail = pytest.mark.xfail
 
 
 @xfail
-def test_embed_url(cards_table):
+def test_embed_url(db_conn, cards_table):
     """
     Expect embed card to require URL.
     """
 
-    card, errors = EmbedCard.insert({
+    card, errors = EmbedCard.insert(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'rubric': True,  # TODO
     })
     assert len(errors) == 1
-    card, errors = card.update({'url': 'http://google.com'})
+    card, errors = card.update(db_conn, {'url': 'http://google.com'})
     assert len(errors) == 0
 
 
 @xfail
-def test_embed_rubric(cards_table):
+def test_embed_rubric(db_conn, cards_table):
     """
     Expect embed card to require a rubric.
     """
 
-    card, errors = EmbedCard.insert({
+    card, errors = EmbedCard.insert(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'url': 'http://google.com',
     })
     assert len(errors) == 1
-    card, errors = card.update({'rubric': None})
+    card, errors = card.update(db_conn, {'rubric': None})
     assert len(errors) == 0
 
 
