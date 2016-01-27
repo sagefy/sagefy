@@ -45,8 +45,34 @@ class Set(EntityMixin, Model):
 
     def ensure_no_cycles(self, db_conn):
         """
-        TODO-0 Ensure no require cycles form.
+        Ensure no membership cycles form.
         """
+        seen = set()
+        main_id = self['entity_id']
+        found = {'cycle': False}
+
+        def _(members):
+            if found['cycle']:
+                return
+            entity_ids = [
+                member['id']
+                for member in members
+                if member['kind'] == 'set'
+            ]
+            entities = Set.list_by_entity_ids(db_conn, entity_ids)
+            for entity in entities:
+                if entity['entity_id'] == main_id:
+                    found['cycle'] = True
+                    break
+                if entity['entity_id'] not in seen:
+                    seen.add(entity['entity_id'])
+                    _(entity['members'])
+
+        _(self['members'])
+
+        if found['cycle']:
+            return [{'message': 'Found a cycle in membership.'}]
+
         return []
 
     @classmethod

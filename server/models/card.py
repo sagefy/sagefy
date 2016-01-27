@@ -39,8 +39,11 @@ class Card(EntityMixin, Model):
 
     def ensure_no_cycles(self, db_conn):
         """
-        TODO-0 Ensure no require cycles form.
+        Ensure no require cycles form.
         """
+
+        if self.find_requires_cycle(db_conn):
+            return [{'message': 'Found a cycle in requires.'}]
 
         return []
 

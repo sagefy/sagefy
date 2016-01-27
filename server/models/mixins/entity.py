@@ -213,3 +213,28 @@ class EntityMixin(object):
                 id=self['entity_id'],
             )
         return super().save(db_conn)
+
+    def find_requires_cycle(self, db_conn):
+        """
+        Inspect own requires to see if a cycle is formed.
+        """
+
+        seen = set()
+        main_id = self['entity_id']
+        found = {'cycle': False}
+
+        def _(require_ids):
+            if found['cycle']:
+                return
+            entities = self.__class__.list_by_entity_ids(db_conn, require_ids)
+            for entity in entities:
+                if entity['entity_id'] == main_id:
+                    found['cycle'] = True
+                    break
+                if entity['entity_id'] not in seen:
+                    seen.add(entity['entity_id'])
+                    _(entity['require_ids'])
+
+        _(self['require_ids'])
+
+        return found['cycle']
