@@ -10,6 +10,7 @@
 } = require('./tree.fn')
 {matchesRoute} = require('../../modules/auxiliaries')
 spinner = require('../components/spinner.tmpl')
+icon = require('../components/icon.tmpl')
 
 # TODO-2 show the learner their overall set progress as a percent or bar
 
@@ -46,7 +47,7 @@ module.exports = (data) ->
 
         p(a(
             {href: "/sets/#{id}"}
-            i({className: 'fa fa-chevron-left'})
+            icon('back')
             ' View set information'
         )) if asContrib
 
@@ -68,13 +69,13 @@ module.exports = (data) ->
                 href: "/sets/#{chooseUnitID}/choose_unit"
             }
             'Next '
-            i({className: 'fa fa-chevron-right'})
+            icon('next')
         )) if chooseUnitID
 
         p(a(
             {className: 'tree__continue', href: "/cards/#{cardID}/learn"}
             'Next '
-            i({className: 'fa fa-chevron-right'})
+            icon('next')
         )) if cardID
     )
 

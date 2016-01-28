@@ -3,6 +3,7 @@ c = require('../../modules/content').get
 {ucfirst} = require('../../modules/auxiliaries')
 formFieldInput = require('./form_field_input.tmpl')
 formFieldSelect = require('./form_field_select.tmpl')
+icon = require('./icon.tmpl')
 
 
 field = ({name, index, col, row, lock}) ->
@@ -56,7 +57,7 @@ module.exports = (data) ->
                     {colSpan: columns.length + 1}  # TODO-2 +2 reordering
                     a(
                         {href: '#', className: 'form-field--list__add-row'}
-                        i({className: 'fa fa-plus'})
+                        icon('create')
                         ' Add Row'
                     )
                 )
@@ -76,7 +77,7 @@ module.exports = (data) ->
                 # TODO-2 move row td(
                 #     a(
                 #         {title: 'Reorder', href: '#', className: 'move-row'}
-                #         i({className: 'fa fa-arrows-v'})
+                #         icon('move')
                 #     )
                 # )
                 td(
@@ -89,7 +90,7 @@ module.exports = (data) ->
                                 'data-index': index
                             }
                         }
-                        i({className: 'fa fa-times-circle'})
+                        icon('remove')
                     )
                 )
             ) for row, index in value

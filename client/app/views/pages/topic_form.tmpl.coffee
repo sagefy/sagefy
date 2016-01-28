@@ -98,7 +98,7 @@ module.exports = (data) ->
         type: 'submit'
         name: 'submit'
         label: if topicID then 'Update Topic' else 'Create Topic'
-        icon: 'plus'
+        icon: 'create'
     })
 
     instanceFields = createFieldsData({

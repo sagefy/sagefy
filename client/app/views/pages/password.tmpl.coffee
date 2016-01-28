@@ -15,7 +15,7 @@ emailFields = [{
     type: 'submit'
     name: 'submit'
     label: 'Send Token'
-    icon: 'envelope'
+    icon: 'create'
 }]
 
 for index, field of emailFields
@@ -28,7 +28,7 @@ passwordFields = [{
     type: 'submit'
     name: 'submit'
     label: 'Change Password'
-    icon: 'check'
+    icon: 'create'
 }]
 
 for index, field of passwordFields

@@ -1,8 +1,9 @@
 # TODO-3 move copy to content directory
-{nav, div, a, i, ul} = require('../../modules/tags')
+{nav, div, a, i, ul, span} = require('../../modules/tags')
 menuItem = require('./menu_item.tmpl')
 {extend} = require('../../modules/utilities')
 {ucfirst, underscored} = require('../../modules/auxiliaries')
+icon = require('./icon.tmpl')
 
 
 # TODO-2 add unread count to notices icon
@@ -11,30 +12,30 @@ menuItem = require('./menu_item.tmpl')
 # A list of all menu items and their configurations
 items = {
     home: { url: '/' }
-    my_sets: { title: 'My Sets', icon: 'star' }
-    log_in: { title: 'Log In', icon: 'sign-in' }
-    terms: { icon: 'pencil-square-o' }
-    contact: { icon: 'envelope' }
-    notices: { icon: 'tachometer' }   # TODO-2 poll and show unread count
-    settings: { icon: 'cog' }
-    log_out: { url: '#log_out', title: 'Log Out', icon: 'sign-out' }
+    my_sets: { title: 'My Sets', icon: 'set' }
+    log_in: { title: 'Log In', icon: 'log-in' }
+    terms: {  }
+    contact: { }
+    notices: {  }   # TODO-2 poll and show unread count
+    settings: {  }
+    log_out: { url: '#log_out', title: 'Log Out', icon: 'log-out' }
     search: { }
-    current_set: { url: '/sets/{id}/tree', title: 'Current Set', icon: 'tree' }
-    current_unit: { url: '/units/{id}', title: 'Current Unit', icon: 'circle' }
+    current_set: { url: '/sets/{id}/tree', title: 'Current Set', icon: 'set' }
+    current_unit: { url: '/units/{id}', title: 'Current Unit', icon: 'unit' }
     discuss_set: {
         url: '/search?kind=topic&q={id}'
         title: 'Discuss Set'
-        icon: 'comment'
+        icon: 'discuss'
     }
     discuss_unit: {
         url: '/search?kind=topic&q={id}'
         title: 'Discuss Unit'
-        icon: 'comment'
+        icon: 'discuss'
     }
     discuss_card: {
         url: '/search?kind=topic&q={id}'
         title: 'Discuss Card'
-        icon: 'comment'
+        icon: 'discuss'
     }
 }
 
@@ -109,7 +110,7 @@ module.exports = (data) ->
                     className: 'menu__trigger'
                 }
                 div({className: 'menu__logo'})
-                i({className: 'menu__close fa fa-times-circle'}) if data.open
+                span({className: 'menu__close'}, icon('remove')) if data.open
             )
             ul(
                 {className: 'menu__items'}

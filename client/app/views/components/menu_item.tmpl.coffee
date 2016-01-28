@@ -1,4 +1,5 @@
 {li, a, i, div} = require('../../modules/tags')
+icon = require('./icon.tmpl')
 
 module.exports = (data) ->
     return li(
@@ -6,7 +7,7 @@ module.exports = (data) ->
         a(
             {href: data.url}
             [
-                i({className: "fa fa-#{data.icon}"})
+                icon(data.icon)
                 div(
                     {className: 'menu__item__title'}
                     data.title

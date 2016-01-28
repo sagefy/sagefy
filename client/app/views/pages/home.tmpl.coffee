@@ -1,5 +1,6 @@
 # TODO-3 move copy to content directory
 {div, img, hgroup, h1, h3, p, a, i} = require('../../modules/tags')
+icon = require('../components/icon.tmpl')
 
 module.exports = (data) ->
     return (
@@ -19,13 +20,13 @@ module.exports = (data) ->
                 a(
                     {href: '/my_sets'}
                     'My Sets '
-                    i({className: 'fa fa-chevron-right'})
+                    icon('next')
                 )
             ) if data.currentUserID
             p(
-                a({href: '/log_in'}, i({className: 'fa fa-sign-in'}), ' Log In')
+                a({href: '/log_in'}, icon('log-in'), ' Log In')
                 ' or '
-                a({href: '/sign_up'}, i({className: 'fa fa-user'}), ' Sign Up')
+                a({href: '/sign_up'}, icon('sign-up'), ' Sign Up')
             ) unless data.currentUserID
             p(
                 {style: {

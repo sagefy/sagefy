@@ -1,5 +1,6 @@
 {div, h1, p, a, i, br} = require('../../modules/tags')
 form = require('../components/form.tmpl')
+icon = require('../components/icon.tmpl')
 userSchema = require('../../schemas/user')
 {extend} = require('../../modules/utilities')
 {createFieldsData} = require('../../modules/auxiliaries')
@@ -21,7 +22,7 @@ fields = [{
     name: 'submit'
     label: 'Sign Up'
     type: 'submit'
-    icon: 'user'
+    icon: 'sign-up'
 }]
 
 for index, field of fields
@@ -45,7 +46,7 @@ module.exports = (data) ->
             'Already have an account? '
             a(
                 {href: '/log_in'}
-                i({className: 'fa fa-sign-in'})
+                icon('log-in')
                 ' Log In'
             )
             '.'

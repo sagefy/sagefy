@@ -1,6 +1,7 @@
 {div, a, i, h2, ul, li, span, p} = require('../../modules/tags')
 timeago = require('./timeago.tmpl')
 {ucfirst} = require('../../modules/auxiliaries')
+icon = require('./icon.tmpl')
 
 module.exports = (kind, entityID, topics) ->
     return div(
@@ -10,7 +11,7 @@ module.exports = (kind, entityID, topics) ->
             {
                 href: "/topics/create?kind=#{kind}&id=#{entityID}"
             }
-            i({className: 'fa fa-plus'})
+            icon('create')
             ' Create a new topic'
         )
         ul(
@@ -27,7 +28,7 @@ module.exports = (kind, entityID, topics) ->
                 a(
                     {href: "/search?kind=topic&q=#{entityID}"}
                     '... See more topics '
-                    i({className: 'fa fa-chevron-right'})
+                    icon('next')
                 )
             )
         ) if topics?.length

@@ -1,4 +1,5 @@
 {a, i, p} = require('../../modules/tags')
+icon = require('./icon.tmpl')
 
 module.exports = (kind, entity_id, follows) ->
     following = follows?.find((f) -> f.entity.id is entity_id)
@@ -9,12 +10,12 @@ module.exports = (kind, entity_id, follows) ->
                 href: '#'
                 className: 'follow-button'
             }
-            i({className: 'fa fa-heart'})
+            icon('follow')
             ' Follow'
         ) if not following
         p(
             {className: 'follow-button__following'}
-            i({className: 'fa fa-check'})
+            icon('follow')
             ' Following'
         ) if following
     ]

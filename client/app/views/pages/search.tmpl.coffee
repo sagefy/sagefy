@@ -4,6 +4,7 @@ c = require('../../modules/content').get
 {truncate, ucfirst} = require('../../modules/auxiliaries')
 spinner = require('../components/spinner.tmpl')
 timeago = require('../components/timeago.tmpl')
+icon = require('../components/icon.tmpl')
 
 # TODO-2 when receiving ?kind={kind}, then search using that as well.
 
@@ -32,7 +33,7 @@ module.exports = (data) ->
             )
             button(
                 {type: 'submit'}
-                i({className: 'fa fa-search'})
+                icon('search')
                 ' Search'
             )
         )

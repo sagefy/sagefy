@@ -1,6 +1,7 @@
 {div, h1, a, i, p} = require('../../modules/tags')
 spinner = require('../components/spinner.tmpl')
 c = require('../../modules/content').get
+icon = require('../components/icon.tmpl')
 
 module.exports = (data) ->
     id = data.routeArgs[0]
@@ -48,7 +49,7 @@ module.exports = (data) ->
                         className: 'continue card-learner__continue'
                     }
                     'Continue '
-                    i({className: 'fa fa-chevron-right'})
+                    icon('next')
                 )
             )
         )

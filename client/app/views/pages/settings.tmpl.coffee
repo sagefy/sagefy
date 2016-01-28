@@ -34,7 +34,7 @@ fields = [{
     name: 'submit'
     type: 'submit'
     label: 'Update'
-    icon: 'check'
+    icon: 'update'
 }]
 
 for index, field of fields

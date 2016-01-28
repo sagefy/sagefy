@@ -43,7 +43,7 @@ module.exports = (data) ->
         type: 'submit'
         name: 'submit'
         label: if postID then 'Update Post' else 'Create Post'
-        icon: 'plus'
+        icon: 'create'
     })
 
     instanceFields = createFieldsData({

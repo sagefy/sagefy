@@ -4,6 +4,7 @@ post = require('../components/post.tmpl')
 followButton = require('../components/follow_button.tmpl')
 {ucfirst} = require('../../modules/auxiliaries')
 spinner = require('../components/spinner.tmpl')
+icon = require('../components/icon.tmpl')
 
 # TODO-2 User doesn't show right after creating a new post in the topic view
 
@@ -24,7 +25,7 @@ module.exports = (data) ->
                 h1(topic.name)
                 a(
                     {href: "/topics/#{topic.id}/update"}
-                    i({className: 'fa fa-edit'})
+                    icon('update')
                     ' Update name'
                 )if data.currentUserID is topic.user_id
             )
@@ -39,7 +40,7 @@ module.exports = (data) ->
                     className: 'topic__create'
                     href: "/topics/#{id}/posts/create"
                 }
-                i({className: 'fa fa-plus'})
+                icon('create')
                 ' Create a new post'
             )
         )

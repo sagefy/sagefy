@@ -1,5 +1,6 @@
 {li, div, img, p, a, i, span, ul, li, h3} = require('../../modules/tags')
 {timeAgo, ucfirst} = require('../../modules/auxiliaries')
+icon = require('./icon.tmpl')
 
 listOfObjectsToString = (list = []) ->
     return list.map((member) ->
@@ -62,7 +63,7 @@ voteResponse = (response) ->
             {
                 className: "post__vote--#{if response then 'good' else 'bad'}"
             }
-            i({className: "fa fa-thumbs-#{if response then 'up' else 'down'}"})
+            icon(if response then 'good' else 'bad')
             if response then ' Yes' else ' No'
         )
         ' '
@@ -104,7 +105,7 @@ module.exports = (data, currentUserID) ->
                         className: 'post__in-reply'
                         href: "/topics/#{data.topic_id}##{data.replies_to_id}"
                     }
-                    i({className: 'fa fa-reply'})
+                    icon('reply')
                     ' In Reply'
                 ) if data.replies_to_id
                 ' ' if data.replies_to_id
@@ -120,29 +121,29 @@ module.exports = (data, currentUserID) ->
                 {className: 'post__footer'}
                 a(
                     {href: "/topics/#{topic_id}/posts/#{data.id}/update"}
-                    i({className: 'fa fa-edit'})
+                    icon('update')
                     ' Edit'
                 ) if currentUserID is data.user_id
                 a(
                     {href: "/topics/#{topic_id}/posts/create?" +
                            "replies_to_id=#{data.id}"}
-                    i({className: 'fa fa-reply'})
+                    icon('reply')
                     ' Reply'
                 ) if currentUserID isnt data.user_id
                 a(
                     {href: "/topics/#{topic_id}/posts/create?" +
                            "replies_to_id=#{data.id}&kind=vote"}
-                    i({className: 'fa fa-check'})
+                    icon('vote')
                     ' Vote'
                 ) if data.kind is 'proposal'
                 a(
                     {href: "/topics/#{data.topicID}##{data.id}"}
-                    i({className: 'fa fa-share'})
+                    icon('discuss')
                     ' Share'
                 )
                 # TODO-3 a(
                 #     {href: '#'}
-                #     i({className: 'fa fa-flag'})
+                #     icon('remove')
                 #     ' Flag'
                 # ) if currentUserID isnt data.user_id
             )

@@ -50,7 +50,7 @@ module.exports = (data) ->
     #     html.push(
     #         a(
     #             {className: 'clear', href: '#'}
-    #             i({className: 'fa fa-ban'})
+    #             icon('remove')
     #             c('clear')
     #         )
     #     )

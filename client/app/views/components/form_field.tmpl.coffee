@@ -1,4 +1,5 @@
 {div, p, i, span} = require('../../modules/tags')
+icon = require('./icon.tmpl')
 
 module.exports = (data) ->
     classes = [
@@ -37,7 +38,7 @@ m = (data) ->
     if data.error
         nodes.push(span(
             {className: 'form-field__feedback'}
-            i({className: 'fa fa-ban'})
+            icon('bad')
             data.error
         ))
 

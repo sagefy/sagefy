@@ -2,6 +2,7 @@
 c = require('../../modules/content').get
 notices = require('../components/notices.tmpl')
 spinner = require('../components/spinner.tmpl')
+icon = require('../components/icon.tmpl')
 
 
 module.exports = (data) ->
@@ -12,7 +13,7 @@ module.exports = (data) ->
         h1('Notices')
         p(a(
             {href: '/follows'},
-            i({className: 'fa fa-cog'})
+            icon('follow')
             ' Manage what I follow'
         ))
         notices(data.notices)

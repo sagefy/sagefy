@@ -1,4 +1,5 @@
 {button, i} = require('../../modules/tags')
+icon = require('./icon.tmpl')
 
 module.exports = (data) ->
     return button(
@@ -7,7 +8,7 @@ module.exports = (data) ->
             disabled: data.disabled
             id: data.id
         }
-        i({className: "fa fa-#{data.icon}"})
+        icon(data.icon)
         ' '
         data.label
     )

@@ -1,6 +1,7 @@
 {h2, ul, li, span, p, a, i} = require('../../modules/tags')
 {timeAgo, ucfirst} = require('../../modules/auxiliaries')
 timeago = require('./timeago.tmpl')
+icon = require('./icon.tmpl')
 
 module.exports = (kind, entityID, versions) ->
     return [
@@ -20,7 +21,7 @@ module.exports = (kind, entityID, versions) ->
                 a(
                     {href: "/#{kind}s/#{entityID}/versions"}
                     '... See more version history '
-                    i({className: 'fa fa-chevron-right'})
+                    icon('next')
                 )
             )
         )

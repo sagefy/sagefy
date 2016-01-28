@@ -1,6 +1,7 @@
 {div, h1, h2, ul, li, iframe, i, strong, em} = require('../../modules/tags')
 c = require('../../modules/content').get
 spinner = require('../components/spinner.tmpl')
+icon = require('../components/icon.tmpl')
 
 followButton = require('../components/follow_button.tmpl')
 entityHeader = require('../components/entity_header.tmpl')
@@ -67,8 +68,7 @@ k.choice = (card) ->
         li('Question: ', card.body)
         li('Options: ', ul(
             li(
-                i({className: if option.correct then 'fa fa-check-circle' \
-                              else 'fa fa-times-circle'})
+                icon(if option.correct then 'good' else 'bad')
                 ' '
                 strong(option.value)
                 ' '

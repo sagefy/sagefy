@@ -5,6 +5,7 @@ entityHeader = require('../components/entity_header.tmpl')
 entityTopics = require('../components/entity_topics.tmpl')
 entityVersions = require('../components/entity_versions.tmpl')
 spinner = require('../components/spinner.tmpl')
+icon = require('../components/icon.tmpl')
 
 
 module.exports = (data) ->
@@ -38,7 +39,7 @@ module.exports = (data) ->
         h2({className: 'set__list-units-h2'}, 'List of Units')
         a(
             {href: "/sets/#{set.entity_id}/tree"}
-            i({className: 'fa fa-tree'})
+            icon('set')
             ' View Tree'
         )
         ul(

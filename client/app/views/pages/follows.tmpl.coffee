@@ -2,6 +2,7 @@
 c = require('../../modules/content').get
 {ucfirst} = require('../../modules/auxiliaries')
 spinner = require('../components/spinner.tmpl')
+icon = require('../components/icon.tmpl')
 
 module.exports = (data) ->
     return spinner() unless data.follows
@@ -11,7 +12,7 @@ module.exports = (data) ->
         h1('Follows')
         a(
             {href: '/notices'}
-            i({className: 'fa fa-chevron-left'})
+            icon('back')
             ' Back to notices.'
         )
         follows(data.follows)
@@ -22,8 +23,8 @@ follows = (data) ->
         return p(
             'No follows. '
             a(
-                {href: '/search'},
-                i({className: 'fa fa-search'})
+                {href: '/search'}
+                icon('search')
                 ' Search'
             )
         )

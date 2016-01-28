@@ -1,6 +1,7 @@
 {div, h1, ul, li, a, h3, p, span, i, div} = require('../../modules/tags')
 c = require('../../modules/content').get
 spinner = require('../components/spinner.tmpl')
+icon = require('../components/icon.tmpl')
 
 module.exports = (data) ->
     return spinner() unless data.chooseUnit
@@ -27,7 +28,7 @@ module.exports = (data) ->
                     h3(unit.name)
                     span(
                         {className: 'choose-unit__recommended'}
-                        i({className: 'fa fa-star'})
+                        icon('good')
                         ' Recommended'
                     ) if index is 0
                     p(unit.body)

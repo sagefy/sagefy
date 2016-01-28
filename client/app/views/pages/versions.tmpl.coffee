@@ -3,6 +3,7 @@ c = require('../../modules/content').get
 {timeAgo, ucfirst} = require('../../modules/auxiliaries')
 spinner = require('../components/spinner.tmpl')
 timeago = require('../components/timeago.tmpl')
+icon = require('../components/icon.tmpl')
 
 # TODO-2 Version history and proposal view should have the same layout,
 #        and be similar to the page
@@ -22,7 +23,7 @@ module.exports = (data) ->
         p(
             a(
                 {href: "/#{kind}s/#{id}"}
-                i({className: 'fa fa-chevron-left'})
+                icon('back')
                 " See #{kind} page"
             )
         )
