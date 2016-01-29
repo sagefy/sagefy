@@ -25,16 +25,32 @@ class Unit(EntityMixin, Model):
             'validate': (is_required, is_string, (has_min_length, 1),)
         },
         'require_ids': {
-            'validate': (is_list,),  # TODO-0 is valid id?
+            'validate': (is_list,),
             'default': []
         },
     })
 
     def validate(self, db_conn):
+        """
+
+        """
+
         errors = super().validate(db_conn)
+        if not errors:
+            errors += self.ensure_requires(db_conn)
         if not errors:
             errors += self.ensure_no_cycles(db_conn)
         return errors
+
+    def ensure_requires(self, db_conn):
+        """
+
+        """
+
+        units = Unit.list_by_entity_ids(db_conn, self['require_ids'])
+        if len(self['require_ids']) != len(units):
+            return [{'message': 'Didn\'t find all requires.'}]
+        return []
 
     def ensure_no_cycles(self, db_conn):
         """

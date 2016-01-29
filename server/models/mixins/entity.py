@@ -21,7 +21,7 @@ class EntityMixin(object):
             'validate': (is_required, is_string,),
             'default': uniqid
         },
-        'previous_id': {  # TODO-0 is valid id?
+        'previous_id': {  # TODO-2 is valid id? (set by code)
             'validate': (is_string,),
         },
         'language': {

@@ -24,7 +24,7 @@ class Post(Model):
                          (is_one_of, 'post', 'proposal', 'vote')),
             'default': 'post'
         },
-        'replies_to_id': {  # TODO-0 validate id is real
+        'replies_to_id': {
             'validate': (is_string,)
         }
     })

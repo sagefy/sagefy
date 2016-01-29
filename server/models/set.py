@@ -25,7 +25,7 @@ class Set(EntityMixin, Model):
         'members': {
             'validate': (is_required, is_list, (has_min_length, 1)),
             'embed_many': {
-                'id': {  # TODO-0 is valid ids?
+                'id': {
                     'validate': (is_required, is_string,),
                 },
                 'kind': {
@@ -40,8 +40,29 @@ class Set(EntityMixin, Model):
     def validate(self, db_conn):
         errors = super().validate(db_conn)
         if not errors:
+            errors += self.is_valid_members(db_conn)
+        if not errors:
             errors += self.ensure_no_cycles(db_conn)
         return errors
+
+    def is_valid_members(self, db_conn):
+        """
+
+        """
+
+        # TODO-3 this is going to be slow
+        for member_desc in self['members']:
+            query = (r.table(member_desc['kind'] + 's')
+                      .filter(r.row['status'].eq('accepted'))
+                      .filter(r.row['entity_id'] == member_desc['id']))
+            vs = [e for e in query.run(db_conn)]
+            if not vs:
+                return [{
+                    'message': 'Not a valid entity.',
+                    'value': member_desc['id'],
+                }]
+
+        return []
 
     def ensure_no_cycles(self, db_conn):
         """

@@ -14,7 +14,7 @@ class Follow(Model):
         'entity': {
             'validate': (is_required,),
             'embed': {
-                'id': {  # TODO-0 validate foreign
+                'id': {
                     'validate': (is_required, is_string,),
                 },
                 'kind': {
@@ -34,6 +34,8 @@ class Follow(Model):
         errors = super().validate(db_conn)
         if not errors:
             errors = self.validate_uniqueness(db_conn)
+        if not errors:
+            errors = self.is_valid_entity(db_conn)
         return errors
 
     def validate_uniqueness(self, db_conn):
@@ -46,6 +48,25 @@ class Follow(Model):
                            entity_id=self['entity']['id'])
         if prev:
             return [{'message': 'Already followed.'}]
+        return []
+
+    def is_valid_entity(self, db_conn):
+        """
+
+        """
+
+        kind = self['entity']['kind']
+
+        query = (r.table(kind + 's')
+                  .filter(r.row[
+                      'id' if kind == 'topic' else 'entity_id'
+                  ] == self['entity']['id']))
+
+        entities = [e for e in query.run(db_conn)]
+
+        if not entities:
+            return [{'message': 'Not a valid entity'}]
+
         return []
 
     @classmethod

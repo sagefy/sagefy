@@ -9,7 +9,7 @@ class Proposal(Post):
         'entity_version': {
             'validate': (is_required, is_dict,),
             'embed': {
-                'id': {  # TODO-0 is valid ids?
+                'id': {
                     'validate': (is_required, is_string,),
                 },
                 'kind': {
@@ -39,6 +39,7 @@ class Proposal(Post):
 
     def is_valid_version(self):
         """
-        TODO-0 Ensure this is a valid version of the entity.
+        TODO-2 Ensure this is a valid version of the entity. (circular)
+        This is checked on the create/update form already.
         """
         return []
