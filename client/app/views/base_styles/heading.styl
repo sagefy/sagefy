@@ -6,16 +6,8 @@ description: All elements <code>h1</code> through <code>h6</code> are styled. Su
 */
 
 h1, h2, h3, h4, h5, h6
-    @extend $title-font
     margin $unit 0
-    font-weight bold
-
-    em
-        font-style normal
-
-    strong
-        background-color $base-color(95)
-        border-radius $border-radius
+    font-weight normal
 
 $subheader
     font-weight normal
@@ -46,7 +38,9 @@ h4
 h5
     @extend $font-size-normal
     color $base-color(57)
+    font-style italic
 
 h6
     @extend $font-size-normal
     color $base-color(65)
+    font-style italic

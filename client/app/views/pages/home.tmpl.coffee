@@ -41,11 +41,11 @@ module.exports = (data) ->
                 content. Please help by creating content and reporting issues
                 to <support@sagefy.org>. Thank you!
                 '''
-            ) # TODO Delete this warning message
+            ) # TODO-2 Delete this warning message
             p(
                 {className: 'home__legal'}
                 '© Copyright 2015 Sagefy. '
-                a({href: '/terms'}, 'Privacy & Terms')
+                a({href: '/terms'}, icon('terms'), ' Privacy & Terms')
                 '.'
             )
         )

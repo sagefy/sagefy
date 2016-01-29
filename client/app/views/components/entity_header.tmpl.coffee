@@ -1,6 +1,7 @@
 {header, span, h1, ul, li} = require('../../modules/tags')
 c = require('../../modules/content').get
 {ucfirst} = require('../../modules/auxiliaries')
+icon = require('./icon.tmpl')
 
 module.exports = (kind, entity) ->
     title = ucfirst(kind)
@@ -9,6 +10,10 @@ module.exports = (kind, entity) ->
 
     return header(
         {className: 'entity-header'}
-        span({className: 'entity-header__kind'}, title)
+        span(
+            {className: 'entity-header__kind'}
+            icon(kind)
+            ' ' + title
+        )
         h1(entity.name)
     )

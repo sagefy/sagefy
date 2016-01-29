@@ -39,6 +39,8 @@ module.exports = (data) ->
 
             p(
                 {className: "card-learner__feedback--#{feedbackLabel}"}
+                icon(feedbackLabel)
+                ' '
                 data.cardFeedback
             ) if data.cardFeedback
 

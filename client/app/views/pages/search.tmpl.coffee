@@ -52,7 +52,7 @@ r = {}
 
 r.userResult = (result) ->
     return [
-        strong('User')
+        strong(icon('user'), ' User')
         ': '
         a(
             {href: "/users/#{result._source.id}"}
@@ -65,7 +65,7 @@ r.userResult = (result) ->
 r.topicResult = (result) ->
     return [
         timeago(result._source.created, {right: true})
-        strong('Topic')
+        strong(icon('topic'), ' Topic')
         ': '
         a(
             {href: "/topics/#{result._source.id}"}
@@ -83,7 +83,7 @@ r.postResult = (result) ->
     href = "/topics/#{result._source.topic_id}##{result._source.id}"
     return [
         timeago(result._source.created, {right: true})
-        strong(ucfirst(result._source.kind))
+        strong(icon('post'), ' ', ucfirst(result._source.kind))
         ': '
         a(
             {href}
@@ -105,7 +105,7 @@ r.postResult = (result) ->
 
 r.cardResult = (result) ->
     return [
-        strong('Card')
+        strong(icon('card'), ' Card')
         ': '
         a(
             {href: "/cards/#{result._source.entity_id}"}
@@ -117,7 +117,7 @@ r.cardResult = (result) ->
 
 r.unitResult = (result) ->
     return [
-        strong('Unit')
+        strong(icon('unit'), ' Unit')
         ': '
         a(
             {href: "/units/#{result._source.entity_id}"}
@@ -135,9 +135,10 @@ r.setResult = (result, asLearner = false) ->
                 href: '#'
                 className: 'add-to-my-sets'
             }
-            'Add to My Sets'
+            icon('create')
+            ' Add to My Sets'
         ) if asLearner
-        strong('Set')
+        strong(icon('set'), ' Set')
         ': '
         a(
             {href: "/sets/#{result._source.entity_id}"}
@@ -151,6 +152,7 @@ r.setResult = (result, asLearner = false) ->
                 href: "/sets/#{result._source.entity_id}/tree"
                 className: 'view-units'
             }
-            'View Units'
+            icon('unit')
+            ' View Units'
         ) if asLearner
     ]

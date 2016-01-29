@@ -47,7 +47,7 @@ def test_follow_401(db_conn, follows_table):
     assert code == 401
 
 
-def test_follow_404(db_conn, session, follows_table):
+def test_follow_400(db_conn, session, follows_table):
     """
     Expect to fail to follow entity if not found entity.
     """
@@ -63,7 +63,8 @@ def test_follow_404(db_conn, session, follows_table):
         'db_conn': db_conn
     }
     code, response = routes.follow.follow_route(request)
-    assert code == 404
+    assert code == 400
+    assert len(response['errors']) == 1
 
 
 def test_follow_409(db_conn, session, cards_table, follows_table):

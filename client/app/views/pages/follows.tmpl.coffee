@@ -39,7 +39,8 @@ follow = (data) ->
                 href: '#'
                 className: 'follows__unfollow-button'
             }
-            'Unfollow'
+            icon('remove')
+            ' Unfollow'
         )
         div(
             strong(ucfirst(data.entity.kind))

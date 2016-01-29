@@ -54,6 +54,7 @@ module.exports = (data) ->
             'By signing up, you agree to our '
             a(
                 {href: '/terms'}
+                icon('terms')
                 ' Terms of Service'
             )
             '.'

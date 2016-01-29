@@ -60,16 +60,6 @@ def follow_route(request):
             'ref': '4Qn9oWVWiGKvXSONQKHSy1T6'
         }
 
-    # Ensure the entity exists   TODO-3 should this be a model validation?
-    if follow['entity']['kind'] == 'topic':
-        entity = Topic.get(db_conn, id=follow['entity']['id'])
-    else:
-        entity = get_latest_accepted(db_conn,
-                                     follow['entity']['kind'],
-                                     follow['entity']['id'])
-    if not entity:
-        return abort(404)
-
     follow, errors = follow.save(db_conn)
     if errors:
         return 400, {

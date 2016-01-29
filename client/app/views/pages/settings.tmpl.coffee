@@ -5,6 +5,7 @@ userSchema = require('../../schemas/user')
 {createFieldsData} = require('../../modules/auxiliaries')
 form = require('../components/form.tmpl')
 spinner = require('../components/spinner.tmpl')
+icon = require('../components/icon.tmpl')
 
 fields = [{
     name: 'id'
@@ -64,10 +65,12 @@ module.exports = (data) ->
         hr()
         p(a(
             {href: '/password'}
-            'Change my password.'
+            icon('password')
+            ' Change my password.'
         ))
         p(a(
             {href: 'http://gravatar.com'}
-            'Update my avatar on Gravatar.'
+            icon('update')
+            ' Update my avatar on Gravatar.'
         ))
     )

@@ -138,7 +138,7 @@ module.exports = (data, currentUserID) ->
                 ) if data.kind is 'proposal'
                 a(
                     {href: "/topics/#{data.topicID}##{data.id}"}
-                    icon('discuss')
+                    icon('post')
                     ' Share'
                 )
                 # TODO-3 a(

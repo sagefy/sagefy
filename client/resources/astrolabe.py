@@ -6,15 +6,15 @@ from jinja2 import Template
 
 # Colors ###
 
-light_color = '#ccc7a8'
-medium_color = '#625f4a'
-dark_color = '#323124'
+light_color = '#ccc7a8'  # (80, 50, 70)
+medium_color = '#625f4a'  # (80, 50, 40)
+dark_color = '#323124'  # (80, 50, 20)
 
 # Light Colors
 
-light_color = '#fcfcfb'
-medium_color = '#ccc7a8'
-dark_color = '#969272'
+light_color = '#fcfcfb'  # (80, 50, 95)
+medium_color = '#ccc7a8'  # (80, 50, 80)
+dark_color = '#969272'  # (80, 50, 60)
 
 # Attributes ###
 

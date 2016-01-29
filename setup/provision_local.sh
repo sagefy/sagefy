@@ -121,3 +121,4 @@ sudo nginx -c /var/www/setup/nginx.conf
 
 echo "Hooray! Provisioned."
 echo "For script and style watching, run gulp."
+echo "Be sure to update config.py if needed"

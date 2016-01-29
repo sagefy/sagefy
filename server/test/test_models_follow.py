@@ -2,11 +2,23 @@ from models.follow import Follow
 import rethinkdb as r
 
 
-def test_user_id(db_conn, follows_table):
+def create_card_a(db_conn, cards_table):
+    """
+    Create a unit for the following tests.
+    """
+
+    cards_table.insert({
+        'entity_id': 'A',
+        'status': 'accepted',
+    }).run(db_conn)
+
+
+def test_user_id(db_conn, cards_table, follows_table):
     """
     A follow should require a user_id.
     """
 
+    create_card_a(db_conn, cards_table)
     follow, errors = Follow.insert(db_conn, {
         'entity': {
             'id': 'A',
@@ -19,11 +31,12 @@ def test_user_id(db_conn, follows_table):
     assert len(errors) == 0
 
 
-def test_entity(db_conn, follows_table):
+def test_entity(db_conn, cards_table, follows_table):
     """
     Expect a follow to require an entity kind and id.
     """
 
+    create_card_a(db_conn, cards_table)
     follow, errors = Follow.insert(db_conn, {
         'user_id': 'A',
     })

@@ -25,17 +25,17 @@ items = {
     discuss_set: {
         url: '/search?kind=topic&q={id}'
         title: 'Discuss Set'
-        icon: 'discuss'
+        icon: 'post'
     }
     discuss_unit: {
         url: '/search?kind=topic&q={id}'
         title: 'Discuss Unit'
-        icon: 'discuss'
+        icon: 'post'
     }
     discuss_card: {
         url: '/search?kind=topic&q={id}'
         title: 'Discuss Card'
-        icon: 'discuss'
+        icon: 'post'
     }
 }
 

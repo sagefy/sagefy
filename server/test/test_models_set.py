@@ -6,11 +6,23 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def test_entity(db_conn, sets_table):
+def create_unit_a(db_conn, units_table):
+    """
+    Create a unit for the following tests.
+    """
+
+    units_table.insert({
+        'entity_id': 'A',
+        'status': 'accepted',
+    }).run(db_conn)
+
+
+def test_entity(db_conn, sets_table, units_table):
     """
     Expect a set to require an entity_id.
     """
 
+    create_unit_a(db_conn, units_table)
     set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
@@ -23,11 +35,12 @@ def test_entity(db_conn, sets_table):
     assert set_['entity_id']
 
 
-def test_previous(db_conn, sets_table):
+def test_previous(db_conn, sets_table, units_table):
     """
     Expect a set to allow a previous version id.
     """
 
+    create_unit_a(db_conn, units_table)
     set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
@@ -40,11 +53,12 @@ def test_previous(db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_language(db_conn, sets_table):
+def test_language(db_conn, sets_table, units_table):
     """
     Expect a set to require a language.
     """
 
+    create_unit_a(db_conn, units_table)
     set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
@@ -57,11 +71,12 @@ def test_language(db_conn, sets_table):
     assert set_['language'] == 'en'
 
 
-def test_name(db_conn, sets_table):
+def test_name(db_conn, sets_table, units_table):
     """
     Expect a set to require a name.
     """
 
+    create_unit_a(db_conn, units_table)
     set_, errors = Set.insert(db_conn, {
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -75,11 +90,12 @@ def test_name(db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_body(db_conn, sets_table):
+def test_body(db_conn, sets_table, units_table):
     """
     Expect a set to require a body.
     """
 
+    create_unit_a(db_conn, units_table)
     set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'members': [{
@@ -93,11 +109,12 @@ def test_body(db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_status(db_conn, sets_table):
+def test_status(db_conn, sets_table, units_table):
     """
     Expect a set status to be a string.
     """
 
+    create_unit_a(db_conn, units_table)
     set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
@@ -113,11 +130,12 @@ def test_status(db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_tags(db_conn, sets_table):
+def test_tags(db_conn, sets_table, units_table):
     """
     Expect a set to allow tags.
     """
 
+    create_unit_a(db_conn, units_table)
     set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
@@ -130,11 +148,12 @@ def test_tags(db_conn, sets_table):
     assert len(errors) == 0
 
 
-def test_members(db_conn, sets_table):
+def test_members(db_conn, sets_table, units_table):
     """
     Expect a set to record a list of members.
     """
 
+    create_unit_a(db_conn, units_table)
     set_, errors = Set.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',

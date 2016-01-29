@@ -22,7 +22,8 @@ module.exports = (data) ->
                                 else ''
                         )
                     }
-                    'Engage!'
+                    icon('good')
+                    ' Engage'
                 )
                 div(
                     h3(unit.name)

@@ -1,4 +1,5 @@
 from models.unit import Unit
+import rethinkdb as r
 
 
 def test_entity_id(db_conn, units_table):
@@ -108,6 +109,11 @@ def test_requires(db_conn, units_table):
     Expect a unit to allow requires ids.
     """
 
+    units_table.insert({
+        'entity_id': 'A',
+        'status': 'accepted',
+        'created': r.now(),
+    }).run(db_conn)
     unit, errors = Unit.insert(db_conn, {
         'name': 'Learn this',
         'body': 'Learn how to do this',
