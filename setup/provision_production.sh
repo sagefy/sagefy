@@ -18,7 +18,7 @@
 #############
 
 # Create a new user
-adduser --disabled-password --gecos "" annina
+adduser --gecos "" annina
 
 # Add user to sudo group
 gpasswd -a annina sudo
