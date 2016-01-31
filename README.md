@@ -10,11 +10,14 @@ Open-content systems allow anyone to view, share, create, and edit content. Like
 
 Sagefy uses learning science research in its [structure](https://github.com/heiskr/sagefy/wiki/Data-Structure) and [ideas](https://github.com/heiskr/sagefy/wiki/Ideas).
 
+For more information, watch this 3 minute [YouTube video].
+
 - [Site], [Wiki], [Twitter]
 
 [Site]: https://sagefy.org
 [Twitter]: https://twitter.com/sagefyorg
 [Wiki]: https://github.com/heiskr/sagefy/wiki
+[YouTube video]: https://www.youtube.com/watch?v=LKUMexJXGDQ
 
 [![Setup](https://img.shields.io/badge/get-setup-brightgreen.svg?style=flat)](https://github.com/heiskr/sagefy/blob/master/setup/setup.md) [![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy) [![Gitter](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg?style=flat)](https://gitter.im/heiskr/sagefy)
 
