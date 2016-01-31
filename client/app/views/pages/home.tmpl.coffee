@@ -29,6 +29,14 @@ module.exports = (data) ->
                 a({href: '/sign_up'}, icon('sign-up'), ' Sign Up')
             ) unless data.currentUserID
             p(
+                'What is Sagefy? '
+                a(
+                    {href: 'https://www.youtube.com/watch?v=LKUMexJXGDQ'}
+                    'Watch this 3 minute YouTube video'
+                )
+                '.'
+            )
+            p(
                 {style: {
                     background: 'rgb(255, 236, 239)'
                     color: 'rgb(197, 124, 139)'
