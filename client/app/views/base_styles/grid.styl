@@ -11,15 +11,11 @@ cols(n)
 
 for i in (1..$max-columns)
     $col-{i}
-        flex-basis cols(i)
         max-width cols(i)
         padding $unit
+        margin 0 auto
 
 $row
-    display -webkit-flex
-    display flex
-    flex-flow row wrap
-    justify-content center
     margin -1 * $unit
 
 $page

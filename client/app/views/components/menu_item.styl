@@ -9,6 +9,8 @@ description: |
 
 .menu__item
     @extend $col-2
+    margin 0
+    flex-basis cols(2)
     text-align center
 
     a
@@ -16,8 +18,8 @@ description: |
         border 0
 
     i
-        color $base-color(90)
         @extend $font-size-epic
+        color $base-color(90)
 
     &:hover
         a

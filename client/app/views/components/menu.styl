@@ -12,14 +12,14 @@ description: |
 
     &.selected
         z-index 2
-        display -webkit-flex
-        display flex
-        justify-content center
-        align-items center
         top 0
         left 0
         width 100%
         height 100%
+
+        display flex
+        justify-content center
+        align-items center
 
 .menu--global
     @extend .menu
@@ -70,7 +70,11 @@ description: |
 .menu__items
     @extend $row
     padding $unit
-    display flex
     position relative
     list-style none
     width 100%
+
+    display flex
+    justify-content center
+    align-items center
+    flex-flow row wrap
