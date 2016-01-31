@@ -13,7 +13,7 @@ module.exports = (data) ->
     asLearner = data.route.indexOf('as_learner') > -1
 
     inputOpts = {
-        type: 'search'
+        type: 'text'
         placeholder: 'Search'
         name: 'search'
         size: 40

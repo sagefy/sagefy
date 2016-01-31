@@ -1040,4 +1040,4 @@ if len(argv) > 1 and argv[1] == 'learn_mode':
         }])
         .run(db_conn))
 
-close_db_connection()
+close_db_connection(db_conn)
