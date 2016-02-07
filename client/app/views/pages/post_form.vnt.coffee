@@ -14,7 +14,7 @@ module.exports = broker.add({
         if values.post?.kind is 'proposal'
             if values.entity?.require_ids
                 values.entity.require_ids = values.entity.require_ids
-                    .map((r) -> r.id)
+                    .map((r) -> r.id).filter((r) -> r)
             if values.post?.entity_version?.kind
                 values[values.post.entity_version.kind] = values.entity
                 delete values.entity
