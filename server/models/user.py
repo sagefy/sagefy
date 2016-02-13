@@ -38,8 +38,8 @@ def update_modified(field):
     return r.now()
 
 
-def lowercase(s):
-    return s.lower()
+def lowercase_and_strip(s):
+    return s.lower().strip()
 
 
 class User(Model):
@@ -53,11 +53,12 @@ class User(Model):
         },
         'name': {
             'validate': (is_required, is_string,),
-            'bundle': lowercase,
+            'bundle': lowercase_and_strip,
             'unique': True,
         },
         'email': {
             'validate': (is_required, is_email,),
+            'bundle': lowercase_and_strip,
             'unique': True,
             'access': ('private',),
         },

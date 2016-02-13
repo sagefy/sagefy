@@ -13,8 +13,8 @@ def encrypt_password(value):
     return value
 
 
-def lowercase(s):
-    return s.lower()
+def lowercase_and_strip(s):
+    return s.lower().strip()
 
 
 schema = extend({}, default, {
@@ -27,11 +27,12 @@ schema = extend({}, default, {
         },
         'name': {
             'validate': (is_required, is_string,),
-            'bundle': lowercase,
+            'bundle': lowercase_and_strip,
             'unique': True,
         },
         'email': {
             'validate': (is_required, is_email,),
+            'bundle': lowercase_and_strip,
             'unique': True,
             'access': ('private',),
         },
