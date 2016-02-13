@@ -403,7 +403,7 @@ def create_post_route(request, topic_id):
     if post_kind == 'proposal':
         update_entity_status(db_conn, post_)
     if post_kind == 'vote':
-        proposal = Proposal.get(id=post_['replies_to_id'])
+        proposal = Proposal.get(db_conn, id=post_['replies_to_id'])
         update_entity_status(db_conn, proposal)
 
     # ## STEP 6) Send notices
