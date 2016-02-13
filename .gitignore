@@ -41,3 +41,4 @@ client/app/content
 var
 sagefy_rsa.pub
 elasticsearch-*
+rethinkdb-bu

@@ -4,8 +4,6 @@ from framework.database import setup_db, make_db_connection, \
 from framework.elasticsearch import es
 from passlib.hash import bcrypt
 from modules.sequencer.params import precision
-from modules.util import json_prep, pick
-from models.user import get_avatar
 from sys import argv
 
 setup_db()
@@ -59,17 +57,6 @@ es.indices.delete(index='entity', ignore=[400, 404])
         }
     }])
     .run(db_conn))
-
-users = r.table('users').run(db_conn)
-for user in users:
-    data = pick(json_prep(user), ('id', 'name'))
-    data['avatar'] = get_avatar(user['email'])
-    es.index(
-        index='entity',
-        doc_type='user',
-        body=data,
-        id=user['id'],
-    )
 
 (r.table('units')
     .insert([{
@@ -179,17 +166,6 @@ for user in users:
     }])
     .run(db_conn))
 
-units = (r.table('units')
-          .filter(r.row['id'] in (
-              'plus-2', 'minus-1', 'times-1', 'slash-1'
-          )).run(db_conn))
-for unit in units:
-    es.index(
-        index='entity',
-        doc_type='unit',
-        body=json_prep(unit),
-        id=unit['entity_id'],
-    )
 
 (r.table('units_parameters')
     .insert([{
@@ -509,14 +485,6 @@ for unit in units:
     }])
     .run(db_conn))
 
-cards = r.table('cards').run(db_conn)
-for card in cards:
-    es.index(
-        index='entity',
-        doc_type='card',
-        body=json_prep(card),
-        id=card['entity_id'],
-    )
 
 (r.table('cards_parameters')
     .insert([{
@@ -675,14 +643,6 @@ for card in cards:
     }])
     .run(db_conn))
 
-sets = r.table('sets').run(db_conn)
-for set_ in sets:
-    es.index(
-        index='entity',
-        doc_type='set',
-        body=json_prep(set_),
-        id=set_['entity_id'],
-    )
 
 (r.table('sets_parameters')
     .insert([{
@@ -737,14 +697,6 @@ for set_ in sets:
     }])
     .run(db_conn))
 
-topics = r.table('topics').run(db_conn)
-for topic in topics:
-    es.index(
-        index='entity',
-        doc_type='topic',
-        body=json_prep(topic),
-        id=topic['id'],
-    )
 
 (r.table('posts')
     .insert([{
@@ -865,23 +817,6 @@ for topic in topics:
     }])
     .run(db_conn))
 
-posts = r.table('posts').run(db_conn)
-for post in posts:
-    data = json_prep(post)
-    topic = (r.table('topics')
-             .get(data['topic_id'])
-             .run(db_conn))
-    user = (r.table('users')
-             .get(data['user_id'])
-             .run(db_conn))
-    data['topic'] = json_prep(topic)
-    data['user'] = json_prep(user)
-    es.index(
-        index='entity',
-        doc_type='post',
-        body=data,
-        id=post['id'],
-    )
 
 (r.table('follows')
     .insert([{
