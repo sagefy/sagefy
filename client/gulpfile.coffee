@@ -36,7 +36,7 @@ gulp.task('default', ['watch'])
 gulp.task('develop', ['watch'])
 gulp.task('watch', (done) ->
     sequence('clean', [
-        'watch statics'
+        'rewrite html'
         'copy fonts'
         'watch styles'
         'watch scripts'
@@ -46,7 +46,7 @@ gulp.task('watch', (done) ->
 gulp.task('build', ['deploy'])
 gulp.task('deploy', (done) ->
     sequence('clean', [
-        'copy statics'
+        'rewrite html'
         'copy fonts'
         'compress styles'
         'compress scripts'
@@ -73,6 +73,17 @@ gulp.task('copy statics', ->
         .pipe(gulp.dest(dist))
 )
 
+gulp.task('rewrite html', ['copy statics'], (done) ->
+    file = dist + 'index.html'
+    require('fs').readFile(file, 'utf8', (err, str) ->
+        throw new Error(err) if(err)
+        str = str.replace(/___/g, Date.now())
+        require('fs').writeFile(file, str, (err) ->
+            done()
+        )
+    )
+)
+
 gulp.task('copy fonts', ->
     gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.woff')
         .pipe(gulp.dest(dist))
@@ -81,7 +92,7 @@ gulp.task('copy fonts', ->
 gulp.task('watch statics', ['copy statics'], ->
     gulp.watch(
         staticSrc
-        ['copy statics']
+        ['rewrite html']
     )
 )
 
