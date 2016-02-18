@@ -34,7 +34,7 @@ module.exports = ->
                     {href: 'https://github.com/heiskr/sagefy/issues'}
                     'Add to Github issues'
                 )
-                ' or '
+                '. For security issues '
                 a(
                     {href: 'mailto:support@sagefy.org'}
                     'send us an email'
@@ -44,7 +44,15 @@ module.exports = ->
             li(
                 strong('My copyright has been violated.')
                 br()
-                'Propose to remove the item. If that doesn\'t work, '
+                a(
+                    {href: 'mailto:support@sagefy.com'}
+                    'Send us an email'
+                )
+                '.'
+            )
+            li(
+                strong('I need help with my account.')
+                br()
                 a(
                     {href: 'mailto:support@sagefy.com'}
                     'send us an email'
@@ -56,7 +64,7 @@ module.exports = ->
                 br()
                 a(
                     {href: 'http://sagefy.totemapp.com/'}
-                    'Visit or media page.'
+                    'Visit our media page.'
                 )
             )
         )

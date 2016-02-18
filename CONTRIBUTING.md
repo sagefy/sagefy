@@ -11,22 +11,19 @@ Create and edit content through the discussion section within the Sagefy interfa
 Issues
 ------
 
-- Please search the existing issues before submitting. This helps us reduce effort and prioritize.
-- For bug reports, to make the process as smooth as possible, please provide:
-    - Step-by-step how to reproduce.
-    - Screenshots.
-    - Logs, as available.
 - For feature requests, consider adding it to [UserVoice](http://sagefy.uservoice.com/) instead. On UserVoice, the feature can be discussed and prioritized more easily.
+- Please search the existing issues before submitting. This helps us reduce effort and prioritize.
+- Please provide step-by-step how to reproduce.
+- Please provide screenshots, as available.
+- Please provide logs, as available.
 
 Pull Request Checklist
 ----------------------
 
-Before you raise a pull request to Sagefy, please review the terms in the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0). If you do not agree to these terms, do not raise a pull request.
-
 For each pull request:
 
-- Pass the linters, as documented below.
-- Pass existing automated tests.
+- Review and agree to release the code under the terms in the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0).
+- Pass the linters and existing automated tests.
 - Document each function.
 - Follow the code styleguide, as documented below.
 - Write at least one test per function.
