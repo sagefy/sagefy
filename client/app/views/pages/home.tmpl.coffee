@@ -31,7 +31,7 @@ module.exports = (data) ->
             p(
                 'What is Sagefy? '
                 a(
-                    {href: 'https://www.youtube.com/watch?v=LKUMexJXGDQ'}
+                    {href: 'https://www.youtube.com/watch?v=HVwfwTOdnOE'}
                     'Watch this 3 minute YouTube video'
                 )
                 '.'
