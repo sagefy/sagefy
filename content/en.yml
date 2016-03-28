@@ -1,6 +1,6 @@
 en:
     boolean: Must be true or false.
-    change_password_url: To change your password, please visit <{url}>.
+    change_password_url: To change your password, please visit {url}
     clear: Clear
     dict: Must be a dict.
     email: Must be an email.
