@@ -37,12 +37,7 @@ module.exports = (data) ->
                 '.'
             )
             p(
-                {style: {
-                    background: 'rgb(255, 236, 239)'
-                    color: 'rgb(197, 124, 139)'
-                    borderRadius: '2px'
-                    padding: '12px'
-                }}
+                {className: 'home__warn'}
                 '''
                 Sagefy is very new. You will likely find bugs
                 and other strange behaviors, as well as a general lack of
