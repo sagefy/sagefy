@@ -77,7 +77,8 @@ passwords, and tokens.
 Sagefy is not liable for any damages resulting from
 unauthorized use of your account.
 
-Sagefy may close accounts and cancel service in Sagefy's own judgement.
+Sagefy may close accounts, cancel service, and restrict access
+in Sagefy's own judgement, even without notice or cause.
 
 If you or Sagefy closes your account,
 your personal information will be removed,
@@ -85,15 +86,18 @@ but your contributions will remain on the service.
 
 ## Community
 
-You cannot spam, defame, harrass, abuse, threaten, or defraud
-other users of Sagefy.
-
-You cannot impersonate any person or entity on Sagefy.
+You cannot use Sagefy to spam, defame, harass, abuse, threaten, defraud,
+or impersonate any person or entity.
 
 You cannot use Sagefy to collect information
 about other users without their consent.
 
 You cannot interfere with any other user's use of Sagefy.
+
+You cannot use Sagefy for any illegal purpose.
+
+You cannot use Sagefy to distribute any software intended to cause damage,
+such as viruses or malware.
 
 ## Sharing Content
 
@@ -107,6 +111,15 @@ under a Creative Commons license <http://creativecommons.org/>
 or similar license.
 
 Sagefy does not claim property rights to user-provided content.
+
+Sagefy does not monitor or take responsibility for user contributed content.
+
+Sagefy, and its content, does not offer professional,
+financial, legal, or medical advice.
+
+Sagefy does not warrant any user submitted content is
+safe, secure, truthful, accurate, error-free, correctly categorized,
+or socially acceptable.
 
 No compensation will be given for user-provided content.
 
@@ -124,6 +137,11 @@ You cannot use any sort of automated means, such as bots or scrapers,
 to access Sagefy.
 
 You cannot bypass measures to restrict access to Sagefy.
+
+You cannot disrupt the services with excessive requests.
+
+You cannot gain or attempt to gain unauthorized access
+to Sagefy's non-public data or infrastructure.
 
 ## DMCA
 
