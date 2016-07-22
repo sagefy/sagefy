@@ -40,6 +40,7 @@ module.exports = store.add({
             fail: (errors) =>
                 @data.errors = errors
                 recorder.emit('add user set failure', errors)
+                @tasks.route('/my_sets')
             always: =>
                 @change()
         })
