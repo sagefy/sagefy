@@ -37,7 +37,7 @@ module.exports = (data) ->
                 '.'
             )
             p(
-                {className: 'home__warn'}
+                {className: 'alert--accent'}
                 '''
                 Sagefy is very new. You will likely find bugs
                 and other strange behaviors, as well as a general lack of

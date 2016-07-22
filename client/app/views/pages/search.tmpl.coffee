@@ -44,6 +44,17 @@ module.exports = (data) ->
             ) for result in data.searchResults
         ) if data.searchResults?.length
         p('No results found.') if data.searchResults?.length is 0
+        # TEMPORARY
+        p(
+            {className: 'alert--good'}
+            icon('good')
+            ' Try the first set, '
+            a(
+                {href: '#', className: 'add-intro-ele-music'}
+                'Introduction to Electronic Music -- Foundation'
+            )
+        ) if asLearner
+        # TEMPORARY
     )
 
     # TODO-2 pagination

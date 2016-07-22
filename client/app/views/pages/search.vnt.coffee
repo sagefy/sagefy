@@ -12,4 +12,11 @@ module.exports = broker.add({
     'click .add-to-my-sets': (e, el) ->
         e.preventDefault() if e
         tasks.addUserSet(el.id)
+
+    # TEMPORARY
+    'click .add-intro-ele-music': (e, el) ->
+        e.preventDefault if e
+        entityID = 'CgDRJPfzJuTR916HdmosA3A8'
+        tasks.addUserSet(entityID)
+    # TEMPORARY
 })
