@@ -56,6 +56,10 @@ def update(db_conn, user, card, response):
     })
 
     card_parameters = CardParameters.get(db_conn, entity_id=card['entity_id'])
+    if not card_parameters:
+        card_parameters = CardParameters({
+            'entity_id': card['entity_id']
+        })
     previous_response = Response.get_latest(db_conn,
                                             user_id=user['id'],
                                             unit_id=card['unit_id'])

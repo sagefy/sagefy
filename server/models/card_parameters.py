@@ -37,6 +37,7 @@ class CardParameters(Model):
                 h: 1 - (init - h) ** 2
                 for h in [h / precision for h in range(1, precision)]
             }
+            self[key] = distribution
         if kind == 'guess':
             return GuessPMF(distribution)
         if kind == 'slip':

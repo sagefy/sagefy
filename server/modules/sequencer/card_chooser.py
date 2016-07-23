@@ -70,10 +70,13 @@ def choose_card(db_conn, user, unit):
             return nonassessment[0]
         for card in assessment:
             params = CardParameters.get(db_conn, entity_id=card['entity_id'])
-            guess = params.get_distribution('guess').get_value()
-            slip = params.get_distribution('slip').get_value()
-            correct = calculate_correct(guess, slip, learned)
-            if 0.25 < correct < 0.75:
+            if params:
+                guess = params.get_distribution('guess').get_value()
+                slip = params.get_distribution('slip').get_value()
+                correct = calculate_correct(guess, slip, learned)
+                if 0.25 < correct < 0.75:
+                    return card
+            else:
                 return card
         return assessment[0]
 

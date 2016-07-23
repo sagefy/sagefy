@@ -38,7 +38,7 @@ def get_card_route(request, card_id):
 
     return 200, {
         'card': card.deliver(access='view'),
-        'card_parameters': params.get_values(),
+        'card_parameters': params.get_values() if params else None,
         'unit': unit.deliver(),
         'topics': [topic.deliver() for topic in topics],
         'versions': [version.deliver() for version in versions],

@@ -32,6 +32,7 @@ npm-debug.log
 parts
 pip-log.txt
 rethinkdb_data
+rethinkdb_dump_*
 sdist
 tmp
 distribution
