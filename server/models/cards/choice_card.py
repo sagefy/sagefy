@@ -2,6 +2,7 @@ from models.card import Card
 from modules.validations import is_required, is_string, is_list, \
     is_one_of, is_boolean, is_integer, has_min_length
 from modules.content import get as c
+from random import shuffle
 
 
 def has_correct_options(options):
@@ -99,3 +100,19 @@ class ChoiceCard(Card):
                     return 0.0, opt['feedback']
 
         return 0.0, 'Default error ajflsdvco'
+
+    def deliver(self, access=None):
+        """
+        Overwrite to randomize option order and limit number of options.
+        """
+
+        data = super().deliver(access)
+
+        if access is 'learn':
+            if self['order'] == 'random':
+                shuffle(data['options'])
+
+            if self['max_options_to_show']:
+                data['options'] = data['options'][:self['max_options_to_show']]
+
+        return data

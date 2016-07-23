@@ -80,7 +80,7 @@ def learn_card_route(request, card_id):
     current_user.set_learning_context(card=card.data, next=next_)
 
     return 200, {
-        'card': card.deliver(access=''),
+        'card': card.deliver(access='learn'),
         'set': context.get('set'),
         'unit': context.get('unit'),
         'next': next_,
