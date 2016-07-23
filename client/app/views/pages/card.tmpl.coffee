@@ -21,7 +21,7 @@ module.exports = (data) ->
 
     return spinner() unless card
 
-    params = card.card_parameters
+    params = card.card_parameters or {}
     assess = card.kind in assessments
 
     return div(

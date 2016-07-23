@@ -92,10 +92,19 @@ truncate = (str, len) ->
     return str if str.length <= len
     return str.slice(0, len) + '...'
 
+compact = (A) ->
+    return (a for a in A when a)
+
 mergeArraysByKey = (A, B, key = 'id') ->
     a = 0
     b = 0
     C = []
+
+    A = compact(A)
+    B = compact(B)
+
+    console.log(A, B)
+    console.log(A.length, B.length)
 
     while a < A.length
         b2 = b
@@ -251,4 +260,5 @@ module.exports = {
     createFieldsData
 
     prefixObjectKeys
+    compact
 }

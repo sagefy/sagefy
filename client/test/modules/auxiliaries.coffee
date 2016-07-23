@@ -38,7 +38,20 @@ describe('Auxiliaries', ->
             {k: 7, v: 2}
             {k: 8, v: 2}
         ])
+    )
 
+    it('should merge into an empty array', ->
+        A = []
+        B = [{k: 1, v: 2}, {k: 2, v: 2}, {k: 7, v: 2}, {k: 8, v: 2}]
+
+        expect(mergeArraysByKey(A, B, 'k')).to.deep.equal(B)
+    )
+
+    it('should merge an empty array', ->
+        A = [{k: 1, v: 2}, {k: 2, v: 2}, {k: 7, v: 2}, {k: 8, v: 2}]
+        B = []
+
+        expect(mergeArraysByKey(A, B, 'k')).to.deep.equal(A)
     )
 
     it('should parse form values into service friendly data', ->
