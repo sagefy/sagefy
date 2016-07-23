@@ -103,9 +103,6 @@ mergeArraysByKey = (A, B, key = 'id') ->
     A = compact(A)
     B = compact(B)
 
-    console.log(A, B)
-    console.log(A.length, B.length)
-
     while a < A.length
         b2 = b
         found = false
