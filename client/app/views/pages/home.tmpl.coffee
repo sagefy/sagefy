@@ -41,7 +41,7 @@ module.exports = (data) ->
                 '''
                 Sagefy is very new. You will likely find bugs
                 and other strange behaviors, as well as a general lack of
-                content. Please help by creating content and reporting issues
+                content. Please report issues
                 to <support@sagefy.org>. Thank you!
                 '''
             ) # TODO-2 Delete this warning message
