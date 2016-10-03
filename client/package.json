@@ -1,7 +1,7 @@
 {
   "name": "Sagefy",
   "version": "0.0.0",
-  "main": "scripts/index.coffee",
+  "main": "scripts/index.js",
   "directories": {
     "test": "test"
   },
@@ -21,14 +21,14 @@
     "virtual-dom": "2.1.1"
   },
   "devDependencies": {
+    "babel": "6.5.2",
+    "babelify": "7.3.0",
     "browserify": "11.2.0",
     "chai": "3.3.0",
-    "coffee-script": "1.10.0",
-    "coffeeify": "1.1.0",
-    "coffeelint": "1.12.1",
+    "eslint": "3.7.0",
     "glob": "5.0.15",
     "gulp": "3.9.0",
-    "gulp-coffeelint": "0.5.0",
+    "gulp-eslint": "3.0.1",
     "gulp-minify-css": "1.2.1",
     "gulp-uglify": "1.4.1",
     "gulp-util": "3.0.6",
@@ -51,7 +51,11 @@
   },
   "browserify": {
     "transform": [
-      "coffeeify"
+      "babelify",
+      "stringify"
     ]
+  },
+  "stringify": {
+    "appliesTo": {"includeExtensions": [".txt"]}
   }
 }

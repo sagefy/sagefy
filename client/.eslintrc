@@ -1,0 +1,21 @@
+{
+    "extends": "eslint:recommended",
+    "env": {
+        "node": true,
+        "browser": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": false
+        }
+    },
+    "rules": {
+        "semi": ["error", "never"],
+        "indent": ["error", 4],
+        "prefer-const": ["error"],
+        "no-var": ["error"],
+        "max-len": ["error", 80]
+    }
+}

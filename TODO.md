@@ -30,7 +30,7 @@
     When a learner is being diagnosed, it should estimate how long it will take to diagnose the remaining units
     When a learner is working on a unit, it should estimate how long it will take to get to p(learned) > 0.95
 - TODO-3 Formula card kind
-- TODO-3 Move style guide to use `*.tmpl.coffee` to render
+- TODO-3 Move style guide to use `*.tmpl.js` to render
     See http://ianfeather.co.uk/a-maintainable-style-guide/
 - TODO-3 User referrals   Invite a friend card
 - TODO-3 Elasticsearch to support event logging

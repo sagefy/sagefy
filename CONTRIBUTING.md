@@ -41,7 +41,7 @@ Naming Conventions
 ------------------
 
 - **Underscores**: Filenames, URLs, Database names, Python other than class names
-- **Camelcase**: CoffeeScript, Python class names
+- **Camelcase**: JavaScript, Python class names
 - **Dashes**: Stylus, HTML attributes
 
 Python
@@ -71,11 +71,10 @@ Database
     - 1 to many: Put the "1" ID into the "many" rows.
     - Many to many: Embed IDs, otherwise use a join table.
 
-Coffeescript
+JavaScript
 ------------
 
-- See [Coffeelint](http://www.coffeelint.org/) for basic Coffeescript formatting.
-- See [Coffeescript Style Guide](https://github.com/polarmobile/coffeescript-style-guide).
+- See [Eslint](http://www.eslint.org/) for basic JavaScript formatting.
 - Write concise comments before classes, methods, blocks.
 
 Stylus
