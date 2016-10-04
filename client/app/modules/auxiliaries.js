@@ -108,11 +108,11 @@ const truncate = (str, len) => {
 
 const compact = (A) => {
     const _ = []
-    A.forEach(a => {
+    for (const a of A) {
         if(a) {
             _.push(a)
         }
-    })
+    }
     return _
 }
 
@@ -181,7 +181,7 @@ const getFormValues = (form) => {
 // in them to create a save-able object for the service
 const parseFormValues = (data) => {
     const output = {}
-    Object.keys(data).forEach(key => {
+    for (const key in data) {
         const value = data[key]
         if (key.indexOf('.') === -1) {
             output[key] = value
@@ -204,7 +204,7 @@ const parseFormValues = (data) => {
                 }
             })
         }
-    })
+    }
     return output
 }
 
@@ -256,12 +256,12 @@ function createFieldsData({
     })
 
     Object.keys(formData).forEach(name => {
-        const value = name[formData]
+        const value = formData[name]
         // All of this for the list input type
         const matches = name.match(/^(.*)\.(\d+)\.(.*)$/)
         if (matches) {
             const [, pre, index, col] = matches
-            let field = fields.filter((f) => f.name === pre)
+            let field = fields.filter(f => f.name === pre)
             if (field) { field = field[0] }
             if (field) {
                 field.value = field.value || []
@@ -270,7 +270,7 @@ function createFieldsData({
             }
         // For every other kind of field...
         } else {
-            let field = fields.filter((f) => f.name === name)
+            let field = fields.filter(f => f.name === name)
             if (field) { field = field[0] }
             if (field) { field.value = value }
         }

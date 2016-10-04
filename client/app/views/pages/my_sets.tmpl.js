@@ -63,7 +63,7 @@ const userSet = (data) =>
             h3(data.name),
             p(data.body),
             a(
-                {href: `/sets/${data.entity_id}/tree,`},
+                {href: `/sets/${data.entity_id}/tree`},
                 icon('unit'),
                 ' View Units'
             )

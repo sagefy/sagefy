@@ -26,15 +26,15 @@ const ajax = function ({method, url, data, done, fail, always}) {
         'Content-Type',
         'application/json; charset=UTF-8'
     )
-    request.onload = () => {
-        if (400 > this.status >= 200) {
+    request.onload = function () {
+        if (400 > this.status && this.status >= 200) {
             done(parseJSON(this.responseText), this)
         } else {
             fail(parseAjaxErrors(this), this)
         }
         if (always) { always() }
     }
-    request.onerror = () => {
+    request.onerror = function () {
         fail(null, this)
         if (always) { always() }
     }
@@ -50,14 +50,14 @@ const ajax = function ({method, url, data, done, fail, always}) {
 const parameterize = (obj) => {
     obj = copy(obj)
     const pairs = []
-    Object.keys(obj).forEach(key => {
+    for (const key in obj) {
         const value = obj[key]
         pairs.push(
             encodeURIComponent(key) +
             '=' +
             encodeURIComponent(value)
         )
-    })
+    }
     return pairs.join('&').replace(/%20/g, '+')
 }
 

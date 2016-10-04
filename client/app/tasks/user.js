@@ -6,7 +6,7 @@ const cookie = require('../modules/cookie')
 // TODO-2 move setting and unsetting of currentUserID back to the server
 
 module.exports = store.add({
-    createUser: (data) => {
+    createUser (data) {
         store.data.sending = true
         store.change()
         recorder.emit('create user')
@@ -32,7 +32,7 @@ module.exports = store.add({
         })
     },
 
-    updateUser: (data) => {
+    updateUser (data) {
         store.data.sending = true
         store.change()
         recorder.emit('update user', data.id)
@@ -56,7 +56,7 @@ module.exports = store.add({
         })
     },
 
-    getCurrentUser: () => {
+    getCurrentUser () {
         recorder.emit('get current user')
         ajax({
             method: 'GET',
@@ -78,7 +78,7 @@ module.exports = store.add({
         })
     },
 
-    getUser: (id, opts = {}) => {
+    getUser (id, opts = {}) {
         recorder.emit('get user', id)
         ajax({
             method: 'GET',
@@ -103,7 +103,7 @@ module.exports = store.add({
         })
     },
 
-    logInUser: (data) => {
+    logInUser (data) {
         store.data.sending = true
         store.change()
         recorder.emit('log in user')
@@ -129,7 +129,7 @@ module.exports = store.add({
         })
     },
 
-    logOutUser: () => {
+    logOutUser () {
         store.data.sending = true
         store.change()
         recorder.emit('log out user')
@@ -154,7 +154,7 @@ module.exports = store.add({
         })
     },
 
-    getUserPasswordToken: (data) => {
+    getUserPasswordToken (data) {
         store.data.sending = true
         store.change()
         recorder.emit('get password token')
@@ -177,7 +177,7 @@ module.exports = store.add({
         })
     },
 
-    createUserPassword: (data) => {
+    createUserPassword (data) {
         store.data.sending = true
         store.change()
         recorder.emit('create password')

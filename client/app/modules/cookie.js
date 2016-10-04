@@ -14,12 +14,12 @@ const read = (s) => {
 const get = (key) => {
     const name = key + '='
     const cookies = document.cookie.split(';')
-    cookies.forEach(c => {
+    for (let c of cookies) {
         c = c.trim()
         if (c.indexOf(name) === 0) {
             return read(c.substring(name.length))
         }
-    })
+    }
     return null
 }
 

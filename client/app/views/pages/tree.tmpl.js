@@ -38,8 +38,8 @@ module.exports = (data) => {
 
     let chooseUnitID, cardID
     if (data.next) {
-        [chooseUnitID] = matchesRoute(data.next.path, '/s/sets/{id}/units')
-        ;[cardID] = matchesRoute(data.next.path, '/s/cards/{id}/learn')
+        chooseUnitID = matchesRoute(data.next.path, '/s/sets/{id}/units')[0]
+        cardID = matchesRoute(data.next.path, '/s/cards/{id}/learn')[0]
     }
 
     return div(

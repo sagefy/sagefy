@@ -42,7 +42,7 @@ const orderLayers = (layers) => {
 
 const calculatePoints = (layers, nodeWidth) => {
     layers.forEach((layer, i) => {
-        layer.foreach((unit, j) => {
+        layer.forEach((unit, j) => {
             unit.x = distance + radius + j * (distance + radius * 2) +
                      (nodeWidth - layer.length) * (radius * 2 + distance) / 2
             unit.y = i * (distance + radius * 2) + distance + radius
@@ -52,19 +52,21 @@ const calculatePoints = (layers, nodeWidth) => {
 }
 
 const findUnit = (layers, id) => {
-    layers.forEach(layer => {
-        layer.forEach(unit => {
+    for (const layer of layers) {
+        for (const unit of layer) {
             if (unit.id === id) { return unit }
-        })
-    })
+        }
+    }
 }
 
 const findLayer = (layers, id) => {
+    let output
     layers.forEach((layer, i) => {
         layer.forEach(unit => {
-            if (unit.id === id) { return i }
+            if (unit.id === id) { output = i; return }
         })
     })
+    return output
 }
 
 module.exports = {

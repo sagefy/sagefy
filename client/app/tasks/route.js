@@ -26,12 +26,12 @@ module.exports = store.add({
     onRoute: (path) => {
         store.data.formData = {}
         store.data.pageData = {}
-        routes.forEach(route => {
+        for (const route of routes) {
             const args = matchesRoute(path, route.path)
             if (args) {
                 return tasks[route.task].apply(null, args)
             }
-        })
+        }
     },
 
     openSettingsRoute: () => {
