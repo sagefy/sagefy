@@ -1,0 +1,388 @@
+{
+    "cards_parameters": {
+        "tablename": "cards_parameters",
+        "singular": "card_parameters",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "cards": {
+        "tablename": "cards",
+        "singular": "card",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "video_cards": {
+        "tablename": "cards",
+        "singular": "video_card",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "choice_cards": {
+        "tablename": "cards",
+        "singular": "choice_card",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "follows": {
+        "tablename": "follows",
+        "singular": "follow",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            },
+            "user_id": {
+                "validate": ["is_required", "is_string"]
+            },
+            "entity": {
+                "validate": ["is_required"],
+                "embed": {
+                    "id": {
+                        "validate": ["is_required", "is_string"]
+                    },
+                    "kind": {
+                        "validate": ["is_required", "is_string", ["is_one_of", "card", "unit", "set", "topic"]]
+                    }
+                }
+            }
+        }
+    },
+    "notices": {
+        "tablename": "notices",
+        "singular": "notice",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            },
+            "user_id": {
+                "validate": ["is_required", "is_string"]
+            },
+            "kind": {
+                "validate": ["is_required", "is_string", ["is_one_of",
+                    "create_topic",
+                    "create_proposal",
+                    "block_proposal",
+                    "decline_proposal",
+                    "accept_proposal",
+                    "create_post",
+                    "come_back"]]
+            },
+            "data": {
+                "validate": ["is_object"],
+                "default": "empty_object"
+            },
+            "read": {
+                "validate": ["is_boolean"],
+                "default": false
+            },
+            "tags": {
+                "validate": ["is_array", "is_array_of_strings"],
+                "default": "empty_array"
+            }
+        }
+    },
+    "posts": {
+        "tablename": "posts",
+        "singular": "post",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "proposals": {
+        "tablename": "posts",
+        "singular": "proposal",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "responses": {
+        "tablename": "responses",
+        "singular": "response",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "sets_parameters": {
+        "tablename": "sets_parameters",
+        "singular": "set_parameters",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "sets": {
+        "tablename": "sets",
+        "singular": "set",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "topics": {
+        "tablename": "topics",
+        "singular": "topic",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            },
+            "user_id": {
+                "validate": ["is_required", "is_string"]
+            },
+            "name": {
+                "validate": ["is_required", "is_string", ["has_min_length", 1]]
+            },
+            "entity": {
+                "validate": ["is_required"],
+                "embed": {
+                    "id": {
+                        "validate": ["is_required", "is_string"]
+                    },
+                    "kind": {
+                        "validate": ["is_required", "is_string", ["is_one_of", "card", "unit", "set"]]
+                    }
+                }
+            }
+        }
+    },
+    "units_parameters": {
+        "tablename": "units_parameters",
+        "singular": "unit_parameters",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "units": {
+        "tablename": "units",
+        "singular": "unit",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "users_sets": {
+        "tablename": "users_sets",
+        "singular": "user_sets",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "users": {
+        "tablename": "users",
+        "singular": "user",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now",
+                "access": ["private"]
+            },
+            "name": {
+                "validate": ["is_required", "is_string"],
+                "bundle": "lowercase_and_strip",
+                "unique": true
+            },
+            "email": {
+                "validate": ["is_required", "is_string", "is_email"],
+                "bundle": "lowercase_and_strip",
+                "unique": true,
+                "access": ["private"]
+            },
+            "password": {
+                "validate": ["is_required", "is_string", ["has_min_length", 8]],
+                "access": ["pAsSwOrD"],
+                "bundle": "encrypt_password"
+            },
+            "settings": {
+                "validate": ["is_required"],
+                "default": "empty_object",
+                "access": ["private"],
+                "embed": {
+                    "email_frequency": {
+                        "validate": ["is_required", "is_string", ["is_one_of", "immediate", "daily", "weekly", "never"]],
+                        "access": ["private"],
+                        "default": "daily"
+                    },
+                    "view_sets": {
+                        "validate": ["is_required", "is_string", ["is_one_of", "public", "private"]],
+                        "access": ["private"],
+                        "default": "private"
+                    },
+                    "view_follows": {
+                        "validate": ["is_required", "is_string", ["is_one_of", "public", "private"]],
+                        "access": ["private"],
+                        "default": "private"
+                    }
+                }
+            }
+        }
+    },
+    "votes": {
+        "tablename": "posts",
+        "singular": "vote",
+        "fields": {
+            "id": {
+                "default": "uniqid"
+            },
+            "created": {
+                "default": "now"
+            },
+            "modified": {
+                "default": "now",
+                "bundle": "now"
+            }
+        }
+    },
+    "_mixins": {
+        "default": {
+            "fields": {
+                "id": {
+                    "default": "uniqid"
+                },
+                "created": {
+                    "default": "now"
+                },
+                "modified": {
+                    "default": "now",
+                    "bundle": "now"
+                }
+            }
+        },
+        "entity": {
+
+        }
+    }
+}
