@@ -1,5 +1,5 @@
-{div} = require('../../modules/tags')
-c = require('../../modules/content').get
+const {div} = require('../../modules/tags')
 
-module.exports = (data) =>
+module.exports = () => {
     return div()
+}

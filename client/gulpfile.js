@@ -194,7 +194,7 @@ gulp.task('build test scripts', ['build styleguide', 'compile content'], () => {
     gulp.src(['node_modules/mocha/mocha.js'])
         .pipe(gulp.dest(dist))
 
-    browserify({
+    return browserify({
         entries: ['./test/index.js'],
         debug: true,
     })
@@ -207,7 +207,7 @@ gulp.task('lint scripts', () => {
     const src = jsSrc
         .concat(testSrc)
         .concat(['!./app/views/pages/styleguide.compiled.js'])
-    gulp.src(src)
+    return gulp.src(src)
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError())

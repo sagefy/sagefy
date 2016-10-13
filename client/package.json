@@ -45,6 +45,7 @@
     "run-sequence": "1.1.4",
     "sinon": "1.17.1",
     "sinon-chai": "2.8.0",
+    "stringify": "^5.1.0",
     "stylus": "0.52.4",
     "vinyl-source-stream": "1.1.0",
     "watchify": "3.4.0"
@@ -56,6 +57,10 @@
     ]
   },
   "stringify": {
-    "appliesTo": {"includeExtensions": [".txt"]}
+    "appliesTo": {
+      "includeExtensions": [
+        ".txt"
+      ]
+    }
   }
 }
