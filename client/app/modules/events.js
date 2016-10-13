@@ -18,7 +18,7 @@ class Events {
 
         // If callbacks registered under name, call all of them.
         ;(this.events[name] || []).forEach(fn => {
-            fn.apply(this, [name].concat(args))
+            fn.apply(this, args)
         })
 
         return this
