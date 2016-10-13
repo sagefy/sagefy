@@ -6,7 +6,7 @@ services:
     - redis-server
     - elasticsearch
 before_install:
-    - nvm install 4.1.1
+    - nvm install 6.8.0
     - node --version
     - 'source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | sudo tee /etc/apt/sources.list.d/rethinkdb.list'
     - wget -qO- http://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
@@ -18,13 +18,13 @@ install:
     - pip install pytest coverage flake8
     - ls ~/virtualenv/
     - source ~/virtualenv/python2.7/bin/activate
-    - nvm use 4.1.1
+    - nvm use 6.8.0
     - 'npm install -g gulp && cd client && npm install && cd ..'
     - source ~/virtualenv/python3.4/bin/activate
 script:
     - flake8 server/**.py
     - coverage run --module py.test server
-    - nvm use 4.1.1
+    - nvm use 6.8.0
     - 'cd client && gulp test && cd ..'
 after_success:
     - coverage report --omit="server/test/*,*site-packages*,*distutils*"
