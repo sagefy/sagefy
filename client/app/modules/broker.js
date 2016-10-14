@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 require('./matches_polyfill')
 
 const eventRegExp = /^(\S+) (.*)$/
@@ -10,18 +11,18 @@ module.exports = {
         submit: {},
     },
 
-    init: function (fn) {
+    init: function init(fn) {
         fn.call(this)
     },
 
-    observe: function (el) {
+    observe: function observer(el) {
         this.el = el
         Object.keys(this.events).forEach(type => {
             this.el.addEventListener(type, this.delegate(type))
         })
     },
 
-    add: function (obj) {
+    add: function add(obj) {
         Object.keys(obj).forEach(query => {
             const fn = obj[query]
             const match = query.match(eventRegExp)
@@ -32,7 +33,7 @@ module.exports = {
         return obj
     },
 
-    delegate: function (type) {
+    delegate: function delegate(type) {
         return (e) => {
             let el = e.target
             while (el && el !== this.el) {

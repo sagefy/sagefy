@@ -8,12 +8,12 @@ const icon = require('../components/icon.tmpl')
 
 // TODO-2 User doesn't show right after creating a new post in the topic view
 
-module.exports = (data) =>{
+module.exports = (data) => {
     const id = data.routeArgs[0]
     const posts = data.topicPosts && data.topicPosts[id]
     const topic = data.topics && data.topics[id]
 
-    if(!topic || !posts) { return spinner() }
+    if (!topic || !posts) { return spinner() }
 
     return div(
         {id: 'topic'},
@@ -51,9 +51,9 @@ module.exports = (data) =>{
 const entity = (topic, data) => {
     const entityKind = topic.entity.kind
     const entityID = topic.entity.id
-    const entity_ = entityKind === 'card' ? data.cards[entityID]
+    const entityObj = entityKind === 'card' ? data.cards[entityID]
                   : entityKind === 'unit' ? data.units[entityID]
                   : entityKind === 'set' ? data.sets[entityID]
                   : ''
-    return h3(`${ucfirst(entityKind)}: ${entity_.name}`)
+    return h3(`${ucfirst(entityKind)}: ${entityObj.name}`)
 }

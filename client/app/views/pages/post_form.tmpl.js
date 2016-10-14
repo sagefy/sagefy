@@ -53,9 +53,9 @@ module.exports = (data) => {
 
     const instanceFields = createFieldsData({
         schema: getSchema(formData),
-        fields: fields,
+        fields,
         errors: data.errors,
-        formData: formData,
+        formData,
         sending: data.sending
     })
 

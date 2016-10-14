@@ -1,6 +1,7 @@
 const store = require('../modules/store')
-const tasks = store.tasks
 const {matchesRoute, ucfirst} = require('../modules/auxiliaries')
+
+const tasks = store.tasks
 
 const routes = [
     {path: '/settings', task: 'openSettingsRoute'},
@@ -37,7 +38,7 @@ module.exports = store.add({
     openSettingsRoute: () => {
         if (!store.data.currentUserID ||
             !store.data.users ||
-            !store.data.users[store.data.currentUserID]){
+            !store.data.users[store.data.currentUserID]) {
             tasks.getCurrentUser()
         }
     },
@@ -96,7 +97,7 @@ module.exports = store.add({
         tasks.getCardForLearn(id)
     },
 
-    openUpdatePost: (topicID/*, postID */) => {
+    openUpdatePost: (topicID/* , postID */) => {
         tasks.listPosts(topicID)
     },
 

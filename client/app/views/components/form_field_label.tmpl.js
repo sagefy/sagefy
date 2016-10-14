@@ -4,7 +4,7 @@ const {label, span} = require('../../modules/tags')
 
 module.exports = (data) => {
     const isRequired = data.validations ?
-                 data.validations.indexOf(required) > -1  :
+                 data.validations.indexOf(required) > -1 :
                  false
     return label(
         {
@@ -14,11 +14,10 @@ module.exports = (data) => {
         data.label || '',
         data.type === 'message' ? null : span(
             {
-                className: (
+                className:
                     isRequired ?
                         'form-field__required' :
                         'form-field__optional'
-                )
             },
             isRequired ? c('required') : c('optional')
         )

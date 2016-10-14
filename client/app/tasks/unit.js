@@ -13,9 +13,9 @@ module.exports = store.add({
             done: (response) => {
                 store.data.units = store.data.units || {}
                 const unit = response.unit
-                ;['topics', 'versions'].forEach((r) =>
+                ;['topics', 'versions'].forEach(r => {
                     unit[r] = response[r]
-                )
+                })
                 unit.relationships = []
                 ;['belongs_to', 'requires', 'required_by'].forEach((r) =>
                     response[r].forEach((e) =>

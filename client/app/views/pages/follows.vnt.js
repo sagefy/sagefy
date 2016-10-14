@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 const broker = require('../../modules/broker')
 const tasks = require('../../modules/tasks')
 

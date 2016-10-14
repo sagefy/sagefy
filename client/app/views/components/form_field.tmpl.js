@@ -1,6 +1,14 @@
 const {div, p, span} = require('../../modules/tags')
 const icon = require('./icon.tmpl')
 
+const kindTmpl = {}
+kindTmpl.label = require('./form_field_label.tmpl')
+kindTmpl.input = require('./form_field_input.tmpl')
+kindTmpl.textarea = require('./form_field_textarea.tmpl')
+kindTmpl.button = require('./form_field_button.tmpl')
+kindTmpl.select = require('./form_field_select.tmpl')
+kindTmpl.list = require('./form_field_list.tmpl')
+
 module.exports = (data) => {
     const classes = [
         'form-field',
@@ -20,24 +28,24 @@ const m = (data) => {
     const nodes = []
 
     if (data.label && ['button', 'submit'].indexOf(data.type) === -1) {
-        nodes.push(require('./form_field_label.tmpl')(data))
+        nodes.push(kindTmpl.label(data))
     }
 
     if(['text', 'email', 'number', 'password', 'hidden']
         .indexOf(data.type) > -1) {
-        nodes.push(require('./form_field_input.tmpl')(data))
+        nodes.push(kindTmpl.input(data))
     }
     if(['textarea'].indexOf(data.type) > -1) {
-        nodes.push(require('./form_field_textarea.tmpl')(data))
+        nodes.push(kindTmpl.textarea(data))
     }
     if(['submit', 'button'].indexOf(data.type) > -1) {
-        nodes.push(require('./form_field_button.tmpl')(data))
+        nodes.push(kindTmpl.button(data))
     }
     if(['select'].indexOf(data.type) > -1) {
-        nodes.push(require('./form_field_select.tmpl')(data))
+        nodes.push(kindTmpl.select(data))
     }
     if(['list'].indexOf(data.type) > -1) {
-        nodes.push(require('./form_field_list.tmpl')(data))
+        nodes.push(kindTmpl.list(data))
     }
 
     if (data.error) {

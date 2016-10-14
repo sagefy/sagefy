@@ -3,6 +3,10 @@ const spinner = require('../components/spinner.tmpl')
 // const c = require('../../modules/content').get
 const icon = require('../components/icon.tmpl')
 
+const kindTmpl = {}
+kindTmpl.video = require('./card_learn_video.tmpl')
+kindTmpl.choice = require('./card_learn_choice.tmpl')
+
 module.exports = (data) => {
     const id = data.routeArgs[0]
     const card = data.learnCards && data.learnCards[id]
@@ -53,7 +57,7 @@ module.exports = (data) => {
             p(
                 a(
                     {
-                        id: id,
+                        id,
                         className: 'continue card-learner__continue'
                     },
                     'Continue ',
@@ -75,9 +79,9 @@ module.exports = (data) => {
 
 const kind = (card, mode) => {
     if (card.kind === 'video') {
-        return require('./card_learn_video.tmpl')(card, mode)
+        return kindTmpl.video(card, mode)
     }
     if (card.kind === 'choice') {
-        return require('./card_learn_choice.tmpl')(card, mode)
+        return kindTmpl.choice(card, mode)
     }
 }

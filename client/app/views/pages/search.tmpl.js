@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const {div, h1, form, input, button, img,
  ul, li, strong, a, p} = require('../../modules/tags')
 // const c = require('../../modules/content').get
@@ -9,7 +10,7 @@ const icon = require('../components/icon.tmpl')
 // TODO-2 when receiving ?kind={kind}, then search using that as well.
 
 module.exports = (data) => {
-    const loading = data.searchQuery && ! data.searchResults
+    const loading = data.searchQuery && !data.searchResults
     const asLearner = data.route.indexOf('as_learner') > -1
 
     const inputOpts = {

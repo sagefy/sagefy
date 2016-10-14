@@ -23,7 +23,7 @@ module.exports = (data) => {
     if(!treeData) { return spinner() }
 
     const asLearner = data.route.indexOf('as_learner') > -1
-    const asContrib = ! asLearner
+    const asContrib = !asLearner
 
     let layers = orderLayers(putUnitsInLayers(treeData.units))
     const nodeHeight = layers.length
@@ -36,7 +36,8 @@ module.exports = (data) => {
     const currentUnit = treeData.units.find((u) =>
         u.entity_id === data.currentTreeUnit)
 
-    let chooseUnitID, cardID
+    let chooseUnitID
+    let cardID
     if (data.next) {
         chooseUnitID = matchesRoute(data.next.path, '/s/sets/{id}/units')[0]
         cardID = matchesRoute(data.next.path, '/s/cards/{id}/learn')[0]
@@ -55,10 +56,15 @@ module.exports = (data) => {
                 class: 'tree',
                 xmlns: 'http://www.w3.org/2000/svg',
                 version: '1.1',
-                width: width,
-                height: height,
+                width,
+                height,
             },
-            renderLayers(layers, currentUnit, preWidth, treeData.buckets)
+            renderLayers({
+                layers,
+                currentUnit,
+                preWidth,
+                buckets: treeData.buckets
+            })
         ),
         chooseUnitID ? p(a(
             {
@@ -76,7 +82,7 @@ module.exports = (data) => {
     )
 }
 
-const renderLayers = (layers, currentUnit, preWidth, buckets) => {
+const renderLayers = ({layers, currentUnit, preWidth, buckets}) => {
     let nodes = []
     // TODO-3 break into smaller functions, and there's lots of repetition..
     // This is done twice to ensure a line never covers over a circle
@@ -92,12 +98,12 @@ const renderLines = (layers) => {
         layer.forEach(unit => {
             unit.requires.forEach(req => {
                 req = findUnit(layers, req)
-                nodes.push(unitLine(
-                    req.x,
-                    req.y,
-                    unit.x,
-                    unit.y
-                ))
+                nodes.push(unitLine({
+                    x1: req.x,
+                    y1: req.y,
+                    x2: unit.x,
+                    y2: unit.y
+                }))
             })
         })
     })
@@ -111,7 +117,7 @@ const renderPoints = (layers, buckets, currentUnit) => {
             Object.keys(buckets).forEach(kind => {
                 const bucket = buckets[kind]
                 bucket.forEach(id => {
-                    if (id === unit.id){
+                    if (id === unit.id) {
                         unit.className = kind
                     }
                 })
@@ -149,23 +155,21 @@ const renderCurrent = (layers, currentUnit, preWidth) => {
     return nodes
 }
 
-const unitPoint = ({id, x, y, className}, currentTreeUnit) => {
-    return circle({
+const unitPoint = ({id, x, y, className}, currentTreeUnit) =>
+    circle({
         class: className + (currentTreeUnit === id ? ' selected' : ''),
-        id: id,
+        id,
         cx: x,
         cy: y,
         r: radius,
     })
-}
 
-const unitLine = (x1, y1, x2, y2) => {
-    return line({
+const unitLine = ({x1, y1, x2, y2}) =>
+    line({
         class: 'unit-require',
-        x1: x1,
-        y1: y1,
-        x2: x2,
-        y2: y2,
+        x1,
+        y1,
+        x2,
+        y2,
         'stroke-width': 2
     })
-}

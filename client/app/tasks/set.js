@@ -15,9 +15,9 @@ module.exports = store.add({
                 const set = response.set
                 store.data.sets = store.data.sets || {}
                 store.data.sets[id] = set
-                ;['topics', 'versions', 'units'].forEach((r) =>
+                ;['topics', 'versions', 'units'].forEach(r => {
                     set[r] = response[r]
-                )
+                })
                 recorder.emit('get set success', id)
             },
             fail: (errors) => {
@@ -62,7 +62,7 @@ module.exports = store.add({
             method: 'GET',
             url: `/s/sets/${id}/tree`,
             data: {},
-            done: (response) =>{
+            done: (response) => {
                 store.data.setTrees = store.data.setTrees || {}
                 store.data.setTrees[id] = response
                 recorder.emit('get set tree success', id)
@@ -75,7 +75,7 @@ module.exports = store.add({
                 store.data.errors = errors
                 recorder.emit('get set tree failure', errors)
             },
-            always: ()=> {
+            always: () => {
                 store.change()
             }
         })

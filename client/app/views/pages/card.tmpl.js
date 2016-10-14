@@ -8,6 +8,7 @@ const entityHeader = require('../components/entity_header.tmpl')
 const entityTopics = require('../components/entity_topics.tmpl')
 const entityVersions = require('../components/entity_versions.tmpl')
 const entityRelationships = require('../components/entity_relationships.tmpl')
+
 const assessments = ['choice', 'number', 'match', 'formula',
                      'writing', 'upload', 'embed']
 const threeDigits = (num) => Math.round(num * 1000) / 1000

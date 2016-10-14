@@ -1,15 +1,15 @@
 const {a, p} = require('../../modules/tags')
 const icon = require('./icon.tmpl')
 
-module.exports = (kind, entity_id, follows) => {
-    const following = follows && follows.find((f) => f.entity.id === entity_id)
+module.exports = (kind, entityId, follows) => {
+    const following = follows && follows.find((f) => f.entity.id === entityId)
     return following ? p(
         {className: 'follow-button__following'},
         icon('follow'),
         ' Following'
     ) : a(
         {
-            id: `${kind}_${entity_id}`,
+            id: `${kind}_${entityId}`,
             href: '#',
             className: 'follow-button',
         },

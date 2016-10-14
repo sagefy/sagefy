@@ -3,16 +3,18 @@ const distance = 36
 
 const putUnitsInLayers = (units) => {
     const ids = units.map(unit => unit.entity_id)
-    let us = units.map(unit => { return {
-        id: unit.entity_id,
-        requires: unit.require_ids.filter((id) => ids.indexOf(id) > -1),
-    }})
+    let us = units.map(unit => { // eslint-disable-line
+        return {
+            id: unit.entity_id,
+            requires: unit.require_ids.filter((id) => ids.indexOf(id) > -1),
+        }
+    })
     const layers = []
     let layer = 0
     while (us.length) {
         Object.keys(us).forEach(i => {
             const u = us[i]
-            if (! u.requires.length) {
+            if (!u.requires.length) {
                 layers[layer] = layers[layer] || []
                 const unit = units.find(unit => unit.entity_id === u.id)
                 layers[layer].push({
@@ -35,10 +37,8 @@ const putUnitsInLayers = (units) => {
     return layers
 }
 
-const orderLayers = (layers) => {
-    // TODO-2 reorder the layers to make the lines more efficient
-    return layers
-}
+const orderLayers = layers => layers
+// TODO-2 reorder the layers to make the lines more efficient
 
 const calculatePoints = (layers, nodeWidth) => {
     layers.forEach((layer, i) => {
@@ -63,7 +63,10 @@ const findLayer = (layers, id) => {
     let output
     layers.forEach((layer, i) => {
         layer.forEach(unit => {
-            if (unit.id === id) { output = i; return }
+            if (unit.id === id) {
+                output = i
+                return
+            }
         })
     })
     return output

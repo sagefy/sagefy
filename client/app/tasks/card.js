@@ -13,9 +13,9 @@ module.exports = store.add({
             done: (response) => {
                 store.data.cards = store.data.cards || {}
                 const card = response.card
-                ;['topics', 'versions', 'card_parameters'].forEach((r) =>
+                ;['topics', 'versions', 'card_parameters'].forEach((r) => {
                     card[r] = response[r]
-                )
+                })
                 card.relationships = [{
                     kind: 'belongs_to',
                     entity: response.unit,

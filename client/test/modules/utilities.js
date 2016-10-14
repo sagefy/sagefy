@@ -1,4 +1,5 @@
 const _ = require('../../app/modules/utilities')
+
 const extend = _.extend
 
 describe('Utilities', () => {

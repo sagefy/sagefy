@@ -25,7 +25,7 @@ const names = [
     'img', 'iframe', 'embed', 'object', 'param', 'video', 'audio', 'source',
     'canvas', 'track',
 
-    //Inline elements
+    // Inline elements
     'a', 'em', 'strong', 'i', 'small', 'abbr', 'del', 'ins',
     'q', 'cite', 'dfn', 'sub', 'sup', 'time', 'code', 'kbd', 'samp', 'var',
     'mark', 'span'
@@ -33,7 +33,7 @@ const names = [
 
 const tags = {}
 const objConstructor = {}.constructor
-names.forEach((name) =>
+names.forEach((name) => {
     tags[name] = (...args) => {
         if (args.length === 0) {
             return h(name)
@@ -43,6 +43,6 @@ names.forEach((name) =>
         }
         return h(name, args)
     }
-)
+})
 
 module.exports = tags

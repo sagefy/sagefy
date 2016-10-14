@@ -36,12 +36,12 @@ module.exports = store.add({
                 )
 
                 if ('card' in response) {
-                    store.data.cards = store.data.cards ||  {}
+                    store.data.cards = store.data.cards || {}
                     store.data.cards[response.card.entity_id] = response.card
                 } else if ('unit' in response) {
                     store.data.units = store.data.units || {}
                     store.data.units[response.unit.entity_id] = response.unit
-                } else if ('set' in response){
+                } else if ('set' in response) {
                     store.data.sets = store.data.sets || {}
                     store.data.sets[response.set.entity_id] = response.set
                 }
@@ -61,18 +61,18 @@ module.exports = store.add({
     createPost: (data) => {
         store.data.sending = true
         store.change()
-        const {topic_id} = data.post
+        const topicId = data.post.topicId
         recorder.emit('create post')
         ajax({
             method: 'POST',
-            url: `/s/topics/${topic_id}/posts`,
+            url: `/s/topics/${topicId}/posts`,
             data: data,
             done: (response) => {
-                if (store.data.topicPosts && store.data.topicPosts[topic_id]) {
-                    store.data.topicPosts[topic_id].push(response.post)
+                if (store.data.topicPosts && store.data.topicPosts[topicId]) {
+                    store.data.topicPosts[topicId].push(response.post)
                 }
                 recorder.emit('create post success')
-                store.tasks.route(`/topics/${topic_id}`)
+                store.tasks.route(`/topics/${topicId}`)
             },
             fail: (errors) => {
                 store.data.errors = errors
@@ -88,21 +88,22 @@ module.exports = store.add({
     updatePost: (data) => {
         store.data.sending = true
         store.change()
-        const {topic_id, id} = data.post
+        const {id} = data.post
+        const topicId = data.post.topic_id
         recorder.emit('update post')
         ajax({
             method: 'PUT',
-            url: `/s/topics/${topic_id}/posts/${id}`,
+            url: `/s/topics/${topicId}/posts/${id}`,
             data: data,
             done: (response) => {
                 const topic = store.data.topicPosts &&
-                              store.data.topicPosts[topic_id]
+                              store.data.topicPosts[topicId]
                 if (topic) {
                     const index = topic.findIndex((post) => post.id === id)
                     topic[index] = response.post
                 }
                 recorder.emit('update post success')
-                store.tasks.route(`/topics/${topic_id}`)
+                store.tasks.route(`/topics/${topicId}`)
             },
             fail: (errors) => {
                 store.data.errors = errors

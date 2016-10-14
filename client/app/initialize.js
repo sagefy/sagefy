@@ -2,11 +2,10 @@ const recorder = require('./modules/recorder')
 const store = require('./modules/store')
 const init = require('./modules/init')
 const cookie = require('./modules/cookie')
-
 const {route} = require('./modules/route_actions')
-
-// Add google analytics
 const {startGoogleAnalytics, trackEvent} = require('./modules/analytics')
+const indexView = require('./views/index.tmpl')
+
 startGoogleAnalytics()
 recorder.on('all', trackEvent)
 
@@ -55,17 +54,19 @@ require('./views/pages/tree.vnt')
 require('./views/pages/unit.vnt')
 
 // Log all recorder events to the console and analytics
-function logAllRecorderEvents () {
+function logAllRecorderEvents() {
     recorder.on('all', (...args) => console.log(...args)) //eslint-disable-line
 }
 
 // Start up the application
 function go() {
     logAllRecorderEvents()
-    store.init(() => store.data.currentUserID = cookie.get('currentUserID'))
+    store.init(() => {
+        store.data.currentUserID = cookie.get('currentUserID')
+    })
     route(window.location.pathname + window.location.search)
     init({
-        view: require('./views/index.tmpl'),
+        view: indexView,
         el: document.body
     })
 }

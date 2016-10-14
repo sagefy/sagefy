@@ -19,7 +19,7 @@ module.exports = store.add({
                     'id'
                 )
                 store.data.follows.forEach((follow, i) => {
-                    extend(follow['entity'], response.entities[i])
+                    extend(follow.entity, response.entities[i])
                 })
                 recorder.emit('list follows success')
             },
@@ -38,7 +38,7 @@ module.exports = store.add({
         ajax({
             method: 'GET',
             url: '/s/follows',
-            data: {'entity_id': entityID},
+            data: {entity_id: entityID},
             done: (response) => {
                 recorder.emit('ask follow success', entityID)
                 if (response.follows.length === 0) { return }

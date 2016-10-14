@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 const {matchesRoute, setTitle} = require('../modules/auxiliaries')
 const {div, main} = require('../modules/tags')
 const {copy} = require('../modules/utilities')

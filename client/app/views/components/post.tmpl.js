@@ -10,7 +10,7 @@ const listOfObjectsToString = (list = []) =>
     ).join('; ')
 
 const renderProposal = (data) => {
-    if (! data.kind === 'proposal') { return }
+    if (!data.kind === 'proposal') { return }
     const evKind = data.entity_version.kind
     const ev = data.ev || {}
     return div(
@@ -76,7 +76,7 @@ const voteResponse = (response) => {
 }
 
 module.exports = (data, currentUserID) => {
-    const {topic_id} = data
+    const topicId = data.topic_id
     return li(
         {
             id: data.id,
@@ -121,17 +121,17 @@ module.exports = (data, currentUserID) => {
             div(
                 {className: 'post__footer'},
                 currentUserID === data.user_id ? a(
-                    {href: `/topics/${topic_id}/posts/${data.id}/update`},
+                    {href: `/topics/${topicId}/posts/${data.id}/update`},
                     icon('update'),
                     ' Edit'
                 ) : a(
-                    {href: `/topics/${topic_id}/posts/create?` +
+                    {href: `/topics/${topicId}/posts/create?` +
                            `replies_to_id=${data.id}`},
                     icon('reply'),
                     ' Reply'
                 ),
                 data.kind === 'proposal' ? a(
-                    {href: `/topics/${topic_id}/posts/create?` +
+                    {href: `/topics/${topicId}/posts/create?` +
                            `replies_to_id=${data.id}&kind=vote`},
                     icon('vote'),
                     ' Vote'

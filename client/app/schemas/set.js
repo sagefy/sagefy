@@ -27,10 +27,14 @@ module.exports = {
         type: 'list',
         validations: [required],
         columns: [
-            {name: 'kind', type: 'select', options: [
-                {value: 'unit'},
-                {value: 'set'}
-            ]},
+            {
+                name: 'kind',
+                type: 'select',
+                options: [
+                    {value: 'unit'},
+                    {value: 'set'}
+                ]
+            },
             {name: 'id', type: 'text'}
         ]
     }

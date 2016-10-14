@@ -72,10 +72,11 @@ util.parseJSON = (str) => {
 
 // Find the closest element matching the given selector.
 require('./matches_polyfill')
+
 util.closest = (element, selector, top = document.body) => {
-    while (! element.matches(selector)) {
+    while (!element.matches(selector)) {
         element = element.parentNode
-        if (element === top){
+        if (element === top) {
             return null
         }
     }

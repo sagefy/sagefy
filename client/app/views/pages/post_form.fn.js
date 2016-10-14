@@ -42,14 +42,14 @@ const getFields = (formData) => {
         name: 'post.kind',
         options: [{
             label: 'Post',
-            disabled: !! formData['post.id'],
+            disabled: !!formData['post.id'],
         }, {
             label: 'Proposal',
-            disabled: !! formData['post.id'],
+            disabled: !!formData['post.id'],
         }, {
             label: 'Vote',
-            disabled: !! formData['post.id'] ||
-                      ! formData['post.replies_to_id']
+            disabled: !!formData['post.id'] ||
+                      !formData['post.replies_to_id']
         }],
         inline: true,
         label: 'Post Kind'
@@ -64,7 +64,7 @@ const getFields = (formData) => {
             ],
             inline: true,
             label: 'Response',
-            disabled: !! formData['post.id']
+            disabled: !!formData['post.id']
         })
     }
 
@@ -81,19 +81,19 @@ const getFields = (formData) => {
         label: formData['post.kind'] === 'proposal' ?
                'Proposal Summary' :
                'Post Body',
-        description: (formData['post.kind'] === 'proposal' ?
+        description: formData['post.kind'] === 'proposal' ?
                       'Describe the value of this proposal.'
-                      : null)
+                      : null
     })
 
-    if (formData['post.kind'] === 'proposal' && ! formData['post.id']) {
+    if (formData['post.kind'] === 'proposal' && !formData['post.id']) {
         fields = fields.concat(getProposalFields(formData))
     }
 
     return fields
 }
 
-const getProposalFields = (formData) => {
+const getProposalFields = formData => {
     let fields = []
 
     fields.push({
@@ -109,7 +109,7 @@ const getProposalFields = (formData) => {
 
     // ##########################################################
     const entityKind = formData['post.entity_version.kind']
-    if (! entityKind) { return fields }
+    if (!entityKind) { return fields }
     if (formData['entity.id']) {
         fields.push({
             name: 'entity.id'

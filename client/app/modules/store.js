@@ -6,11 +6,11 @@ const store = {
     data: window.preload || {},
     tasks: {},
 
-    init: function (fn) {
+    init: function init(fn) {
         fn.call(store)
     },
 
-    add: function (obj) {
+    add: function add(obj) {
         Object.keys(obj).forEach(key => {
             const fn = obj[key]
             store.tasks[key] = fn.bind(store)
@@ -18,11 +18,12 @@ const store = {
         return obj
     },
 
-    bind: function (fn) {
-        return store.callback = fn
+    bind: function bind(fn) {
+        store.callback = fn
+        return fn
     },
 
-    change: function () {
+    change: function change() {
         if (store.callback) {
             return store.callback(store.data)
         }

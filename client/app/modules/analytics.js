@@ -10,8 +10,12 @@ const startGoogleAnalytics = () => {
     a.async = 1
     a.src = '//www.google-analytics.com/analytics.js'
     const m = document.getElementsByTagName('script')[0]
-    if (m) { m.parentNode.insertBefore(a, m) }
-    if (!m) { document.body.appendChild(a) }
+    if (m) {
+        m.parentNode.insertBefore(a, m)
+    }
+    if (!m) {
+        document.body.appendChild(a)
+    }
 
     ga('create', 'UA-40497674-1', 'auto')
     ga('send', 'pageview')

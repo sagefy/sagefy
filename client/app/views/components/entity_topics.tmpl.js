@@ -30,7 +30,7 @@ module.exports = (kind, entityID, topics) => {
                     icon('next')
                 )
             )
-        ): null,
+        ) : null,
         topics && topics.length ? null : p(
             'No topics yet.'
         )

@@ -1,13 +1,13 @@
 const store = require('../modules/store')
 const recorder = require('../modules/recorder')
 
-store.init(() =>
+store.init(() => {
     store.data.menu = {open: false, context: {}}
-)
+})
 
 module.exports = store.add({
     toggleMenu: () => {
-        store.data.menu.open = ! store.data.menu.open
+        store.data.menu.open = !store.data.menu.open
         recorder.emit('toggle menu',
             store.data.menu.open ? 'open' : 'closed')
         store.change()

@@ -25,11 +25,12 @@ const get = (key) => {
 
 // Set the cookie value at a specific key.
 const set = (key, value, time = 31556926) => {
-    return document.cookie = [
-        encode(key), '=', ('' + value),
+    document.cookie = [
+        encode(key), '=', '' + value,
         ';path=/',
         `;max-age=${time}`
     ].join('')
+    return document.cookie
 }
 
 // Remove the cookie value at a specific key.

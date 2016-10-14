@@ -6,19 +6,13 @@ const cookie = require('./cookie')
 const {extend, copy, isString, isArray} = require('./utilities')
 
 // Determine if the user is logged in
-const isLoggedIn = () => {
-    return cookie.get('logged_in') === '1'
-}
+const isLoggedIn = () => cookie.get('logged_in') === '1'
 
 // Capitalizes the first letter of a string
-const ucfirst = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1)
-}
+const ucfirst = str => str.charAt(0).toUpperCase() + str.slice(1)
 
 // Replaces dashes and spaces with underscores, ready to be used in an URL
-const underscored = (str) => {
-    return str.replace(/[-\s]+/g, '_').toLowerCase()
-}
+const underscored = str => str.replace(/[-\s]+/g, '_').toLowerCase()
 
 // From Handlebars
 const escape = (str) => {
@@ -31,9 +25,7 @@ const escape = (str) => {
         '`': '&#x60;',
     }
 
-    return ('' + str).replace(/[&<>"'`]/g, (char) => {
-        return chars[char]
-    })
+    return (str.toString()).replace(/[&<>"'`]/g, char => chars[char])
 }
 
 // From http://ejohn.org/files/pretty.js
@@ -53,9 +45,7 @@ const timeAgo = (str) => {
 }
 
 // Return a variable friendly name of the title.
-const slugify = (s) => {
-    return s.toLowerCase().replace(/[-\s]+/g, '_')
-}
+const slugify = s => s.toLowerCase().replace(/[-\s]+/g, '_')
 
 // Set the page title.
 const setTitle = (title = 'FIX ME') => {
@@ -67,9 +57,9 @@ const setTitle = (title = 'FIX ME') => {
 
 // Wait for function to stop being called for `delay`
 // milliseconds, and then finally call the real function.
-const debounce = function (fn, delay) {
+const debounce = function debounce(fn, delay) {
     let timer = null
-    return function (...args) {
+    return function debounceInternal(...args) {
         clearTimeout(timer)
         timer = setTimeout(() =>
             fn.apply(this, args)
@@ -84,7 +74,7 @@ const matchesRoute = (docPath, viewPath) => {
     if (isString(viewPath)) {
         viewPath = new RegExp(
             '^' +
-            viewPath.replace(/\{([\d\w\_\$]+)\}/g, '([^/]+)') +
+            viewPath.replace(/\{([\d\w_\$]+)\}/g, '([^/]+)') +
             '$'
         )
     }
@@ -109,7 +99,7 @@ const truncate = (str, len) => {
 const compact = (A) => {
     const _ = []
     for (const a of A) {
-        if(a) {
+        if (a) {
             _.push(a)
         }
     }
@@ -249,11 +239,13 @@ function createFieldsData({
         fields[i] = extend({}, schema[field.name] || {}, field)
     })
 
-    errors && errors.forEach(error => {
-        let field = fields.filter((f) => f.name === error.name)
-        if (field) { field = field[0] }
-        if (field) { field.error = error.message }
-    })
+    if (errors) {
+        errors.forEach(error => {
+            let field = fields.filter((f) => f.name === error.name)
+            if (field) { field = field[0] }
+            if (field) { field.error = error.message }
+        })
+    }
 
     Object.keys(formData).forEach(name => {
         const value = formData[name]
@@ -277,7 +269,7 @@ function createFieldsData({
     })
 
     if (sending) {
-        let field = fields.filter((f) => f.type === 'submit')
+        let field = fields.filter(f => f.type === 'submit')
         if (field) { field = field[0] }
         if (field) { field.disabled = true }
     }

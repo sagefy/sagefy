@@ -17,13 +17,13 @@ module.exports = (data) => {
             h1(user.name),
             p('Joined ' + timeAgo(user.created))
         ),
-        user.sets ? sets(user, user.sets) : null,
-        user.follows ? follows(user, user.follows) : null,
-        user.posts ? posts(user, user.posts) : null
+        user.sets ? showSets(user, user.sets) : null,
+        user.follows ? showFollows(user, user.follows) : null,
+        user.posts ? showPosts(user, user.posts) : null
     )
 }
 
-const sets = (user, sets) =>
+const showSets = (user, sets) =>
     [
         h3(`${user.name} is learning:`),
         ul(
@@ -35,7 +35,7 @@ const sets = (user, sets) =>
     ]
     // TODO-2 and link to search
 
-const follows = (user, follows) =>
+const showFollows = (user, follows) =>
     [
         h3(`${user.name} follows:`),
         ul(
@@ -51,7 +51,7 @@ const follows = (user, follows) =>
     ]
     // TODO-2 and link to search
 
-const posts = (user, posts) =>
+const showPosts = (user, posts) =>
     [
         h3(`${user.name} wrote:`),
         ul(

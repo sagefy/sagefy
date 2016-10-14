@@ -12,10 +12,10 @@ const items = {
     home: { url: '/' },
     my_sets: { title: 'My Sets', icon: 'set' },
     log_in: { title: 'Log In', icon: 'log-in' },
-    terms: {  },
+    terms: { },
     contact: { },
-    notices: {  },  // TODO-2 poll and show unread count
-    settings: {  },
+    notices: { },  // TODO-2 poll and show unread count
+    settings: { },
     log_out: { url: '#log_out', title: 'Log Out', icon: 'log-out' },
     search: { },
     current_set: { url: '/sets/{id}/tree', title: 'Current Set', icon: 'set' },
@@ -70,11 +70,12 @@ const menus = {
 
 const addContextItems = (menuItems, {card, unit, set}) => {
     const add = []
-    let discuss, current
+    let discuss
+    let current
 
     if (set) {
-        discuss = extend(items['discuss_set'])
-        current = extend(items['current_set'])
+        discuss = extend(items.discuss_set)
+        current = extend(items.current_set)
         discuss.url = discuss.url.replace('{id}', set)
         current.url = current.url.replace('{id}', set)
         add.push(discuss)
@@ -82,8 +83,8 @@ const addContextItems = (menuItems, {card, unit, set}) => {
     }
 
     if (unit) {
-        discuss = extend(items['discuss_unit'])
-        current = extend(items['current_unit'])
+        discuss = extend(items.discuss_unit)
+        current = extend(items.current_unit)
         discuss.url = discuss.url.replace('{id}', unit)
         current.url = current.url.replace('{id}', unit)
         add.push(discuss)
@@ -91,7 +92,7 @@ const addContextItems = (menuItems, {card, unit, set}) => {
     }
 
     if (card) {
-        discuss = extend(items['discuss_card'])
+        discuss = extend(items.discuss_card)
         discuss.url = discuss.url.replace('{id}', card)
         add.push(discuss)
     }

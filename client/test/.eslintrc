@@ -5,5 +5,11 @@
     "globals": {
         "expect": true,
         "sinon": true
+    },
+    "rules": {
+        "no-unused-expressions": "off",
+        "func-names": "off",
+        "prefer-arrow-callback": "off",
+        "import/no-extraneous-dependencies": "off"
     }
 }

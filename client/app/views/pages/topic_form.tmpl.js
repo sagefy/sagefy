@@ -59,7 +59,9 @@ const getEntityByKind = (data, kind, id) => {
 
 const getEntitySummary = (data) => {
     const topicID = getTopicID(data)
-    let topic, kind, id
+    let topic
+    let kind
+    let id
 
     if (topicID) {
         topic = data.topics && data.topics[topicID]
@@ -74,7 +76,7 @@ const getEntitySummary = (data) => {
 
     return {
         name: entity && entity.name,
-        kind: kind
+        kind
     }
 }
 
@@ -98,7 +100,7 @@ module.exports = (data) => {
 
     const schema = prefixObjectKeys('topic.', topicSchema)
 
-    if (! formData['topic.id']) {
+    if (!formData['topic.id']) {
         fields = fields.concat(getPostFields(formData))
         extend(schema, getPostSchema(formData))
     }
@@ -110,10 +112,10 @@ module.exports = (data) => {
     })
 
     const instanceFields = createFieldsData({
-        schema: schema,
-        fields: fields,
+        schema,
+        fields,
         errors: data.errors,
-        formData: formData,
+        formData,
         sending: data.sending,
     })
 
