@@ -148,19 +148,20 @@ const mergeArraysByKey = (A, B, key = 'id') => {
 // Returns an object of the fields' value
 const getFormValues = (form) => {
     const data = {}
-    form.querySelectorAll([
+    const forEach = (nl, fn) => Array.prototype.forEach.call(nl, fn)
+    forEach(form.querySelectorAll([
         'input[type="text"]',
         'input[type="email"]',
         'input[type="password"]',
         'input[type="hidden"]',
         'textarea'
-    ].join(', ')).forEach(el => {
+    ].join(', ')), el => {
         data[el.name] = valuefy(el.value)
     })
-    form.querySelectorAll('[type=radio]').forEach(el => {
+    forEach(form.querySelectorAll('[type=radio]'), el => {
         if (el.checked) { data[el.name] = valuefy(el.value) }
     })
-    form.querySelectorAll('[type=checkbox]').forEach(el => {
+    forEach(form.querySelectorAll('[type=checkbox]'), el => {
         data[el.name] = data[el.name] || []
         if (el.checked) { data[el.name].push(valuefy(el.value)) }
     })
