@@ -94,7 +94,7 @@ sudo service redis-server restart
 sudo apt-get -y update
 sudo apt-get -y install software-properties-common
 sudo apt-get -y install python-software-properties python g++ make
-curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo npm install -g gulp
 cd /var/www/client

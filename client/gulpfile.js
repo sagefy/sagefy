@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const gulp = require('gulp')
 const gutil = require('gulp-util')
 const browserify = require('browserify')
@@ -14,22 +15,23 @@ const uglify = require('gulp-uglify')
 const eslint = require('gulp-eslint')
 const Mocha = require('mocha')
 const mkdirp = require('mkdirp')
+const fs = require('fs')
 
 const fillTests = require('./fill_tests')
 const grabStyleMeta = require('./grab_style_meta')
 
-/*##############################################################################
+/* #############################################################################
 ### Configuration ##############################################################
-##############################################################################*/
+############################################################################# */
 
 const dist = 'distribution/'
 const staticSrc = ['app/images/*', 'app/*.{html,txt,ico}']
 const jsSrc = ['app/**/*.js']
 const testSrc = ['test/**/*.js']
 
-/*##############################################################################
+/* #############################################################################
 ### Main Tasks #################################################################
-##############################################################################*/
+############################################################################# */
 
 gulp.task('default', ['watch'])
 gulp.task('develop', ['watch'])
@@ -59,9 +61,9 @@ gulp.task('test', (done) =>
     ], done)
 )
 
-/*##############################################################################
+/* #############################################################################
 ### Subtasks ###################################################################
-##############################################################################*/
+############################################################################# */
 
 gulp.task('clean', (done) =>
     rimraf(dist, done)
@@ -74,10 +76,10 @@ gulp.task('copy statics', () =>
 
 gulp.task('rewrite html', ['copy statics'], (done) => {
     const file = dist + 'index.html'
-    require('fs').readFile(file, 'utf8', (err, str) => {
+    fs.readFile(file, 'utf8', (err, str) => {
         if(err) { throw new Error(err) }
         str = str.replace(/___/g, Date.now())
-        require('fs').writeFile(file, str, () =>
+        fs.writeFile(file, str, () =>
             done()
         )
     })
@@ -96,11 +98,11 @@ gulp.task('watch statics', ['copy statics'], () =>
 )
 
 const stylus2css = (from, to, done) =>
-    require('fs').readFile(from, 'utf8', (err, styl) =>
+    fs.readFile(from, 'utf8', (err, styl) =>
         stylus(styl)
             .set('filename', from)
             .set('include css', true)
-            .define('huslp', (h, s, l, a) => {
+            .define('huslp', (h, s, l, a) => {  // eslint-disable-line max-params, max-len
                 const [r, g, b] = husl.p.toRGB(h.val, s.val, l.val)
                 a = a || 1
                 return new stylus.nodes.RGBA(r * 255, g * 255, b * 255, a)
@@ -108,7 +110,7 @@ const stylus2css = (from, to, done) =>
             .render((err, css) => {
                 if (err) { throw err }
                 mkdirp(to.split('/').slice(0, -1).join('/'), () =>
-                    require('fs').writeFile(to, css, done)
+                    fs.writeFile(to, css, done)
                 )
             })
     )
@@ -120,7 +122,6 @@ gulp.task('build styles', (done) => {
 })
 
 gulp.task('build styleguide', (done) => {
-    const fs = require('fs')
     grabStyleMeta('./**/*.styl', (data) => {
         const content = JSON.stringify(data)
         fs.writeFile(
