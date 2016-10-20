@@ -9,6 +9,17 @@ from modules.sequencer.card_chooser import choose_card
 # Nota Bene: We use `set_` because `set` is a type in Python
 
 
+@get('/s/sets/recommended')
+def get_recommended_sets(request):
+    db_conn = request['db_conn']
+    sets = Set.get_all(db_conn)
+    if not sets:
+        return abort(404)
+    return 200, {
+        'sets': [set_.deliver() for set_ in sets]
+    }
+
+
 @get('/s/sets/{set_id}')
 def get_set_route(request, set_id):
     """

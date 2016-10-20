@@ -13,13 +13,5 @@ module.exports = broker.add({
     'click .add-to-my-sets': (e, el) => {
         if(e) { e.preventDefault() }
         tasks.addUserSet(el.id)
-    },
-
-    // TEMPORARY
-    'click .add-intro-ele-music': (e) => {
-        if(e) { e.preventDefault() }
-        const entityID = 'CgDRJPfzJuTR916HdmosA3A8'
-        tasks.addUserSet(entityID)
     }
-    // TEMPORARY
 })

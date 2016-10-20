@@ -86,6 +86,10 @@ const routes = [{
     tmpl: require('./pages/follows.tmpl'),
     title: 'Follows',
 }, {
+    path: '/recommended_sets',
+    tmpl: require('./pages/recommended_sets.tmpl'),
+    title: 'Recommended Sets',
+}, {
     path: '/my_sets',
     tmpl: require('./pages/my_sets.tmpl'),
     title: 'My Sets',

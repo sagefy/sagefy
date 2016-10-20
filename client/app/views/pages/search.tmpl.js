@@ -46,18 +46,7 @@ module.exports = (data) => {
         ) : null,
         data.searchResults && data.searchResults.length === 0 ?
             p('No results found.') :
-            null,
-        // TEMPORARY
-        asLearner ? p(
-            {className: 'alert--good'},
-            icon('good'),
-            ' Try the first set, ',
-            a(
-                {href: '#', className: 'add-intro-ele-music'},
-                'Introduction to Electronic Music -- Foundation'
-            )
-        ) : null
-        // TEMPORARY
+            null
     )
 
     // TODO-2 pagination

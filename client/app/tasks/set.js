@@ -30,6 +30,26 @@ module.exports = store.add({
         })
     },
 
+    getRecommendedSets: () => {
+        recorder.emit('get recommended sets')
+        ajax({
+            method: 'GET',
+            url: '/s/sets/recommended',
+            data: {},
+            done: (response) => {
+                store.data.recommendedSets = response.sets
+                recorder.emit('get recommended sets success')
+            },
+            fail: (errors) => {
+                store.data.errors = errors
+                recorder.emit('get recommended sets failure', errors)
+            },
+            always: () => {
+                store.change()
+            }
+        })
+    },
+
     listSetVersions: (id) => {
         recorder.emit('list set versions', id)
         ajax({

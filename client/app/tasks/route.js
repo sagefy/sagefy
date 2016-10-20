@@ -21,6 +21,7 @@ const routes = [
     {path: '/cards/{id}/learn', task: 'openLearnCard'},
     {path: '/topics/{id}/posts/{id}/update', task: 'openUpdatePost'},
     {path: '/search', task: 'openSearch'},
+    {path: '/recommended_sets', task: 'getRecommendedSets'},
 ]
 
 module.exports = store.add({

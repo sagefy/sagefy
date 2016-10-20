@@ -97,6 +97,14 @@ class Set(EntityMixin, Model):
         return []
 
     @classmethod
+    def get_all(cls, db_conn, limit=10, skip=0, **params):
+        query = (cls.start_accepted_query()
+                    .order_by(r.desc('created'))
+                    .skip(skip)
+                    .limit(limit))
+        return [cls(document) for document in query.run(db_conn)]
+
+    @classmethod
     def list_by_unit_id(cls, db_conn, unit_id):
         """
         Get a list of sets which contain the given member ID. Recursive.

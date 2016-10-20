@@ -32,14 +32,16 @@ module.exports = (data) => {
         ul(data.userSets.map(set => userSet(set))),
         data.userSets.length === 0 ? p(
             a(
-                {href: '/search?mode=as_learner'},
+                // TODO-2 temporary {href: '/search?mode=as_learner'},
+                {href: '/recommended_sets'},
                 icon('search'),
                 ' Find a set'
             ),
             ' to get started.'
         ) : p(
             a(
-                {href: '/search?mode=as_learner'},
+                // TODO-2 temporary {href: '/search?mode=as_learner'},
+                {href: '/recommended_sets'},
                 icon('search'),
                 ' Find another set'
             )
