@@ -1,9 +1,8 @@
-const {div, h1, ul, li, a, p, strong, hr} = require('../../modules/tags')
+const {div, h1, h3, ul, li, a, p, hr} = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
 const spinner = require('../components/spinner.tmpl')
 
 
-// TODO-2 merge with function in `search.tmpl`
 const setResult = (set) =>
     [
         a(  // TODO-2 if already in sets, don't show this button
@@ -15,12 +14,7 @@ const setResult = (set) =>
             icon('create'),
             ' Add to My Sets'
         ),
-        strong(icon('set'), ' Set'),
-        ': ',
-        a(
-            {href: `/sets/${set.entity_id}`},
-            set.name
-        ),
+        h3(set.name),
         p(set.body),
         a(
             {
