@@ -29,7 +29,7 @@ Working with the UI
 -------------------
 
     cd ~/Sites/sagefy/ui
-    gulp
+    npm start
 
 Push gh-pages to Github Pages
 -----------------------------

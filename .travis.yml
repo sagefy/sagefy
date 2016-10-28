@@ -19,13 +19,13 @@ install:
     - ls ~/virtualenv/
     - source ~/virtualenv/python2.7/bin/activate
     - nvm use 6.7.0
-    - 'npm install -g gulp && cd client && npm install && cd ..'
+    - 'cd client && npm install && cd ..'
     - source ~/virtualenv/python3.4/bin/activate
 script:
     - flake8 server/**.py
     - coverage run --module py.test server
     - nvm use 6.7.0
-    - 'cd client && gulp test && cd ..'
+    - 'cd client && npm test && cd ..'
 after_success:
     - coverage report --omit="server/test/*,*site-packages*,*distutils*"
 notifications:

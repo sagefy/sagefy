@@ -96,10 +96,9 @@ sudo apt-get -y install software-properties-common
 sudo apt-get -y install python-software-properties python g++ make
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
-sudo npm install -g gulp
 cd /var/www/client
 sudo npm install
-gulp deploy
+npm run deploy
 
 #### Server ###################################################################
 
@@ -123,5 +122,5 @@ sudo nginx -c /var/www/setup/nginx.conf
 # TODO-2 Re-read bit.ly/1mERm9F
 
 echo "Hooray! Provisioned."
-echo "For script and style watching, run gulp."
+echo "For script and style watching, run npm start."
 echo "Be sure to update config.py if needed"
