@@ -1,1 +1,8 @@
-content = require('../../app/modules/content')const {expect} = require('chai')describe('content', () => {    it.skip('needs tests', () =>        expect(false).to.be.true    })})
+const content = require('../../app/modules/content')
+
+describe('Content', () => {
+    it('should get content', () => {
+        expect(content.get('required')).to.equal('Required.')
+        expect(content.get('required', 'eo')).to.equal('Postulo.')
+    })
+})

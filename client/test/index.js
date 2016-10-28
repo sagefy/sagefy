@@ -1,1 +1,3 @@
-index = require('../app/index')const {expect} = require('chai')describe('index', () => {    it.skip('needs tests', () =>        expect(false).to.be.true    })})
+require('./setup')
+// Require all test files
+require('require-dir')('./', {recurse: true})
