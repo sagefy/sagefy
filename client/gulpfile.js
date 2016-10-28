@@ -5,7 +5,6 @@ const browserify = require('browserify')
 const watchify = require('watchify')
 const source = require('vinyl-source-stream')
 const prettyHrtime = require('pretty-hrtime')
-const sequence = require('run-sequence')
 const rimraf = require('rimraf')
 const stylus = require('stylus')
 const husl = require('husl')
@@ -30,38 +29,6 @@ const jsSrc = ['app/**/*.js']
 const testSrc = ['test/**/*.js']
 
 /* #############################################################################
-### Main Tasks #################################################################
-############################################################################# */
-
-gulp.task('default', ['watch'])
-gulp.task('develop', ['watch'])
-gulp.task('watch', (done) =>
-    sequence('clean', [
-        'rewrite html',
-        'copy fonts',
-        'watch styles',
-        'watch scripts',
-    ], done)
-)
-
-gulp.task('build', ['deploy'])
-gulp.task('deploy', (done) =>
-    sequence('clean', [
-        'rewrite html',
-        'copy fonts',
-        'compress styles',
-        'compress scripts',
-    ], done)
-)
-
-gulp.task('test', (done) =>
-    sequence('clean', [
-        'lint scripts',
-        'run tests',
-    ], done)
-)
-
-/* #############################################################################
 ### Subtasks ###################################################################
 ############################################################################# */
 
@@ -74,7 +41,7 @@ gulp.task('copy statics', () =>
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('rewrite html', ['copy statics'], (done) => {
+gulp.task('rewrite html', (done) => {
     const file = dist + 'index.html'
     fs.readFile(file, 'utf8', (err, str) => {
         if(err) { throw new Error(err) }
@@ -90,7 +57,7 @@ gulp.task('copy fonts', () =>
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('watch statics', ['copy statics'], () =>
+gulp.task('watch statics', () =>
     gulp.watch(
         staticSrc,
         ['rewrite html']
@@ -132,13 +99,13 @@ gulp.task('build styleguide', (done) => {
     })
 })
 
-gulp.task('compress styles', ['build styles'], () =>
+gulp.task('compress styles', () =>
     gulp.src(dist + 'index.css')
         .pipe(minifyCss())
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('watch styles', ['build styles'], () =>
+gulp.task('watch styles', () =>
     gulp.watch(
         ['app/**/*.styl'],
         ['build styles', 'build scripts']
@@ -151,7 +118,7 @@ gulp.task('compile content', () =>
         .pipe(gulp.dest('./app/content/'))
 )
 
-gulp.task('build scripts', ['build styleguide', 'compile content'], () =>
+gulp.task('build scripts', () =>
     browserify({
         entries: ['./app/index.js'],
         debug: true,
@@ -161,7 +128,7 @@ gulp.task('build scripts', ['build styleguide', 'compile content'], () =>
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('watch scripts', ['build scripts'], () => {
+gulp.task('watch scripts', () => {
     const bundle = watchify(browserify({
         entries: ['./app/index.js'],
         debug: true,
@@ -185,13 +152,13 @@ gulp.task('watch scripts', ['build scripts'], () => {
     return rebundle()
 })
 
-gulp.task('compress scripts', ['build scripts'], () =>
+gulp.task('compress scripts', () =>
     gulp.src(dist + 'index.js')
         .pipe(uglify())
         .pipe(gulp.dest(dist))
 )
 
-gulp.task('build test scripts', ['build styleguide', 'compile content'], () => {
+gulp.task('build test scripts', () => {
     gulp.src(['node_modules/mocha/mocha.js'])
         .pipe(gulp.dest(dist))
 
@@ -214,7 +181,7 @@ gulp.task('lint scripts', () => {
         .pipe(eslint.failAfterError())
 })
 
-gulp.task('run tests', ['build test scripts'], (done) => {
+gulp.task('run tests', (done) => {
     const mocha = new Mocha({
         reporter: 'min'
     })
