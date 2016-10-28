@@ -1,4 +1,5 @@
 // Write a test file for every script file.
+/* eslint-disable import/no-extraneous-dependencies,quotes */
 
 const glob = require('glob')
 const fs = require('fs')

@@ -5,14 +5,8 @@ const browserify = require('browserify')
 const watchify = require('watchify')
 const source = require('vinyl-source-stream')
 const prettyHrtime = require('pretty-hrtime')
-const rimraf = require('rimraf')
 const stylus = require('stylus')
 const husl = require('husl')
-const minifyCss = require('gulp-minify-css')
-const yaml = require('gulp-yaml')
-const uglify = require('gulp-uglify')
-const eslint = require('gulp-eslint')
-const Mocha = require('mocha')
 const mkdirp = require('mkdirp')
 const fs = require('fs')
 
@@ -25,21 +19,10 @@ const grabStyleMeta = require('./grab_style_meta')
 
 const dist = 'distribution/'
 const staticSrc = ['app/images/*', 'app/*.{html,txt,ico}']
-const jsSrc = ['app/**/*.js']
-const testSrc = ['test/**/*.js']
 
 /* #############################################################################
 ### Subtasks ###################################################################
 ############################################################################# */
-
-gulp.task('clean', (done) =>
-    rimraf(dist, done)
-)
-
-gulp.task('copy statics', () =>
-    gulp.src(staticSrc)
-        .pipe(gulp.dest(dist))
-)
 
 gulp.task('rewrite html', (done) => {
     const file = dist + 'index.html'
@@ -51,11 +34,6 @@ gulp.task('rewrite html', (done) => {
         )
     })
 })
-
-gulp.task('copy fonts', () =>
-    gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.woff')
-        .pipe(gulp.dest(dist))
-)
 
 gulp.task('watch statics', () =>
     gulp.watch(
@@ -99,23 +77,11 @@ gulp.task('build styleguide', (done) => {
     })
 })
 
-gulp.task('compress styles', () =>
-    gulp.src(dist + 'index.css')
-        .pipe(minifyCss())
-        .pipe(gulp.dest(dist))
-)
-
 gulp.task('watch styles', () =>
     gulp.watch(
         ['app/**/*.styl'],
         ['build styles', 'build scripts']
     )
-)
-
-gulp.task('compile content', () =>
-    gulp.src('../content/*.yml')
-        .pipe(yaml())
-        .pipe(gulp.dest('./app/content/'))
 )
 
 gulp.task('build scripts', () =>
@@ -152,16 +118,7 @@ gulp.task('watch scripts', () => {
     return rebundle()
 })
 
-gulp.task('compress scripts', () =>
-    gulp.src(dist + 'index.js')
-        .pipe(uglify())
-        .pipe(gulp.dest(dist))
-)
-
 gulp.task('build test scripts', () => {
-    gulp.src(['node_modules/mocha/mocha.js'])
-        .pipe(gulp.dest(dist))
-
     return browserify({
         entries: ['./test/index.js'],
         debug: true,
@@ -169,24 +126,6 @@ gulp.task('build test scripts', () => {
         .bundle()
         .pipe(source('test.js'))
         .pipe(gulp.dest(dist))
-})
-
-gulp.task('lint scripts', () => {
-    const src = jsSrc
-        .concat(testSrc)
-        .concat(['!./app/views/pages/styleguide.compiled.js'])
-    return gulp.src(src)
-        .pipe(eslint())
-        .pipe(eslint.format())
-        .pipe(eslint.failAfterError())
-})
-
-gulp.task('run tests', (done) => {
-    const mocha = new Mocha({
-        reporter: 'min'
-    })
-    mocha.addFile('test/index.js')
-    mocha.run(done)
 })
 
 gulp.task('fill tests', (done) =>
