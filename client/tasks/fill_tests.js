@@ -5,7 +5,7 @@ const glob = require('glob')
 const fs = require('fs')
 const mkdirp = require('mkdirp')
 
-module.exports = () =>
+const fillTests = () =>
     glob('app/**/*.js').on('match', (file) => {
         const testFile = file.replace('app/', 'test/')
         fs.readFile(testFile, (err) => {
@@ -37,3 +37,9 @@ module.exports = () =>
             })
         })
     })
+
+if (require.main === module) {
+    fillTests()
+}
+
+module.exports = fillTests
