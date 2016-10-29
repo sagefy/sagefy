@@ -109,6 +109,7 @@ def prepare_document(schema, data, db_conn):
 
     data = tidy_fields(schema, data)
     data = add_default_fields(schema, data)
+    # NOTA BENE: add_default_fields must come before validate_unique_fields
     errors = (validate_fields(schema, data)
               + validate_unique_fields(schema, data, db_conn))
     return data, errors
