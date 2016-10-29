@@ -18,6 +18,8 @@ def update_document(schema, prev_data, data, db_conn):
     """
     Update the document in the database.
     Return document and errors if failed.
+    NOTICE: `prev_data` should be the _return_ of `insert_document`, not the
+            originally provided data.
     """
 
     data = omit(data, ('id', 'created', 'modified'))
@@ -27,6 +29,7 @@ def update_document(schema, prev_data, data, db_conn):
 
 def save_document(schema, data, db_conn):
     """
+    NOTICE: You should use `insert_document` or `update_document` instead.
     Insert the document in the database.
     Return document and errors if failed.
     """
