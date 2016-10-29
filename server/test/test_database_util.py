@@ -63,7 +63,7 @@ def vases_table(request, db_conn):
     return table(tablename, request, db_conn)
 
 
-def test_insert_document(db_conn):
+def test_insert_document(db_conn, vases_table):
     schema = vases_schema
     data = {
         'id': 'haxxor',
