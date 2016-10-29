@@ -89,14 +89,14 @@ def recurse_embeds(fn, data, schema, prefix=''):
 
         if 'embed' in field_schema:
             data[field_name] = data.get(field_name) or {}
-            iter(fn, data[field_name], field_schema['embed'],
-                 '%s%s.' % (prefix, field_name))
+            recurse_embeds(fn, data[field_name], field_schema['embed'],
+                           '%s%s.' % (prefix, field_name))
 
         elif 'embed_many' in field_schema:
             data[field_name] = data.get(field_name) or []
             for i, d in enumerate(data[field_name]):
-                iter(fn, d, field_schema['embed_many'],
-                     '%s%s.%i.' % (prefix, field_name, i))
+                recurse_embeds(fn, d, field_schema['embed_many'],
+                               '%s%s.%i.' % (prefix, field_name, i))
 
 
 def prepare_document(schema, data, db_conn):
