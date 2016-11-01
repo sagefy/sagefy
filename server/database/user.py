@@ -2,7 +2,7 @@ from schemas.user import schema as user_schema
 import urllib
 import hashlib
 from passlib.hash import bcrypt
-from database.util import insert_document, update_document, delete_document, \
+from database.util import insert_document, update_document, \
     get_document, deliver_fields
 from framework.elasticsearch import es
 import json
@@ -22,6 +22,7 @@ def insert_user(data, db_conn):
     data, errors = insert_document(schema, data, db_conn)
     if not errors:
         add_user_to_es(data)
+    return data, errors
 
 
 def update_user(prev_data, data, db_conn):
@@ -34,6 +35,18 @@ def update_user(prev_data, data, db_conn):
     data, errors = update_document(schema, prev_data, data, db_conn)
     if not errors:
         add_user_to_es(data)
+    return data, errors
+
+
+def update_user_password(prev_data, data, db_conn):
+    """
+    Overwrite update method to add password.
+    """
+
+    schema = user_schema
+    data = pick(data, ('password',))
+    data, errors = update_document(schema, prev_data, data, db_conn)
+    return data, errors
 
 
 def add_user_to_es(user):
@@ -41,7 +54,7 @@ def add_user_to_es(user):
     Add the user to Elasticsearch.
     """
 
-    data = json_prep(deliver_fields(user))
+    data = json_prep(deliver_user(user))
     data['avatar'] = get_avatar(user['email'])
 
     return es.index(
@@ -61,19 +74,28 @@ def get_user(params, db_conn):
     return get_document(tablename, params, db_conn)
 
 
-def delete_user(doc_id, db_conn):
+# def delete_user(doc_id, db_conn):
+#     """
+#     Overwrite delete method to delete in Elasticsearch.
+#     """
+#
+#     # TODO-2 should we validate the delete worked before going to ES?
+#     tablename = user_schema['tablename']
+#     es.delete(
+#         index='entity',
+#         doc_type='user',
+#         id=doc_id,
+#     )
+#     return delete_document(tablename, doc_id, db_conn)
+
+
+def deliver_user(data, access=None):
     """
-    Overwrite delete method to delete in Elasticsearch.
+    Prepare user data for JSON response.
     """
 
-    # TODO-2 should we validate the delete worked before going to ES?
-    tablename = user_schema['tablename']
-    es.delete(
-        index='entity',
-        doc_type='user',
-        id=doc_id,
-    )
-    return delete_document(tablename, doc_id, db_conn)
+    schema = user_schema
+    return deliver_fields(schema, data, access)
 
 
 def is_password_valid(real_encrypted_password, given_password):
