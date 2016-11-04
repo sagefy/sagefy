@@ -25,7 +25,7 @@
     "compile-content": "yaml2json \"../content/\" --recursive --save && mkdir -p ./app/content && mv ../content/*.json ./app/content/",
     "build-scripts": "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"npm run build-styleguide\" \"npm run compile-content\" && webpack ./app/index.js ./distribution/index.js",
     "watch-scripts": "npm run build-scripts && webpack --watch ./app/index.js ./distribution/index.js -v",
-    "compress-scripts": "npm run build-scripts && uglifyjs distribution/index.js -o distribution/index.js",
+    "compress-scripts": "npm run build-scripts && uglifyjs --compress --mangle --output distribution/index.js -- distribution/index.js",
     "build-test-scripts": "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"npm run build-styleguide\" \"npm run compile-content\" && webpack ./test/index.js distribution/test.js",
     "lint-scripts": "eslint \"app/**/*.js\" \"test/**/*.js\"",
     "run-tests": "mocha -R min ./test/index.js",
