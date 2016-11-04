@@ -1,3 +1,4 @@
+require('../setup')
 const Events = require('../../app/modules/events')
 
 let e

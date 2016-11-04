@@ -1,3 +1,4 @@
+require('../setup')
 const validations = require('../../app/modules/validations')
 
 describe('Validations', () => {

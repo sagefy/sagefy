@@ -1,3 +1,4 @@
+require('../setup')
 const queryString = require('../../app/modules/query_string')
 
 describe('Query String', () =>
