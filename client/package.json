@@ -28,8 +28,7 @@
     "compress-scripts": "npm run build-scripts && uglifyjs --compress --mangle --output distribution/index.js -- distribution/index.js",
     "prep-scripts": "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"npm run build-styleguide\" \"npm run compile-content\"",
     "lint-scripts": "eslint \"app/**/*.js\" \"test/**/*.js\"",
-    "run-tests": "mocha -R min \"app/**/*.test.js\" -r ./tasks/test_setup.js",
-    "fill-tests": "node ./tasks/fill_tests.js"
+    "run-tests": "mocha -R min \"app/**/*.test.js\" -r ./tasks/test_setup.js"
   },
   "author": "Sagefy",
   "license": "Apache-2.0",
@@ -52,7 +51,6 @@
     "husl": "6.0.1",
     "jsdom": "6.5.1",
     "json-loader": "0.5.4",
-    "mkdirp": "0.5.1",
     "mocha": "2.3.3",
     "raw-loader": "0.5.1",
     "sinon": "1.17.1",
