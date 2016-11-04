@@ -105,13 +105,10 @@ npm run deploy
 cd /var/www
 sudo apt-get -y install uwsgi
 sudo apt-get -y install nginx
-sleep 1
+
 sudo uwsgi --stop /tmp/uwsgi-master.pid
-sleep 1
 sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
-sleep 1
 sudo nginx -s stop
-sleep 1
 sudo nginx -c /var/www/setup/nginx.conf
 
 # TODO-1 Setup file system monitoring do.co/1GfDGYN
