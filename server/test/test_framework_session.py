@@ -4,7 +4,7 @@ xfail = pytest.mark.xfail
 
 from conftest import create_user_in_db, log_in
 from framework.session import get_current_user, log_in_user, log_out_user
-from models.user import User
+from database.user import get_user
 from framework.redis import redis
 
 
@@ -29,7 +29,7 @@ def test_log_in_user(users_table, db_conn):
     """
 
     create_user_in_db(users_table, db_conn)
-    user = User.get(db_conn, id='abcd1234')
+    user = get_user({'id': 'abcd1234'}, db_conn)
     token = log_in_user(user)
     assert token
     assert redis.get(token).decode() == 'abcd1234'
@@ -41,7 +41,7 @@ def test_log_out_user(users_table, db_conn):
     """
 
     create_user_in_db(users_table, db_conn)
-    user = User.get(db_conn, id='abcd1234')
+    user = get_user({'id': 'abcd1234'}, db_conn)
     token = log_in_user(user)
     assert redis.get(token).decode() == 'abcd1234'
     log_out_user({

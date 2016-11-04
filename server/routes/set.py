@@ -5,6 +5,7 @@ from models.unit import Unit
 from framework.session import get_current_user
 from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
+from database.user import get_learning_context, set_learning_context
 
 # Nota Bene: We use `set_` because `set` is a type in Python
 
@@ -100,7 +101,7 @@ def get_set_tree_route(request, set_id):
     if not current_user:
         return 200, output
 
-    context = current_user.get_learning_context() if current_user else {}
+    context = get_learning_context(current_user) if current_user else {}
     buckets = traverse(db_conn, current_user, set_)
     output['buckets'] = {
         'diagnose': [u['entity_id'] for u in buckets['diagnose']],
@@ -122,7 +123,8 @@ def get_set_tree_route(request, set_id):
             'path': '/s/cards/{card_id}/learn'
                     .format(card_id=card['entity_id']),
         }
-        current_user.set_learning_context(
+        set_learning_context(
+            current_user,
             next=next_, unit=unit.data, card=card.data)
 
     # When in learn or review mode, lead me to choose a unit.
@@ -132,7 +134,7 @@ def get_set_tree_route(request, set_id):
             'path': '/s/sets/{set_id}/units'
                     .format(set_id=set_id),
         }
-        current_user.set_learning_context(next=next_)
+        set_learning_context(current_user, next=next_)
 
     # If the set is complete, lead the learner to choose another set.
     else:
@@ -141,7 +143,7 @@ def get_set_tree_route(request, set_id):
             'path': '/s/users/{user_id}/sets'
                     .format(user_id=current_user['id']),
         }
-        current_user.set_learning_context(next=next_, unit=None, set=None)
+        set_learning_context(current_user, next=next_, unit=None, set=None)
 
     output['next'] = next_
     return 200, output
@@ -165,14 +167,14 @@ def get_set_units_route(request, set_id):
     if not current_user:
         return abort(401)
 
-    context = current_user.get_learning_context()
+    context = get_learning_context(current_user)
     next_ = {
         'method': 'POST',
         'path': '/s/sets/{set_id}/units/{unit_id}'
                   .format(set_id=context.get('set', {}).get('entity_id'),
                           unit_id='{unit_id}'),
     }
-    current_user.set_learning_context(next=next_)
+    set_learning_context(current_user, next=next_)
 
     set_ = Set.get_latest_accepted(db_conn, set_id)
 
@@ -212,7 +214,7 @@ def choose_unit_route(request, set_id, unit_id):
         return abort(404)
 
     # If the unit isn't in the set...
-    context = current_user.get_learning_context()
+    context = get_learning_context(current_user)
     set_ids = [set_['entity_id']
                for set_ in Set.list_by_unit_id(db_conn, unit_id)]
     if context.get('set', {}).get('entity_id') not in set_ids:
@@ -235,7 +237,8 @@ def choose_unit_route(request, set_id, unit_id):
     else:
         next_ = {}
 
-    current_user.set_learning_context(
+    set_learning_context(
+        current_user,
         unit=unit.data,
         card=card.data if card else None,
         next=next_

@@ -1,5 +1,5 @@
 import routes.next
-from models.user import User
+from database.user import get_user, set_learning_context
 
 
 def test_seq_next(db_conn, session):
@@ -11,15 +11,15 @@ def test_seq_next(db_conn, session):
         'cookies': {'session_id': session},
         'db_conn': db_conn,
     }
-    user = User.get(db_conn, id='abcd1234')
-    user.set_learning_context(next={
+    user = get_user({'id': 'abcd1234'}, db_conn)
+    set_learning_context(user, next={
         'method': 'DANCE',
         'path': '/s/unicorns'
     })
     code, response = routes.next.next_route(request)
     assert code == 200
     assert response['next']['method'] == 'DANCE'
-    user.set_learning_context(next=None)
+    set_learning_context(user, next=None)
 
 
 def test_seq_next_default(db_conn, session):

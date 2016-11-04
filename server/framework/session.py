@@ -1,4 +1,4 @@
-from models.user import User
+from database.user import get_user
 from framework.redis import redis
 from modules.util import uniqid
 
@@ -13,7 +13,7 @@ def get_current_user(request):
     user_id = redis.get(session_id)
     if user_id:
         user_id = user_id.decode()
-        return User.get(request['db_conn'], id=user_id)
+        return get_user({'id': user_id}, request['db_conn'])
 
 
 def log_in_user(user):

@@ -1,9 +1,9 @@
 from passlib.hash import bcrypt
-from models.user import User
 from conftest import create_user_in_db
 import rethinkdb as r
 import routes.user
 import pytest
+from database.user import get_user, get_email_token
 
 xfail = pytest.mark.xfail
 
@@ -367,9 +367,9 @@ def test_user_create_password_fail(db_conn, users_table):
     """
 
     create_user_in_db(users_table, db_conn)
-    user = User.get(db_conn, id='abcd1234')
+    user = get_user({'id': 'abcd1234'}, db_conn)
     pw1 = user['password']
-    user.get_email_token(send_email=False)
+    get_email_token(user, send_email=False)
 
     request = {
         'params': {
@@ -380,7 +380,7 @@ def test_user_create_password_fail(db_conn, users_table):
     }
     code, response = routes.user.create_password_route(request, 'abcd1234')
     assert code == 403
-    user.sync(db_conn)
+    user = get_user({'id': 'abcd1234'}, db_conn)
     assert user['password'] == pw1
 
 
@@ -390,9 +390,9 @@ def test_user_create_password_ok(db_conn, users_table):
     """
 
     create_user_in_db(users_table, db_conn)
-    user = User.get(db_conn, id='abcd1234')
+    user = get_user({'id': 'abcd1234'}, db_conn)
     pw1 = user['password']
-    token = user.get_email_token(send_email=False)
+    token = get_email_token(user, send_email=False)
 
     request = {
         'params': {
@@ -403,5 +403,5 @@ def test_user_create_password_ok(db_conn, users_table):
     }
     code, response = routes.user.create_password_route(request, 'abcd1234')
     assert code == 200
-    user.sync(db_conn)
+    user = get_user({'id': 'abcd1234'}, db_conn)
     assert user['password'] != pw1

@@ -15,12 +15,12 @@ from modules.util import pick, omit, object_diff
 from modules.entity import get_kind, get_latest_accepted, get_version, \
     instance_new_entity
 from models.topic import Topic
-from models.user import User
 from models.proposal import Proposal
 from models.vote import Vote
 from models.follow import Follow
 from modules.content import get as c
 from modules.notices import send_notices
+from database.user import get_user, get_avatar
 
 
 def prefix_error_names(prefix, errors):
@@ -303,11 +303,11 @@ def get_posts_route(request, topic_id):
     for post_ in posts:
         user_id = post_['user_id']
         if user_id not in users:
-            user = User.get(db_conn, id=user_id)
+            user = get_user({'id': user_id}, db_conn)
             if user:
                 users[user_id] = {
                     'name': user['name'],
-                    'avatar': user.get_avatar(48)
+                    'avatar': get_avatar(user['email'], 48),
                 }
 
     # TODO-2 SPLITUP create new endpoints for these instead

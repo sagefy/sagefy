@@ -1,11 +1,12 @@
-from models.user import User
 from models.user_sets import UserSets
 from models.follow import Follow
 from modules.content import get as c
 from modules.discuss import get_posts_facade
-
 from framework.routes import get, post, put, delete, abort
 from framework.session import get_current_user, log_in_user, log_out_user
+from database.user import get_user, insert_user, deliver_user, get_avatar, \
+    update_user, is_password_valid, get_email_token, is_valid_token, \
+    update_user_password
 
 
 def _log_in(user):
@@ -17,7 +18,7 @@ def _log_in(user):
     session_id = log_in_user(user)
     if session_id:
         return 200, {
-            'user': user.deliver(access='private'),
+            'user': deliver_user(user, access='private'),
             'cookies': {
                 'session_id': session_id
             },
@@ -34,7 +35,7 @@ def get_current_user_route(request):
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    return 200, {'user': current_user.deliver(access='private')}
+    return 200, {'user': deliver_user(current_user, access='private')}
 
 
 @get('/s/users/{user_id}')
@@ -44,7 +45,7 @@ def get_user_route(request, user_id):
     """
 
     db_conn = request['db_conn']
-    user = User.get(db_conn, id=user_id)
+    user = get_user({'id': user_id}, db_conn)
     current_user = get_current_user(request)
     # Posts if in request params
     # Sets if in request params and allowed
@@ -53,7 +54,8 @@ def get_user_route(request, user_id):
         return abort(404)
 
     data = {}
-    data['user'] = user.deliver(access='private'
+    data['user'] = deliver_user(user,
+                                access='private'
                                 if current_user
                                 and user['id'] == current_user['id']
                                 else None)
@@ -72,7 +74,7 @@ def get_user_route(request, user_id):
                            Follow.list(db_conn, user_id=user['id'])]
     if 'avatar' in request['params']:
         size = int(request['params']['avatar'])
-        data['avatar'] = user.get_avatar(size if size else None)
+        data['avatar'] = get_avatar(user['email'], size if size else None)
 
     return 200, data
 
@@ -84,7 +86,7 @@ def create_user_route(request):
     """
 
     db_conn = request['db_conn']
-    user, errors = User.insert(db_conn, request['params'])
+    user, errors = insert_user(request['params'], db_conn)
     if len(errors):
         return 400, {
             'errors': errors,
@@ -103,9 +105,9 @@ def log_in_route(request):
     name = request['params'].get('name') or ''
     name = name.lower().strip()
 
-    user = User.get(db_conn, name=name)
+    user = get_user({'name': name}, db_conn)
     if not user:
-        user = User.get(db_conn, email=request['params'].get('name'))
+        user = get_user({'email': request['params'].get('name')}, db_conn)
     if not user:
         return 404, {
             'errors': [{
@@ -114,7 +116,9 @@ def log_in_route(request):
             }],
             'ref': 'FYIPOI8g2nzrIEcJYSDAfmti'
         }
-    if not user.is_password_valid(request['params'].get('password')):
+    real_encrypted_password = user['password']
+    given_password = request['params'].get('password')
+    if not is_password_valid(real_encrypted_password, given_password):
         return 400, {
             'errors': [{
                 'name': 'password',
@@ -146,19 +150,19 @@ def update_user_route(request, user_id):
     """
 
     db_conn = request['db_conn']
-    user = User.get(db_conn, id=user_id)
+    user = get_user({'id': user_id}, db_conn)
     current_user = get_current_user(request)
     if not user:
         return abort(404)
     if not user['id'] == current_user['id']:
         return abort(401)
-    user, errors = user.update(db_conn, request['params'])
+    user, errors = update_user(user, request['params'], db_conn)
     if len(errors):
         return 400, {
             'errors': errors,
             'ref': 'AS7LCAWiOOyeEbNOrbsegVY9',
         }
-    return 200, {'user': user.deliver(access='private')}
+    return 200, {'user': deliver_user(user, access='private')}
 
 
 @post('/s/password_tokens')
@@ -168,10 +172,10 @@ def create_token_route(request):
     """
 
     db_conn = request['db_conn']
-    user = User.get(db_conn, email=request['params'].get('email'))
+    user = get_user({'email': request['params'].get('email')}, db_conn)
     if not user:
         return abort(404)
-    user.get_email_token()
+    get_email_token(user)
     return 200, {}
 
 
@@ -182,12 +186,13 @@ def create_password_route(request, user_id):
     """
 
     db_conn = request['db_conn']
-    user = User.get(db_conn, id=user_id)
+    user = get_user({'id': user_id}, db_conn)
     if not user:
         return abort(404)
-    valid = user.is_valid_token(request['params'].get('token'))
+    token = request['params'].get('token')
+    valid = is_valid_token(user, token)
     if not valid:
         return abort(403)
-    user['password'] = request['params'].get('password')
-    user.save(db_conn)
+    given_password = request['params'].get('password')
+    update_user_password(user, {'password': given_password}, db_conn)
     return _log_in(user)

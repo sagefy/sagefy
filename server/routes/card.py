@@ -9,6 +9,7 @@ from modules.entity import get_card_by_kind
 from modules.sequencer.index import update as seq_update
 from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
+from database.user import get_learning_context, set_learning_context
 # from modules.sequencer.params import max_learned
 
 
@@ -68,7 +69,7 @@ def learn_card_route(request, card_id):
         return abort(404)
 
     # Make sure the current unit id matches the card
-    context = current_user.get_learning_context()
+    context = get_learning_context(current_user)
     if context.get('unit', {}).get('entity_id') != card['unit_id']:
         return abort(400)
 
@@ -77,7 +78,7 @@ def learn_card_route(request, card_id):
         'path': '/s/cards/{card_id}/responses'
                 .format(card_id=card['entity_id'])
     }
-    current_user.set_learning_context(card=card.data, next=next_)
+    set_learning_context(current_user, card=card.data, next=next_)
 
     return 200, {
         'card': card.deliver(access='learn'),
@@ -129,7 +130,7 @@ def respond_to_card_route(request, card_id):
         return abort(404)
 
     # Make sure the card is the current one
-    context = current_user.get_learning_context()
+    context = get_learning_context(current_user)
     if context.get('card', {}).get('entity_id') != card['entity_id']:
         return abort(400)
 
@@ -161,7 +162,8 @@ def respond_to_card_route(request, card_id):
                 'path': '/s/cards/{card_id}/learn'
                         .format(card_id=next_card['entity_id']),
             }
-            current_user.set_learning_context(
+            set_learning_context(
+                current_user,
                 card=next_card.data, unit=unit.data, next=next_)
 
         # If there are units to be learned or reviewed...
@@ -171,7 +173,8 @@ def respond_to_card_route(request, card_id):
                 'path': '/s/sets/{set_id}/units'
                         .format(set_id=set_['entity_id']),
             }
-            current_user.set_learning_context(card=None, unit=None, next=next_)
+            set_learning_context(current_user,
+                                 card=None, unit=None, next=next_)
 
         # If we are out of units...
         else:
@@ -180,7 +183,8 @@ def respond_to_card_route(request, card_id):
                 'path': '/s/sets/{set_id}/tree'
                         .format(set_id=set_['entity_id']),
             }
-            current_user.set_learning_context(card=None, unit=None, next=next_)
+            set_learning_context(current_user,
+                                 card=None, unit=None, next=next_)
 
     # If we are still reviewing, learning or diagnosing this unit...
     else:
@@ -191,10 +195,10 @@ def respond_to_card_route(request, card_id):
                 'path': '/s/cards/{card_id}/learn'
                         .format(card_id=next_card['entity_id']),
             }
-            current_user.set_learning_context(card=next_card.data, next=next_)
+            set_learning_context(current_user, card=next_card.data, next=next_)
         else:
             next_ = {}
-            current_user.set_learning_context(next=next_)
+            set_learning_context(current_user, next=next_)
 
     return 200, {
         'response': response.deliver(),

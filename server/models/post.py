@@ -72,15 +72,15 @@ class Post(Model):
         # TODO-2 should we validate the save worked before going to ES?
 
         from models.topic import Topic
-        from models.user import User
+        from database.user import get_user, deliver_user
 
         data = json_prep(self.deliver())
         topic = Topic.get(db_conn, id=self['topic_id'])
         if topic:
             data['topic'] = json_prep(topic.deliver())
-        user = User.get(db_conn, id=self['user_id'])
+        user = get_user({'id': self['user_id']}, db_conn)
         if user:
-            data['user'] = json_prep(user.deliver())
+            data['user'] = json_prep(deliver_user(user))
 
         es.index(
             index='entity',

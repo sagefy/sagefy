@@ -46,7 +46,8 @@ def setup_db():
     if config['rdb_db'] not in r.db_list().run(db_conn):
         r.db_create(config['rdb_db']).run(db_conn)
 
-    from models.user import User
+    tables = r.db(config['rdb_db']).table_list().run(db_conn)
+
     from models.notice import Notice
     from models.topic import Topic
     from models.post import Post
@@ -62,12 +63,10 @@ def setup_db():
     from models.user_sets import UserSets
     from models.response import Response
 
-    models = (User, Notice, Topic, Post, Proposal, Vote,
+    models = (Notice, Topic, Post, Proposal, Vote,
               Card, Unit, Set,
               CardParameters, UnitParameters, SetParameters,
               Follow, UserSets, Response)
-
-    tables = r.db(config['rdb_db']).table_list().run(db_conn)
 
     for model_cls in models:
         tablename = getattr(model_cls, 'tablename', None)
@@ -87,5 +86,16 @@ def setup_db():
                 (r.db(config['rdb_db'])
                   .index_create(*index)
                   .run(db_conn))
+
+    from schemas.user import schema as user_schema
+    schemas = (user_schema,)
+    for schema in schemas:
+        tablename = schema['tablename']
+
+        if tablename and tablename not in tables:
+            (r.db(config['rdb_db'])
+              .table_create(tablename)
+              .run(db_conn))
+            tables.append(tablename)
 
     close_db_connection(db_conn)

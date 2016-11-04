@@ -2,6 +2,7 @@ from models.user_sets import UserSets
 from models.set import Set
 from framework.routes import get, post, put, delete, abort
 from framework.session import get_current_user
+from database.user import set_learning_context
 
 
 @get('/s/users/{user_id}/sets')
@@ -29,7 +30,7 @@ def get_user_sets_route(request, user_id):
                 .format(user_id=current_user['id'],
                         set_id='{set_id}'),
     }
-    current_user.set_learning_context(next=next_)
+    set_learning_context(current_user, next=next_)
 
     uset = UserSets.get(db_conn, user_id=user_id)
     if not uset:
@@ -112,7 +113,7 @@ def select_set_route(request, user_id, set_id):
         'path': '/s/sets/{set_id}/tree'
                 .format(set_id=set_id),
     }
-    current_user.set_learning_context(set=set_.data, next=next_)
+    set_learning_context(current_user, set=set_.data, next=next_)
 
     return 200, {'next': next_}
 
