@@ -71,3 +71,14 @@ sudo swapon /swapfile
 sudo sh -c 'echo "/swapfile none swap sw 0 0" >> /etc/fstab'
 
 # TODO-3 Install stuff from provision local...
+
+
+# Then fix permissions for client to install / run deploy
+# Update server config.py
+# backup old prod data
+# install b2
+# authorize b2
+# download & restore backup
+# update cloudflare
+
+# python3 es_populate.py
