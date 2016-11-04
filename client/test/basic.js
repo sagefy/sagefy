@@ -1,3 +1,5 @@
+require('./setup')
+
 describe('Basic test setup', () => {
     it('should run a test', () =>
         expect(true).to.be.true
