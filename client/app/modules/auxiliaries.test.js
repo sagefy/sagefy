@@ -1,4 +1,5 @@
-require('../setup')
+/* eslint-disable no-unused-expressions */
+
 const {
     isLoggedIn,
     ucfirst,

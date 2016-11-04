@@ -1,4 +1,5 @@
-require('../setup')
+/* eslint-disable no-unused-expressions */
+
 const _ = require('../../app/modules/utilities')
 
 const extend = _.extend

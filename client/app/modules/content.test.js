@@ -1,4 +1,3 @@
-require('../setup')
 const content = require('../../app/modules/content')
 
 describe('Content', () => {

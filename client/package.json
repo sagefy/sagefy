@@ -28,7 +28,7 @@
     "compress-scripts": "npm run build-scripts && uglifyjs --compress --mangle --output distribution/index.js -- distribution/index.js",
     "prep-scripts": "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"npm run build-styleguide\" \"npm run compile-content\"",
     "lint-scripts": "eslint \"app/**/*.js\" \"test/**/*.js\"",
-    "run-tests": "mocha -R min \"test/**/*.js\"",
+    "run-tests": "mocha -R min \"app/**/*.test.js\" -r ./tasks/test_setup.js",
     "fill-tests": "node ./tasks/fill_tests.js"
   },
   "author": "Sagefy",

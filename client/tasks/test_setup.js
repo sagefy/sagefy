@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const jsdom = require('jsdom').jsdom()
 const chai = require('chai')
 const sinon = require('sinon')

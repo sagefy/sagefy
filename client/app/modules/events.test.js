@@ -1,4 +1,5 @@
-require('../setup')
+/* eslint-disable no-unused-expressions, prefer-arrow-callback, func-names */
+
 const Events = require('../../app/modules/events')
 
 let e

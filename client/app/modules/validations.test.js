@@ -1,4 +1,4 @@
-require('../setup')
+/* eslint-disable no-unused-expressions */
 const validations = require('../../app/modules/validations')
 
 describe('Validations', () => {

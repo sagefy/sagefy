@@ -1,4 +1,3 @@
-require('../setup')
 const cookie = require('../../app/modules/cookie')
 
 describe('Cookie', () => {

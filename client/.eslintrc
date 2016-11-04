@@ -2,7 +2,12 @@
     "extends": "airbnb-base",
     "env": {
         "node": true,
-        "browser": true
+        "browser": true,
+        "mocha": true
+    },
+    "globals": {
+        "expect": true,
+        "sinon": true
     },
     "parserOptions": {
         "ecmaVersion": 6,
