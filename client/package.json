@@ -23,10 +23,10 @@
     "compress-styles": "npm run build-styles && cleancss distribution/index.css -o distribution/index.css",
     "watch-styles": "stylus --include-css --use ./tasks/stylus_huslp.js --include ./app/ -w ./app/index.styl -o ./distribution/index.css",
     "compile-content": "yaml2json \"../content/\" --recursive --save && mkdir -p ./app/content && mv ../content/*.json ./app/content/",
-    "build-scripts": "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"npm run build-styleguide\" \"npm run compile-content\" && browserify ./app/index.js -o ./distribution/index.js",
-    "watch-scripts": "npm run build-scripts && watchify ./app/index.js -o ./distribution/index.js -v",
+    "build-scripts": "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"npm run build-styleguide\" \"npm run compile-content\" && webpack ./app/index.js ./distribution/index.js",
+    "watch-scripts": "npm run build-scripts && webpack --watch ./app/index.js ./distribution/index.js -v",
     "compress-scripts": "npm run build-scripts && uglifyjs distribution/index.js -o distribution/index.js",
-    "build-test-scripts": "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"npm run build-styleguide\" \"npm run compile-content\" && browserify ./test/index.js -o distribution/test.js",
+    "build-test-scripts": "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"npm run build-styleguide\" \"npm run compile-content\" && webpack ./test/index.js distribution/test.js",
     "lint-scripts": "eslint \"app/**/*.js\" \"test/**/*.js\"",
     "run-tests": "mocha -R min ./test/index.js",
     "fill-tests": "node ./tasks/fill_tests.js"
@@ -40,9 +40,8 @@
   },
   "devDependencies": {
     "babel": "6.5.2",
+    "babel-loader": "6.2.7",
     "babel-preset-es2015": "6.16.0",
-    "babelify": "7.3.0",
-    "browserify": "11.2.0",
     "chai": "3.3.0",
     "clean-css": "3.4.20",
     "concurrently": "3.1.0",
@@ -52,35 +51,16 @@
     "glob": "5.0.15",
     "husl": "6.0.1",
     "jsdom": "6.5.1",
+    "json-loader": "0.5.4",
     "mkdirp": "0.5.1",
     "mocha": "2.3.3",
+    "raw-loader": "0.5.1",
     "require-dir": "0.3.0",
     "sinon": "1.17.1",
     "sinon-chai": "2.8.0",
-    "stringify": "5.1.0",
     "stylus": "0.52.4",
     "uglify-js": "2.7.4",
-    "watchify": "3.4.0",
-    "yamljs": "^0.2.8"
-  },
-  "browserify": {
-    "transform": [
-      "stringify",
-      [
-        "babelify",
-        {
-          "presets": [
-            "es2015"
-          ]
-        }
-      ]
-    ]
-  },
-  "stringify": {
-    "appliesTo": {
-      "includeExtensions": [
-        ".txt"
-      ]
-    }
+    "webpack": "1.13.3",
+    "yamljs": "0.2.8"
   }
 }
