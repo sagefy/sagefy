@@ -43,14 +43,15 @@ sudo /etc/init.d/rethinkdb restart
 
 #### Elasticsearch ############################################################
 
-# Securing ElasticSearch: do.co/1JsVB2O
-sudo apt-get -y install openjdk-7-jre-headless
-wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb
-sudo dpkg -i elasticsearch-1.7.2.deb
-sudo update-rc.d elasticsearch defaults
-echo "network.bind_host: localhost" | sudo tee -a /etc/elasticsearch/elasticsearch.yml
-echo "script.disable_dynamic: true" | sudo tee -a /etc/elasticsearch/elasticsearch.yml
-sudo service elasticsearch start
+# Securing ElasticSearch: http://do.co/2f3vNPZ
+sudo apt-get -y install openjdk-8-jre-headless
+sudo apt-get update
+wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.1/elasticsearch-2.3.1.deb
+sudo dpkg -i elasticsearch-2.3.1.deb
+sudo systemctl enable elasticsearch.service
+#...nano...
+sudo systemctl start elasticsearch
+
 
 #### Kibana ###################################################################
 
