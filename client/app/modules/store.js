@@ -27,6 +27,10 @@ const store = {
         if (store.callback) {
             return store.callback(store.data)
         }
+    },
+
+    update: function update(key, reducer, action) {
+        store.data[key] = reducer(store.data[key], action)
     }
 }
 

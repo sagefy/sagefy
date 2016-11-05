@@ -1,5 +1,6 @@
 const store = require('../modules/store')
 const {matchesRoute, ucfirst} = require('../modules/auxiliaries')
+const formData = require('../reducers/formData')
 
 const tasks = store.tasks
 
@@ -26,7 +27,9 @@ const routes = [
 
 module.exports = store.add({
     onRoute: (path) => {
-        store.data.formData = {}
+        store.update('formData', formData, {
+            type: 'RESET_FORM_DATA'
+        })
         store.data.pageData = {}
         for (const route of routes) {
             const args = matchesRoute(path, route.path)
