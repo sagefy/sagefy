@@ -1,8 +1,5 @@
-from models.notice import Notice
 import routes.notice
-import pytest
-
-xfail = pytest.mark.xfail
+from database.notice import insert_notice
 
 
 def test_list(db_conn, session, notices_table):
@@ -10,7 +7,7 @@ def test_list(db_conn, session, notices_table):
     Expect to get a list of 10 notices by user ID.
     """
     for i in range(0, 10):
-        Notice.insert(db_conn, {
+        insert_notice({
             'user_id': 'abcd1234',
             'kind': 'create_proposal',
             'data': {
@@ -19,7 +16,7 @@ def test_list(db_conn, session, notices_table):
                 'entity_kind': '',
                 'entity_name': '',
             }
-        })
+        }, db_conn)
 
     request = {
         'cookies': {'session_id': session},
@@ -51,7 +48,7 @@ def test_list_paginate(db_conn, session, notices_table):
     """
 
     for i in range(0, 25):
-        Notice.insert(db_conn, {
+        insert_notice({
             'user_id': 'abcd1234',
             'kind': 'create_proposal',
             'data': {
@@ -60,7 +57,7 @@ def test_list_paginate(db_conn, session, notices_table):
                 'entity_kind': '',
                 'entity_name': '',
             }
-        })
+        }, db_conn)
 
     request = {
         'cookies': {'session_id': session},
@@ -81,7 +78,7 @@ def test_mark(db_conn, session, notices_table):
     """
     Expect to mark a notice as read.
     """
-    notice, errors = Notice.insert(db_conn, {
+    notice, errors = insert_notice({
         'user_id': 'abcd1234',
         'kind': 'create_proposal',
         'data': {
@@ -90,7 +87,7 @@ def test_mark(db_conn, session, notices_table):
             'entity_kind': '',
             'entity_name': '',
         }
-    })
+    }, db_conn)
     nid = notice['id']
 
     request = {
@@ -109,7 +106,7 @@ def test_mark_no_user(db_conn, notices_table):
     """
     Expect to error on not logged in when marking as read.
     """
-    notice, errors = Notice.insert(db_conn, {
+    notice, errors = insert_notice({
         'user_id': 'abcd1234',
         'kind': 'create_proposal',
         'data': {
@@ -118,7 +115,7 @@ def test_mark_no_user(db_conn, notices_table):
             'entity_kind': '',
             'entity_name': '',
         }
-    })
+    }, db_conn)
     nid = notice['id']
 
     request = {
@@ -150,7 +147,7 @@ def test_mark_not_owned(db_conn, session, notices_table):
     """
     Expect to error when not own notice when marking as read.
     """
-    notice, errors = Notice.insert(db_conn, {
+    notice, errors = insert_notice({
         'user_id': '1234abcd',
         'kind': 'create_proposal',
         'data': {
@@ -159,7 +156,7 @@ def test_mark_not_owned(db_conn, session, notices_table):
             'entity_kind': '',
             'entity_name': '',
         }
-    })
+    }, db_conn)
     nid = notice['id']
 
     request = {
@@ -171,12 +168,3 @@ def test_mark_not_owned(db_conn, session, notices_table):
     assert code == 403
     record = notices_table.get(nid).run(db_conn)
     assert record['read'] is False
-
-
-@xfail
-def test_add_notices(db_conn, session, notices_table):
-    """
-    Expect to add body to notices.
-    """
-
-    assert False

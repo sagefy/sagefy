@@ -1,5 +1,6 @@
 from schemas.notice import schema as notice_schema
-from database.util import insert_document, update_document, deliver_fields
+from database.util import insert_document, update_document, deliver_fields, \
+    get_document
 import rethinkdb as r
 from modules.content import get as c
 from copy import deepcopy
@@ -24,6 +25,15 @@ accept_proposal: proposal_name, entity_kind, entity_name
 create_post: user_name, topic_name, entity_kind, entity_name
 come_back: -
 """
+
+
+def get_notice(params, db_conn):
+    """
+    Get the user matching the parameters.
+    """
+
+    tablename = notice_schema['tablename']
+    return get_document(tablename, params, db_conn)
 
 
 def insert_notice(data, db_conn):
