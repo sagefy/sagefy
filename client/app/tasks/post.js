@@ -1,9 +1,12 @@
 const store = require('../modules/store')
+const tasks = require('../modules/tasks')
 const ajax = require('../modules/ajax').ajax
 const recorder = require('../modules/recorder')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
+const errorsReducer = require('../reducers/errors')
+const sendingReducer = require('../reducers/sending')
 
-module.exports = store.add({
+module.exports = tasks.add({
     listPosts: (id) => {
         recorder.emit('list posts', id)
         ajax({
@@ -47,20 +50,22 @@ module.exports = store.add({
                 }
 
                 recorder.emit('list posts success', id)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('list posts failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'list posts failure',
+                    errors,
+                })
             }
         })
     },
 
     createPost: (data) => {
-        store.data.sending = true
-        store.change()
+        store.update('sending', sendingReducer, {
+            type: 'SET_SENDING_ON'
+        })
         const topicId = data.post.topicId
         recorder.emit('create post')
         ajax({
@@ -72,22 +77,28 @@ module.exports = store.add({
                     store.data.topicPosts[topicId].push(response.post)
                 }
                 recorder.emit('create post success')
-                store.tasks.route(`/topics/${topicId}`)
+                tasks.route(`/topics/${topicId}`)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('create post failure', errors)
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'create post failure',
+                    errors,
+                })
             },
             always: () => {
-                store.data.sending = false
-                store.change()
+                store.update('sending', sendingReducer, {
+                    type: 'SET_SENDING_OFF'
+                })
             }
         })
     },
 
     updatePost: (data) => {
-        store.data.sending = true
-        store.change()
+        store.update('sending', sendingReducer, {
+            type: 'SET_SENDING_ON'
+        })
         const {id} = data.post
         const topicId = data.post.topic_id
         recorder.emit('update post')
@@ -103,15 +114,19 @@ module.exports = store.add({
                     topic[index] = response.post
                 }
                 recorder.emit('update post success')
-                store.tasks.route(`/topics/${topicId}`)
+                tasks.route(`/topics/${topicId}`)
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('update post failure', errors)
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'update post failure',
+                    errors,
+                })
             },
             always: () => {
-                store.data.sending = false
-                store.change()
+                store.update('sending', sendingReducer, {
+                    type: 'SET_SENDING_OFF'
+                })
             }
         })
     }

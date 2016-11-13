@@ -1,8 +1,7 @@
 const store = require('./store')
+const tasks = require('./tasks')
 const recorder = require('./recorder')
 const qs = require('./query_string')
-
-const tasks = store.tasks
 
 const request = () => {
     return window.location.pathname + window.location.search
@@ -25,7 +24,7 @@ window.onpopstate = () => {
     route(request())
 }
 
-store.add({
+tasks.add({
     route: (path) => {
         if (path !== request()) {
             history.pushState({}, '', path)

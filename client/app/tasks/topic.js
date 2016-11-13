@@ -1,11 +1,15 @@
 const store = require('../modules/store')
+const tasks = require('../modules/tasks')
 const ajax = require('../modules/ajax').ajax
 const recorder = require('../modules/recorder')
+const errorsReducer = require('../reducers/errors')
+const sendingReducer = require('../reducers/sending')
 
-module.exports = store.add({
+module.exports = tasks.add({
     createTopic: (data) => {
-        store.data.sending = true
-        store.change()
+        store.update('sending', sendingReducer, {
+            type: 'SET_SENDING_ON'
+        })
         recorder.emit('create topic')
         ajax({
             method: 'POST',
@@ -15,22 +19,27 @@ module.exports = store.add({
                 store.data.topics = store.data.topics || {}
                 store.data.topics[response.topic.id] = response.topic
                 recorder.emit('create topic success')
-                store.tasks.route(`/topics/${response.topic.id}`)
+                tasks.route(`/topics/${response.topic.id}`)
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('create topic failure', errors)
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'create topic failure',
+                    errors,
+                })
             },
             always: () => {
-                store.data.sending = false
-                store.change()
+                store.update('sending', sendingReducer, {
+                    type: 'SET_SENDING_OFF'
+                })
             }
         })
     },
 
     updateTopic: (data) => {
-        store.data.sending = true
-        store.change()
+        store.update('sending', sendingReducer, {
+            type: 'SET_SENDING_ON'
+        })
         recorder.emit('update topic')
         ajax({
             method: 'PUT',
@@ -40,15 +49,19 @@ module.exports = store.add({
                 store.data.topics = store.data.topics || {}
                 store.data.topics[data.topic.id] = response.topic
                 recorder.emit('update topic success')
-                store.tasks.route(`/topics/${data.topic.id}`)
+                tasks.route(`/topics/${data.topic.id}`)
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('update topic failure', errors)
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'update topic failure',
+                    errors,
+                })
             },
             always: () => {
-                store.data.sending = false
-                store.change()
+                store.update('sending', sendingReducer, {
+                    type: 'SET_SENDING_OFF'
+                })
             }
         })
     }

@@ -1,10 +1,12 @@
 const store = require('../modules/store')
+const tasks = require('../modules/tasks')
 const ajax = require('../modules/ajax').ajax
 const recorder = require('../modules/recorder')
 const {extend} = require('../modules/utilities')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
+const errorsReducer = require('../reducers/errors')
 
-module.exports = store.add({
+module.exports = tasks.add({
     listFollows: (skip = 0, limit = 50) => {
         recorder.emit('list follows')
         ajax({
@@ -22,13 +24,14 @@ module.exports = store.add({
                     extend(follow.entity, response.entities[i])
                 })
                 recorder.emit('list follows success')
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('list follows failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'list follows failure',
+                    errors,
+                })
             }
         })
     },
@@ -52,13 +55,14 @@ module.exports = store.add({
                     store.data.follows.push(follow)
                 }
                 // TODO-3 will this cause a bug with mergeArraysByKey later?
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('ask follow failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'ask follow failure',
+                    errors,
+                })
             }
         })
     },
@@ -74,13 +78,14 @@ module.exports = store.add({
                 store.data.follows.push(response.follow)
                 recorder.emit('follow success', data.entity.id)
                 // TODO-3 will this cause a bug with mergeArraysByKey later?
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('follow failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'follow failure',
+                    errors,
+                })
             }
         })
     },
@@ -96,13 +101,14 @@ module.exports = store.add({
                     follow.id === id)
                 store.data.follows.splice(i, 1)
                 recorder.emit('unfollow success', id)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('unfollow failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'unfollow failure',
+                    errors,
+                })
             }
         })
     }

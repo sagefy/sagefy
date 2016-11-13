@@ -61,9 +61,7 @@ function logAllRecorderEvents() {
 // Start up the application
 function go() {
     logAllRecorderEvents()
-    store.init(() => {
-        store.data.currentUserID = cookie.get('currentUserID')
-    })
+    store.data.currentUserID = cookie.get('currentUserID')
     route(window.location.pathname + window.location.search)
     init({
         view: indexView,

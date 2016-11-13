@@ -1,9 +1,12 @@
 const store = require('../modules/store')
+const tasks = require('../modules/tasks')
 const ajax = require('../modules/ajax').ajax
 const recorder = require('../modules/recorder')
 const {mergeArraysByKey, matchesRoute} = require('../modules/auxiliaries')
+const errorsReducer = require('../reducers/errors')
+const sendingReducer = require('../reducers/sending')
 
-module.exports = store.add({
+module.exports = tasks.add({
     getCard: (id) => {
         recorder.emit('get card', id)
         ajax({
@@ -30,13 +33,14 @@ module.exports = store.add({
                 )
                 store.data.cards[id] = card
                 recorder.emit('get card success', id)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('get card failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'get card failure',
+                    errors,
+                })
             }
         })
     },
@@ -52,15 +56,16 @@ module.exports = store.add({
             done: (response) => {
                 store.data.learnCards = store.data.learnCards || {}
                 store.data.learnCards[id] = response.card
-                store.tasks.updateMenuContext({card: id})
+                tasks.updateMenuContext({card: id})
                 recorder.emit('learn card success', id)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('learn card failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'learn card failure',
+                    errors,
+                })
             }
         })
     },
@@ -80,20 +85,22 @@ module.exports = store.add({
                     'entity_id'
                 )
                 recorder.emit('list card versions success', id)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('list card versions failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'list card versions failure',
+                    errors,
+                })
             }
         })
     },
 
     respondToCard: (id, data, goNext = false) => {
-        store.data.sending = true
-        store.change()
+        store.update('sending', sendingReducer, {
+            type: 'SET_SENDING_ON'
+        })
         recorder.emit('respond to card', id)
         ajax({
             method: 'POST',
@@ -109,18 +116,22 @@ module.exports = store.add({
                 store.data.unitLearned[response.response.unit_id] =
                     response.response.learned
                 store.data.cardFeedback = response.feedback
-                store.tasks.updateMenuContext({card: false})
+                tasks.updateMenuContext({card: false})
                 recorder.emit('respond to card success', id)
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('respond to card failure', errors)
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'respond to card failure',
+                    errors,
+                })
             },
             always: () => {
-                store.data.sending = false
-                store.change()
+                store.update('sending', sendingReducer, {
+                    type: 'SET_SENDING_OFF'
+                })
                 if (goNext) {
-                    store.tasks.nextState()
+                    tasks.nextState()
                 }
             }
         })
@@ -132,15 +143,15 @@ module.exports = store.add({
         let args
         args = matchesRoute(path, '/s/cards/{id}/learn')
         if (args) {
-            store.tasks.route(`/cards/${args[0]}/learn`)
+            tasks.route(`/cards/${args[0]}/learn`)
         }
         args = matchesRoute(path, '/s/sets/{id}/units')
         if (args) {
-            store.tasks.route(`/sets/${args[0]}/choose_unit`)
+            tasks.route(`/sets/${args[0]}/choose_unit`)
         }
         args = matchesRoute(path, '/s/sets/{id}/tree')
         if (args) {
-            store.tasks.route(`/sets/${args[0]}/tree`)
+            tasks.route(`/sets/${args[0]}/tree`)
         }
     },
 

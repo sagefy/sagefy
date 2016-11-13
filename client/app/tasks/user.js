@@ -1,13 +1,18 @@
 const store = require('../modules/store')
+const tasks = require('../modules/tasks')
 const ajax = require('../modules/ajax').ajax
 const recorder = require('../modules/recorder')
 const cookie = require('../modules/cookie')
+const errorsReducer = require('../reducers/errors')
+const sendingReducer = require('../reducers/sending')
 
 // TODO-2 move setting and unsetting of currentUserID back to the server
 
-module.exports = store.add({
+module.exports = tasks.add({
     createUser(data) {
-        store.data.sending = true
+        store.update('sending', sendingReducer, {
+            type: 'SET_SENDING_ON'
+        })
         store.change()
         recorder.emit('create user')
         ajax({
@@ -22,19 +27,24 @@ module.exports = store.add({
                 // Hard redirect to get the HTTP_ONLY cookie
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('error on create user', errors)
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'create user failure',
+                    errors,
+                })
             },
             always: () => {
-                store.data.sending = false
-                store.change()
+                store.update('sending', sendingReducer, {
+                    type: 'SET_SENDING_OFF'
+                })
             }
         })
     },
 
     updateUser(data) {
-        store.data.sending = true
-        store.change()
+        store.update('sending', sendingReducer, {
+            type: 'SET_SENDING_ON'
+        })
         recorder.emit('update user', data.id)
         ajax({
             method: 'PUT',
@@ -46,12 +56,16 @@ module.exports = store.add({
                 recorder.emit('update user success', response.user.id)
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('update user failure', errors)
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'update user failure',
+                    errors,
+                })
             },
             always: () => {
-                store.data.sending = false
-                store.change()
+                store.update('sending', sendingReducer, {
+                    type: 'SET_SENDING_OFF'
+                })
             }
         })
     },
@@ -67,13 +81,14 @@ module.exports = store.add({
                 store.data.users = store.data.users || {}
                 store.data.users[response.user.id] = response.user
                 recorder.emit('get current user success')
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('get current user failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'get current user failure',
+                    errors,
+                })
             }
         })
     },
@@ -92,20 +107,22 @@ module.exports = store.add({
                 })
                 store.data.users[response.user.id] = user
                 recorder.emit('get user success', id)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('get user failure', id, errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'get user failure',
+                    errors,
+                })
             }
         })
     },
 
     logInUser(data) {
-        store.data.sending = true
-        store.change()
+        store.update('sending', sendingReducer, {
+            type: 'SET_SENDING_ON'
+        })
         recorder.emit('log in user')
         ajax({
             method: 'POST',
@@ -119,19 +136,24 @@ module.exports = store.add({
                 window.location = '/my_sets'
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('log in user failure', errors)
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'log in user failure',
+                    errors,
+                })
             },
             always: () => {
-                store.data.sending = false
-                store.change()
+                store.update('sending', sendingReducer, {
+                    type: 'SET_SENDING_OFF'
+                })
             }
         })
     },
 
     logOutUser() {
-        store.data.sending = true
-        store.change()
+        store.update('sending', sendingReducer, {
+            type: 'SET_SENDING_ON'
+        })
         recorder.emit('log out user')
         ajax({
             method: 'DELETE',
@@ -144,19 +166,24 @@ module.exports = store.add({
                 recorder.emit('log out user success')
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('log out user failure', errors)
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'log out user failure',
+                    errors,
+                })
             },
             always: () => {
-                store.data.sending = false
-                store.change()
+                store.update('sending', sendingReducer, {
+                    type: 'SET_SENDING_OFF'
+                })
             }
         })
     },
 
     getUserPasswordToken(data) {
-        store.data.sending = true
-        store.change()
+        store.update('sending', sendingReducer, {
+            type: 'SET_SENDING_ON'
+        })
         recorder.emit('get password token')
         ajax({
             method: 'POST',
@@ -167,19 +194,24 @@ module.exports = store.add({
                 recorder.emit('get password token success')
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('get password token failure', errors)
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'get password token failure',
+                    errors,
+                })
             },
             always: () => {
-                store.data.sending = false
-                store.change()
+                store.update('sending', sendingReducer, {
+                    type: 'SET_SENDING_OFF'
+                })
             }
         })
     },
 
     createUserPassword(data) {
-        store.data.sending = true
-        store.change()
+        store.update('sending', sendingReducer, {
+            type: 'SET_SENDING_ON'
+        })
         recorder.emit('create password')
         ajax({
             method: 'POST',
@@ -193,12 +225,16 @@ module.exports = store.add({
                 window.location = '/my_sets'
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('create password failure', errors)
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'create password failure',
+                    errors,
+                })
             },
             always: () => {
-                store.data.sending = false
-                store.change()
+                store.update('sending', sendingReducer, {
+                    type: 'SET_SENDING_OFF'
+                })
             }
         })
     }

@@ -1,9 +1,11 @@
 const store = require('../modules/store')
+const tasks = require('../modules/tasks')
 const ajax = require('../modules/ajax').ajax
 const recorder = require('../modules/recorder')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
+const errorsReducer = require('../reducers/errors')
 
-module.exports = store.add({
+module.exports = tasks.add({
     listNotices: (limit = 50, skip = 0) => {
         recorder.emit('list notices')
         ajax({
@@ -18,13 +20,14 @@ module.exports = store.add({
                     'id'
                 )
                 recorder.emit('list notices success', limit, skip)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('list notices failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'list notices failure',
+                    errors,
+                })
             }
         })
     },
@@ -43,13 +46,14 @@ module.exports = store.add({
                     return notice.id !== id
                 })
                 recorder.emit('mark notice success', id, read)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('mark notice failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'mark notice failure',
+                    errors,
+                })
             }
         })
     }

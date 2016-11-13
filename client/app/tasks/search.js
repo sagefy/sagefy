@@ -1,9 +1,11 @@
 const store = require('../modules/store')
+const tasks = require('../modules/tasks')
 const ajax = require('../modules/ajax').ajax
 const recorder = require('../modules/recorder')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
+const errorsReducer = require('../reducers/errors')
 
-module.exports = store.add({
+module.exports = tasks.add({
     search: ({q, skip = 0, limit = 10, order}) => {
         recorder.emit('search', q)
         if (q !== store.data.searchQuery) {
@@ -22,13 +24,14 @@ module.exports = store.add({
                     'id'
                 )
                 recorder.emit('search success', q, response.hits.length)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('search failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'search failure',
+                    errors,
+                })
             }
         })
     }

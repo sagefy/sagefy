@@ -1,9 +1,11 @@
 const store = require('../modules/store')
+const tasks = require('../modules/tasks')
 const ajax = require('../modules/ajax').ajax
 const recorder = require('../modules/recorder')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
+const errorsReducer = require('../reducers/errors')
 
-module.exports = store.add({
+module.exports = tasks.add({
     listUserSets: (limit = 50, skip = 0) => {
         const userID = store.data.currentUserID
         recorder.emit('list user sets')
@@ -19,13 +21,14 @@ module.exports = store.add({
                     'id'
                 )
                 recorder.emit('list user sets success')
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('list user sets failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'list user sets failure',
+                    errors,
+                })
             }
         })
     },
@@ -40,14 +43,16 @@ module.exports = store.add({
             done: (response) => {
                 store.data.userSets.push(response.set)
                 recorder.emit('add user set success', setID)
-                store.tasks.route('/my_sets')
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('add user set failure', errors)
-                store.tasks.route('/my_sets')
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'add user set failure',
+                    errors,
+                })
             },
             always: () => {
+                tasks.route('/my_sets')
                 store.change()
             }
         })
@@ -61,22 +66,23 @@ module.exports = store.add({
             url: `/s/users/${userID}/sets/${setID}`,
             data: {},
             done: (response) => {
-                store.tasks.route(`/sets/${setID}/tree`)
+                tasks.route(`/sets/${setID}/tree`)
                 recorder.emit('choose set success', setID)
                 recorder.emit('next', response.next)
-                store.tasks.updateMenuContext({
+                tasks.updateMenuContext({
                     set: setID,
                     unit: false,
                     card: false
                 })
                 store.data.next = response.next
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('choose set failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'choose set failure',
+                    errors,
+                })
             }
         })
     },
@@ -91,13 +97,14 @@ module.exports = store.add({
             done: () => {
                 // store.data TODO
                 recorder.emit('remove user set success', setID)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('remove user set failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'remove user set failure',
+                    errors,
+                })
             }
         })
     }

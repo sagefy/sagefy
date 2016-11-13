@@ -1,9 +1,11 @@
 const store = require('../modules/store')
+const tasks = require('../modules/tasks')
 const ajax = require('../modules/ajax').ajax
 const recorder = require('../modules/recorder')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
+const errorsReducer = require('../reducers/errors')
 
-module.exports = store.add({
+module.exports = tasks.add({
     getUnit: (id) => {
         recorder.emit('get unit', id)
         ajax({
@@ -27,13 +29,14 @@ module.exports = store.add({
                 )
                 store.data.units[id] = unit
                 recorder.emit('get unit success', id)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('get unit failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'get unit failure',
+                    errors,
+                })
             }
         })
     },
@@ -53,13 +56,14 @@ module.exports = store.add({
                     'id'
                 )
                 recorder.emit('list unit versions success', id)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('list unit versions failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'list unit versions failure',
+                    errors,
+                })
             }
         })
     }

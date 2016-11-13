@@ -1,10 +1,12 @@
 const store = require('../modules/store')
+const tasks = require('../modules/tasks')
 const ajax = require('../modules/ajax').ajax
 const recorder = require('../modules/recorder')
 const {matchesRoute} = require('../modules/auxiliaries')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
+const errorsReducer = require('../reducers/errors')
 
-module.exports = store.add({
+module.exports = tasks.add({
     getSet: (id) => {
         recorder.emit('get set', id)
         ajax({
@@ -19,13 +21,14 @@ module.exports = store.add({
                     set[r] = response[r]
                 })
                 recorder.emit('get set success', id)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('get set failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'get set failure',
+                    errors,
+                })
             }
         })
     },
@@ -39,13 +42,14 @@ module.exports = store.add({
             done: (response) => {
                 store.data.recommendedSets = response.sets
                 recorder.emit('get recommended sets success')
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('get recommended sets failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'get recommended sets failure',
+                    errors,
+                })
             }
         })
     },
@@ -65,13 +69,14 @@ module.exports = store.add({
                     'id'
                 )
                 recorder.emit('list set versions success', id)
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('list set versions failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'list set versions failure',
+                    errors,
+                })
             }
         })
     },
@@ -90,13 +95,14 @@ module.exports = store.add({
                     recorder.emit('next', response.next)
                     store.data.next = response.next
                 }
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('get set tree failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'get set tree failure',
+                    errors,
+                })
             }
         })
     },
@@ -118,13 +124,14 @@ module.exports = store.add({
                 recorder.emit('get set units success', id)
                 recorder.emit('next', response.next)
                 store.data.next = response.next
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('get set units failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'get set units failure',
+                    errors,
+                })
             }
         })
     },
@@ -140,22 +147,23 @@ module.exports = store.add({
                 const {next} = response
                 store.data.next = next
                 recorder.emit('next', next)
-                store.tasks.updateMenuContext({
+                tasks.updateMenuContext({
                     set: setId,
                     unit: unitId,
                     card: false,
                 })
                 const args = matchesRoute(next.path, '/s/cards/{id}/learn')
                 if (args) {
-                    store.tasks.route(`/cards/${args[0]}/learn`)
+                    tasks.route(`/cards/${args[0]}/learn`)
                 }
+                store.change()
             },
             fail: (errors) => {
-                store.data.errors = errors
-                recorder.emit('choose unit failure', errors)
-            },
-            always: () => {
-                store.change()
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'choose unit failure',
+                    errors,
+                })
             }
         })
     }
