@@ -11,6 +11,7 @@ from modules.util import uniqid, pick, compact_dict, json_serial, \
     omit, json_prep
 from modules.content import get as c
 from framework.mail import send_mail
+import rethinkdb as r
 
 
 def insert_user(data, db_conn):
@@ -73,6 +74,15 @@ def get_user(params, db_conn):
     tablename = user_schema['tablename']
     return get_document(tablename, params, db_conn)
 
+
+def list_users(params, db_conn):
+    """
+    Get a list of users of Sagefy.
+    """
+
+    schema = user_schema
+    query = r.table(schema['tablename'])
+    return list(query.run(db_conn))
 
 # def delete_user(doc_id, db_conn):
 #     """

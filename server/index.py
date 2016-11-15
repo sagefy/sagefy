@@ -21,5 +21,6 @@ import routes.unit
 import routes.set
 import routes.search
 import routes.next
+import routes.sitemap
 
 from framework.index import serve
