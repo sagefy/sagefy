@@ -5,6 +5,7 @@ const recorder = require('../modules/recorder')
 const {mergeArraysByKey, matchesRoute} = require('../modules/auxiliaries')
 const errorsReducer = require('../reducers/errors')
 const sendingReducer = require('../reducers/sending')
+const cardsReducer = require('../reducers/cards')
 
 module.exports = tasks.add({
     getCard: (id) => {
@@ -14,26 +15,17 @@ module.exports = tasks.add({
             url: `/s/cards/${id}`,
             data: {},
             done: (response) => {
-                store.data.cards = store.data.cards || {}
-                const card = response.card
-                ;['topics', 'versions', 'card_parameters'].forEach((r) => {
-                    card[r] = response[r]
+                store.update('cards', cardsReducer, {
+                    type: 'GET_CARD_SUCCESS',
+                    card: response.card,
+                    topics: response.topics,
+                    versions: response.versions,
+                    card_parameters: response.card_parameters,
+                    unit: response.unit,
+                    requires: response.requires,
+                    required_by: response.required_by,
+                    id,
                 })
-                card.relationships = [{
-                    kind: 'belongs_to',
-                    entity: response.unit,
-                }]
-                ;['requires', 'required_by'].forEach((r) =>
-                    response[r].forEach((e) =>
-                        card.relationships.push({
-                            kind: r,
-                            entity: e,
-                        })
-                    )
-                )
-                store.data.cards[id] = card
-                recorder.emit('get card success', id)
-                store.change()
             },
             fail: (errors) => {
                 store.update('errors', errorsReducer, {

@@ -5,6 +5,7 @@ const recorder = require('../modules/recorder')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
 const errorsReducer = require('../reducers/errors')
 const sendingReducer = require('../reducers/sending')
+const cardsReducer = require('../reducers/cards')
 
 module.exports = tasks.add({
     listPosts: (id) => {
@@ -39,8 +40,11 @@ module.exports = tasks.add({
                 )
 
                 if ('card' in response) {
-                    store.data.cards = store.data.cards || {}
-                    store.data.cards[response.card.entity_id] = response.card
+                    store.update('cards', cardsReducer, {
+                        type: 'LIST_POSTS_SUCCESS',
+                        entity: 'card',
+                        card: response.card,
+                    })
                 } else if ('unit' in response) {
                     store.data.units = store.data.units || {}
                     store.data.units[response.unit.entity_id] = response.unit
