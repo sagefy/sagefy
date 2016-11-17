@@ -15,6 +15,7 @@ __pycache__
 *.py[cod]
 *.pyc
 *.so
+*console.log
 server/config.py
 bin
 build

@@ -2,8 +2,8 @@ const store = require('../modules/store')
 const tasks = require('../modules/tasks')
 const ajax = require('../modules/ajax').ajax
 const recorder = require('../modules/recorder')
-const {mergeArraysByKey} = require('../modules/auxiliaries')
 const errorsReducer = require('../reducers/errors')
+const noticesReducer = require('../reducers/notices')
 
 module.exports = tasks.add({
     listNotices: (limit = 50, skip = 0) => {
@@ -13,14 +13,13 @@ module.exports = tasks.add({
             data: {limit, skip},
             url: '/s/notices',
             done: (response) => {
-                store.data.notices = store.data.notices || []
-                store.data.notices = mergeArraysByKey(
-                    store.data.notices,
-                    response.notices,
-                    'id'
-                )
-                recorder.emit('list notices success', limit, skip)
-                store.change()
+                store.update('notices', noticesReducer, {
+                    type: 'LIST_NOTICES_SUCCESS',
+                    message: 'list notices success',
+                    limit,
+                    skip,
+                    notices: response.notices
+                })
             },
             fail: (errors) => {
                 store.update('errors', errorsReducer, {
@@ -39,14 +38,13 @@ module.exports = tasks.add({
             url: `/s/notices/${id}`,
             data: {read},
             done: (response) => {
-                store.data.notices.every((notice, index) => {
-                    if (notice.id === id) {
-                        store.data.notices[index] = response.notice
-                    }
-                    return notice.id !== id
+                store.update('notices', noticesReducer, {
+                    type: 'MARK_NOTICE_SUCCESS',
+                    message: 'mark notice success',
+                    id,
+                    read,
+                    notice: response.notice
                 })
-                recorder.emit('mark notice success', id, read)
-                store.change()
             },
             fail: (errors) => {
                 store.update('errors', errorsReducer, {
