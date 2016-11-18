@@ -5,6 +5,7 @@ const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 
 module.exports = (data) => {
+    // TODO-2 update this to look for some status field
     if(!data.follows) { return spinner() }
 
     return div(
@@ -20,7 +21,7 @@ module.exports = (data) => {
 }
 
 const follows = (data) => {
-    if(data.length) { ul(data.map(f => follow(f))) }
+    if(data.length) { return ul(data.map(f => follow(f))) }
     return p(
         'No follows. ',
         a(

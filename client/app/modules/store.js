@@ -19,10 +19,8 @@ const store = {
     },
 
     update: function update(key, reducer, action) {
+        recorder.emit(action.message || action.type, action)
         store.data[key] = reducer(store.data[key], action)
-        if (action.message) {
-            recorder.emit(action.message)
-        }
         store.change()
     }
 }
