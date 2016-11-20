@@ -1,6 +1,6 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-const ajax = require('../modules/ajax').ajax
+const request = require('../modules/request')
 const recorder = require('../modules/recorder')
 const errorsReducer = require('../reducers/errors')
 const followsReducer = require('../reducers/follows')
@@ -8,7 +8,7 @@ const followsReducer = require('../reducers/follows')
 module.exports = tasks.add({
     listFollows: (skip = 0, limit = 50) => {
         recorder.emit('list follows')
-        ajax({
+        request({
             method: 'GET',
             url: '/s/follows',
             data: {skip, limit, entities: true},
@@ -31,7 +31,7 @@ module.exports = tasks.add({
 
     askFollow: (entityID) => {
         recorder.emit('ask follow', entityID)
-        ajax({
+        request({
             method: 'GET',
             url: '/s/follows',
             data: {entity_id: entityID},
@@ -54,7 +54,7 @@ module.exports = tasks.add({
 
     follow: (data) => {
         recorder.emit('follow', data.entity.id)
-        ajax({
+        request({
             method: 'POST',
             url: '/s/follows',
             data: data,
@@ -76,7 +76,7 @@ module.exports = tasks.add({
 
     unfollow: (id) => {
         recorder.emit('unfollow', id)
-        ajax({
+        request({
             method: 'DELETE',
             url: `/s/follows/${id}`,
             done: () => {

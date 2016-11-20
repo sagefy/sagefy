@@ -1,16 +1,6 @@
-/*
-Make an Ajax call given options:
-- method: one of get, post, put, delete
-- url: string URL
-- data: data to send to the server
-- done: a function to do on success
-    - (json, request) =>
-- fail: a function to do on fail
-    - (json, request) =>
-*/
-const {extend, parseJSON, copy, isString} = require('./utilities')
+const {extend, parseJSON, isString, parameterize} = require('./utilities')
 
-const ajax = function ajax({method, url, data, done, fail, always}) {
+module.exports = function ajax({method, url, data, done, fail, always}) {
     method = method.toUpperCase()
     if (method === 'GET') {
         url += url.indexOf('?') > -1 ? '&' : '?'
@@ -50,19 +40,8 @@ const ajax = function ajax({method, url, data, done, fail, always}) {
     return request
 }
 
-// Convert an object to a query string for GET requests.
-const parameterize = (obj) => {
-    obj = copy(obj)
-    const pairs = []
-    for (const key in obj) {
-        const value = obj[key]
-        pairs.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-    }
-    return pairs.join('&').replace(/%20/g, '+')
-}
-
 // Try to parse the errors array or just return the error text.
-const parseAjaxErrors = (r) => {
+function parseAjaxErrors(r) {
     if (!r.responseText) {
         return null
     }
@@ -72,5 +51,3 @@ const parseAjaxErrors = (r) => {
     }
     return errors.errors
 }
-
-module.exports = {ajax, parameterize, parseAjaxErrors}

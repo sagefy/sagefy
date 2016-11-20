@@ -83,4 +83,15 @@ util.closest = (element, selector, top = document.body) => {
     return element
 }
 
+// Convert an object to a query string for GET requests.
+util.parameterize = (obj) => {
+    obj = util.copy(obj)
+    const pairs = []
+    for (const key in obj) {
+        const value = obj[key]
+        pairs.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    }
+    return pairs.join('&').replace(/%20/g, '+')
+}
+
 module.exports = util

@@ -1,6 +1,6 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-const ajax = require('../modules/ajax').ajax
+const request = require('../modules/request')
 const recorder = require('../modules/recorder')
 const {mergeArraysByKey, matchesRoute} = require('../modules/auxiliaries')
 const errorsReducer = require('../reducers/errors')
@@ -10,7 +10,7 @@ const cardsReducer = require('../reducers/cards')
 module.exports = tasks.add({
     getCard: (id) => {
         recorder.emit('get card', id)
-        ajax({
+        request({
             method: 'GET',
             url: `/s/cards/${id}`,
             data: {},
@@ -41,7 +41,7 @@ module.exports = tasks.add({
         delete store.data.cardResponse
         delete store.data.cardFeedback
         recorder.emit('learn card', id)
-        ajax({
+        request({
             method: 'GET',
             url: `/s/cards/${id}/learn`,
             data: {},
@@ -64,7 +64,7 @@ module.exports = tasks.add({
 
     listCardVersions: (id) => {
         recorder.emit('list card versions', id)
-        ajax({
+        request({
             method: 'GET',
             url: `/s/cards/${id}/versions`,
             data: {},
@@ -94,7 +94,7 @@ module.exports = tasks.add({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('respond to card', id)
-        ajax({
+        request({
             method: 'POST',
             url: `/s/cards/${id}/responses`,
             data: data,

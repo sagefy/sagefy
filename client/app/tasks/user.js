@@ -1,6 +1,6 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-const ajax = require('../modules/ajax').ajax
+const request = require('../modules/request')
 const recorder = require('../modules/recorder')
 const cookie = require('../modules/cookie')
 const errorsReducer = require('../reducers/errors')
@@ -15,7 +15,7 @@ module.exports = tasks.add({
         })
         store.change()
         recorder.emit('create user')
-        ajax({
+        request({
             method: 'POST',
             url: '/s/users',
             data: data,
@@ -46,7 +46,7 @@ module.exports = tasks.add({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('update user', data.id)
-        ajax({
+        request({
             method: 'PUT',
             url: `/s/users/${data.id}`,
             data: data,
@@ -72,7 +72,7 @@ module.exports = tasks.add({
 
     getCurrentUser() {
         recorder.emit('get current user')
-        ajax({
+        request({
             method: 'GET',
             url: '/s/users/current',
             done: (response) => {
@@ -95,7 +95,7 @@ module.exports = tasks.add({
 
     getUser(id, opts = {}) {
         recorder.emit('get user', id)
-        ajax({
+        request({
             method: 'GET',
             url: `/s/users/${id}`,
             data: opts,
@@ -124,7 +124,7 @@ module.exports = tasks.add({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('log in user')
-        ajax({
+        request({
             method: 'POST',
             url: '/s/sessions',
             data: data,
@@ -155,7 +155,7 @@ module.exports = tasks.add({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('log out user')
-        ajax({
+        request({
             method: 'DELETE',
             url: '/s/sessions',
             done: () => {
@@ -185,7 +185,7 @@ module.exports = tasks.add({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('get password token')
-        ajax({
+        request({
             method: 'POST',
             url: '/s/password_tokens',
             data: data,
@@ -213,7 +213,7 @@ module.exports = tasks.add({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('create password')
-        ajax({
+        request({
             method: 'POST',
             url: `/s/users/${data.id}/password`,
             data: data,

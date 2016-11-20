@@ -1,6 +1,6 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-const ajax = require('../modules/ajax').ajax
+const request = require('../modules/request')
 const recorder = require('../modules/recorder')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
 const errorsReducer = require('../reducers/errors')
@@ -10,7 +10,7 @@ const cardsReducer = require('../reducers/cards')
 module.exports = tasks.add({
     listPosts: (id) => {
         recorder.emit('list posts', id)
-        ajax({
+        request({
             method: 'GET',
             url: `/s/topics/${id}/posts`,
             data: {},
@@ -72,7 +72,7 @@ module.exports = tasks.add({
         })
         const topicId = data.post.topicId
         recorder.emit('create post')
-        ajax({
+        request({
             method: 'POST',
             url: `/s/topics/${topicId}/posts`,
             data: data,
@@ -106,7 +106,7 @@ module.exports = tasks.add({
         const {id} = data.post
         const topicId = data.post.topic_id
         recorder.emit('update post')
-        ajax({
+        request({
             method: 'PUT',
             url: `/s/topics/${topicId}/posts/${id}`,
             data: data,

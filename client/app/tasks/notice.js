@@ -1,6 +1,6 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-const ajax = require('../modules/ajax').ajax
+const request = require('../modules/request')
 const recorder = require('../modules/recorder')
 const errorsReducer = require('../reducers/errors')
 const noticesReducer = require('../reducers/notices')
@@ -8,7 +8,7 @@ const noticesReducer = require('../reducers/notices')
 module.exports = tasks.add({
     listNotices: (limit = 50, skip = 0) => {
         recorder.emit('list notices')
-        ajax({
+        request({
             method: 'GET',
             data: {limit, skip},
             url: '/s/notices',
@@ -33,7 +33,7 @@ module.exports = tasks.add({
 
     markNotice: (id, read = true) => {
         recorder.emit('mark notice', id, read)
-        ajax({
+        request({
             method: 'PUT',
             url: `/s/notices/${id}`,
             data: {read},

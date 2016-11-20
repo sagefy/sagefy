@@ -1,6 +1,6 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-const ajax = require('../modules/ajax').ajax
+const request = require('../modules/request')
 const recorder = require('../modules/recorder')
 const errorsReducer = require('../reducers/errors')
 const sendingReducer = require('../reducers/sending')
@@ -11,7 +11,7 @@ module.exports = tasks.add({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('create topic')
-        ajax({
+        request({
             method: 'POST',
             url: '/s/topics',
             data: data,
@@ -41,7 +41,7 @@ module.exports = tasks.add({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('update topic')
-        ajax({
+        request({
             method: 'PUT',
             url: `/s/topics/${data.topic.id}`,
             data: data,

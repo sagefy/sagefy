@@ -1,6 +1,6 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-const ajax = require('../modules/ajax').ajax
+const request = require('../modules/request')
 const recorder = require('../modules/recorder')
 const {matchesRoute} = require('../modules/auxiliaries')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
@@ -9,7 +9,7 @@ const errorsReducer = require('../reducers/errors')
 module.exports = tasks.add({
     getSet: (id) => {
         recorder.emit('get set', id)
-        ajax({
+        request({
             method: 'GET',
             url: `/s/sets/${id}`,
             data: {},
@@ -35,7 +35,7 @@ module.exports = tasks.add({
 
     getRecommendedSets: () => {
         recorder.emit('get recommended sets')
-        ajax({
+        request({
             method: 'GET',
             url: '/s/sets/recommended',
             data: {},
@@ -56,7 +56,7 @@ module.exports = tasks.add({
 
     listSetVersions: (id) => {
         recorder.emit('list set versions', id)
-        ajax({
+        request({
             method: 'GET',
             url: `/s/sets/${id}/versions`,
             data: {},
@@ -83,7 +83,7 @@ module.exports = tasks.add({
 
     getSetTree: (id) => {
         recorder.emit('get set tree', id)
-        ajax({
+        request({
             method: 'GET',
             url: `/s/sets/${id}/tree`,
             data: {},
@@ -115,7 +115,7 @@ module.exports = tasks.add({
 
     getSetUnits: (id) => {
         recorder.emit('get set units', id)
-        ajax({
+        request({
             method: 'GET',
             url: `/s/sets/${id}/units`,
             data: {},
@@ -138,7 +138,7 @@ module.exports = tasks.add({
 
     chooseUnit: (setId, unitId) => {
         recorder.emit('choose unit', setId, unitId)
-        ajax({
+        request({
             method: 'POST',
             url: `/s/sets/${setId}/units/${unitId}`,
             data: {},

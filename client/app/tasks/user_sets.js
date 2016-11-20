@@ -1,6 +1,6 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-const ajax = require('../modules/ajax').ajax
+const request = require('../modules/request')
 const recorder = require('../modules/recorder')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
 const errorsReducer = require('../reducers/errors')
@@ -9,7 +9,7 @@ module.exports = tasks.add({
     listUserSets: (limit = 50, skip = 0) => {
         const userID = store.data.currentUserID
         recorder.emit('list user sets')
-        ajax({
+        request({
             method: 'GET',
             url: `/s/users/${userID}/sets`,
             data: {limit, skip},
@@ -36,7 +36,7 @@ module.exports = tasks.add({
     addUserSet: (setID) => {
         const userID = store.data.currentUserID
         recorder.emit('add user set', setID)
-        ajax({
+        request({
             method: 'POST',
             url: `/s/users/${userID}/sets/${setID}`,
             data: {},
@@ -61,7 +61,7 @@ module.exports = tasks.add({
     chooseSet: (setID) => {
         const userID = store.data.currentUserID
         recorder.emit('choose set', setID)
-        ajax({
+        request({
             method: 'PUT',
             url: `/s/users/${userID}/sets/${setID}`,
             data: {},
@@ -90,7 +90,7 @@ module.exports = tasks.add({
     removeUserSet: (setID) => {
         const userID = store.data.currentUserID
         recorder.emit('remove user set', setID)
-        ajax({
+        request({
             method: 'DELETE',
             url: `/s/users/${userID}/sets/${setID}`,
             data: {},
