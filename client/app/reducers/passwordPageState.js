@@ -1,4 +1,4 @@
-module.exports = function passwordPageState(state = {}, action = {type: ''}) {
+module.exports = function passwordPageState(state = '', action = {type: ''}) {
     if(action.type !== '') {
         return state
     }

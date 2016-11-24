@@ -1,8 +1,6 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
 const {matchesRoute, ucfirst} = require('../modules/auxiliaries')
-const formData = require('../reducers/formData')
-const errorsReducer = require('../reducers/errors')
 
 const routes = [
     {path: '/settings', task: 'openSettingsRoute'},
@@ -27,11 +25,11 @@ const routes = [
 
 module.exports = tasks.add({
     onRoute: (path) => {
-        store.update('formData', formData, {
+        store.dispatch({
             type: 'RESET_FORM_DATA'
         })
         store.data.pageData = {}
-        store.update('errors', errorsReducer, {
+        store.dispatch({
             type: 'RESET_ERRORS'
         })
         for (const route of routes) {

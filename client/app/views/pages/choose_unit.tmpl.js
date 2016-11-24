@@ -4,7 +4,7 @@ const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 
 module.exports = (data) => {
-    if(!data.chooseUnit) { return spinner() }
+    if(!Object.keys(data.chooseUnit).length) { return spinner() }
     return div(
         {id: 'choose-unit'},
         h1('Choose a Unit'),

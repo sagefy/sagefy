@@ -4,7 +4,6 @@ const tasks = require('../modules/tasks')
 const recorder = require('../modules/recorder')
 const {matchesRoute} = require('../modules/auxiliaries')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
-const errorsReducer = require('../reducers/errors')
 
 const request = require('../modules/request')
 
@@ -27,7 +26,7 @@ module.exports = tasks.add({
                 store.change()
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'get set failure',
                     errors,
@@ -48,7 +47,7 @@ module.exports = tasks.add({
                 store.change()
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'get recommended sets failure',
                     errors,
@@ -75,7 +74,7 @@ module.exports = tasks.add({
                 store.change()
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'list set versions failure',
                     errors,
@@ -101,7 +100,7 @@ module.exports = tasks.add({
                 store.change()
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'get set tree failure',
                     errors,
@@ -130,7 +129,7 @@ module.exports = tasks.add({
                 store.change()
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'get set units failure',
                     errors,
@@ -162,7 +161,7 @@ module.exports = tasks.add({
                 store.change()
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'choose unit failure',
                     errors,

@@ -28,7 +28,7 @@ const setResult = (set) =>
 
 
 module.exports = (data) => {
-    if(!data.recommendedSets) { return spinner() }
+    if(!data.recommendedSets.length) { return spinner() }
     return div(
         {id: 'recommended-sets'},
         h1('Recommended Sets'),

@@ -3,8 +3,6 @@ const tasks = require('../modules/tasks')
 
 const recorder = require('../modules/recorder')
 const cookie = require('../modules/cookie')
-const errorsReducer = require('../reducers/errors')
-const sendingReducer = require('../reducers/sending')
 
 const request = require('../modules/request')
 
@@ -12,7 +10,7 @@ const request = require('../modules/request')
 
 module.exports = tasks.add({
     createUser(data) {
-        store.update('sending', sendingReducer, {
+        store.dispatch({
             type: 'SET_SENDING_ON'
         })
         store.change()
@@ -28,24 +26,24 @@ module.exports = tasks.add({
                 recorder.emit('create user success')
                 window.location = '/my_sets'
                 // Hard redirect to get the HTTP_ONLY cookie
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'create user failure',
                     errors,
                 })
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     updateUser(data) {
-        store.update('sending', sendingReducer, {
+        store.dispatch({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('update user', data.id)
@@ -58,17 +56,17 @@ module.exports = tasks.add({
                 store.data.users = store.data.users || {}
                 store.data.users[response.user.id] = response.user
                 recorder.emit('update user success', response.user.id)
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'update user failure',
                     errors,
                 })
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
@@ -89,7 +87,7 @@ module.exports = tasks.add({
                 store.change()
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'get current user failure',
                     errors,
@@ -115,7 +113,7 @@ module.exports = tasks.add({
                 store.change()
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'get user failure',
                     errors,
@@ -124,7 +122,7 @@ module.exports = tasks.add({
     },
 
     logInUser(data) {
-        store.update('sending', sendingReducer, {
+        store.dispatch({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('log in user')
@@ -139,24 +137,24 @@ module.exports = tasks.add({
                 recorder.emit('log in user success')
                 // Hard redirect to get the HTTP_ONLY cookie
                 window.location = '/my_sets'
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'log in user failure',
                     errors,
                 })
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     logOutUser() {
-        store.update('sending', sendingReducer, {
+        store.dispatch({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('log out user')
@@ -170,24 +168,24 @@ module.exports = tasks.add({
                 window.location = '/'
                 // Hard redirect to delete the HTTP_ONLY cookie
                 recorder.emit('log out user success')
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'log out user failure',
                     errors,
                 })
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     getUserPasswordToken(data) {
-        store.update('sending', sendingReducer, {
+        store.dispatch({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('get password token')
@@ -199,24 +197,24 @@ module.exports = tasks.add({
             .then(() => {
                 store.data.passwordPageState = 'inbox'
                 recorder.emit('get password token success')
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'get password token failure',
                     errors,
                 })
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     createUserPassword(data) {
-        store.update('sending', sendingReducer, {
+        store.dispatch({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('create password')
@@ -231,17 +229,17 @@ module.exports = tasks.add({
                 recorder.emit('create password success')
                 // Hard redirect to get the HTTP_ONLY cookie
                 window.location = '/my_sets'
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'create password failure',
                     errors,
                 })
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })

@@ -7,22 +7,28 @@ const recorder = require('./recorder')
 const store = {
     data: window.preload || {},
 
-    bind: function bind(fn) {
+    bind(fn) {
         store.callback = fn
         return fn
     },
 
-    change: function change() {
+    change() {
         if (store.callback) {
             return store.callback(store.data)
         }
     },
 
-    update: function update(key, reducer, action) {
+    update(action) {
         recorder.emit(action.message || action.type, action)
-        store.data[key] = reducer(store.data[key], action)
+        store.data = store.reducer(store.data, action)
         store.change()
+    },
+
+    setReducer(fn) {
+        store.reducer = fn
     }
 }
+
+store.dispatch = store.update
 
 module.exports = store

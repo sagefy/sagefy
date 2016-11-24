@@ -2,8 +2,6 @@ const store = require('../modules/store')
 const tasks = require('../modules/tasks')
 
 const recorder = require('../modules/recorder')
-const errorsReducer = require('../reducers/errors')
-const noticesReducer = require('../reducers/notices')
 
 const request = require('../modules/request')
 
@@ -16,7 +14,7 @@ module.exports = tasks.add({
             url: '/s/notices',
         })
             .then((response) => {
-                store.update('notices', noticesReducer, {
+                store.dispatch({
                     type: 'LIST_NOTICES_SUCCESS',
                     message: 'list notices success',
                     limit,
@@ -25,7 +23,7 @@ module.exports = tasks.add({
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'list notices failure',
                     errors,
@@ -41,7 +39,7 @@ module.exports = tasks.add({
             data: {read},
         })
             .then((response) => {
-                store.update('notices', noticesReducer, {
+                store.dispatch({
                     type: 'MARK_NOTICE_SUCCESS',
                     message: 'mark notice success',
                     id,
@@ -50,7 +48,7 @@ module.exports = tasks.add({
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'mark notice failure',
                     errors,

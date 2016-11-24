@@ -2,8 +2,6 @@ const store = require('../modules/store')
 const tasks = require('../modules/tasks')
 
 const recorder = require('../modules/recorder')
-const errorsReducer = require('../reducers/errors')
-const followsReducer = require('../reducers/follows')
 
 const request = require('../modules/request')
 
@@ -16,14 +14,14 @@ module.exports = tasks.add({
             data: {skip, limit, entities: true},
         })
             .then((response) => {
-                store.update('follows', followsReducer, {
+                store.dispatch({
                     type: 'LIST_FOLLOWS_SUCCESS',
                     follows: response.follows,
                     entities: response.entities,
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'list follows failure',
                     errors,
@@ -39,14 +37,14 @@ module.exports = tasks.add({
             data: {entity_id: entityID},
         })
             .then((response) => {
-                store.update('follows', followsReducer, {
+                store.dispatch({
                     type: 'ASK_FOLLOW_SUCCESS',
                     follows: response.follows,
                     entityID
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'ask follow failure',
                     errors,
@@ -62,13 +60,13 @@ module.exports = tasks.add({
             data: data,
         })
             .then((response) => {
-                store.update('follows', followsReducer, {
+                store.dispatch({
                     type: 'FOLLOW_SUCCESS',
                     follow: response.follow
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'follow failure',
                     errors,
@@ -83,13 +81,13 @@ module.exports = tasks.add({
             url: `/s/follows/${id}`,
         })
             .then(() => {
-                store.update('follows', followsReducer, {
+                store.dispatch({
                     type: 'UNFOLLOW_SUCCESS',
                     id
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'unfollow failure',
                     errors,

@@ -3,9 +3,6 @@ const tasks = require('../modules/tasks')
 
 const recorder = require('../modules/recorder')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
-const errorsReducer = require('../reducers/errors')
-const sendingReducer = require('../reducers/sending')
-const cardsReducer = require('../reducers/cards')
 
 const request = require('../modules/request')
 
@@ -43,7 +40,7 @@ module.exports = tasks.add({
                 )
 
                 if ('card' in response) {
-                    store.update('cards', cardsReducer, {
+                    store.dispatch({
                         type: 'LIST_POSTS_SUCCESS',
                         entity: 'card',
                         card: response.card,
@@ -60,7 +57,7 @@ module.exports = tasks.add({
                 store.change()
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'list posts failure',
                     errors,
@@ -69,10 +66,10 @@ module.exports = tasks.add({
     },
 
     createPost: (data) => {
-        store.update('sending', sendingReducer, {
+        store.dispatch({
             type: 'SET_SENDING_ON'
         })
-        const topicId = data.post.topicId
+        const topicId = data.post.topicId || data.post.topic_id
         recorder.emit('create post')
         return request({
             method: 'POST',
@@ -86,24 +83,24 @@ module.exports = tasks.add({
                 recorder.emit('create post success')
                 tasks.route(`/topics/${topicId}`)
                 store.change()
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'create post failure',
                     errors,
                 })
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     updatePost: (data) => {
-        store.update('sending', sendingReducer, {
+        store.dispatch({
             type: 'SET_SENDING_ON'
         })
         const {id} = data.post
@@ -123,17 +120,17 @@ module.exports = tasks.add({
                 }
                 recorder.emit('update post success')
                 tasks.route(`/topics/${topicId}`)
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'update post failure',
                     errors,
                 })
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })

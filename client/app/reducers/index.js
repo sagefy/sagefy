@@ -21,7 +21,6 @@ module.exports = combineReducers({
     errors: require('./errors'),
     follows: require('./follows'),
     formData: require('./formData'),
-    index: require('./index'),
     learnCards: require('./learnCards'),
     menu: require('./menu'),
     next: require('./next'),
@@ -29,6 +28,7 @@ module.exports = combineReducers({
     pageData: require('./pageData'),
     passwordPageState: require('./passwordPageState'),
     recommendedSets: require('./recommendedSets'),
+    route: require('./route'),
     routeQuery: require('./routeQuery'),
     searchQuery: require('./searchQuery'),
     searchResults: require('./searchResults'),
@@ -41,4 +41,5 @@ module.exports = combineReducers({
     unitLearned: require('./unitLearned'),
     unitVersions: require('./unitVersions'),
     units: require('./units'),
+    users: require('./users'),
 })

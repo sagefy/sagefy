@@ -2,14 +2,12 @@ const store = require('../modules/store')
 const tasks = require('../modules/tasks')
 
 const recorder = require('../modules/recorder')
-const errorsReducer = require('../reducers/errors')
-const sendingReducer = require('../reducers/sending')
 
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     createTopic: (data) => {
-        store.update('sending', sendingReducer, {
+        store.dispatch({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('create topic')
@@ -23,24 +21,24 @@ module.exports = tasks.add({
                 store.data.topics[response.topic.id] = response.topic
                 recorder.emit('create topic success')
                 tasks.route(`/topics/${response.topic.id}`)
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'create topic failure',
                     errors,
                 })
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     updateTopic: (data) => {
-        store.update('sending', sendingReducer, {
+        store.dispatch({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('update topic')
@@ -54,17 +52,17 @@ module.exports = tasks.add({
                 store.data.topics[data.topic.id] = response.topic
                 recorder.emit('update topic success')
                 tasks.route(`/topics/${data.topic.id}`)
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'update topic failure',
                     errors,
                 })
-                store.update('sending', sendingReducer, {
+                store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })

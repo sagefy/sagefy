@@ -9,7 +9,7 @@ const {extend, copy, isString, isArray} = require('./utilities')
 const isLoggedIn = () => cookie.get('logged_in') === '1'
 
 // Capitalizes the first letter of a string
-const ucfirst = str => str.charAt(0).toUpperCase() + str.slice(1)
+const ucfirst = (str = '') => str.charAt(0).toUpperCase() + str.slice(1)
 
 // Replaces dashes and spaces with underscores, ready to be used in an URL
 const underscored = str => str.replace(/[-\s]+/g, '_').toLowerCase()

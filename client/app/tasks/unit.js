@@ -3,7 +3,6 @@ const tasks = require('../modules/tasks')
 
 const recorder = require('../modules/recorder')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
-const errorsReducer = require('../reducers/errors')
 
 const request = require('../modules/request')
 
@@ -35,7 +34,7 @@ module.exports = tasks.add({
                 store.change()
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'get unit failure',
                     errors,
@@ -62,7 +61,7 @@ module.exports = tasks.add({
                 store.change()
             })
             .catch((errors) => {
-                store.update('errors', errorsReducer, {
+                store.dispatch({
                     type: 'SET_ERRORS',
                     message: 'list unit versions failure',
                     errors,

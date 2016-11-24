@@ -1,11 +1,11 @@
 const recorder = require('./recorder')
 const store = require('./store')
+const reducer = require('../reducers/index')
 const init = require('./init')
 const cookie = require('./cookie')
 const {route} = require('./route_actions')
 const {startGoogleAnalytics, trackEvent} = require('./analytics')
 const indexView = require('../views/index.tmpl')
-const clientRequest = require('./request.client')
 
 startGoogleAnalytics()
 recorder.on('all', trackEvent)
@@ -62,6 +62,7 @@ function logAllRecorderEvents() {
 // Start up the application
 function go() {
     logAllRecorderEvents()
+    store.setReducer(reducer)
     store.data.currentUserID = cookie.get('currentUserID')
     route(window.location.pathname + window.location.search)
     init({
