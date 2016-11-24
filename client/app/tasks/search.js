@@ -5,6 +5,8 @@ const recorder = require('../modules/recorder')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
 const errorsReducer = require('../reducers/errors')
 
+const request = require('../modules/request')
+
 module.exports = tasks.add({
     search: ({q, skip = 0, limit = 10, order}) => {
         recorder.emit('search', q)
@@ -12,7 +14,7 @@ module.exports = tasks.add({
             store.data.searchResults = []
         }
         store.data.searchQuery = q
-        isoRequest({
+        request({
             method: 'GET',
             url: '/s/search',
             data: {q, skip, limit, order},

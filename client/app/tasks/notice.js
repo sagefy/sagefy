@@ -5,10 +5,12 @@ const recorder = require('../modules/recorder')
 const errorsReducer = require('../reducers/errors')
 const noticesReducer = require('../reducers/notices')
 
+const request = require('../modules/request')
+
 module.exports = tasks.add({
     listNotices: (limit = 50, skip = 0) => {
         recorder.emit('list notices')
-        isoRequest({
+        request({
             method: 'GET',
             data: {limit, skip},
             url: '/s/notices',
@@ -33,7 +35,7 @@ module.exports = tasks.add({
 
     markNotice: (id, read = true) => {
         recorder.emit('mark notice', id, read)
-        isoRequest({
+        request({
             method: 'PUT',
             url: `/s/notices/${id}`,
             data: {read},

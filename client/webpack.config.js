@@ -11,5 +11,8 @@ module.exports = {
             test: /\.txt$/,
             loader: 'raw-loader'
         }]
+    },
+    externals: {
+        './request.server': 'var undefined'
     }
 }

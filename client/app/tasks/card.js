@@ -5,11 +5,12 @@ const {mergeArraysByKey, matchesRoute} = require('../modules/auxiliaries')
 const errorsReducer = require('../reducers/errors')
 const sendingReducer = require('../reducers/sending')
 const cardsReducer = require('../reducers/cards')
+const request = require('../modules/request')
 
 module.exports = tasks.add({
     getCard: (id) => {
         recorder.emit('get card', id)
-        isoRequest({
+        request({
             method: 'GET',
             url: `/s/cards/${id}`,
             data: {},
@@ -40,7 +41,7 @@ module.exports = tasks.add({
         delete store.data.cardResponse
         delete store.data.cardFeedback
         recorder.emit('learn card', id)
-        isoRequest({
+        request({
             method: 'GET',
             url: `/s/cards/${id}/learn`,
             data: {},
@@ -63,7 +64,7 @@ module.exports = tasks.add({
 
     listCardVersions: (id) => {
         recorder.emit('list card versions', id)
-        isoRequest({
+        request({
             method: 'GET',
             url: `/s/cards/${id}/versions`,
             data: {},
@@ -93,7 +94,7 @@ module.exports = tasks.add({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('respond to card', id)
-        isoRequest({
+        request({
             method: 'POST',
             url: `/s/cards/${id}/responses`,
             data: data,

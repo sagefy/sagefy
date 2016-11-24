@@ -7,8 +7,7 @@
     },
     "globals": {
         "expect": true,
-        "sinon": true,
-        "isoRequest": true
+        "sinon": true
     },
     "parserOptions": {
         "ecmaVersion": 6,

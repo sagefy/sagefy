@@ -5,10 +5,12 @@ const recorder = require('../modules/recorder')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
 const errorsReducer = require('../reducers/errors')
 
+const request = require('../modules/request')
+
 module.exports = tasks.add({
     getUnit: (id) => {
         recorder.emit('get unit', id)
-        isoRequest({
+        request({
             method: 'GET',
             url: `/s/units/${id}`,
             data: {},
@@ -43,7 +45,7 @@ module.exports = tasks.add({
 
     listUnitVersions: (id) => {
         recorder.emit('list unit versions', id)
-        isoRequest({
+        request({
             method: 'GET',
             url: `/s/units/${id}/versions`,
             data: {},

@@ -59,14 +59,8 @@ function logAllRecorderEvents() {
     recorder.on('all', (...args) => console.log(...args)) //eslint-disable-line
 }
 
-// Create a global request function
-function globalizeRequest() {
-    window.isoRequest = global.isoRequest = clientRequest
-}
-
 // Start up the application
 function go() {
-    globalizeRequest()
     logAllRecorderEvents()
     store.data.currentUserID = cookie.get('currentUserID')
     route(window.location.pathname + window.location.search)

@@ -7,10 +7,12 @@ const errorsReducer = require('../reducers/errors')
 const sendingReducer = require('../reducers/sending')
 const cardsReducer = require('../reducers/cards')
 
+const request = require('../modules/request')
+
 module.exports = tasks.add({
     listPosts: (id) => {
         recorder.emit('list posts', id)
-        isoRequest({
+        request({
             method: 'GET',
             url: `/s/topics/${id}/posts`,
             data: {},
@@ -72,7 +74,7 @@ module.exports = tasks.add({
         })
         const topicId = data.post.topicId
         recorder.emit('create post')
-        isoRequest({
+        request({
             method: 'POST',
             url: `/s/topics/${topicId}/posts`,
             data: data,
@@ -106,7 +108,7 @@ module.exports = tasks.add({
         const {id} = data.post
         const topicId = data.post.topic_id
         recorder.emit('update post')
-        isoRequest({
+        request({
             method: 'PUT',
             url: `/s/topics/${topicId}/posts/${id}`,
             data: data,

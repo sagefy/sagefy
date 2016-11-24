@@ -6,10 +6,12 @@ const {matchesRoute} = require('../modules/auxiliaries')
 const {mergeArraysByKey} = require('../modules/auxiliaries')
 const errorsReducer = require('../reducers/errors')
 
+const request = require('../modules/request')
+
 module.exports = tasks.add({
     getSet: (id) => {
         recorder.emit('get set', id)
-        isoRequest({
+        request({
             method: 'GET',
             url: `/s/sets/${id}`,
             data: {},
@@ -35,7 +37,7 @@ module.exports = tasks.add({
 
     getRecommendedSets: () => {
         recorder.emit('get recommended sets')
-        isoRequest({
+        request({
             method: 'GET',
             url: '/s/sets/recommended',
             data: {},
@@ -56,7 +58,7 @@ module.exports = tasks.add({
 
     listSetVersions: (id) => {
         recorder.emit('list set versions', id)
-        isoRequest({
+        request({
             method: 'GET',
             url: `/s/sets/${id}/versions`,
             data: {},
@@ -83,7 +85,7 @@ module.exports = tasks.add({
 
     getSetTree: (id) => {
         recorder.emit('get set tree', id)
-        isoRequest({
+        request({
             method: 'GET',
             url: `/s/sets/${id}/tree`,
             data: {},
@@ -115,7 +117,7 @@ module.exports = tasks.add({
 
     getSetUnits: (id) => {
         recorder.emit('get set units', id)
-        isoRequest({
+        request({
             method: 'GET',
             url: `/s/sets/${id}/units`,
             data: {},
@@ -138,7 +140,7 @@ module.exports = tasks.add({
 
     chooseUnit: (setId, unitId) => {
         recorder.emit('choose unit', setId, unitId)
-        isoRequest({
+        request({
             method: 'POST',
             url: `/s/sets/${setId}/units/${unitId}`,
             data: {},
