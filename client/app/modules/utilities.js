@@ -94,4 +94,13 @@ util.parameterize = (obj) => {
     return pairs.join('&').replace(/%20/g, '+')
 }
 
+util.convertDataToGet = (url, data) => {
+    url += url.indexOf('?') > -1 ? '&' : '?'
+    url += util.parameterize(util.extend(
+        data || {},
+        {_: +new Date()}  // Cachebreaker
+    ))
+    return url
+}
+
 module.exports = util

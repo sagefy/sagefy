@@ -11,11 +11,12 @@ module.exports = tasks.add({
     listUserSets: (limit = 50, skip = 0) => {
         const userID = store.data.currentUserID
         recorder.emit('list user sets')
-        request({
+        return request({
             method: 'GET',
             url: `/s/users/${userID}/sets`,
             data: {limit, skip},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.data.userSets = store.data.userSets || []
                 store.data.userSets = mergeArraysByKey(
                     store.data.userSets,
@@ -24,50 +25,50 @@ module.exports = tasks.add({
                 )
                 recorder.emit('list user sets success')
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'list user sets failure',
                     errors,
                 })
-            }
-        })
+            })
     },
 
     addUserSet: (setID) => {
         const userID = store.data.currentUserID
         recorder.emit('add user set', setID)
-        request({
+        return request({
             method: 'POST',
             url: `/s/users/${userID}/sets/${setID}`,
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.data.userSets.push(response.set)
                 recorder.emit('add user set success', setID)
-            },
-            fail: (errors) => {
+                tasks.route('/my_sets')
+                store.change()
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'add user set failure',
                     errors,
                 })
-            },
-            always: () => {
                 tasks.route('/my_sets')
                 store.change()
-            }
-        })
+            })
     },
 
     chooseSet: (setID) => {
         const userID = store.data.currentUserID
         recorder.emit('choose set', setID)
-        request({
+        return request({
             method: 'PUT',
             url: `/s/users/${userID}/sets/${setID}`,
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 tasks.route(`/sets/${setID}/tree`)
                 recorder.emit('choose set success', setID)
                 recorder.emit('next', response.next)
@@ -78,36 +79,35 @@ module.exports = tasks.add({
                 })
                 store.data.next = response.next
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'choose set failure',
                     errors,
                 })
-            }
-        })
+            })
     },
 
     removeUserSet: (setID) => {
         const userID = store.data.currentUserID
         recorder.emit('remove user set', setID)
-        request({
+        return request({
             method: 'DELETE',
             url: `/s/users/${userID}/sets/${setID}`,
             data: {},
-            done: () => {
+        })
+            .then(() => {
                 // store.data TODO
                 recorder.emit('remove user set success', setID)
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'remove user set failure',
                     errors,
                 })
-            }
-        })
+            })
     }
 })

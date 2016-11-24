@@ -10,11 +10,12 @@ const request = require('../modules/request')
 module.exports = tasks.add({
     getCard: (id) => {
         recorder.emit('get card', id)
-        request({
+        return request({
             method: 'GET',
             url: `/s/cards/${id}`,
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.update('cards', cardsReducer, {
                     type: 'GET_CARD_SUCCESS',
                     card: response.card,
@@ -26,49 +27,49 @@ module.exports = tasks.add({
                     required_by: response.required_by,
                     id,
                 })
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'get card failure',
                     errors,
                 })
-            }
-        })
+            })
     },
 
     getCardForLearn: (id) => {
         delete store.data.cardResponse
         delete store.data.cardFeedback
         recorder.emit('learn card', id)
-        request({
+        return request({
             method: 'GET',
             url: `/s/cards/${id}/learn`,
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.data.learnCards = store.data.learnCards || {}
                 store.data.learnCards[id] = response.card
                 tasks.updateMenuContext({card: id})
                 recorder.emit('learn card success', id)
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'learn card failure',
                     errors,
                 })
-            }
-        })
+            })
     },
 
     listCardVersions: (id) => {
         recorder.emit('list card versions', id)
-        request({
+        return request({
             method: 'GET',
             url: `/s/cards/${id}/versions`,
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.data.cardVersions = store.data.cardVersions || {}
                 store.data.cardVersions[id] = store.data.cardVersions[id] || []
                 store.data.cardVersions[id] = mergeArraysByKey(
@@ -78,15 +79,14 @@ module.exports = tasks.add({
                 )
                 recorder.emit('list card versions success', id)
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'list card versions failure',
                     errors,
                 })
-            }
-        })
+            })
     },
 
     respondToCard: (id, data, goNext = false) => {
@@ -94,11 +94,12 @@ module.exports = tasks.add({
             type: 'SET_SENDING_ON'
         })
         recorder.emit('respond to card', id)
-        request({
+        return request({
             method: 'POST',
             url: `/s/cards/${id}/responses`,
             data: data,
-            done: (response) => {
+        })
+            .then((response) => {
                 if (response.next) {
                     recorder.emit('next', response.next)
                     store.data.next = response.next
@@ -110,23 +111,26 @@ module.exports = tasks.add({
                 store.data.cardFeedback = response.feedback
                 tasks.updateMenuContext({card: false})
                 recorder.emit('respond to card success', id)
-            },
-            fail: (errors) => {
-                store.update('errors', errorsReducer, {
-                    type: 'SET_ERRORS',
-                    message: 'respond to card failure',
-                    errors,
-                })
-            },
-            always: () => {
                 store.update('sending', sendingReducer, {
                     type: 'SET_SENDING_OFF'
                 })
                 if (goNext) {
                     tasks.nextState()
                 }
-            }
-        })
+            })
+            .catch((errors) => {
+                store.update('errors', errorsReducer, {
+                    type: 'SET_ERRORS',
+                    message: 'respond to card failure',
+                    errors,
+                })
+                store.update('sending', sendingReducer, {
+                    type: 'SET_SENDING_OFF'
+                })
+                if (goNext) {
+                    tasks.nextState()
+                }
+            })
     },
 
     nextState: () => {

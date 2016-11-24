@@ -10,11 +10,12 @@ const request = require('../modules/request')
 module.exports = tasks.add({
     listNotices: (limit = 50, skip = 0) => {
         recorder.emit('list notices')
-        request({
+        return request({
             method: 'GET',
             data: {limit, skip},
             url: '/s/notices',
-            done: (response) => {
+        })
+            .then((response) => {
                 store.update('notices', noticesReducer, {
                     type: 'LIST_NOTICES_SUCCESS',
                     message: 'list notices success',
@@ -22,24 +23,24 @@ module.exports = tasks.add({
                     skip,
                     notices: response.notices
                 })
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'list notices failure',
                     errors,
                 })
-            }
-        })
+            })
     },
 
     markNotice: (id, read = true) => {
         recorder.emit('mark notice', id, read)
-        request({
+        return request({
             method: 'PUT',
             url: `/s/notices/${id}`,
             data: {read},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.update('notices', noticesReducer, {
                     type: 'MARK_NOTICE_SUCCESS',
                     message: 'mark notice success',
@@ -47,14 +48,13 @@ module.exports = tasks.add({
                     read,
                     notice: response.notice
                 })
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'mark notice failure',
                     errors,
                 })
-            }
-        })
+            })
     }
 })

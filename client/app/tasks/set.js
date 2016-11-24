@@ -11,11 +11,12 @@ const request = require('../modules/request')
 module.exports = tasks.add({
     getSet: (id) => {
         recorder.emit('get set', id)
-        request({
+        return request({
             method: 'GET',
             url: `/s/sets/${id}`,
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 const set = response.set
                 store.data.sets = store.data.sets || {}
                 store.data.sets[id] = set
@@ -24,45 +25,45 @@ module.exports = tasks.add({
                 })
                 recorder.emit('get set success', id)
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'get set failure',
                     errors,
                 })
-            }
-        })
+            })
     },
 
     getRecommendedSets: () => {
         recorder.emit('get recommended sets')
-        request({
+        return request({
             method: 'GET',
             url: '/s/sets/recommended',
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.data.recommendedSets = response.sets
                 recorder.emit('get recommended sets success')
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'get recommended sets failure',
                     errors,
                 })
-            }
-        })
+            })
     },
 
     listSetVersions: (id) => {
         recorder.emit('list set versions', id)
-        request({
+        return request({
             method: 'GET',
             url: `/s/sets/${id}/versions`,
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.data.setVersions = store.data.setVersions || {}
                 store.data.setVersions[id] = store.data.setVersions[id] || []
                 store.data.setVersions[id] = mergeArraysByKey(
@@ -72,24 +73,24 @@ module.exports = tasks.add({
                 )
                 recorder.emit('list set versions success', id)
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'list set versions failure',
                     errors,
                 })
-            }
-        })
+            })
     },
 
     getSetTree: (id) => {
         recorder.emit('get set tree', id)
-        request({
+        return request({
             method: 'GET',
             url: `/s/sets/${id}/tree`,
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.data.setTrees = store.data.setTrees || {}
                 store.data.setTrees[id] = response
                 recorder.emit('get set tree success', id)
@@ -98,15 +99,14 @@ module.exports = tasks.add({
                     store.data.next = response.next
                 }
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'get set tree failure',
                     errors,
                 })
-            }
-        })
+            })
     },
 
     selectTreeUnit: (id) => {
@@ -117,34 +117,35 @@ module.exports = tasks.add({
 
     getSetUnits: (id) => {
         recorder.emit('get set units', id)
-        request({
+        return request({
             method: 'GET',
             url: `/s/sets/${id}/units`,
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.data.chooseUnit = response
                 recorder.emit('get set units success', id)
                 recorder.emit('next', response.next)
                 store.data.next = response.next
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'get set units failure',
                     errors,
                 })
-            }
-        })
+            })
     },
 
     chooseUnit: (setId, unitId) => {
         recorder.emit('choose unit', setId, unitId)
-        request({
+        return request({
             method: 'POST',
             url: `/s/sets/${setId}/units/${unitId}`,
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 recorder.emit('choose unit success', setId, unitId)
                 const {next} = response
                 store.data.next = next
@@ -159,14 +160,13 @@ module.exports = tasks.add({
                     tasks.route(`/cards/${args[0]}/learn`)
                 }
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'choose unit failure',
                     errors,
                 })
-            }
-        })
+            })
     }
 })

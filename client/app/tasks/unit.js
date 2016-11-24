@@ -10,11 +10,12 @@ const request = require('../modules/request')
 module.exports = tasks.add({
     getUnit: (id) => {
         recorder.emit('get unit', id)
-        request({
+        return request({
             method: 'GET',
             url: `/s/units/${id}`,
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.data.units = store.data.units || {}
                 const unit = response.unit
                 ;['topics', 'versions'].forEach(r => {
@@ -32,24 +33,24 @@ module.exports = tasks.add({
                 store.data.units[id] = unit
                 recorder.emit('get unit success', id)
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'get unit failure',
                     errors,
                 })
-            }
-        })
+            })
     },
 
     listUnitVersions: (id) => {
         recorder.emit('list unit versions', id)
-        request({
+        return request({
             method: 'GET',
             url: `/s/units/${id}/versions`,
             data: {},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.data.unitVersions = store.data.unitVersions || {}
                 store.data.unitVersions[id] = store.data.unitVersions[id] || []
                 store.data.unitVersions[id] = mergeArraysByKey(
@@ -59,14 +60,13 @@ module.exports = tasks.add({
                 )
                 recorder.emit('list unit versions success', id)
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'list unit versions failure',
                     errors,
                 })
-            }
-        })
+            })
     }
 })

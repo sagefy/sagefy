@@ -1,15 +1,17 @@
 const http = require('http')
-const {extend, parameterize, isString} = require('./utilities')
+const {convertDataToGet, isString} = require('./utilities')
 
-module.exports = function httpRequest({method, url, data, done, fail, always}) {
+module.exports = function httpRequest({method, url, data}) {
     method = method.toUpperCase()
     if (method === 'GET') {
-        url += url.indexOf('?') > -1 ? '&' : '?'
-        url += parameterize(extend(
-            data || {},
-            {_: +new Date()}  // Cachebreaker
-        ))
+        url = convertDataToGet(url, data)
     }
+    let done
+    let fail
+    const promise = new Promise((resolve, reject) => {
+        done = resolve
+        fail = reject
+    })
     const request = http.request({
         hostname: 'localhost',
         port: 8653,
@@ -33,14 +35,11 @@ module.exports = function httpRequest({method, url, data, done, fail, always}) {
             } else {
                 fail(responseData.errors)
             }
-            if (always) {
-                always()
-            }
         })
     })
     if(method !== 'GET') {
         request.write(JSON.stringify(data || {}))
     }
     request.end()
-    return request
+    return promise
 }

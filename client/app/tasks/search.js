@@ -14,11 +14,12 @@ module.exports = tasks.add({
             store.data.searchResults = []
         }
         store.data.searchQuery = q
-        request({
+        return request({
             method: 'GET',
             url: '/s/search',
             data: {q, skip, limit, order},
-            done: (response) => {
+        })
+            .then((response) => {
                 store.data.searchResults = store.data.searchResults || []
                 store.data.searchResults = mergeArraysByKey(
                     store.data.searchResults,
@@ -27,14 +28,13 @@ module.exports = tasks.add({
                 )
                 recorder.emit('search success', q, response.hits.length)
                 store.change()
-            },
-            fail: (errors) => {
+            })
+            .catch((errors) => {
                 store.update('errors', errorsReducer, {
                     type: 'SET_ERRORS',
                     message: 'search failure',
                     errors,
                 })
-            }
-        })
+            })
     }
 })
