@@ -310,5 +310,5 @@ def test_get_avatar():
 
     email = 'test@example.com'
     url = get_avatar(email)
-    assert url.startswith('http://www.gravatar.com/avatar/' +
+    assert url.startswith('https://www.gravatar.com/avatar/' +
                           '55502f40dc8b7c769880b10874abc9d0')

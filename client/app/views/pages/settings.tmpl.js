@@ -69,7 +69,7 @@ module.exports = (data) => {
             ' Change my password.'
         )),
         p(a(
-            {href: 'http://gravatar.com'},
+            {href: 'https://gravatar.com'},
             icon('update'),
             ' Update my avatar on Gravatar.'
         ))

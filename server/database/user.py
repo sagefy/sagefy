@@ -129,7 +129,7 @@ def get_avatar(email, size=24):
 
     hash_ = hashlib.md5(email.lower().encode('utf-8')).hexdigest()
     params = urllib.parse.urlencode({'d': 'mm', 's': str(size)})
-    gravatar_url = "http://www.gravatar.com/avatar/" + hash_ + "?" + params
+    gravatar_url = "https://www.gravatar.com/avatar/" + hash_ + "?" + params
     return gravatar_url
 
 
