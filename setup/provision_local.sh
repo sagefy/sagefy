@@ -97,9 +97,11 @@ sudo apt-get -y install software-properties-common
 sudo apt-get -y install python-software-properties python g++ make
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
+sudo npm install -g pm2
 cd /var/www/client
 sudo npm install
 npm run deploy
+pm2 start /var/www/client/app/index.server.js
 
 #### Server ###################################################################
 
