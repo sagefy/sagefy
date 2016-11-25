@@ -1,7 +1,9 @@
 const {valuefy} = require('./auxiliaries')
 
 const get = (query) => {
-    query = query || window.location.search.substring(1)
+    query = query ||
+        (typeof window !== 'undefined' &&
+         window.location.search.substring(1))
     if (!query) { return {} }
     const params = query.split('&')
     const data = {}
