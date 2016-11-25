@@ -3,8 +3,28 @@ const toHTML = require('vdom-to-html')
 const template = require('./views/index.tmpl')
 const {route} = require('./modules/route_actions')
 const store = require('./modules/store')
+const reducer = require('./reducers/index')
+const cookieParser = require('cookie-parser')
+
+// Require all tasks
+require('./tasks/card')
+require('./tasks/follow')
+require('./tasks/form')
+require('./tasks/menu')
+require('./tasks/notice')
+require('./tasks/post')
+require('./tasks/route')
+require('./tasks/search')
+require('./tasks/set')
+require('./tasks/topic')
+require('./tasks/unit')
+require('./tasks/user')
+require('./tasks/user_sets')
 
 const app = express()
+app.use(cookieParser())
+
+store.setReducer(reducer)
 
 const htmlTop = [
     '<!doctype html>',
@@ -17,20 +37,31 @@ const htmlTop = [
 
 const htmlBottom = '</body>'
 
+function render() {
+    const state = store.data
+    return htmlTop +
+           toHTML(template(state)) +
+           `<script>window.preload=${JSON.stringify(state)}</script>` +
+           htmlBottom
+}
+
 app.get(/.*/, (request, response) => {
-    const path = request.path
-    route(path)
-        .then(() => {
-            const state = store.data
-            // currentUserId
-            // route
-            response.status(200).send(
-                htmlTop +
-                toHTML(template(state)) +
-                `<script>window.preload=${JSON.stringify(state)}` +
-                htmlBottom
-            )
+    const path = request.originalUrl
+    console.log(path) // eslint-disable-line
+    if(request.cookies) {
+        store.data.currentUserID = request.cookies.currentUserID
+    }
+    global.requestCookie = `session_id=${request.cookies.session_id}`
+    const promise = route(path)
+    if (promise) {
+        promise.then(() => {
+            response.status(200).send(render())
+        }).catch((error) => {
+            console.error(error) // eslint-disable-line
         })
+    } else {
+        response.status(200).send(render())
+    }
 })
 
 app.listen(5984, () => {

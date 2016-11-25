@@ -5,7 +5,7 @@
 const recorder = require('./recorder')
 
 const store = {
-    data: window.preload || {},
+    data: typeof window === 'undefined' ? {} : window.preload || {},
 
     bind(fn) {
         store.callback = fn

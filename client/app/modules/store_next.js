@@ -1,5 +1,5 @@
 const listeners = []
-let state = window.preload || {}
+let state = typeof window === 'undefined' ? {} : window.preload || {}
 let reducer = () => {}
 function bind(fn) { listeners.push(fn) }
 function setReducer(fn) { reducer = fn }

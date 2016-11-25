@@ -50,7 +50,7 @@ const slugify = s => s.toLowerCase().replace(/[-\s]+/g, '_')
 // Set the page title.
 const setTitle = (title = 'FIX ME') => {
     title = `${title} – Sagefy`
-    if (document.title !== title) {
+    if (typeof document !== 'undefined' && document.title !== title) {
         document.title = title
     }
 }
@@ -70,6 +70,7 @@ const debounce = function debounce(fn, delay) {
 // Determine if a given path matches this router.
 // Returns either false or array, where array is matches parameters.
 const matchesRoute = (docPath, viewPath) => {
+    if (!docPath) { return false }
     docPath = docPath.split('?')[0]  // Only match the pre-query params
     if (isString(viewPath)) {
         viewPath = new RegExp(
@@ -83,6 +84,7 @@ const matchesRoute = (docPath, viewPath) => {
 }
 
 const valuefy = (value) => {
+    if (typeof value === 'undefined') return undefined
     if (value === 'true') return true
     if (value === 'false') return false
     if (value === 'null') return null

@@ -20,8 +20,10 @@ const route = (path) => {
     if (tasks.onRoute) { return tasks.onRoute(path) }
 }
 
-window.onpopstate = () => {
-    route(request())
+if (typeof window !== 'undefined') {
+    window.onpopstate = () => {
+        route(request())
+    }
 }
 
 tasks.add({

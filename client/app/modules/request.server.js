@@ -20,6 +20,7 @@ module.exports = function httpRequest({method, url, data}) {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Requested-With': 'Node.js',
+            Cookie: global.requestCookie || '',
         }
     }, (response) => {
         let body = ''
