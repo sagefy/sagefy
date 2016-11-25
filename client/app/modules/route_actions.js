@@ -16,8 +16,8 @@ const route = (path) => {
     recorder.emit('route', path)
     store.data.route = path
     store.data.routeQuery = getQueryParams(path)
-    if (tasks.onRoute) { tasks.onRoute(path) }
     store.change()
+    if (tasks.onRoute) { return tasks.onRoute(path) }
 }
 
 window.onpopstate = () => {

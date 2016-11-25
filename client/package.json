@@ -33,8 +33,10 @@
   "author": "Sagefy",
   "license": "Apache-2.0",
   "dependencies": {
-    "normalize.css": "3.0.3",
+    "express": "4.14.0",
     "font-awesome": "4.5.0",
+    "normalize.css": "3.0.3",
+    "vdom-to-html": "2.3.0",
     "virtual-dom": "2.1.1"
   },
   "devDependencies": {

@@ -2,8 +2,6 @@ const store = require('../modules/store')
 const tasks = require('../modules/tasks')
 const recorder = require('../modules/recorder')
 
-store.data.menu = {open: false, context: {}}
-
 module.exports = tasks.add({
     toggleMenu: () => {
         store.data.menu.open = !store.data.menu.open
