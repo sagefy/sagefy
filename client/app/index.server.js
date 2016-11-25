@@ -48,6 +48,7 @@ function render() {
 app.get(/.*/, (request, response) => {
     const path = request.originalUrl
     console.log(path) // eslint-disable-line
+    store.data = {} // make sure it doesn't use a pre-existing state
     if(request.cookies) {
         store.data.currentUserID = request.cookies.currentUserID
     }
