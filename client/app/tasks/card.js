@@ -95,8 +95,10 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 if (response.next) {
-                    recorder.emit('next', response.next)
-                    store.data.next = response.next
+                    store.dispatch({
+                        type: 'SET_NEXT',
+                        next: response.next,
+                    })
                 }
                 store.dispatch({
                     type: 'SET_CARD_RESPONSE',

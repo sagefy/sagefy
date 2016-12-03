@@ -76,8 +76,10 @@ module.exports = tasks.add({
                     unit: false,
                     card: false
                 })
-                store.data.next = response.next
-                store.change()
+                store.dispatch({
+                    type: 'SET_NEXT',
+                    next: response.next,
+                })
             })
             .catch((errors) => {
                 store.dispatch({

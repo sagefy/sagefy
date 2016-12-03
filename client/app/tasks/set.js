@@ -94,8 +94,10 @@ module.exports = tasks.add({
                 store.data.setTrees[id] = response
                 recorder.emit('get set tree success', id)
                 if (response.next && response.next.path) {
-                    recorder.emit('next', response.next)
-                    store.data.next = response.next
+                    store.dispatch({
+                        type: 'SET_NEXT',
+                        next: response.next,
+                    })
                 }
                 store.change()
             })
@@ -125,11 +127,12 @@ module.exports = tasks.add({
                 store.dispatch({
                     type: 'SET_CHOOSE_UNIT',
                     chooseUnit: response,
+                    message: 'get set units success',
                 })
-                recorder.emit('get set units success', id)
-                recorder.emit('next', response.next)
-                store.data.next = response.next
-                store.change()
+                store.dispatch({
+                    type: 'SET_NEXT',
+                    next: response.next,
+                })
             })
             .catch((errors) => {
                 store.dispatch({
@@ -150,8 +153,10 @@ module.exports = tasks.add({
             .then((response) => {
                 recorder.emit('choose unit success', setId, unitId)
                 const {next} = response
-                store.data.next = next
-                recorder.emit('next', next)
+                store.dispatch({
+                    type: 'SET_NEXT',
+                    next,
+                })
                 tasks.updateMenuContext({
                     set: setId,
                     unit: unitId,
