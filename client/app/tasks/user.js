@@ -53,9 +53,11 @@ module.exports = tasks.add({
             data: data,
         })
             .then((response) => {
-                store.data.users = store.data.users || {}
-                store.data.users[response.user.id] = response.user
-                recorder.emit('update user success', response.user.id)
+                store.dispatch({
+                    type: 'ADD_USER',
+                    user: response.user,
+                    message: 'update user success',
+                })
                 store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
@@ -81,10 +83,11 @@ module.exports = tasks.add({
             .then((response) => {
                 store.data.currentUserID = response.user.id
                 cookie.set('currentUserID', response.user.id)
-                store.data.users = store.data.users || {}
-                store.data.users[response.user.id] = response.user
-                recorder.emit('get current user success')
-                store.change()
+                store.dispatch({
+                    type: 'ADD_USER',
+                    user: response.user,
+                    message: 'get current user success',
+                })
             })
             .catch((errors) => {
                 store.dispatch({
@@ -103,14 +106,15 @@ module.exports = tasks.add({
             data: opts,
         })
             .then((response) => {
-                store.data.users = store.data.users || {}
                 const user = response.user
                 ;['avatar', 'posts', 'sets', 'follows'].forEach((t) => {
                     if (response[t]) { user[t] = response[t] }
                 })
-                store.data.users[response.user.id] = user
-                recorder.emit('get user success', id)
-                store.change()
+                store.dispatch({
+                    type: 'ADD_USER',
+                    message: 'get user success',
+                    user,
+                })
             })
             .catch((errors) => {
                 store.dispatch({
