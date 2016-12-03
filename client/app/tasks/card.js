@@ -36,7 +36,7 @@ module.exports = tasks.add({
 
     getCardForLearn: (id) => {
         delete store.data.cardResponse
-        delete store.data.cardFeedback
+        store.dispatch({type: 'RESET_CARD_FEEDBACK'})
         recorder.emit('learn card', id)
         return request({
             method: 'GET',
@@ -105,7 +105,10 @@ module.exports = tasks.add({
                 store.data.unitLearned = store.data.unitLearned || {}
                 store.data.unitLearned[response.response.unit_id] =
                     response.response.learned
-                store.data.cardFeedback = response.feedback
+                store.dispatch({
+                    type: 'SET_CARD_FEEDBACK',
+                    feedback: response.feedback,
+                })
                 tasks.updateMenuContext({card: false})
                 recorder.emit('respond to card success', id)
                 store.dispatch({
@@ -150,7 +153,10 @@ module.exports = tasks.add({
 
     needAnAnswer: () => {
         recorder.emit('need an answer')
-        store.data.cardFeedback = 'Please provide an answer.'
+        store.dispatch({
+            type: 'SET_CARD_FEEDBACK',
+            feedback: 'Please provide an answer.',
+        })
         store.change()
     }
 })
