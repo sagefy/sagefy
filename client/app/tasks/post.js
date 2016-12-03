@@ -15,8 +15,11 @@ module.exports = tasks.add({
             data: {},
         })
             .then((response) => {
-                store.data.topics = store.data.topics || {}
-                store.data.topics[id] = response.topic
+                store.dispatch({
+                    type: 'ADD_TOPIC',
+                    topic: response.topic,
+                    id,
+                })
 
                 store.data.topicPosts = store.data.topicPosts || {}
                 store.data.topicPosts[id] = store.data.topicPosts[id] || []

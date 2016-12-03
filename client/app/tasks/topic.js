@@ -17,9 +17,12 @@ module.exports = tasks.add({
             data: data,
         })
             .then((response) => {
-                store.data.topics = store.data.topics || {}
-                store.data.topics[response.topic.id] = response.topic
-                recorder.emit('create topic success')
+                store.dispatch({
+                    type: 'ADD_TOPIC',
+                    message: 'create topic success',
+                    topic: response.topic,
+                    id: response.topic.id,
+                })
                 tasks.route(`/topics/${response.topic.id}`)
                 store.dispatch({
                     type: 'SET_SENDING_OFF'
@@ -48,9 +51,12 @@ module.exports = tasks.add({
             data: data,
         })
             .then((response) => {
-                store.data.topics = store.data.topics || {}
-                store.data.topics[data.topic.id] = response.topic
-                recorder.emit('update topic success')
+                store.dispatch({
+                    type: 'ADD_TOPIC',
+                    topic: response.topic,
+                    id: data.topic.id,
+                    message: 'update topic success',
+                })
                 tasks.route(`/topics/${data.topic.id}`)
                 store.dispatch({
                     type: 'SET_SENDING_OFF'
