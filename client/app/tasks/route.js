@@ -28,7 +28,6 @@ module.exports = tasks.add({
         store.dispatch({
             type: 'RESET_FORM_DATA'
         })
-        store.data.pageData = {}
         store.dispatch({
             type: 'RESET_ERRORS'
         })

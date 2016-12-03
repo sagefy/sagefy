@@ -25,7 +25,6 @@ module.exports = combineReducers({
     menu: require('./menu'),
     next: require('./next'),
     notices: require('./notices'),
-    pageData: require('./pageData'),
     passwordPageState: require('./passwordPageState'),
     recommendedSets: require('./recommendedSets'),
     route: require('./route'),
