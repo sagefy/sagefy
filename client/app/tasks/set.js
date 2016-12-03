@@ -105,9 +105,10 @@ module.exports = tasks.add({
     },
 
     selectTreeUnit: (id) => {
-        recorder.emit('select tree unit', id)
-        store.data.currentTreeUnit = id
-        store.change()
+        store.dispatch({
+            type: 'SET_CURRENT_TREE_UNIT',
+            id,
+        })
     },
 
     getSetUnits: (id) => {
