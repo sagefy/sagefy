@@ -122,7 +122,10 @@ module.exports = tasks.add({
             data: {},
         })
             .then((response) => {
-                store.data.chooseUnit = response
+                store.dispatch({
+                    type: 'SET_CHOOSE_UNIT',
+                    chooseUnit: response,
+                })
                 recorder.emit('get set units success', id)
                 recorder.emit('next', response.next)
                 store.data.next = response.next
