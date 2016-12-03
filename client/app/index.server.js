@@ -50,7 +50,10 @@ app.get(/.*/, (request, response) => {
     console.log(path) // eslint-disable-line
     store.data = {} // make sure it doesn't use a pre-existing state
     if(request.cookies) {
-        store.data.currentUserID = request.cookies.currentUserID
+        store.dispatch({
+            type: 'SET_CURRENT_USER_ID',
+            currentUserID: request.cookies.currentUserID,
+        })
     }
     global.requestCookie = `session_id=${request.cookies.session_id}`
     const promise = route(path)

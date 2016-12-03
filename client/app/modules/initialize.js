@@ -63,7 +63,10 @@ function logAllRecorderEvents() {
 function go() {
     logAllRecorderEvents()
     store.setReducer(reducer)
-    store.data.currentUserID = cookie.get('currentUserID')
+    store.dispatch({
+        type: 'SET_CURRENT_USER_ID',
+        currentUserID: cookie.get('currentUserID'),
+    })
     route(window.location.pathname + window.location.search)
     init({
         view: indexView,

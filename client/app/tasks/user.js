@@ -1,12 +1,7 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-
 const recorder = require('../modules/recorder')
-const cookie = require('../modules/cookie')
-
 const request = require('../modules/request')
-
-// TODO-2 move setting and unsetting of currentUserID back to the server
 
 module.exports = tasks.add({
     createUser(data) {
@@ -21,9 +16,12 @@ module.exports = tasks.add({
             data: data,
         })
             .then((response) => {
-                store.data.currentUserID = response.user.id
-                cookie.set('currentUserID', response.user.id)
-                recorder.emit('create user success')
+                store.dispatch({
+                    type: 'SET_CURRENT_USER_ID',
+                    currentUserID: response.user.id,
+                    message: 'create user success',
+                })
+                // TODO-2 make this a listener
                 window.location = '/my_sets'
                 // Hard redirect to get the HTTP_ONLY cookie
                 store.dispatch({
@@ -81,8 +79,10 @@ module.exports = tasks.add({
             url: '/s/users/current',
         })
             .then((response) => {
-                store.data.currentUserID = response.user.id
-                cookie.set('currentUserID', response.user.id)
+                store.dispatch({
+                    type: 'SET_CURRENT_USER_ID',
+                    currentUserID: response.user.id,
+                })
                 store.dispatch({
                     type: 'ADD_USER',
                     user: response.user,
@@ -136,10 +136,13 @@ module.exports = tasks.add({
             data: data,
         })
             .then((response) => {
-                store.data.currentUserID = response.user.id
-                cookie.set('currentUserID', response.user.id)
-                recorder.emit('log in user success')
+                store.dispatch({
+                    type: 'SET_CURRENT_USER_ID',
+                    currentUserID: response.user.id,
+                    message: 'log in user success',
+                })
                 // Hard redirect to get the HTTP_ONLY cookie
+                // TODO-2 move to listener
                 window.location = '/my_sets'
                 store.dispatch({
                     type: 'SET_SENDING_OFF'
@@ -167,11 +170,13 @@ module.exports = tasks.add({
             url: '/s/sessions',
         })
             .then(() => {
-                store.data.currentUserID = null
-                cookie.unset('currentUserID')
+                store.dispatch({
+                    type: 'RESET_CURRENT_USER_ID',
+                    messsage: 'log out user success',
+                })
                 window.location = '/'
                 // Hard redirect to delete the HTTP_ONLY cookie
-                recorder.emit('log out user success')
+                // TODO-2 move to listener
                 store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
@@ -228,10 +233,13 @@ module.exports = tasks.add({
             data: data,
         })
             .then((response) => {
-                store.data.currentUserID = response.user.id
-                cookie.set('currentUserID', response.user.id)
-                recorder.emit('create password success')
+                store.dispatch({
+                    type: 'SET_CURRENT_USER_ID',
+                    message: 'create password success',
+                    currentUserID: response.user.id,
+                })
                 // Hard redirect to get the HTTP_ONLY cookie
+                // TODO-2 move to listener
                 window.location = '/my_sets'
                 store.dispatch({
                     type: 'SET_SENDING_OFF'

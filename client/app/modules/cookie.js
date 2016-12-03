@@ -12,6 +12,7 @@ const read = (s) => {
 
 // Get the cookie value at a particular key.
 const get = (key) => {
+    if(typeof document === 'undefined') { return null }
     const name = key + '='
     const cookies = document.cookie.split(';')
     for (let c of cookies) {
