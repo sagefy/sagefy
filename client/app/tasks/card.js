@@ -35,7 +35,7 @@ module.exports = tasks.add({
     },
 
     getCardForLearn: (id) => {
-        delete store.data.cardResponse
+        store.dispatch({type: 'RESET_CARD_RESPONSE'})
         store.dispatch({type: 'RESET_CARD_FEEDBACK'})
         recorder.emit('learn card', id)
         return request({
@@ -101,7 +101,10 @@ module.exports = tasks.add({
                     recorder.emit('next', response.next)
                     store.data.next = response.next
                 }
-                store.data.cardResponse = response.response
+                store.dispatch({
+                    type: 'SET_CARD_RESPONSE',
+                    response: response.response
+                })
                 store.data.unitLearned = store.data.unitLearned || {}
                 store.data.unitLearned[response.response.unit_id] =
                     response.response.learned

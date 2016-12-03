@@ -19,7 +19,7 @@ module.exports = (data) => {
     if (card.kind === 'video') {
         mode = 'next-please'
     } else if (card.kind === 'choice') {
-        if (data.cardResponse) {
+        if (data.cardResponse.score) {
             mode = 'next-please'
         } else {
             mode = 'answer'
@@ -27,7 +27,7 @@ module.exports = (data) => {
     }
 
     let feedbackLabel
-    if (data.cardResponse) {
+    if (data.cardResponse.score) {
         if (data.cardResponse.score === 1) {
             feedbackLabel = 'good'
         } else {
