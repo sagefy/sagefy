@@ -61,6 +61,13 @@ util.copy = (obj) => {
     return obj
 }
 
+util.shallowCopy = (obj) => {
+    return Object.keys(obj).reduce((next, key) => {
+        next[key] = obj[key]
+        return next
+    }, {})
+}
+
 // Try to parse a string as JSON, otherwise just return the string.
 util.parseJSON = (str) => {
     try {

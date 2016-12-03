@@ -1,7 +1,7 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
 const recorder = require('../modules/recorder')
-const {mergeArraysByKey, matchesRoute} = require('../modules/auxiliaries')
+const {matchesRoute} = require('../modules/auxiliaries')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
@@ -67,15 +67,12 @@ module.exports = tasks.add({
             data: {},
         })
             .then((response) => {
-                store.data.cardVersions = store.data.cardVersions || {}
-                store.data.cardVersions[id] = store.data.cardVersions[id] || []
-                store.data.cardVersions[id] = mergeArraysByKey(
-                    store.data.cardVersions[id],
-                    response.versions,
-                    'entity_id'
-                )
-                recorder.emit('list card versions success', id)
-                store.change()
+                store.dispatch({
+                    type: 'ADD_CARD_VERSIONS',
+                    versions: response.versions,
+                    message: 'list card versions success',
+                    id: id,
+                })
             })
             .catch((errors) => {
                 store.dispatch({
