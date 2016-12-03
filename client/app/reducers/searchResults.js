@@ -1,6 +1,15 @@
+const {mergeArraysByKey} = require('../modules/auxiliaries')
+
 module.exports = function searchResults(state = [], action = {type: ''}) {
-    if(action.type !== '') {
-        return state
+    if(action.type === 'RESET_SEARCH_RESULTS') {
+        return []
+    }
+    if(action.type === 'ADD_SEARCH_RESULTS') {
+        return mergeArraysByKey(
+            state,
+            action.results,
+            'id'
+        )
     }
     return state
 }

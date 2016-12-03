@@ -1,32 +1,27 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-
-const recorder = require('../modules/recorder')
-const {mergeArraysByKey} = require('../modules/auxiliaries')
-
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     search: ({q, skip = 0, limit = 10, order}) => {
-        recorder.emit('search', q)
         if (q !== store.data.searchQuery) {
-            store.data.searchResults = []
+            store.dispatch({type: 'RESET_SEARCH_RESULTS'})
         }
-        store.data.searchQuery = q
+        store.dispatch({
+            type: 'SET_SEARCH_QUERY',
+            q,
+        })
         return request({
             method: 'GET',
             url: '/s/search',
             data: {q, skip, limit, order},
         })
             .then((response) => {
-                store.data.searchResults = store.data.searchResults || []
-                store.data.searchResults = mergeArraysByKey(
-                    store.data.searchResults,
-                    response.hits,
-                    'id'
-                )
-                recorder.emit('search success', q, response.hits.length)
-                store.change()
+                store.dispatch({
+                    type: 'ADD_SEARCH_RESULTS',
+                    message: 'search success',
+                    results: response.hits
+                })
             })
             .catch((errors) => {
                 store.dispatch({
