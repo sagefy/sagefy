@@ -1,10 +1,7 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-
 const recorder = require('../modules/recorder')
 const {matchesRoute} = require('../modules/auxiliaries')
-const {mergeArraysByKey} = require('../modules/auxiliaries')
-
 const request = require('../modules/request')
 
 module.exports = tasks.add({
@@ -63,15 +60,12 @@ module.exports = tasks.add({
             data: {},
         })
             .then((response) => {
-                store.data.setVersions = store.data.setVersions || {}
-                store.data.setVersions[id] = store.data.setVersions[id] || []
-                store.data.setVersions[id] = mergeArraysByKey(
-                    store.data.setVersions[id],
-                    response.versions,
-                    'id'
-                )
-                recorder.emit('list set versions success', id)
-                store.change()
+                store.dispatch({
+                    type: 'ADD_SET_VERSIONS',
+                    versions: response.versions,
+                    entity_id: id,
+                    message: 'list set versions success',
+                })
             })
             .catch((errors) => {
                 store.dispatch({

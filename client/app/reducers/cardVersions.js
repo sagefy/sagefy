@@ -3,14 +3,14 @@ const {shallowCopy} = require('../modules/utilities')
 
 module.exports = function cardVersions(state = {}, action = {type: ''}) {
     if(action.type === 'ADD_CARD_VERSIONS') {
-        let versions = state[action.id] || []
+        let versions = state[action.entity_id] || []
         versions = mergeArraysByKey(
             versions,
             action.versions,
-            'entity_id'
+            'id' // id is the version id
         )
         state = shallowCopy(state)
-        state[action.id] = versions
+        state[action.entity_id] = versions
         return state
     }
     return state

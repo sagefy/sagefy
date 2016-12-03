@@ -71,7 +71,7 @@ module.exports = tasks.add({
                     type: 'ADD_CARD_VERSIONS',
                     versions: response.versions,
                     message: 'list card versions success',
-                    id: id,
+                    entity_id: id,
                 })
             })
             .catch((errors) => {
