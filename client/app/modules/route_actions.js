@@ -1,6 +1,5 @@
 const store = require('./store')
 const tasks = require('./tasks')
-const recorder = require('./recorder')
 const qs = require('./query_string')
 
 const request = () => {
@@ -13,10 +12,11 @@ const getQueryParams = (path) => {
 }
 
 const route = (path) => {
-    recorder.emit('route', path)
-    store.data.route = path
-    store.data.routeQuery = getQueryParams(path)
-    store.change()
+    store.dispatch({
+        type: 'SET_ROUTE',
+        route: path,
+        routeQuery: getQueryParams(path)
+    })
     if (tasks.onRoute) { return tasks.onRoute(path) }
 }
 

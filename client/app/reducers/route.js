@@ -1,6 +1,6 @@
 module.exports = function route(state = {}, action = {type: ''}) {
-    if(action.type !== '') {
-        return state
+    if(action.type === 'SET_ROUTE') {
+        return action.route
     }
     return state
 }
