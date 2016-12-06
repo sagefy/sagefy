@@ -39,7 +39,7 @@ module.exports = tasks.add({
 
     updateTopic: (data) => {
         dispatch({type: 'SET_SENDING_ON'})
-        dispatch({type: 'ADD_TOPIC'})
+        dispatch({type: 'UPDATE_TOPIC'})
         return request({
             method: 'PUT',
             url: `/s/topics/${data.topic.id}`,

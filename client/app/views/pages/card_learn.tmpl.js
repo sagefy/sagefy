@@ -1,4 +1,5 @@
 const {div, a, p} = require('../../modules/tags')
+const {isNumber} = require('../../modules/utilities')
 const spinner = require('../components/spinner.tmpl')
 // const c = require('../../modules/content').get
 const icon = require('../components/icon.tmpl')
@@ -19,7 +20,7 @@ module.exports = (data) => {
     if (card.kind === 'video') {
         mode = 'next-please'
     } else if (card.kind === 'choice') {
-        if (data.cardResponse.score) {
+        if (isNumber(data.cardResponse.score)) {
             mode = 'next-please'
         } else {
             mode = 'answer'
@@ -27,7 +28,7 @@ module.exports = (data) => {
     }
 
     let feedbackLabel
-    if (data.cardResponse.score) {
+    if (isNumber(data.cardResponse.score)) {
         if (data.cardResponse.score === 1) {
             feedbackLabel = 'good'
         } else {

@@ -21,6 +21,11 @@ util.isUndefined = (a) => {
     return typeof a === 'undefined'
 }
 
+// http://stackoverflow.com/a/9716488
+util.isNumber = (n) => {
+    return !isNaN(parseFloat(n)) && isFinite(n)
+}
+
 const objectConstructor = {}.constructor
 
 // Add the properties of the injects into the target.
