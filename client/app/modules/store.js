@@ -15,7 +15,6 @@ const store = {
     dispatch(action) {
         recorder.emit(action.message || action.type, action)
         store.data = store.reducer(store.data, action)
-        store.change()
         if (store.callback) {
             return store.callback(store.data)
         }
