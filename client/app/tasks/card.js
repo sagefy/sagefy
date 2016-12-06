@@ -106,9 +106,11 @@ module.exports = tasks.add({
                     type: 'SET_CARD_RESPONSE',
                     response: response.response
                 })
-                store.data.unitLearned = store.data.unitLearned || {}
-                store.data.unitLearned[response.response.unit_id] =
-                    response.response.learned
+                store.dispatch({
+                    type: 'ADD_UNIT_LEARNED',
+                    unit_id: response.response.unit_id,
+                    learned: response.response.learned,
+                })
                 store.dispatch({
                     type: 'SET_CARD_FEEDBACK',
                     feedback: response.feedback,
