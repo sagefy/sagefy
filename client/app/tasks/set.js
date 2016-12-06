@@ -39,9 +39,11 @@ module.exports = tasks.add({
             data: {},
         })
             .then((response) => {
-                store.data.recommendedSets = response.sets
-                recorder.emit('get recommended sets success')
-                store.change()
+                store.dispatch({
+                    type: 'SET_RECOMMENDED_SETS',
+                    message: 'get recommended sets success',
+                    recommendedSets: response.sets,
+                })
             })
             .catch((errors) => {
                 store.dispatch({
