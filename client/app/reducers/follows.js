@@ -9,7 +9,8 @@ module.exports = function follows(state = [], action = {type: ''}) {
             'id'
         )
         follows.forEach((follow, i) => {
-            extend(follow.entity, action.entities[i])
+            const entity = action.entities[i]
+            if (entity) { extend(follow.entity, entity) }
         })
         return follows
     }
