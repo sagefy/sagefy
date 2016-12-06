@@ -12,7 +12,6 @@ module.exports = tasks.add({
             data: {},
         })
             .then((response) => {
-                store.data.units = store.data.units || {}
                 const unit = response.unit
                 ;['topics', 'versions'].forEach(r => {
                     unit[r] = response[r]
@@ -26,9 +25,11 @@ module.exports = tasks.add({
                         })
                     )
                 )
-                store.data.units[id] = unit
-                recorder.emit('get unit success', id)
-                store.change()
+                store.dispatch({
+                    type: 'ADD_UNIT',
+                    message: 'get unit success',
+                    unit,
+                })
             })
             .catch((errors) => {
                 store.dispatch({

@@ -49,8 +49,10 @@ module.exports = tasks.add({
                         card: response.card,
                     })
                 } else if ('unit' in response) {
-                    store.data.units = store.data.units || {}
-                    store.data.units[response.unit.entity_id] = response.unit
+                    store.dispatch({
+                        type: 'ADD_UNIT',
+                        unit: response.unit,
+                    })
                 } else if ('set' in response) {
                     store.dispatch({
                         type: 'ADD_SET',
