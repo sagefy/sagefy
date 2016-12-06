@@ -1,9 +1,6 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-
 const recorder = require('../modules/recorder')
-const {mergeArraysByKey} = require('../modules/auxiliaries')
-
 const request = require('../modules/request')
 
 module.exports = tasks.add({
@@ -16,14 +13,11 @@ module.exports = tasks.add({
             data: {limit, skip},
         })
             .then((response) => {
-                store.data.userSets = store.data.userSets || []
-                store.data.userSets = mergeArraysByKey(
-                    store.data.userSets,
-                    response.sets,
-                    'id'
-                )
-                recorder.emit('list user sets success')
-                store.change()
+                store.dispatch({
+                    type: 'ADD_USER_SETS',
+                    sets: response.sets,
+                    message: 'list user sets success',
+                })
             })
             .catch((errors) => {
                 store.dispatch({
@@ -43,10 +37,12 @@ module.exports = tasks.add({
             data: {},
         })
             .then((response) => {
-                store.data.userSets.push(response.set)
-                recorder.emit('add user set success', setID)
+                store.dispatch({
+                    type: 'ADD_USER_SETS',
+                    sets: [response.set],
+                    message: 'add user set success',
+                })
                 tasks.route('/my_sets')
-                store.change()
             })
             .catch((errors) => {
                 store.dispatch({
@@ -55,7 +51,6 @@ module.exports = tasks.add({
                     errors,
                 })
                 tasks.route('/my_sets')
-                store.change()
             })
     },
 
@@ -101,7 +96,6 @@ module.exports = tasks.add({
             .then(() => {
                 // store.data TODO
                 recorder.emit('remove user set success', setID)
-                store.change()
             })
             .catch((errors) => {
                 store.dispatch({

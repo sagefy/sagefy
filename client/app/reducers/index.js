@@ -10,6 +10,8 @@ function combineReducers(reducerMap) {
     }
 }
 
+// TODO-3 change file names to camelcase to match other files
+
 module.exports = combineReducers({
     cardFeedback: require('./cardFeedback'),
     cardResponse: require('./cardResponse'),
@@ -41,4 +43,5 @@ module.exports = combineReducers({
     unitVersions: require('./unitVersions'),
     units: require('./units'),
     users: require('./users'),
+    userSets: require('./userSets'),
 })

@@ -8,7 +8,6 @@ module.exports = tasks.add({
         store.dispatch({
             type: 'SET_SENDING_ON'
         })
-        store.change()
         recorder.emit('create user')
         return request({
             method: 'POST',

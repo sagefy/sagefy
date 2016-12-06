@@ -163,6 +163,5 @@ module.exports = tasks.add({
             type: 'SET_CARD_FEEDBACK',
             feedback: 'Please provide an answer.',
         })
-        store.change()
     }
 })
