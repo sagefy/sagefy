@@ -44,11 +44,13 @@ module.exports = tasks.add({
             data: {},
         })
             .then((response) => {
-                store.data.learnCards = store.data.learnCards || {}
-                store.data.learnCards[id] = response.card
+                store.dispatch({
+                    type: 'ADD_LEARN_CARD',
+                    message: 'learn card success',
+                    card: response.card,
+                    id,
+                })
                 tasks.updateMenuContext({card: id})
-                recorder.emit('learn card success', id)
-                store.change()
             })
             .catch((errors) => {
                 store.dispatch({
