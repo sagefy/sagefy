@@ -52,8 +52,10 @@ module.exports = tasks.add({
                     store.data.units = store.data.units || {}
                     store.data.units[response.unit.entity_id] = response.unit
                 } else if ('set' in response) {
-                    store.data.sets = store.data.sets || {}
-                    store.data.sets[response.set.entity_id] = response.set
+                    store.dispatch({
+                        type: 'ADD_SET',
+                        set: response.set,
+                    })
                 }
 
                 recorder.emit('list posts success', id)

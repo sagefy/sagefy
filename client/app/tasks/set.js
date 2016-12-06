@@ -14,13 +14,14 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 const set = response.set
-                store.data.sets = store.data.sets || {}
-                store.data.sets[id] = set
                 ;['topics', 'versions', 'units'].forEach(r => {
                     set[r] = response[r]
                 })
-                recorder.emit('get set success', id)
-                store.change()
+                store.dispatch({
+                    type: 'ADD_SET',
+                    message: 'get set success',
+                    set,
+                })
             })
             .catch((errors) => {
                 store.dispatch({
