@@ -210,15 +210,15 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'kind': 'choice',
         'body': 'What is 2 + 2?',
         'options': [{
-            'value': '2',
+            'value': 'Two',
             'correct': False,
             'feedback': 'There are two numbers.',
         }, {
-            'value': '0',
+            'value': 'Zero',
             'correct': False,
             'feedback': 'We are not subtracting.',
         }, {
-            'value': '4',
+            'value': 'Four',
             'correct': True,
             'feedback': 'Yes, 2 + 2 = 4.',
         }],
@@ -240,15 +240,15 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'kind': 'choice',
         'body': 'What is 3 + 1?',
         'options': [{
-            'value': '3',
+            'value': 'Three',
             'correct': False,
             'feedback': 'There are two numbers.',
         }, {
-            'value': '1',
+            'value': 'One',
             'correct': False,
             'feedback': 'There are two numbers.',
         }, {
-            'value': '4',
+            'value': 'Four',
             'correct': True,
             'feedback': 'Yes, 3 + 1 = 4.',
         }],
@@ -286,15 +286,15 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'kind': 'choice',
         'body': 'What is 2 - 2?',
         'options': [{
-            'value': '2',
+            'value': 'Two',
             'correct': False,
             'feedback': 'There are two numbers.',
         }, {
-            'value': '0',
+            'value': 'Zero',
             'correct': True,
             'feedback': 'We are not subtracting.',
         }, {
-            'value': '1',
+            'value': 'One',
             'correct': False,
             'feedback': 'We are not dividing.',
         }],
@@ -316,15 +316,15 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'kind': 'choice',
         'body': 'What is 3 - 1?',
         'options': [{
-            'value': '2',
+            'value': 'Two',
             'correct': True,
             'feedback': 'Yes.',
         }, {
-            'value': '1',
+            'value': 'One',
             'correct': False,
             'feedback': 'There are two numbers.',
         }, {
-            'value': '4',
+            'value': 'Four',
             'correct': False,
             'feedback': 'There are two numbers.',
         }],
@@ -362,15 +362,15 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'kind': 'choice',
         'body': 'What is 2 * 2?',
         'options': [{
-            'value': '2',
+            'value': 'Two',
             'correct': False,
             'feedback': 'There are two numbers.',
         }, {
-            'value': '0',
+            'value': 'Zero',
             'correct': False,
             'feedback': 'We are not subtracting.',
         }, {
-            'value': '4',
+            'value': 'Four',
             'correct': True,
             'feedback': 'Yes, 2 * 2 = 4.',
         }],
@@ -392,15 +392,15 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'kind': 'choice',
         'body': 'What is 3 * 1?',
         'options': [{
-            'value': '3',
+            'value': 'Three',
             'correct': True,
             'feedback': 'Yes.',
         }, {
-            'value': '1',
+            'value': 'One',
             'correct': False,
             'feedback': 'There are two numbers.',
         }, {
-            'value': '4',
+            'value': 'Four',
             'correct': False,
             'feedback': 'There are two numbers.',
         }],
@@ -438,15 +438,15 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'kind': 'choice',
         'body': 'What is 2 / 2?',
         'options': [{
-            'value': '2',
+            'value': 'Two',
             'correct': False,
             'feedback': 'There are two numbers.',
         }, {
-            'value': '0',
+            'value': 'Zero',
             'correct': False,
             'feedback': 'We are not subtracting.',
         }, {
-            'value': '1',
+            'value': 'One',
             'correct': True,
             'feedback': 'Yes, 2 / 2 = 1.',
         }],
@@ -468,15 +468,15 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'kind': 'choice',
         'body': 'What is 3 / 1?',
         'options': [{
-            'value': '3',
+            'value': 'Three',
             'correct': True,
             'feedback': 'Yes.',
         }, {
-            'value': '1',
+            'value': 'One',
             'correct': False,
             'feedback': 'There are two numbers.',
         }, {
-            'value': '4',
+            'value': 'Four',
             'correct': False,
             'feedback': 'There are two numbers.',
         }],
