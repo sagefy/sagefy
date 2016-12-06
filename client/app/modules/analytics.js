@@ -21,21 +21,21 @@ const startGoogleAnalytics = () => {
     ga('send', 'pageview')
 }
 
-const trackEvent = (name, ...args) => {
-    if (name === 'route') {
+const trackEvent = (action) => {
+    if (action.type === 'SET_ROUTE') {
         ga('send', {
             hitType: 'pageview',
-            page: args[0],
+            page: action.route,
         })
         ga('set', {
-            page: args[0]
+            page: action.route
         })
     } else {
         ga('send', {
             hitType: 'event',
             eventCategory: 'Sagefy',
-            eventAction: name,
-            eventLabel: JSON.stringify(args),
+            eventAction: action.type,
+            eventLabel: JSON.stringify(action),
         })
     }
 }

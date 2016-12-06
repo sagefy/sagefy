@@ -1,74 +1,69 @@
-const store = require('../modules/store')
+const {dispatch} = require('../modules/store')
 const tasks = require('../modules/tasks')
-
-const recorder = require('../modules/recorder')
-
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     createTopic: (data) => {
-        store.dispatch({
+        dispatch({
             type: 'SET_SENDING_ON'
         })
-        recorder.emit('create topic')
+        dispatch({type: 'CREATE_TOPIC'})
         return request({
             method: 'POST',
             url: '/s/topics',
             data: data,
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'ADD_TOPIC',
                     message: 'create topic success',
                     topic: response.topic,
                     id: response.topic.id,
                 })
                 tasks.route(`/topics/${response.topic.id}`)
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'create topic failure',
                     errors,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     updateTopic: (data) => {
-        store.dispatch({
-            type: 'SET_SENDING_ON'
-        })
-        recorder.emit('update topic')
+        dispatch({type: 'SET_SENDING_ON'})
+        dispatch({type: 'ADD_TOPIC'})
         return request({
             method: 'PUT',
             url: `/s/topics/${data.topic.id}`,
             data: data,
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'ADD_TOPIC',
                     topic: response.topic,
                     id: data.topic.id,
                     message: 'update topic success',
                 })
                 tasks.route(`/topics/${data.topic.id}`)
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'update topic failure',
                     errors,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })

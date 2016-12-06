@@ -1,11 +1,10 @@
-const store = require('../modules/store')
+const {dispatch} = require('../modules/store')
 const tasks = require('../modules/tasks')
-const recorder = require('../modules/recorder')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     getUnit: (id) => {
-        recorder.emit('get unit', id)
+        dispatch({type: 'GET_UNIT', id})
         return request({
             method: 'GET',
             url: `/s/units/${id}`,
@@ -25,14 +24,14 @@ module.exports = tasks.add({
                         })
                     )
                 )
-                store.dispatch({
+                dispatch({
                     type: 'ADD_UNIT',
                     message: 'get unit success',
                     unit,
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'get unit failure',
                     errors,
@@ -41,14 +40,14 @@ module.exports = tasks.add({
     },
 
     listUnitVersions: (id) => {
-        recorder.emit('list unit versions', id)
+        dispatch({type: 'LIST_UNIT_VERSIONS', id})
         return request({
             method: 'GET',
             url: `/s/units/${id}/versions`,
             data: {},
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'ADD_UNIT_VERSIONS',
                     versions: response.versions,
                     entity_id: id,
@@ -56,7 +55,7 @@ module.exports = tasks.add({
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'list unit versions failure',
                     errors,

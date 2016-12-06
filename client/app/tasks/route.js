@@ -1,4 +1,4 @@
-const store = require('../modules/store')
+const {dispatch, getState} = require('../modules/store')
 const tasks = require('../modules/tasks')
 const {matchesRoute, ucfirst} = require('../modules/auxiliaries')
 
@@ -25,10 +25,10 @@ const routes = [
 
 module.exports = tasks.add({
     onRoute: (path) => {
-        store.dispatch({
+        dispatch({
             type: 'RESET_FORM_DATA'
         })
-        store.dispatch({
+        dispatch({
             type: 'RESET_ERRORS'
         })
         for (const route of routes) {
@@ -40,9 +40,9 @@ module.exports = tasks.add({
     },
 
     openSettingsRoute: () => {
-        if (!store.data.currentUserID ||
-            !store.data.users ||
-            !store.data.users[store.data.currentUserID]) {
+        if (!getState().currentUserID ||
+            !getState().users ||
+            !getState().users[getState().currentUserID]) {
             return tasks.getCurrentUser()
         }
     },
@@ -82,7 +82,7 @@ module.exports = tasks.add({
     },
 
     openCreateTopic: () => {
-        const {kind, id} = store.data.routeQuery
+        const {kind, id} = getState().routeQuery
         return tasks[`get${ucfirst(kind)}`](id)
     },
 
@@ -114,7 +114,7 @@ module.exports = tasks.add({
     },
 
     openSearch: () => {
-        const q = store.data.routeQuery.q
+        const q = getState().routeQuery.q
         if (q) {
             return tasks.search({q})
         }

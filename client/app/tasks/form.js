@@ -1,11 +1,10 @@
-const store = require('../modules/store')
+const {dispatch} = require('../modules/store')
 const tasks = require('../modules/tasks')
-const recorder = require('../modules/recorder')
 const {validateFormData} = require('../modules/auxiliaries')
 
 module.exports = tasks.add({
     updateFormData: (data) => {
-        store.dispatch({
+        dispatch({
             data,
             message: 'update form data',
             type: 'SET_FORM_DATA',
@@ -15,18 +14,18 @@ module.exports = tasks.add({
     validateForm: (data, schema, fields) => {
         const errors = validateFormData(data, schema, fields)
         if (errors.length) {
-            store.dispatch({
+            dispatch({
                 type: 'SET_ERRORS',
                 message: 'validate form - invalid',
                 errors,
             })
             return errors
         }
-        recorder.emit('validate form - valid')
+        dispatch({type: 'FORM_IS_VALID'})
     },
 
     addListFieldRow: (name, columns) => {
-        store.dispatch({
+        dispatch({
             type: 'ADD_LIST_FIELD_ROW',
             message: 'add list field row',
             name,
@@ -35,7 +34,7 @@ module.exports = tasks.add({
     },
 
     removeListFieldRow: (name, index) => {
-        store.dispatch({
+        dispatch({
             type: 'REMOVE_LIST_FIELD_ROW',
             message: 'remove list field row',
             name,

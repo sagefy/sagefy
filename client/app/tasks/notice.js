@@ -1,20 +1,17 @@
-const store = require('../modules/store')
+const {dispatch} = require('../modules/store')
 const tasks = require('../modules/tasks')
-
-const recorder = require('../modules/recorder')
-
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     listNotices: (limit = 50, skip = 0) => {
-        recorder.emit('list notices')
+        dispatch({type: 'LIST_NOTICES', limit, skip})
         return request({
             method: 'GET',
             data: {limit, skip},
             url: '/s/notices',
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'LIST_NOTICES_SUCCESS',
                     message: 'list notices success',
                     limit,
@@ -23,7 +20,7 @@ module.exports = tasks.add({
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'list notices failure',
                     errors,
@@ -32,14 +29,14 @@ module.exports = tasks.add({
     },
 
     markNotice: (id, read = true) => {
-        recorder.emit('mark notice', id, read)
+        dispatch({type: 'MARK_NOTICE', id, read})
         return request({
             method: 'PUT',
             url: `/s/notices/${id}`,
             data: {read},
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'MARK_NOTICE_SUCCESS',
                     message: 'mark notice success',
                     id,
@@ -48,7 +45,7 @@ module.exports = tasks.add({
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'mark notice failure',
                     errors,

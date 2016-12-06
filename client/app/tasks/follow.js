@@ -1,27 +1,24 @@
-const store = require('../modules/store')
+const {dispatch} = require('../modules/store')
 const tasks = require('../modules/tasks')
-
-const recorder = require('../modules/recorder')
-
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     listFollows: (skip = 0, limit = 50) => {
-        recorder.emit('list follows')
+        dispatch({type: 'LIST_FOLLOWS'})
         return request({
             method: 'GET',
             url: '/s/follows',
             data: {skip, limit, entities: true},
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'LIST_FOLLOWS_SUCCESS',
                     follows: response.follows,
                     entities: response.entities,
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'list follows failure',
                     errors,
@@ -30,21 +27,21 @@ module.exports = tasks.add({
     },
 
     askFollow: (entityID) => {
-        recorder.emit('ask follow', entityID)
+        dispatch({type: 'ASK_FOLLOW', entityID})
         return request({
             method: 'GET',
             url: '/s/follows',
             data: {entity_id: entityID},
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'ASK_FOLLOW_SUCCESS',
                     follows: response.follows,
                     entityID
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'ask follow failure',
                     errors,
@@ -53,20 +50,20 @@ module.exports = tasks.add({
     },
 
     follow: (data) => {
-        recorder.emit('follow', data.entity.id)
+        dispatch({type: 'FOLLOW', id: data.entity.id})
         return request({
             method: 'POST',
             url: '/s/follows',
             data: data,
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'FOLLOW_SUCCESS',
                     follow: response.follow
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'follow failure',
                     errors,
@@ -75,19 +72,19 @@ module.exports = tasks.add({
     },
 
     unfollow: (id) => {
-        recorder.emit('unfollow', id)
+        dispatch({type: 'UNFOLLOW', id})
         return request({
             method: 'DELETE',
             url: `/s/follows/${id}`,
         })
             .then(() => {
-                store.dispatch({
+                dispatch({
                     type: 'UNFOLLOW_SUCCESS',
                     id
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'unfollow failure',
                     errors,

@@ -1,21 +1,20 @@
-const store = require('../modules/store')
+const {dispatch} = require('../modules/store')
 const tasks = require('../modules/tasks')
-const recorder = require('../modules/recorder')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     createUser(data) {
-        store.dispatch({
+        dispatch({
             type: 'SET_SENDING_ON'
         })
-        recorder.emit('create user')
+        dispatch({type: 'CREATE_USER'})
         return request({
             method: 'POST',
             url: '/s/users',
             data: data,
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_CURRENT_USER_ID',
                     currentUserID: response.user.id,
                     message: 'create user success',
@@ -23,73 +22,73 @@ module.exports = tasks.add({
                 // TODO-2 make this a listener
                 window.location = '/my_sets'
                 // Hard redirect to get the HTTP_ONLY cookie
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'create user failure',
                     errors,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     updateUser(data) {
-        store.dispatch({
+        dispatch({
             type: 'SET_SENDING_ON'
         })
-        recorder.emit('update user', data.id)
+        dispatch({type: 'UPDATE_USER', id: data.id})
         return request({
             method: 'PUT',
             url: `/s/users/${data.id}`,
             data: data,
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'ADD_USER',
                     user: response.user,
                     message: 'update user success',
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'update user failure',
                     errors,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     getCurrentUser() {
-        recorder.emit('get current user')
+        dispatch({type: 'GET_CURRENT_USER'})
         return request({
             method: 'GET',
             url: '/s/users/current',
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_CURRENT_USER_ID',
                     currentUserID: response.user.id,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'ADD_USER',
                     user: response.user,
                     message: 'get current user success',
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'get current user failure',
                     errors,
@@ -98,7 +97,7 @@ module.exports = tasks.add({
     },
 
     getUser(id, opts = {}) {
-        recorder.emit('get user', id)
+        dispatch({type: 'GET_USER', id})
         return request({
             method: 'GET',
             url: `/s/users/${id}`,
@@ -109,14 +108,14 @@ module.exports = tasks.add({
                 ;['avatar', 'posts', 'sets', 'follows'].forEach((t) => {
                     if (response[t]) { user[t] = response[t] }
                 })
-                store.dispatch({
+                dispatch({
                     type: 'ADD_USER',
                     message: 'get user success',
                     user,
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'get user failure',
                     errors,
@@ -125,17 +124,17 @@ module.exports = tasks.add({
     },
 
     logInUser(data) {
-        store.dispatch({
+        dispatch({
             type: 'SET_SENDING_ON'
         })
-        recorder.emit('log in user')
+        dispatch({type: 'LOG_IN_USER'})
         return request({
             method: 'POST',
             url: '/s/sessions',
             data: data,
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_CURRENT_USER_ID',
                     currentUserID: response.user.id,
                     message: 'log in user success',
@@ -143,99 +142,99 @@ module.exports = tasks.add({
                 // Hard redirect to get the HTTP_ONLY cookie
                 // TODO-2 move to listener
                 window.location = '/my_sets'
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'log in user failure',
                     errors,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     logOutUser() {
-        store.dispatch({
+        dispatch({
             type: 'SET_SENDING_ON'
         })
-        recorder.emit('log out user')
+        dispatch({type: 'LOG_OUT_USER'})
         return request({
             method: 'DELETE',
             url: '/s/sessions',
         })
             .then(() => {
-                store.dispatch({
+                dispatch({
                     type: 'RESET_CURRENT_USER_ID',
                     messsage: 'log out user success',
                 })
                 window.location = '/'
                 // Hard redirect to delete the HTTP_ONLY cookie
                 // TODO-2 move to listener
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'log out user failure',
                     errors,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     getUserPasswordToken(data) {
-        store.dispatch({
+        dispatch({
             type: 'SET_SENDING_ON'
         })
-        recorder.emit('get password token')
+        dispatch({type: 'GET_PASSWORD_TOKEN'})
         return request({
             method: 'POST',
             url: '/s/password_tokens',
             data: data,
         })
             .then(() => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_PASSWORD_PAGE_STATE',
                     state: 'inbox',
                     message: 'get password token success',
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'get password token failure',
                     errors,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     createUserPassword(data) {
-        store.dispatch({
+        dispatch({
             type: 'SET_SENDING_ON'
         })
-        recorder.emit('create password')
+        dispatch({type: 'CREATE_PASSWORD'})
         return request({
             method: 'POST',
             url: `/s/users/${data.id}/password`,
             data: data,
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_CURRENT_USER_ID',
                     message: 'create password success',
                     currentUserID: response.user.id,
@@ -243,17 +242,17 @@ module.exports = tasks.add({
                 // Hard redirect to get the HTTP_ONLY cookie
                 // TODO-2 move to listener
                 window.location = '/my_sets'
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'create password failure',
                     errors,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })

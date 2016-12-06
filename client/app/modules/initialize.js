@@ -1,5 +1,4 @@
-const recorder = require('./recorder')
-const store = require('./store')
+const {dispatch, bind, setReducer} = require('./store')
 const reducer = require('../reducers/index')
 const init = require('./init')
 const cookie = require('./cookie')
@@ -8,7 +7,6 @@ const {startGoogleAnalytics, trackEvent} = require('./analytics')
 const indexView = require('../views/index.tmpl')
 
 startGoogleAnalytics()
-recorder.on('all', trackEvent)
 
 // Require all tasks
 require('../tasks/card')
@@ -55,15 +53,24 @@ require('../views/pages/tree.vnt')
 require('../views/pages/unit.vnt')
 
 // Log all recorder events to the console and analytics
-function logAllRecorderEvents() {
-    recorder.on('all', (...args) => console.log(...args)) //eslint-disable-line
+function logAllActions() {
+    bind((state, action) => {
+        console.log(action.type, action, state) // eslint-disable-line
+    })
+}
+
+function trackAllActions() {
+    bind((state, action) => {
+        trackEvent(action)
+    })
 }
 
 // Start up the application
 function go() {
-    logAllRecorderEvents()
-    store.setReducer(reducer)
-    store.dispatch({
+    logAllActions()
+    trackAllActions()
+    setReducer(reducer)
+    dispatch({
         type: 'SET_CURRENT_USER_ID',
         currentUserID: cookie.get('currentUserID'),
     })
@@ -74,4 +81,4 @@ function go() {
     })
 }
 
-module.exports = {go, logAllRecorderEvents}
+module.exports = {go, logAllActions, trackAllActions}

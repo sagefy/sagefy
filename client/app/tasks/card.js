@@ -1,19 +1,18 @@
-const store = require('../modules/store')
+const {dispatch, getState} = require('../modules/store')
 const tasks = require('../modules/tasks')
-const recorder = require('../modules/recorder')
 const {matchesRoute} = require('../modules/auxiliaries')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     getCard: (id) => {
-        recorder.emit('get card', id)
+        dispatch({type: 'GET_CARD', id})
         return request({
             method: 'GET',
             url: `/s/cards/${id}`,
             data: {},
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'GET_CARD_SUCCESS',
                     card: response.card,
                     topics: response.topics,
@@ -26,7 +25,7 @@ module.exports = tasks.add({
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'get card failure',
                     errors,
@@ -35,16 +34,16 @@ module.exports = tasks.add({
     },
 
     getCardForLearn: (id) => {
-        store.dispatch({type: 'RESET_CARD_RESPONSE'})
-        store.dispatch({type: 'RESET_CARD_FEEDBACK'})
-        recorder.emit('learn card', id)
+        dispatch({type: 'RESET_CARD_RESPONSE'})
+        dispatch({type: 'RESET_CARD_FEEDBACK'})
+        dispatch({type: 'GET_LEARN_CARD', id})
         return request({
             method: 'GET',
             url: `/s/cards/${id}/learn`,
             data: {},
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'ADD_LEARN_CARD',
                     message: 'learn card success',
                     card: response.card,
@@ -53,7 +52,7 @@ module.exports = tasks.add({
                 tasks.updateMenuContext({card: id})
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'learn card failure',
                     errors,
@@ -62,14 +61,14 @@ module.exports = tasks.add({
     },
 
     listCardVersions: (id) => {
-        recorder.emit('list card versions', id)
+        dispatch({type: 'LIST_CARD_VERSIONS', id})
         return request({
             method: 'GET',
             url: `/s/cards/${id}/versions`,
             data: {},
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'ADD_CARD_VERSIONS',
                     versions: response.versions,
                     message: 'list card versions success',
@@ -77,7 +76,7 @@ module.exports = tasks.add({
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'list card versions failure',
                     errors,
@@ -86,8 +85,8 @@ module.exports = tasks.add({
     },
 
     respondToCard: (id, data, goNext = false) => {
-        recorder.emit('respond to card', id)
-        store.dispatch({
+        dispatch({type: 'RESPOND_TO_CARD', id})
+        dispatch({
             type: 'SET_SENDING_ON'
         })
         return request({
@@ -97,27 +96,27 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 if (response.next) {
-                    store.dispatch({
+                    dispatch({
                         type: 'SET_NEXT',
                         next: response.next,
                     })
                 }
-                store.dispatch({
+                dispatch({
                     type: 'SET_CARD_RESPONSE',
+                    message: 'respond to card success',
                     response: response.response
                 })
-                store.dispatch({
+                dispatch({
                     type: 'ADD_UNIT_LEARNED',
                     unit_id: response.response.unit_id,
                     learned: response.response.learned,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_CARD_FEEDBACK',
                     feedback: response.feedback,
                 })
                 tasks.updateMenuContext({card: false})
-                recorder.emit('respond to card success', id)
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
                 if (goNext) {
@@ -125,12 +124,12 @@ module.exports = tasks.add({
                 }
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'respond to card failure',
                     errors,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
                 if (goNext) {
@@ -140,8 +139,7 @@ module.exports = tasks.add({
     },
 
     nextState: () => {
-        recorder.emit('next state')
-        const path = store.data.next.path
+        const path = getState().next.path
         let args
         args = matchesRoute(path, '/s/cards/{id}/learn')
         if (args) {
@@ -158,8 +156,7 @@ module.exports = tasks.add({
     },
 
     needAnAnswer: () => {
-        recorder.emit('need an answer')
-        store.dispatch({
+        dispatch({
             type: 'SET_CARD_FEEDBACK',
             feedback: 'Please provide an answer.',
         })

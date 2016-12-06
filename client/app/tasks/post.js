@@ -1,18 +1,17 @@
-const store = require('../modules/store')
+const {dispatch} = require('../modules/store')
 const tasks = require('../modules/tasks')
-const recorder = require('../modules/recorder')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     listPosts: (id) => {
-        recorder.emit('list posts', id)
+        dispatch({type: 'LIST_POSTS', id})
         return request({
             method: 'GET',
             url: `/s/topics/${id}/posts`,
             data: {},
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'ADD_TOPIC',
                     topic: response.topic,
                     id,
@@ -29,7 +28,7 @@ module.exports = tasks.add({
                     }
                 })
 
-                store.dispatch({
+                dispatch({
                     type: 'ADD_TOPIC_POSTS',
                     message: 'list posts success',
                     topic_id: id,
@@ -37,25 +36,25 @@ module.exports = tasks.add({
                 })
 
                 if ('card' in response) {
-                    store.dispatch({
+                    dispatch({
                         type: 'LIST_POSTS_SUCCESS',
                         entity: 'card',
                         card: response.card,
                     })
                 } else if ('unit' in response) {
-                    store.dispatch({
+                    dispatch({
                         type: 'ADD_UNIT',
                         unit: response.unit,
                     })
                 } else if ('set' in response) {
-                    store.dispatch({
+                    dispatch({
                         type: 'ADD_SET',
                         set: response.set,
                     })
                 }
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'list posts failure',
                     errors,
@@ -64,72 +63,71 @@ module.exports = tasks.add({
     },
 
     createPost: (data) => {
-        store.dispatch({
+        dispatch({
             type: 'SET_SENDING_ON'
         })
         const topicId = data.post.topicId || data.post.topic_id
-        recorder.emit('create post')
+        dispatch({type: 'CREATE_POST', topicId})
         return request({
             method: 'POST',
             url: `/s/topics/${topicId}/posts`,
             data: data,
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'ADD_TOPIC_POSTS',
                     message: 'create post success',
                     topic_id: topicId,
                     posts: [response.post],
                 })
                 tasks.route(`/topics/${topicId}`)
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'create post failure',
                     errors,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
     },
 
     updatePost: (data) => {
-        store.dispatch({
+        dispatch({
             type: 'SET_SENDING_ON'
         })
         const {id} = data.post
         const topicId = data.post.topic_id
-        recorder.emit('update post')
+        dispatch({type: 'UPDATE_POST'})
         return request({
             method: 'PUT',
             url: `/s/topics/${topicId}/posts/${id}`,
             data: data,
         })
             .then((response) => {
-                const topic = store.data.topicPosts &&
-                              store.data.topicPosts[topicId]
-                if (topic) {
-                    const index = topic.findIndex((post) => post.id === id)
-                    topic[index] = response.post
-                }
-                recorder.emit('update post success')
+                dispatch({
+                    type: 'UPDATE_POST_SUCCESS',
+                    topicId,
+                    postId: id,
+                    post: response.post,
+                })
                 tasks.route(`/topics/${topicId}`)
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'update post failure',
                     errors,
                 })
-                store.dispatch({
+                dispatch({
                     type: 'SET_SENDING_OFF'
                 })
             })

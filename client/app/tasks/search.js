@@ -1,13 +1,13 @@
-const store = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
+const {getState, dispatch} = require('../modules/store')
 
 module.exports = tasks.add({
     search: ({q, skip = 0, limit = 10, order}) => {
-        if (q !== store.data.searchQuery) {
-            store.dispatch({type: 'RESET_SEARCH_RESULTS'})
+        if (q !== getState().searchQuery) {
+            dispatch({type: 'RESET_SEARCH_RESULTS'})
         }
-        store.dispatch({
+        dispatch({
             type: 'SET_SEARCH_QUERY',
             q,
         })
@@ -17,14 +17,14 @@ module.exports = tasks.add({
             data: {q, skip, limit, order},
         })
             .then((response) => {
-                store.dispatch({
+                dispatch({
                     type: 'ADD_SEARCH_RESULTS',
                     message: 'search success',
                     results: response.hits
                 })
             })
             .catch((errors) => {
-                store.dispatch({
+                dispatch({
                     type: 'SET_ERRORS',
                     message: 'search failure',
                     errors,

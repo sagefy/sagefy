@@ -2,7 +2,7 @@ const express = require('express')
 const toHTML = require('vdom-to-html')
 const template = require('./views/index.tmpl')
 const {route} = require('./modules/route_actions')
-const store = require('./modules/store')
+const {dispatch, getState, setReducer, resetState} = require('./modules/store')
 const reducer = require('./reducers/index')
 const cookieParser = require('cookie-parser')
 
@@ -24,7 +24,7 @@ require('./tasks/user_sets')
 const app = express()
 app.use(cookieParser())
 
-store.setReducer(reducer)
+setReducer(reducer)
 
 const htmlTop = [
     '<!doctype html>',
@@ -38,7 +38,7 @@ const htmlTop = [
 const htmlBottom = '</body>'
 
 function render() {
-    const state = store.data
+    const state = getState()
     return htmlTop +
            toHTML(template(state)) +
            `<script>window.preload=${JSON.stringify(state)}</script>` +
@@ -48,9 +48,9 @@ function render() {
 app.get(/.*/, (request, response) => {
     const path = request.originalUrl
     console.log(path) // eslint-disable-line
-    store.data = {} // make sure it doesn't use a pre-existing state
+    resetState() // make sure it doesn't use a pre-existing state
     if(request.cookies) {
-        store.dispatch({
+        dispatch({
             type: 'SET_CURRENT_USER_ID',
             currentUserID: request.cookies.currentUserID,
         })

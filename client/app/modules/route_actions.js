@@ -1,4 +1,4 @@
-const store = require('./store')
+const {dispatch} = require('./store')
 const tasks = require('./tasks')
 const qs = require('./query_string')
 
@@ -12,7 +12,7 @@ const getQueryParams = (path) => {
 }
 
 const route = (path) => {
-    store.dispatch({
+    dispatch({
         type: 'SET_ROUTE',
         route: path,
         routeQuery: getQueryParams(path)
