@@ -86,9 +86,12 @@ module.exports = tasks.add({
             data: {},
         })
             .then((response) => {
-                store.data.setTrees = store.data.setTrees || {}
-                store.data.setTrees[id] = response
-                recorder.emit('get set tree success', id)
+                store.dispatch({
+                    type: 'ADD_SET_TREE',
+                    message: 'get set tree success',
+                    tree: response,
+                    id,
+                })
                 if (response.next && response.next.path) {
                     store.dispatch({
                         type: 'SET_NEXT',
