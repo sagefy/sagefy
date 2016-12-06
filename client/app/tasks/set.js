@@ -99,7 +99,6 @@ module.exports = tasks.add({
                         next: response.next,
                     })
                 }
-                store.change()
             })
             .catch((errors) => {
                 store.dispatch({
@@ -167,7 +166,6 @@ module.exports = tasks.add({
                 if (args) {
                     tasks.route(`/cards/${args[0]}/learn`)
                 }
-                store.change()
             })
             .catch((errors) => {
                 store.dispatch({

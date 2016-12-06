@@ -1,9 +1,6 @@
 const store = require('../modules/store')
 const tasks = require('../modules/tasks')
-
 const recorder = require('../modules/recorder')
-const {mergeArraysByKey} = require('../modules/auxiliaries')
-
 const request = require('../modules/request')
 
 module.exports = tasks.add({
@@ -21,9 +18,6 @@ module.exports = tasks.add({
                     id,
                 })
 
-                store.data.topicPosts = store.data.topicPosts || {}
-                store.data.topicPosts[id] = store.data.topicPosts[id] || []
-
                 const posts = response.posts
                 posts.forEach(post => {
                     const user = response.users[post.user_id]
@@ -35,12 +29,12 @@ module.exports = tasks.add({
                     }
                 })
 
-                store.data.topicPosts[id] = store.data.topicPosts[id] || []
-                store.data.topicPosts[id] = mergeArraysByKey(
-                    store.data.topicPosts[id],
+                store.dispatch({
+                    type: 'ADD_TOPIC_POSTS',
+                    message: 'list posts success',
+                    topic_id: id,
                     posts,
-                    'id'
-                )
+                })
 
                 if ('card' in response) {
                     store.dispatch({
@@ -59,9 +53,6 @@ module.exports = tasks.add({
                         set: response.set,
                     })
                 }
-
-                recorder.emit('list posts success', id)
-                store.change()
             })
             .catch((errors) => {
                 store.dispatch({
@@ -84,12 +75,13 @@ module.exports = tasks.add({
             data: data,
         })
             .then((response) => {
-                if (store.data.topicPosts && store.data.topicPosts[topicId]) {
-                    store.data.topicPosts[topicId].push(response.post)
-                }
-                recorder.emit('create post success')
+                store.dispatch({
+                    type: 'ADD_TOPIC_POSTS',
+                    message: 'create post success',
+                    topic_id: topicId,
+                    posts: [response.post],
+                })
                 tasks.route(`/topics/${topicId}`)
-                store.change()
                 store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
