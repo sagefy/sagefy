@@ -204,8 +204,11 @@ module.exports = tasks.add({
             data: data,
         })
             .then(() => {
-                store.data.passwordPageState = 'inbox'
-                recorder.emit('get password token success')
+                store.dispatch({
+                    type: 'SET_PASSWORD_PAGE_STATE',
+                    state: 'inbox',
+                    message: 'get password token success',
+                })
                 store.dispatch({
                     type: 'SET_SENDING_OFF'
                 })
