@@ -35,3 +35,16 @@ Push gh-pages to Github Pages
 -----------------------------
 
     git subtree push --prefix gh-pages origin gh-pages
+
+
+Deploy steps
+------------
+
+    cd /var/www
+    sudo git pull origin master  # ugh
+    cd /client
+    sudo npm run deploy
+    sudo cp -a app/images/* distributi
+on/ && sudo cp -a app/*.{html,txt,ico} distribution/   # ugh
+    pm2 restart all
+    # TODO restart uwsgi... should not be in watch mode on prod
