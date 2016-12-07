@@ -12,7 +12,7 @@ module.exports = () =>
             li(
                 strong('I have a problem with content.'),
                 br(),
-                'Flag it, discuss it, or propose removing it.'
+                'Discuss it in the site, or propose removing it.'
             ),
             li(
                 strong('I have an idea for content.'),
@@ -55,7 +55,7 @@ module.exports = () =>
                 br(),
                 a(
                     {href: 'mailto:support@sagefy.com'},
-                    'send us an email'
+                    'Send us an email'
                 ),
                 '.'
             ),
@@ -63,9 +63,10 @@ module.exports = () =>
                 strong('I\'m a media person.'),
                 br(),
                 a(
-                    {href: 'http://sagefy.totemapp.com/'},
-                    'Visit our media page.'
-                )
+                    {href: 'mailto:support@sagefy.com'},
+                    'Send us an email'
+                ),
+                '.'
             )
         )
     )
