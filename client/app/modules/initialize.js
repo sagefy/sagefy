@@ -5,6 +5,7 @@ const cookie = require('./cookie')
 const {route} = require('./route_actions')
 const {startGoogleAnalytics, trackEvent} = require('./analytics')
 const indexView = require('../views/index.tmpl')
+const {setTitle} = require('../modules/auxiliaries')
 
 startGoogleAnalytics()
 
@@ -65,10 +66,19 @@ function trackAllActions() {
     })
 }
 
+function updateTitle() {
+    bind((state, action) => {
+        if(action.type === 'SET_ROUTE') {
+            setTitle(action.title)
+        }
+    })
+}
+
 // Start up the application
 function go() {
     logAllActions()
     trackAllActions()
+    updateTitle()
     setReducer(reducer)
     dispatch({
         type: 'SET_CURRENT_USER_ID',

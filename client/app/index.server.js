@@ -26,23 +26,24 @@ app.use(cookieParser())
 
 setReducer(reducer)
 
-const htmlTop = [
-    '<!doctype html>',
-    '<meta charset="utf-8">',
-    '<meta name="viewport" content="width=device-width, initial-scale=1">',
-    '<link rel="stylesheet" href="/index.css?___">',
-    '<script src="/index.js?___"></script>',
-    '<body>',
-].join('')
-
-const htmlBottom = '</body>'
+const html = `
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title} – Sagefy</title>
+<link rel="stylesheet" href="/index.css?___">
+<script src="/index.js?___"></script>
+<body>{body}</body>
+<script>window.preload={state}</script>
+</body>
+`.replace(/\n/g, '')
 
 function render() {
     const state = getState()
-    return htmlTop +
-           toHTML(template(state)) +
-           `<script>window.preload=${JSON.stringify(state)}</script>` +
-           htmlBottom
+    return html
+        .replace('{title}', state.routeTitle)
+        .replace('{body}', toHTML(template(state)))
+        .replace('{state}', JSON.stringify(state))
 }
 
 app.get(/.*/, (request, response) => {

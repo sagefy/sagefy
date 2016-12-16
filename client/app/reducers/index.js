@@ -31,6 +31,7 @@ module.exports = combineReducers({
     recommendedSets: require('./recommendedSets'),
     route: require('./route'),
     routeQuery: require('./routeQuery'),
+    routeTitle: require('./routeTitle'),
     searchQuery: require('./searchQuery'),
     searchResults: require('./searchResults'),
     sending: require('./sending'),
