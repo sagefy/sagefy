@@ -33,7 +33,7 @@ const html = `
 <title>{title} – Sagefy</title>
 <link rel="stylesheet" href="/index.css?___">
 <script src="/index.js?___"></script>
-<body>{body}</body>
+<body>{body}
 <script>window.preload={state}</script>
 </body>
 `.replace(/\n/g, '')
