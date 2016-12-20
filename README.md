@@ -12,11 +12,11 @@ Sagefy uses learning science research in its [structure](https://github.com/heis
 
 For more information, watch this 3 minute [YouTube video].
 
-- [Site], [Wiki], [Twitter]
+- [Site], [Docs], [Twitter]
 
 [Site]: https://sagefy.org
 [Twitter]: https://twitter.com/sagefyorg
-[Wiki]: https://github.com/heiskr/sagefy/wiki
+[Docs]: https://docs.sagefy.org
 [YouTube video]: https://www.youtube.com/watch?v=HVwfwTOdnOE
 
 [![Setup](https://img.shields.io/badge/get-setup-brightgreen.svg?style=flat)](https://github.com/heiskr/sagefy/blob/master/setup/setup.md) [![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy) [![Gitter](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg?style=flat)](https://gitter.im/heiskr/sagefy)
