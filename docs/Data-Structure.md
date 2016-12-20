@@ -1,3 +1,8 @@
+---
+layout: docs
+title: Data Structure
+---
+
 This document covers the overall architecture of Sagefy's data structure. This data structure allows Sagefy to be open-content, flexible, and practical.
 
 ![Data Structure Example: Statistics](https://docs.google.com/drawings/d/1idC1i8udNsD5C1yj1K7qKp6cwSkyhwjLXzG-xsXG6gE/pub?w=735&amp;h=280)
@@ -10,6 +15,6 @@ There are three types of entities in Sagefy: cards, units, and sets.
 
 **Set**. A set is a collection of units and other sets. Sets are like classes or courses, anything from like a short workshop to an entire degree program. Examples could be, "measures of central tendency", "descriptive statistics", or "first statistics course". A set is the large size in the Sagefy system. A set contains many units and other sets.
 
-Also see [[Data Structure: Requirements and Guidelines]].
+Also see [Data Structure: Requirements and Guidelines](Data-Structure-Requirements-and-Guidelines).
 
 Also see [YouTube Video](https://www.youtube.com/watch?v=HVwfwTOdnOE).

@@ -1,3 +1,7 @@
+---
+layout: docs
+title: Planning> First Use Case
+---
 
 Objective: Identify and develop for first use case.
 

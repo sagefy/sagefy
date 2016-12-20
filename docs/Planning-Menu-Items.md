@@ -1,3 +1,7 @@
+---
+layout: docs
+title: Planning> Menu Items
+---
 
 A list of what menu items should appear per page.
 

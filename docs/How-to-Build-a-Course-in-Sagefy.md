@@ -1,8 +1,13 @@
+---
+layout: docs
+title: How to Build a Course in Sagefy
+---
+
 Thank you for your interest and support of Sagefy!
 
-I'll try to walk through the process of making a course in Sagefy on this page. Sagefy is still a bit rough, so just keep that in mind if you're going through this process. Feel free to email me at any time at <support@sagefy.org> if you run into problems or need any clarification. I'll be updating this page as I get feedback and experience. We're in this journey together. :smile: 
+I'll try to walk through the process of making a course in Sagefy on this page. Sagefy is still a bit rough, so just keep that in mind if you're going through this process. Feel free to email me at any time at <support@sagefy.org> if you run into problems or need any clarification. I'll be updating this page as I get feedback and experience. We're in this journey together. :smile:
 
-For this page, I'm going to talk about the "Introduction to Electronic Music" course I've been building. If you haven't already, check out the [[Data Structure]] before you get started. You can think of a 'set' as being a class, a 'unit' as a learning objective, and a card as an individual type of learning activity. Right now Sagefy only supports video cards and multiple choice cards, but more types are planned. If you have a need for a specific type of card, let me know and I'll try to see if I can get that live.
+For this page, I'm going to talk about the "Introduction to Electronic Music" course I've been building. If you haven't already, check out the [Data Structure](Data-Structure) before you get started. You can think of a 'set' as being a class, a 'unit' as a learning objective, and a card as an individual type of learning activity. Right now Sagefy only supports video cards and multiple choice cards, but more types are planned. If you have a need for a specific type of card, let me know and I'll try to see if I can get that live.
 
 -----
 
@@ -12,7 +17,7 @@ For this part, you'll need to break down your course into units. Here's the proc
 
 1. Break down your course into a list of small topics. It should be broken down so each topic would be about 3-5 minutes of video.
 2. Group those topics as you'd like.
-3. Figure out what sets you'd like to make based on those groupings. You can make groupings as deep or as shallow as you'd like. Maybe for your content, it makes sense to only have one overall set. Maybe it makes sense to have one parent set and 5 child sets. Or maybe 1 grandparent, 3 parents, and 10 children. Whatever makes sense for your content. 
+3. Figure out what sets you'd like to make based on those groupings. You can make groupings as deep or as shallow as you'd like. Maybe for your content, it makes sense to only have one overall set. Maybe it makes sense to have one parent set and 5 child sets. Or maybe 1 grandparent, 3 parents, and 10 children. Whatever makes sense for your content.
 4. Write a description for each set, and indicate which set belongs to which set.
 5. Create a goal for each unit.
 6. For each unit, write down what units are required to happen *before* that unit.

@@ -1,3 +1,7 @@
+---
+layout: docs
+title: RESTish
+---
 
 General REST ideas, but made more practical.
 

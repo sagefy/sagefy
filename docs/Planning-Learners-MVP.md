@@ -1,5 +1,9 @@
+---
+layout: docs
+title: Planning> Learners MVP
+---
 
-See [Sequencer](/f_planning/sequencer), [Sequencer Background](/f_planning/sequencer_background) and [Machine Learning Requirements](/f_planning/ml_requirements).
+See [Sequencer](Planning-Sequencer), [Sequencer Background](Planning-Sequencer-Background) and [Machine Learning Requirements](Planning-Machine-Learning-Requirements).
 
 Learner Models
 --------------

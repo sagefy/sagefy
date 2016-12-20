@@ -1,3 +1,8 @@
+---
+layout: docs
+title: Ideas
+---
+
 The ideas are the foundation of Sagefy's architecture. The ideas are broad and based on highly common patterns in memory and learning research. Use the ideas to provide a sense of direction.
 
 1. Do One Thing at a Time

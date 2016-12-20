@@ -1,3 +1,7 @@
+---
+layout: docs
+title: Planning> Markdown Features
+---
 
 Gist: Render markdown on the frontend using `marked`, but sanitize the input on the server before saving to the database.
 

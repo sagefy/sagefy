@@ -1,3 +1,8 @@
+---
+layout: docs
+title: Technology Stack
+---
+
 We Use
 ------
 

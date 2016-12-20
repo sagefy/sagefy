@@ -1,3 +1,7 @@
+---
+layout: docs
+title: Planning> Sequencer Guess Slip
+---
 
 Expectations for Guess and Slip Updates
 ---------------------------------------

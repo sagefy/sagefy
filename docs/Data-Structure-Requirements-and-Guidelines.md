@@ -1,3 +1,7 @@
+---
+layout: docs
+title: Data Structure> Requirements and Guidelines
+---
 
 Requirements
 ------------
@@ -11,7 +15,7 @@ Requirements
 - A card must belong to a single unit of the same language.
 - A card can have requires (prerequisites). Requires cannot form a cycle.
 - Each card kind has its own set of requirements.
-- For more card kinds, see [[Data Structure: Card Kinds]]. 
+- For more card kinds, see [Data Structure: Card Kinds](Data-Structure-Card-Kinds).
 
 ### Unit
 

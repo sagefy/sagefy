@@ -1,3 +1,7 @@
+---
+layout: docs
+title: Planning> User Accounts
+---
 
 This document covers very early planning for the ability for users to create and manage accounts in Sagefy.
 

@@ -1,3 +1,7 @@
+---
+layout: docs
+title: Web API
+---
 
 FORMAT: 1A
 HOST: http://sagefy.org/

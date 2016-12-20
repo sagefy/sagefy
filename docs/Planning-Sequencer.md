@@ -1,3 +1,7 @@
+---
+layout: docs
+title: Planning> Sequencer
+---
 
 <script
 src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -5,12 +9,12 @@ src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 
 This document covers the terms, parameters, flow, and formula for the primary learning engine of Sagefy.
 
-Also see [[Planning: Sequencer Background]] and [[Planning: Sequencer Guess Slip]].
+Also see [Planning: Sequencer Background](Planning-Sequencer-Background) and [Planning: Sequencer Guess Slip](Planning-Sequencer-Guess-Slip).
 
 Terms
 -----
 
-Also see [data structure](/data_structure) for definitions of **card**, **unit**, and **set**.
+Also see [Data Structure](Data-Structure) for definitions of **card**, **unit**, and **set**.
 
 **Sequencer** - Determines the optimal ordering of cards, units, or other activity to present to the learner.
 

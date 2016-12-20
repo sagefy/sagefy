@@ -1,3 +1,7 @@
+---
+layout: docs
+title: Planning> Contributors MVP
+---
 
 At first, there will only be video information with multiple choice questions with textual questions, answers, and feedback. Later stages will add more formats.
 
@@ -140,7 +144,7 @@ Contributor Screen Requirements & Wireframes
         - Amend proposal (if owned)
         - Vote block (if not owned)
     - Considerations
-        - [Contributor Ratings and Proposal Friction](/f_planning/contributor_ratings)
+        - [Contributor Ratings and Proposal Friction](f_planning/contributor_ratings)
 
 <img src="https://docs.google.com/drawings/d/1nIvhNcseLdUu4qzEN_0zfu9QenneynwFgmuDiZp5JC0/pub?w=913&amp;h=1136">
 
@@ -220,7 +224,7 @@ Contributor Screen Requirements & Wireframes
 - Contents (Changes by kind)
 - Stats (Changes by kind)
     - Num Learners
-    - See [Sequencer](/f_planning/sequencer)
+    - See [Sequencer](_planning/sequencer)
 - Relationships (Changes by kind)
 - Topics
     - Topic name

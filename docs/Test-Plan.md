@@ -1,3 +1,8 @@
+---
+layout: docs
+title: Test Plan
+---
+
 - [ ] View the terms and privacy policy
 - [ ] Sign up for an account
 - [ ] Log out of your account

@@ -1,3 +1,7 @@
+---
+layout: docs
+title: Planning> Sequencer Background
+---
 
 <script
 src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">

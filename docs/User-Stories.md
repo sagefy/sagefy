@@ -1,3 +1,7 @@
+---
+layout: docs
+title: User Stories
+---
 
 This document serves as a list of major use cases for Sagefy's functionality. It can be used for checking progress or for validation. These stories should remain high level and not get into edge cases, scenarios, or details.
 

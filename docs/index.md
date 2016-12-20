@@ -1,4 +1,7 @@
-## What is Sagefy?
+---
+layout: docs
+title: What is Sagefy?
+---
 
 **Sagefy is an open-content adaptive learning platform.**
 
@@ -6,7 +9,7 @@ Sagefy is an _adaptive learning system_. Instead of planned and structured cours
 
 Open-content systems allow anyone to view, share, create, and edit content. Like most open-content systems, Sagefy works through consensus-driven decision making. Sagefy is open source and freely available.
 
-Sagefy uses learning science research in its [[Data Structure]] and [[Ideas]].
+Sagefy uses learning science research in its [Data Structure](Data-Structure) and [Ideas](Ideas).
 
 All contents in this project are licensed under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 

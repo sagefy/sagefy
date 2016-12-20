@@ -1,3 +1,8 @@
+---
+layout: docs
+title: Planning> Machine Learning Requirements
+---
+
 Non-Sequencer Applications
 ------------------
 

@@ -1,3 +1,7 @@
+---
+layout: docs
+title: Data Structure> Card Kinds
+---
 
 _This documents kinds of cards that may appear in the Sagefy system._
 
