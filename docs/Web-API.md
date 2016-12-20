@@ -4,7 +4,7 @@ title: Web API
 ---
 
 FORMAT: 1A
-HOST: http://sagefy.org/
+HOST: https://sagefy.org/
 
 # Sagefy Web Service API
 

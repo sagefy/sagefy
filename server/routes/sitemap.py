@@ -21,7 +21,7 @@ def sitemap_route(request):
     """
     Generate a sitemap so Google can find Sagefy's content.
     Should be linked to from https://sagefy.org/robots.txt
-    Sitemap: http://sagefy.org/s/sitemap.txt
+    Sitemap: https://sagefy.org/s/sitemap.txt
     """
 
     # TODO-1 cache in redis
