@@ -17,7 +17,7 @@ module.exports = (data) => {
     //            data.follows.find((f) => f.entity.id === set.entity_id)
 
     return div(
-        {id: 'set'},
+        {id: 'set', className: 'page'},
 
         followButton('set', set.entity_id, data.follows),
         entityHeader('set', set),

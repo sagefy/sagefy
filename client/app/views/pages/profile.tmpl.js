@@ -10,7 +10,7 @@ module.exports = (data) => {
     if(!user) { return spinner() }
 
     return div(
-        {id: 'profile'},
+        {id: 'profile', className: 'page'},
         header(
             {className: 'profile__header'},
             img({src: user.avatar, className: 'profile__avatar'}),

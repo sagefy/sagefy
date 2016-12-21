@@ -44,7 +44,7 @@ module.exports = (data) => {
     return div(
         {
             id: 'password',
-            className: state
+            className: `page ${state}`,
         },
         h1('Create a New Password'),
         wizard({

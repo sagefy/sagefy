@@ -4,9 +4,12 @@
 <title>{{ page.title }} – Sagefy</title>
 <link rel="stylesheet" href="https://sagefy.org/index.css?___">
 <style>img{max-width: 100%}</style>
-<body id="docs">
-    <div id="docs-main">
-        <aside>
+<body>
+    <main>
+        <div class="page">
+            <h1>{{ page.title }}</h1>
+            {{ content }}
+            <hr />
             <img src="https://raw.githubusercontent.com/heiskr/sagefy/master/client/app/images/astrolabe.png" height="48">
             <h3>Sagefy</h3>
             <p><em>An open-content adaptive learning platform.</em></p>
@@ -22,16 +25,12 @@
                 <li><a href="/Reference">Reference</a></li>
                 <li><a href="/Web-API">Web API</a></li>
             </ul>
-        </aside>
-        <main>
-            <h1>{{ page.title }}</h1>
-            {{ content }}
             <hr />
             <p>
                 &copy; Copyright Sagefy 2016. All contents are licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>
             </p>
-        </main>
-    </div>
+        </div>
+    </main>
     <!-- Google Analytics -->
     <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

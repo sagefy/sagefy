@@ -15,7 +15,7 @@ module.exports = (data) => {
     const latestAccepted = versions.find((v) => v.status === 'accepted')
 
     return div(
-        {id: 'versions'},
+        {id: 'versions', className: 'page'},
         h1(`Versions: ${latestAccepted.name}`),
         p(
             a(

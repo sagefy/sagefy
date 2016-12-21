@@ -4,7 +4,7 @@ const data = require('./styleguide.data.json')
 
 module.exports = () =>
     div(
-        {id: 'styleguide'},
+        {id: 'styleguide', className: 'page'},
         h1(
             'Style Guide & Component Library'
         ),

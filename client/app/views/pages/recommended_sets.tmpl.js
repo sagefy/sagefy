@@ -30,7 +30,7 @@ const setResult = (set) =>
 module.exports = (data) => {
     if(!data.recommendedSets.length) { return spinner() }
     return div(
-        {id: 'recommended-sets'},
+        {id: 'recommended-sets', className: 'page'},
         h1('Recommended Sets'),
         ul(
             data.recommendedSets.map(set => li(setResult(set)))

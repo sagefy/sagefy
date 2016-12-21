@@ -59,7 +59,7 @@ module.exports = (data) => {
     })
 
     return div(
-        {id: 'settings'},
+        {id: 'settings', className: 'page'},
         h1('Settings'),
         form(instanceFields),
         hr(),

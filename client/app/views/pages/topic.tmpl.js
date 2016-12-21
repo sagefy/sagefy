@@ -16,7 +16,7 @@ module.exports = (data) => {
     if (!topic || !posts) { return spinner() }
 
     return div(
-        {id: 'topic'},
+        {id: 'topic', className: 'page'},
 
         header(
             followButton('topic', id, data.follows),

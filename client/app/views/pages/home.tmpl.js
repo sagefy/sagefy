@@ -4,7 +4,7 @@ const icon = require('../components/icon.tmpl')
 
 module.exports = data =>
     div(
-        {id: 'home'},
+        {id: 'home', className: 'page'},
         img(
             {src: '/astrolabe.svg', className: 'home__logo'}
         ),

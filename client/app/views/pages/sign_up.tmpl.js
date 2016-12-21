@@ -41,7 +41,7 @@ module.exports = (data) => {
     })
 
     return div(
-        {id: 'sign-up'},
+        {id: 'sign-up', className: 'page'},
         h1('Sign Up'),
         p(
             'Already have an account? ',

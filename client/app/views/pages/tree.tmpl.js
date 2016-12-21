@@ -44,7 +44,7 @@ module.exports = (data) => {
     }
 
     return div(
-        {id: 'tree'},
+        {id: 'tree', className: 'page'},
         h1(`Tree: ${treeData.set.name}`),
         asContrib ? p(a(
             {href: `/sets/${id}`},

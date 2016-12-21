@@ -6,7 +6,7 @@ const uvUrl = 'https://sagefy.uservoice.com/forums/233394-general'
 
 module.exports = () =>
     div(
-        {id: 'contact'},
+        {id: 'contact', className: 'page'},
         h1('Contact Sagefy'),
         ul(
             li(

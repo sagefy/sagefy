@@ -23,7 +23,7 @@ module.exports = (data) => {
     inputOpts.value = data.searchQuery || null
 
     return div(
-        {id: 'search'},
+        {id: 'search', className: 'page'},
         h1('Search'),
         // TODO-2 add search filtering / ordering
         form(

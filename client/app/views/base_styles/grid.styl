@@ -18,6 +18,9 @@ for i in (1..$max-columns)
 $row
     margin -1 * $unit
 
-$page
+$container
     @extend $row
     margin-bottom $unit * 3
+
+$page
+    @extend $col-10

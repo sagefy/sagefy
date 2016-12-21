@@ -27,7 +27,7 @@ module.exports = (data) => {
     if(!data.userSets) { return spinner() }
 
     return div(
-        {id: 'my-sets'},
+        {id: 'my-sets', className: 'page'},
         h1('My Sets'),
         ul(data.userSets.map(set => userSet(set))),
         data.userSets.length === 0 ? p(

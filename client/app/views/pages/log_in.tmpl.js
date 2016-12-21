@@ -36,7 +36,7 @@ module.exports = (data) => {
     })
 
     return div(
-        {id: 'log-in'},
+        {id: 'log-in', className: 'page'},
         h1('Log In'),
         p(
             'Don\'t have an account? ',

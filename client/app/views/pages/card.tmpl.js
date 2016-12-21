@@ -20,7 +20,7 @@ module.exports = (data) => {
     const params = card.card_parameters || {}
     const assess = card.kind in assessments
     return div(
-        {id: 'card'},
+        {id: 'card', className: 'page'},
         followButton('card', card.entity_id, data.follows),
         entityHeader('card', card),
         div(

@@ -6,7 +6,7 @@ const icon = require('../components/icon.tmpl')
 module.exports = (data) => {
     if(!Object.keys(data.chooseUnit).length) { return spinner() }
     return div(
-        {id: 'choose-unit'},
+        {id: 'choose-unit', className: 'page'},
         h1('Choose a Unit'),
         ul(
             {id: data.chooseUnit.set.entity_id, className: 'units'},

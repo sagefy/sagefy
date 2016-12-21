@@ -8,7 +8,7 @@ module.exports = (data) => {
     if(!data.notices) { return spinner() }
 
     return div(
-        {id: 'notices'},
+        {id: 'notices', className: 'page'},
         h1('Notices'),
         p(a(
             {href: '/follows'},

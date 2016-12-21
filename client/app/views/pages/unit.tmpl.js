@@ -18,7 +18,7 @@ module.exports = (data) => {
     if(!unit) { return spinner() }
 
     return div(
-        {id: 'unit'},
+        {id: 'unit', className: 'page'},
         followButton('unit', unit.entity_id, data.follows),
         entityHeader('unit', unit),
         p(unit.body),

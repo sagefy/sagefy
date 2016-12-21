@@ -42,7 +42,7 @@ module.exports = (data) => {
         div(
             {
                 id: 'card-learn',
-                className: `${card.kind} ${mode}`,
+                className: `page ${card.kind} ${mode}`,
                 key: 'WbrGhHy5aUCmBVtHnlmTdJ1x'
             },
 

@@ -15,6 +15,7 @@ const classes = (formData) => {
     const entityKind = formData['post.entity_version.kind']
     const cardKind = formData['entity.kind']
     return [
+        'page',
         postID ? 'update' : 'create',
         postKind ? `post-${postKind}` : '',
         entityKind ? `entity-${entityKind}` : '',
