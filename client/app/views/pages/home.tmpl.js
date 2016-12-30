@@ -35,10 +35,9 @@ module.exports = data =>
         ),
         p(
             {className: 'alert--accent'},
-            'Sagefy is very new. You will likely find bugs ',
-            'and other strange behaviors, as well as a general lack of ',
-            'content. Please report issues ',
-            'to <support@sagefy.org>. Thank you!'
+            'Sagefy is new. You will likely find bugs. ',
+            'Please report issues to <support@sagefy.org>. ',
+            'Thank you!'
         ),  // TODO-2 Delete this warning message
         p(
             {className: 'home__legal'},
