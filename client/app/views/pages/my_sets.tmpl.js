@@ -29,6 +29,12 @@ module.exports = (data) => {
     return div(
         {id: 'my-sets', className: 'page'},
         h1('My Sets'),
+        p(
+            {className: 'alert--accent'},
+            'Sagefy is new. You will likely find bugs. ',
+            'Please report issues to <support@sagefy.org>. ',
+            'Thank you!'
+        ),  // TODO-2 Delete this warning message
         ul(data.userSets.map(set => userSet(set))),
         data.userSets.length === 0 ? p(
             a(

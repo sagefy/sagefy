@@ -2,21 +2,20 @@
     h1
         font-weight normal
 
-    h1, h3, p
+    header
         text-align center
 
     h3
         @extend $subheader
-
-    h3
-        margin-bottom $unit * 2
 
 .home__logo
         margin $gutter auto 0
         height $unit * 10
         display block
 
+.home__cta-button
+    @extend $button--accent
+
 .home__legal
     @extend $font-size-small
     color $base-color(43)
-    margin-top $unit * 4
