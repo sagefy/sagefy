@@ -8,6 +8,13 @@
     h3
         @extend $subheader
 
+    footer
+        @extend $font-size-small
+        color $base-color(43)
+
+    footer ul
+        @extend $ul--inline
+
 .home__logo
         margin $gutter auto 0
         height $unit * 10
@@ -15,7 +22,3 @@
 
 .home__cta-button
     @extend $button--accent
-
-.home__legal
-    @extend $font-size-small
-    color $base-color(43)

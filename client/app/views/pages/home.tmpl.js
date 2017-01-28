@@ -127,15 +127,11 @@ module.exports = data => {
         ),
         footer(
           ul(
+            li('© Copyright 2016 Sagefy.'),
             li(a({href: 'https://docs.sagefy.org/'}, 'Docs')),
             li(a({href: 'https://stories.sagefy.org/'}, 'Stories (Blog)')),
-            li(a({href: 'https://sagefy.uservoice.com/forums/233394-general/'}, 'Support'))
-          ),
-          p(
-              {className: 'home__legal'},
-              '© Copyright 2016 Sagefy. ',
-              a({href: '/terms'}, icon('terms'), ' Privacy & Terms'),
-              '.'
+            li(a({href: 'https://sagefy.uservoice.com/forums/233394-general/'}, icon('contact'), ' Support')),
+            li(a({href: '/terms'}, icon('terms'), ' Privacy & Terms'))
           )
         )
     )
