@@ -27,6 +27,7 @@ const get = (key) => {
 // Set the cookie value at a specific key.
 const set = (key, value, time = 31556926) => {
     if(typeof document === 'undefined') { return }
+    if(value === null || value === undefined) { return }
     document.cookie = [
         encode(key), '=', '' + value,
         ';path=/',
