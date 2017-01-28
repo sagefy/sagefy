@@ -7,7 +7,6 @@ const icon = require('../components/icon.tmpl')
 // TODO-1 Include unique CTAs throughout
 
 module.exports = data => {
-
     const cta = a({href: '/sign_up', className: 'home__cta-button'}, icon('sign-up'), ' Sign Up');
 
     return div(
@@ -128,9 +127,9 @@ module.exports = data => {
         ),
         footer(
           ul(
-            li(a({href: '/docs'}, 'Docs')),
-            li(a({href: '/stories'}, 'Stories (Blog)')),
-            li(a({href: 'https://sagefy.uservoice.com/'}, 'Support'))
+            li(a({href: 'https://docs.sagefy.org/'}, 'Docs')),
+            li(a({href: 'https://stories.sagefy.org/'}, 'Stories (Blog)')),
+            li(a({href: 'https://sagefy.uservoice.com/forums/233394-general/'}, 'Support'))
           ),
           p(
               {className: 'home__legal'},
