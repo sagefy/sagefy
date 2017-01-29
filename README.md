@@ -24,7 +24,7 @@ For more information, watch this 3 minute [YouTube video].
 All contents in this project are licensed under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
     Sagefy, open-content adaptive learning platform.
-    Copyright 2016 Kevin Heis and [contributors](https://github.com/heiskr/sagefy/graphs/contributors)
+    Copyright 2017 Kevin Heis and [contributors](https://github.com/heiskr/sagefy/graphs/contributors)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

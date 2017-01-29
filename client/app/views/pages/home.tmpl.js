@@ -149,7 +149,7 @@ module.exports = data => {
         ),
         footer(
           ul(
-            li('© Copyright 2016 Sagefy.'),
+            li('© Copyright 2017 Sagefy.'),
             li(a({href: 'https://docs.sagefy.org/'}, 'Docs')),
             li(a({href: 'https://stories.sagefy.org/'}, 'Stories (Blog)')),
             li(a({href: 'https://sagefy.uservoice.com/forums/233394-general/'}, icon('contact'), ' Support')),
