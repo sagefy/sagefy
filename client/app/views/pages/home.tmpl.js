@@ -1,13 +1,15 @@
 /* eslint-disable */
 
 // TODO-3 move copy to content directory
-const {div, header, img, hgroup, h1, h2, h3, h4, h5, h6, p, a, hr, strong, ul, ol, li, iframe, br, footer} = require('../../modules/tags')
+const {div, header, img, hgroup, h1, h2, h3, h4, h5, h6, p, a, hr, strong, ul, ol, li, iframe, br, footer, span, em, section} = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
 
 // TODO-1 Include unique CTAs throughout
 
 module.exports = data => {
-    const cta = a({href: '/sign_up', className: 'home__cta-button'}, icon('sign-up'), ' Sign Up');
+    const cta = a({href: '/sign_up', className: 'home__cta-button'}, icon('sign-up'), ' Sign Up')
+
+    const w = (n) => span({className: 'home__icon-wrap'}, n)
 
     return div(
         {id: 'home', className: 'page'},
@@ -18,7 +20,7 @@ module.exports = data => {
           hgroup(
               h1('Sagefy'),
               h3('Learn anything, customized for you.'),
-              h6('And always free.')
+              h6('...and always free.')
           ),
           data.currentUserID ? p(
               'Logged in. ',
@@ -34,96 +36,116 @@ module.exports = data => {
               a({href: '/sign_up'}, icon('sign-up'), ' Sign Up')
           )
         ),
-        hr(),
         data.currentUserID ? null : div(
-          hgroup(
-            h2('What is Sagefy?'),
-            h5('Sagefy is an open-content adaptive learning platform.')
+          section(
+            hgroup(
+              h2('What is Sagefy?'),
+              h5('Sagefy is an open-content adaptive learning platform.')
+            ),
+            p(
+              strong('Adaptive Learning.'),
+              ' Get the most out of your time and effort spent. Sagefy optimizes based on what you already know and what your goal is.'
+            ),
+            p(
+              strong('Open-Content.'),
+              ' Anyone can view, share, create, and edit content. Open-content means that Sagefy reaches a range of learning subjects.'
+            ),
+            cta
           ),
-          p(
-            strong('Adaptive Learning.'),
-            ' Get the most out of your time and effort spent. Sagefy optimizes the learning experience based on what you already know and what your goal is. Sagefy presents small pieces of content based on your responses.'
+          section(
+            h2('Why learn with Sagefy?'),
+            ul(
+              {className: 'home__ul--why'},
+              li(w(icon('learn')), em(' Learn any subject.')),
+              li(w(icon('create')), em(' Create and edit any content.')),
+              li(w(icon('fast')), em(' Skip what you already know.')),
+              li(w(icon('grow')), em(' Build up to where you need to be.')),
+              li(w(icon('search')), em(' Choose your own path.')),
+              li(w(icon('topic')), em(' Discussion built in.'))
+            ),
+            cta
           ),
-          p(
-            strong('Open-Content.'),
-            ' Anyone can view, share, create, and edit content. Open-content means that Sagefy reaches a range of learning subjects.'
+          section(
+            h2('How do I learn with Sagefy?'),
+            ol(
+              {className: 'home__ul--how'},
+              li(img({src: 'http://i.imgur.com/qrPmvzZ.png'}), 'Create an account.'),
+              li(img({src: 'http://i.imgur.com/9KJdaFl.png'}), 'Find and add a set.'),
+              li(img({src: 'http://i.imgur.com/uLJstC1.png'}), 'Choose your unit.'),
+              li(img({src: 'http://i.imgur.com/BlUMbif.png'}), 'Learn.')
+            ),
+            iframe({
+              width: "560",
+              height: "315",
+              src: "https://www.youtube.com/embed/HVwfwTOdnOE",
+              frameborder: "0",
+              allowfullscreen: true
+            }),
+            p(
+              'Also check out the in-detail ',
+              a({href: 'https://stories.sagefy.org/why-im-building-sagefy-731eb0ceceea'}, 'article on Medium'),
+              '.'
+            ),
+            cta
           ),
-          h2('Why learn with Sagefy?'),
-          ul(
-            li('Learn any subject'),
-            li('Create and edit any content'),
-            li('Skip what you already know'),
-            li('Build up to where you need to be'),
-            li('Choose your own path'),
-            li('Discussion built in')
+          section(
+            h2('Popular Sets'),
+            ul(
+              li(
+                a({href: 'https://sagefy.org/sets/CgDRJPfzJuTR916HdmosA3A8'}, 'An Introduction to Electronic Music - Foundation'),
+                br(),
+                'A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.'
+              )
+            ),
+            cta
           ),
-          cta,
-          h2('How do I learn with Sagefy?'),
-          ol(
-            li('Create an account'),
-            li('Find and add a set'),
-            li('Choose your unit'),
-            li('Learn')
-          ),
-          iframe({
-            width: "560",
-            height: "315",
-            src: "https://www.youtube.com/embed/HVwfwTOdnOE",
-            frameborder: "0",
-            allowfullscreen: true
-          }),
-          p(
-            'Also check out the in-detail ',
-            a({href: 'https://stories.sagefy.org/why-im-building-sagefy-731eb0ceceea'}, 'article on Medium'),
-            '.'
-          ),
-          cta,
-          h2('Popular Sets'),
-          ul(
-            li(
-              a({href: 'https://sagefy.org/sets/CgDRJPfzJuTR916HdmosA3A8'}, 'An Introduction to Electronic Music - Foundation'),
-              br(),
-              'A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.'
-            )
-          ),
-          cta,
           // TODO-1 third party validation
-          h2('Features'),
-          ul(
-            li('Simple organization. The only kinds of things are sets (courses), units (a learning goal), and cards (a small learning experience).'),
-            li('Choose your path along the way. Sagefy recommends, but never requires.'),
-            li('Keep up to speed with review reminders.'),
-            li('Variety of types of cards, so you can stay motivated.'),
-            li('Focus on what you want to learn with no distractions.'),
-            li('Skip content you already know.'),
-            li('Really learn it, instead of skimming the top.')
+          section(
+            h2('Features'),
+            ul(
+              {className: 'home__ul--features'},
+              li(w(icon('unit')), strong('Simple'), ' organization. The only kinds of things are: ',
+                ul(
+                  li('Sets -- or courses,'),
+                  li('Units -- or learning goals, and'),
+                  li('Cards -- small learning experiences.')
+                )
+              ),
+              li(w(icon('search')), strong('Choose'), ' your path along the way. Sagefy recommends, but never requires.'),
+              li(w(icon('reply')), 'Keep up to speed with ', strong('review'), ' reminders.'),
+              li(w(icon('follow')), strong('Variety'), ' of types of cards, so you can stay motivated.'),
+              li(w(icon('good')), 'Focus on what you want to learn with ', strong('no distractions.')),
+              li(w(icon('fast')), strong('Skip'), ' content you already know.'),
+              li(w(icon('learn')), 'Learn ', strong('deeply'), ', instead of skimming the top.')
+            ),
+            cta
           ),
-          cta,
-          h2('Comparison'),
-          ul(
-            li(
-              strong('Classroom'),
-              ': Difficult to adapt, expensive.'
+          section(
+            h2('Comparison'),
+            ul(
+              li(
+                strong('Classroom'),
+                ': When we adapt the content to what the learner already knows, we keep the motivation going and reduce effort and time. Classrooms are a difficult place to get personal. Sagefy optimizes for what you already know, every time.'
+              ),
+              li(
+                strong('Learning Management Systems'),
+                ': Great cost and time savings come from using technology. LMSs are designed to support the classroom model. With Sagefy, you get both online and highly personalized.'
+              ),
+              li(
+                strong('Closed Adaptive Systems'),
+                ': Learners should be able to pursue their own goals. Closed systems means only select topics are available. An open-content system like Sagefy reaches a range of topics.'
+              ),
+              li(
+                strong('Massive Online Courses'),
+                ': MOOCs reach a large range, but offer little adaption and only support expert-created content. Sagefy has no deadlines -- learn when you see fit.'
+              ),
+              li(
+                strong('Flash Cards'),
+                ': Flash cards are great for memorizing content. But what about integration and application of knowledge? Sagefy goes deeper than flash cards.'
+              )
             ),
-            li(
-              strong('Learning Management Systems'),
-              ': Online, but still difficult to adapt, often expensive.'
-            ),
-            li(
-              strong('Closed Adaptive Systems'),
-              ': Limited range of topics.'
-            ),
-            li(
-              strong('Massive Online Courses'),
-              ': Rarely adapts. Set time frame.'
-            ),
-            li(
-              strong('Flash Cards'),
-              ': Limited depth of practice.'
-            )
-          ),
-          cta,
-          hr()
+            cta
+          )
         ),
         footer(
           ul(
