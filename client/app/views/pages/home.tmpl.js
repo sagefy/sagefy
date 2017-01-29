@@ -69,10 +69,10 @@ module.exports = data => {
             h2('How do I learn with Sagefy?'),
             ol(
               {className: 'home__ul--how'},
-              li(img({src: 'http://i.imgur.com/qrPmvzZ.png'}), 'Create an account.'),
-              li(img({src: 'http://i.imgur.com/9KJdaFl.png'}), 'Find and add a set.'),
-              li(img({src: 'http://i.imgur.com/uLJstC1.png'}), 'Choose your unit.'),
-              li(img({src: 'http://i.imgur.com/BlUMbif.png'}), 'Learn.')
+              li(img({src: 'https://i.imgur.com/qrPmvzZ.png'}), 'Create an account.'),
+              li(img({src: 'https://i.imgur.com/9KJdaFl.png'}), 'Find and add a set.'),
+              li(img({src: 'https://i.imgur.com/uLJstC1.png'}), 'Choose your unit.'),
+              li(img({src: 'https://i.imgur.com/BlUMbif.png'}), 'Learn.')
             ),
             iframe({
               width: "560",
