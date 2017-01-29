@@ -36,7 +36,9 @@ const html = `
 <body>{body}
 <script>window.preload={state}</script>
 </body>
-`.replace(/\n/g, '')
+`
+    .replace(/\n/g, '')
+    .replace(/___/g, Date.now())
 
 function render() {
     const state = getState()

@@ -11,12 +11,11 @@
     "url": "https://github.com/heiskr/sagefy.git"
   },
   "scripts": {
-    "start": "npm run clean && concurrently -p \"[{name}]\" --names rewrite-html,copy-fonts,watch-styles,watch-scripts \"npm run rewrite-html\" \"npm run copy-fonts\" \"npm run watch-styles\" \"npm run watch-scripts\"",
+    "start": "npm run clean && concurrently -p \"[{name}]\" --names copy-statics,copy-fonts,watch-styles,watch-scripts \"npm run copy-statics\" \"npm run copy-fonts\" \"npm run watch-styles\" \"npm run watch-scripts\"",
     "test": "npm run clean && npm run prep-scripts && concurrently -p \"[{name}]\" --names lint-scripts,run-tests \"npm run lint-scripts\" \"npm run run-tests\"",
-    "deploy": "npm run clean && concurrently -p \"[{name}]\" --names rewrite-html,copy-fonts,compress-styles,compress-scripts \"npm run rewrite-html\" \"npm run copy-fonts\" \"npm run compress-styles\" \"npm run compress-scripts\"",
+    "deploy": "npm run clean && concurrently -p \"[{name}]\" --names copy-statics,copy-fonts,compress-styles,compress-scripts \"npm run copy-statics\" \"npm run copy-fonts\" \"npm run compress-styles\" \"npm run compress-scripts\"",
     "clean": "rm -rf distribution/ && mkdir distribution/",
     "copy-statics": "cp -a app/images/* distribution/ && cp -a app/*.{html,txt,ico} distribution/",
-    "rewrite-html": "npm run copy-statics && node ./tasks/rewrite_html.js",
     "copy-fonts": "cp -a node_modules/font-awesome/fonts/fontawesome-webfont.woff distribution/",
     "build-styles": "stylus --include-css --use ./tasks/stylus_huslp.js --include ./app/ ./app/index.styl -o ./distribution/index.css",
     "build-styleguide": "node ./tasks/build_styleguide.js",
