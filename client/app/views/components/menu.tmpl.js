@@ -20,16 +20,6 @@ const items = {
     search: { },
     current_set: { url: '/sets/{id}/tree', title: 'Current Set', icon: 'set' },
     current_unit: { url: '/units/{id}', title: 'Current Unit', icon: 'unit' },
-    discuss_set: {
-        url: '/search?kind=topic&q={id}',
-        title: 'Discuss Set',
-        icon: 'post',
-    },
-    discuss_unit: {
-        url: '/search?kind=topic&q={id}',
-        title: 'Discuss Unit',
-        icon: 'post',
-    },
     discuss_card: {
         url: '/search?kind=topic&q={id}',
         title: 'Discuss Card',
@@ -70,29 +60,21 @@ const menus = {
 
 const addContextItems = (menuItems, {card, unit, set}) => {
     const add = []
-    let discuss
-    let current
 
     if (set) {
-        discuss = extend(items.discuss_set)
-        current = extend(items.current_set)
-        discuss.url = discuss.url.replace('{id}', set)
-        current.url = current.url.replace('{id}', set)
-        add.push(discuss)
-        add.push(current)
+        const currentSet = extend(items.current_set)
+        currentSet.url = currentSet.url.replace('{id}', set)
+        add.push(currentSet)
     }
 
     if (unit) {
-        discuss = extend(items.discuss_unit)
-        current = extend(items.current_unit)
-        discuss.url = discuss.url.replace('{id}', unit)
-        current.url = current.url.replace('{id}', unit)
-        add.push(discuss)
-        add.push(current)
+        const currentUnit = extend(items.current_unit)
+        currentUnit.url = currentUnit.url.replace('{id}', unit)
+        add.push(currentUnit)
     }
 
     if (card) {
-        discuss = extend(items.discuss_card)
+        const discuss = extend(items.discuss_card)
         discuss.url = discuss.url.replace('{id}', card)
         add.push(discuss)
     }
