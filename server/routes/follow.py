@@ -1,9 +1,7 @@
 from framework.routes import get, post, delete, abort
 from models.follow import Follow
 from framework.session import get_current_user
-from modules.entity import get_latest_accepted
 from modules.entity import flush_entities
-from models.topic import Topic
 
 
 @get('/s/follows')
