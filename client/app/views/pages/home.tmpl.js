@@ -125,15 +125,15 @@ module.exports = data => {
             ul(
               li(
                 strong('Classroom'),
-                ': When we adapt the content to what the learner already knows, we keep the motivation going and reduce effort and time. Classrooms are a difficult place to get personal. Sagefy optimizes for what you already know, every time.'
+                ': When we adapt the content to what you already know, we keep the motivation going and reduce effort and time. Classrooms are a difficult place to get personal. Sagefy optimizes for what you already know, every time.'
               ),
               li(
                 strong('Learning Management Systems'),
-                ': Great cost and time savings come from using technology. LMSs are designed to support the classroom model. With Sagefy, you get both online and highly personalized.'
+                ': Great cost and time savings come from using technology. LMSs are designed to support the classroom model. With Sagefy, you get both the benefits of online learning and a highly personalized experience.'
               ),
               li(
                 strong('Closed Adaptive Systems'),
-                ': Learners should be able to pursue their own goals. Closed systems means only select topics are available. An open-content system like Sagefy reaches a range of topics.'
+                ': You should be able to pursue your own goals. Closed systems means only select topics are available. An open-content system like Sagefy reaches a range of topics.'
               ),
               li(
                 strong('Massive Online Courses'),
