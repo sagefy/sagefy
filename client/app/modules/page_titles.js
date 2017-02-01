@@ -72,6 +72,9 @@ const routes = [{
     path: '/cards/{id}/learn',
     title: 'Learn',
 }, {
+    path: '/sets/{id}/landing',
+    title: 'An Introduction to Electronic Music',
+}, {
     path: /^\/?$/,
     title: 'Home',
     // Must be 2nd to last

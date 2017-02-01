@@ -101,7 +101,7 @@ sudo npm install -g pm2
 cd /var/www/client
 sudo npm install
 npm run deploy
-pm2 start /var/www/client/app/index.server.js
+# pm2 start /var/www/client/app/index.server.js
 
 #### Server ###################################################################
 

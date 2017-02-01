@@ -82,6 +82,9 @@ const routes = [{
     path: '/cards/{id}/learn',
     tmpl: require('./pages/card_learn.tmpl'),
 }, {
+    path: '/sets/{id}/landing',
+    tmpl: require('./pages/sets_landing.tmpl'),
+}, {
     path: /^\/?$/,
     tmpl: require('./pages/home.tmpl'),
     // Must be 2nd to last
