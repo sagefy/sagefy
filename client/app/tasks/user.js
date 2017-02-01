@@ -22,6 +22,7 @@ module.exports = tasks.add({
                 // TODO-2 make this a listener
                 window.location = '/my_sets'
                 // Hard redirect to get the HTTP_ONLY cookie
+                // TODO-1 if set_id is a param, auto add to user's sets
                 dispatch({
                     type: 'SET_SENDING_OFF'
                 })

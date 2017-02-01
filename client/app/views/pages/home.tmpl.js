@@ -92,7 +92,7 @@ module.exports = data => {
             h2('Popular Sets'),
             ul(
               li(
-                a({href: 'https://sagefy.org/sets/CgDRJPfzJuTR916HdmosA3A8/landing'}, 'An Introduction to Electronic Music - Foundation'),
+                a({href: '/sets/CgDRJPfzJuTR916HdmosA3A8/landing'}, 'An Introduction to Electronic Music - Foundation'),
                 br(),
                 'A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.'
               )
