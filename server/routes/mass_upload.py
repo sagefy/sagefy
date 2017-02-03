@@ -170,7 +170,6 @@ def create_topic_route(request):
         return abort(401)
 
     user_id = current_user['id']
-    user_id = 'doris'
 
     if user_id != "NNKkHsjE3pEOW0wsPaQJm9MD":
         return abort(403)
