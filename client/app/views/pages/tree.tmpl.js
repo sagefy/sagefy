@@ -98,12 +98,14 @@ const renderLines = (layers) => {
         layer.forEach(unit => {
             unit.requires.forEach(req => {
                 req = findUnit(layers, req)
-                nodes.push(unitLine({
-                    x1: req.x,
-                    y1: req.y,
-                    x2: unit.x,
-                    y2: unit.y
-                }))
+                if(req) {
+                    nodes.push(unitLine({
+                        x1: req.x,
+                        y1: req.y,
+                        x2: unit.x,
+                        y2: unit.y
+                    }))
+                }
             })
         })
     })
