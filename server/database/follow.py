@@ -111,7 +111,7 @@ def is_valid_entity(follow, db_conn):
     return []
 
 
-def get_user_ids_by_entity(entity_id, entity_kind, db_conn):
+def get_user_ids_by_followed_entity(entity_id, entity_kind, db_conn):
     """
     Produce a list of `user_id`s for a given entity.
     """

@@ -17,10 +17,10 @@ from modules.entity import get_kind, get_latest_accepted, get_version, \
 from models.topic import Topic
 from models.proposal import Proposal
 from models.vote import Vote
-from models.follow import Follow
 from modules.content import get as c
 from modules.notices import send_notices
 from database.user import get_user, get_avatar
+from database.follow import insert_follow
 
 
 def prefix_error_names(prefix, errors):
@@ -163,13 +163,13 @@ def create_topic_route(request):
         entity.save(db_conn)
 
     # ## STEP 4) Add author as a follower
-    Follow.insert(db_conn, {
+    insert_follow({
         'user_id': current_user['id'],
         'entity': {
             'id': topic['id'],
             'kind': 'topic',
         }
-    })
+    }, db_conn)
     # TODO-2 also follow the entity automatically IF needed
 
     # ## STEP 5) Send out any needed notices
@@ -390,13 +390,13 @@ def create_post_route(request, topic_id):
         entity.save(db_conn)
 
     # ## STEP 4) Add author as a follower
-    Follow.insert(db_conn, {
+    insert_follow({
         'user_id': current_user['id'],
         'entity': {
             'id': topic['id'],
             'kind': 'topic',
         }
-    })
+    }, db_conn)
     # TODO-2 also follow the entity
 
     # ## STEP 5) Make updates based on proposal / vote status

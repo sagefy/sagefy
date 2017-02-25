@@ -1,5 +1,4 @@
 from models.user_sets import UserSets
-from models.follow import Follow
 from modules.content import get as c
 from modules.discuss import get_posts_facade
 from framework.routes import get, post, put, delete, abort
@@ -7,6 +6,7 @@ from framework.session import get_current_user, log_in_user, log_out_user
 from database.user import get_user, insert_user, deliver_user, get_avatar, \
     update_user, is_password_valid, get_email_token, is_valid_token, \
     update_user_password
+from database.follow import list_follows, deliver_follow
 
 
 def _log_in(user):
@@ -70,8 +70,8 @@ def get_user_route(request, user_id):
         data['sets'] = [set_.deliver() for set_ in u_sets.list_sets(db_conn)]
     if ('follows' in request['params']
             and user['settings']['view_follows'] == 'public'):
-        data['follows'] = [follow.deliver() for follow in
-                           Follow.list(db_conn, user_id=user['id'])]
+        data['follows'] = [deliver_follow(follow) for follow in
+                           list_follows({'user_id': user['id']}, db_conn)]
     if 'avatar' in request['params']:
         size = int(request['params']['avatar'])
         data['avatar'] = get_avatar(user['email'], size if size else None)
