@@ -3,7 +3,7 @@ Primary learning sequencer.
 """
 
 from models.card_parameters import CardParameters
-from modules.sequencer.formulas import update as formula_update
+from modules.sequencer.update import update as formula_update
 from modules.sequencer.params import init_learned
 from models.response import Response
 from time import time

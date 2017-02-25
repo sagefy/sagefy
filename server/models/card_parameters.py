@@ -1,7 +1,8 @@
 from modules.model import Model
 from modules.validations import is_required, is_string, is_dict
-from modules.sequencer.guess_pmf import GuessPMF
-from modules.sequencer.slip_pmf import SlipPMF
+from modules.sequencer.pmf import init_pmf, \
+    get_guess_pmf_value, \
+    get_slip_pmf_value
 from modules.sequencer.params import init_guess, init_slip, precision, \
     init_transit
 
@@ -39,18 +40,18 @@ class CardParameters(Model):
             }
             self[key] = distribution
         if kind == 'guess':
-            return GuessPMF(distribution)
+            return init_pmf(distribution)
         if kind == 'slip':
-            return SlipPMF(distribution)
+            return init_pmf(distribution)
 
-    def set_distribution(self, kind, distribution):
+    def set_distribution(self, kind, hypotheses):
         """
         Given the kind and the distribution,
         prepare for saving the distribution to the database.
         """
 
         key = '{kind}_distribution'.format(kind=kind)
-        self[key] = {str(k): v for k, v in distribution.hypotheses.items()}
+        self[key] = {str(k): v for k, v in hypotheses.items()}
         return self
 
     def get_guess(self):
@@ -59,7 +60,7 @@ class CardParameters(Model):
         """
 
         guess_distribution = self.get_distribution('guess')
-        return guess_distribution.get_value()
+        return get_guess_pmf_value(guess_distribution)
 
     def get_slip(self):
         """
@@ -67,7 +68,7 @@ class CardParameters(Model):
         """
 
         slip_distribution = self.get_distribution('slip')
-        return slip_distribution.get_value()
+        return get_slip_pmf_value(slip_distribution)
 
     def get_transit(self):
         """

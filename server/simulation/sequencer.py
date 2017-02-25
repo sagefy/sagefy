@@ -14,9 +14,9 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
 from mock import main as create_responses
-from modules.sequencer.formulas import update
-from modules.sequencer.guess_pmf import GuessPMF
-from modules.sequencer.slip_pmf import SlipPMF
+from modules.sequencer.update import update
+from modules.sequencer.pmf import init_pmf, get_guess_pmf_value, \
+    get_slip_pmf_value
 from modules.sequencer.params import init_learned, init_guess, \
     init_slip, init_transit
 from math import sqrt
@@ -38,10 +38,10 @@ def main(num_learners=1000, num_cards=50):
 
     my_cards = [{
         'name': card['name'],
-        'guess_distribution': GuessPMF({
+        'guess_distribution': init_pmf({
             h: 1 - (init_guess - h) ** 2
             for h in [h / precision for h in range(1, precision)]}),
-        'slip_distribution': SlipPMF({
+        'slip_distribution': init_pmf({
             h:  1 - (init_slip - h) ** 2
             for h in [h / precision for h in range(1, precision)]}),
         'transit': init_transit,
@@ -88,8 +88,8 @@ def main(num_learners=1000, num_cards=50):
 
     for card in cards:
         my_card = get_card(card['name'], my_cards)
-        my_card['guess'] = my_card['guess_distribution'].get_value()
-        my_card['slip'] = my_card['slip_distribution'].get_value()
+        my_card['guess'] = get_guess_pmf_value(my_card['guess_distribution'])
+        my_card['slip'] = get_slip_pmf_value(my_card['slip_distribution'])
         guess_error += (my_card['guess'] - card['guess']) ** 2
         slip_error += (my_card['slip'] - card['slip']) ** 2
         transit_error += (my_card['transit'] - card['transit']) ** 2

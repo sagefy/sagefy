@@ -1,38 +1,33 @@
-import pytest
-
-xfail = pytest.mark.xfail
-
-from modules.sequencer.pmf import PMF
+from modules.sequencer.pmf import init_pmf, update_pmf, normalize_pmf, \
+    get_pmf_value
 
 
-def test_create():
+def test_init_pmf():
     """
     Expect to create a new PMF with given hypotheses.
     """
 
     test = {0: 0.25, 0.5: 0.25, 0.75: 0.25, 1: 0.25}
+    hypotheses_a = init_pmf(tuple(test.keys()))
+    assert hypotheses_a == test
+    hypotheses_b = init_pmf(test)
+    assert hypotheses_b == test
+    hypotheses_c = init_pmf()
+    assert hypotheses_c == {}
 
-    a = PMF(tuple(test.keys()))
-    assert a.hypotheses == test
-    b = PMF(test)
-    assert b.hypotheses == test
-    c = PMF()
-    assert c.hypotheses == {}
 
-
-def test_likelihood_and_update():
+def test_update_pmf():
     """
     Expect to update a PMF with given data,
     require and use a likelihood function to update.
     """
 
-    class X(PMF):
-        def likelihood(self, data, hypothesis):
-            return hypothesis
+    def likelihood(data, hypothesis):
+        return hypothesis
 
-    x = X((0, 0.5, 0.75, 1))
-    x.update({})
-    assert x.hypotheses == {
+    hypotheses = init_pmf((0, 0.5, 0.75, 1))
+    hypotheses = update_pmf(hypotheses, {}, likelihood)
+    assert hypotheses == {
         0: 0.0,
         0.5: 2/9,
         0.75: 1/3,
@@ -40,21 +35,20 @@ def test_likelihood_and_update():
     }
 
 
-def test_normalize():
+def test_normalize_pmf():
     """
     Expect all the probabilities of the PMF to add up to 1.
     """
 
-    a = PMF()
-    a.hypotheses = {0: 1, 1: 1}
-    a.normalize()
-    assert a.hypotheses[0] == 0.5
+    hypotheses = {0: 1, 1: 1}
+    hypotheses = normalize_pmf(hypotheses)
+    assert hypotheses[0] == 0.5
 
 
-def test_get_value():
+def test_get_pmf_value():
     """
     Expect to get a single number representing the best fit for the PMF.
     """
 
-    a = PMF((0, 0.5, 0.75, 1))
-    assert a.get_value() == 0.5625
+    hypotheses = init_pmf((0, 0.5, 0.75, 1))
+    assert get_pmf_value(hypotheses) == 0.5625
