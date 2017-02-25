@@ -73,7 +73,6 @@ module.exports = (data) => {
                 ),
                 li(
                     h3('Creating Sound'),
-                    small(' Coming soon!'),
                     ul(
                         li(strong('Oscillators'), ': Describe the oscillators and basic wave forms: sine, triangle, square, and sawtooth.'),
                         li(strong('Noise'), ': Describe the types of noise: white, brown, and pink.'),
