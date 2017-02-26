@@ -1,4 +1,3 @@
-sudo: required
 language: python
 python:
     - 3.4
@@ -25,4 +24,4 @@ script:
 after_success:
     - coverage report --omit="server/test/*,*site-packages*,*distutils*"
 notifications:
-  email: true
+    email: true
