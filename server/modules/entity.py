@@ -6,33 +6,33 @@ from models.card import Card
 from models.unit import Unit
 from models.set import Set
 
-from models.cards.audio_card import AudioCard
+# from models.cards.audio_card import AudioCard
 from models.cards.choice_card import ChoiceCard
-from models.cards.embed_card import EmbedCard
-from models.cards.formula_card import FormulaCard
-from models.cards.match_card import MatchCard
-from models.cards.number_card import NumberCard
-from models.cards.page_card import PageCard
-from models.cards.slideshow_card import SlideshowCard
-from models.cards.upload_card import UploadCard
+# from models.cards.embed_card import EmbedCard
+# from models.cards.formula_card import FormulaCard
+# from models.cards.match_card import MatchCard
+# from models.cards.number_card import NumberCard
+# from models.cards.page_card import PageCard
+# from models.cards.slideshow_card import SlideshowCard
+# from models.cards.upload_card import UploadCard
 from models.cards.video_card import VideoCard
-from models.cards.writing_card import WritingCard
+# from models.cards.writing_card import WritingCard
 
 from modules.util import omit
 
 
 card_map = {
-    'audio': AudioCard,
+    # 'audio': AudioCard,
     'choice': ChoiceCard,
-    'embed': EmbedCard,
-    'formula': FormulaCard,
-    'match': MatchCard,
-    'number': NumberCard,
-    'page': PageCard,
-    'slideshow': SlideshowCard,
-    'upload': UploadCard,
+    # 'embed': EmbedCard,
+    # 'formula': FormulaCard,
+    # 'match': MatchCard,
+    # 'number': NumberCard,
+    # 'page': PageCard,
+    # 'slideshow': SlideshowCard,
+    # 'upload': UploadCard,
     'video': VideoCard,
-    'writing': WritingCard,
+    # 'writing': WritingCard,
 }
 
 
