@@ -1,4 +1,4 @@
-from models.card import Card
+from modules.util import extend
 from modules.validations import is_required, is_string, is_list, \
     is_list_of_strings, has_max_length, is_integer
 
@@ -9,9 +9,10 @@ media = (
     'video'
 )
 
+card_schema = {}  # TODO-3 import card_schema
 
-class UploadCard(Card):
-    schema = dict(Card.schema.copy(), **{
+schema = extend({}, card_schema, {
+    'fields': {
         'body': {  # Question field
             'validate': (is_required, is_string,)
         },
@@ -40,20 +41,5 @@ class UploadCard(Card):
                 },
             },
         },
-    })
-
-    def __init__(self, fields=None):
-        """
-        Create a new upload card instance.
-        """
-
-        super().__init__(fields)
-        self['kind'] = 'upload'
-
-    def validate_response(self, response):
-        """
-        TODO-3 Ensure the given response body is valid,
-        given the card information.
-        """
-
-        return []
+    }
+})

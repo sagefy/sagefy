@@ -1,10 +1,11 @@
-from models.card import Card
+from modules.util import extend
 from modules.validations import is_required, is_string, is_integer, is_list, \
     has_max_length
 
+card_schema = {}  # TODO-3 import card_schema
 
-class WritingCard(Card):
-    schema = dict(Card.schema.copy(), **{
+schema = extend({}, card_schema, {
+    'fields': {
         'body': {
             'validate': (is_required, is_string,)
         },
@@ -33,20 +34,5 @@ class WritingCard(Card):
                 },
             },
         },
-    })
-
-    def __init__(self, fields=None):
-        """
-        Create a new writing card instance.
-        """
-
-        super().__init__(fields)
-        self['kind'] = 'writing'
-
-    def validate_response(self, response):
-        """
-        TODO-3 Ensure the given response body is valid,
-        given the card information.
-        """
-
-        return []
+    },
+})

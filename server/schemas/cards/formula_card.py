@@ -1,6 +1,5 @@
 # TODO-3 is this just an extension of the number card?
-
-from models.card import Card
+from modules.util import extend
 from modules.validations import is_required, is_string, is_list, is_number, \
     is_string_or_number, is_boolean, has_min_length
 
@@ -13,8 +12,10 @@ def is_list_of_variables(vars):
     pass
 
 
-class FormulaCard(Card):
-    schema = dict(Card.schema.copy(), **{
+card_schema = {}  # TODO-3 import card_schema
+
+schema = extend({}, card_schema, {
+    'fields': {
         'body': {  # Question field
             'validate': (is_required, is_string,)
         },
@@ -45,30 +46,5 @@ class FormulaCard(Card):
             'validate': (is_required, is_string,),
             'access': ('view',),
         },
-    })
-
-    def __init__(self, fields=None):
-        """
-        Create a new formula card instance.
-        """
-
-        super().__init__(fields)
-        self['kind'] = 'formula'
-
-    # TODO-3 validate has_correct_options
-
-    def validate_response(self, body):
-        """
-        TODO-3 Ensure the given response body is valid,
-        given the card information.
-        """
-
-        return []
-
-    def score_response(self, response):
-        """
-        TODO-3 Score the given response.
-        Returns the score and feedback.
-        """
-
-        return 1, ''
+    }
+})

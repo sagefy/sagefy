@@ -1,10 +1,11 @@
-from models.card import Card
-from modules.validations import is_required, is_string, is_url, \
-    has_max_length, is_list, is_integer
+from modules.util import extend
+from modules.validations import is_required, is_string, is_url, is_list, \
+    has_max_length, is_integer
 
+card_schema = {}  # TODO-3 import card_schema
 
-class EmbedCard(Card):
-    schema = dict(Card.schema.copy(), **{
+schema = extend({}, card_schema, {
+    'fields': {
         'url': {
             'validate': (is_required, is_string, is_url),
         },
@@ -29,20 +30,5 @@ class EmbedCard(Card):
                 },
             },
         },
-    })
-
-    def __init__(self, fields=None):
-        """
-        Create a new embed card instance.
-        """
-
-        super().__init__(fields)
-        self['kind'] = 'embed'
-
-    def validate_response(self, response):
-        """
-        TODO-3 Ensure the given response body is valid,
-        given the card information.
-        """
-
-        return []
+    },
+})
