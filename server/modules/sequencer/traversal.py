@@ -1,5 +1,5 @@
 from modules.sequencer.params import max_learned, max_belief, diag_belief
-from models.response import Response
+from database.response import get_latest_response
 from modules.sequencer.formulas import calculate_belief
 from time import time
 
@@ -91,10 +91,10 @@ def judge(db_conn, unit, user):
     Given a unit and a user, pass judgement on which bucket to file it under.
     """
 
-    response = Response.get_latest(
-        db_conn,
-        user_id=user['id'],
-        unit_id=unit['entity_id']
+    response = get_latest_response(
+        user['id'],
+        unit['entity_id'],
+        db_conn
     )
     if response:
         learned = response['learned']

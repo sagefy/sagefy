@@ -10,6 +10,7 @@ from modules.sequencer.index import update as seq_update
 from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
 from database.user import get_learning_context, set_learning_context
+from database.response import deliver_response
 # from modules.sequencer.params import max_learned
 
 
@@ -201,7 +202,7 @@ def respond_to_card_route(request, card_id):
             set_learning_context(current_user, next=next_)
 
     return 200, {
-        'response': response.deliver(),
+        'response': deliver_response(response),
         'feedback': feedback,
         'next': next_,
     }

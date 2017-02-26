@@ -182,22 +182,6 @@
             }
         }
     },
-    "sets_parameters": {
-        "tablename": "sets_parameters",
-        "singular": "set_parameters",
-        "fields": {
-            "id": {
-                "default": "uniqid"
-            },
-            "created": {
-                "default": "now"
-            },
-            "modified": {
-                "default": "now",
-                "bundle": "now"
-            }
-        }
-    },
     "sets": {
         "tablename": "sets",
         "singular": "set",
@@ -244,22 +228,6 @@
                         "validate": ["is_required", "is_string", ["is_one_of", "card", "unit", "set"]]
                     }
                 }
-            }
-        }
-    },
-    "units_parameters": {
-        "tablename": "units_parameters",
-        "singular": "unit_parameters",
-        "fields": {
-            "id": {
-                "default": "uniqid"
-            },
-            "created": {
-                "default": "now"
-            },
-            "modified": {
-                "default": "now",
-                "bundle": "now"
             }
         }
     },

@@ -5,7 +5,7 @@ Primary learning sequencer.
 from models.card_parameters import CardParameters
 from modules.sequencer.update import update as formula_update
 from modules.sequencer.params import init_learned
-from models.response import Response
+from database.response import get_latest_response, insert_response
 from time import time
 
 """
@@ -38,7 +38,7 @@ def update(db_conn, user, card, response):
 
     if not card.has_assessment():
         return {
-            'response': Response({}),
+            'response': {},
             'feedback': '',
         }
 
@@ -47,22 +47,22 @@ def update(db_conn, user, card, response):
         return {'errors': errors}
 
     score, feedback = card.score_response(response)
-    response = Response({
+    response = {
         'user_id': user['id'],
         'card_id': card['entity_id'],
         'unit_id': card['unit_id'],
         'response': response,
         'score': score,
-    })
+    }
 
     card_parameters = CardParameters.get(db_conn, entity_id=card['entity_id'])
     if not card_parameters:
         card_parameters = CardParameters({
             'entity_id': card['entity_id']
         })
-    previous_response = Response.get_latest(db_conn,
-                                            user_id=user['id'],
-                                            unit_id=card['unit_id'])
+    previous_response = get_latest_response(user['id'],
+                                            card['unit_id'],
+                                            db_conn)
 
     now = time()
     time_delta = now - (int(previous_response['created'].strftime("%s"))
@@ -77,7 +77,7 @@ def update(db_conn, user, card, response):
                              learned, guess_distribution, slip_distribution)
 
     response['learned'] = updates['learned']
-    response, errors = response.save(db_conn)
+    response, errors = insert_response(response, db_conn)
     if errors:
         return {'errors': errors, 'feedback': feedback}
 

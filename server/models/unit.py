@@ -2,7 +2,6 @@ from modules.model import Model
 from models.mixins.entity import EntityMixin
 from modules.validations import is_required, is_string, is_list, \
     has_min_length
-from models.unit_parameters import UnitParameters
 
 
 class Unit(EntityMixin, Model):
@@ -17,8 +16,6 @@ class Unit(EntityMixin, Model):
     30-60 minutes of practice to gain proficiency.
     """
     tablename = 'units'
-
-    parametersCls = UnitParameters
 
     schema = dict(EntityMixin.schema.copy(), **{
         'body': {

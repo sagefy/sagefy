@@ -5,7 +5,7 @@ from modules.sequencer.params import init_learned
 from random import shuffle, random
 from math import floor
 from functools import reduce
-from models.response import Response
+from database.response import get_latest_response
 
 
 p_assessment_map = {
@@ -47,9 +47,7 @@ def choose_card(db_conn, user, unit):
     if not len(cards):
         return None
 
-    previous_response = Response.get_latest(db_conn,
-                                            user_id=user['id'],
-                                            unit_id=unit_id)
+    previous_response = get_latest_response(user['id'], unit_id, db_conn)
     if previous_response:
         learned = previous_response['learned']
         # Don't allow the previous card as the next card

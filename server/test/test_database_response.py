@@ -1,4 +1,4 @@
-from models.response import Response
+from database.response import insert_response, get_latest_response
 import rethinkdb as r
 
 
@@ -7,17 +7,16 @@ def test_created(db_conn, responses_table):
     Expect to have a created date.
     """
 
-    response = Response({
+    response, errors = insert_response({
         'user_id': 'A',
         'card_id': 'BC',
         'unit_id': 'RM',
         'response': 42,
         'score': 0.9,
         'learned': 0.9,
-    })
-    del response['created']  # should be set to default anywho
-    response, errors = response.save(db_conn)
+    }, db_conn)
     assert len(errors) == 0
+    assert response['created']
 
 
 def test_user(db_conn, responses_table):
@@ -25,16 +24,17 @@ def test_user(db_conn, responses_table):
     Expect to require a user ID.
     """
 
-    response, errors = Response.insert(db_conn, {
+    repsonse_data = {
         'card_id': 'BC',
         'unit_id': 'RM',
         'response': 42,
         'score': 0.9,
         'learned': 0.9,
-    })
+    }
+    response, errors = insert_response(repsonse_data, db_conn)
     assert len(errors) == 1
-    response['user_id'] = 'A'
-    response, errors = response.save(db_conn)
+    repsonse_data['user_id'] = 'A'
+    response, errors = insert_response(repsonse_data, db_conn)
     assert len(errors) == 0
 
 
@@ -43,16 +43,17 @@ def test_card(db_conn, responses_table):
     Expect to require a card ID.
     """
 
-    response, errors = Response.insert(db_conn, {
+    response_data = {
         'user_id': 'A',
         'unit_id': 'RM',
         'response': 42,
         'score': 0.9,
         'learned': 0.9,
-    })
+    }
+    response, errors = insert_response(response_data, db_conn)
     assert len(errors) == 1
-    response['card_id'] = 'AFJ'
-    response, errors = response.save(db_conn)
+    response_data['card_id'] = 'AFJ'
+    response, errors = insert_response(response_data, db_conn)
     assert len(errors) == 0
 
 
@@ -61,16 +62,17 @@ def test_unit(db_conn, responses_table):
     Expect to require a unit ID.
     """
 
-    response, errors = Response.insert(db_conn, {
+    response_data = {
         'user_id': 'A',
         'card_id': 'BC',
         'response': 42,
         'score': 0.9,
         'learned': 0.9,
-    })
+    }
+    response, errors = insert_response(response_data, db_conn)
     assert len(errors) == 1
-    response['unit_id'] = 'A24JLD'
-    response, errors = response.save(db_conn)
+    response_data['unit_id'] = 'A24JLD'
+    response, errors = insert_response(response_data, db_conn)
     assert len(errors) == 0
 
 
@@ -79,16 +81,17 @@ def test_response(db_conn, responses_table):
     Expect to record the user's response.
     """
 
-    response, errors = Response.insert(db_conn, {
+    response_data = {
         'user_id': 'A',
         'card_id': 'BC',
         'unit_id': 'RM',
         'score': 0.9,
         'learned': 0.9,
-    })
+    }
+    response, errors = insert_response(response_data, db_conn)
     assert len(errors) == 1
-    response['response'] = 42
-    response, errors = response.save(db_conn)
+    response_data['response'] = 42
+    response, errors = insert_response(response_data, db_conn)
     assert len(errors) == 0
 
 
@@ -97,22 +100,23 @@ def test_score(db_conn, responses_table):
     Expect to have a score between 0 and 1 (including).
     """
 
-    response, errors = Response.insert(db_conn, {
+    response_data = {
         'user_id': 'A',
         'card_id': 'BC',
         'unit_id': 'RM',
         'response': 42,
         'learned': 0.9,
-    })
+    }
+    response, errors = insert_response(response_data, db_conn)
     assert len(errors) == 1
-    response['score'] = 1.1
-    response, errors = response.save(db_conn)
+    response_data['score'] = 1.1
+    response, errors = insert_response(response_data, db_conn)
     assert len(errors) == 1
-    response['score'] = 0
-    response, errors = response.save(db_conn)
+    response_data['score'] = 0
+    response, errors = insert_response(response_data, db_conn)
     assert len(errors) == 0
-    response['score'] = 1
-    response, errors = response.save(db_conn)
+    response_data['score'] = 1
+    response, errors = insert_response(response_data, db_conn)
     assert len(errors) == 0
 
 
@@ -135,4 +139,4 @@ def test_get_latest(db_conn, responses_table):
         'modified': r.now(),
     }]).run(db_conn)
 
-    assert Response.get_latest(db_conn, 'abcd1234', 'apple')['id'] == 'A'
+    assert get_latest_response('abcd1234', 'apple', db_conn)['id'] == 'A'
