@@ -40,22 +40,10 @@ def get_entity_status(current_status, votes):
     # Make sure the entity version status is not declined or accepted
     if current_status in ('accepted', 'declined'):
         return False, current_status
-    # Count the "no" and "yes" vote power
-    no_vote_power, yes_vote_power = 0, 1
-    # For now, we will assume the proposer is one "yes" vote until
-    # contributor vote power is calculated
-    for vote in votes:
-        if vote['response']:
-            yes_vote_power = yes_vote_power + 1
-        else:
-            no_vote_power = no_vote_power + 1
-    # If no power is great enough, then block the version
-    if no_vote_power >= 1:
-        return True, 'blocked'
-    # If yes power is great enough, then accept the version
-    if yes_vote_power >= 3:
-        return True, 'accepted'
-    return False, current_status
+    # TODO-3 for now, we'll just accept all proposals as is
+    # The algorithm should eventually be updated to match
+    # https://docs.sagefy.org/Planning-Contributor-Ratings
+    return True, 'accepted'
 
 
 def update_entity_status(db_conn, proposal):
