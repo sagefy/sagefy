@@ -30,6 +30,34 @@ def prefix_error_names(prefix, errors):
     return errors
 
 
+def get_entity_status(current_status, votes):
+    """
+    Returns (changed, status) ... one of:
+    (True, 'accepted|blocked|pending')
+    (False, 'accepted|blocked|pending|declined')
+    """
+
+    # Make sure the entity version status is not declined or accepted
+    if current_status in ('accepted', 'declined'):
+        return False, current_status
+    # Count the "no" and "yes" vote power
+    no_vote_power, yes_vote_power = 0, 1
+    # For now, we will assume the proposer is one "yes" vote until
+    # contributor vote power is calculated
+    for vote in votes:
+        if vote['response']:
+            yes_vote_power = yes_vote_power + 1
+        else:
+            no_vote_power = no_vote_power + 1
+    # If no power is great enough, then block the version
+    if no_vote_power >= 1:
+        return True, 'blocked'
+    # If yes power is great enough, then accept the version
+    if yes_vote_power >= 3:
+        return True, 'accepted'
+    return False, current_status
+
+
 def update_entity_status(db_conn, proposal):
     """
     Update the entity's status based on the vote power received.
@@ -46,49 +74,21 @@ def update_entity_status(db_conn, proposal):
                                  proposal['entity_version']['kind'],
                                  proposal['entity_version']['id'])
 
-    # Make sure the entity version status is not declined or accepted
-    if entity_version['status'] in ('accepted', 'declined'):
-        return
-
-    # Count the "no" and "yes" vote power
-    no_vote_power = 0
-    yes_vote_power = 1
-    # For now, we will assume the proposer is one "yes" vote until
-    # contributor vote power is calculated
     votes = Vote.list(db_conn, replies_to_id=proposal['id'])
-    for vote in votes:
-        if vote['response']:
-            yes_vote_power = yes_vote_power + 1
-        else:
-            no_vote_power = no_vote_power + 1
+    changed, status = get_entity_status(entity_version['status'], votes)
 
-    # If no power is great enough, then block the version
-    if no_vote_power >= 1:
-        entity_version['status'] = 'blocked'
+    if changed:
+        entity_version['status'] = status
         entity_version.save(db_conn)
         send_notices(
             db_conn,
             entity_id=proposal['entity_version']['id'],
             entity_kind=proposal['entity_version']['kind'],
-            notice_kind='block_proposal',
+            notice_kind=('block_proposal'
+                         if status is 'blocked' else
+                         'accept_proposal'),
             notice_data={
                 'user_name': '???',  # TODO-2
-                'proposal_name': proposal['name'],
-                'entity_kind': proposal['entity_version']['kind'],
-                'entity_name': entity_version['name'],
-            }
-        )
-
-    # If yes power is great enough, then accept the version
-    if yes_vote_power >= 3:
-        entity_version['status'] = 'accepted'
-        entity_version.save(db_conn)
-        send_notices(
-            db_conn,
-            entity_id=proposal['entity_version']['id'],
-            entity_kind=proposal['entity_version']['kind'],
-            notice_kind='accept_proposal',
-            notice_data={
                 'proposal_name': proposal['name'],
                 'entity_kind': proposal['entity_version']['kind'],
                 'entity_name': entity_version['name'],
