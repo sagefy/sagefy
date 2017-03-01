@@ -73,7 +73,7 @@ def update_entity_status(db_conn, proposal):
             entity_id=proposal['entity_version']['id'],
             entity_kind=proposal['entity_version']['kind'],
             notice_kind=('block_proposal'
-                         if status is 'blocked' else
+                         if status == 'blocked' else
                          'accept_proposal'),
             notice_data={
                 'user_name': '???',  # TODO-2
