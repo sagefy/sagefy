@@ -1,8 +1,10 @@
-from models.user_sets import UserSets
 from models.set import Set
 from framework.routes import get, post, put, delete, abort
 from framework.session import get_current_user
 from database.user import set_learning_context
+from database.user_sets import insert_user_sets, get_user_sets, \
+    append_user_sets, remove_user_sets, \
+    list_user_sets_entity
 
 
 @get('/s/users/{user_id}/sets')
@@ -32,14 +34,15 @@ def get_user_sets_route(request, user_id):
     }
     set_learning_context(current_user, next=next_)
 
-    uset = UserSets.get(db_conn, user_id=user_id)
+    uset = get_user_sets(user_id, db_conn)
     if not uset:
         return 200, {'sets': [], 'next': next_}
     return 200, {
-        'sets': [s.deliver()
-                 for s in uset.list_sets(
-                     db_conn,
-                     **request['params'])],
+        'sets': [set_.deliver()
+                 for set_ in list_user_sets_entity(
+                     user_id,
+                     request['params'],
+                     db_conn)],
         'next': next_,
     }
 
@@ -63,7 +66,7 @@ def add_set_route(request, user_id, set_id):
     if not set_:
         return abort(404)
 
-    uset = UserSets.get(db_conn, user_id=user_id)
+    uset = get_user_sets(user_id, db_conn)
     if uset and set_id in uset['set_ids']:
         return 400, {
             'errors': [{
@@ -73,14 +76,14 @@ def add_set_route(request, user_id, set_id):
             'ref': 'kPZ95zM3oxFDGGl8vBdR3J3o',
         }
 
+    # TODO-2 move some of this logic to the database file
     if uset:
-        uset['set_ids'].append(set_id)
-        uset, errors = uset.save(db_conn)
+        uset, errors = append_user_sets(user_id, set_id, db_conn)
     else:
-        uset, errors = UserSets.insert(db_conn, {
+        uset, errors = insert_user_sets({
             'user_id': user_id,
             'set_ids': [set_id],
-        })
+        }, db_conn)
 
     if errors:
         return 400, {
@@ -133,7 +136,7 @@ def remove_set_route(request, user_id, set_id):
     if user_id != current_user['id']:
         return abort(403)
 
-    uset = UserSets.get(db_conn, user_id=user_id)
+    uset = get_user_sets(user_id, db_conn)
     if not uset:
         return 404, {
             'errors': [{'message': 'User does not have sets.'}],
@@ -143,8 +146,7 @@ def remove_set_route(request, user_id, set_id):
     if set_id not in uset['set_ids']:
         return abort(404)
 
-    uset['set_ids'].remove(set_id)
-    usets, errors = uset.save(db_conn)
+    uset, errors = remove_user_sets(user_id, set_id, db_conn)
 
     if errors:
         return 400, {

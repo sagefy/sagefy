@@ -1,4 +1,3 @@
-from models.user_sets import UserSets
 from modules.content import get as c
 from modules.discuss import get_posts_facade
 from framework.routes import get, post, put, delete, abort
@@ -7,6 +6,7 @@ from database.user import get_user, insert_user, deliver_user, get_avatar, \
     update_user, is_password_valid, get_email_token, is_valid_token, \
     update_user_password
 from database.follow import list_follows, deliver_follow
+from database.user_sets import list_user_sets_entity
 
 
 def _log_in(user):
@@ -66,8 +66,11 @@ def get_user_route(request, user_id):
                          get_posts_facade(db_conn, user_id=user['id'])]
     if ('sets' in request['params']
             and user['settings']['view_sets'] == 'public'):
-        u_sets = UserSets.get(db_conn, user_id=user['id'])
-        data['sets'] = [set_.deliver() for set_ in u_sets.list_sets(db_conn)]
+        data['sets'] = [set_.deliver()
+                        for set_ in list_user_sets_entity(
+                            user['id'],
+                            {},
+                            db_conn)]
     if ('follows' in request['params']
             and user['settings']['view_follows'] == 'public'):
         data['follows'] = [deliver_follow(follow) for follow in

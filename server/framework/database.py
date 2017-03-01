@@ -56,12 +56,10 @@ def setup_db():
     from models.unit import Unit
     from models.set import Set
     from models.card_parameters import CardParameters
-    from models.user_sets import UserSets
 
     models = (Topic, Post, Proposal, Vote,
               Card, Unit, Set,
-              CardParameters,
-              UserSets)
+              CardParameters,)
 
     for model_cls in models:
         tablename = getattr(model_cls, 'tablename', None)
@@ -86,7 +84,9 @@ def setup_db():
     from schemas.notice import schema as notice_schema
     from schemas.follow import schema as follow_schema
     from schemas.response import schema as response_schema
-    schemas = (user_schema, notice_schema, follow_schema, response_schema,)
+    from schemas.user_sets import schema as user_sets_schema
+    schemas = (user_schema, notice_schema, follow_schema, response_schema,
+               user_sets_schema,)
     for schema in schemas:
         tablename = schema['tablename']
 

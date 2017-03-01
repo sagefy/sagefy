@@ -1,4 +1,6 @@
-from models.user_sets import UserSets
+from database.user_sets import insert_user_sets, \
+    list_user_sets_entity
+# get_user_sets, append_user_sets, remove_user_sets,
 import rethinkdb as r
 
 
@@ -7,15 +9,16 @@ def test_user(db_conn, users_sets_table):
     Expect to require a user ID.
     """
 
-    user_sets, errors = UserSets.insert(db_conn, {
+    uset_data = {
         'set_ids': [
             'A',
             'B',
         ],
-    })
+    }
+    user_sets, errors = insert_user_sets(uset_data, db_conn)
     assert len(errors) == 1
-    user_sets['user_id'] = 'A'
-    user_sets, errors = user_sets.save(db_conn)
+    uset_data['user_id'] = 'A'
+    user_sets, errors = insert_user_sets(uset_data, db_conn)
     assert len(errors) == 0
 
 
@@ -24,15 +27,16 @@ def test_sets(db_conn, users_sets_table):
     Expect to require a list of set IDs.
     """
 
-    user_sets, errors = UserSets.insert(db_conn, {
+    uset_data = {
         'user_id': 'A'
-    })
+    }
+    user_sets, errors = insert_user_sets(uset_data, db_conn)
     assert len(errors) == 1
-    user_sets['set_ids'] = [
+    uset_data['set_ids'] = [
         'A',
         'B',
     ]
-    user_sets, errors = user_sets.save(db_conn)
+    user_sets, errors = insert_user_sets(uset_data, db_conn)
     assert len(errors) == 0
 
 
@@ -79,7 +83,7 @@ def test_list_sets(db_conn, users_sets_table, sets_table):
         'created': r.now(),
         'modified': r.now(),
     }).run(db_conn)
-    uset = UserSets.get(db_conn, user_id='abcd1234')
-    sets = uset.list_sets(db_conn)
+    user_id = 'abcd1234'
+    sets = list_user_sets_entity(user_id, {}, db_conn)
     assert sets[0]['body'] in ('Apple', 'Coconut')
-    assert sets[0]['body'] in ('Apple', 'Coconut')
+    assert sets[1]['body'] in ('Apple', 'Coconut')
