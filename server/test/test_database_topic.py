@@ -1,4 +1,4 @@
-from models.topic import Topic
+from database.topic import insert_topic, list_topics_by_entity_id
 
 
 def test_user_id(db_conn, topics_table):
@@ -6,16 +6,17 @@ def test_user_id(db_conn, topics_table):
     Expect a topic to require a user id.
     """
 
-    topic, errors = Topic.insert(db_conn, {
+    topic_data = {
         'name': 'A',
         'entity': {
             'id': 'A',
             'kind': 'card',
         }
-    })
+    }
+    topic, errors = insert_topic(topic_data, db_conn)
     assert len(errors) == 1
-    topic['user_id'] = 'Q'
-    topic, errors = topic.save(db_conn)
+    topic_data['user_id'] = 'Q'
+    topic, errors = insert_topic(topic_data, db_conn)
     assert len(errors) == 0
 
 
@@ -24,16 +25,17 @@ def test_name(db_conn, topics_table):
     Expect a topic to require a name.
     """
 
-    topic, errors = Topic.insert(db_conn, {
+    topic_data = {
         'user_id': 'Q',
         'entity': {
             'id': 'A',
             'kind': 'card',
         }
-    })
+    }
+    topic, errors = insert_topic(topic_data, db_conn)
     assert len(errors) == 1
-    topic['name'] = 'A'
-    topic, errors = topic.save(db_conn)
+    topic_data['name'] = 'A'
+    topic, errors = insert_topic(topic_data, db_conn)
     assert len(errors) == 0
 
 
@@ -42,16 +44,17 @@ def test_entity(db_conn, topics_table):
     Expect a topic to require an entity kind and id.
     """
 
-    topic, errors = Topic.insert(db_conn, {
+    topic_data = {
         'user_id': 'Q',
         'name': 'A',
-    })
+    }
+    topic, errors = insert_topic(topic_data, db_conn)
     assert len(errors) == 2
-    topic['entity'] = {
+    topic_data['entity'] = {
         'id': 'A',
         'kind': 'card',
     }
-    topic, errors = topic.save(db_conn)
+    topic, errors = insert_topic(topic_data, db_conn)
     assert len(errors) == 0
 
 
@@ -79,5 +82,5 @@ def test_list_by_entity_id(db_conn, topics_table):
         }
     }]).run(db_conn)
 
-    topics = Topic.list_by_entity_id(db_conn, 'A')
+    topics = list_topics_by_entity_id('A', {}, db_conn)
     assert len(topics) == 2

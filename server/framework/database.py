@@ -48,7 +48,6 @@ def setup_db():
 
     tables = r.db(config['rdb_db']).table_list().run(db_conn)
 
-    from models.topic import Topic
     from models.post import Post
     from models.proposal import Proposal
     from models.vote import Vote
@@ -57,7 +56,7 @@ def setup_db():
     from models.set import Set
     from models.card_parameters import CardParameters
 
-    models = (Topic, Post, Proposal, Vote,
+    models = (Post, Proposal, Vote,
               Card, Unit, Set,
               CardParameters,)
 
@@ -85,8 +84,9 @@ def setup_db():
     from schemas.follow import schema as follow_schema
     from schemas.response import schema as response_schema
     from schemas.user_sets import schema as user_sets_schema
+    from schemas.topic import schema as topic_schema
     schemas = (user_schema, notice_schema, follow_schema, response_schema,
-               user_sets_schema,)
+               user_sets_schema, topic_schema,)
     for schema in schemas:
         tablename = schema['tablename']
 

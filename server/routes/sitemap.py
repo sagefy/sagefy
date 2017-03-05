@@ -2,8 +2,8 @@ from framework.routes import get
 from models.card import Card
 from models.unit import Unit
 from models.set import Set
-from models.topic import Topic
 from database.user import list_users, deliver_user
+from database.topic import list_topics
 
 defaults = {
     'https://sagefy.org/',
@@ -43,7 +43,7 @@ def sitemap_route(request):
             # TODO-2 set tree
 
     # Topic
-    for topic in Topic.list(db_conn):
+    for topic in list_topics({}, db_conn):
         sitemap.add('https://sagefy.org/topics/{id}'.format(id=topic['id']))
 
     # User

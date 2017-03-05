@@ -14,13 +14,14 @@ from modules.discuss import instance_post_facade, \
 from modules.util import pick, omit, object_diff
 from modules.entity import get_kind, get_latest_accepted, get_version, \
     instance_new_entity
-from models.topic import Topic
 from models.proposal import Proposal
 from models.vote import Vote
 from modules.content import get as c
 from modules.notices import send_notices
 from database.user import get_user, get_avatar
 from database.follow import insert_follow
+from database.topic import get_topic, deliver_topic, validate_topic, \
+    update_topic, insert_topic
 
 
 def prefix_error_names(prefix, errors):
@@ -118,10 +119,11 @@ def create_topic_route(request):
         }
     topic_data = omit(topic_data, ('id', 'created', 'modified'))
     topic_data['user_id'] = current_user['id']
-    topic = Topic(topic_data)
+    topic_data, topic_errors = validate_topic(topic_data, db_conn)
+
     post_data = omit(post_data, ('id', 'created', 'modified',))
     post_data['user_id'] = current_user['id']
-    post_data['topic_id'] = topic['id']
+    post_data['topic_id'] = topic_data['id']
     post_ = instance_post_facade(post_data)
     post_kind = post_['kind']
     if post_kind == 'proposal':
@@ -133,7 +135,7 @@ def create_topic_route(request):
         }
 
     # ## STEP 2) Validate post and topic (and entity) instances
-    errors = prefix_error_names('topic.', topic.validate(db_conn))
+    errors = prefix_error_names('topic.', topic_errors)
     errors = errors + prefix_error_names('post.', post_.validate(db_conn))
     if post_kind == 'proposal':
         errors = (errors +
@@ -145,7 +147,8 @@ def create_topic_route(request):
         }
 
     # ## STEP 3) Save post and topic (and entity)
-    topic.save(db_conn)
+    topic_data, topic_errors = insert_topic(topic_data, db_conn)
+    post_['topic_id'] = topic_data['id']
     post_.save(db_conn)
     if post_kind == 'proposal':
         entity.save(db_conn)
@@ -154,7 +157,7 @@ def create_topic_route(request):
     insert_follow({
         'user_id': current_user['id'],
         'entity': {
-            'id': topic['id'],
+            'id': topic_data['id'],
             'kind': 'topic',
         }
     }, db_conn)
@@ -163,33 +166,33 @@ def create_topic_route(request):
     # ## STEP 5) Send out any needed notices
     send_notices(
         db_conn,
-        entity_id=topic['entity']['id'],
-        entity_kind=topic['entity']['kind'],
+        entity_id=topic_data['entity']['id'],
+        entity_kind=topic_data['entity']['kind'],
         notice_kind='create_topic',
         notice_data={
             'user_name': current_user['name'],
-            'topic_name': topic['name'],
-            'entity_kind': topic['entity']['kind'],
-            'entity_name': topic['entity']['id'],
+            'topic_name': topic_data['name'],
+            'entity_kind': topic_data['entity']['kind'],
+            'entity_name': topic_data['entity']['id'],
         }
     )
 
     if post_kind == 'proposal':
         send_notices(
             db_conn,
-            entity_id=topic['entity']['id'],
-            entity_kind=topic['entity']['kind'],
+            entity_id=topic_data['entity']['id'],
+            entity_kind=topic_data['entity']['kind'],
             notice_kind='create_proposal',
             notice_data={
                 'user_name': current_user['name'],
-                'topic_name': topic['name'],
-                'entity_kind': topic['entity']['kind'],
-                'entity_name': topic['entity']['id'],
+                'topic_name': topic_data['name'],
+                'entity_kind': topic_data['entity']['kind'],
+                'entity_name': topic_data['entity']['id'],
             }
         )
 
     # ## STEP 5) Return response
-    return 200, {'topic': topic.deliver(), 'post': post_.deliver()}
+    return 200, {'topic': deliver_topic(topic_data), 'post': post_.deliver()}
 
 
 @put('/s/topics/{topic_id}')
@@ -207,7 +210,7 @@ def update_topic_route(request, topic_id):
         return abort(401)
 
     # ## STEP 1) Find existing topic instance ## #
-    topic = Topic.get(db_conn, id=topic_id)
+    topic = get_topic({'id': topic_id}, db_conn)
     if not topic:
         return abort(404)
     if topic['user_id'] != current_user['id']:
@@ -218,7 +221,7 @@ def update_topic_route(request, topic_id):
     topic_data = pick(topic_data, ('name',))
 
     # ## STEP 3) Validate and save topic instance ## #
-    topic, errors = topic.update(db_conn, topic_data)
+    topic, errors = update_topic(topic, topic_data, db_conn)
     if errors:
         errors = prefix_error_names('topic.', errors)
         return 400, {
@@ -227,7 +230,7 @@ def update_topic_route(request, topic_id):
         }
 
     # ## STEP 4) Return response ## #
-    return 200, {'topic': topic.deliver()}
+    return 200, {'topic': deliver_topic(topic)}
 
 
 @get('/s/topics/{topic_id}/posts')
@@ -241,7 +244,7 @@ def get_posts_route(request, topic_id):
     db_conn = request['db_conn']
 
     # Is the topic valid?
-    topic = Topic.get(db_conn, id=topic_id)
+    topic = get_topic({'id': topic_id}, db_conn)
     if not topic:
         return 404, {
             'errors': [{
@@ -300,7 +303,7 @@ def get_posts_route(request, topic_id):
 
     # TODO-2 SPLITUP create new endpoints for these instead
     output = {
-        'topic': topic.deliver(),
+        'topic': deliver_topic(topic),
         'posts': [p.deliver() for p in posts],
         'entity_versions': {
             p: ev.deliver('view')
@@ -328,7 +331,7 @@ def create_post_route(request, topic_id):
     if not current_user:
         return abort(401)
 
-    topic = Topic.get(db_conn, id=topic_id)
+    topic = get_topic({'id': topic_id}, db_conn)
     if not topic:
         return 404, {
             'errors': [{

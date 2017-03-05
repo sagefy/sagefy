@@ -1,11 +1,11 @@
 from framework.routes import get, post, abort
 from models.set import Set
-from models.topic import Topic
 from models.unit import Unit
 from framework.session import get_current_user
 from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
 from database.user import get_learning_context, set_learning_context
+from database.topic import list_topics_by_entity_id, deliver_topic
 
 # Nota Bene: We use `set_` because `set` is a type in Python
 
@@ -33,14 +33,14 @@ def get_set_route(request, set_id):
         return abort(404)
 
     # TODO-2 SPLITUP create new endpoints for these instead
-    topics = Topic.list_by_entity_id(db_conn, entity_id=set_id)
+    topics = list_topics_by_entity_id(set_id, {}, db_conn)
     versions = Set.get_versions(db_conn, entity_id=set_id)
     units = set_.list_units(db_conn)
 
     return 200, {
         'set': set_.deliver(),
         # 'set_parameters': set_.fetch_parameters(),
-        'topics': [topic.deliver() for topic in topics],
+        'topics': [deliver_topic(topic) for topic in topics],
         'versions': [version.deliver() for version in versions],
         'units': [unit.deliver() for unit in units],
     }
