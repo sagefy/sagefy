@@ -1,11 +1,12 @@
 from models.card import Card
-from models.card_parameters import CardParameters
 from modules.sequencer.formulas import calculate_correct
 from modules.sequencer.params import init_learned
 from random import shuffle, random
 from math import floor
 from functools import reduce
 from database.response import get_latest_response
+from database.card_parameters import get_card_parameters, \
+    get_card_parameters_values
 
 
 p_assessment_map = {
@@ -67,10 +68,14 @@ def choose_card(db_conn, user, unit):
         if not len(assessment):
             return nonassessment[0]
         for card in assessment:
-            params = CardParameters.get(db_conn, entity_id=card['entity_id'])
+            params = get_card_parameters(
+                {'entity_id': card['entity_id']},
+                db_conn
+            )
             if params:
-                guess = params.get_guess()
-                slip = params.get_slip()
+                values = get_card_parameters_values(params)
+                guess = values['guess']
+                slip = values['slip']
                 correct = calculate_correct(guess, slip, learned)
                 if 0.25 < correct < 0.75:
                     return card

@@ -245,10 +245,6 @@ def test_respond_card(db_conn, units_table, cards_table,
         'max_options_to_show': 4,
     }).run(db_conn)
 
-    cards_parameters_table.insert({
-        'entity_id': 'tyui4567'
-    }).run(db_conn)
-
     units_table.insert({
         'entity_id': 'vbnm7890',
         'created': r.now(),

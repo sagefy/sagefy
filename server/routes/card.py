@@ -1,7 +1,6 @@
 from framework.session import get_current_user
 from framework.routes import get, post, abort
 from models.card import Card
-from models.card_parameters import CardParameters
 from models.unit import Unit
 from models.set import Set
 from database.topic import list_topics_by_entity_id, deliver_topic
@@ -11,6 +10,8 @@ from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
 from database.user import get_learning_context, set_learning_context
 from database.response import deliver_response
+from database.card_parameters import get_card_parameters, \
+    get_card_parameters_values
 # from modules.sequencer.params import max_learned
 
 
@@ -36,11 +37,12 @@ def get_card_route(request, card_id):
     versions = Card.get_versions(db_conn, entity_id=card_id)
     requires = Card.list_requires(db_conn, entity_id=card_id)
     required_by = Card.list_required_by(db_conn, entity_id=card_id)
-    params = CardParameters.get(db_conn, entity_id=card_id)
+    params = get_card_parameters({'entity_id': card_id}, db_conn)
 
     return 200, {
         'card': card.deliver(access='view'),
-        'card_parameters': params.get_values() if params else None,
+        'card_parameters': (get_card_parameters_values(params)
+                            if params else None),
         'unit': unit.deliver(),
         'topics': [deliver_topic(topic) for topic in topics],
         'versions': [version.deliver() for version in versions],

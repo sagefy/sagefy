@@ -2,7 +2,8 @@
 Primary learning sequencer.
 """
 
-from models.card_parameters import CardParameters
+from database.card_parameters import get_card_parameters, get_distribution, \
+    bundle_distribution, insert_card_parameters, update_card_parameters
 from modules.sequencer.update import update as formula_update
 from modules.sequencer.params import init_learned
 from database.response import get_latest_response, insert_response
@@ -55,11 +56,10 @@ def update(db_conn, user, card, response):
         'score': score,
     }
 
-    card_parameters = CardParameters.get(db_conn, entity_id=card['entity_id'])
-    if not card_parameters:
-        card_parameters = CardParameters({
-            'entity_id': card['entity_id']
-        })
+    card_parameters = get_card_parameters(
+        {'entity_id': card['entity_id']},
+        db_conn
+    ) or {}
     previous_response = get_latest_response(user['id'],
                                             card['unit_id'],
                                             db_conn)
@@ -70,8 +70,8 @@ def update(db_conn, user, card, response):
 
     learned = (previous_response['learned']
                if previous_response else init_learned)
-    guess_distribution = card_parameters.get_distribution('guess')
-    slip_distribution = card_parameters.get_distribution('slip')
+    guess_distribution = get_distribution(card_parameters, 'guess')
+    slip_distribution = get_distribution(card_parameters, 'slip')
 
     updates = formula_update(score, time_delta,
                              learned, guess_distribution, slip_distribution)
@@ -81,9 +81,25 @@ def update(db_conn, user, card, response):
     if errors:
         return {'errors': errors, 'feedback': feedback}
 
-    card_parameters.set_distribution('guess', updates['guess_distribution'])
-    card_parameters.set_distribution('slip', updates['slip_distribution'])
-    card_parameters, errors = card_parameters.save(db_conn)
+    updated_card_parameters = {
+        'entity_id': card['entity_id'],
+        'guess_distribution':
+            bundle_distribution(updates['guess_distribution']),
+        'slip_distribution':
+            bundle_distribution(updates['slip_distribution']),
+    }
+    if card_parameters.get('id'):
+        _, errors = update_card_parameters(
+            card_parameters,
+            updated_card_parameters,
+            db_conn
+        )
+    else:
+        _, errors = insert_card_parameters(
+            updated_card_parameters,
+            db_conn
+        )
+
     if errors:
         return {'errors': errors, 'feedback': feedback}
 
