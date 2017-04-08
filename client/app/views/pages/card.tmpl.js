@@ -48,7 +48,8 @@ const k = {}
 
 k.video = (card) =>
     iframe({
-        src: `https://www.youtube.com/embed/${card.video_id}`,
+        src: `https://www.youtube.com/embed/${card.video_id}` +
+             '?autoplay=0&modestbranding=1&rel=0',
         width: 300,
         height: 200,
         allowfullscreen: true,
