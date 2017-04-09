@@ -39,18 +39,28 @@ description: |
     bottom 0
     left 0
     padding ($unit / 2)
-    background alpha($base-color(99), 0.8)
+    background transparent
     border-bottom 0
     border-top-right-radius 6px
+    text-align center
 
     .selected &
         background transparent
+
+    &:hover
+        background white
+        border-top 1px solid $base-color(80)
+        border-right 1px solid $base-color(80)
+
+    .selected &:hover
+        background $base-color(35)
+        border 0
 
     &:hover .menu__close
         color $base-color(90)
 
 .menu__logo
-    $h = $unit * 6
+    $h = $unit * 5
     height $h
     width ($h * 270.0 / 365.0)
     display block
@@ -60,10 +70,19 @@ description: |
     .selected &
         background-image url('/astrolabe_light.svg')
 
+.menu__label
+    color $base-color(43)
+    @extend $font-size-small
+    margin 0
+    line-height 1
+
+    .selected &
+      color $base-color(70)
+
 .menu__close
     position absolute
     top 0
-    right 0
+    right ($unit / 2)
     display inline-block
     color $base-color(66)
 

@@ -48,9 +48,12 @@ module.exports = (data) => {
         h1(`Tree: ${treeData.set.name}`),
         asContrib ? p(a(
             {href: `/sets/${id}`},
-            icon('back'),
+            icon('set'),
             ' View set information'
         )) : null,
+        p(
+          'You can click the nodes to see the unit name.'
+        ),
         svg(
             {
                 class: 'tree',

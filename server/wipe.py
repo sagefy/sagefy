@@ -9,11 +9,9 @@ db_conn = make_db_connection()
 for kind in (
     'users',
     'units',
-    'units_parameters',
     'cards',
     'cards_parameters',
     'sets',
-    'sets_parameters',
     'topics',
     'posts',
     'follows',

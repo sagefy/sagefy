@@ -12,11 +12,9 @@ db_conn = make_db_connection()
 for kind in (
     'users',
     'units',
-    'units_parameters',
     'cards',
     'cards_parameters',
     'sets',
-    'sets_parameters',
     'topics',
     'posts',
     'follows',
@@ -163,16 +161,6 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'tags': ['math'],
         'body': 'The joy and pleasure of dividing numbers.',
         'require_ids': ['minus', 'times'],
-    }])
-    .run(db_conn))
-
-
-(r.table('units_parameters')
-    .insert([{
-        'id': 'plus-params',
-        'created': r.time(2014, 2, 1, 'Z'),
-        'modified': r.time(2014, 2, 1, 'Z'),
-        'entity_id': 'plus',
     }])
     .run(db_conn))
 
@@ -640,16 +628,6 @@ es.indices.delete(index='entity', ignore=[400, 404])
             'id': 'slash',
             'kind': 'unit',
         }]
-    }])
-    .run(db_conn))
-
-
-(r.table('sets_parameters')
-    .insert([{
-        'id': 'basic-math-params',
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
-        'entity_id': 'basic-math',
     }])
     .run(db_conn))
 

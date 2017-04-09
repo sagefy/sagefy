@@ -1,5 +1,5 @@
 // TODO-3 move copy to content directory
-const {nav, div, a, ul, span} = require('../../modules/tags')
+const {nav, div, a, ul, span, p} = require('../../modules/tags')
 const menuItem = require('./menu_item.tmpl')
 const {extend} = require('../../modules/utilities')
 const {ucfirst, underscored} = require('../../modules/auxiliaries')
@@ -97,6 +97,7 @@ module.exports = (data) => {
                     className: 'menu__trigger',
                 },
                 div({className: 'menu__logo'}),
+                p({className: 'menu__label'}, 'Menu'),
                 data.open ?
                     span({className: 'menu__close'}, icon('remove')) :
                     null

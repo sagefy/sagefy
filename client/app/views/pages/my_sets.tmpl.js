@@ -39,9 +39,12 @@ module.exports = (data) => {
         data.userSets.length === 0 ? p(
             a(
                 // TODO-2 temporary {href: '/search?mode=as_learner'},
-                {href: '/recommended_sets'},
+                {
+                    href: '/recommended_sets',
+                    className: 'my-sets__find-first-set',
+                },
                 icon('search'),
-                ' Find a set'
+                ' See Recommended Sets'
             ),
             ' to get started.'
         ) : p(
@@ -60,20 +63,15 @@ const userSet = (data) =>
         {className: 'my-set'},
         button(
             {
-                className: 'engage-set',
+                className: 'my-sets__engage-set',
                 id: data.entity_id
             },
             icon('good'),
             ' Engage'
         ),
         div(
-            {className: 'my-set-right'},
+            {className: 'my-sets__my-set-right'},
             h3(data.name),
-            p(data.body),
-            a(
-                {href: `/sets/${data.entity_id}/tree`},
-                icon('unit'),
-                ' View Units'
-            )
+            p(data.body)
         )
     )
