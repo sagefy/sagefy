@@ -59,27 +59,27 @@ const menus = {
 }
 
 const addContextItems = (menuItems, {card, unit, set}) => {
-    const add = []
+    menuItems = menuItems.slice()
 
     if (set) {
         const currentSet = extend(items.current_set)
         currentSet.url = currentSet.url.replace('{id}', set)
-        add.push(currentSet)
+        menuItems.push(currentSet)
     }
 
     if (unit) {
         const currentUnit = extend(items.current_unit)
         currentUnit.url = currentUnit.url.replace('{id}', unit)
-        add.push(currentUnit)
+        menuItems.push(currentUnit)
     }
 
     if (card) {
         const discuss = extend(items.discuss_card)
         discuss.url = discuss.url.replace('{id}', card)
-        add.push(discuss)
+        menuItems.push(discuss)
     }
 
-    return add.concat(menuItems)
+    return menuItems
 }
 
 module.exports = (data) => {
