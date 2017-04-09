@@ -1,4 +1,4 @@
-const {div, h1, ul, li, a, h3, p, span} = require('../../modules/tags')
+const {div, h1, ul, li, a, h3, p, span, hgroup} = require('../../modules/tags')
 // const c = require('../../modules/content').get
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
@@ -7,7 +7,15 @@ module.exports = (data) => {
     if(!Object.keys(data.chooseUnit).length) { return spinner() }
     return div(
         {id: 'choose-unit', className: 'page'},
-        h1('Choose a Unit'),
+        Object.keys(data.unitLearned).length ?
+          hgroup(
+            h1('Choose a Unit'),
+            h3(
+              icon('good'),
+              ' You just finished a unit! Pick the next one to learn:'
+            )
+          ) :
+          h1('Choose a Unit'),
         ul(
             {id: data.chooseUnit.set.entity_id, className: 'units'},
             data.chooseUnit.units.slice(0, 5).map((unit, index) => li(
@@ -21,14 +29,14 @@ module.exports = (data) => {
                                 ''
                         )
                     },
-                    icon('good'),
-                    ' Engage'
+                    'Engage ',
+                    icon('next')
                 ),
                 div(
                     h3(unit.name),
                     index === 0 ? span(
                         {className: 'choose-unit__recommended'},
-                        icon('good'),
+                        icon('learn'),
                         ' Recommended'
                     ) : null,
                     p(unit.body)

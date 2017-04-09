@@ -66,8 +66,8 @@ const userSet = (data) =>
                 className: 'my-sets__engage-set',
                 id: data.entity_id
             },
-            icon('good'),
-            ' Engage'
+            'Engage ',
+            icon('next')
         ),
         div(
             {className: 'my-sets__my-set-right'},
