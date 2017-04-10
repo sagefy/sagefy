@@ -382,6 +382,7 @@ def test_get_posts_votes(db_conn, users_table, units_table, topics_table,
         'proposal_id': 'jklm',
         'topic_id': 'wxyz7890',
         'response': True,
+        'user_id': 'abcd1234',
     }).run(db_conn)
 
     request = {
@@ -583,10 +584,11 @@ def test_update_post_body(db_conn, users_table, topics_table,
                 'body': 'Update.'
             }
         },
-        'db_conn': db_conn
+        'db_conn': db_conn,
     }
     code, response = routes.topic.update_post_route(request,
                                                     'wxyz7890', 'jklm')
+    assert not response.get('errors')
     assert code == 200
     assert 'Update' in response['post']['body']
 

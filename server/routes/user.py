@@ -1,5 +1,4 @@
 from modules.content import get as c
-from modules.discuss import get_posts_facade
 from framework.routes import get, post, put, delete, abort
 from framework.session import get_current_user, log_in_user, log_out_user
 from database.user import get_user, insert_user, deliver_user, get_avatar, \
@@ -7,6 +6,7 @@ from database.user import get_user, insert_user, deliver_user, get_avatar, \
     update_user_password
 from database.follow import list_follows, deliver_follow
 from database.user_sets import list_user_sets_entity
+from database.post import list_posts, deliver_post
 
 
 def _log_in(user):
@@ -62,8 +62,8 @@ def get_user_route(request, user_id):
 
     # TODO-2 SPLITUP create new endpoints for these instead
     if 'posts' in request['params']:
-        data['posts'] = [post.deliver() for post in
-                         get_posts_facade(db_conn, user_id=user['id'])]
+        data['posts'] = [deliver_post(post) for post in
+                         list_posts({'user_id': user['id']}, db_conn)]
     if ('sets' in request['params']
             and user['settings']['view_sets'] == 'public'):
         data['sets'] = [set_.deliver()

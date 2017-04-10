@@ -9,19 +9,17 @@ Includes topics, posts, proposals, and votes.
 
 from framework.routes import get, post, put, abort
 from framework.session import get_current_user
-from modules.discuss import instance_post_facade, \
-    get_post_facade, get_posts_facade
 from modules.util import pick, omit, object_diff
 from modules.entity import get_kind, get_latest_accepted, get_version, \
     instance_new_entity
-from models.proposal import Proposal
-from models.vote import Vote
 from modules.content import get as c
 from modules.notices import send_notices
 from database.user import get_user, get_avatar
 from database.follow import insert_follow
 from database.topic import get_topic, deliver_topic, validate_topic, \
     update_topic, insert_topic
+from database.post import deliver_post, validate_post, insert_post, \
+    list_posts, get_post, update_post
 
 
 def prefix_error_names(prefix, errors):
@@ -63,7 +61,10 @@ def update_entity_status(db_conn, proposal):
                                  proposal['entity_version']['kind'],
                                  proposal['entity_version']['id'])
 
-    votes = Vote.list(db_conn, replies_to_id=proposal['id'])
+    votes = list_posts({
+        'kind': 'vote',
+        'replies_to_id': proposal['id'],
+    }, db_conn)
     changed, status = get_entity_status(entity_version['status'], votes)
 
     if changed:
@@ -124,19 +125,19 @@ def create_topic_route(request):
     post_data = omit(post_data, ('id', 'created', 'modified',))
     post_data['user_id'] = current_user['id']
     post_data['topic_id'] = topic_data['id']
-    post_ = instance_post_facade(post_data)
-    post_kind = post_['kind']
+    post_kind = post_data['kind']
     if post_kind == 'proposal':
         entity = instance_new_entity(request['params'])
         entity_kind = get_kind(request['params'])
-        post_['entity_version'] = {
+        post_data['entity_version'] = {
             'id': entity['id'],
             'kind': entity_kind,
         }
 
     # ## STEP 2) Validate post and topic (and entity) instances
     errors = prefix_error_names('topic.', topic_errors)
-    errors = errors + prefix_error_names('post.', post_.validate(db_conn))
+    _, post_errors = validate_post(post_data, db_conn)
+    errors = errors + prefix_error_names('post.', post_errors)
     if post_kind == 'proposal':
         errors = (errors +
                   prefix_error_names('entity.', entity.validate(db_conn)))
@@ -148,8 +149,8 @@ def create_topic_route(request):
 
     # ## STEP 3) Save post and topic (and entity)
     topic_data, topic_errors = insert_topic(topic_data, db_conn)
-    post_['topic_id'] = topic_data['id']
-    post_.save(db_conn)
+    post_data['topic_id'] = topic_data['id']
+    post_, errors = insert_post(post_data, db_conn)
     if post_kind == 'proposal':
         entity.save(db_conn)
 
@@ -192,7 +193,10 @@ def create_topic_route(request):
         )
 
     # ## STEP 5) Return response
-    return 200, {'topic': deliver_topic(topic_data), 'post': post_.deliver()}
+    return 200, {
+        'topic': deliver_topic(topic_data),
+        'post': deliver_post(post_),
+    }
 
 
 @put('/s/topics/{topic_id}')
@@ -261,12 +265,11 @@ def get_posts_route(request, topic_id):
                                  topic['entity']['id'])
 
     # Pull all kinds of posts
-    posts = get_posts_facade(
-        db_conn,
-        limit=request['params'].get('limit') or 10,
-        skip=request['params'].get('skip') or 0,
-        topic_id=topic_id
-    )
+    posts = list_posts({
+        'limit': request['params'].get('limit') or 10,
+        'skip': request['params'].get('skip') or 0,
+        'topic_id': topic_id,
+    }, db_conn)
 
     # For proposals, pull up the proposal entity version
     # ...then pull up the previous version
@@ -304,7 +307,7 @@ def get_posts_route(request, topic_id):
     # TODO-2 SPLITUP create new endpoints for these instead
     output = {
         'topic': deliver_topic(topic),
-        'posts': [p.deliver() for p in posts],
+        'posts': [deliver_post(p) for p in posts],
         'entity_versions': {
             p: ev.deliver('view')
             for p, ev in entity_versions.items()
@@ -354,18 +357,18 @@ def create_post_route(request, topic_id):
     post_data = omit(post_data, ('id', 'created', 'modified',))
     post_data['user_id'] = current_user['id']
     post_data['topic_id'] = topic_id
-    post_ = instance_post_facade(post_data)
-    post_kind = post_['kind']
+    post_kind = post_data['kind']
     if post_kind == 'proposal':
         entity = instance_new_entity(request['params'])
         entity_kind = get_kind(request['params'])
-        post_['entity_version'] = {
+        post_data['entity_version'] = {
             'id': entity['id'],
             'kind': entity_kind,
         }
 
     # ## STEP 2) Validate post (and entity) instances
-    errors = prefix_error_names('post.', post_.validate(db_conn))
+    _, post_errors = validate_post(post_data, db_conn)
+    errors = prefix_error_names('post.', post_errors)
     if post_kind == 'proposal':
         errors = (errors +
                   prefix_error_names('entity.', entity.validate(db_conn)))
@@ -376,7 +379,7 @@ def create_post_route(request, topic_id):
         }
 
     # ## STEP 3) Save post (and entity)
-    post_.save(db_conn)
+    post_, post_errors = insert_post(post_data, db_conn)
     if post_kind == 'proposal':
         entity.save(db_conn)
 
@@ -394,7 +397,7 @@ def create_post_route(request, topic_id):
     if post_kind == 'proposal':
         update_entity_status(db_conn, post_)
     if post_kind == 'vote':
-        proposal = Proposal.get(db_conn, id=post_['replies_to_id'])
+        proposal = get_post({'id': post_data['replies_to_id']}, db_conn)
         update_entity_status(db_conn, proposal)
 
     # ## STEP 6) Send notices
@@ -413,7 +416,7 @@ def create_post_route(request, topic_id):
         )
 
     # ## STEP 7) Return response
-    return 200, {'post': post_.deliver()}
+    return 200, {'post': deliver_post(post_data)}
 
 
 @put('/s/topics/{topic_id}/posts/{post_id}')
@@ -440,7 +443,7 @@ def update_post_route(request, topic_id, post_id):
         return abort(401)
 
     # ## STEP 1) Find existing post instance ## #
-    post_ = get_post_facade(db_conn, post_id)
+    post_ = get_post({'id': post_id}, db_conn)
     if not post_:
         return abort(404)
     if post_['user_id'] != current_user['id']:
@@ -454,13 +457,13 @@ def update_post_route(request, topic_id, post_id):
     elif post_kind is 'proposal':
         post_data = pick(post_data, ('name', 'body', 'status',))
         if (post_data.get('status') != 'declined' or
-                post_data.get('status') not in ('pending', 'blocked',)):
+                post_.get('status') not in ('pending', 'blocked',)):
             del post_data['status']
     elif post_kind is 'vote':
         post_data = pick(post_data, ('body', 'response',))
 
     # ## STEP 3) Validate and save post instance ## #
-    post_, errors = post_.update(db_conn, post_data)
+    post_, errors = update_post(post_, post_data, db_conn)
     if errors:
         errors = prefix_error_names('post.', errors)
         return 400, {
@@ -472,8 +475,8 @@ def update_post_route(request, topic_id, post_id):
     if post_kind == 'proposal':
         update_entity_status(db_conn, post_)
     if post_kind == 'vote':
-        proposal = Proposal.get(db_conn, id=post_['replies_to_id'])
+        proposal = get_post({'id': post_['replies_to_id']}, db_conn)
         update_entity_status(db_conn, proposal)
 
     # ## STEP 5) Return response ## #
-    return 200, {'post': post_.deliver()}
+    return 200, {'post': deliver_post(post_)}
