@@ -83,7 +83,6 @@ module.exports = (data) => {
                 ),
                 li(
                     h3('Changing Sound'),
-                    small(' Coming soon!'),
                     ul(
                         li(strong('Filters'), ': Describe the basic types of filters: low-pass, high-pass, band-reject, and band-pass.'),
                         li(strong('Modulation'), ': Describe modulation of sound signals.'),
@@ -99,21 +98,19 @@ module.exports = (data) => {
                 ),
                 li(
                     h3('Complex Techniques'),
-                    small(' Coming soon!'),
                     ul(
                         li(strong('Fast Fourier Transform'), ': Describe the inputs, outputs, and applications of the Fast Fourier Transform.'),
                         li(strong('Spatialization'), ': Describe acoustic panning and spatialization.'),
-                        li(strong('Frequency Modulation Synthesis'), ': Describe frequency modulation (FM) synthesis.'),
-                        li(strong('Granular Synthesis'), ': Describe granular synthesis.'),
-                        li(strong('Formant Synthesis'), ': Describe formant synthesis.'),
-                        li(strong('Physical Modeling'), ': Describe physical modeling.'),
-                        li(strong('Convolution'), ': Describe convolution.'),
-                        li(strong('Vocoding'), ': Describe vocoding.')
+                        li(strong('Frequency Modulation Synthesis'), small(' Coming soon!'), ': Describe frequency modulation (FM) synthesis.'),
+                        li(strong('Granular Synthesis'), small(' Coming soon!'), ': Describe granular synthesis.'),
+                        li(strong('Formant Synthesis'), small(' Coming soon!'), ': Describe formant synthesis.'),
+                        li(strong('Physical Modeling'), small(' Coming soon!'), ': Describe physical modeling.'),
+                        li(strong('Convolution'), small(' Coming soon!'), ': Describe convolution.'),
+                        li(strong('Vocoding'), small(' Coming soon!'), ': Describe vocoding.')
                     )
                 ),
                 li(
                     h3('Systems'),
-                    small(' Coming soon!'),
                     ul(
                         li(strong('Basic Synthesizer'), ': Describe a basic synthesizer configuration.'),
                         li(strong('Mixers'), ': Describe a mixer.'),
