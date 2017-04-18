@@ -26,7 +26,7 @@ def inject_unit(unit, db_conn):
         'available': True,
         'tags': [],
         'body': unit['body'],
-        'require_ids': unit['require_ids'],
+        'require_ids': unit.get('require_ids') or [],
     }).run(db_conn)
     return entity_id, version_id
 
