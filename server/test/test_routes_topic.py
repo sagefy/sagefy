@@ -49,10 +49,10 @@ def create_proposal_in_db(posts_table, units_table, db_conn):
         'kind': 'proposal',
         'name': 'New Unit',
         'replies_to_id': None,
-        'entity_version': {
+        'entity_versions': [{
             'id': 'slash-1',
             'kind': 'unit',
-        },
+        }],
     }).run(db_conn)
 
     units_table.insert({

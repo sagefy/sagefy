@@ -117,10 +117,10 @@ def inject_proposal(kind, entity, user_id, topic_id, version_id, db_conn):
         'user_id': user_id,
         'topic_id': topic_id,
         'kind': 'proposal',
-        'entity_version': {
+        'entity_versions': [{
             'id': version_id,
             'kind': 'unit' if kind == 'unit' else 'card',
-        },
+        }],
         'body': 'Create "%s"' % entity_body,
         'name': 'Create "%s"' % entity_body,
     }).run(db_conn)

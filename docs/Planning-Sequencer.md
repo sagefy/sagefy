@@ -81,7 +81,7 @@ The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) an
 - _Factors_ - Learner-unit ability, card difficulty, guess, slip.
 - _Formula_ - `learned * (1 - slip) + (1 - learned) * guess`
 
-**Learner-Unit Ability [!!!]** - $$p(learned)$$ with $$p(belief)$$
+**Learner-Unit Ability** - $$p(learned)$$ with $$p(belief)$$
 
 - _Definition_ - How likely is the learner to respond well to a typical card within the unit?
 - _When_ - Diagnostic assessment. When to change units. When unit is complete. When to review. Forming completion tree.

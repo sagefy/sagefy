@@ -715,10 +715,10 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'body': 'I think we should make subtracting more fun.',
         'kind': 'proposal',
         'replies_to_id': None,
-        'entity_version': {
+        'entity_versions': [{
             'id': 'minus-2',
             'kind': 'unit',
-        },
+        }],
         'name': 'Subtracting fun.',
     }, {
         'id': 'plus-proposal-accepted',
@@ -729,10 +729,10 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'body': 'Yeah, totally! Lets make adding more fun.',
         'kind': 'proposal',
         'replies_to_id': None,
-        'entity_version': {
+        'entity_versions': [{
             'id': 'plus-2',
             'kind': 'unit',
-        },
+        }],
         'name': 'Adding funness.',
     }, {
         'id': 'plus-vote-accept',
@@ -753,10 +753,10 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'body': 'Let\'s make it even more fun!',
         'kind': 'proposal',
         'replies_to_id': None,
-        'entity_version': {
+        'entity_versions': [{
             'id': 'plus-3',
             'kind': 'unit',
-        },
+        }],
         'name': 'Funner!',
     }, {
         'id': 'plus-vote-block',
@@ -777,10 +777,10 @@ es.indices.delete(index='entity', ignore=[400, 404])
         'body': 'More serious!',
         'kind': 'proposal',
         'replies_to_id': None,
-        'entity_version': {
+        'entity_versions': [{
             'id': 'slash-2',
             'kind': 'unit',
-        },
+        }],
         'name': 'Let\'s make dividing more serious.',
     }, {
         'id': 'slash-vote-block',

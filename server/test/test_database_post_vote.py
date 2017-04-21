@@ -8,10 +8,10 @@ def create_proposal(posts_table, units_table, db_conn):
         'topic_id': 'B',
         'body': '_',
         'kind': 'proposal',
-        'entity_version': {
+        'entity_versions': [{
             'id': 'E',
             'kind': 'unit',
-        },
+        }],
         'name': 'make unit'
     }).run(db_conn)
 

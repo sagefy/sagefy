@@ -5,9 +5,9 @@ from modules.util import extend
 
 schema = extend({}, post_schema, {
     'fields': {
-        'entity_version': {
+        'entity_versions': {
             'validate': (is_required, is_dict,),
-            'embed': {
+            'embed_many': {
                 'id': {
                     'validate': (is_required, is_string,),
                 },

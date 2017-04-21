@@ -200,8 +200,8 @@ def is_valid_reply_kind(data, db_conn):
     if proposal_data['user_id'] == data['user_id']:
         return [{'message': 'You cannot vote on your own proposal.'}]
     entity_version = get_version(db_conn,
-                                 proposal_data['entity_version']['kind'],
-                                 proposal_data['entity_version']['id'])
+                                 proposal_data['entity_versions'][0]['kind'],
+                                 proposal_data['entity_versions'][0]['id'])
     if not entity_version:
         return [{'message': 'No entity version for proposal.'}]
     if entity_version['status'] in ('accepted', 'declined'):

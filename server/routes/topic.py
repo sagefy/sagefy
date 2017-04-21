@@ -54,6 +54,7 @@ def update_entity_status(db_conn, proposal):
         This requires knowing two things:
         - Number of learners the entity impacts
         - The vote and proposal history of the contributor
+    !!!
     """
 
     # Get the entity version
@@ -91,6 +92,7 @@ def create_topic_route(request):
     """
     Create a new topic.
     The first post (or proposal) must be provided.
+    !!!
     """
 
     db_conn = request['db_conn']
@@ -243,6 +245,7 @@ def get_posts_route(request, topic_id):
     Get a reverse chronological listing of posts for given topic.
     Includes topic meta data and posts (or proposals or votes).
     Paginates.
+    !!!
     """
 
     db_conn = request['db_conn']
@@ -326,6 +329,7 @@ def create_post_route(request, topic_id):
     Create a new post on a given topic.
     Proposal: must include entity (card, unit, or set) information.
     Vote: must refer to a valid proposal.
+    !!!
     """
 
     db_conn = request['db_conn']
