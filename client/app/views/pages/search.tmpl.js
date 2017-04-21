@@ -2,9 +2,9 @@
 const {div, h1, form, input, button, img,
  ul, li, strong, a, p} = require('../../modules/tags')
 // const c = require('../../modules/content').get
-const {truncate, ucfirst} = require('../../modules/auxiliaries')
+const {truncate/* TP@ , ucfirst */} = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
-const timeago = require('../components/timeago.tmpl')
+// TP@ const timeago = require('../components/timeago.tmpl')
 const icon = require('../components/icon.tmpl')
 
 // TODO-2 when receiving ?kind={kind}, then search using that as well.
@@ -66,8 +66,9 @@ r.userResult = (result) =>
         )
     ]
 
-r.topicResult = (result) =>
-    [
+r.topicResult = (/* TP@ result */) =>
+    []
+    /* TP@ [
         timeago(result._source.created, {right: true}),
         strong(icon('topic'), ' Topic'),
         ': ',
@@ -84,9 +85,11 @@ r.topicResult = (result) =>
             result._source.entity.name
         )
         // TODO-2 no of posts     ???
-    ]
+    ] */
 
-r.postResult = (result) => {
+r.postResult = (/* TP@ result */) => {
+    return []
+    /* TP@
     const href = `/topics/${result._source.topic_id}#${result._source.id}`
     return [
         timeago(result._source.created, {right: true}),
@@ -108,7 +111,7 @@ r.postResult = (result) => {
         ) : null
         // TODO-3 entity kind       result._source.topic_id > ????
         // TODO-3 entity name       result._source.topic_id > ????
-    ]
+    ] */
 }
 
 r.cardResult = (result) =>

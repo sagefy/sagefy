@@ -1,8 +1,12 @@
 const {div, h1, p, img, h3, header,
  ul, li, a, strong} = require('../../modules/tags')
-const {timeAgo, truncate, ucfirst} = require('../../modules/auxiliaries')
+const {
+  timeAgo,
+  /* TP@ truncate,*/
+  ucfirst
+} = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
-const timeago = require('../components/timeago.tmpl')
+// TP@ const timeago = require('../components/timeago.tmpl')
 
 module.exports = (data) => {
     const [id] = data.routeArgs
@@ -18,8 +22,8 @@ module.exports = (data) => {
             p('Joined ' + timeAgo(user.created))
         ),
         user.sets ? showSets(user, user.sets) : null,
-        user.follows ? showFollows(user, user.follows) : null,
-        user.posts ? showPosts(user, user.posts) : null
+        user.follows ? showFollows(user, user.follows) : null
+        // TP@ user.posts ? showPosts(user, user.posts) : null
     )
 }
 
@@ -51,6 +55,8 @@ const showFollows = (user, follows) =>
     ]
     // TODO-2 and link to search
 
+/*
+TP@
 const showPosts = (user, posts) =>
     [
         h3(`${user.name} wrote:`),
@@ -69,3 +75,4 @@ const showPosts = (user, posts) =>
         )
     ]
     // TODO-2 and link to search
+*/
