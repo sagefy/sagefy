@@ -102,7 +102,7 @@ def test_entity(db_conn, posts_table):
         'body': 'C',
         'name': 'E',
     }, db_conn)
-    assert len(errors) == 2
+    assert len(errors) == 1
     proposal['entity_versions'] = [{
         'id': 'D',
         'kind': 'unit'
