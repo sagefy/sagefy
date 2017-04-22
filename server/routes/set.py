@@ -6,6 +6,7 @@ from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
 from database.user import get_learning_context, set_learning_context
 from database.topic import list_topics_by_entity_id, deliver_topic
+from database.my_recently_created import get_my_recently_created_sets
 
 # Nota Bene: We use `set_` because `set` is a type in Python
 
@@ -245,3 +246,19 @@ def choose_unit_route(request, set_id, unit_id):
     )
 
     return 200, {'next': next_}
+
+
+@get('/s/sets:get_my_recently_created')
+def get_my_recently_created_sets_route(request):
+    """
+    Get the sets the user most recently created.
+    """
+
+    current_user = get_current_user(request)
+    if not current_user:
+        return abort(401)
+    db_conn = request['db_conn']
+    sets = get_my_recently_created_sets(current_user, db_conn)
+    return 200, {
+        'sets': [set_.deliver() for set_ in sets],
+    }

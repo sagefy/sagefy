@@ -2,6 +2,8 @@ from framework.routes import get, abort
 from models.unit import Unit
 from models.set import Set
 from database.topic import list_topics_by_entity_id, deliver_topic
+from framework.session import get_current_user
+from database.my_recently_created import get_my_recently_created_units
 
 
 @get('/s/units/{unit_id}')
@@ -48,4 +50,20 @@ def get_unit_versions_route(request, unit_id):
     )
     return 200, {
         'versions': [version.deliver(access='view') for version in versions]
+    }
+
+
+@get('/s/units:get_my_recently_created')
+def get_my_recently_created_units_route(request):
+    """
+    Get the units the user most recently created.
+    """
+
+    current_user = get_current_user(request)
+    if not current_user:
+        return abort(401)
+    db_conn = request['db_conn']
+    units = get_my_recently_created_units(current_user, db_conn)
+    return 200, {
+        'units': [unit.deliver() for unit in units],
     }
