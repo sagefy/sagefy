@@ -54,37 +54,37 @@ def update_entity_status(db_conn, proposal):
         This requires knowing two things:
         - Number of learners the entity impacts
         - The vote and proposal history of the contributor
-    !!!
     """
 
     # Get the entity version
-    entity_version = get_version(db_conn,
-                                 proposal['entity_version']['kind'],
-                                 proposal['entity_version']['id'])
+    for p_entity_version in proposal['entity_versions']:
+        entity_version = get_version(db_conn,
+                                     p_entity_version['kind'],
+                                     p_entity_version['id'])
 
-    votes = list_posts({
-        'kind': 'vote',
-        'replies_to_id': proposal['id'],
-    }, db_conn)
-    changed, status = get_entity_status(entity_version['status'], votes)
+        votes = list_posts({
+            'kind': 'vote',
+            'replies_to_id': proposal['id'],
+        }, db_conn)
+        changed, status = get_entity_status(entity_version['status'], votes)
 
-    if changed:
-        entity_version['status'] = status
-        entity_version.save(db_conn)
-        send_notices(
-            db_conn,
-            entity_id=proposal['entity_version']['id'],
-            entity_kind=proposal['entity_version']['kind'],
-            notice_kind=('block_proposal'
-                         if status == 'blocked' else
-                         'accept_proposal'),
-            notice_data={
-                'user_name': '???',  # TODO-2
-                'proposal_name': proposal['name'],
-                'entity_kind': proposal['entity_version']['kind'],
-                'entity_name': entity_version['name'],
-            }
-        )
+        if changed:
+            entity_version['status'] = status
+            entity_version.save(db_conn)
+            send_notices(
+                db_conn,
+                entity_id=p_entity_version['id'],
+                entity_kind=p_entity_version['kind'],
+                notice_kind=('block_proposal'
+                             if status == 'blocked' else
+                             'accept_proposal'),
+                notice_data={
+                    'user_name': '???',  # TODO-2
+                    'proposal_name': proposal['name'],
+                    'entity_kind': p_entity_version['kind'],
+                    'entity_name': entity_version['name'],
+                }
+            )
 
 
 @post('/s/topics')
