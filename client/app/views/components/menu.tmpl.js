@@ -20,11 +20,11 @@ const items = {
     search: { },
     current_set: { url: '/sets/{id}/tree', title: 'Current Set', icon: 'set' },
     current_unit: { url: '/units/{id}', title: 'Current Unit', icon: 'unit' },
-    discuss_card: {
+    /* TP@ discuss_card: {
         url: '/search?kind=topic&q={id}',
         title: 'Discuss Card',
         icon: 'post',
-    }
+    } */
 }
 
 // For items that don't have them
@@ -58,7 +58,7 @@ const menus = {
     ]
 }
 
-const addContextItems = (menuItems, {card, unit, set}) => {
+const addContextItems = (menuItems, {/* TP@ card, */unit, set}) => {
     menuItems = menuItems.slice()
 
     if (set) {
@@ -73,11 +73,11 @@ const addContextItems = (menuItems, {card, unit, set}) => {
         menuItems.push(currentUnit)
     }
 
-    if (card) {
+    /* TP@ if (card) {
         const discuss = extend(items.discuss_card)
         discuss.url = discuss.url.replace('{id}', card)
         menuItems.push(discuss)
-    }
+    } */
 
     return menuItems
 }
