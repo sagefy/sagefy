@@ -18,13 +18,22 @@ const items = {
     settings: { },
     log_out: { url: '#log_out', title: 'Log Out', icon: 'log-out' },
     search: { },
-    current_set: { url: '/sets/{id}/tree', title: 'Current Set', icon: 'set' },
-    current_unit: { url: '/units/{id}', title: 'Current Unit', icon: 'unit' },
-    /* TP@ discuss_card: {
+    discuss_card: {
         url: '/search?kind=topic&q={id}',
         title: 'Discuss Card',
         icon: 'post',
-    } */
+    },
+    discuss_unit: {
+        url: '/search?kind=topic&q={id}',
+        title: 'Discuss Unit',
+        icon: 'post',
+    },
+    discuss_set: {
+        url: '/search?kind=topic&q={id}',
+        title: 'Discuss Set',
+        icon: 'post',
+    },
+    create: { }
 }
 
 // For items that don't have them
@@ -44,6 +53,7 @@ const menus = {
     loggedOut: [
         'home',
         'log_in',
+        'search',
         'contact',
         'terms',
     ],
@@ -51,6 +61,7 @@ const menus = {
         'my_sets',
         'search',
         'notices',
+        'create',
         'settings',
         'contact',
         'terms',
@@ -58,26 +69,31 @@ const menus = {
     ]
 }
 
-const addContextItems = (menuItems, {/* TP@ card, */unit, set}) => {
+const addContextItems = (menuItems /* , TP@ {card, unit, set} */) => {
     menuItems = menuItems.slice()
 
-    if (set) {
-        const currentSet = extend(items.current_set)
-        currentSet.url = currentSet.url.replace('{id}', set)
-        menuItems.push(currentSet)
-    }
-
-    if (unit) {
-        const currentUnit = extend(items.current_unit)
-        currentUnit.url = currentUnit.url.replace('{id}', unit)
-        menuItems.push(currentUnit)
-    }
-
-    /* TP@ if (card) {
+    /* TP@
+    if (card) {
         const discuss = extend(items.discuss_card)
         discuss.url = discuss.url.replace('{id}', card)
         menuItems.push(discuss)
-    } */
+        return menuItems
+    }
+
+    if (unit) {
+        const discuss = extend(items.discuss_unit)
+        discuss.url = discuss.url.replace('{id}', unit)
+        menuItems.push(discuss)
+        return menuItems
+    }
+
+    if (set) {
+        const discuss = extend(items.discuss_set)
+        discuss.url = discuss.url.replace('{id}', set)
+        menuItems.push(discuss)
+        return menuItems
+    }
+    */
 
     return menuItems
 }
