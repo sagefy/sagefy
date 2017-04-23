@@ -9,7 +9,7 @@ Includes topics, posts, proposals, and votes.
 
 from framework.routes import get, post, put, abort
 from framework.session import get_current_user
-from modules.util import pick, omit, object_diff
+from modules.util import pick, omit
 from modules.entity import get_kind, get_latest_accepted, get_version, \
     instance_new_entity
 from modules.content import get as c
@@ -92,7 +92,6 @@ def create_topic_route(request):
     """
     Create a new topic.
     The first post (or proposal) must be provided.
-    !!!
     """
 
     db_conn = request['db_conn']
@@ -129,6 +128,8 @@ def create_topic_route(request):
     post_data['topic_id'] = topic_data['id']
     post_kind = post_data['kind']
     if post_kind == 'proposal':
+        # TP@ instance all entities so we have id, current time etc and
+        # save entity_versions
         entity = instance_new_entity(request['params'])
         entity_kind = get_kind(request['params'])
         post_data['entity_version'] = {
@@ -141,6 +142,7 @@ def create_topic_route(request):
     _, post_errors = validate_post(post_data, db_conn)
     errors = errors + prefix_error_names('post.', post_errors)
     if post_kind == 'proposal':
+        # TP@ validate all entities
         errors = (errors +
                   prefix_error_names('entity.', entity.validate(db_conn)))
     if len(errors):
@@ -154,6 +156,7 @@ def create_topic_route(request):
     post_data['topic_id'] = topic_data['id']
     post_, errors = insert_post(post_data, db_conn)
     if post_kind == 'proposal':
+        # TP@ save all entities
         entity.save(db_conn)
 
     # ## STEP 4) Add author as a follower
@@ -181,6 +184,7 @@ def create_topic_route(request):
     )
 
     if post_kind == 'proposal':
+        # TP@ send notices per entity
         send_notices(
             db_conn,
             entity_id=topic_data['entity']['id'],
@@ -277,23 +281,24 @@ def get_posts_route(request, topic_id):
     # For proposals, pull up the proposal entity version
     # ...then pull up the previous version
     # ...make a diff between the previous and the proposal entity version
-    diffs = {}
+    # diffs = {}
     entity_versions = {}
     for post_ in posts:
         if post_['kind'] == 'proposal':
-            entity_version = entity_versions[post_['id']] = get_version(
+            entity_versions[post_['id']] = [get_version(
                 db_conn,
-                post_['entity_version']['kind'],
-                post_['entity_version']['id']
-            )
-            previous_version = get_version(
-                db_conn,
-                post_['entity_version']['kind'],
-                entity_version['previous_id']
-            )
-            if previous_version:
-                diffs[post_['id']] = object_diff(previous_version.deliver(),
-                                                 entity_version.deliver())
+                p_entity_version['kind'],
+                p_entity_version['id']
+            ) for p_entity_version in post_['entity_versions']]
+            # TODO-2 re-enable diffs
+            # previous_version = get_version(
+            #     db_conn,
+            #     p_entity_version['kind'],
+            #     entity_version['previous_id']
+            # )
+            # if previous_version:
+            #     diffs[post_['id']] = object_diff(previous_version.deliver(),
+            #                                      entity_version.deliver())
 
     # TODO-2 SPLITUP create new endpoint for this instead
     users = {}
@@ -329,7 +334,6 @@ def create_post_route(request, topic_id):
     Create a new post on a given topic.
     Proposal: must include entity (card, unit, or set) information.
     Vote: must refer to a valid proposal.
-    !!!
     """
 
     db_conn = request['db_conn']
@@ -363,6 +367,8 @@ def create_post_route(request, topic_id):
     post_data['topic_id'] = topic_id
     post_kind = post_data['kind']
     if post_kind == 'proposal':
+        # TP@ set entity_versions instead... and instance each of these
+        # by prepping so we have an id, etc
         entity = instance_new_entity(request['params'])
         entity_kind = get_kind(request['params'])
         post_data['entity_version'] = {
@@ -374,6 +380,7 @@ def create_post_route(request, topic_id):
     _, post_errors = validate_post(post_data, db_conn)
     errors = prefix_error_names('post.', post_errors)
     if post_kind == 'proposal':
+        # TP@ test all entities
         errors = (errors +
                   prefix_error_names('entity.', entity.validate(db_conn)))
     if len(errors):
@@ -385,6 +392,7 @@ def create_post_route(request, topic_id):
     # ## STEP 3) Save post (and entity)
     post_, post_errors = insert_post(post_data, db_conn)
     if post_kind == 'proposal':
+        # TP@ save all entities
         entity.save(db_conn)
 
     # ## STEP 4) Add author as a follower
@@ -399,13 +407,16 @@ def create_post_route(request, topic_id):
 
     # ## STEP 5) Make updates based on proposal / vote status
     if post_kind == 'proposal':
+        # TP@ update all entity statuses
         update_entity_status(db_conn, post_)
     if post_kind == 'vote':
+        # TP@ update all entity statuses
         proposal = get_post({'id': post_data['replies_to_id']}, db_conn)
         update_entity_status(db_conn, proposal)
 
     # ## STEP 6) Send notices
     if post_kind == 'proposal':
+        # TP@ send all notices
         send_notices(
             db_conn,
             entity_id=topic['entity']['id'],
@@ -477,8 +488,10 @@ def update_post_route(request, topic_id, post_id):
 
     # ## STEP 4) Make updates based on proposal / vote status ## #
     if post_kind == 'proposal':
+        # TP@ update all entity statuses
         update_entity_status(db_conn, post_)
     if post_kind == 'vote':
+        # TP@ update all entity statuses
         proposal = get_post({'id': post_['replies_to_id']}, db_conn)
         update_entity_status(db_conn, proposal)
 
