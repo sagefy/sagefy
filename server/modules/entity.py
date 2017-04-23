@@ -61,29 +61,18 @@ def get_version(db_conn, kind, id_):
         return Set.get(db_conn, id=id_)
 
 
-def get_kind(data):
+def get_kind(instance):
     """
     Given the JSON data, figure out what kind of entity lies within.
     """
 
-    kinds = []
-
-    if 'card' in data or 'cards' in data:
-        kinds.append('card')
-    elif 'unit' in data or 'units' in data:
-        kinds.append('unit')
-    elif 'set' in data or 'set' in data:
-        kinds.append('set')
-
-    if len(kinds) == 0:
-        return None
-    if len(kinds) == 1:
-        return kinds[0]
-
-    return kinds
+    kind = instance.__class__.__name__.lower()
+    if kind in ('card', 'unit', 'set'):
+        return kind
+    return None
 
 
-def instance_new_entity(data):
+def instance_entities(data):
     """
     Given a kind and some json, call insert on that kind
     and return the results.
@@ -92,14 +81,25 @@ def instance_new_entity(data):
 
     fields = ('id', 'created', 'modified',
               'entity_id', 'previous_id', 'status', 'available')
-    if 'card' in data:
-        kind = data['card'].get('kind')
-        if kind in card_map:
-            return card_map[kind](omit(data['card'], fields))
-    elif 'unit' in data:
-        return Unit(omit(data['unit'], fields))
-    elif 'set' in data:
-        return Set(omit(data['set'], fields))
+    entities = []
+    if 'cards' in data:
+        for card_data in data['cards']:
+            kind = card_data.get('kind')
+            if kind in card_map:
+                entities.push(
+                    card_map[kind](omit(card_data, fields))
+                )
+    if 'units' in data:
+        entities = entities + [
+            Unit(omit(unit_data, fields))
+            for unit_data in data['units']
+        ]
+    if 'sets' in data:
+        entities = entities + [
+            Set(omit(set_data, fields))
+            for set_data in data['sets']
+        ]
+    return entities
 
 
 def get_card_by_kind(db_conn, card_id):

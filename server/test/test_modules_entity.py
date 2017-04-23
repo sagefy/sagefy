@@ -44,7 +44,7 @@ def test_get_kind():
     Expect to return kind as string given data.
     """
 
-    kind = entity.get_kind({'card': {}})
+    kind = entity.get_kind(Card({}))
     assert kind == 'card'
 
 
