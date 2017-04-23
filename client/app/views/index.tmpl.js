@@ -35,6 +35,9 @@ const routes = [{
 }, {
     path: '/search',
     tmpl: require('./pages/search.tmpl'),
+}, {
+    path: '/create',
+    tmpl: require('./pages/create.tmpl'),
 },
 /* TP@ {
     path: /^\/topics\/(create|[\d\w]+\/update)$/,

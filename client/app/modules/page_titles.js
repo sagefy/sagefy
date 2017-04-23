@@ -26,6 +26,9 @@ const routes = [{
     path: '/search',
     title: 'Search',
 }, {
+    path: '/create',
+    title: 'Create',
+}, {
     path: /^\/topics\/(create|[\d\w]+\/update)$/,
     title: 'Topic',
     // Must be before `topic`
