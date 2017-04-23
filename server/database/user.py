@@ -13,6 +13,9 @@ from modules.content import get as c
 from framework.mail import send_mail
 import rethinkdb as r
 
+# TODO-2 should we use this to test passwords?
+# https://github.com/dropbox/python-zxcvbn
+
 
 def insert_user(data, db_conn):
     """

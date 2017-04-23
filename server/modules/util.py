@@ -107,6 +107,8 @@ def object_diff(prev, next_):
     """
     Return a description of the differences between two dicts.
     Assume the keys are the same either way.
+    TODO-2 use this instead?
+    https://blog.jcoglan.com/2017/02/12/the-myers-diff-algorithm-part-1/
     """
 
     diffs = set()
