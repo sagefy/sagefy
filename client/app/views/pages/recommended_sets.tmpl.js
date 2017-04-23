@@ -14,15 +14,17 @@ const setResult = (set) =>
             icon('create'),
             ' Add to My Sets'
         ),
-        h3(set.name),
-        p(set.body),
-        a(
-            {
-                href: `/sets/${set.entity_id}/tree`,
-                className: 'view-units',
-            },
-            icon('unit'),
-            ' View Units'
+        div(
+            h3(set.name),
+            p(set.body),
+            a(
+                {
+                    href: `/sets/${set.entity_id}/tree`,
+                    className: 'view-units',
+                },
+                icon('unit'),
+                ' View Units'
+            )
         )
     ]
 

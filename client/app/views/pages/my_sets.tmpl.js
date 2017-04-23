@@ -1,28 +1,9 @@
 const {div, h1, ul, li, h3, p, button, a,
-       strong, small, br} = require('../../modules/tags')
+       br} = require('../../modules/tags')
 // const c = require('../../modules/content').get
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
-
-/*
-r.db('sagefy').table('users_sets').insert([{
-  'user_id': 'thOCi8QoDUJyhJPYy63EY9Ml',
-  'set_ids': ['a'],
-}]);
-
-  r.db('sagefy').table('sets').insert([{
-    'created': r.now(),
-    'modified': r.now(),
-    'entity_id': 'a',
-    'body': 'foo',
-    'name': 'A grand set A.',
-    'status': 'accepted',
-    'members': [{
-      'id': 'b',
-      'kind': 'unit'
-    }]
-  }])
-*/
+const info = require('../components/entity_info.tmpl')
 
 module.exports = (data) => {
     if(!data.userSets) { return spinner() }
@@ -64,40 +45,6 @@ module.exports = (data) => {
         info()
     )
 }
-
-const info = () =>
-  div(
-    {className: 'my-sets__info'},
-    h3('What are cards, units, and sets?'),
-    ul(
-      li(
-        'A ', strong('card'), ' is a single learning activity.',
-        br(),
-        small('(Examples: a 3-minute video or a multiple choice question.)')
-      ),
-      li(
-        'A ', strong('unit'), ' is a single learning goal.',
-        br(), small('(Example: "What is mean, median, and mode?")')
-      ),
-      li(
-        'A ', strong('set'), ' is a collection of units and other sets.',
-        br(),
-        small(
-          '(Like a course, but at any scale. ',
-          'Such as "Measures of Central Tendency", "Intro to Statistics", ',
-          'or even a full degree program.)'
-        )
-      )
-    ),
-    p(
-      'For more details and examples, ',
-      a(
-        {href: 'https://youtu.be/HVwfwTOdnOE'},
-        'check out this 3-minute overview video'
-      ),
-      '.'
-    )
-  )
 
 const userSet = (data) =>
     li(

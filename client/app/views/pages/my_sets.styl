@@ -1,13 +1,5 @@
 .my-sets__list
-    list-style none
-    padding 0
-
-    // TODO-2 Migrate this all to BEM syntax
-    li
-        padding $unit
-
-    li:nth-child(even)
-        background $base-color(97)
+    @extend $list-options
 
 .my-sets__engage-set
     float left

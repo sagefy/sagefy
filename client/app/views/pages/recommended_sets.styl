@@ -2,19 +2,21 @@
     // TODO-2 Migrate this all to BEM syntax
 
     > ul
-        list-style none
-        padding 0
-
-        > li
-            margin ($unit * 2) 0
+        @extend $list-options
 
         p
             margin 0
+
+        h3
+            margin $unit 0 0
+
+        div
+            margin-left 180px
 
     .view-units
         @extend $font-size-small
 
     .add-to-my-sets
         @extend $button--good
-        float right
-        margin-left $unit
+        float left
+        margin-right $unit

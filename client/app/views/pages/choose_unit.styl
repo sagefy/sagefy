@@ -11,12 +11,9 @@
 // TODO-2 Migrate this all to BEM syntax
 #choose-unit
     .units
-        list-style none
-        padding 0
+        @extend $list-options
 
         > li
-            padding $unit
-
             > div
                 margin-left cols(2)
 
@@ -24,9 +21,5 @@
                 display inline-block
                 margin-right $unit
 
-        li:nth-child(even)
-            background $base-color(97)
-
     .recommended
-        background $good-color(95)
-        border-radius $border-radius
+        background $good-color(95) !important // TODO-2 ugh
