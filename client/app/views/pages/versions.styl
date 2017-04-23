@@ -13,13 +13,7 @@
 // TODO-2 Migrate this all to BEM syntax
 #versions
     > ul
-        @extend $ul--unstyled
-
-        > li
-            padding $unit
-
-            &:nth-child(even)
-                background-color $base-color(97)
+        @extend $list-options
 
     .avail, .language, .status
         margin-right $unit
