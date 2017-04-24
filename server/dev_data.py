@@ -5,6 +5,9 @@ from framework.elasticsearch import es
 from passlib.hash import bcrypt
 from modules.sequencer.params import precision
 from sys import argv
+from config import config
+if not config['debug']:
+    raise Exception('You must be in debug mode to wipe the DB.')
 
 setup_db()
 db_conn = make_db_connection()
