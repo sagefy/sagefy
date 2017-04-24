@@ -1,0 +1,3334 @@
+sets:
+  setAll:
+    name: An Introduction to Electronic Music
+    body: A small taste of the basics of electronic music. Learn the concepts behind creating and modifying sounds in an electronic music system. Learn the ideas behind the tools and systems we use to create electronic music.
+    members:
+      - kind: set
+        id: setFoundation
+      - kind: set
+        id: setCreate
+      - kind: set
+        id: setChange
+      - kind: set
+        id: setSystems
+  setFoundation:
+    name: An Introduction to Electronic Music -- Foundation
+    body: A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.
+    members:
+      - kind: unit
+        id: unitIntro
+      - kind: unit
+        id: unitParams
+      - kind: unit
+        id: unitHuman
+      - kind: unit
+        id: unitCurves
+      - kind: unit
+        id: unitDigital
+      - kind: unit
+        id: unitAdc
+      - kind: unit
+        id: unitComplex
+  setCreate:
+    name: An Introduction to Electronic Music -- Creating Sound
+    body: An overview of commons tools to create sound in an electronic music system.
+    members:
+      - id: unitOsc
+        kind: unit
+      - id: unitNoise
+        kind: unit
+      - id: unitAdd
+        kind: unit
+      - id: unitSub
+        kind: unit
+      - id: unitSample
+        kind: unit
+  setChange:
+    name: An Introduction to Electronic Music -- Changing Sound
+    body: An overview of commons tools to change sound in an electronic music system.
+    members:
+      - kind: unit
+        id: unitFilters
+      - kind: unit
+        id: unitModulation
+      - kind: unit
+        id: unitLfo
+      - kind: unit
+        id: unitModEffects
+      - kind: unit
+        id: unitAmpModifiers
+      - kind: unit
+        id: unitEnvelopes
+      - kind: unit
+        id: unitEqualization
+      - kind: unit
+        id: unitDistortion
+      - kind: unit
+        id: unitDelay
+      - kind: unit
+        id: unitReverberation
+  setSystems:
+    name: An Introduction to Electronic Music -- Systems
+    body: An introduction to some of the systems we use in electronic music.
+    members:
+      - kind: unit
+        id: unitFFT
+      - kind: unit
+        id: unitSpatialization
+      - kind: unit
+        id: unitSynthesizer
+      - kind: unit
+        id: unitMixers
+      - kind: unit
+        id: unitMonoPoly
+      - kind: unit
+        id: unitMidi
+      - kind: unit
+        id: unitOsc
+units:
+  unitIntro:
+    name: Electronic Music
+    body: Define electronic music and the subjects electronic music covers.
+    requires: []
+  unitParams:
+    name: Sound Parameters
+    body: Describe the basic parameters of sound -- amplitude, frequency, duration, phase, and timbre.
+    requires: [unitIntro]
+  unitHuman:
+    name: Human Hearing
+    body: Describe common properties of human hearing, as hearing pertains to electronic music.
+    requires: [unitParams]
+  unitCurves:
+    name: Hearing Curves
+    body: Describe how hearing varies with frequency and amplitude.
+    requires: [unitHuman]
+  unitDigital:
+    name: Digital Representation
+    body: Describe how we represent sound digitally, including bit depth and sample rate.
+    requires: [unitHuman]
+  unitAdc:
+    name: Analog to Digital
+    body: Describe how we convert analog sound into digital sound.
+    requires: [unitDigital]
+  unitComplex:
+    name: Complex Waves
+    body: Describe the composition of complex sounds.
+    requires: [unitParams]
+  unitOsc:
+    name: Oscillators
+    body: Describe the oscillators and basic wave forms -- sine, triangle, square, and sawtooth.
+    requires: []
+  unitNoise:
+    name: Noise
+    body: Describe the types of noise -- white, brown, and pink.
+    requires: []
+  unitAdd:
+    name: Additive Synthesis
+    body: Describe how multiple waves produce a single sound.
+    requires: []
+  unitSub:
+    name: Subtractive Synthesis
+    body: Describe how we can subtract information to produce sound.
+    requires: []
+  unitSample:
+    name: Samplers
+    body: Describe samplers.
+    requires: []
+  unitFilters:
+    name: Filters
+    body: Describe the basic types of filters low-pass, high-pass, band-reject, and band-pass.
+    requires: []
+  unitModulation:
+    name: Modulation
+    body: Describe modulation of sound signals.
+    requires: []
+  unitLfo:
+    name: Low Frequency Oscillators
+    body: Describe low-frequency oscillators.
+    requires: []
+  unitModEffects:
+    name: Modulation Effects
+    body: Describe modulation effects of tremolo, chorus, flange, phase, vibrato.
+    requires: []
+  unitAmpModifiers:
+    name: Amplitude Modifiers
+    body: Describe the basic characteristics of amplitude modifiers of gain, compressors, de-essers, expanders, multi-pressors.
+    requires: []
+  unitEnvelopes:
+    name: Envelopes
+    body: Describe how amplitude changes over time.
+    requires: []
+  unitEqualization:
+    name: Equalization
+    body: Describe equalizers.
+    requires: []
+  unitDistortion:
+    name: Distortion
+    body: Describe distortion and applying the effect to a signal.
+    requires: []
+  unitDelay:
+    name: Delay
+    body: Describe delay effects.
+    requires: []
+  unitReverberation:
+    name: Reverberation
+    body: Describe reverberation effects.
+    requires: []
+  unitFFT:
+    name: Fast Fourier Transform
+    body: Describe the inputs, outputs, and applications of the Fast Fourier Transform.
+    requires: []
+  unitSpatialization:
+    name: Spatialization
+    body: Describe acoustic panning and spatialization.
+    requires: []
+  unitSynthesizer:
+    name: A Basic Synthesizer
+    body: Describe a basic synthesizer configuration.
+    requires: []
+  unitMixers:
+    name: Mixers
+    body: Describe a mixer.
+    requires: []
+  unitMonoPoly:
+    name: Monophony and Polyphony
+    body: Describe polyphonic synthesis.
+    requires: []
+  unitMidi:
+    name: MIDI, Musical Instrument Digital Interface
+    body: Describe the basics of the MIDI protocol.
+    requires: []
+  unitOsc:
+    name: OSC, Open Sound Control
+    body: Describe the basics of the OSC protocol.
+    requires: []
+cards:
+  video:
+    - unit: unitIntro
+      video_id: VSwjp7Zt1GY
+    - unit: unitParams
+      video_id: 9nlWEA-DAGU
+    - unit: unitHuman
+      video_id: 3K7fYHczldY
+    - unit: unitCurves
+      video_id: N8TDZWYr6xo
+    - unit: unitDigital
+      video_id: bhCRqfdI_dI
+    - unit: unitAdc
+      video_id: kVwK-u82n6g
+    - unit: unitComplex
+      video_id: qAojF80nwsM
+    - unit: unitOsc
+      video_id: XVSTrQktys8
+    - unit: unitNoise
+      video_id: 1Ru0I4epGA0
+    - unit: unitAdd
+      video_id: 'TBt4YUP-UN0'
+    - unit: unitSub
+      video_id: lJaOJxP4hUg
+    - unit: unitSample
+      video_id: apT5oXr9sPg
+    - unit: unitFilters
+      video_id: icRtqXy7UQk
+    - unit: unitModulation
+      video_id: Pfbvj8tzc8M
+    - unit: unitLfo
+      video_id: SLmtt33huVo
+    - unit: unitModEffects
+      video_id: ExFlL97cwPY
+    - unit: unitAmpModifiers
+      video_id: EosXTzzVM7c
+    - unit: unitEnvelopes
+      video_id: WMZJmjfMAX4
+    - unit: unitEqualization
+      video_id: LYv_oVJ4vnI
+    - unit: unitDistortion
+      video_id: smylrBjP8s0
+    - unit: unitDelay
+      video_id: 3zM7GleGlKw
+    - unit: unitReverberation
+      video_id: wAgrMN5WtZ4
+    - unit: unitFFT
+      video_id: K8XAKz68kH4
+    - unit: unitSpatialization
+      video_id: czrUV712htI
+    - unit: unitSynthesizer
+      video_id: Uq-oyrjtGcs
+    - unit: unitMixers
+      video_id: j1iweMiYegQ
+    - unit: unitMonoPoly
+      video_id: ZFOnYaG3TGs
+    - unit: unitMidi
+      video_id: DnDjkPVUlos
+    - unit: unitOsc
+      video_id: iB2N585gEKg
+  choice:
+    - unit: unitIntro
+      body: What does "electronic" mean?
+      options:
+      - value: Operated by an electric current.
+        correct: Y
+        feedback: Yes!
+      - value: Any device made by humans.
+        correct: N
+        feedback: This answer is too broad.
+      - value: Operated by physical effort.
+        correct: N
+        feedback: This answer is the opposite meaning.
+      - value: Art of combining and organizing sounds.
+        correct: N
+        feedback: This answer is the definition to a different term.
+    - unit: unitIntro
+      body: What does acoustic mean, in relation to electronic music?
+      options:
+      - value: Operated without use of electric current.
+        correct: Y
+        feedback: Good job!
+      - value: Operated by an electric current.
+        correct: N
+        feedback: Quite the opposite...
+      - value: Any device made by humans.
+        correct: N
+        feedback: This is too broad.
+      - value: The process of combining two or more sounds.
+        correct: N
+        feedback: This is the definition to a different term.
+    - unit: unitIntro
+      body: What is music?
+      options:
+      - value: An art form of combining and organizing sounds.
+        correct: Y
+        feedback: Excellent!
+      - value: An art form primarily of pattern making.
+        correct: N
+        feedback: While music often includes patterns, this misses the main purpose.
+      - value: An art form operated by electric current.
+        correct: N
+        feedback: The question only asks about music.
+      - value: A technique of taking an existing sound and changing the sound.
+        correct: N
+        feedback: This is the definition to a different term.
+    - unit: unitIntro
+      body: What do we mean when we say, "electronic music"?
+      options:
+      - value: Music that uses electronic devices as a primary source.
+        correct: Y
+        feedback: Perfect!
+      - value: Any music produced or reproduced with electronic devices.
+        correct: N
+        feedback: While this is literally correctly, this answer misses the connotation.
+      - value: Music created by combining and organizing sounds.
+        correct: N
+        feedback: This answer is too broad.
+      - value: A process of combining two or more sounds to create a new sound.
+        correct: N
+        feedback: This is the definition to a different term.
+    - unit: unitIntro
+      body: Which of the following is not electronic music?
+      options:
+      - value: Ambient music.
+        correct: N
+        feedback: Most ambient music uses synthesizers and samplers as primary sources.
+      - value: Electronic dance music.
+        correct: N
+        feedback: Electronic dance music, by definition, uses electronic devices as a primary source.
+      - value: Musique concrète.
+        correct: N
+        feedback: This form of music combines real sounds with electronic techniques.
+      - value: String sonatas.
+        correct: Y
+        feedback: While you might hear the music on speakers, electronic devices are not a primary sound source.
+    - unit: unitIntro
+      body: Which of the following topics does electronic music not cover?
+      options:
+      - value:  Sound synthesis.
+        correct: N
+        feedback: Synthesis is one of the most basic electronic music techniques.
+      - value: Sound reproduction.
+        correct: N
+        feedback: Changing sound formats is a significant topic to electronic music.
+      - value: Protocols.
+        correct: N
+        feedback: Protocols such as MIDI and OSC are a large topic in electronic music.
+      - value: Western music theory.
+        correct: Y
+        feedback: While important to many types of music, including electronic music, there's no requirement for using western music theory in electronic music.
+    - unit: unitIntro
+      body: What is sound synthesis?
+      options:
+      - value: A process of combining two or more sounds.
+        correct: Y
+        feedback: Yes!
+      - value: A method of breaking down a sound to compare and make decisions.
+        correct: N
+        feedback: This is the definition of sound analysis.
+      - value: A process of taking an existing sound and changing the sound.
+        correct: N
+        feedback: This is the definition of sound modification.
+      - value: A standard way of communicating between components.
+        correct: N
+        feedback: This is the definition of protocol.
+    - unit: unitIntro
+      body: What is sound analysis?
+      options:
+      - value: A method of breaking down a sound to compare and make decisions.
+        correct: Y
+        feedback: Congrats!
+      - value: A process of combining two or more sounds.
+        correct: N
+        feedback: This is the definition of sound synthesis.
+      - value: A process of taking an existing sound and changing the sound.
+        correct: N
+        feedback: This is the definition of sound modification.
+      - value: A standard way of communicating between components.
+        correct: N
+        feedback: This is the definition of protocol.
+    - unit: unitIntro
+      body: What is sound modification?
+      options:
+      - value: A process of taking an existing sound and changing the sound.
+        correct: Y
+        feedback: Excellent!
+      - value: A method of breaking down a sound to compare and make decisions.
+        correct: N
+        feedback: This is the definition of sound analysis.
+      - value: A process of combining two or more sounds.
+        correct: N
+        feedback: This is the definition of sound synthesis.
+      - value: A standard way of communicating between components.
+        correct: N
+        feedback: This is the definition of protocol.
+    - unit: unitIntro
+      body: What is sound reproduction?
+      options:
+      - value: A technique of taking an existing sound and outputting the sound in a new format.
+        correct: Y
+        feedback: Correct!
+      - value: A method of breaking down a sound to compare and make decisions.
+        correct: N
+        feedback: This is the definition of sound analysis.
+      - value: A process of combining two or more sounds.
+        correct: N
+        feedback: This is the definition of sound synthesis.
+      - value:  A standard way of communicating between components.
+        correct: N
+        feedback: This is the definition of protocol.
+    - unit: unitIntro
+      body: What is a protocol?
+      options:
+      - value: A standard way of communicating between components.
+        correct: Y
+        feedback: Great job!
+      - value: A method of breaking down a sound to compare and make decisions.
+        correct: N
+        feedback: This is the definition of sound analysis.
+      - value: A process of combining two or more sounds.
+        correct: N
+        feedback: This is the definition of sound synthesis.
+      - value: A combination of components.
+        correct: N
+        feedback: This is a system.
+    - unit: unitIntro
+      body: What is a system?
+      options:
+      - value: A combination of components.
+        correct: Y
+        feedback:
+      - value: A process of taking an existing sound and changing the sound.
+        correct: N
+        feedback: This is the definition of sound modification.
+      - value: A method of breaking down a sound to compare and make decisions.
+        correct: N
+        feedback: This is the definition of sound analysis.
+      - value: A standard way of communicating between components.
+        correct: N
+        feedback: This is the definition of protocol.
+    - unit: unitParams
+      body: What is amplitude?
+      options:
+      - value: The intensity of a sound.
+        correct: Y
+        feedback: Yes!
+      - value: The speed of a sound.
+        correct: N
+        feedback: This is frequency.
+      - value: How long a sound is.
+        correct: N
+        feedback: This is duration.
+      - value: How loud or soft a sound is.
+        correct: N
+        feedback: This is volume, which is perceptual. Amplitude is physical.
+    - unit: unitParams
+      body: How is amplitude measured?
+      options:
+      - value: Decibels
+        correct: Y
+        feedback: Correct!
+      - value: Hertz
+        correct: N
+        feedback: Frequency is measured in Hertz.
+      - value: Milliseconds
+        correct: N
+        feedback: Duration is measured in time.
+      - value: Radians
+        correct: N
+        feedback: Phase is measured in radians or degrees.
+    - unit: unitParams
+      body: What is volume?
+      options:
+      - value: How loud or soft a sound is.
+        correct: Y
+        feedback: Perfect!
+      - value: The intensity of a sound.
+        correct: N
+        feedback: Intensity is physical; volume is perceptual.
+      - value: How high or low a sound is.
+        correct: N
+        feedback: This is pitch.
+      - value: Where a sound is.
+        correct: N
+        feedback: This is space.
+    - unit: unitParams
+      body: What is frequency?
+      options:
+      - value: The speed of a sound.
+        correct: Y
+        feedback: Excellent!
+      - value: How high or low a sound is.
+        correct: N
+        feedback: Close, but frequency is physical, not perceptual.
+      - value: The intensity of a sound.
+        correct: N
+        feedback: This is amplitude.
+      - value: How amplitude is distributed over a set of frequencies, over time.
+        correct: N
+        feedback: This is spectrum.
+    - unit: unitParams
+      body: How is frequency measured?
+      options:
+      - value: Hertz
+        correct: Y
+        feedback: Good job!
+      - value: Decibels
+        correct: N
+        feedback: Amplitude is measured in decibels.
+      - value: Radians
+        correct: N
+        feedback: Phase is measured in radians.
+      - value: Seconds
+        correct: N
+        feedback: Duration is measured in time.
+    - unit: unitParams
+      body: What is pitch?
+      options:
+      - value: How high or low a sound is.
+        correct: Y
+        feedback: Great!
+      - value: The speed of a sound.
+        correct: N
+        feedback: Close, but speed is physical, not perceptual.
+      - value: How loud or soft a sound is.
+        correct: N
+        feedback: This is volume.
+      - value: Where a sound is.
+        correct: N
+        feedback: This is space.
+    - unit: unitParams
+      body: What is duration?
+      options:
+      - value: How long a sound is.
+        correct: Y
+        feedback: Excellent!
+      - value: A pattern over time.
+        correct: N
+        feedback: This is rhythm.
+      - value: The speed of the sound.
+        correct: N
+        feedback: This is frequency.
+      - value: The intensity of a sound.
+        correct: N
+        feedback: This is amplitude.
+    - unit: unitParams
+      body: How is duration measured?
+      options:
+      - value: Time (milliseconds, seconds)
+        correct: Y
+        feedback: Great job!
+      - value: Decibels
+        correct: N
+        feedback: Amplitude is measured in decibels.
+      - value: Hertz
+        correct: N
+        feedback: Frequency is measured in Hertz.
+      - value: Radians
+        correct: N
+        feedback: Phase is measured in radians.
+    - unit: unitParams
+      body: What is rhythm?
+      options:
+      - value: The perceived pattern of duration over time.
+        correct: Y
+        feedback: Correct!
+      - value: How long a sound is.
+        correct: N
+        feedback: This is duration, a physical characteristic.
+      - value: How loud or soft a sound is.
+        correct: N
+        feedback: This is volume.
+      - value: How high or low a sound is.
+        correct: N
+        feedback: This is a pitch.
+    - unit: unitParams
+      body: What is phase?
+      options:
+      - value: How much the sound is offset in cycle.
+        correct: Y
+        feedback: Perfect!
+      - value: Our sense of location and direction of a sound.
+        correct: N
+        feedback: Close, but this is space, which is perceptual, not physical.
+      - value: How long a sound is.
+        correct: N
+        feedback: This is duration.
+      - value: The speed of a sound.
+        correct: N
+        feedback: This is frequency.
+    - unit: unitParams
+      body: How is phase measured?
+      options:
+      - value: Degrees or radians
+        correct: Y
+        feedback: Yes!
+      - value: Decibels
+        correct: N
+        feedback: Amplitude is measured in decibels.
+      - value: Hertz
+        correct: N
+        feedback: Frequency is measured in Hertz.
+      - value: Seconds
+        correct: N
+        feedback: Duration is measured in time.
+    - unit: unitParams
+      body: What is the space of a sound?
+      options:
+      - value: Our sense of location and direction of a sound.
+        correct: Y
+        feedback: Excellent!
+      - value: How much the sound is offset in cycle.
+        correct: N
+        feedback: Close, but this is a physical characteristic.
+      - value: How high or low a sound is.
+        correct: N
+        feedback: This is pitch.
+      - value: How loud or soft a sound is.
+        correct: N
+        feedback: This is volume.
+    - unit: unitParams
+      body: What is the spectrum?
+      options:
+      - value: How amplitude is distributed over a set of frequencies, over time.
+        correct: Y
+        feedback: Good job!
+      - value: What makes one sound source sound different from another.
+        correct: N
+        feedback: Close, but color is perceptual, spectrum is physical.
+      - value: How high or low a sound is.
+        correct: N
+        feedback: This is pitch.
+      - value: The speed of a sound.
+        correct: N
+        feedback: This is frequency.
+    - unit: unitParams
+      body: What is the color of a sound?
+      options:
+      - value: What makes one sound source sound different from another.
+        correct: Y
+        feedback: As close as one can describe it!
+      - value: How amplitude is distributed over a set of frequencies, over time.
+        correct: N
+        feedback: Close, but this answer is a physical description, not perceptual.
+      - value: How high or low a sound is.
+        correct: N
+        feedback: This is pitch.
+      - value: How loud or soft a sound is.
+        correct: N
+        feedback: This is amplitude.
+    - unit: unitHuman
+      body: We we age, our hearing ability...
+      options:
+      - value: Declines
+        correct: Y
+        feedback: Correct.
+      - value: Stays the same
+        correct: N
+        feedback: It declines.
+      - value: Improves
+        correct: N
+        feedback: It declines.
+      - value: None of the other answers
+        correct: N
+        feedback: It declines.
+    - unit: unitHuman
+      body: Which of the following is not a way to protect hearing?
+      options:
+      - value: Listen at lower levels.
+        correct: N
+        feedback: Look at "not" in the question.
+      - value: Take frequent breaks from loud noise.
+        correct: N
+        feedback: Look at "not" in the question.
+      - value: Use ear plugs in loud environments.
+        correct: N
+        feedback: Look at "not" in the question.
+      - value: Surround yourself with noise.
+        correct: Y
+        feedback: This answer doesn't make sense.
+    - unit: unitHuman
+      body: What is the range of perceive-able amplitude?
+      options:
+      - value: 0 dB SPL to 140 dB SPL.
+        correct: Y
+        feedback: Correct!
+      - value: 10 dB SPL to 100 dB SPL.
+        correct: N
+        feedback: The range is somewhat wider.
+      - value: 0 dB SPL to 70 db SPL.
+        correct: N
+        feedback: The range is significantly wider.
+      - value: 10 dB SPL to 140 dB SPL.
+        correct: N
+        feedback: We can hear all the way down to 0 dB SPL, though it is very faint in most environments.
+    - unit: unitHuman
+      body: At what volume level causes pain?
+      options:
+      - value: Anything above 120 dB SPL.
+        correct: Y
+        feedback: Correct.
+      - value: Anything above 100 dB SPL.
+        correct: N
+        feedback: While you should avoid listening to louder, it probably won't cause pain from 100 to 120.
+      - value: Anything above 140 dB SPL.
+        correct: N
+        feedback: Our maximum perceptual is 140 dB SPL.
+      - value: Anything below 120 dB SPL.
+        correct: N
+        feedback: Most sounds we experience are less than 120.
+    - unit: unitHuman
+      body: What is the recommended listening level for music?
+      options:
+      - value: Usually, 80 to 90 dB SPL.
+        correct: Y
+        feedback: Yes.
+      - value: Usually, 60 to 70 dB SPL.
+        correct: N
+        feedback: This isn't a bad level to listen to, but most textbooks would recommend louder for mixing.
+      - value: 100 dB SPL or above.
+        correct: N
+        feedback: There's a risk of hearing damage above 100 dB SPL.
+      - value: Usually, 0 to 140 dB SPL.
+        correct: N
+        feedback: This is the range of our amplitude perception.
+    - unit: unitHuman
+      body: What is the volume level of speech?
+      options:
+      - value: Usually, 80 to 90 dB SPL.
+        correct: N
+        feedback: This is the range of recommended music listening.
+      - value: 60 to 70 dB SPL.
+        correct: Y
+        feedback: Correct!
+      - value: Usually, 0 to 140 dB SPL.
+        correct: N
+        feedback: Those would be very loud or very quiet voices.
+      - value: 100 dB SPL and above.
+        correct: N
+        feedback: Those would be very loud voices.
+    - unit: unitHuman
+      body: What is the commonly cited frequency range of human hearing?
+      options:
+      - value: 20 Hz - 20,000 Hz.
+        correct: Y
+        feedback: Yes.
+      - value: 20 Hz - 15,000 Hz.
+        correct: N
+        feedback: While difficult to hear above 15,000 Hz usually, we commonly cite a larger range.
+      - value: 1.5 kHz - 5 kHz.
+        correct: N
+        feedback: This is the part of the range we are most sensitive to.
+      - value:
+        correct:
+        feedback:
+    - unit: unitHuman
+      body: How does our perception of frequency increase over Hz?
+      options:
+      - value: Linearly.
+        correct: N
+        feedback: We do not perceive 20-40 Hz the same as 10,020 Hz to 10,040 Hz.
+      - value: Logarithmically.
+        correct: Y
+        feedback: Yes. We perceive 20-40 Hz the roughly same as 10,000 Hz to 20,000 Hz.
+      - value: It doesn't.
+        correct: N
+        feedback: As frequency increases, our perception of frequency ranges decrease.
+      - value: None of the other answers.
+        correct: N
+        feedback: As frequency increases, our perception of frequency ranges decrease.
+    - unit: unitHuman
+      body: What is the most sensitive frequency range of human hearing?
+      options:
+      - value: 20 Hz - 20,000 Hz.
+        correct: N
+        feedback: This is the commonly cited range of human hearing.
+      - value: 20 Hz - 15,000 Hz.
+        correct: N
+        feedback: This is the range we usually hear within.
+      - value: 1.5 kHz - 5 kHz.
+        correct: Y
+        feedback: Correct!
+      - value: All equal.
+        correct: N
+        feedback: We do not perceive all frequencies evenly.
+    - unit: unitHuman
+      body: At what duration do we stop noticing sounds?
+      options:
+      - value: 35 milliseconds.
+        correct: Y
+        feedback: Correct!
+      - value: 25 milliseconds
+        correct: N
+        feedback: There's a slightly larger range.
+      - value: 35 seconds.
+        correct: N
+        feedback: Check the units
+      - value: 15 milliseconds.
+        correct: N
+        feedback: There's a significantly larger range.
+    - unit: unitHuman
+      body: Which of the following is not a use of rhythm?
+      options:
+      - value: Heart beat.
+        correct: N
+        feedback: We use rhythm for heart beat.
+      - value: Breathing.
+        correct: N
+        feedback: We use rhythm for breathing.
+      - value: Social coordination.
+        correct: N
+        feedback: We use rhythm for social coordination.
+      - value: To decline our hearing.
+        correct: Y
+        feedback: This answer doesn't make sense.
+    - unit: unitHuman
+      body: Which of the following is not a cue to the location of a sound?
+      options:
+      - value: Overall volume.
+        correct: N
+        feedback: We use volume of sounds to determine location.
+      - value: High-frequency content.
+        correct: N
+        feedback: We use the high-frequency content of sounds to determine location.
+      - value: The phase of the sound.
+        correct: N
+        feedback: We use phase of sounds to determine location.
+      - value: Duration
+        correct: Y
+        feedback: We do not use the direct duration of the sound to determine its location.
+    - unit: unitHuman
+      body: What are the primary factors we use to determine the distance of a sound?
+      options:
+      - value: Volume, high-frequency content.
+        correct: Y
+        feedback: Correct.
+      - value: Comparative amplitude between ears, sound arriving faster at one ear.
+        correct: N
+        feedback: This is used normally for the direction of the sound.
+      - value: Change in pitch.
+        correct: N
+        feedback: We use this for the movement of the sound.
+      - value: None of the other answers.
+        correct: N
+        feedback: There is a good answer available.
+    - unit: unitHuman
+      body: What are the primary factors we use to determine the direction of a sound?
+      options:
+      - value: Comparative amplitude between ears, sound arriving faster at one ear.
+        correct: Y
+        feedback: Yes.
+      - value: Volume, high-frequency content.
+        correct: N`
+        feedback: We use these more for distance than direction.
+      - value: Change in pitch.
+        correct: N
+        feedback: We use this for the movement of the sound.
+      - value: None of the other answers.
+        correct: N
+        feedback: There is a good answer available.
+    - unit: unitHuman
+      body: What is the Doppler effect?
+      options:
+      - value: The change in pitch over movement.
+        correct: Y
+        feedback: Correct.
+      - value: The change in volume over movement.
+        correct: N
+        feedback: While this may change, Doppler specifically refers to...
+      - value: The change in duration over movement.
+        correct: N
+        feedback: There usually isn't a relationship here.
+      - value: The change in color over movement.
+        correct: N
+        feedback: Color may change over movement, but we typically refer to...
+    - unit: unitHuman
+      body: Which axis are we best at determining the location of a sound?
+      options:
+      - value: Side-to-side.
+        correct: Y
+        feedback: Excellent.
+      - value: Above-and-below.
+        correct: N
+        feedback: This axis is our worst, actually.
+      - value: Forward-and-back.
+        correct: N
+        feedback: This axis is not the best or worst.
+      - value: None of the other answers.
+        correct: N
+        feedback: There is a good answer available.
+    - unit: unitCurves
+      body: Do we hear different frequencies evenly?
+      options:
+      - value: Yes, we do.
+        correct: N
+        feedback: This is not correct.
+      - value: No, we don't.
+        correct: Y
+        feedback: Correct!
+      - value: Sometimes
+        correct: N
+        feedback: The answer is constant.
+      - value: Rarely
+        correct: N
+        feedback: The answer is constant.
+    - unit: unitCurves
+      body: What is the definition of an equal-loudness contour?
+      options:
+      - value: A graph that shows how our hearing varies over frequency and amplitude.
+        correct: Y
+        feedback: Excellent!
+      - value: Fletcher-Munson curves.
+        correct: N
+        feedback: This is a type of equal-loudness contour, not the definition.
+      - value: We perceive some frequencies as louder than others.
+        correct: N
+        feedback: This is the principle, but not the actual object.
+      - value: A graph that shows how our hearing varies over phase and amplitude.
+        correct: N
+        feedback: The graph does not involve phase.
+    - unit: unitCurves
+      body: Which of the following is why we do not perceive frequencies evenly?
+      options:
+      - value: Anatomy and survival.
+        correct: Y
+        feedback: Correct!
+      - value: We perceive frequencies evenly.
+        correct: N
+        feedback: The unit has the opposite argument to make.
+      - value: Complexity and processing ability.
+        correct: N
+        feedback: This is not provided in the text.
+      - value: Cochlea and hair cells.
+        correct: N
+        feedback: These two parts are involved with hearing, but are part of the how, not the why.
+    - unit: unitCurves
+      body: Which range of our hearing is the weakest?
+      options:
+      - value: Below 100 Hz and above 10,000 Hz.
+        correct: Y
+        feedback: Good job!
+      - value: Between 1.5 kHz and 5 kHz.
+        correct: N
+        feedback: This is the strongest part of our hearing ability.
+      - value: Around 3.5 kHz.
+        correct: N
+        feedback: This isn't a range.
+      - value: None of the other answers.
+        correct: N
+        feedback: One of the answers is a good option.
+    - unit: unitCurves
+      body: Which range of our hearing is the strongest?
+      options:
+      - value: Below 100 Hz and above 10,000 Hz.
+        correct: N
+        feedback: This is the weakest.
+      - value: Between 1.5 kHz and 5 kHz.
+        correct: Y
+        feedback: Excellent!
+      - value: Around 3.5 kHz.
+        correct: N
+        feedback: This is a specific value, not a range.
+      - value: None of the other answers.
+        correct: N
+        feedback: One of the answers is a good option.
+    - unit: unitCurves
+      body: How does overall amplitude impact our sense of volume over frequency?
+      options:
+      - value: Less variation at higher amplitude, more variation at lower amplitude.
+        correct: Y
+        feedback: Correct!
+      - value: More variation at higher amplitude, less variation at lower amplitude.
+        correct: N
+        feedback: The opposite is true.
+      - value: There is no correlation between amplitude and our sense of volume over frequency.
+        correct: N
+        feedback: There is a correlation.
+      - value: None of the other answers.
+        correct: N
+        feedback: One of the answers is a good option.
+    - unit: unitDigital
+      body: How does a computer represent a sound?
+      options:
+      - value: A long series of large numbers.
+        correct: Y
+        feedback: Excellent!
+      - value: By complete waveforms.
+        correct: N
+        feedback: The computer has a way of representing the waveform itself...
+      - value: Physical signals.
+        correct: N
+        feedback: A computer cannot directly understand a physical signal.
+      - value: A long series of waveforms.
+        correct: N
+        feedback: The first part is right...
+    - unit: unitDigital
+      body: What is the album quality sample rate?
+      options:
+      - value: 44,100 samples per second
+        correct: Y
+        feedback: Correct!
+      - value: 48,000 samples per second
+        correct: N
+        feedback: This is above album quality audio.
+      - value: 20,000 samples per second
+        correct: N
+        feedback: You would need at least twice this amount for humans.
+      - value: There is no consistent rate.
+        correct: N
+        feedback: There is a consistent album quality sample rate.
+    - unit: unitDigital
+      body: What is the album quality bit depth?
+      options:
+      - value: 16-bit depth. 0 to 65,535.
+        correct: Y
+        feedback: Correct.
+      - value: 24-bit depth. 0 to 16,777,215.
+        correct: N
+        feedback: This is larger than album quality bit depth.
+      - value: 8-bit depth. 0 to 255.
+        correct: N
+        feedback: This is much smaller than album quality bit depth.
+      - value: There is no consistent bit depth.
+        correct: N
+        feedback: Album quality audio has a standard bit depth.
+    - unit: unitDigital
+      body: What is a sample rate?
+      options:
+      - value: The amount of time each sample represents.
+        correct: Y
+        feedback: Correct!
+      - value: The possible range of each number.
+        correct: N
+        feedback: This answer is the bit depth.
+      - value: A long series of large numbers.
+        correct: N
+        feedback: This is the computer's representation of audio.
+      - value: None of the other answers.
+        correct: N
+        feedback: There is a good answer available.
+    - unit: unitDigital
+      body: What is a bit depth?
+      options:
+      - value: The possible range of each number.
+        correct: Y
+        feedback: Excellent!
+      - value: The amount of time each sample represents.
+        correct: N
+        feedback: This answer is sample rate.
+      - value: A long series of large numbers.
+        correct: N
+        feedback: This is the computer's representation of audio.
+      - value: None of the other answers.
+        correct: N
+        feedback: There is a good answer available.
+    - unit: unitDigital
+      body: Which of the following is not a common bit depth?
+      options:
+      - value: 16-bit depth. 0 to 65,535.
+        correct: N
+        feedback: This is the most common bit depth.
+      - value: 24-bit depth. 0 to 16,777,215.
+        correct: N
+        feedback: This is the second most common bit depth.
+      - value: 32-bit depth. 0 to 4,294,967,295.
+        correct: N
+        feedback: This is the third most common bit depth.
+      - value: 8-bit depth. 0 to 255.
+        correct: Y
+        feedback: 8-bit depth is almost never used.
+    - unit: unitDigital
+      body: Why do we use faster sample rates or larger bit depths?
+      options:
+      - value: When we modify sounds to the extreme.
+        correct: Y
+        feedback: Correct!
+      - value: To hear the sound more clearly as-is.
+        correct: N
+        feedback: A common misconception, but human hearing has its limits.
+      - value: We don't.
+        correct: N
+        feedback: There is a good reason sometimes to go beyond album quality recording.
+      - value: None of the other answers.
+        correct: N
+        feedback: There is a good answer available.
+    - unit: unitAdc
+      body: What is ADC?
+      options:
+      - value: Analog-to-Digital Conversion
+        correct: Y
+        feedback: Correct!
+      - value: Digital-to-Analog Conversion
+        correct: N
+        feedback: Other way around.
+      - value: Nyquist-Shannon sampling theorem
+        correct: N
+        feedback: This is the wrong term.
+      - value: Quantification
+        correct: N
+        feedback: Quantification is a step of ADC, but not the full process.
+    - unit: unitAdc
+      body: What is a waveform?
+      options:
+      - value: A representation of a sound
+        correct: Y
+        feedback: Excellent!
+      - value: A device that provides electric current to the microphone.
+        correct: N
+        feedback: This definition is for "pre-amp".
+      - value: Quantification
+        correct: N
+        feedback: Quanitification is a step against the waveform to convert to a digital format.
+      - value: The air molecules are dense.
+        correct: N
+        feedback: This is compression.
+    - unit: unitAdc
+      body: What does the diaphragm in the microphone do?
+      options:
+      - value: The diaphragm moves with changes in air pressure, and the energy represents the sound.
+        correct: Y
+        feedback: Perfect!
+      - value: The diaphragm changes the the amplitude over time into a waveform.
+        correct: N
+        feedback: This is the definition of converter.
+      - value: The diaphragm samples the analog waveform from the microphone.
+        correct: N
+        feedback: This is the job of the converter.
+      - value: The diaphragm sends the array of integers representing the sound into the computer.
+        correct: N
+        feedback: This is the job of the converter.
+    - unit: unitAdc
+      body: What does a digital converter do?
+      options:
+      - value: Receives changes in amplitude from the diaphragm in the microphone, quantifies it, and converts it into a digital format.
+        correct: Y
+        feedback: Correct!
+      - value: Moves with changes in air pressure, and the energy represents the sound
+        correct: N
+        feedback: The diaphragm moves with changes in air pressure.
+      - value: Emits sound from a musical instrument or device.
+        correct: N
+        feedback: The sound source emits sound.
+      - value: Changes the array of integers back into an analog signal.
+        correct: N
+        feedback: Usually, the computer will handle this job with its sound card.
+    - unit: unitAdc
+      body: What is a microphone preamp?
+      options:
+      - value: A device that provides electric current to the microphone to operate.
+        correct: Y
+        feedback: Good job!
+      - value: A device that samples the analog waveform from the microphone.
+        correct: N
+        feedback: This is the converters definition.
+      - value: A device that changes the array of integers back into an analog signal.
+        correct: N
+        feedback: This is the computer sound card's job.
+      - value: A device where the air molecules are spaced apart.
+        correct: N
+        feedback: This is rarefaction.
+    - unit: unitAdc
+      body: What is sound quantification?
+      options:
+      - value: The process of measuring the continuous analog signal at regular intervals and converting the samples to integers representing the amplitude.
+        correct: Y
+        feedback: Yes!
+      - value: The process of providing electric current to the microphone to operate.
+        correct: N
+        feedback: This is a preamp's job.
+      - value: The process of changing the array of integers back into an analog signal.
+        correct: N
+        feedback: This is the computer sound card's job.
+      - value: The process of creating changes in pressure in the air to create sound.
+        correct: N
+        feedback: This is the speaker's job.
+    - unit: unitAdc
+      body: What does the Nyquist-Shannon theorem mean to digital audio sampling rates?
+      options:
+      - value: The sampling rate needs to be twice the highest audible frequency.
+        correct: Y
+        feedback: Excellent!
+      - value: One needs to change the analog signal into an array of integers.
+        correct: N
+        feedback: This is the function of a converter.
+      - value: One needs to change the array of integers back into an analog signal.
+        correct: N
+        feedback: This is the job of the computer's sound card.
+      - value: The sampling rate needs to be half the highest audible frequency.
+        correct: N
+        feedback: Other direction.
+    - unit: unitAdc
+      body: What is DAC?
+      options:
+      - value: Digital-to-Analog Conversion, the process of returning to an analog signal.
+        correct: Y
+        feedback: Great job!
+      - value: Analog-to-Digital Conversion, the process of going from an analog signal to a digital signal.
+        correct: N
+        feedback: The other way around.
+      - value: You need double the sampling rate as the highest frequency in the sound.
+        correct: N
+        feedback: This stems from the Nyquist-Shannon sampling theorem.
+      - value: We can reasonably expect no human can hear frequencies above 22,050 Hz.
+        correct: N
+        feedback: This doesn't answer the question.
+    - unit: unitAdc
+      body: What does the diaphragm in the speaker do?
+      options:
+      - value: The diaphragm moves to match the analog signal, which creates changes in pressure in the air to create sound.
+        correct: Y
+        feedback: Correct.
+      - value: The diaphragm moves to match the changes in air pressure, which is recorded and sampled in the digital converter.
+        correct: N
+        feedback: This is the diaphragm in the microphone.
+      - value: The air molecules are spaced apart.
+        correct: N
+        feedback: This is rarefaction.
+      - value: The air molecules are dense.
+        correct: N
+        feedback: This is compression.
+    - unit: unitComplex
+      body: What is a sine wave?
+      options:
+      - value: The simplest sound in the universe, defined as a periodic oscillation that follows a trigonometric function.
+        correct: Y
+        feedback: Correct!
+      - value: A non-sinusoidal waveform named for its triangular shape.
+        correct: N
+        feedback: This describes a triangle wave.
+      - value: An integer multiple of the fundamental frequency.
+        correct: N
+        feedback: This is a harmonic.
+      - value: Not an integer multiple of the fundamental frequency.
+        correct: N
+        feedback: This is inharmonic.
+    - unit: unitComplex
+      body: What are all sounds made up of?
+      options:
+      - value: Sine waves.
+        correct: Y
+        feedback: Good job!
+      - value: Triangle waves.
+        correct: N
+        feedback: Not all sounds are made of triangle waves.
+      - value: Spectral editing.
+        correct: N
+        feedback: Not all sounds are spectrally edited.
+      - value: All of the frequencies are harmonic.
+        correct: N
+        feedback: This is certainly not true.
+    - unit: unitComplex
+      body: The idea that sounds are made up of sine waves stems from what theory?
+      options:
+      - value: Fourier theorem.
+        correct: Y
+        feedback: Yes!
+      - value: Nyquist-Shannon sampling theorem.
+        correct: N
+        feedback: From this theorem stems the idea we need to double the sampling rate of the highest audible frequency.
+      - value: Discrete-time theorem.
+        correct: N
+        feedback: There's a better answer.
+      - value: Laplace theorem.
+        correct: N
+        feedback: While related...
+    - unit: unitComplex
+      body: What is the fundamental frequency?
+      options:
+      - value: The most prominent or focal sine wave, the pitch we perceive the sound at.
+        correct: Y
+        feedback: Yes!
+      - value: An integer multiple of the fundamental frequency.
+        correct: N
+        feedback: A multiple of itself?
+      - value: Waves that surround a single area.
+        correct: N
+        feedback: This is the definition of a format.
+      - value: Changes the individual sine waves within a complex wave.
+        correct: N
+        feedback: This is spectral editing.
+    - unit: unitComplex
+      body: What gives a sound color?
+      options:
+      - value: The combination of many sine waves with different frequencies, amplitudes, and phases, all of which change over time.
+        correct: Y
+        feedback: Correct!
+      - value: The combination of many sine waves with different frequencies, amplitudes, and spectrums, all of which change over time.
+        correct: N
+        feedback: Sine waves do not have unique spectrums, individually.
+      - value: The combination of many sine waves with different frequencies, all of which change over time.
+        correct: N
+        feedback: This is partially true...
+      - value: The surrounding of many inharmonic waves around a single area.
+        correct: N
+        feedback: Formants do give the sound some color, but some sounds don't have formants.
+    - unit: unitComplex
+      body: What is the difference between harmonic and inharmonic waves?
+      options:
+      - value: Harmonics are integer multiples, inharmonics are not.
+        correct: Y
+        feedback: Correct!
+      - value: Inharmonics are integer multiples, harmonics are not.
+        correct: N
+        feedback: The opposite is true.
+      - value: Both harmonics and inharmonics are integer multiples of the fundamental.
+        correct: N
+        feedback: One is not an integer multiple.
+      - value: Neither harmonics nor inharmonics are integer multiples of the fundamental.
+        correct: N
+        feedback: One is an integer multiple.
+    - unit: unitComplex
+      body: What is a formant?
+      options:
+      - value: The surrounding of many inharmonic waves around a single area.
+        correct: Y
+        feedback: Correct!
+      - value: When a sine wave is an integer multiple of the fundamental frequency.
+        correct: N
+        feedback: This is a harmonic wave.
+      - value: When a sine wave is not an integer multiple of the fundamental frequency.
+        correct: N
+        feedback: This is an inharmonic wave.
+      - value: When we directly change the individual sine waves within a complex wave.
+        correct: N
+        feedback: This is spectral editing.
+    - unit: unitComplex
+      body: What is spectral editing?
+      options:
+      - value: The technique of directly changing the individual sine waves within a complex wave.
+        correct: Y
+        feedback: Great job!
+      - value: The technique of indirectly changing the individual sine waves within a complex wave.
+        correct: N
+        feedback: You can change sounds by filtering, but this usually isn't referred to as spectral editing.
+      - value: The combination of many sine waves with different frequencies, amplitudes, and phases, all of which change over time.
+        correct: N
+        feedback: This is the definition of spectrum, which gives sound color.
+      - value: All other sound is simply a combination of multiple sine waves.
+        correct: N
+        feedback: While a true statement, this doesn't answer the question.
+    - unit: unitOsc
+      body: Which of the following is NOT a type of basic oscillators?
+      options:
+        - value: Star
+          correct: Y
+          feedback: Yes, star is not a type of basic oscillator.
+        - value: Sine
+          correct: N
+          feedback: Sine is a basic type of oscillator.
+        - value: Sawtooth
+          correct: N
+          feedback: Sawtooth is a basic type of oscillator.
+        - value: Square
+          correct: N
+          feedback: Square is a basic type of oscillator.
+    - unit: unitOsc
+      body: You can create any other oscillator by combining _____ oscillators.
+      options:
+        - value: Sine
+          correct: Y
+          feedback: Excellent!
+        - value: Triangle
+          correct: N
+          feedback: Triangle waves have more than one frequency.
+        - value: Sawtooth
+          correct: N
+          feedback: Sawtooth waves have more than one frequency.
+        - value: Rectangle
+          correct: N
+          feedback: Rectangle waves have more than one frequency.
+    - unit: unitOsc
+      body: Which of the following are common inputs to basic oscillators?
+      options:
+        - value: Amplitude, frequency, and phase.
+          correct: Y
+          feedback: Great job.
+        - value: Amplitude, pitch, and space.
+          correct: N
+          feedback: We change physical characteristics, not perceptual characteristics.
+        - value: Frequency, spectrum, and panning.
+          correct: N
+          feedback: Spectrum and panning are sometimes options, but not always.
+        - value: Frequency, color, and space.
+          correct: N
+          feedback: We change physical characteristics, not perceptual characteristics.
+    - unit: unitOsc
+      body: We make ____ oscillators from only odd-numbered harmonics, and ____ from all harmonics.
+      options:
+        - value: Triangle, square, and rectangle; Sawtooth
+          correct: Y
+          feedback: Yes!
+        - value: Square, rectangle, and sawtooth; Triangle
+          correct: N
+          feedback: Triangle is a gentle simple wave.
+        - value: Triangle and square; Sawtooth and rectangle
+          correct: N
+          feedback: Rectangle waves, while have a duty cycle, do not use all harmonics.
+        - value: Triangle and sawtooth; Square and rectangle
+          correct: N
+          feedback: Square waves only use odd-numbered harmonics.
+    - unit: unitOsc
+      body: Why do we call the basic oscillators by "circle, triangle, square, rectangle, sawtooth"?
+      options:
+        - value: The oscillators visually look like these shapes.
+          correct: Y
+          feedback: Good work.
+        - value: The oscillators sound like these shapes.
+          correct: N
+          feedback: What does a shape sound like?
+        - value: The oscillators were named after their inventors.
+          correct: N
+          feedback: I've not heard of a ... Mr. Sawtooth ... before.
+        - value: There is no correlation, these are just names.
+          correct: N
+          feedback: There is a common reason for the naming.
+    - unit: unitOsc
+      body: The ______ oscillators use (1 / h), while the _____ oscillators use (1 / h^2).
+      options:
+        - value: Square, rectangle, and sawtooth; Triangle
+          correct: Y
+          feedback: Yes, great work!
+        - value: Triangle, square, and rectangle; Sawtooth
+          correct: N
+          feedback: Sawtooths are a rich sound.
+        - value: Square and rectangle; Triangle and sawtooth
+          correct: N
+          feedback: Sawtooths are a rich sound.
+        - value: Triangle and sawtooth; Square and rectangle
+          correct: N
+          feedback: Triangle waves have a gentle sound.
+    - unit: unitOsc
+      body: Which of the following are in order from the harshest sound to the most gentle sound?
+      options:
+        - value: Sawtooth, Rectangle, Square, Triangle, Sine
+          correct: Y
+          feedback: Yes, this is correct!
+        - value: Sine, Triangle, Square, Rectangle, Sawtooth
+          correct: N
+          feedback: The order is in reverse. Though none of them are particularly pleasant to listen to.
+        - value: Sawtooth, Triangle, Square, Rectangle, Sine
+          correct: N
+          feedback: Triangle is a gentle sound.
+        - value: Sine, Rectangle, Square, Triangle, Sawtooth
+          correct: N
+          feedback: This sequence is completely out of order.
+    - unit: unitOsc
+      body: What is the role of the duty cycle?
+      options:
+        - value: The duty cycle determines which harmonics to output.
+          correct: Y
+          feedback: Yes.
+        - value: The duty cycle reduces the amplitudes of the harmonics.
+          correct: N
+          feedback: If by reduces you mean eliminates...
+        - value: The duty cycle is not relevant to simple oscillators.
+          correct: N
+          feedback: The rectangle wave has a duty cycle.
+        - value: The duty cycle is how often the oscillator reports.
+          correct: N
+          feedback: I'm not sure what this would mean...
+    - unit: unitNoise
+      body: What is noise?
+      options:
+        - value: Noise is a collection of signals with random amplitudes and frequencies within specific parameters over time.
+          correct: Y
+          feedback: Excellent!
+        - value: Noise is an unpleasant signal that the majority of the public voted to be unpleasant.
+          correct: N
+          feedback: Noise can mean different things to different people, but for this unit, noise has a specific meaning.
+        - value: Noise is a collection of generators with random inputs that do not change at all over time.
+          correct: N
+          feedback: The change over time part is what makes the sound 'noisy'.
+        - value: Noise is the lack of musical context.
+          correct: N
+          feedback: Noise can mean different things to different people, but for this unit, noise has a specific meaning.
+    - unit: unitNoise
+      body: What is a noise generator?
+      options:
+        - value: A noise generator is a sound module that creates a noise signal.
+          correct: Y
+          feedback: Good job.
+        - value: A noise generator is a collection of signals with random amplitudes and frequencies within specific parameters over time.
+          correct: N
+          feedback: This is the defintion of noise, not a noise generator.
+        - value: A noise generator is a sound module that creates simple, repetitive signals.
+          correct: N
+          feedback: Noise is only repetitve in its shape, but within that shape noise is random.
+        - value: A noise generator creates unpleasant sounds.
+          correct: N
+          feedback: Unpleasant it may be, but there's a clearer definition here.
+    - unit: unitNoise
+      body: How is the amplitude of white noise distributed?
+      options:
+        - value: Equal amplitude over linear space.
+          correct: Y
+          feedback: Good job!
+        - value: Equal amplitude over logarithmic space.
+          correct: N
+          feedback: This would be pink noise.
+        - value: Equal amplitude over (1 / frequency^2).
+          correct: N
+          feedback: This would be brown noise.
+        - value: Equal amplitude over random space.
+          correct: N
+          feedback: That sounds like a fun module to play with.
+    - unit: unitNoise
+      body: How is the amplitude of pink noise distributed?
+      options:
+        - value: Equal amplitude over logarithmic space.
+          correct: Y
+          feedback: Great work!
+        - value: Equal amplitude over linear space.
+          correct: N
+          feedback: This would be white noise.
+        - value: Equal amplitude over (1 / frequency^2).
+          correct: N
+          feedback: This would be brown noise.
+        - value: Equal amplitude over random space.
+          correct: N
+          feedback: That sounds like a fun module to play with.
+    - unit: unitNoise
+      body: How is the amplitude of brown noise distributed?
+      options:
+        - value: Equal amplitude over (1 / frequency^2).
+          correct: Y
+          feedback: Yes!
+        - value: Equal amplitude over logarithmic space.
+          correct: N
+          feedback: This would be pink noise.
+        - value: Equal amplitude over linear space.
+          correct: N
+          feedback: This would be white noise.
+        - value: Equal amplitude over random space.
+          correct: N
+          feedback: That sounds like a fun module to play with.
+    - unit: unitNoise
+      body: From harshest to most gentle, which is the correct order?
+      options:
+        - value: White, pink, brown
+          correct: Y
+          feedback: Yes!
+        - value: Brown, pink, white
+          correct: N
+          feedback: Reverse...
+        - value: White, brown, pink
+          correct: N
+          feedback: Brown is more gentle than pink.
+        - value: Pink, white, brown.
+          correct: N
+          feedback: White is harsher than pink.
+    - unit: unitAdd
+      body: What is additive synthesis?
+      options:
+        - value: Additive synthesis is a sound generating module that combines waves in a variety of amplitudes, frequencies, and phases.
+          correct: Y
+          feedback: Excellent!
+        - value: Additive synthesis is a sound generating technique that combines a rich sound sound and one or more filters to create a new color.
+          correct: N
+          feedback: This is the definition of subtractive synthesis.
+        - value: Additive synthesis is a sound generating module that can play back samples.
+          correct: N
+          feedback: This is the defintion of a sampler.
+        - value: Additive synthesis is a sound generating module that reduces rich sound waves in a variety of amplitudes.
+          correct: N
+          feedback: This answer doesn't make sense.
+    - unit: unitAdd
+      body: What is one of the most expressive features of additive synthesis?
+      options:
+        - value: These waves may change in amplitude, frequency, and phase over time.
+          correct: Y
+          feedback: That's correct!
+        - value: These waves may change in volume, color, and space over time.
+          correct: N
+          feedback: At this level, we describe the physical properties.
+        - value: These waves stay static.
+          correct: N
+          feedback: A lack of change is boring and represents death.
+        - value: Additive synthesis is not expressive.
+          correct: N
+          feedback: This is a reductive answer.
+    - unit: unitAdd
+      body: A disadvantage of additive synthesis is...
+      options:
+        - value: Additive synthesis can be expensive for the computer to calculate.
+          correct: Y
+          feedback: Yes.
+        - value: Additive synthesis can be cheap for the computer to calculate.
+          correct: N
+          feedback: This doesn't make sense. Cheap would be an advantage.
+        - value: Additive synthesis can be expensive for the human to design.
+          correct: N
+          feedback: Some very complex forms, sure, but not all additive synthesis is complex.
+        - value: Additive synthesis can be expensive for the human to execute.
+          correct: N
+          feedback: Interface design is irrelevant to this unit.
+    - unit: unitSub
+      body: What is subtractive synthesis?
+      options:
+        - value: Subtractive synthesis is a sound generating technique that combines a rich sound sound and one or more filters to create a new color.
+          correct: Y
+          feedback: Excellent!
+        - value: Subtractive synthesis is a sound generating module that combines waves in a variety of amplitudes, frequencies, and phases.
+          correct: N
+          feedback: This is the definition of additive synthesis.
+        - value: Subtractive synthesis is a sound generating module that can play back samples.
+          correct: N
+          feedback: This is the definition of a sampler.
+        - value: Subtractive synthesis is a sound generating module that reduces rich sound waves in a variety of amplitudes.
+          correct: N
+          feedback: This doesn't make sense.
+    - unit: unitSub
+      body: How is the human voice like subtractive synthesis?
+      options:
+        - value: We use our mouth, teeth, tongue, and throat to filter the sound from our vocal chords.
+          correct: Y
+          feedback: Yup!
+        - value: The human voice isn't similar to subtractive synthesis at all.
+          correct: N
+          feedback: This is a reductive answer.
+        - value: We have a filtering device inside our mouths.
+          correct: N
+          feedback: I mean, at a certain level...
+        - value: We use our mouth, teeth, tongue, and throat to combine the sound from our vocal chords.
+          correct: N
+          feedback: We only have one set of vocal chords.
+    - unit: unitSub
+      body: An expressive feature of subtractive synthesis is...
+      options:
+        - value: the filtering properties -- frequency, amplitude, and phase -- can vary over time.
+          correct: Y
+          feedback:
+        - value: the filtering properties -- pitch, volume, and space -- can vary over time.
+          correct: N
+          feedback: Pitch is a perceptual characteristics, not a physical property.
+        - value: the subtractive properties -- pitch, volume, and space -- can vary over time.
+          correct: N
+          feedback: There is no such thing as 'subtractive properties'.
+        - value: the subtractive properties -- frequency, amplitude, and phase -- can vary over time.
+          correct: N
+          feedback: There is no such thing as 'subtractive properties'.
+    - unit: unitSub
+      body: What is a performance feature of subtractive synthesis?
+      options:
+        - value: Subtractive synthesis is often cheaper than additive synthesis for a computer to calculate.
+          correct: Y
+          feedback: Correct!
+        - value: Subtractive synthesis is often more expensive than additive synthesis for a computer to calculate.
+          correct: N
+          feedback: The opposite is true.
+        - value: Subtractive synthesis is often about the same than additive synthesis for a computer to calculate.
+          correct: N
+          feedback: There is a difference...
+        - value: Subtractive synthesis requires no calculation.
+          correct: N
+          feedback: This just isn't true of anything on a computer.
+    - unit: unitSample
+      body: What is a sample?
+      options:
+        - value: A sample is a short piece of prerecorded sound that we have loaded into the computer's memory.
+          correct: Y
+          feedback: Correct!
+        - value: A sample is a short piece of a computer's memory that we have loaded into a prerecorded sound.
+          correct: N
+          feedback: I'm not sure how one loads memory into sound. That sounds like an experiment.
+        - value: A sample is a small taste of a prerecorded sound.
+          correct: N
+          feedback: A sample can greatly vary in length, but is usually short.
+        - value: A sample is a short piece of precorded memory that we have loaded into the computer's sound.
+          correct: N
+          feedback: This is a little wacky.
+    - unit: unitSample
+      body: What is a sampler?
+      options:
+        - value: A sampler is a sound generating module that can play back samples.
+          correct: Y
+          feedback: Excellent!
+        - value: A sampler is a sound generating technique that combines a rich sound sound and one or more filters to create a new color.
+          correct: N
+          feedback: This is the definition of subtractive synthesis.
+        - value: A sampler is a sound generating module that combines waves in a variety of amplitudes, frequencies, and phases.
+          correct: N
+          feedback: This is the definition of additive synthesis
+        - value: A sampler is a sound generating module that reduces rich sound waves in a variety of amplitudes.
+          correct: N
+          feedback: This doesn't make sense
+    - unit: unitSample
+      body: Which of the following is NOT a common capability of a sampler?
+      options:
+        - value: Convolving
+          correct: Y
+          feedback: Convolving is a complex technique, not a typical feature of a sampler.
+        - value: Reverse
+          correct: N
+          feedback: Reverse is an iconic sampling technique.
+        - value: Slowing down playback
+          correct: N
+          feedback: Slowing down playback is a basic sampling technique.
+        - value: Looping
+          correct: N
+          feedback: Looping is one of the most heavily used sampling techniques.
+    - unit: unitSample
+      body: A unique feature of drum machines is...
+      options:
+        - value: The drum machine can play back the samples in preset or live modified patterns.
+          correct: Y
+          feedback: Yes!
+        - value: The drum machine can play back the samples in reverse.
+          correct: N
+          feedback: Many drum machines can, but this isn't a marked feature of the drum machine.
+        - value: The drum machine can play back the samples slowed down.
+          correct: N
+          feedback: Many drum machines can, but this isn't a marked feature of the drum machine.
+        - value: The drum machine can play back the samples in loops.
+          correct: N
+          feedback: Many drum machines can, but this isn't a marked feature of the drum machine.
+    - unit: unitSample
+      body: What is tape music?
+      options:
+        - value: Tape music is a music genre created by using physical tapes of music and sounds, and cutting them up, and adhering the pieces back together; or simulating that experience using a computer.
+          correct: Y
+          feedback: Yes!
+        - value: Tape music is a music genre that simulates using physical tapes of music and sounds, and cutting them up, and adhering the pieces back together.
+          correct: N
+          feedback: Close, but tape music can include both the simulation and physical.
+    - unit: unitFilters
+      body: What is filtering?
+      options:
+        - value: The process of reducing or eliminating the amplitude of selected frequencies in the spectrum of a sound signal.
+          correct: Y
+          feedback: Yes, this is correct.
+        - value: The process of increasing the amplitude of selected frequencies in the spectrum of a sound signal.
+          correct: N
+          feedback: The opposite is true.
+        - value: The technique of varying parameters to sound generators and sound modifiers over time.
+          correct: N
+          feedback: This is modulation.
+        - value: Filtering reduces the proportion of the amplitude over a threshold amplitude.
+          correct: N
+          feedback: This is filtering.
+    - unit: unitFilters
+      body: Which of the following is NOT why we use filters?
+      options:
+        - value: To add spectral content.
+          correct: Y
+          feedback: Filters do not, by themselves, add spectral content.
+        - value: To shape sounds.
+          correct: N
+          feedback: We often use filtering to shape sounds.
+        - value: To bring out new colors.
+          correct: N
+          feedback: We often use filtering to bring out new colors
+        - value: To balance sounds together.
+          correct: N
+          feedback: We often use filtering to balance sounds together.
+    - unit: unitFilters
+      body: What does a low-pass filter do?
+      options:
+        - value: It reduces or eliminates high-frequency content.
+          correct: Y
+          feedback: Excellent!
+        - value: It reduces or eliminates low-frequency content.
+          correct: N
+          feedback: That's a high-pass filter.
+        - value: It reduces or eliminates content outside of a specific frequency range.
+          correct: N
+          feedback: That's a band-pass filter.
+        - value: It reduces or eliminates content within a specific frequency range.
+          correct: N
+          feedback: That's a band-reject filter.
+    - unit: unitFilters
+      body: What does a high-pass filter do?
+      options:
+        - value: It reduces or eliminates low-frequency content.
+          correct: Y
+          feedback: Good job!
+        - value: It reduces or eliminates high-frequency content.
+          correct: N
+          feedback: That's a low-pass filter.
+        - value: It reduces or eliminates content outside of a specific frequency range.
+          correct: N
+          feedback: That's a band-pass filter.
+        - value: It reduces or eliminates content within a specific frequency range.
+          correct: N
+          feedback: That's a band-reject filter.
+    - unit: unitFilters
+      body: What does a band-pass filter do?
+      options:
+        - value: It reduces or eliminates content outside of a specific frequency range.
+          correct: Y
+          feedback: Great job!
+        - value: It reduces or eliminates low-frequency content.
+          correct: N
+          feedback: That's a high-pass filter.
+        - value: It reduces or eliminates high-frequency content.
+          correct: N
+          feedback: That's a low-pass filter.
+        - value: It reduces or eliminates content within a specific frequency range.
+          correct: N
+          feedback: That's a band-reject filter.
+    - unit: unitFilters
+      body: What does a band-reject filter do?
+      options:
+        - value: It reduces or eliminates content within a specific frequency range.
+          correct: Y
+          feedback: Perfect!
+        - value: It reduces or eliminates low-frequency content.
+          correct: N
+          feedback: That's a high-pass filter.
+        - value: It reduces or eliminates high-frequency content.
+          correct: N
+          feedback: That's a low-pass filter.
+        - value: It reduces or eliminates content outside of a specific frequency range.
+          correct: N
+          feedback: That's a band-pass filter.
+    - unit: unitFilters
+      body: What does the cutoff parameter do?
+      options:
+        - value: Cutoff is the frequency or frequencies where the filtering will begin to occur.
+          correct: Y
+          feedback: Excellent!
+        - value: Cutoff is the amount of amplitude that we will impact.
+          correct: N
+          feedback: That is gain.
+        - value: Cutoff determines how smooth the transition is from unfiltered to filtered content.
+          correct: N
+          feedback: That is Q.
+        - value: Cutoff is not a filtering parameter.
+          correct: N
+          feedback: Not correct.
+    - unit: unitFilters
+      body: What does the gain parameter do?
+      options:
+        - value: The gain is the amount of amplitude that we will impact.
+          correct: Y
+          feedback: Good job.
+        - value: Gain determines how smooth the transition is from unfiltered to filtered content.
+          correct: N
+          feedback: That is Q.
+        - value: Gain is the frequency or frequencies where the filtering will begin to occur.
+          correct: N
+          feedback: That is cutoff.
+        - value: Gain is not a filtering parameter.
+          correct: N
+          feedback: Not correct.
+    - unit: unitFilters
+      body: What does the "Q" parameter do?
+      options:
+        - value: Q determines how smooth the transition is from unfiltered to filtered content.
+          correct: Y
+          feedback: Yay!
+        - value: Q is the amount of amplitude that we will impact.
+          correct: N
+          feedback: That is gain.
+        - value: Q is the frequency or frequencies where the filtering will begin to occur.
+          correct: N
+          feedback: That is cutoff.
+        - value: Q is not a filtering parameter.
+          correct: N
+          feedback: Not correct.
+    - unit: unitModulation
+      body: What is modulation?
+      options:
+        - value: Modulation is the technique of varying parameters to sound generators and sound modifiers over time.
+          correct: Y
+          feedback: Good job!
+        - value: Modulation is the technique of setting parameters to sound generators and sound modifiers statically.
+          correct: N
+          feedback: Modulation is about _over time_, not about setting statically.
+        - value: Modulation is an oscillator with a frequency below the human range of hearing.
+          correct: N
+          feedback: That is a low frequency oscillator.
+        - value: Modulation reduces the proportion of the amplitude over a threshold amplitude.
+          correct: N
+          feedback: That is a compressor.
+    - unit: unitModulation
+      body: Which of the following can we modulate?
+      options:
+        - value: Nothing.
+          correct: Y
+          feedback: Good job! We can modulate just about everything.
+        - value: Frequency.
+          correct: N
+          feedback: We can module frequency.
+        - value: Amplitude.
+          correct: N
+          feedback: We can module amplitude.
+        - value: Phase.
+          correct: N
+          feedback: We can module phase.
+    - unit: unitModulation
+      body: What is ring modulation?
+      options:
+        - value: A source signal is multiplied by another, simple signal such as a sine wave.
+          correct: Y
+          feedback: Excellent!
+        - value: A source signal is added to another, simple signal such as a sine wave.
+          correct: N
+          feedback: Multiply, not add.
+        - value: A source signal is subtracted by a complex signal.
+          correct: N
+          feedback: Multiply, not subtract.
+        - value: A source signal is multiplied by a complex signal.
+          correct: N
+          feedback: Typically we use simple signals for ring modulation.
+    - unit: unitLfo
+      body: What is a low frequency oscillator?
+      options:
+        - value: A low frequency oscillator is an oscillator with a frequency below the human range of hearing.
+          correct: Y
+          feedback: Excellent!
+        - value: A low frequency oscillator is the technique of varying parameters to sound generators and sound modifiers over time.
+          correct: N
+          feedback: No, that is modulation.
+        - value: A low frequency oscillator changes a parameter over time.
+          correct: N
+          feedback: That is the purpose of an LFO, not the definition.
+        - value: A low frequency oscillator is the effect of modulating the amplitude of a sound source.
+          correct: N
+          feedback: That is tremolo.
+    - unit: unitLfo
+      body: What are the common parameters of a low frequency oscillator?
+      options:
+        - value: Shape, amplitude, and frequency.
+          correct: Y
+          feedback: Yes!
+        - value: Color, volume, and pitch.
+          correct: N
+          feedback: Those are perceptual, not physical.
+        - value: Noise, spectrum, and rhythm.
+          correct: N
+          feedback: Nope, look for more basic parameters.
+        - value: Amplitude and volume.
+          correct: N
+          feedback: Those two things essentially identical... physical and perceptual.
+    - unit: unitLfo
+      body: Why do we use low frequency oscillators?
+      options:
+        - value: The purpose is to change a parameter over time.
+          correct: Y
+          feedback: Correct!
+        - value: The purpose is to set static parameters.
+          correct: N
+          feedback: The opposite is true.
+        - value: The purpose is to make our music smarter.
+          correct: N
+          feedback: While LFOs add interest, there's something more basic going on.
+        - value: There is no purpose.
+          correct: N
+          feedback: Nihilism isn't cute.
+    - unit: unitModEffects
+      body: What is vibrato?
+      options:
+        - value: Vibrato is the effect of modulating the frequency of a sound source.
+          correct: Y
+          feedback: Good job!
+        - value: Vibrato is the effect of modulating the amplitude of a sound source.
+          correct: N
+          feedback: That is tremolo.
+        - value: Vibrato is the effect of modulating the copies of a sound source.
+          correct: N
+          feedback: That is flange, phaser, and chorus.
+        - value: Vibrato makes the sound source appear to be a group of instruments playing the same part instead of a single instrument.
+          correct: N
+          feedback: That is chorus.
+    - unit: unitModEffects
+      body: What are the common parameters of vibrato?
+      options:
+        - value: Wet/dry mix, delay time, depth, & rate.
+          correct: Y
+          feedback: Good job!
+        - value: Depth and rate.
+          correct: N
+          feedback: There's two more...
+        - value: Wet/dry mix and delay time.
+          correct: N
+          feedback: There's two more..
+        - value: Wet/dry mix, delay time, and rate.
+          correct: N
+          feedback: There's one more...
+    - unit: unitModEffects
+      body: What is tremolo?
+      options:
+        - value: Tremolo is the effect of modulating the amplitude of a sound source.
+          correct: Y
+          feedback: Perfect!
+        - value: Tremolo is the effect of modulating the frequency of a sound source.
+          correct: N
+          feedback: That is vibrato.
+        - value: Tremolo is the effect of modulating the copies of a sound source.
+          correct: N
+          feedback: That is flange, phaser, and chorus.
+        - value: Tremolo makes the sound source appear to be a group of instruments playing the same part instead of a single instrument.
+          correct: N
+          feedback: That is chorus.
+    - unit: unitModEffects
+      body: What are the common parameters of tremolo?
+      options:
+        - value: Rate and depth.
+          correct: Y
+          feedback: Correct!
+        - value: Wet/dry mix, delay time, depth, & rate.
+          correct: N
+          feedback: You may see delay time and wet/dry mix on some tremolo effects, but I wouldn't say they are common.
+        - value: Amplitude and frequency.
+          correct: N
+          feedback: Close, but think about what a tremolo does.
+        - value: Phase and spectrum.
+          correct: N
+          feedback: This is not correct.
+    - unit: unitModEffects
+      body: What are phasers and flangers?
+      options:
+        - value: Phasers and flangers modify the spectrum of the sound source over time.
+          correct: Y
+          feedback: Great work.
+        - value: Phasers and flangers modulate the amplitude of a sound source.
+          correct: N
+          feedback: That is tremolo.
+        - value: Phasers and flangers modulate the frequency of a sound source.
+          correct: N
+          feedback: That is vibrato.
+        - value: Phasers and flangers modulate the measurements of a sound source.
+          correct: N
+          feedback: Read more carefully.
+    - unit: unitModEffects
+      body: What is the difference between phaser and flanger?
+      options:
+        - value: Flangers cause harmonic frequencies, but phasers cause inharmonic frequencies.
+          correct: Y
+          feedback: Correct.
+        - value: Flangers cause inharmonic frequencies, but phasers cause harmonic frequencies.
+          correct: N
+          feedback: The opposite is true.
+        - value: Flangers and phasers both primarily cause harmonic frequencies.
+          correct: N
+          feedback: There is a difference.
+        - value: Flangers and phasers both primarily cause inharmonic frequencies.
+          correct: N
+          feedback: There is a difference.
+    - unit: unitModEffects
+      body: What are the common parameters of phasers and flangers?
+      options:
+        - value: Wet/dry mix, delay, depth, and rate.
+          correct: Y
+          feedback: Perfect!
+        - value: Depth and rate.
+          correct: N
+          feedback: There's two other common parameters...
+        - value:  Wet/dry mix and delay.
+          correct: N
+          feedback: There's two other common parameters...
+        - value: Amplitude and frequency.
+          correct: N
+          feedback: Phasers and flangers are a bit more complex than this...
+    - unit: unitModEffects
+      body: What is chorus?
+      options:
+        - value: Chorus makes the sound source appear to be a group of instruments playing the same part instead of a single instrument.
+          correct: Y
+          feedback: Yes!
+        - value: Chorus makes the sound source appear to be a single instrument playing the same part instead of a group of instruments.
+          correct: N
+          feedback: The opposite is true.
+        - value: Chorus makes the sound source appear to be modulating frequency.
+          correct: N
+          feedback: That is closer to vibrato.
+        - value: Chorus makes the sound source appear to be modulating amplitude.
+          correct: N
+          feedback: That is closer to tremolo.
+    - unit: unitModEffects
+      body: What are the common parameters of chorus?
+      options:
+        - value: Wet/dry mix, delay, depth, and rate.
+          correct: Y
+          feedback: Perfect!
+        - value: Depth and rate.
+          correct: N
+          feedback: There's two other common parameters...
+        - value:  Wet/dry mix and delay.
+          correct: N
+          feedback: There's two other common parameters...
+        - value: Amplitude and frequency.
+          correct: N
+          feedback: Chorus is a bit more complex than this...
+    - unit: unitAmpModifiers
+      body: What is an amplitude modifier?
+      options:
+        - value: It impacts the sound source's amplitude.
+          correct: Y
+          feedback: Yes!
+        - value: It impacts the sound source's frequency.
+          correct: N
+          feedback: Nope.
+        - value: It impacts the sound source's phase.
+          correct: N
+          feedback: Nope.
+        - value: It does not impact the sound source.
+          correct: N
+          feedback: Nope.
+    - unit: unitAmpModifiers
+      body: What is gain?
+      options:
+        - value: Gain changes the overall amplitude of the signal.
+          correct: Y
+          feedback: Excellent!
+        - value: Gain reduces the proportion of the amplitude over a threshold amplitude.
+          correct: N
+          feedback: That is a compressor.
+        - value: Gain increases the amplitude over a threshold.
+          correct: N
+          feedback: That is an expander.
+        - value: Gain targets a specific band of frequencies and reduces the amplitude on specific ranges.
+          correct: N
+          feedback: That is a de-esser.
+    - unit: unitAmpModifiers
+      body: What is a compressor?
+      options:
+        - value: Compressors reduce the proportion of the amplitude over a threshold amplitude.
+          correct: Y
+          feedback: Good job!
+        - value: Compressors changes the overall amplitude of the signal.
+          correct: N
+          feedback: That is gain.
+        - value: Gain increases the amplitude over a threshold.
+          correct: N
+          feedback: That is an expander.
+        - value: Gain targets a specific band of frequencies and reduces the amplitude on specific ranges.
+          correct: N
+          feedback: That is a de-esser.
+    - unit: unitAmpModifiers
+      body: What does the threshold of a compressor do?
+      options:
+        - value: We will reduce any amplitude over the threshold.
+          correct: Y
+          feedback: That is correct.
+        - value: The threshold determines how much we will reduce the amplitudes over the ratio.
+          correct: N
+          feedback: The words are reversed.
+        - value: Threshold impacts how quickly the compressor will respond to changes in amplitude.
+          correct: N
+          feedback: That is attack and release.
+        - value: A threshold is a collection of individual compressors for specific frequency ranges.
+          correct: N
+          feedback: That is a multi-pressor.
+    - unit: unitAmpModifiers
+      body: What does the ratio of a compressor do?
+      options:
+        - value: The ratio determines how much we will reduce the amplitudes over the threshold.
+          correct: Y
+          feedback: Great work!
+        - value: We will reduce any amplitude over the ratio.
+          correct: N
+          feedback: That is threshold, not ratio.
+        - value: Ratio impacts how quickly the compressor will respond to changes in amplitude.
+          correct: N
+          feedback: That is attack and release.
+        - value: A ratio is a collection of individual compressors for specific frequency ranges.
+          correct: N
+          feedback: That is a multipressor.
+    - unit: unitAmpModifiers
+      body: What is the the attack and release of a compressor do?
+      options:
+        - value: These parameters impact how quickly the compressor will respond to changes in amplitude.
+          correct: Y
+          feedback:
+        - value: Attack and release determine how much we will reduce the amplitudes over the threshold.
+          correct: N
+          feedback: No, that's ratio.
+        - value: We will reduce any amplitude over the attack and under the release.
+          correct: N
+          feedback: That doesn't make sense.
+        - value: Attack and release are a collection of individual compressors for specific frequency ranges.
+          correct: N
+          feedback: That is a multipressor.
+    - unit: unitAmpModifiers
+      body: What does an expander do?
+      options:
+        - value: An expander increases the amplitude over a threshold.
+          correct: Y
+          feedback: Yes!
+        - value: An expander reduces the amplitude over a threshold.
+          correct: N
+          feedback: That is a compressor.
+        - value: An expander targets a specific band of frequencies and reduces the amplitude on specific ranges.
+          correct: N
+          feedback: That is a de-esser.
+        - value: An expander is a collection of individual compressors for specific frequency ranges.
+          correct: N
+          feedback: That is a multipressor.
+    - unit: unitAmpModifiers
+      body: What does a de-esser do?
+      options:
+        - value: A de-esser targets a specific band of frequencies and reduces the amplitude on specific ranges.
+          correct: Y
+          feedback: Great job!
+        - value: A de-esser increases the amplitude over a threshold.
+          correct: N
+          feedback: That is an expander.
+        - value: A de-esser reduces the amplitude over a threshold.
+          correct: N
+          feedback: That is a compresor.
+        - value: A de-esser is a collection of individual compressors for specific frequency ranges.
+          correct: N
+          feedback: That is a multi-pressor.
+    - unit: unitAmpModifiers
+      body: What does a multi-pressor do?
+      options:
+        - value: A multi-pressor is a collection of individual compressors for specific frequency ranges.
+          correct: Y
+          feedback:
+        - value: A multi-pressor targets a specific band of frequencies and reduces the amplitude on specific ranges.
+          correct: N
+          feedback: That is a de-esser.
+        - value: A multi-pressor increases the amplitude over a threshold.
+          correct: N
+          feedback: That is an expander.
+        - value: A multi-pressor reduces the amplitude over a threshold.
+          correct: N
+          feedback: That is a compressor.
+    - unit: unitEnvelopes
+      body: What is an envelope?
+      options:
+        - value: An envelope is a special type of amplitude modifier that changes amplitude over time to give sounds a natural shape.
+          correct: Y
+          feedback: Good job!
+        - value: An envelope is a special type of frequency modifier that changes frequency over time to give sounds a natural shape.
+          correct: N
+          feedback: Envelopes are typically applied to amplitude.
+        - value: An envelope ramps up from zero amplitude to its highest amplitude.
+          correct: N
+          feedback: That is the attack phase.
+        - value: An envelopes ramps sound back down to a somewhat lower amplitude level
+          correct: N
+          feedback: That is the decay phase.
+    - unit: unitEnvelopes
+      body: What is the attack phase? How do we measure it?
+      options:
+        - value: The sound ramps up from zero amplitude to its highest amplitude. Time.
+          correct: Y
+          feedback: Excellent!
+        - value: The sound ramps back down to a somewhat lower amplitude level. Time.
+          correct: N
+          feedback: That is decay.
+        - value: The sound ramps up from zero amplitude to its highest amplitude. Relative amplitude.
+          correct: N
+          feedback: Wrong measure.
+        - value: The sound ramps back down to a somewhat lower amplitude level. Relative amplitude.
+          correct: N
+          feedback: Decay; wrong measure.
+    - unit: unitEnvelopes
+      body: What is the decay phase? How do we measure it?
+      options:
+        - value: The sound ramps back down to a somewhat lower amplitude level. Time.
+          correct: Y
+          feedback: Great work!
+        - value: The sound ramps up from zero amplitude to its highest amplitude. Time.
+          correct: N
+          feedback: That is attack.
+        - value: The sound holds that amplitude until release. Relative amplitude.
+          correct: N
+          feedback: That is sustain.
+        - value: The sound returns the amplitude back down to zero. Time.
+          correct: N
+          feedback: That is release.
+    - unit: unitEnvelopes
+      body: What is the sustain phase? How do we measure it?
+      options:
+        - value: The sound holds that amplitude until release. Relative amplitude.
+          correct: Y
+          feedback: Yes!
+        - value: The sound holds that amplitude until release. Time.
+          correct: N
+          feedback:
+        - value: The sound increases that amplitude until release. Relative amplitude.
+          correct: N
+          feedback: Holds, not increases.
+        - value: The sound increases that amplitude until release. Time.
+          correct: N
+          feedback: Holds, not increases; wrong measure.
+    - unit: unitEnvelopes
+      body: What is the release phase? How do we measure it?
+      options:
+        - value: The sound returns the amplitude back down to zero. Time.
+          correct: Y
+          feedback: Correct!
+        - value: The sound ramps up from zero amplitude to its highest amplitude. Time.
+          correct: N
+          feedback: That is attack.
+        - value: The sound holds that amplitude until release. Relative amplitude.
+          correct: N
+          feedback: That is sustain.
+        - value: The sound ramps back down to a somewhat lower amplitude level. Time.
+          correct: N
+          feedback: That is decay.
+    - unit: unitEnvelopes
+      body: How many types of envelopes are there?
+      options:
+        - value: Infinite.
+          correct: Y
+          feedback: Great!
+        - value: One.
+          correct: N
+          feedback: There's several kinds.
+        - value: None.
+          correct: N
+          feedback: That is philosophical.
+        - value: Many.
+          correct: N
+          feedback: There's a better answer...
+    - unit: unitEqualization
+      body: What is an equalizer?
+      options:
+        - value: An equalizer is a sound modifying module that helps to balance the frequencies of the incoming signal.
+          correct: Y
+          feedback: Perfect!
+        - value: An equalizer is a sound modifying module that helps to balance the amplitudes of the incoming signal.
+          correct: N
+          feedback: There's a better answer.
+        - value: An equalizer is a sound modifying module that helps to balance the phases of the incoming signal.
+          correct: N
+          feedback: Nope.
+        - value: An equalizer is a sound modifying module that helps to balance the duration of the incoming signal.
+          correct: N
+          feedback: Nope.
+    - unit: unitEqualization
+      body: What are the parts of an equalizer?
+      options:
+        - value: Filters and gain.
+          correct: Y
+          feedback: Awesome.
+        - value: Boosters and cutters.
+          correct: N
+          feedback: This is the opposite.
+        - value: Compressors and range selectors.
+          correct: N
+          feedback: Compressors are not part of equalizers.
+        - value: Delay and phaser.
+          correct: N
+          feedback: That would be fun, but no.
+    - unit: unitEqualization
+      body: Why do we use equalizers?
+      options:
+        - value: To make multiple sound sources combine together clearly by avoiding overlapping frequency ranges.
+          correct: Y
+          feedback: Excellent!
+        - value: To make multiple sound sources fight each other by adding overlapping frequency ranges.
+          correct: N
+          feedback: That could be artistic, but not the typical use case...
+        - value: To make a single sound source clearer.
+          correct: N
+          feedback: You can use it for that, but that isn't the main purpose...
+        - value: To have the instruments hold a fair democratic election.
+          correct: N
+          feedback: Nope.
+    - unit: unitEqualization
+      body: What are the 'typical ranges' described in the video?
+      options:
+        - value: Low bass, mid bass, upper bass, low mids, high mids, and highs.
+          correct: Y
+          feedback: Good work!
+        - value: Low bass, upper bass, low mids, mid mids, high mids, and highs.
+          correct: N
+          feedback: I've never heard of mid mids.
+        - value: Bass, mids, and highs.
+          correct: N
+          feedback: There's more ranges to mix typically than three.
+        - value: Bass, low mids, high mids, low highs, and high highs.
+          correct: N
+          feedback: I've never heard of high highs.
+    - unit: unitEqualization
+      body: What are the common parameters for an equalizer?
+      options:
+        - value: Each filter has its own filter parameters of type, cutoff, q, gain.
+          correct: Y
+          feedback: Great job!
+        - value: Each filter has its own filter parameters of color, amplitude, gain.
+          correct: N
+          feedback: These aren't the right parameters.
+        - value: The equalizer has type, cutoff, q, gain.
+          correct: N
+          feedback: Each filter has its own set.
+        - value: The equalizer has color, amplitude, gain.
+          correct: N
+          feedback: Each filter has its own set.
+    - unit: unitDistortion
+      body: What is distortion?
+      options:
+        - value: Distortion is a sound effect that adds noise to a sound source.
+          correct: Y
+          feedback: Excellent!
+        - value: Distortion is a sound effect that removes noise from a sound source.
+          correct: N
+          feedback: Adds, not removes.
+        - value: Distortion is a sound effect that adds phasing to a sound source.
+          correct: N
+          feedback: Adds noise, not phasing.
+        - value: Distortion is a sound effect that removes phasing from a sound source.
+          correct: N
+          feedback: Nope.
+    - unit: unitDistortion
+      body: What is the wet dry mix?
+      options:
+        - value: Dry is the original signal, wet is the effected signal.
+          correct: Y
+          feedback: Yes!
+        - value: Dry is the effected signal, wet is the original signal.
+          correct: N
+          feedback: The opposite is true.
+        - value: Dry is the source signal, wet is the copied signal.
+          correct: N
+          feedback: Distortion typically doesn't copy.
+        - value: Dry is the copied signal, wet is the source signal.
+          correct: N
+          feedback: Distortion typically doesn't copy.
+    - unit: unitDistortion
+      body: What does amplitude do in distortion?
+      options:
+        - value: Amplitude impacts the intensity of the distortion.
+          correct: Y
+          feedback: Perfect!
+        - value: Amplitude impacts the color of the distortion.
+          correct: N
+          feedback: It can, but another answer is more likely...
+        - value: Amplitude impacts the shape of the distortion.
+          correct: N
+          feedback: The shape of distortion has a variety of factors.
+        - value: There is no amplitude in distortion.
+          correct: N
+          feedback: Nope.
+    - unit: unitDistortion
+      body: What does frequency do in distortion?
+      options:
+        - value: Frequency impacts the color of the distortion.
+          correct: Y
+          feedback: Good job!
+        - value: Frequency impacts the intensity of the distortion.
+          correct: N
+          feedback: No, the amplitude impacts the intensity.
+        - value: There is no frequency in distortion.
+          correct: N
+          feedback: Some may not have that parameter however...
+        - value: Frequency impacts the phase of the distortion.
+          correct: N
+          feedback: Nope.
+    - unit: unitDelay
+      body: What is delay?
+      options:
+        - value: Delay is a sound changing module that plays the sound source more than once at different times.
+          correct: Y
+          feedback: Perfect!
+        - value: Delay is a sound changing module that plays the sound source once at a different time.
+          correct: N
+          feedback: It can be once, or many times.
+        - value: Delay is a sound generating module that plays the sound source once at a different time.
+          correct: N
+          feedback: Changing, not generating per say.
+        - value: Delay is a sound generating module that plays the sound source more than once at different times.
+          correct: N
+          feedback: Changing, not generating per say.
+    - unit: unitDelay
+      body: Why do we use delay?
+      options:
+        - value: Ambience, texture, and rhythm.
+          correct: Y
+          feedback: Excellent!
+        - value: Amplitude, frequency, and phase.
+          correct: N
+          feedback: This doesn't make sense.
+        - value: Color, emotion, and space.
+          correct: N
+          feedback: We can use delay for those things, but there's a better answer.
+        - value: None of the other answers.
+          correct: N
+          feedback: There is a decent answer here.
+    - unit: unitDelay
+      body: What is unique about a feedback delay?
+      options:
+        - value: A feedback delay plays the combination of the original sound source and the previous copies as well.
+          correct: Y
+          feedback: Good job!
+        - value: A feedback delay plays copies of the original sound only.
+          correct: N
+          feedback: It's both!
+        - value: A feedback delay plays the previous copies only.
+          correct: N
+          feedback: It's both!
+        - value: A feedback delay isn't unique.
+          correct: N
+          feedback: They are common, but not all delays use feedback.
+    - unit: unitDelay
+      body: What are common parameters for each copy of a delay?
+      options:
+        - value: Number of copies, tempo sync, gain, duration, filtering.
+          correct: Y
+          feedback: Great work!
+        - value: Tempo sync, gain, duration, filtering.
+          correct: N
+          feedback: Missing one...
+        - value: Number of copies, tempo sync, gain, duration, filtering, amplitude.
+          correct: N
+          feedback: Amplitude and gain are very similar.
+        - value: None of the other answers.
+          correct: N
+          feedback: There's a decent answer.
+    - unit: unitDelay
+      body: What is tempo sync?
+      options:
+        - value: It lines up the delayed playback to the rhythm of the music.
+          correct: Y
+          feedback: Yes!
+        - value: It lines up the delayed playback to the tempo of the music.
+          correct: N
+          feedback: We can do more than tempo!
+        - value: It lines up the delayed playback to the color of the music.
+          correct: N
+          feedback: I'm not sure how that would work...
+        - value: None of the other answers.
+          correct: N
+          feedback: Nope.
+    - unit: unitDelay
+      body: What are the time ranges associated with flanger/phaser, chorus, and delay?
+      options:
+        - value: 1-20ms, 20-80ms, 80ms+
+          correct: Y
+          feedback: Excellent!
+        - value: 80ms+, 20-80ms, 1-20ms
+          correct: N
+          feedback: Out of order.
+        - value: 80ms+, 1-20ms, 20-80ms
+          correct: N
+          feedback: Out of order.
+        - value: 20-80ms, 1-20ms, 80ms+
+          correct: N
+          feedback: Out of order.
+    - unit: unitReverberation
+      body: What is reverberation?
+      options:
+        - value: Reverberation is a natural phenomenon where a sound source reflects off of surfaces, creating a sense of space.
+          correct: Y
+          feedback: Correct!
+        - value: Reverberation is a synthetic phenomenon where a sound source reflects off of surfaces, creating a sense of color.
+          correct: N
+          feedback: Reverberation is real.
+        - value: Reverberation is a sound changing module that plays the sound source more than once at different times.
+          correct: N
+          feedback: Sort of, but this describes delay.
+        - value: Reverberation is a sound modifying module that helps to balance the frequencies of the incoming signal.
+          correct: N
+          feedback: That would be an equalizer.
+    - unit: unitReverberation
+      body: What is a spring reverb?
+      options:
+        - value: A spring reverb is a simple effect caused by passing the sound through a spring.
+          correct: Y
+          feedback: Good work!
+        - value: A spring reverb is an effect created by passing the sound through a metal plate.
+          correct: N
+          feedback: That is a plate reverb.
+        - value: We combine room information with the source signal to make the sound appear to be in a different environment.
+          correct: N
+          feedback: That is a convolution reverb.
+        - value: None of the other answers.
+          correct: N
+          feedback: There's a good answer.
+    - unit: unitReverberation
+      body: What is a plate reverb?
+      options:
+        - value: A plate reverb is an effect created by passing the sound through a metal plate.
+          correct: Y
+          feedback: Great work!
+        - value: A plate reverb is a simple effect caused by passing the sound through a spring.
+          correct: N
+          feedback: That is a spring reverb.
+        - value: We combine room information with the source signal to make the sound appear to be in a different environment.
+          correct: N
+          feedback: That is a convolution reverb.
+        - value: None of the other answers.
+          correct: N
+          feedback: There's a good answer.
+    - unit: unitReverberation
+      body: What is convolution reverb?
+      options:
+        - value: We combine room information with the source signal to make the sound appear to be in a different environment.
+          correct: Y
+          feedback: Good job!
+        - value: A convolution reverb is a simple effect caused by passing the sound through a spring.
+          correct: N
+          feedback: That is a spring reverb.
+        - value: A convolution reverb is an effect created by passing the sound through a metal plate.
+          correct: N
+          feedback: That is a plate reverb.
+        - value: None of the other answers.
+          correct: N
+          feedback: There's a good answer.
+    - unit: unitReverberation
+      body: What is the wet dry mix?
+      options:
+        - value: Dry is the original signal, wet is the effected signal.
+          correct: Y
+          feedback: Yes!
+        - value: Dry is the effected signal, wet is the original signal.
+          correct: N
+          feedback: The opposite is true.
+        - value: Dry is the source signal, wet is the copied signal.
+          correct: N
+          feedback: Reverb typically doesn't copy straight up.
+        - value: Dry is the copied signal, wet is the source signal.
+          correct: N
+          feedback: Reverb typically doesn't copy straight up.
+    - unit: unitReverberation
+      body: What is predelay?
+      options:
+        - value: Predelay is the amount of time between the original source and the start of reverberation.
+          correct: Y
+          feedback: Excellent!
+        - value: Predelay is the initial, loudest reverberations.
+          correct: N
+          feedback: That is early reflections.
+        - value: Predelay will impact the number and intensity of the reflections.
+          correct: N
+          feedback: That is ratio and depth.
+        - value: Predelay sets how long the reverberation will sound for.
+          correct: N
+          feedback: That is decay time.
+    - unit: unitReverberation
+      body: What are early reflections?
+      options:
+        - value: Early reflections are the initial, loudest reverberations.
+          correct: Y
+          feedback: Yes!
+        - value: Early reflections is the amount of time between the original source and the start of reverberation.
+          correct: N
+          feedback: That is predelay.
+        - value: Early reflections will impact the number and intensity of all the reflections.
+          correct: N
+          feedback: That is ratio and depth.
+        - value: Early reflections sets how long the reverberation will sound for.
+          correct: N
+          feedback: That is decay time.
+    - unit: unitReverberation
+      body: What are ratio and depth in reverb?
+      options:
+        - value: Ratio and depth will impact the number and intensity of the reflections.
+          correct: Y
+          feedback: Correct!
+        - value: Ratio and depth is the amount of time between the original source and the start of reverberation.
+          correct: N
+          feedback: That is predelay.
+        - value: Ratio and depth are the initial, loudest reverberations.
+          correct: N
+          feedback: That is early reflections.
+        - value: Ratio and depth sets how long the reverberation will sound for.
+          correct: N
+          feedback: That is decay time.
+    - unit: unitReverberation
+      body: What is decay time in reverb?
+      options:
+        - value: Decay time sets how long the reverberation will sound for.
+          correct: Y
+          feedback: Correct!
+        - value: Decay time is the amount of time between the original source and the start of reverberation.
+          correct: N
+          feedback: That is predelay.
+        - value: Decay times are the initial, loudest reverberations.
+          correct: N
+          feedback: That is early reflections.
+        - value: Decay time will impact the number and intensity of the reflections.
+          correct: N
+          feedback: That is ratio and depth.
+    - unit: unitReverberation
+      body: What DOES NOT change the color of a reverb?
+      options:
+        - value: Predelay
+          correct: Y
+          feedback: Perfect!
+        - value: Room size
+          correct: N
+          feedback: Nope.
+        - value: Density
+          correct: N
+          feedback: Nope.
+        - value: Panning
+          correct: N
+          feedback: Nope.
+    - unit: unitFFT
+      body: How do we normally represent audio?
+      options:
+        - value: Amplitude over time.
+          correct: Y
+          feedback: Good job!
+        - value: Amplitude over frequency.
+          correct: N
+          feedback: That is the result of an FFT.
+        - value: Time over amplitude.
+          correct: N
+          feedback: It's Y over X, not X over Y.
+        - value: Time over frequency.
+          correct: N
+          feedback: It's Y over X, not X over Y.
+    - unit: unitFFT
+      body: After FFT, in a single window, how do we represent audio?
+      options:
+        - value: Amplitude over frequency.
+          correct: Y
+          feedback: Correct!
+        - value: Amplitude over time.
+          correct: N
+          feedback: That is the original
+        - value: Time over amplitude.
+          correct: N
+          feedback: It's Y over X, not X over Y.
+        - value: Time over frequency.
+          correct: N
+          feedback: It's Y over X, not X over Y.
+    - unit: unitFFT
+      body: How do we represent time after FFT?
+      options:
+        - value: A series of windows.
+          correct: Y
+          feedback: Excellent!
+        - value: Just in samples, as usual.
+          correct: N
+          feedback: No, there's a change...
+        - value: Amplitude.
+          correct: N
+          feedback: This doesn't make sense.
+        - value: A series of peaks.
+          correct: N
+          feedback: This doesn't make sense.
+    - unit: unitFFT
+      body: How long is a normal window duration?
+      options:
+        - value: 0 to 20 ms.
+          correct: Y
+          feedback: Great work!
+        - value: 20 to 40 ms.
+          correct: N
+          feedback: Too long.
+        - value: 0 to 10 ms.
+          correct: N
+          feedback: Longer windows are possible.
+        - value: None of the other answers.
+          correct: N
+          feedback: One of the answers is correct.
+    - unit: unitFFT
+      body: A short window gives us good ___ information, while a long window gives us good ___ information.
+      options:
+        - value: Duration, frequency.
+          correct: Y
+          feedback: Yes!
+        - value: Frequency, duration.
+          correct: N
+          feedback: The opposite.
+        - value: Amplitude, phase.
+          correct: N
+          feedback: What does an FFT result in?
+        - value: Phase, Amplitude.
+          correct: N
+          feedback: What does an FFT result in?
+    - unit: unitFFT
+      body: What does an Inverse FFT do?
+      options:
+        - value: Returns from analysis to sound.
+          correct: Y
+          feedback: Perfect.
+        - value: Breaks down the sound into windows of amplitude over frequency.
+          correct: N
+          feedback: That would be a regular FFT.
+        - value: Changes the analysis from amplitude over frequency to frequency over amplitude.
+          correct: N
+          feedback: That doesn't make sense.
+        - value: Changes the analysis from frequency over amplitude to amplitude over frequency.
+          correct: N
+          feedback: That doesn't make sense.
+    - unit: unitFFT
+      body: Which of the following can we NOT use an FFT for?
+      options:
+        - value: Envelopes
+          correct: Y
+          feedback: Good job!
+        - value: Analysis
+          correct: N
+          feedback: That's the most common use case.
+        - value: Filtering
+          correct: N
+          feedback: Some filters do use FFT.
+        - value: Morphing
+          correct: N
+          feedback: Morphing is a classic FFT technique.
+    - unit: unitSpatialization
+      body: What is panning?
+      options:
+        - value: Panning is the technique of shifting the amplitudes of a sound source between sound channels.
+          correct: Y
+          feedback: That is correct.
+        - value: Panning is the technique of setting a sound in three-dimensional space.
+          correct: N
+          feedback: That is spatialization.
+        - value: The delay between ears which informs our sense of space of the sound.
+          correct: N
+          feedback: That is interaural time delay.
+        - value: None of the other answers.
+          correct: N
+          feedback: The answer is available.
+    - unit: unitSpatialization
+      body: What is spatialization?
+      options:
+        - value: Spatialization is the technique of setting a sound in three-dimensional space.
+          correct: Y
+          feedback: Excellent!
+        - value: Spatialization is the technique of shifting the amplitudes of a sound source between sound channels.
+          correct: N
+          feedback: That is panning.
+        - value: The delay between ears which informs our sense of space of the sound.
+          correct: N
+          feedback: That is interaural time delay.
+        - value: None of the other answers.
+          correct: N
+          feedback: The answer is available.
+    - unit: unitSpatialization
+      body: Which of the following is NOT a spatialization cue?
+      options:
+        - value: Duration
+          correct: Y
+          feedback: Good job!
+        - value: Amplitude
+          correct: N
+          feedback: Amplitude is a spatialization cue.
+        - value: Time gap
+          correct: N
+          feedback: Time gap is a spatialization cue.
+        - value: High-Frequency Content
+          correct: N
+          feedback: High-frequency content is a spatialization cue.
+    - unit: unitSpatialization
+      body: A close sound is ___, a further away sound is ___.
+      options:
+        - value: Louder, softer.
+          correct: Y
+          feedback: Great work!
+        - value: Softer, louder.
+          correct: N
+          feedback: The opposite is true.
+        - value: Higher, lower.
+          correct: N
+          feedback: This doesn't make sense. There is no mention of movement.
+        - value: Lower, higher.
+          correct: N
+          feedback: This doesn't make sense. There is no mention of movement.
+    - unit: unitSpatialization
+      body: If a sound arrives at the left ear faster than the right ear, we perceive the sound as coming from the ___.
+      options:
+        - value: Left.
+          correct: Y
+          feedback: Perfect.
+        - value: Right.
+          correct: N
+          feedback: The opposite.
+        - value: Above.
+          correct: N
+          feedback: Think azimuth, not elevation.
+        - value: Behind.
+          correct: N
+          feedback: There's nothing here indicating forward/back.
+    - unit: unitSpatialization
+      body: What is the Interaural Time Delay?
+      options:
+        - value: The delay between ears which informs our sense of space of the sound.
+          correct: Y
+          feedback: Yes!
+        - value: The technique of setting a sound in three-dimensional space.
+          correct: N
+          feedback: That is spatialization.
+        - value: The technique of shifting the amplitudes of a sound source between sound channels.
+          correct: N
+          feedback: That is panning.
+        - value: A sound moving towards us has a higher pitch, a sound moving away has a lower pitch.
+          correct: N
+          feedback: That is the Doppler effect.
+    - unit: unitSpatialization
+      body: A sound ___ has its full spectrum, while a sound ___ loses some of its high frequency content.
+      options:
+        - value: Close, further away.
+          correct: Y
+          feedback: Correct.
+        - value: Further away, close.
+          correct: N
+          feedback: The opposite.
+        - value: To the left, to the right.
+          correct: N
+          feedback: Azimuth doesn't impact high-frequency content directly.
+        - value: To the right, to the left.
+          correct: N
+          feedback: Azimuth doesn't impact high-frequency content directly.
+    - unit: unitSpatialization
+      body: What is the Doppler Effect?
+      options:
+        - value: A sound moving towards us has a higher pitch, a sound moving away has a lower pitch.
+          correct: Y
+          feedback: Excellent!
+        - value: The delay between ears which informs our sense of space of the sound.
+          correct: N
+          feedback: That is interaural time delay.
+        - value: The technique of setting a sound in three-dimensional space.
+          correct: N
+          feedback: That is spatialization.
+        - value: The technique of shifting the amplitudes of a sound source between sound channels.
+          correct: N
+          feedback: That is panning.
+    - unit: unitSpatialization
+      body: Which of the following is NOT a dimension for sound?
+      options:
+        - value: Tilt
+          correct: Y
+          feedback: Way to go!
+        - value: Distance
+          correct: N
+          feedback: Distance is a dimension.
+        - value: Elevation
+          correct: N
+          feedback: Elevation is a dimension.
+        - value: Azimuth
+          correct: N
+          feedback: Azimuth is a dimension.
+    - unit: unitSpatialization
+      body: What is binaural audio?
+      options:
+        - value: Binaural audio simulates three-dimensional sound using headphones, which is two channels of audio.
+          correct: Y
+          feedback: Yes!
+        - value: Binaural audio is a technique of encoding sound into XYZW channels and then routing those channels to any number of speakers in any arrangement.
+          correct: N
+          feedback: That is ambisonics
+        - value: The technique of setting a sound in three-dimensional space.
+          correct: N
+          feedback: That is spatialization.
+        - value: The technique of shifting the amplitudes of a sound source between sound channels.
+          correct: N
+          feedback: That is panning.
+    - unit: unitSpatialization
+      body: What is Ambisonics?
+      options:
+        - value: Ambisonics is a technique of encoding sound into XYZW channels and then routing those channels to any number of speakers in any arrangement.
+          correct: Y
+          feedback: Nice!
+        - value: Ambisonics simulates three-dimensional sound using headphones, which is two channels of audio.
+          correct: N
+          feedback: That is binaural audio.
+        - value: The technique of setting a sound in three-dimensional space.
+          correct: N
+          feedback: That is spatialization.
+        - value: The technique of shifting the amplitudes of a sound source between sound channels.
+          correct: N
+          feedback: That is panning.
+    - unit: unitSynthesizer
+      body: What is sound synthesis?
+      options:
+        - value: A process of combining sounds to create new sounds.
+          correct: Y
+          feedback: Perfect!
+        - value: A standard way of communicating between components.
+          correct: N
+          feedback: That is a protocol.
+        - value: A combination of components.
+          correct: N
+          feedback: That is a system.
+        - value: A process of taking an existing sound and changing the sound.
+          correct: N
+          feedback: That is sound modification
+    - unit: unitSynthesizer
+      body: What is a synthesizer?
+      options:
+        - value: A synthesizer combines sound creating and modifying modules to create new sounds.
+          correct: Y
+          feedback: Good job!
+        - value: A synthesizer combines sound analyzing and modifying modules to create new sounds.
+          correct: N
+          feedback: Close!
+        - value: A synthesizer combines sound creating and modifying modules to change existing sounds.
+          correct: N
+          feedback: We normally create new sounds with a synthesizer.
+        - value: A synthesizer is a combination of sound creating modules.
+          correct: N
+          feedback: Normally sound changing module are part of that.
+    - unit: unitSynthesizer
+      body: What are the common inputs to a synthesizer?
+      options:
+        - value: Frequency, amplitude, duration.
+          correct: Y
+          feedback: Great work!
+        - value: Frequency, phase, amplitude.
+          correct: N
+          feedback: Normally, not phase.
+        - value: Amplitude, panning, color.
+          correct: N
+          feedback: Sometimes panning, but rarely color.
+        - value: Amplitude, phase, duration.
+          correct: N
+          feedback: Yes amplitude and duration; no on phase.
+    - unit: unitSynthesizer
+      body: Where does our initial input go into?
+      options:
+        - value: Oscillators and ADSR.
+          correct: Y
+          feedback: Excellent!
+        - value: Filters.
+          correct: N
+          feedback: Initial input.
+        - value: Panning.
+          correct: N
+          feedback: Initial input.
+        - value: Output gain.
+          correct: N
+          feedback: That's skipping quite a few steps.
+    - unit: unitSynthesizer
+      body: When do we use a filter?
+      options:
+        - value: After sound generation, before panning.
+          correct: Y
+          feedback: Perfect!
+        - value: Towards the end of the process.
+          correct: N
+          feedback: Usually filtering is closer to the middle.
+        - value: Modulating using low-frequency oscillators.
+          correct: N
+          feedback: This doesn't make sense.
+        - value: At the beginning of the process.
+          correct: N
+          feedback: We need something to filter.
+    - unit: unitSynthesizer
+      body: When do we use panning?
+      options:
+        - value: Towards the end of the process.
+          correct: Y
+          feedback: Good job!
+        - value: After sound generation, before panning.
+          correct: N
+          feedback: Normally we do filtering before panning.
+        - value: At the beginning of the process.
+          correct: N
+          feedback: We need something to pan.
+        - value: Modulating using low-frequency oscillators.
+          correct: N
+          feedback: This doesn't make sense.
+    - unit: unitSynthesizer
+      body: What can add interest over time to our synthesizer?
+      options:
+        - value: Modulating using low-frequency oscillators.
+          correct: Y
+          feedback: Yes!
+        - value: Adding distortion.
+          correct: N
+          feedback: Adds interest, but note the "over time" part.
+        - value: Filtering.
+          correct: N
+          feedback: Filtering doesn't inheritantly change things over time, unless...
+        - value: Panning.
+          correct: N
+          feedback: Panning doesn't inheritantly change things over time, unless...
+    - unit: unitMixers
+      body: What is a mixer?
+      options:
+        - value: A mixer is a module that combines many sound sources.
+          correct: Y
+          feedback: Great work!
+        - value: A mixer is a module that modifies many sound sources.
+          correct: N
+          feedback: Mixers can modify, but the primary purpose is...
+        - value: A collection of tracks.
+          correct: N
+          feedback: A mixer HAS tracks, but the primary purpose is...
+        - value: A technique of combining two or more sounds to create new sounds.
+          correct: N
+          feedback: That is synthesis, not mixing.
+    - unit: unitMixers
+      body: What does each track in a mixer have?
+      options:
+        - value: An input, a gain, and a meter.
+          correct: Y
+          feedback: Amazing!
+        - value: An input, gain, and filtering.
+          correct: N
+          feedback: Filtering is common, but not always...
+        - value: A gain module, a meter, and panning.
+          correct: N
+          feedback: Panning is common, but not always...
+        - value: An input, routing, and gain.
+          correct: N
+          feedback: Routing is common, but not always...
+    - unit: unitMixers
+      body: Which of the following does a track NOT have?
+      options:
+        - value: Direct output
+          correct: Y
+          feedback: Good job!
+        - value: Filtering
+          correct: N
+          feedback: Tracks may have filtering.
+        - value: Panning
+          correct: N
+          feedback: Tracks may have panning.
+        - value: Routing
+          correct: N
+          feedback: Tracks may have routing.
+    - unit: unitMonoPoly
+      body: What is monophony?
+      options:
+        - value: Monophony is a capability of an instrument meaning... can create either zero or one sounds at a given time.
+          correct: Y
+          feedback: Excellent!
+        - value: Monophony is a capability of an instrument meaning... the instrument can create multiple sounds at the same time.
+          correct: N
+          feedback: That is polyphony.
+        - value: Monophony is a capability of an instrument meaning... can create either zero or one pitches at a given time.
+          correct: N
+          feedback: Pitches?
+        - value: Monophony is a capability of an instrument meaning... the instrument can create multiple pitches at the same time.
+          correct: N
+          feedback: Pitches?
+    - unit: unitMonoPoly
+      body: What is polyphony?
+      options:
+        - value: Polyphony is a capability of an instrument meaning... the instrument can create multiple sounds at the same time.
+          correct: Y
+          feedback: Yes!
+        - value: Polyphony is a capability of an instrument meaning... can create either zero or one sounds at a given time.
+          correct: N
+          feedback: That is monophony.
+        - value: Polyphony is a capability of an instrument meaning... the instrument can create multiple pitches at the same time.
+          correct: N
+          feedback: Pitches?
+        - value: Polyphony is a capability of an instrument meaning... the instrument can create zero or one pitches at the same time.
+          correct: N
+          feedback: Pitches?
+    - unit: unitMonoPoly
+      body: What does the number of voices do?
+      options:
+        - value: The number of voices determines how many sounds the instrument can create at the same time.
+          correct: Y
+          feedback: Correct!
+        - value: The number of voices determines how many pitches the instrument can create at the same time.
+          correct: N
+          feedback: You can create more than one of the same pitch.
+        - value: The number of voices determines how many sounds the instrument can modify at the same time.
+          correct: N
+          feedback: Usually refers to create.
+        - value: The number of voices determines how many pitches the instrument can modify at the same time.
+          correct: N
+          feedback: Usually refers to create.
+    - unit: unitMonoPoly
+      body: If we signal a note past the maximum...
+      options:
+        - value: Then either the new note won't play or the oldest note cuts out.
+          correct: Y
+          feedback: Good job!
+        - value: Then the new note won't play.
+          correct: N
+          feedback: Sometimes, but there's two options...
+        - value: Then the oldest note cuts out.
+          correct: N
+          feedback: Sometimes, but there's two options...
+        - value: None of the other options.
+          correct: N
+          feedback: There is a good option...
+    - unit: unitMidi
+      body: What is MIDI?
+      options:
+        - value:  MIDI, or Musical Instrument Digital Interface, is a protocol for communicating data between music and sound devices.
+          correct: Y
+          feedback: Great work!
+        - value: MIDI, or Musical Instrument Digital Interface, is a protocol for communicating audio between music and sound devices.
+          correct: N
+          feedback: MIDI only does numeric data, not audio.
+        - value: MIDI, or Musical Instrument Digital Interface, is a protocol for communicating pitches between music and sound devices.
+          correct: N
+          feedback: Pitch is one of the data...
+        - value: None of the other answers.
+          correct: N
+          feedback: One of the answers is correct.
+    - unit: unitMidi
+      body: What is a MIDI channel?
+      options:
+        - value: Each channel contains events.
+          correct: Y
+          feedback: Great job!
+        - value: Each event has several channels.
+          correct: N
+          feedback: The other way around.
+        - value: A MIDI channel is a protocol for communicating data between music and sound devices.
+          correct: N
+          feedback: That is MIDI, not MIDI channel.
+        - value: None of the other options.
+          correct: N
+          feedback: There's a decent option.
+    - unit: unitMidi
+      body: What is a MIDI event?
+      options:
+        - value: Data within in a channel that specifies note-on and off, pitch, and volume, as well as control messages.
+          correct: Y
+          feedback: Good work!
+        - value: MIDI events means that we can pass data through, creating a flow through multiple devices.
+          correct: N
+          feedback: That is daisy chaining.
+        - value: Events contain channels.
+          correct: N
+          feedback: The other way around.
+        - value: A MIDI event is a protocol for communicating data between music and sound devices.
+          correct: N
+          feedback: That is MIDI, not a MIDI event.
+    - unit: unitMidi
+      body: What is daisy chaining?
+      options:
+        - value: Daisy chaining means that we can pass data through, creating a flow through multiple devices.
+          correct: Y
+          feedback: Perfect!
+        - value: Daisy chaining is in a channel that specifies note-on and off, pitch, and volume, as well as control messages.
+          correct: N
+          feedback: That is an event.
+        - value: Daisy chaining is a protocol for communicating data between music and sound devices.
+          correct: N
+          feedback: That is MIDI not daisy chaining.
+        - value: None of the other options.
+          correct: N
+          feedback: There's a good answer...
+    - unit: unitMidi
+      body: What is the range of allowed values?
+      options:
+        - value: 0-127
+          correct: Y
+          feedback: You got it!
+        - value: 0-256
+          correct: N
+          feedback: Too large
+        - value: Any value we want
+          correct: N
+          feedback: MIDI is 8-bit
+        - value: 0-63
+          correct: N
+          feedback: Too small
+    - unit: unitMidi
+      body: How many MIDI channels are there per connection?
+      options:
+        - value: Sixteen
+          correct: Y
+          feedback: Way to go!
+        - value: Thirty-two
+          correct: N
+          feedback: Too many
+        - value: Four
+          correct: N
+          feedback: Too few
+        - value: One
+          correct: N
+          feedback: That's OSC
+    - unit: unitOsc
+      body: What is OSC?
+      options:
+        - value: Open sound control is a protocol for communicating music and sound data between devices.
+          correct: Y
+          feedback: Excellent!
+        - value: Open sound control is a protocol for communicating only audio between devices.
+          correct: N
+          feedback: We can send many types of data.
+        - value: Open sound control is a protocol for controlling mixers.
+          correct: N
+          feedback: It can do more than that!
+        - value: Open sound control is only available on Apple hardware.
+          correct: N
+          feedback: It's an open protocol!
+    - unit: unitOsc
+      body: What are the properties of an OSC event?
+      options:
+        - value: The time, an address, a type, and a value.
+          correct: Y
+          feedback: Very good!
+        - value: The time, an channel, a type, and a value.
+          correct: N
+          feedback: There's only one channel!
+        - value: The time, an address, and a type.
+          correct: N
+          feedback: Missing value.
+        - value: The time, an channel, and a value.
+          correct: N
+          feedback: There's only one channel! And missing type.
+    - unit: unitOsc
+      body: What does the address of an OSC event do?
+      options:
+        - value: Addresses allow us to route events to the matching device.
+          correct: Y
+          feedback: Great!
+        - value: Addresses tell us the parameter involved.
+          correct: N
+          feedback: That is type.
+        - value: Addresses are the data of the event.
+          correct: N
+          feedback: That is value.
+        - value: Address is the time of the event.
+          correct: N
+          feedback: That is time.
+    - unit: unitOsc
+      body: What does the type of an OSC event do?
+      options:
+        - value: The type tells us the parameter involved.
+          correct: Y
+          feedback: Way to go!
+        - value: Types allow us to route events to the matching device.
+          correct: N
+          feedback: That is address.
+        - value: Types are the data of the event.
+          correct: N
+          feedback: That is value.
+        - value: Type is the time of the event.
+          correct: N
+          feedback: That is time.
+    - unit: unitOsc
+      body: What kind of values does OSC support?
+      options:
+        - value: Integer, float, string, arbitrary data.
+          correct: Y
+          feedback: Excellent!
+        - value: Integer, float, string.
+          correct: N
+          feedback: It's all four!
+        - value: Integer, float.
+          correct: N
+          feedback: It's all four!
+        - value: Integer, float, arbitrary data.
+          correct: N
+          feedback: It's all four!
