@@ -1,12 +1,13 @@
-const {div, h1, p, img, h3, header,
- ul, li, a, strong} = require('../../modules/tags')
+const {div, h1, p, img, h3, header, ul, li} = require('../../modules/tags')
 const {
   timeAgo,
   /* TP@ truncate,*/
-  ucfirst
 } = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 // TP@ const timeago = require('../components/timeago.tmpl')
+const previewSetHead = require('../components/preview_set_head.tmpl')
+const previewUnitHead = require('../components/preview_unit_head.tmpl')
+const previewCardHead = require('../components/preview_card_head.tmpl')
 
 module.exports = (data) => {
     const [id] = data.routeArgs
@@ -31,10 +32,14 @@ const showSets = (user, sets) =>
     [
         h3(`${user.name} is learning:`),
         ul(
-            sets.map(set => li(a(
-                {href: `/sets/${set.id}`},
-                set.name
-            )))
+            {className: 'profile__options'},
+            sets.map(set => li(
+                previewSetHead({
+                    url: `/sets/${set.entity_id}`,
+                    name: set.name,
+                    body: set.body,
+                })
+            ))
         )
     ]
     // TODO-2 and link to search
@@ -43,17 +48,32 @@ const showFollows = (user, follows) =>
     [
         h3(`${user.name} follows:`),
         ul(
-            follows.map(follow => li(
-                strong(ucfirst(follow.entity.kind)),
-                ': ',
-                a(
-                    {href: `/${follow.entity.kind}s/${follow.entity.id}`},
-                    'TODO-2 follow.entity.name'
+            {className: 'profile__options'},
+            follows.map((follow) => {
+                const e = follow.entity
+                const kind = e.kind
+                return li(
+                    kind === 'set' ?
+                        previewSetHead({
+                            url: `/sets/${e.id}`,
+                            name: e.id, // TODO-2 update to real name & body
+                        }) :
+                    kind === 'unit' ?
+                        previewUnitHead({
+                            url: `/units/${e.id}`,
+                            name: e.id,
+                        }) :
+                    kind === 'card' ?
+                        previewCardHead({
+                            url: `/cards/${e.id}`,
+                            name: e.id,
+                        }) :
+                        null
                 )
-            ))
+            })
         )
+        // TODO-2 and link to search
     ]
-    // TODO-2 and link to search
 
 /*
 TP@

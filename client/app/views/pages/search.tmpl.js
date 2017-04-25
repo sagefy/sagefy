@@ -2,10 +2,12 @@
 const {div, h1, form, input, button, img,
  ul, li, strong, a, p} = require('../../modules/tags')
 // const c = require('../../modules/content').get
-const {truncate/* TP@ , ucfirst */} = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 // TP@ const timeago = require('../components/timeago.tmpl')
 const icon = require('../components/icon.tmpl')
+const previewSetHead = require('../components/preview_set_head.tmpl')
+const previewUnitHead = require('../components/preview_unit_head.tmpl')
+const previewCardHead = require('../components/preview_card_head.tmpl')
 
 // TODO-2 when receiving ?kind={kind}, then search using that as well.
 
@@ -115,28 +117,22 @@ r.postResult = (/* TP@ result */) => {
 }
 
 r.cardResult = (result) =>
-    [
-        strong(icon('card'), ' Card'),
-        ': ',
-        a(
-            {href: `/cards/${result._source.entity_id}`},
-            result._source.name
-        )
+    previewCardHead({
+        url: `/cards/${result._source.entity_id}`,
+        name: result._source.name,
+        kind: result._source.kind,
+        labelKind: true,
         // TODO-3 unit name   result._source.unit_id > ???
         // TODO-3 contents    ???
-    ]
+    })
 
 r.unitResult = (result) =>
-    [
-        strong(icon('unit'), ' Unit'),
-        ': ',
-        a(
-            {href: `/units/${result._source.entity_id}`},
-            result._source.name
-        ),
-        ' – ',
-        truncate(result._source.body, 40)
-    ]
+    previewUnitHead({
+        url: `/units/${result._source.entity_id}`,
+        name: result._source.name,
+        body: result._source.body,
+        labelKind: true,
+    })
 
 r.setResult = (result, asLearner = false) =>
     [
@@ -149,14 +145,13 @@ r.setResult = (result, asLearner = false) =>
             icon('create'),
             ' Add to My Sets'
         ) : null,
-        strong(icon('set'), ' Set'),
-        ': ',
-        a(
-            {href: `/sets/${result._source.entity_id}`},
-            result._source.name
-        ),
-        ' – ',
-        truncate(result._source.body, 40),
+
+        previewSetHead({
+            url: `/sets/${result._source.entity_id}`,
+            name: result._source.name,
+            body: result._source.body,
+            labelKind: true,
+        }),
         asLearner ? ' ' : null,
         asLearner ? a(
             {

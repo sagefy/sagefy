@@ -1,5 +1,8 @@
-const {div, a, iframe, p, ul, li, strong, small, span} =
+/* eslint-disable camelcase */
+const {div, a, iframe, p, ul, li, strong, small, span, em, h4} =
     require('../../modules/tags')
+const {ucfirst} =
+    require('../../modules/auxiliaries')
 const {previewCommon, previewRequires, previewTags} =
     require('./preview_shared.fn')
 const icon = require('./icon.tmpl')
@@ -13,8 +16,8 @@ module.exports = function previewCardContent({
     language,
     unit, // name, url = false
     // video fields
-    videoId,
-    videoSite,
+    video_id,
+    site,
     // choice fields
     body,
     options, // [{correct, value, feedback}]
@@ -28,12 +31,13 @@ module.exports = function previewCardContent({
         {className: `preview--card__content preview--card__content--${kind}`},
         previewCommon({created, status, available, language}),
         unit ?
-          unit.url ?
-            a({href: unit.url}, `Unit: ${unit.name}`)
-            : `Unit: ${unit.name}`
-          : null,
-        videoId && videoSite === 'youtube' ? iframe({
-            src: `https://www.youtube.com/embed/${videoId}` +
+          h4(
+            unit.url ?
+              a({href: unit.url}, 'Unit: ', em(unit.name))
+              : span('Unit: ', em(unit.name))
+          ) : null,
+        video_id && site === 'youtube' ? iframe({
+            src: `https://www.youtube.com/embed/${video_id}` +
                  '?autoplay=0&modestbranding=1&rel=0',
             width: 300,
             height: 200,
@@ -45,9 +49,9 @@ module.exports = function previewCardContent({
             strong(option.value), ' ',
             small(`(${option.feedback})`)
         ))) : null,
-        order ? span(`Order: ${order}`) : null,
+        order ? span('Order: ', em(ucfirst(order))) : null,
         maxOptionsToShow ?
-          span(`Max Options To Show: ${maxOptionsToShow}`) :
+          span('Max Options To Show: ', em(maxOptionsToShow)) :
           null,
         previewRequires(requires),
         previewTags(tags)

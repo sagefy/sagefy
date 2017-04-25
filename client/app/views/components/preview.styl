@@ -1,0 +1,30 @@
+.preview--card__kind
+    @extend $label
+
+.preview__kind-label
+    @extend $label--accent
+
+.preview--card__content
+    > ul
+        @extend $ul--unstyled
+
+    small
+        color $base-color(50)
+
+    iframe
+        margin-top $unit
+
+.preview__status--accepted
+.preview__available
+    @extend $label--good
+    margin-right $unit
+
+.preview__language
+.preview__status--declined
+.preview__status--pending
+    @extend $label
+    margin-right $unit
+
+.preview__status--blocked
+    @extend $label--bad
+    margin-right $unit

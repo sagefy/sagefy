@@ -1,7 +1,8 @@
-const {div, h1, ul, li, a, h3, p, span, hgroup} = require('../../modules/tags')
+const {div, h1, ul, li, a, h3, span, hgroup} = require('../../modules/tags')
 // const c = require('../../modules/content').get
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
+const previewUnitHead = require('../components/preview_unit_head.tmpl')
 
 module.exports = (data) => {
     if(!Object.keys(data.chooseUnit).length) { return spinner() }
@@ -33,13 +34,15 @@ module.exports = (data) => {
                     icon('next')
                 ),
                 div(
-                    h3(unit.name),
                     index === 0 ? span(
                         {className: 'choose-unit__recommended'},
                         icon('learn'),
                         ' Recommended'
                     ) : null,
-                    p(unit.body)
+                    previewUnitHead({
+                        name: unit.name,
+                        body: unit.body,
+                    })
                     // TODO-2 % learned
                 )
             ))

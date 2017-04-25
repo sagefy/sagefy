@@ -1,8 +1,10 @@
-const {div, h1, p, a, ul, li, strong} = require('../../modules/tags')
+const {div, h1, p, a, ul, li} = require('../../modules/tags')
 // const c = require('../../modules/content').get
-const {ucfirst} = require('../../modules/auxiliaries')
 // const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
+const previewSetHead = require('../components/preview_set_head.tmpl')
+const previewUnitHead = require('../components/preview_unit_head.tmpl')
+const previewCardHead = require('../components/preview_card_head.tmpl')
 
 module.exports = (data) => {
     // TODO-2 update this to look for some status field
@@ -32,8 +34,9 @@ const follows = (data) => {
     )
 }
 
-const follow = (data) =>
-    li(
+const follow = (data) => {
+    const {kind, name, body} = data.entity
+    return li(
         {className: 'follow'},
         a(
             {
@@ -44,9 +47,12 @@ const follow = (data) =>
             icon('remove'),
             ' Unfollow'
         ),
-        div(
-            strong(ucfirst(data.entity.kind)),
-            ': ',
-            data.entity.name
-        )
+        kind === 'unit' ?
+            previewUnitHead({ name, body, labelKind: true, }) :
+        kind === 'set' ?
+            previewSetHead({ name, body, labelKind: true, }) :
+        ['video', 'choice'].indexOf(kind) > -1 ?
+            previewCardHead({ name, kind, labelKind: true, }) :
+            null
     )
+}

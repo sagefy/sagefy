@@ -1,8 +1,8 @@
-const {div, ul, li, a} = require('../../modules/tags')
+const {div, ul, li, a, h4, span} = require('../../modules/tags')
 const {previewCommon, previewTags} =
     require('./preview_shared.fn')
 const icon = require('./icon.tmpl')
-const {ucfirst} = require('../../modules/utilities')
+const {ucfirst} = require('../../modules/auxiliaries')
 
 
 // TODO-2 show diff option
@@ -19,17 +19,30 @@ module.exports = function previewSetContent({
     return div(
         {className: 'preview--set__content'},
         previewCommon({created, status, available, language}),
-        members && members.length ? ul(members.map(member => li(
-          member.kind ? [icon(member.kind), ` ${ucfirst(member.kind)}`] : null,
-          member.url ?
-              a({href: member.url}, member.name || member.id)
-              : member.name || member.id
-        ))) : null,
-        units && units.length ? ul(units.map(unit => li(
-          unit.url ?
-              a({href: unit.url}, unit.name || unit.id)
-              : unit.name || unit.id
-        ))) : null,
+        units && units.length ? [
+            h4('List of Units'),
+            ul(units.map(unit => li(
+              unit.url ?
+                  a({href: unit.url}, unit.name || unit.id)
+                  : unit.name || unit.id
+            )))
+        ] : null,
+        members && members.length ? [
+            h4('List of Members'),
+            ul(
+                {className: 'preview--set__content__members'},
+                members.map(member => li(
+                member.kind ?
+                    [span(
+                        {className: 'preview--set__content__members__kind'},
+                        icon(member.kind), ` ${ucfirst(member.kind)}`
+                    ), ' '] :
+                    null,
+                member.url ?
+                    a({href: member.url}, member.name || member.id)
+                    : member.name || member.id
+            )))
+        ] : null,
         previewTags(tags)
     )
 }

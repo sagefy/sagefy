@@ -1,64 +1,15 @@
-const {li, div, img, a, span, ul, h3} = require('../../modules/tags')
-const {timeAgo, ucfirst} = require('../../modules/auxiliaries')
+const {li, div, img, a, span, h3} = require('../../modules/tags')
+const {timeAgo} = require('../../modules/auxiliaries')
 const icon = require('./icon.tmpl')
-
-const listOfObjectsToString = (list = []) =>
-    list.map((member) =>
-        Object.keys(member).map((key) =>
-            `${key}: ${member[key]}`
-        ).join(', ')
-    ).join('; ')
 
 const renderProposal = (data) => {
     if (!data.kind === 'proposal') { return }
-    const evKind = data.entity_version.kind
-    const ev = data.ev || {}
+    // const evKind = data.entity_version.kind
+    // const ev = data.ev || {}
     return div(
-        {className: 'post__proposal'},
-        // TODO-2 this is super ugly
-        ul(
-            li(
-                'Status: ',
-                span(
-                    {className: `post__proposal-status--${ev.status}`},
-                    ucfirst(ev.status)
-                )
-            ),
-            li('Kind: ' + ucfirst(evKind)),
-            li('Name: ' + ev.name),
-            li('Language: ' + ev.language),
-            ['unit', 'set'].indexOf(evKind) > -1 ?
-                li('Body: ' + ev.body) :
-                null,
-            evKind === 'card' ? li('Unit ID: ' + ev.unit_id) : null,
-            ['unit', 'set'].indexOf(evKind) > -1 ?
-                li('Require IDs: ' + ev.require_ids) :
-                null,
-            evKind === 'set' ? li(
-                'Members: ' + listOfObjectsToString(ev.members)
-            ) : null
-            // TODO-3 Tags (all)
-        ),
-        evKind === 'card' ? renderCardProposal(data) : null
+        {className: 'post__proposal'}
+        // TODO-2 TP@ show preview components
     )
-}
-
-const renderCardProposal = (data) => {
-    const ev = data.ev || {}
-    return ul(
-        li('Card Kind: ' + ev.kind),
-        ev.kind === 'video' ? li('Video Site: ' + ev.site) : null,
-        ev.kind === 'video' ? li('Video ID: ' + ev.video_id) : null,
-        ev.kind === 'choice' ? li('Question: ' + ev.body) : null,
-        ev.kind === 'choice' ? li(
-            'Options: ' + listOfObjectsToString(ev.options)
-        ) : null,
-        ev.kind === 'choice' ? li('Order: ' + ev.order) : null,
-        ev.kind === 'choice' ? li(
-            'Max Options to Show: ' + ev.max_options_to_show
-        ) : null
-    )
-    // TODO-2 diff from previous version
 }
 
 const voteResponse = (response) => {
