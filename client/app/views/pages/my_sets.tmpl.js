@@ -1,9 +1,10 @@
-const {div, h1, ul, li, h3, p, button, a,
-       br} = require('../../modules/tags')
+const {div, h1, ul, li, p, button, a, br} =
+    require('../../modules/tags')
 // const c = require('../../modules/content').get
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 const info = require('../components/entity_info.tmpl')
+const previewSetHead = require('../components/preview_set_head.tmpl')
 
 module.exports = (data) => {
     if(!data.userSets) { return spinner() }
@@ -59,7 +60,6 @@ const userSet = (data) =>
         ),
         div(
             {className: 'my-sets__my-set-right'},
-            h3(data.name),
-            p(data.body)
+            previewSetHead({ name: data.name, body: data.body })
         )
     )

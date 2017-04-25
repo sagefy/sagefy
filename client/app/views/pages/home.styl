@@ -5,9 +5,6 @@
     header, footer
         text-align center
 
-    h3
-        @extend $subheader
-
     footer
         @extend $font-size-small
         color $base-color(43)
@@ -20,6 +17,9 @@
 
     iframe
         max-width 100%
+
+    a h3
+        @extend a
 
 .home__logo
         margin $gutter auto 0
@@ -75,3 +75,6 @@
 
 .home__ul--features
     @extend $ul--unstyled
+
+.home__ul--popular-sets
+    @extend $list-options

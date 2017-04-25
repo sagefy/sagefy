@@ -3,6 +3,7 @@
 // TODO-3 move copy to content directory
 const {div, header, img, hgroup, h1, h2, h3, h4, h5, h6, p, a, hr, strong, ul, ol, li, iframe, br, footer, span, em, section} = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
+const previewSetHead = require('../components/preview_set_head.tmpl')
 
 // TODO-1 Include unique CTAs throughout
 
@@ -91,10 +92,13 @@ module.exports = data => {
           section(
             h2('Popular Sets'),
             ul(
+              {className: 'home__ul--popular-sets'},
               li(
-                a({href: '/sets/CgDRJPfzJuTR916HdmosA3A8/landing'}, 'An Introduction to Electronic Music - Foundation'),
-                br(),
-                'A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.'
+                previewSetHead({
+                  url:  '/sets/CgDRJPfzJuTR916HdmosA3A8/landing',
+                  name: 'An Introduction to Electronic Music - Foundation',
+                  body: 'A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.',
+                })
               )
             ),
             cta

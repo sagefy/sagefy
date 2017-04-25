@@ -1,7 +1,7 @@
-const {div, h1, h3, ul, li, a, p, hr} = require('../../modules/tags')
+const {div, h1, ul, li, a, hr} = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
 const spinner = require('../components/spinner.tmpl')
-
+const previewSetHead = require('../components/preview_set_head.tmpl')
 
 const setResult = (set) =>
     [
@@ -15,12 +15,12 @@ const setResult = (set) =>
             ' Add to My Sets'
         ),
         div(
-            h3(set.name),
-            p(set.body),
+            {className: 'recommended-sets__right'},
+            previewSetHead({ name: set.name, body: set.body }),
             a(
                 {
                     href: `/sets/${set.entity_id}/tree`,
-                    className: 'view-units',
+                    className: 'recommended-sets__view-units',
                 },
                 icon('unit'),
                 ' View Units'
