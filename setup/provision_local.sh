@@ -75,7 +75,7 @@ sudo apt-get -y install redis-server
 # Renaming Dangerous Commands
 sudo tee -a /etc/redis/redis.conf <<- EOM
 rename-command FLUSHDB ""
-rename-command FLUSHALL ""
+# rename-command FLUSHALL ""
 rename-command KEYS ""
 rename-command CONFIG ""
 rename-command SHUTDOWN ""

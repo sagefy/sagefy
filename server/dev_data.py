@@ -9,6 +9,7 @@ from config import config
 from es_populate import es_populate
 import yaml
 import os
+from framework.redis import redis
 
 
 if not config['debug']:
@@ -35,6 +36,8 @@ for kind in (
       .run(db_conn))
 
 es.indices.delete(index='entity', ignore=[400, 404])
+
+redis.flushall()
 
 dirname = os.path.realpath(__file__).replace('/server/dev_data.py', '')
 stream = open(

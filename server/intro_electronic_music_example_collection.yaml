@@ -84,7 +84,7 @@ sets:
       - kind: unit
         id: unitMidi
       - kind: unit
-        id: unitOsc
+        id: unitOscS
 units:
   unitIntro:
     name: Electronic Music
@@ -117,91 +117,91 @@ units:
   unitOsc:
     name: Oscillators
     body: Describe the oscillators and basic wave forms -- sine, triangle, square, and sawtooth.
-    requires: []
+    requires: [unitComplex]
   unitNoise:
     name: Noise
     body: Describe the types of noise -- white, brown, and pink.
-    requires: []
+    requires: [unitOsc]
   unitAdd:
     name: Additive Synthesis
     body: Describe how multiple waves produce a single sound.
-    requires: []
+    requires: [unitOsc]
   unitSub:
     name: Subtractive Synthesis
     body: Describe how we can subtract information to produce sound.
-    requires: []
+    requires: [unitNoise]
   unitSample:
     name: Samplers
     body: Describe samplers.
-    requires: []
+    requires: [unitAdc]
   unitFilters:
     name: Filters
     body: Describe the basic types of filters low-pass, high-pass, band-reject, and band-pass.
-    requires: []
+    requires: [unitSub]
   unitModulation:
     name: Modulation
     body: Describe modulation of sound signals.
-    requires: []
+    requires: [unitParams]
   unitLfo:
     name: Low Frequency Oscillators
     body: Describe low-frequency oscillators.
-    requires: []
+    requires: [unitModulation, unitOsc]
   unitModEffects:
     name: Modulation Effects
     body: Describe modulation effects of tremolo, chorus, flange, phase, vibrato.
-    requires: []
+    requires: [unitLfo]
   unitAmpModifiers:
     name: Amplitude Modifiers
     body: Describe the basic characteristics of amplitude modifiers of gain, compressors, de-essers, expanders, multi-pressors.
-    requires: []
+    requires: [unitCurves]
   unitEnvelopes:
     name: Envelopes
     body: Describe how amplitude changes over time.
-    requires: []
+    requires: [unitAmpModifiers]
   unitEqualization:
     name: Equalization
     body: Describe equalizers.
-    requires: []
+    requires: [unitFilters]
   unitDistortion:
     name: Distortion
     body: Describe distortion and applying the effect to a signal.
-    requires: []
+    requires: [unitNoise]
   unitDelay:
     name: Delay
     body: Describe delay effects.
-    requires: []
+    requires: [unitComplex]
   unitReverberation:
     name: Reverberation
     body: Describe reverberation effects.
-    requires: []
+    requires: [unitDelay]
   unitFFT:
     name: Fast Fourier Transform
     body: Describe the inputs, outputs, and applications of the Fast Fourier Transform.
-    requires: []
+    requires: [unitComplex]
   unitSpatialization:
     name: Spatialization
     body: Describe acoustic panning and spatialization.
-    requires: []
+    requires: [unitComplex]
   unitSynthesizer:
     name: A Basic Synthesizer
     body: Describe a basic synthesizer configuration.
-    requires: []
+    requires: [unitOsc, unitEnvelopes, unitFilters, unitSpatialization]
   unitMixers:
     name: Mixers
     body: Describe a mixer.
-    requires: []
+    requires: [unitAmpModifiers]
   unitMonoPoly:
     name: Monophony and Polyphony
     body: Describe polyphonic synthesis.
-    requires: []
+    requires: [unitSynthesizer]
   unitMidi:
     name: MIDI, Musical Instrument Digital Interface
     body: Describe the basics of the MIDI protocol.
-    requires: []
-  unitOsc:
+    requires: [unitMonoPoly]
+  unitOscS:
     name: OSC, Open Sound Control
     body: Describe the basics of the OSC protocol.
-    requires: []
+    requires: [unitMidi]
 cards:
   video:
     - unit: unitIntro
@@ -260,7 +260,7 @@ cards:
       video_id: ZFOnYaG3TGs
     - unit: unitMidi
       video_id: DnDjkPVUlos
-    - unit: unitOsc
+    - unit: unitOscS
       video_id: iB2N585gEKg
   choice:
     - unit: unitIntro
@@ -3257,7 +3257,7 @@ cards:
         - value: One
           correct: N
           feedback: That's OSC
-    - unit: unitOsc
+    - unit: unitOscS
       body: What is OSC?
       options:
         - value: Open sound control is a protocol for communicating music and sound data between devices.
@@ -3272,7 +3272,7 @@ cards:
         - value: Open sound control is only available on Apple hardware.
           correct: N
           feedback: It's an open protocol!
-    - unit: unitOsc
+    - unit: unitOscS
       body: What are the properties of an OSC event?
       options:
         - value: The time, an address, a type, and a value.
@@ -3287,7 +3287,7 @@ cards:
         - value: The time, an channel, and a value.
           correct: N
           feedback: There's only one channel! And missing type.
-    - unit: unitOsc
+    - unit: unitOscS
       body: What does the address of an OSC event do?
       options:
         - value: Addresses allow us to route events to the matching device.
@@ -3302,7 +3302,7 @@ cards:
         - value: Address is the time of the event.
           correct: N
           feedback: That is time.
-    - unit: unitOsc
+    - unit: unitOscS
       body: What does the type of an OSC event do?
       options:
         - value: The type tells us the parameter involved.
@@ -3317,7 +3317,7 @@ cards:
         - value: Type is the time of the event.
           correct: N
           feedback: That is time.
-    - unit: unitOsc
+    - unit: unitOscS
       body: What kind of values does OSC support?
       options:
         - value: Integer, float, string, arbitrary data.
