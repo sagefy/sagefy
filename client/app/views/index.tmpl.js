@@ -36,6 +36,33 @@ const routes = [{
     path: '/search',
     tmpl: require('./pages/search.tmpl'),
 }, {
+    path: '/create/set/create',
+    tmpl: require('./pages/create_set_create.tmpl'),
+}, {
+    path: '/create/set/add',
+    tmpl: require('./pages/create_set_add.tmpl'),
+}, {
+    path: '/create/unit/find',
+    tmpl: require('./pages/create_unit_find.tmpl'),
+}, {
+    path: '/create/unit/list',
+    tmpl: require('./pages/create_unit_list.tmpl'),
+}, {
+    path: '/create/unit/add',
+    tmpl: require('./pages/create_unit_add.tmpl'),
+}, {
+    path: '/create/unit/create',
+    tmpl: require('./pages/create_unit_create.tmpl'),
+}, {
+    path: '/create/card/find',
+    tmpl: require('./pages/create_card_find.tmpl'),
+}, {
+    path: '/create/card/list',
+    tmpl: require('./pages/create_card_list.tmpl'),
+}, {
+    path: '/create/card/create',
+    tmpl: require('./pages/create_card_create.tmpl'),
+}, {
     path: '/create',
     tmpl: require('./pages/create.tmpl'),
 },

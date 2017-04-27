@@ -3,7 +3,7 @@ const info = require('../components/entity_info.tmpl')
 const icon = require('../components/icon.tmpl')
 
 
-module.exports = (/* data */) => {
+module.exports = () => {
     return div(
         {id: 'create', className: 'page'},
         h1('Create Cards, Units, and Sets'),
@@ -11,7 +11,7 @@ module.exports = (/* data */) => {
             {className: 'create__options'},
             li(
                 a(
-                    { className: 'create__route', href: '/create/set/1' },
+                    { className: 'create__route ', href: '/create/set/create' },
                     icon('set'),
                     ' Create a Set'
                 ),
@@ -20,7 +20,7 @@ module.exports = (/* data */) => {
             ),
             li(
                 a(
-                    { className: 'create__route', href: '/create/units/1' },
+                    { className: 'create__route', href: '/create/unit/find' },
                     icon('unit'),
                     ' Add Units'
                 ),
@@ -28,7 +28,7 @@ module.exports = (/* data */) => {
             ),
             li(
                 a(
-                    { className: 'create__route', href: '/create/cards/1' },
+                    { className: 'create__route', href: '/create/card/find' },
                     icon('card'),
                     ' Add Cards'
                 ),

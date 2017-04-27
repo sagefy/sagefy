@@ -20,6 +20,7 @@ require('./tasks/topic')
 require('./tasks/unit')
 require('./tasks/user')
 require('./tasks/user_sets')
+require('./tasks/create')
 
 const app = express()
 app.use(cookieParser())

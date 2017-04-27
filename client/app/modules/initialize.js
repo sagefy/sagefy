@@ -23,6 +23,7 @@ require('../tasks/topic')
 require('../tasks/unit')
 require('../tasks/user')
 require('../tasks/user_sets')
+require('../tasks/create')
 
 // Require all broker events
 require('../views/index.vnt')

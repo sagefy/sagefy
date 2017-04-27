@@ -26,6 +26,33 @@ const routes = [{
     path: '/search',
     title: 'Search',
 }, {
+    path: '/create/set/create',
+    title: 'Create a New Set',
+}, {
+    path: '/create/set/add',
+    title: 'Add Existing Members to a Set',
+}, {
+    path: '/create/unit/find',
+    title: 'Find a Set to Add Units',
+}, {
+    path: '/create/unit/list',
+    title: 'Add Units to Set',
+}, {
+    path: '/create/unit/add',
+    title: 'Add Existing Unit to Set',
+}, {
+    path: '/create/unit/create',
+    title: 'Create a New Unit for Set',
+}, {
+    path: '/create/card/find',
+    title: 'Find a Unit to Add Cards',
+}, {
+    path: '/create/card/list',
+    title: 'Add Cards to Unit',
+}, {
+    path: '/create/card/create',
+    title: 'Create a New Card for Unit',
+}, {
     path: '/create',
     title: 'Create',
 }, {

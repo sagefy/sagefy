@@ -20,6 +20,7 @@ module.exports = combineReducers({
     chooseUnit: require('./chooseUnit'),
     currentTreeUnit: require('./currentTreeUnit'),
     currentUserID: require('./currentUserID'),
+    create: require('./create'),
     errors: require('./errors'),
     follows: require('./follows'),
     formData: require('./formData'),
