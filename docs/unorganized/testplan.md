@@ -1,0 +1,48 @@
+- [ ] View the terms and privacy policy
+- [ ] Sign up for an account
+- [ ] Log out of your account
+- [ ] Log into your account
+- [ ] Change your password
+- [ ] Change your user name
+- -
+- [ ] Find the set on "Basic Math"
+- [ ] Find the unit on addition: "Adding two..."
+- [ ] View the change history of the unit
+- [ ] Find the video card on addition: "How to add by..."
+- -
+- [ ] Find and view the user "Doris"
+- [ ] Find the topic under "Basic Math" set
+- [ ] Follow the topic
+- [ ] Write a post in the "Basic Math" topic
+- [ ] Update the content of the post
+- [ ] Write a reply to an existing post
+- -
+- [ ] Find the unit on addition: "Adding two..."
+- [ ] Find the topic where a proposal has been made
+- [ ] Vote on an existing proposal for the plus unit
+- -
+- [ ] Start a new topic
+- [ ] Create a proposal to create a new unit "Modulus"
+- -
+- [ ] Start a new topic called "Rename Basic Math"
+- [ ] Change the name of the topic
+- [ ] Create a proposal to change the set name
+- -
+- [ ] Read my notices
+- [ ] Mark a notice as read
+- [ ] Go to "manage what I follow"
+- [ ] Unfollow the "Basic Math" topic
+- -
+- [ ] Find the empty list of "my sets"
+- [ ] Find the "Basic Math" set
+- [ ] Add the set to "My Sets"
+- [ ] View the units within "Basic Math"
+- [ ] Engage "Basic Math"
+- [ ] View the set tree
+- [ ] Play with some cards
+- -
+- [ ] Log out
+- [ ] Log in as user doris / example1
+- [ ] Engage "Basic Math"
+- [ ] Choose a unit
+- [ ] Play with some cards
