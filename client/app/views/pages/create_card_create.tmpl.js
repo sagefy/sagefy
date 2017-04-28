@@ -23,10 +23,6 @@ const allKindsFields = [{
     description: 'Add the ID of the unit the card belongs to. ' +
                  'You can find this in the URL of the unit.'
 }, {
-    name: 'require_ids',
-    label: 'Card Requires',
-    description: 'List the cards required before this card.',
-}, {
     label: 'Card Kind',
     name: 'kind',
     options: [
@@ -35,6 +31,12 @@ const allKindsFields = [{
     ],
     inline: true
 }]
+
+/* {
+   name: 'require_ids',
+   label: 'Card Requires',
+   description: 'List the cards required before this card.',
+}, */
 
 const videoFields = allKindsFields.concat([{
     label: 'Video Site',
