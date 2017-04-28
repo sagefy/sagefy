@@ -19,8 +19,5 @@ schema = extend({}, post_schema, {
                 }
             }
         },
-        'name': {
-            'validate': (is_required, is_string,)
-        },
     },
 })

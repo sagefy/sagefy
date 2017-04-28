@@ -3,10 +3,6 @@ const {extend} = require('../modules/utilities')
 const {required} = require('../modules/validations')
 
 module.exports = extend({}, post, {
-    name: {
-        type: 'text',
-        validations: [required]
-    },
     'entity_version.id': {
         type: 'hidden',
         validations: []
