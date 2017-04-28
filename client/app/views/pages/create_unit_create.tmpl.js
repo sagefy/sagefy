@@ -49,5 +49,6 @@ module.exports = function createUnitCreate(data) {
         h1('Create a New Unit for Set'),
         unitWizard('list'),
         form(instanceFields)
+        // Back to list view button
     )
 }

@@ -6,5 +6,9 @@ module.exports = function createUnitAdd() {
         {id: 'create', className: 'page'},
         h1('Add an Existing Unit to Set'),
         unitWizard('list')
+
+        // Search box and button
+        // List of units with add buttons
+        // Back to list view button
     )
 }

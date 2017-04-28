@@ -6,5 +6,13 @@ module.exports = function createCardList() {
         {id: 'create', className: 'page'},
         h1('Add Cards to Unit'),
         cardWizard('list')
+
+        // List of cards with remove buttons
+        // :: confirm to remove
+
+        // Create a new card for unit button
+
+        // Back to choose a unit
+        // Create cards button
     )
 }

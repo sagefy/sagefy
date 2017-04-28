@@ -6,5 +6,15 @@ module.exports = function createUnitFind() {
         {id: 'create', className: 'page'},
         h1('Find a Set to Add Units'),
         unitWizard('find')
+
+        // My Recent Sets
+        // List of sets with √ buttons
+
+        // - or -
+
+        // Search box and buttons
+        // List of sets with √ buttons
+
+        // Back to create page
     )
 }

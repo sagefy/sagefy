@@ -123,5 +123,6 @@ module.exports = function createCardCreate(data) {
         h1('Create a New Card for Unit'),
         cardWizard('list'),
         form(instanceFields)
+        // Back to list view button
     )
 }

@@ -6,5 +6,15 @@ module.exports = function createCardFind() {
         {id: 'create', className: 'page'},
         h1('Find a Unit to Add Cards'),
         cardWizard('find')
+
+        // My Recent Units
+        // List of units with √ buttons
+
+        // - or -
+
+        // Search box and buttons
+        // List of units with √ buttons
+
+        // Back to create page
     )
 }
