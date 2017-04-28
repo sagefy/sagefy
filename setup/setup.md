@@ -40,10 +40,37 @@ Push gh-pages to Github Pages
 Deploy steps
 ------------
 
+    ++ ssh into the server ++
     cd /var/www
-    sudo git pull origin master  # ugh
+    sudo git pull origin master
     cd client
     sudo npm run deploy
-    sudo cp -a app/images/* distribution/ && sudo cp -a app/*.{html,txt,ico} distribution/   # ugh
+    sudo cp -a app/images/* distribution/ && sudo cp -a app/*.{html,txt,ico} distribution/
     pm2 restart all
-    # TODO restart uwsgi... should not be in watch mode on prod
+
+Things to fix:
+
+- The server should not know about git
+- Fix permissions so we don't have to run `cp` by itself.
+- We should need to restart uwsgi, which should not be in watch mode on prod.
+
+Back up the database
+--------------------
+
+Set up:
+
+    ++ ssh into the server ++
+    sudo pip3 install --upgrade --ignore-installed b2
+    cd /var/www
+    mkdir rethinkdb-bu
+
+Run:
+
+    ++ ssh into the server ++
+    cd /var/www/rethinkdb-bu
+    b2 authorize_account xxx xxxxxxxx  # see dashlane
+    b2 sync /var/www/rethinkdb-bu b2:sagefy-rethinkdb-backup2
+
+TODO:
+
+- Set up as a cron job... find a smart person to fix the environment :)
