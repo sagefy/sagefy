@@ -4,7 +4,6 @@ const tasks = require('../modules/tasks')
 
 module.exports = tasks.add({
     resetCreate() {
-        dispatch({type: 'RESET_FORM_DATA'})
         dispatch({type: 'RESET_CREATE'})
     },
 
@@ -16,9 +15,16 @@ module.exports = tasks.add({
         return tasks.createTopic(data)
     },
 
-    addMemberToFormSet({kind, id, name, body}) {
+    createSetData(values) {
         dispatch({
-            type: 'ADD_MEMBER_TO_FORM_SET',
+            type: 'CREATE_SET_DATA',
+            values,
+        })
+    },
+
+    addMemberToCreateSet({kind, id, name, body}) {
+        dispatch({
+            type: 'ADD_MEMBER_TO_CREATE_SET',
             kind,
             id,
             name,

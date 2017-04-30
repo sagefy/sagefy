@@ -44,7 +44,7 @@ module.exports = function createSetCreate(data) {
         schema: setSchema,
         fields,
         errors: data.errors,
-        formData: data.formData,
+        formData: data.create.set || {},
         sending: data.sending,
     })
 

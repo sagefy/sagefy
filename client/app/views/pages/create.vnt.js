@@ -16,11 +16,10 @@ module.exports = broker.add({
     'submit .create--set-create form'(e, el) {
         if(e) e.preventDefault()
         let values = getFormValues(el)
-        tasks.updateFormData(values)
-        const errors = tasks.validateForm(values, setSchema,
-            ['name', 'language', 'body'])  // TODO members
-        if(errors && errors.length) { return }
         values = parseFormValues(values)
+        const errors = tasks.validateForm(values, setSchema,
+            ['name', 'language', 'body', 'members'])
+        if(errors && errors.length) { return }
         const data = {
             topic: {
                 name: `Create a Set: ${values.name}`,
@@ -37,10 +36,6 @@ module.exports = broker.add({
                 name: values.name,
                 body: values.body,
                 members: values.members,
-                /* members: [{
-                    id
-                    kind
-                }] */
             }],
         }
         tasks.createSetProposal(data)
@@ -55,13 +50,13 @@ module.exports = broker.add({
     'click .create--set-add__add'(e, el) {
         if(e) e.preventDefault()
         const {kind, id, name, body} = el.dataset
-        tasks.addMemberToFormSet({kind, id, name, body})
+        tasks.addMemberToCreateSet({kind, id, name, body})
     },
 
     'click .create--set-create .form-field--entities__a'(e, el) {
         if(e) e.preventDefault()
         const form = closest(el, 'form')
         const values = getFormValues(form)
-        tasks.updateFormData(values)
+        tasks.createSetData(values)
     }
 })

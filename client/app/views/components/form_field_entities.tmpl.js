@@ -1,4 +1,4 @@
-const {div, ul, li, a} = require('../../modules/tags')
+const {div, ul, li, a, input} = require('../../modules/tags')
 const icon = require('./icon.tmpl')
 const previewCardHead = require('./preview_card_head.tmpl')
 const previewUnitHead = require('./preview_unit_head.tmpl')
@@ -9,7 +9,7 @@ module.exports = (data) => {
     return div(
         entities.length ? ul(
             {className: 'form-field--entities__ul'},
-            entities.map(entity => li(
+            entities.map((entity, index) => li(
                 a(
                     {href: '#', className: 'form-field--entities__remove'},
                     icon('remove'),
@@ -30,7 +30,17 @@ module.exports = (data) => {
                         name: entity.name,
                         body: entity.body,
                     }) :
-                    null
+                    null,
+                input({
+                    type: 'hidden',
+                    name: `members.${index}.kind`,
+                    value: entity.kind,
+                }),
+                input({
+                    type: 'hidden',
+                    name: `members.${index}.id`,
+                    value: entity.id,
+                })
             ))
         ) : null,
         data.add ? a(

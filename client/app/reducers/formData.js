@@ -1,4 +1,3 @@
-const {copy} = require('../modules/utilities')
 
 module.exports = function formData(state = {}, action = {type: ''}) {
     if(action.type === 'RESET_FORM_DATA') {
@@ -55,17 +54,6 @@ module.exports = function formData(state = {}, action = {type: ''}) {
                     delete newState[key]
                 }
             })
-        return newState
-    }
-    if(action.type === 'ADD_MEMBER_TO_FORM_SET') {
-        const newState = copy(state)
-        newState.members = newState.members || []
-        newState.members.push({
-            kind: action.kind,
-            id: action.id,
-            name: action.name,
-            body: action.body,
-        })
         return newState
     }
     return state

@@ -9,11 +9,10 @@
     selectedUnit
         id
         members
-    set /// dont need, skip straight to create step
+    set
     units
     cards
     searchResults /// use top level instead
-    body
 }
 
 /create
@@ -30,6 +29,7 @@
 /create/card/create 2
 -> topic/proposal
 */
+const {shallowCopy, copy} = require('../modules/utilities')
 
 module.exports = function create(state = {}, action = {type: ''}) {
     if (action.type === 'RESET_CREATE') {
@@ -40,6 +40,24 @@ module.exports = function create(state = {}, action = {type: ''}) {
             kind: action.kind,
             step: action.step,
         })
+    }
+    if (action.type === 'CREATE_SET_DATA') {
+        state = shallowCopy(state)
+        state.set = action.values
+        return state
+    }
+    if(action.type === 'ADD_MEMBER_TO_CREATE_SET') {
+        state = shallowCopy(state)
+        state.set = copy(state.set || {})
+        const members = (state.set.members || []).slice()
+        members.push({
+            kind: action.kind,
+            id: action.id,
+            name: action.name,
+            body: action.body,
+        })
+        state.set.members = members
+        return state
     }
     return state
 }
