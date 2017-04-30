@@ -25,9 +25,11 @@ const routes = [
 
 module.exports = tasks.add({
     onRoute(path) {
-        dispatch({
-            type: 'RESET_FORM_DATA'
-        })
+        if (path.indexOf('/create') !== 0) { // TODO I need a better solution
+            dispatch({
+                type: 'RESET_FORM_DATA'
+            })
+        }
         dispatch({
             type: 'RESET_ERRORS'
         })

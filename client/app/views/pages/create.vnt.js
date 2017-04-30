@@ -3,6 +3,7 @@ const tasks = require('../../modules/tasks')
 const {getFormValues, parseFormValues} =
     require('../../modules/auxiliaries')
 const setSchema = require('../../schemas/set')
+const {closest} = require('../../modules/utilities')
 
 module.exports = broker.add({
     'click .create__route'(e, el) {
@@ -51,7 +52,16 @@ module.exports = broker.add({
         tasks.search({ q, kind: 'unit,set' })
     },
 
-    /* 'click .create--set-add__add'(e, el) {
+    'click .create--set-add__add'(e, el) {
         if(e) e.preventDefault()
-    } */
+        const {kind, id, name, body} = el.dataset
+        tasks.addMemberToFormSet({kind, id, name, body})
+    },
+
+    'click .create--set-create .form-field--entities__a'(e, el) {
+        if(e) e.preventDefault()
+        const form = closest(el, 'form')
+        const values = getFormValues(form)
+        tasks.updateFormData(values)
+    }
 })

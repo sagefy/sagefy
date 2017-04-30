@@ -10,7 +10,11 @@ module.exports = (data) => {
         entities.length ? ul(
             {className: 'form-field--entities__ul'},
             entities.map(entity => li(
-                'Remove',
+                a(
+                    {href: '#', className: 'form-field--entities__remove'},
+                    icon('remove'),
+                    ' Remove'
+                ),
                 entity.kind === 'card' ?
                     previewCardHead({
                         name: entity.name,

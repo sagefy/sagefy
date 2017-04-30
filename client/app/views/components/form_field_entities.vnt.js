@@ -3,5 +3,8 @@ const broker = require('../../modules/broker')
 // const {getFormValues} = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
-
+    'click .form-field--entities__remove'(e, el) {
+        if(e) e.preventDefault()
+        // TODO
+    },
 })

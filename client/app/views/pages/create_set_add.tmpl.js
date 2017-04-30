@@ -42,7 +42,13 @@ module.exports = function createSetAdd(data) {
                 a(
                     {
                         href: '/create/set/create',
-                        className: 'create--set-add__add'
+                        className: 'create--set-add__add',
+                        dataset: {
+                            kind: result._type,
+                            id: result._id,
+                            name: result._source.name,
+                            body: result._source.body,
+                        },
                     },
                     icon('create'),
                     ' Add to Set'
