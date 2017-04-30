@@ -41,5 +41,10 @@ module.exports = function create(state = {}, action = {type: ''}) {
             step: action.step,
         })
     }
+    if (action.type === 'WANT_CREATE_SET') {
+        return Object.assign({}, state, {
+            set: action.values,
+        })
+    }
     return state
 }

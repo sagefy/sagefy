@@ -9,5 +9,12 @@ module.exports = tasks.add({
 
     updateCreateRoute({kind, step}) {
         dispatch({type: 'UPDATE_CREATE_ROUTE', kind, step})
-    }
+    },
+
+    wantCreateSet(values) {
+        dispatch({
+            type: 'WANT_CREATE_SET',
+            values,
+        })
+    },
 })

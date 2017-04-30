@@ -52,7 +52,7 @@ module.exports = function createSetCreate(data) {
     })
 
     return div(
-        {id: 'create', className: 'page'},
+        {id: 'create', className: 'page create--set-create'},
         h1('Create a New Set'),
         form(instanceFields)
     )
