@@ -3,7 +3,7 @@ const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
-    createTopic: (data) => {
+    createTopic(data) {
         dispatch({
             type: 'SET_SENDING_ON'
         })
@@ -37,7 +37,7 @@ module.exports = tasks.add({
             })
     },
 
-    updateTopic: (data) => {
+    updateTopic(data) {
         dispatch({type: 'SET_SENDING_ON'})
         dispatch({type: 'UPDATE_TOPIC'})
         return request({

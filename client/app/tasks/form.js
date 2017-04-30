@@ -3,7 +3,7 @@ const tasks = require('../modules/tasks')
 const {validateFormData} = require('../modules/auxiliaries')
 
 module.exports = tasks.add({
-    updateFormData: (data) => {
+    updateFormData(data) {
         dispatch({
             data,
             message: 'update form data',
@@ -11,7 +11,7 @@ module.exports = tasks.add({
         })
     },
 
-    validateForm: (data, schema, fields) => {
+    validateForm(data, schema, fields) {
         const errors = validateFormData(data, schema, fields)
         if (errors.length) {
             dispatch({
@@ -24,7 +24,7 @@ module.exports = tasks.add({
         dispatch({type: 'FORM_IS_VALID'})
     },
 
-    addListFieldRow: (name, columns) => {
+    addListFieldRow(name, columns) {
         dispatch({
             type: 'ADD_LIST_FIELD_ROW',
             message: 'add list field row',
@@ -33,7 +33,7 @@ module.exports = tasks.add({
         })
     },
 
-    removeListFieldRow: (name, index) => {
+    removeListFieldRow(name, index) {
         dispatch({
             type: 'REMOVE_LIST_FIELD_ROW',
             message: 'remove list field row',

@@ -3,7 +3,7 @@ const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
-    listFollows: (skip = 0, limit = 50) => {
+    listFollows(skip = 0, limit = 50) {
         dispatch({type: 'LIST_FOLLOWS'})
         return request({
             method: 'GET',
@@ -26,7 +26,7 @@ module.exports = tasks.add({
             })
     },
 
-    askFollow: (entityID) => {
+    askFollow(entityID) {
         dispatch({type: 'ASK_FOLLOW', entityID})
         return request({
             method: 'GET',
@@ -49,7 +49,7 @@ module.exports = tasks.add({
             })
     },
 
-    follow: (data) => {
+    follow(data) {
         dispatch({type: 'FOLLOW', id: data.entity.id})
         return request({
             method: 'POST',
@@ -71,7 +71,7 @@ module.exports = tasks.add({
             })
     },
 
-    unfollow: (id) => {
+    unfollow(id) {
         dispatch({type: 'UNFOLLOW', id})
         return request({
             method: 'DELETE',

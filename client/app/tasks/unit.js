@@ -3,7 +3,7 @@ const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
-    getUnit: (id) => {
+    getUnit(id) {
         dispatch({type: 'GET_UNIT', id})
         return request({
             method: 'GET',
@@ -39,7 +39,7 @@ module.exports = tasks.add({
             })
     },
 
-    listUnitVersions: (id) => {
+    listUnitVersions(id) {
         dispatch({type: 'LIST_UNIT_VERSIONS', id})
         return request({
             method: 'GET',

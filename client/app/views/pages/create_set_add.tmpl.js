@@ -14,6 +14,7 @@ module.exports = function createSetAdd(data) {
         name: 'search',
         size: 40
     }
+    inputOpts.value = data.searchQuery || null
 
     return div(
         {id: 'create', className: 'page create--set-add'},

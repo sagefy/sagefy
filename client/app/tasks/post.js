@@ -3,7 +3,7 @@ const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
-    listPosts: (id) => {
+    listPosts(id) {
         dispatch({type: 'LIST_POSTS', id})
         return request({
             method: 'GET',
@@ -62,7 +62,7 @@ module.exports = tasks.add({
             })
     },
 
-    createPost: (data) => {
+    createPost(data) {
         dispatch({
             type: 'SET_SENDING_ON'
         })
@@ -97,7 +97,7 @@ module.exports = tasks.add({
             })
     },
 
-    updatePost: (data) => {
+    updatePost(data) {
         dispatch({
             type: 'SET_SENDING_ON'
         })

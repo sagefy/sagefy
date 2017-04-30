@@ -4,7 +4,7 @@ const {matchesRoute} = require('../modules/auxiliaries')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
-    getCard: (id) => {
+    getCard(id) {
         dispatch({type: 'GET_CARD', id})
         return request({
             method: 'GET',
@@ -33,7 +33,7 @@ module.exports = tasks.add({
             })
     },
 
-    getCardForLearn: (id) => {
+    getCardForLearn(id) {
         dispatch({type: 'RESET_CARD_RESPONSE'})
         dispatch({type: 'RESET_CARD_FEEDBACK'})
         dispatch({type: 'GET_LEARN_CARD', id})
@@ -60,7 +60,7 @@ module.exports = tasks.add({
             })
     },
 
-    listCardVersions: (id) => {
+    listCardVersions(id) {
         dispatch({type: 'LIST_CARD_VERSIONS', id})
         return request({
             method: 'GET',
@@ -84,7 +84,7 @@ module.exports = tasks.add({
             })
     },
 
-    respondToCard: (id, data, goNext = false) => {
+    respondToCard(id, data, goNext = false) {
         dispatch({type: 'RESPOND_TO_CARD', id})
         dispatch({
             type: 'SET_SENDING_ON'
@@ -138,7 +138,7 @@ module.exports = tasks.add({
             })
     },
 
-    nextState: () => {
+    nextState() {
         const path = getState().next.path
         let args
         args = matchesRoute(path, '/s/cards/{id}/learn')
@@ -155,7 +155,7 @@ module.exports = tasks.add({
         }
     },
 
-    needAnAnswer: () => {
+    needAnAnswer() {
         dispatch({
             type: 'SET_CARD_FEEDBACK',
             feedback: 'Please provide an answer.',

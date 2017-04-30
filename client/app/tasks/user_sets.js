@@ -3,7 +3,7 @@ const request = require('../modules/request')
 const {dispatch, getState} = require('../modules/store')
 
 module.exports = tasks.add({
-    listUserSets: (limit = 50, skip = 0) => {
+    listUserSets(limit = 50, skip = 0) {
         const userID = getState().currentUserID
         dispatch({type: 'LIST_USER_SETS'})
         return request({
@@ -27,7 +27,7 @@ module.exports = tasks.add({
             })
     },
 
-    addUserSet: (setID) => {
+    addUserSet(setID) {
         const userID = getState().currentUserID
         dispatch({type: 'ADD_USER_SET', setID})
         return request({
@@ -53,7 +53,7 @@ module.exports = tasks.add({
             })
     },
 
-    chooseSet: (setID) => {
+    chooseSet(setID) {
         const userID = getState().currentUserID
         dispatch({type: 'CHOOSE_SET', setID})
         return request({
@@ -83,7 +83,7 @@ module.exports = tasks.add({
             })
     },
 
-    removeUserSet: (setID) => {
+    removeUserSet(setID) {
         const userID = getState().currentUserID
         dispatch({type: 'REMOVE_USER_SET', setID})
         return request({

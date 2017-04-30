@@ -3,7 +3,7 @@ const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
-    listNotices: (limit = 50, skip = 0) => {
+    listNotices(limit = 50, skip = 0) {
         dispatch({type: 'LIST_NOTICES', limit, skip})
         return request({
             method: 'GET',
@@ -28,7 +28,7 @@ module.exports = tasks.add({
             })
     },
 
-    markNotice: (id, read = true) => {
+    markNotice(id, read = true) {
         dispatch({type: 'MARK_NOTICE', id, read})
         return request({
             method: 'PUT',

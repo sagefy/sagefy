@@ -24,7 +24,7 @@ const routes = [
 ]
 
 module.exports = tasks.add({
-    onRoute: (path) => {
+    onRoute(path) {
         dispatch({
             type: 'RESET_FORM_DATA'
         })
@@ -39,7 +39,7 @@ module.exports = tasks.add({
         }
     },
 
-    openSettingsRoute: () => {
+    openSettingsRoute() {
         if (!getState().currentUserID ||
             !getState().users ||
             !getState().users[getState().currentUserID]) {
@@ -47,7 +47,7 @@ module.exports = tasks.add({
         }
     },
 
-    openProfileRoute: (id) => {
+    openProfileRoute(id) {
         return tasks.getUser(id, {
             avatar: 12 * 10,
             sets: true,
@@ -56,64 +56,64 @@ module.exports = tasks.add({
         })
     },
 
-    openUnitRoute: (id) => {
+    openUnitRoute(id) {
         return Promise.all([
             tasks.getUnit(id),
             tasks.askFollow(id),
         ])
     },
 
-    openSetRoute: (id) => {
+    openSetRoute(id) {
         return Promise.all([
             tasks.getSet(id),
             tasks.askFollow(id),
         ])
     },
 
-    openCardRoute: (id) => {
+    openCardRoute(id) {
         return Promise.all([
             tasks.getCard(id),
             tasks.askFollow(id),
         ])
     },
 
-    openVersionsRoute: (kind, id) => {
+    openVersionsRoute(kind, id) {
         return tasks[`list${ucfirst(kind)}Versions`](id)
     },
 
-    openCreateTopic: () => {
+    openCreateTopic() {
         const {kind, id} = getState().routeQuery
         return tasks[`get${ucfirst(kind)}`](id)
     },
 
-    openUpdateTopic: (id) => {
+    openUpdateTopic(id) {
         return tasks.listPosts(id)
     },
 
-    openTopicRoute: (id) => {
+    openTopicRoute(id) {
         return Promise.all([
             tasks.listPosts(id),
             tasks.askFollow(id),
         ])
     },
 
-    openTreeRoute: (id) => {
+    openTreeRoute(id) {
         return tasks.getSetTree(id)
     },
 
-    openChooseUnit: (setID) => {
+    openChooseUnit(setID) {
         return tasks.getSetUnits(setID)
     },
 
-    openLearnCard: (id) => {
+    openLearnCard(id) {
         return tasks.getCardForLearn(id)
     },
 
-    openUpdatePost: (topicID/* , postID */) => {
+    openUpdatePost(topicID/* , postID */) {
         return tasks.listPosts(topicID)
     },
 
-    openSearch: () => {
+    openSearch() {
         const q = getState().routeQuery.q
         if (q) {
             return tasks.search({q})

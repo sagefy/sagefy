@@ -4,7 +4,7 @@ const {matchesRoute} = require('../modules/auxiliaries')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
-    getSet: (id) => {
+    getSet(id) {
         dispatch({type: 'GET_SET', id})
         return request({
             method: 'GET',
@@ -31,7 +31,7 @@ module.exports = tasks.add({
             })
     },
 
-    getRecommendedSets: () => {
+    getRecommendedSets() {
         dispatch({type: 'GET_RECOMMENDED_SETS'})
         return request({
             method: 'GET',
@@ -54,7 +54,7 @@ module.exports = tasks.add({
             })
     },
 
-    listSetVersions: (id) => {
+    listSetVersions(id) {
         dispatch({type: 'LIST_SET_VERSIONS', id})
         return request({
             method: 'GET',
@@ -78,7 +78,7 @@ module.exports = tasks.add({
             })
     },
 
-    getSetTree: (id) => {
+    getSetTree(id) {
         dispatch({type: 'GET_SET_TREE', id})
         return request({
             method: 'GET',
@@ -108,14 +108,14 @@ module.exports = tasks.add({
             })
     },
 
-    selectTreeUnit: (id) => {
+    selectTreeUnit(id) {
         dispatch({
             type: 'SET_CURRENT_TREE_UNIT',
             id,
         })
     },
 
-    getSetUnits: (id) => {
+    getSetUnits(id) {
         dispatch({type: 'GET_SET_UNITS', id})
         return request({
             method: 'GET',
@@ -142,7 +142,7 @@ module.exports = tasks.add({
             })
     },
 
-    chooseUnit: (setId, unitId) => {
+    chooseUnit(setId, unitId) {
         dispatch({type: 'CHOOSE_UNIT', setId, unitId})
         return request({
             method: 'POST',
