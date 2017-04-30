@@ -11,7 +11,11 @@ module.exports = (data) => {
             {className: 'form-field--entities__ul'},
             entities.map((entity, index) => li(
                 a(
-                    {href: '#', className: 'form-field--entities__remove'},
+                    {
+                        id: entity.id,
+                        href: '#',
+                        className: 'form-field--entities__remove'
+                    },
                     icon('remove'),
                     ' Remove'
                 ),

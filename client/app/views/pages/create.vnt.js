@@ -58,5 +58,11 @@ module.exports = broker.add({
         const form = closest(el, 'form')
         const values = getFormValues(form)
         tasks.createSetData(values)
+    },
+
+    'click .create--set-create .form-field--entities__remove'(e, el) {
+        if(e) e.preventDefault()
+        const id = el.id
+        tasks.removeMemberFromCreateSet({id})
     }
 })

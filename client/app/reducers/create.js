@@ -59,5 +59,13 @@ module.exports = function create(state = {}, action = {type: ''}) {
         state.set.members = members
         return state
     }
+    if(action.type === 'REMOVE_MEMBER_FROM_CREATE_SET') {
+        state = shallowCopy(state)
+        state.set = copy(state.set || {})
+        const members = (state.set.members || [])
+            .filter(member => member.id !== action.id)
+        state.set.members = members
+        return state
+    }
     return state
 }

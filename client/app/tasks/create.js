@@ -30,5 +30,12 @@ module.exports = tasks.add({
             name,
             body,
         })
+    },
+
+    removeMemberFromCreateSet({id}) {
+        dispatch({
+            type: 'REMOVE_MEMBER_FROM_CREATE_SET',
+            id,
+        })
     }
 })
