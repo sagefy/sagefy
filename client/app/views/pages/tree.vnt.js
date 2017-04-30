@@ -2,7 +2,7 @@ const broker = require('../../modules/broker')
 const tasks = require('../../modules/tasks')
 
 module.exports = broker.add({
-    'click .tree circle': (e, el) => {
+    'click .tree circle'(e, el) {
         if(e) e.preventDefault()
         if (el.classList.contains('selected')) {
             tasks.selectTreeUnit()
@@ -11,7 +11,7 @@ module.exports = broker.add({
         }
     },
 
-    'click .tree text': (e) => {
+    'click .tree text'(e) {
         if(e) e.preventDefault()
         tasks.selectTreeUnit()
     }

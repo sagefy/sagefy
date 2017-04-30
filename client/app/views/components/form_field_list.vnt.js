@@ -4,7 +4,7 @@ const {closest} = require('../../modules/utilities')
 const {getFormValues} = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
-    'click .form-field--list__remove-row': (e, el) => {
+    'click .form-field--list__remove-row'(e, el) {
         if (e) { e.preventDefault() }
 
         const form = closest(el, 'form')
@@ -17,7 +17,7 @@ module.exports = broker.add({
         tasks.removeListFieldRow(name, index)
     },
 
-    'click .form-field--list__add-row': (e, el) => {
+    'click .form-field--list__add-row'(e, el) {
         if (e) { e.preventDefault() }
 
         const form = closest(el, 'form')
@@ -33,6 +33,6 @@ module.exports = broker.add({
         tasks.addListFieldRow(name, columns)
     }
 
-    // TODO-3 'dragstart .form-field--list__move-row': (e, el) =>
-    // TODO-3 'drop form-field--list__move-row': (e, el) =>
+    // TODO-3 'dragstart .form-field--list__move-row'(e, el)
+    // TODO-3 'drop form-field--list__move-row'(e, el)
 })

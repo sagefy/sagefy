@@ -5,7 +5,7 @@ const {getFormValues, parseFormValues} =
 const userSchema = require('../../schemas/user')
 
 module.exports = broker.add({
-    'submit #sign-up form': (e, el) => {
+    'submit #sign-up form'(e, el) {
         if(e) e.preventDefault()
         let values = getFormValues(el)
         tasks.updateFormData(values)

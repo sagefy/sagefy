@@ -3,7 +3,7 @@ const broker = require('../../modules/broker')
 // const {debounce} = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
-    'click .select .clear': (e) => {
+    'click .select .clear'(e) {
         e.preventDefault()
         // TODO-3 clear options
     }

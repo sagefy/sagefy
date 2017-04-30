@@ -5,14 +5,14 @@ const {getFormValues, parseFormValues} =
 const setSchema = require('../../schemas/set')
 
 module.exports = broker.add({
-    'click .create__route': (e, el) => {
+    'click .create__route'(e, el) {
         if(e) e.preventDefault()
         const [,, kind, step] = el.pathname.split('/')
         tasks.resetCreate()
         tasks.updateCreateRoute({kind, step})
     },
 
-    'submit .create--set-create form': (e, el) => {
+    'submit .create--set-create form'(e, el) {
         if(e) e.preventDefault()
         let values = getFormValues(el)
         tasks.updateFormData(values)
@@ -43,5 +43,13 @@ module.exports = broker.add({
             }],
         }
         tasks.createSetProposal(data)
+    },
+
+    'click .create--set-add__search'(e, el) {
+        if(e) e.preventDefault()
+    },
+
+    'click .create--set-add__add'(e, el) {
+        if(e) e.preventDefault()
     }
 })

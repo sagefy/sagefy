@@ -5,7 +5,7 @@ const qs = require('../../modules/query_string')
 const userSchema = require('../../schemas/user')
 
 module.exports = broker.add({
-    'submit #password.email form': (e, el) => {
+    'submit #password.email form'(e, el) {
         if (e) { e.preventDefault() }
         let values = getFormValues(el)
         tasks.updateFormData(values)
@@ -15,7 +15,7 @@ module.exports = broker.add({
         tasks.getUserPasswordToken(values)
     },
 
-    'submit #password.password form': (e, el) => {
+    'submit #password.password form'(e, el) {
         if (e) { e.preventDefault() }
         const {token, id} = qs.get()
         let values = getFormValues(el)

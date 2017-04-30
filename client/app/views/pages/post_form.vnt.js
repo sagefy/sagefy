@@ -4,7 +4,7 @@ const {closest} = require('../../modules/utilities')
 const {getFormValues, parseFormValues} = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
-    'submit #post-form.create form': (e, el) => {
+    'submit #post-form.create form'(e, el) {
         if (e) { e.preventDefault() }
         let values = getFormValues(el)
         tasks.updateFormData(values)
@@ -26,7 +26,7 @@ module.exports = broker.add({
         tasks.createPost(values)
     },
 
-    'submit #post-form.update form': (e, el) => {
+    'submit #post-form.update form'(e, el) {
         if (e) { e.preventDefault() }
         let values = getFormValues(el)
         tasks.updateFormData(values)
@@ -36,19 +36,19 @@ module.exports = broker.add({
         tasks.updatePost(values)
     },
 
-    'change #post-form.create [name="post.kind"]': (e, el) => {
+    'change #post-form.create [name="post.kind"]'(e, el) {
         const form = closest(el, 'form')
         const values = getFormValues(form)
         tasks.updateFormData(values)
     },
 
-    'change #post-form.create [name="post.entity_version.kind"]': (e, el) => {
+    'change #post-form.create [name="post.entity_version.kind"]'(e, el) {
         const form = closest(el, 'form')
         const values = getFormValues(form)
         tasks.updateFormData(values)
     },
 
-    'change #post-form.create [name="entity.kind"]': (e, el) => {
+    'change #post-form.create [name="entity.kind"]'(e, el) {
         const form = closest(el, 'form')
         const values = getFormValues(form)
         tasks.updateFormData(values)

@@ -29,7 +29,7 @@ module.exports = function createSetAdd(data) {
                 input(inputOpts)
             ),
             button(
-                {type: 'submit'},
+                {type: 'submit', className: 'create--set-add__search'},
                 icon('search'),
                 ' Search'
             )

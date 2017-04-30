@@ -10,12 +10,22 @@ module.exports = (data) => {
         entities.length ? ul(
             {className: 'form-field--entities__ul'},
             entities.map(entity => li(
+                'Remove',
                 entity.kind === 'card' ?
-                    previewCardHead({}) :
+                    previewCardHead({
+                        name: entity.name,
+                        kind: entity.kind,
+                    }) :
                 entity.kind === 'unit' ?
-                    previewUnitHead({}) :
+                    previewUnitHead({
+                        name: entity.name,
+                        body: entity.body,
+                    }) :
                 entity.kind === 'set' ?
-                    previewSetHead({}) :
+                    previewSetHead({
+                        name: entity.name,
+                        body: entity.body,
+                    }) :
                     null
             ))
         ) : null,
