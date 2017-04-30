@@ -1,12 +1,13 @@
 /* eslint-disable no-underscore-dangle */
 
-const {div, h1, form, input, button, a, ul, li} = require('../../modules/tags')
+const {div, h1, form, input, button, a, ul, li, p} =
+    require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewSetHead = require('../components/preview_set_head.tmpl')
 
 module.exports = function createSetAdd(data) {
-    const {searchResults} = data.create
+    const {searchResults} = data
     const inputOpts = {
         type: 'text',
         placeholder: 'Search Unit and Sets',
@@ -23,7 +24,7 @@ module.exports = function createSetAdd(data) {
             ' Back to Create Set form'
         ),
         form(
-            {className: 'form--horizontal'},
+            {className: 'form--horizontal create--set-add__form'},
             div(
                 {className: 'form-field form-field--search'},
                 input(inputOpts)
@@ -57,6 +58,6 @@ module.exports = function createSetAdd(data) {
                     }) :
                     null
             ))
-        ) : null
+        ) : p('No results.')
     )
 }

@@ -45,11 +45,13 @@ module.exports = broker.add({
         tasks.createSetProposal(data)
     },
 
-    'click .create--set-add__search'(e, el) {
+    'submit .create--set-add__form'(e, el) {
         if(e) e.preventDefault()
+        const q = el.querySelector('input').value
+        tasks.search({ q, kind: 'unit,set' })
     },
 
-    'click .create--set-add__add'(e, el) {
+    /* 'click .create--set-add__add'(e, el) {
         if(e) e.preventDefault()
-    }
+    } */
 })

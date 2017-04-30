@@ -12,6 +12,21 @@ These instructions assume you are using Mac OS X.
 7. `sudo nano /etc/hosts`, and add `192.168.122.114 doris`
 8. In your browser, visit `http://doris/`
 
+Crap I Shouldn't Need to Do
+----------------------------
+
+... after creating a new box
+
+    sudo uwsgi --stop /tmp/uwsgi-master.pid
+    sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
+    sudo nginx -s stop
+    sudo nginx -c /var/www/setup/nginx.conf
+    pm2 start /var/www/client/app/index.server.js
+    cd /var/www/client
+    pm2 start npm -- start
+    pm2 logs
+
+
 Common Vagrant commands
 -----------------------
 

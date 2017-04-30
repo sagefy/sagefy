@@ -109,10 +109,10 @@ cd /var/www
 sudo apt-get -y install uwsgi
 sudo apt-get -y install nginx
 
-sudo uwsgi --stop /tmp/uwsgi-master.pid
-sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
-sudo nginx -s stop
-sudo nginx -c /var/www/setup/nginx.conf
+# sudo uwsgi --stop /tmp/uwsgi-master.pid
+# sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
+# sudo nginx -s stop
+# sudo nginx -c /var/www/setup/nginx.conf
 
 # TODO-1 Setup file system monitoring do.co/1GfDGYN
 # TODO-1 Setup Digital Ocean private networking do.co/1nrFJE3
