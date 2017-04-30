@@ -20,6 +20,28 @@ module.exports = broker.add({
             ['name', 'language', 'body'])  // TODO members
         if(errors && errors.length) { return }
         values = parseFormValues(values)
-        tasks.wantCreateSet(values) // TODO go ahead and make the network call
+        const data = {
+            topic: {
+                name: `Create a Set: ${values.name}`,
+                entity: {
+                    id: '1rk0jS5EGEavSG4NBxRvPkZf',
+                    kind: 'unit',
+                }
+            },
+            post: {
+                kind: 'proposal',
+                body: `Create a Set: ${values.name}`,
+            },
+            sets: [{
+                name: values.name,
+                body: values.body,
+                members: values.members,
+                /* members: [{
+                    id
+                    kind
+                }] */
+            }],
+        }
+        tasks.createSetProposal(data)
     }
 })

@@ -11,7 +11,7 @@ module.exports = broker.add({
         // errors = tasks.validateForm(values, schema, [...])
         // unless errors?.length, (...tab)
         values = parseFormValues(values)
-        if (values.post && values.post.kind === 'proposal') {
+        /* TP@ if (values.post && values.post.kind === 'proposal') {
             if (values.entity && values.entity.require_ids) {
                 values.entity.require_ids = values.entity.require_ids
                     .map((r) => r.id).filter((r) => r)
@@ -22,7 +22,7 @@ module.exports = broker.add({
                 values[values.post.entity_version.kind] = values.entity
                 delete values.entity
             }
-        }
+        } */
         tasks.createTopic(values)
     },
 

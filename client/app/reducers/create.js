@@ -9,7 +9,7 @@
     selectedUnit
         id
         members
-    set
+    set /// dont need, skip straight to create step
     units
     cards
     searchResults
@@ -39,11 +39,6 @@ module.exports = function create(state = {}, action = {type: ''}) {
         return Object.assign({}, state, {
             kind: action.kind,
             step: action.step,
-        })
-    }
-    if (action.type === 'WANT_CREATE_SET') {
-        return Object.assign({}, state, {
-            set: action.values,
         })
     }
     return state

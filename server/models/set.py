@@ -20,7 +20,7 @@ class Set(EntityMixin, Model):
             'validate': (is_required, is_string, (has_min_length, 1),)
         },
         'members': {
-            'validate': (is_required, is_list, (has_min_length, 1)),
+            'validate': (is_required, is_list,),
             'embed_many': {
                 'id': {
                     'validate': (is_required, is_string,),
