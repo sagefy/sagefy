@@ -30,6 +30,7 @@ require('../views/index.vnt')
 
 require('../views/components/follow_button.vnt')
 require('../views/components/form_field_list.vnt')
+require('../views/components/form_field_entities.vnt')
 require('../views/components/form_field_select.vnt')
 require('../views/components/menu.vnt')
 require('../views/components/notice.vnt')

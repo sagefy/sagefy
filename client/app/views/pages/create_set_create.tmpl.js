@@ -24,13 +24,10 @@ const fields = [{
     label: 'Set Members',
     description: 'Choose a list of units and sets. ' +
                  'Cycles are not allowed.',
-    columns: [
-        {options: [
-            {label: 'Unit'},
-            {label: 'Set'}
-        ]},
-        {}
-    ]
+    add: {
+        label: 'Add an Existing Unit or Set',
+        url: '/create/set/add',
+    }
 }, {
     type: 'submit',
     name: 'submit',

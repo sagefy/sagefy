@@ -24,6 +24,10 @@ const fields = [{
     name: 'require_ids',
     label: 'Unit Requires',
     description: 'List the units required before this unit.',
+    add: {
+        url: '/create/unit/???',
+        label: 'Find a Unit to Require',
+    },
 }, {
     type: 'submit',
     name: 'submit',

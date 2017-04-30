@@ -24,11 +24,8 @@ module.exports = {
         ]
     },
     require_ids: {
-        type: 'list',
+        type: 'entities',
         validations: [],
-        columns: [
-            {name: 'id', type: 'text'}
-        ]
     },
     kind: {
         type: 'select',
