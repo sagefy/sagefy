@@ -4,6 +4,7 @@
     No decision has been made.
 
 TO think about:
+    user settings
     post entity_versions
     set members
     c_params guess/slip
