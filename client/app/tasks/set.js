@@ -173,5 +173,27 @@ module.exports = tasks.add({
                     errors,
                 })
             })
-    }
+    },
+
+    getMyRecentSets() {
+        dispatch({type: 'GET_MY_RECENT_SETS'})
+        return request({
+            method: 'GET',
+            url: '/s/sets:get_my_recently_created',
+            data: {},
+        })
+            .then((response) => {
+                dispatch({
+                    type: 'SET_MY_RECENT_SETS',
+                    sets: response.sets,
+                })
+            })
+            .catch((errors) => {
+                dispatch({
+                    type: 'SET_ERRORS',
+                    message: 'get set my recent setsfailure',
+                    errors,
+                })
+            })
+    },
 })

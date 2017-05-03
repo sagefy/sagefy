@@ -112,6 +112,24 @@ class EntityMixin(object):
         # TODO-2 index in unit and set
 
     @classmethod
+    def list_by_version_ids(cls, db_conn, version_ids):
+        """
+        ???
+        """
+
+        if not version_ids:
+            return []
+
+        query = (cls.table
+                    .filter(lambda entity:
+                            r.expr(version_ids)
+                            .contains(entity['id']))
+                    .filter(r.row['status'].eq('accepted')))
+        docs = query.run(db_conn)
+        entity_ids = [fields['entity_id'] for fields in docs]
+        return cls.list_by_entity_ids(db_conn, entity_ids)
+
+    @classmethod
     def get_versions(cls, db_conn, entity_id, limit=10, skip=0, **params):
         """
         Get the latest accepted version of the card.

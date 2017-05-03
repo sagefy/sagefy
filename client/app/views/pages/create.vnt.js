@@ -64,5 +64,11 @@ module.exports = broker.add({
         if(e) e.preventDefault()
         const id = el.id
         tasks.removeMemberFromCreateSet({id})
+    },
+
+    'click .create--unit-find__choose'(e, el) {
+        if(e) e.preventDefault()
+        const {id, name} = el.dataset
+        tasks.createChooseSetForUnits({id, name})
     }
 })

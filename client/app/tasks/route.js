@@ -21,6 +21,7 @@ const routes = [
     {path: '/topics/{id}/posts/{id}/update', task: 'openUpdatePost'},
     {path: '/search', task: 'openSearch'},
     {path: '/recommended_sets', task: 'getRecommendedSets'},
+    {path: '/create/unit/find', task: 'openFindSetForUnits'},
 ]
 
 module.exports = tasks.add({
@@ -118,5 +119,9 @@ module.exports = tasks.add({
         if (q) {
             return tasks.search({q})
         }
+    },
+
+    openFindSetForUnits() {
+        return tasks.getMyRecentSets()
     }
 })

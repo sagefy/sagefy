@@ -13,6 +13,8 @@
     units
     cards
     searchResults /// use top level instead
+    myRecentSets
+    myRecentUnits
 }
 
 /create
@@ -65,6 +67,19 @@ module.exports = function create(state = {}, action = {type: ''}) {
         const members = (state.set.members || [])
             .filter(member => member.id !== action.id)
         state.set.members = members
+        return state
+    }
+    if(action.type === 'SET_MY_RECENT_SETS') {
+        state = shallowCopy(state)
+        state.myRecentSets = action.sets
+        return state
+    }
+    if(action.type === 'CREATE_CHOOSE_SET_FOR_UNITS') {
+        state = shallowCopy(state)
+        state.selectedSet = {
+            id: action.id,
+            name: action.name,
+        }
         return state
     }
     return state

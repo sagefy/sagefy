@@ -41,6 +41,13 @@ sudo /etc/init.d/rethinkdb restart
 # Securing RethinkDB: https://rethinkdb.com/docs/security/
 # TODO-1 Use socks to access the admin UI
 
+#### Postgres #################################################################
+
+sudo add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo apt-get update
+sudo apt-get -y install postgresql-9.6
+
 #### Elasticsearch ############################################################
 
 # Securing ElasticSearch: http://do.co/2f3vNPZ

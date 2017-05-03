@@ -15,7 +15,7 @@ def get_my_recent_proposals(current_user, db_conn):
     }, db_conn)
 
 
-def get_proposal_entities(proposals, kind):
+def get_proposal_entity_versions(proposals, kind):
     """
     Given a list of proposals and a kind,
     pull out all the entity ids matching that kind.
@@ -35,8 +35,8 @@ def get_my_recently_created_units(current_user, db_conn):
     """
 
     proposals = get_my_recent_proposals(current_user, db_conn)
-    unit_ids = get_proposal_entities(proposals, 'unit')
-    units = Unit.list_by_entity_ids(db_conn, unit_ids)
+    unit_version_ids = get_proposal_entity_versions(proposals, 'unit')
+    units = Unit.list_by_version_ids(db_conn, unit_version_ids)
     return units
 
 
@@ -46,6 +46,6 @@ def get_my_recently_created_sets(current_user, db_conn):
     """
 
     proposals = get_my_recent_proposals(current_user, db_conn)
-    unit_ids = get_proposal_entities(proposals, 'set')
-    sets = Set.list_by_entity_ids(db_conn, unit_ids)
+    set_version_ids = get_proposal_entity_versions(proposals, 'set')
+    sets = Set.list_by_version_ids(db_conn, set_version_ids)
     return sets

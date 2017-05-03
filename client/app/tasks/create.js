@@ -37,5 +37,13 @@ module.exports = tasks.add({
             type: 'REMOVE_MEMBER_FROM_CREATE_SET',
             id,
         })
+    },
+
+    createChooseSetForUnits({id, name}) {
+        dispatch({
+            type: 'CREATE_CHOOSE_SET_FOR_UNITS',
+            id,
+            name,
+        })
     }
 })

@@ -3,12 +3,6 @@
     This schema is still evolving.
     No decision has been made.
 
-TO think about:
-    user settings
-    post entity_versions
-    set members
-    c_params guess/slip
-
     ENSURE is UTF-8
 */
 
@@ -29,6 +23,7 @@ CREATE TABLE users (
     email       text            NOT NULL UNIQUE,
     password    varchar(60)     NOT NULL,
     settings    jsonb           NOT NULL
+        /* jsonb?: add new settings without alter table */
 );
 
 CREATE TRIGGER update_users_modified
@@ -88,6 +83,7 @@ CREATE TABLE posts (
         CHECK (kind <> 'vote' OR replies_to_id IS NOT NULL),
     entity_versions jsonb       NULL
         CHECK (kind <> 'proposal' or entity_versions IS NOT NULL),
+        /* jsonb?: cant ref, cant enum composite */
     response    boolean         NULL
         CHECK (kind <> 'vote' OR response IS NOT NULL)
 );
@@ -113,6 +109,7 @@ CREATE TABLE notices (
     user_id     char(24)        NOT NULL REFERENCES users (id),
     kind        notice_kind     NOT NULL,
     data        jsonb           NOT NULL,
+        /* jsonb?: varies per kind */
     read        boolean         NOT NULL DEFAULT FALSE,
     tags        text[]          NULL DEFAULT array[]::text[]
 );
@@ -182,6 +179,7 @@ CREATE TABLE sets (
     /* and the rest.... */
     body        text            NOT NULL,
     members     jsonb           NOT NULL
+        /* jsonb?: cant ref, cant enum composite */
 );
 
 CREATE TRIGGER update_sets_modified
@@ -209,6 +207,7 @@ CREATE TABLE cards (
     require_ids char(24)[]      NOT NULL, /* cant ref non-unique, no ELEMENT */
     kind        card_kind       NOT NULL,
     data        jsonb           NOT NULL
+        /* jsonb?: varies per kind */
 );
 
 CREATE TRIGGER update_cards_modified
@@ -221,6 +220,7 @@ CREATE TABLE cards_parameters (
     modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     entity_id   char(24)        NOT NULL UNIQUE, /* cant ref non-unique */
     guess_distribution  jsonb   NOT NULL,
+        /* jsonb?: map */
     slip_distribution   jsonb   NOT NULL
 );
 
