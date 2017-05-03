@@ -70,5 +70,27 @@ module.exports = broker.add({
         if(e) e.preventDefault()
         const {id, name} = el.dataset
         tasks.createChooseSetForUnits({id, name})
-    }
+    },
+
+    'submit .create--unit-find__form'(e, el) {
+        if(e) e.preventDefault()
+        const q = el.querySelector('input').value
+        tasks.search({ q, kind: 'set' })
+    },
+
+    'click .create--unit-list__remove'(e, el) {
+        if(e) e.preventDefault()
+    },
+
+    'click .create--unit-list__create'(e, el) {
+        if(e) e.preventDefault()
+    },
+
+    'click .create--unit-list__add'(e, el) {
+        if(e) e.preventDefault()
+    },
+
+    'click .create--unit-list__submit'(e, el) {
+        if(e) e.preventDefault()
+    },
 })

@@ -41,7 +41,7 @@ module.exports = () => {
             a(
                 {href: '/search'},
                 icon('search'),
-                ' Search for it, then click edit.'
+                ' Search for it, then click edit'
             ),
             '.'
         )

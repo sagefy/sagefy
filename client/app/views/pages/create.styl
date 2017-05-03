@@ -20,6 +20,7 @@
     float left
 
 .create--unit-find__my-recents
+.create--unit-find__results
     @extend $list-options
 
     .preview--set__head
@@ -34,3 +35,27 @@
     color $base-color(50)
     font-style italic
     text-align center
+    border-radius $border-radius
+
+.create__home
+    @extend $button--bad
+
+    .create--unit-list &
+        float right
+
+.create--unit-list__submit
+    @extend $button--accent
+
+.create--unit-list__create
+    @extend $button--good
+    margin-right $unit * 2
+
+.create--unit-list__add
+    @extend $button--good
+
+.create--unit-list__remove
+    @extend $button--bad
+    float right
+
+.create--unit-list__units
+    @extend $list-options
