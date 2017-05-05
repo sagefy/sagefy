@@ -132,7 +132,8 @@ module.exports = broker.add({
         tasks.removeUnitFromSet({index})
     },
 
-    'click .create--unit-list__submit'(e, el) {
+    'click .create--unit-list__submit'(e) {
         if(e) e.preventDefault()
+        tasks.createUnitsProposal()
     },
 })

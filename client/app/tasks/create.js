@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const {dispatch} = require('../modules/store')
+const {dispatch, getState} = require('../modules/store')
 const tasks = require('../modules/tasks')
 // const request = require('../modules/request')
 
@@ -84,5 +84,40 @@ module.exports = tasks.add({
             body,
             kind
         })
+    },
+
+    createUnitsProposal() {
+        const state = getState()
+        const {selectedSet} = state.create
+        const data = {
+            topic: {
+                name: 'Add Units to This Set',
+                entity: {
+                    id: selectedSet.id,
+                    kind: 'set',
+                },
+            },
+            post: {
+                kind: 'proposal',
+                body: 'Add Units to Set',
+            }
+            /*
+                TODO!!!
+                sets: [{
+                    (entity_id?)
+                    //xxx name: values.name,
+                    //xxx body: values.body,
+                    members: values.members,
+                }],
+                units: [{
+                    (entity_id?)
+                    --or--
+                    name
+                    body
+                    require_ids
+                }, ...]
+            */
+        }
+        return tasks.createTopic(data)
     }
 })
