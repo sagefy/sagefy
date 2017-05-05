@@ -35,16 +35,11 @@ module.exports = (data) => {
                         body: entity.body,
                     }) :
                     null,
-                input({
+                Object.keys(entity).map(key => input({
                     type: 'hidden',
-                    name: `members.${index}.kind`,
-                    value: entity.kind,
-                }),
-                input({
-                    type: 'hidden',
-                    name: `members.${index}.id`,
-                    value: entity.id,
-                })
+                    name: `${data.name}.${index}.${key}`,
+                    value: entity[key],
+                }))
             ))
         ) : null,
         data.add ? a(

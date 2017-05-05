@@ -57,5 +57,25 @@ module.exports = tasks.add({
             id,
             name,
         })
+    },
+
+    stowProposedUnit({name, language, body, require_ids}) {
+        dispatch({
+            type: 'STOW_PROPOSED_UNIT',
+            name,
+            language,
+            body,
+            require_ids,
+        })
+    },
+
+    addRequireToProposedUnit({id, name, body, kind}) {
+        dispatch({
+            type: 'ADD_REQUIRE_TO_PROPOSED_UNIT',
+            id,
+            name,
+            body,
+            kind
+        })
     }
 })

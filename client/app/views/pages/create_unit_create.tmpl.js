@@ -1,9 +1,10 @@
-const {div, h1} = require('../../modules/tags')
+const {div, h1, a} = require('../../modules/tags')
 const {unitWizard} = require('./create_shared.fn')
 const {extend} = require('../../modules/utilities')
-const unitSchema = require('../../schemas/set')
+const unitSchema = require('../../schemas/unit')
 const form = require('../components/form.tmpl')
 const {createFieldsData} = require('../../modules/auxiliaries')
+const icon = require('../components/icon.tmpl')
 
 const fields = [{
     label: 'Unit Name',
@@ -25,7 +26,7 @@ const fields = [{
     label: 'Unit Requires',
     description: 'List the units required before this unit.',
     add: {
-        url: '/create/unit/???',
+        url: '#',
         label: 'Find a Unit to Require',
     },
 }, {
@@ -40,11 +41,13 @@ fields.forEach((field, index) => {
 })
 
 module.exports = function createUnitCreate(data) {
+    const proposedUnit = data.create && data.create.proposedUnit || {}
+
     const instanceFields = createFieldsData({
         schema: unitSchema,
         fields,
         errors: data.errors,
-        formData: data.formData,
+        formData: proposedUnit,
         sending: data.sending,
     })
 
@@ -52,7 +55,11 @@ module.exports = function createUnitCreate(data) {
         {id: 'create', className: 'page create--unit-create'},
         h1('Create a New Unit for Set'),
         unitWizard('list'),
-        form(instanceFields)
-        // Back to list view button
+        form(instanceFields),
+        a(
+            {href: '/create/unit/list'},
+            icon('back'),
+            ' Back to List of Units'
+        )
     )
 }

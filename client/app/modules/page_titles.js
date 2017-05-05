@@ -41,6 +41,9 @@ const routes = [{
     path: '/create/unit/add',
     title: 'Add Existing Unit to Set',
 }, {
+    path: '/create/unit/create/add',
+    title: 'Find Requires for New Unit',
+}, {
     path: '/create/unit/create',
     title: 'Create a New Unit for Set',
 }, {

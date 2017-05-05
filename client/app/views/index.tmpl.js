@@ -51,6 +51,9 @@ const routes = [{
     path: '/create/unit/add',
     tmpl: require('./pages/create_unit_add.tmpl'),
 }, {
+    path: '/create/unit/create/add',
+    tmpl: require('./pages/create_unit_create_add.tmpl'),
+}, {
     path: '/create/unit/create',
     tmpl: require('./pages/create_unit_create.tmpl'),
 }, {

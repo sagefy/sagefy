@@ -13,7 +13,7 @@ module.exports = function createUnitList(data) {
         h1('Add Units to Set'),
         unitWizard('list'),
 
-        h3(`Create and Add Units for ${setName}`),
+        h3(`The following units will be added to ${setName}`),
 
         // TODO List of existing units (if any)
 

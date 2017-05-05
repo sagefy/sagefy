@@ -15,6 +15,8 @@
     searchResults /// use top level instead
     myRecentSets
     myRecentUnits
+
+    proposedUnit  // popped into units
 }
 
 /create
@@ -92,6 +94,27 @@ module.exports = function create(state = {}, action = {type: ''}) {
             body: action.body,
             require_ids: action.require_ids,
             language: action.language,
+        })
+        return state
+    }
+    if(action.type === 'STOW_PROPOSED_UNIT') {
+        state = shallowCopy(state)
+        state.proposedUnit = copy(state.proposedUnit || {})
+        state.proposedUnit.name = action.name
+        state.proposedUnit.language = action.language
+        state.proposedUnit.body = action.body
+        state.proposedUnit.require_ids = action.require_ids
+        return state
+    }
+    if(action.type === 'ADD_REQUIRE_TO_PROPOSED_UNIT') {
+        state = shallowCopy(state)
+        state.proposedUnit = copy(state.proposedUnit || {})
+        state.proposedUnit.require_ids = state.proposedUnit.require_ids || []
+        state.proposedUnit.require_ids.push({
+            id: action.id,
+            name: action.name,
+            body: action.body,
+            kind: action.kind,
         })
         return state
     }

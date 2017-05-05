@@ -3,6 +3,7 @@ const tasks = require('../../modules/tasks')
 const {getFormValues, parseFormValues} =
     require('../../modules/auxiliaries')
 const setSchema = require('../../schemas/set')
+const unitSchema = require('../../schemas/unit')
 const {closest} = require('../../modules/utilities')
 
 module.exports = broker.add({
@@ -45,8 +46,11 @@ module.exports = broker.add({
         if(e) e.preventDefault()
         let values = getFormValues(el)
         values = parseFormValues(values)
-        const errors = tasks.validateForm(values, setSchema,
-            ['name', 'language', 'body']) // TODO require_ids
+        values.require_ids = values.require_ids &&
+            values.require_ids.map(rmap => rmap.id) ||
+            []
+        const errors = tasks.validateForm(values, unitSchema,
+            ['name', 'language', 'body', 'require_ids'])
         if(errors && errors.length) { return }
         tasks.addMemberToAddUnits(values)
         tasks.route('/create/unit/list')
@@ -83,6 +87,15 @@ module.exports = broker.add({
         tasks.createSetData(values)
     },
 
+    'click .create--unit-create .form-field--entities__a'(e, el) {
+        if(e) e.preventDefault()
+        const form = closest(el, 'form')
+        let values = getFormValues(form)
+        values = parseFormValues(values)
+        tasks.stowProposedUnit(values)
+        tasks.route('/create/unit/create/add')
+    },
+
     'click .create--set-create .form-field--entities__remove'(e, el) {
         if(e) e.preventDefault()
         const id = el.id
@@ -101,19 +114,25 @@ module.exports = broker.add({
         tasks.search({ q, kind: 'set' })
     },
 
+    'submit .create--unit-create-add__form'(e, el) {
+        if(e) e.preventDefault()
+        const q = el.querySelector('input').value
+        tasks.search({ q, kind: 'unit' })
+    },
+
+    'click .create--unit-create-add__add'(e, el) {
+        if(e) e.preventDefault()
+        const {id, name, body} = el.dataset
+        tasks.addRequireToProposedUnit({id, name, body, kind: 'unit'})
+    }
+
     /* 'click .create--unit-list__remove'(e, el) {
         if(e) e.preventDefault()
-    },
-
-    'click .create--unit-list__create'(e, el) {
-        if(e) e.preventDefault()
-    },
-
-    'click .create--unit-list__add'(e, el) {
-        if(e) e.preventDefault()
+        // TODO
     },
 
     'click .create--unit-list__submit'(e, el) {
         if(e) e.preventDefault()
+        // TODO
     }, */
 })
