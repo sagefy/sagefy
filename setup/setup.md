@@ -83,6 +83,7 @@ Run:
 
     ++ ssh into the server ++
     cd /var/www/rethinkdb-bu
+    rethinkdb dump
     b2 authorize_account xxx xxxxxxxx  # see dashlane
     b2 sync /var/www/rethinkdb-bu b2:sagefy-rethinkdb-backup2
 

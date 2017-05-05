@@ -82,5 +82,16 @@ module.exports = function create(state = {}, action = {type: ''}) {
         }
         return state
     }
+    if(action.type === 'ADD_MEMBER_TO_ADD_UNITS') {
+        state = shallowCopy(state)
+        state.units = state.units && state.units.slice() || []
+        state.units.push({
+            kind: action.kind,
+            id: action.id,
+            name: action.name,
+            body: action.body,
+        })
+        return state
+    }
     return state
 }

@@ -32,6 +32,16 @@ module.exports = tasks.add({
         })
     },
 
+    addMemberToAddUnits({kind, id, name, body}) {
+        dispatch({
+            type: 'ADD_MEMBER_TO_ADD_UNITS',
+            kind,
+            id,
+            name,
+            body,
+        })
+    },
+
     removeMemberFromCreateSet({id}) {
         dispatch({
             type: 'REMOVE_MEMBER_FROM_CREATE_SET',

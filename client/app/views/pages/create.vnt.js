@@ -47,10 +47,22 @@ module.exports = broker.add({
         tasks.search({ q, kind: 'unit,set' })
     },
 
+    'submit .create--unit-add__form'(e, el) {
+        if(e) e.preventDefault()
+        const q = el.querySelector('input').value
+        tasks.search({ q, kind: 'unit' })
+    },
+
     'click .create--set-add__add'(e, el) {
         if(e) e.preventDefault()
         const {kind, id, name, body} = el.dataset
         tasks.addMemberToCreateSet({kind, id, name, body})
+    },
+
+    'click .create--unit-add__add'(e, el) {
+        if(e) e.preventDefault()
+        const {kind, id, name, body} = el.dataset
+        tasks.addMemberToAddUnits({kind, id, name, body})
     },
 
     'click .create--set-create .form-field--entities__a'(e, el) {
@@ -78,7 +90,7 @@ module.exports = broker.add({
         tasks.search({ q, kind: 'set' })
     },
 
-    'click .create--unit-list__remove'(e, el) {
+    /* 'click .create--unit-list__remove'(e, el) {
         if(e) e.preventDefault()
     },
 
@@ -92,5 +104,5 @@ module.exports = broker.add({
 
     'click .create--unit-list__submit'(e, el) {
         if(e) e.preventDefault()
-    },
+    }, */
 })
