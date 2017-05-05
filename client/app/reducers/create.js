@@ -90,6 +90,8 @@ module.exports = function create(state = {}, action = {type: ''}) {
             id: action.id,
             name: action.name,
             body: action.body,
+            require_ids: action.require_ids,
+            language: action.language,
         })
         return state
     }

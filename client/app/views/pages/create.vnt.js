@@ -41,6 +41,17 @@ module.exports = broker.add({
         tasks.createSetProposal(data)
     },
 
+    'submit .create--unit-create form'(e, el) {
+        if(e) e.preventDefault()
+        let values = getFormValues(el)
+        values = parseFormValues(values)
+        const errors = tasks.validateForm(values, setSchema,
+            ['name', 'language', 'body']) // TODO require_ids
+        if(errors && errors.length) { return }
+        tasks.addMemberToAddUnits(values)
+        tasks.route('/create/unit/list')
+    },
+
     'submit .create--set-add__form'(e, el) {
         if(e) e.preventDefault()
         const q = el.querySelector('input').value
@@ -61,8 +72,8 @@ module.exports = broker.add({
 
     'click .create--unit-add__add'(e, el) {
         if(e) e.preventDefault()
-        const {kind, id, name, body} = el.dataset
-        tasks.addMemberToAddUnits({kind, id, name, body})
+        const {id, name, body} = el.dataset
+        tasks.addMemberToAddUnits({id, name, body})
     },
 
     'click .create--set-create .form-field--entities__a'(e, el) {

@@ -17,8 +17,8 @@ const fields = [{
     value: 'en'
 }, {
     label: 'Unit Goal',
-    description: 'Start with a verb, such as: Compute the value of ' +
-                 'dividing two whole numbers.',
+    description: 'Start with a verb, such as: "Compute the value of ' +
+                 'dividing two whole numbers."',
     name: 'body'
 }, {
     name: 'require_ids',
@@ -49,7 +49,7 @@ module.exports = function createUnitCreate(data) {
     })
 
     return div(
-        {id: 'create', className: 'page'},
+        {id: 'create', className: 'page create--unit-create'},
         h1('Create a New Unit for Set'),
         unitWizard('list'),
         form(instanceFields)

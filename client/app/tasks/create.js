@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const {dispatch} = require('../modules/store')
 const tasks = require('../modules/tasks')
 // const request = require('../modules/request')
@@ -32,13 +33,14 @@ module.exports = tasks.add({
         })
     },
 
-    addMemberToAddUnits({kind, id, name, body}) {
+    addMemberToAddUnits({id, name, body, language = 'en', require_ids = []}) {
         dispatch({
             type: 'ADD_MEMBER_TO_ADD_UNITS',
-            kind,
             id,
             name,
             body,
+            language,
+            require_ids,
         })
     },
 
