@@ -71,6 +71,13 @@ module.exports = function create(state = {}, action = {type: ''}) {
         state.set.members = members
         return state
     }
+    if(action.type === 'REMOVE_UNIT_FROM_SET') {
+        state = shallowCopy(state)
+        const units = copy(state.units || [])
+        units.splice(action.index, 1)
+        state.units = units
+        return state
+    }
     if(action.type === 'SET_MY_RECENT_SETS') {
         state = shallowCopy(state)
         state.myRecentSets = action.sets

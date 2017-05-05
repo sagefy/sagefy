@@ -124,15 +124,15 @@ module.exports = broker.add({
         if(e) e.preventDefault()
         const {id, name, body} = el.dataset
         tasks.addRequireToProposedUnit({id, name, body, kind: 'unit'})
-    }
+    },
 
-    /* 'click .create--unit-list__remove'(e, el) {
+    'click .create--unit-list__remove'(e, el) {
         if(e) e.preventDefault()
-        // TODO
+        const index = el.dataset.index
+        tasks.removeUnitFromSet({index})
     },
 
     'click .create--unit-list__submit'(e, el) {
         if(e) e.preventDefault()
-        // TODO
-    }, */
+    },
 })

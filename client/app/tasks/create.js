@@ -51,6 +51,13 @@ module.exports = tasks.add({
         })
     },
 
+    removeUnitFromSet({index}) {
+        dispatch({
+            type: 'REMOVE_UNIT_FROM_SET',
+            index,
+        })
+    },
+
     createChooseSetForUnits({id, name}) {
         dispatch({
             type: 'CREATE_CHOOSE_SET_FOR_UNITS',
