@@ -146,6 +146,7 @@ We are more effective as team or as a community. Often, but not always.
 - Be honest with learners.
 - Hold users accountable.
 - Don't cover up non-private information.
+- Invite and offer feedback regularly.
 
 ### How does Sagefy implement this idea?
 
