@@ -26,26 +26,26 @@ const routes = [{
     path: '/search',
     title: 'Search',
 }, {
-    path: '/create/set/create',
-    title: 'Create a New Set',
+    path: '/create/subject/create',
+    title: 'Create a New Subject',
 }, {
-    path: '/create/set/add',
-    title: 'Add Existing Members to a Set',
+    path: '/create/subject/add',
+    title: 'Add Existing Members to a Subject',
 }, {
     path: '/create/unit/find',
-    title: 'Find a Set to Add Units',
+    title: 'Find a Subject to Add Units',
 }, {
     path: '/create/unit/list',
-    title: 'Add Units to Set',
+    title: 'Add Units to Subject',
 }, {
     path: '/create/unit/add',
-    title: 'Add Existing Unit to Set',
+    title: 'Add Existing Unit to Subject',
 }, {
     path: '/create/unit/create/add',
     title: 'Find Requires for New Unit',
 }, {
     path: '/create/unit/create',
-    title: 'Create a New Unit for Set',
+    title: 'Create a New Unit for Subject',
 }, {
     path: '/create/card/find',
     title: 'Find a Unit to Add Cards',
@@ -81,31 +81,31 @@ const routes = [{
     path: '/units/{id}',
     title: 'Unit',
 }, {
-    path: '/sets/{id}',
-    title: 'Set',
+    path: '/subjects/{id}',
+    title: 'Subject',
 }, {
-    path: /^\/(card|unit|set)s\/([\w\d-]+)\/versions$/,
+    path: /^\/(card|unit|subject)s\/([\w\d-]+)\/versions$/,
     title: 'Versions',
 }, {
     path: '/follows',
     title: 'Follows',
 }, {
-    path: '/recommended_sets',
-    title: 'Recommended Sets',
+    path: '/recommended_subjects',
+    title: 'Recommended Subjects',
 }, {
-    path: '/my_sets',
-    title: 'My Sets',
+    path: '/my_subjects',
+    title: 'My Subjects',
 }, {
-    path: '/sets/{id}/tree',
-    title: 'Set Tree',
+    path: '/subjects/{id}/tree',
+    title: 'Subject Tree',
 }, {
-    path: '/sets/{id}/choose_unit',
+    path: '/subjects/{id}/choose_unit',
     title: 'Choose Unit',
 }, {
     path: '/cards/{id}/learn',
     title: 'Learn',
 }, {
-    path: '/sets/{id}/landing',
+    path: '/subjects/{id}/landing',
     title: 'An Introduction to Electronic Music',
 }, {
     path: /^\/?$/,

@@ -13,7 +13,7 @@ description: |
 ---
 */
 
-for set in (small 14 24) (normal 16 24) (accent 18 24) (large 20 24) (big 24 36) (epic 32 36)
-    $font-size-{set[0]}
-        font-size unit(set[1], "px")
-        line-height unit(set[2], "px")
+for g in (small 14 24) (normal 16 24) (accent 18 24) (large 20 24) (big 24 36) (epic 32 36)
+    $font-size-{g[0]}
+        font-size unit(g[1], "px")
+        line-height unit(g[2], "px")

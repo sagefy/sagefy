@@ -8,12 +8,12 @@ module.exports = tasks.add({
         })
     },
 
-    updateMenuContext({card, unit, set}) {
+    updateMenuContext({card, unit, subject}) {
         dispatch({
             type: 'UPDATE_MENU_CONTEXT',
             card,
             unit,
-            set,
+            subject,
         })
     }
 })

@@ -4,91 +4,91 @@ const {matchesRoute} = require('../modules/auxiliaries')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
-    getSet(id) {
-        dispatch({type: 'GET_SET', id})
+    getSubject(id) {
+        dispatch({type: 'GET_SUBJECT', id})
         return request({
             method: 'GET',
-            url: `/s/sets/${id}`,
+            url: `/s/subjects/${id}`,
             data: {},
         })
             .then((response) => {
-                const set = response.set
+                const subject = response.subject
                 ;['topics', 'versions', 'units'].forEach(r => {
-                    set[r] = response[r]
+                    subject[r] = response[r]
                 })
                 dispatch({
-                    type: 'ADD_SET',
-                    message: 'get set success',
-                    set,
-                })
-            })
-            .catch((errors) => {
-                dispatch({
-                    type: 'SET_ERRORS',
-                    message: 'get set failure',
-                    errors,
-                })
-            })
-    },
-
-    getRecommendedSets() {
-        dispatch({type: 'GET_RECOMMENDED_SETS'})
-        return request({
-            method: 'GET',
-            url: '/s/sets/recommended',
-            data: {},
-        })
-            .then((response) => {
-                dispatch({
-                    type: 'SET_RECOMMENDED_SETS',
-                    message: 'get recommended sets success',
-                    recommendedSets: response.sets,
+                    type: 'ADD_SUBJECT',
+                    message: 'get subject success',
+                    subject,
                 })
             })
             .catch((errors) => {
                 dispatch({
                     type: 'SET_ERRORS',
-                    message: 'get recommended sets failure',
+                    message: 'get subject failure',
                     errors,
                 })
             })
     },
 
-    listSetVersions(id) {
-        dispatch({type: 'LIST_SET_VERSIONS', id})
+    getRecommendedSubjects() {
+        dispatch({type: 'GET_RECOMMENDED_SUBJECTS'})
         return request({
             method: 'GET',
-            url: `/s/sets/${id}/versions`,
+            url: '/s/subjects/recommended',
             data: {},
         })
             .then((response) => {
                 dispatch({
-                    type: 'ADD_SET_VERSIONS',
+                    type: 'SET_RECOMMENDED_SUJBECTS',
+                    message: 'get recommended subjects success',
+                    recommendedSubjects: response.subjects,
+                })
+            })
+            .catch((errors) => {
+                dispatch({
+                    type: 'SET_ERRORS',
+                    message: 'get recommended subjects failure',
+                    errors,
+                })
+            })
+    },
+
+    listSubjectVersions(id) {
+        dispatch({type: 'LIST_SUBJECT_VERSIONS', id})
+        return request({
+            method: 'GET',
+            url: `/s/subjects/${id}/versions`,
+            data: {},
+        })
+            .then((response) => {
+                dispatch({
+                    type: 'ADD_SUBJECT_VERSIONS',
                     versions: response.versions,
                     entity_id: id,
-                    message: 'list set versions success',
+                    message: 'list subject versions success',
                 })
             })
             .catch((errors) => {
                 dispatch({
                     type: 'SET_ERRORS',
-                    message: 'list set versions failure',
+                    message: 'list subject versions failure',
                     errors,
                 })
             })
     },
 
-    getSetTree(id) {
-        dispatch({type: 'GET_SET_TREE', id})
+    getSubjectTree(id) {
+        dispatch({type: 'GET_SUBJECT_TREE', id})
         return request({
             method: 'GET',
-            url: `/s/sets/${id}/tree`,
+            url: `/s/subjects/${id}/tree`,
             data: {},
         })
             .then((response) => {
                 dispatch({
-                    type: 'ADD_SET_TREE',
-                    message: 'get set tree success',
+                    type: 'ADD_SUBJECT_TREE',
+                    message: 'get subject tree success',
                     tree: response,
                     id,
                 })
@@ -102,7 +102,7 @@ module.exports = tasks.add({
             .catch((errors) => {
                 dispatch({
                     type: 'SET_ERRORS',
-                    message: 'get set tree failure',
+                    message: 'get subject tree failure',
                     errors,
                 })
             })
@@ -115,18 +115,18 @@ module.exports = tasks.add({
         })
     },
 
-    getSetUnits(id) {
-        dispatch({type: 'GET_SET_UNITS', id})
+    getSubjectUnits(id) {
+        dispatch({type: 'GET_SUBJECT_UNITS', id})
         return request({
             method: 'GET',
-            url: `/s/sets/${id}/units`,
+            url: `/s/subjects/${id}/units`,
             data: {},
         })
             .then((response) => {
                 dispatch({
                     type: 'SET_CHOOSE_UNIT',
                     chooseUnit: response,
-                    message: 'get set units success',
+                    message: 'get subject units success',
                 })
                 dispatch({
                     type: 'SET_NEXT',
@@ -136,28 +136,28 @@ module.exports = tasks.add({
             .catch((errors) => {
                 dispatch({
                     type: 'SET_ERRORS',
-                    message: 'get set units failure',
+                    message: 'get subject units failure',
                     errors,
                 })
             })
     },
 
-    chooseUnit(setId, unitId) {
-        dispatch({type: 'CHOOSE_UNIT', setId, unitId})
+    chooseUnit(subjectId, unitId) {
+        dispatch({type: 'CHOOSE_UNIT', subjectId, unitId})
         return request({
             method: 'POST',
-            url: `/s/sets/${setId}/units/${unitId}`,
+            url: `/s/subjects/${subjectId}/units/${unitId}`,
             data: {},
         })
             .then((response) => {
-                dispatch({type: 'CHOOSE_UNIT_SUCCESS', setId, unitId})
+                dispatch({type: 'CHOOSE_UNIT_SUCCESS', subjectId, unitId})
                 const {next} = response
                 dispatch({
                     type: 'SET_NEXT',
                     next,
                 })
                 tasks.updateMenuContext({
-                    set: setId,
+                    subject: subjectId,
                     unit: unitId,
                     card: false,
                 })
@@ -175,23 +175,23 @@ module.exports = tasks.add({
             })
     },
 
-    getMyRecentSets() {
-        dispatch({type: 'GET_MY_RECENT_SETS'})
+    getMyRecentSubjects() {
+        dispatch({type: 'GET_MY_RECENT_SUBJECTS'})
         return request({
             method: 'GET',
-            url: '/s/sets:get_my_recently_created',
+            url: '/s/subjects:get_my_recently_created',
             data: {},
         })
             .then((response) => {
                 dispatch({
-                    type: 'SET_MY_RECENT_SETS',
-                    sets: response.sets,
+                    type: 'SET_MY_RECENT_SUBJECTS',
+                    subjects: response.subjects,
                 })
             })
             .catch((errors) => {
                 dispatch({
                     type: 'SET_ERRORS',
-                    message: 'get set my recent setsfailure',
+                    message: 'get my recent subjects failure',
                     errors,
                 })
             })

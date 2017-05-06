@@ -4,14 +4,14 @@ const {div, h1, ul, li, p, button, a, br} =
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 const info = require('../components/entity_info.tmpl')
-const previewSetHead = require('../components/preview_set_head.tmpl')
+const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 
 module.exports = (data) => {
-    if(!data.userSets) { return spinner() }
+    if(!data.userSubjects) { return spinner() }
 
     return div(
-        {id: 'my-sets', className: 'page'},
-        h1('My Sets'),
+        {id: 'my-subjects', className: 'page'},
+        h1('My Subjects'),
         p(
             {className: 'alert--accent'},
             icon('follow'),
@@ -21,45 +21,45 @@ module.exports = (data) => {
             'Thank you!'
         ),  // TODO-2 Delete this warning message
         ul(
-          {className: 'my-sets__list'},
-          data.userSets.map(set => userSet(set))
+          {className: 'my-subjects__list'},
+          data.userSubjects.map(subject => userSubject(subject))
         ),
-        data.userSets.length === 0 ? p(
+        data.userSubjects.length === 0 ? p(
             a(
                 // TODO-2 temporary {href: '/search?mode=as_learner'},
                 {
-                    href: '/recommended_sets',
-                    className: 'my-sets__find-first-set',
+                    href: '/recommended_subjects',
+                    className: 'my-subjects__find-first-subject',
                 },
                 icon('search'),
-                ' See Recommended Sets'
+                ' See Recommended Subjects'
             ),
             ' to get started.'
         ) : p(
             a(
                 // TODO-2 temporary {href: '/search?mode=as_learner'},
-                {href: '/recommended_sets'},
+                {href: '/recommended_subjects'},
                 icon('search'),
-                ' Find another set'
+                ' Find another subject'
             )
         ),
         info()
     )
 }
 
-const userSet = (data) =>
+const userSubject = (data) =>
     li(
-        {className: 'my-set'},
+        {className: 'my-subject'},
         button(
             {
-                className: 'my-sets__engage-set',
+                className: 'my-subjects__engage-subject',
                 id: data.entity_id
             },
             'Engage ',
             icon('next')
         ),
         div(
-            {className: 'my-sets__my-set-right'},
-            previewSetHead({ name: data.name, body: data.body })
+            {className: 'my-subjects__my-subject-right'},
+            previewSubjectHead({ name: data.name, body: data.body })
         )
     )

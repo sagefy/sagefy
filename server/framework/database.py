@@ -50,9 +50,9 @@ def setup_db():
 
     from models.card import Card
     from models.unit import Unit
-    from models.set import Set
+    from models.subject import Subject
 
-    models = (Card, Unit, Set,)
+    models = (Card, Unit, Subject,)
 
     for model_cls in models:
         tablename = getattr(model_cls, 'tablename', None)
@@ -77,12 +77,12 @@ def setup_db():
     from schemas.notice import schema as notice_schema
     from schemas.follow import schema as follow_schema
     from schemas.response import schema as response_schema
-    from schemas.user_sets import schema as user_sets_schema
+    from schemas.user_subjects import schema as user_subjects_schema
     from schemas.topic import schema as topic_schema
     from schemas.card_parameters import schema as card_parameters_schema
     from schemas.post import schema as post_schema
     schemas = (user_schema, notice_schema, follow_schema, response_schema,
-               user_sets_schema, topic_schema, card_parameters_schema,
+               user_subjects_schema, topic_schema, card_parameters_schema,
                post_schema,)
     for schema in schemas:
         tablename = schema['tablename']

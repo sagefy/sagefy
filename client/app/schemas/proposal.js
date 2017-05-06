@@ -12,7 +12,7 @@ module.exports = extend({}, post, {
         options: [
             {value: 'card'},
             {value: 'unit'},
-            {value: 'set'}
+            {value: 'subject'}
         ],
         validations: [required]
     }

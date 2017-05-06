@@ -46,10 +46,10 @@ module.exports = tasks.add({
                         type: 'ADD_UNIT',
                         unit: response.unit,
                     })
-                } else if ('set' in response) {
+                } else if ('subject' in response) {
                     dispatch({
-                        type: 'ADD_SET',
-                        set: response.set,
+                        type: 'ADD_SUBJECT',
+                        subject: response.subject,
                     })
                 }
             })

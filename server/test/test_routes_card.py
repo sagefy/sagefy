@@ -141,7 +141,7 @@ def test_learn_card(db_conn, session, cards_table):
 
     redis.set('learning_context_abcd1234', json.dumps({
         'unit': {'entity_id': 'vbnm7890'},
-        'set': {'entity_id': 'jkl;1234'},
+        'subject': {'entity_id': 'jkl;1234'},
     }))
 
     request = {'cookies': {'session_id': session}, 'db_conn': db_conn}
@@ -150,7 +150,7 @@ def test_learn_card(db_conn, session, cards_table):
     assert 'order' not in response['card']
     # TODO-3 assert 'correct' not in response['card']['options'][0]
     # TODO-3 assert 'feedback' not in response['card']['options'][0]
-    assert 'set' in response
+    assert 'subject' in response
     assert 'unit' in response
 
     redis.delete('learning_context_abcd1234')
@@ -207,7 +207,7 @@ def test_learn_card_400(db_conn, cards_table, session):
 
     redis.set('learning_context_abcd1234', json.dumps({
         'unit': {'entity_id': 'gfds6543'},
-        'set': {'entity_id': '6543hgfs'},
+        'subject': {'entity_id': '6543hgfs'},
     }))
 
     request = {'cookies': {'session_id': session}, 'db_conn': db_conn}
@@ -251,7 +251,7 @@ def test_respond_card(db_conn, units_table, cards_table,
     }).run(db_conn)
 
     redis.set('learning_context_abcd1234', json.dumps({
-        'set': {'entity_id': 'jkl;1234'},
+        'subject': {'entity_id': 'jkl;1234'},
         'card': {'entity_id': 'tyui4567'},
     }))
 
@@ -323,7 +323,7 @@ def test_respond_card_400a(db_conn, session, cards_table):
 
     redis.set('learning_context_abcd1234', json.dumps({
         'unit': {'entity_id': 'vbnm7890'},
-        'set': {'entity_id': 'jkl;1234'},
+        'subject': {'entity_id': 'jkl;1234'},
         'card': {'entity_id': 'gfds3456'},
     }))
 
@@ -366,7 +366,7 @@ def test_respond_card_400b(db_conn, session, cards_table):
 
     redis.set('learning_context_abcd1234', json.dumps({
         'unit': {'entity_id': 'vbnm7890'},
-        'set': {'entity_id': 'jkl;1234'},
+        'subject': {'entity_id': 'jkl;1234'},
         'card': {'entity_id': 'tyui4567'},
     }))
 

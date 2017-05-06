@@ -153,12 +153,12 @@ def set_learning_context(user, **d):
     """
     Update the learning context of the user.
 
-    Keys: `card`, `unit`, `set`
+    Keys: `card`, `unit`, `subject`
         `next`: `method` and `path`
     """
 
     context = get_learning_context(user)
-    d = pick(d, ('card', 'unit', 'set', 'next'))
+    d = pick(d, ('card', 'unit', 'subject', 'next'))
     context.update(d)
     context = compact_dict(context)
     key = 'learning_context_{id}'.format(id=user['id'])

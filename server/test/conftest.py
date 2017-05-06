@@ -106,8 +106,8 @@ def units_table(request, db_conn):
 
 
 @pytest.fixture
-def sets_table(request, db_conn):
-    return table('sets', request, db_conn)
+def subjects_table(request, db_conn):
+    return table('subjects', request, db_conn)
 
 
 @pytest.fixture
@@ -116,8 +116,8 @@ def follows_table(request, db_conn):
 
 
 @pytest.fixture
-def users_sets_table(request, db_conn):
-    return table('users_sets', request, db_conn)
+def users_subjects_table(request, db_conn):
+    return table('users_subjects', request, db_conn)
 
 
 @pytest.fixture

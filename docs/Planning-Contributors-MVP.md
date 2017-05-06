@@ -43,7 +43,7 @@ Contributor Models
 - body (objective, goal, description)
 - requires
 
-### Set
+### Subject
 
 - id
 - created
@@ -94,11 +94,11 @@ Contributor Models
 Contributor Endpoints
 ---------------------
 
-### Card, Unit, Set API
+### Card, Unit, Subject API
 
 - GET `/cards/{id}`
 - GET `/units/{id}`
-- GET `/sets/{id}`
+- GET `/subjects/{id}`
 
 ### Discussion API
 
@@ -179,8 +179,8 @@ Contributor Screen Requirements & Wireframes
         - Kind selection changes fields available
     - **Create/Edit Unit**
         - (Unit, )Name, Language, Body, Tags, Requires
-    - **Create/Edit Set**
-        - (Set, )Name, Language, Body, Tags, Members
+    - **Create/Edit Subject**
+        - (Subject, )Name, Language, Body, Tags, Members
 - **Flag**
     - Reason 'offensive', 'irrelevant', 'incorrect', 'unpublished', 'duplicate', 'inaccessible'
 - **Vote**
@@ -198,7 +198,7 @@ Contributor Screen Requirements & Wireframes
     - Language
     - ...
 - Kinds of Entities
-    - Set
+    - Subject
         - Show name, body (truncated), contains modules, components (truncated)
     - Unit
         - Show name, kind, body (truncated), requires (truncated)
@@ -255,15 +255,15 @@ Contributor Screen Requirements & Wireframes
     - Relationships
         - Requires (unit)
         - Required By (unit)
-        - Belongs to (set)
-- **Set**
+        - Belongs to (subject)
+- **Subject**
     - Contents
         - Body
         - Members
     - Stats
         - Number of units > link to search
     - Relationships
-        - Belongs to (set)
+        - Belongs to (subject)
 
 <img src="https://docs.google.com/drawings/d/1S8b5GQnZ2Wj7XPG0cYvS-ac_Syhx6Gcb5lq0gsYUbWk/pub?w=960&amp;h=1920">
 

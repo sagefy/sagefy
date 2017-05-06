@@ -10,7 +10,7 @@ const {matchesRoute} = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 
-// TODO-2 show the learner their overall set progress as a percent or bar
+// TODO-2 show the learner their overall subject progress as a percent or bar
 
 const radius = 9
 const distance = 36
@@ -18,7 +18,7 @@ const distance = 36
 module.exports = (data) => {
     let width
     const id = data.routeArgs[0]
-    const treeData = data.setTrees && data.setTrees[id]
+    const treeData = data.subjectTrees && data.subjectTrees[id]
 
     if(!treeData) { return spinner() }
 
@@ -37,19 +37,19 @@ module.exports = (data) => {
         u.entity_id === data.currentTreeUnit)
 
     let chooseUnitID
-    let cardID
+    let cardId
     if (data.next) {
-        chooseUnitID = matchesRoute(data.next.path, '/s/sets/{id}/units')[0]
-        cardID = matchesRoute(data.next.path, '/s/cards/{id}/learn')[0]
+        chooseUnitID = matchesRoute(data.next.path, '/s/subjects/{id}/units')[0]
+        cardId = matchesRoute(data.next.path, '/s/cards/{id}/learn')[0]
     }
 
     return div(
         {id: 'tree', className: 'page'},
-        h1(`Tree: ${treeData.set.name}`),
+        h1(`Tree: ${treeData.subject.name}`),
         asContrib ? p(a(
-            {href: `/sets/${id}`},
-            icon('set'),
-            ' View set information'
+            {href: `/subjects/${id}`},
+            icon('subject'),
+            ' View subject information'
         )) : null,
         p(
           'You can click the nodes to see the unit name.'
@@ -72,13 +72,13 @@ module.exports = (data) => {
         chooseUnitID ? p(a(
             {
                 className: 'tree__continue',
-                href: `/sets/${chooseUnitID}/choose_unit`,
+                href: `/subjects/${chooseUnitID}/choose_unit`,
             },
             'Next ',
             icon('next')
         )) : null,
-        cardID ? p(a(
-            {className: 'tree__continue', href: `/cards/${cardID}/learn`},
+        cardId ? p(a(
+            {className: 'tree__continue', href: `/cards/${cardId}/learn`},
             'Next ',
             icon('next')
         )) : null

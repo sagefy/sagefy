@@ -4,7 +4,7 @@ module.exports = {
     unitWizard(state = 'find') {
         return wizard({
             options: [{
-                label: 'Find Set',
+                label: 'Find Subject',
                 name: 'find',
             }, {
                 label: 'Add Units',

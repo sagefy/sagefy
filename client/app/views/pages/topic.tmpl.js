@@ -53,7 +53,7 @@ const entity = (topic, data) => {
     const entityID = topic.entity.id
     const entityObj = entityKind === 'card' ? data.cards[entityID]
                   : entityKind === 'unit' ? data.units[entityID]
-                  : entityKind === 'set' ? data.sets[entityID]
+                  : entityKind === 'subject' ? data.subjects[entityID]
                   : {}
     const entityName = entityObj && entityObj.name || ''
     return h3(`${ucfirst(entityKind)}: ${entityName}`)

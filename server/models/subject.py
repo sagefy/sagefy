@@ -7,13 +7,13 @@ from modules.validations import is_required, is_string, is_list, is_one_of, \
 from modules.memoize_redis import memoize_redis
 
 
-class Set(EntityMixin, Model):
+class Subject(EntityMixin, Model):
     """
-    A set is a collection of units and other sets.
-    Sets can vary greatly in scale.
-    A graph is automatically formed based on the units and sets specified.
+    A subject is a collection of units and other subjects.
+    Subjects can vary greatly in scale.
+    A graph is automatically formed based on the units and subjects specified.
     """
-    tablename = 'sets'
+    tablename = 'subjects'
 
     schema = dict(EntityMixin.schema.copy(), **{
         'body': {
@@ -27,7 +27,7 @@ class Set(EntityMixin, Model):
                 },
                 'kind': {
                     'validate': (is_required, is_string, (
-                        is_one_of, 'unit', 'set'
+                        is_one_of, 'unit', 'subject'
                     )),
                 }
             }
@@ -75,9 +75,9 @@ class Set(EntityMixin, Model):
             entity_ids = [
                 member['id']
                 for member in members
-                if member['kind'] == 'set'
+                if member['kind'] == 'subject'
             ]
-            entities = Set.list_by_entity_ids(db_conn, entity_ids)
+            entities = Subject.list_by_entity_ids(db_conn, entity_ids)
             for entity in entities:
                 if entity['entity_id'] == main_id:
                     found['cycle'] = True
@@ -104,44 +104,48 @@ class Set(EntityMixin, Model):
     @classmethod
     def list_by_unit_id(cls, db_conn, unit_id):
         """
-        Get a list of sets which contain the given member ID. Recursive.
+        Get a list of subjects which contain the given member ID. Recursive.
 
         # TODO-2 is there a way to simplify this method?
         """
 
         def _():
-            # *** First, find the list of sets
+            # *** First, find the list of subjects
             #     directly containing the member ID. ***
 
             query = (cls.start_accepted_query()
                         .filter(r.row['members'].contains(
                             lambda member: member['id'] == unit_id
                         )))
-            sets = query.run(db_conn)
+            subjects = query.run(db_conn)
 
-            # *** Second, find all the sets containing
-            #     those sets... recursively. ***
+            # *** Second, find all the subjects containing
+            #     those subjects... recursively. ***
 
-            found_sets, all_sets = sets, []
+            found_subjects, all_subjects = subjects, []
 
-            while found_sets:
-                set_ids = {set_['entity_id'] for set_ in found_sets}
-                all_sets += found_sets
+            while found_subjects:
+                subject_ids = {
+                    subject['entity_id']
+                    for subject in found_subjects
+                }
+                all_subjects += found_subjects
                 query = (cls.start_accepted_query()
                             .filter(r.row['members'].contains(
                                 lambda member:
-                                    r.expr(set_ids).contains(member['id'])
+                                    r.expr(subject_ids).contains(member['id'])
                             )))
-                found_sets = query.run(db_conn)
+                found_subjects = query.run(db_conn)
 
-            return all_sets
+            return all_subjects
 
-        key = 'list_sets_by_unit_id_{id}'.format(id=unit_id)
-        return [Set(data) for data in memoize_redis(key, _)]
+        key = 'list_subjects_by_unit_id_{id}'.format(id=unit_id)
+        return [Subject(data) for data in memoize_redis(key, _)]
 
     def list_units(self, db_conn):
         """
-        Get the list of units contained within the set. Recursive. Connecting.
+        Get the list of units contained within the subject.
+        Recursive. Connecting.
 
         TODO-2 OMG break into smaller functions
         TODO-2 Should this method be part of the Unit class/module,
@@ -150,21 +154,23 @@ class Set(EntityMixin, Model):
 
         def _():
             # *** First, we need to break down
-            #     the set into a list of known units. ***
+            #     the subject into a list of known units. ***
 
             unit_ids = set()
-            sets = [self]
+            subjects = [self]
 
-            while sets:
-                set_ids = set()
-                for set_ in sets:
-                    unit_ids.update({member['id']
-                                     for member in set_.data.get('members')
-                                     if member['kind'] == 'unit'})
-                    set_ids.update({member['id']
-                                    for member in set_.data.get('members')
-                                    if member['kind'] == 'set'})
-                sets = Set.list_by_entity_ids(db_conn, set_ids)
+            while subjects:
+                subject_ids = set()
+                for subject in subjects:
+                    unit_ids.update({
+                        member['id']
+                        for member in subject.data.get('members')
+                        if member['kind'] == 'unit'})
+                    subject_ids.update({
+                        member['id']
+                        for member in subject.data.get('members')
+                        if member['kind'] == 'subject'})
+                subjects = Subject.list_by_entity_ids(db_conn, subject_ids)
 
             # *** Second, we need to find all
             #     the required connecting units. ***
@@ -202,5 +208,5 @@ class Set(EntityMixin, Model):
             return units
 
         # If we already have it stored, use that
-        key = 'set_units_{id}'.format(id=self['entity_id'])
+        key = 'subject_{id}'.format(id=self['entity_id'])
         return [Unit(data) for data in memoize_redis(key, _)]

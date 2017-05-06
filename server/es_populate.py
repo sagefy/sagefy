@@ -60,21 +60,21 @@ def es_populate():
             id=card['entity_id'],
         )
 
-    # Add sets
-    sets = (r.table('sets')
-             .filter(r.row['status'].eq('accepted'))
-             .group('entity_id')
-             .max('created')
-             .default(None)
-             .ungroup()
-             .map(r.row['reduction'])
-             .run(db_conn))
-    for set_ in sets:
+    # Add subjects
+    subjects = (r.table('subjects')
+                 .filter(r.row['status'].eq('accepted'))
+                 .group('entity_id')
+                 .max('created')
+                 .default(None)
+                 .ungroup()
+                 .map(r.row['reduction'])
+                 .run(db_conn))
+    for subject in subjects:
         es.index(
             index='entity',
-            doc_type='set',
-            body=json_prep(set_),
-            id=set_['entity_id'],
+            doc_type='subject',
+            body=json_prep(subject),
+            id=subject['entity_id'],
         )
 
     # Add topics

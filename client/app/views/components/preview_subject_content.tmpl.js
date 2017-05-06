@@ -7,17 +7,17 @@ const {ucfirst} = require('../../modules/auxiliaries')
 
 // TODO-2 show diff option
 
-module.exports = function previewSetContent({
+module.exports = function previewSubjectContent({
     status,
     available,
     created,
     language,
-    members,  // units and sets: kind url name id
+    members,  // units and subjects: kind url name id
     units,  // just a list of units: url name id
     tags,
 }) {
     return div(
-        {className: 'preview--set__content'},
+        {className: 'preview--subject__content'},
         previewCommon({created, status, available, language}),
         units && units.length ? [
             h4('List of Units'),
@@ -30,11 +30,11 @@ module.exports = function previewSetContent({
         members && members.length ? [
             h4('List of Members'),
             ul(
-                {className: 'preview--set__content__members'},
+                {className: 'preview--subject__content__members'},
                 members.map(member => li(
                 member.kind ?
                     [span(
-                        {className: 'preview--set__content__members__kind'},
+                        {className: 'preview--subject__content__members__kind'},
                         icon(member.kind), ` ${ucfirst(member.kind)}`
                     ), ' '] :
                     null,

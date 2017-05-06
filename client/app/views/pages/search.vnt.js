@@ -10,8 +10,8 @@ module.exports = broker.add({
         tasks.search({q: input.value})
     },
 
-    'click .add-to-my-sets'(e, el) {
+    'click .add-to-my-subjects'(e, el) {
         if(e) { e.preventDefault() }
-        tasks.addUserSet(el.id)
+        tasks.addUserSubject(el.id)
     }
 })

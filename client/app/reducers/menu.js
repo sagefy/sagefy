@@ -11,7 +11,7 @@ module.exports = function menu(state = defaultState, action = {type: ''}) {
         const newState = copy(state)
         if (action.card) { newState.context.card = action.card }
         if (action.unit) { newState.context.unit = action.unit }
-        if (action.set) { newState.context.set = action.set }
+        if (action.subject) { newState.context.subject = action.subject }
         return newState
     }
     return state

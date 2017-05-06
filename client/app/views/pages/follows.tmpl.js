@@ -2,7 +2,7 @@ const {div, h1, p, a, ul, li} = require('../../modules/tags')
 // const c = require('../../modules/content').get
 // const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
-const previewSetHead = require('../components/preview_set_head.tmpl')
+const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
 
@@ -49,8 +49,8 @@ const follow = (data) => {
         ),
         kind === 'unit' ?
             previewUnitHead({ name, body, labelKind: true, }) :
-        kind === 'set' ?
-            previewSetHead({ name, body, labelKind: true, }) :
+        kind === 'subject' ?
+            previewSubjectHead({ name, body, labelKind: true, }) :
         ['video', 'choice'].indexOf(kind) > -1 ?
             previewCardHead({ name, kind, labelKind: true, }) :
             null

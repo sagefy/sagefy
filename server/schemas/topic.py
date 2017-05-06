@@ -21,7 +21,7 @@ schema = extend({}, default, {
                 },
                 'kind': {
                     'validate': (is_required, is_string, (
-                        is_one_of, 'card', 'unit', 'set'
+                        is_one_of, 'card', 'unit', 'subject'
                     )),
                 }
             }

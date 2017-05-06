@@ -14,13 +14,13 @@ Also see [Planning: Sequencer Background](Planning-Sequencer-Background) and [Pl
 Terms
 -----
 
-Also see [Data Structure](Data-Structure) for definitions of **card**, **unit**, and **set**.
+Also see [Data Structure](Data-Structure) for definitions of **card**, **unit**, and **subject**.
 
 **Sequencer** - Determines the optimal ordering of cards, units, or other activity to present to the learner.
 
-**Ability** - Refers to the learner's ability towards a particular card, unit, or set.
+**Ability** - Refers to the learner's ability towards a particular card, unit, or subject.
 
-**Quality** - Refers to the ability of the card, unit, or set to improve the learner's ability.
+**Quality** - Refers to the ability of the card, unit, or subject to improve the learner's ability.
 
 **Difficulty** - Refers to how likely either the specific learner or the general learner to respond well.
 
@@ -66,8 +66,8 @@ Requirements:
 - `learned` should be able to account for time. If a learner doesn't answer in a long time, our prediction of `learned` should go down.
 - We'll want to avoid having to look at previous responses and statistics too much, as it would cost in terms of database queries. Preferably, all the results of calculation should be stored in a key-value store and not in the main database.
 - We need aggregates to help learners with:
-    1. Searching for new sets
-    2. Estimating time to complete units and sets
+    1. Searching for new subjects
+    2. Estimating time to complete units and subjects
 
 Parameters
 ----------
@@ -90,10 +90,10 @@ The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) an
     - 1) `learned = learned * (slip || 1 - slip) / (p(correct) || p(incorrect))`
     - 2) `learned = learned + (1 - learned) * transit`
 
-**Learner-Set Ability**
+**Learner-Subject Ability**
 
-- _Definition_ - How well does the learner know the set?
-- _When_ - Searching for sets. Time to complete estimates.
+- _Definition_ - How well does the learner know the subject?
+- _When_ - Searching for subjects. Time to complete estimates.
 - _Factors_ - Learner-unit ability.
 - _Formula_ - `sum(learner-unit ability) / count(units)`
 
@@ -107,14 +107,14 @@ The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) an
 **Unit Quality**
 
 - _Definition_ - How likely is the typical learner to gain significant ability within this unit?
-- _When_ - Computing set quality.
+- _When_ - Computing subject quality.
 - _Factors_ - Learner-unit ability.
 - _Formula_ - `mean_learner_unit_ability * (num_learners / (num_learners + min_learners))` where mean_learner_unit_ability is the average of ability of all learners who have participated with the unit
 
-**Set Quality**
+**Subject Quality**
 
-- _Definition_ - How likely is the typical learner to gain significant ability within this set?
-- _When_ - Searching for a sets.
+- _Definition_ - How likely is the typical learner to gain significant ability within this subject?
+- _When_ - Searching for a subjects.
 - _Factors_ - Unit quality.
 - _Formula_ - `sum(unit quality per unit) / count(units)` mean of the units contained.
 
@@ -138,7 +138,7 @@ The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) an
 - _Factors_ - Responses, learned.
 - _Formula_ - When the learner first hits 99% p(learned), how many cards has the learner done so far? Take the average.
 
-**Set Difficulty**
+**Subject Difficulty**
 
 - _Definition_ - How difficult is it for a typical learner to gain proficiency?
 - _When_ - Time to complete estimates.
@@ -152,27 +152,27 @@ Flow
 
 ![Endpoint Flowchart](/f_planning/sequencer_endpoints.png)
 
-### Set Selection
+### Subject Selection
 
-I come to the site, I sign in. Brings me to empty list of sets. Links to search sets.
+I come to the site, I sign in. Brings me to empty list of subjects. Links to search subjects.
 
-I search sets. I see ordering of sets matching, estimates for difficulty (or time). I can click to see a map of the units involved in a tree diagram.
+I search subjects. I see ordering of subjects matching, estimates for difficulty (or time). I can click to see a map of the units involved in a tree diagram.
 
-I click one and add it to my sets. It will appear on my list of sets, along with my overall completion percent. A link to the tree diagram is present. I will see if I need to continue or review any particular set.
+I click one and add it to my subjects. It will appear on my list of subjects, along with my overall completion percent. A link to the tree diagram is present. I will see if I need to continue or review any particular subject.
 
 ### Menu
 
-I can open the diagram at any time from the menu. In the diagram, the current unit is highlighted. The menu also has a discussion link, and a link to return to the list of sets. The discussion link can go up the chain; I can discuss the card, unit, and sets from within a card.
+I can open the diagram at any time from the menu. In the diagram, the current unit is highlighted. The menu also has a discussion link, and a link to return to the list of subjects. The discussion link can go up the chain; I can discuss the card, unit, and subjects from within a card.
 
 ### Diagnosis
 
-I click to go into the set. First I see the diagram of the units.
+I click to go into the subject. First I see the diagram of the units.
 
 The page says I will take a diagnostic assessment. It estimates how long it will take to complete the diagnostic assessment. It says it will start with the hardest questions first and work back.
 
-I start the diagnostic assessment. The system picks a unit near the end of the set.
+I start the diagnostic assessment. The system picks a unit near the end of the subject.
 
-The questions are all synchronous assessment. The system continues to ask me questions from the last units in the set until it is confident in its finding. For any units I am at less than proficient ability, it diagnoses the required units. Required units do not have to be explicitly defined in the set, just within other units. The system shows my progress on screen towards completing the diagnostic assessment. If I leave, I can come back later and finish the assessment. If I've already completed units previously, it will use those ratings. Questions do not present feedback in diagnostic assessment.
+The questions are all synchronous assessment. The system continues to ask me questions from the last units in the subject until it is confident in its finding. For any units I am at less than proficient ability, it diagnoses the required units. Required units do not have to be explicitly defined in the subject, just within other units. The system shows my progress on screen towards completing the diagnostic assessment. If I leave, I can come back later and finish the assessment. If I've already completed units previously, it will use those ratings. Questions do not present feedback in diagnostic assessment.
 
 When there are no units left with requires below proficiency, the diagnostic assessment ends. Again I see the tree within the metrics for each unit.
 
@@ -184,16 +184,16 @@ I practice with the unit. I can see my progress on the unit at the bottom of the
 
 If I have low ability, the system will add more high quality non-assessment cards, like videos. It also uses assessment cards that I am highly likely to answer correctly. If I have moderate ability, the system focuses on medium likelihood cards. Non-assessment cards are shown if I get multiple answers incorrect. If I have high ability, the system focuses on lower likelihood cards. The system prefers to follow require chains in sequence for cards. If I gain significantly or reach proficient ability, the system recommends I switch to a different unit.
 
-The set is complete when all cards have proficient ability with confidence. I'm encouraged to find a new set.
+The subject is complete when all cards have proficient ability with confidence. I'm encouraged to find a new subject.
 
 ### Retention
 
-The system will monitor the last time I interacted with the units in the set. Using spaced repetition, it reminds me when I should review the units. The more time since the last review, the greater it will impact my ability score. The more time since the last review, the confidence will decrease.
+The system will monitor the last time I interacted with the units in the subject. Using spaced repetition, it reminds me when I should review the units. The more time since the last review, the greater it will impact my ability score. The more time since the last review, the confidence will decrease.
 
 Graph Traversal
 ---------------
 
-We collect the set of units that the learner will be participating in. We will need to diagnose any units which have either never been seen by the learner. We will also need to diagnose any units that have been viewed, but we are no longer confident in the ability score due to time.
+We collect the subject of units that the learner will be participating in. We will need to diagnose any units which have either never been seen by the learner. We will also need to diagnose any units that have been viewed, but we are no longer confident in the ability score due to time.
 
 The following is an example of this process, known as a graph traversal.
 
@@ -233,6 +233,6 @@ In the ready list, A, B, and E have requires, so those are not options to the le
 
 "H" has the most dependents, so that would be recommended as the starting place for the learner. Let's say, however, the learner choose to learn unit "D" first.
 
-Now the remaining set is C and H. The learner chooses H. So now the remaining set is E and C. Let's say the learner chooses C.
+Now the remaining subject is C and H. The learner chooses H. So now the remaining subject is E and C. Let's say the learner chooses C.
 
 Now, the only option remaining is E. After E, the learner would do B, then A.

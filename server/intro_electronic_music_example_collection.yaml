@@ -1,17 +1,17 @@
-sets:
-  setAll:
+subjects:
+  subjectAll:
     name: An Introduction to Electronic Music
     body: A small taste of the basics of electronic music. Learn the concepts behind creating and modifying sounds in an electronic music system. Learn the ideas behind the tools and systems we use to create electronic music.
     members:
-      - kind: set
-        id: setFoundation
-      - kind: set
-        id: setCreate
-      - kind: set
-        id: setChange
-      - kind: set
-        id: setSystems
-  setFoundation:
+      - kind: subject
+        id: subjectFoundation
+      - kind: subject
+        id: subjectCreate
+      - kind: subject
+        id: subjectChange
+      - kind: subject
+        id: subjectSystems
+  subjectFoundation:
     name: An Introduction to Electronic Music -- Foundation
     body: A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.
     members:
@@ -29,7 +29,7 @@ sets:
         id: unitAdc
       - kind: unit
         id: unitComplex
-  setCreate:
+  subjectCreate:
     name: An Introduction to Electronic Music -- Creating Sound
     body: An overview of commons tools to create sound in an electronic music system.
     members:
@@ -43,7 +43,7 @@ sets:
         kind: unit
       - id: unitSample
         kind: unit
-  setChange:
+  subjectChange:
     name: An Introduction to Electronic Music -- Changing Sound
     body: An overview of commons tools to change sound in an electronic music system.
     members:
@@ -67,7 +67,7 @@ sets:
         id: unitDelay
       - kind: unit
         id: unitReverberation
-  setSystems:
+  subjectSystems:
     name: An Introduction to Electronic Music -- Systems
     body: An introduction to some of the systems we use in electronic music.
     members:

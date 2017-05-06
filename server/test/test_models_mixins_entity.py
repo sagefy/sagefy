@@ -4,7 +4,7 @@ xfail = pytest.mark.xfail
 
 import rethinkdb as r
 from models.card import Card
-from models.set import Set
+from models.subject import Subject
 from models.unit import Unit
 
 
@@ -60,12 +60,12 @@ def test_latest_accepted(db_conn, units_table):
     assert unit['id'] == 'B2'
 
 
-def test_latest_accepted_set(db_conn, sets_table):
+def test_latest_accepted_subject(db_conn, subjects_table):
     """
-    Expect to get the latest accepted set version.
+    Expect to get the latest accepted subject version.
     """
 
-    sets_table.insert([{
+    subjects_table.insert([{
         'id': 'A1',
         'entity_id': 'A',
         'created': r.time(2004, 11, 3, 'Z'),
@@ -82,8 +82,8 @@ def test_latest_accepted_set(db_conn, sets_table):
         'status': 'accepted',
     }]).run(db_conn)
 
-    set_ = Set.get_latest_accepted(db_conn, 'A')
-    assert set_['id'] == 'B2'
+    subject = Subject.get_latest_accepted(db_conn, 'A')
+    assert subject['id'] == 'B2'
 
 
 def test_get_versions(db_conn, cards_table):

@@ -330,7 +330,7 @@ def get_posts_route(request, topic_id):
 def create_post_route(request, topic_id):
     """
     Create a new post on a given topic.
-    Proposal: must include entity (card, unit, or set) information.
+    Proposal: must include entity (card, unit, or subject) information.
     Vote: must refer to a valid proposal.
     """
 

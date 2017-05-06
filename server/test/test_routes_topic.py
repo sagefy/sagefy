@@ -254,7 +254,7 @@ def test_update_topic_fields(db_conn, users_table, topics_table,
             'name': 'Another entity',
             'topic_id': 'wxyz7890',
             'entity': {
-                'kind': 'set'
+                'kind': 'subject'
             }
         },
         'db_conn': db_conn

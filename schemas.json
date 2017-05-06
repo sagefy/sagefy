@@ -87,7 +87,7 @@
                         "validate": ["is_required", "is_string"]
                     },
                     "kind": {
-                        "validate": ["is_required", "is_string", ["is_one_of", "card", "unit", "set", "topic"]]
+                        "validate": ["is_required", "is_string", ["is_one_of", "card", "unit", "subject", "topic"]]
                     }
                 }
             }
@@ -182,9 +182,9 @@
             }
         }
     },
-    "sets": {
-        "tablename": "sets",
-        "singular": "set",
+    "subjects": {
+        "tablename": "subjects",
+        "singular": "subject",
         "fields": {
             "id": {
                 "default": "uniqid"
@@ -225,7 +225,7 @@
                         "validate": ["is_required", "is_string"]
                     },
                     "kind": {
-                        "validate": ["is_required", "is_string", ["is_one_of", "card", "unit", "set"]]
+                        "validate": ["is_required", "is_string", ["is_one_of", "card", "unit", "subject"]]
                     }
                 }
             }
@@ -247,9 +247,9 @@
             }
         }
     },
-    "users_sets": {
-        "tablename": "users_sets",
-        "singular": "user_sets",
+    "users_subjects": {
+        "tablename": "users_subjects",
+        "singular": "user_subjects",
         "fields": {
             "id": {
                 "default": "uniqid"
@@ -304,7 +304,7 @@
                         "access": ["private"],
                         "default": "daily"
                     },
-                    "view_sets": {
+                    "view_subjects": {
                         "validate": ["is_required", "is_string", ["is_one_of", "public", "private"]],
                         "access": ["private"],
                         "default": "private"

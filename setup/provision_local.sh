@@ -125,7 +125,7 @@ sudo apt-get -y install nginx
 # TODO-1 Setup Digital Ocean private networking do.co/1nrFJE3
 # TODO-1 Setup loggly
 # TODO-1 Setup automated backups (especially of RethinkDB)
-# TODO-1 set up auto updating on ubuntu
+# TODO-1 setup auto updating on ubuntu
 # TODO-2 Re-read bit.ly/1mERm9F
 
 echo "Hooray! Provisioned."

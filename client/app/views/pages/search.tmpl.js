@@ -5,7 +5,7 @@ const {div, h1, form, input, button, img,
 const spinner = require('../components/spinner.tmpl')
 // TP@ const timeago = require('../components/timeago.tmpl')
 const icon = require('../components/icon.tmpl')
-const previewSetHead = require('../components/preview_set_head.tmpl')
+const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
 
@@ -134,20 +134,20 @@ r.unitResult = (result) =>
         labelKind: true,
     })
 
-r.setResult = (result, asLearner = false) =>
+r.subjectResult = (result, asLearner = false) =>
     [
-        asLearner ? a(  // TODO-2 if already in sets, don't show this button
+        asLearner ? a(  // TODO-2 if already in subjects, don't show this button
             {
                 id: result._source.entity_id,
                 href: '#',
-                className: 'add-to-my-sets'
+                className: 'add-to-my-subjects'
             },
             icon('create'),
-            ' Add to My Sets'
+            ' Add to My Subjects'
         ) : null,
 
-        previewSetHead({
-            url: `/sets/${result._source.entity_id}`,
+        previewSubjectHead({
+            url: `/subjects/${result._source.entity_id}`,
             name: result._source.name,
             body: result._source.body,
             labelKind: true,
@@ -155,7 +155,7 @@ r.setResult = (result, asLearner = false) =>
         asLearner ? ' ' : null,
         asLearner ? a(
             {
-                href: `/sets/${result._source.entity_id}/tree`,
+                href: `/subjects/${result._source.entity_id}/tree`,
                 className: 'view-units',
             },
             icon('unit'),

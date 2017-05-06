@@ -53,7 +53,7 @@ schema = extend({}, default, {
                     'access': ('private',),
                     'default': 'daily',
                 },
-                'view_sets': {
+                'view_subjects': {
                     'validate': (is_required, is_string, (
                         is_one_of, 'public', 'private'
                     )),

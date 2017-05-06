@@ -3,7 +3,7 @@ import routes.unit
 
 
 def test_get_unit(db_conn,
-                  units_table, sets_table, topics_table):
+                  units_table, subjects_table, topics_table):
     """
     Expect to get the unit information for displaying to a contributor.
     """
@@ -36,7 +36,7 @@ def test_get_unit(db_conn,
         'requires': ['zytx'],
     }]).run(db_conn)
 
-    sets_table.insert({
+    subjects_table.insert({
         'entity_id': 'W',
         'name': 'Woods',
         'created': r.now(),
@@ -96,7 +96,7 @@ def test_get_unit(db_conn,
     # Required By
     assert len(response['required_by']) == 1
     assert response['required_by'][0]['entity_id'] == 'tyui'
-    # Sets
+    # Subjects
     assert len(response['belongs_to']) == 1
     assert response['belongs_to'][0]['entity_id'] == 'W'
     # TODO-3 sequencer data: learners, quality, difficulty

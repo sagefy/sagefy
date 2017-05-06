@@ -19,8 +19,8 @@
 - TODO-3 Research WSGI framework security and performance issues
 - TODO-3 Learning aggregate parameters
 - TODO-3 Update GET /units/{id} with sequencer information
-- TODO-3 Update GET /sets/{id} with sequencer information
-- TODO-2 User Sets: Order sets by last reviewed, pagination
+- TODO-3 Update GET /subjects/{id} with sequencer information
+- TODO-2 User Subjects: Order subjects by last reviewed, pagination
 - TODO-3 Plan for Rubrics for async assessment card kinds
 - TODO-3 Donate Card
 - TODO-3 User Personal Stats Pages

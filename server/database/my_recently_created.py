@@ -1,6 +1,6 @@
 from database.post import list_posts
 from models.unit import Unit
-from models.set import Set
+from models.subject import Subject
 
 
 def get_my_recent_proposals(current_user, db_conn):
@@ -40,12 +40,12 @@ def get_my_recently_created_units(current_user, db_conn):
     return units
 
 
-def get_my_recently_created_sets(current_user, db_conn):
+def get_my_recently_created_subjects(current_user, db_conn):
     """
-    Get the user's most recently created sets.
+    Get the user's most recently created subjects.
     """
 
     proposals = get_my_recent_proposals(current_user, db_conn)
-    set_version_ids = get_proposal_entity_versions(proposals, 'set')
-    sets = Set.list_by_version_ids(db_conn, set_version_ids)
-    return sets
+    subject_version_ids = get_proposal_entity_versions(proposals, 'subject')
+    subjects = Subject.list_by_version_ids(db_conn, subject_version_ids)
+    return subjects

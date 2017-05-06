@@ -5,7 +5,7 @@ from database.user import get_user, insert_user, deliver_user, get_avatar, \
     update_user, is_password_valid, get_email_token, is_valid_token, \
     update_user_password
 from database.follow import list_follows, deliver_follow
-from database.user_sets import list_user_sets_entity
+from database.user_subjects import list_user_subjects_entity
 from database.post import list_posts, deliver_post
 
 
@@ -48,7 +48,7 @@ def get_user_route(request, user_id):
     user = get_user({'id': user_id}, db_conn)
     current_user = get_current_user(request)
     # Posts if in request params
-    # Sets if in request params and allowed
+    # Subjects if in request params and allowed
     # Follows if in request params and allowed
     if not user:
         return abort(404)
@@ -64,13 +64,14 @@ def get_user_route(request, user_id):
     if 'posts' in request['params']:
         data['posts'] = [deliver_post(post) for post in
                          list_posts({'user_id': user['id']}, db_conn)]
-    if ('sets' in request['params']
-            and user['settings']['view_sets'] == 'public'):
-        data['sets'] = [set_.deliver()
-                        for set_ in list_user_sets_entity(
-                            user['id'],
-                            {},
-                            db_conn)]
+    if ('subjects' in request['params']
+            and user['settings']['view_subjects'] == 'public'):
+        data['subjects'] = [
+            subject.deliver()
+            for subject in list_user_subjects_entity(
+                user['id'],
+                {},
+                db_conn)]
     if ('follows' in request['params']
             and user['settings']['view_follows'] == 'public'):
         data['follows'] = [deliver_follow(follow) for follow in

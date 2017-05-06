@@ -18,7 +18,7 @@ module.exports = (data) => {
           ) :
           h1('Choose a Unit'),
         ul(
-            {id: data.chooseUnit.set.entity_id, className: 'units'},
+            {id: data.chooseUnit.subject.entity_id, className: 'units'},
             data.chooseUnit.units.slice(0, 5).map((unit, index) => li(
                 {className: index === 0 ? 'recommended' : null},
                 a(

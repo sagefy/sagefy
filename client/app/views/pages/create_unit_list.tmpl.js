@@ -5,15 +5,15 @@ const previewUnitHead = require('../components/preview_unit_head.tmpl')
 
 module.exports = function createUnitList(data) {
     const {units} = data.create
-    const selectedSet = data.create.selectedSet || {}
-    const setName = selectedSet.name || '???'
+    const selectedSubject = data.create.selectedSubject || {}
+    const subjectName = selectedSubject.name || '???'
 
     return div(
         {id: 'create', className: 'page create--unit-list'},
-        h1('Add Units to Set'),
+        h1('Add Units to Subject'),
         unitWizard('list'),
 
-        h3(`The following units will be added to ${setName}`),
+        h3(`The following units will be added to ${subjectName}`),
 
         // TODO List of existing units (if any)
 

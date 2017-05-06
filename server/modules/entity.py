@@ -1,10 +1,10 @@
 """
-Facades for working with entities (card, unit, set).
+Facades for working with entities (card, unit, subject).
 """
 
 from models.card import Card
 from models.unit import Unit
-from models.set import Set
+from models.subject import Subject
 
 # from models.cards.audio_card import AudioCard
 from models.cards.choice_card import ChoiceCard
@@ -47,8 +47,8 @@ def get_latest_accepted(db_conn, kind, entity_id):
         return flip_card_into_kind(card)
     elif kind == 'unit':
         return Unit.get_latest_accepted(db_conn, entity_id)
-    elif kind == 'set':
-        return Set.get_latest_accepted(db_conn, entity_id)
+    elif kind == 'subject':
+        return Subject.get_latest_accepted(db_conn, entity_id)
 
 
 def get_version(db_conn, kind, id_):
@@ -57,8 +57,8 @@ def get_version(db_conn, kind, id_):
         return flip_card_into_kind(card)
     elif kind == 'unit':
         return Unit.get(db_conn, id=id_)
-    elif kind == 'set':
-        return Set.get(db_conn, id=id_)
+    elif kind == 'subject':
+        return Subject.get(db_conn, id=id_)
 
 
 def get_kind(instance):
@@ -67,7 +67,7 @@ def get_kind(instance):
     """
 
     kind = instance.__class__.__name__.lower()
-    if kind in ('card', 'unit', 'set'):
+    if kind in ('card', 'unit', 'subject'):
         return kind
     return None
 
@@ -94,10 +94,10 @@ def instance_entities(data):
             Unit(omit(unit_data, fields))
             for unit_data in data['units']
         ]
-    if 'sets' in data:
+    if 'subjects' in data:
         entities = entities + [
-            Set(omit(set_data, fields))
-            for set_data in data['sets']
+            Subject(omit(subject_data, fields))
+            for subject_data in data['subjects']
         ]
     return entities
 
@@ -143,8 +143,8 @@ def flush_entities(db_conn, descs):
                 db_conn,
                 entity_id=desc['id']
             ))
-        elif desc['kind'] == 'set':
-            output.append(Set.get_latest_accepted(
+        elif desc['kind'] == 'subject':
+            output.append(Subject.get_latest_accepted(
                 db_conn,
                 entity_id=desc['id']
             ))

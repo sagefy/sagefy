@@ -1,7 +1,7 @@
 from framework.routes import get
 from models.card import Card
 from models.unit import Unit
-from models.set import Set
+from models.subject import Subject
 from database.user import list_users, deliver_user
 from database.topic import list_topics
 
@@ -29,8 +29,8 @@ def sitemap_route(request):
     db_conn = request['db_conn']
     sitemap = defaults | set()
 
-    # Card, unit, set
-    kinds = {'card': Card, 'unit': Unit, 'set': Set}
+    # Card, unit, subject
+    kinds = {'card': Card, 'unit': Unit, 'subject': Subject}
     for kind, Model in kinds.items():
         query = Model.start_accepted_query()
         entities = [Model(data).deliver() for data in query.run(db_conn)]
@@ -40,7 +40,7 @@ def sitemap_route(request):
                 kind=kind
             ))
             # TODO-2 ...and versions pages
-            # TODO-2 set tree
+            # TODO-2
 
     # Topic
     for topic in list_topics({}, db_conn):

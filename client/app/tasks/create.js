@@ -12,20 +12,20 @@ module.exports = tasks.add({
         dispatch({type: 'UPDATE_CREATE_ROUTE', kind, step})
     },
 
-    createSetProposal(data) {
+    createSubjectProposal(data) {
         return tasks.createTopic(data)
     },
 
-    createSetData(values) {
+    createSubjectData(values) {
         dispatch({
-            type: 'CREATE_SET_DATA',
+            type: 'CREATE_SUBJECT_DATA',
             values,
         })
     },
 
-    addMemberToCreateSet({kind, id, name, body}) {
+    addMemberToCreateSubject({kind, id, name, body}) {
         dispatch({
-            type: 'ADD_MEMBER_TO_CREATE_SET',
+            type: 'ADD_MEMBER_TO_CREATE_SUBJECT',
             kind,
             id,
             name,
@@ -44,23 +44,23 @@ module.exports = tasks.add({
         })
     },
 
-    removeMemberFromCreateSet({id}) {
+    removeMemberFromCreateSubject({id}) {
         dispatch({
-            type: 'REMOVE_MEMBER_FROM_CREATE_SET',
+            type: 'REMOVE_MEMBER_FROM_CREATE_SUBJECT',
             id,
         })
     },
 
-    removeUnitFromSet({index}) {
+    removeUnitFromSubject({index}) {
         dispatch({
-            type: 'REMOVE_UNIT_FROM_SET',
+            type: 'REMOVE_UNIT_FROM_SUBJECT',
             index,
         })
     },
 
-    createChooseSetForUnits({id, name}) {
+    createChooseSubjectForUnits({id, name}) {
         dispatch({
-            type: 'CREATE_CHOOSE_SET_FOR_UNITS',
+            type: 'CREATE_CHOOSE_SUBJECT_FOR_UNITS',
             id,
             name,
         })
@@ -88,22 +88,22 @@ module.exports = tasks.add({
 
     createUnitsProposal() {
         const state = getState()
-        const {selectedSet} = state.create
+        const {selectedSubject} = state.create
         const data = {
             topic: {
-                name: 'Add Units to This Set',
+                name: 'Add Units to This Subject',
                 entity: {
-                    id: selectedSet.id,
-                    kind: 'set',
+                    id: selectedSubject.id,
+                    kind: 'subject',
                 },
             },
             post: {
                 kind: 'proposal',
-                body: 'Add Units to Set',
+                body: 'Add Units to Subject',
             }
             /*
                 TODO!!!
-                sets: [{
+                subjects: [{
                     (entity_id?)
                     //xxx name: values.name,
                     //xxx body: values.body,

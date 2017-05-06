@@ -6,22 +6,22 @@ const routes = [
     {path: '/settings', task: 'openSettingsRoute'},
     {path: '/notices', task: 'listNotices'},
     {path: '/users/{id}', task: 'openProfileRoute'},
-    {path: '/my_sets', task: 'listUserSets'},
+    {path: '/my_subjects', task: 'listUserSubjects'},
     {path: '/follows', task: 'listFollows'},
     {path: '/units/{id}', task: 'openUnitRoute'},
-    {path: '/sets/{id}', task: 'openSetRoute'},
+    {path: '/subjects/{id}', task: 'openSubjectRoute'},
     {path: '/cards/{id}', task: 'openCardRoute'},
     {path: '/{kind}s/{id}/versions', task: 'openVersionsRoute'},
     {path: '/topics/create', task: 'openCreateTopic'},
     {path: '/topics/{id}/update', task: 'openUpdateTopic'},
     {path: '/topics/{id}', task: 'openTopicRoute'},
-    {path: '/sets/{id}/tree', task: 'openTreeRoute'},
-    {path: '/sets/{id}/choose_unit', task: 'openChooseUnit'},
+    {path: '/subjects/{id}/tree', task: 'openTreeRoute'},
+    {path: '/subjects/{id}/choose_unit', task: 'openChooseUnit'},
     {path: '/cards/{id}/learn', task: 'openLearnCard'},
     {path: '/topics/{id}/posts/{id}/update', task: 'openUpdatePost'},
     {path: '/search', task: 'openSearch'},
-    {path: '/recommended_sets', task: 'getRecommendedSets'},
-    {path: '/create/unit/find', task: 'openFindSetForUnits'},
+    {path: '/recommended_subjects', task: 'getRecommendedSubjects'},
+    {path: '/create/unit/find', task: 'openFindSubjectForUnits'},
 ]
 
 module.exports = tasks.add({
@@ -51,7 +51,7 @@ module.exports = tasks.add({
     openProfileRoute(id) {
         return tasks.getUser(id, {
             avatar: 12 * 10,
-            sets: true,
+            subjects: true,
             follows: true,
             posts: true,
         })
@@ -64,9 +64,9 @@ module.exports = tasks.add({
         ])
     },
 
-    openSetRoute(id) {
+    openSubjectRoute(id) {
         return Promise.all([
-            tasks.getSet(id),
+            tasks.getSuject(id),
             tasks.askFollow(id),
         ])
     },
@@ -99,11 +99,11 @@ module.exports = tasks.add({
     },
 
     openTreeRoute(id) {
-        return tasks.getSetTree(id)
+        return tasks.getSubjectTree(id)
     },
 
-    openChooseUnit(setID) {
-        return tasks.getSetUnits(setID)
+    openChooseUnit(subjectId) {
+        return tasks.getSubjectUnits(subjectId)
     },
 
     openLearnCard(id) {
@@ -121,7 +121,7 @@ module.exports = tasks.add({
         }
     },
 
-    openFindSetForUnits() {
-        return tasks.getMyRecentSets()
+    openFindSubjectForUnits() {
+        return tasks.getMyRecentSubjects()
     }
 })

@@ -1,15 +1,15 @@
 const {div, p} = require('../../modules/tags')
 const {previewName} = require('./preview_shared.fn')
 
-module.exports = function previewSetHead({
+module.exports = function previewSubjectHead({
     name,
     body,
     url = false,
     labelKind = false,
 }) {
     return div(
-        {className: 'preview--set__head'},
-        previewName({name, kind: 'set', url, labelKind}),
+        {className: 'preview--subject__head'},
+        previewName({name, kind: 'subject', url, labelKind}),
         body ? p(body) : null
     )
 }

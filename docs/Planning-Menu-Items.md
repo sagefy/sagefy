@@ -13,7 +13,7 @@ A list of what menu items should appear per page.
 
 ### _Standard items, logged in_
 
-- My Sets
+- My Subjects
 - Notices
 - Settings
 - Contact
@@ -79,29 +79,29 @@ A list of what menu items should appear per page.
 
 - Standard items
 
-### My Sets
+### My Subjects
 
 - Standard items
 
 ### Tree (as learner)
 
-- (Title: {set.name})
-- Discuss Set: {name}
+- (Title: {subject.name})
+- Discuss Subject: {name}
 - Standard items
 
 ### Choose Unit
 
-- (Title: {set.name})
+- (Title: {subject.name})
 - View Tree
-- Discuss Set: {name}
+- Discuss Subject: {name}
 - Standard items
 
 ### Card (as learner)
 
-- (Title: {set.name}, {unit.name}, {unit.body})
+- (Title: {subject.name}, {unit.name}, {unit.body})
 - View Tree
 - Choose Another Unit
 - Discuss This Card
 - Discuss Unit: {name}
-- Discuss Set: {name}
+- Discuss Subject: {name}
 - Standard items

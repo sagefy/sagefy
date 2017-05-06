@@ -36,11 +36,11 @@ const routes = [{
     path: '/search',
     tmpl: require('./pages/search.tmpl'),
 }, {
-    path: '/create/set/create',
-    tmpl: require('./pages/create_set_create.tmpl'),
+    path: '/create/subject/create',
+    tmpl: require('./pages/create_subject_create.tmpl'),
 }, {
-    path: '/create/set/add',
-    tmpl: require('./pages/create_set_add.tmpl'),
+    path: '/create/subject/add',
+    tmpl: require('./pages/create_subject_add.tmpl'),
 }, {
     path: '/create/unit/find',
     tmpl: require('./pages/create_unit_find.tmpl'),
@@ -94,32 +94,32 @@ const routes = [{
     path: '/units/{id}',
     tmpl: require('./pages/unit.tmpl'),
 }, {
-    path: '/sets/{id}',
-    tmpl: require('./pages/set.tmpl'),
+    path: '/subjects/{id}',
+    tmpl: require('./pages/subject.tmpl'),
 }, {
-    path: /^\/(card|unit|set)s\/([\w\d-]+)\/versions$/,
+    path: /^\/(card|unit|subject)s\/([\w\d-]+)\/versions$/,
     tmpl: require('./pages/versions.tmpl'),
 }, {
     path: '/follows',
     tmpl: require('./pages/follows.tmpl'),
 }, {
-    path: '/recommended_sets',
-    tmpl: require('./pages/recommended_sets.tmpl'),
+    path: '/recommended_subjects',
+    tmpl: require('./pages/recommended_subjects.tmpl'),
 }, {
-    path: '/my_sets',
-    tmpl: require('./pages/my_sets.tmpl'),
+    path: '/my_subjects',
+    tmpl: require('./pages/my_subjects.tmpl'),
 }, {
-    path: '/sets/{id}/tree',
+    path: '/subjects/{id}/tree',
     tmpl: require('./pages/tree.tmpl'),
 }, {
-    path: '/sets/{id}/choose_unit',
+    path: '/subjects/{id}/choose_unit',
     tmpl: require('./pages/choose_unit.tmpl'),
 }, {
     path: '/cards/{id}/learn',
     tmpl: require('./pages/card_learn.tmpl'),
 }, {
-    path: '/sets/{id}/landing',
-    tmpl: require('./pages/sets_landing.tmpl'),
+    path: '/subjects/{id}/landing',
+    tmpl: require('./pages/subjects_landing.tmpl'),
 }, {
     path: /^\/?$/,
     tmpl: require('./pages/home.tmpl'),

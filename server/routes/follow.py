@@ -40,7 +40,7 @@ def get_follows_route(request):
 @post('/s/follows')
 def follow_route(request):
     """
-    Follow a card, unit, or set.
+    Follow a card, unit, or subject.
     """
 
     db_conn = request['db_conn']

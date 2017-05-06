@@ -176,11 +176,11 @@ Update the user's password. Must have a matching and timely token.
             }
         }
 
-## User Sets [/s/users/{id}/sets]
+## User Subjects [/s/users/{id}/subjects]
 
-### Get all of users' sets [GET]
+### Get all of users' subjects [GET]
 
-Get the list of learner's sets.
+Get the list of learner's subjects.
 
 401 if not logged in. 403 if not current user.
 
@@ -188,40 +188,40 @@ Get the list of learner's sets.
 
         {
             "user_id": "fnsLJIoel",
-            "set_ids": ["fjkOTJRLEf"]
+            "subject_ids": ["fjkOTJRLEf"]
         }
 
-## User Set [/s/users/{id}/sets/{id}]
+## User Subject [/s/users/{id}/subjects/{id}]
 
-### Add a user set [POST]
+### Add a user subject [POST]
 
-Add a set to the learner's list.
+Add a subject to the learner's list.
 
-401 if not logged in. 403 if not current user. 404 if set not found. 409 if already added.
+401 if not logged in. 403 if not current user. 404 if subject not found. 409 if already added.
 
 + Response 200 (application/json)
 
         {
             "user_id": "fnsLJIoel",
-            "set_ids": ["fjkOTJRLEf"]
+            "subject_ids": ["fjkOTJRLEf"]
         }
 
-### Remove a user set [DELETE]
+### Remove a user subject [DELETE]
 
-Remove a set from the learner's list.
+Remove a subject from the learner's list.
 
-401 if not logged in. 403 if not current user. 404 if set not found.
+401 if not logged in. 403 if not current user. 404 if subject not found.
 
 + Response 200 (application/json)
 
         {
             "user_id": "fnsLJIoel",
-            "set_ids": ["fjkOTJRLEf"]
+            "subject_ids": ["fjkOTJRLEf"]
         }
 
-### Select a user set [PUT]
+### Select a user subject [PUT]
 
-Selects a set for the user to engage.
+Selects a subject for the user to engage.
 
 + Response 200
 
@@ -327,18 +327,18 @@ Always returns the latest accepted version. 404 if card not found.
 
 + Response 200
 
-## Set [/s/sets/{id}]
+## Subject [/s/subjects/{id}]
 
-A set is a collection of units and other sets.
+A subject is a collection of units and other subjects.
 
-### Get set information [GET]
+### Get subject information [GET]
 
-Get a specific set given an ID.
+Get a specific subject given an ID.
 
 + Response 200
 
         {
-            "set": {
+            "subject": {
                 "language": "en",
                 "name": "Lorem ipsum.",
                 "body": "Lorem ipsum.",
@@ -350,19 +350,19 @@ Get a specific set given an ID.
             }
         }
 
-## Set Versions [/s/sets/{set_id}/versions]
+## Subject Versions [/s/subjects/{subject_id}/versions]
 
-### Get set versions [GET]
+### Get subject versions [GET]
 
 + Response 200
 
-## Set Tree [/s/sets/{id}/tree]
+## Subject Tree [/s/subjects/{id}/tree]
 
-### Get set tree [GET]
+### Get subject [GET]
 
-Render the tree of units that exists within a set.
+Render the tree of units that exists within a subject.
 
-404 if set not found.
+404 if subject not found.
 
 + Response 200
 
@@ -372,15 +372,15 @@ Render the tree of units that exists within a set.
             }
         }
 
-## Set' Units [/s/sets/{id}/units]
+## Subject' Units [/s/subjects/{id}/units]
 
-### Get set units [GET]
+### Get subject units [GET]
 
-Render the units that exist within the set.
+Render the units that exist within the subject.
 
 Specifically, present a small number of units the learner can choose from.
 
-401 if not logged in. 404 if set not found. 400 if it doesn't make sense.
+401 if not logged in. 404 if subject not found. 400 if it doesn't make sense.
 
 + Response 200
 
@@ -394,13 +394,13 @@ Specifically, present a small number of units the learner can choose from.
             }]
         }
 
-## Set' Unit [/s/sets/{id}/units/{id}]
+## Subject' Unit [/s/subjects/{id}/units/{id}]
 
 ### Choose unit [POST]
 
 Updates the learner's information based on the unit they have chosen.
 
-401 if not logged in. 404 if set or unit not found. 400 if it doesn't make sense.
+401 if not logged in. 404 if subject or unit not found. 400 if it doesn't make sense.
 
 + Response 204
 
@@ -423,7 +423,7 @@ Can lead to a card, tree, or choose unit screen.
 
 ## Search [/s/search]
 
-Site-wide search for cards, units, sets, users, topics, and posts.
+Site-wide search for cards, units, subjects, users, topics, and posts.
 
 ### Search [GET]
 
@@ -434,7 +434,7 @@ Search for entities.
     + skip (optional) - Offset results by count.
     + limit (optional) - Maximum number of results to return.
     + order
-    + kind (optional) - the kind of entity to search for (e.g. set, card, unit)
+    + kind (optional) - the kind of entity to search for (e.g. subject, card, unit)
     + as_learner (optional)
 
 + Response 200
@@ -554,7 +554,7 @@ Returns 404 if topic not found. Posts can be one of post, proposal, vote, or fla
 
 Create a new post on a given topic.
 Accounts for posts, proposals, votes, and flags.
-Proposal: must include entity (card, unit, set) information.
+Proposal: must include entity (card, unit, subject) information.
 Vote: must refer to a proposal.
 
 401 if not logged in. 404 if topic not found. 400 if issue presented with content.
@@ -607,7 +607,7 @@ the current status is pending or blocked.
 
 ## Follows [/s/follows]
 
-Follows allow users to subscribe to updates on cards, units, and sets.
+Follows allow users to subscribe to updates on cards, units, and subjects.
 
 ### List follows [GET]
 
@@ -651,7 +651,7 @@ Return 404 if it doesn't find that follow. Return 401 if not logged in. Return 4
 
 ## Notices [/s/notices]
 
-Notices provide updates to users on cards, units, and sets they follow.
+Notices provide updates to users on cards, units, and subjects they follow.
 
 ### List notices [GET]
 
@@ -661,7 +661,7 @@ Returns a 401 if there's no user currently logged in.
 
 + Parameters
     + limit - Maximum number of notices to return.
-    + skip - Offset in returned set.
+    + skip - Offset in returned subject.
     + tag - Filter by a specific tag.
     + read - Filter by read or unread notices.
 

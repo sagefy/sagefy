@@ -1,4 +1,4 @@
-from models.set import Set
+from models.subject import Subject
 import rethinkdb as r
 
 import pytest
@@ -17,13 +17,13 @@ def create_unit_a(db_conn, units_table):
     }).run(db_conn)
 
 
-def test_entity(db_conn, sets_table, units_table):
+def test_entity(db_conn, subjects_table, units_table):
     """
-    Expect a set to require an entity_id.
+    Expect a subject to require an entity_id.
     """
 
     create_unit_a(db_conn, units_table)
-    set_, errors = Set.insert(db_conn, {
+    subject, errors = Subject.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -32,16 +32,16 @@ def test_entity(db_conn, sets_table, units_table):
         }]
     })
     assert len(errors) == 0
-    assert set_['entity_id']
+    assert subject['entity_id']
 
 
-def test_previous(db_conn, sets_table, units_table):
+def test_previous(db_conn, subjects_table, units_table):
     """
-    Expect a set to allow a previous version id.
+    Expect a subject to allow a previous version id.
     """
 
     create_unit_a(db_conn, units_table)
-    set_, errors = Set.insert(db_conn, {
+    subject, errors = Subject.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -53,13 +53,13 @@ def test_previous(db_conn, sets_table, units_table):
     assert len(errors) == 0
 
 
-def test_language(db_conn, sets_table, units_table):
+def test_language(db_conn, subjects_table, units_table):
     """
-    Expect a set to require a language.
+    Expect a subject to require a language.
     """
 
     create_unit_a(db_conn, units_table)
-    set_, errors = Set.insert(db_conn, {
+    subject, errors = Subject.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -68,16 +68,16 @@ def test_language(db_conn, sets_table, units_table):
         }],
     })
     assert len(errors) == 0
-    assert set_['language'] == 'en'
+    assert subject['language'] == 'en'
 
 
-def test_name(db_conn, sets_table, units_table):
+def test_name(db_conn, subjects_table, units_table):
     """
-    Expect a set to require a name.
+    Expect a subject to require a name.
     """
 
     create_unit_a(db_conn, units_table)
-    set_, errors = Set.insert(db_conn, {
+    subject, errors = Subject.insert(db_conn, {
         'body': 'A beginning course focused on probability.',
         'members': [{
             'id': 'A',
@@ -85,18 +85,18 @@ def test_name(db_conn, sets_table, units_table):
         }],
     })
     assert len(errors) == 1
-    set_['name'] = 'Statistics'
-    set_, errors = set_.save(db_conn)
+    subject['name'] = 'Statistics'
+    subject, errors = subject.save(db_conn)
     assert len(errors) == 0
 
 
-def test_body(db_conn, sets_table, units_table):
+def test_body(db_conn, subjects_table, units_table):
     """
-    Expect a set to require a body.
+    Expect a subject to require a body.
     """
 
     create_unit_a(db_conn, units_table)
-    set_, errors = Set.insert(db_conn, {
+    subject, errors = Subject.insert(db_conn, {
         'name': 'Statistics',
         'members': [{
             'id': 'A',
@@ -104,18 +104,18 @@ def test_body(db_conn, sets_table, units_table):
         }],
     })
     assert len(errors) == 1
-    set_['body'] = 'A beginning course focused on probability.'
-    set_, errors = set_.save(db_conn)
+    subject['body'] = 'A beginning course focused on probability.'
+    subject, errors = subject.save(db_conn)
     assert len(errors) == 0
 
 
-def test_status(db_conn, sets_table, units_table):
+def test_status(db_conn, subjects_table, units_table):
     """
-    Expect a set status to be a string.
+    Expect a subject status to be a string.
     """
 
     create_unit_a(db_conn, units_table)
-    set_, errors = Set.insert(db_conn, {
+    subject, errors = Subject.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -124,19 +124,19 @@ def test_status(db_conn, sets_table, units_table):
         }],
     })
     assert len(errors) == 0
-    assert set_['status'] == 'pending'
-    set_['status'] = 'accepted'
-    set_, errors = set_.save(db_conn)
+    assert subject['status'] == 'pending'
+    subject['status'] = 'accepted'
+    subject, errors = subject.save(db_conn)
     assert len(errors) == 0
 
 
-def test_tags(db_conn, sets_table, units_table):
+def test_tags(db_conn, subjects_table, units_table):
     """
-    Expect a set to allow tags.
+    Expect a subject to allow tags.
     """
 
     create_unit_a(db_conn, units_table)
-    set_, errors = Set.insert(db_conn, {
+    subject, errors = Subject.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -148,31 +148,31 @@ def test_tags(db_conn, sets_table, units_table):
     assert len(errors) == 0
 
 
-def test_members(db_conn, sets_table, units_table):
+def test_members(db_conn, subjects_table, units_table):
     """
-    Expect a set to record a list of members.
+    Expect a subject to record a list of members.
     """
 
     create_unit_a(db_conn, units_table)
-    set_, errors = Set.insert(db_conn, {
+    subject, errors = Subject.insert(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
     })
     assert len(errors) == 1
-    set_['members'] = [{
+    subject['members'] = [{
         'id': 'A',
         'kind': 'unit',
     }]
-    set_, errors = set_.save(db_conn)
+    subject, errors = subject.save(db_conn)
     assert len(errors) == 0
 
 
-def test_list_by_entity_ids(db_conn, sets_table):
+def test_list_by_entity_ids(db_conn, subjects_table):
     """
-    Expect to list sets by given entity IDs.
+    Expect to list subjects by given entity IDs.
     """
 
-    sets_table.insert([{
+    subjects_table.insert([{
         'entity_id': 'A1',
         'name': 'A',
         'body': 'Apple',
@@ -201,14 +201,14 @@ def test_list_by_entity_ids(db_conn, sets_table):
         'modified': r.now(),
         'status': 'accepted',
     }]).run(db_conn)
-    sets = Set.list_by_entity_ids(db_conn, ['A1', 'C3'])
-    assert sets[0]['body'] in ('Apple', 'Coconut')
-    assert sets[0]['body'] in ('Apple', 'Coconut')
+    subjects = Subject.list_by_entity_ids(db_conn, ['A1', 'C3'])
+    assert subjects[0]['body'] in ('Apple', 'Coconut')
+    assert subjects[0]['body'] in ('Apple', 'Coconut')
 
 
-def test_list_by_unit_ids(db_conn, units_table, sets_table):
+def test_list_by_unit_ids(db_conn, units_table, subjects_table):
     """
-    Expect to get a list of sets which contain the given unit ID.
+    Expect to get a list of subjects which contain the given unit ID.
     Recursive.
     """
 
@@ -220,7 +220,7 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'name': 'Z',
     }).run(db_conn)
 
-    sets_table.insert([{
+    subjects_table.insert([{
         'entity_id': 'A',
         'name': 'Apple',
         'body': 'Apple',
@@ -239,7 +239,7 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'modified': r.now(),
         'status': 'accepted',
         'members': [{
-            'kind': 'set',
+            'kind': 'subject',
             'id': 'A',
         }]
     }, {
@@ -250,7 +250,7 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'modified': r.now(),
         'status': 'accepted',
         'members': [{
-            'kind': 'set',
+            'kind': 'subject',
             'id': 'A',
         }]
     }, {
@@ -261,7 +261,7 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'modified': r.now(),
         'status': 'accepted',
         'members': [{
-            'kind': 'set',
+            'kind': 'subject',
             'id': 'N',
         }]
     }, {
@@ -272,10 +272,10 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'modified': r.now(),
         'status': 'accepted',
         'members': [{
-            'kind': 'set',
+            'kind': 'subject',
             'id': 'B1',
         }, {
-            'kind': 'set',
+            'kind': 'subject',
             'id': 'B2',
         }]
     }, {
@@ -287,14 +287,14 @@ def test_list_by_unit_ids(db_conn, units_table, sets_table):
         'status': 'accepted'
     }]).run(db_conn)
 
-    sets = Set.list_by_unit_id(db_conn, 'Z')
-    set_ids = set(set_['entity_id'] for set_ in sets)
-    assert set_ids == {'A', 'B1', 'B2', 'C'}
+    subjects = Subject.list_by_unit_id(db_conn, 'Z')
+    subject_ids = set(subject['entity_id'] for subject in subjects)
+    assert subject_ids == {'A', 'B1', 'B2', 'C'}
 
 
-def test_list_units(db_conn, units_table, sets_table):
+def test_list_units(db_conn, units_table, subjects_table):
     """
-    Expect to get a list of units contained within the set.
+    Expect to get a list of units contained within the subject.
     Recursive.
     """
 
@@ -333,7 +333,7 @@ def test_list_units(db_conn, units_table, sets_table):
         'require_ids': ['Q', 'A']
     }]).run(db_conn)
 
-    sets_table.insert([{
+    subjects_table.insert([{
         'entity_id': 'T',
         'name': 'TRex',
         'body': 'TRex',
@@ -355,7 +355,7 @@ def test_list_units(db_conn, units_table, sets_table):
         'modified': r.now(),
         'status': 'accepted',
         'members': [{
-            'kind': 'set',
+            'kind': 'subject',
             'id': 'T',
         }, {
             'kind': 'unit',
@@ -363,7 +363,7 @@ def test_list_units(db_conn, units_table, sets_table):
         }]
     }]).run(db_conn)
 
-    set_ = Set.get(db_conn, entity_id='S')
-    cards = set_.list_units(db_conn)
+    subject = Subject.get(db_conn, entity_id='S')
+    cards = subject.list_units(db_conn)
     card_ids = set(card['entity_id'] for card in cards)
     assert card_ids == {'B', 'V', 'Q', 'N'}

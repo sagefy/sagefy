@@ -233,12 +233,12 @@ def test_get_learning_context(db_conn, users_table):
     redis.set('learning_context_abcd1234', json.dumps({
         'card': {'entity_id': 'A'},
         'unit': {'entity_id': 'B'},
-        'set': {'entity_id': 'C'},
+        'subject': {'entity_id': 'C'},
     }))
     assert get_learning_context(user) == {
         'card': {'entity_id': 'A'},
         'unit': {'entity_id': 'B'},
-        'set': {'entity_id': 'C'},
+        'subject': {'entity_id': 'C'},
     }
 
     redis.delete('learning_context_abcd1234')
@@ -268,7 +268,7 @@ def test_set_learning_context(db_conn, users_table):
         'entity_id': 'B',
         'name': 'Banana',
         'body': "Banana",
-    }, set={
+    }, subject={
         'entity_id': 'C',
         'name': 'Coconut',
     })
@@ -281,13 +281,13 @@ def test_set_learning_context(db_conn, users_table):
             'name': 'Banana',
             'body': "Banana",
         },
-        'set': {
+        'subject': {
             'entity_id': 'C',
             'name': 'Coconut',
         }
     }
 
-    set_learning_context(user, set=None)
+    set_learning_context(user, subject=None)
     assert get_learning_context(user) == {
         'card': {
             'entity_id': 'A',

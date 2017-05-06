@@ -36,6 +36,6 @@ def test_seq_next_default(db_conn, session):
     assert response == {
         'next': {
             'method': 'GET',
-            'path': '/s/users/abcd1234/sets',
+            'path': '/s/users/abcd1234/subjects',
         }
     }

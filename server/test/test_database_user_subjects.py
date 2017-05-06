@@ -1,51 +1,51 @@
-from database.user_sets import insert_user_sets, \
-    list_user_sets_entity
-# get_user_sets, append_user_sets, remove_user_sets,
+from database.user_subjects import insert_user_subjects, \
+    list_user_subjects_entity
+# get_user_subjects, append_user_subjects, remove_user_subjects,
 import rethinkdb as r
 
 
-def test_user(db_conn, users_sets_table):
+def test_user(db_conn, users_subjects_table):
     """
     Expect to require a user ID.
     """
 
-    uset_data = {
-        'set_ids': [
+    user_subject_data = {
+        'subject_ids': [
             'A',
             'B',
         ],
     }
-    user_sets, errors = insert_user_sets(uset_data, db_conn)
+    user_subjects, errors = insert_user_subjects(user_subject_data, db_conn)
     assert len(errors) == 1
-    uset_data['user_id'] = 'A'
-    user_sets, errors = insert_user_sets(uset_data, db_conn)
+    user_subject_data['user_id'] = 'A'
+    user_subjects, errors = insert_user_subjects(user_subject_data, db_conn)
     assert len(errors) == 0
 
 
-def test_sets(db_conn, users_sets_table):
+def test_subjects(db_conn, users_subjects_table):
     """
-    Expect to require a list of set IDs.
+    Expect to require a list of subject IDs.
     """
 
-    uset_data = {
+    user_subject_data = {
         'user_id': 'A'
     }
-    user_sets, errors = insert_user_sets(uset_data, db_conn)
+    user_subjects, errors = insert_user_subjects(user_subject_data, db_conn)
     assert len(errors) == 1
-    uset_data['set_ids'] = [
+    user_subject_data['subject_ids'] = [
         'A',
         'B',
     ]
-    user_sets, errors = insert_user_sets(uset_data, db_conn)
+    user_subjects, errors = insert_user_subjects(user_subject_data, db_conn)
     assert len(errors) == 0
 
 
-def test_list_sets(db_conn, users_sets_table, sets_table):
+def test_list_subjects(db_conn, users_subjects_table, subjects_table):
     """
-    Expect to list sets a user subscribes to.
+    Expect to list subjects a user subscribes to.
     """
 
-    sets_table.insert([{
+    subjects_table.insert([{
         'entity_id': 'A1',
         'name': 'A',
         'body': 'Apple',
@@ -74,9 +74,9 @@ def test_list_sets(db_conn, users_sets_table, sets_table):
         'modified': r.now(),
         'status': 'accepted',
     }]).run(db_conn)
-    users_sets_table.insert({
+    users_subjects_table.insert({
         'user_id': 'abcd1234',
-        'set_ids': [
+        'subject_ids': [
             'A1',
             'C3',
         ],
@@ -84,6 +84,6 @@ def test_list_sets(db_conn, users_sets_table, sets_table):
         'modified': r.now(),
     }).run(db_conn)
     user_id = 'abcd1234'
-    sets = list_user_sets_entity(user_id, {}, db_conn)
-    assert sets[0]['body'] in ('Apple', 'Coconut')
-    assert sets[1]['body'] in ('Apple', 'Coconut')
+    subjects = list_user_subjects_entity(user_id, {}, db_conn)
+    assert subjects[0]['body'] in ('Apple', 'Coconut')
+    assert subjects[1]['body'] in ('Apple', 'Coconut')

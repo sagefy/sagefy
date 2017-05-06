@@ -5,13 +5,13 @@
 - [ ] Change your password
 - [ ] Change your user name
 - -
-- [ ] Find the set on "Basic Math"
+- [ ] Find the subject on "Basic Math"
 - [ ] Find the unit on addition: "Adding two..."
 - [ ] View the change history of the unit
 - [ ] Find the video card on addition: "How to add by..."
 - -
 - [ ] Find and view the user "Doris"
-- [ ] Find the topic under "Basic Math" set
+- [ ] Find the topic under "Basic Math" subject
 - [ ] Follow the topic
 - [ ] Write a post in the "Basic Math" topic
 - [ ] Update the content of the post
@@ -26,19 +26,19 @@
 - -
 - [ ] Start a new topic called "Rename Basic Math"
 - [ ] Change the name of the topic
-- [ ] Create a proposal to change the set name
+- [ ] Create a proposal to change the subject name
 - -
 - [ ] Read my notices
 - [ ] Mark a notice as read
 - [ ] Go to "manage what I follow"
 - [ ] Unfollow the "Basic Math" topic
 - -
-- [ ] Find the empty list of "my sets"
-- [ ] Find the "Basic Math" set
-- [ ] Add the set to "My Sets"
+- [ ] Find the empty list of "my subjects"
+- [ ] Find the "Basic Math" subject
+- [ ] Add the subject to "My Subjects"
 - [ ] View the units within "Basic Math"
 - [ ] Engage "Basic Math"
-- [ ] View the set tree
+- [ ] View the
 - [ ] Play with some cards
 - -
 - [ ] Log out

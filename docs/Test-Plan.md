@@ -10,13 +10,13 @@ title: Test Plan
 - [ ] Change your password
 - [ ] Change your user name
 - -
-- [ ] Find the set on "Basic Math"
+- [ ] Find the subject on "Basic Math"
 - [ ] Find the unit on addition
 - [ ] View the change history of the unit
 - [ ] Find the video card on addition
 - -
 - [ ] Find and view the user "Doris"
-- [ ] Find the topic under "Basic Math" set
+- [ ] Find the topic under "Basic Math" subject
 - [ ] Follow the topic
 - [ ] Write a post in the "Basic Math" topic
 - [ ] Update the content of the post
@@ -37,10 +37,10 @@ title: Test Plan
 - [ ] Go to "manage what I follow"
 - [ ] Unfollow the "Basic Math" topic
 - -
-- [ ] Find the empty list of "my sets"
-- [ ] Find the "Basic Math" set
-- [ ] Add the set to "My Sets"
+- [ ] Find the empty list of "my subjects"
+- [ ] Find the "Basic Math" subject
+- [ ] Add the subject to "My Subjects"
 - [ ] View the units within "Basic Math"
 - [ ] Engage "Basic Math"
-- [ ] View the set tree
+- [ ] View the
 - [ ] Play with some cards

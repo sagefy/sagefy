@@ -287,9 +287,9 @@ def test_unit_name(app):
 
 
 @xfail
-def test_unit_set(app):
+def test_unit_subject(app):
     """
-    Expect to filter units by sets.
+    Expect to filter units by subjects.
     """
     assert False
 
@@ -327,40 +327,40 @@ def test_unit_learners(app):
 
 
 @xfail
-def test_set(app):
+def test_subject(app):
     """
-    Expect to filter to sets.
-    """
-    assert False
-
-
-@xfail
-def test_set_name(app):
-    """
-    Expect to search sets by name and body.
+    Expect to filter to subjects.
     """
     assert False
 
 
 @xfail
-def test_set_containing(app):
+def test_subject_name(app):
     """
-    Expect to filter sets by unit containing.
-    """
-    assert False
-
-
-@xfail
-def test_set_tag(app):
-    """
-    Expect to filter sets by tag.
+    Expect to search subjects by name and body.
     """
     assert False
 
 
 @xfail
-def test_set_learners(app):
+def test_subject_containing(app):
     """
-    Expect to sort sets by number of learners.
+    Expect to filter subjects by unit containing.
+    """
+    assert False
+
+
+@xfail
+def test_subject_tag(app):
+    """
+    Expect to filter subjects by tag.
+    """
+    assert False
+
+
+@xfail
+def test_subject_learners(app):
+    """
+    Expect to sort subjects by number of learners.
     """
     assert False

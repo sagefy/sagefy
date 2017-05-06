@@ -145,13 +145,13 @@ module.exports = tasks.add({
         if (args) {
             tasks.route(`/cards/${args[0]}/learn`)
         }
-        args = matchesRoute(path, '/s/sets/{id}/units')
+        args = matchesRoute(path, '/s/subjects/{id}/units')
         if (args) {
-            tasks.route(`/sets/${args[0]}/choose_unit`)
+            tasks.route(`/subjects/${args[0]}/choose_unit`)
         }
-        args = matchesRoute(path, '/s/sets/{id}/tree')
+        args = matchesRoute(path, '/s/subjects/{id}/tree')
         if (args) {
-            tasks.route(`/sets/${args[0]}/tree`)
+            tasks.route(`/subjects/${args[0]}/tree`)
         }
     },
 

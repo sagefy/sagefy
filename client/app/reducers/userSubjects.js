@@ -1,10 +1,10 @@
 const {mergeArraysByKey} = require('../modules/auxiliaries')
 
-module.exports = function userSets(state = [], action = {type: ''}) {
-    if(action.type === 'ADD_USER_SETS') {
+module.exports = function userSubjects(state = [], action = {type: ''}) {
+    if(action.type === 'ADD_USER_SUBJECTS') {
         return mergeArraysByKey(
             state,
-            action.sets,
+            action.subjects,
             'id'
         )
     }

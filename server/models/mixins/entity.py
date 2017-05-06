@@ -64,7 +64,7 @@ class EntityMixin(object):
         to the latest accepted versions for each.
         """
 
-        # TODO-2 this query should have an index in card, unit, set
+        # TODO-2 this query should have an index in card, unit, subject
         # TODO-2 is there a way to avoid the cost of this query?
         return (cls.table
                    .filter(r.row['status'].eq('accepted'))
@@ -83,7 +83,7 @@ class EntityMixin(object):
         if not entity_id:
             return
 
-        # TODO-2 this query should have an index in card, unit, set
+        # TODO-2 this query should have an index in card, unit, subject
         query = (cls.start_accepted_query()
                     .filter(r.row['entity_id'] == entity_id)
                     .limit(1))
@@ -109,7 +109,7 @@ class EntityMixin(object):
 
         docs = query.run(db_conn)
         return [cls(fields) for fields in docs]
-        # TODO-2 index in unit and set
+        # TODO-2 index in unit and subject
 
     @classmethod
     def list_by_version_ids(cls, db_conn, version_ids):
@@ -138,7 +138,7 @@ class EntityMixin(object):
         if not entity_id:
             return []
 
-        # TODO-2 this query should have an index in card, unit, set
+        # TODO-2 this query should have an index in card, unit, subject
         query = (cls.table
                     .filter(r.row['entity_id'] == entity_id)
                     .order_by(r.desc('created'))

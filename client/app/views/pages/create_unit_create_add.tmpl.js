@@ -5,7 +5,7 @@ const {div, h1, form, input, button, a, ul, li, p} =
 const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 
-module.exports = function createSetAdd(data) {
+module.exports = function createSubjectAdd(data) {
     const {searchResults} = data
     const inputOpts = {
         type: 'text',

@@ -3,7 +3,7 @@
 // TODO-3 move copy to content directory
 const {div, header, img, hgroup, h1, h2, h3, h4, h5, h6, p, a, hr, strong, ul, ol, li, iframe, br, footer, span, em, section} = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
-const previewSetHead = require('../components/preview_set_head.tmpl')
+const previewSubjectHead = require('../components/preview_suject_head.tmpl')
 
 // TODO-1 Include unique CTAs throughout
 
@@ -26,8 +26,8 @@ module.exports = data => {
           data.currentUserID ? p(
               'Logged in. ',
               a(
-                  {href: '/my_sets'},
-                  'My Sets ',
+                  {href: '/my_subjects'},
+                  'My Subjects ',
                   icon('next')
               )
           ) : null,
@@ -71,7 +71,7 @@ module.exports = data => {
             ol(
               {className: 'home__ul--how'},
               li(img({src: 'https://i.imgur.com/qrPmvzZ.png'}), 'Create an account.'),
-              li(img({src: 'https://i.imgur.com/9KJdaFl.png'}), 'Find and add a set.'),
+              li(img({src: 'https://i.imgur.com/9KJdaFl.png'}), 'Find and add a subject.'),
               li(img({src: 'https://i.imgur.com/uLJstC1.png'}), 'Choose your unit.'),
               li(img({src: 'https://i.imgur.com/BlUMbif.png'}), 'Learn.')
             ),
@@ -90,12 +90,12 @@ module.exports = data => {
             cta
           ),
           section(
-            h2('Popular Sets'),
+            h2('Popular Subjects'),
             ul(
-              {className: 'home__ul--popular-sets'},
+              {className: 'home__ul--popular-subjects'},
               li(
-                previewSetHead({
-                  url:  '/sets/CgDRJPfzJuTR916HdmosA3A8/landing',
+                previewSubjectHead({
+                  url:  '/subjects/CgDRJPfzJuTR916HdmosA3A8/landing',
                   name: 'An Introduction to Electronic Music - Foundation',
                   body: 'A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.',
                 })
@@ -110,7 +110,7 @@ module.exports = data => {
               {className: 'home__ul--features'},
               li(w(icon('unit')), strong('Simple'), ' organization. The only kinds of things are: ',
                 ul(
-                  li('Sets -- or courses,'),
+                  li('Subjects -- or courses,'),
                   li('Units -- or learning goals, and'),
                   li('Cards -- small learning experiences.')
                 )

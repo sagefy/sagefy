@@ -23,12 +23,12 @@ for kind in (
     'units',
     'cards',
     'cards_parameters',
-    'sets',
+    'subjects',
     'topics',
     'posts',
     'follows',
     'notices',
-    'users_sets',
+    'users_subjects',
     'responses',
 ):
     (r.table(kind)
@@ -57,7 +57,7 @@ stream.close()
         'password': bcrypt.encrypt('example1'),
         'settings': {
             'email_frequency': 'daily',
-            'view_sets': 'public',
+            'view_subjects': 'public',
             'view_follows': 'public',
         }
     }, {
@@ -69,7 +69,7 @@ stream.close()
         'password': bcrypt.encrypt('example1'),
         'settings': {
             'email_frequency': 'daily',
-            'view_sets': 'public',
+            'view_subjects': 'public',
             'view_follows': 'public',
         }
     }])
@@ -165,21 +165,21 @@ for card_data in sample_data['cards']['choice']:
     }).run(db_conn)
 
 
-for sample_id, set_data in sample_data['sets'].items():
-    set_data['entity_id'] = sample_id
-    r.table('sets').insert({
+for sample_id, subject_data in sample_data['subjects'].items():
+    subject_data['entity_id'] = sample_id
+    r.table('subjects').insert({
         'id': uniqid(),
         'created': r.time(2014, 1, 1, 'Z'),
         'modified': r.time(2014, 1, 1, 'Z'),
-        'entity_id': set_data['entity_id'],
+        'entity_id': subject_data['entity_id'],
         'previous_id': None,
         'language': 'en',
-        'name': set_data['name'],
+        'name': subject_data['name'],
         'status': 'accepted',
         'available': True,
         'tags': [],
-        'body': set_data['body'],
-        'members': set_data['members'],
+        'body': subject_data['body'],
+        'members': subject_data['members'],
     }).run(db_conn)
 
 
@@ -260,14 +260,14 @@ for sample_id, unit_data in sample_data['units'].items():
     }).run(db_conn)
 
 
-r.table('users_sets').insert({
-    'id': 'doris-sets',
+r.table('users_subjects').insert({
+    'id': 'doris-subjects',
     'created': r.time(2014, 1, 1, 'Z'),
     'modified': r.time(2014, 1, 1, 'Z'),
     'user_id': 'doris',
-    'set_ids': [
+    'subject_ids': [
         sample_id
-        for sample_id, set_data in sample_data['sets'].items()
+        for sample_id, subject_data in sample_data['subjects'].items()
     ],
 }).run(db_conn)
 

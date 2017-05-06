@@ -4,45 +4,45 @@ const {div, h1, form, input, button, a, ul, li, p} =
     require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
-const previewSetHead = require('../components/preview_set_head.tmpl')
+const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 
-module.exports = function createSetAdd(data) {
+module.exports = function createSubjectAdd(data) {
     const {searchResults} = data
     const inputOpts = {
         type: 'text',
-        placeholder: 'Search Unit and Sets',
+        placeholder: 'Search Unit and Subjects',
         name: 'search',
         size: 40
     }
     inputOpts.value = data.searchQuery || null
 
     return div(
-        {id: 'create', className: 'page create--set-add'},
-        h1('Add an Existing Unit or Set to New Set'),
+        {id: 'create', className: 'page create--subject-add'},
+        h1('Add an Existing Unit or Subject to New Subject'),
         a(
-            {href: '/create/set/create'},
+            {href: '/create/subject/create'},
             icon('back'),
-            ' Back to Create Set form'
+            ' Back to Create Subject form'
         ),
         form(
-            {className: 'form--horizontal create--set-add__form'},
+            {className: 'form--horizontal create--subject-add__form'},
             div(
                 {className: 'form-field form-field--search'},
                 input(inputOpts)
             ),
             button(
-                {type: 'submit', className: 'create--set-add__search'},
+                {type: 'submit', className: 'create--subject-add__search'},
                 icon('search'),
                 ' Search'
             )
         ),
         searchResults && searchResults.length ? ul(
-            {className: 'create--set-add__results'},
+            {className: 'create--subject-add__results'},
             searchResults.map(result => li(
                 a(
                     {
-                        href: '/create/set/create',
-                        className: 'create--set-add__add',
+                        href: '/create/subject/create',
+                        className: 'create--subject-add__add',
                         dataset: {
                             kind: result._type,
                             id: result._id,
@@ -51,10 +51,10 @@ module.exports = function createSetAdd(data) {
                         },
                     },
                     icon('create'),
-                    ' Add to Set'
+                    ' Add to Subject'
                 ),
-                result._type === 'set' ?
-                    previewSetHead({
+                result._type === 'subject' ?
+                    previewSubjectHead({
                         name: result._source.name,
                         body: result._source.body,
                     }) :

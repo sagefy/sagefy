@@ -15,10 +15,10 @@ import routes.user
 import routes.notice
 import routes.topic
 import routes.follow
-import routes.user_sets
+import routes.user_subjects
 import routes.card
 import routes.unit
-import routes.set
+import routes.subject
 import routes.search
 import routes.next
 import routes.sitemap

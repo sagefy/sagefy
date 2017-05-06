@@ -4,18 +4,19 @@ from modules.sequencer.formulas import calculate_belief
 from time import time
 
 
-def traverse(db_conn, user, set_):
+def traverse(db_conn, user, subject):
     """
-    Given a user and a set, sort all the units in the set based on need.
+    Given a user and a subject,
+    sort all the units in the subject based on need.
     Return status of (diagnose, learn, review, done) and list of units.
 
     Routes that use this:
 
     - @post('/s/cards/{card_id}/responses')
         - needs a status and a list of units per that status
-    - @get('/s/sets/{set_id}/tree')
+    - @get('/s/subjects/{subject_id}/tree')
         - needs a status per unit, and the dependencies in graph form
-    - @get('/s/sets/{set_id}/units')
+    - @get('/s/subjects/{subject_id}/units')
         - needs units under the status "review" or "learn", in priority order
     """
 
@@ -26,7 +27,7 @@ def traverse(db_conn, user, set_):
         'done': [],
     }
 
-    units = set_.list_units(db_conn)
+    units = subject.list_units(db_conn)
     for unit in units:
         status = judge(db_conn, unit, user)
         buckets[status].append(unit)
@@ -50,7 +51,8 @@ def order_units_by_need(units):
 
     Units with more dependencies will come at the beginning of the list,
     units with fewer dependencies will come at the end.
-    This function only considers the units provided; not all units in the set.
+    This function only considers the units provided;
+    not all units in the subject.
 
     The algorithm considers how many nodes depend on the given node,
     rather than how deep in the graph the node is.
@@ -65,7 +67,7 @@ def order_units_by_need(units):
 
 def match_unit_dependents(units):
     """
-    For each unit, provide a set of units that depend on the given unit.
+    For each unit, provide a subject of units that depend on the given unit.
     """
 
     ids_to_units = {unit['entity_id']: unit for unit in units}

@@ -8,10 +8,10 @@ See [Sequencer](Planning-Sequencer), [Sequencer Background](Planning-Sequencer-B
 Learner Models
 --------------
 
-**users_sets**
+**users_subjects**
 
 - user_id : string
-- set_ids : array of strings
+- subject_ids : array of strings
 
 **responses**
 
@@ -23,34 +23,34 @@ Learner Models
 
 **redis**
 
-- user -> current set
+- user -> current subject
 - user -> current unit
 - caching
 
 Learner Endpoints
 -----------------
 
-- GET `/s/users/{id}/sets/`
-- POST `/s/users/{id}/sets/` <- Add to my sets
-- DELETE `/s/users/{id}/sets/{id}` <- Remove from my sets
+- GET `/s/users/{id}/subjects/`
+- POST `/s/users/{id}/subjects/` <- Add to my subjects
+- DELETE `/s/users/{id}/subjects/{id}` <- Remove from my subjects
 - GET `/s/sequencer/next`
-    - parameters: set_id
+    - parameters: subject_id
     - returns: reference to one of the following endpoints
-- GET `/s/sets/{id}/tree` <- Show tree
+- GET `/s/subjects/{id}/tree` <- Show tree
     - returns: what would be the next action?
-- GET `/s/sets/{id}/units` <- Choose Unit screen
-- PUT `/s/sets/{id}/units/{id}` <- Unit chosen
+- GET `/s/subjects/{id}/units` <- Choose Unit screen
+- PUT `/s/subjects/{id}/units/{id}` <- Unit chosen
 - GET `/s/cards/{id}/learn` <- Render card
 - POST `/s/cards/{id}/responses` <- Respond to card
 
 Learner Screen Requirements and Wireframes
 ------------------------------------------
 
-### My Sets
+### My Subjects
 
 <img src="https://docs.google.com/drawings/d/1jQFTFcNuIKIvsF3C9O4n2NkaRoxBVy0ZSE_ZtEVUb8Y/pub?w=1440&amp;h=1080">
 
-### Search Sets (...as learner)
+### Search Subjects (...as learner)
 
 <img src="https://docs.google.com/drawings/d/11xFDioVMAswGdr3CCIj2HqRiwy98NVUphO1MhzbAvoM/pub?w=1440&amp;h=1080">
 

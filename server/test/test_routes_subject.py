@@ -3,16 +3,16 @@ import pytest
 xfail = pytest.mark.xfail
 
 import rethinkdb as r
-import routes.set
+import routes.subject
 
 
-def test_get_set(db_conn,
-                 sets_table, units_table, topics_table):
+def test_get_subject(db_conn,
+                     subjects_table, units_table, topics_table):
     """
-    Expect to get the set information for displaying to a contributor.
+    Expect to get the subject information for displaying to a contributor.
     """
 
-    sets_table.insert([{
+    subjects_table.insert([{
         'entity_id': 'zytx',
         'created': r.now(),
         'modified': r.now(),
@@ -45,7 +45,7 @@ def test_get_set(db_conn,
         'name': 'A Modest Proposal',
         'entity': {
             'id': 'zytx',
-            'kind': 'set'
+            'kind': 'subject'
         }
     }, {
         'created': r.now(),
@@ -54,7 +54,7 @@ def test_get_set(db_conn,
         'name': 'Another Proposal',
         'entity': {
             'id': 'zytx',
-            'kind': 'set'
+            'kind': 'subject'
         }
     }, {
         'created': r.now(),
@@ -67,16 +67,16 @@ def test_get_set(db_conn,
         }
     }]).run(db_conn)
 
-    code, response = routes.set.get_set_route({
+    code, response = routes.subject.get_subject_route({
         'db_conn': db_conn
     }, 'zytx')
     assert code == 200
     # Model
-    assert response['set']['entity_id'] == 'zytx'
-    assert response['set']['name'] == 'Wildwood'
+    assert response['subject']['entity_id'] == 'zytx'
+    assert response['subject']['name'] == 'Wildwood'
     # Topics
     assert len(response['topics']) == 2
-    assert response['topics'][0]['entity']['kind'] == 'set'
+    assert response['topics'][0]['entity']['kind'] == 'subject'
     # Versions
     assert len(response['versions']) == 2
     assert response['versions'][1]['name'] == 'Umberwood'
@@ -87,48 +87,48 @@ def test_get_set(db_conn,
     # TODO-3 sequencer: learners, quality, difficulty
 
 
-def test_get_set_404(db_conn):
+def test_get_subject_404(db_conn):
     """
-    Expect to fail to get set information if set is unknown. (404)
+    Expect to fail to get subject information if subject is unknown. (404)
     """
 
-    code, response = routes.set.get_set_route({
+    code, response = routes.subject.get_subject_route({
         'db_conn': db_conn
     }, 'abcd')
     assert code == 404
 
 
 @xfail
-def test_set_tree():
+def test_subject_tree():
     """
-    Expect to get set information in tree format.
-    """
-
-    assert False
-
-
-@xfail
-def test_set_tree_401():
-    """
-    Expect to fail to get set in tree format if not log in. (401)
+    Expect to get subject information in tree format.
     """
 
     assert False
 
 
 @xfail
-def test_set_tree_404():
+def test_subject_tree_401():
     """
-    Expect to fail to get set in tree format if no set. (404)
+    Expect to fail to get subject in tree format if not log in. (401)
     """
 
     assert False
 
 
 @xfail
-def test_set_tree_400():
+def test_subject_tree_404():
     """
-    Expect to fail to get set in tree format
+    Expect to fail to get subject in tree format if no subject. (404)
+    """
+
+    assert False
+
+
+@xfail
+def test_subject_tree_400():
+    """
+    Expect to fail to get subject in tree format
     if parameters don't make sense. (400)
     """
 
@@ -136,7 +136,7 @@ def test_set_tree_400():
 
 
 @xfail
-def test_set_units():
+def test_subject_units():
     """
     Expect to provide list of units to choose from.
     """
@@ -145,7 +145,7 @@ def test_set_units():
 
 
 @xfail
-def test_set_units_401():
+def test_subject_units_401():
     """
     Expect to fail to provide list of units if not log in. (401)
     """
@@ -154,16 +154,16 @@ def test_set_units_401():
 
 
 @xfail
-def test_set_units_404():
+def test_subject_units_404():
     """
-    Expect to fail to provide list of units if set not found. (404)
+    Expect to fail to provide list of units if subject not found. (404)
     """
 
     assert False
 
 
 @xfail
-def test_set_units_400():
+def test_subject_units_400():
     """
     Expect to fail to provide list of units if request is nonsense. (400)
     """

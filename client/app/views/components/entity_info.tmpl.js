@@ -4,7 +4,7 @@ const icon = require('./icon.tmpl')
 module.exports = () =>
   div(
     {className: 'entity-info'},
-    h3('What are cards, units, and sets?'),
+    h3('What are cards, units, and subjects?'),
     ul(
       li(
         'A ', icon('card'), ' ', strong('card'),
@@ -18,8 +18,8 @@ module.exports = () =>
         br(), small('(Example: "What is mean, median, and mode?")')
       ),
       li(
-        'A ', icon('set'), ' ', strong('set'),
-            ' is a collection of units and other sets.',
+        'A ', icon('subject'), ' ', strong('subject'),
+            ' is a collection of units and other subjects.',
         br(),
         small(
           '(Like a course, but at any scale. ',

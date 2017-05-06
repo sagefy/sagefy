@@ -6,7 +6,7 @@ const verbage = {
     belongs_to: 'Belongs to',
 }
 
-// const order = ['card', 'unit', 'set']
+// const order = ['card', 'unit', 'subject']
 
 module.exports = (kind, entity) => {
     return [
@@ -30,7 +30,7 @@ module.exports = (kind, entity) => {
 const findKind = (curr, rel) => {
     if (rel === 'belongs_to') {
         if (curr === 'unit') {
-            return 'set'
+            return 'subject'
         }
 
         if (curr === 'card') {

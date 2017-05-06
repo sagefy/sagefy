@@ -1,99 +1,98 @@
 from framework.routes import get, post, abort
-from models.set import Set
+from models.subject import Subject
 from models.unit import Unit
 from framework.session import get_current_user
 from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
 from database.user import get_learning_context, set_learning_context
 from database.topic import list_topics_by_entity_id, deliver_topic
-from database.my_recently_created import get_my_recently_created_sets
-
-# Nota Bene: We use `set_` because `set` is a type in Python
+from database.my_recently_created import get_my_recently_created_subjects
 
 
-@get('/s/sets/recommended')
-def get_recommended_sets(request):
+@get('/s/subjects/recommended')
+def get_recommended_subjects(request):
     db_conn = request['db_conn']
-    sets = Set.get_all(db_conn)
-    if not sets:
+    subjects = Subject.get_all(db_conn)
+    if not subjects:
         return abort(404)
     return 200, {
-        'sets': [set_.deliver() for set_ in sets]
+        'subjects': [subject.deliver() for subject in subjects]
     }
 
 
-@get('/s/sets/{set_id}')
-def get_set_route(request, set_id):
+@get('/s/subjects/{subject_id}')
+def get_subject_route(request, subject_id):
     """
-    Get a specific set given an ID.
+    Get a specific subject given an ID.
     """
 
     db_conn = request['db_conn']
-    set_ = Set.get_latest_accepted(db_conn, set_id)
-    if not set_:
+    subject = Subject.get_latest_accepted(db_conn, subject_id)
+    if not subject:
         return abort(404)
 
     # TODO-2 SPLITUP create new endpoints for these instead
-    topics = list_topics_by_entity_id(set_id, {}, db_conn)
-    versions = Set.get_versions(db_conn, entity_id=set_id)
-    units = set_.list_units(db_conn)
+    topics = list_topics_by_entity_id(subject_id, {}, db_conn)
+    versions = Subject.get_versions(db_conn, entity_id=subject_id)
+    units = subject.list_units(db_conn)
 
     return 200, {
-        'set': set_.deliver(),
-        # 'set_parameters': set_.fetch_parameters(),
+        'subject': subject.deliver(),
+        # 'subject_parameters': subject.fetch_parameters(),
         'topics': [deliver_topic(topic) for topic in topics],
         'versions': [version.deliver() for version in versions],
         'units': [unit.deliver() for unit in units],
     }
 
 
-@get('/s/sets/{set_id}/versions')
-def get_set_versions_route(request, set_id):
+@get('/s/subjects/{subject_id}/versions')
+def get_subject_versions_route(request, subject_id):
     """
-    Get versions set given an ID. Paginates.
+    Get subject versions given an ID. Paginates.
     """
 
     db_conn = request['db_conn']
-    versions = Set.get_versions(db_conn, entity_id=set_id, **request['params'])
+    versions = Subject.get_versions(
+        db_conn, entity_id=subject_id, **request['params'])
     return 200, {
         'versions': [version.deliver(access='view') for version in versions]
     }
 
 
-@get('/s/sets/{set_id}/tree')
-def get_set_tree_route(request, set_id):
+@get('/s/subjects/{subject_id}/tree')
+def get_subject_tree_route(request, subject_id):
     """
-    Render the tree of units that exists within a set.
+    Render the tree of units that exists within a subject.
 
     Contexts:
-    - Search set, preview units in set
+    - Search subject, preview units in subject
     - Pre diagnosis
-    - Learner view progress in set
-    - Set complete
+    - Learner view progress in subject
+    - Subject complete
 
     NEXT STATE
-    GET View Set Tree
-        -> GET Choose Set    ...when set is complete
-        -> GET Choose Unit   ...when in learn or review mode
-        -> GET Learn Card    ...when in diagnosis
+    GET View Subject Tree
+        -> GET Choose Subject ...when subject is complete
+        -> GET Choose Unit    ...when in learn or review mode
+        -> GET Learn Card     ...when in diagnosis
             (Unit auto chosen)
 
-    TODO-2 merge with get_set_units_route
+    TODO-2 merge with get_subject_units_route
     TODO-2 simplify this method
     """
 
     db_conn = request['db_conn']
 
-    set_ = Set.get(db_conn, entity_id=set_id)
+    subject = Subject.get(db_conn, entity_id=subject_id)
 
-    if not set_:
+    if not subject:
         return abort(404)
 
-    units = set_.list_units(db_conn)
+    units = subject.list_units(db_conn)
 
-    # For the menu, it must return the name and ID of the set
+    # For the menu, it must return the name and ID of the subject
     output = {
-        'set': set_.deliver(),
+        'subjects': subject.deliver(),
         'units': [u.deliver() for u in units],
     }
 
@@ -103,7 +102,7 @@ def get_set_tree_route(request, set_id):
         return 200, output
 
     context = get_learning_context(current_user) if current_user else {}
-    buckets = traverse(db_conn, current_user, set_)
+    buckets = traverse(db_conn, current_user, subject)
     output['buckets'] = {
         'diagnose': [u['entity_id'] for u in buckets['diagnose']],
         'review': [u['entity_id'] for u in buckets['review']],
@@ -112,7 +111,7 @@ def get_set_tree_route(request, set_id):
     }
 
     # If we are just previewing, don't update anything
-    if set_id != context.get('set', {}).get('entity_id'):
+    if subject_id != context.get('subject', {}).get('entity_id'):
         return 200, output
 
     # When in diagnosis, choose the unit and card automagically.
@@ -132,26 +131,26 @@ def get_set_tree_route(request, set_id):
     elif buckets['review'] or buckets['learn']:
         next_ = {
             'method': 'GET',
-            'path': '/s/sets/{set_id}/units'
-                    .format(set_id=set_id),
+            'path': '/s/subjects/{subject_id}/units'
+                    .format(subject_id=subject_id),
         }
         set_learning_context(current_user, next=next_)
 
-    # If the set is complete, lead the learner to choose another set.
+    # If the subject is complete, lead the learner to choose another subject.
     else:
         next_ = {
             'method': 'GET',
-            'path': '/s/users/{user_id}/sets'
+            'path': '/s/users/{user_id}/subjects'
                     .format(user_id=current_user['id']),
         }
-        set_learning_context(current_user, next=next_, unit=None, set=None)
+        set_learning_context(current_user, next=next_, unit=None, subject=None)
 
     output['next'] = next_
     return 200, output
 
 
-@get('/s/sets/{set_id}/units')
-def get_set_units_route(request, set_id):
+@get('/s/subjects/{subject_id}/units')
+def get_subject_units_route(request, subject_id):
     """
     Present a small number of units the learner can choose from.
 
@@ -171,30 +170,31 @@ def get_set_units_route(request, set_id):
     context = get_learning_context(current_user)
     next_ = {
         'method': 'POST',
-        'path': '/s/sets/{set_id}/units/{unit_id}'
-                  .format(set_id=context.get('set', {}).get('entity_id'),
-                          unit_id='{unit_id}'),
+        'path': '/s/subjects/{subject_id}/units/{unit_id}'
+                  .format(
+                      subject_id=context.get('subject', {}).get('entity_id'),
+                      unit_id='{unit_id}'),
     }
     set_learning_context(current_user, next=next_)
 
-    set_ = Set.get_latest_accepted(db_conn, set_id)
+    subject = Subject.get_latest_accepted(db_conn, subject_id)
 
     # Pull a list of up to 5 units to choose from based on priority.
-    buckets = traverse(db_conn, current_user, set_)
+    buckets = traverse(db_conn, current_user, subject)
     units = buckets['learn'][:5]
     # TODO-3 Time estimates per unit for mastery.
 
     return 200, {
         'next': next_,
         'units': [unit.deliver() for unit in units],
-        # For the menu, it must return the name and ID of the set
-        'set': set_.deliver(),
+        # For the menu, it must return the name and ID of the subject
+        'subject': subject.deliver(),
         'current_unit_id': context.get('unit', {}).get('entity_id'),
     }
 
 
-@post('/s/sets/{set_id}/units/{unit_id}')
-def choose_unit_route(request, set_id, unit_id):
+@post('/s/subjects/{subject_id}/units/{unit_id}')
+def choose_unit_route(request, subject_id, unit_id):
     """
     Updates the learner's information based on the unit they have chosen.
 
@@ -214,11 +214,12 @@ def choose_unit_route(request, set_id, unit_id):
     if not unit:
         return abort(404)
 
-    # If the unit isn't in the set...
+    # If the unit isn't in the subject...
     context = get_learning_context(current_user)
-    set_ids = [set_['entity_id']
-               for set_ in Set.list_by_unit_id(db_conn, unit_id)]
-    if context.get('set', {}).get('entity_id') not in set_ids:
+    subject_ids = [
+        subject['entity_id']
+        for subject in Subject.list_by_unit_id(db_conn, unit_id)]
+    if context.get('subject', {}).get('entity_id') not in subject_ids:
         return abort(400)
 
     status = judge(db_conn, unit, current_user)
@@ -248,17 +249,17 @@ def choose_unit_route(request, set_id, unit_id):
     return 200, {'next': next_}
 
 
-@get('/s/sets:get_my_recently_created')
-def get_my_recently_created_sets_route(request):
+@get('/s/subjects:get_my_recently_created')
+def get_my_recently_created_subjects_route(request):
     """
-    Get the sets the user most recently created.
+    Get the subjects the user most recently created.
     """
 
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
     db_conn = request['db_conn']
-    sets = get_my_recently_created_sets(current_user, db_conn)
+    subjects = get_my_recently_created_subjects(current_user, db_conn)
     return 200, {
-        'sets': [set_.deliver() for set_ in sets],
+        'subjects': [subject.deliver() for subject in subjects],
     }

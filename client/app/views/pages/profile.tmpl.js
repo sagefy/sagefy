@@ -5,7 +5,7 @@ const {
 } = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 // TP@ const timeago = require('../components/timeago.tmpl')
-const previewSetHead = require('../components/preview_set_head.tmpl')
+const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
 
@@ -22,22 +22,22 @@ module.exports = (data) => {
             h1(user.name),
             p('Joined ' + timeAgo(user.created))
         ),
-        user.sets ? showSets(user, user.sets) : null,
+        user.subjects ? showSubjects(user, user.subjects) : null,
         user.follows ? showFollows(user, user.follows) : null
         // TP@ user.posts ? showPosts(user, user.posts) : null
     )
 }
 
-const showSets = (user, sets) =>
+const showSubjects = (user, subjects) =>
     [
         h3(`${user.name} is learning:`),
         ul(
             {className: 'profile__options'},
-            sets.map(set => li(
-                previewSetHead({
-                    url: `/sets/${set.entity_id}`,
-                    name: set.name,
-                    body: set.body,
+            subjects.map(subject => li(
+                previewSubjectHead({
+                    url: `/subjects/${subject.entity_id}`,
+                    name: subject.name,
+                    body: subject.body,
                 })
             ))
         )
@@ -53,9 +53,9 @@ const showFollows = (user, follows) =>
                 const e = follow.entity
                 const kind = e.kind
                 return li(
-                    kind === 'set' ?
-                        previewSetHead({
-                            url: `/sets/${e.id}`,
+                    kind === 'subject' ?
+                        previewSubjectHead({
+                            url: `/subjects/${e.id}`,
                             name: e.id, // TODO-2 update to real name & body
                         }) :
                     kind === 'unit' ?

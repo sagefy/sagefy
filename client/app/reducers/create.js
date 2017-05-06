@@ -3,25 +3,25 @@
 {
     kind
     step (find, list, form, add, create)
-    selectedSet
+    selectedSubject
         id
         members
     selectedUnit
         id
         members
-    set
+    subject
     units
     cards
     searchResults /// use top level instead
-    myRecentSets
+    myRecentSubjects
     myRecentUnits
 
     proposedUnit  // popped into units
 }
 
 /create
-/create/set/form  1
-/create/set/add   1
+/create/subject/form  1
+/create/subject/add   1
 -> topic/proposal
 /create/unit/find 1
 /create/unit/list 2
@@ -45,47 +45,47 @@ module.exports = function create(state = {}, action = {type: ''}) {
             step: action.step,
         })
     }
-    if (action.type === 'CREATE_SET_DATA') {
+    if (action.type === 'CREATE_SUBJECT_DATA') {
         state = shallowCopy(state)
-        state.set = action.values
+        state.subject = action.values
         return state
     }
-    if(action.type === 'ADD_MEMBER_TO_CREATE_SET') {
+    if(action.type === 'ADD_MEMBER_TO_CREATE_SUBJECT') {
         state = shallowCopy(state)
-        state.set = copy(state.set || {})
-        const members = (state.set.members || []).slice()
+        state.subject = copy(state.subject || {})
+        const members = (state.subject.members || []).slice()
         members.push({
             kind: action.kind,
             id: action.id,
             name: action.name,
             body: action.body,
         })
-        state.set.members = members
+        state.subject.members = members
         return state
     }
-    if(action.type === 'REMOVE_MEMBER_FROM_CREATE_SET') {
+    if(action.type === 'REMOVE_MEMBER_FROM_CREATE_SUBJECT') {
         state = shallowCopy(state)
-        state.set = copy(state.set || {})
-        const members = (state.set.members || [])
+        state.subject = copy(state.subject || {})
+        const members = (state.subject.members || [])
             .filter(member => member.id !== action.id)
-        state.set.members = members
+        state.subject.members = members
         return state
     }
-    if(action.type === 'REMOVE_UNIT_FROM_SET') {
+    if(action.type === 'REMOVE_UNIT_FROM_SUBJECT') {
         state = shallowCopy(state)
         const units = copy(state.units || [])
         units.splice(action.index, 1)
         state.units = units
         return state
     }
-    if(action.type === 'SET_MY_RECENT_SETS') {
+    if(action.type === 'SET_MY_RECENT_SUBJECTS') {
         state = shallowCopy(state)
-        state.myRecentSets = action.sets
+        state.myRecentSubjects = action.subjects
         return state
     }
-    if(action.type === 'CREATE_CHOOSE_SET_FOR_UNITS') {
+    if(action.type === 'CREATE_CHOOSE_SUBJECT_FOR_UNITS') {
         state = shallowCopy(state)
-        state.selectedSet = {
+        state.selectedSubject = {
             id: action.id,
             name: action.name,
         }

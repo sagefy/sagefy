@@ -30,24 +30,24 @@ CREATE TRIGGER update_users_modified
     BEFORE UPDATE ON users
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
-/* NB set_ids >>> set_id */
+/* NB subject_ids >>> subject_id */
 
-CREATE TABLE users_sets (
+CREATE TABLE users_subjects (
     id          char(24)        PRIMARY KEY,
     created     timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_id     char(24)        NOT NULL REFERENCES users (id),
-    set_id      char(24)        NOT NULL REFERENCES sets (id)
+    subject_id  char(24)        NOT NULL REFERENCES subjects (id)
 );
 
-CREATE TRIGGER update_users_sets_modified
-    BEFORE UPDATE ON users_sets
+CREATE TRIGGER update_users_subjects_modified
+    BEFORE UPDATE ON users_subjects
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 CREATE TYPE entity_kind AS ENUM(
     'card',
     'unit',
-    'set'
+    'subject'
 );
 
 CREATE TABLE topics (
@@ -121,7 +121,7 @@ CREATE TRIGGER update_notices_modified
 CREATE TYPE follow_kind AS ENUM(
     'card',
     'unit',
-    'set',
+    'subject',
     'topic'
 );
 
@@ -165,12 +165,12 @@ CREATE TRIGGER update_units_modified
     BEFORE UPDATE ON units
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
-CREATE TABLE sets (
+CREATE TABLE subjects (
     version_id  char(24)        PRIMARY KEY,
     created     timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     entity_id   char(24)        NOT NULL, /* non-unique */
-    previous_id char(24)        NULL REFERENCES sets (version_id),
+    previous_id char(24)        NULL REFERENCES subjects (version_id),
     language    varchar(5)      NOT NULL DEFAULT 'en',
     name        text            NOT NULL,
     status      entity_status   NOT NULL DEFAULT 'pending',
@@ -182,8 +182,8 @@ CREATE TABLE sets (
         /* jsonb?: cant ref, cant enum composite */
 );
 
-CREATE TRIGGER update_sets_modified
-    BEFORE UPDATE ON sets
+CREATE TRIGGER update_subjects_modified
+    BEFORE UPDATE ON subjects
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 CREATE TYPE card_kind AS ENUM(

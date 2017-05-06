@@ -8,16 +8,16 @@ module.exports = (data) => {
     if (id !== 'CgDRJPfzJuTR916HdmosA3A8') { return div() }
 
     const cta = a(
-        {href: `/sign_up?set_id=${id}`, className: 'sets-landing__cta'},
+        {href: `/sign_up?subject_id=${id}`, className: 'subjects-landing__cta'},
         icon('sign-up'),
         ' Let\'s Get Learning!'
     )
 
-    const w = (n) => span({className: 'sets-landing__icon-wrap'}, n)
+    const w = (n) => span({className: 'subjects-landing__icon-wrap'}, n)
 
     return div(
         {
-            id: 'sets-landing',
+            id: 'subjects-landing',
             className: 'page',
         },
         header(
@@ -29,12 +29,12 @@ module.exports = (data) => {
         section(
             h2('Goals'),
             h3('Who'),
-            p('This set is for anyone who wants to learn the basic ideas of electronic music systems. We will focus on computer-based systems.'),
+            p('This subject is for anyone who wants to learn the basic ideas of electronic music systems. We will focus on computer-based systems.'),
             h3('Outcome'),
             p('You will be able to explain the basic properties of sound and hearing in a digital system. You\'ll be able to describe the basic tools of creating and modifying sounds. You\'ll have an understanding of some of the systems we use to create and edit electronic music.'),
-            p('This set does not teach how to use a particular piece of software. The ideas here will apply to any software of your choice. This set does not detail: the artistic study of electronic music, the history of electronic music, or how western music theory applies to electronic music. These are important topics, but outside of the scope of this focused set.'),
+            p('This subject does not teach how to use a particular piece of software. The ideas here will apply to any software of your choice. This subjct does not detail: the artistic study of electronic music, the history of electronic music, or how western music theory applies to electronic music. These are important topics, but outside of the scope of this focused subject.'),
             h3('Requirements'),
-            p('This set does not require extra software. This set focuses on the what and why, not how. The ideas apply to any electronic music software, such as Pure Data, Audacity, and Ardour. A background in western music theory is not required.'),
+            p('This subject does not require extra software. This subject focuses on the what and why, not how. The ideas apply to any electronic music software, such as Pure Data, Audacity, and Ardour. A background in western music theory is not required.'),
             p('A basic understanding of mathematical concepts, such as linear vs logarithmic scale, is helpful. Some physics knowledge is also helpful, but not necessary.'),
             h3('Difficulty'),
             p('Easy. Approximately 5-10 hours in length.'),
@@ -45,12 +45,12 @@ module.exports = (data) => {
         section(
             h2('About Sagefy'),
             ul(
-                {className: 'sets-landing__about-sagefy'},
+                {className: 'subjects-landing__about-sagefy'},
                 li(w(icon('next')), ' Short, informational videos. Easy to understand.'),
                 li(w(icon('learn')), ' Lots of practice questions to help you master the content.'),
                 li(w(icon('settings')), ' Sagefy adapts practice questions based on your responses.'),
                 li(w(icon('grow')), ' Completely self-paced.'),
-                li(w(icon('set')), ' Choose your own path.'),
+                li(w(icon('subject')), ' Choose your own path.'),
                 li(w(icon('fast')), ' Skip content you already know.'),
                 li(w(icon('post')), ' Get support with our built-in discussions.')
             ),

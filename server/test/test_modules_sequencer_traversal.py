@@ -5,14 +5,14 @@ xfail = pytest.mark.xfail
 from modules.sequencer.traversal import traverse, \
     match_unit_dependents, order_units_by_need, judge
 from models.unit import Unit
-from models.set import Set
+from models.subject import Subject
 import rethinkdb as r
 from database.user import get_user
 
 
-def add_test_set(db_conn,
-                 users_table=None, units_table=None, responses_table=None,
-                 sets_table=None):
+def add_test_subject(db_conn,
+                     users_table=None, units_table=None, responses_table=None,
+                     subjects_table=None):
     """
     Add doesn't require anything.
     Multiply requires add.
@@ -64,9 +64,9 @@ def add_test_set(db_conn,
             'created': r.time(2004, 11, 3, 'Z')
         }]).run(db_conn)
 
-    if sets_table:
-        sets_table.insert({
-            'entity_id': 'set',
+    if subjects_table:
+        subjects_table.insert({
+            'entity_id': 'subject',
             'status': 'accepted',
             'members': [
                 {'id': 'add', 'kind': 'unit'},
@@ -79,18 +79,18 @@ def add_test_set(db_conn,
 
 @xfail
 def test_traverse(db_conn, units_table, users_table, responses_table,
-                  sets_table):
+                  subjects_table):
     """
     Expect to take a list of units and traverse them correctly.
     Basic test.
     """
 
-    add_test_set(db_conn,
-                 users_table, units_table, responses_table, sets_table)
+    add_test_subject(db_conn,
+                     users_table, units_table, responses_table, subjects_table)
 
-    set_ = Set.get(db_conn, entity_id='set')
+    subject = Subject.get(db_conn, entity_id='subject')
     user = get_user({'id': 'user'}, db_conn)
-    buckets = traverse(db_conn, user, set_)
+    buckets = traverse(db_conn, user, subject)
     assert buckets['diagnose'][0]['entity_id'] == 'divide'
     assert buckets['learn'][0]['entity_id'] == 'multiply'
     assert buckets['review'][0]['entity_id'] == 'subtract'
@@ -113,7 +113,7 @@ def test_judge_diagnose(db_conn, users_table, units_table, responses_table):
     Expect to add no known ability to "diagnose".
     """
 
-    add_test_set(db_conn, users_table, units_table, responses_table)
+    add_test_subject(db_conn, users_table, units_table, responses_table)
     unit = Unit.get(db_conn, entity_id='divide')
     user = get_user({'id': 'user'}, db_conn)
     assert judge(db_conn, unit, user) == "diagnose"
@@ -124,7 +124,7 @@ def test_judge_review(db_conn, users_table, units_table, responses_table):
     Expect to add older, high ability to "review".
     """
 
-    add_test_set(db_conn, users_table, units_table, responses_table)
+    add_test_subject(db_conn, users_table, units_table, responses_table)
     unit = Unit.get(db_conn, entity_id='subtract')
     user = get_user({'id': 'user'}, db_conn)
     assert judge(db_conn, unit, user) == "review"
@@ -135,7 +135,7 @@ def test_judge_learn(db_conn, units_table, users_table, responses_table):
     Expect to add known low ability to "learn".
     """
 
-    add_test_set(db_conn, users_table, units_table, responses_table)
+    add_test_subject(db_conn, users_table, units_table, responses_table)
     unit = Unit.get(db_conn, entity_id='multiply')
     user = get_user({'id': 'user'}, db_conn)
     assert judge(db_conn, unit, user) == "learn"
@@ -146,7 +146,7 @@ def test_judge_done(db_conn, units_table, users_table, responses_table):
     Expect to show "done".
     """
 
-    add_test_set(db_conn, users_table, units_table, responses_table)
+    add_test_subject(db_conn, users_table, units_table, responses_table)
     unit = Unit.get(db_conn, entity_id='add')
     user = get_user({'id': 'user'}, db_conn)
     assert judge(db_conn, unit, user) == "done"
@@ -157,7 +157,7 @@ def test_match_unit_dependents(db_conn, units_table):
     Expect to order units by the number of depending units.
     """
 
-    add_test_set(db_conn, units_table=units_table)
+    add_test_subject(db_conn, units_table=units_table)
     units = Unit.list_by_entity_ids(db_conn, [
         'add', 'subtract', 'multiply', 'divide',
     ])
@@ -173,7 +173,7 @@ def test_order(db_conn, units_table):
     Expect to order units by the number of depending units.
     """
 
-    add_test_set(db_conn, units_table=units_table)
+    add_test_subject(db_conn, units_table=units_table)
     units = Unit.list_by_entity_ids(db_conn, [
         'add', 'subtract', 'multiply', 'divide',
     ])

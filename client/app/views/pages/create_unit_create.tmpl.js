@@ -53,7 +53,7 @@ module.exports = function createUnitCreate(data) {
 
     return div(
         {id: 'create', className: 'page create--unit-create'},
-        h1('Create a New Unit for Set'),
+        h1('Create a New Unit for Subject'),
         unitWizard('list'),
         form(instanceFields),
         a(

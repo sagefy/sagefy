@@ -2,7 +2,7 @@ const {div, ul, li, a, input} = require('../../modules/tags')
 const icon = require('./icon.tmpl')
 const previewCardHead = require('./preview_card_head.tmpl')
 const previewUnitHead = require('./preview_unit_head.tmpl')
-const previewSetHead = require('./preview_set_head.tmpl')
+const previewSubjectHead = require('./preview_subject_head.tmpl')
 
 module.exports = (data) => {
     const entities = data.value || data.default || []
@@ -29,8 +29,8 @@ module.exports = (data) => {
                         name: entity.name,
                         body: entity.body,
                     }) :
-                entity.kind === 'set' ?
-                    previewSetHead({
+                entity.kind === 'subject' ?
+                    previewSubjectHead({
                         name: entity.name,
                         body: entity.body,
                     }) :

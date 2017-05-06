@@ -19,7 +19,7 @@ def next_route(request):
     context = get_learning_context(current_user)
 
     # If 'next' action, return that,
-    # else 'next' is GET Choose Set
+    # else 'next' is GET Choose Subject
     if context.get('next'):
         return 200, {
             'next': context['next']
@@ -28,7 +28,7 @@ def next_route(request):
     return 200, {
         'next': {
             'method': 'GET',
-            'path': '/s/users/{user_id}/sets'
+            'path': '/s/users/{user_id}/subjects'
                     .format(user_id=current_user['id']),
         }
     }

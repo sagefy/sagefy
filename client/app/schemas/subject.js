@@ -27,7 +27,7 @@ module.exports = {
         type: 'entities',
         validations: [],
         /*
-            kind: (unit|set)
+            kind: (unit|subject)
             id
         */
     }

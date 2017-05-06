@@ -4,7 +4,7 @@ const icon = require('../components/icon.tmpl')
 
 const previewCard = require('../components/preview_card.tmpl')
 const previewUnit = require('../components/preview_unit.tmpl')
-const previewSet = require('../components/preview_set.tmpl')
+const previewSubject = require('../components/preview_subject.tmpl')
 
 // TODO-2 Version history and proposal view should have the same layout,
 //        and be similar to the page
@@ -47,8 +47,8 @@ const row = (kind, version) => {
         }))
     }
 
-    if (kind === 'set') {
-        return previewSet(version)
+    if (kind === 'subject') {
+        return previewSubject(version)
     }
 
     /* [

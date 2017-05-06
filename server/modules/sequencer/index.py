@@ -22,10 +22,10 @@ Unit
 - [ ] unit quality  TODO-3
 - [ ] unit difficulty  TODO-3
 
-Set
-- [ ] learner-set ability  TODO-3
-- [ ] set quality  TODO-3
-- [ ] set difficulty  TODO-3
+Subject
+- [ ] learner-subject ability  TODO-3
+- [ ] subject quality  TODO-3
+- [ ] subject difficulty  TODO-3
 """
 
 

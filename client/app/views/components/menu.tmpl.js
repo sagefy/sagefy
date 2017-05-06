@@ -10,7 +10,7 @@ const icon = require('./icon.tmpl')
 // A list of all menu items and their configurations
 const items = {
     home: { url: '/' },
-    my_sets: { title: 'My Sets', icon: 'set' },
+    my_subjects: { title: 'My Subjects', icon: 'subject' },
     log_in: { title: 'Log In', icon: 'log-in' },
     terms: { },
     contact: { },
@@ -28,9 +28,9 @@ const items = {
         title: 'Discuss Unit',
         icon: 'post',
     },
-    discuss_set: {
+    discuss_subject: {
         url: '/search?kind=topic&q={id}',
-        title: 'Discuss Set',
+        title: 'Discuss Subjects',
         icon: 'post',
     },
     create: { }
@@ -58,7 +58,7 @@ const menus = {
         'terms',
     ],
     loggedIn: [
-        'my_sets',
+        'my_subjects',
         'search',
         'notices',
         'create',
@@ -69,7 +69,7 @@ const menus = {
     ]
 }
 
-const addContextItems = (menuItems /* , TP@ {card, unit, set} */) => {
+const addContextItems = (menuItems /* , TP@ {card, unit, subject} */) => {
     menuItems = menuItems.slice()
 
     /* TP@
@@ -87,9 +87,9 @@ const addContextItems = (menuItems /* , TP@ {card, unit, set} */) => {
         return menuItems
     }
 
-    if (set) {
-        const discuss = extend(items.discuss_set)
-        discuss.url = discuss.url.replace('{id}', set)
+    if (subject) {
+        const discuss = extend(items.discuss_subject)
+        discuss.url = discuss.url.replace('{id}', subject)
         menuItems.push(discuss)
         return menuItems
     }

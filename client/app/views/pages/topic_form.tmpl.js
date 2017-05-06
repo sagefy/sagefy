@@ -53,8 +53,8 @@ const getEntityByKind = (data, kind, id) => {
     if (kind === 'unit') {
         return data.units && data.units[id]
     }
-    if (kind === 'set') {
-        return data.sets && data.sets[id]
+    if (kind === 'subject') {
+        return data.subjects && data.subjects[id]
     }
 }
 

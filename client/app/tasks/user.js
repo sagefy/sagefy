@@ -20,9 +20,9 @@ module.exports = tasks.add({
                     message: 'create user success',
                 })
                 // TODO-2 make this a listener
-                window.location = '/my_sets'
+                window.location = '/my_subjects'
                 // Hard redirect to get the HTTP_ONLY cookie
-                // TODO-1 if set_id is a param, auto add to user's sets
+                // TODO-1 if subject_id is a param, auto add to user's subjects
                 dispatch({
                     type: 'SET_SENDING_OFF'
                 })
@@ -106,7 +106,7 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 const user = response.user
-                ;['avatar', 'posts', 'sets', 'follows'].forEach((t) => {
+                ;['avatar', 'posts', 'subjects', 'follows'].forEach((t) => {
                     if (response[t]) { user[t] = response[t] }
                 })
                 dispatch({
@@ -142,7 +142,7 @@ module.exports = tasks.add({
                 })
                 // Hard redirect to get the HTTP_ONLY cookie
                 // TODO-2 move to listener
-                window.location = '/my_sets'
+                window.location = '/my_subjects'
                 dispatch({
                     type: 'SET_SENDING_OFF'
                 })
@@ -242,7 +242,7 @@ module.exports = tasks.add({
                 })
                 // Hard redirect to get the HTTP_ONLY cookie
                 // TODO-2 move to listener
-                window.location = '/my_sets'
+                window.location = '/my_subjects'
                 dispatch({
                     type: 'SET_SENDING_OFF'
                 })

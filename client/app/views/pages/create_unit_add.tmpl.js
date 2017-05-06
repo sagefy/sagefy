@@ -17,7 +17,7 @@ module.exports = function createUnitAdd(data) {
 
     return div(
         {id: 'create', className: 'page'},
-        h1('Add an Existing Unit to Set'),
+        h1('Add an Existing Unit to Subject'),
         unitWizard('list'),
         a(
             {href: '/create/unit/list'},
@@ -51,7 +51,7 @@ module.exports = function createUnitAdd(data) {
                         },
                     },
                     icon('create'),
-                    ' Add to Set'
+                    ' Add to Subject'
                 ),
                 previewUnitHead({
                     name: result._source.name,

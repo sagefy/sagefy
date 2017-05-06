@@ -2,7 +2,7 @@ from framework.session import get_current_user
 from framework.routes import get, post, abort
 from models.card import Card
 from models.unit import Unit
-from models.set import Set
+from models.subject import Subject
 from database.topic import list_topics_by_entity_id, deliver_topic
 from modules.entity import get_card_by_kind
 from modules.sequencer.index import update as seq_update
@@ -85,7 +85,7 @@ def learn_card_route(request, card_id):
 
     return 200, {
         'card': card.deliver(access='learn'),
-        'set': context.get('set'),
+        'subject': context.get('subject'),
         'unit': context.get('unit'),
         'next': next_,
     }
@@ -117,7 +117,7 @@ def respond_to_card_route(request, card_id):
     POST Respond Card
         -> GET Learn Card      ...when not ready
         -> GET Choose Unit     ...when ready, but still units
-        -> GET View Set Tree   ...when ready and done
+        -> GET View Subject Tree   ...when ready and done
     """
 
     # TODO-3 simplify this method.
@@ -147,14 +147,14 @@ def respond_to_card_route(request, card_id):
             'ref': 'wtyOJPoy4bh76OIbYp8mS3LP',
         }
 
-    set_ = Set(context.get('set'))
+    subject = Subject(context.get('subject'))
     unit = Unit(context.get('unit'))
 
     status = judge(db_conn, unit, current_user)
 
     # If we are done with this current unit...
     if status == "done":
-        buckets = traverse(db_conn, current_user, set_)
+        buckets = traverse(db_conn, current_user, subject)
 
         # If there are units to be diagnosed...
         if buckets['diagnose']:
@@ -173,8 +173,8 @@ def respond_to_card_route(request, card_id):
         elif buckets['learn'] or buckets['review']:
             next_ = {
                 'method': 'GET',
-                'path': '/s/sets/{set_id}/units'
-                        .format(set_id=set_['entity_id']),
+                'path': '/s/subjects/{subject_id}/units'
+                        .format(subject_id=subject['entity_id']),
             }
             set_learning_context(current_user,
                                  card=None, unit=None, next=next_)
@@ -183,8 +183,8 @@ def respond_to_card_route(request, card_id):
         else:
             next_ = {
                 'method': 'GET',
-                'path': '/s/sets/{set_id}/tree'
-                        .format(set_id=set_['entity_id']),
+                'path': '/s/subjects/{subject_id}/tree'
+                        .format(subject_id=subject['entity_id']),
             }
             set_learning_context(current_user,
                                  card=None, unit=None, next=next_)

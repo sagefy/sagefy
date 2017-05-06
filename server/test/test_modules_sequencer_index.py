@@ -27,6 +27,6 @@ Expect to follow card require chains.
 Expect to follow unit require chains.
 Expect recommend to switch to unit after significant gain.
 Expect to show congrats tree after proficient in all units.
-Expect to recommend sets after proficient in all units.
+Expect to recommend subjects after proficient in all units.
 Expect to remind me when to review units.
 """

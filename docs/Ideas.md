@@ -31,7 +31,7 @@ Our memory system is powerful but limited. We are most effective when focusing o
 
 - The user can only be presented one card at a time.
 - The user only works on one unit at a time.
-- When the learner must make a choice about which set or unit to pursue, the learner is only presented with the choice.
+- When the learner must make a choice about which subject or unit to pursue, the learner is only presented with the choice.
 - A contributor can only change one entity at a time.
 
 2) Keep Organized
@@ -49,7 +49,7 @@ Our memory system works by forming relationships. Mastery is the result of an or
 ### How does Sagefy implement this idea?
 
 - The three basic entities are easy to remember and have a clear hierarchy.
-- Sets can embed each other, allowing for a variety of organizational structures.
+- Subjects can embed each other, allowing for a variety of organizational structures.
 - A card must belong to a unit, which defines its purpose.
 - A unit can only have a single goal, limiting extraneous information.
 - Requires are available for cards and units, allowing for the system to automatically keep things organized with low effort.
@@ -71,7 +71,7 @@ The strongest predictor of how much we will learn is what we already know. Every
 ### How does Sagefy implement this idea?
 
 - Cards and units have requires, which ensures the learner has sufficient prior knowledge.
-- The algorithms which sequence show cards, units, and sets that are available to the learner.
+- The algorithms which sequence show cards, units, and subjects that are available to the learner.
     - The algorithms which sequence the entities focus on improving the learner's prior knowledge.
     - A diagnostic assessment means learners can build prior knowledge where lacking.
     - A learner with high prior knowledge can skip to more relevant areas.
@@ -91,7 +91,7 @@ Defining small, achievable goals and constantly checking against them builds bet
 
 - Units are defined by their goal, or objective.
 - Cards must be attached to a unit.
-- Sets can be small or large, but they always have a single description.
+- Subjects can be small or large, but they always have a single description.
 - Flagging enables users to remove irrelevant content.
 
 5) Make it Real
@@ -126,7 +126,7 @@ Route memorizing isn't enough. We must be able to use our knowledge.
 
 ### How does Sagefy implement this idea?
 
-- Sets can contain sets and units. Sets can scale out extensively.
+- Subjects can contain subjects and units. Subjects can scale out extensively.
 - Cards are flexible in format. This flexibility means we can ask for more than comprehesion.
 - By removing complexity in the data structure, we make room for more depth by adding flexibility.
 - The system encourages spaced repetition to ensure maximum retention of knowledge.
@@ -151,7 +151,7 @@ We are more effective as team or as a community. Often, but not always.
 ### How does Sagefy implement this idea?
 
 - Learners can work on cards together.
-- Discussions are available for all cards, units, and sets.
+- Discussions are available for all cards, units, and subjects.
 - Creating and editing content uses the consensus model.
 - Everything is open source.
 - Documentation throughout.

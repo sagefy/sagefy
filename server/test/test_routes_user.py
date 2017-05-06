@@ -73,17 +73,17 @@ def test_get_user_posts(db_conn, session, posts_table):
     assert len(response['posts']) == 2
 
 
-def test_get_user_sets(db_conn, session, users_sets_table,
-                       users_table,  sets_table):
+def test_get_user_subjects(db_conn, session, users_subjects_table,
+                           users_table,  subjects_table):
     """
-    Expect to get user's sets, if requested and allowed.
+    Expect to get user's subjects, if requested and allowed.
     """
 
     users_table.get('abcd1234').update({
-        'settings': {'view_sets': 'public'}
+        'settings': {'view_subjects': 'public'}
     }).run(db_conn)
 
-    sets_table.insert([{
+    subjects_table.insert([{
         'entity_id': 'A1',
         'name': 'A',
         'body': 'Apple',
@@ -99,9 +99,9 @@ def test_get_user_sets(db_conn, session, users_sets_table,
         'status': 'accepted',
     }]).run(db_conn)
 
-    users_sets_table.insert({
+    users_subjects_table.insert({
         'user_id': 'abcd1234',
-        'set_ids': [
+        'subject_ids': [
             'A1',
             'B2',
         ],
@@ -110,13 +110,13 @@ def test_get_user_sets(db_conn, session, users_sets_table,
     }).run(db_conn)
 
     request = {
-        'params': {'sets': True},
+        'params': {'subjects': True},
         'cookies': {'session_id': session},
         'db_conn': db_conn
     }
     code, response = routes.user.get_user_route(request, 'abcd1234')
-    assert 'sets' in response
-    assert len(response['sets']) == 2
+    assert 'subjects' in response
+    assert len(response['subjects']) == 2
 
 
 def test_get_user_follows(db_conn, session, users_table, follows_table):

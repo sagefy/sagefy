@@ -80,9 +80,9 @@ def test_learned(app):
 
 
 """
-Expect to estimate learner-set ability.
+Expect to estimate learner-subject ability.
 Expect to calculate unit quality.
-Expect to calculate set quality.
+Expect to calculate subject quality.
 Expect to calculate unit difficulty.
-Expect to calculate set difficulty.
+Expect to calculate subject difficulty.
 """

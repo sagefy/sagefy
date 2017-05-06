@@ -2,7 +2,7 @@ const broker = require('../../modules/broker')
 const tasks = require('../../modules/tasks')
 const {getFormValues, parseFormValues} =
     require('../../modules/auxiliaries')
-const setSchema = require('../../schemas/set')
+const subjectSchema = require('../../schemas/subject')
 const unitSchema = require('../../schemas/unit')
 const {closest} = require('../../modules/utilities')
 
@@ -14,16 +14,16 @@ module.exports = broker.add({
         tasks.updateCreateRoute({kind, step})
     },
 
-    'submit .create--set-create form'(e, el) {
+    'submit .create--subject-create form'(e, el) {
         if(e) e.preventDefault()
         let values = getFormValues(el)
         values = parseFormValues(values)
-        const errors = tasks.validateForm(values, setSchema,
+        const errors = tasks.validateForm(values, subjectSchema,
             ['name', 'language', 'body', 'members'])
         if(errors && errors.length) { return }
         const data = {
             topic: {
-                name: `Create a Set: ${values.name}`,
+                name: `Create a Subject: ${values.name}`,
                 entity: {
                     id: '1rk0jS5EGEavSG4NBxRvPkZf',
                     kind: 'unit',
@@ -31,15 +31,15 @@ module.exports = broker.add({
             },
             post: {
                 kind: 'proposal',
-                body: `Create a Set: ${values.name}`,
+                body: `Create a Subject: ${values.name}`,
             },
-            sets: [{
+            subjects: [{
                 name: values.name,
                 body: values.body,
                 members: values.members,
             }],
         }
-        tasks.createSetProposal(data)
+        tasks.createSubjectProposal(data)
     },
 
     'submit .create--unit-create form'(e, el) {
@@ -56,10 +56,10 @@ module.exports = broker.add({
         tasks.route('/create/unit/list')
     },
 
-    'submit .create--set-add__form'(e, el) {
+    'submit .create--subject-add__form'(e, el) {
         if(e) e.preventDefault()
         const q = el.querySelector('input').value
-        tasks.search({ q, kind: 'unit,set' })
+        tasks.search({ q, kind: 'unit,subject' })
     },
 
     'submit .create--unit-add__form'(e, el) {
@@ -68,10 +68,10 @@ module.exports = broker.add({
         tasks.search({ q, kind: 'unit' })
     },
 
-    'click .create--set-add__add'(e, el) {
+    'click .create--subject-add__add'(e, el) {
         if(e) e.preventDefault()
         const {kind, id, name, body} = el.dataset
-        tasks.addMemberToCreateSet({kind, id, name, body})
+        tasks.addMemberToCreateSubject({kind, id, name, body})
     },
 
     'click .create--unit-add__add'(e, el) {
@@ -80,11 +80,11 @@ module.exports = broker.add({
         tasks.addMemberToAddUnits({id, name, body})
     },
 
-    'click .create--set-create .form-field--entities__a'(e, el) {
+    'click .create--subject-create .form-field--entities__a'(e, el) {
         if(e) e.preventDefault()
         const form = closest(el, 'form')
         const values = getFormValues(form)
-        tasks.createSetData(values)
+        tasks.createSubjectData(values)
     },
 
     'click .create--unit-create .form-field--entities__a'(e, el) {
@@ -96,22 +96,22 @@ module.exports = broker.add({
         tasks.route('/create/unit/create/add')
     },
 
-    'click .create--set-create .form-field--entities__remove'(e, el) {
+    'click .create--subject-create .form-field--entities__remove'(e, el) {
         if(e) e.preventDefault()
         const id = el.id
-        tasks.removeMemberFromCreateSet({id})
+        tasks.removeMemberFromCreateSubject({id})
     },
 
     'click .create--unit-find__choose'(e, el) {
         if(e) e.preventDefault()
         const {id, name} = el.dataset
-        tasks.createChooseSetForUnits({id, name})
+        tasks.createChooseSubjectForUnits({id, name})
     },
 
     'submit .create--unit-find__form'(e, el) {
         if(e) e.preventDefault()
         const q = el.querySelector('input').value
-        tasks.search({ q, kind: 'set' })
+        tasks.search({ q, kind: 'subject' })
     },
 
     'submit .create--unit-create-add__form'(e, el) {
@@ -129,7 +129,7 @@ module.exports = broker.add({
     'click .create--unit-list__remove'(e, el) {
         if(e) e.preventDefault()
         const index = el.dataset.index
-        tasks.removeUnitFromSet({index})
+        tasks.removeUnitFromSubject({index})
     },
 
     'click .create--unit-list__submit'(e) {
