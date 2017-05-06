@@ -32,7 +32,7 @@ module.exports = (data) => {
             p('This subject is for anyone who wants to learn the basic ideas of electronic music systems. We will focus on computer-based systems.'),
             h3('Outcome'),
             p('You will be able to explain the basic properties of sound and hearing in a digital system. You\'ll be able to describe the basic tools of creating and modifying sounds. You\'ll have an understanding of some of the systems we use to create and edit electronic music.'),
-            p('This subject does not teach how to use a particular piece of software. The ideas here will apply to any software of your choice. This subjct does not detail: the artistic study of electronic music, the history of electronic music, or how western music theory applies to electronic music. These are important topics, but outside of the scope of this focused subject.'),
+            p('This subject does not teach how to use a particular piece of software. The ideas here will apply to any software of your choice. This subject does not detail: the artistic study of electronic music, the history of electronic music, or how western music theory applies to electronic music. These are important topics, but outside of the scope of this focused subject.'),
             h3('Requirements'),
             p('This subject does not require extra software. This subject focuses on the what and why, not how. The ideas apply to any electronic music software, such as Pure Data, Audacity, and Ardour. A background in western music theory is not required.'),
             p('A basic understanding of mathematical concepts, such as linear vs logarithmic scale, is helpful. Some physics knowledge is also helpful, but not necessary.'),

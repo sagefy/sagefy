@@ -96,7 +96,7 @@ module.exports = data => {
               li(
                 previewSubjectHead({
                   url:  '/subjects/CgDRJPfzJuTR916HdmosA3A8/landing',
-                  name: 'An Introduction to Electronic Music - Foundation',
+                  name: 'An Introduction to Electronic Music',
                   body: 'A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.',
                 })
               )
