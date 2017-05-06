@@ -45,7 +45,7 @@ module.exports = (data) => {
 
     return div(
         {id: 'tree', className: 'page'},
-        h1(`Tree: ${treeData.subject.name}`),
+        h1(`Tree: ${treeData.subjects.name}`),
         asContrib ? p(a(
             {href: `/subjects/${id}`},
             icon('subject'),

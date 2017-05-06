@@ -66,7 +66,7 @@ module.exports = tasks.add({
 
     openSubjectRoute(id) {
         return Promise.all([
-            tasks.getSuject(id),
+            tasks.getSubject(id),
             tasks.askFollow(id),
         ])
     },

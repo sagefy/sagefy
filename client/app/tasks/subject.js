@@ -40,7 +40,7 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 dispatch({
-                    type: 'SET_RECOMMENDED_SUJBECTS',
+                    type: 'SET_RECOMMENDED_SUBJECTS',
                     message: 'get recommended subjects success',
                     recommendedSubjects: response.subjects,
                 })

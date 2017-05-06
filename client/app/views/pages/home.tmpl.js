@@ -3,7 +3,7 @@
 // TODO-3 move copy to content directory
 const {div, header, img, hgroup, h1, h2, h3, h4, h5, h6, p, a, hr, strong, ul, ol, li, iframe, br, footer, span, em, section} = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
-const previewSubjectHead = require('../components/preview_suject_head.tmpl')
+const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 
 // TODO-1 Include unique CTAs throughout
 
