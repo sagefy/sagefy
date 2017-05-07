@@ -14,49 +14,55 @@ def create_some_proposals(posts_table, units_table, subjects_table, db_conn):
         'kind': 'proposal',
         'user_id': 'abcd1234',
         'entity_versions': [{
-            'kind': 'subject', 'id': 'A',
+            'kind': 'subject', 'id': 'A1',
         }, {
-            'kind': 'unit', 'id': 'D',
+            'kind': 'unit', 'id': 'D1',
         }],
     }, {
         'kind': 'proposal',
         'user_id': '5678xywz',
         'entity_versions': [{
-            'kind': 'subject', 'id': 'B',
+            'kind': 'subject', 'id': 'B1',
         }, {
-            'kind': 'unit', 'id': 'E',
+            'kind': 'unit', 'id': 'E1',
         }],
     }, {
         'kind': 'proposal',
         'user_id': 'abcd1234',
         'entity_versions': [{
-            'kind': 'subject', 'id': 'C',
+            'kind': 'subject', 'id': 'C1',
         }, {
-            'kind': 'unit', 'id': 'F',
+            'kind': 'unit', 'id': 'F1',
         }],
     }]).run(db_conn)
     subjects_table.insert([{
+        'id': 'A1',
         'entity_id': 'A',
         'status': 'accepted',
         'created': r.now(),
     }, {
+        'id': 'B1',
         'entity_id': 'B',
         'status': 'accepted',
         'created': r.now(),
     }, {
+        'id': 'C1',
         'entity_id': 'C',
         'status': 'accepted',
         'created': r.now(),
     }]).run(db_conn)
     units_table.insert([{
+        'id': 'D1',
         'entity_id': 'D',
         'status': 'accepted',
         'created': r.now(),
     }, {
+        'id': 'E1',
         'entity_id': 'E',
         'status': 'accepted',
         'created': r.now(),
     }, {
+        'id': 'F1',
         'entity_id': 'F',
         'status': 'accepted',
         'created': r.now(),

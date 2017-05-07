@@ -158,7 +158,7 @@ def test_members(db_conn, subjects_table, units_table):
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
     })
-    assert len(errors) == 1
+    assert len(errors) == 0
     subject['members'] = [{
         'id': 'A',
         'kind': 'unit',
