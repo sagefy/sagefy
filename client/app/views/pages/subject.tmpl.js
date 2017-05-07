@@ -43,11 +43,12 @@ module.exports = (data) => {
             li('Quality: ???'),
             li('Difficulty: ???')
         ), */
-
-        a(
-            {href: `/subjects/${subject.entity_id}/tree`},
-            icon('subject'),
-            ' View Unit Tree'
+        p(
+            a(
+                {href: `/subjects/${subject.entity_id}/tree`},
+                icon('subject'),
+                ' View Unit Tree'
+            )
         ),
 
         entityTopics('subject', subject.entity_id, subject.topics),
