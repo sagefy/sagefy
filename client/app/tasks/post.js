@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const {dispatch} = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
@@ -22,9 +23,14 @@ module.exports = tasks.add({
                     const user = response.users[post.user_id]
                     post.user_name = user.name
                     post.user_avatar = user.avatar
-                    const ev = response.entity_versions[post.id]
-                    if (ev) {
-                        post.ev = ev
+                    const entityVersions = response.entity_versions[post.id]
+                    if (entityVersions) {
+                        post.entityVersionsFull =
+                        entityVersions.map((data, index) => {
+                            return Object.assign({}, data, {
+                                entityKind: post.entity_versions[index].kind,
+                            })
+                        })
                     }
                 })
 

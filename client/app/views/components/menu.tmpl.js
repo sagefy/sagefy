@@ -69,10 +69,9 @@ const menus = {
     ]
 }
 
-const addContextItems = (menuItems /* , TP@ {card, unit, subject} */) => {
+const addContextItems = (menuItems, {card, unit, subject}) => {
     menuItems = menuItems.slice()
 
-    /* TP@
     if (card) {
         const discuss = extend(items.discuss_card)
         discuss.url = discuss.url.replace('{id}', card)
@@ -93,7 +92,6 @@ const addContextItems = (menuItems /* , TP@ {card, unit, subject} */) => {
         menuItems.push(discuss)
         return menuItems
     }
-    */
 
     return menuItems
 }

@@ -68,8 +68,7 @@ const routes = [{
 }, {
     path: '/create',
     tmpl: require('./pages/create.tmpl'),
-},
-/* TP@ {
+}, {
     path: /^\/topics\/(create|[\d\w]+\/update)$/,
     tmpl: require('./pages/topic_form.tmpl'),
     // Must be before `topic`
@@ -82,9 +81,7 @@ const routes = [{
 }, {
     path: '/topics/{id}',
     tmpl: require('./pages/topic.tmpl'),
-}, */
-/* eslint-disable */
-{
+}, {
     path: '/users/{id}',
     tmpl: require('./pages/profile.tmpl'),
 }, {

@@ -1,14 +1,33 @@
 const {li, div, img, a, span, h3} = require('../../modules/tags')
 const {timeAgo} = require('../../modules/auxiliaries')
 const icon = require('./icon.tmpl')
+const previewCard = require('./preview_card.tmpl')
+const previewUnit = require('./preview_unit.tmpl')
+const previewSubject = require('./preview_subject.tmpl')
 
 const renderProposal = (data) => {
     if (!data.kind === 'proposal') { return }
-    // const evKind = data.entity_version.kind
-    // const ev = data.ev || {}
+    const entityVersions = data.entityVersionsFull || []
     return div(
-        {className: 'post__proposal'}
-        // TODO-2 TP@ show preview components
+        {className: 'post__proposal'},
+        entityVersions.map((version) => {
+            const {entityKind} = version
+            if (entityKind === 'card') {
+                return previewCard(Object.assign({}, version, {
+                    unit: { name: version.unit_id },
+                    requires: version.require_ids.map(id => ({id}))
+                }))
+            }
+            if (entityKind === 'unit') {
+                return previewUnit(Object.assign({}, version, {
+                    requires: version.require_ids.map(id => ({id}))
+                }))
+            }
+            if (entityKind === 'subject') {
+                return previewSubject(version)
+            }
+            return null
+        })
     )
 }
 
@@ -81,12 +100,12 @@ module.exports = (data, currentUserID) => {
                     icon('reply'),
                     ' Reply'
                 ),
-                data.kind === 'proposal' ? a(
+                /* PP@ data.kind === 'proposal' ? a(
                     {href: `/topics/${topicId}/posts/create?` +
                            `replies_to_id=${data.id}&kind=vote`},
                     icon('vote'),
                     ' Vote'
-                ) : null,
+                ) : null, */
                 a(
                     {href: `/topics/${data.topicID}#${data.id}`},
                     icon('post'),

@@ -11,7 +11,7 @@ module.exports = broker.add({
         // errors = tasks.validateForm(values, schema, [...])
         // unless errors?.length, (...tab)
         values = parseFormValues(values)
-        /* TP@ if (values.post && values.post.kind === 'proposal') {
+        /* PP@ if (values.post && values.post.kind === 'proposal') {
             if (values.entity && values.entity.require_ids) {
                 values.entity.require_ids = values.entity.require_ids
                     .map((r) => r.id).filter((r) => r)

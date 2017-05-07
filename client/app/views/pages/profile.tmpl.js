@@ -1,10 +1,12 @@
-const {div, h1, p, img, h3, header, ul, li} = require('../../modules/tags')
+const {div, h1, p, img, h3, header, ul, li, strong, a} =
+    require('../../modules/tags')
 const {
   timeAgo,
-  /* TP@ truncate,*/
+  truncate,
+  ucfirst,
 } = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
-// TP@ const timeago = require('../components/timeago.tmpl')
+const timeago = require('../components/timeago.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
@@ -23,8 +25,8 @@ module.exports = (data) => {
             p('Joined ' + timeAgo(user.created))
         ),
         user.subjects ? showSubjects(user, user.subjects) : null,
-        user.follows ? showFollows(user, user.follows) : null
-        // TP@ user.posts ? showPosts(user, user.posts) : null
+        user.follows ? showFollows(user, user.follows) : null,
+        user.posts ? showPosts(user, user.posts) : null
     )
 }
 
@@ -75,8 +77,6 @@ const showFollows = (user, follows) =>
         // TODO-2 and link to search
     ]
 
-/*
-TP@
 const showPosts = (user, posts) =>
     [
         h3(`${user.name} wrote:`),
@@ -95,4 +95,3 @@ const showPosts = (user, posts) =>
         )
     ]
     // TODO-2 and link to search
-*/

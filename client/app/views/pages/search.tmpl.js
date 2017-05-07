@@ -1,13 +1,13 @@
 /* eslint-disable no-underscore-dangle */
 const {div, h1, form, input, button, img,
- ul, li, strong, a, p} = require('../../modules/tags')
-// const c = require('../../modules/content').get
+ ul, li, a, p, h3, span, br} = require('../../modules/tags')
 const spinner = require('../components/spinner.tmpl')
-// TP@ const timeago = require('../components/timeago.tmpl')
+const timeago = require('../components/timeago.tmpl')
 const icon = require('../components/icon.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
+const {ucfirst} = require('../../modules/auxiliaries')
 
 // TODO-2 when receiving ?kind={kind}, then search using that as well.
 
@@ -57,63 +57,67 @@ module.exports = (data) => {
 const r = {}
 
 r.userResult = (result) =>
-    [
-        strong(icon('user'), ' User'),
-        ': ',
+    h3(
+        span({className: 'search__label'}, icon('user'), ' User'),
+        ' ',
         a(
             {href: `/users/${result._source.id}`},
             img({className: 'avatar', src: result._source.avatar}),
             ' ',
             result._source.name
         )
-    ]
+    )
 
-r.topicResult = (/* TP@ result */) =>
-    []
-    /* TP@ [
+r.topicResult = (result) =>
+    [
         timeago(result._source.created, {right: true}),
-        strong(icon('topic'), ' Topic'),
-        ': ',
-        a(
-            {href: `/topics/${result._source.id}`},
-            result._source.name
+        h3(
+            span({className: 'search__label'}, icon('topic'), ' Topic'),
+            ' ',
+            a(
+                {href: `/topics/${result._source.id}`},
+                result._source.name
+            )
         ),
-        ', ',
-        a(
+        result._source.entity.name ? a(
             {
                 href:
                     `/${result._source.entity.kind}/${result._source.entity.id}`
             },
             result._source.entity.name
-        )
+        ) : null
         // TODO-2 no of posts     ???
-    ] */
+    ]
 
-r.postResult = (/* TP@ result */) => {
-    return []
-    /* TP@
+r.postResult = (result) => {
     const href = `/topics/${result._source.topic_id}#${result._source.id}`
     return [
         timeago(result._source.created, {right: true}),
-        strong(icon('post'), ' ', ucfirst(result._source.kind)),
-        ': ',
-        a(
-            {href},
-            truncate(result._source.body, 40)
-        ),
-        ' by ',
-        a(
-            {href: `/users/${result._source.user.id}`},
-            result._source.user.name
+        h3(
+            span({className: 'search__label'},
+                icon('post'), ' ', ucfirst(result._source.kind)),
+            ' by ',
+            a(
+                {href: `/users/${result._source.user.id}`},
+                result._source.user.name
+            )
         ),
         ' in topic: ',
         result._source.topic ? a(
             {href: `/topics/${result._source.topic.id}`},
             result._source.topic.name
-        ) : null
+        ) : null,
+        br(),
+        result._source.body,
+        ' ',
+        a(
+            {href},
+            'To Post ',
+            icon('next')
+        )
         // TODO-3 entity kind       result._source.topic_id > ????
         // TODO-3 entity name       result._source.topic_id > ????
-    ] */
+    ]
 }
 
 r.cardResult = (result) =>

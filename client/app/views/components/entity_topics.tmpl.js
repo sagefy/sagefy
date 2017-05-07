@@ -1,11 +1,9 @@
-const {div} = require('../../modules/tags')
-/* TP@ const {div, a, h2, ul, li, p} = require('../../modules/tags')
+const {div, a, h2, ul, li, p} = require('../../modules/tags')
 const timeago = require('./timeago.tmpl')
-const icon = require('./icon.tmpl') */
+const icon = require('./icon.tmpl')
 
-module.exports = (/* TP@ kind, entityID, topics */) => {
-    return div()
-    /* TP@ return div(
+module.exports = (kind, entityID, topics) => {
+    return div(
         {className: 'entity-topics'},
         h2('Topics'),
         a(
@@ -36,5 +34,5 @@ module.exports = (/* TP@ kind, entityID, topics */) => {
         topics && topics.length ? null : p(
             'No topics yet.'
         )
-    ) */
+    )
 }

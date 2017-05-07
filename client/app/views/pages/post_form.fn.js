@@ -26,7 +26,7 @@ const getFields = (formData) => {
         if (formData[name]) { fields.push({name}) }
     })
 
-    fields.push({
+    /* PP@ fields.push({
         name: 'post.kind',
         options: [{
             label: 'Post',
@@ -41,6 +41,11 @@ const getFields = (formData) => {
         }],
         inline: true,
         label: 'Post Kind'
+    }) */
+
+    fields.push({
+        name: 'post.kind',
+        type: 'hidden',
     })
 
     if (formData['post.kind'] === 'vote') {
@@ -66,7 +71,7 @@ const getFields = (formData) => {
                       : null
     })
 
-    // TODO TP@ update proposal handling
+    // TODO PP@ update proposal handling
 
     return fields
 }
