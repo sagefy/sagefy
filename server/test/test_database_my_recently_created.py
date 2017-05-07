@@ -1,6 +1,6 @@
 from conftest import create_user_in_db
 from database.my_recently_created import get_my_recent_proposals, \
-    get_proposal_entities, get_my_recently_created_units, \
+    get_proposal_entity_versions, get_my_recently_created_units, \
     get_my_recently_created_subjects
 import rethinkdb as r
 
@@ -94,7 +94,7 @@ def test_get_proposal_entities():
         }]
     }]
     kind = 'unit'
-    entity_ids = get_proposal_entities(proposals, kind)
+    entity_ids = get_proposal_entity_versions(proposals, kind)
     assert len(entity_ids) == 2
     assert entity_ids[0] == 'A'
     assert entity_ids[1] == 'C'
@@ -116,7 +116,7 @@ def test_get_my_recently_created_units(db_conn, posts_table, subjects_table,
 
 
 def test_get_my_recently_created_subjects(db_conn, posts_table, units_table,
-                                      subjects_table, users_table):
+                                          subjects_table, users_table):
     """
     Get the user's most recent subjects.
     """
