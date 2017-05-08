@@ -58,7 +58,7 @@ module.exports = tasks.add({
         })
     },
 
-    createChooseSubjectForUnits({id, name}) {
+    createChooseSubjectForUnits({id, name, body, members}) {
         dispatch({
             type: 'CREATE_CHOOSE_SUBJECT_FOR_UNITS',
             id,
@@ -100,23 +100,17 @@ module.exports = tasks.add({
             post: {
                 kind: 'proposal',
                 body: 'Add Units to Subject',
-            }
-            /*
-                TODO!!!
-                subjects: [{
-                    (entity_id?)
-                    //xxx name: values.name,
-                    //xxx body: values.body,
-                    members: values.members,
-                }],
-                units: [{
-                    (entity_id?)
-                    --or--
-                    name
-                    body
-                    require_ids
-                }, ...]
-            */
+            },
+            units: state.create.units.filter(unit => !unit.entity_id),
+            subjects: [{
+                entity_id: selectedSubject.id,
+                // TODO 43827 other fields should populate from prev version
+                members: selectedSubject.units.map(unit => ({
+                    kind: 'unit',
+                    id: unit.entity_id,
+                    // TODO 54382 some haven't been created yet...
+                }))
+            }],
         }
         return tasks.createTopic(data)
     }
