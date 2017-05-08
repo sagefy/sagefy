@@ -58,7 +58,7 @@ module.exports = tasks.add({
         })
     },
 
-    createChooseSubjectForUnits({id, name, body, members}) {
+    createChooseSubjectForUnits({id, name}) {
         dispatch({
             type: 'CREATE_CHOOSE_SUBJECT_FOR_UNITS',
             id,
