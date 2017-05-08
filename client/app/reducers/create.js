@@ -91,6 +91,14 @@ module.exports = function create(state = {}, action = {type: ''}) {
         }
         return state
     }
+    if(action.type === 'CREATE_CHOOSE_UNIT_FOR_CARDS') {
+        state = shallowCopy(state)
+        state.selectedUnit = {
+            id: action.id,
+            name: action.name,
+        }
+        return state
+    }
     if(action.type === 'ADD_MEMBER_TO_ADD_UNITS') {
         state = shallowCopy(state)
         state.units = state.units && state.units.slice() || []

@@ -114,6 +114,18 @@ module.exports = broker.add({
         tasks.search({ q, kind: 'subject' })
     },
 
+    'click .create--card-find__choose'(e, el) {
+        if(e) e.preventDefault()
+        const {id, name} = el.dataset
+        tasks.createChooseUnitForCards({id, name})
+    },
+
+    'submit .create--card-find__form'(e, el) {
+        if(e) e.preventDefault()
+        const q = el.querySelector('input').value
+        tasks.search({ q, kind: 'unit' })
+    },
+
     'submit .create--unit-create-add__form'(e, el) {
         if(e) e.preventDefault()
         const q = el.querySelector('input').value

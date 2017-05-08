@@ -66,6 +66,14 @@ module.exports = tasks.add({
         })
     },
 
+    createChooseUnitForCards({id, name}) {
+        dispatch({
+            type: 'CREATE_CHOOSE_UNIT_FOR_CARDS',
+            id,
+            name,
+        })
+    },
+
     stowProposedUnit({name, language, body, require_ids}) {
         dispatch({
             type: 'STOW_PROPOSED_UNIT',
