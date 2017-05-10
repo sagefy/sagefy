@@ -58,6 +58,13 @@ module.exports = tasks.add({
         })
     },
 
+    removeCardFromUnit({index}) {
+        dispatch({
+            type: 'REMOVE_CARD_FROM_UNIT',
+            index,
+        })
+    },
+
     createChooseSubjectForUnits({id, name}) {
         dispatch({
             type: 'CREATE_CHOOSE_SUBJECT_FOR_UNITS',
@@ -121,5 +128,9 @@ module.exports = tasks.add({
             }],
         }
         return tasks.createTopic(data)
+    },
+
+    createCardsProposal() {
+        // TODO pp@
     }
 })

@@ -78,6 +78,13 @@ module.exports = function create(state = {}, action = {type: ''}) {
         state.units = units
         return state
     }
+    if(action.type === 'REMOVE_CARD_FROM_UNIT') {
+        state = shallowCopy(state)
+        const cards = copy(state.cards || [])
+        cards.splice(action.index, 1)
+        state.cards = cards
+        return state
+    }
     if(action.type === 'SET_MY_RECENT_SUBJECTS') {
         state = shallowCopy(state)
         state.myRecentSubjects = action.subjects

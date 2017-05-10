@@ -148,4 +148,15 @@ module.exports = broker.add({
         if(e) e.preventDefault()
         tasks.createUnitsProposal()
     },
+
+    'click .create--card-list__remove'(e, el) {
+        if(e) e.preventDefault()
+        const index = el.dataset.index
+        tasks.removeCardFromUnit({index})
+    },
+
+    'click .create--card-list__submit'(e) {
+        if(e) e.preventDefault()
+        tasks.createCardsProposal()
+    },
 })
