@@ -119,6 +119,12 @@ module.exports = function create(state = {}, action = {type: ''}) {
         })
         return state
     }
+    if(action.type === 'ADD_MEMBER_TO_ADD_CARDS') {
+        state = shallowCopy(state)
+        state.cards = state.cards && state.cards.slice() || []
+        state.cards.push(action.values)
+        return state
+    }
     if(action.type === 'STOW_PROPOSED_UNIT') {
         state = shallowCopy(state)
         state.proposedUnit = copy(state.proposedUnit || {})

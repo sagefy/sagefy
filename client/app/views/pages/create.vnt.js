@@ -4,6 +4,7 @@ const {getFormValues, parseFormValues} =
     require('../../modules/auxiliaries')
 const subjectSchema = require('../../schemas/subject')
 const unitSchema = require('../../schemas/unit')
+const cardSchema = require('../../schemas/card')
 const {closest} = require('../../modules/utilities')
 
 module.exports = broker.add({
@@ -164,6 +165,16 @@ module.exports = broker.add({
         const form = closest(el, 'form')
         const values = getFormValues(form)
         tasks.stowProposedCard(values)
-        // tasks.updateFormData(values)
-    }
+    },
+
+    'submit .create--card-create form'(e, el) {
+        if(e) e.preventDefault()
+        let values = getFormValues(el)
+        values = parseFormValues(values)
+        const errors = tasks.validateForm(values, cardSchema,
+            ['name', 'language', 'kind'])
+        if(errors && errors.length) { return }
+        tasks.addMemberToAddCards(values)
+        tasks.route('/create/card/list')
+    },
 })

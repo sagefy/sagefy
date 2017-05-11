@@ -44,6 +44,13 @@ module.exports = tasks.add({
         })
     },
 
+    addMemberToAddCards(values) {
+        dispatch({
+            type: 'ADD_MEMBER_TO_ADD_CARDS',
+            values,
+        })
+    },
+
     removeMemberFromCreateSubject({id}) {
         dispatch({
             type: 'REMOVE_MEMBER_FROM_CREATE_SUBJECT',
