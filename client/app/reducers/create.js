@@ -15,8 +15,8 @@
     searchResults /// use top level instead
     myRecentSubjects
     myRecentUnits
-
     proposedUnit  // popped into units
+    proposedCard  // popped into cards
 }
 
 /create
@@ -126,6 +126,11 @@ module.exports = function create(state = {}, action = {type: ''}) {
         state.proposedUnit.language = action.language
         state.proposedUnit.body = action.body
         state.proposedUnit.require_ids = action.require_ids
+        return state
+    }
+    if(action.type === 'STOW_PROPOSED_CARD') {
+        state = shallowCopy(state)
+        state.proposedCard = action.values || {}
         return state
     }
     if(action.type === 'ADD_REQUIRE_TO_PROPOSED_UNIT') {

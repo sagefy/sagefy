@@ -1,4 +1,4 @@
-const {div, h1} = require('../../modules/tags')
+const {div, h1, a} = require('../../modules/tags')
 const {cardWizard} = require('./create_shared.fn')
 const {extend} = require('../../modules/utilities')
 const cardSchema = require('../../schemas/card')
@@ -6,6 +6,7 @@ const videoCardSchema = require('../../schemas/cards/video_card')
 const choiceCardSchema = require('../../schemas/cards/choice_card')
 const form = require('../components/form.tmpl')
 const {createFieldsData} = require('../../modules/auxiliaries')
+const icon = require('../components/icon.tmpl')
 
 const allKindsFields = [{
     label: 'Card Name',
@@ -17,11 +18,6 @@ const allKindsFields = [{
         {label: 'English'}
     ],
     value: 'en'
-}, {
-    name: 'unit_id',
-    label: 'Card\'s Unit ID',
-    description: 'Add the ID of the unit the card belongs to. ' +
-                 'You can find this in the URL of the unit.'
 }, {
     label: 'Card Kind',
     name: 'kind',
@@ -100,7 +96,8 @@ choiceFields.forEach((field, index) => {
 })
 
 module.exports = function createCardCreate(data) {
-    const cardKind = 'video' // TODO-0 update this to use value
+    const proposedCard = data.create && data.create.proposedCard || {}
+    const cardKind = proposedCard.kind
 
     const fields = cardKind === 'video' ? videoFields
         : cardKind === 'choice' ? choiceFields
@@ -114,15 +111,19 @@ module.exports = function createCardCreate(data) {
         schema,
         fields,
         errors: data.errors,
-        formData: data.formData,
+        formData: proposedCard,
         sending: data.sending,
     })
 
     return div(
-        {id: 'create', className: 'page'},
+        {id: 'create', className: 'page create--card-create'},
         h1('Create a New Card for Unit'),
         cardWizard('list'),
-        form(instanceFields)
-        // Back to list view button
+        form(instanceFields),
+        a(
+            {href: '/create/card/list'},
+            icon('back'),
+            ' Back to List of Cards'
+        )
     )
 }

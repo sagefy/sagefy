@@ -1,6 +1,5 @@
 const broker = require('../../modules/broker')
 const tasks = require('../../modules/tasks')
-const {closest} = require('../../modules/utilities')
 const {getFormValues, parseFormValues} = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
@@ -35,22 +34,4 @@ module.exports = broker.add({
         values = parseFormValues(values)
         tasks.updatePost(values)
     },
-
-    'change #post-form.create [name="post.kind"]'(e, el) {
-        const form = closest(el, 'form')
-        const values = getFormValues(form)
-        tasks.updateFormData(values)
-    },
-
-    'change #post-form.create [name="post.entity_version.kind"]'(e, el) {
-        const form = closest(el, 'form')
-        const values = getFormValues(form)
-        tasks.updateFormData(values)
-    },
-
-    'change #post-form.create [name="entity.kind"]'(e, el) {
-        const form = closest(el, 'form')
-        const values = getFormValues(form)
-        tasks.updateFormData(values)
-    }
 })

@@ -91,6 +91,13 @@ module.exports = tasks.add({
         })
     },
 
+    stowProposedCard(values) {
+        dispatch({
+            type: 'STOW_PROPOSED_CARD',
+            values,
+        })
+    },
+
     addRequireToProposedUnit({id, name, body, kind}) {
         dispatch({
             type: 'ADD_REQUIRE_TO_PROPOSED_UNIT',

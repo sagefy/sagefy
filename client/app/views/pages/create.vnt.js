@@ -159,4 +159,11 @@ module.exports = broker.add({
         if(e) e.preventDefault()
         tasks.createCardsProposal()
     },
+
+    'change .create--card-create [name="kind"]'(e, el) {
+        const form = closest(el, 'form')
+        const values = getFormValues(form)
+        tasks.stowProposedCard(values)
+        // tasks.updateFormData(values)
+    }
 })
