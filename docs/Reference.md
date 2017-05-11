@@ -123,6 +123,7 @@ Learning platforms
 - [Udacity](https://www.udacity.com/)
 - [Duolingo](http://duolingo.com)
 - [Udemy](https://www.udemy.com/)
+- [Metacademy](https://metacademy.org/graphs/concepts/logistic_regression#focus=logistic_regression&mode=explore)
 
 ### LMS
 - [List of LMS software](http://lms.findthebest.com/)
