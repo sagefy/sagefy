@@ -17,7 +17,7 @@ For more information, watch this 3 minute [YouTube video].
 [Site]: https://sagefy.org
 [Twitter]: https://twitter.com/sagefyorg
 [Docs]: https://docs.sagefy.org
-[YouTube video]: https://www.youtube.com/watch?v=HVwfwTOdnOE
+[YouTube video]: https://youtu.be/gFn4Q9tx7Qs
 
 [![Setup](https://img.shields.io/badge/get-setup-brightgreen.svg?style=flat)](https://github.com/heiskr/sagefy/blob/master/setup/setup.md) [![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy) ![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=<badge_key>)
  [![Gitter](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg?style=flat)](https://gitter.im/heiskr/sagefy)

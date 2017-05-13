@@ -31,7 +31,7 @@ module.exports = () =>
     p(
       'For more details and examples, ',
       a(
-        {href: 'https://youtu.be/HVwfwTOdnOE'},
+        {href: 'https://youtu.be/gFn4Q9tx7Qs'},
         'check out this 3-minute overview video'
       ),
       '.'

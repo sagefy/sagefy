@@ -78,7 +78,7 @@ module.exports = data => {
             iframe({
               width: "560",
               height: "315",
-              src: "https://www.youtube.com/embed/HVwfwTOdnOE",
+              src: "https://www.youtube.com/embed/gFn4Q9tx7Qs",
               frameborder: "0",
               allowfullscreen: true
             }),

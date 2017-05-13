@@ -17,4 +17,4 @@ There are three types of entities in Sagefy: cards, units, and subjects.
 
 Also see [Data Structure: Requirements and Guidelines](Data-Structure-Requirements-and-Guidelines).
 
-Also see [YouTube Video](https://www.youtube.com/watch?v=HVwfwTOdnOE).
+Also see [YouTube Video](https://youtu.be/gFn4Q9tx7Qs).
