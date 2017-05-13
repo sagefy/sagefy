@@ -9,10 +9,16 @@ from database.topic import list_topics_by_entity_id, deliver_topic
 from database.my_recently_created import get_my_recently_created_subjects
 
 
+from config import config
+
+
 @get('/s/subjects/recommended')
 def get_recommended_subjects(request):
     db_conn = request['db_conn']
-    subjects = Subject.get_all(db_conn)
+    entity_ids = ('JAFGYFWhILcsiByyH2O9frcU',)
+    if config['debug']:
+        entity_ids = ('subjectAll',)
+    subjects = Subject.list_by_entity_ids(db_conn, entity_ids)
     if not subjects:
         return abort(404)
     return 200, {
