@@ -1,4 +1,3 @@
-from models.subject import Subject
 import rethinkdb as r
 
 import pytest

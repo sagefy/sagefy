@@ -1,4 +1,3 @@
-from models.card import Card
 import pytest
 
 xfail = pytest.mark.xfail

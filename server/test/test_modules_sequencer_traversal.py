@@ -4,8 +4,6 @@ xfail = pytest.mark.xfail
 
 from modules.sequencer.traversal import traverse, \
     match_unit_dependents, order_units_by_need, judge
-from models.unit import Unit
-from models.subject import Subject
 import rethinkdb as r
 from database.user import get_user
 

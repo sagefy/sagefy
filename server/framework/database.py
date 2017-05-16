@@ -48,31 +48,6 @@ def setup_db():
 
     tables = r.db(config['rdb_db']).table_list().run(db_conn)
 
-    from models.card import Card
-    from models.unit import Unit
-    from models.subject import Subject
-
-    models = (Card, Unit, Subject,)
-
-    for model_cls in models:
-        tablename = getattr(model_cls, 'tablename', None)
-        if tablename and tablename not in tables:
-            (r.db(config['rdb_db'])
-              .table_create(tablename)
-              .run(db_conn))
-            tables.append(tablename)
-
-        existant_indexes = (r.db(config['rdb_db'])
-                             .table(tablename)
-                             .index_list()
-                             .run(db_conn))
-        indexes = getattr(model_cls, 'indexes', [])
-        for index in indexes:
-            if index[0] not in existant_indexes:
-                (r.db(config['rdb_db'])
-                  .index_create(*index)
-                  .run(db_conn))
-
     from schemas.user import schema as user_schema
     from schemas.notice import schema as notice_schema
     from schemas.follow import schema as follow_schema
@@ -81,12 +56,14 @@ def setup_db():
     from schemas.topic import schema as topic_schema
     from schemas.card_parameters import schema as card_parameters_schema
     from schemas.post import schema as post_schema
+    from schemas.card import schema as card_schema
+    from schemas.unit import schema as unit_schema
+    from schemas.subject import schema as subject_schema
     schemas = (user_schema, notice_schema, follow_schema, response_schema,
                user_subjects_schema, topic_schema, card_parameters_schema,
-               post_schema,)
+               post_schema, card_schema, unit_schema, subject_schema)
     for schema in schemas:
         tablename = schema['tablename']
-
         if tablename and tablename not in tables:
             (r.db(config['rdb_db'])
               .table_create(tablename)

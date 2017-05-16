@@ -1,4 +1,3 @@
-from models.unit import Unit
 import rethinkdb as r
 
 

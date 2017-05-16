@@ -10,8 +10,6 @@ Includes topics, posts, proposals, and votes.
 from framework.routes import get, post, put, abort
 from framework.session import get_current_user
 from modules.util import pick, omit
-from modules.entity import get_kind, get_latest_accepted, get_version, \
-    instance_entities
 from modules.content import get as c
 from modules.notices import send_notices
 from database.user import get_user, get_avatar

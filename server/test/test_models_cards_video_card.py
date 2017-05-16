@@ -1,4 +1,3 @@
-from models.cards.video_card import VideoCard
 import pytest
 
 xfail = pytest.mark.xfail

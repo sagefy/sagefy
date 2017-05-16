@@ -1,4 +1,3 @@
-from models.cards.choice_card import ChoiceCard
 import pytest
 
 xfail = pytest.mark.xfail

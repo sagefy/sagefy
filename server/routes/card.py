@@ -1,10 +1,6 @@
 from framework.session import get_current_user
 from framework.routes import get, post, abort
-from models.card import Card
-from models.unit import Unit
-from models.subject import Subject
 from database.topic import list_topics_by_entity_id, deliver_topic
-from modules.entity import get_card_by_kind
 from modules.sequencer.index import update as seq_update
 from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card

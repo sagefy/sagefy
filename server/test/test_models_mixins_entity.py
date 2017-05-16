@@ -3,9 +3,6 @@ import pytest
 xfail = pytest.mark.xfail
 
 import rethinkdb as r
-from models.card import Card
-from models.subject import Subject
-from models.unit import Unit
 
 
 def test_latest_accepted_card(db_conn, cards_table):

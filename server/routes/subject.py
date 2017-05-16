@@ -1,6 +1,4 @@
 from framework.routes import get, post, abort
-from models.subject import Subject
-from models.unit import Unit
 from framework.session import get_current_user
 from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card

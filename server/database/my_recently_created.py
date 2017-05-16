@@ -1,6 +1,4 @@
 from database.post import list_posts
-from models.unit import Unit
-from models.subject import Subject
 
 
 def get_my_recent_proposals(current_user, db_conn):

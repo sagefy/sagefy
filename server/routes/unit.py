@@ -1,6 +1,4 @@
 from framework.routes import get, abort
-from models.unit import Unit
-from models.subject import Subject
 from database.topic import list_topics_by_entity_id, deliver_topic
 from framework.session import get_current_user
 from database.my_recently_created import get_my_recently_created_units

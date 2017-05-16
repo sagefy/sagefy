@@ -1,8 +1,5 @@
 import rethinkdb as r
 
-from models.card import Card
-from modules import entity
-
 import pytest
 
 xfail = pytest.mark.xfail

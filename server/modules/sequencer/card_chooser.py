@@ -1,4 +1,3 @@
-from models.card import Card
 from modules.sequencer.formulas import calculate_correct
 from modules.sequencer.params import init_learned
 from random import shuffle, random

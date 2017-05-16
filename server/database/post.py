@@ -6,7 +6,6 @@ from schemas.vote import schema as vote_schema
 from database.util import insert_document, update_document, deliver_fields, \
     get_document, prepare_document
 import rethinkdb as r
-from modules.entity import get_version  # TODO-2 this may cause a problem
 
 
 def get_post_schema(data):

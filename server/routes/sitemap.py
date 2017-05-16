@@ -1,7 +1,4 @@
 from framework.routes import get
-from models.card import Card
-from models.unit import Unit
-from models.subject import Subject
 from database.user import list_users, deliver_user
 from database.topic import list_topics
 
