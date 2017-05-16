@@ -56,6 +56,9 @@ def validate_post(data, db_conn):
     Validate a post before saving it against the schema.
     """
 
+    # TODO-2 move these to schema-level 'validate' fns instead.
+    # See database/util.py: for fn in schema['validate']:
+
     schema = get_post_schema(data)
     data, errors = prepare_document(schema, data, db_conn)
     if not errors:

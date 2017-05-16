@@ -1,62 +1,10 @@
 import rethinkdb as r
-from modules.model import Model
-from modules.validations import is_required, is_language, is_boolean, \
-    is_list, is_string, is_list_of_strings, is_one_of, has_min_length
-from modules.util import uniqid
 from framework.elasticsearch import es
 from modules.util import json_prep
 from modules.util import omit, pick
 
 
 class EntityMixin(object):
-    """
-    The model represents a **version** of an entity, not an entity itself.
-    The `entity_id` attribute is what refers to a particular entity.
-    The `id` attribute refers to a specific version of the entity.
-    The `previous_id` attribute refers to the version based off.
-    """
-
-    schema = dict(Model.schema.copy(), **{
-        'entity_id': {
-            'validate': (is_required, is_string,),
-            'default': uniqid
-        },
-        'previous_id': {  # TODO-2 is valid id? (set by code)
-            'validate': (is_string,),
-        },
-        'language': {
-            'validate': (is_required, is_language,),
-            'default': 'en'
-        },
-        'name': {
-            'validate': (is_required, is_string, (has_min_length, 1),)
-        },
-        'status': {
-            'validate': (is_required, (
-                is_one_of, 'pending', 'blocked', 'accepted', 'declined'
-            )),
-            'default': 'pending'
-        },
-        'available': {
-            'validate': (is_boolean,),
-            'default': True
-        },
-        'tags': {
-            'validate': (is_list, is_list_of_strings),
-            'default': []
-        },
-    })
-
-    def __repr__(self):
-        """
-        View an easy to read format when debugging.
-        """
-
-        return "{class_name}<{entity_id}>".format(
-            class_name=self.__class__.__name__,
-            entity_id=self['entity_id']
-        )
-
     @classmethod
     def start_accepted_query(cls):
         """

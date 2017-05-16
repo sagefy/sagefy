@@ -45,6 +45,9 @@ def insert_follow(data, db_conn):
     Create a new follow (user <-> entity).
     """
 
+    # TODO-2 move these to schema-level 'validate' fns instead.
+    # See database/util.py: for fn in schema['validate']:
+
     schema = follow_schema
     data, errors = prepare_document(schema, data, db_conn)
     if errors:
