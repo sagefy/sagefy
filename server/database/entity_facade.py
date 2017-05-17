@@ -1,4 +1,34 @@
 from modules.memoize_redis import memoize_redis
+from modules.util import omit
+import rethinkdb as r
+
+
+def instance_entities(data):
+    """
+    Given a kind and some json, call insert on that kind
+    and return the results.
+    A little safer.
+    """
+
+    fields = ('id', 'created', 'modified',
+              'entity_id', 'previous_id', 'status', 'available')
+    entities = []
+    if 'cards' in data:
+        for card_data in data['cards']:
+            entities.push(
+                ('card', omit(card_data, fields))
+            )
+    if 'units' in data:
+        entities = entities + [
+            ('unit', omit(unit_data, fields))
+            for unit_data in data['units']
+        ]
+    if 'subjects' in data:
+        entities = entities + [
+            ('subject', omit(subject_data, fields))
+            for subject_data in data['subjects']
+        ]
+    return entities
 
 
 def list_subjects_by_unit_id(cls, db_conn, unit_id):
@@ -39,7 +69,7 @@ def list_subjects_by_unit_id(cls, db_conn, unit_id):
         return all_subjects
 
     key = 'list_subjects_by_unit_id_{id}'.format(id=unit_id)
-    return [Subject(data) for data in memoize_redis(key, _)]
+    return [data for data in memoize_redis(key, _)]
 
 
 def list_units_in_subject(self, db_conn):
@@ -70,7 +100,7 @@ def list_units_in_subject(self, db_conn):
                     member['id']
                     for member in subject.data.get('members')
                     if member['kind'] == 'subject'})
-            subjects = Subject.list_by_entity_ids(db_conn, subject_ids)
+            subjects = list_by_entity_ids('subjects', db_conn, subject_ids)
 
         # *** Second, we need to find all
         #     the required connecting units. ***
@@ -78,7 +108,7 @@ def list_units_in_subject(self, db_conn):
         next_grab, units, unit_requires = unit_ids, [], {}
 
         while next_grab:
-            tier_units = Unit.list_by_entity_ids(db_conn, next_grab)
+            tier_units = list_by_entity_ids('units', db_conn, next_grab)
             units += tier_units
             next_grab = set()
 
@@ -109,4 +139,4 @@ def list_units_in_subject(self, db_conn):
 
     # If we already have it stored, use that
     key = 'subject_{id}'.format(id=self['entity_id'])
-    return [Unit(data) for data in memoize_redis(key, _)]
+    return [data for data in memoize_redis(key, _)]
