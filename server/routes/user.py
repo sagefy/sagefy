@@ -67,7 +67,7 @@ def get_user_route(request, user_id):
     if ('subjects' in request['params']
             and user['settings']['view_subjects'] == 'public'):
         data['subjects'] = [
-            subject.deliver()
+            subject.deliver()  # MMM
             for subject in list_user_subjects_entity(
                 user['id'],
                 {},

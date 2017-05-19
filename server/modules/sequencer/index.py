@@ -44,11 +44,11 @@ def update(db_conn, user, card, response):
             'feedback': '',
         }
 
-    errors = card.validate_response(response)
+    errors = card.validate_response(response)  # MMM
     if errors:
         return {'errors': errors}
 
-    score, feedback = card.score_response(response)
+    score, feedback = card.score_response(response)  # MMM
     response = {
         'user_id': user['id'],
         'card_id': card['entity_id'],

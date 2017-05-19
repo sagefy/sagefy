@@ -27,7 +27,7 @@ def traverse(db_conn, user, subject):
         'done': [],
     }
 
-    units = subject.list_units(db_conn)
+    units = subject.list_units(db_conn)  # MMM
     for unit in units:
         status = judge(db_conn, unit, user)
         buckets[status].append(unit)

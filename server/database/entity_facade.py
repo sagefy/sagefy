@@ -96,11 +96,11 @@ def list_units_in_subject(self, db_conn):
             for subject in subjects:
                 unit_ids.update({
                     member['id']
-                    for member in subject.data.get('members')
+                    for member in subject.get('members')
                     if member['kind'] == 'unit'})
                 subject_ids.update({
                     member['id']
-                    for member in subject.data.get('members')
+                    for member in subject.get('members')
                     if member['kind'] == 'subject'})
             subjects = list_by_entity_ids('subjects', db_conn, subject_ids)
 
@@ -133,7 +133,7 @@ def list_units_in_subject(self, db_conn):
                     elif require_id not in unit_requires:
                         next_grab.add(require_id)
 
-        units = [unit.data
+        units = [unit
                  for unit in units
                  if unit['entity_id'] in unit_ids]
 
