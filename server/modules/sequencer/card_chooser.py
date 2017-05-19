@@ -6,6 +6,8 @@ from functools import reduce
 from database.response import get_latest_response
 from database.card_parameters import get_card_parameters, \
     get_card_parameters_values
+from database.entity_base import start_accepted_query
+from schemas.card import assessment_kinds
 
 
 p_assessment_map = {
@@ -36,14 +38,14 @@ def choose_card(db_conn, user, unit):
     # TODO-3 simplify this method
 
     unit_id = unit['entity_id']
-    query = (Card.start_accepted_query()
-                 .filter({'unit_id': unit_id})
-                 .sample(10))  # TODO-2 index
-    # TODO-3 does this belong as a model method?
+    query = (start_accepted_query('cards')
+             .filter({'unit_id': unit_id})
+             .sample(10))  # TODO-2 index
+    # TODO-2 move to database file
     # TODO-2 is the sample value decent?
     # TODO-2 has the learner seen this card recently?
 
-    cards = [Card(d) for d in query.run(db_conn)]
+    cards = [d for d in query.run(db_conn)]
     if not len(cards):
         return None
 
@@ -60,7 +62,10 @@ def choose_card(db_conn, user, unit):
         learned = init_learned
 
     shuffle(cards)
-    assessment, nonassessment = partition(cards, lambda c: c.has_assessment())
+    assessment, nonassessment = partition(
+        cards,
+        lambda c: c['kind'] in assessment_kinds
+    )
     choose_assessment = random() < p_assessment_map[floor(learned * 10)]
 
     if choose_assessment:

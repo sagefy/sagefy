@@ -8,6 +8,7 @@ from modules.sequencer.update import update as formula_update
 from modules.sequencer.params import init_learned
 from database.response import get_latest_response, insert_response
 from time import time
+from schemas.card import assessment_kinds
 
 """
 Card
@@ -37,7 +38,7 @@ def update(db_conn, user, card, response):
 
     # TODO-3 split up into smaller methods
 
-    if not card.has_assessment():
+    if card['kind'] not in assessment_kinds:
         return {
             'response': {},
             'feedback': '',
