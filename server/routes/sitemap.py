@@ -1,7 +1,7 @@
-# MMM
 from framework.routes import get
 from database.user import list_users, deliver_user
 from database.topic import list_topics
+from database.entity_base import start_accepted_query
 
 defaults = {
     'https://sagefy.org/',
@@ -28,11 +28,10 @@ def sitemap_route(request):
     sitemap = defaults | set()
 
     # Card, unit, subject
-    kinds = {'card': Card, 'unit': Unit, 'subject': Subject}
-    for kind, Model in kinds.items():
-        query = Model.start_accepted_query()
-        entities = [Model(data).deliver() for data in query.run(db_conn)]
-        for entity in entities:
+    kinds = ('card', 'unit', 'subject',)
+    for kind in kinds:
+        query = start_accepted_query('%ss' % kind)
+        for entity in query.run(db_conn):
             sitemap.add('https://sagefy.org/{kind}s/{id}'.format(
                 id=entity['entity_id'],
                 kind=kind

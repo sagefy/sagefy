@@ -7,6 +7,7 @@ from database.user import get_user, insert_user, deliver_user, get_avatar, \
 from database.follow import list_follows, deliver_follow
 from database.user_subjects import list_user_subjects_entity
 from database.post import list_posts, deliver_post
+from database.subject import deliver_subject
 
 
 def _log_in(user):
@@ -67,7 +68,7 @@ def get_user_route(request, user_id):
     if ('subjects' in request['params']
             and user['settings']['view_subjects'] == 'public'):
         data['subjects'] = [
-            subject.deliver()  # MMM
+            deliver_subject(subject)
             for subject in list_user_subjects_entity(
                 user['id'],
                 {},

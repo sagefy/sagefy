@@ -74,7 +74,7 @@ def list_subjects_by_unit_id(cls, db_conn, unit_id):
     return [data for data in memoize_redis(key, _)]
 
 
-def list_units_in_subject(self, db_conn):
+def list_units_in_subject(main_subject, db_conn):
     """
     Get the list of units contained within the subject.
     Recursive. Connecting.
