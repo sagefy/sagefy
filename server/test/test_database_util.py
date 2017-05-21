@@ -274,7 +274,7 @@ def test_tidy_fields():
         'name': 'celestial',
         'shape': 'round',
         'plants': [
-            {'species': 'zzplant',  'quantity': 2},
+            {'species': 'zzplant', 'quantity': 2},
             {'species': 'rubbertree'},
         ],
         'soil': {'color': 'black'}

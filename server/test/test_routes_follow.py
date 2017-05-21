@@ -47,7 +47,7 @@ def test_follow_401(db_conn, follows_table):
     assert code == 401
 
 
-def test_follow_400(db_conn, session, follows_table):
+def test_follow_400a(db_conn, session, follows_table):
     """
     Expect to fail to follow entity if not found entity.
     """
@@ -101,7 +101,7 @@ def test_follow_409(db_conn, session, cards_table, follows_table):
     assert code == 400
 
 
-def test_follow_400(db_conn, session, follows_table):
+def test_follow_400b(db_conn, session, follows_table):
     """
     Expect to fail to follow entity if the request is nonsense.
     """

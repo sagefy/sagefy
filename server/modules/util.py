@@ -3,11 +3,13 @@ Short, one-off methods that could potentially be reused anywhere.
 """
 
 from random import SystemRandom
-random = SystemRandom()
 import string
 from datetime import datetime
 import collections
 import rethinkdb
+
+
+random = SystemRandom()
 
 
 def uniqid():

@@ -1,11 +1,9 @@
 import pytest
-
-xfail = pytest.mark.xfail
-
-
 from conftest import create_user_in_db
 import rethinkdb as r
 import routes.topic
+
+xfail = pytest.mark.xfail
 
 
 def create_topic_in_db(topics_table, db_conn, user_id='abcd1234'):

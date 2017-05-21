@@ -29,9 +29,9 @@ def test_update_pmf():
     hypotheses = update_pmf(hypotheses, {}, likelihood)
     assert hypotheses == {
         0: 0.0,
-        0.5: 2/9,
-        0.75: 1/3,
-        1: 4/9
+        0.5: 2 / 9,
+        0.75: 1 / 3,
+        1: 4 / 9,
     }
 
 

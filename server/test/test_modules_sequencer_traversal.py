@@ -1,12 +1,12 @@
 import pytest
-
-xfail = pytest.mark.xfail
-
 from modules.sequencer.traversal import traverse, \
     match_unit_dependents, order_units_by_need, judge
 import rethinkdb as r
 from database.user import get_user
 from database.entity_base import list_by_entity_ids, get_latest_accepted
+
+
+xfail = pytest.mark.xfail
 
 
 def add_test_subject(db_conn,

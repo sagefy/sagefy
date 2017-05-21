@@ -32,7 +32,7 @@ def test_video_id(db_conn, cards_table):
     })
     assert len(errors) == 1
     card['video_id'] = 'JFKl94jl'
-    errors = insert_card(db_conn,  card)
+    errors = insert_card(db_conn, card)
     assert len(errors) == 0
 
 

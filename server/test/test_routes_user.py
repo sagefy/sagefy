@@ -74,7 +74,7 @@ def test_get_user_posts(db_conn, session, posts_table):
 
 
 def test_get_user_subjects(db_conn, session, users_subjects_table,
-                           users_table,  subjects_table):
+                           users_table, subjects_table):
     """
     Expect to get user's subjects, if requested and allowed.
     """
