@@ -92,7 +92,7 @@ def deliver_card(data, access=None):
         schema = card_schema
     data = deepcopy(data)
 
-    if access is 'learn':
+    if access is 'learn' and data['kind'] is 'choice':
         if data['order'] == 'random':
             shuffle(data['options'])
 

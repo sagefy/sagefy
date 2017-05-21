@@ -23,6 +23,7 @@ module.exports = tasks.add({
                     const user = response.users[post.user_id]
                     post.user_name = user.name
                     post.user_avatar = user.avatar
+                    if (!response.entity_versions) { return }
                     const entityVersions = response.entity_versions[post.id]
                     if (entityVersions) {
                         post.entityVersionsFull =

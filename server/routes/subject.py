@@ -99,7 +99,7 @@ def get_subject_tree_route(request, subject_id):
     if not subject:
         return abort(404)
 
-    units = subject.list_units(db_conn)
+    units = list_units_in_subject(subject, db_conn)
 
     # For the menu, it must return the name and ID of the subject
     output = {
