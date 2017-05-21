@@ -6,6 +6,7 @@ from schemas.vote import schema as vote_schema
 from database.util import insert_document, update_document, deliver_fields, \
     get_document, prepare_document
 import rethinkdb as r
+from database.entity_base import get_version
 
 
 def get_post_schema(data):
@@ -201,9 +202,9 @@ def is_valid_reply_kind(data, db_conn):
         return [{'message': 'A vote must reply to a proposal.'}]
     if proposal_data['user_id'] == data['user_id']:
         return [{'message': 'You cannot vote on your own proposal.'}]
-    entity_version = get_version(db_conn,
-                                 proposal_data['entity_versions'][0]['kind'],
-                                 proposal_data['entity_versions'][0]['id'])
+    tablename = '%ss' % proposal_data['entity_versions'][0]['kind']
+    version_id = proposal_data['entity_versions'][0]['id']
+    entity_version = get_version(db_conn, tablename, version_id)
     if not entity_version:
         return [{'message': 'No entity version for proposal.'}]
     if entity_version['status'] in ('accepted', 'declined'):

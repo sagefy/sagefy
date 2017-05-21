@@ -3,6 +3,9 @@ from modules.util import omit
 from database.entity_base import list_by_entity_ids
 import rethinkdb as r
 from database.entity_base import start_accepted_query
+from database.unit import deliver_unit
+from database.subject import deliver_subject
+from database.card import deliver_card
 
 
 def instance_entities(data):
@@ -142,3 +145,12 @@ def list_units_in_subject(main_subject, db_conn):
     # If we already have it stored, use that
     key = 'subject_{id}'.format(id=main_subject['entity_id'])
     return [data for data in memoize_redis(key, _)]
+
+
+def deliver_entity_by_kind(kind, entity):
+    if kind == 'card':
+        return deliver_card(entity, 'view')
+    if kind == 'unit':
+        return deliver_unit(entity, 'view')
+    if kind == 'subject':
+        return deliver_subject(entity, 'view')

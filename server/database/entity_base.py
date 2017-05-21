@@ -11,6 +11,7 @@ def start_accepted_query(tablename):
     to the latest accepted versions for each.
     """
 
+    assert tablename in ('cards', 'units', 'subjects')
     # TODO-2 this query should have an index in card, unit, subject
     # TODO-2 is there a way to avoid the cost of this query?
     return (r.table(tablename)
@@ -26,6 +27,8 @@ def get_latest_accepted(tablename, db_conn, entity_id):
     """
     Get the latest accepted version of the card.
     """
+
+    assert tablename in ('cards', 'units', 'subjects')
 
     if not entity_id:
         return
@@ -46,6 +49,7 @@ def list_by_entity_ids(tablename, db_conn, entity_ids):
     Get a list of entities by a list of entity IDs.
     """
 
+    assert tablename in ('cards', 'units', 'subjects')
     if not entity_ids:
         return []
 
@@ -64,6 +68,7 @@ def list_by_version_ids(tablename, db_conn, version_ids):
     ???
     """
 
+    assert tablename in ('cards', 'units', 'subjects')
     if not version_ids:
         return []
 
@@ -82,6 +87,7 @@ def get_versions(tablename, db_conn, entity_id, limit=10, skip=0, **params):
     Get the latest accepted version of the card.
     """
 
+    assert tablename in ('cards', 'units', 'subjects')
     if not entity_id:
         return []
 
@@ -100,6 +106,7 @@ def list_requires(tablename, db_conn, entity_id, limit=10, skip=0, **params):
     Get the same kind of entity that this one requires.
     """
 
+    assert tablename in ('cards', 'units', 'subjects')
     if not entity_id:
         return []
 
@@ -122,6 +129,7 @@ def list_required_by(tablename, db_conn, entity_id,
     Get the same kind of entity that requires this one.
     """
 
+    assert tablename in ('cards', 'units', 'subjects')
     if not entity_id:
         return []
 
@@ -181,6 +189,8 @@ def find_requires_cycle(tablename, data, db_conn):
     Inspect own requires to see if a cycle is formed.
     """
 
+    assert tablename in ('cards', 'units', 'subjects')
+
     seen = set()
     main_id = data['entity_id']
     found = {'cycle': False}
@@ -200,3 +210,12 @@ def find_requires_cycle(tablename, data, db_conn):
     _(data['require_ids'])
 
     return found['cycle']
+
+
+def get_version(db_conn, tablename, version_id):
+    """
+    Retrieve a specific version from the database.
+    """
+
+    assert tablename in ('cards', 'units', 'subjects')
+    return r.table(tablename).get(version_id).run(db_conn)

@@ -18,7 +18,7 @@ from database.topic import get_topic, deliver_topic, validate_topic, \
     update_topic, insert_topic
 from database.post import deliver_post, validate_post, insert_post, \
     list_posts, get_post, update_post
-from database.entity_base import get_latest_accepted
+from database.entity_base import get_latest_accepted, get_version
 
 
 def prefix_error_names(prefix, errors):
@@ -57,10 +57,9 @@ def update_entity_statuses(db_conn, proposal):
 
     # Get the entity version
     for p_entity_version in proposal['entity_versions']:
-        entity_version = get_version(db_conn,
-                                     p_entity_version['kind'],
-                                     p_entity_version['id'])
-
+        tablename = '%ss' % p_entity_version['kind']
+        version_id = p_entity_version['id']
+        entity_version = get_version(db_conn, tablename, version_id)
         votes = list_posts({
             'kind': 'vote',
             'replies_to_id': proposal['id'],
@@ -286,13 +285,13 @@ def get_posts_route(request, topic_id):
         if post_['kind'] == 'proposal':
             entity_versions[post_['id']] = [get_version(
                 db_conn,
-                p_entity_version['kind'],
+                '%ss' % p_entity_version['kind'],
                 p_entity_version['id']
             ) for p_entity_version in post_['entity_versions']]
             # TODO-2 re-enable diffs
             # previous_version = get_version(
             #     db_conn,
-            #     p_entity_version['kind'],
+            #     '%ss' % p_entity_version['kind'],
             #     entity_version['previous_id']
             # )
             # if previous_version:
