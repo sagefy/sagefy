@@ -1,8 +1,8 @@
-# MMM
 from schemas.entity_base import schema as entity_schema
 from modules.validations import is_required, is_string, is_list, \
     has_min_length
 from modules.util import extend
+from database.entity_base import list_by_entity_ids, find_requires_cycle
 
 """
 A unit is the medium size in the Sagefy data structure system.
@@ -21,7 +21,7 @@ def ensure_requires(schema, data, db_conn):
 
     """
 
-    units = Unit.list_by_entity_ids(db_conn, data['require_ids'])
+    units = list_by_entity_ids('units', db_conn, data['require_ids'])
     if len(data['require_ids']) != len(units):
         return [{'message': 'Didn\'t find all requires.'}]
     return []
@@ -32,7 +32,7 @@ def ensure_no_cycles(schema, data, db_conn):
     Ensure no require cycles form.
     """
 
-    if self.find_requires_cycle(db_conn):
+    if find_requires_cycle('units', data, db_conn):
         return [{'message': 'Found a cycle in requires.'}]
 
     return []

@@ -1,9 +1,9 @@
-# MMM
 from schemas.entity_base import schema as entity_schema
 from modules.util import extend
 from modules.validations import is_required, is_string, is_list, is_one_of, \
     has_min_length
 import rethinkdb as r
+from database.entity_base import list_by_entity_ids
 
 """
 A subject is a collection of units and other subjects.
@@ -49,7 +49,7 @@ def ensure_no_cycles(schema, data, db_conn):
             for member in members
             if member['kind'] == 'subject'
         ]
-        entities = Subject.list_by_entity_ids(db_conn, entity_ids)
+        entities = list_by_entity_ids('subjects', db_conn, entity_ids)
         for entity in entities:
             if entity['entity_id'] == main_id:
                 found['cycle'] = True

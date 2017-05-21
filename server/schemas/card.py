@@ -1,8 +1,8 @@
-# MMM
 from schemas.entity_base import schema as entity_schema
 from modules.validations import is_required, is_list, is_string, is_one_of
 from modules.util import extend
 import rethinkdb as r
+from database.entity_base import list_by_entity_ids, find_requires_cycle
 
 """
 Cards are the smallest entity in the Sagefy data structure system.
@@ -34,7 +34,7 @@ def ensure_requires(schema, data, db_conn):
 
     """
 
-    cards = Card.list_by_entity_ids(db_conn, data['require_ids'])
+    cards = list_by_entity_ids('cards', db_conn, data['require_ids'])
     if len(data['require_ids']) != len(cards):
         return [{'message': 'Didn\'t find all requires.'}]
     return []
@@ -45,7 +45,7 @@ def ensure_no_cycles(schema, data, db_conn):
     Ensure no require cycles form.
     """
 
-    if self.find_requires_cycle(db_conn):
+    if find_requires_cycle('cards', data, db_conn):
         return [{'message': 'Found a cycle in requires.'}]
 
     return []
