@@ -112,7 +112,7 @@ def select_subject_route(request, user_id, subject_id):
     if not current_user:
         return abort(401)
 
-    subject = Subject.get_latest_accepted(db_conn, subject_id)
+    subject = get_latest_accepted('subjects', db_conn, subject_id)
     next_ = {
         'method': 'GET',
         'path': '/s/subjects/{subject_id}/tree'

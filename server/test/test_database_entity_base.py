@@ -27,7 +27,7 @@ def test_latest_accepted_card(db_conn, cards_table):
         'status': 'accepted',
     }]).run(db_conn)
 
-    card = Card.get_latest_accepted(db_conn, 'A')
+    card = get_latest_accepted('cards', db_conn, 'A')
     assert card['id'] == 'B2'
 
 
@@ -53,7 +53,7 @@ def test_latest_accepted(db_conn, units_table):
         'status': 'accepted',
     }]).run(db_conn)
 
-    unit = Unit.get_latest_accepted(db_conn, 'A')
+    unit = get_latest_accepted('units', db_conn, 'A')
     assert unit['id'] == 'B2'
 
 
@@ -79,7 +79,7 @@ def test_latest_accepted_subject(db_conn, subjects_table):
         'status': 'accepted',
     }]).run(db_conn)
 
-    subject = Subject.get_latest_accepted(db_conn, 'A')
+    subject = get_latest_accepted('subjects', db_conn, 'A')
     assert subject['id'] == 'B2'
 
 

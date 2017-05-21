@@ -32,7 +32,7 @@ def get_subject_route(request, subject_id):
     """
 
     db_conn = request['db_conn']
-    subject = Subject.get_latest_accepted(db_conn, subject_id)
+    subject = get_latest_accepted('subjects', db_conn, subject_id)
     if not subject:
         return abort(404)
 
@@ -182,7 +182,7 @@ def get_subject_units_route(request, subject_id):
     }
     set_learning_context(current_user, next=next_)
 
-    subject = Subject.get_latest_accepted(db_conn, subject_id)
+    subject = get_latest_accepted('subjects', db_conn, subject_id)
 
     # Pull a list of up to 5 units to choose from based on priority.
     buckets = traverse(db_conn, current_user, subject)
@@ -215,7 +215,7 @@ def choose_unit_route(request, subject_id, unit_id):
     if not current_user:
         return abort(401)
 
-    unit = Unit.get_latest_accepted(db_conn, unit_id)
+    unit = get_latest_accepted('units', db_conn, unit_id)
     if not unit:
         return abort(404)
 

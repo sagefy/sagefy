@@ -13,7 +13,7 @@ def get_unit_route(request, unit_id):
 
     db_conn = request['db_conn']
 
-    unit = Unit.get_latest_accepted(db_conn, unit_id)
+    unit = get_latest_accepted('units', db_conn, unit_id)
     if not unit:
         return abort(404)
 
