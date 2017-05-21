@@ -144,12 +144,10 @@ def insert_entity(schema, db_conn, data):
     """
 
     data = omit(data, ('status', 'available'))
-
     if 'entity_id' in data:
         latest = get_latest_accepted(
             schema['tablename'], db_conn, data['entity_id'])
         data['previous_id'] = latest['id']
-
     return insert_document(schema, data, db_conn)
 
 

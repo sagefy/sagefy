@@ -1,10 +1,53 @@
 from random import shuffle
 from schemas.card import schema as card_schema
+from schemas.cards.video_card import schema as video_card_schema
+from schemas.cards.choice_card import schema as choice_card_schema
 from copy import deepcopy
 from database.util import deliver_fields
+from database.entity_base import insert_entity, update_entity, \
+    save_entity_to_es
 
 
-# TODO all saves should go to ES
+def get_card_schema(data):
+    if 'kind' in data:
+        if data['kind'] == 'video':
+            return video_card_schema
+        if data['kind'] == 'choice':
+            return choice_card_schema
+
+
+def insert_card(db_conn, data):
+    """
+    Create a card, saving to ES.
+    """
+
+    schema = get_card_schema(data)
+    if not schema:
+        return data, [{
+            'name': 'kind',
+            'message': 'Missing card kind.',
+        }]
+    card, errors = insert_entity(schema, db_conn, data)
+    if not errors:
+        save_entity_to_es(deliver_card(card, access='view'), db_conn)
+    return card, errors
+
+
+def update_card(prev_data, data, db_conn):
+    """
+    Update a card.
+    """
+
+    schema = get_card_schema(data)
+    if not schema:
+        return data, [{
+            'name': 'kind',
+            'message': 'Missing card kind.',
+        }]
+    card, errors = update_entity(schema, prev_data, data, db_conn)
+    if not errors:
+        save_entity_to_es(deliver_card(card, access='view'), db_conn)
+    return card, errors
 
 
 def validate_card_response(card, response):
@@ -16,10 +59,8 @@ def validate_card_response(card, response):
     # If not a choice card, return [{'message': 'No response is valid.'}]
 
     values = [opt['value'] for opt in card['options']]
-
     if response not in values:
         return [{'message': 'Value is not an option.'}]
-
     return []
 
 
@@ -46,7 +87,9 @@ def deliver_card(data, access=None):
     Overwrite to randomize option order and limit number of options.
     """
 
-    schema = card_schema
+    schema = get_card_schema(data)
+    if not schema:
+        schema = card_schema
     data = deepcopy(data)
 
     if access is 'learn':

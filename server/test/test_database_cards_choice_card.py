@@ -1,4 +1,5 @@
 import pytest
+from database.card import insert_card
 
 xfail = pytest.mark.xfail
 
@@ -8,7 +9,7 @@ def test_choice_body(cards_table, db_conn):
     Expect a choice card to require a body (question).
     """
 
-    card, errors = ChoiceCard.insert(db_conn, {
+    card, errors = insert_card(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'options': [{
@@ -19,7 +20,7 @@ def test_choice_body(cards_table, db_conn):
     })
     assert len(errors) == 1
     card['body'] = 'Testing 1234'
-    errors = card.save(db_conn)
+    errors = insert_card(db_conn, card)
     assert len(errors) == 0
 
 
@@ -29,7 +30,7 @@ def test_choice_options(db_conn, cards_table):
     (value, correct, feedback)
     """
 
-    card, errors = ChoiceCard.insert(db_conn, {
+    card, errors = insert_card(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'body': 'Testing 1234',
@@ -40,7 +41,7 @@ def test_choice_options(db_conn, cards_table):
         'correct': True,
         'feedback': 'Bazaaa...'
     }]
-    errors = card.save(db_conn)
+    errors = insert_card(db_conn, card)
     assert len(errors) == 0
 
 
@@ -49,7 +50,7 @@ def test_choice_order(db_conn, cards_table):
     Expect a choice card to allow set order.
     """
 
-    card, errors = ChoiceCard.insert(db_conn, {
+    card, errors = insert_card(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'body': 'Testing 1234',
@@ -61,7 +62,7 @@ def test_choice_order(db_conn, cards_table):
     })
     assert len(errors) == 0
     card['order'] = 'set'
-    errors = card.save(db_conn, )
+    errors = insert_card(db_conn, card)
     assert len(errors) == 0
 
 
@@ -70,7 +71,7 @@ def test_choice_max_opts(db_conn, cards_table):
     Expect a choice card to allow max options (question).
     """
 
-    card, errors = ChoiceCard.insert(db_conn, {
+    card, errors = insert_card(db_conn, {
         'unit_id': 'RUF531',
         'name': 'What is?',
         'body': 'Testing 1234',
@@ -82,7 +83,7 @@ def test_choice_max_opts(db_conn, cards_table):
     })
     assert len(errors) == 0
     card['max_options'] = 2
-    errors = card.save(db_conn)
+    errors = insert_card(db_conn, card)
     assert len(errors) == 0
 
 

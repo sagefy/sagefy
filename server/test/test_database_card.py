@@ -1,4 +1,5 @@
 import pytest
+from database.card import insert_card
 
 xfail = pytest.mark.xfail
 
@@ -8,7 +9,7 @@ def test_entity_id(db_conn, cards_table):
     Expect a card to require an entity_id.
     """
 
-    card, errors = Card.insert(db_conn, {
+    card, errors = insert_card(db_conn, {
         'previous_id': 'TJKL35',
         'language': 'en',
         'unit_id': 'RUF531',
@@ -24,7 +25,7 @@ def test_previous_version_id(db_conn, cards_table):
     Expect a card to allow a previous version id.
     """
 
-    card, errors = Card.insert(db_conn, {
+    card, errors = insert_card(db_conn, {
         'language': 'en',
         'unit_id': 'RUF531',
         'name': 'What is?',
@@ -32,7 +33,7 @@ def test_previous_version_id(db_conn, cards_table):
     })
     assert len(errors) == 0
     card['previous_id'] = 'TJKL35'
-    card, errors = card.save(db_conn)
+    card, errors = insert_card(db_conn, card)
     assert len(errors) == 0
 
 
@@ -41,7 +42,7 @@ def test_language(db_conn, cards_table):
     Expect a card to require a language.
     """
 
-    card, errors = Card.insert(db_conn, {
+    card, errors = insert_card(db_conn, {
         'previous_id': 'TJKL35',
         'unit_id': 'RUF531',
         'name': 'What is?',
@@ -56,7 +57,7 @@ def test_unit_id(db_conn, cards_table):
     Expect a card to require a unit id.
     """
 
-    card, errors = Card.insert(db_conn, {
+    card, errors = insert_card(db_conn, {
         'previous_id': 'TJKL35',
         'language': 'en',
         'name': 'What is?',
@@ -64,7 +65,7 @@ def test_unit_id(db_conn, cards_table):
     })
     assert len(errors) == 1
     card['unit_id'] = 'RUF531A'
-    card, errors = card.save(db_conn)
+    card, errors = insert_card(db_conn, card)
     assert len(errors) == 0
 
 
@@ -73,7 +74,7 @@ def test_name(db_conn, cards_table):
     Expect a card to require a name.
     """
 
-    card, errors = Card.insert(db_conn, {
+    card, errors = insert_card(db_conn, {
         'previous_id': 'TJKL35',
         'language': 'en',
         'unit_id': 'RUF531',
@@ -81,7 +82,7 @@ def test_name(db_conn, cards_table):
     })
     assert len(errors) == 1
     card['name'] = 'What is?'
-    card, errors = card.save(db_conn)
+    card, errors = insert_card(db_conn, card)
     assert len(errors) == 0
 
 
@@ -90,7 +91,7 @@ def test_status(db_conn, cards_table):
     Expect a card version status to be a string.
     """
 
-    card, errors = Card.insert(db_conn, {
+    card, errors = insert_card(db_conn, {
         'previous_id': 'TJKL35',
         'language': 'en',
         'unit_id': 'RUF531',
@@ -100,7 +101,7 @@ def test_status(db_conn, cards_table):
     assert len(errors) == 0
     assert card['status'] == 'pending'
     card['status'] = 'accepted'
-    card, errors = card.save(db_conn)
+    card, errors = insert_card(db_conn, card)
     assert len(errors) == 0
 
 
@@ -109,7 +110,7 @@ def test_tags(db_conn, cards_table):
     Expect a card to allow tags.
     """
 
-    card, errors = Card.insert(db_conn, {
+    card, errors = insert_card(db_conn, {
         'previous_id': 'TJKL35',
         'language': 'en',
         'unit_id': 'RUF531',
@@ -118,7 +119,7 @@ def test_tags(db_conn, cards_table):
     })
     assert len(errors) == 0
     card['tags'] = ['B', 'A']
-    card, errors = card.save(db_conn)
+    card, errors = insert_card(db_conn, card)
     assert len(errors) == 0
 
 
@@ -127,7 +128,7 @@ def test_kind(db_conn, cards_table):
     Expect a card to have a kind.
     """
 
-    card, errors = Card.insert(db_conn, {
+    card, errors = insert_card(db_conn, {
         'previous_id': 'TJKL35',
         'language': 'en',
         'unit_id': 'RUF531',
@@ -135,7 +136,7 @@ def test_kind(db_conn, cards_table):
     })
     assert len(errors) == 1
     card['kind'] = 'video'
-    card, errors = card.save(db_conn)
+    card, errors = insert_card(db_conn, card)
     assert len(errors) == 0
 
 

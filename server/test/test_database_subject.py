@@ -2,6 +2,7 @@ import rethinkdb as r
 from database.entity_base import list_by_entity_ids, get_latest_accepted
 from database.entity_facade import list_subjects_by_unit_id
 import pytest
+from database.subject import insert_subject
 
 xfail = pytest.mark.xfail
 
@@ -23,7 +24,7 @@ def test_entity(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -41,7 +42,7 @@ def test_previous(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -59,7 +60,7 @@ def test_language(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -77,7 +78,7 @@ def test_name(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'body': 'A beginning course focused on probability.',
         'members': [{
             'id': 'A',
@@ -86,7 +87,7 @@ def test_name(db_conn, subjects_table, units_table):
     })
     assert len(errors) == 1
     subject['name'] = 'Statistics'
-    subject, errors = subject.save(db_conn)
+    subject, errors = insert_subject(db_conn, subject)
     assert len(errors) == 0
 
 
@@ -96,7 +97,7 @@ def test_body(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'members': [{
             'id': 'A',
@@ -105,7 +106,7 @@ def test_body(db_conn, subjects_table, units_table):
     })
     assert len(errors) == 1
     subject['body'] = 'A beginning course focused on probability.'
-    subject, errors = subject.save(db_conn)
+    subject, errors = insert_subject(db_conn, subject)
     assert len(errors) == 0
 
 
@@ -115,7 +116,7 @@ def test_status(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -126,7 +127,7 @@ def test_status(db_conn, subjects_table, units_table):
     assert len(errors) == 0
     assert subject['status'] == 'pending'
     subject['status'] = 'accepted'
-    subject, errors = subject.save(db_conn)
+    subject, errors = insert_subject(db_conn, subject)
     assert len(errors) == 0
 
 
@@ -136,7 +137,7 @@ def test_tags(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -154,7 +155,7 @@ def test_members(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
     })
@@ -163,7 +164,7 @@ def test_members(db_conn, subjects_table, units_table):
         'id': 'A',
         'kind': 'unit',
     }]
-    subject, errors = subject.save(db_conn)
+    subject, errors = insert_subject(db_conn, subject)
     assert len(errors) == 0
 
 
