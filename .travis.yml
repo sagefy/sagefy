@@ -18,7 +18,7 @@ install:
     - 'cd client && npm install && cd ..'
     - source ~/virtualenv/python3.4/bin/activate
 script:
-    - 'cd server && flake8 && cd ..'
+    - '#cd server && flake8 && cd ..'
     - coverage run --module py.test server
     - nvm use 6.7.0
     - 'cd client && npm test && cd ..'
