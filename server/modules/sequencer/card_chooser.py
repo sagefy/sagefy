@@ -69,7 +69,7 @@ def choose_card(db_conn, user, unit):
     choose_assessment = random() < p_assessment_map[floor(learned * 10)]
 
     if choose_assessment:
-        if not len(assessment):
+        if not len(assessment) and len(nonassessment):
             return nonassessment[0]
         for card in assessment:
             params = get_card_parameters(

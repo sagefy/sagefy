@@ -75,7 +75,7 @@ def match_unit_dependents(units):
     dependents = {unit['entity_id']: set() for unit in units}
 
     def _(unit, dep):
-        for required_id in unit.get('require_ids', []):
+        for required_id in (unit.get('require_ids') or []):
             if required_id not in dependents:
                 dependents[required_id] = set()
             dependents[required_id].add(dep)
@@ -84,7 +84,7 @@ def match_unit_dependents(units):
                 _(required_unit, dep)
 
     for unit in units:
-        _(unit, unit)
+        _(unit, unit['entity_id'])
 
     return dependents
 
