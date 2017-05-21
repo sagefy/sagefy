@@ -135,7 +135,7 @@ def list_required_by(tablename, db_conn, entity_id,
 
     # TODO-2 this query should have an index in card and unit
     query = (start_accepted_query(tablename)
-             .filter(r.row['requires'].contains(entity_id))
+             .filter(r.row['require_ids'].contains(entity_id))
              .order_by(r.desc('created'))
              .skip(skip)
              .limit(limit))

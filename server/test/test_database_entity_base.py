@@ -123,7 +123,7 @@ def test_list_requires(db_conn, cards_table):
         'modified': r.now(),
         'status': 'accepted',
         'kind': 'video',
-        'requires': ['zxyz'],
+        'require_ids': ['zxyz'],
     }, {
         'entity_id': 'abcd',
         'unit_id': 'zytx',
@@ -145,7 +145,7 @@ def test_list_requires(db_conn, cards_table):
         'modified': r.now(),
         'status': 'accepted',
         'kind': 'choice',
-        'requires': ['abcd'],
+        'require_ids': ['abcd'],
     }]).run(db_conn)
 
     cards = list_requires('cards', db_conn, 'abcd')
@@ -166,7 +166,7 @@ def test_list_required_by(db_conn, cards_table):
         'modified': r.now(),
         'status': 'accepted',
         'kind': 'video',
-        'requires': ['zxyz'],
+        'require_ids': ['zxyz'],
     }, {
         'entity_id': 'abcd',
         'unit_id': 'zytx',
@@ -188,7 +188,7 @@ def test_list_required_by(db_conn, cards_table):
         'modified': r.now(),
         'status': 'accepted',
         'kind': 'choice',
-        'requires': ['abcd'],
+        'require_ids': ['abcd'],
     }]).run(db_conn)
 
     cards = list_required_by('cards', db_conn, 'abcd')

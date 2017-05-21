@@ -91,7 +91,7 @@ for sample_id, unit_data in sample_data['units'].items():
         'tags': [],
         'name': unit_data['name'],
         'body': unit_data['body'],
-        'require_ids': unit_data['requires'],
+        'require_ids': unit_data['require_ids'],
     }).run(db_conn)
 
 

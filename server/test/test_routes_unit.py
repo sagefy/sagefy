@@ -14,7 +14,7 @@ def test_get_unit(db_conn,
         'modified': r.now(),
         'status': 'accepted',
         'name': 'Wildwood',
-        'requires': ['ntza'],
+        'require_ids': ['ntza'],
     }, {
         'entity_id': 'zytx',
         'created': r.time(1986, 11, 3, 'Z'),
@@ -33,7 +33,7 @@ def test_get_unit(db_conn,
         'modified': r.now(),
         'status': 'accepted',
         'name': 'Wildwood',
-        'requires': ['zytx'],
+        'require_ids': ['zytx'],
     }]).run(db_conn)
 
     subjects_table.insert({

@@ -20,7 +20,7 @@ def test_get_card(db_conn, cards_table, cards_parameters_table, units_table,
         'modified': r.now(),
         'status': 'accepted',
         'kind': 'video',
-        'requires': ['zxyz'],
+        'require_ids': ['zxyz'],
     }, {
         'entity_id': 'abcd',
         'unit_id': 'zytx',
@@ -42,7 +42,7 @@ def test_get_card(db_conn, cards_table, cards_parameters_table, units_table,
         'modified': r.now(),
         'status': 'accepted',
         'kind': 'choice',
-        'requires': ['abcd'],
+        'require_ids': ['abcd'],
     }]).run(db_conn)
 
     cards_parameters_table.insert({

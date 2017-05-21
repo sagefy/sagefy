@@ -89,119 +89,119 @@ units:
   unitIntro:
     name: Electronic Music
     body: Define electronic music and the subjects electronic music covers.
-    requires: []
+    require_ids: []
   unitParams:
     name: Sound Parameters
     body: Describe the basic parameters of sound -- amplitude, frequency, duration, phase, and timbre.
-    requires: [unitIntro]
+    require_ids: [unitIntro]
   unitHuman:
     name: Human Hearing
     body: Describe common properties of human hearing, as hearing pertains to electronic music.
-    requires: [unitParams]
+    require_ids: [unitParams]
   unitCurves:
     name: Hearing Curves
     body: Describe how hearing varies with frequency and amplitude.
-    requires: [unitHuman]
+    require_ids: [unitHuman]
   unitDigital:
     name: Digital Representation
     body: Describe how we represent sound digitally, including bit depth and sample rate.
-    requires: [unitHuman]
+    require_ids: [unitHuman]
   unitAdc:
     name: Analog to Digital
     body: Describe how we convert analog sound into digital sound.
-    requires: [unitDigital]
+    require_ids: [unitDigital]
   unitComplex:
     name: Complex Waves
     body: Describe the composition of complex sounds.
-    requires: [unitParams]
+    require_ids: [unitParams]
   unitOsc:
     name: Oscillators
     body: Describe the oscillators and basic wave forms -- sine, triangle, square, and sawtooth.
-    requires: [unitComplex]
+    require_ids: [unitComplex]
   unitNoise:
     name: Noise
     body: Describe the types of noise -- white, brown, and pink.
-    requires: [unitOsc]
+    require_ids: [unitOsc]
   unitAdd:
     name: Additive Synthesis
     body: Describe how multiple waves produce a single sound.
-    requires: [unitOsc]
+    require_ids: [unitOsc]
   unitSub:
     name: Subtractive Synthesis
     body: Describe how we can subtract information to produce sound.
-    requires: [unitNoise]
+    require_ids: [unitNoise]
   unitSample:
     name: Samplers
     body: Describe samplers.
-    requires: [unitAdc]
+    require_ids: [unitAdc]
   unitFilters:
     name: Filters
     body: Describe the basic types of filters low-pass, high-pass, band-reject, and band-pass.
-    requires: [unitSub]
+    require_ids: [unitSub]
   unitModulation:
     name: Modulation
     body: Describe modulation of sound signals.
-    requires: [unitParams]
+    require_ids: [unitParams]
   unitLfo:
     name: Low Frequency Oscillators
     body: Describe low-frequency oscillators.
-    requires: [unitModulation, unitOsc]
+    require_ids: [unitModulation, unitOsc]
   unitModEffects:
     name: Modulation Effects
     body: Describe modulation effects of tremolo, chorus, flange, phase, vibrato.
-    requires: [unitLfo]
+    require_ids: [unitLfo]
   unitAmpModifiers:
     name: Amplitude Modifiers
     body: Describe the basic characteristics of amplitude modifiers of gain, compressors, de-essers, expanders, multi-pressors.
-    requires: [unitCurves]
+    require_ids: [unitCurves]
   unitEnvelopes:
     name: Envelopes
     body: Describe how amplitude changes over time.
-    requires: [unitAmpModifiers]
+    require_ids: [unitAmpModifiers]
   unitEqualization:
     name: Equalization
     body: Describe equalizers.
-    requires: [unitFilters]
+    require_ids: [unitFilters]
   unitDistortion:
     name: Distortion
     body: Describe distortion and applying the effect to a signal.
-    requires: [unitNoise]
+    require_ids: [unitNoise]
   unitDelay:
     name: Delay
     body: Describe delay effects.
-    requires: [unitComplex]
+    require_ids: [unitComplex]
   unitReverberation:
     name: Reverberation
     body: Describe reverberation effects.
-    requires: [unitDelay]
+    require_ids: [unitDelay]
   unitFFT:
     name: Fast Fourier Transform
     body: Describe the inputs, outputs, and applications of the Fast Fourier Transform.
-    requires: [unitComplex]
+    require_ids: [unitComplex]
   unitSpatialization:
     name: Spatialization
     body: Describe acoustic panning and spatialization.
-    requires: [unitComplex]
+    require_ids: [unitComplex]
   unitSynthesizer:
     name: A Basic Synthesizer
     body: Describe a basic synthesizer configuration.
-    requires: [unitOsc, unitEnvelopes, unitFilters, unitSpatialization]
+    require_ids: [unitOsc, unitEnvelopes, unitFilters, unitSpatialization]
   unitMixers:
     name: Mixers
     body: Describe a mixer.
-    requires: [unitAmpModifiers]
+    require_ids: [unitAmpModifiers]
   unitMonoPoly:
     name: Monophony and Polyphony
     body: Describe polyphonic synthesis.
-    requires: [unitSynthesizer]
+    require_ids: [unitSynthesizer]
   unitMidi:
     name: MIDI, Musical Instrument Digital Interface
     body: Describe the basics of the MIDI protocol.
-    requires: [unitMonoPoly]
+    require_ids: [unitMonoPoly]
   unitOscS:
     name: OSC, Open Sound Control
     body: Describe the basics of the OSC protocol.
-    requires: [unitMidi]
+    require_ids: [unitMidi]
 cards:
   video:
     - unit: unitIntro
