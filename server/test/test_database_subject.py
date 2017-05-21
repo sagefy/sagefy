@@ -1,5 +1,5 @@
 import rethinkdb as r
-
+from database.entity_base import list_by_entity_ids
 import pytest
 
 xfail = pytest.mark.xfail
@@ -200,7 +200,7 @@ def test_list_by_entity_ids(db_conn, subjects_table):
         'modified': r.now(),
         'status': 'accepted',
     }]).run(db_conn)
-    subjects = Subject.list_by_entity_ids(db_conn, ['A1', 'C3'])
+    subjects = list_by_entity_ids('subjects', db_conn, ['A1', 'C3'])
     assert subjects[0]['body'] in ('Apple', 'Coconut')
     assert subjects[0]['body'] in ('Apple', 'Coconut')
 

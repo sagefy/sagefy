@@ -4,6 +4,7 @@ from modules.util import uniqid
 import rethinkdb as r
 
 
+# TODO-1 delete this file
 # TODO-2 remove temporary auto approvers
 reviewer_a_id = 'uVpp1Zovc4S3jihP8X29tXGf'
 reviewer_b_id = 'ikFGjpOHa3YQlpuCNkHE0Bzp'

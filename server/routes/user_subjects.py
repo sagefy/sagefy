@@ -5,6 +5,7 @@ from database.user import set_learning_context
 from database.user_subjects import insert_user_subjects, get_user_subjects, \
     append_user_subjects, remove_user_subjects, \
     list_user_subjects_entity
+from database.entity_base import get_latest_accepted
 
 
 @get('/s/users/{user_id}/subjects')

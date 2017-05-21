@@ -6,6 +6,7 @@ from modules.sequencer.traversal import traverse, \
     match_unit_dependents, order_units_by_need, judge
 import rethinkdb as r
 from database.user import get_user
+from database.entity_base import list_by_entity_ids
 
 
 def add_test_subject(db_conn,
@@ -156,7 +157,7 @@ def test_match_unit_dependents(db_conn, units_table):
     """
 
     add_test_subject(db_conn, units_table=units_table)
-    units = Unit.list_by_entity_ids(db_conn, [
+    units = list_by_entity_ids('units', db_conn, [
         'add', 'subtract', 'multiply', 'divide',
     ])
     deps = match_unit_dependents(units)
@@ -172,7 +173,7 @@ def test_order(db_conn, units_table):
     """
 
     add_test_subject(db_conn, units_table=units_table)
-    units = Unit.list_by_entity_ids(db_conn, [
+    units = list_by_entity_ids('units', db_conn, [
         'add', 'subtract', 'multiply', 'divide',
     ])
     units = order_units_by_need(units)

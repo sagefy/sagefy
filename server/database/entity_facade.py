@@ -2,6 +2,7 @@ from modules.memoize_redis import memoize_redis
 from modules.util import omit
 from database.entity_base import list_by_entity_ids
 import rethinkdb as r
+from database.entity_base import start_accepted_query
 
 
 def instance_entities(data):
@@ -32,7 +33,7 @@ def instance_entities(data):
     return entities
 
 
-def list_subjects_by_unit_id(cls, db_conn, unit_id):
+def list_subjects_by_unit_id(db_conn, unit_id):
     """
     Get a list of subjects which contain the given member ID. Recursive.
 
@@ -43,10 +44,10 @@ def list_subjects_by_unit_id(cls, db_conn, unit_id):
         # *** First, find the list of subjects
         #     directly containing the member ID. ***
 
-        query = (cls.start_accepted_query()
-                    .filter(r.row['members'].contains(
-                        lambda member: member['id'] == unit_id
-                    )))
+        query = (start_accepted_query('subjects')
+                 .filter(r.row['members'].contains(
+                     lambda member: member['id'] == unit_id
+                 )))
         subjects = query.run(db_conn)
 
         # *** Second, find all the subjects containing
@@ -60,11 +61,11 @@ def list_subjects_by_unit_id(cls, db_conn, unit_id):
                 for subject in found_subjects
             }
             all_subjects += found_subjects
-            query = (cls.start_accepted_query()
-                        .filter(r.row['members'].contains(
-                            lambda member:
-                                r.expr(subject_ids).contains(member['id'])
-                        )))
+            query = (start_accepted_query('subjects')
+                     .filter(r.row['members'].contains(
+                         lambda member:
+                             r.expr(subject_ids).contains(member['id'])
+                     )))
             found_subjects = query.run(db_conn)
 
         return all_subjects

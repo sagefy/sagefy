@@ -1,6 +1,5 @@
-# MMM
-
 from database.post import list_posts
+from database.entity_base import list_by_version_ids
 
 
 def get_my_recent_proposals(current_user, db_conn):
@@ -36,7 +35,7 @@ def get_my_recently_created_units(current_user, db_conn):
 
     proposals = get_my_recent_proposals(current_user, db_conn)
     unit_version_ids = get_proposal_entity_versions(proposals, 'unit')
-    units = Unit.list_by_version_ids(db_conn, unit_version_ids)
+    units = list_by_version_ids('units', db_conn, unit_version_ids)
     return units
 
 
@@ -47,5 +46,5 @@ def get_my_recently_created_subjects(current_user, db_conn):
 
     proposals = get_my_recent_proposals(current_user, db_conn)
     subject_version_ids = get_proposal_entity_versions(proposals, 'subject')
-    subjects = Subject.list_by_version_ids(db_conn, subject_version_ids)
+    subjects = list_by_version_ids('subjects', db_conn, subject_version_ids)
     return subjects

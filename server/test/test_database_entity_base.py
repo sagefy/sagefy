@@ -1,4 +1,6 @@
 import pytest
+from database.entity_base import get_versions, get_latest_accepted, \
+    list_requires, list_required_by
 
 xfail = pytest.mark.xfail
 
@@ -104,7 +106,8 @@ def test_get_versions(db_conn, cards_table):
         'status': 'accepted',
     }]).run(db_conn)
 
-    card_versions = Card.get_versions(db_conn, 'A')
+    card_versions = get_versions('cards', db_conn, 'A')
+
     assert len(card_versions) == 2
 
 
@@ -145,7 +148,7 @@ def test_list_requires(db_conn, cards_table):
         'requires': ['abcd'],
     }]).run(db_conn)
 
-    cards = Card.list_requires(db_conn, 'abcd')
+    cards = list_requires('cards', db_conn, 'abcd')
 
     assert len(cards) == 1
     assert cards[0]['entity_id'] == 'zxyz'
@@ -188,7 +191,7 @@ def test_list_required_by(db_conn, cards_table):
         'requires': ['abcd'],
     }]).run(db_conn)
 
-    cards = Card.list_required_by(db_conn, 'abcd')
+    cards = list_required_by('cards', db_conn, 'abcd')
 
     assert len(cards) == 1
     assert cards[0]['entity_id'] == 'qwer'

@@ -10,6 +10,8 @@ from database.response import deliver_response
 from database.card_parameters import get_card_parameters, \
     get_card_parameters_values
 # from modules.sequencer.params import max_learned
+from database.entity_base import get_latest_accepted, get_versions, \
+    list_requires, list_required_by
 
 
 @get('/s/cards/{card_id}')
@@ -31,9 +33,9 @@ def get_card_route(request, card_id):
 
     # TODO-2 SPLITUP create new endpoints for these instead
     topics = list_topics_by_entity_id(card_id, {}, db_conn)
-    versions = Card.get_versions(db_conn, entity_id=card_id)
-    requires = Card.list_requires(db_conn, entity_id=card_id)
-    required_by = Card.list_required_by(db_conn, entity_id=card_id)
+    versions = get_versions('cards', db_conn, entity_id=card_id)
+    requires = list_requires('cards', db_conn, entity_id=card_id)
+    required_by = list_required_by('cards', db_conn, entity_id=card_id)
     params = get_card_parameters({'entity_id': card_id}, db_conn)
 
     return 200, {
@@ -95,7 +97,8 @@ def get_card_versions_route(request, card_id):
     """
 
     db_conn = request['db_conn']
-    versions = Card.get_versions(
+    versions = get_versions(
+        'cards',
         db_conn,
         entity_id=card_id,
         **request['params']

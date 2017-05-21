@@ -6,8 +6,8 @@ from modules.sequencer.card_chooser import choose_card
 from database.user import get_learning_context, set_learning_context
 from database.topic import list_topics_by_entity_id, deliver_topic
 from database.my_recently_created import get_my_recently_created_subjects
-
-
+from database.entity_base import list_by_entity_ids, get_latest_accepted, \
+    get_versions
 from config import config
 
 
@@ -17,7 +17,7 @@ def get_recommended_subjects(request):
     entity_ids = ('JAFGYFWhILcsiByyH2O9frcU',)
     if config['debug']:
         entity_ids = ('subjectAll',)
-    subjects = Subject.list_by_entity_ids(db_conn, entity_ids)
+    subjects = list_by_entity_ids('subjects', db_conn, entity_ids)
     if not subjects:
         return abort(404)
     return 200, {
@@ -38,7 +38,7 @@ def get_subject_route(request, subject_id):
 
     # TODO-2 SPLITUP create new endpoints for these instead
     topics = list_topics_by_entity_id(subject_id, {}, db_conn)
-    versions = Subject.get_versions(db_conn, entity_id=subject_id)
+    versions = get_versions('subjects', db_conn, entity_id=subject_id)
     units = subject.list_units(db_conn)
 
     return 200, {
@@ -57,8 +57,8 @@ def get_subject_versions_route(request, subject_id):
     """
 
     db_conn = request['db_conn']
-    versions = Subject.get_versions(
-        db_conn, entity_id=subject_id, **request['params'])
+    versions = get_versions(
+        'subjects', db_conn, entity_id=subject_id, **request['params'])
     return 200, {
         'versions': [version.deliver(access='view') for version in versions]
     }

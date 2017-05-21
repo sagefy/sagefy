@@ -31,7 +31,7 @@ def sitemap_route(request):
     kinds = ('card', 'unit', 'subject',)
     for kind in kinds:
         query = start_accepted_query('%ss' % kind)
-        for entity in query.run(db_conn):
+        for entity in query.run(db_conn):  # TODO move this to DB file
             sitemap.add('https://sagefy.org/{kind}s/{id}'.format(
                 id=entity['entity_id'],
                 kind=kind
