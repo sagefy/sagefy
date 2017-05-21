@@ -18,7 +18,8 @@ from database.topic import get_topic, deliver_topic, validate_topic, \
     update_topic, insert_topic
 from database.post import deliver_post, validate_post, insert_post, \
     list_posts, get_post, update_post
-from database.entity_base import get_latest_accepted, get_version
+from database.entity_base import get_latest_accepted
+from database.entity_facade import deliver_entity_by_kind
 
 
 def prefix_error_names(prefix, errors):
@@ -44,45 +45,45 @@ def get_entity_status(current_status, votes):
     return True, 'accepted'
 
 
-def update_entity_statuses(db_conn, proposal):
-    """
-    Update the entity's status based on the vote power received.
-    Move to accepted or blocked if qualified.
-    TODO-2 Update this to work as described in:
-        https://github.com/heiskr/sagefy/wiki/Planning%3A-Contributor-Ratings
-        This requires knowing two things:
-        - Number of learners the entity impacts
-        - The vote and proposal history of the contributor
-    """
-
-    # Get the entity version
-    for p_entity_version in proposal['entity_versions']:
-        tablename = '%ss' % p_entity_version['kind']
-        version_id = p_entity_version['id']
-        entity_version = get_version(db_conn, tablename, version_id)
-        votes = list_posts({
-            'kind': 'vote',
-            'replies_to_id': proposal['id'],
-        }, db_conn)
-        changed, status = get_entity_status(entity_version['status'], votes)
-
-        if changed:
-            entity_version['status'] = status
-            update_x(entity_version, db_conn)
-            send_notices(
-                db_conn,
-                entity_id=p_entity_version['id'],
-                entity_kind=p_entity_version['kind'],
-                notice_kind=('block_proposal'
-                             if status == 'blocked' else
-                             'accept_proposal'),
-                notice_data={
-                    'user_name': '???',  # TODO-2
-                    'proposal_name': proposal['name'],
-                    'entity_kind': p_entity_version['kind'],
-                    'entity_name': entity_version['name'],
-                }
-            )
+# def update_entity_statuses(db_conn, proposal):
+#     """
+#     Update the entity's status based on the vote power received.
+#     Move to accepted or blocked if qualified.
+#     TODO-2 Update this to work as described in:
+#         https://github.com/heiskr/sagefy/wiki/Planning%3A-Contributor-Ratings
+#         This requires knowing two things:
+#         - Number of learners the entity impacts
+#         - The vote and proposal history of the contributor
+#     """
+#
+#     # Get the entity version
+#     for p_entity_version in proposal['entity_versions']:
+#         tablename = '%ss' % p_entity_version['kind']
+#         version_id = p_entity_version['id']
+#         entity_version = get_version(db_conn, tablename, version_id)
+#         votes = list_posts({
+#             'kind': 'vote',
+#             'replies_to_id': proposal['id'],
+#         }, db_conn)
+#         changed, status = get_entity_status(entity_version['status'], votes)
+#
+#         if changed:
+#             entity_version['status'] = status
+#             update_x(entity_version, db_conn)
+#             send_notices(
+#                 db_conn,
+#                 entity_id=p_entity_version['id'],
+#                 entity_kind=p_entity_version['kind'],
+#                 notice_kind=('block_proposal'
+#                              if status == 'blocked' else
+#                              'accept_proposal'),
+#                 notice_data={
+#                     'user_name': '???',  # TODO-2
+#                     'proposal_name': proposal['name'],
+#                     'entity_kind': p_entity_version['kind'],
+#                     'entity_name': entity_version['name'],
+#                 }
+#             )
 
 
 @post('/s/topics')
@@ -124,27 +125,27 @@ def create_topic_route(request):
     post_data = omit(post_data, ('id', 'created', 'modified',))
     post_data['user_id'] = current_user['id']
     post_data['topic_id'] = topic_data['id']
-    post_kind = post_data['kind']
-    if post_kind == 'proposal':
-        entities = instance_entities(request['params'])
-        post_data['entity_versions'] = []
-        for entity in entities:
-            entity_kind = get_kind(entity)
-            post_data['entity_versions'].append({
-                'id': entity['id'],
-                'kind': entity_kind,
-            })
+    # post_kind = post_data['kind']
+    # if post_kind == 'proposal':
+    #     entities = instance_entities(request['params'])
+    #     post_data['entity_versions'] = []
+    #     for entity in entities:
+    #         entity_kind = get_kind(entity)
+    #         post_data['entity_versions'].append({
+    #             'id': entity['id'],
+    #             'kind': entity_kind,
+    #         })
 
     # ## STEP 2) Validate post and topic (and entity) instances
     errors = prefix_error_names('topic.', topic_errors)
     _, post_errors = validate_post(post_data, db_conn)
     errors = errors + prefix_error_names('post.', post_errors)
-    if post_kind == 'proposal':
-        for entity in entities:
-            errors = (errors +
-                      prefix_error_names(
-                          'entity.',
-                          validate_x(entity, db_conn)))
+    # if post_kind == 'proposal':
+    #     for entity in entities:
+    #         errors = (errors +
+    #                   prefix_error_names(
+    #                       'entity.',
+    #                       validate_x(entity, db_conn)))
     if len(errors):
         return 400, {
             'errors': errors,
@@ -155,9 +156,9 @@ def create_topic_route(request):
     topic_data, topic_errors = insert_topic(topic_data, db_conn)
     post_data['topic_id'] = topic_data['id']
     post_, errors = insert_post(post_data, db_conn)
-    if post_kind == 'proposal':
-        for entity in entities:
-            save_x(entity, db_conn)
+    # if post_kind == 'proposal':
+    #     for entity in entities:
+    #         save_x(entity, db_conn)
 
     # ## STEP 4) Add author as a follower
     insert_follow({
@@ -183,19 +184,19 @@ def create_topic_route(request):
         }
     )
 
-    if post_kind == 'proposal':
-        send_notices(
-            db_conn,
-            entity_id=topic_data['entity']['id'],
-            entity_kind=topic_data['entity']['kind'],
-            notice_kind='create_proposal',
-            notice_data={
-                'user_name': current_user['name'],
-                'topic_name': topic_data['name'],
-                'entity_kind': topic_data['entity']['kind'],
-                'entity_name': topic_data['entity']['id'],
-            }
-        )
+    # if post_kind == 'proposal':
+    #     send_notices(
+    #         db_conn,
+    #         entity_id=topic_data['entity']['id'],
+    #         entity_kind=topic_data['entity']['kind'],
+    #         notice_kind='create_proposal',
+    #         notice_data={
+    #             'user_name': current_user['name'],
+    #             'topic_name': topic_data['name'],
+    #             'entity_kind': topic_data['entity']['kind'],
+    #             'entity_name': topic_data['entity']['id'],
+    #         }
+    #     )
 
     # ## STEP 5) Return response
     return 200, {
@@ -280,23 +281,23 @@ def get_posts_route(request, topic_id):
     # ...then pull up the previous version
     # ...make a diff between the previous and the proposal entity version
     # diffs = {}
-    entity_versions = {}
-    for post_ in posts:
-        if post_['kind'] == 'proposal':
-            entity_versions[post_['id']] = [get_version(
-                db_conn,
-                '%ss' % p_entity_version['kind'],
-                p_entity_version['id']
-            ) for p_entity_version in post_['entity_versions']]
-            # TODO-2 re-enable diffs
-            # previous_version = get_version(
-            #     db_conn,
-            #     '%ss' % p_entity_version['kind'],
-            #     entity_version['previous_id']
-            # )
-            # if previous_version:
-            #     diffs[post_['id']] = object_diff(deliver previous_version,
-            #                                      deliver entity_version)
+    # entity_versions = {}
+    # for post_ in posts:
+    #     if post_['kind'] == 'proposal':
+    #         entity_versions[post_['id']] = [get_version(
+    #             db_conn,
+    #             '%ss' % p_entity_version['kind'],
+    #             p_entity_version['id']
+    #         ) for p_entity_version in post_['entity_versions']]
+    #         # TODO-2 re-enable diffs
+    #         # previous_version = get_version(
+    #         #     db_conn,
+    #         #     '%ss' % p_entity_version['kind'],
+    #         #     entity_version['previous_id']
+    #         # )
+    #         # if previous_version:
+    #         #     diffs[post_['id']] = object_diff(deliver previous_version,
+    #         #                                      deliver entity_version)
 
     # TODO-2 SPLITUP create new endpoint for this instead
     users = {}
@@ -314,15 +315,15 @@ def get_posts_route(request, topic_id):
     output = {
         'topic': deliver_topic(topic),
         'posts': [deliver_post(p) for p in posts],
-        'entity_versions': {
-            p: [deliver_x(ev, 'view') for ev in evs]
-            for p, evs in entity_versions.items()
-        },
+        # 'entity_versions': {
+        #     p: [deliver_x(ev, 'view') for ev in evs]
+        #     for p, evs in entity_versions.items()
+        # },
         # 'diffs': diffs,  TODO-2 this causes a circular dependency
         'users': users,
     }
     if entity:
-        output[entity_kind] = deliver_x(entity)
+        output[entity_kind] = deliver_entity_by_kind(entity_kind, entity)
     return 200, output
 
 
@@ -363,26 +364,26 @@ def create_post_route(request, topic_id):
     post_data = omit(post_data, ('id', 'created', 'modified',))
     post_data['user_id'] = current_user['id']
     post_data['topic_id'] = topic_id
-    post_kind = post_data['kind']
-    if post_kind == 'proposal':
-        entities = instance_entities(request['params'])
-        post_data['entity_versions'] = []
-        for entity in entities:
-            entity_kind = get_kind(entity)
-            post_data['entity_versions'].push({
-                'id': entity['id'],
-                'kind': entity_kind,
-            })
+    # post_kind = post_data['kind']
+    # if post_kind == 'proposal':
+    #     entities = instance_entities(request['params'])
+    #     post_data['entity_versions'] = []
+    #     for entity in entities:
+    #         entity_kind = get_kind(entity)
+    #         post_data['entity_versions'].push({
+    #             'id': entity['id'],
+    #             'kind': entity_kind,
+    #         })
 
     # ## STEP 2) Validate post (and entity) instances
     _, post_errors = validate_post(post_data, db_conn)
     errors = prefix_error_names('post.', post_errors)
-    if post_kind == 'proposal':
-        for entity in entities:
-            errors = (errors +
-                      prefix_error_names('entity.', validate_x(
-                          entity,
-                          db_conn)))
+    # if post_kind == 'proposal':
+    #     for entity in entities:
+    #         errors = (errors +
+    #                   prefix_error_names('entity.', validate_x(
+    #                       entity,
+    #                       db_conn)))
 
     if len(errors):
         return 400, {
@@ -392,9 +393,9 @@ def create_post_route(request, topic_id):
 
     # ## STEP 3) Save post (and entity)
     post_, post_errors = insert_post(post_data, db_conn)
-    if post_kind == 'proposal':
-        for entity in entities:
-            save_x(entiy, db_conn)
+    # if post_kind == 'proposal':
+    #     for entity in entities:
+    #         save_x(entity, db_conn)
 
     # ## STEP 4) Add author as a follower
     insert_follow({
@@ -407,26 +408,26 @@ def create_post_route(request, topic_id):
     # TODO-2 also follow the entity
 
     # ## STEP 5) Make updates based on proposal / vote status
-    if post_kind == 'proposal':
-        update_entity_statuses(db_conn, post_)
-    if post_kind == 'vote':
-        proposal = get_post({'id': post_data['replies_to_id']}, db_conn)
-        update_entity_statuses(db_conn, proposal)
+    # if post_kind == 'proposal':
+    #     update_entity_statuses(db_conn, post_)
+    # if post_kind == 'vote':
+    #     proposal = get_post({'id': post_data['replies_to_id']}, db_conn)
+    #     update_entity_statuses(db_conn, proposal)
 
     # ## STEP 6) Send notices
-    if post_kind == 'proposal':
-        send_notices(
-            db_conn,
-            entity_id=topic['entity']['id'],
-            entity_kind=topic['entity']['kind'],
-            notice_kind='create_proposal',
-            notice_data={
-                'user_name': current_user['name'],
-                'topic_name': topic['name'],
-                'entity_kind': topic['entity']['kind'],
-                'entity_name': topic['entity']['id'],
-            }
-        )
+    # if post_kind == 'proposal':
+    #     send_notices(
+    #         db_conn,
+    #         entity_id=topic['entity']['id'],
+    #         entity_kind=topic['entity']['kind'],
+    #         notice_kind='create_proposal',
+    #         notice_data={
+    #             'user_name': current_user['name'],
+    #             'topic_name': topic['name'],
+    #             'entity_kind': topic['entity']['kind'],
+    #             'entity_name': topic['entity']['id'],
+    #         }
+    #     )
 
     # ## STEP 7) Return response
     return 200, {'post': deliver_post(post_data)}
@@ -485,11 +486,11 @@ def update_post_route(request, topic_id, post_id):
         }
 
     # ## STEP 4) Make updates based on proposal / vote status ## #
-    if post_kind == 'proposal':
-        update_entity_statuses(db_conn, post_)
-    if post_kind == 'vote':
-        proposal = get_post({'id': post_['replies_to_id']}, db_conn)
-        update_entity_statuses(db_conn, proposal)
+    # if post_kind == 'proposal':
+    #     update_entity_statuses(db_conn, post_)
+    # if post_kind == 'vote':
+    #     proposal = get_post({'id': post_['replies_to_id']}, db_conn)
+    #     update_entity_statuses(db_conn, proposal)
 
     # ## STEP 5) Return response ## #
     return 200, {'post': deliver_post(post_)}
