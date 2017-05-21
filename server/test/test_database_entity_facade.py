@@ -1,6 +1,6 @@
 import rethinkdb as r
-
 import pytest
+from database.entity_base import get_latest_accepted
 
 xfail = pytest.mark.xfail
 
@@ -32,14 +32,4 @@ def test_get_latest_accepted(db_conn, cards_table):
     }]).run(db_conn)
 
     e = get_latest_accepted('cards', db_conn, 'A')
-
-    assert isinstance(e, Card)
-
-
-def test_get_kind():
-    """
-    Expect to return kind as string given data.
-    """
-
-    kind = entity.get_kind(Card({}))
-    assert kind == 'card'
+    assert e['id'] == 'B2'

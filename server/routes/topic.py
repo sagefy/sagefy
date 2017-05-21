@@ -1,4 +1,3 @@
-# MMM
 """
 Routes for the discussion platform.
 Includes topics, posts, proposals, and votes.
@@ -70,7 +69,7 @@ def update_entity_statuses(db_conn, proposal):
 
         if changed:
             entity_version['status'] = status
-            entity_version.save(db_conn)
+            update_x(entity_version, db_conn)
             send_notices(
                 db_conn,
                 entity_id=p_entity_version['id'],
@@ -159,7 +158,7 @@ def create_topic_route(request):
     post_, errors = insert_post(post_data, db_conn)
     if post_kind == 'proposal':
         for entity in entities:
-            entity.save(db_conn)
+            save_x(entity, db_conn)
 
     # ## STEP 4) Add author as a follower
     insert_follow({
@@ -396,7 +395,7 @@ def create_post_route(request, topic_id):
     post_, post_errors = insert_post(post_data, db_conn)
     if post_kind == 'proposal':
         for entity in entities:
-            entity.save(db_conn)
+            save_x(entiy, db_conn)
 
     # ## STEP 4) Add author as a follower
     insert_follow({

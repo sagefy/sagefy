@@ -1,4 +1,3 @@
-# MMM
 from framework.routes import get, post, delete, abort
 from framework.session import get_current_user
 from database.follow import get_follow, list_follows, insert_follow, \

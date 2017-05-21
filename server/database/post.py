@@ -1,5 +1,3 @@
-# MMM
-
 from framework.elasticsearch import es
 from modules.util import json_prep, omit, extend
 from schemas.post import schema as post_schema
