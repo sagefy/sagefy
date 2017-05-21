@@ -30,7 +30,7 @@ def get_unit_route(request, unit_id):
 
     return 200, {
         'unit': deliver_unit(unit),
-        # 'unit_parameters': unit.fetch_parameters(),
+        # TODO-3 unit parameters
         'topics': [deliver_topic(topic) for topic in topics],
         'versions': [deliver_unit(version) for version in versions],
         'requires': [deliver_unit(require) for require in requires],

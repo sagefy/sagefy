@@ -8,7 +8,8 @@ from database.my_recently_created import get_my_recently_created_subjects
 from database.entity_base import list_by_entity_ids, get_latest_accepted, \
     get_versions
 from config import config
-from database.entity_facade import list_subjects_by_unit_id
+from database.entity_facade import list_subjects_by_unit_id, \
+    list_units_in_subject
 from database.subject import deliver_subject
 from database.unit import deliver_unit
 
@@ -41,11 +42,11 @@ def get_subject_route(request, subject_id):
     # TODO-2 SPLITUP create new endpoints for these instead
     topics = list_topics_by_entity_id(subject_id, {}, db_conn)
     versions = get_versions('subjects', db_conn, entity_id=subject_id)
-    units = subject.list_units(db_conn)
+    units = list_units_in_subject(subject, db_conn)
 
     return 200, {
         'subject': deliver_subject(subject),
-        # 'subject_parameters': subject.fetch_parameters(),
+        # TODO-3 subject parameters
         'topics': [deliver_topic(topic) for topic in topics],
         'versions': [deliver_subject(version) for version in versions],
         'units': [deliver_unit(unit) for unit in units],
@@ -135,7 +136,7 @@ def get_subject_tree_route(request, subject_id):
         }
         set_learning_context(
             current_user,
-            next=next_, unit=unit.data, card=card.data)
+            next=next_, unit=unit, card=card)
 
     # When in learn or review mode, lead me to choose a unit.
     elif buckets['review'] or buckets['learn']:
@@ -251,8 +252,8 @@ def choose_unit_route(request, subject_id, unit_id):
 
     set_learning_context(
         current_user,
-        unit=unit.data,
-        card=card.data if card else None,
+        unit=unit,
+        card=card if card else None,
         next=next_
     )
 

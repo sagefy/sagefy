@@ -1,6 +1,7 @@
 import rethinkdb as r
 from database.entity_base import list_by_entity_ids, get_latest_accepted
-from database.entity_facade import list_subjects_by_unit_id
+from database.entity_facade import list_subjects_by_unit_id, \
+    list_units_in_subject
 import pytest
 from database.subject import insert_subject
 
@@ -365,6 +366,6 @@ def test_list_units(db_conn, units_table, subjects_table):
     }]).run(db_conn)
 
     subject = get_latest_accepted('subjects', db_conn, entity_id='S')
-    cards = subject.list_units(db_conn)
+    cards = list_units_in_subject(subject, db_conn)
     card_ids = set(card['entity_id'] for card in cards)
     assert card_ids == {'B', 'V', 'Q', 'N'}

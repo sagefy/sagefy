@@ -119,7 +119,7 @@ def select_subject_route(request, user_id, subject_id):
         'path': '/s/subjects/{subject_id}/tree'
                 .format(subject_id=subject_id),
     }
-    set_learning_context(current_user, subject=subject.data, next=next_)
+    set_learning_context(current_user, subject=subject, next=next_)
 
     return 200, {'next': next_}
 

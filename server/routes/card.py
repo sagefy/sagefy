@@ -82,7 +82,7 @@ def learn_card_route(request, card_id):
         'path': '/s/cards/{card_id}/responses'
                 .format(card_id=card['entity_id'])
     }
-    set_learning_context(current_user, card=card.data, next=next_)
+    set_learning_context(current_user, card=card, next=next_)
 
     return 200, {
         'card': deliver_card(card, access='learn'),
@@ -172,7 +172,7 @@ def respond_to_card_route(request, card_id):
             }
             set_learning_context(
                 current_user,
-                card=next_card.data, unit=unit.data, next=next_)
+                card=next_card.data, unit=unit, next=next_)
 
         # If there are units to be learned or reviewed...
         elif buckets['learn'] or buckets['review']:
@@ -203,7 +203,7 @@ def respond_to_card_route(request, card_id):
                 'path': '/s/cards/{card_id}/learn'
                         .format(card_id=next_card['entity_id']),
             }
-            set_learning_context(current_user, card=next_card.data, next=next_)
+            set_learning_context(current_user, card=next_card, next=next_)
         else:
             next_ = {}
             set_learning_context(current_user, next=next_)
