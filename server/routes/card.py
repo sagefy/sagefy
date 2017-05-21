@@ -1,10 +1,6 @@
 from framework.session import get_current_user
 from framework.routes import get, post, abort
-from models.card import Card
-from models.unit import Unit
-from models.subject import Subject
 from database.topic import list_topics_by_entity_id, deliver_topic
-from modules.entity import get_card_by_kind
 from modules.sequencer.index import update as seq_update
 from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
@@ -12,6 +8,11 @@ from database.user import get_learning_context, set_learning_context
 from database.response import deliver_response
 from database.card_parameters import get_card_parameters, \
     get_card_parameters_values
+from database.entity_base import get_latest_accepted, get_versions, \
+    list_requires, list_required_by
+from database.card import deliver_card
+from database.unit import deliver_unit
+
 # from modules.sequencer.params import max_learned
 
 
@@ -24,30 +25,30 @@ def get_card_route(request, card_id):
 
     db_conn = request['db_conn']
 
-    card = get_card_by_kind(db_conn, card_id)
+    card = get_latest_accepted('cards', db_conn, card_id)
     if not card:
         return abort(404)
 
-    unit = Unit.get_latest_accepted(db_conn, entity_id=card['unit_id'])
+    unit = get_latest_accepted('units', db_conn, entity_id=card['unit_id'])
     if not unit:
         return abort(404)
 
     # TODO-2 SPLITUP create new endpoints for these instead
     topics = list_topics_by_entity_id(card_id, {}, db_conn)
-    versions = Card.get_versions(db_conn, entity_id=card_id)
-    requires = Card.list_requires(db_conn, entity_id=card_id)
-    required_by = Card.list_required_by(db_conn, entity_id=card_id)
+    versions = get_versions('cards', db_conn, entity_id=card_id)
+    requires = list_requires('cards', db_conn, entity_id=card_id)
+    required_by = list_required_by('cards', db_conn, entity_id=card_id)
     params = get_card_parameters({'entity_id': card_id}, db_conn)
 
     return 200, {
-        'card': card.deliver(access='view'),
+        'card': deliver_card(card, access='view'),
         'card_parameters': (get_card_parameters_values(params)
                             if params else None),
-        'unit': unit.deliver(),
+        'unit': deliver_unit(unit),
         'topics': [deliver_topic(topic) for topic in topics],
-        'versions': [version.deliver() for version in versions],
-        'requires': [require.deliver() for require in requires],
-        'required_by': [require.deliver() for require in required_by],
+        'versions': [deliver_card(version) for version in versions],
+        'requires': [deliver_card(require) for require in requires],
+        'required_by': [deliver_card(require) for require in required_by],
     }
 
 
@@ -67,7 +68,7 @@ def learn_card_route(request, card_id):
     if not current_user:
         return abort(401)
 
-    card = get_card_by_kind(db_conn, card_id)
+    card = get_latest_accepted('cards', db_conn, card_id)
     if not card:
         return abort(404)
 
@@ -81,10 +82,10 @@ def learn_card_route(request, card_id):
         'path': '/s/cards/{card_id}/responses'
                 .format(card_id=card['entity_id'])
     }
-    set_learning_context(current_user, card=card.data, next=next_)
+    set_learning_context(current_user, card=card, next=next_)
 
     return 200, {
-        'card': card.deliver(access='learn'),
+        'card': deliver_card(card, access='learn'),
         'subject': context.get('subject'),
         'unit': context.get('unit'),
         'next': next_,
@@ -98,13 +99,17 @@ def get_card_versions_route(request, card_id):
     """
 
     db_conn = request['db_conn']
-    versions = Card.get_versions(
+    versions = get_versions(
+        'cards',
         db_conn,
         entity_id=card_id,
         **request['params']
     )
     return 200, {
-        'versions': [version.deliver(access='view') for version in versions]
+        'versions': [
+            deliver_card(version, access='view')
+            for version in versions
+        ]
     }
 
 
@@ -128,7 +133,7 @@ def respond_to_card_route(request, card_id):
     if not current_user:
         return abort(401)
 
-    card = get_card_by_kind(db_conn, card_id)
+    card = get_latest_accepted('cards', db_conn, card_id)
     if not card:
         return abort(404)
 
@@ -147,8 +152,8 @@ def respond_to_card_route(request, card_id):
             'ref': 'wtyOJPoy4bh76OIbYp8mS3LP',
         }
 
-    subject = Subject(context.get('subject'))
-    unit = Unit(context.get('unit'))
+    subject = context.get('subject')
+    unit = context.get('unit')
 
     status = judge(db_conn, unit, current_user)
 
@@ -167,7 +172,7 @@ def respond_to_card_route(request, card_id):
             }
             set_learning_context(
                 current_user,
-                card=next_card.data, unit=unit.data, next=next_)
+                card=next_card.data, unit=unit, next=next_)
 
         # If there are units to be learned or reviewed...
         elif buckets['learn'] or buckets['review']:
@@ -198,7 +203,7 @@ def respond_to_card_route(request, card_id):
                 'path': '/s/cards/{card_id}/learn'
                         .format(card_id=next_card['entity_id']),
             }
-            set_learning_context(current_user, card=next_card.data, next=next_)
+            set_learning_context(current_user, card=next_card, next=next_)
         else:
             next_ = {}
             set_learning_context(current_user, next=next_)

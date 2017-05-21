@@ -223,7 +223,7 @@ def test_respond_card(db_conn, units_table, cards_table,
     Expect to respond to a card. (200)
     """
 
-    cards_table.insert({
+    cards_table.insert([{
         'entity_id': 'tyui4567',
         'unit_id': 'vbnm7890',
         'created': r.now(),
@@ -243,7 +243,27 @@ def test_respond_card(db_conn, units_table, cards_table,
         }],
         'order': 'set',
         'max_options_to_show': 4,
-    }).run(db_conn)
+    }, {
+        'entity_id': 'abcd1234',
+        'unit_id': 'vbnm7890',
+        'created': r.now(),
+        'modified': r.now(),
+        'status': 'accepted',
+        'kind': 'choice',
+        'name': 'Meaning of Love',
+        'body': 'What is the meaning of love?',
+        'options': [{
+            'value': 'Flava Flav',
+            'correct': True,
+            'feedback': 'Yay!',
+        }, {
+            'value': 'life',
+            'correct': False,
+            'feedback': 'Boo!',
+        }],
+        'order': 'set',
+        'max_options_to_show': 4,
+    }]).run(db_conn)
 
     units_table.insert({
         'entity_id': 'vbnm7890',
@@ -253,6 +273,7 @@ def test_respond_card(db_conn, units_table, cards_table,
     redis.set('learning_context_abcd1234', json.dumps({
         'subject': {'entity_id': 'jkl;1234'},
         'card': {'entity_id': 'tyui4567'},
+        'unit': {'entity_id': 'vbnm7890'},
     }))
 
     request = {

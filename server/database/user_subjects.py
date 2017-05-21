@@ -1,7 +1,7 @@
-from models.subject import Subject
 from schemas.user_subjects import schema as user_subjects_schema
 from database.util import insert_document, update_document, get_document
 from copy import deepcopy
+from database.entity_base import list_by_entity_ids
 
 """
 Record the list of subjects the learner has added.
@@ -62,4 +62,4 @@ def list_user_subjects_entity(user_id, params, db_conn):
     user_subject = get_user_subjects(user_id, db_conn)
     # TODO-3 limit = params.get('limit') or 10
     # TODO-3 skip = params.get('skip') or 0
-    return Subject.list_by_entity_ids(db_conn, user_subject['subject_ids'])
+    return list_by_entity_ids('subjects', db_conn, user_subject['subject_ids'])

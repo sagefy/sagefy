@@ -1,7 +1,9 @@
-from models.subject import Subject
 import rethinkdb as r
-
+from database.entity_base import list_by_entity_ids, get_latest_accepted
+from database.entity_facade import list_subjects_by_unit_id, \
+    list_units_in_subject
 import pytest
+from database.subject import insert_subject
 
 xfail = pytest.mark.xfail
 
@@ -23,7 +25,7 @@ def test_entity(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -41,7 +43,7 @@ def test_previous(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -59,7 +61,7 @@ def test_language(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -77,7 +79,7 @@ def test_name(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'body': 'A beginning course focused on probability.',
         'members': [{
             'id': 'A',
@@ -86,7 +88,7 @@ def test_name(db_conn, subjects_table, units_table):
     })
     assert len(errors) == 1
     subject['name'] = 'Statistics'
-    subject, errors = subject.save(db_conn)
+    subject, errors = insert_subject(db_conn, subject)
     assert len(errors) == 0
 
 
@@ -96,7 +98,7 @@ def test_body(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'members': [{
             'id': 'A',
@@ -105,7 +107,7 @@ def test_body(db_conn, subjects_table, units_table):
     })
     assert len(errors) == 1
     subject['body'] = 'A beginning course focused on probability.'
-    subject, errors = subject.save(db_conn)
+    subject, errors = insert_subject(db_conn, subject)
     assert len(errors) == 0
 
 
@@ -115,7 +117,7 @@ def test_status(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -126,7 +128,7 @@ def test_status(db_conn, subjects_table, units_table):
     assert len(errors) == 0
     assert subject['status'] == 'pending'
     subject['status'] = 'accepted'
-    subject, errors = subject.save(db_conn)
+    subject, errors = insert_subject(db_conn, subject)
     assert len(errors) == 0
 
 
@@ -136,7 +138,7 @@ def test_tags(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -154,7 +156,7 @@ def test_members(db_conn, subjects_table, units_table):
     """
 
     create_unit_a(db_conn, units_table)
-    subject, errors = Subject.insert(db_conn, {
+    subject, errors = insert_subject(db_conn, {
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
     })
@@ -163,7 +165,7 @@ def test_members(db_conn, subjects_table, units_table):
         'id': 'A',
         'kind': 'unit',
     }]
-    subject, errors = subject.save(db_conn)
+    subject, errors = insert_subject(db_conn, subject)
     assert len(errors) == 0
 
 
@@ -201,7 +203,7 @@ def test_list_by_entity_ids(db_conn, subjects_table):
         'modified': r.now(),
         'status': 'accepted',
     }]).run(db_conn)
-    subjects = Subject.list_by_entity_ids(db_conn, ['A1', 'C3'])
+    subjects = list_by_entity_ids('subjects', db_conn, ['A1', 'C3'])
     assert subjects[0]['body'] in ('Apple', 'Coconut')
     assert subjects[0]['body'] in ('Apple', 'Coconut')
 
@@ -287,7 +289,7 @@ def test_list_by_unit_ids(db_conn, units_table, subjects_table):
         'status': 'accepted'
     }]).run(db_conn)
 
-    subjects = Subject.list_by_unit_id(db_conn, 'Z')
+    subjects = list_subjects_by_unit_id(db_conn, 'Z')
     subject_ids = set(subject['entity_id'] for subject in subjects)
     assert subject_ids == {'A', 'B1', 'B2', 'C'}
 
@@ -363,7 +365,7 @@ def test_list_units(db_conn, units_table, subjects_table):
         }]
     }]).run(db_conn)
 
-    subject = Subject.get(db_conn, entity_id='S')
-    cards = subject.list_units(db_conn)
+    subject = get_latest_accepted('subjects', db_conn, entity_id='S')
+    cards = list_units_in_subject(subject, db_conn)
     card_ids = set(card['entity_id'] for card in cards)
     assert card_ids == {'B', 'V', 'Q', 'N'}

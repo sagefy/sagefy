@@ -1,10 +1,11 @@
-from models.subject import Subject
 from framework.routes import get, post, put, delete, abort
 from framework.session import get_current_user
 from database.user import set_learning_context
 from database.user_subjects import insert_user_subjects, get_user_subjects, \
     append_user_subjects, remove_user_subjects, \
     list_user_subjects_entity
+from database.entity_base import get_latest_accepted
+from database.subject import deliver_subject
 
 
 @get('/s/users/{user_id}/subjects')
@@ -39,7 +40,7 @@ def get_user_subjects_route(request, user_id):
         return 200, {'subjects': [], 'next': next_}
     return 200, {
         'subjects': [
-            subject.deliver()
+            deliver_subject(subject)
             for subject in list_user_subjects_entity(
                 user_id,
                 request['params'],
@@ -63,7 +64,7 @@ def add_subject_route(request, user_id, subject_id):
     if user_id != current_user['id']:
         return abort(403)
 
-    subject = Subject.get(db_conn, entity_id=subject_id)
+    subject = get_latest_accepted('subjects', db_conn, entity_id=subject_id)
     if not subject:
         return abort(404)
 
@@ -112,13 +113,13 @@ def select_subject_route(request, user_id, subject_id):
     if not current_user:
         return abort(401)
 
-    subject = Subject.get_latest_accepted(db_conn, subject_id)
+    subject = get_latest_accepted('subjects', db_conn, subject_id)
     next_ = {
         'method': 'GET',
         'path': '/s/subjects/{subject_id}/tree'
                 .format(subject_id=subject_id),
     }
-    set_learning_context(current_user, subject=subject.data, next=next_)
+    set_learning_context(current_user, subject=subject, next=next_)
 
     return 200, {'next': next_}
 

@@ -1,8 +1,9 @@
 from framework.routes import get, post, delete, abort
 from framework.session import get_current_user
-from modules.entity import flush_entities
 from database.follow import get_follow, list_follows, insert_follow, \
     deliver_follow, delete_follow
+from database.entity_base import get_latest_accepted
+from database.entity_facade import deliver_entity_by_kind
 
 
 @get('/s/follows')
@@ -27,12 +28,17 @@ def get_follows_route(request):
                     for follow in follows]
     }
 
-    # TODO-3 SPLITUP should this be a different endpoint?
+    # TODO-3 SPLITUP this be a different endpoint
     if 'entities' in request['params']:
-        entities = flush_entities(db_conn,
-                                  [follow['entity'] for follow in follows])
-        output['entities'] = [entity.deliver() if entity else None
-                              for entity in entities]
+        output['entities'] = []
+        for follow in follows:
+            entity_kind = follow['entity']['kind']
+            entity_id = follow['entity']['id']
+            tablename = '%ss' % entity_kind
+            entity = get_latest_accepted(tablename, db_conn, entity_id)
+            output['entities'].append(
+                deliver_entity_by_kind(entity_kind, entity)
+            )
 
     return 200, output
 

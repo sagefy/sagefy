@@ -4,6 +4,7 @@ from modules.util import uniqid
 import rethinkdb as r
 
 
+# TODO-1 delete this file
 # TODO-2 remove temporary auto approvers
 reviewer_a_id = 'uVpp1Zovc4S3jihP8X29tXGf'
 reviewer_b_id = 'ikFGjpOHa3YQlpuCNkHE0Bzp'
@@ -71,10 +72,10 @@ def inject_choice_card(unit_id, card, db_conn):
         'kind': 'choice',
         'body': card['body'],
         'options': [{
-                'value': option['value'],
-                'feedback': option['feedback'],
-                'correct': option['correct'] in ('Y', True),
-            } for option in card['options']],
+            'value': option['value'],
+            'feedback': option['feedback'],
+            'correct': option['correct'] in ('Y', True),
+        } for option in card['options']],
         'order': 'random',
         'max_options_to_show': 4,
         'entity_id': entity_id,

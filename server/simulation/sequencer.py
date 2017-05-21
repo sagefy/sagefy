@@ -42,7 +42,7 @@ def main(num_learners=1000, num_cards=50):
             h: 1 - (init_guess - h) ** 2
             for h in [h / precision for h in range(1, precision)]}),
         'slip_distribution': init_pmf({
-            h:  1 - (init_slip - h) ** 2
+            h: 1 - (init_slip - h) ** 2
             for h in [h / precision for h in range(1, precision)]}),
         'transit': init_transit,
     } for card in cards]
@@ -108,6 +108,7 @@ def main(num_learners=1000, num_cards=50):
     print('CONTROL guess_error', sqrt(guess_error / len(my_cards)))
     print('CONTROL slip_error', sqrt(slip_error / len(my_cards)))
     print('CONTROL transit_error', sqrt(transit_error / len(my_cards)))
+
 
 if __name__ == '__main__':
     main()

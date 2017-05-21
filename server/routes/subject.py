@@ -1,15 +1,17 @@
 from framework.routes import get, post, abort
-from models.subject import Subject
-from models.unit import Unit
 from framework.session import get_current_user
 from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
 from database.user import get_learning_context, set_learning_context
 from database.topic import list_topics_by_entity_id, deliver_topic
 from database.my_recently_created import get_my_recently_created_subjects
-
-
+from database.entity_base import list_by_entity_ids, get_latest_accepted, \
+    get_versions
 from config import config
+from database.entity_facade import list_subjects_by_unit_id, \
+    list_units_in_subject
+from database.subject import deliver_subject
+from database.unit import deliver_unit
 
 
 @get('/s/subjects/recommended')
@@ -18,11 +20,11 @@ def get_recommended_subjects(request):
     entity_ids = ('JAFGYFWhILcsiByyH2O9frcU',)
     if config['debug']:
         entity_ids = ('subjectAll',)
-    subjects = Subject.list_by_entity_ids(db_conn, entity_ids)
+    subjects = list_by_entity_ids('subjects', db_conn, entity_ids)
     if not subjects:
         return abort(404)
     return 200, {
-        'subjects': [subject.deliver() for subject in subjects]
+        'subjects': [deliver_subject(subject) for subject in subjects]
     }
 
 
@@ -33,21 +35,21 @@ def get_subject_route(request, subject_id):
     """
 
     db_conn = request['db_conn']
-    subject = Subject.get_latest_accepted(db_conn, subject_id)
+    subject = get_latest_accepted('subjects', db_conn, subject_id)
     if not subject:
         return abort(404)
 
     # TODO-2 SPLITUP create new endpoints for these instead
     topics = list_topics_by_entity_id(subject_id, {}, db_conn)
-    versions = Subject.get_versions(db_conn, entity_id=subject_id)
-    units = subject.list_units(db_conn)
+    versions = get_versions('subjects', db_conn, entity_id=subject_id)
+    units = list_units_in_subject(subject, db_conn)
 
     return 200, {
-        'subject': subject.deliver(),
-        # 'subject_parameters': subject.fetch_parameters(),
+        'subject': deliver_subject(subject),
+        # TODO-3 subject parameters
         'topics': [deliver_topic(topic) for topic in topics],
-        'versions': [version.deliver() for version in versions],
-        'units': [unit.deliver() for unit in units],
+        'versions': [deliver_subject(version) for version in versions],
+        'units': [deliver_unit(unit) for unit in units],
     }
 
 
@@ -58,10 +60,13 @@ def get_subject_versions_route(request, subject_id):
     """
 
     db_conn = request['db_conn']
-    versions = Subject.get_versions(
-        db_conn, entity_id=subject_id, **request['params'])
+    versions = get_versions(
+        'subjects', db_conn, entity_id=subject_id, **request['params'])
     return 200, {
-        'versions': [version.deliver(access='view') for version in versions]
+        'versions': [
+            deliver_subject(version, access='view')
+            for version in versions
+        ]
     }
 
 
@@ -89,17 +94,17 @@ def get_subject_tree_route(request, subject_id):
 
     db_conn = request['db_conn']
 
-    subject = Subject.get(db_conn, entity_id=subject_id)
+    subject = get_latest_accepted('subjects', db_conn, entity_id=subject_id)
 
     if not subject:
         return abort(404)
 
-    units = subject.list_units(db_conn)
+    units = list_units_in_subject(subject, db_conn)
 
     # For the menu, it must return the name and ID of the subject
     output = {
-        'subjects': subject.deliver(),
-        'units': [u.deliver() for u in units],
+        'subjects': deliver_subject(subject),
+        'units': [deliver_unit(unit) for unit in units],
     }
 
     current_user = get_current_user(request)
@@ -131,7 +136,7 @@ def get_subject_tree_route(request, subject_id):
         }
         set_learning_context(
             current_user,
-            next=next_, unit=unit.data, card=card.data)
+            next=next_, unit=unit, card=card)
 
     # When in learn or review mode, lead me to choose a unit.
     elif buckets['review'] or buckets['learn']:
@@ -183,7 +188,7 @@ def get_subject_units_route(request, subject_id):
     }
     set_learning_context(current_user, next=next_)
 
-    subject = Subject.get_latest_accepted(db_conn, subject_id)
+    subject = get_latest_accepted('subjects', db_conn, subject_id)
 
     # Pull a list of up to 5 units to choose from based on priority.
     buckets = traverse(db_conn, current_user, subject)
@@ -192,9 +197,9 @@ def get_subject_units_route(request, subject_id):
 
     return 200, {
         'next': next_,
-        'units': [unit.deliver() for unit in units],
+        'units': [deliver_unit(unit) for unit in units],
         # For the menu, it must return the name and ID of the subject
-        'subject': subject.deliver(),
+        'subject': deliver_subject(subject),
         'current_unit_id': context.get('unit', {}).get('entity_id'),
     }
 
@@ -216,7 +221,7 @@ def choose_unit_route(request, subject_id, unit_id):
     if not current_user:
         return abort(401)
 
-    unit = Unit.get_latest_accepted(db_conn, unit_id)
+    unit = get_latest_accepted('units', db_conn, unit_id)
     if not unit:
         return abort(404)
 
@@ -224,7 +229,7 @@ def choose_unit_route(request, subject_id, unit_id):
     context = get_learning_context(current_user)
     subject_ids = [
         subject['entity_id']
-        for subject in Subject.list_by_unit_id(db_conn, unit_id)]
+        for subject in list_subjects_by_unit_id(db_conn, unit_id)]
     if context.get('subject', {}).get('entity_id') not in subject_ids:
         return abort(400)
 
@@ -247,8 +252,8 @@ def choose_unit_route(request, subject_id, unit_id):
 
     set_learning_context(
         current_user,
-        unit=unit.data,
-        card=card.data if card else None,
+        unit=unit,
+        card=card if card else None,
         next=next_
     )
 
@@ -267,5 +272,5 @@ def get_my_recently_created_subjects_route(request):
     db_conn = request['db_conn']
     subjects = get_my_recently_created_subjects(current_user, db_conn)
     return 200, {
-        'subjects': [subject.deliver() for subject in subjects],
+        'subjects': [deliver_subject(subject) for subject in subjects],
     }

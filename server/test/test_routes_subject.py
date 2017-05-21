@@ -1,9 +1,9 @@
 import pytest
-
-xfail = pytest.mark.xfail
-
 import rethinkdb as r
 import routes.subject
+
+
+xfail = pytest.mark.xfail
 
 
 def test_get_subject(db_conn,
