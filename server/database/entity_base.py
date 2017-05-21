@@ -1,9 +1,8 @@
-# MMM
-
 import rethinkdb as r
 from framework.elasticsearch import es
 from modules.util import json_prep
 from modules.util import omit, pick
+from database.util import insert_document, update_document
 
 
 def start_accepted_query(tablename):
@@ -136,7 +135,7 @@ def list_required_by(tablename, db_conn, entity_id,
     return [fields for fields in query.run(db_conn)]
 
 
-def insert_entity(tablename, db_conn, data):
+def insert_entity(schema, db_conn, data):
     """
     When a user creates a new version,
     don't accept certain fields.
@@ -147,7 +146,8 @@ def insert_entity(tablename, db_conn, data):
     data = omit(data, ('status', 'available'))
 
     if 'entity_id' in data:
-        latest = get_latest_accepted(tablename, db_conn, data['entity_id'])
+        latest = get_latest_accepted(
+            schema['tablename'], db_conn, data['entity_id'])
         data['previous_id'] = latest['id']
 
     return insert_document(schema, data, db_conn)
@@ -162,18 +162,19 @@ def update_entity(schema, prev_data, data, db_conn):
     return update_document(schema, prev_data, data, db_conn)
 
 
-def save_entity_to_es(kind, entity):
+def save_entity_to_es(kind, data):
     """
     Overwrite save method to add to Elasticsearch.
     """
 
-    body = json_prep(deliver_thing(entity))
-    if entity['status'] == 'accepted':
+    # NB use deliver_thing(entity) BEFORE calling this function
+    body = json_prep(data)
+    if data['status'] == 'accepted':
         return es.index(
             index='entity',
             doc_type=kind,
             body=body,
-            id=entity['entity_id'],
+            id=data['entity_id'],
         )
 
 

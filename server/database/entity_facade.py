@@ -1,7 +1,6 @@
-# MMM
-
 from modules.memoize_redis import memoize_redis
 from modules.util import omit
+from database.entity_base import list_by_entity_ids
 import rethinkdb as r
 
 
@@ -89,7 +88,7 @@ def list_units_in_subject(main_subject, db_conn):
         #     the subject into a list of known units. ***
 
         unit_ids = set()
-        subjects = [self]
+        subjects = [main_subject]
 
         while subjects:
             subject_ids = set()
@@ -140,5 +139,5 @@ def list_units_in_subject(main_subject, db_conn):
         return units
 
     # If we already have it stored, use that
-    key = 'subject_{id}'.format(id=self['entity_id'])
+    key = 'subject_{id}'.format(id=main_subject['entity_id'])
     return [data for data in memoize_redis(key, _)]
