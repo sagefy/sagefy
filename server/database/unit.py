@@ -14,7 +14,7 @@ def insert_unit(db_conn, data):
     schema = unit_schema
     unit, errors = insert_entity(schema, db_conn, data)
     if not errors:
-        save_entity_to_es(deliver_unit(unit, access='view'), db_conn)
+        save_entity_to_es('unit', deliver_unit(unit, access='view'))
     return unit, errors
 
 
@@ -26,7 +26,7 @@ def update_unit(prev_data, data, db_conn):
     schema = unit_schema
     unit, errors = update_entity(schema, prev_data, data, db_conn)
     if not errors:
-        save_entity_to_es(deliver_unit(unit, access='view'), db_conn)
+        save_entity_to_es('unit', deliver_unit(unit, access='view'))
     return unit, errors
 
 

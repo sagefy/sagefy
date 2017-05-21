@@ -36,7 +36,7 @@ def save_document(schema, data, db_conn):
 
     data, errors = prepare_document(schema, data, db_conn)
     if errors:
-        return None, errors
+        return data, errors
     data = bundle_fields(schema, data)
     r.table(schema['tablename']).insert(data, conflict='update').run(db_conn)
     data = r.table(schema['tablename']).get(data['id']).run(db_conn)

@@ -29,7 +29,7 @@ def insert_card(db_conn, data):
         }]
     card, errors = insert_entity(schema, db_conn, data)
     if not errors:
-        save_entity_to_es(deliver_card(card, access='view'), db_conn)
+        save_entity_to_es('card', deliver_card(card, access='view'))
     return card, errors
 
 
@@ -46,7 +46,7 @@ def update_card(prev_data, data, db_conn):
         }]
     card, errors = update_entity(schema, prev_data, data, db_conn)
     if not errors:
-        save_entity_to_es(deliver_card(card, access='view'), db_conn)
+        save_entity_to_es('card', deliver_card(card, access='view'))
     return card, errors
 
 

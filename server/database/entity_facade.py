@@ -122,7 +122,7 @@ def list_units_in_subject(main_subject, db_conn):
                     continue
                 unit_id = unit['entity_id']
                 require_ids = unit_requires[unit_id] = \
-                    set(unit['require_ids'])
+                    set(unit.get('require_ids'))
                 for require_id in require_ids:
                     if require_id in unit_ids:
                         ids = {unit_id}

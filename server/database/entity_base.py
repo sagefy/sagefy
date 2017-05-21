@@ -155,7 +155,8 @@ def insert_entity(schema, db_conn, data):
     if 'entity_id' in data:
         latest = get_latest_accepted(
             schema['tablename'], db_conn, data['entity_id'])
-        data['previous_id'] = latest['id']
+        if latest:
+            data['previous_id'] = latest['id']
     return insert_document(schema, data, db_conn)
 
 
@@ -205,7 +206,8 @@ def find_requires_cycle(tablename, data, db_conn):
                 break
             if entity['entity_id'] not in seen:
                 seen.add(entity['entity_id'])
-                _(entity['require_ids'])
+                if 'require_ids' in entity:
+                    _(entity['require_ids'])
 
     _(data['require_ids'])
 

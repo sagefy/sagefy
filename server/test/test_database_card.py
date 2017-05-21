@@ -14,7 +14,9 @@ def test_entity_id(db_conn, cards_table):
         'language': 'en',
         'unit_id': 'RUF531',
         'name': 'What is?',
-        'kind': 'video'
+        'kind': 'video',
+        'video_id': 'abcd1234',
+        'site': 'youtube',
     })
     assert len(errors) == 0
     assert card['entity_id']
@@ -29,7 +31,9 @@ def test_previous_version_id(db_conn, cards_table):
         'language': 'en',
         'unit_id': 'RUF531',
         'name': 'What is?',
-        'kind': 'video'
+        'kind': 'video',
+        'video_id': 'abcd1234',
+        'site': 'youtube',
     })
     assert len(errors) == 0
     card['previous_id'] = 'TJKL35'
@@ -46,7 +50,9 @@ def test_language(db_conn, cards_table):
         'previous_id': 'TJKL35',
         'unit_id': 'RUF531',
         'name': 'What is?',
-        'kind': 'video'
+        'kind': 'video',
+        'video_id': 'abcd1234',
+        'site': 'youtube',
     })
     assert len(errors) == 0
     card['language'] = 'en'
@@ -61,7 +67,9 @@ def test_unit_id(db_conn, cards_table):
         'previous_id': 'TJKL35',
         'language': 'en',
         'name': 'What is?',
-        'kind': 'video'
+        'kind': 'video',
+        'video_id': 'abcd1234',
+        'site': 'youtube',
     })
     assert len(errors) == 1
     card['unit_id'] = 'RUF531A'
@@ -78,7 +86,9 @@ def test_name(db_conn, cards_table):
         'previous_id': 'TJKL35',
         'language': 'en',
         'unit_id': 'RUF531',
-        'kind': 'video'
+        'kind': 'video',
+        'video_id': 'abcd1234',
+        'site': 'youtube',
     })
     assert len(errors) == 1
     card['name'] = 'What is?'
@@ -96,7 +106,9 @@ def test_status(db_conn, cards_table):
         'language': 'en',
         'unit_id': 'RUF531',
         'name': 'What is?',
-        'kind': 'video'
+        'kind': 'video',
+        'video_id': 'abcd1234',
+        'site': 'youtube',
     })
     assert len(errors) == 0
     assert card['status'] == 'pending'
@@ -115,7 +127,9 @@ def test_tags(db_conn, cards_table):
         'language': 'en',
         'unit_id': 'RUF531',
         'name': 'What is?',
-        'kind': 'video'
+        'kind': 'video',
+        'video_id': 'abcd1234',
+        'site': 'youtube',
     })
     assert len(errors) == 0
     card['tags'] = ['B', 'A']
@@ -133,6 +147,8 @@ def test_kind(db_conn, cards_table):
         'language': 'en',
         'unit_id': 'RUF531',
         'name': 'What is?',
+        'video_id': 'abcd1234',
+        'site': 'youtube',
     })
     assert len(errors) == 1
     card['kind'] = 'video'
