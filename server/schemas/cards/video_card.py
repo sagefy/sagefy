@@ -1,6 +1,6 @@
 from modules.util import extend
 from modules.validations import is_required, is_string, is_one_of
-from schemas.card import card_schema
+from schemas.card import schema as card_schema
 
 
 schema = extend({}, card_schema, {

@@ -1,7 +1,7 @@
 from modules.util import extend
 from modules.validations import is_required, is_string, is_list, \
     is_one_of, is_boolean, is_integer, has_min_length
-from schemas.card import card_schema
+from schemas.card import schema as card_schema
 from modules.content import get as c
 
 
