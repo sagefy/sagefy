@@ -8,6 +8,7 @@ addons:
     rethinkdb: '2.3.4'
 before_install:
     - nvm install 6.7.0
+    - cp server/config.dev.example.py server/config.py
 install:
     - pip install -r server/requirements.txt
     - pip install pytest coverage flake8
