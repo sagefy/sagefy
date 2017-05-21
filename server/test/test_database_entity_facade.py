@@ -43,12 +43,3 @@ def test_get_kind():
 
     kind = entity.get_kind(Card({}))
     assert kind == 'card'
-
-
-@xfail
-def test_get_card_by_kind(db_conn, cards_table):
-    """
-    Expect to get a card by id and return the proper kind.
-    """
-
-    assert False

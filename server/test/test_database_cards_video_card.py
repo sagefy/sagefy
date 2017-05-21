@@ -15,7 +15,7 @@ def test_site(db_conn, cards_table):
     })
     assert len(errors) == 1
     card['site'] = 'youtube'
-    errors = card.validate(db_conn)
+    errors = card.save(db_conn)
     assert len(errors) == 0
 
 
@@ -31,7 +31,7 @@ def test_video_id(db_conn, cards_table):
     })
     assert len(errors) == 1
     card['video_id'] = 'JFKl94jl'
-    errors = card.validate(db_conn)
+    errors = card.save(db_conn)
     assert len(errors) == 0
 
 

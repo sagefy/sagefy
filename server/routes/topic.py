@@ -19,6 +19,7 @@ from database.topic import get_topic, deliver_topic, validate_topic, \
     update_topic, insert_topic
 from database.post import deliver_post, validate_post, insert_post, \
     list_posts, get_post, update_post
+from database.entity_base import get_latest_accepted
 
 
 def prefix_error_names(prefix, errors):
@@ -143,7 +144,9 @@ def create_topic_route(request):
     if post_kind == 'proposal':
         for entity in entities:
             errors = (errors +
-                      prefix_error_names('entity.', entity.validate(db_conn)))
+                      prefix_error_names(
+                          'entity.',
+                          validate_x(entity, db_conn)))
     if len(errors):
         return 400, {
             'errors': errors,
@@ -264,8 +267,8 @@ def get_posts_route(request, topic_id):
 
     # Pull the entity
     entity_kind = topic['entity']['kind']
-    entity = get_latest_accepted(db_conn,
-                                 entity_kind,
+    entity = get_latest_accepted('%ss' % entity_kind,
+                                 db_conn,
                                  topic['entity']['id'])
 
     # Pull all kinds of posts
@@ -294,8 +297,8 @@ def get_posts_route(request, topic_id):
             #     entity_version['previous_id']
             # )
             # if previous_version:
-            #     diffs[post_['id']] = object_diff(previous_version.deliver(),
-            #                                      entity_version.deliver())
+            #     diffs[post_['id']] = object_diff(deliver previous_version,
+            #                                      deliver entity_version)
 
     # TODO-2 SPLITUP create new endpoint for this instead
     users = {}
@@ -314,14 +317,14 @@ def get_posts_route(request, topic_id):
         'topic': deliver_topic(topic),
         'posts': [deliver_post(p) for p in posts],
         'entity_versions': {
-            p: [ev.deliver('view') for ev in evs]
+            p: [deliver_x(ev, 'view') for ev in evs]
             for p, evs in entity_versions.items()
         },
         # 'diffs': diffs,  TODO-2 this causes a circular dependency
         'users': users,
     }
     if entity:
-        output[entity_kind] = entity.deliver()
+        output[entity_kind] = deliver_x(entity)
     return 200, output
 
 
@@ -379,7 +382,9 @@ def create_post_route(request, topic_id):
     if post_kind == 'proposal':
         for entity in entities:
             errors = (errors +
-                      prefix_error_names('entity.', entity.validate(db_conn)))
+                      prefix_error_names('entity.', validate_x(
+                          entity,
+                          db_conn)))
 
     if len(errors):
         return 400, {

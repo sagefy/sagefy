@@ -31,7 +31,7 @@ def get_follows_route(request):
     if 'entities' in request['params']:
         entities = flush_entities(db_conn,
                                   [follow['entity'] for follow in follows])
-        output['entities'] = [entity.deliver() if entity else None
+        output['entities'] = [deliver_x(entity) if entity else None
                               for entity in entities]
 
     return 200, output

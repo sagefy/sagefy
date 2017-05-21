@@ -1,5 +1,6 @@
 import rethinkdb as r
-from database.entity_base import list_by_entity_ids
+from database.entity_base import list_by_entity_ids, get_latest_accepted
+from database.entity_facade import list_subjects_by_unit_id
 import pytest
 
 xfail = pytest.mark.xfail
@@ -286,7 +287,7 @@ def test_list_by_unit_ids(db_conn, units_table, subjects_table):
         'status': 'accepted'
     }]).run(db_conn)
 
-    subjects = Subject.list_by_unit_id(db_conn, 'Z')
+    subjects = list_subjects_by_unit_id(db_conn, 'Z')
     subject_ids = set(subject['entity_id'] for subject in subjects)
     assert subject_ids == {'A', 'B1', 'B2', 'C'}
 
@@ -362,7 +363,7 @@ def test_list_units(db_conn, units_table, subjects_table):
         }]
     }]).run(db_conn)
 
-    subject = Subject.get(db_conn, entity_id='S')
+    subject = get_latest_accepted('subjects', db_conn, entity_id='S')
     cards = subject.list_units(db_conn)
     card_ids = set(card['entity_id'] for card in cards)
     assert card_ids == {'B', 'V', 'Q', 'N'}

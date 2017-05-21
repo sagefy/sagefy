@@ -1,4 +1,3 @@
-# MMM
 from framework.routes import get, post, abort
 from framework.session import get_current_user
 from modules.sequencer.traversal import traverse, judge
@@ -9,6 +8,9 @@ from database.my_recently_created import get_my_recently_created_subjects
 from database.entity_base import list_by_entity_ids, get_latest_accepted, \
     get_versions
 from config import config
+from database.entity_facade import list_subjects_by_unit_id
+from database.subject import deliver_subject
+from database.unit import deliver_unit
 
 
 @get('/s/subjects/recommended')
@@ -21,7 +23,7 @@ def get_recommended_subjects(request):
     if not subjects:
         return abort(404)
     return 200, {
-        'subjects': [subject.deliver() for subject in subjects]
+        'subjects': [deliver_subject(subject) for subject in subjects]
     }
 
 
@@ -42,11 +44,11 @@ def get_subject_route(request, subject_id):
     units = subject.list_units(db_conn)
 
     return 200, {
-        'subject': subject.deliver(),
+        'subject': deliver_subject(subject),
         # 'subject_parameters': subject.fetch_parameters(),
         'topics': [deliver_topic(topic) for topic in topics],
-        'versions': [version.deliver() for version in versions],
-        'units': [unit.deliver() for unit in units],
+        'versions': [deliver_subject(version) for version in versions],
+        'units': [deliver_unit(unit) for unit in units],
     }
 
 
@@ -60,7 +62,10 @@ def get_subject_versions_route(request, subject_id):
     versions = get_versions(
         'subjects', db_conn, entity_id=subject_id, **request['params'])
     return 200, {
-        'versions': [version.deliver(access='view') for version in versions]
+        'versions': [
+            deliver_subject(version, access='view')
+            for version in versions
+        ]
     }
 
 
@@ -88,7 +93,7 @@ def get_subject_tree_route(request, subject_id):
 
     db_conn = request['db_conn']
 
-    subject = Subject.get(db_conn, entity_id=subject_id)
+    subject = get_latest_accepted('subjects', db_conn, entity_id=subject_id)
 
     if not subject:
         return abort(404)
@@ -97,8 +102,8 @@ def get_subject_tree_route(request, subject_id):
 
     # For the menu, it must return the name and ID of the subject
     output = {
-        'subjects': subject.deliver(),
-        'units': [u.deliver() for u in units],
+        'subjects': deliver_subject(subject),
+        'units': [deliver_unit(unit) for unit in units],
     }
 
     current_user = get_current_user(request)
@@ -191,9 +196,9 @@ def get_subject_units_route(request, subject_id):
 
     return 200, {
         'next': next_,
-        'units': [unit.deliver() for unit in units],
+        'units': [deliver_unit(unit) for unit in units],
         # For the menu, it must return the name and ID of the subject
-        'subject': subject.deliver(),
+        'subject': deliver_subject(subject),
         'current_unit_id': context.get('unit', {}).get('entity_id'),
     }
 
@@ -223,7 +228,7 @@ def choose_unit_route(request, subject_id, unit_id):
     context = get_learning_context(current_user)
     subject_ids = [
         subject['entity_id']
-        for subject in Subject.list_by_unit_id(db_conn, unit_id)]
+        for subject in list_subjects_by_unit_id(db_conn, unit_id)]
     if context.get('subject', {}).get('entity_id') not in subject_ids:
         return abort(400)
 
@@ -266,5 +271,5 @@ def get_my_recently_created_subjects_route(request):
     db_conn = request['db_conn']
     subjects = get_my_recently_created_subjects(current_user, db_conn)
     return 200, {
-        'subjects': [subject.deliver() for subject in subjects],
+        'subjects': [deliver_subject(subject) for subject in subjects],
     }

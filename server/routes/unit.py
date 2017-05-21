@@ -1,10 +1,12 @@
-# MMM
 from framework.routes import get, abort
 from database.topic import list_topics_by_entity_id, deliver_topic
 from framework.session import get_current_user
 from database.my_recently_created import get_my_recently_created_units
 from database.entity_base import get_latest_accepted, get_versions, \
     list_requires, list_required_by
+from database.entity_facade import list_subjects_by_unit_id
+from database.unit import deliver_unit
+from database.subject import deliver_subject
 
 
 @get('/s/units/{unit_id}')
@@ -24,16 +26,16 @@ def get_unit_route(request, unit_id):
     versions = get_versions('units', db_conn, unit_id)
     requires = list_requires('units', db_conn, unit_id)
     required_by = list_required_by('units', db_conn, unit_id)
-    subjects = Subject.list_by_unit_id(db_conn, unit_id)
+    subjects = list_subjects_by_unit_id(db_conn, unit_id)
 
     return 200, {
-        'unit': unit.deliver(),
+        'unit': deliver_unit(unit),
         # 'unit_parameters': unit.fetch_parameters(),
         'topics': [deliver_topic(topic) for topic in topics],
-        'versions': [version.deliver() for version in versions],
-        'requires': [require.deliver() for require in requires],
-        'required_by': [require.deliver() for require in required_by],
-        'belongs_to': [subject.deliver() for subject in subjects],
+        'versions': [deliver_unit(version) for version in versions],
+        'requires': [deliver_unit(require) for require in requires],
+        'required_by': [deliver_unit(require) for require in required_by],
+        'belongs_to': [deliver_subject(subject) for subject in subjects],
     }
 
 
@@ -51,7 +53,10 @@ def get_unit_versions_route(request, unit_id):
         **request['params']
     )
     return 200, {
-        'versions': [version.deliver(access='view') for version in versions]
+        'versions': [
+            deliver_unit(version, access='view')
+            for version in versions
+        ]
     }
 
 
@@ -67,5 +72,5 @@ def get_my_recently_created_units_route(request):
     db_conn = request['db_conn']
     units = get_my_recently_created_units(current_user, db_conn)
     return 200, {
-        'units': [unit.deliver() for unit in units],
+        'units': [deliver_unit(unit) for unit in units],
     }

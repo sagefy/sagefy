@@ -6,7 +6,7 @@ from modules.sequencer.traversal import traverse, \
     match_unit_dependents, order_units_by_need, judge
 import rethinkdb as r
 from database.user import get_user
-from database.entity_base import list_by_entity_ids
+from database.entity_base import list_by_entity_ids, get_latest_accepted
 
 
 def add_test_subject(db_conn,
@@ -87,7 +87,7 @@ def test_traverse(db_conn, units_table, users_table, responses_table,
     add_test_subject(db_conn,
                      users_table, units_table, responses_table, subjects_table)
 
-    subject = Subject.get(db_conn, entity_id='subject')
+    subject = get_latest_accepted('subjects', db_conn, entity_id='subject')
     user = get_user({'id': 'user'}, db_conn)
     buckets = traverse(db_conn, user, subject)
     assert buckets['diagnose'][0]['entity_id'] == 'divide'
@@ -113,7 +113,7 @@ def test_judge_diagnose(db_conn, users_table, units_table, responses_table):
     """
 
     add_test_subject(db_conn, users_table, units_table, responses_table)
-    unit = Unit.get(db_conn, entity_id='divide')
+    unit = get_latest_accepted('units', db_conn, entity_id='divide')
     user = get_user({'id': 'user'}, db_conn)
     assert judge(db_conn, unit, user) == "diagnose"
 
@@ -124,7 +124,7 @@ def test_judge_review(db_conn, users_table, units_table, responses_table):
     """
 
     add_test_subject(db_conn, users_table, units_table, responses_table)
-    unit = Unit.get(db_conn, entity_id='subtract')
+    unit = get_latest_accepted('units', db_conn, entity_id='subtract')
     user = get_user({'id': 'user'}, db_conn)
     assert judge(db_conn, unit, user) == "review"
 
@@ -135,7 +135,7 @@ def test_judge_learn(db_conn, units_table, users_table, responses_table):
     """
 
     add_test_subject(db_conn, users_table, units_table, responses_table)
-    unit = Unit.get(db_conn, entity_id='multiply')
+    unit = get_latest_accepted('units', db_conn, entity_id='multiply')
     user = get_user({'id': 'user'}, db_conn)
     assert judge(db_conn, unit, user) == "learn"
 
@@ -146,7 +146,7 @@ def test_judge_done(db_conn, units_table, users_table, responses_table):
     """
 
     add_test_subject(db_conn, users_table, units_table, responses_table)
-    unit = Unit.get(db_conn, entity_id='add')
+    unit = get_latest_accepted('units', db_conn, entity_id='add')
     user = get_user({'id': 'user'}, db_conn)
     assert judge(db_conn, unit, user) == "done"
 

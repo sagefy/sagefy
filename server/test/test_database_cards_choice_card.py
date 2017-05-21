@@ -19,7 +19,7 @@ def test_choice_body(cards_table, db_conn):
     })
     assert len(errors) == 1
     card['body'] = 'Testing 1234'
-    errors = card.validate(db_conn)
+    errors = card.save(db_conn)
     assert len(errors) == 0
 
 
@@ -40,7 +40,7 @@ def test_choice_options(db_conn, cards_table):
         'correct': True,
         'feedback': 'Bazaaa...'
     }]
-    errors = card.validate(db_conn)
+    errors = card.save(db_conn)
     assert len(errors) == 0
 
 
@@ -61,7 +61,7 @@ def test_choice_order(db_conn, cards_table):
     })
     assert len(errors) == 0
     card['order'] = 'set'
-    errors = card.validate(db_conn, )
+    errors = card.save(db_conn, )
     assert len(errors) == 0
 
 
@@ -82,7 +82,7 @@ def test_choice_max_opts(db_conn, cards_table):
     })
     assert len(errors) == 0
     card['max_options'] = 2
-    errors = card.validate(db_conn)
+    errors = card.save(db_conn)
     assert len(errors) == 0
 
 

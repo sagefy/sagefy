@@ -1,7 +1,7 @@
-# MMM
-
 from random import shuffle
 from schemas.card import schema as card_schema
+from copy import deepcopy
+from database.util import deliver_fields
 
 
 # TODO all saves should go to ES
