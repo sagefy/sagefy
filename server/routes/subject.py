@@ -10,8 +10,10 @@ from database.entity_base import list_by_entity_ids, get_latest_accepted, \
 from config import config
 from database.entity_facade import list_subjects_by_unit_id, \
     list_units_in_subject
-from database.subject import deliver_subject
+from database.subject import deliver_subject, insert_subject
 from database.unit import deliver_unit
+from modules.util import extend
+from copy import deepcopy
 
 
 @get('/s/subjects/recommended')
@@ -306,3 +308,53 @@ def get_my_recently_created_subjects_route(request):
     return 200, {
         'subjects': [deliver_subject(subject) for subject in subjects],
     }
+
+
+@post('/s/subjects/versions')
+def create_new_subject_version_route(request):
+    """
+    Create a new subject version for a brand new subject.
+    """
+
+    current_user = get_current_user(request)
+    if not current_user:
+        return abort(401)
+    db_conn = request['db_conn']
+    data = deepcopy(request['params'])
+    if 'entity_id' in data:
+        return abort(403)
+    data['user_id'] = current_user['id']
+    subject, errors = insert_subject(data, db_conn)
+    if len(errors):
+        return 400, {
+            'errors': errors,
+            'ref': 'VBXxZqIzq5Tui8MVmaz8JsIM',
+        }
+    return 200, {'version': deliver_subject(subject, 'view')}
+
+
+@post('/s/subjects/{subject_id}/versions')
+def create_existing_subject_version_route(request, subject_id):
+    """
+    Create a new subject version for an existing subject.
+    """
+
+    current_user = get_current_user(request)
+    if not current_user:
+        return abort(401)
+    db_conn = request['db_conn']
+    next_data = deepcopy(request['params'])
+    next_data['entity_id'] = subject_id
+    next_data['user_id'] = current_user['id']
+    current_subject = get_latest_accepted(
+        'subjects', db_conn, entity_id=subject_id)
+    if not current_subject:
+        return abort(404)
+    subject_data = extend({}, current_subject, next_data)
+    subject, errors = insert_subject(subject_data, db_conn)
+    if len(errors):
+        return 400, {
+            'errors': errors,
+            'ref': 'IrwkwrwhIfRHchkbeerGHX5V',
+        }
+    return 200, {'version': deliver_subject(subject, 'view')}

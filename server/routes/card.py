@@ -10,8 +10,10 @@ from database.card_parameters import get_card_parameters, \
     get_card_parameters_values
 from database.entity_base import get_latest_accepted, get_versions, \
     list_requires, list_required_by, list_by_entity_ids, get_version
-from database.card import deliver_card
+from database.card import deliver_card, insert_card
 from database.unit import deliver_unit
+from modules.util import extend
+from copy import deepcopy
 
 # from modules.sequencer.params import max_learned
 
@@ -243,3 +245,52 @@ def respond_to_card_route(request, card_id):
         'feedback': feedback,
         'next': next_,
     }
+
+
+@post('/s/cards/versions')
+def create_new_card_version_route(request):
+    """
+    Create a new card version for a brand new card.
+    """
+
+    current_user = get_current_user(request)
+    if not current_user:
+        return abort(401)
+    db_conn = request['db_conn']
+    data = deepcopy(request['params'])
+    if 'entity_id' in data:
+        return abort(403)
+    data['user_id'] = current_user['id']
+    card, errors = insert_card(data, db_conn)
+    if len(errors):
+        return 400, {
+            'errors': errors,
+            'ref': 'xenjJt51AO3wJysZsuOPOe0h',
+        }
+    return 200, {'version': deliver_card(card, 'view')}
+
+
+@post('/s/cards/{card_id}/versions')
+def create_existing_card_version_route(request, card_id):
+    """
+    Create a new card version for an existing card.
+    """
+
+    current_user = get_current_user(request)
+    if not current_user:
+        return abort(401)
+    db_conn = request['db_conn']
+    next_data = deepcopy(request['params'])
+    next_data['entity_id'] = card_id
+    next_data['user_id'] = current_user['id']
+    current_card = get_latest_accepted('cards', db_conn, entity_id=card_id)
+    if not current_card:
+        return abort(404)
+    card_data = extend({}, current_card, next_data)
+    card, errors = insert_card(card_data, db_conn)
+    if len(errors):
+        return 400, {
+            'errors': errors,
+            'ref': '0njH71xtw8mQ9xHVftLvaZWe',
+        }
+    return 200, {'version': deliver_card(card, 'view')}

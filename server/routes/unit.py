@@ -1,12 +1,14 @@
-from framework.routes import get, abort
+from framework.routes import get, post, abort
 from database.topic import list_topics_by_entity_id, deliver_topic
 from framework.session import get_current_user
 from database.my_recently_created import get_my_recently_created_units
 from database.entity_base import get_latest_accepted, get_versions, \
     list_requires, list_required_by, list_by_entity_ids, get_version
 from database.entity_facade import list_subjects_by_unit_id
-from database.unit import deliver_unit
+from database.unit import deliver_unit, insert_unit
 from database.subject import deliver_subject
+from copy import deepcopy
+from modules.util import extend
 
 
 @get('/s/units/{unit_id}')
@@ -104,3 +106,52 @@ def get_my_recently_created_units_route(request):
     return 200, {
         'units': [deliver_unit(unit) for unit in units],
     }
+
+
+@post('/s/units/versions')
+def create_new_unit_version_route(request):
+    """
+    Create a new unit version for a brand new unit.
+    """
+
+    current_user = get_current_user(request)
+    if not current_user:
+        return abort(401)
+    db_conn = request['db_conn']
+    data = deepcopy(request['params'])
+    if 'entity_id' in data:
+        return abort(403)
+    data['user_id'] = current_user['id']
+    unit, errors = insert_unit(data, db_conn)
+    if len(errors):
+        return 400, {
+            'errors': errors,
+            'ref': '9CuN9nYpmBXd45barbfoIe5t',
+        }
+    return 200, {'version': deliver_unit(unit, 'view')}
+
+
+@post('/s/units/{unit_id}/versions')
+def create_existing_unit_version_route(request, unit_id):
+    """
+    Create a new unit version for an existing unit.
+    """
+
+    current_user = get_current_user(request)
+    if not current_user:
+        return abort(401)
+    db_conn = request['db_conn']
+    next_data = deepcopy(request['params'])
+    next_data['entity_id'] = unit_id
+    next_data['user_id'] = current_user['id']
+    current_unit = get_latest_accepted('units', db_conn, entity_id=unit_id)
+    if not current_unit:
+        return abort(404)
+    unit_data = extend({}, current_unit, next_data)
+    unit, errors = insert_unit(unit_data, db_conn)
+    if len(errors):
+        return 400, {
+            'errors': errors,
+            'ref': 'aint3EhS4LkTKuIoY0q07vHZ',
+        }
+    return 200, {'version': deliver_unit(unit, 'view')}

@@ -151,7 +151,7 @@ def insert_entity(schema, db_conn, data):
     Also, find the previous_id.
     """
 
-    data = omit(data, ('status', 'available'))
+    data = omit(data, ('version_id', 'status', 'available', 'previous_id'))
     if 'entity_id' in data:
         latest = get_latest_accepted(
             schema['tablename'], db_conn, data['entity_id'])
