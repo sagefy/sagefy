@@ -3,7 +3,7 @@ from framework.routes import get, post, put, delete, abort
 from framework.session import get_current_user, log_in_user, log_out_user
 from database.user import get_user, insert_user, deliver_user, get_avatar, \
     update_user, is_password_valid, get_email_token, is_valid_token, \
-    update_user_password
+    update_user_password, list_users_by_user_ids
 from database.follow import list_follows, deliver_follow
 from database.user_subjects import list_user_subjects_entity
 from database.post import list_posts, deliver_post
@@ -78,10 +78,35 @@ def get_user_route(request, user_id):
         data['follows'] = [deliver_follow(follow) for follow in
                            list_follows({'user_id': user['id']}, db_conn)]
     if 'avatar' in request['params']:
-        size = int(request['params']['avatar'])
-        data['avatar'] = get_avatar(user['email'], size if size else None)
+        size = int(request['params']['avatar']) or None
+        data['avatar'] = get_avatar(user['email'], size)
 
     return 200, data
+
+
+@get('/s/users')
+def list_users_route(request):
+    """
+    List users by user id. Public facing route.
+    """
+
+    db_conn = request['db_conn']
+    user_ids = request['params'].get('user_ids')
+    if not user_ids:
+        return abort(404)
+    user_ids = user_ids.split(',')
+    users = list_users_by_user_ids(user_ids, db_conn)
+    if not users:
+        return abort(404)
+    size = int(request['params'].get('avatar') or 0) or None
+    avatars = {
+        user['id']: get_avatar(user['email'], size)
+        for user in users
+    }
+    return 200, {
+        'users': [deliver_user(user, None) for user in users],
+        'avatars': avatars,
+    }
 
 
 @post('/s/users')

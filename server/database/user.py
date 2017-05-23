@@ -80,12 +80,25 @@ def get_user(params, db_conn):
 
 def list_users(params, db_conn):
     """
-    Get a list of users of Sagefy.
+    Get a list of all users of Sagefy.
     """
 
     schema = user_schema
     query = r.table(schema['tablename'])
     return list(query.run(db_conn))
+
+
+def list_users_by_user_ids(user_ids, db_conn):
+    """
+    Get a list of users by their user id.
+    """
+    schema = user_schema
+    query = (r.table(schema['tablename'])
+              .filter(lambda user:
+                      r.expr(user_ids)
+                      .contains(user['id'])))
+    return list(query.run(db_conn))
+
 
 # def delete_user(doc_id, db_conn):
 #     """
@@ -129,6 +142,8 @@ def get_avatar(email, size=24):
 
     if not email:
         return ''
+    if not size:
+        size = 24
 
     hash_ = hashlib.md5(email.lower().encode('utf-8')).hexdigest()
     params = urllib.parse.urlencode({'d': 'mm', 's': str(size)})
