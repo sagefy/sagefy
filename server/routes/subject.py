@@ -6,7 +6,7 @@ from database.user import get_learning_context, set_learning_context
 from database.topic import list_topics_by_entity_id, deliver_topic
 from database.my_recently_created import get_my_recently_created_subjects
 from database.entity_base import list_by_entity_ids, get_latest_accepted, \
-    get_versions
+    get_versions, get_version
 from config import config
 from database.entity_facade import list_subjects_by_unit_id, \
     list_units_in_subject
@@ -87,6 +87,19 @@ def get_subject_versions_route(request, subject_id):
             for version in versions
         ]
     }
+
+
+@get('/s/subjects/versions/{version_id}')
+def get_subject_version_route(request, version_id):
+    """
+    Get a subject version only knowing the `version_id`.
+    """
+
+    db_conn = request['db_conn']
+    subject_version = get_version(db_conn, 'subjects', version_id)
+    if not subject_version:
+        return abort(404)
+    return 200, {'version': subject_version}
 
 
 @get('/s/subjects/{subject_id}/tree')

@@ -3,7 +3,7 @@ from database.topic import list_topics_by_entity_id, deliver_topic
 from framework.session import get_current_user
 from database.my_recently_created import get_my_recently_created_units
 from database.entity_base import get_latest_accepted, get_versions, \
-    list_requires, list_required_by, list_by_entity_ids
+    list_requires, list_required_by, list_by_entity_ids, get_version
 from database.entity_facade import list_subjects_by_unit_id
 from database.unit import deliver_unit
 from database.subject import deliver_subject
@@ -75,6 +75,19 @@ def get_unit_versions_route(request, unit_id):
             for version in versions
         ]
     }
+
+
+@get('/s/units/versions/{version_id}')
+def get_unit_version_route(request, version_id):
+    """
+    Get a unit version only knowing the `version_id`.
+    """
+
+    db_conn = request['db_conn']
+    unit_version = get_version(db_conn, 'units', version_id)
+    if not unit_version:
+        return abort(404)
+    return 200, {'version': unit_version}
 
 
 @get('/s/units:get_my_recently_created')

@@ -9,7 +9,7 @@ from database.response import deliver_response
 from database.card_parameters import get_card_parameters, \
     get_card_parameters_values
 from database.entity_base import get_latest_accepted, get_versions, \
-    list_requires, list_required_by, list_by_entity_ids
+    list_requires, list_required_by, list_by_entity_ids, get_version
 from database.card import deliver_card
 from database.unit import deliver_unit
 
@@ -128,6 +128,19 @@ def get_card_versions_route(request, card_id):
             for version in versions
         ]
     }
+
+
+@get('/s/cards/versions/{version_id}')
+def get_card_version_route(request, version_id):
+    """
+    Get a card version only knowing the `version_id`.
+    """
+
+    db_conn = request['db_conn']
+    card_version = get_version(db_conn, 'cards', version_id)
+    if not card_version:
+        return abort(404)
+    return 200, {'version': card_version}
 
 
 @post('/s/cards/{card_id}/responses')
