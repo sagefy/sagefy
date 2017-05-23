@@ -1,6 +1,7 @@
 const {dispatch} = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
+const {shallowCopy} = require('../modules/utilities')
 
 module.exports = tasks.add({
     createTopic(data) {
@@ -11,7 +12,7 @@ module.exports = tasks.add({
         return request({
             method: 'POST',
             url: '/s/topics',
-            data: data,
+            data: data.topic,
         })
             .then((response) => {
                 dispatch({
@@ -20,10 +21,12 @@ module.exports = tasks.add({
                     topic: response.topic,
                     id: response.topic.id,
                 })
-                tasks.route(`/topics/${response.topic.id}`)
                 dispatch({
                     type: 'SET_SENDING_OFF'
                 })
+                const post = shallowCopy(data.post)
+                post.topic_id = response.topic.id
+                return tasks.createPost({post})
             })
             .catch((errors) => {
                 dispatch({

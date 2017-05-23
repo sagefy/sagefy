@@ -87,10 +87,10 @@ module.exports = tasks.add({
                     topic_id: topicId,
                     posts: [response.post],
                 })
-                tasks.route(`/topics/${topicId}`)
                 dispatch({
                     type: 'SET_SENDING_OFF'
                 })
+                tasks.route(`/topics/${topicId}`)
             })
             .catch((errors) => {
                 dispatch({

@@ -1,9 +1,9 @@
 import rethinkdb as r
-from modules.util import json_prep
+from modules.util import json_prep, pick
 from framework.elasticsearch import es
 from schemas.topic import schema as topic_schema
 from database.util import insert_document, update_document, deliver_fields, \
-    get_document, prepare_document
+    get_document
 
 
 def insert_topic(data, db_conn):
@@ -24,19 +24,10 @@ def update_topic(prev_data, data, db_conn):
     """
 
     schema = topic_schema
+    data = pick(data, ('name',))
     data, errors = update_document(schema, prev_data, data, db_conn)
     if not errors:
         add_topic_to_es(data)
-    return data, errors
-
-
-def validate_topic(data, db_conn):
-    """
-    Validate a topic before saving it against the schema.
-    """
-
-    schema = topic_schema
-    data, errors = prepare_document(schema, data, db_conn)
     return data, errors
 
 

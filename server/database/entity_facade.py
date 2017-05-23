@@ -1,15 +1,15 @@
+import rethinkdb as r
 from modules.memoize_redis import memoize_redis
 from modules.util import omit
-from database.entity_base import list_by_entity_ids, get_version
-from database.post import list_posts
-import rethinkdb as r
-from database.entity_base import start_accepted_query
+from database.entity_base import list_by_entity_ids, get_version, \
+    start_accepted_query
 from database.unit import deliver_unit, update_unit
 from database.subject import deliver_subject, update_subject
 from database.card import deliver_card, update_card
 
 # if something breaks the import loop, it would likely be one
 # of these files:
+from database.post import list_posts
 from modules.notices import send_notices
 from database.user import get_user
 
@@ -89,8 +89,6 @@ def list_units_in_subject(main_subject, db_conn):
     Recursive. Connecting.
 
     TODO-2 OMG break into smaller functions
-    TODO-2 Should this method be part of the Unit class/module,
-         as it returns units?
     """
 
     def _():
