@@ -156,6 +156,7 @@ CREATE TABLE units (
     status      entity_status   NOT NULL DEFAULT 'pending',
     available   boolean         NOT NULL DEFAULT TRUE,
     tags        text[]          NULL DEFAULT array[]::text[],
+    user_id     char(24)        NOT NULL REFERENCES users (id),
     /* and the rest.... */
     body        text            NOT NULL,
     require_ids varchar(24)[]   NOT NULL  /* cant ref non-unique, no ELEMENT */
@@ -176,6 +177,7 @@ CREATE TABLE subjects (
     status      entity_status   NOT NULL DEFAULT 'pending',
     available   boolean         NOT NULL DEFAULT TRUE,
     tags        text[]          NULL DEFAULT array[]::text[],
+    user_id     char(24)        NOT NULL REFERENCES users (id),
     /* and the rest.... */
     body        text            NOT NULL,
     members     jsonb           NOT NULL
@@ -202,6 +204,7 @@ CREATE TABLE cards (
     status      entity_status   NOT NULL DEFAULT 'pending',
     available   boolean         NOT NULL DEFAULT TRUE,
     tags        text[]          NULL DEFAULT array[]::text[],
+    user_id     char(24)        NOT NULL REFERENCES users (id),
     /* and the rest.... */
     unit_id     char(24)        NOT NULL, /* cant ref non-unique */
     require_ids char(24)[]      NOT NULL, /* cant ref non-unique, no ELEMENT */

@@ -42,5 +42,8 @@ schema = extend({}, default, {
             'validate': (is_list, is_list_of_strings),
             'default': []
         },
+        'user_id': {
+            'validate': (is_required, is_string,),
+        },
     },
 })
