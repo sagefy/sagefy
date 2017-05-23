@@ -8,6 +8,7 @@ def test_entity_id(db_conn, units_table):
     """
 
     unit, errors = insert_unit(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Learn this',
         'body': 'Learn how to do this',
     })
@@ -23,6 +24,7 @@ def test_previous(db_conn, units_table):
     """
 
     unit, errors = insert_unit(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Learn this',
         'body': 'Learn how to do this',
     })
@@ -38,6 +40,7 @@ def test_language(db_conn, units_table):
     """
 
     unit, errors = insert_unit(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Learn this',
         'body': 'Learn how to do this',
     })
@@ -51,6 +54,7 @@ def test_name(db_conn, units_table):
     """
 
     unit, errors = insert_unit(db_conn, {
+        'user_id': 'abcd1234',
         'body': 'Learn how to do this',
     })
     assert len(errors) == 1
@@ -65,6 +69,7 @@ def test_body(db_conn, units_table):
     """
 
     unit, errors = insert_unit(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Learn this',
     })
     assert len(errors) == 1
@@ -79,6 +84,7 @@ def test_status(db_conn, units_table):
     """
 
     unit, errors = insert_unit(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Learn this',
         'body': 'Learn how to do this',
     })
@@ -95,6 +101,7 @@ def test_tags(db_conn, units_table):
     """
 
     unit, errors = insert_unit(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Learn this',
         'body': 'Learn how to do this',
     })
@@ -110,11 +117,13 @@ def test_requires(db_conn, units_table):
     """
 
     units_table.insert({
+        'user_id': 'abcd1234',
         'entity_id': 'A',
         'status': 'accepted',
         'created': r.now(),
     }).run(db_conn)
     unit, errors = insert_unit(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Learn this',
         'body': 'Learn how to do this',
     })

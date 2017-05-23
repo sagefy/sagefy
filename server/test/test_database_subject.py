@@ -14,6 +14,7 @@ def create_unit_a(db_conn, units_table):
     """
 
     units_table.insert({
+        'user_id': 'abcd1234',
         'entity_id': 'A',
         'status': 'accepted',
     }).run(db_conn)
@@ -26,6 +27,7 @@ def test_entity(db_conn, subjects_table, units_table):
 
     create_unit_a(db_conn, units_table)
     subject, errors = insert_subject(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -44,6 +46,7 @@ def test_previous(db_conn, subjects_table, units_table):
 
     create_unit_a(db_conn, units_table)
     subject, errors = insert_subject(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -62,6 +65,7 @@ def test_language(db_conn, subjects_table, units_table):
 
     create_unit_a(db_conn, units_table)
     subject, errors = insert_subject(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -80,6 +84,7 @@ def test_name(db_conn, subjects_table, units_table):
 
     create_unit_a(db_conn, units_table)
     subject, errors = insert_subject(db_conn, {
+        'user_id': 'abcd1234',
         'body': 'A beginning course focused on probability.',
         'members': [{
             'id': 'A',
@@ -99,6 +104,7 @@ def test_body(db_conn, subjects_table, units_table):
 
     create_unit_a(db_conn, units_table)
     subject, errors = insert_subject(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Statistics',
         'members': [{
             'id': 'A',
@@ -118,6 +124,7 @@ def test_status(db_conn, subjects_table, units_table):
 
     create_unit_a(db_conn, units_table)
     subject, errors = insert_subject(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -139,6 +146,7 @@ def test_tags(db_conn, subjects_table, units_table):
 
     create_unit_a(db_conn, units_table)
     subject, errors = insert_subject(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
         'members': [{
@@ -157,6 +165,7 @@ def test_members(db_conn, subjects_table, units_table):
 
     create_unit_a(db_conn, units_table)
     subject, errors = insert_subject(db_conn, {
+        'user_id': 'abcd1234',
         'name': 'Statistics',
         'body': 'A beginning course focused on probability.',
     })

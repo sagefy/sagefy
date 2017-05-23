@@ -10,6 +10,7 @@ def test_entity_id(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'previous_id': 'TJKL35',
         'language': 'en',
         'unit_id': 'RUF531',
@@ -28,6 +29,7 @@ def test_previous_version_id(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'language': 'en',
         'unit_id': 'RUF531',
         'name': 'What is?',
@@ -47,6 +49,7 @@ def test_language(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'previous_id': 'TJKL35',
         'unit_id': 'RUF531',
         'name': 'What is?',
@@ -64,6 +67,7 @@ def test_unit_id(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'previous_id': 'TJKL35',
         'language': 'en',
         'name': 'What is?',
@@ -83,6 +87,7 @@ def test_name(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'previous_id': 'TJKL35',
         'language': 'en',
         'unit_id': 'RUF531',
@@ -102,6 +107,7 @@ def test_status(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'previous_id': 'TJKL35',
         'language': 'en',
         'unit_id': 'RUF531',
@@ -123,6 +129,7 @@ def test_tags(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'previous_id': 'TJKL35',
         'language': 'en',
         'unit_id': 'RUF531',
@@ -143,6 +150,7 @@ def test_kind(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'previous_id': 'TJKL35',
         'language': 'en',
         'unit_id': 'RUF531',

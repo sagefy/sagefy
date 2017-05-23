@@ -10,6 +10,7 @@ def test_site(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'kind': 'video',
         'unit_id': 'RUF531',
         'name': 'What is?',
@@ -27,6 +28,7 @@ def test_video_id(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'kind': 'video',
         'unit_id': 'RUF531',
         'name': 'What is?',

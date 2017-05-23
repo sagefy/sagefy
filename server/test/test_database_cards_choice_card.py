@@ -10,6 +10,7 @@ def test_choice_body(cards_table, db_conn):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'kind': 'choice',
         'unit_id': 'RUF531',
         'name': 'What is?',
@@ -32,6 +33,7 @@ def test_choice_options(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'kind': 'choice',
         'unit_id': 'RUF531',
         'name': 'What is?',
@@ -53,6 +55,7 @@ def test_choice_order(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'kind': 'choice',
         'unit_id': 'RUF531',
         'name': 'What is?',
@@ -75,6 +78,7 @@ def test_choice_max_opts(db_conn, cards_table):
     """
 
     card, errors = insert_card(db_conn, {
+        'user_id': 'abcd1234',
         'kind': 'choice',
         'unit_id': 'RUF531',
         'name': 'What is?',
