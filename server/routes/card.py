@@ -9,7 +9,7 @@ from database.response import deliver_response
 from database.card_parameters import get_card_parameters, \
     get_card_parameters_values
 from database.entity_base import get_latest_accepted, get_versions, \
-    list_requires, list_required_by
+    list_requires, list_required_by, list_by_entity_ids
 from database.card import deliver_card
 from database.unit import deliver_unit
 
@@ -50,6 +50,23 @@ def get_card_route(request, card_id):
         'requires': [deliver_card(require) for require in requires],
         'required_by': [deliver_card(require) for require in required_by],
     }
+
+
+@get('/s/cards')
+def list_cards_route(request):
+    """
+    Return a collection of cards by `entity_id`.
+    """
+
+    db_conn = request['db_conn']
+    entity_ids = request['params'].get('entity_ids')
+    if not entity_ids:
+        return abort(404)
+    entity_ids = entity_ids.split(',')
+    cards = list_by_entity_ids('cards', db_conn, entity_ids)
+    if not cards:
+        return abort(404)
+    return 200, {'cards': [deliver_card(card, 'view') for card in cards]}
 
 
 @get('/s/cards/{card_id}/learn')  # TODO-3 merge with main GET route

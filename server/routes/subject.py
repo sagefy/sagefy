@@ -53,6 +53,25 @@ def get_subject_route(request, subject_id):
     }
 
 
+@get('/s/subjects')
+def list_subjects_route(request):
+    """
+    Return a collection of subjects by `entity_id`.
+    """
+
+    db_conn = request['db_conn']
+    entity_ids = request['params'].get('entity_ids')
+    if not entity_ids:
+        return abort(404)
+    entity_ids = entity_ids.split(',')
+    subjects = list_by_entity_ids('subjects', db_conn, entity_ids)
+    if not subjects:
+        return abort(404)
+    return 200, {
+        'subjects': [deliver_subject(subject, 'view') for subject in subjects]
+    }
+
+
 @get('/s/subjects/{subject_id}/versions')
 def get_subject_versions_route(request, subject_id):
     """

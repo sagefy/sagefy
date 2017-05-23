@@ -3,7 +3,7 @@ from database.topic import list_topics_by_entity_id, deliver_topic
 from framework.session import get_current_user
 from database.my_recently_created import get_my_recently_created_units
 from database.entity_base import get_latest_accepted, get_versions, \
-    list_requires, list_required_by
+    list_requires, list_required_by, list_by_entity_ids
 from database.entity_facade import list_subjects_by_unit_id
 from database.unit import deliver_unit
 from database.subject import deliver_subject
@@ -37,6 +37,23 @@ def get_unit_route(request, unit_id):
         'required_by': [deliver_unit(require) for require in required_by],
         'belongs_to': [deliver_subject(subject) for subject in subjects],
     }
+
+
+@get('/s/units')
+def list_units_route(request):
+    """
+    Return a collection of units by `entity_id`.
+    """
+
+    db_conn = request['db_conn']
+    entity_ids = request['params'].get('entity_ids')
+    if not entity_ids:
+        return abort(404)
+    entity_ids = entity_ids.split(',')
+    units = list_by_entity_ids('units', db_conn, entity_ids)
+    if not units:
+        return abort(404)
+    return 200, {'units': [deliver_unit(unit, 'view') for unit in units]}
 
 
 @get('/s/units/{unit_id}/versions')
