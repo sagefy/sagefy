@@ -14,6 +14,7 @@ import routes.public
 import routes.user
 import routes.notice
 import routes.topic
+import routes.post
 import routes.follow
 import routes.user_subjects
 import routes.card

@@ -154,3 +154,60 @@ def deliver_entity_by_kind(kind, entity):
         return deliver_unit(entity, 'view')
     if kind == 'subject':
         return deliver_subject(entity, 'view')
+
+
+def get_entity_status(current_status, votes):
+    """
+    Returns (changed, status) ... one of:
+    (True, 'accepted|blocked|pending')
+    (False, 'accepted|blocked|pending|declined')
+    """
+
+    # Make sure the entity version status is not declined or accepted
+    if current_status in ('accepted', 'declined'):
+        return False, current_status
+    # TODO-3 for now, we'll just accept all proposals as is
+    # The algorithm should eventually be updated to match
+    # https://docs.sagefy.org/Planning-Contributor-Ratings
+    return True, 'accepted'
+
+
+# def update_entity_statuses(db_conn, proposal):
+#     """
+#     Update the entity's status based on the vote power received.
+#     Move to accepted or blocked if qualified.
+#     TODO-2 Update this to work as described in:
+#         https://github.com/heiskr/sagefy/wiki/Planning%3A-Contributor-Ratings
+#         This requires knowing two things:
+#         - Number of learners the entity impacts
+#         - The vote and proposal history of the contributor
+#     """
+#
+#     # Get the entity version
+#     for p_entity_version in proposal['entity_versions']:
+#         tablename = '%ss' % p_entity_version['kind']
+#         version_id = p_entity_version['id']
+#         entity_version = get_version(db_conn, tablename, version_id)
+#         votes = list_posts({
+#             'kind': 'vote',
+#             'replies_to_id': proposal['id'],
+#         }, db_conn)
+#         changed, status = get_entity_status(entity_version['status'], votes)
+#
+#         if changed:
+#             entity_version['status'] = status
+#             update_x(entity_version, db_conn)
+#             send_notices(
+#                 db_conn,
+#                 entity_id=p_entity_version['id'],
+#                 entity_kind=p_entity_version['kind'],
+#                 notice_kind=('block_proposal'
+#                              if status == 'blocked' else
+#                              'accept_proposal'),
+#                 notice_data={
+#                     'user_name': '???',  # TODO-2
+#                     'proposal_name': proposal['name'],
+#                     'entity_kind': p_entity_version['kind'],
+#                     'entity_name': entity_version['name'],
+#                 }
+#             )

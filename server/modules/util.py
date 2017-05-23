@@ -127,3 +127,14 @@ def object_diff(prev, next_):
     _(prev, next_)
 
     return diffs
+
+
+def prefix_error_names(prefix, errors):
+    """
+    ???
+    """
+
+    for error in errors:
+        if 'name' in error:
+            error['name'] = prefix + error['name']
+    return errors
