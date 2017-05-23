@@ -1,11 +1,17 @@
 from modules.memoize_redis import memoize_redis
 from modules.util import omit
-from database.entity_base import list_by_entity_ids
+from database.entity_base import list_by_entity_ids, get_version
+from database.post import list_posts
 import rethinkdb as r
 from database.entity_base import start_accepted_query
-from database.unit import deliver_unit
-from database.subject import deliver_subject
-from database.card import deliver_card
+from database.unit import deliver_unit, update_unit
+from database.subject import deliver_subject, update_subject
+from database.card import deliver_card, update_card
+
+# if something breaks the import loop, it would likely be one
+# of these files:
+from modules.notices import send_notices
+from database.user import get_user
 
 
 def instance_entities(data):
@@ -161,6 +167,12 @@ def get_entity_status(current_status, votes):
     Returns (changed, status) ... one of:
     (True, 'accepted|blocked|pending')
     (False, 'accepted|blocked|pending|declined')
+
+    TODO-2 Update this to work as described in:
+        http://docs.sagefy.org/Planning-Contributor-Ratings
+        This requires knowing two things:
+        - Number of learners the entity impacts
+        - The vote and proposal history of the contributor
     """
 
     # Make sure the entity version status is not declined or accepted
@@ -172,42 +184,45 @@ def get_entity_status(current_status, votes):
     return True, 'accepted'
 
 
-# def update_entity_statuses(db_conn, proposal):
-#     """
-#     Update the entity's status based on the vote power received.
-#     Move to accepted or blocked if qualified.
-#     TODO-2 Update this to work as described in:
-#         https://github.com/heiskr/sagefy/wiki/Planning%3A-Contributor-Ratings
-#         This requires knowing two things:
-#         - Number of learners the entity impacts
-#         - The vote and proposal history of the contributor
-#     """
-#
-#     # Get the entity version
-#     for p_entity_version in proposal['entity_versions']:
-#         tablename = '%ss' % p_entity_version['kind']
-#         version_id = p_entity_version['id']
-#         entity_version = get_version(db_conn, tablename, version_id)
-#         votes = list_posts({
-#             'kind': 'vote',
-#             'replies_to_id': proposal['id'],
-#         }, db_conn)
-#         changed, status = get_entity_status(entity_version['status'], votes)
-#
-#         if changed:
-#             entity_version['status'] = status
-#             update_x(entity_version, db_conn)
-#             send_notices(
-#                 db_conn,
-#                 entity_id=p_entity_version['id'],
-#                 entity_kind=p_entity_version['kind'],
-#                 notice_kind=('block_proposal'
-#                              if status == 'blocked' else
-#                              'accept_proposal'),
-#                 notice_data={
-#                     'user_name': '???',  # TODO-2
-#                     'proposal_name': proposal['name'],
-#                     'entity_kind': p_entity_version['kind'],
-#                     'entity_name': entity_version['name'],
-#                 }
-#             )
+def update_entity_statuses(db_conn, proposal):
+    """
+    Update the entity's status based on the vote power received.
+    Move to accepted or blocked if qualified.
+    """
+
+    # Get the entity version
+    for p_entity_version in proposal['entity_versions']:
+        entity_kind = p_entity_version['kind']
+        version_id = p_entity_version['id']
+
+        tablename = '%ss' % entity_kind
+        entity_version = get_version(db_conn, tablename, version_id)
+        votes = list_posts({
+            'kind': 'vote',
+            'replies_to_id': proposal['id'],
+        }, db_conn)
+        changed, status = get_entity_status(entity_version['status'], votes)
+
+        if changed:
+            entity_version['status'] = status
+            if entity_kind == 'card':
+                update_card(entity_version, {'status': status}, db_conn)
+            elif entity_kind == 'unit':
+                update_unit(entity_version, {'status': status}, db_conn)
+            elif entity_kind == 'subject':
+                update_subject(entity_version, {'status': status}, db_conn)
+            user = get_user({'id': proposal['user_id']}, db_conn)
+            send_notices(
+                db_conn,
+                entity_id=version_id,
+                entity_kind=entity_kind,
+                notice_kind=('block_proposal'
+                             if status == 'blocked' else
+                             'accept_proposal'),
+                notice_data={
+                    'user_name': user['name'],
+                    'proposal_name': proposal['name'],
+                    'entity_kind': entity_kind,
+                    'entity_name': entity_version['name'],
+                }
+            )
