@@ -1,11 +1,25 @@
 from database.post import insert_post
 
 
-def test_user_id(db_conn, posts_table):
+def create_unit_ad(db_conn, units_table):
+    """
+    Create a unit for the following tests.
+    """
+
+    units_table.insert({
+        'user_id': 'abcd1234',
+        'entity_id': 'A',
+        'id': 'D',
+        'status': 'accepted',
+    }).run(db_conn)
+
+
+def test_user_id(db_conn, posts_table, units_table):
     """
     Expect a proposal to require a user id.
     """
 
+    create_unit_ad(db_conn, units_table)
     proposal, errors = insert_post({
         'kind': 'proposal',
         'topic_id': 'B',
@@ -21,11 +35,12 @@ def test_user_id(db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_topic(db_conn, posts_table):
+def test_topic(db_conn, posts_table, units_table):
     """
     Expect a proposal to require a topic id.
     """
 
+    create_unit_ad(db_conn, units_table)
     proposal, errors = insert_post({
         'kind': 'proposal',
         'user_id': 'A',
@@ -41,11 +56,12 @@ def test_topic(db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_body(db_conn, posts_table):
+def test_body(db_conn, posts_table, units_table):
     """
     Expect a proposal to require a body.
     """
 
+    create_unit_ad(db_conn, units_table)
     proposal, errors = insert_post({
         'kind': 'proposal',
         'user_id': 'A',
@@ -61,11 +77,12 @@ def test_body(db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_replies(db_conn, posts_table):
+def test_replies(db_conn, posts_table, units_table):
     """
     Expect a proposal to allow a replies to id.
     """
 
+    create_unit_ad(db_conn, units_table)
     prev, errors = insert_post({
         'kind': 'post',
         'user_id': 'A',
@@ -86,11 +103,12 @@ def test_replies(db_conn, posts_table):
     assert len(errors) == 0
 
 
-def test_entity(db_conn, posts_table):
+def test_entity(db_conn, posts_table, units_table):
     """
     Expect a proposal to require an entity version id.
     """
 
+    create_unit_ad(db_conn, units_table)
     proposal, errors = insert_post({
         'kind': 'proposal',
         'user_id': 'A',

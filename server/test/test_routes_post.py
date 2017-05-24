@@ -212,13 +212,11 @@ def test_create_post(db_conn, users_table, topics_table, posts_table,
         'cookies': {'session_id': session},
         'params': {
             # Should default to > 'kind': 'post',
-            'post': {
-                'body': '''A Modest Proposal for Preventing the Children of
-                    Poor People From Being a Burthen to Their Parents or
-                    Country, and for Making Them Beneficial to the Publick.''',
-                'kind': 'post',
-                'topic_id': 'wxyz7890',
-            }
+            'body': '''A Modest Proposal for Preventing the Children of
+                Poor People From Being a Burthen to Their Parents or
+                Country, and for Making Them Beneficial to the Publick.''',
+            'kind': 'post',
+            'topic_id': 'wxyz7890',
         },
         'db_conn': db_conn
     }
@@ -237,10 +235,8 @@ def test_create_post_errors(db_conn, users_table, topics_table,
     request = {
         'cookies': {'session_id': session},
         'params': {
-            'post': {
-                'kind': 'post',
-                'topic_id': 'wxyz7890',
-            }
+            'kind': 'post',
+            'topic_id': 'wxyz7890',
         },
         'db_conn': db_conn
     }
@@ -283,20 +279,11 @@ def test_create_post_proposal(db_conn, users_table, topics_table,
     create_topic_in_db(topics_table, db_conn)
     request = {
         'params': {
-            'post': {
-                'kind': 'proposal',
-                'name': 'New Unit',
-                'body': '''A Modest Proposal for Preventing the Children of
-                    Poor People From Being a Burthen to Their Parents or
-                    Country, and for Making Them Beneficial to the Publick.''',
-            },
-            'unit': {
-                'name': 'Satire',
-                'body': '''Learn the use of humor, irony, exaggeration, or
-                ridicule to expose and criticize people's
-                stupidity or vices.''',
-                'tags': ['literature']
-            },
+            'kind': 'proposal',
+            'name': 'New Unit',
+            'body': '''A Modest Proposal for Preventing the Children of
+                Poor People From Being a Burthen to Their Parents or
+                Country, and for Making Them Beneficial to the Publick.''',
         },
         'db_conn': db_conn
     }
@@ -338,9 +325,7 @@ def test_update_post_log_in(db_conn, users_table, topics_table,
     create_post_in_db(posts_table, db_conn)
     request = {
         'params': {
-            'post': {
-                'body': 'Update.'
-            }
+            'body': 'Update.'
         },
         'db_conn': db_conn
     }
@@ -362,9 +347,7 @@ def test_update_post_author(db_conn, users_table, topics_table,
     request = {
         'cookies': {'session_id': session},
         'params': {
-            'post': {
-                'body': 'Update.'
-            }
+            'body': 'Update.'
         },
         'db_conn': db_conn
     }
@@ -385,9 +368,7 @@ def test_update_post_body(db_conn, users_table, topics_table,
     request = {
         'cookies': {'session_id': session},
         'params': {
-            'post': {
-                'body': 'Update.'
-            }
+            'body': 'Update.'
         },
         'db_conn': db_conn,
     }

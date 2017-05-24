@@ -51,48 +51,16 @@ def test_create_topic_log_in(db_conn, users_table, topics_table,
 
     request = {
         'params': {
-            'topic': {
-                'name': 'An entity',
-                'entity': {
-                    'kind': 'unit',
-                    'id': 'dfgh4567'
-                },
+            'name': 'An entity',
+            'entity': {
+                'kind': 'unit',
+                'id': 'dfgh4567'
             },
-            'post': {
-                'body': 'Here\'s a pear.',
-                'kind': 'post'
-            }
         },
         'db_conn': db_conn
     }
     code, response = routes.topic.create_topic_route(request)
     assert code == 401
-    assert 'errors' in response
-
-
-def test_create_topic_no_post(db_conn, users_table, topics_table,
-                              posts_table, session):
-    """
-    Expect create topic to fail without post.
-    """
-
-    request = {
-        'params': {
-            'topic': {
-                'name': 'An entity',
-                'entity': {
-                    'kind': 'unit',
-                    'id': 'dfgh4567'
-                },
-            }
-        },
-        'cookies': {
-            'session_id': session,
-        },
-        'db_conn': db_conn
-    }
-    code, response = routes.topic.create_topic_route(request)
-    assert code == 400
     assert 'errors' in response
 
 
@@ -108,10 +76,8 @@ def test_topic_update(db_conn, users_table, topics_table,
             'session_id': session
         },
         'params': {
-            'topic': {
-                'name': 'Another entity',
-                'topic_id': 'wxyz7890',
-            }
+            'name': 'Another entity',
+            'topic_id': 'wxyz7890',
         },
         'db_conn': db_conn
     }
@@ -132,10 +98,8 @@ def test_update_topic_author(db_conn, users_table, topics_table,
             'session_id': session
         },
         'params': {
-            'topic': {
-                'name': 'Another entity',
-                'topic_id': 'wxyz7890',
-            }
+            'name': 'Another entity',
+            'topic_id': 'wxyz7890',
         },
         'db_conn': db_conn
     }

@@ -18,6 +18,7 @@ schema = extend({}, default, {
                 'decline_proposal',
                 'accept_proposal',
                 'create_post',
+                'create_vote',
                 'come_back',
             ))
         },

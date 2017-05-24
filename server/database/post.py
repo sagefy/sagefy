@@ -65,9 +65,6 @@ def validate_post(data, db_conn):
         errors += is_valid_topic_id(data)
     if not errors:
         errors += is_valid_reply(data, db_conn)
-    if data['kind'] == 'proposal':
-        if not errors:
-            errors += is_valid_version(data)
     if data['kind'] == 'vote':
         if not errors:
             errors += is_unique_vote(data, db_conn)
@@ -160,14 +157,6 @@ def is_valid_reply(data, db_conn):
             return [{'message': 'Replying to a non-existant post.'}]
         if post_data['topic_id'] != data['topic_id']:
             return [{'message': 'A reply must be in the same topic.'}]
-    return []
-
-
-def is_valid_version(data):
-    """
-    TODO-2 Ensure this is a valid version of the entity. (circular)
-    This is checked on the create/update form already.
-    """
     return []
 
 

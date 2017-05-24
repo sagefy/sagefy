@@ -1,7 +1,27 @@
 from schemas.post import schema as post_schema
+from database.entity_base import get_version
 from modules.validations import is_required, is_string, is_one_of, is_list, \
     has_min_length
 from modules.util import extend
+
+
+def validate_entity_versions(schema, data, db_conn):
+    """
+    Ensure all the entity versions exist.
+    """
+
+    for p_entity_version in data['entity_versions']:
+        tablename = '%ss' % p_entity_version['kind']
+        version_id = p_entity_version['id']
+        entity_version = get_version(db_conn, tablename, version_id)
+        if not entity_version:
+            return [{
+                'name': 'entity_versions',
+                'message': 'Not a valid version: {version_id}'.format(
+                    version_id=version_id
+                ),
+            }]
+    return []
 
 
 schema = extend({}, post_schema, {
@@ -20,4 +40,5 @@ schema = extend({}, post_schema, {
             }
         },
     },
+    'validate': [validate_entity_versions],
 })

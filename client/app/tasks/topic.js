@@ -46,7 +46,7 @@ module.exports = tasks.add({
         return request({
             method: 'PUT',
             url: `/s/topics/${data.topic.id}`,
-            data: data,
+            data: data.topic,
         })
             .then((response) => {
                 dispatch({

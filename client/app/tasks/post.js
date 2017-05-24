@@ -5,6 +5,10 @@ const request = require('../modules/request')
 
 module.exports = tasks.add({
     listPosts(id) {
+        // TODO get topic
+        // TODO get users... ask for size of 48
+        // TODO get the entity for the topic
+        // TODO get entity versions for proposals
         dispatch({type: 'LIST_POSTS', id})
         return request({
             method: 'GET',

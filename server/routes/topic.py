@@ -91,7 +91,7 @@ def update_topic_route(request, topic_id):
         return abort(403)
 
     # ## STEP 2) Validate and save topic instance ## #
-    topic_data = request['params']['topic']
+    topic_data = request['params']
     topic, errors = update_topic(topic, topic_data, db_conn)
     if errors:
         return 400, {

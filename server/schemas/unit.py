@@ -34,7 +34,6 @@ def ensure_no_cycles(schema, data, db_conn):
 
     if find_requires_cycle('units', data, db_conn):
         return [{'message': 'Found a cycle in requires.'}]
-
     return []
 
 
