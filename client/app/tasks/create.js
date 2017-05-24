@@ -130,16 +130,15 @@ module.exports = tasks.add({
                 kind: 'proposal',
                 body: 'Add Units to Subject',
             },
+            /* TODO
             units: state.create.units.filter(unit => !unit.entity_id),
             subjects: [{
                 entity_id: selectedSubject.id,
-                // TODO 43827 other fields should populate from prev version
                 members: selectedSubject.units.map(unit => ({
                     kind: 'unit',
                     id: unit.entity_id,
-                    // TODO 54382 some haven't been created yet...
                 }))
-            }],
+            }], */
         }
         return tasks.createTopic(data)
     },
