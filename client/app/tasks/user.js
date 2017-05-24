@@ -124,6 +124,41 @@ module.exports = tasks.add({
             })
     },
 
+    listUsers(userIds, opts = {}) {
+        const size = opts.size || 48
+        dispatch({type: 'LIST_USERS', userIds, size})
+        return request({
+            method: 'GET',
+            url: '/s/users',
+            data: {
+                user_ids: userIds.join(','),
+                size
+            },
+        })
+            .then((response) => {
+                const {users} = response
+                users.forEach(user => {
+                    dispatch({
+                        type: 'ADD_USER',
+                        message: 'get user success',
+                        user,
+                    })
+                })
+                const {avatars} = response
+                dispatch({
+                    type: 'ADD_USER_AVATARS',
+                    avatars,
+                })
+            })
+            .catch((errors) => {
+                dispatch({
+                    type: 'SET_ERRORS',
+                    message: 'list users failure',
+                    errors,
+                })
+            })
+    },
+
     logInUser(data) {
         dispatch({
             type: 'SET_SENDING_ON'

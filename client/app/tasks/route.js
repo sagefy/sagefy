@@ -88,12 +88,12 @@ module.exports = tasks.add({
     },
 
     openUpdateTopic(id) {
-        return tasks.listPosts(id)
+        return tasks.listPostsForTopic(id)
     },
 
     openTopicRoute(id) {
         return Promise.all([
-            tasks.listPosts(id),
+            tasks.listPostsForTopic(id),
             tasks.askFollow(id),
         ])
     },
@@ -111,7 +111,7 @@ module.exports = tasks.add({
     },
 
     openUpdatePost(topicID/* , postID */) {
-        return tasks.listPosts(topicID)
+        return tasks.listPostsForTopic(topicID)
     },
 
     openSearch() {

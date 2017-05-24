@@ -3,12 +3,37 @@ const {dispatch} = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
+function flatten(arr) {
+    return arr.reduce(
+        (acc, val) => acc.concat(
+            Array.isArray(val) ? flatten(val) : val
+        ),
+        []
+    )
+}
+
 module.exports = tasks.add({
+    listPostsForTopic(id) {
+        return tasks.listPosts(id)
+            .then((response) => {
+                const userIds = response.posts.map(post => post.user_id)
+                const entityVersions = flatten(response.posts
+                    .filter(post => post.kind === 'proposal')
+                    .map(post => post.entity_versions))
+                return Promise.all([
+                    tasks.getTopic(id)
+                        .then((response) => {
+                            const kind = response.topic.entity.kind
+                            const entityId = response.topic.entity.id
+                            return tasks.getEntity(kind, entityId)
+                        }),
+                    tasks.listUsers(userIds, {size: 48}),
+                    tasks.listEntityVersionsByTopic(id, entityVersions)
+                ])
+            })
+    },
+
     listPosts(id) {
-        // TODO get topic
-        // TODO get users... ask for size of 48
-        // TODO get the entity for the topic
-        // TODO get entity versions for proposals
         dispatch({type: 'LIST_POSTS', id})
         return request({
             method: 'GET',
@@ -16,53 +41,14 @@ module.exports = tasks.add({
             data: {},
         })
             .then((response) => {
-                dispatch({
-                    type: 'ADD_TOPIC',
-                    topic: response.topic,
-                    id,
-                })
-
                 const posts = response.posts
-                posts.forEach(post => {
-                    const user = response.users[post.user_id]
-                    post.user_name = user.name
-                    post.user_avatar = user.avatar
-                    if (!response.entity_versions) { return }
-                    const entityVersions = response.entity_versions[post.id]
-                    if (entityVersions) {
-                        post.entityVersionsFull =
-                        entityVersions.map((data, index) => {
-                            return Object.assign({}, data, {
-                                entityKind: post.entity_versions[index].kind,
-                            })
-                        })
-                    }
-                })
-
                 dispatch({
                     type: 'ADD_TOPIC_POSTS',
                     message: 'list posts success',
                     topic_id: id,
                     posts,
                 })
-
-                if ('card' in response) {
-                    dispatch({
-                        type: 'LIST_POSTS_SUCCESS',
-                        entity: 'card',
-                        card: response.card,
-                    })
-                } else if ('unit' in response) {
-                    dispatch({
-                        type: 'ADD_UNIT',
-                        unit: response.unit,
-                    })
-                } else if ('subject' in response) {
-                    dispatch({
-                        type: 'ADD_SUBJECT',
-                        subject: response.subject,
-                    })
-                }
+                return response
             })
             .catch((errors) => {
                 dispatch({
@@ -82,7 +68,7 @@ module.exports = tasks.add({
         return request({
             method: 'POST',
             url: `/s/topics/${topicId}/posts`,
-            data: data,
+            data: data.post,
         })
             .then((response) => {
                 dispatch({
@@ -118,7 +104,7 @@ module.exports = tasks.add({
         return request({
             method: 'PUT',
             url: `/s/topics/${topicId}/posts/${id}`,
-            data: data,
+            data: data.post,
         })
             .then((response) => {
                 dispatch({

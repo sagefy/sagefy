@@ -57,7 +57,7 @@ module.exports = (data, currentUserID) => {
             a(
                 {href: `/users/${data.user_id}`},
                 img({
-                    src: data.user_avatar || '',
+                    src: data.user.avatar || '',
                     width: 48,
                     height: 48
                 })
@@ -71,7 +71,7 @@ module.exports = (data, currentUserID) => {
                     className: 'post__name',
                     href: `/users/${data.user_id}`,
                 },
-                data.user_name || '???'
+                data.user.name || '???'
             ),
             div(
                 data.replies_to_id ? a(

@@ -31,7 +31,15 @@ module.exports = (data) => {
             )
         ),
 
-        ul({className: 'posts'}, posts.map(p => post(p, data.currentUserID))),
+        ul({className: 'posts'}, posts.map((postData) => {
+            const user = data.users[postData.user_id]
+            return post(Object.assign({}, postData, {
+                user: {
+                    name: user && user.name,
+                    avatar: data.userAvatars[postData.user_id],
+                },
+            }), data.currentUserID)
+        })),
 
         div(
             {className: 'topic__actions'},

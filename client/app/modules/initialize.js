@@ -10,20 +10,7 @@ const {setTitle} = require('../modules/auxiliaries')
 startGoogleAnalytics()
 
 // Require all tasks
-require('../tasks/card')
-require('../tasks/follow')
-require('../tasks/form')
-require('../tasks/menu')
-require('../tasks/notice')
-require('../tasks/post')
-require('../tasks/route')
-require('../tasks/search')
-require('../tasks/subject')
-require('../tasks/topic')
-require('../tasks/unit')
-require('../tasks/user')
-require('../tasks/user_subjects')
-require('../tasks/create')
+require('../tasks/index')
 
 // Require all broker events
 require('../views/index.vnt')

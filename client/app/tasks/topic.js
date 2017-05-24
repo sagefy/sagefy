@@ -4,6 +4,30 @@ const request = require('../modules/request')
 const {shallowCopy} = require('../modules/utilities')
 
 module.exports = tasks.add({
+    getTopic(id) {
+        dispatch({type: 'GET_TOPIC', id})
+        return request({
+            method: 'GET',
+            url: `/s/topics/${id}`
+        })
+            .then((response) => {
+                dispatch({
+                    type: 'ADD_TOPIC',
+                    message: 'create topic success',
+                    topic: response.topic,
+                    id: response.topic.id,
+                })
+                return response
+            })
+            .catch((errors) => {
+                dispatch({
+                    type: 'SET_ERRORS',
+                    message: 'get topic failure',
+                    errors,
+                })
+            })
+    },
+
     createTopic(data) {
         dispatch({
             type: 'SET_SENDING_ON'

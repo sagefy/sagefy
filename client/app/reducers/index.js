@@ -45,5 +45,6 @@ module.exports = combineReducers({
     unitVersions: require('./unitVersions'),
     units: require('./units'),
     users: require('./users'),
+    userAvatars: require('./userAvatars'),
     userSubjects: require('./userSubjects'),
 })

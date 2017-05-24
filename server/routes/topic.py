@@ -3,12 +3,32 @@ Routes for the discussion platform.
 Includes topics.
 """
 
-from framework.routes import post, put, abort
+from framework.routes import get, post, put, abort
 from framework.session import get_current_user
 from modules.notices import send_notices
 from database.follow import insert_follow
 from database.topic import get_topic, deliver_topic, \
     update_topic, insert_topic
+from modules.content import get as c
+
+
+@get('/s/topics/{topic_id}')
+def get_topic_route(request, topic_id):
+    """
+    Get a topic
+    """
+
+    db_conn = request['db_conn']
+    topic = get_topic({'id': topic_id}, db_conn)
+    if not topic:
+        return 404, {
+            'errors': [{
+                'name': 'topic_id',
+                'message': c('no_topic'),
+            }],
+            'ref': 'lWX0Scbdx5y8YcHA7wm7Jfm4',
+        }
+    return 200, {'topic': deliver_topic(topic)}
 
 
 @post('/s/topics')
