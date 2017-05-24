@@ -1,7 +1,6 @@
 from modules.content import get as c
 from framework.routes import get, post, put, abort
 from framework.session import get_current_user
-from modules.util import pick
 from database.follow import insert_follow
 from database.topic import get_topic
 from database.post import deliver_post, insert_post, \
@@ -143,14 +142,8 @@ def update_post_route(request, topic_id, post_id):
         return abort(403)
     post_kind = post_['kind']
 
-    # ## STEP 2) Limit the scope of changes ## #
+    # ## STEP 2) Validate and save post instance ## #
     post_data = request['params']
-    if post_kind is 'post' or post_kind is 'proposal':
-        post_data = pick(post_data, ('body',))
-    elif post_kind is 'vote':
-        post_data = pick(post_data, ('body', 'response',))
-
-    # ## STEP 3) Validate and save post instance ## #
     post_, errors = update_post(post_, post_data, db_conn)
     if errors:
         return 400, {
@@ -158,12 +151,12 @@ def update_post_route(request, topic_id, post_id):
             'ref': 'E4LFwRv2WEJZks7use7TCpww'
         }
 
-    # ## STEP 4) Make updates based on proposal / vote status ## #
+    # ## STEP 3) Make updates based on proposal / vote status ## #
     if post_kind == 'proposal':
         update_entity_statuses(db_conn, post_)
     if post_kind == 'vote':
         proposal = get_post({'id': post_['replies_to_id']}, db_conn)
         update_entity_statuses(db_conn, proposal)
 
-    # ## STEP 5) Return response ## #
+    # ## STEP 4) Return response ## #
     return 200, {'post': deliver_post(post_)}

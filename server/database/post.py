@@ -1,5 +1,5 @@
 from framework.elasticsearch import es
-from modules.util import json_prep, omit, extend
+from modules.util import json_prep, pick, omit
 from schemas.post import schema as post_schema
 from schemas.proposal import schema as proposal_schema
 from schemas.vote import schema as vote_schema
@@ -40,11 +40,11 @@ def update_post(prev_data, data, db_conn):
     """
 
     schema = get_post_schema(data)
-    data2 = omit(data, ('id', 'created', 'modified'))
-    data2 = extend({}, prev_data, data2)
-    data, errors = validate_post(data2, db_conn)
-    if errors:
-        return data, errors
+    post_kind = prev_data['kind']
+    if post_kind is 'post' or post_kind is 'proposal':
+        data = pick(data, ('body',))
+    elif post_kind is 'vote':
+        data = pick(data, ('body', 'response',))
     data, errors = update_document(schema, prev_data, data, db_conn)
     if not errors:
         add_post_to_es(data, db_conn)
