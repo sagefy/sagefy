@@ -22,7 +22,7 @@ schema = {
             'bundle': update_modified
         }
     },
-    'validate': [],
+    'validate': tuple(),
 }
 
 

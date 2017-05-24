@@ -1,4 +1,5 @@
 from schemas.post import schema as post_schema
+from schemas.post import is_valid_topic_id, is_valid_reply
 from database.entity_base import get_version
 from modules.validations import is_required, is_string, is_one_of, is_list, \
     has_min_length
@@ -40,5 +41,5 @@ schema = extend({}, post_schema, {
             }
         },
     },
-    'validate': [validate_entity_versions],
+    'validate': (is_valid_topic_id, is_valid_reply, validate_entity_versions),
 })

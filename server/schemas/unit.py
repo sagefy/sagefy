@@ -48,5 +48,5 @@ schema = extend({}, entity_schema, {
             'default': []
         },
     },
-    'validate': [ensure_requires, ensure_no_cycles],
+    'validate': (ensure_requires, ensure_no_cycles),
 })

@@ -4,9 +4,8 @@ from schemas.post import schema as post_schema
 from schemas.proposal import schema as proposal_schema
 from schemas.vote import schema as vote_schema
 from database.util import insert_document, update_document, deliver_fields, \
-    get_document, prepare_document
+    get_document
 import rethinkdb as r
-from database.entity_base import get_version
 
 
 def get_post_schema(data):
@@ -25,9 +24,6 @@ def insert_post(data, db_conn):
     """
 
     schema = get_post_schema(data)
-    data, errors = validate_post(data, db_conn)
-    if errors:
-        return data, errors
     data, errors = insert_document(schema, data, db_conn)
     if not errors:
         add_post_to_es(data, db_conn)
@@ -48,28 +44,6 @@ def update_post(prev_data, data, db_conn):
     data, errors = update_document(schema, prev_data, data, db_conn)
     if not errors:
         add_post_to_es(data, db_conn)
-    return data, errors
-
-
-def validate_post(data, db_conn):
-    """
-    Validate a post before saving it against the schema.
-    """
-
-    # TODO-2 move these to schema-level 'validate' fns instead.
-    # See database/util.py: for fn in schema['validate']:
-
-    schema = get_post_schema(data)
-    data, errors = prepare_document(schema, data, db_conn)
-    if not errors:
-        errors += is_valid_topic_id(data)
-    if not errors:
-        errors += is_valid_reply(data, db_conn)
-    if data['kind'] == 'vote':
-        if not errors:
-            errors += is_unique_vote(data, db_conn)
-        if not errors:
-            errors += is_valid_reply_kind(data, db_conn)
     return data, errors
 
 
@@ -129,73 +103,3 @@ def add_post_to_es(post, db_conn):
         body=data,
         id=post['id'],
     )
-
-
-def is_valid_topic_id(data):
-    """
-    TODO-3 Ensure the topic is valid.
-           Is there a way to allow for 'in memory only' topic?
-    (We're currently validating this in the route for now...)
-    """
-
-    return []
-
-
-def is_valid_reply(data, db_conn):
-    """
-    A reply must belong to the same topic.
-    - A post can reply to a post, proposal, or vote.
-    - A proposal can reply to a post, proposal, or vote.
-    - A vote may only reply to a proposal.
-    """
-
-    if data.get('replies_to_id'):
-        query = (r.table(post_schema['tablename'])
-                  .get(data['replies_to_id']))
-        post_data = query.run(db_conn)
-        if not post_data:
-            return [{'message': 'Replying to a non-existant post.'}]
-        if post_data['topic_id'] != data['topic_id']:
-            return [{'message': 'A reply must be in the same topic.'}]
-    return []
-
-
-def is_unique_vote(data, db_conn):
-    """
-    Ensure a user can only vote once per proposal.
-    """
-
-    query = (r.table(post_schema['tablename'])
-              .filter(r.row['user_id'] == data['user_id'])
-              .filter(r.row['replies_to_id'] == data['replies_to_id'])
-              .filter(r.row['kind'] == 'vote'))
-    documents = [doc for doc in query.run(db_conn)]
-    if documents:
-        return [{'message': 'You already have a vote on this proposal.'}]
-    return []
-
-
-def is_valid_reply_kind(data, db_conn):
-    """
-    A vote can reply to a proposal.
-    A vote cannot reply to a proposal that is accepted or declined.
-    A user cannot vote on their own proposal.
-    """
-
-    query = (r.table(post_schema['tablename'])
-              .get(data['replies_to_id']))
-    proposal_data = query.run(db_conn)
-    if not proposal_data:
-        return [{'message': 'No proposal found.'}]
-    if proposal_data['kind'] != 'proposal':
-        return [{'message': 'A vote must reply to a proposal.'}]
-    if proposal_data['user_id'] == data['user_id']:
-        return [{'message': 'You cannot vote on your own proposal.'}]
-    tablename = '%ss' % proposal_data['entity_versions'][0]['kind']
-    version_id = proposal_data['entity_versions'][0]['id']
-    entity_version = get_version(db_conn, tablename, version_id)
-    if not entity_version:
-        return [{'message': 'No entity version for proposal.'}]
-    if entity_version['status'] in ('accepted', 'declined'):
-        return [{'message': 'Proposal is already complete.'}]
-    return []

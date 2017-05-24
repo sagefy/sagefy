@@ -86,5 +86,5 @@ schema = extend({}, entity_schema, {
             }
         }
     },
-    'validate': [is_valid_members, ensure_no_cycles],
+    'validate': (is_valid_members, ensure_no_cycles),
 })

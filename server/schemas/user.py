@@ -70,5 +70,5 @@ schema = extend({}, default, {
             }
         }
     },
-    'validate': [],
+    'validate': tuple(),
 })

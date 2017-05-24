@@ -70,5 +70,5 @@ schema = extend({}, entity_schema, {
                           ))
         },
     },
-    'validate': [is_valid_unit, ensure_requires, ensure_no_cycles],
+    'validate': (is_valid_unit, ensure_requires, ensure_no_cycles),
 })
