@@ -28,6 +28,15 @@ module.exports = tasks.add({
             })
     },
 
+    createTopicWithPost(data) {
+        return tasks.createTopic(data)
+            .then((response) => {
+                const post = shallowCopy(data.post)
+                post.topic_id = response.topic.id
+                return tasks.createPost({post})
+            })
+    },
+
     createTopic(data) {
         dispatch({
             type: 'SET_SENDING_ON'
@@ -48,9 +57,7 @@ module.exports = tasks.add({
                 dispatch({
                     type: 'SET_SENDING_OFF'
                 })
-                const post = shallowCopy(data.post)
-                post.topic_id = response.topic.id
-                return tasks.createPost({post})
+                return response
             })
             .catch((errors) => {
                 dispatch({

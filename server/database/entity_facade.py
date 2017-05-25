@@ -219,7 +219,7 @@ def update_entity_statuses(db_conn, proposal):
                              'accept_proposal'),
                 notice_data={
                     'user_name': user['name'],
-                    'proposal_name': proposal['name'],
+                    'proposal_name': proposal['body'],
                     'entity_kind': entity_kind,
                     'entity_name': entity_version['name'],
                 }

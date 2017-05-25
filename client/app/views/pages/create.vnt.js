@@ -34,11 +34,11 @@ module.exports = broker.add({
                 kind: 'proposal',
                 body: `Create a Subject: ${values.name}`,
             },
-            subjects: [{
+            subject: {
                 name: values.name,
                 body: values.body,
                 members: values.members,
-            }],
+            },
         }
         tasks.createSubjectProposal(data)
     },

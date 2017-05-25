@@ -196,4 +196,24 @@ module.exports = tasks.add({
                 })
             })
     },
+
+    createNewSubjectVersion(data) {
+        dispatch({type: 'CREATE_SUBJECT_VERSION'})
+        return request({
+            method: 'POST',
+            url: '/s/subjects/versions',
+            data,
+        })
+            .then((response) => {
+                dispatch({type: 'CREATE_SUBJECT_VERSION_SUCCESS'})
+                return response
+            })
+            .catch((errors) => {
+                dispatch({
+                    type: 'SET_ERRORS',
+                    message: 'create new subject version failure',
+                    errors,
+                })
+            })
+    }
 })

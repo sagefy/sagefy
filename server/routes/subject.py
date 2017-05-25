@@ -324,7 +324,7 @@ def create_new_subject_version_route(request):
     if 'entity_id' in data:
         return abort(403)
     data['user_id'] = current_user['id']
-    subject, errors = insert_subject(data, db_conn)
+    subject, errors = insert_subject(db_conn, data)
     if len(errors):
         return 400, {
             'errors': errors,
@@ -351,7 +351,7 @@ def create_existing_subject_version_route(request, subject_id):
     if not current_subject:
         return abort(404)
     subject_data = extend({}, current_subject, next_data)
-    subject, errors = insert_subject(subject_data, db_conn)
+    subject, errors = insert_subject(db_conn, subject_data)
     if len(errors):
         return 400, {
             'errors': errors,

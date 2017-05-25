@@ -25,6 +25,7 @@ develop-eggs
 dist
 eggs
 htmlcov
+html/*
 kibana
 lib
 lib64

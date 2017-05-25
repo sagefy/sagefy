@@ -83,7 +83,7 @@ module.exports = (data, currentUserID) => {
                     ' In Reply'
                 ) : null,
                 data.replies_to_id ? ' ' : null,
-                data.kind === 'proposal' ? h3('Proposal: ' + data.name) : null,
+                data.kind === 'proposal' ? h3('Proposal') : null,
                 voteResponse(data.response),
                 data.body
             ),

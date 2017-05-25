@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
-const {dispatch, getState} = require('../modules/store')
+const {dispatch /* , getState */} = require('../modules/store')
 const tasks = require('../modules/tasks')
+const {copy} = require('../modules/utilities')
 // const request = require('../modules/request')
 
 module.exports = tasks.add({
@@ -13,7 +14,21 @@ module.exports = tasks.add({
     },
 
     createSubjectProposal(data) {
-        return tasks.createTopic(data)
+        let topicId
+        tasks.createTopic({topic: data.topic})
+            .then((topicResponse) => {
+                topicId = topicResponse.topic.id
+                return tasks.createNewSubjectVersion(data.subject)
+            })
+            .then((subjectResponse) => {
+                const post = copy(data.post)
+                post.topic_id = topicId
+                post.entity_versions = [{
+                    kind: 'subject',
+                    id: subjectResponse.version.id
+                }]
+                return tasks.createPost({post})
+            })
     },
 
     createSubjectData(values) {
@@ -125,7 +140,7 @@ module.exports = tasks.add({
     },
 
     createUnitsProposal() {
-        const state = getState()
+        /* const state = getState()
         const {selectedSubject} = state.create
         const data = {
             topic: {
@@ -147,9 +162,8 @@ module.exports = tasks.add({
                     kind: 'unit',
                     id: unit.entity_id,
                 }))
-            }], */
-        }
-        return tasks.createTopic(data)
+            }],
+        } */
     },
 
     createCardsProposal() {

@@ -23,7 +23,7 @@ module.exports = broker.add({
                 delete values.entity
             }
         } */
-        tasks.createTopic(values)
+        tasks.createTopicWithPost(values)
     },
 
     'submit #topic-form.update form'(e, el) {
