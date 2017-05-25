@@ -52,24 +52,33 @@ module.exports = tasks.add({
     },
 
     removeMemberFromCreateSubject({id}) {
-        dispatch({
-            type: 'REMOVE_MEMBER_FROM_CREATE_SUBJECT',
-            id,
-        })
+        // TODO-2 switch to undo
+        if(window.confirm('Remove member?')) {  // eslint-disable-line
+            dispatch({
+                type: 'REMOVE_MEMBER_FROM_CREATE_SUBJECT',
+                id,
+            })
+        }
     },
 
     removeUnitFromSubject({index}) {
-        dispatch({
-            type: 'REMOVE_UNIT_FROM_SUBJECT',
-            index,
-        })
+        // TODO-2 switch to undo
+        if(window.confirm('Remove unit?')) {  // eslint-disable-line
+            dispatch({
+                type: 'REMOVE_UNIT_FROM_SUBJECT',
+                index,
+            })
+        }
     },
 
     removeCardFromUnit({index}) {
-        dispatch({
-            type: 'REMOVE_CARD_FROM_UNIT',
-            index,
-        })
+        // TODO-2 switch to undo
+        if(window.confirm('Remove card?')) {  // eslint-disable-line
+            dispatch({
+                type: 'REMOVE_CARD_FROM_UNIT',
+                index,
+            })
+        }
     },
 
     createChooseSubjectForUnits({id, name}) {
