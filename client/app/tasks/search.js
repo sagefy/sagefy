@@ -5,7 +5,7 @@ const {getState, dispatch} = require('../modules/store')
 module.exports = tasks.add({
     search({q, kind, skip = 0, limit = 10, order}) {
         if (q !== getState().searchQuery) {
-            dispatch({type: 'RESET_SEARCH_RESULTS'})
+            dispatch({type: 'RESET_SEARCH'})
         }
         dispatch({
             type: 'SET_SEARCH_QUERY',

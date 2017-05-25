@@ -26,12 +26,9 @@ const routes = [
 
 module.exports = tasks.add({
     onRoute(path) {
-        dispatch({
-            type: 'RESET_FORM_DATA'
-        })
-        dispatch({
-            type: 'RESET_ERRORS'
-        })
+        dispatch({type: 'RESET_FORM_DATA'})
+        dispatch({type: 'RESET_ERRORS'})
+        dispatch({type: 'RESET_SEARCH'})
         for (const route of routes) {
             const args = matchesRoute(path, route.path)
             if (args) {
