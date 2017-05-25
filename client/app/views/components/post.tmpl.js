@@ -1,4 +1,4 @@
-const {li, div, img, a, span, h3} = require('../../modules/tags')
+const {li, div, img, a, span, h3, p} = require('../../modules/tags')
 const {timeAgo} = require('../../modules/auxiliaries')
 const icon = require('./icon.tmpl')
 const previewCard = require('./preview_card.tmpl')
@@ -88,6 +88,11 @@ module.exports = (data, currentUserID) => {
                 data.body
             ),
             data.kind === 'proposal' ? renderProposal(data) : null,
+            data.kind === 'proposal' ? p(a(
+                {href: '/create'},
+                icon('create'),
+                ' Create another proposal'
+            )) : null,
             div(
                 {className: 'post__footer'},
                 currentUserID === data.user_id ? a(
