@@ -22,6 +22,8 @@ Crap I Shouldn't Need to Do
     sudo nginx -s stop
     sudo nginx -c /var/www/setup/nginx.conf
     pm2 start /var/www/client/app/index.server.js
+    cd /var/www/server
+    python3 dev_data.py
     cd /var/www/client
     pm2 start npm -- start
     pm2 logs
