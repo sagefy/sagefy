@@ -1,8 +1,7 @@
 /* eslint-disable camelcase */
-const {dispatch /* , getState */} = require('../modules/store')
+const {dispatch, getState} = require('../modules/store')
 const tasks = require('../modules/tasks')
 const {copy} = require('../modules/utilities')
-// const request = require('../modules/request')
 
 module.exports = tasks.add({
     resetCreate() {
@@ -11,24 +10,6 @@ module.exports = tasks.add({
 
     updateCreateRoute({kind, step}) {
         dispatch({type: 'UPDATE_CREATE_ROUTE', kind, step})
-    },
-
-    createSubjectProposal(data) {
-        let topicId
-        tasks.createTopic({topic: data.topic})
-            .then((topicResponse) => {
-                topicId = topicResponse.topic.id
-                return tasks.createNewSubjectVersion(data.subject)
-            })
-            .then((subjectResponse) => {
-                const post = copy(data.post)
-                post.topic_id = topicId
-                post.entity_versions = [{
-                    kind: 'subject',
-                    id: subjectResponse.version.id
-                }]
-                return tasks.createPost({post})
-            })
     },
 
     createSubjectData(values) {
@@ -139,34 +120,97 @@ module.exports = tasks.add({
         })
     },
 
+    createSubjectProposal(data) {
+        let topicId
+        tasks.createTopic({topic: data.topic})
+            .then((topicResponse) => {
+                topicId = topicResponse.topic.id
+                return tasks.createNewSubjectVersion(data.subject)
+            })
+            .then((subjectResponse) => {
+                const post = copy(data.post)
+                post.topic_id = topicId
+                post.entity_versions = [{
+                    kind: 'subject',
+                    id: subjectResponse.version.id
+                }]
+                return tasks.createPost({post})
+            })
+    },
+
     createUnitsProposal() {
         /* const state = getState()
         const {selectedSubject} = state.create
-        const data = {
-            topic: {
-                name: 'Add Units to This Subject',
-                entity: {
-                    id: selectedSubject.id,
-                    kind: 'subject',
-                },
+        const topic = {
+            name: 'Add Units to This Subject',
+            entity: {
+                id: selectedSubject.id,
+                kind: 'subject',
             },
-            post: {
-                kind: 'proposal',
-                body: 'Add Units to Subject',
-            },
-            /* TODO
-            units: state.create.units.filter(unit => !unit.entity_id),
-            subjects: [{
-                entity_id: selectedSubject.id,
-                members: selectedSubject.units.map(unit => ({
-                    kind: 'unit',
-                    id: unit.entity_id,
-                }))
-            }],
-        } */
+        }
+
+        let topicId
+        return tasks.createTopic({topic})
+            .then((topicResponse) => {
+                topicId = topicResponse.topic.id
+                const units = state.create.units.filter(unit => !unit.entity_id)
+                return tasks.createNewUnitVersions(units)
+            })
+            .then((unitsResponse) => {
+                const subject = {
+                    entity_id: selectedSubject.id,
+                    members: selectedSubject.units.map(unit => ({
+                        kind: 'unit',
+                        id: unit.entity_id /* or from unitsResponse /,
+                    }))
+                }
+                return tasks.createExistingSubjectVersion(subject)
+            })
+            .then((subjectResponse) => {
+                const post = {
+                    kind: 'proposal',
+                    body: 'Add Units to Subject',
+                    topic_id: topicId,
+                    entity_versions: [{
+                        kind: 'subject',
+                        id: subjectResponse.version.id
+                    }, /* ...units /],
+                }
+                return tasks.createPost({post})
+            }) */
     },
 
     createCardsProposal() {
-        // TODO pp@
+        const state = getState()
+        const {selectedUnit} = state.create
+        const topic = {
+            name: 'Add Cards to This Unit',
+            entity: {
+                id: selectedUnit.id,
+                kind: 'unit',
+            },
+        }
+        let topicId
+        return tasks.createTopic({topic})
+            .then((topicResponse) => {
+                topicId = topicResponse.topic.id
+                let {cards} = state.create
+                cards = cards.map(card => Object.assign({}, card, {
+                    unit_id: selectedUnit.id,
+                }))
+                return tasks.createNewCardVersions(cards)
+            })
+            .then((cardsResponse) => {
+                const post = {
+                    kind: 'proposal',
+                    body: 'Add Cards to Unit',
+                    topic_id: topicId,
+                    entity_versions: cardsResponse.cards.map(card => ({
+                        id: card.id,
+                        kind: 'card',
+                    })),
+                }
+                return tasks.createPost({post})
+            })
     }
 })

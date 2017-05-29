@@ -261,7 +261,7 @@ def create_new_card_version_route(request):
     if 'entity_id' in data:
         return abort(403)
     data['user_id'] = current_user['id']
-    card, errors = insert_card(data, db_conn)
+    card, errors = insert_card(db_conn, data)
     if len(errors):
         return 400, {
             'errors': errors,

@@ -122,7 +122,7 @@ def create_new_unit_version_route(request):
     if 'entity_id' in data:
         return abort(403)
     data['user_id'] = current_user['id']
-    unit, errors = insert_unit(data, db_conn)
+    unit, errors = insert_unit(db_conn, data)
     if len(errors):
         return 400, {
             'errors': errors,
@@ -148,7 +148,7 @@ def create_existing_unit_version_route(request, unit_id):
     if not current_unit:
         return abort(404)
     unit_data = extend({}, current_unit, next_data)
-    unit, errors = insert_unit(unit_data, db_conn)
+    unit, errors = insert_unit(db_conn, unit_data)
     if len(errors):
         return 400, {
             'errors': errors,

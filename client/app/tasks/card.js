@@ -160,5 +160,35 @@ module.exports = tasks.add({
             type: 'SET_CARD_FEEDBACK',
             feedback: 'Please provide an answer.',
         })
+    },
+
+    createNewCardVersions(cards) {
+        let count = 0
+        const total = cards.length
+        const allResponses = []
+        return new Promise((resolve, reject) => {
+            cards.forEach((card) => {
+                request({
+                    method: 'POST',
+                    url: '/s/cards/versions',
+                    data: card,
+                })
+                    .then((response) => {
+                        allResponses.push(response.version)
+                        count++
+                        if(count === total) {
+                            resolve({cards: allResponses})
+                        }
+                    })
+                    .catch((errors) => {
+                        dispatch({
+                            type: 'SET_ERRORS',
+                            message: 'create new card version failure',
+                            errors,
+                        })
+                        reject()
+                    })
+            })
+        })
     }
 })
