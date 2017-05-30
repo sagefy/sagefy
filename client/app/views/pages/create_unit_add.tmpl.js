@@ -46,6 +46,7 @@ module.exports = function createUnitAdd(data) {
                         dataset: {
                             kind: result._type,
                             id: result._id,
+                            version: result._source.id,
                             name: result._source.name,
                             body: result._source.body,
                         },

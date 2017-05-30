@@ -198,20 +198,40 @@ module.exports = tasks.add({
     },
 
     createNewSubjectVersion(data) {
-        dispatch({type: 'CREATE_SUBJECT_VERSION'})
+        dispatch({type: 'CREATE_NEW_SUBJECT_VERSION'})
         return request({
             method: 'POST',
             url: '/s/subjects/versions',
             data,
         })
             .then((response) => {
-                dispatch({type: 'CREATE_SUBJECT_VERSION_SUCCESS'})
+                dispatch({type: 'CREATE_NEW_SUBJECT_VERSION_SUCCESS'})
                 return response
             })
             .catch((errors) => {
                 dispatch({
                     type: 'SET_ERRORS',
                     message: 'create new subject version failure',
+                    errors,
+                })
+            })
+    },
+
+    createExistingSubjectVersion(data) {
+        dispatch({type: 'CREATE_EXISTING_SUBJECT_VERSION'})
+        return request({
+            method: 'POST',
+            url: `/s/subjects/${data.entity_id}/versions`,
+            data,
+        })
+            .then((response) => {
+                dispatch({type: 'CREATE_EXISTING_SUBJECT_VERSION_SUCCESS'})
+                return response
+            })
+            .catch((errors) => {
+                dispatch({
+                    type: 'SET_ERRORS',
+                    message: 'create existing subject version failure',
                     errors,
                 })
             })

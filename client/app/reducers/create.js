@@ -112,6 +112,7 @@ module.exports = function create(state = {}, action = {type: ''}) {
         state.units.push({
             kind: action.kind,
             id: action.id,
+            version: action.version,
             name: action.name,
             body: action.body,
             require_ids: action.require_ids,

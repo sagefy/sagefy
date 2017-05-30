@@ -20,7 +20,6 @@ def is_valid_members(schema, data, db_conn):
     # TODO-3 this is going to be slow
     for member_desc in data['members']:
         query = (r.table(member_desc['kind'] + 's')
-                  .filter(r.row['status'].eq('accepted'))
                   .filter(r.row['entity_id'] == member_desc['id']))
         vs = [e for e in query.run(db_conn)]
         if not vs:

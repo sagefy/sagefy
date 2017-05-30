@@ -61,5 +61,35 @@ module.exports = tasks.add({
                     errors,
                 })
             })
+    },
+
+    createNewUnitVersions(units) {
+        let count = 0
+        const total = units.length
+        const allResponses = []
+        return new Promise((resolve, reject) => {
+            units.forEach((unit) => {
+                request({
+                    method: 'POST',
+                    url: '/s/units/versions',
+                    data: unit,
+                })
+                    .then((response) => {
+                        allResponses.push(response.version)
+                        count++
+                        if(count === total) {
+                            resolve({units: allResponses})
+                        }
+                    })
+                    .catch((errors) => {
+                        dispatch({
+                            type: 'SET_ERRORS',
+                            message: 'create new unit version failure',
+                            errors,
+                        })
+                        reject()
+                    })
+            })
+        })
     }
 })

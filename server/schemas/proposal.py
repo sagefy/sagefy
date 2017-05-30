@@ -12,13 +12,16 @@ def validate_entity_versions(schema, data, db_conn):
     """
 
     for p_entity_version in data['entity_versions']:
-        tablename = '%ss' % p_entity_version['kind']
+        entity_kind = p_entity_version['kind']
+        tablename = '%ss' % entity_kind
         version_id = p_entity_version['id']
         entity_version = get_version(db_conn, tablename, version_id)
         if not entity_version:
             return [{
                 'name': 'entity_versions',
-                'message': 'Not a valid version: {version_id}'.format(
+                'message': 'Not a valid version: {entity_kind} {version_id}'
+                .format(
+                    entity_kind=entity_kind,
                     version_id=version_id
                 ),
             }]

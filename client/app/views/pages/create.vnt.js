@@ -77,8 +77,8 @@ module.exports = broker.add({
 
     'click .create--unit-add__add'(e, el) {
         if(e) e.preventDefault()
-        const {id, name, body} = el.dataset
-        tasks.addMemberToAddUnits({id, name, body})
+        const {id, name, body, version} = el.dataset
+        tasks.addMemberToAddUnits({id, name, body, version})
     },
 
     'click .create--subject-create .form-field--entities__a'(e, el) {
