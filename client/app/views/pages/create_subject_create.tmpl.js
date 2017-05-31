@@ -26,7 +26,7 @@ const fields = [{
                  'Cycles are not allowed.',
     add: {
         label: 'Add an Existing Unit or Subject',
-        url: '/create/subject/add',
+        url: '#',
     }
 }, {
     type: 'submit',

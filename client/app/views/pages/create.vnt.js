@@ -86,6 +86,7 @@ module.exports = broker.add({
         const form = closest(el, 'form')
         const values = getFormValues(form)
         tasks.createSubjectData(values)
+        tasks.route('/create/subject/add')
     },
 
     'click .create--unit-create .form-field--entities__a'(e, el) {
