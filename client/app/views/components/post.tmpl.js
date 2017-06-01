@@ -1,4 +1,4 @@
-const {li, div, img, a, span, h3} = require('../../modules/tags')
+const {li, div, img, a, span, h3, hr} = require('../../modules/tags')
 const {timeAgo} = require('../../modules/auxiliaries')
 const icon = require('./icon.tmpl')
 const previewCard = require('./preview_card.tmpl')
@@ -13,18 +13,20 @@ const renderProposal = (data) => {
         entityVersions.map((version) => {
             const {entityKind} = version
             if (entityKind === 'card') {
-                return previewCard(Object.assign({}, version, {
+                return [previewCard(Object.assign({}, version, {
                     unit: { name: version.unit_id },
-                    requires: version.require_ids.map(id => ({id}))
-                }))
+                    requires: version.require_ids &&
+                        version.require_ids.map(id => ({id}))
+                })), hr()]
             }
             if (entityKind === 'unit') {
-                return previewUnit(Object.assign({}, version, {
-                    requires: version.require_ids.map(id => ({id}))
-                }))
+                return [previewUnit(Object.assign({}, version, {
+                    requires: version.require_ids &&
+                        version.require_ids.map(id => ({id}))
+                })), hr()]
             }
             if (entityKind === 'subject') {
-                return previewSubject(version)
+                return [previewSubject(version), hr()]
             }
             return null
         })

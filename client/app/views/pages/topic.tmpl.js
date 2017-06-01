@@ -38,8 +38,15 @@ module.exports = (data) => {
                     name: user && user.name,
                     avatar: data.userAvatars[postData.user_id],
                 },
+                entityVersionsFull: postData.kind === 'proposal' &&
+                    postData.entity_versions.map(ev => Object.assign(
+                        {}, data.topicPostVersions[ev.kind][ev.id], {
+                            entityKind: ev.kind,
+                        }
+                    ))
             }), data.currentUserID)
         })),
+        // TODO-2 Pagination
 
         div(
             {className: 'topic__actions'},
@@ -52,7 +59,6 @@ module.exports = (data) => {
                 ' Create a new post'
             )
         )
-        // TODO-2 Pagination
     )
 }
 

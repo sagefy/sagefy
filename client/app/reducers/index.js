@@ -40,6 +40,7 @@ module.exports = combineReducers({
     subjectVersions: require('./subjectVersions'),
     subjects: require('./subjects'),
     topicPosts: require('./topicPosts'),
+    topicPostVersions: require('./topicPostVersions'),
     topics: require('./topics'),
     unitLearned: require('./unitLearned'),
     unitVersions: require('./unitVersions'),
