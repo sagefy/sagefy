@@ -24,19 +24,21 @@ module.exports = tasks.add({
         dispatch({type: 'FORM_IS_VALID'})
     },
 
-    addListFieldRow(name, columns) {
+    addListFieldRow(values, name, columns) {
         dispatch({
             type: 'ADD_LIST_FIELD_ROW',
             message: 'add list field row',
+            values,
             name,
             columns
         })
     },
 
-    removeListFieldRow(name, index) {
+    removeListFieldRow(values, name, index) {
         dispatch({
             type: 'REMOVE_LIST_FIELD_ROW',
             message: 'remove list field row',
+            values,
             name,
             index
         })

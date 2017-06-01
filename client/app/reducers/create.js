@@ -152,5 +152,41 @@ module.exports = function create(state = {}, action = {type: ''}) {
         })
         return state
     }
+    if(action.type === 'ADD_LIST_FIELD_ROW' && state.proposedCard) {
+        state = shallowCopy(state)
+        let {values = {}} = action
+        const {name, columns} = action
+        values = translateListOfRows(values, name)
+        values[name].push(columns.reduce((o, key) => {
+            o[key] = ''
+            return o
+        }, {}))
+        state.proposedCard = values
+        return state
+    }
+    if(action.type === 'REMOVE_LIST_FIELD_ROW' && state.proposedCard) {
+        state = shallowCopy(state)
+        let {values = {}} = action
+        const {name, index} = action
+        values = translateListOfRows(values, name)
+        values[name].splice(index, 1)
+        state.proposedCard = values
+        return state
+    }
     return state
+}
+
+function translateListOfRows(values, name) {
+    values = copy(values)
+    Object.keys(values).forEach(key => {
+        if (key.indexOf(name) === 0) {
+            const [, i, field] = key.split('.')
+            const index = parseInt(i, 10)
+            values[name] = values[name] || []
+            values[name][index] = values[name][index] || {}
+            values[name][index][field] = values[key]
+            delete values[key]
+        }
+    })
+    return values
 }

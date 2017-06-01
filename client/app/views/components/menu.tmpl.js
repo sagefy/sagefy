@@ -61,7 +61,7 @@ const menus = {
         'my_subjects',
         'search',
         'notices',
-        // 'create',
+        'create',
         'settings',
         'contact',
         'terms',

@@ -19,7 +19,7 @@ const field = ({name, index, col, row, lock}) => {
     if (col.type === 'text') {
         return formFieldInput({
             type: 'text',
-            size: 10,
+            size: 30,
             name: `${name}.${index}.${col.name}`,
             value: row[col.name],
             // TODO-3 placeholder
