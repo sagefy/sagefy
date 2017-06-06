@@ -115,5 +115,5 @@ module.exports = tasks.add({
 
     openFindSubjectForUnits() {
         return tasks.getMyRecentSubjects()
-    }
+    },
 })

@@ -12,7 +12,7 @@ module.exports = function createSubjectAdd(data) {
         type: 'text',
         placeholder: 'Search Unit and Subjects',
         name: 'search',
-        size: 40
+        size: 40,
     }
     inputOpts.value = data.searchQuery || null
 

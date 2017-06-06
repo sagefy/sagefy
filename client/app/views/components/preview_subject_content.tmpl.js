@@ -25,7 +25,7 @@ module.exports = function previewSubjectContent({
               unit.url ?
                   a({ href: unit.url }, unit.name || unit.id)
                   : unit.name || unit.id
-            )))
+            ))),
         ] : null,
         members && members.length ? [
             h4('List of Members'),
@@ -41,7 +41,7 @@ module.exports = function previewSubjectContent({
                 member.url ?
                     a({ href: member.url }, member.name || member.id)
                     : member.name || member.id
-            )))
+            ))),
         ] : null,
         previewTags(tags)
     )

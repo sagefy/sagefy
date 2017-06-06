@@ -67,7 +67,7 @@ module.exports = tasks.add({
                 tasks.updateMenuContext({
                     subject: subjectId,
                     unit: false,
-                    card: false
+                    card: false,
                 })
                 dispatch({
                     type: 'SET_NEXT',
@@ -102,5 +102,5 @@ module.exports = tasks.add({
                     errors,
                 })
             })
-    }
+    },
 })

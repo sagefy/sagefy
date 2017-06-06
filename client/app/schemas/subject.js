@@ -5,23 +5,23 @@ module.exports = {
         type: 'select',
         validations: [required],
         options: [
-            { value: 'en' }
-        ]
+            { value: 'en' },
+        ],
     },
     name: {
         type: 'text',
-        validations: [required]
+        validations: [required],
     },
     body: {
         type: 'textarea',
-        validations: [required]
+        validations: [required],
     },
     tags: {
         type: 'list',
         validations: [],
         columns: [
-            { name: 'tag', type: 'text' }
-        ]
+            { name: 'tag', type: 'text' },
+        ],
     },
     members: {
         type: 'entities',
@@ -30,5 +30,5 @@ module.exports = {
             kind: (unit|subject)
             id
         */
-    }
+    },
 }

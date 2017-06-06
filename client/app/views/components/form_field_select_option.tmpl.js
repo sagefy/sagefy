@@ -8,7 +8,7 @@ module.exports = (data) =>
                     data.disabled ?
                         ' form-field--select__label--disabled' :
                         ''
-                )
+                ),
             },
             input({
                 type: data.multiple ? 'checkbox' : 'radio',

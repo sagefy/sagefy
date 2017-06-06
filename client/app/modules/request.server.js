@@ -21,7 +21,7 @@ module.exports = function httpRequest({ method, url, data }) {
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Requested-With': 'Node.js',
             Cookie: global.requestCookie || '',
-        }
+        },
     }, (response) => {
         let body = ''
         response.setEncoding('utf8')

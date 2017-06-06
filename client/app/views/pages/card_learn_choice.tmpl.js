@@ -28,6 +28,6 @@ module.exports = (data, mode) => {
                     disabled: disabled,
                 }, option)
             ))
-        )
+        ),
     ]
 }

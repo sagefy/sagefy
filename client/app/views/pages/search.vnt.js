@@ -13,5 +13,5 @@ module.exports = broker.add({
     'click .add-to-my-subjects'(e, el) {
         if(e) { e.preventDefault() }
         tasks.addUserSubject(el.id)
-    }
+    },
 })

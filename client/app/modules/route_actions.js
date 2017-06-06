@@ -45,7 +45,7 @@ tasks.add({
             history.pushState({}, '', path)
             route(path)
         }
-    }
+    },
 })
 
 module.exports = { route }

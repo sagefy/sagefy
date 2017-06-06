@@ -5,7 +5,7 @@ const cardSchema = require('../card')
 module.exports = extend({}, cardSchema, {
     body: {
         type: 'textarea',
-        validations: [required]
+        validations: [required],
     },
     options: {
         type: 'list',
@@ -16,25 +16,25 @@ module.exports = extend({}, cardSchema, {
                 type: 'select',
                 options: [
                     { value: 'true' },
-                    { value: 'false' }
-                ]
+                    { value: 'false' },
+                ],
             },
             { name: 'value', type: 'text' },
-            { name: 'feedback', type: 'text' }
-        ]
+            { name: 'feedback', type: 'text' },
+        ],
     },
     order: {
         type: 'select',
         validations: [required],
         options: [
             { value: 'random' },
-            { value: 'set' }
+            { value: 'set' },
         ],
-        default: 'random'
+        default: 'random',
     },
     max_options_to_show: {
         type: 'number',
         validations: [required],
-        default: 4
-    }
+        default: 4,
+    },
 })

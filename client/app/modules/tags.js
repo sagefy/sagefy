@@ -28,7 +28,7 @@ const names = [
     // Inline elements
     'a', 'em', 'strong', 'i', 'small', 'abbr', 'del', 'ins',
     'q', 'cite', 'dfn', 'sub', 'sup', 'time', 'code', 'kbd', 'samp', 'var',
-    'mark', 'span'
+    'mark', 'span',
 ]
 
 const tags = {}

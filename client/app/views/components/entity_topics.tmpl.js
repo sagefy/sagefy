@@ -8,7 +8,7 @@ module.exports = (kind, entityID, topics) => {
         h2('Topics'),
         a(
             {
-                href: `/topics/create?kind=${kind}&id=${entityID}`
+                href: `/topics/create?kind=${kind}&id=${entityID}`,
             },
             icon('create'),
             ' Create a new topic'

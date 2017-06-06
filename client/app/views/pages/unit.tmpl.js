@@ -24,7 +24,7 @@ module.exports = (data) => {
         entityHeader('unit', unit),
         p({ className: 'unit__body' }, unit.body),
         previewUnitContent(Object.assign({}, unit, {
-            requires: unit.require_ids.map(id => ({ id }))
+            requires: unit.require_ids.map(id => ({ id })),
         })),
         /* TODO-2 h2('Stats'),
         ul(

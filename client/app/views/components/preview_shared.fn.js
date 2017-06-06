@@ -82,7 +82,7 @@ const shared = {
                         a({ href: require.url }, require.name || require.id) :
                         require.name || require.id
                 ))
-            )
+            ),
         ] : null
     },
 

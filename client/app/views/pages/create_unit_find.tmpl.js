@@ -13,7 +13,7 @@ module.exports = function createUnitFind(data) {
         type: 'text',
         placeholder: 'Search Subjects',
         name: 'search',
-        size: 40
+        size: 40,
     }
     inputOpts.value = data.searchQuery || null
 

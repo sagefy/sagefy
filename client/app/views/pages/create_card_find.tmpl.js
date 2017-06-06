@@ -14,7 +14,7 @@ module.exports = function createCardFind(data) {
         type: 'text',
         placeholder: 'Search Units',
         name: 'search',
-        size: 40
+        size: 40,
     }
     inputOpts.value = data.searchQuery || null
 

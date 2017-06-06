@@ -93,8 +93,8 @@ module.exports = (data) => {
                             href: '#',
                             className: 'form-field--list__remove-row',
                             attributes: {
-                                'data-index': index
-                            }
+                                'data-index': index,
+                            },
                         },
                         icon('remove')
                     )

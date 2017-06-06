@@ -13,14 +13,14 @@ const fields = [{
     label: 'Unit Language',
     name: 'language',
     options: [
-        { label: 'English' }
+        { label: 'English' },
     ],
-    value: 'en'
+    value: 'en',
 }, {
     label: 'Unit Goal',
     description: 'Start with a verb, such as: "Compute the value of ' +
                  'dividing two whole numbers."',
-    name: 'body'
+    name: 'body',
 }, {
     name: 'require_ids',
     label: 'Unit Requires',
@@ -33,7 +33,7 @@ const fields = [{
     type: 'submit',
     name: 'submit',
     label: 'Create Unit',
-    icon: 'create'
+    icon: 'create',
 }]
 
 fields.forEach((field, index) => {

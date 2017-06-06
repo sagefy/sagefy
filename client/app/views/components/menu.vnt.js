@@ -10,5 +10,5 @@ module.exports = broker.add({
     'click [href="#log_out"]'(e) {
         if(e) { e.preventDefault() }
         tasks.logOutUser()
-    }
+    },
 })

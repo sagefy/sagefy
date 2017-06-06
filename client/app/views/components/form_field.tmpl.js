@@ -16,7 +16,7 @@ module.exports = (data) => {
         'form-field--' + data.type,
         'form-field--' + data.name,
         data.error ? 'form-field--bad' : '',
-        data.good ? 'form-field--good' : ''
+        data.good ? 'form-field--good' : '',
     ].join(' ')
     return div(
         { className: classes },

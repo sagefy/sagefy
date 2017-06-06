@@ -24,7 +24,7 @@ module.exports = function createCardList(data) {
                     {
                         dataset: { index },
                         href: '#',
-                        className: 'create--card-list__remove'
+                        className: 'create--card-list__remove',
                     },
                     icon('remove'),
                     ' Remove'
@@ -50,7 +50,7 @@ module.exports = function createCardList(data) {
         a(
             {
                 href: '#',
-                className: 'create--card-list__submit'
+                className: 'create--card-list__submit',
             },
             icon('create'),
             ' Submit This Work'

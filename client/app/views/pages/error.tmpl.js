@@ -6,6 +6,6 @@ module.exports = () =>
         { id: 'error', className: 'page' },
         [
             h1('404'),
-            p(c('not_found'))
+            p(c('not_found')),
         ]
     )

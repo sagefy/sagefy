@@ -14,5 +14,5 @@ module.exports = broker.add({
     'click .tree text'(e) {
         if(e) e.preventDefault()
         tasks.selectTreeUnit()
-    }
+    },
 })

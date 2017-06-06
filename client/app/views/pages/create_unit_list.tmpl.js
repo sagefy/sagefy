@@ -24,7 +24,7 @@ module.exports = function createUnitList(data) {
                     {
                         dataset: { index },
                         href: '#',
-                        className: 'create--unit-list__remove'
+                        className: 'create--unit-list__remove',
                     },
                     icon('remove'),
                     ' Remove'
@@ -58,7 +58,7 @@ module.exports = function createUnitList(data) {
         a(
             {
                 href: '#',
-                className: 'create--unit-list__submit'
+                className: 'create--unit-list__submit',
             },
             icon('create'),
             ' Submit This Work'

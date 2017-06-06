@@ -20,7 +20,7 @@ module.exports = tasks.add({
                 dispatch({
                     type: 'ADD_SEARCH_RESULTS',
                     message: 'search success',
-                    results: response.hits
+                    results: response.hits,
                 })
             })
             .catch((errors) => {
@@ -30,5 +30,5 @@ module.exports = tasks.add({
                     errors,
                 })
             })
-    }
+    },
 })

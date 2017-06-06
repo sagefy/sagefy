@@ -33,7 +33,7 @@ const items = {
         title: 'Discuss Subjects',
         icon: 'post',
     },
-    create: { }
+    create: { },
 }
 
 // For items that don't have them
@@ -66,7 +66,7 @@ const menus = {
         'contact',
         'terms',
         'log_out',
-    ]
+    ],
 }
 
 const addContextItems = (menuItems, { card, unit, subject }) => {
@@ -119,7 +119,7 @@ module.exports = (data) => {
             data.open ? ul(
                 { className: 'menu__items' },
                 menuItems.map(d => menuItem(d))
-            ) : null
+            ) : null,
         ]
     )
 }

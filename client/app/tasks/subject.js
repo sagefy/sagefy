@@ -235,5 +235,5 @@ module.exports = tasks.add({
                     errors,
                 })
             })
-    }
+    },
 })

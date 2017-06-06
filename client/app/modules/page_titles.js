@@ -67,7 +67,7 @@ const routes = [{
     title: 'Create Post',
 }, {
     path: '/topics/{id}/posts/{id}/update',
-    title: 'Update Post'
+    title: 'Update Post',
 }, {
     path: '/topics/{id}',
     title: 'Topic',

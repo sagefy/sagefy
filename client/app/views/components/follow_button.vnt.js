@@ -9,7 +9,7 @@ module.exports = broker.add({
             entity: {
                 id: id,
                 kind: kind,
-            }
+            },
         })
-    }
+    },
 })

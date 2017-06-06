@@ -37,13 +37,13 @@ const row = (kind, version) => {
     if (kind === 'card') {
         return previewCard(Object.assign({}, version, {
             unit: { name: version.unit_id },
-            requires: version.require_ids.map(id => ({ id }))
+            requires: version.require_ids.map(id => ({ id })),
         }))
     }
 
     if (kind === 'unit') {
         return previewUnit(Object.assign({}, version, {
-            requires: version.require_ids.map(id => ({ id }))
+            requires: version.require_ids.map(id => ({ id })),
         }))
     }
 

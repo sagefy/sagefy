@@ -28,7 +28,7 @@ module.exports = tasks.add({
                             return tasks.getEntity(kind, entityId)
                         }),
                     tasks.listUsers(userIds, { size: 48 }),
-                    tasks.listEntityVersionsByTopic(id, entityVersions)
+                    tasks.listEntityVersionsByTopic(id, entityVersions),
                 ])
             })
     },
@@ -61,7 +61,7 @@ module.exports = tasks.add({
 
     createPost(data) {
         dispatch({
-            type: 'SET_SENDING_ON'
+            type: 'SET_SENDING_ON',
         })
         const topicId = data.post.topicId || data.post.topic_id
         dispatch({ type: 'CREATE_POST', topicId })
@@ -78,7 +78,7 @@ module.exports = tasks.add({
                     posts: [response.post],
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
                 tasks.route(`/topics/${topicId}`)
             })
@@ -89,14 +89,14 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
     },
 
     updatePost(data) {
         dispatch({
-            type: 'SET_SENDING_ON'
+            type: 'SET_SENDING_ON',
         })
         const { id } = data.post
         const topicId = data.post.topic_id
@@ -115,7 +115,7 @@ module.exports = tasks.add({
                 })
                 tasks.route(`/topics/${topicId}`)
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
             .catch((errors) => {
@@ -125,8 +125,8 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
-    }
+    },
 })

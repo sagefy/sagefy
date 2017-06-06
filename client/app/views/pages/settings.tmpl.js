@@ -53,9 +53,9 @@ module.exports = (data) => {
             id: user.id,
             name: user.name,
             email: user.email,
-            'settings.email_frequency': user.settings.email_frequency
+            'settings.email_frequency': user.settings.email_frequency,
         }, data.formData),
-        sending: data.sending
+        sending: data.sending,
     })
 
     return div(

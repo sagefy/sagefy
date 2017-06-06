@@ -5,23 +5,23 @@ module.exports = {
         type: 'select',
         validations: [required],
         options: [
-            { value: 'en' }
-        ]
+            { value: 'en' },
+        ],
     },
     unit_id: {
         type: 'text',
-        validations: [required]
+        validations: [required],
     },
     name: {
         type: 'text',
-        validations: [required]
+        validations: [required],
     },
     tags: {
         type: 'list',
         validations: [],
         columns: [
-            { name: 'tag', type: 'text' }
-        ]
+            { name: 'tag', type: 'text' },
+        ],
     },
     require_ids: {
         type: 'entities',
@@ -32,7 +32,7 @@ module.exports = {
         validations: [required],
         options: [
             { value: 'video' },
-            { value: 'choice' }
-        ]
-    }
+            { value: 'choice' },
+        ],
+    },
 }

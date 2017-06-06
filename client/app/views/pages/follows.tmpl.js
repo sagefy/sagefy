@@ -48,11 +48,11 @@ const follow = (data) => {
             ' Unfollow'
         ),
         kind === 'unit' ?
-            previewUnitHead({ name, body, labelKind: true, }) :
+            previewUnitHead({ name, body, labelKind: true }) :
         kind === 'subject' ?
-            previewSubjectHead({ name, body, labelKind: true, }) :
+            previewSubjectHead({ name, body, labelKind: true }) :
         ['video', 'choice'].indexOf(kind) > -1 ?
-            previewCardHead({ name, kind, labelKind: true, }) :
+            previewCardHead({ name, kind, labelKind: true }) :
             null
     )
 }

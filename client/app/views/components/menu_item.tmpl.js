@@ -11,7 +11,7 @@ module.exports = (data) =>
                 div(
                     { className: 'menu__item__title' },
                     data.title
-                )
+                ),
             ]
         )
     )

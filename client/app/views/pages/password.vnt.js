@@ -26,5 +26,5 @@ module.exports = broker.add({
         if(errors && errors.length) { return }
         values = parseFormValues(values)
         tasks.createUserPassword(values)
-    }
+    },
 })

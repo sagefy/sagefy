@@ -19,6 +19,6 @@ module.exports = extend({}, post, {
         options: [
             { value: 'true' },
             { value: 'false' },
-        ]
-    }
+        ],
+    },
 })

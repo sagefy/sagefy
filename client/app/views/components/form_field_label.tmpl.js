@@ -17,7 +17,7 @@ module.exports = (data) => {
                 className:
                     isRequired ?
                         'form-field__required' :
-                        'form-field__optional'
+                        'form-field__optional',
             },
             isRequired ? c('required') : c('optional')
         )

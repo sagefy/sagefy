@@ -6,5 +6,5 @@ module.exports = broker.add({
         if (el.classList.contains('notice--unread')) {
             tasks.markNotice(el.id)
         }
-    }
+    },
 })

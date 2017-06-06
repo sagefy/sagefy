@@ -30,7 +30,7 @@ module.exports = tasks.add({
     },
 
     addMemberToAddUnits({
-        id, version, name, body, language = 'en', require_ids = []
+        id, version, name, body, language = 'en', require_ids = [],
     }) {
         dispatch({
             type: 'ADD_MEMBER_TO_ADD_UNITS',
@@ -119,7 +119,7 @@ module.exports = tasks.add({
             id,
             name,
             body,
-            kind
+            kind,
         })
     },
 
@@ -135,7 +135,7 @@ module.exports = tasks.add({
                 post.topic_id = topicId
                 post.entity_versions = [{
                     kind: 'subject',
-                    id: subjectResponse.version.id
+                    id: subjectResponse.version.id,
                 }]
                 return tasks.createPost({ post })
             })
@@ -193,7 +193,7 @@ module.exports = tasks.add({
                     topic_id: topicId,
                     entity_versions: [{
                         kind: 'subject',
-                        id: subjectResponse.version.id
+                        id: subjectResponse.version.id,
                     }].concat(unitVersionIds.map(unitId => ({
                         id: unitId,
                         kind: 'unit',
@@ -235,5 +235,5 @@ module.exports = tasks.add({
                 }
                 return tasks.createPost({ post })
             })
-    }
+    },
 })

@@ -25,7 +25,7 @@ module.exports = broker.add({
             (el) => el.dataset.col
         ).filter((c) => c)
         tasks.addListFieldRow(values, name, columns)
-    }
+    },
 
     // TODO-3 'dragstart .form-field--list__move-row'(e, el)
     // TODO-3 'drop form-field--list__move-row'(e, el)

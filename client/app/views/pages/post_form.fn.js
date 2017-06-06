@@ -53,11 +53,11 @@ const getFields = (formData) => {
             name: 'post.response',
             options: [
                 { label: 'Yes, I agree' },
-                { label: 'No, I dissent' }
+                { label: 'No, I dissent' },
             ],
             inline: true,
             label: 'Response',
-            disabled: !!formData['post.id']
+            disabled: !!formData['post.id'],
         })
     }
 
@@ -68,7 +68,7 @@ const getFields = (formData) => {
                'Post Body',
         description: formData['post.kind'] === 'proposal' ?
                       'Describe the value of this proposal.'
-                      : null
+                      : null,
     })
 
     // TODO PP@ update proposal handling

@@ -30,7 +30,7 @@ module.exports = tasks.add({
             message: 'add list field row',
             values,
             name,
-            columns
+            columns,
         })
     },
 
@@ -40,7 +40,7 @@ module.exports = tasks.add({
             message: 'remove list field row',
             values,
             name,
-            index
+            index,
         })
-    }
+    },
 })

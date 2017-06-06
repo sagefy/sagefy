@@ -53,7 +53,7 @@ const userSubject = (data) =>
         button(
             {
                 className: 'my-subjects__engage-subject',
-                id: data.entity_id
+                id: data.entity_id,
             },
             'Engage ',
             icon('next')

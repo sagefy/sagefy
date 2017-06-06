@@ -38,7 +38,7 @@ const showSubjects = (user, subjects) =>
                     body: subject.body,
                 })
             ))
-        )
+        ),
     ]
     // TODO-2 and link to search
 
@@ -71,6 +71,6 @@ const showFollows = (user, follows) =>
                         null
                 )
             })
-        )
+        ),
         // TODO-2 and link to search
     ]

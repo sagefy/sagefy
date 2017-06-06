@@ -31,7 +31,7 @@ const set = (key, value, time = 31556926) => {
     document.cookie = [
         encode(key), '=', '' + value,
         ';path=/',
-        `;max-age=${time}`
+        `;max-age=${time}`,
     ].join('')
     return document.cookie
 }

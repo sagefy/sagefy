@@ -44,5 +44,5 @@ module.exports = {
                 el = el.parentNode
             }
         }
-    }
+    },
 }

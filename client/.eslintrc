@@ -39,7 +39,6 @@
         "no-nested-ternary": "off",
 
         // temporary
-        "comma-dangle": "off",
         "arrow-parens": "off",
         "prefer-template": "off",
         "keyword-spacing": "off",

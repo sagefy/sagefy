@@ -43,7 +43,7 @@ module.exports = (data) => {
             {
                 id: 'card-learn',
                 className: `page ${card.kind} ${mode}`,
-                key: 'WbrGhHy5aUCmBVtHnlmTdJ1x'
+                key: 'WbrGhHy5aUCmBVtHnlmTdJ1x',
             },
 
             kind(card, mode),
@@ -59,7 +59,7 @@ module.exports = (data) => {
                 a(
                     {
                         id,
-                        className: 'continue card-learner__continue'
+                        className: 'continue card-learner__continue',
                     },
                     'Continue ',
                     icon('next')
@@ -71,10 +71,10 @@ module.exports = (data) => {
                 key: '0Xe4fksADWwm9qWOMuTl7thD',
                 className: 'card-learn__progress',
                 style: {
-                    width: pLearned * 100 + '%'
-                }
+                    width: pLearned * 100 + '%',
+                },
             }
-        ) : null
+        ) : null,
     ]
 }
 

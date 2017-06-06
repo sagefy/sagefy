@@ -4,7 +4,7 @@ const tasks = require('../modules/tasks')
 module.exports = tasks.add({
     toggleMenu() {
         dispatch({
-            type: 'TOGGLE_MENU'
+            type: 'TOGGLE_MENU',
         })
     },
 
@@ -15,5 +15,5 @@ module.exports = tasks.add({
             unit,
             subject,
         })
-    }
+    },
 })

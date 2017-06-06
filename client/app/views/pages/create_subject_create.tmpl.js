@@ -11,14 +11,14 @@ const fields = [{
     label: 'Subject Language',
     name: 'language',
     options: [
-        { label: 'English' }
+        { label: 'English' },
     ],
-    value: 'en'
+    value: 'en',
 }, {
     label: 'Subject Goal',
     description: 'Start with a verb, such as: Compute the value of ' +
                  'dividing two whole numbers.',
-    name: 'body'
+    name: 'body',
 }, {
     name: 'members',
     label: 'Subject Members',
@@ -27,12 +27,12 @@ const fields = [{
     add: {
         label: 'Add an Existing Unit or Subject',
         url: '#',
-    }
+    },
 }, {
     type: 'submit',
     name: 'submit',
     label: 'Create Subject',
-    icon: 'create'
+    icon: 'create',
 }]
 
 fields.forEach((field, index) => {

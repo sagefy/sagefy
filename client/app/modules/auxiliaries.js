@@ -156,7 +156,7 @@ const getFormValues = (form) => {
         'input[type="email"]',
         'input[type="password"]',
         'input[type="hidden"]',
-        'textarea'
+        'textarea',
     ].join(', ')), el => {
         data[el.name] = valuefy(el.value)
     })
@@ -234,7 +234,7 @@ function createFieldsData({
     fields,
     errors = [],
     formData = {},
-    sending = false
+    sending = false,
 }) {
     fields = copy(fields)
 

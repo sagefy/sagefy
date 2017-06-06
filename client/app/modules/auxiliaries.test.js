@@ -5,7 +5,7 @@ const {
     ucfirst,
     underscored,
     mergeArraysByKey,
-    parseFormValues
+    parseFormValues,
 } = require('../../app/modules/auxiliaries')
 const cookie = require('../../app/modules/cookie')
 
@@ -73,14 +73,14 @@ describe('Auxiliaries', () => {
             b: {
                 a: 2,
                 b: {
-                    a: 3
-                }
+                    a: 3,
+                },
             },
             c: [4, 5],
             d: [
                 { a: 6, b: 7 },
-                { a: 8, b: 9 }
-            ]
+                { a: 8, b: 9 },
+            ],
         })
     })
 })

@@ -11,5 +11,5 @@ module.exports = (data) =>
              '',
         width: 672,
         height: 336,
-        allowfullscreen: true
+        allowfullscreen: true,
     })

@@ -37,7 +37,7 @@ module.exports = tasks.add({
                 dispatch({
                     type: 'ASK_FOLLOW_SUCCESS',
                     follows: response.follows,
-                    entityID
+                    entityID,
                 })
             })
             .catch((errors) => {
@@ -59,7 +59,7 @@ module.exports = tasks.add({
             .then((response) => {
                 dispatch({
                     type: 'FOLLOW_SUCCESS',
-                    follow: response.follow
+                    follow: response.follow,
                 })
             })
             .catch((errors) => {
@@ -80,7 +80,7 @@ module.exports = tasks.add({
             .then(() => {
                 dispatch({
                     type: 'UNFOLLOW_SUCCESS',
-                    id
+                    id,
                 })
             })
             .catch((errors) => {
@@ -90,5 +90,5 @@ module.exports = tasks.add({
                     errors,
                 })
             })
-    }
+    },
 })

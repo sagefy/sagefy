@@ -10,7 +10,7 @@ const util = {}
     'Function',
     'Date',
     'String',
-    'RegExp'
+    'RegExp',
 ].forEach((type) => {
     util['is' + type] = (a) => {
         return Object.prototype.toString.call(a) === '[object ' + type + ']'

@@ -5,15 +5,15 @@ const { required } = require('../modules/validations')
 module.exports = extend({}, post, {
     'entity_version.id': {
         type: 'hidden',
-        validations: []
+        validations: [],
     },
     'entity_version.kind': {
         type: 'select',
         options: [
             { value: 'card' },
             { value: 'unit' },
-            { value: 'subject' }
+            { value: 'subject' },
         ],
-        validations: [required]
-    }
+        validations: [required],
+    },
 })

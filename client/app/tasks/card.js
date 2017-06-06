@@ -87,7 +87,7 @@ module.exports = tasks.add({
     respondToCard(id, data, goNext = false) {
         dispatch({ type: 'RESPOND_TO_CARD', id })
         dispatch({
-            type: 'SET_SENDING_ON'
+            type: 'SET_SENDING_ON',
         })
         return request({
             method: 'POST',
@@ -104,7 +104,7 @@ module.exports = tasks.add({
                 dispatch({
                     type: 'SET_CARD_RESPONSE',
                     message: 'respond to card success',
-                    response: response.response
+                    response: response.response,
                 })
                 dispatch({
                     type: 'ADD_UNIT_LEARNED',
@@ -117,7 +117,7 @@ module.exports = tasks.add({
                 })
                 tasks.updateMenuContext({ card: false })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
                 if (goNext) {
                     tasks.nextState()
@@ -130,7 +130,7 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
                 if (goNext) {
                     tasks.nextState()
@@ -190,5 +190,5 @@ module.exports = tasks.add({
                     })
             })
         })
-    }
+    },
 })

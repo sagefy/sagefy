@@ -43,7 +43,7 @@ module.exports = (data) => {
                         {}, data.topicPostVersions[ev.kind][ev.id], {
                             entityKind: ev.kind,
                         }
-                    ))
+                    )),
             }), data.currentUserID)
         })),
         // TODO-2 Pagination
@@ -53,7 +53,7 @@ module.exports = (data) => {
             a(
                 {
                     className: 'topic__create',
-                    href: `/topics/${id}/posts/create`
+                    href: `/topics/${id}/posts/create`,
                 },
                 icon('create'),
                 ' Create a new post'

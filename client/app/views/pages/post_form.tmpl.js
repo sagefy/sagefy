@@ -19,7 +19,7 @@ const classes = (formData) => {
         postID ? 'update' : 'create',
         postKind ? `post-${postKind}` : '',
         entityKind ? `entity-${entityKind}` : '',
-        cardKind ? `card-${cardKind}` : ''
+        cardKind ? `card-${cardKind}` : '',
     ].join(' ')
 }
 
@@ -49,7 +49,7 @@ module.exports = (data) => {
         type: 'submit',
         name: 'submit',
         label: postID ? 'Update Post' : 'Create Post',
-        icon: 'create'
+        icon: 'create',
     })
 
     const instanceFields = createFieldsData({
@@ -57,13 +57,13 @@ module.exports = (data) => {
         fields,
         errors: data.errors,
         formData,
-        sending: data.sending
+        sending: data.sending,
     })
 
     return div(
         {
             id: 'post-form',
-            className: classes(formData)
+            className: classes(formData),
         },
         h1(postID ? 'Update Post' : 'Create Post'),
         form(instanceFields)

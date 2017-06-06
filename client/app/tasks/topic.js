@@ -8,7 +8,7 @@ module.exports = tasks.add({
         dispatch({ type: 'GET_TOPIC', id })
         return request({
             method: 'GET',
-            url: `/s/topics/${id}`
+            url: `/s/topics/${id}`,
         })
             .then((response) => {
                 dispatch({
@@ -39,7 +39,7 @@ module.exports = tasks.add({
 
     createTopic(data) {
         dispatch({
-            type: 'SET_SENDING_ON'
+            type: 'SET_SENDING_ON',
         })
         dispatch({ type: 'CREATE_TOPIC' })
         return request({
@@ -55,7 +55,7 @@ module.exports = tasks.add({
                     id: response.topic.id,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
                 return response
             })
@@ -66,7 +66,7 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
     },
@@ -88,7 +88,7 @@ module.exports = tasks.add({
                 })
                 tasks.route(`/topics/${data.topic.id}`)
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
             .catch((errors) => {
@@ -98,8 +98,8 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
-    }
+    },
 })

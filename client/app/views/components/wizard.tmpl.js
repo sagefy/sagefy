@@ -10,7 +10,7 @@ module.exports = ({ options, state }) =>
                     'wizard__li' +
                     (state === option.name ?
                         ' wizard__li--selected' :
-                        '')
+                        ''),
             },
             option.label
         ))

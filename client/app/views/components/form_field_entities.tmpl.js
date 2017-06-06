@@ -14,7 +14,7 @@ module.exports = (data) => {
                     {
                         id: entity.id,
                         href: '#',
-                        className: 'form-field--entities__remove'
+                        className: 'form-field--entities__remove',
                     },
                     icon('remove'),
                     ' Remove'

@@ -20,7 +20,7 @@ module.exports = function previewCardHead({
             name: [cardKindLabel, ' ', name],
             kind: 'card',
             url,
-            labelKind
+            labelKind,
         })
     )
 }

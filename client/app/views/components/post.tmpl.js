@@ -16,13 +16,13 @@ const renderProposal = (data) => {
                 return [previewCard(Object.assign({}, version, {
                     unit: { name: version.unit_id },
                     requires: version.require_ids &&
-                        version.require_ids.map(id => ({ id }))
+                        version.require_ids.map(id => ({ id })),
                 })), hr()]
             }
             if (entityKind === 'unit') {
                 return [previewUnit(Object.assign({}, version, {
                     requires: version.require_ids &&
-                        version.require_ids.map(id => ({ id }))
+                        version.require_ids.map(id => ({ id })),
                 })), hr()]
             }
             if (entityKind === 'subject') {
@@ -38,12 +38,12 @@ const voteResponse = (response) => {
     return [
         span(
             {
-                className: `post__vote--${response ? 'good' : 'bad'}`
+                className: `post__vote--${response ? 'good' : 'bad'}`,
             },
             icon(response ? 'good' : 'bad'),
             response ? ' Yes' : ' No'
         ),
-        ' '
+        ' ',
     ]
 }
 
@@ -61,7 +61,7 @@ module.exports = (data, currentUserID) => {
                 img({
                     src: data.user.avatar || '',
                     width: 48,
-                    height: 48
+                    height: 48,
                 })
             )
         ),
@@ -79,7 +79,7 @@ module.exports = (data, currentUserID) => {
                 data.replies_to_id ? a(
                     {
                         className: 'post__in-reply',
-                        href: `/topics/${data.topic_id}#${data.replies_to_id}`
+                        href: `/topics/${data.topic_id}#${data.replies_to_id}`,
                     },
                     icon('reply'),
                     ' In Reply'

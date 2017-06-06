@@ -4,7 +4,7 @@ const {
     putUnitsInLayers,
     orderLayers,
     calculatePoints,
-    findUnit
+    findUnit,
 } = require('./tree.fn')
 const { matchesRoute } = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
@@ -66,7 +66,7 @@ module.exports = (data) => {
                 layers,
                 currentUnit,
                 preWidth,
-                buckets: treeData.buckets
+                buckets: treeData.buckets,
             })
         ),
         chooseUnitID ? p(a(
@@ -106,7 +106,7 @@ const renderLines = (layers) => {
                         x1: req.x,
                         y1: req.y,
                         x2: unit.x,
-                        y2: unit.y
+                        y2: unit.y,
                     }))
                 }
             })
@@ -151,7 +151,7 @@ const renderCurrent = (layers, currentUnit, preWidth) => {
                 {
                     class: 'tree__current-unit',
                     x: preWidth,
-                    y: unit.y + 6
+                    y: unit.y + 6,
                 },
                 currentUnit.name
             ))
@@ -176,5 +176,5 @@ const unitLine = ({ x1, y1, x2, y2 }) =>
         y1,
         x2,
         y2,
-        'stroke-width': 2
+        'stroke-width': 2,
     })

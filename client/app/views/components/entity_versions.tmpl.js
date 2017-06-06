@@ -24,6 +24,6 @@ module.exports = (kind, entityID, versions) => {
                     icon('next')
                 )
             )
-        )
+        ),
     ]
 }

@@ -18,7 +18,7 @@ const classes = (formData) => {
         topicID ? 'update' : 'create',
         postKind ? `post-${postKind}` : '',
         entityKind ? `entity-${entityKind}` : '',
-        cardKind ? `card-${cardKind}` : ''
+        cardKind ? `card-${cardKind}` : '',
     ].join(' ')
 }
 
@@ -26,16 +26,16 @@ const getFields = (formData) => {
     let fields = []
     if (formData['topic.id']) {
         fields.push({
-            name: 'topic.id'
+            name: 'topic.id',
         })
     }
     fields = fields.concat([{
-        name: 'topic.entity.id'
+        name: 'topic.entity.id',
     }, {
-        name: 'topic.entity.kind'
+        name: 'topic.entity.kind',
     }, {
         name: 'topic.name',
-        label: 'Topic Name'
+        label: 'Topic Name',
     }])
     return fields
 }
@@ -77,7 +77,7 @@ const getEntitySummary = (data) => {
 
     return {
         name: entity && entity.name,
-        kind
+        kind,
     }
 }
 
@@ -94,7 +94,7 @@ module.exports = (data) => {
         'topic.id': topic && topic.id,
         'topic.name': topic && topic.name,
         'topic.entity.kind': topic && topic.entity.kind || data.routeQuery.kind,
-        'topic.entity.id': topic && topic.entity.kind || data.routeQuery.id
+        'topic.entity.id': topic && topic.entity.kind || data.routeQuery.id,
     })
 
     let fields = getFields(formData)
@@ -109,7 +109,7 @@ module.exports = (data) => {
         type: 'submit',
         name: 'submit',
         label: topicID ? 'Update Topic' : 'Create Topic',
-        icon: 'create'
+        icon: 'create',
     })
 
     const instanceFields = createFieldsData({
@@ -125,7 +125,7 @@ module.exports = (data) => {
     return div(
         {
             id: 'topic-form',
-            className: classes(formData)
+            className: classes(formData),
         },
         h1(topicID ? 'Update Topic' : 'Create Topic'),
         p(

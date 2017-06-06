@@ -9,7 +9,7 @@ const subjectResult = (subject) =>
             {
                 id: subject.entity_id,
                 href: '#',
-                className: 'add-to-my-subjects'
+                className: 'add-to-my-subjects',
             },
             icon('create'),
             ' Add to My Subjects'
@@ -25,7 +25,7 @@ const subjectResult = (subject) =>
                 icon('unit'),
                 ' View Units'
             )
-        )
+        ),
     ]
 
 

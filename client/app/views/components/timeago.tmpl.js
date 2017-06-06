@@ -8,7 +8,7 @@ module.exports = (time, { right } = {}) =>
                 right ?
                     ' timeago--right' :
                     ''
-            )
+            ),
         },
         timeAgo(time)
     )

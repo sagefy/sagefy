@@ -28,7 +28,7 @@ const trackEvent = (action) => {
             page: action.route,
         })
         ga('set', {
-            page: action.route
+            page: action.route,
         })
     } else {
         ga('send', {

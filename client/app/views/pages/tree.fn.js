@@ -77,5 +77,5 @@ module.exports = {
     orderLayers,
     calculatePoints,
     findUnit,
-    findLayer
+    findLayer,
 }

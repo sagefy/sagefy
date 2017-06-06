@@ -51,9 +51,9 @@ module.exports = (data) => {
             options: [
                 { name: 'email', label: 'Enter Email' },
                 { name: 'inbox', label: 'Check Inbox' },
-                { name: 'password', label: 'Change Password' }
+                { name: 'password', label: 'Change Password' },
             ],
-            state
+            state,
         }),
         getNodesForState(state, data)
     )

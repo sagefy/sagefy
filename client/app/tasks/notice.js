@@ -16,7 +16,7 @@ module.exports = tasks.add({
                     message: 'list notices success',
                     limit,
                     skip,
-                    notices: response.notices
+                    notices: response.notices,
                 })
             })
             .catch((errors) => {
@@ -41,7 +41,7 @@ module.exports = tasks.add({
                     message: 'mark notice success',
                     id,
                     read,
-                    notice: response.notice
+                    notice: response.notice,
                 })
             })
             .catch((errors) => {
@@ -51,5 +51,5 @@ module.exports = tasks.add({
                     errors,
                 })
             })
-    }
+    },
 })

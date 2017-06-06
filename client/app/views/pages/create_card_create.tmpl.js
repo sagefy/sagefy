@@ -15,17 +15,17 @@ const allKindsFields = [{
     label: 'Card Language',
     name: 'language',
     options: [
-        { label: 'English' }
+        { label: 'English' },
     ],
-    value: 'en'
+    value: 'en',
 }, {
     label: 'Card Kind',
     name: 'kind',
     options: [
         { label: 'Video' },
-        { label: 'Choice' }
+        { label: 'Choice' },
     ],
-    inline: true
+    inline: true,
 }]
 
 /* {
@@ -49,7 +49,7 @@ const videoFields = allKindsFields.concat([{
     type: 'submit',
     name: 'submit',
     label: 'Create Video Card',
-    icon: 'create'
+    icon: 'create',
 }])
 
 const choiceFields = allKindsFields.concat([{
@@ -64,23 +64,23 @@ const choiceFields = allKindsFields.concat([{
             { label: 'No' },
         ] },
         {},
-        {}
-    ]
+        {},
+    ],
 }, {
     label: 'Order',
     name: 'order',
     options: [
         { label: 'Random' },
-        { label: 'Set' }
-    ]
+        { label: 'Set' },
+    ],
 }, {
     label: 'Max Options to Show',
-    name: 'max_options_to_show'
+    name: 'max_options_to_show',
 }, {
     type: 'submit',
     name: 'submit',
     label: 'Create Choice Card',
-    icon: 'create'
+    icon: 'create',
 }])
 
 allKindsFields.forEach((field, index) => {

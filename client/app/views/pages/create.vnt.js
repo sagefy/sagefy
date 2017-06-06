@@ -28,7 +28,7 @@ module.exports = broker.add({
                 entity: {
                     id: '1rk0jS5EGEavSG4NBxRvPkZf',
                     kind: 'unit',
-                }
+                },
             },
             post: {
                 kind: 'proposal',

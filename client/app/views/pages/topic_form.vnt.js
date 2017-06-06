@@ -52,5 +52,5 @@ module.exports = broker.add({
         const form = closest(el, 'form')
         const values = getFormValues(form)
         tasks.updateFormData(values)
-    }
+    },
 })

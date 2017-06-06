@@ -19,7 +19,7 @@ module.exports = (data) => {
         type: 'text',
         placeholder: 'Search',
         name: 'search',
-        size: 40
+        size: 40,
     }
 
     inputOpts.value = data.searchQuery || null
@@ -82,10 +82,10 @@ r.topicResult = (result) =>
         result._source.entity.name ? a(
             {
                 href:
-                    `/${result._source.entity.kind}/${result._source.entity.id}`
+                    `/${result._source.entity.kind}/${result._source.entity.id}`,
             },
             result._source.entity.name
-        ) : null
+        ) : null,
         // TODO-2 no of posts     ???
     ]
 
@@ -114,7 +114,7 @@ r.postResult = (result) => {
             { href },
             'To Post ',
             icon('next')
-        )
+        ),
         // TODO-3 entity kind       result._source.topic_id > ????
         // TODO-3 entity name       result._source.topic_id > ????
     ]
@@ -144,7 +144,7 @@ r.subjectResult = (result, asLearner = false) =>
             {
                 id: result._source.entity_id,
                 href: '#',
-                className: 'add-to-my-subjects'
+                className: 'add-to-my-subjects',
             },
             icon('create'),
             ' Add to My Subjects'
@@ -164,5 +164,5 @@ r.subjectResult = (result, asLearner = false) =>
             },
             icon('unit'),
             ' View Units'
-        ) : null
+        ) : null,
     ]

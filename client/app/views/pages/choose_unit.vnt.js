@@ -7,5 +7,5 @@ module.exports = broker.add({
         if (e) { e.preventDefault() }
         const ul = closest(el, 'ul')
         tasks.chooseUnit(ul.id, el.id)
-    }
+    },
 })

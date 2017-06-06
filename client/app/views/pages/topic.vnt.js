@@ -15,5 +15,5 @@ module.exports = broker.add({
     'click #topic .load-more'(e) {
         if (e) e.preventDefault()
         // TODO-2 el
-    }
+    },
 })

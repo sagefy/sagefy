@@ -23,5 +23,5 @@ module.exports = broker.add({
     'click #card-learn.video .continue'(e, el) {
         if(e) { e.preventDefault() }
         tasks.respondToCard(el.id, {}, true)
-    }
+    },
 })

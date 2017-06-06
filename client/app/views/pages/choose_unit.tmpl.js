@@ -28,7 +28,7 @@ module.exports = (data) => {
                             index === 0 ?
                                 ' choose-unit__engage--first' :
                                 ''
-                        )
+                        ),
                     },
                     'Engage ',
                     icon('next')
