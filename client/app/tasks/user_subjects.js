@@ -1,15 +1,15 @@
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
-const {dispatch, getState} = require('../modules/store')
+const { dispatch, getState } = require('../modules/store')
 
 module.exports = tasks.add({
     listUserSubjects(userId, limit = 50, skip = 0) {
         const userID = userId || getState().currentUserID
-        dispatch({type: 'LIST_USER_SUBJECTS'})
+        dispatch({ type: 'LIST_USER_SUBJECTS' })
         return request({
             method: 'GET',
             url: `/s/users/${userID}/subjects`,
-            data: {limit, skip},
+            data: { limit, skip },
         })
             .then((response) => {
                 dispatch({
@@ -29,7 +29,7 @@ module.exports = tasks.add({
 
     addUserSubject(subjectId) {
         const userID = getState().currentUserID
-        dispatch({type: 'ADD_USER_SUBJECT', subjectId})
+        dispatch({ type: 'ADD_USER_SUBJECT', subjectId })
         return request({
             method: 'POST',
             url: `/s/users/${userID}/subjects/${subjectId}`,
@@ -55,14 +55,14 @@ module.exports = tasks.add({
 
     chooseSubject(subjectId) {
         const userID = getState().currentUserID
-        dispatch({type: 'CHOOSE_SUBJECT', subjectId})
+        dispatch({ type: 'CHOOSE_SUBJECT', subjectId })
         return request({
             method: 'PUT',
             url: `/s/users/${userID}/subjects/${subjectId}`,
             data: {},
         })
             .then((response) => {
-                dispatch({type: 'CHOOSE_SUBJECT_SUCCESS', subjectId})
+                dispatch({ type: 'CHOOSE_SUBJECT_SUCCESS', subjectId })
                 tasks.route(`/subjects/${subjectId}/tree`)
                 tasks.updateMenuContext({
                     subject: subjectId,
@@ -85,7 +85,7 @@ module.exports = tasks.add({
 
     removeUserSubject(subjectId) {
         const userID = getState().currentUserID
-        dispatch({type: 'REMOVE_USER_SUBJECT', subjectId})
+        dispatch({ type: 'REMOVE_USER_SUBJECT', subjectId })
         return request({
             method: 'DELETE',
             url: `/s/users/${userID}/subjects/${subjectId}`,
@@ -93,7 +93,7 @@ module.exports = tasks.add({
         })
             .then(() => {
                 // TODO-1 remove from the state
-                dispatch({type: 'REMOVE_USER_SUBJECT_SUCCESS', subjectId})
+                dispatch({ type: 'REMOVE_USER_SUBJECT_SUCCESS', subjectId })
             })
             .catch((errors) => {
                 dispatch({

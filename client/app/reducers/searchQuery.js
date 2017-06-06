@@ -1,4 +1,4 @@
-module.exports = function searchQuery(state = '', action = {type: ''}) {
+module.exports = function searchQuery(state = '', action = { type: '' }) {
     if(action.type === 'RESET_SEARCH') {
         return ''
     }

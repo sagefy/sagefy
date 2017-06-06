@@ -1,4 +1,4 @@
-const {form} = require('../../modules/tags')
+const { form } = require('../../modules/tags')
 const formField = require('./form_field.tmpl')
 
 module.exports = (fields) =>

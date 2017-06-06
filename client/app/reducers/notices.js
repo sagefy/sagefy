@@ -1,7 +1,7 @@
-const {mergeArraysByKey} = require('../modules/auxiliaries')
-const {copy} = require('../modules/utilities')
+const { mergeArraysByKey } = require('../modules/auxiliaries')
+const { copy } = require('../modules/utilities')
 
-module.exports = function notices(state = [], action = {type: ''}) {
+module.exports = function notices(state = [], action = { type: '' }) {
     if(action.type === 'LIST_NOTICES_SUCCESS') {
         const notices = copy(state)
         const newNotices = mergeArraysByKey(notices, action.notices, 'id')

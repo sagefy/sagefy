@@ -1,6 +1,6 @@
 const broker = require('../../modules/broker')
 const tasks = require('../../modules/tasks')
-const {getFormValues, parseFormValues} =
+const { getFormValues, parseFormValues } =
     require('../../modules/auxiliaries')
 const userSchema = require('../../schemas/user')
 

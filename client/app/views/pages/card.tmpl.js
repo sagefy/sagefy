@@ -1,4 +1,4 @@
-const {div, h2, ul, li} = require('../../modules/tags')
+const { div, h2, ul, li } = require('../../modules/tags')
 const spinner = require('../components/spinner.tmpl')
 const followButton = require('../components/follow_button.tmpl')
 const entityHeader = require('../components/entity_header.tmpl')
@@ -19,7 +19,7 @@ module.exports = (data) => {
     const params = card.card_parameters || {}
     const assess = card.kind in assessments
     return div(
-        {id: 'card', className: 'page'},
+        { id: 'card', className: 'page' },
         followButton('card', card.entity_id, data.follows),
         entityHeader('card', card),
         previewCardContent(card),

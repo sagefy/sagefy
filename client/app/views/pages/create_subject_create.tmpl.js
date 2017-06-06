@@ -1,8 +1,8 @@
-const {div, h1} = require('../../modules/tags')
-const {extend} = require('../../modules/utilities')
+const { div, h1 } = require('../../modules/tags')
+const { extend } = require('../../modules/utilities')
 const subjectSchema = require('../../schemas/subject')
 const form = require('../components/form.tmpl')
-const {createFieldsData} = require('../../modules/auxiliaries')
+const { createFieldsData } = require('../../modules/auxiliaries')
 
 const fields = [{
     label: 'Subject Name',
@@ -11,7 +11,7 @@ const fields = [{
     label: 'Subject Language',
     name: 'language',
     options: [
-        {label: 'English'}
+        { label: 'English' }
     ],
     value: 'en'
 }, {
@@ -49,7 +49,7 @@ module.exports = function createSubjectCreate(data) {
     })
 
     return div(
-        {id: 'create', className: 'page create--subject-create'},
+        { id: 'create', className: 'page create--subject-create' },
         h1('Create a New Subject'),
         form(instanceFields)
     )

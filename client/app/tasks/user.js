@@ -1,4 +1,4 @@
-const {dispatch} = require('../modules/store')
+const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
@@ -7,7 +7,7 @@ module.exports = tasks.add({
         dispatch({
             type: 'SET_SENDING_ON'
         })
-        dispatch({type: 'CREATE_USER'})
+        dispatch({ type: 'CREATE_USER' })
         return request({
             method: 'POST',
             url: '/s/users',
@@ -43,7 +43,7 @@ module.exports = tasks.add({
         dispatch({
             type: 'SET_SENDING_ON'
         })
-        dispatch({type: 'UPDATE_USER', id: data.id})
+        dispatch({ type: 'UPDATE_USER', id: data.id })
         return request({
             method: 'PUT',
             url: `/s/users/${data.id}`,
@@ -72,7 +72,7 @@ module.exports = tasks.add({
     },
 
     getCurrentUser() {
-        dispatch({type: 'GET_CURRENT_USER'})
+        dispatch({ type: 'GET_CURRENT_USER' })
         return request({
             method: 'GET',
             url: '/s/users/current',
@@ -116,7 +116,7 @@ module.exports = tasks.add({
     },
 
     getUser(id, opts = {}) {
-        dispatch({type: 'GET_USER', id})
+        dispatch({ type: 'GET_USER', id })
         return request({
             method: 'GET',
             url: `/s/users/${id}`,
@@ -143,7 +143,7 @@ module.exports = tasks.add({
 
     listUsers(userIds, opts = {}) {
         const size = opts.size || 48
-        dispatch({type: 'LIST_USERS', userIds, size})
+        dispatch({ type: 'LIST_USERS', userIds, size })
         return request({
             method: 'GET',
             url: '/s/users',
@@ -153,7 +153,7 @@ module.exports = tasks.add({
             },
         })
             .then((response) => {
-                const {users} = response
+                const { users } = response
                 users.forEach(user => {
                     dispatch({
                         type: 'ADD_USER',
@@ -161,7 +161,7 @@ module.exports = tasks.add({
                         user,
                     })
                 })
-                const {avatars} = response
+                const { avatars } = response
                 dispatch({
                     type: 'ADD_USER_AVATARS',
                     avatars,
@@ -180,7 +180,7 @@ module.exports = tasks.add({
         dispatch({
             type: 'SET_SENDING_ON'
         })
-        dispatch({type: 'LOG_IN_USER'})
+        dispatch({ type: 'LOG_IN_USER' })
         return request({
             method: 'POST',
             url: '/s/sessions',
@@ -215,7 +215,7 @@ module.exports = tasks.add({
         dispatch({
             type: 'SET_SENDING_ON'
         })
-        dispatch({type: 'LOG_OUT_USER'})
+        dispatch({ type: 'LOG_OUT_USER' })
         return request({
             method: 'DELETE',
             url: '/s/sessions',
@@ -248,7 +248,7 @@ module.exports = tasks.add({
         dispatch({
             type: 'SET_SENDING_ON'
         })
-        dispatch({type: 'GET_PASSWORD_TOKEN'})
+        dispatch({ type: 'GET_PASSWORD_TOKEN' })
         return request({
             method: 'POST',
             url: '/s/password_tokens',
@@ -280,7 +280,7 @@ module.exports = tasks.add({
         dispatch({
             type: 'SET_SENDING_ON'
         })
-        dispatch({type: 'CREATE_PASSWORD'})
+        dispatch({ type: 'CREATE_PASSWORD' })
         return request({
             method: 'POST',
             url: `/s/users/${data.id}/password`,

@@ -1,7 +1,7 @@
-const defaultState = {open: false, context: {}}
-const {copy} = require('../modules/utilities')
+const defaultState = { open: false, context: {} }
+const { copy } = require('../modules/utilities')
 
-module.exports = function menu(state = defaultState, action = {type: ''}) {
+module.exports = function menu(state = defaultState, action = { type: '' }) {
     if(action.type === 'TOGGLE_MENU') {
         const newState = copy(state)
         newState.open = !state.open

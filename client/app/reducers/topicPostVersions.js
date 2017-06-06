@@ -1,10 +1,10 @@
-const {shallowCopy} = require('../modules/utilities')
+const { shallowCopy } = require('../modules/utilities')
 
 module.exports = function topicPostVersions(state = {
     card: {},
     unit: {},
     subject: {},
-}, action = {type: ''}) {
+}, action = { type: '' }) {
     if(action.type === 'ADD_TOPIC_POST_VERSIONS_CARD') {
         state.card = shallowCopy(state.card)
         state.card[action.version.id] = action.version

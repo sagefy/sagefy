@@ -1,10 +1,10 @@
-const {dispatch} = require('../modules/store')
+const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     getUnit(id) {
-        dispatch({type: 'GET_UNIT', id})
+        dispatch({ type: 'GET_UNIT', id })
         return request({
             method: 'GET',
             url: `/s/units/${id}`,
@@ -40,7 +40,7 @@ module.exports = tasks.add({
     },
 
     listUnitVersions(id) {
-        dispatch({type: 'LIST_UNIT_VERSIONS', id})
+        dispatch({ type: 'LIST_UNIT_VERSIONS', id })
         return request({
             method: 'GET',
             url: `/s/units/${id}/versions`,
@@ -78,7 +78,7 @@ module.exports = tasks.add({
                         allResponses.push(response.version)
                         count++
                         if(count === total) {
-                            resolve({units: allResponses})
+                            resolve({ units: allResponses })
                         }
                     })
                     .catch((errors) => {

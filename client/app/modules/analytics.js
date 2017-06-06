@@ -40,4 +40,4 @@ const trackEvent = (action) => {
     }
 }
 
-module.exports = {startGoogleAnalytics, trackEvent}
+module.exports = { startGoogleAnalytics, trackEvent }

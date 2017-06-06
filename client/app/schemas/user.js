@@ -1,4 +1,4 @@
-const {required, email, minlength, isOneOf} = require('../modules/validations')
+const { required, email, minlength, isOneOf } = require('../modules/validations')
 
 module.exports = {
     name: {

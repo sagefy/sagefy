@@ -1,4 +1,4 @@
-const {div, h1, ul, li, p, button, a, br} =
+const { div, h1, ul, li, p, button, a, br } =
     require('../../modules/tags')
 // const c = require('../../modules/content').get
 const spinner = require('../components/spinner.tmpl')
@@ -10,10 +10,10 @@ module.exports = (data) => {
     if(!data.userSubjects) { return spinner() }
 
     return div(
-        {id: 'my-subjects', className: 'page'},
+        { id: 'my-subjects', className: 'page' },
         h1('My Subjects'),
         p(
-            {className: 'alert--accent'},
+            { className: 'alert--accent' },
             icon('follow'),
             ' Sagefy is new. You will likely find bugs. ',
             br(),
@@ -21,7 +21,7 @@ module.exports = (data) => {
             'Thank you!'
         ),  // TODO-2 Delete this warning message
         ul(
-          {className: 'my-subjects__list'},
+          { className: 'my-subjects__list' },
           data.userSubjects.map(subject => userSubject(subject))
         ),
         data.userSubjects.length === 0 ? p(
@@ -38,7 +38,7 @@ module.exports = (data) => {
         ) : p(
             a(
                 // TODO-2 temporary {href: '/search?mode=as_learner'},
-                {href: '/recommended_subjects'},
+                { href: '/recommended_subjects' },
                 icon('search'),
                 ' Find another subject'
             )
@@ -49,7 +49,7 @@ module.exports = (data) => {
 
 const userSubject = (data) =>
     li(
-        {className: 'my-subject'},
+        { className: 'my-subject' },
         button(
             {
                 className: 'my-subjects__engage-subject',
@@ -59,7 +59,7 @@ const userSubject = (data) =>
             icon('next')
         ),
         div(
-            {className: 'my-subjects__my-subject-right'},
+            { className: 'my-subjects__my-subject-right' },
             previewSubjectHead({ name: data.name, body: data.body })
         )
     )

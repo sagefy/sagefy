@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const {dispatch} = require('../modules/store')
+const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
@@ -27,14 +27,14 @@ module.exports = tasks.add({
                             const entityId = response.topic.entity.id
                             return tasks.getEntity(kind, entityId)
                         }),
-                    tasks.listUsers(userIds, {size: 48}),
+                    tasks.listUsers(userIds, { size: 48 }),
                     tasks.listEntityVersionsByTopic(id, entityVersions)
                 ])
             })
     },
 
     listPosts(id) {
-        dispatch({type: 'LIST_POSTS', id})
+        dispatch({ type: 'LIST_POSTS', id })
         return request({
             method: 'GET',
             url: `/s/topics/${id}/posts`,
@@ -64,7 +64,7 @@ module.exports = tasks.add({
             type: 'SET_SENDING_ON'
         })
         const topicId = data.post.topicId || data.post.topic_id
-        dispatch({type: 'CREATE_POST', topicId})
+        dispatch({ type: 'CREATE_POST', topicId })
         return request({
             method: 'POST',
             url: `/s/topics/${topicId}/posts`,
@@ -98,9 +98,9 @@ module.exports = tasks.add({
         dispatch({
             type: 'SET_SENDING_ON'
         })
-        const {id} = data.post
+        const { id } = data.post
         const topicId = data.post.topic_id
-        dispatch({type: 'UPDATE_POST'})
+        dispatch({ type: 'UPDATE_POST' })
         return request({
             method: 'PUT',
             url: `/s/topics/${topicId}/posts/${id}`,

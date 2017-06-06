@@ -110,7 +110,7 @@ util.convertDataToGet = (url, data) => {
     url += url.indexOf('?') > -1 ? '&' : '?'
     url += util.parameterize(util.extend(
         data || {},
-        {_: +new Date()}  // Cachebreaker
+        { _: +new Date() }  // Cachebreaker
     ))
     return url
 }

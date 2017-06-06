@@ -1,9 +1,9 @@
-const {div, h1, p, a, br} = require('../../modules/tags')
+const { div, h1, p, a, br } = require('../../modules/tags')
 const form = require('../components/form.tmpl')
 const icon = require('../components/icon.tmpl')
 const userSchema = require('../../schemas/user')
-const {extend} = require('../../modules/utilities')
-const {createFieldsData} = require('../../modules/auxiliaries')
+const { extend } = require('../../modules/utilities')
+const { createFieldsData } = require('../../modules/auxiliaries')
 
 const fields = [{
     name: 'name',
@@ -41,12 +41,12 @@ module.exports = (data) => {
     })
 
     return div(
-        {id: 'sign-up', className: 'page'},
+        { id: 'sign-up', className: 'page' },
         h1('Sign Up'),
         p(
             'Already have an account? ',
             a(
-                {href: '/log_in'},
+                { href: '/log_in' },
                 icon('log-in'),
                 ' Log In'
             ),
@@ -54,7 +54,7 @@ module.exports = (data) => {
             br(),
             'By signing up, you agree to our ',
             a(
-                {href: '/terms'},
+                { href: '/terms' },
                 icon('terms'),
                 ' Terms of Service'
             ),

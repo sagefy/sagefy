@@ -1,4 +1,4 @@
-const {div, h1, p, img, h3, header, ul, li} =
+const { div, h1, p, img, h3, header, ul, li } =
     require('../../modules/tags')
 const {
   timeAgo,
@@ -14,10 +14,10 @@ module.exports = (data) => {
     if(!user) { return spinner() }
 
     return div(
-        {id: 'profile', className: 'page'},
+        { id: 'profile', className: 'page' },
         header(
-            {className: 'profile__header'},
-            img({src: user.avatar, className: 'profile__avatar'}),
+            { className: 'profile__header' },
+            img({ src: user.avatar, className: 'profile__avatar' }),
             h1(user.name),
             p('Joined ' + timeAgo(user.created))
         ),
@@ -30,7 +30,7 @@ const showSubjects = (user, subjects) =>
     [
         h3(`${user.name} is learning:`),
         ul(
-            {className: 'profile__options'},
+            { className: 'profile__options' },
             subjects.map(subject => li(
                 previewSubjectHead({
                     url: `/subjects/${subject.entity_id}`,
@@ -46,7 +46,7 @@ const showFollows = (user, follows) =>
     [
         h3(`${user.name} follows:`),
         ul(
-            {className: 'profile__options'},
+            { className: 'profile__options' },
             follows.map((follow) => {
                 const e = follow.entity
                 const kind = e.kind

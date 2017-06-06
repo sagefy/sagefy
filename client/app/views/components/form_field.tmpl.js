@@ -1,4 +1,4 @@
-const {div, p, span} = require('../../modules/tags')
+const { div, p, span } = require('../../modules/tags')
 const icon = require('./icon.tmpl')
 
 const kindTmpl = {}
@@ -19,7 +19,7 @@ module.exports = (data) => {
         data.good ? 'form-field--good' : ''
     ].join(' ')
     return div(
-        {className: classes},
+        { className: classes },
         m(data)
     )
 }
@@ -50,14 +50,14 @@ const m = (data) => {
     }
     if (data.error) {
         nodes.push(span(
-            {className: 'form-field__feedback'},
+            { className: 'form-field__feedback' },
             icon('bad'),
             data.error
         ))
     }
     if (data.description) {
         nodes.push(
-            p({className: 'form-field__description'}, data.description)
+            p({ className: 'form-field__description' }, data.description)
         )
     }
     return nodes

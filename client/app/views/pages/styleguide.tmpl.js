@@ -1,10 +1,10 @@
 // Note: we won't translate this copy as its dev specific
-const {div, h1, h2, p} = require('../../modules/tags')
+const { div, h1, h2, p } = require('../../modules/tags')
 const data = require('./styleguide.data.json')
 
 module.exports = () =>
     div(
-        {id: 'styleguide', className: 'page'},
+        { id: 'styleguide', className: 'page' },
         h1(
             'Style Guide & Component Library'
         ),

@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
-const {matchesRoute} = require('../modules/auxiliaries')
-const {div, main} = require('../modules/tags')
-const {copy} = require('../modules/utilities')
+const { matchesRoute } = require('../modules/auxiliaries')
+const { div, main } = require('../modules/tags')
+const { copy } = require('../modules/utilities')
 
 /*
 TODO-3 distribute routing, something like...

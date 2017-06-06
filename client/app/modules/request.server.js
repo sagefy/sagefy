@@ -1,7 +1,7 @@
 const http = require('http')
-const {convertDataToGet, isString} = require('./utilities')
+const { convertDataToGet, isString } = require('./utilities')
 
-module.exports = function httpRequest({method, url, data}) {
+module.exports = function httpRequest({ method, url, data }) {
     method = method.toUpperCase()
     if (method === 'GET') {
         url = convertDataToGet(url, data)

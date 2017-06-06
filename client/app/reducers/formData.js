@@ -1,5 +1,5 @@
 
-module.exports = function formData(state = {}, action = {type: ''}) {
+module.exports = function formData(state = {}, action = { type: '' }) {
     if(action.type === 'RESET_FORM_DATA') {
         return {}
     }

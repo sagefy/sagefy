@@ -1,10 +1,10 @@
-const {div, h1} = require('../../modules/tags')
+const { div, h1 } = require('../../modules/tags')
 // const c = require('../../modules/content').get
 const form = require('../components/form.tmpl')
 const spinner = require('../components/spinner.tmpl')
-const {extend} = require('../../modules/utilities')
-const {createFieldsData} = require('../../modules/auxiliaries')
-const {getFields, getSchema} = require('./post_form.fn')
+const { extend } = require('../../modules/utilities')
+const { createFieldsData } = require('../../modules/auxiliaries')
+const { getFields, getSchema } = require('./post_form.fn')
 
 // TODO-1 Currently there is no way to update an existing entity from the UI,
 //        you can only propose a new entity.

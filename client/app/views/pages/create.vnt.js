@@ -1,18 +1,18 @@
 const broker = require('../../modules/broker')
 const tasks = require('../../modules/tasks')
-const {getFormValues, parseFormValues} =
+const { getFormValues, parseFormValues } =
     require('../../modules/auxiliaries')
 const subjectSchema = require('../../schemas/subject')
 const unitSchema = require('../../schemas/unit')
 const cardSchema = require('../../schemas/card')
-const {closest} = require('../../modules/utilities')
+const { closest } = require('../../modules/utilities')
 
 module.exports = broker.add({
     'click .create__route'(e, el) {
         if(e) e.preventDefault()
         const [,, kind, step] = el.pathname.split('/')
         tasks.resetCreate()
-        tasks.updateCreateRoute({kind, step})
+        tasks.updateCreateRoute({ kind, step })
     },
 
     'submit .create--subject-create form'(e, el) {
@@ -71,14 +71,14 @@ module.exports = broker.add({
 
     'click .create--subject-add__add'(e, el) {
         if(e) e.preventDefault()
-        const {kind, id, name, body} = el.dataset
-        tasks.addMemberToCreateSubject({kind, id, name, body})
+        const { kind, id, name, body } = el.dataset
+        tasks.addMemberToCreateSubject({ kind, id, name, body })
     },
 
     'click .create--unit-add__add'(e, el) {
         if(e) e.preventDefault()
-        const {id, name, body, version} = el.dataset
-        tasks.addMemberToAddUnits({id, name, body, version})
+        const { id, name, body, version } = el.dataset
+        tasks.addMemberToAddUnits({ id, name, body, version })
     },
 
     'click .create--subject-create .form-field--entities__a'(e, el) {
@@ -101,13 +101,13 @@ module.exports = broker.add({
     'click .create--subject-create .form-field--entities__remove'(e, el) {
         if(e) e.preventDefault()
         const id = el.id
-        tasks.removeMemberFromCreateSubject({id})
+        tasks.removeMemberFromCreateSubject({ id })
     },
 
     'click .create--unit-find__choose'(e, el) {
         if(e) e.preventDefault()
-        const {id, name} = el.dataset
-        tasks.createChooseSubjectForUnits({id, name})
+        const { id, name } = el.dataset
+        tasks.createChooseSubjectForUnits({ id, name })
     },
 
     'submit .create--unit-find__form'(e, el) {
@@ -118,8 +118,8 @@ module.exports = broker.add({
 
     'click .create--card-find__choose'(e, el) {
         if(e) e.preventDefault()
-        const {id, name} = el.dataset
-        tasks.createChooseUnitForCards({id, name})
+        const { id, name } = el.dataset
+        tasks.createChooseUnitForCards({ id, name })
     },
 
     'submit .create--card-find__form'(e, el) {
@@ -136,14 +136,14 @@ module.exports = broker.add({
 
     'click .create--unit-create-add__add'(e, el) {
         if(e) e.preventDefault()
-        const {id, name, body} = el.dataset
-        tasks.addRequireToProposedUnit({id, name, body, kind: 'unit'})
+        const { id, name, body } = el.dataset
+        tasks.addRequireToProposedUnit({ id, name, body, kind: 'unit' })
     },
 
     'click .create--unit-list__remove'(e, el) {
         if(e) e.preventDefault()
         const index = el.dataset.index
-        tasks.removeUnitFromSubject({index})
+        tasks.removeUnitFromSubject({ index })
     },
 
     'click .create--unit-list__submit'(e) {
@@ -154,7 +154,7 @@ module.exports = broker.add({
     'click .create--card-list__remove'(e, el) {
         if(e) e.preventDefault()
         const index = el.dataset.index
-        tasks.removeCardFromUnit({index})
+        tasks.removeCardFromUnit({ index })
     },
 
     'click .create--card-list__submit'(e) {

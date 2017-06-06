@@ -1,11 +1,11 @@
-const {required} = require('../modules/validations')
+const { required } = require('../modules/validations')
 
 module.exports = {
     language: {
         type: 'select',
         validations: [required],
         options: [
-            {value: 'en'}
+            { value: 'en' }
         ]
     },
     name: {
@@ -20,7 +20,7 @@ module.exports = {
         type: 'list',
         validations: [],
         columns: [
-            {name: 'tag', type: 'text'}
+            { name: 'tag', type: 'text' }
         ]
     },
     require_ids: {

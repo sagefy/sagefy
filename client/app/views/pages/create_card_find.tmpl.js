@@ -1,14 +1,14 @@
 /* eslint-disable no-underscore-dangle */
-const {div, h1, h2, p, ul, li, a, form, input, button} =
+const { div, h1, h2, p, ul, li, a, form, input, button } =
     require('../../modules/tags')
-const {cardWizard} = require('./create_shared.fn')
+const { cardWizard } = require('./create_shared.fn')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const icon = require('../components/icon.tmpl')
 
 
 module.exports = function createCardFind(data) {
-    const {searchResults} = data
-    const {myRecentUnits} = data.create
+    const { searchResults } = data
+    const { myRecentUnits } = data.create
 
     const inputOpts = {
         type: 'text',
@@ -19,13 +19,13 @@ module.exports = function createCardFind(data) {
     inputOpts.value = data.searchQuery || null
 
     return div(
-        {id: 'create', className: 'page create--card-find'},
+        { id: 'create', className: 'page create--card-find' },
         h1('Find a Unit to Add Cards'),
         cardWizard('find'),
         myRecentUnits && myRecentUnits.length ? div(
             h2('My Recent Units'),
             ul(
-                {className: 'create--card-find__my-recents'},
+                { className: 'create--card-find__my-recents' },
                 myRecentUnits.map(unit => li(
                     a(
                         {
@@ -45,24 +45,24 @@ module.exports = function createCardFind(data) {
                     })
                 ))
             ),
-            p({className: 'create--card-find__or'}, 'or')
+            p({ className: 'create--card-find__or' }, 'or')
         ) : null,
 
         h2('Search for a Unit'),
         form(
-            {className: 'form--horizontal create--card-find__form'},
+            { className: 'form--horizontal create--card-find__form' },
             div(
-                {className: 'form-field form-field--search'},
+                { className: 'form-field form-field--search' },
                 input(inputOpts)
             ),
             button(
-                {type: 'submit', className: 'create--card-find__search'},
+                { type: 'submit', className: 'create--card-find__search' },
                 icon('search'),
                 ' Search'
             )
         ),
         searchResults && searchResults.length ? ul(
-            {className: 'create--card-find__results'},
+            { className: 'create--card-find__results' },
             searchResults.map(result => li(
                 a(
                     {

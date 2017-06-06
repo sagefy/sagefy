@@ -1,7 +1,7 @@
-const {div, h1, p, a, hr} = require('../../modules/tags')
+const { div, h1, p, a, hr } = require('../../modules/tags')
 const userSchema = require('../../schemas/user')
-const {extend} = require('../../modules/utilities')
-const {createFieldsData} = require('../../modules/auxiliaries')
+const { extend } = require('../../modules/utilities')
+const { createFieldsData } = require('../../modules/auxiliaries')
 const form = require('../components/form.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
@@ -59,17 +59,17 @@ module.exports = (data) => {
     })
 
     return div(
-        {id: 'settings', className: 'page'},
+        { id: 'settings', className: 'page' },
         h1('Settings'),
         form(instanceFields),
         hr(),
         p(a(
-            {href: '/password'},
+            { href: '/password' },
             icon('password'),
             ' Change my password.'
         )),
         p(a(
-            {href: 'https://gravatar.com'},
+            { href: 'https://gravatar.com' },
             icon('update'),
             ' Update my avatar on Gravatar.'
         ))

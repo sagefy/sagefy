@@ -1,8 +1,8 @@
 const express = require('express')
 const toHTML = require('vdom-to-html')
 const template = require('./views/index.tmpl')
-const {route} = require('./modules/route_actions')
-const {dispatch, getState, setReducer, resetState} = require('./modules/store')
+const { route } = require('./modules/route_actions')
+const { dispatch, getState, setReducer, resetState } = require('./modules/store')
 const reducer = require('./reducers/index')
 const cookieParser = require('cookie-parser')
 

@@ -28,28 +28,28 @@ describe('Auxiliaries', () => {
     })
 
     it('should merge two arrays by a key', () => {
-        const A = [{k: 0, v: 1}, {k: 1, v: 1}, {k: 3, v: 1}, {k: 7, v: 1}]
-        const B = [{k: 1, v: 2}, {k: 2, v: 2}, {k: 7, v: 2}, {k: 8, v: 2}]
+        const A = [{ k: 0, v: 1 }, { k: 1, v: 1 }, { k: 3, v: 1 }, { k: 7, v: 1 }]
+        const B = [{ k: 1, v: 2 }, { k: 2, v: 2 }, { k: 7, v: 2 }, { k: 8, v: 2 }]
 
         expect(mergeArraysByKey(A, B, 'k')).to.deep.equal([
-            {k: 0, v: 1},
-            {k: 1, v: 2},
-            {k: 3, v: 1},
-            {k: 2, v: 2},
-            {k: 7, v: 2},
-            {k: 8, v: 2},
+            { k: 0, v: 1 },
+            { k: 1, v: 2 },
+            { k: 3, v: 1 },
+            { k: 2, v: 2 },
+            { k: 7, v: 2 },
+            { k: 8, v: 2 },
         ])
     })
 
     it('should merge into an empty array', () => {
         const A = []
-        const B = [{k: 1, v: 2}, {k: 2, v: 2}, {k: 7, v: 2}, {k: 8, v: 2}]
+        const B = [{ k: 1, v: 2 }, { k: 2, v: 2 }, { k: 7, v: 2 }, { k: 8, v: 2 }]
 
         expect(mergeArraysByKey(A, B, 'k')).to.deep.equal(B)
     })
 
     it('should merge an empty array', () => {
-        const A = [{k: 1, v: 2}, {k: 2, v: 2}, {k: 7, v: 2}, {k: 8, v: 2}]
+        const A = [{ k: 1, v: 2 }, { k: 2, v: 2 }, { k: 7, v: 2 }, { k: 8, v: 2 }]
         const B = []
 
         expect(mergeArraysByKey(A, B, 'k')).to.deep.equal(A)
@@ -78,8 +78,8 @@ describe('Auxiliaries', () => {
             },
             c: [4, 5],
             d: [
-                {a: 6, b: 7},
-                {a: 8, b: 9}
+                { a: 6, b: 7 },
+                { a: 8, b: 9 }
             ]
         })
     })

@@ -1,4 +1,4 @@
-const {div, h1, ul, li, a, hr} = require('../../modules/tags')
+const { div, h1, ul, li, a, hr } = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
@@ -15,7 +15,7 @@ const subjectResult = (subject) =>
             ' Add to My Subjects'
         ),
         div(
-            {className: 'recommended-subjects__right'},
+            { className: 'recommended-subjects__right' },
             previewSubjectHead({ name: subject.name, body: subject.body }),
             a(
                 {
@@ -32,12 +32,12 @@ const subjectResult = (subject) =>
 module.exports = (data) => {
     if(!data.recommendedSubjects.length) { return spinner() }
     return div(
-        {id: 'recommended-subjects', className: 'page'},
+        { id: 'recommended-subjects', className: 'page' },
         h1('Recommended Subjects'),
         ul(
             data.recommendedSubjects.map(subject => li(subjectResult(subject)))
         ),
         hr(),
-        a({href: '/search?mode=as_learner'}, icon('search'), ' Search Subjects')
+        a({ href: '/search?mode=as_learner' }, icon('search'), ' Search Subjects')
     )
 }

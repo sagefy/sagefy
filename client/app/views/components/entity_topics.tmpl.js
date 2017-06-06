@@ -1,10 +1,10 @@
-const {div, a, h2, ul, li, p} = require('../../modules/tags')
+const { div, a, h2, ul, li, p } = require('../../modules/tags')
 const timeago = require('./timeago.tmpl')
 const icon = require('./icon.tmpl')
 
 module.exports = (kind, entityID, topics) => {
     return div(
-        {className: 'entity-topics'},
+        { className: 'entity-topics' },
         h2('Topics'),
         a(
             {
@@ -15,17 +15,17 @@ module.exports = (kind, entityID, topics) => {
         ),
         topics && topics.length ? ul(
             topics.map(topic => li(
-                timeago(topic.created, {right: true}),
+                timeago(topic.created, { right: true }),
                 // TODO-2 update time ago to latest post time
                 a(
-                    {href: `/topics/${topic.id}`},
+                    { href: `/topics/${topic.id}` },
                     topic.name
                 )
                 // TODO-3 number of posts
             )),
             li(
                 a(
-                    {href: `/search?kind=topic&q=${entityID}`},
+                    { href: `/search?kind=topic&q=${entityID}` },
                     '... See more topics ',
                     icon('next')
                 )

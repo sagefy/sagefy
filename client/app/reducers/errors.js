@@ -1,4 +1,4 @@
-module.exports = function errors(state = [], action = {type: ''}) {
+module.exports = function errors(state = [], action = { type: '' }) {
     if(action.type === 'SET_ERRORS') {
         return state.errors
     }

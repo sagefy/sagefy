@@ -1,4 +1,4 @@
-const {dispatch} = require('../modules/store')
+const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
 
 module.exports = tasks.add({
@@ -8,7 +8,7 @@ module.exports = tasks.add({
         })
     },
 
-    updateMenuContext({card, unit, subject}) {
+    updateMenuContext({ card, unit, subject }) {
         dispatch({
             type: 'UPDATE_MENU_CONTEXT',
             card,

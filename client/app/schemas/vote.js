@@ -1,6 +1,6 @@
 const post = require('./post')
-const {extend} = require('../modules/utilities')
-const {required} = require('../modules/validations')
+const { extend } = require('../modules/utilities')
+const { required } = require('../modules/validations')
 
 const noop = () => {}
 
@@ -17,8 +17,8 @@ module.exports = extend({}, post, {
         type: 'select',
         validations: [required],
         options: [
-            {value: 'true'},
-            {value: 'false'},
+            { value: 'true' },
+            { value: 'false' },
         ]
     }
 })

@@ -1,7 +1,7 @@
-const {extend} = require('../modules/utilities')
-const {mergeArraysByKey} = require('../modules/auxiliaries')
+const { extend } = require('../modules/utilities')
+const { mergeArraysByKey } = require('../modules/auxiliaries')
 
-module.exports = function follows(state = [], action = {type: ''}) {
+module.exports = function follows(state = [], action = { type: '' }) {
     if(action.type === 'LIST_FOLLOWS_SUCCESS') {
         const follows = mergeArraysByKey(
             state,

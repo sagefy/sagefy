@@ -1,4 +1,4 @@
-const {h2, ul, li, a} = require('../../modules/tags')
+const { h2, ul, li, a } = require('../../modules/tags')
 
 const verbage = {
     requires: 'Requires',
@@ -18,7 +18,7 @@ module.exports = (kind, entity) => {
                     verbage[relation.kind],
                     ': ',
                     a(
-                        {href: `/${kind}s/${relation.entity.entity_id}`},
+                        { href: `/${kind}s/${relation.entity.entity_id}` },
                         relation.entity.name
                     )
                 )

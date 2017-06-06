@@ -1,4 +1,4 @@
-const {required} = require('../modules/validations')
+const { required } = require('../modules/validations')
 
 module.exports = {
     id: {
@@ -22,9 +22,9 @@ module.exports = {
     kind: {
         type: 'select',
         options: [
-            {value: 'post'},
-            {value: 'proposal'},
-            {value: 'vote'}
+            { value: 'post' },
+            { value: 'proposal' },
+            { value: 'vote' }
         ],
         default: 'post',
         validations: [

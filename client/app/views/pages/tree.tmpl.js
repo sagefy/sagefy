@@ -1,12 +1,12 @@
-const {div, h1, a, p} = require('../../modules/tags')
-const {svg, circle, line, text} = require('../../modules/svg_tags')
+const { div, h1, a, p } = require('../../modules/tags')
+const { svg, circle, line, text } = require('../../modules/svg_tags')
 const {
     putUnitsInLayers,
     orderLayers,
     calculatePoints,
     findUnit
 } = require('./tree.fn')
-const {matchesRoute} = require('../../modules/auxiliaries')
+const { matchesRoute } = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 
@@ -44,10 +44,10 @@ module.exports = (data) => {
     }
 
     return div(
-        {id: 'tree', className: 'page'},
+        { id: 'tree', className: 'page' },
         h1(`Tree: ${treeData.subjects.name}`),
         asContrib ? p(a(
-            {href: `/subjects/${id}`},
+            { href: `/subjects/${id}` },
             icon('subject'),
             ' View subject information'
         )) : null,
@@ -78,14 +78,14 @@ module.exports = (data) => {
             icon('next')
         )) : null,
         cardId ? p(a(
-            {className: 'tree__continue', href: `/cards/${cardId}/learn`},
+            { className: 'tree__continue', href: `/cards/${cardId}/learn` },
             'Next ',
             icon('next')
         )) : null
     )
 }
 
-const renderLayers = ({layers, currentUnit, preWidth, buckets}) => {
+const renderLayers = ({ layers, currentUnit, preWidth, buckets }) => {
     let nodes = []
     // TODO-3 break into smaller functions, and there's lots of repetition..
     // This is done twice to ensure a line never covers over a circle
@@ -160,7 +160,7 @@ const renderCurrent = (layers, currentUnit, preWidth) => {
     return nodes
 }
 
-const unitPoint = ({id, x, y, className}, currentTreeUnit) =>
+const unitPoint = ({ id, x, y, className }, currentTreeUnit) =>
     circle({
         class: className + (currentTreeUnit === id ? ' selected' : ''),
         id,
@@ -169,7 +169,7 @@ const unitPoint = ({id, x, y, className}, currentTreeUnit) =>
         r: radius,
     })
 
-const unitLine = ({x1, y1, x2, y2}) =>
+const unitLine = ({ x1, y1, x2, y2 }) =>
     line({
         class: 'unit-require',
         x1,

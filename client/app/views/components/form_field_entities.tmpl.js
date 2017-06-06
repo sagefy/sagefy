@@ -1,4 +1,4 @@
-const {div, ul, li, a, input} = require('../../modules/tags')
+const { div, ul, li, a, input } = require('../../modules/tags')
 const icon = require('./icon.tmpl')
 const previewCardHead = require('./preview_card_head.tmpl')
 const previewUnitHead = require('./preview_unit_head.tmpl')
@@ -8,7 +8,7 @@ module.exports = (data) => {
     const entities = data.value || data.default || []
     return div(
         entities.length ? ul(
-            {className: 'form-field--entities__ul'},
+            { className: 'form-field--entities__ul' },
             entities.map((entity, index) => li(
                 a(
                     {
@@ -43,7 +43,7 @@ module.exports = (data) => {
             ))
         ) : null,
         data.add ? a(
-            {className: 'form-field--entities__a', href: data.add.url},
+            { className: 'form-field--entities__a', href: data.add.url },
             icon('search'),
             ` ${data.add.label}`
         ) : null

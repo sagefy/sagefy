@@ -1,7 +1,7 @@
-const {div, span} = require('../../modules/tags')
-const {ucfirst} = require('../../modules/auxiliaries')
+const { div, span } = require('../../modules/tags')
+const { ucfirst } = require('../../modules/auxiliaries')
 const icon = require('./icon.tmpl')
-const {previewName} = require('./preview_shared.fn')
+const { previewName } = require('./preview_shared.fn')
 
 module.exports = function previewCardHead({
     name,
@@ -10,12 +10,12 @@ module.exports = function previewCardHead({
     labelKind = false,
 }) {
     const cardKindLabel = kind ? span(
-        {className: 'preview--card__kind'},
+        { className: 'preview--card__kind' },
         icon(kind.toLowerCase()),
         ucfirst(kind)
     ) : null
     return div(
-        {className: 'preview--card__head'},
+        { className: 'preview--card__head' },
         previewName({
             name: [cardKindLabel, ' ', name],
             kind: 'card',

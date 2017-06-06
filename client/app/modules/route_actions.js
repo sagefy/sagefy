@@ -1,8 +1,8 @@
-const {dispatch} = require('./store')
+const { dispatch } = require('./store')
 const tasks = require('./tasks')
 const qs = require('./query_string')
 const pageTitles = require('../modules/page_titles')
-const {matchesRoute} = require('../modules/auxiliaries')
+const { matchesRoute } = require('../modules/auxiliaries')
 
 const request = () => {
     return window.location.pathname + window.location.search
@@ -48,4 +48,4 @@ tasks.add({
     }
 })
 
-module.exports = {route}
+module.exports = { route }

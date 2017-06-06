@@ -1,8 +1,8 @@
-const {div, h1, p} = require('../../modules/tags')
+const { div, h1, p } = require('../../modules/tags')
 const form = require('../components/form.tmpl')
 const userSchema = require('../../schemas/user')
-const {extend} = require('../../modules/utilities')
-const {createFieldsData} = require('../../modules/auxiliaries')
+const { extend } = require('../../modules/utilities')
+const { createFieldsData } = require('../../modules/auxiliaries')
 const wizard = require('../components/wizard.tmpl')
 
 const emailFields = [{
@@ -38,7 +38,7 @@ passwordFields.forEach((field, index) => {
 module.exports = (data) => {
     // TODO-3 the state should be provided solely by data,
     //      the view should not be looking at the window query string
-    const {token, id} = data.routeQuery
+    const { token, id } = data.routeQuery
     const state = token && id ? 'password'
             : data.passwordPageState || 'email'
     return div(
@@ -49,9 +49,9 @@ module.exports = (data) => {
         h1('Create a New Password'),
         wizard({
             options: [
-                {name: 'email', label: 'Enter Email'},
-                {name: 'inbox', label: 'Check Inbox'},
-                {name: 'password', label: 'Change Password'}
+                { name: 'email', label: 'Enter Email' },
+                { name: 'inbox', label: 'Check Inbox' },
+                { name: 'password', label: 'Change Password' }
             ],
             state
         }),

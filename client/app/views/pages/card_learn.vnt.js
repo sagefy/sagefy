@@ -1,6 +1,6 @@
 const broker = require('../../modules/broker')
 const tasks = require('../../modules/tasks')
-const {closest} = require('../../modules/utilities')
+const { closest } = require('../../modules/utilities')
 
 module.exports = broker.add({
     'click #card-learn.choice.answer .continue'(e, el) {
@@ -9,7 +9,7 @@ module.exports = broker.add({
         const checked = container.querySelector('[name=choice]:checked')
         const response = checked && checked.value
         if (response) {
-            tasks.respondToCard(el.id, {response})
+            tasks.respondToCard(el.id, { response })
         } else {
             tasks.needAnAnswer()
         }

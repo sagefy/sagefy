@@ -45,4 +45,4 @@ const isOneOf = (val, ...opts) => {
     }
 }
 
-module.exports = {required, email, minlength, isOneOf}
+module.exports = { required, email, minlength, isOneOf }

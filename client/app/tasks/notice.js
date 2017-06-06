@@ -1,13 +1,13 @@
-const {dispatch} = require('../modules/store')
+const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     listNotices(limit = 50, skip = 0) {
-        dispatch({type: 'LIST_NOTICES', limit, skip})
+        dispatch({ type: 'LIST_NOTICES', limit, skip })
         return request({
             method: 'GET',
-            data: {limit, skip},
+            data: { limit, skip },
             url: '/s/notices',
         })
             .then((response) => {
@@ -29,11 +29,11 @@ module.exports = tasks.add({
     },
 
     markNotice(id, read = true) {
-        dispatch({type: 'MARK_NOTICE', id, read})
+        dispatch({ type: 'MARK_NOTICE', id, read })
         return request({
             method: 'PUT',
             url: `/s/notices/${id}`,
-            data: {read},
+            data: { read },
         })
             .then((response) => {
                 dispatch({

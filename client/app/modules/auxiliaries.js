@@ -3,7 +3,7 @@ Auxiliaries are utlity functions that are specific to Sagefy.
 */
 
 const cookie = require('./cookie')
-const {extend, copy, isString, isArray} = require('./utilities')
+const { extend, copy, isString, isArray } = require('./utilities')
 
 // Determine if the user is logged in
 const isLoggedIn = () => cookie.get('logged_in') === '1'

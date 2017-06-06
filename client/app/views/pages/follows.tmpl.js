@@ -1,4 +1,4 @@
-const {div, h1, p, a, ul, li} = require('../../modules/tags')
+const { div, h1, p, a, ul, li } = require('../../modules/tags')
 // const c = require('../../modules/content').get
 // const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
@@ -11,10 +11,10 @@ module.exports = (data) => {
     // if(!data.follows) { return spinner() }
 
     return div(
-        {id: 'follows', className: 'page'},
+        { id: 'follows', className: 'page' },
         h1('Follows'),
         a(
-            {href: '/notices'},
+            { href: '/notices' },
             icon('back'),
             ' Back to notices.'
         ),
@@ -27,7 +27,7 @@ const follows = (data) => {
     return p(
         'No follows. ',
         a(
-            {href: '/search'},
+            { href: '/search' },
             icon('search'),
             ' Search'
         )
@@ -35,9 +35,9 @@ const follows = (data) => {
 }
 
 const follow = (data) => {
-    const {kind, name, body} = data.entity
+    const { kind, name, body } = data.entity
     return li(
-        {className: 'follow'},
+        { className: 'follow' },
         a(
             {
                 id: data.id,

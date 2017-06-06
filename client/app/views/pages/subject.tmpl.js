@@ -1,4 +1,4 @@
-const {div, p, a} = require('../../modules/tags')
+const { div, p, a } = require('../../modules/tags')
 const followButton = require('../components/follow_button.tmpl')
 const entityHeader = require('../components/entity_header.tmpl')
 const entityTopics = require('../components/entity_topics.tmpl')
@@ -18,12 +18,12 @@ module.exports = (data) => {
     //            data.follows.find((f) => f.entity.id === subject.entity_id)
 
     return div(
-        {id: 'subject', className: 'page'},
+        { id: 'subject', className: 'page' },
 
         followButton('subject', subject.entity_id, data.follows),
         entityHeader('subject', subject),
 
-        p({className: 'subject__body'}, subject.body),
+        p({ className: 'subject__body' }, subject.body),
         previewSubjectContent({
             status: subject.status,
             available: subject.available,
@@ -45,7 +45,7 @@ module.exports = (data) => {
         ), */
         p(
             a(
-                {href: `/subjects/${subject.entity_id}/tree`},
+                { href: `/subjects/${subject.entity_id}/tree` },
                 icon('subject'),
                 ' View Unit Tree'
             )

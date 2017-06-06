@@ -1,8 +1,8 @@
-const {ol, li} = require('../../modules/tags')
+const { ol, li } = require('../../modules/tags')
 
-module.exports = ({options, state}) =>
+module.exports = ({ options, state }) =>
     ol(
-        {className: 'wizard'},
+        { className: 'wizard' },
         options.map(option => li(
             {
                 href: '#',

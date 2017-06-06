@@ -13,4 +13,4 @@ const get = (key, language = 'en') => {
     return files[language][key]
 }
 
-module.exports = {get}
+module.exports = { get }

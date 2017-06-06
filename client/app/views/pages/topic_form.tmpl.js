@@ -1,10 +1,10 @@
-const {div, h1, p, strong} = require('../../modules/tags')
+const { div, h1, p, strong } = require('../../modules/tags')
 const form = require('../components/form.tmpl')
 const getPostFields = require('./post_form.fn').getFields
 const getPostSchema = require('./post_form.fn').getSchema
-const {createFieldsData, prefixObjectKeys, ucfirst} =
+const { createFieldsData, prefixObjectKeys, ucfirst } =
     require('../../modules/auxiliaries')
-const {extend} = require('../../modules/utilities')
+const { extend } = require('../../modules/utilities')
 const topicSchema = require('../../schemas/topic')
 const spinner = require('../components/spinner.tmpl')
 

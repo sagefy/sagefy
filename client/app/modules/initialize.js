@@ -1,11 +1,11 @@
-const {dispatch, bind, setReducer} = require('./store')
+const { dispatch, bind, setReducer } = require('./store')
 const reducer = require('../reducers/index')
 const init = require('./init')
 const cookie = require('./cookie')
-const {route} = require('./route_actions')
-const {startGoogleAnalytics, trackEvent} = require('./analytics')
+const { route } = require('./route_actions')
+const { startGoogleAnalytics, trackEvent } = require('./analytics')
 const indexView = require('../views/index.tmpl')
-const {setTitle} = require('../modules/auxiliaries')
+const { setTitle } = require('../modules/auxiliaries')
 
 startGoogleAnalytics()
 
@@ -81,4 +81,4 @@ function go() {
     })
 }
 
-module.exports = {go, logAllActions, trackAllActions}
+module.exports = { go, logAllActions, trackAllActions }

@@ -1,5 +1,5 @@
 /* eslint-disable quotes, max-len */
-const {h2, p} = require('../../modules/tags')
+const { h2, p } = require('../../modules/tags')
 
 module.exports = [
     h2("General Terms"),

@@ -1,4 +1,4 @@
-module.exports = function cardResponse(state = {}, action = {type: ''}) {
+module.exports = function cardResponse(state = {}, action = { type: '' }) {
     if(action.type === 'RESET_CARD_RESPONSE') {
         return {}
     }

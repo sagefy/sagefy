@@ -1,11 +1,11 @@
-const {dispatch} = require('../modules/store')
+const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
-const {shallowCopy} = require('../modules/utilities')
+const { shallowCopy } = require('../modules/utilities')
 
 module.exports = tasks.add({
     getTopic(id) {
-        dispatch({type: 'GET_TOPIC', id})
+        dispatch({ type: 'GET_TOPIC', id })
         return request({
             method: 'GET',
             url: `/s/topics/${id}`
@@ -33,7 +33,7 @@ module.exports = tasks.add({
             .then((response) => {
                 const post = shallowCopy(data.post)
                 post.topic_id = response.topic.id
-                return tasks.createPost({post})
+                return tasks.createPost({ post })
             })
     },
 
@@ -41,7 +41,7 @@ module.exports = tasks.add({
         dispatch({
             type: 'SET_SENDING_ON'
         })
-        dispatch({type: 'CREATE_TOPIC'})
+        dispatch({ type: 'CREATE_TOPIC' })
         return request({
             method: 'POST',
             url: '/s/topics',
@@ -72,8 +72,8 @@ module.exports = tasks.add({
     },
 
     updateTopic(data) {
-        dispatch({type: 'SET_SENDING_ON'})
-        dispatch({type: 'UPDATE_TOPIC'})
+        dispatch({ type: 'SET_SENDING_ON' })
+        dispatch({ type: 'UPDATE_TOPIC' })
         return request({
             method: 'PUT',
             url: `/s/topics/${data.topic.id}`,

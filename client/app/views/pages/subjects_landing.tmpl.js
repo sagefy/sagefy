@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-const {div, header, h1, a, p, section, h2, h3, ul, li, strong, small, span} = require('../../modules/tags')
+const { div, header, h1, a, p, section, h2, h3, ul, li, strong, small, span } = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
 
 module.exports = (data) => {
@@ -8,12 +8,12 @@ module.exports = (data) => {
     if (id !== 'CgDRJPfzJuTR916HdmosA3A8') { return div() }
 
     const cta = a(
-        {href: `/sign_up?subject_id=${id}`, className: 'subjects-landing__cta'},
+        { href: `/sign_up?subject_id=${id}`, className: 'subjects-landing__cta' },
         icon('sign-up'),
         ' Let\'s Get Learning!'
     )
 
-    const w = (n) => span({className: 'subjects-landing__icon-wrap'}, n)
+    const w = (n) => span({ className: 'subjects-landing__icon-wrap' }, n)
 
     return div(
         {
@@ -45,7 +45,7 @@ module.exports = (data) => {
         section(
             h2('About Sagefy'),
             ul(
-                {className: 'subjects-landing__about-sagefy'},
+                { className: 'subjects-landing__about-sagefy' },
                 li(w(icon('next')), ' Short, informational videos. Easy to understand.'),
                 li(w(icon('learn')), ' Lots of practice questions to help you master the content.'),
                 li(w(icon('settings')), ' Sagefy adapts practice questions based on your responses.'),

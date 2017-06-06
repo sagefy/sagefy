@@ -1,5 +1,5 @@
-const {required} = require('../../modules/validations')
-const {extend} = require('../../modules/utilities')
+const { required } = require('../../modules/validations')
+const { extend } = require('../../modules/utilities')
 const cardSchema = require('../card')
 
 module.exports = extend({}, cardSchema, {
@@ -15,20 +15,20 @@ module.exports = extend({}, cardSchema, {
                 name: 'correct',
                 type: 'select',
                 options: [
-                    {value: 'true'},
-                    {value: 'false'}
+                    { value: 'true' },
+                    { value: 'false' }
                 ]
             },
-            {name: 'value', type: 'text'},
-            {name: 'feedback', type: 'text'}
+            { name: 'value', type: 'text' },
+            { name: 'feedback', type: 'text' }
         ]
     },
     order: {
         type: 'select',
         validations: [required],
         options: [
-            {value: 'random'},
-            {value: 'set'}
+            { value: 'random' },
+            { value: 'set' }
         ],
         default: 'random'
     },

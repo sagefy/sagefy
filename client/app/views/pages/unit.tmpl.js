@@ -1,4 +1,4 @@
-const {div, p} =
+const { div, p } =
     require('../../modules/tags')
 
 const followButton = require('../components/follow_button.tmpl')
@@ -19,12 +19,12 @@ module.exports = (data) => {
     if(!unit) { return spinner() }
 
     return div(
-        {id: 'unit', className: 'page'},
+        { id: 'unit', className: 'page' },
         followButton('unit', unit.entity_id, data.follows),
         entityHeader('unit', unit),
-        p({className: 'unit__body'}, unit.body),
+        p({ className: 'unit__body' }, unit.body),
         previewUnitContent(Object.assign({}, unit, {
-            requires: unit.require_ids.map(id => ({id}))
+            requires: unit.require_ids.map(id => ({ id }))
         })),
         /* TODO-2 h2('Stats'),
         ul(

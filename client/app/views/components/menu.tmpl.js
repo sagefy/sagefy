@@ -1,8 +1,8 @@
 // TODO-3 move copy to content directory
-const {nav, div, a, ul, span, p} = require('../../modules/tags')
+const { nav, div, a, ul, span, p } = require('../../modules/tags')
 const menuItem = require('./menu_item.tmpl')
-const {extend} = require('../../modules/utilities')
-const {ucfirst, underscored} = require('../../modules/auxiliaries')
+const { extend } = require('../../modules/utilities')
+const { ucfirst, underscored } = require('../../modules/auxiliaries')
 const icon = require('./icon.tmpl')
 
 // TODO-2 add unread count to notices icon
@@ -69,7 +69,7 @@ const menus = {
     ]
 }
 
-const addContextItems = (menuItems, {card, unit, subject}) => {
+const addContextItems = (menuItems, { card, unit, subject }) => {
     menuItems = menuItems.slice()
 
     if (card) {
@@ -100,24 +100,24 @@ module.exports = (data) => {
     let menuItems = menus[data.kind].map((name) => items[name])
     menuItems = addContextItems(menuItems, data.context)
     return nav(
-        {className: data.open ? 'menu selected' : 'menu'},
+        { className: data.open ? 'menu selected' : 'menu' },
         [
             data.open ? div(
-                {className: 'menu__overlay'}
+                { className: 'menu__overlay' }
             ) : null,
             a(
                 {
                     href: '#',
                     className: 'menu__trigger',
                 },
-                div({className: 'menu__logo'}),
-                p({className: 'menu__label'}, 'Menu'),
+                div({ className: 'menu__logo' }),
+                p({ className: 'menu__label' }, 'Menu'),
                 data.open ?
-                    span({className: 'menu__close'}, icon('remove')) :
+                    span({ className: 'menu__close' }, icon('remove')) :
                     null
             ),
             data.open ? ul(
-                {className: 'menu__items'},
+                { className: 'menu__items' },
                 menuItems.map(d => menuItem(d))
             ) : null
         ]

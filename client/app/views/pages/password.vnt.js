@@ -1,6 +1,6 @@
 const broker = require('../../modules/broker')
 const tasks = require('../../modules/tasks')
-const {getFormValues, parseFormValues} = require('../../modules/auxiliaries')
+const { getFormValues, parseFormValues } = require('../../modules/auxiliaries')
 const qs = require('../../modules/query_string')
 const userSchema = require('../../schemas/user')
 
@@ -17,7 +17,7 @@ module.exports = broker.add({
 
     'submit #password.password form'(e, el) {
         if (e) { e.preventDefault() }
-        const {token, id} = qs.get()
+        const { token, id } = qs.get()
         let values = getFormValues(el)
         values.token = token
         values.id = id

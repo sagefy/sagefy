@@ -1,11 +1,11 @@
-const {dispatch} = require('../modules/store')
+const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
-const {matchesRoute} = require('../modules/auxiliaries')
+const { matchesRoute } = require('../modules/auxiliaries')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     getSubject(id) {
-        dispatch({type: 'GET_SUBJECT', id})
+        dispatch({ type: 'GET_SUBJECT', id })
         return request({
             method: 'GET',
             url: `/s/subjects/${id}`,
@@ -32,7 +32,7 @@ module.exports = tasks.add({
     },
 
     getRecommendedSubjects() {
-        dispatch({type: 'GET_RECOMMENDED_SUBJECTS'})
+        dispatch({ type: 'GET_RECOMMENDED_SUBJECTS' })
         return request({
             method: 'GET',
             url: '/s/subjects/recommended',
@@ -55,7 +55,7 @@ module.exports = tasks.add({
     },
 
     listSubjectVersions(id) {
-        dispatch({type: 'LIST_SUBJECT_VERSIONS', id})
+        dispatch({ type: 'LIST_SUBJECT_VERSIONS', id })
         return request({
             method: 'GET',
             url: `/s/subjects/${id}/versions`,
@@ -79,7 +79,7 @@ module.exports = tasks.add({
     },
 
     getSubjectTree(id) {
-        dispatch({type: 'GET_SUBJECT_TREE', id})
+        dispatch({ type: 'GET_SUBJECT_TREE', id })
         return request({
             method: 'GET',
             url: `/s/subjects/${id}/tree`,
@@ -116,7 +116,7 @@ module.exports = tasks.add({
     },
 
     getSubjectUnits(id) {
-        dispatch({type: 'GET_SUBJECT_UNITS', id})
+        dispatch({ type: 'GET_SUBJECT_UNITS', id })
         return request({
             method: 'GET',
             url: `/s/subjects/${id}/units`,
@@ -143,15 +143,15 @@ module.exports = tasks.add({
     },
 
     chooseUnit(subjectId, unitId) {
-        dispatch({type: 'CHOOSE_UNIT', subjectId, unitId})
+        dispatch({ type: 'CHOOSE_UNIT', subjectId, unitId })
         return request({
             method: 'POST',
             url: `/s/subjects/${subjectId}/units/${unitId}`,
             data: {},
         })
             .then((response) => {
-                dispatch({type: 'CHOOSE_UNIT_SUCCESS', subjectId, unitId})
-                const {next} = response
+                dispatch({ type: 'CHOOSE_UNIT_SUCCESS', subjectId, unitId })
+                const { next } = response
                 dispatch({
                     type: 'SET_NEXT',
                     next,
@@ -176,7 +176,7 @@ module.exports = tasks.add({
     },
 
     getMyRecentSubjects() {
-        dispatch({type: 'GET_MY_RECENT_SUBJECTS'})
+        dispatch({ type: 'GET_MY_RECENT_SUBJECTS' })
         return request({
             method: 'GET',
             url: '/s/subjects:get_my_recently_created',
@@ -198,14 +198,14 @@ module.exports = tasks.add({
     },
 
     createNewSubjectVersion(data) {
-        dispatch({type: 'CREATE_NEW_SUBJECT_VERSION'})
+        dispatch({ type: 'CREATE_NEW_SUBJECT_VERSION' })
         return request({
             method: 'POST',
             url: '/s/subjects/versions',
             data,
         })
             .then((response) => {
-                dispatch({type: 'CREATE_NEW_SUBJECT_VERSION_SUCCESS'})
+                dispatch({ type: 'CREATE_NEW_SUBJECT_VERSION_SUCCESS' })
                 return response
             })
             .catch((errors) => {
@@ -218,14 +218,14 @@ module.exports = tasks.add({
     },
 
     createExistingSubjectVersion(data) {
-        dispatch({type: 'CREATE_EXISTING_SUBJECT_VERSION'})
+        dispatch({ type: 'CREATE_EXISTING_SUBJECT_VERSION' })
         return request({
             method: 'POST',
             url: `/s/subjects/${data.entity_id}/versions`,
             data,
         })
             .then((response) => {
-                dispatch({type: 'CREATE_EXISTING_SUBJECT_VERSION_SUCCESS'})
+                dispatch({ type: 'CREATE_EXISTING_SUBJECT_VERSION_SUCCESS' })
                 return response
             })
             .catch((errors) => {

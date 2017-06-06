@@ -33,9 +33,9 @@
 /create/card/create 2
 -> topic/proposal
 */
-const {shallowCopy, copy} = require('../modules/utilities')
+const { shallowCopy, copy } = require('../modules/utilities')
 
-module.exports = function create(state = {}, action = {type: ''}) {
+module.exports = function create(state = {}, action = { type: '' }) {
     if (action.type === 'RESET_CREATE') {
         return {}
     }
@@ -154,8 +154,8 @@ module.exports = function create(state = {}, action = {type: ''}) {
     }
     if(action.type === 'ADD_LIST_FIELD_ROW' && state.proposedCard) {
         state = shallowCopy(state)
-        let {values = {}} = action
-        const {name, columns} = action
+        let { values = {} } = action
+        const { name, columns } = action
         values = translateListOfRows(values, name)
         values[name].push(columns.reduce((o, key) => {
             o[key] = ''
@@ -166,8 +166,8 @@ module.exports = function create(state = {}, action = {type: ''}) {
     }
     if(action.type === 'REMOVE_LIST_FIELD_ROW' && state.proposedCard) {
         state = shallowCopy(state)
-        let {values = {}} = action
-        const {name, index} = action
+        let { values = {} } = action
+        const { name, index } = action
         values = translateListOfRows(values, name)
         values[name].splice(index, 1)
         state.proposedCard = values

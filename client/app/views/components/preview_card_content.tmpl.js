@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-const {div, a, iframe, p, ul, li, strong, small, span, em, h4} =
+const { div, a, iframe, p, ul, li, strong, small, span, em, h4 } =
     require('../../modules/tags')
-const {ucfirst} =
+const { ucfirst } =
     require('../../modules/auxiliaries')
-const {previewCommon, previewRequires, previewTags} =
+const { previewCommon, previewRequires, previewTags } =
     require('./preview_shared.fn')
 const icon = require('./icon.tmpl')
 // TODO-2 show diff option
@@ -28,12 +28,12 @@ module.exports = function previewCardContent({
     tags,
 }) {
     return div(
-        {className: `preview--card__content preview--card__content--${kind}`},
-        previewCommon({created, status, available, language}),
+        { className: `preview--card__content preview--card__content--${kind}` },
+        previewCommon({ created, status, available, language }),
         unit ?
           h4(
             unit.url ?
-              a({href: unit.url}, 'Unit: ', em(unit.name))
+              a({ href: unit.url }, 'Unit: ', em(unit.name))
               : span('Unit: ', em(unit.name))
           ) : null,
         video_id && site === 'youtube' ? iframe({

@@ -1,7 +1,7 @@
-const {div, ul, li, input, label} = require('../../modules/tags')
+const { div, ul, li, input, label } = require('../../modules/tags')
 
 module.exports = (data, mode) => {
-    let {options} = data
+    let { options } = data
     options = options.map((o) => o.value)
     const disabled = mode === 'next-please'
 
@@ -10,9 +10,9 @@ module.exports = (data, mode) => {
             data.body
         ),
         ul(
-            {className: 'options card-learn__options'},
+            { className: 'options card-learn__options' },
             options.map((option, i) => li(
-                {className: disabled ? 'disabled' : ''},
+                { className: disabled ? 'disabled' : '' },
                 input({
                     type: 'radio',
                     name: 'choice',

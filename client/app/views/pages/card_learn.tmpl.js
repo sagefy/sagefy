@@ -1,5 +1,5 @@
-const {div, a, p} = require('../../modules/tags')
-const {isNumber} = require('../../modules/utilities')
+const { div, a, p } = require('../../modules/tags')
+const { isNumber } = require('../../modules/utilities')
 const spinner = require('../components/spinner.tmpl')
 // const c = require('../../modules/content').get
 const icon = require('../components/icon.tmpl')
@@ -49,7 +49,7 @@ module.exports = (data) => {
             kind(card, mode),
 
             data.cardFeedback ? p(
-                {className: `card-learner__feedback--${feedbackLabel}`},
+                { className: `card-learner__feedback--${feedbackLabel}` },
                 icon(feedbackLabel),
                 ' ',
                 data.cardFeedback

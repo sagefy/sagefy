@@ -1,13 +1,13 @@
 /* eslint-disable no-underscore-dangle */
-const {div, h1, form, input, button, img,
- ul, li, a, p, h3, span, br} = require('../../modules/tags')
+const { div, h1, form, input, button, img,
+ ul, li, a, p, h3, span, br } = require('../../modules/tags')
 const spinner = require('../components/spinner.tmpl')
 const timeago = require('../components/timeago.tmpl')
 const icon = require('../components/icon.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
-const {ucfirst} = require('../../modules/auxiliaries')
+const { ucfirst } = require('../../modules/auxiliaries')
 
 // TODO-2 when receiving ?kind={kind}, then search using that as well.
 
@@ -25,17 +25,17 @@ module.exports = (data) => {
     inputOpts.value = data.searchQuery || null
 
     return div(
-        {id: 'search', className: 'page'},
+        { id: 'search', className: 'page' },
         h1('Search'),
         // TODO-2 add search filtering / ordering
         form(
-            {className: 'form--horizontal'},
+            { className: 'form--horizontal' },
             div(
-                {className: 'form-field form-field--search'},
+                { className: 'form-field form-field--search' },
                 input(inputOpts)
             ),
             button(
-                {type: 'submit'},
+                { type: 'submit' },
                 icon('search'),
                 ' Search'
             )
@@ -58,11 +58,11 @@ const r = {}
 
 r.userResult = (result) =>
     h3(
-        span({className: 'search__label'}, icon('user'), ' User'),
+        span({ className: 'search__label' }, icon('user'), ' User'),
         ' ',
         a(
-            {href: `/users/${result._source.id}`},
-            img({className: 'avatar', src: result._source.avatar}),
+            { href: `/users/${result._source.id}` },
+            img({ className: 'avatar', src: result._source.avatar }),
             ' ',
             result._source.name
         )
@@ -70,12 +70,12 @@ r.userResult = (result) =>
 
 r.topicResult = (result) =>
     [
-        timeago(result._source.created, {right: true}),
+        timeago(result._source.created, { right: true }),
         h3(
-            span({className: 'search__label'}, icon('topic'), ' Topic'),
+            span({ className: 'search__label' }, icon('topic'), ' Topic'),
             ' ',
             a(
-                {href: `/topics/${result._source.id}`},
+                { href: `/topics/${result._source.id}` },
                 result._source.name
             )
         ),
@@ -92,26 +92,26 @@ r.topicResult = (result) =>
 r.postResult = (result) => {
     const href = `/topics/${result._source.topic_id}#${result._source.id}`
     return [
-        timeago(result._source.created, {right: true}),
+        timeago(result._source.created, { right: true }),
         h3(
-            span({className: 'search__label'},
+            span({ className: 'search__label' },
                 icon('post'), ' ', ucfirst(result._source.kind)),
             ' by ',
             a(
-                {href: `/users/${result._source.user.id}`},
+                { href: `/users/${result._source.user.id}` },
                 result._source.user.name
             )
         ),
         ' in topic: ',
         result._source.topic ? a(
-            {href: `/topics/${result._source.topic.id}`},
+            { href: `/topics/${result._source.topic.id}` },
             result._source.topic.name
         ) : null,
         br(),
         result._source.body,
         ' ',
         a(
-            {href},
+            { href },
             'To Post ',
             icon('next')
         )

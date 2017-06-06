@@ -1,9 +1,9 @@
-const {div, h3, ul, li, strong, br, small, p, a} = require('../../modules/tags')
+const { div, h3, ul, li, strong, br, small, p, a } = require('../../modules/tags')
 const icon = require('./icon.tmpl')
 
 module.exports = () =>
   div(
-    {className: 'entity-info'},
+    { className: 'entity-info' },
     h3('What are cards, units, and subjects?'),
     ul(
       li(
@@ -31,7 +31,7 @@ module.exports = () =>
     p(
       'For more details and examples, ',
       a(
-        {href: 'https://youtu.be/gFn4Q9tx7Qs'},
+        { href: 'https://youtu.be/gFn4Q9tx7Qs' },
         'check out this 3-minute overview video'
       ),
       '.'

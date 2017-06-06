@@ -1,4 +1,4 @@
-const {valuefy} = require('./auxiliaries')
+const { valuefy } = require('./auxiliaries')
 
 const get = (query) => {
     query = query ||
@@ -14,4 +14,4 @@ const get = (query) => {
     return data
 }
 
-module.exports = {valuefy, get}
+module.exports = { valuefy, get }

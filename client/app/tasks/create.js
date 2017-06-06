@@ -1,15 +1,15 @@
 /* eslint-disable camelcase */
-const {dispatch, getState} = require('../modules/store')
+const { dispatch, getState } = require('../modules/store')
 const tasks = require('../modules/tasks')
-const {copy} = require('../modules/utilities')
+const { copy } = require('../modules/utilities')
 
 module.exports = tasks.add({
     resetCreate() {
-        dispatch({type: 'RESET_CREATE'})
+        dispatch({ type: 'RESET_CREATE' })
     },
 
-    updateCreateRoute({kind, step}) {
-        dispatch({type: 'UPDATE_CREATE_ROUTE', kind, step})
+    updateCreateRoute({ kind, step }) {
+        dispatch({ type: 'UPDATE_CREATE_ROUTE', kind, step })
     },
 
     createSubjectData(values) {
@@ -19,7 +19,7 @@ module.exports = tasks.add({
         })
     },
 
-    addMemberToCreateSubject({kind, id, name, body}) {
+    addMemberToCreateSubject({ kind, id, name, body }) {
         dispatch({
             type: 'ADD_MEMBER_TO_CREATE_SUBJECT',
             kind,
@@ -50,7 +50,7 @@ module.exports = tasks.add({
         })
     },
 
-    removeMemberFromCreateSubject({id}) {
+    removeMemberFromCreateSubject({ id }) {
         // TODO-2 switch to undo
         if(window.confirm('Remove member?')) {  // eslint-disable-line
             dispatch({
@@ -60,7 +60,7 @@ module.exports = tasks.add({
         }
     },
 
-    removeUnitFromSubject({index}) {
+    removeUnitFromSubject({ index }) {
         // TODO-2 switch to undo
         if(window.confirm('Remove unit?')) {  // eslint-disable-line
             dispatch({
@@ -70,7 +70,7 @@ module.exports = tasks.add({
         }
     },
 
-    removeCardFromUnit({index}) {
+    removeCardFromUnit({ index }) {
         // TODO-2 switch to undo
         if(window.confirm('Remove card?')) {  // eslint-disable-line
             dispatch({
@@ -80,7 +80,7 @@ module.exports = tasks.add({
         }
     },
 
-    createChooseSubjectForUnits({id, name}) {
+    createChooseSubjectForUnits({ id, name }) {
         dispatch({
             type: 'CREATE_CHOOSE_SUBJECT_FOR_UNITS',
             id,
@@ -88,7 +88,7 @@ module.exports = tasks.add({
         })
     },
 
-    createChooseUnitForCards({id, name}) {
+    createChooseUnitForCards({ id, name }) {
         dispatch({
             type: 'CREATE_CHOOSE_UNIT_FOR_CARDS',
             id,
@@ -96,7 +96,7 @@ module.exports = tasks.add({
         })
     },
 
-    stowProposedUnit({name, language, body, require_ids}) {
+    stowProposedUnit({ name, language, body, require_ids }) {
         dispatch({
             type: 'STOW_PROPOSED_UNIT',
             name,
@@ -113,7 +113,7 @@ module.exports = tasks.add({
         })
     },
 
-    addRequireToProposedUnit({id, name, body, kind}) {
+    addRequireToProposedUnit({ id, name, body, kind }) {
         dispatch({
             type: 'ADD_REQUIRE_TO_PROPOSED_UNIT',
             id,
@@ -125,7 +125,7 @@ module.exports = tasks.add({
 
     createSubjectProposal(data) {
         let topicId
-        tasks.createTopic({topic: data.topic})
+        tasks.createTopic({ topic: data.topic })
             .then((topicResponse) => {
                 topicId = topicResponse.topic.id
                 return tasks.createNewSubjectVersion(data.subject)
@@ -137,13 +137,13 @@ module.exports = tasks.add({
                     kind: 'subject',
                     id: subjectResponse.version.id
                 }]
-                return tasks.createPost({post})
+                return tasks.createPost({ post })
             })
     },
 
     createUnitsProposal() {
         const state = getState()
-        const {selectedSubject} = state.create
+        const { selectedSubject } = state.create
         const topic = {
             name: 'Add Units to This Subject',
             entity: {
@@ -154,7 +154,7 @@ module.exports = tasks.add({
 
         let topicId
         let unitVersionIds
-        return tasks.createTopic({topic})
+        return tasks.createTopic({ topic })
             .then((topicResponse) => {
                 topicId = topicResponse.topic.id
                 const newUnits = state.create.units
@@ -199,13 +199,13 @@ module.exports = tasks.add({
                         kind: 'unit',
                     }))),
                 }
-                return tasks.createPost({post})
+                return tasks.createPost({ post })
             })
     },
 
     createCardsProposal() {
         const state = getState()
-        const {selectedUnit} = state.create
+        const { selectedUnit } = state.create
         const topic = {
             name: 'Add Cards to This Unit',
             entity: {
@@ -214,10 +214,10 @@ module.exports = tasks.add({
             },
         }
         let topicId
-        return tasks.createTopic({topic})
+        return tasks.createTopic({ topic })
             .then((topicResponse) => {
                 topicId = topicResponse.topic.id
-                let {cards} = state.create
+                let { cards } = state.create
                 cards = cards.map(card => Object.assign({}, card, {
                     unit_id: selectedUnit.id,
                 }))
@@ -233,7 +233,7 @@ module.exports = tasks.add({
                         kind: 'card',
                     })),
                 }
-                return tasks.createPost({post})
+                return tasks.createPost({ post })
             })
     }
 })

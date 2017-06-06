@@ -1,12 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 
-const {div, h1, form, input, button, a, ul, li, p} =
+const { div, h1, form, input, button, a, ul, li, p } =
     require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 
 module.exports = function createSubjectAdd(data) {
-    const {searchResults} = data
+    const { searchResults } = data
     const inputOpts = {
         type: 'text',
         placeholder: 'Search Units',
@@ -16,27 +16,27 @@ module.exports = function createSubjectAdd(data) {
     inputOpts.value = data.searchQuery || null
 
     return div(
-        {id: 'create', className: 'page create--unit-create-add'},
+        { id: 'create', className: 'page create--unit-create-add' },
         h1('Find Requires for New Unit'),
         a(
-            {href: '/create/unit/create'},
+            { href: '/create/unit/create' },
             icon('back'),
             ' Back to Create Unit form'
         ),
         form(
-            {className: 'form--horizontal create--unit-create-add__form'},
+            { className: 'form--horizontal create--unit-create-add__form' },
             div(
-                {className: 'form-field form-field--search'},
+                { className: 'form-field form-field--search' },
                 input(inputOpts)
             ),
             button(
-                {type: 'submit', className: 'create--unit-create-add__search'},
+                { type: 'submit', className: 'create--unit-create-add__search' },
                 icon('search'),
                 ' Search'
             )
         ),
         searchResults && searchResults.length ? ul(
-            {className: 'create--unit-create-add__results'},
+            { className: 'create--unit-create-add__results' },
             searchResults.map(result => li(
                 a(
                     {
