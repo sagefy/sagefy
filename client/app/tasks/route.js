@@ -46,12 +46,7 @@ module.exports = tasks.add({
     },
 
     openProfileRoute(id) {
-        return tasks.getUser(id, {
-            avatar: 12 * 10,
-            subjects: true,
-            follows: true,
-            posts: true,
-        })
+        return tasks.getUserForProfile(id, { avatar: 12 * 10 })
     },
 
     openUnitRoute(id) {

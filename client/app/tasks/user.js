@@ -97,6 +97,25 @@ module.exports = tasks.add({
             })
     },
 
+    getUserForProfile(id, opts = {}) {
+        return tasks.getUser(id, opts)
+            /* .then((/userResponse) => {
+                // const {user} = userResponse
+                const calls = []
+                // TODO-2 listTopics that user has posted in or owns
+                /*
+                TODO-1 update so that these stores are by user_id
+                otherwise there's no way to tell the difference...
+                if (user.settings.view_follows === 'public') {
+                    calls.push(tasks.listFollows(user.id))
+                }
+                if (user.settings.view_subjects === 'public') {
+                    calls.push(tasks.listUserSubjects(user.id))
+                } /
+                return Promise.all(calls)
+            }) */
+    },
+
     getUser(id, opts = {}) {
         dispatch({type: 'GET_USER', id})
         return request({
@@ -106,14 +125,13 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 const user = response.user
-                ;['avatar', 'posts', 'subjects', 'follows'].forEach((t) => {
-                    if (response[t]) { user[t] = response[t] }
-                })
+                if (response.avatar) { user.avatar = response.avatar }
                 dispatch({
                     type: 'ADD_USER',
                     message: 'get user success',
                     user,
                 })
+                return response
             })
             .catch((errors) => {
                 dispatch({

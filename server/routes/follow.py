@@ -4,6 +4,7 @@ from database.follow import get_follow, list_follows, insert_follow, \
     deliver_follow, delete_follow
 from database.entity_base import get_latest_accepted
 from database.entity_facade import deliver_entity_by_kind
+from database.user import get_user
 
 
 @get('/s/follows')
@@ -13,14 +14,22 @@ def get_follows_route(request):
     """
 
     db_conn = request['db_conn']
-
     current_user = get_current_user(request)
-    if not current_user:
-        return abort(401)
+    user_id = request['params'].get('user_id')
+    if user_id:
+        user = get_user({'id': user_id}, db_conn)
+        if not user:
+            return abort(404)
+        if (user != current_user and
+                user['settings']['view_follows'] != 'public'):
+            return abort(403)
+    else:
+        user = current_user
+        if not user:
+            return abort(401)
 
     params = dict(**request['params'])
-    params['user_id'] = current_user['id']
-
+    params['user_id'] = user['id']
     follows = list_follows(params, db_conn)
 
     output = {

@@ -44,7 +44,6 @@ schema = extend({}, default, {
         'settings': {
             'validate': (is_required,),
             'default': {},
-            'access': ('private',),
             'embed': {
                 'email_frequency': {
                     'validate': (is_required, is_string, (
@@ -57,14 +56,12 @@ schema = extend({}, default, {
                     'validate': (is_required, is_string, (
                         is_one_of, 'public', 'private'
                     )),
-                    'access': ('private',),
                     'default': 'private',
                 },
                 'view_follows': {
                     'validate': (is_required, is_string, (
                         is_one_of, 'public', 'private'
                     )),
-                    'access': ('private',),
                     'default': 'private',
                 },
             }

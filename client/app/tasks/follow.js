@@ -3,12 +3,12 @@ const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
-    listFollows(skip = 0, limit = 50) {
+    listFollows(userId, skip = 0, limit = 50) {
         dispatch({type: 'LIST_FOLLOWS'})
         return request({
             method: 'GET',
             url: '/s/follows',
-            data: {skip, limit, entities: true},
+            data: {user_id: userId, skip, limit, entities: true},
         })
             .then((response) => {
                 dispatch({

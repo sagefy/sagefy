@@ -1,9 +1,7 @@
-const {div, h1, p, img, h3, header, ul, li, strong, a} =
+const {div, h1, p, img, h3, header, ul, li, a} =
     require('../../modules/tags')
 const {
   timeAgo,
-  truncate,
-  ucfirst,
 } = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 const timeago = require('../components/timeago.tmpl')
@@ -26,7 +24,7 @@ module.exports = (data) => {
         ),
         user.subjects ? showSubjects(user, user.subjects) : null,
         user.follows ? showFollows(user, user.follows) : null,
-        user.posts ? showPosts(user, user.posts) : null
+        user.topics ? showTopics(user, user.topics) : null
     )
 }
 
@@ -77,20 +75,18 @@ const showFollows = (user, follows) =>
         // TODO-2 and link to search
     ]
 
-const showPosts = (user, posts) =>
+const showTopics = (user, topics) =>
     [
-        h3(`${user.name} wrote:`),
+        h3(`${user.name} is in topics:`),
         ul(
-            {className: 'posts'},
-            posts.map(post => li(
-                strong(ucfirst(post.kind)),
-                ': ',
+            {className: 'topics'},
+            topics.map(topic => li(
                 a(
-                    {href: `/topics/${post.topic_id}#${post.id}`},
-                    truncate(post.body, 40)
+                    {href: `/topics/${topic.id}`},
+                    topic.name
                 ),
-                timeago(post.created, {right: true})
-                // TODO-2 add topic info
+                timeago(topic.created, {right: true})
+                // TODO-2 change to timestamp most recent post
             ))
         )
     ]

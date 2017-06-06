@@ -27,7 +27,12 @@ module.exports = function httpRequest({method, url, data}) {
         response.setEncoding('utf8')
         response.on('data', (d) => { body += d })
         response.on('end', () => {
-            const responseData = JSON.parse(body)
+            let responseData = ''
+            try {
+                responseData = JSON.parse(body)
+            } catch (e) {
+                responseData = body
+            }
             const statusCode = response.statusCode
             if(statusCode < 400 && statusCode >= 200) {
                 done(responseData)

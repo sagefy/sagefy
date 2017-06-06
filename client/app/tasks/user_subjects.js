@@ -3,8 +3,8 @@ const request = require('../modules/request')
 const {dispatch, getState} = require('../modules/store')
 
 module.exports = tasks.add({
-    listUserSubjects(limit = 50, skip = 0) {
-        const userID = getState().currentUserID
+    listUserSubjects(userId, limit = 50, skip = 0) {
+        const userID = userId || getState().currentUserID
         dispatch({type: 'LIST_USER_SUBJECTS'})
         return request({
             method: 'GET',
