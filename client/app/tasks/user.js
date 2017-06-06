@@ -102,7 +102,6 @@ module.exports = tasks.add({
             /* .then((/userResponse) => {
                 // const {user} = userResponse
                 const calls = []
-                // TODO-2 listTopics that user has posted in or owns
                 /*
                 TODO-1 update so that these stores are by user_id
                 otherwise there's no way to tell the difference...

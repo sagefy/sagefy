@@ -1,10 +1,9 @@
-const {div, h1, p, img, h3, header, ul, li, a} =
+const {div, h1, p, img, h3, header, ul, li} =
     require('../../modules/tags')
 const {
   timeAgo,
 } = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
-const timeago = require('../components/timeago.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
@@ -23,8 +22,7 @@ module.exports = (data) => {
             p('Joined ' + timeAgo(user.created))
         ),
         user.subjects ? showSubjects(user, user.subjects) : null,
-        user.follows ? showFollows(user, user.follows) : null,
-        user.topics ? showTopics(user, user.topics) : null
+        user.follows ? showFollows(user, user.follows) : null
     )
 }
 
@@ -68,26 +66,11 @@ const showFollows = (user, follows) =>
                             url: `/cards/${e.id}`,
                             name: e.id,
                         }) :
+                    kind === 'topic' ?
+                        'topic' :  // TODO-2
                         null
                 )
             })
         )
         // TODO-2 and link to search
     ]
-
-const showTopics = (user, topics) =>
-    [
-        h3(`${user.name} is in topics:`),
-        ul(
-            {className: 'topics'},
-            topics.map(topic => li(
-                a(
-                    {href: `/topics/${topic.id}`},
-                    topic.name
-                ),
-                timeago(topic.created, {right: true})
-                // TODO-2 change to timestamp most recent post
-            ))
-        )
-    ]
-    // TODO-2 and link to search
