@@ -27,13 +27,13 @@ module.exports = (data) => {
 
     let layers = orderLayers(putUnitsInLayers(treeData.units))
     const nodeHeight = layers.length
-    const nodeWidth = Math.max.apply(null, layers.map((l) => l.length))
+    const nodeWidth = Math.max.apply(null, layers.map(l => l.length))
     const preWidth = width = nodeWidth * radius * 2 + (nodeWidth + 1) * distance
     if (data.currentTreeUnit) { width += 12 * (6 * 2 + 5) }
     const height = nodeHeight * radius * 2 + (nodeHeight + 1) * distance
     layers = calculatePoints(layers, nodeWidth)
 
-    const currentUnit = treeData.units.find((u) =>
+    const currentUnit = treeData.units.find(u =>
         u.entity_id === data.currentTreeUnit)
 
     let chooseUnitID
@@ -97,9 +97,9 @@ const renderLayers = ({ layers, currentUnit, preWidth, buckets }) => {
 
 const renderLines = (layers) => {
     const nodes = []
-    layers.forEach(layer => {
-        layer.forEach(unit => {
-            unit.requires.forEach(req => {
+    layers.forEach((layer) => {
+        layer.forEach((unit) => {
+            unit.requires.forEach((req) => {
                 req = findUnit(layers, req)
                 if(req) {
                     nodes.push(unitLine({
@@ -117,11 +117,11 @@ const renderLines = (layers) => {
 
 const renderPoints = (layers, buckets, currentUnit) => {
     const nodes = []
-    layers.forEach(layer => {
-        layer.forEach(unit => {
-            Object.keys(buckets).forEach(kind => {
+    layers.forEach((layer) => {
+        layer.forEach((unit) => {
+            Object.keys(buckets).forEach((kind) => {
                 const bucket = buckets[kind]
-                bucket.forEach(id => {
+                bucket.forEach((id) => {
                     if (id === unit.id) {
                         unit.className = kind
                     }
@@ -136,8 +136,8 @@ const renderPoints = (layers, buckets, currentUnit) => {
 const renderCurrent = (layers, currentUnit, preWidth) => {
     const nodes = []
     if(!currentUnit) { return nodes }
-    layers.forEach(layer => {
-        layer.forEach(unit => {
+    layers.forEach((layer) => {
+        layer.forEach((unit) => {
             if(unit.id !== currentUnit.entity_id) { return }
             nodes.push(line({
                 class: 'name-line',

@@ -13,7 +13,7 @@ module.exports = (data) => {
         ' Let\'s Get Learning!'
     )
 
-    const w = (n) => span({ className: 'subjects-landing__icon-wrap' }, n)
+    const w = n => span({ className: 'subjects-landing__icon-wrap' }, n)
 
     return div(
         {

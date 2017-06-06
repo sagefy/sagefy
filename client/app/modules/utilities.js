@@ -30,8 +30,8 @@ const objectConstructor = {}.constructor
 
 // Add the properties of the injects into the target.
 util.extend = (target, ...injects) => {
-    injects.forEach(inject => {
-        Object.keys(inject).forEach(prop => {
+    injects.forEach((inject) => {
+        Object.keys(inject).forEach((prop) => {
             const val = inject[prop]
             if(util.isUndefined(val)) { return }
             if(util.isDate(val)) {

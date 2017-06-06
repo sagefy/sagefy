@@ -8,7 +8,7 @@ const entityRelationships = require('../components/entity_relationships.tmpl')
 
 const assessments = ['choice', 'number', 'match', 'formula',
                      'writing', 'upload', 'embed']
-const threeDigits = (num) => Math.round(num * 1000) / 1000
+const threeDigits = num => Math.round(num * 1000) / 1000
 
 const previewCardContent = require('../components/preview_card_content.tmpl')
 

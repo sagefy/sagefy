@@ -13,7 +13,7 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 const subject = response.subject
-                ;['topics', 'versions', 'units'].forEach(r => {
+                ;['topics', 'versions', 'units'].forEach((r) => {
                     subject[r] = response[r]
                 })
                 dispatch({

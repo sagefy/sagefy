@@ -22,8 +22,8 @@ module.exports = broker.add({
         const name = table.dataset.name
         const columns = Array.prototype.map.call(
             table.querySelectorAll('th'),
-            (el) => el.dataset.col
-        ).filter((c) => c)
+            el => el.dataset.col
+        ).filter(c => c)
         tasks.addListFieldRow(values, name, columns)
     },
 

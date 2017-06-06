@@ -47,7 +47,7 @@ module.exports = (data) => {
     )
 }
 
-const userSubject = (data) =>
+const userSubject = data =>
     li(
         { className: 'my-subject' },
         button(

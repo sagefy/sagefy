@@ -1,6 +1,6 @@
 const { iframe } = require('../../modules/tags')
 
-module.exports = (data) =>
+module.exports = data =>
     iframe({
         className: 'video',
         src: data.site === 'youtube' ?

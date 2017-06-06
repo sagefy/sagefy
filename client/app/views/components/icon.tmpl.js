@@ -1,4 +1,4 @@
 const { i } = require('../../modules/tags')
 
-module.exports = (name) =>
+module.exports = name =>
     i({ className: `icon icon-${name}` })

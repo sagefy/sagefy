@@ -1,6 +1,6 @@
 const { li, label, input } = require('../../modules/tags')
 
-module.exports = (data) =>
+module.exports = data =>
     li(
         label(
             {

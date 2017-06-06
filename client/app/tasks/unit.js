@@ -12,12 +12,12 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 const unit = response.unit
-                ;['topics', 'versions'].forEach(r => {
+                ;['topics', 'versions'].forEach((r) => {
                     unit[r] = response[r]
                 })
                 unit.relationships = []
-                ;['belongs_to', 'requires', 'required_by'].forEach((r) =>
-                    response[r].forEach((e) =>
+                ;['belongs_to', 'requires', 'required_by'].forEach(r =>
+                    response[r].forEach(e =>
                         unit.relationships.push({
                             kind: r,
                             entity: e,

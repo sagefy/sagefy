@@ -16,7 +16,7 @@ module.exports = function topicPosts(state = {}, action = { type: '' }) {
     if(action.type === 'UPDATE_POST_SUCCESS') {
         state = shallowCopy(state)
         const posts = state[action.topicId].slice() || []
-        const index = posts.findIndex((post) => post.id === action.postId)
+        const index = posts.findIndex(post => post.id === action.postId)
         posts[index] = action.post
         state[action.topicId] = posts
         return state

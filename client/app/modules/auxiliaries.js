@@ -157,13 +157,13 @@ const getFormValues = (form) => {
         'input[type="password"]',
         'input[type="hidden"]',
         'textarea',
-    ].join(', ')), el => {
+    ].join(', ')), (el) => {
         data[el.name] = valuefy(el.value)
     })
-    forEach(form.querySelectorAll('[type=radio]'), el => {
+    forEach(form.querySelectorAll('[type=radio]'), (el) => {
         if (el.checked) { data[el.name] = valuefy(el.value) }
     })
-    forEach(form.querySelectorAll('[type=checkbox]'), el => {
+    forEach(form.querySelectorAll('[type=checkbox]'), (el) => {
         data[el.name] = data[el.name] || []
         if (el.checked) { data[el.name].push(valuefy(el.value)) }
     })
@@ -181,7 +181,7 @@ const parseFormValues = (data) => {
         } else {
             let prev = output
             let next
-            const names = key.split('.').map((n) =>
+            const names = key.split('.').map(n =>
                 (/^\d+$/).test(n) ? parseInt(n) : n)
             names.forEach((name, i) => {
                 if (i === names.length - 1) {
@@ -206,8 +206,8 @@ const parseFormValues = (data) => {
 // Use this method for any sort of `create` or `update` call.
 const validateFormData = (data, schema, fields) => {
     const errors = []
-    ;(fields || Object.keys(schema)).forEach(fieldName => {
-        schema[fieldName].validations.forEach(fn => {
+    ;(fields || Object.keys(schema)).forEach((fieldName) => {
+        schema[fieldName].validations.forEach((fn) => {
             let error
             if (isArray(fn)) {
                 error = fn[0](data[fieldName], ...fn.slice(1))
@@ -243,14 +243,14 @@ function createFieldsData({
     })
 
     if (errors) {
-        errors.forEach(error => {
-            let field = fields.filter((f) => f.name === error.name)
+        errors.forEach((error) => {
+            let field = fields.filter(f => f.name === error.name)
             if (field) { field = field[0] }
             if (field) { field.error = error.message }
         })
     }
 
-    Object.keys(formData).forEach(name => {
+    Object.keys(formData).forEach((name) => {
         const value = formData[name]
         // All of this for the list input type
         const matches = name.match(/^(.*)\.(\d+)\.(.*)$/)
@@ -282,7 +282,7 @@ function createFieldsData({
 
 const prefixObjectKeys = (prefix, obj) => {
     const next = {}
-    Object.keys(obj).forEach(name => {
+    Object.keys(obj).forEach((name) => {
         const value = obj[name]
         next[prefix + name] = value
     })

@@ -28,7 +28,7 @@ module.exports = (data) => {
     let post
     if (postID) {
         post = data.topicPosts &&
-               data.topicPosts[topicID].find((post) => post.id === postID)
+               data.topicPosts[topicID].find(post => post.id === postID)
     }
 
     if(postID && !post) { return spinner() }

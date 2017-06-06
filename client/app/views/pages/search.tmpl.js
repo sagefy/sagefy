@@ -56,7 +56,7 @@ module.exports = (data) => {
 
 const r = {}
 
-r.userResult = (result) =>
+r.userResult = result =>
     h3(
         span({ className: 'search__label' }, icon('user'), ' User'),
         ' ',
@@ -68,7 +68,7 @@ r.userResult = (result) =>
         )
     )
 
-r.topicResult = (result) =>
+r.topicResult = result =>
     [
         timeago(result._source.created, { right: true }),
         h3(
@@ -120,7 +120,7 @@ r.postResult = (result) => {
     ]
 }
 
-r.cardResult = (result) =>
+r.cardResult = result =>
     previewCardHead({
         url: `/cards/${result._source.entity_id}`,
         name: result._source.name,
@@ -130,7 +130,7 @@ r.cardResult = (result) =>
         // TODO-3 contents    ???
     })
 
-r.unitResult = (result) =>
+r.unitResult = result =>
     previewUnitHead({
         url: `/units/${result._source.entity_id}`,
         name: result._source.name,

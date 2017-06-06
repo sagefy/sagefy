@@ -12,7 +12,7 @@ module.exports = (kind, entity) => {
     return [
         h2('Relationships'),
         ul(
-            entity.relationships.map(relation => {
+            entity.relationships.map((relation) => {
                 kind = findKind(kind, relation.kind)
                 return li(
                     verbage[relation.kind],

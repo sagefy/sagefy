@@ -20,7 +20,7 @@ module.exports = () =>
 
 const writeStyleguide = () => {
     const tags = []
-    Object.keys(data).forEach(title => {
+    Object.keys(data).forEach((title) => {
         const o = data[title]
         if(o) {
             tags.push(

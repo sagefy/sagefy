@@ -178,7 +178,7 @@ module.exports = function create(state = {}, action = { type: '' }) {
 
 function translateListOfRows(values, name) {
     values = copy(values)
-    Object.keys(values).forEach(key => {
+    Object.keys(values).forEach((key) => {
         if (key.indexOf(name) === 0) {
             const [, i, field] = key.split('.')
             const index = parseInt(i, 10)

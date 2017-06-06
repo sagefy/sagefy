@@ -18,7 +18,7 @@ module.exports = function follows(state = [], action = { type: '' }) {
         if (action.follows.length === 0) { return }
         const follow = action.follows[0]
         const follows = state
-        const index = follows.findIndex((f) =>
+        const index = follows.findIndex(f =>
             f.entity.id === action.entityID)
         if (index > -1) {
             follows[index] = follow
@@ -36,7 +36,7 @@ module.exports = function follows(state = [], action = { type: '' }) {
     }
     if(action.type === 'UNFOLLOW_SUCCESS') {
         const follows = state
-        const i = follows.findIndex((follow) =>
+        const i = follows.findIndex(follow =>
             follow.id === action.id)
         follows.splice(i, 1)
         return follows

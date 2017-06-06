@@ -1,7 +1,7 @@
 const { li, a, div } = require('../../modules/tags')
 const icon = require('./icon.tmpl')
 
-module.exports = (data) =>
+module.exports = data =>
     li(
         { className: 'menu__item' },
         a(

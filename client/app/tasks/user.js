@@ -154,7 +154,7 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 const { users } = response
-                users.forEach(user => {
+                users.forEach((user) => {
                     dispatch({
                         type: 'ADD_USER',
                         message: 'get user success',

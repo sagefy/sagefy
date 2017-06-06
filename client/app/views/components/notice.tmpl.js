@@ -3,7 +3,7 @@ const timeAgo = require('../../modules/auxiliaries').timeAgo
 
 // TODO-2 add a link around the notice, and go to the appropriate page on click.
 
-module.exports = (data) =>
+module.exports = data =>
     li(
         {
             className: data.read ? 'notice' : 'notice notice--unread',

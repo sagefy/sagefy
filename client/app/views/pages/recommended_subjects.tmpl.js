@@ -3,7 +3,7 @@ const icon = require('../components/icon.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 
-const subjectResult = (subject) =>
+const subjectResult = subject =>
     [
         a(  // TODO-2 if already in subjects, don't show this button
             {

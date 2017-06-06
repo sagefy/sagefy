@@ -35,11 +35,9 @@
         "consistent-return": "off",
         "radix": "off",
         "no-plusplus": "off",
-        // "arrow-parens": ["error", "as-needed", { "requireForBlockBody": false }],
         "no-nested-ternary": "off",
 
         // temporary
-        "arrow-parens": "off",
         "prefer-template": "off",
         "keyword-spacing": "off",
         "no-mixed-operators": "off",

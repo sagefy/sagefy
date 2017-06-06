@@ -7,7 +7,7 @@ const get = (query) => {
     if (!query) { return {} }
     const params = query.split('&')
     const data = {}
-    params.forEach(param => {
+    params.forEach((param) => {
         const [key, value] = param.split('=')
         data[decodeURIComponent(key)] = valuefy(value)
     })
