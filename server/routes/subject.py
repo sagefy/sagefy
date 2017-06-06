@@ -294,6 +294,7 @@ def choose_unit_route(request, subject_id, unit_id):
     return 200, {'next': next_}
 
 
+# TODO-1 move to /s/users/{user_id}/subjects (?)
 @get('/s/subjects:get_my_recently_created')
 def get_my_recently_created_subjects_route(request):
     """

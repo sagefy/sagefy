@@ -92,6 +92,7 @@ def get_unit_version_route(request, version_id):
     return 200, {'version': unit_version}
 
 
+# TODO-1 move to /s/users/{user_id}/units (?)
 @get('/s/units:get_my_recently_created')
 def get_my_recently_created_units_route(request):
     """

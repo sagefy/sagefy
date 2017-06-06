@@ -9,8 +9,9 @@ from database.entity_facade import update_entity_statuses
 from modules.notices import send_notices
 from copy import deepcopy
 
-
+# TODO-1 remove /topics/{topic_id} from these routes.
 # TODO-2 re-enable diffs see object_diff
+
 
 @get('/s/topics/{topic_id}/posts')
 def get_posts_route(request, topic_id):
