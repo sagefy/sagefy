@@ -24,11 +24,10 @@ module.exports = (data) => {
                 a(
                     {
                         id: unit.entity_id,
-                        className: 'choose-unit__engage' + (
+                        className: `choose-unit__engage${
                             index === 0 ?
                                 ' choose-unit__engage--first' :
-                                ''
-                        ),
+                                ''}`,
                     },
                     'Engage ',
                     icon('next')

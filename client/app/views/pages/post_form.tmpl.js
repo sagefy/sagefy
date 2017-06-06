@@ -40,7 +40,7 @@ module.exports = (data) => {
                               data.routeQuery.replies_to_id,
         'post.kind': post && post.kind,
         'post.body': post && post.body,
-        'post.response': post ? '' + post.response : null,
+        'post.response': post ? `${post.response}` : null,
         'post.name': post && post.name,
     })
 

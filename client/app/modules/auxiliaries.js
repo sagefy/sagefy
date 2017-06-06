@@ -74,9 +74,9 @@ const matchesRoute = (docPath, viewPath) => {
     docPath = docPath.split('?')[0]  // Only match the pre-query params
     if (isString(viewPath)) {
         viewPath = new RegExp(
-            '^' +
-            viewPath.replace(/\{([\d\w_\$]+)\}/g, '([^/]+)') +
-            '$'
+            `^${
+            viewPath.replace(/\{([\d\w_\$]+)\}/g, '([^/]+)')
+            }$`
         )
     }
     const match = docPath.match(viewPath)
@@ -95,7 +95,7 @@ const valuefy = (value) => {
 
 const truncate = (str, len) => {
     if (str.length <= len) return str
-    return str.slice(0, len) + '...'
+    return `${str.slice(0, len)}...`
 }
 
 const compact = (A) => {

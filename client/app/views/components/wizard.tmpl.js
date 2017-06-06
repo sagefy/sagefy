@@ -7,10 +7,10 @@ module.exports = ({ options, state }) =>
             {
                 href: '#',
                 className:
-                    'wizard__li' +
-                    (state === option.name ?
+                    `wizard__li${
+                    state === option.name ?
                         ' wizard__li--selected' :
-                        ''),
+                        ''}`,
             },
             option.label
         ))

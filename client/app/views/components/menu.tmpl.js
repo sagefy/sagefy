@@ -43,7 +43,7 @@ Object.keys(items).forEach((name) => {
     items[name] = extend({
         name: name,
         title: ucfirst(name),
-        url: '/' + underscored(name),
+        url: `/${underscored(name)}`,
         icon: name,
     }, items[name] || {})
 })

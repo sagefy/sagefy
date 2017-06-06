@@ -19,7 +19,7 @@ module.exports = (data) => {
             { className: 'profile__header' },
             img({ src: user.avatar, className: 'profile__avatar' }),
             h1(user.name),
-            p('Joined ' + timeAgo(user.created))
+            p(`Joined ${timeAgo(user.created)}`)
         ),
         user.subjects ? showSubjects(user, user.subjects) : null,
         user.follows ? showFollows(user, user.follows) : null

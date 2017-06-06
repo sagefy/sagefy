@@ -11,7 +11,7 @@ module.exports = (kind, entityID, versions) => {
             versions.map(version => li(
                 timeago(version.created, { right: true }),
                 span(
-                    { className: 'entity-versions__status--' + version.status },
+                    { className: `entity-versions__status--${version.status}` },
                     ucfirst(version.status)
                 ),
                 ' ',

@@ -71,7 +71,7 @@ module.exports = (data) => {
                 key: '0Xe4fksADWwm9qWOMuTl7thD',
                 className: 'card-learn__progress',
                 style: {
-                    width: pLearned * 100 + '%',
+                    width: `${pLearned * 100}%`,
                 },
             }
         ) : null,

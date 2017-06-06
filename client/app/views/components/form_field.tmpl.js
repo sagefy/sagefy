@@ -13,8 +13,8 @@ kindTmpl.entities = require('./form_field_entities.tmpl')
 module.exports = (data) => {
     const classes = [
         'form-field',
-        'form-field--' + data.type,
-        'form-field--' + data.name,
+        `form-field--${data.type}`,
+        `form-field--${data.name}`,
         data.error ? 'form-field--bad' : '',
         data.good ? 'form-field--good' : '',
     ].join(' ')

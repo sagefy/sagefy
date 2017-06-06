@@ -23,8 +23,8 @@ module.exports = (data) => {
     const html = []
 
     html.push(ul(
-        { className: 'form-field--select__ul' +
-            (data.inline ? ' form-field--select__ul--inline' : ''),
+        { className: `form-field--select__ul${
+            data.inline ? ' form-field--select__ul--inline' : ''}`,
         },
         data.options.map(o => optionTemplate({
             name: data.name,

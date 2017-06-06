@@ -13,7 +13,7 @@ const read = (s) => {
 // Get the cookie value at a particular key.
 const get = (key) => {
     if(typeof document === 'undefined') { return null }
-    const name = key + '='
+    const name = `${key}=`
     const cookies = document.cookie.split(';')
     for (let c of cookies) {
         c = c.trim()
@@ -29,7 +29,7 @@ const set = (key, value, time = 31556926) => {
     if(typeof document === 'undefined') { return }
     if(value === null || value === undefined) { return }
     document.cookie = [
-        encode(key), '=', '' + value,
+        encode(key), '=', `${value}`,
         ';path=/',
         `;max-age=${time}`,
     ].join('')

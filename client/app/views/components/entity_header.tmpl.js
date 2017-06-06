@@ -5,7 +5,7 @@ const icon = require('./icon.tmpl')
 module.exports = (kind, entity) => {
     let title = ucfirst(kind)
     if (kind === 'card') {
-        title = ucfirst(entity.kind) + ' ' + title
+        title = `${ucfirst(entity.kind)} ${title}`
     }
 
     return header(
@@ -13,7 +13,7 @@ module.exports = (kind, entity) => {
         span(
             { className: 'entity-header__kind' },
             icon(kind),
-            ' ' + title
+            ` ${title}`
         ),
         h1(entity.name)
     )

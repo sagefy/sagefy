@@ -43,7 +43,7 @@ module.exports = (data) => {
         loading ? spinner() : null,
         data.searchResults && data.searchResults.length ? ul(
             data.searchResults.map(result => li(
-                r[result._type + 'Result'](result, asLearner)
+                r[`${result._type}Result`](result, asLearner)
             ))
         ) : null,
         data.searchResults && data.searchResults.length === 0 ?
