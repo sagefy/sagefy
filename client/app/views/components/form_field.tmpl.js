@@ -29,23 +29,23 @@ const m = (data) => {
     if (data.label && ['button', 'submit'].indexOf(data.type) === -1) {
         nodes.push(kindTmpl.label(data))
     }
-    if(['text', 'email', 'number', 'password', 'hidden']
+    if (['text', 'email', 'number', 'password', 'hidden']
         .indexOf(data.type) > -1) {
         nodes.push(kindTmpl.input(data))
     }
-    if(data.type === 'textarea') {
+    if (data.type === 'textarea') {
         nodes.push(kindTmpl.textarea(data))
     }
-    if(['submit', 'button'].indexOf(data.type) > -1) {
+    if (['submit', 'button'].indexOf(data.type) > -1) {
         nodes.push(kindTmpl.button(data))
     }
-    if(data.type === 'select') {
+    if (data.type === 'select') {
         nodes.push(kindTmpl.select(data))
     }
-    if(data.type === 'list') {
+    if (data.type === 'list') {
         nodes.push(kindTmpl.list(data))
     }
-    if(data.type === 'entities') {
+    if (data.type === 'entities') {
         nodes.push(kindTmpl.entities(data))
     }
     if (data.error) {

@@ -5,7 +5,7 @@ const { getFormValues, parseFormValues } = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
     'submit #topic-form.create form'(e, el) {
-        if(e) { e.preventDefault() }
+        if (e) { e.preventDefault() }
         let values = getFormValues(el)
         tasks.updateFormData(values)
         // errors = tasks.validateForm(values, schema, [...])
@@ -27,7 +27,7 @@ module.exports = broker.add({
     },
 
     'submit #topic-form.update form'(e, el) {
-        if(e) { e.preventDefault() }
+        if (e) { e.preventDefault() }
         let values = getFormValues(el)
         tasks.updateFormData(values)
         // errors = tasks.validateForm(values, schema, [...])

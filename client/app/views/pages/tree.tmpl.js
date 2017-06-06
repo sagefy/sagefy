@@ -20,7 +20,7 @@ module.exports = (data) => {
     const id = data.routeArgs[0]
     const treeData = data.subjectTrees && data.subjectTrees[id]
 
-    if(!treeData) { return spinner() }
+    if (!treeData) { return spinner() }
 
     const asLearner = data.route.indexOf('as_learner') > -1
     const asContrib = !asLearner
@@ -101,7 +101,7 @@ const renderLines = (layers) => {
         layer.forEach((unit) => {
             unit.requires.forEach((req) => {
                 req = findUnit(layers, req)
-                if(req) {
+                if (req) {
                     nodes.push(unitLine({
                         x1: req.x,
                         y1: req.y,
@@ -135,10 +135,10 @@ const renderPoints = (layers, buckets, currentUnit) => {
 
 const renderCurrent = (layers, currentUnit, preWidth) => {
     const nodes = []
-    if(!currentUnit) { return nodes }
+    if (!currentUnit) { return nodes }
     layers.forEach((layer) => {
         layer.forEach((unit) => {
-            if(unit.id !== currentUnit.entity_id) { return }
+            if (unit.id !== currentUnit.entity_id) { return }
             nodes.push(line({
                 class: 'name-line',
                 x1: preWidth,

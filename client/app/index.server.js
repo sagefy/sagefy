@@ -40,7 +40,7 @@ app.get(/.*/, (request, response) => {
     const path = request.originalUrl
     console.log(path) // eslint-disable-line
     resetState() // make sure it doesn't use a pre-existing state
-    if(request.cookies) {
+    if (request.cookies) {
         dispatch({
             type: 'SET_CURRENT_USER_ID',
             currentUserID: request.cookies.currentUserID,

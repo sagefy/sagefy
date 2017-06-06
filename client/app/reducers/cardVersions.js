@@ -2,7 +2,7 @@ const { mergeArraysByKey } = require('../modules/auxiliaries')
 const { shallowCopy } = require('../modules/utilities')
 
 module.exports = function cardVersions(state = {}, action = { type: '' }) {
-    if(action.type === 'ADD_CARD_VERSIONS') {
+    if (action.type === 'ADD_CARD_VERSIONS') {
         let versions = state[action.entity_id] || []
         versions = mergeArraysByKey(
             versions,

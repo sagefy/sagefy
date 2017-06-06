@@ -42,7 +42,7 @@ const getFields = (formData) => {
 
 const getTopicID = (data) => {
     const match = data.route.match(/^\/topics\/([\d\w]+)\/update$/)
-    if(match) { return match[1] }
+    if (match) { return match[1] }
     return null
 }
 
@@ -88,7 +88,7 @@ module.exports = (data) => {
         topic = data.topics && data.topics[topicID]
     }
 
-    if(topicID && !topic) { return spinner() }
+    if (topicID && !topic) { return spinner() }
 
     const formData = extend({}, data.formData, {
         'topic.id': topic && topic.id,

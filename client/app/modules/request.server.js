@@ -34,7 +34,7 @@ module.exports = function httpRequest({ method, url, data }) {
                 responseData = body
             }
             const statusCode = response.statusCode
-            if(statusCode < 400 && statusCode >= 200) {
+            if (statusCode < 400 && statusCode >= 200) {
                 done(responseData)
             } else if (isString(responseData)) {
                 fail(responseData)
@@ -43,7 +43,7 @@ module.exports = function httpRequest({ method, url, data }) {
             }
         })
     })
-    if(method !== 'GET') {
+    if (method !== 'GET') {
         request.write(JSON.stringify(data || {}))
     }
     request.end()

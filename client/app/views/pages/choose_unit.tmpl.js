@@ -5,7 +5,7 @@ const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 
 module.exports = (data) => {
-    if(!Object.keys(data.chooseUnit).length) { return spinner() }
+    if (!Object.keys(data.chooseUnit).length) { return spinner() }
     return div(
         { id: 'choose-unit', className: 'page' },
         Object.keys(data.unitLearned).length ?

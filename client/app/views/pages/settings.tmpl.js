@@ -43,7 +43,7 @@ fields.forEach((field, index) => {
 
 module.exports = (data) => {
     const user = data.users && data.users[data.currentUserID]
-    if(!user) { return spinner() }
+    if (!user) { return spinner() }
 
     const instanceFields = createFieldsData({
         schema: userSchema,

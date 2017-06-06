@@ -31,7 +31,7 @@ module.exports = (data) => {
                data.topicPosts[topicID].find(post => post.id === postID)
     }
 
-    if(postID && !post) { return spinner() }
+    if (postID && !post) { return spinner() }
 
     const formData = extend({}, data.formData, {
         'post.id': postID,

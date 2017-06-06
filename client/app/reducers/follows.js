@@ -2,7 +2,7 @@ const { extend } = require('../modules/utilities')
 const { mergeArraysByKey } = require('../modules/auxiliaries')
 
 module.exports = function follows(state = [], action = { type: '' }) {
-    if(action.type === 'LIST_FOLLOWS_SUCCESS') {
+    if (action.type === 'LIST_FOLLOWS_SUCCESS') {
         const follows = mergeArraysByKey(
             state,
             action.follows,
@@ -14,7 +14,7 @@ module.exports = function follows(state = [], action = { type: '' }) {
         })
         return follows
     }
-    if(action.type === 'ASK_FOLLOW_SUCCESS') {
+    if (action.type === 'ASK_FOLLOW_SUCCESS') {
         if (action.follows.length === 0) { return }
         const follow = action.follows[0]
         const follows = state
@@ -28,13 +28,13 @@ module.exports = function follows(state = [], action = { type: '' }) {
         return follows
         // TODO-3 will this cause a bug with mergeArraysByKey later?
     }
-    if(action.type === 'FOLLOW_SUCCESS') {
+    if (action.type === 'FOLLOW_SUCCESS') {
         const follows = state
         follows.push(action.follow)
         return follows
         // TODO-3 will this cause a bug with mergeArraysByKey later?
     }
-    if(action.type === 'UNFOLLOW_SUCCESS') {
+    if (action.type === 'UNFOLLOW_SUCCESS') {
         const follows = state
         const i = follows.findIndex(follow =>
             follow.id === action.id)

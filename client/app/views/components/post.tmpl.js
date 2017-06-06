@@ -34,7 +34,7 @@ const renderProposal = (data) => {
 }
 
 const voteResponse = (response) => {
-    if(!response) { return }
+    if (!response) { return }
     return [
         span(
             {

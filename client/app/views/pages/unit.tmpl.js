@@ -16,7 +16,7 @@ module.exports = (data) => {
     const id = data.routeArgs[0]
     const unit = data.units && data.units[id]
 
-    if(!unit) { return spinner() }
+    if (!unit) { return spinner() }
 
     return div(
         { id: 'unit', className: 'page' },

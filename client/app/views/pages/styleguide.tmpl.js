@@ -22,7 +22,7 @@ const writeStyleguide = () => {
     const tags = []
     Object.keys(data).forEach((title) => {
         const o = data[title]
-        if(o) {
+        if (o) {
             tags.push(
                 h2(title),
                 o.description ? p(o.description) : null

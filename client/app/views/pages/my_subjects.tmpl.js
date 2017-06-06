@@ -7,7 +7,7 @@ const info = require('../components/entity_info.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 
 module.exports = (data) => {
-    if(!data.userSubjects) { return spinner() }
+    if (!data.userSubjects) { return spinner() }
 
     return div(
         { id: 'my-subjects', className: 'page' },

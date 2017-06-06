@@ -12,7 +12,7 @@ module.exports = (data) => {
     const id = data.routeArgs[0]
     const card = data.learnCards && data.learnCards[id]
 
-    if(!card) { return spinner() }
+    if (!card) { return spinner() }
 
     const pLearned = data.unitLearned && data.unitLearned[card.unit_id]
 

@@ -58,7 +58,7 @@ function trackAllActions() {
 
 function updateTitle() {
     bind((state, action) => {
-        if(action.type === 'SET_ROUTE') {
+        if (action.type === 'SET_ROUTE') {
             setTitle(action.title)
         }
     })

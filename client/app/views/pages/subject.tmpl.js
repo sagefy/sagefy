@@ -12,7 +12,7 @@ module.exports = (data) => {
     const id = data.routeArgs[0]
     const subject = data.subjects && data.subjects[id]
 
-    if(!subject) { return spinner() }
+    if (!subject) { return spinner() }
 
     // const following = data.follows &&
     //            data.follows.find((f) => f.entity.id === subject.entity_id)

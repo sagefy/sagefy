@@ -9,7 +9,7 @@ module.exports = broker.add({
         let values = getFormValues(el)
         tasks.updateFormData(values)
         const errors = tasks.validateForm(values, userSchema, ['name', 'email'])
-        if(errors && errors.length) { return }
+        if (errors && errors.length) { return }
         values = parseFormValues(values)
         tasks.updateUser(values)
     },

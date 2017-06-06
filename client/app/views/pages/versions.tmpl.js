@@ -12,7 +12,7 @@ const previewSubject = require('../components/preview_subject.tmpl')
 module.exports = (data) => {
     const [kind, id] = data.routeArgs
     const versions = data[`${kind}Versions`] && data[`${kind}Versions`][id]
-    if(!versions) { return spinner() }
+    if (!versions) { return spinner() }
     const latestAccepted = versions.find(v => v.status === 'accepted')
 
     return div(

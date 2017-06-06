@@ -30,7 +30,7 @@ const subjectResult = subject =>
 
 
 module.exports = (data) => {
-    if(!data.recommendedSubjects.length) { return spinner() }
+    if (!data.recommendedSubjects.length) { return spinner() }
     return div(
         { id: 'recommended-subjects', className: 'page' },
         h1('Recommended Subjects'),

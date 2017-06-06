@@ -176,7 +176,7 @@ module.exports = tasks.add({
                     .then((response) => {
                         allResponses.push(response.version)
                         count++
-                        if(count === total) {
+                        if (count === total) {
                             resolve({ cards: allResponses })
                         }
                     })

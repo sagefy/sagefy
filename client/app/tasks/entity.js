@@ -29,7 +29,7 @@ module.exports = tasks.add({
                         version: response.version,
                     })
                     count++
-                    if(count === total) { resolve() }
+                    if (count === total) { resolve() }
                 })
                 .catch((errors) => {
                     dispatch({

@@ -23,7 +23,7 @@ module.exports = (data) => {
 }
 
 const follows = (data) => {
-    if(data.length) { return ul(data.map(f => follow(f))) }
+    if (data.length) { return ul(data.map(f => follow(f))) }
     return p(
         'No follows. ',
         a(

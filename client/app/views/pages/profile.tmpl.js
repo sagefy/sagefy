@@ -11,7 +11,7 @@ const previewCardHead = require('../components/preview_card_head.tmpl')
 module.exports = (data) => {
     const [id] = data.routeArgs
     const user = data.users && data.users[id]
-    if(!user) { return spinner() }
+    if (!user) { return spinner() }
 
     return div(
         { id: 'profile', className: 'page' },

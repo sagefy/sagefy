@@ -50,7 +50,7 @@ module.exports = function create(state = {}, action = { type: '' }) {
         state.subject = action.values
         return state
     }
-    if(action.type === 'ADD_MEMBER_TO_CREATE_SUBJECT') {
+    if (action.type === 'ADD_MEMBER_TO_CREATE_SUBJECT') {
         state = shallowCopy(state)
         state.subject = copy(state.subject || {})
         const members = (state.subject.members || []).slice()
@@ -63,7 +63,7 @@ module.exports = function create(state = {}, action = { type: '' }) {
         state.subject.members = members
         return state
     }
-    if(action.type === 'REMOVE_MEMBER_FROM_CREATE_SUBJECT') {
+    if (action.type === 'REMOVE_MEMBER_FROM_CREATE_SUBJECT') {
         state = shallowCopy(state)
         state.subject = copy(state.subject || {})
         const members = (state.subject.members || [])
@@ -71,26 +71,26 @@ module.exports = function create(state = {}, action = { type: '' }) {
         state.subject.members = members
         return state
     }
-    if(action.type === 'REMOVE_UNIT_FROM_SUBJECT') {
+    if (action.type === 'REMOVE_UNIT_FROM_SUBJECT') {
         state = shallowCopy(state)
         const units = copy(state.units || [])
         units.splice(action.index, 1)
         state.units = units
         return state
     }
-    if(action.type === 'REMOVE_CARD_FROM_UNIT') {
+    if (action.type === 'REMOVE_CARD_FROM_UNIT') {
         state = shallowCopy(state)
         const cards = copy(state.cards || [])
         cards.splice(action.index, 1)
         state.cards = cards
         return state
     }
-    if(action.type === 'SET_MY_RECENT_SUBJECTS') {
+    if (action.type === 'SET_MY_RECENT_SUBJECTS') {
         state = shallowCopy(state)
         state.myRecentSubjects = action.subjects
         return state
     }
-    if(action.type === 'CREATE_CHOOSE_SUBJECT_FOR_UNITS') {
+    if (action.type === 'CREATE_CHOOSE_SUBJECT_FOR_UNITS') {
         state = shallowCopy(state)
         state.selectedSubject = {
             id: action.id,
@@ -98,7 +98,7 @@ module.exports = function create(state = {}, action = { type: '' }) {
         }
         return state
     }
-    if(action.type === 'CREATE_CHOOSE_UNIT_FOR_CARDS') {
+    if (action.type === 'CREATE_CHOOSE_UNIT_FOR_CARDS') {
         state = shallowCopy(state)
         state.selectedUnit = {
             id: action.id,
@@ -106,7 +106,7 @@ module.exports = function create(state = {}, action = { type: '' }) {
         }
         return state
     }
-    if(action.type === 'ADD_MEMBER_TO_ADD_UNITS') {
+    if (action.type === 'ADD_MEMBER_TO_ADD_UNITS') {
         state = shallowCopy(state)
         state.units = state.units && state.units.slice() || []
         state.units.push({
@@ -120,13 +120,13 @@ module.exports = function create(state = {}, action = { type: '' }) {
         })
         return state
     }
-    if(action.type === 'ADD_MEMBER_TO_ADD_CARDS') {
+    if (action.type === 'ADD_MEMBER_TO_ADD_CARDS') {
         state = shallowCopy(state)
         state.cards = state.cards && state.cards.slice() || []
         state.cards.push(action.values)
         return state
     }
-    if(action.type === 'STOW_PROPOSED_UNIT') {
+    if (action.type === 'STOW_PROPOSED_UNIT') {
         state = shallowCopy(state)
         state.proposedUnit = copy(state.proposedUnit || {})
         state.proposedUnit.name = action.name
@@ -135,12 +135,12 @@ module.exports = function create(state = {}, action = { type: '' }) {
         state.proposedUnit.require_ids = action.require_ids
         return state
     }
-    if(action.type === 'STOW_PROPOSED_CARD') {
+    if (action.type === 'STOW_PROPOSED_CARD') {
         state = shallowCopy(state)
         state.proposedCard = action.values || {}
         return state
     }
-    if(action.type === 'ADD_REQUIRE_TO_PROPOSED_UNIT') {
+    if (action.type === 'ADD_REQUIRE_TO_PROPOSED_UNIT') {
         state = shallowCopy(state)
         state.proposedUnit = copy(state.proposedUnit || {})
         state.proposedUnit.require_ids = state.proposedUnit.require_ids || []
@@ -152,7 +152,7 @@ module.exports = function create(state = {}, action = { type: '' }) {
         })
         return state
     }
-    if(action.type === 'ADD_LIST_FIELD_ROW' && state.proposedCard) {
+    if (action.type === 'ADD_LIST_FIELD_ROW' && state.proposedCard) {
         state = shallowCopy(state)
         let { values = {} } = action
         const { name, columns } = action
@@ -164,7 +164,7 @@ module.exports = function create(state = {}, action = { type: '' }) {
         state.proposedCard = values
         return state
     }
-    if(action.type === 'REMOVE_LIST_FIELD_ROW' && state.proposedCard) {
+    if (action.type === 'REMOVE_LIST_FIELD_ROW' && state.proposedCard) {
         state = shallowCopy(state)
         let { values = {} } = action
         const { name, index } = action

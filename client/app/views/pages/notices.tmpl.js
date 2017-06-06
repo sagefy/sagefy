@@ -5,7 +5,7 @@ const icon = require('../components/icon.tmpl')
 
 module.exports = (data) => {
     // TODO-2 update this to use a status field
-    if(!data.notices) { return spinner() }
+    if (!data.notices) { return spinner() }
 
     return div(
         { id: 'notices', className: 'page' },

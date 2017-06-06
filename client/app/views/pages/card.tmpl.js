@@ -15,7 +15,7 @@ const previewCardContent = require('../components/preview_card_content.tmpl')
 module.exports = (data) => {
     const id = data.routeArgs[0]
     const card = data.cards && data.cards[id]
-    if(!card) { return spinner() }
+    if (!card) { return spinner() }
     const params = card.card_parameters || {}
     const assess = card.kind in assessments
     return div(

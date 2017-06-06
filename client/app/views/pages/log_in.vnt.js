@@ -11,7 +11,7 @@ module.exports = broker.add({
         tasks.updateFormData(values)
         const errors = tasks.validateForm(
             values, userSchema, ['name', 'password'])
-        if(errors && errors.length) { return }
+        if (errors && errors.length) { return }
         values = parseFormValues(values)
         tasks.logInUser(values)
     },

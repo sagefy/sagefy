@@ -14,7 +14,7 @@ module.exports = function init(options) {
     let tree
     let root
 
-    if(el.innerHTML.trim()) {
+    if (el.innerHTML.trim()) {
         tree = virtualize(el)
         root = el.children[0]
     } else {

@@ -33,15 +33,15 @@ util.extend = (target, ...injects) => {
     injects.forEach((inject) => {
         Object.keys(inject).forEach((prop) => {
             const val = inject[prop]
-            if(util.isUndefined(val)) { return }
-            if(util.isDate(val)) {
+            if (util.isUndefined(val)) { return }
+            if (util.isDate(val)) {
                 target[prop] = new Date(val)
             } else if (util.isArray(val)) {
-                if(!util.isArray(target[prop])) { target[prop] = [] }
+                if (!util.isArray(target[prop])) { target[prop] = [] }
                 target[prop] = util.extend([], target[prop], val)
             } else if (util.isObject(val) &&
                        val.constructor === objectConstructor) {
-                if(!util.isObject(target[prop])) { target[prop] = {} }
+                if (!util.isObject(target[prop])) { target[prop] = {} }
                 target[prop] = util.extend({}, target[prop], val)
             } else {
                 target[prop] = val
