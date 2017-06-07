@@ -12,9 +12,7 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 const unit = response.unit
-                ;['topics', 'versions'].forEach((r) => {
-                    unit[r] = response[r]
-                })
+                unit.topics = response.topics
                 unit.relationships = []
                 ;['belongs_to', 'requires', 'required_by'].forEach(r =>
                     response[r].forEach(e =>

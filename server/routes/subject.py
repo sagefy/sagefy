@@ -43,14 +43,12 @@ def get_subject_route(request, subject_id):
 
     # TODO-2 SPLITUP create new endpoints for these instead
     topics = list_topics_by_entity_id(subject_id, {}, db_conn)
-    versions = get_versions('subjects', db_conn, entity_id=subject_id)
     units = list_units_in_subject(subject, db_conn)
 
     return 200, {
         'subject': deliver_subject(subject),
         # TODO-3 subject parameters
         'topics': [deliver_topic(topic) for topic in topics],
-        'versions': [deliver_subject(version) for version in versions],
         'units': [deliver_unit(unit) for unit in units],
     }
 

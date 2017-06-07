@@ -16,6 +16,7 @@ module.exports = (data) => {
     const id = data.routeArgs[0]
     const card = data.cards && data.cards[id]
     if (!card) { return spinner() }
+    const cardVersions = data.cardVersions && data.cardVersions[id]
     const params = card.card_parameters || {}
     const assess = card.kind in assessments
     return div(
@@ -32,6 +33,6 @@ module.exports = (data) => {
         ),
         entityRelationships('card', card),
         entityTopics('card', card.entity_id, card.topics),
-        entityVersions('card', card.entity_id, card.versions)
+        entityVersions('card', card.entity_id, cardVersions)
     )
 }

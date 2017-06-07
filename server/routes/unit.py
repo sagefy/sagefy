@@ -25,7 +25,6 @@ def get_unit_route(request, unit_id):
 
     # TODO-2 SPLITUP create new endpoints for these instead
     topics = list_topics_by_entity_id(unit_id, {}, db_conn)
-    versions = get_versions('units', db_conn, unit_id)
     requires = list_requires('units', db_conn, unit_id)
     required_by = list_required_by('units', db_conn, unit_id)
     subjects = list_subjects_by_unit_id(db_conn, unit_id)
@@ -34,7 +33,6 @@ def get_unit_route(request, unit_id):
         'unit': deliver_unit(unit),
         # TODO-3 unit parameters
         'topics': [deliver_topic(topic) for topic in topics],
-        'versions': [deliver_unit(version) for version in versions],
         'requires': [deliver_unit(require) for require in requires],
         'required_by': [deliver_unit(require) for require in required_by],
         'belongs_to': [deliver_subject(subject) for subject in subjects],

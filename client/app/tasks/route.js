@@ -52,6 +52,7 @@ module.exports = tasks.add({
     openUnitRoute(id) {
         return Promise.all([
             tasks.getUnit(id),
+            tasks.listUnitVersions(id),
             tasks.askFollow(id),
         ])
     },
@@ -59,6 +60,7 @@ module.exports = tasks.add({
     openSubjectRoute(id) {
         return Promise.all([
             tasks.getSubject(id),
+            tasks.listSubjectVersions(id),
             tasks.askFollow(id),
         ])
     },
@@ -66,6 +68,7 @@ module.exports = tasks.add({
     openCardRoute(id) {
         return Promise.all([
             tasks.getCard(id),
+            tasks.listCardVersions(id),
             tasks.askFollow(id),
         ])
     },

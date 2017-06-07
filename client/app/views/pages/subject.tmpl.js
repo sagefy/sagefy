@@ -17,6 +17,8 @@ module.exports = (data) => {
     // const following = data.follows &&
     //            data.follows.find((f) => f.entity.id === subject.entity_id)
 
+    const subjectVersions = data.subjectVersions && data.subjectVersions[id]
+
     return div(
         { id: 'subject', className: 'page' },
 
@@ -52,6 +54,6 @@ module.exports = (data) => {
         ),
 
         entityTopics('subject', subject.entity_id, subject.topics),
-        entityVersions('subject', subject.entity_id, subject.versions)
+        entityVersions('subject', subject.entity_id, subjectVersions)
     )
 }

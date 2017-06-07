@@ -18,6 +18,8 @@ module.exports = (data) => {
 
     if (!unit) { return spinner() }
 
+    const unitVersions = data.unitVersions && data.unitVersions[id]
+
     return div(
         { id: 'unit', className: 'page' },
         followButton('unit', unit.entity_id, data.follows),
@@ -34,6 +36,6 @@ module.exports = (data) => {
         ), */
         entityRelationships('unit', unit),
         entityTopics('unit', unit.entity_id, unit.topics),
-        entityVersions('unit', unit.entity_id, unit.versions)
+        entityVersions('unit', unit.entity_id, unitVersions)
     )
 }

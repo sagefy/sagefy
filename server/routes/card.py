@@ -37,7 +37,6 @@ def get_card_route(request, card_id):
 
     # TODO-2 SPLITUP create new endpoints for these instead
     topics = list_topics_by_entity_id(card_id, {}, db_conn)
-    versions = get_versions('cards', db_conn, entity_id=card_id)
     requires = list_requires('cards', db_conn, entity_id=card_id)
     required_by = list_required_by('cards', db_conn, entity_id=card_id)
     params = get_card_parameters({'entity_id': card_id}, db_conn)
@@ -48,7 +47,6 @@ def get_card_route(request, card_id):
                             if params else None),
         'unit': deliver_unit(unit),
         'topics': [deliver_topic(topic) for topic in topics],
-        'versions': [deliver_card(version) for version in versions],
         'requires': [deliver_card(require) for require in requires],
         'required_by': [deliver_card(require) for require in required_by],
     }
