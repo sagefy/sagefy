@@ -13,9 +13,7 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 const subject = response.subject
-                ;['topics', 'units'].forEach((r) => {
-                    subject[r] = response[r]
-                })
+                subject.unit = response.unit
                 dispatch({
                     type: 'ADD_SUBJECT',
                     message: 'get subject success',

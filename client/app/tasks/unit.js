@@ -12,7 +12,6 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 const unit = response.unit
-                unit.topics = response.topics
                 unit.relationships = []
                 ;['belongs_to', 'requires', 'required_by'].forEach(r =>
                     response[r].forEach(e =>

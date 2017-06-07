@@ -1,7 +1,7 @@
 module.exports = function cards(state = {}, action = { type: '' }) {
     if (action.type === 'GET_CARD_SUCCESS') {
         const card = action.card
-        ;['topics', 'versions', 'card_parameters'].forEach((r) => {
+        ;['card_parameters'].forEach((r) => {
             card[r] = action[r]
         })
         card.relationships = [{

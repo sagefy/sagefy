@@ -28,6 +28,33 @@ module.exports = tasks.add({
             })
     },
 
+    listTopics(opts = {}) {
+        dispatch({ type: 'LIST_TOPICS', opts })
+        return request({
+            method: 'GET',
+            url: '/s/topics',
+            data: opts,
+        })
+        .then((response) => {
+            response.topics.forEach((topic) => {
+                dispatch({
+                    type: 'ADD_TOPIC',
+                    message: 'create topic success',
+                    topic: topic,
+                    id: topic.id,
+                })
+            })
+            return response
+        })
+        .catch((errors) => {
+            dispatch({
+                type: 'SET_ERRORS',
+                message: 'list topics failure',
+                errors,
+            })
+        })
+    },
+
     createTopicWithPost(data) {
         return tasks.createTopic(data)
             .then((response) => {

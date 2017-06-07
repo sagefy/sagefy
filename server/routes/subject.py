@@ -3,7 +3,6 @@ from framework.session import get_current_user
 from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
 from database.user import get_learning_context, set_learning_context
-from database.topic import list_topics_by_entity_id, deliver_topic
 from database.my_recently_created import get_my_recently_created_subjects
 from database.entity_base import list_by_entity_ids, get_latest_accepted, \
     get_versions, get_version
@@ -42,13 +41,11 @@ def get_subject_route(request, subject_id):
         return abort(404)
 
     # TODO-2 SPLITUP create new endpoints for these instead
-    topics = list_topics_by_entity_id(subject_id, {}, db_conn)
     units = list_units_in_subject(subject, db_conn)
 
     return 200, {
         'subject': deliver_subject(subject),
         # TODO-3 subject parameters
-        'topics': [deliver_topic(topic) for topic in topics],
         'units': [deliver_unit(unit) for unit in units],
     }
 

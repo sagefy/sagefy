@@ -15,7 +15,6 @@ module.exports = tasks.add({
                 dispatch({
                     type: 'GET_CARD_SUCCESS',
                     card: response.card,
-                    topics: response.topics,
                     card_parameters: response.card_parameters,
                     unit: response.unit,
                     requires: response.requires,

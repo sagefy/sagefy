@@ -19,6 +19,9 @@ module.exports = (data) => {
     if (!unit) { return spinner() }
 
     const unitVersions = data.unitVersions && data.unitVersions[id]
+    const topics = Object.keys(data.topics)
+        .filter(topicId => data.topics[topicId].entity.id === id)
+        .map(topicId => data.topics[topicId])
 
     return div(
         { id: 'unit', className: 'page' },
@@ -35,7 +38,7 @@ module.exports = (data) => {
             li('Difficulty: ???')
         ), */
         entityRelationships('unit', unit),
-        entityTopics('unit', unit.entity_id, unit.topics),
+        entityTopics('unit', unit.entity_id, topics),
         entityVersions('unit', unit.entity_id, unitVersions)
     )
 }

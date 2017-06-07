@@ -53,6 +53,7 @@ module.exports = tasks.add({
         return Promise.all([
             tasks.getUnit(id),
             tasks.listUnitVersions(id),
+            tasks.listTopics({ entity_id: id }),
             tasks.askFollow(id),
         ])
     },
@@ -61,6 +62,7 @@ module.exports = tasks.add({
         return Promise.all([
             tasks.getSubject(id),
             tasks.listSubjectVersions(id),
+            tasks.listTopics({ entity_id: id }),
             tasks.askFollow(id),
         ])
     },
@@ -69,6 +71,7 @@ module.exports = tasks.add({
         return Promise.all([
             tasks.getCard(id),
             tasks.listCardVersions(id),
+            tasks.listTopics({ entity_id: id }),
             tasks.askFollow(id),
         ])
     },

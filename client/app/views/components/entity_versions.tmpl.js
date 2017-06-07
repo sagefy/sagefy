@@ -8,7 +8,7 @@ module.exports = (kind, entityID, versions) => {
         h2('Versions'),
         ul(
             { className: 'entity-versions' },
-            versions.map(version => li(
+            versions && versions.map(version => li(
                 timeago(version.created, { right: true }),
                 span(
                     { className: `entity-versions__status--${version.status}` },

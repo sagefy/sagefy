@@ -17,6 +17,11 @@ module.exports = (data) => {
     const card = data.cards && data.cards[id]
     if (!card) { return spinner() }
     const cardVersions = data.cardVersions && data.cardVersions[id]
+
+    const topics = Object.keys(data.topics)
+        .filter(topicId => data.topics[topicId].entity.id === id)
+        .map(topicId => data.topics[topicId])
+
     const params = card.card_parameters || {}
     const assess = card.kind in assessments
     return div(
@@ -32,7 +37,7 @@ module.exports = (data) => {
             li(`Transit: ${threeDigits(params.transit)} (Default)`)
         ),
         entityRelationships('card', card),
-        entityTopics('card', card.entity_id, card.topics),
+        entityTopics('card', card.entity_id, topics),
         entityVersions('card', card.entity_id, cardVersions)
     )
 }
