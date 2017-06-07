@@ -17,6 +17,7 @@ Crap I Shouldn't Need to Do
 
 ... after creating a new box
 
+    ++ cd into the `sagefy` directory, then `vagrant ssh` followed by... ++
     sudo uwsgi --stop /tmp/uwsgi-master.pid
     sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
     sudo nginx -s stop
@@ -28,31 +29,27 @@ Crap I Shouldn't Need to Do
     pm2 start npm -- start
     pm2 logs
 
+Note that pm2 is not properly watching JavaScript files. To rebuild the JS:
+
+    pm2 restart all
+    pm2 logs
+    ++ then wait for it to say something like `Version: webpack 1.13.3`
 
 Common Vagrant commands
 -----------------------
 
 - Enter Vagrant: `vagrant ssh`
 - Put Vagrant to sleep: `vagrant suspend`
+- Wake Vagrant back up: `vagrant up`
 - Make a new Vagrant: `vagrant destroy; vagrant up`
+- SSH locked? Try this: `vagrant halt -f; vagrant up; vagrant ssh`
 
-Tailing the Log
----------------
+Tailing the Logs
+----------------
 
     sudo tail -F /var/log/nginx/error.log
     sudo tail -F /tmp/uwsgi.log
-
-Working with the UI
--------------------
-
-    cd ~/Sites/sagefy/ui
-    npm start
-
-Push gh-pages to Github Pages
------------------------------
-
-    git subtree push --prefix gh-pages origin gh-pages
-
+    pm2 logs
 
 Deploy steps
 ------------
