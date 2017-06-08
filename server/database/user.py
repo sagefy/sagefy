@@ -23,6 +23,8 @@ def insert_user(data, db_conn):
     """
 
     schema = user_schema
+    data['email'] = data.get('email', '').lower().strip()
+    data['name'] = data.get('name', '').lower().strip()
     data, errors = insert_document(schema, data, db_conn)
     if not errors:
         add_user_to_es(data)

@@ -13,10 +13,6 @@ def encrypt_password(value):
     return value
 
 
-def lowercase_and_strip(s):
-    return s.lower().strip()
-
-
 schema = extend({}, default, {
     'tablename': 'users',
     'fields': {
@@ -27,12 +23,10 @@ schema = extend({}, default, {
         },
         'name': {
             'validate': (is_required, is_string,),
-            'bundle': lowercase_and_strip,
             'unique': True,
         },
         'email': {
             'validate': (is_required, is_email,),
-            'bundle': lowercase_and_strip,
             'unique': True,
             'access': ('private',),
         },
