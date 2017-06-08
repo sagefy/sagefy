@@ -1,6 +1,5 @@
 from passlib.hash import bcrypt
 from conftest import create_user_in_db
-import rethinkdb as r
 import routes.user
 import pytest
 from database.user import get_user, get_email_token
