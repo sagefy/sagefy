@@ -84,12 +84,6 @@ def test_get_unit(db_conn,
     # Model
     assert response['unit']['entity_id'] == 'zytx'
     assert response['unit']['name'] == 'Wildwood'
-    # Topics
-    assert len(response['topics']) == 2
-    assert response['topics'][0]['entity']['kind'] == 'unit'
-    # Versions
-    assert len(response['versions']) == 2
-    assert response['versions'][1]['name'] == 'Umberwood'
     # Requires
     assert len(response['requires']) == 1
     assert response['requires'][0]['entity_id'] == 'ntza'
