@@ -108,7 +108,7 @@ def log_in_route(request):
 
     user = get_user({'name': name}, db_conn)
     if not user:
-        user = get_user({'email': request['params'].get('name')}, db_conn)
+        user = get_user({'email': name}, db_conn)
     if not user:
         return 404, {
             'errors': [{
