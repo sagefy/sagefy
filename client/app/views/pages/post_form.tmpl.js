@@ -3,7 +3,7 @@ const { div, h1 } = require('../../modules/tags')
 const form = require('../components/form.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const { extend } = require('../../modules/utilities')
-const { createFieldsData } = require('../../modules/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
 const { getFields, getSchema } = require('./post_form.fn')
 
 // TODO-1 Currently there is no way to update an existing entity from the UI,
@@ -60,12 +60,20 @@ module.exports = (data) => {
         sending: data.sending,
     })
 
+    const globalErrors = findGlobalErrors({
+        fields: fields,
+        errors: data.errors,
+    })
+
     return div(
         {
             id: 'post-form',
             className: classes(formData),
         },
         h1(postID ? 'Update Post' : 'Create Post'),
-        form(instanceFields)
+        form({
+            fields: instanceFields,
+            errors: globalErrors,
+        })
     )
 }

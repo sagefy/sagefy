@@ -5,7 +5,7 @@ const cardSchema = require('../../schemas/card')
 const videoCardSchema = require('../../schemas/cards/video_card')
 const choiceCardSchema = require('../../schemas/cards/choice_card')
 const form = require('../components/form.tmpl')
-const { createFieldsData } = require('../../modules/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
 const icon = require('../components/icon.tmpl')
 
 const allKindsFields = [{
@@ -115,11 +115,19 @@ module.exports = function createCardCreate(data) {
         sending: data.sending,
     })
 
+    const globalErrors = findGlobalErrors({
+        fields: fields,
+        errors: data.errors,
+    })
+
     return div(
         { id: 'create', className: 'page create--card-create' },
         h1('Create a New Card for Unit'),
         cardWizard('list'),
-        form(instanceFields),
+        form({
+            fields: instanceFields,
+            errors: globalErrors,
+        }),
         a(
             { href: '/create/card/list' },
             icon('back'),

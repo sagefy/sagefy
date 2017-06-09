@@ -2,7 +2,7 @@ const { div, h1 } = require('../../modules/tags')
 const { extend } = require('../../modules/utilities')
 const subjectSchema = require('../../schemas/subject')
 const form = require('../components/form.tmpl')
-const { createFieldsData } = require('../../modules/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
 
 const fields = [{
     label: 'Subject Name',
@@ -48,9 +48,17 @@ module.exports = function createSubjectCreate(data) {
         sending: data.sending,
     })
 
+    const globalErrors = findGlobalErrors({
+        fields: fields,
+        errors: data.errors,
+    })
+
     return div(
         { id: 'create', className: 'page create--subject-create' },
         h1('Create a New Subject'),
-        form(instanceFields)
+        form({
+            fields: instanceFields,
+            errors: globalErrors,
+        })
     )
 }

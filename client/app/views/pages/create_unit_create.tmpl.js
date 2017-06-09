@@ -3,7 +3,7 @@ const { unitWizard } = require('./create_shared.fn')
 const { extend } = require('../../modules/utilities')
 const unitSchema = require('../../schemas/unit')
 const form = require('../components/form.tmpl')
-const { createFieldsData } = require('../../modules/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
 const icon = require('../components/icon.tmpl')
 
 const fields = [{
@@ -51,11 +51,19 @@ module.exports = function createUnitCreate(data) {
         sending: data.sending,
     })
 
+    const globalErrors = findGlobalErrors({
+        fields: fields,
+        errors: data.errors,
+    })
+
     return div(
         { id: 'create', className: 'page create--unit-create' },
         h1('Create a New Unit for Subject'),
         unitWizard('list'),
-        form(instanceFields),
+        form({
+            fields: instanceFields,
+            errors: globalErrors,
+        }),
         a(
             { href: '/create/unit/list' },
             icon('back'),

@@ -280,6 +280,14 @@ function createFieldsData({
     return fields
 }
 
+function findGlobalErrors({ fields, errors }) {
+    const fieldNames = fields.map(field => field.name)
+    return errors.filter(error =>
+        !error.name ||
+        fieldNames.indexOf(error.name) === -1
+    )
+}
+
 const prefixObjectKeys = (prefix, obj) => {
     const next = {}
     Object.keys(obj).forEach((name) => {
@@ -307,6 +315,7 @@ module.exports = {
     parseFormValues,
     validateFormData,
     createFieldsData,
+    findGlobalErrors,
 
     prefixObjectKeys,
     compact,

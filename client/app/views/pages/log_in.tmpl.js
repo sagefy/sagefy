@@ -3,7 +3,7 @@ const form = require('../components/form.tmpl')
 const icon = require('../components/icon.tmpl')
 const userSchema = require('../../schemas/user')
 const { extend } = require('../../modules/utilities')
-const { createFieldsData } = require('../../modules/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
 
 const fields = [{
     name: 'name',
@@ -35,6 +35,11 @@ module.exports = (data) => {
         sending: data.sending,
     })
 
+    const globalErrors = findGlobalErrors({
+        fields: fields,
+        errors: data.errors,
+    })
+
     return div(
         { id: 'log-in', className: 'page' },
         h1('Log In'),
@@ -55,6 +60,9 @@ module.exports = (data) => {
             ),
             '.'
         ),
-        form(instanceFields)
+        form({
+            fields: instanceFields,
+            errors: globalErrors,
+        })
     )
 }

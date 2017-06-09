@@ -1,7 +1,7 @@
 const { div, h1, p, a, hr } = require('../../modules/tags')
 const userSchema = require('../../schemas/user')
 const { extend } = require('../../modules/utilities')
-const { createFieldsData } = require('../../modules/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
 const form = require('../components/form.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
@@ -58,10 +58,18 @@ module.exports = (data) => {
         sending: data.sending,
     })
 
+    const globalErrors = findGlobalErrors({
+        fields: fields,
+        errors: data.errors,
+    })
+
     return div(
         { id: 'settings', className: 'page' },
         h1('Settings'),
-        form(instanceFields),
+        form({
+            fields: instanceFields,
+            errors: globalErrors,
+        }),
         hr(),
         p(a(
             { href: '/password' },

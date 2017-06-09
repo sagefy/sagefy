@@ -2,7 +2,7 @@ const { div, h1, p, strong } = require('../../modules/tags')
 const form = require('../components/form.tmpl')
 const getPostFields = require('./post_form.fn').getFields
 const getPostSchema = require('./post_form.fn').getSchema
-const { createFieldsData, prefixObjectKeys, ucfirst } =
+const { createFieldsData, prefixObjectKeys, ucfirst, findGlobalErrors } =
     require('../../modules/auxiliaries')
 const { extend } = require('../../modules/utilities')
 const topicSchema = require('../../schemas/topic')
@@ -120,6 +120,11 @@ module.exports = (data) => {
         sending: data.sending,
     })
 
+    const globalErrors = findGlobalErrors({
+        fields: fields,
+        errors: data.errors,
+    })
+
     const entity = getEntitySummary(data)
 
     return div(
@@ -132,6 +137,9 @@ module.exports = (data) => {
             strong(ucfirst((entity && entity.kind) || '')),
             `: ${entity && entity.name}`
         ),
-        form(instanceFields)
+        form({
+            fields: instanceFields,
+            errors: globalErrors,
+        })
     )
 }

@@ -2,7 +2,7 @@ const { div, h1, p } = require('../../modules/tags')
 const form = require('../components/form.tmpl')
 const userSchema = require('../../schemas/user')
 const { extend } = require('../../modules/utilities')
-const { createFieldsData } = require('../../modules/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
 const wizard = require('../components/wizard.tmpl')
 
 const emailFields = [{
@@ -61,6 +61,7 @@ module.exports = (data) => {
 
 const getNodesForState = (state, data) => {
     let instanceFields
+    let globalErrors
     if (state === 'email') {
         instanceFields = createFieldsData({
             schema: userSchema,
@@ -69,7 +70,14 @@ const getNodesForState = (state, data) => {
             formData: data.formData,
             sending: data.sending,
         })
-        return form(instanceFields)
+        globalErrors = findGlobalErrors({
+            fields: emailFields,
+            errors: data.errors,
+        })
+        return form({
+            fields: instanceFields,
+            errors: globalErrors,
+        })
     }
     if (state === 'inbox') {
         return p('Check your inbox. Be sure to check your spam folder.')
@@ -82,6 +90,13 @@ const getNodesForState = (state, data) => {
             formData: data.formData,
             sending: data.sending,
         })
-        return form(instanceFields)
+        globalErrors = findGlobalErrors({
+            fields: passwordFields,
+            errors: data.errors,
+        })
+        return form({
+            fields: instanceFields,
+            errors: globalErrors,
+        })
     }
 }
