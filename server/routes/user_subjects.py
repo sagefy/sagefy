@@ -31,7 +31,6 @@ def get_user_subjects_route(request, user_id):
         user = current_user
         if not current_user:
             return abort(401)
-
     user_subjects = list_user_subjects_entity(
         user_id, request['params'], db_conn)
     response = {
@@ -59,18 +58,14 @@ def add_subject_route(request, user_id, subject_id):
     """
 
     db_conn = request['db_conn']
-
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-
     if user_id != current_user['id']:
         return abort(403)
-
     subject = get_latest_accepted('subjects', db_conn, entity_id=subject_id)
     if not subject:
         return abort(404)
-
     user_subject = get_user_subjects(user_id, db_conn)
     if user_subject and subject_id in user_subject['subject_ids']:
         return 400, {
@@ -80,7 +75,6 @@ def add_subject_route(request, user_id, subject_id):
             }],
             'ref': 'kPZ95zM3oxFDGGl8vBdR3J3o',
         }
-
     # TODO-2 move some of this logic to the database file
     if user_subject:
         user_subject, errors = append_user_subjects(
@@ -90,13 +84,11 @@ def add_subject_route(request, user_id, subject_id):
             'user_id': user_id,
             'subject_ids': [subject_id],
         }, db_conn)
-
     if errors:
         return 400, {
             'errors': errors,
             'ref': 'zCFUbLBTg9n2DnTkQYbqO4X9'
         }
-
     return 200, {'subjects': user_subject['subject_ids']}
 
 
@@ -111,11 +103,9 @@ def select_subject_route(request, user_id, subject_id):
     """
 
     db_conn = request['db_conn']
-
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-
     subject = get_latest_accepted('subjects', db_conn, subject_id)
     next_ = {
         'method': 'GET',
@@ -123,7 +113,6 @@ def select_subject_route(request, user_id, subject_id):
                 .format(subject_id=subject_id),
     }
     set_learning_context(current_user, subject=subject, next=next_)
-
     return 200, {'next': next_}
 
 
@@ -134,30 +123,23 @@ def remove_subject_route(request, user_id, subject_id):
     """
 
     db_conn = request['db_conn']
-
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-
     if user_id != current_user['id']:
         return abort(403)
-
     user_subject = get_user_subjects(user_id, db_conn)
     if not user_subject:
         return 404, {
             'errors': [{'message': 'User does not have subjects.'}],
             'ref': '8huZbvEAYOP8LcZb2sXbqNOC'
         }
-
     if subject_id not in user_subject['subject_ids']:
         return abort(404)
-
     user_subject, errors = remove_user_subjects(user_id, subject_id, db_conn)
-
     if errors:
         return 400, {
             'errors': errors,
             'ref': 'qIfll1e7dbP9V9jmC8FkCwsa'
         }
-
     return 200, {'subjects': user_subject['subject_ids']}

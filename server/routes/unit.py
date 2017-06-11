@@ -17,16 +17,13 @@ def get_unit_route(request, unit_id):
     """
 
     db_conn = request['db_conn']
-
     unit = get_latest_accepted('units', db_conn, unit_id)
     if not unit:
         return abort(404)
-
     # TODO-2 SPLITUP create new endpoints for these instead
     requires = list_requires('units', db_conn, unit_id)
     required_by = list_required_by('units', db_conn, unit_id)
     subjects = list_subjects_by_unit_id(db_conn, unit_id)
-
     return 200, {
         'unit': deliver_unit(unit),
         # TODO-3 unit parameters

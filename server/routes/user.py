@@ -105,7 +105,6 @@ def log_in_route(request):
     db_conn = request['db_conn']
     name = request['params'].get('name') or ''
     name = name.lower().strip()
-
     user = get_user({'name': name}, db_conn)
     if not user:
         user = get_user({'email': name}, db_conn)

@@ -23,10 +23,8 @@ def sitemap_route(request):
     """
 
     # TODO-1 cache in redis
-
     db_conn = request['db_conn']
     sitemap = defaults | set()
-
     # Card, unit, subject
     kinds = ('card', 'unit', 'subject',)
     for kind in kinds:
@@ -37,16 +35,12 @@ def sitemap_route(request):
                 kind=kind
             ))
             # TODO-2 ...and versions pages
-            # TODO-2
-
     # Topic
     for topic in list_topics({}, db_conn):
         sitemap.add('https://sagefy.org/topics/{id}'.format(id=topic['id']))
-
     # User
     users = [deliver_user(user) for user in list_users({}, db_conn)]
     for user in users:
         sitemap.add('https://sagefy.org/users/{id}'.format(id=user['id']))
-
     sitemap = '\n'.join(sitemap)
     return 200, sitemap
