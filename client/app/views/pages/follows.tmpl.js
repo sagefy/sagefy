@@ -2,6 +2,7 @@ const { div, h1, p, a, ul, li } = require('../../modules/tags')
 // const c = require('../../modules/content').get
 // const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
+const { copy } = require('../../modules/utilities')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
@@ -18,7 +19,15 @@ module.exports = (data) => {
             icon('back'),
             ' Back to notices.'
         ),
-        follows(data.follows)
+        follows(
+            data.follows.map((follow) => {
+                const ofKinds = data[`${follow.entity.kind}s`] || {}
+                const entity = ofKinds[follow.entity.id]
+                follow = copy(follow)
+                follow.entityFull = entity || {}
+                return follow
+            })
+        )
     )
 }
 
@@ -35,7 +44,8 @@ const follows = (data) => {
 }
 
 const follow = (data) => {
-    const { kind, name, body } = data.entity
+    const { kind } = data.entity
+    const { name, body } = data.entityFull
     return li(
         { className: 'follow' },
         a(
@@ -51,8 +61,14 @@ const follow = (data) => {
             previewUnitHead({ name, body, labelKind: true }) :
         kind === 'subject' ?
             previewSubjectHead({ name, body, labelKind: true }) :
-        ['video', 'choice'].indexOf(kind) > -1 ?
-            previewCardHead({ name, kind, labelKind: true }) :
+        kind === 'card' ?
+            previewCardHead({
+                name,
+                kind: data.entityFull.kind,
+                labelKind: true,
+            }) :
+        kind === 'topic' ?
+            'A topic' :
             null
     )
 }

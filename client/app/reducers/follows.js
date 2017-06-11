@@ -1,4 +1,3 @@
-const { extend } = require('../modules/utilities')
 const { mergeArraysByKey } = require('../modules/auxiliaries')
 
 module.exports = function follows(state = [], action = { type: '' }) {
@@ -8,10 +7,6 @@ module.exports = function follows(state = [], action = { type: '' }) {
             action.follows,
             'id'
         )
-        follows.forEach((follow, i) => {
-            const entity = action.entities[i]
-            if (entity) { extend(follow.entity, entity) }
-        })
         return follows
     }
     if (action.type === 'ASK_FOLLOW_SUCCESS') {

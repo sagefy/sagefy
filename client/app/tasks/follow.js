@@ -14,8 +14,8 @@ module.exports = tasks.add({
                 dispatch({
                     type: 'LIST_FOLLOWS_SUCCESS',
                     follows: response.follows,
-                    entities: response.entities,
                 })
+                return tasks.listEntitiesByFollows(response.follows)
             })
             .catch((errors) => {
                 dispatch({

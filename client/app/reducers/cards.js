@@ -1,4 +1,11 @@
+const { shallowCopy } = require('../modules/utilities')
+
 module.exports = function cards(state = {}, action = { type: '' }) {
+    if (action.type === 'ADD_CARD') {
+        state = shallowCopy(state)
+        state[action.card.entity_id] = action.card
+        return state
+    }
     if (action.type === 'GET_CARD_SUCCESS') {
         const card = action.card
         ;['card_parameters'].forEach((r) => {

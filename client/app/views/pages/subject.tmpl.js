@@ -35,7 +35,7 @@ module.exports = (data) => {
             created: subject.created,
             language: subject.language,
             members: subject.members,  // units and subjects: kind url name id
-            units: subject.units.map(unit => ({
+            units: subject.units && subject.units.map(unit => ({
                 name: unit.name,
                 url: `/units/${unit.entity_id}`,
             })),  // just a list of units: url name id

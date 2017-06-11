@@ -2,8 +2,6 @@ from framework.routes import get, post, delete, abort
 from framework.session import get_current_user
 from database.follow import get_follow, list_follows, insert_follow, \
     deliver_follow, delete_follow
-from database.entity_base import get_latest_accepted
-from database.entity_facade import deliver_entity_by_kind
 from database.user import get_user
 
 
@@ -30,25 +28,10 @@ def get_follows_route(request):
     params = dict(**request['params'])
     params['user_id'] = user['id']
     follows = list_follows(params, db_conn)
-
-    output = {
+    return 200, {
         'follows': [deliver_follow(follow, access='private')
                     for follow in follows]
     }
-
-    # TODO-3 SPLITUP this be a different endpoint
-    if 'entities' in request['params']:
-        output['entities'] = []
-        for follow in follows:
-            entity_kind = follow['entity']['kind']
-            entity_id = follow['entity']['id']
-            tablename = '%ss' % entity_kind
-            entity = get_latest_accepted(tablename, db_conn, entity_id)
-            output['entities'].append(
-                deliver_entity_by_kind(entity_kind, entity)
-            )
-
-    return 200, output
 
 
 @post('/s/follows')
@@ -93,5 +76,4 @@ def unfollow_route(request, follow_id):
             'errors': errors,
             'ref': 'iGmpx8UwoFcKNmSKq9Aocy1a'
         }
-
     return 200, {}
