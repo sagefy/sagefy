@@ -33,6 +33,7 @@ schema = {
 #               return a string if error, None if okay
 # - bundle:     before saving to the database,
 #               transform the data
+#               bundle happens AFTER validate. be careful!
 # - default:    default value of the field
 #               can be a value or a function to call
 # - deliver:    tranform the data before sending out to the client

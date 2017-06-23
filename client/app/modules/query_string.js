@@ -1,4 +1,4 @@
-const {valuefy} = require('./auxiliaries')
+const { valuefy } = require('./auxiliaries')
 
 const get = (query) => {
     query = query ||
@@ -7,11 +7,11 @@ const get = (query) => {
     if (!query) { return {} }
     const params = query.split('&')
     const data = {}
-    params.forEach(param => {
+    params.forEach((param) => {
         const [key, value] = param.split('=')
         data[decodeURIComponent(key)] = valuefy(value)
     })
     return data
 }
 
-module.exports = {valuefy, get}
+module.exports = { valuefy, get }

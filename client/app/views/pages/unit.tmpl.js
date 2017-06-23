@@ -1,4 +1,4 @@
-const {div, p} =
+const { div, p } =
     require('../../modules/tags')
 
 const followButton = require('../components/follow_button.tmpl')
@@ -16,15 +16,20 @@ module.exports = (data) => {
     const id = data.routeArgs[0]
     const unit = data.units && data.units[id]
 
-    if(!unit) { return spinner() }
+    if (!unit) { return spinner() }
+
+    const unitVersions = data.unitVersions && data.unitVersions[id]
+    const topics = Object.keys(data.topics)
+        .filter(topicId => data.topics[topicId].entity.id === id)
+        .map(topicId => data.topics[topicId])
 
     return div(
-        {id: 'unit', className: 'page'},
+        { id: 'unit', className: 'page' },
         followButton('unit', unit.entity_id, data.follows),
         entityHeader('unit', unit),
-        p({className: 'unit__body'}, unit.body),
+        p({ className: 'unit__body' }, unit.body),
         previewUnitContent(Object.assign({}, unit, {
-            requires: unit.require_ids.map(id => ({id}))
+            requires: unit.require_ids.map(id => ({ id })),
         })),
         /* TODO-2 h2('Stats'),
         ul(
@@ -33,7 +38,7 @@ module.exports = (data) => {
             li('Difficulty: ???')
         ), */
         entityRelationships('unit', unit),
-        entityTopics('unit', unit.entity_id, unit.topics),
-        entityVersions('unit', unit.entity_id, unit.versions)
+        entityTopics('unit', unit.entity_id, topics),
+        entityVersions('unit', unit.entity_id, unitVersions)
     )
 }

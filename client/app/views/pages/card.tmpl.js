@@ -1,4 +1,4 @@
-const {div, h2, ul, li} = require('../../modules/tags')
+const { div, h2, ul, li } = require('../../modules/tags')
 const spinner = require('../components/spinner.tmpl')
 const followButton = require('../components/follow_button.tmpl')
 const entityHeader = require('../components/entity_header.tmpl')
@@ -8,18 +8,24 @@ const entityRelationships = require('../components/entity_relationships.tmpl')
 
 const assessments = ['choice', 'number', 'match', 'formula',
                      'writing', 'upload', 'embed']
-const threeDigits = (num) => Math.round(num * 1000) / 1000
+const threeDigits = num => Math.round(num * 1000) / 1000
 
 const previewCardContent = require('../components/preview_card_content.tmpl')
 
 module.exports = (data) => {
     const id = data.routeArgs[0]
     const card = data.cards && data.cards[id]
-    if(!card) { return spinner() }
+    if (!card) { return spinner() }
+    const cardVersions = data.cardVersions && data.cardVersions[id]
+
+    const topics = Object.keys(data.topics)
+        .filter(topicId => data.topics[topicId].entity.id === id)
+        .map(topicId => data.topics[topicId])
+
     const params = card.card_parameters || {}
     const assess = card.kind in assessments
     return div(
-        {id: 'card', className: 'page'},
+        { id: 'card', className: 'page' },
         followButton('card', card.entity_id, data.follows),
         entityHeader('card', card),
         previewCardContent(card),
@@ -31,7 +37,7 @@ module.exports = (data) => {
             li(`Transit: ${threeDigits(params.transit)} (Default)`)
         ),
         entityRelationships('card', card),
-        entityTopics('card', card.entity_id, card.topics),
-        entityVersions('card', card.entity_id, card.versions)
+        entityTopics('card', card.entity_id, topics),
+        entityVersions('card', card.entity_id, cardVersions)
     )
 }

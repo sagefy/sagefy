@@ -1,7 +1,7 @@
 const broker = require('../../modules/broker')
 const tasks = require('../../modules/tasks')
-const {closest} = require('../../modules/utilities')
-const {getFormValues} = require('../../modules/auxiliaries')
+const { closest } = require('../../modules/utilities')
+const { getFormValues } = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
     'click .form-field--list__remove-row'(e, el) {
@@ -22,10 +22,10 @@ module.exports = broker.add({
         const name = table.dataset.name
         const columns = Array.prototype.map.call(
             table.querySelectorAll('th'),
-            (el) => el.dataset.col
-        ).filter((c) => c)
+            el => el.dataset.col
+        ).filter(c => c)
         tasks.addListFieldRow(values, name, columns)
-    }
+    },
 
     // TODO-3 'dragstart .form-field--list__move-row'(e, el)
     // TODO-3 'drop form-field--list__move-row'(e, el)

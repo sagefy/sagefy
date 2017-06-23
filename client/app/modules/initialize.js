@@ -1,11 +1,11 @@
-const {dispatch, bind, setReducer} = require('./store')
+const { dispatch, bind, setReducer } = require('./store')
 const reducer = require('../reducers/index')
 const init = require('./init')
 const cookie = require('./cookie')
-const {route} = require('./route_actions')
-const {startGoogleAnalytics, trackEvent} = require('./analytics')
+const { route } = require('./route_actions')
+const { startGoogleAnalytics, trackEvent } = require('./analytics')
 const indexView = require('../views/index.tmpl')
-const {setTitle} = require('../modules/auxiliaries')
+const { setTitle } = require('../modules/auxiliaries')
 
 startGoogleAnalytics()
 
@@ -58,7 +58,7 @@ function trackAllActions() {
 
 function updateTitle() {
     bind((state, action) => {
-        if(action.type === 'SET_ROUTE') {
+        if (action.type === 'SET_ROUTE') {
             setTitle(action.title)
         }
     })
@@ -77,8 +77,8 @@ function go() {
     route(window.location.pathname + window.location.search)
     init({
         view: indexView,
-        el: document.body
+        el: document.body,
     })
 }
 
-module.exports = {go, logAllActions, trackAllActions}
+module.exports = { go, logAllActions, trackAllActions }

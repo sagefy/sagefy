@@ -1,4 +1,4 @@
-const {input} = require('../../modules/tags')
+const { input } = require('../../modules/tags')
 
 module.exports = (data) => {
     return input({
@@ -7,6 +7,6 @@ module.exports = (data) => {
         placeholder: data.placeholder || '',
         type: data.type || 'text',
         value: data.value || data.default || '',
-        size: data.size || 40
+        size: data.size || 40,
     })
 }

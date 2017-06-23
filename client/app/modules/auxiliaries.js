@@ -3,7 +3,7 @@ Auxiliaries are utlity functions that are specific to Sagefy.
 */
 
 const cookie = require('./cookie')
-const {extend, copy, isString, isArray} = require('./utilities')
+const { extend, copy, isString, isArray } = require('./utilities')
 
 // Determine if the user is logged in
 const isLoggedIn = () => cookie.get('logged_in') === '1'
@@ -74,9 +74,9 @@ const matchesRoute = (docPath, viewPath) => {
     docPath = docPath.split('?')[0]  // Only match the pre-query params
     if (isString(viewPath)) {
         viewPath = new RegExp(
-            '^' +
-            viewPath.replace(/\{([\d\w_\$]+)\}/g, '([^/]+)') +
-            '$'
+            `^${
+            viewPath.replace(/\{([\d\w_\$]+)\}/g, '([^/]+)')
+            }$`
         )
     }
     const match = docPath.match(viewPath)
@@ -95,7 +95,7 @@ const valuefy = (value) => {
 
 const truncate = (str, len) => {
     if (str.length <= len) return str
-    return str.slice(0, len) + '...'
+    return `${str.slice(0, len)}...`
 }
 
 const compact = (A) => {
@@ -156,14 +156,14 @@ const getFormValues = (form) => {
         'input[type="email"]',
         'input[type="password"]',
         'input[type="hidden"]',
-        'textarea'
-    ].join(', ')), el => {
+        'textarea',
+    ].join(', ')), (el) => {
         data[el.name] = valuefy(el.value)
     })
-    forEach(form.querySelectorAll('[type=radio]'), el => {
+    forEach(form.querySelectorAll('[type=radio]'), (el) => {
         if (el.checked) { data[el.name] = valuefy(el.value) }
     })
-    forEach(form.querySelectorAll('[type=checkbox]'), el => {
+    forEach(form.querySelectorAll('[type=checkbox]'), (el) => {
         data[el.name] = data[el.name] || []
         if (el.checked) { data[el.name].push(valuefy(el.value)) }
     })
@@ -181,7 +181,7 @@ const parseFormValues = (data) => {
         } else {
             let prev = output
             let next
-            const names = key.split('.').map((n) =>
+            const names = key.split('.').map(n =>
                 (/^\d+$/).test(n) ? parseInt(n) : n)
             names.forEach((name, i) => {
                 if (i === names.length - 1) {
@@ -206,8 +206,8 @@ const parseFormValues = (data) => {
 // Use this method for any sort of `create` or `update` call.
 const validateFormData = (data, schema, fields) => {
     const errors = []
-    ;(fields || Object.keys(schema)).forEach(fieldName => {
-        schema[fieldName].validations.forEach(fn => {
+    ;(fields || Object.keys(schema)).forEach((fieldName) => {
+        schema[fieldName].validations.forEach((fn) => {
             let error
             if (isArray(fn)) {
                 error = fn[0](data[fieldName], ...fn.slice(1))
@@ -234,7 +234,7 @@ function createFieldsData({
     fields,
     errors = [],
     formData = {},
-    sending = false
+    sending = false,
 }) {
     fields = copy(fields)
 
@@ -243,14 +243,14 @@ function createFieldsData({
     })
 
     if (errors) {
-        errors.forEach(error => {
-            let field = fields.filter((f) => f.name === error.name)
+        errors.forEach((error) => {
+            let field = fields.filter(f => f.name === error.name)
             if (field) { field = field[0] }
             if (field) { field.error = error.message }
         })
     }
 
-    Object.keys(formData).forEach(name => {
+    Object.keys(formData).forEach((name) => {
         const value = formData[name]
         // All of this for the list input type
         const matches = name.match(/^(.*)\.(\d+)\.(.*)$/)
@@ -280,9 +280,17 @@ function createFieldsData({
     return fields
 }
 
+function findGlobalErrors({ fields, errors }) {
+    const fieldNames = fields.map(field => field.name)
+    return errors.filter(error =>
+        !error.name ||
+        fieldNames.indexOf(error.name) === -1
+    )
+}
+
 const prefixObjectKeys = (prefix, obj) => {
     const next = {}
-    Object.keys(obj).forEach(name => {
+    Object.keys(obj).forEach((name) => {
         const value = obj[name]
         next[prefix + name] = value
     })
@@ -307,6 +315,7 @@ module.exports = {
     parseFormValues,
     validateFormData,
     createFieldsData,
+    findGlobalErrors,
 
     prefixObjectKeys,
     compact,

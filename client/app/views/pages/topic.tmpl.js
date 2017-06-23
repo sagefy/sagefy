@@ -1,8 +1,8 @@
-const {header, h3, hgroup, div, h1, ul, a} = require('../../modules/tags')
+const { header, h3, hgroup, div, h1, ul, a } = require('../../modules/tags')
 // const c = require('../../modules/content').get
 const post = require('../components/post.tmpl')
 const followButton = require('../components/follow_button.tmpl')
-const {ucfirst} = require('../../modules/auxiliaries')
+const { ucfirst } = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 
@@ -16,7 +16,7 @@ module.exports = (data) => {
     if (!topic || !posts) { return spinner() }
 
     return div(
-        {id: 'topic', className: 'page'},
+        { id: 'topic', className: 'page' },
 
         header(
             followButton('topic', id, data.follows),
@@ -24,14 +24,14 @@ module.exports = (data) => {
                 entity(topic, data),
                 h1(topic.name),
                 data.currentUserID === topic.user_id ? a(
-                    {href: `/topics/${topic.id}/update`},
+                    { href: `/topics/${topic.id}/update` },
                     icon('update'),
                     ' Update name'
                 ) : null
             )
         ),
 
-        ul({className: 'posts'}, posts.map((postData) => {
+        ul({ className: 'posts' }, posts.map((postData) => {
             const user = data.users[postData.user_id]
             return post(Object.assign({}, postData, {
                 user: {
@@ -43,17 +43,17 @@ module.exports = (data) => {
                         {}, data.topicPostVersions[ev.kind][ev.id], {
                             entityKind: ev.kind,
                         }
-                    ))
+                    )),
             }), data.currentUserID)
         })),
         // TODO-2 Pagination
 
         div(
-            {className: 'topic__actions'},
+            { className: 'topic__actions' },
             a(
                 {
                     className: 'topic__create',
-                    href: `/topics/${id}/posts/create`
+                    href: `/topics/${id}/posts/create`,
                 },
                 icon('create'),
                 ' Create a new post'

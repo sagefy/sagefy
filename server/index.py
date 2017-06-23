@@ -23,6 +23,5 @@ import routes.subject
 import routes.search
 import routes.next
 import routes.sitemap
-import routes.mass_upload
 
 from framework.index import serve

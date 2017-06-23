@@ -1,4 +1,4 @@
-const {div} = require('../../modules/tags')
+const { div } = require('../../modules/tags')
 
 module.exports = () =>
     div()

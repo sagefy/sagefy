@@ -1,9 +1,9 @@
-const {div, h1, p, br, a} = require('../../modules/tags')
+const { div, h1, p, br, a } = require('../../modules/tags')
 const form = require('../components/form.tmpl')
 const icon = require('../components/icon.tmpl')
 const userSchema = require('../../schemas/user')
-const {extend} = require('../../modules/utilities')
-const {createFieldsData} = require('../../modules/auxiliaries')
+const { extend } = require('../../modules/utilities')
+const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
 
 const fields = [{
     name: 'name',
@@ -35,13 +35,18 @@ module.exports = (data) => {
         sending: data.sending,
     })
 
+    const globalErrors = findGlobalErrors({
+        fields: fields,
+        errors: data.errors,
+    })
+
     return div(
-        {id: 'log-in', className: 'page'},
+        { id: 'log-in', className: 'page' },
         h1('Log In'),
         p(
             'Don\'t have an account? ',
             a(
-                {href: '/sign_up'},
+                { href: '/sign_up' },
                 icon('sign-up'),
                 ' Sign Up'
             ),
@@ -49,12 +54,15 @@ module.exports = (data) => {
             br(),
             'Forgot your password? ',
             a(
-                {href: '/password'},
+                { href: '/password' },
                 icon('password'),
                 ' Reset'
             ),
             '.'
         ),
-        form(instanceFields)
+        form({
+            fields: instanceFields,
+            errors: globalErrors,
+        })
     )
 }

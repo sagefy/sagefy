@@ -1,6 +1,6 @@
-const {iframe} = require('../../modules/tags')
+const { iframe } = require('../../modules/tags')
 
-module.exports = (data) =>
+module.exports = data =>
     iframe({
         className: 'video',
         src: data.site === 'youtube' ?
@@ -11,5 +11,5 @@ module.exports = (data) =>
              '',
         width: 672,
         height: 336,
-        allowfullscreen: true
+        allowfullscreen: true,
     })

@@ -2,8 +2,8 @@
 // TODO-2 on update: how to decline a proposal?
 // TODO-3 Tags (all)
 
-const {extend} = require('../../modules/utilities')
-const {prefixObjectKeys} = require('../../modules/auxiliaries')
+const { extend } = require('../../modules/utilities')
+const { prefixObjectKeys } = require('../../modules/auxiliaries')
 
 const postSchema = require('../../schemas/post')
 const voteSchema = require('../../schemas/vote')
@@ -23,7 +23,7 @@ const getFields = (formData) => {
         'post.topic_id',
         'post.replies_to_id',
     ].forEach((name) => {
-        if (formData[name]) { fields.push({name}) }
+        if (formData[name]) { fields.push({ name }) }
     })
 
     /* PP@ fields.push({
@@ -52,12 +52,12 @@ const getFields = (formData) => {
         fields.push({
             name: 'post.response',
             options: [
-                {label: 'Yes, I agree'},
-                {label: 'No, I dissent'}
+                { label: 'Yes, I agree' },
+                { label: 'No, I dissent' },
             ],
             inline: true,
             label: 'Response',
-            disabled: !!formData['post.id']
+            disabled: !!formData['post.id'],
         })
     }
 
@@ -68,7 +68,7 @@ const getFields = (formData) => {
                'Post Body',
         description: formData['post.kind'] === 'proposal' ?
                       'Describe the value of this proposal.'
-                      : null
+                      : null,
     })
 
     // TODO PP@ update proposal handling
@@ -90,4 +90,4 @@ const getSchema = (formData) => {
     return schema
 }
 
-module.exports = {getFields, getSchema}
+module.exports = { getFields, getSchema }

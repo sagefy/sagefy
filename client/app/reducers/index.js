@@ -2,7 +2,7 @@
 
 function combineReducers(reducerMap) {
     const keys = Object.keys(reducerMap)
-    return function combinedReducer(prevState = {}, action = {type: ''}) {
+    return function combinedReducer(prevState = {}, action = { type: '' }) {
         return keys.reduce((newState, key) => {
             newState[key] = reducerMap[key](prevState[key], action)
             return newState

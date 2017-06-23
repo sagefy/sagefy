@@ -1,6 +1,6 @@
 const c = require('../../modules/content').get
-const {required} = require('../../modules/validations')
-const {label, span} = require('../../modules/tags')
+const { required } = require('../../modules/validations')
+const { label, span } = require('../../modules/tags')
 
 module.exports = (data) => {
     const isRequired = data.validations ?
@@ -17,7 +17,7 @@ module.exports = (data) => {
                 className:
                     isRequired ?
                         'form-field__required' :
-                        'form-field__optional'
+                        'form-field__optional',
             },
             isRequired ? c('required') : c('optional')
         )

@@ -1,10 +1,10 @@
-const {div, h1} = require('../../modules/tags')
+const { div, h1 } = require('../../modules/tags')
 // const c = require('../../modules/content').get
 const form = require('../components/form.tmpl')
 const spinner = require('../components/spinner.tmpl')
-const {extend} = require('../../modules/utilities')
-const {createFieldsData} = require('../../modules/auxiliaries')
-const {getFields, getSchema} = require('./post_form.fn')
+const { extend } = require('../../modules/utilities')
+const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
+const { getFields, getSchema } = require('./post_form.fn')
 
 // TODO-1 Currently there is no way to update an existing entity from the UI,
 //        you can only propose a new entity.
@@ -19,7 +19,7 @@ const classes = (formData) => {
         postID ? 'update' : 'create',
         postKind ? `post-${postKind}` : '',
         entityKind ? `entity-${entityKind}` : '',
-        cardKind ? `card-${cardKind}` : ''
+        cardKind ? `card-${cardKind}` : '',
     ].join(' ')
 }
 
@@ -28,10 +28,10 @@ module.exports = (data) => {
     let post
     if (postID) {
         post = data.topicPosts &&
-               data.topicPosts[topicID].find((post) => post.id === postID)
+               data.topicPosts[topicID].find(post => post.id === postID)
     }
 
-    if(postID && !post) { return spinner() }
+    if (postID && !post) { return spinner() }
 
     const formData = extend({}, data.formData, {
         'post.id': postID,
@@ -40,7 +40,7 @@ module.exports = (data) => {
                               data.routeQuery.replies_to_id,
         'post.kind': post && post.kind,
         'post.body': post && post.body,
-        'post.response': post ? '' + post.response : null,
+        'post.response': post ? `${post.response}` : null,
         'post.name': post && post.name,
     })
 
@@ -49,7 +49,7 @@ module.exports = (data) => {
         type: 'submit',
         name: 'submit',
         label: postID ? 'Update Post' : 'Create Post',
-        icon: 'create'
+        icon: 'create',
     })
 
     const instanceFields = createFieldsData({
@@ -57,15 +57,23 @@ module.exports = (data) => {
         fields,
         errors: data.errors,
         formData,
-        sending: data.sending
+        sending: data.sending,
+    })
+
+    const globalErrors = findGlobalErrors({
+        fields: fields,
+        errors: data.errors,
     })
 
     return div(
         {
             id: 'post-form',
-            className: classes(formData)
+            className: classes(formData),
         },
         h1(postID ? 'Update Post' : 'Create Post'),
-        form(instanceFields)
+        form({
+            fields: instanceFields,
+            errors: globalErrors,
+        })
     )
 }

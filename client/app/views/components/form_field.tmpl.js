@@ -1,4 +1,4 @@
-const {div, p, span} = require('../../modules/tags')
+const { div, p, span } = require('../../modules/tags')
 const icon = require('./icon.tmpl')
 
 const kindTmpl = {}
@@ -13,13 +13,13 @@ kindTmpl.entities = require('./form_field_entities.tmpl')
 module.exports = (data) => {
     const classes = [
         'form-field',
-        'form-field--' + data.type,
-        'form-field--' + data.name,
+        `form-field--${data.type}`,
+        `form-field--${data.name}`,
         data.error ? 'form-field--bad' : '',
-        data.good ? 'form-field--good' : ''
+        data.good ? 'form-field--good' : '',
     ].join(' ')
     return div(
-        {className: classes},
+        { className: classes },
         m(data)
     )
 }
@@ -29,35 +29,35 @@ const m = (data) => {
     if (data.label && ['button', 'submit'].indexOf(data.type) === -1) {
         nodes.push(kindTmpl.label(data))
     }
-    if(['text', 'email', 'number', 'password', 'hidden']
+    if (['text', 'email', 'number', 'password', 'hidden']
         .indexOf(data.type) > -1) {
         nodes.push(kindTmpl.input(data))
     }
-    if(data.type === 'textarea') {
+    if (data.type === 'textarea') {
         nodes.push(kindTmpl.textarea(data))
     }
-    if(['submit', 'button'].indexOf(data.type) > -1) {
+    if (['submit', 'button'].indexOf(data.type) > -1) {
         nodes.push(kindTmpl.button(data))
     }
-    if(data.type === 'select') {
+    if (data.type === 'select') {
         nodes.push(kindTmpl.select(data))
     }
-    if(data.type === 'list') {
+    if (data.type === 'list') {
         nodes.push(kindTmpl.list(data))
     }
-    if(data.type === 'entities') {
+    if (data.type === 'entities') {
         nodes.push(kindTmpl.entities(data))
     }
     if (data.error) {
         nodes.push(span(
-            {className: 'form-field__feedback'},
+            { className: 'form-field__feedback' },
             icon('bad'),
             data.error
         ))
     }
     if (data.description) {
         nodes.push(
-            p({className: 'form-field__description'}, data.description)
+            p({ className: 'form-field__description' }, data.description)
         )
     }
     return nodes

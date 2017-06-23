@@ -1,7 +1,7 @@
 const http = require('http')
-const {convertDataToGet, isString} = require('./utilities')
+const { convertDataToGet, isString } = require('./utilities')
 
-module.exports = function httpRequest({method, url, data}) {
+module.exports = function httpRequest({ method, url, data }) {
     method = method.toUpperCase()
     if (method === 'GET') {
         url = convertDataToGet(url, data)
@@ -21,15 +21,20 @@ module.exports = function httpRequest({method, url, data}) {
             'Content-Type': 'application/json; charset=UTF-8',
             'X-Requested-With': 'Node.js',
             Cookie: global.requestCookie || '',
-        }
+        },
     }, (response) => {
         let body = ''
         response.setEncoding('utf8')
         response.on('data', (d) => { body += d })
         response.on('end', () => {
-            const responseData = JSON.parse(body)
+            let responseData = ''
+            try {
+                responseData = JSON.parse(body)
+            } catch (e) {
+                responseData = body
+            }
             const statusCode = response.statusCode
-            if(statusCode < 400 && statusCode >= 200) {
+            if (statusCode < 400 && statusCode >= 200) {
                 done(responseData)
             } else if (isString(responseData)) {
                 fail(responseData)
@@ -38,7 +43,7 @@ module.exports = function httpRequest({method, url, data}) {
             }
         })
     })
-    if(method !== 'GET') {
+    if (method !== 'GET') {
         request.write(JSON.stringify(data || {}))
     }
     request.end()

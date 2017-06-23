@@ -1,6 +1,5 @@
 from framework.session import get_current_user
 from framework.routes import get, post, abort
-from database.topic import list_topics_by_entity_id, deliver_topic
 from modules.sequencer.index import update as seq_update
 from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
@@ -26,29 +25,21 @@ def get_card_route(request, card_id):
     """
 
     db_conn = request['db_conn']
-
     card = get_latest_accepted('cards', db_conn, card_id)
     if not card:
         return abort(404)
-
     unit = get_latest_accepted('units', db_conn, entity_id=card['unit_id'])
     if not unit:
         return abort(404)
-
     # TODO-2 SPLITUP create new endpoints for these instead
-    topics = list_topics_by_entity_id(card_id, {}, db_conn)
-    versions = get_versions('cards', db_conn, entity_id=card_id)
     requires = list_requires('cards', db_conn, entity_id=card_id)
     required_by = list_required_by('cards', db_conn, entity_id=card_id)
     params = get_card_parameters({'entity_id': card_id}, db_conn)
-
     return 200, {
         'card': deliver_card(card, access='view'),
         'card_parameters': (get_card_parameters_values(params)
                             if params else None),
         'unit': deliver_unit(unit),
-        'topics': [deliver_topic(topic) for topic in topics],
-        'versions': [deliver_card(version) for version in versions],
         'requires': [deliver_card(require) for require in requires],
         'required_by': [deliver_card(require) for require in required_by],
     }
@@ -82,27 +73,22 @@ def learn_card_route(request, card_id):
     """
 
     db_conn = request['db_conn']
-
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-
     card = get_latest_accepted('cards', db_conn, card_id)
     if not card:
         return abort(404)
-
     # Make sure the current unit id matches the card
     context = get_learning_context(current_user)
     if context.get('unit', {}).get('entity_id') != card['unit_id']:
         return abort(400)
-
     next_ = {
         'method': 'POST',
         'path': '/s/cards/{card_id}/responses'
                 .format(card_id=card['entity_id'])
     }
     set_learning_context(current_user, card=card, next=next_)
-
     return 200, {
         'card': deliver_card(card, access='learn'),
         'subject': context.get('subject'),
@@ -159,21 +145,17 @@ def respond_to_card_route(request, card_id):
 
     # TODO-3 simplify this method.
     #      perhaps smaller methods or move to model layer?
-
     db_conn = request['db_conn']
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-
     card = get_latest_accepted('cards', db_conn, card_id)
     if not card:
         return abort(404)
-
     # Make sure the card is the current one
     context = get_learning_context(current_user)
     if context.get('card', {}).get('entity_id') != card['entity_id']:
         return abort(400)
-
     r = seq_update(db_conn, current_user, card,
                    request['params'].get('response'))
     errors, response, feedback = (r.get('errors'), r.get('response'),

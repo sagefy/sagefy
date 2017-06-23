@@ -1,6 +1,6 @@
-const {dispatch} = require('../modules/store')
+const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
-const {validateFormData} = require('../modules/auxiliaries')
+const { validateFormData } = require('../modules/auxiliaries')
 
 module.exports = tasks.add({
     updateFormData(data) {
@@ -21,7 +21,7 @@ module.exports = tasks.add({
             })
             return errors
         }
-        dispatch({type: 'FORM_IS_VALID'})
+        dispatch({ type: 'FORM_IS_VALID' })
     },
 
     addListFieldRow(values, name, columns) {
@@ -30,7 +30,7 @@ module.exports = tasks.add({
             message: 'add list field row',
             values,
             name,
-            columns
+            columns,
         })
     },
 
@@ -40,7 +40,7 @@ module.exports = tasks.add({
             message: 'remove list field row',
             values,
             name,
-            index
+            index,
         })
-    }
+    },
 })

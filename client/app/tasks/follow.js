@@ -1,21 +1,21 @@
-const {dispatch} = require('../modules/store')
+const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
-    listFollows(skip = 0, limit = 50) {
-        dispatch({type: 'LIST_FOLLOWS'})
+    listFollows(userId, skip = 0, limit = 50) {
+        dispatch({ type: 'LIST_FOLLOWS' })
         return request({
             method: 'GET',
             url: '/s/follows',
-            data: {skip, limit, entities: true},
+            data: { user_id: userId, skip, limit, entities: true },
         })
             .then((response) => {
                 dispatch({
                     type: 'LIST_FOLLOWS_SUCCESS',
                     follows: response.follows,
-                    entities: response.entities,
                 })
+                return tasks.listEntitiesByFollows(response.follows)
             })
             .catch((errors) => {
                 dispatch({
@@ -27,17 +27,17 @@ module.exports = tasks.add({
     },
 
     askFollow(entityID) {
-        dispatch({type: 'ASK_FOLLOW', entityID})
+        dispatch({ type: 'ASK_FOLLOW', entityID })
         return request({
             method: 'GET',
             url: '/s/follows',
-            data: {entity_id: entityID},
+            data: { entity_id: entityID },
         })
             .then((response) => {
                 dispatch({
                     type: 'ASK_FOLLOW_SUCCESS',
                     follows: response.follows,
-                    entityID
+                    entityID,
                 })
             })
             .catch((errors) => {
@@ -50,7 +50,7 @@ module.exports = tasks.add({
     },
 
     follow(data) {
-        dispatch({type: 'FOLLOW', id: data.entity.id})
+        dispatch({ type: 'FOLLOW', id: data.entity.id })
         return request({
             method: 'POST',
             url: '/s/follows',
@@ -59,7 +59,7 @@ module.exports = tasks.add({
             .then((response) => {
                 dispatch({
                     type: 'FOLLOW_SUCCESS',
-                    follow: response.follow
+                    follow: response.follow,
                 })
             })
             .catch((errors) => {
@@ -72,7 +72,7 @@ module.exports = tasks.add({
     },
 
     unfollow(id) {
-        dispatch({type: 'UNFOLLOW', id})
+        dispatch({ type: 'UNFOLLOW', id })
         return request({
             method: 'DELETE',
             url: `/s/follows/${id}`,
@@ -80,7 +80,7 @@ module.exports = tasks.add({
             .then(() => {
                 dispatch({
                     type: 'UNFOLLOW_SUCCESS',
-                    id
+                    id,
                 })
             })
             .catch((errors) => {
@@ -90,5 +90,5 @@ module.exports = tasks.add({
                     errors,
                 })
             })
-    }
+    },
 })

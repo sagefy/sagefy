@@ -1,8 +1,8 @@
-const {mergeArraysByKey} = require('../modules/auxiliaries')
-const {shallowCopy} = require('../modules/utilities')
+const { mergeArraysByKey } = require('../modules/auxiliaries')
+const { shallowCopy } = require('../modules/utilities')
 
-module.exports = function unitVersions(state = {}, action = {type: ''}) {
-    if(action.type === 'ADD_UNIT_VERSIONS') {
+module.exports = function unitVersions(state = {}, action = { type: '' }) {
+    if (action.type === 'ADD_UNIT_VERSIONS') {
         let versions = state[action.entity_id] || []
         versions = mergeArraysByKey(
             versions,

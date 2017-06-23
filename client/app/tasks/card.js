@@ -1,11 +1,11 @@
-const {dispatch, getState} = require('../modules/store')
+const { dispatch, getState } = require('../modules/store')
 const tasks = require('../modules/tasks')
-const {matchesRoute} = require('../modules/auxiliaries')
+const { matchesRoute } = require('../modules/auxiliaries')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     getCard(id) {
-        dispatch({type: 'GET_CARD', id})
+        dispatch({ type: 'GET_CARD', id })
         return request({
             method: 'GET',
             url: `/s/cards/${id}`,
@@ -15,8 +15,6 @@ module.exports = tasks.add({
                 dispatch({
                     type: 'GET_CARD_SUCCESS',
                     card: response.card,
-                    topics: response.topics,
-                    versions: response.versions,
                     card_parameters: response.card_parameters,
                     unit: response.unit,
                     requires: response.requires,
@@ -34,9 +32,9 @@ module.exports = tasks.add({
     },
 
     getCardForLearn(id) {
-        dispatch({type: 'RESET_CARD_RESPONSE'})
-        dispatch({type: 'RESET_CARD_FEEDBACK'})
-        dispatch({type: 'GET_LEARN_CARD', id})
+        dispatch({ type: 'RESET_CARD_RESPONSE' })
+        dispatch({ type: 'RESET_CARD_FEEDBACK' })
+        dispatch({ type: 'GET_LEARN_CARD', id })
         return request({
             method: 'GET',
             url: `/s/cards/${id}/learn`,
@@ -49,7 +47,7 @@ module.exports = tasks.add({
                     card: response.card,
                     id,
                 })
-                tasks.updateMenuContext({card: id})
+                tasks.updateMenuContext({ card: id })
             })
             .catch((errors) => {
                 dispatch({
@@ -61,7 +59,7 @@ module.exports = tasks.add({
     },
 
     listCardVersions(id) {
-        dispatch({type: 'LIST_CARD_VERSIONS', id})
+        dispatch({ type: 'LIST_CARD_VERSIONS', id })
         return request({
             method: 'GET',
             url: `/s/cards/${id}/versions`,
@@ -85,9 +83,9 @@ module.exports = tasks.add({
     },
 
     respondToCard(id, data, goNext = false) {
-        dispatch({type: 'RESPOND_TO_CARD', id})
+        dispatch({ type: 'RESPOND_TO_CARD', id })
         dispatch({
-            type: 'SET_SENDING_ON'
+            type: 'SET_SENDING_ON',
         })
         return request({
             method: 'POST',
@@ -104,7 +102,7 @@ module.exports = tasks.add({
                 dispatch({
                     type: 'SET_CARD_RESPONSE',
                     message: 'respond to card success',
-                    response: response.response
+                    response: response.response,
                 })
                 dispatch({
                     type: 'ADD_UNIT_LEARNED',
@@ -115,9 +113,9 @@ module.exports = tasks.add({
                     type: 'SET_CARD_FEEDBACK',
                     feedback: response.feedback,
                 })
-                tasks.updateMenuContext({card: false})
+                tasks.updateMenuContext({ card: false })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
                 if (goNext) {
                     tasks.nextState()
@@ -130,7 +128,7 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
                 if (goNext) {
                     tasks.nextState()
@@ -176,8 +174,8 @@ module.exports = tasks.add({
                     .then((response) => {
                         allResponses.push(response.version)
                         count++
-                        if(count === total) {
-                            resolve({cards: allResponses})
+                        if (count === total) {
+                            resolve({ cards: allResponses })
                         }
                     })
                     .catch((errors) => {
@@ -190,5 +188,5 @@ module.exports = tasks.add({
                     })
             })
         })
-    }
+    },
 })

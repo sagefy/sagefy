@@ -1,11 +1,11 @@
-const {div, h1, a} = require('../../modules/tags')
-const {cardWizard} = require('./create_shared.fn')
-const {extend} = require('../../modules/utilities')
+const { div, h1, a } = require('../../modules/tags')
+const { cardWizard } = require('./create_shared.fn')
+const { extend } = require('../../modules/utilities')
 const cardSchema = require('../../schemas/card')
 const videoCardSchema = require('../../schemas/cards/video_card')
 const choiceCardSchema = require('../../schemas/cards/choice_card')
 const form = require('../components/form.tmpl')
-const {createFieldsData} = require('../../modules/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
 const icon = require('../components/icon.tmpl')
 
 const allKindsFields = [{
@@ -15,17 +15,17 @@ const allKindsFields = [{
     label: 'Card Language',
     name: 'language',
     options: [
-        {label: 'English'}
+        { label: 'English' },
     ],
-    value: 'en'
+    value: 'en',
 }, {
     label: 'Card Kind',
     name: 'kind',
     options: [
-        {label: 'Video'},
-        {label: 'Choice'}
+        { label: 'Video' },
+        { label: 'Choice' },
     ],
-    inline: true
+    inline: true,
 }]
 
 /* {
@@ -38,8 +38,8 @@ const videoFields = allKindsFields.concat([{
     label: 'Video Site',
     name: 'site',
     options: [
-        {label: 'YouTube'},
-        {label: 'Vimeo'},
+        { label: 'YouTube' },
+        { label: 'Vimeo' },
     ],
 }, {
     label: 'Video ID',
@@ -49,7 +49,7 @@ const videoFields = allKindsFields.concat([{
     type: 'submit',
     name: 'submit',
     label: 'Create Video Card',
-    icon: 'create'
+    icon: 'create',
 }])
 
 const choiceFields = allKindsFields.concat([{
@@ -59,28 +59,28 @@ const choiceFields = allKindsFields.concat([{
     label: 'Response Options',
     name: 'options',
     columns: [
-        {options: [
-            {label: 'Yes'},
-            {label: 'No'},
-        ]},
+        { options: [
+            { label: 'Yes' },
+            { label: 'No' },
+        ] },
         {},
-        {}
-    ]
+        {},
+    ],
 }, {
     label: 'Order',
     name: 'order',
     options: [
-        {label: 'Random'},
-        {label: 'Set'}
-    ]
+        { label: 'Random' },
+        { label: 'Set' },
+    ],
 }, {
     label: 'Max Options to Show',
-    name: 'max_options_to_show'
+    name: 'max_options_to_show',
 }, {
     type: 'submit',
     name: 'submit',
     label: 'Create Choice Card',
-    icon: 'create'
+    icon: 'create',
 }])
 
 allKindsFields.forEach((field, index) => {
@@ -115,13 +115,21 @@ module.exports = function createCardCreate(data) {
         sending: data.sending,
     })
 
+    const globalErrors = findGlobalErrors({
+        fields: fields,
+        errors: data.errors,
+    })
+
     return div(
-        {id: 'create', className: 'page create--card-create'},
+        { id: 'create', className: 'page create--card-create' },
         h1('Create a New Card for Unit'),
         cardWizard('list'),
-        form(instanceFields),
+        form({
+            fields: instanceFields,
+            errors: globalErrors,
+        }),
         a(
-            {href: '/create/card/list'},
+            { href: '/create/card/list' },
             icon('back'),
             ' Back to List of Cards'
         )

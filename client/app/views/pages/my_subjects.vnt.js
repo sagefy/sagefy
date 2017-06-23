@@ -6,5 +6,5 @@ module.exports = broker.add({
         if (e) { e.preventDefault() }
         const entityID = e.target.id
         tasks.chooseSubject(entityID)
-    }
+    },
 })

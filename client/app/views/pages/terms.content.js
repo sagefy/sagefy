@@ -1,5 +1,5 @@
 /* eslint-disable quotes, max-len */
-const {h2, p} = require('../../modules/tags')
+const { h2, p } = require('../../modules/tags')
 
 module.exports = [
     h2("General Terms"),
@@ -59,5 +59,5 @@ module.exports = [
     p("You cannot gain or attempt to gain unauthorized access to Sagefy's non-public data or infrastructure."),
     h2("DMCA"),
     p("If your copyright, patent, or trademark has been violated, contact <support@sagefy.org>."),
-    p("Notices and counter-notices must meet statutory requirements imposed by the Digital Millennium Copyright Act of 1998. ")
+    p("Notices and counter-notices must meet statutory requirements imposed by the Digital Millennium Copyright Act of 1998. "),
 ]

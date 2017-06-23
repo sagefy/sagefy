@@ -1,7 +1,7 @@
-const {div, h1, p, a, hr} = require('../../modules/tags')
+const { div, h1, p, a, hr } = require('../../modules/tags')
 const userSchema = require('../../schemas/user')
-const {extend} = require('../../modules/utilities')
-const {createFieldsData} = require('../../modules/auxiliaries')
+const { extend } = require('../../modules/utilities')
+const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
 const form = require('../components/form.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
@@ -43,7 +43,7 @@ fields.forEach((field, index) => {
 
 module.exports = (data) => {
     const user = data.users && data.users[data.currentUserID]
-    if(!user) { return spinner() }
+    if (!user) { return spinner() }
 
     const instanceFields = createFieldsData({
         schema: userSchema,
@@ -53,23 +53,31 @@ module.exports = (data) => {
             id: user.id,
             name: user.name,
             email: user.email,
-            'settings.email_frequency': user.settings.email_frequency
+            'settings.email_frequency': user.settings.email_frequency,
         }, data.formData),
-        sending: data.sending
+        sending: data.sending,
+    })
+
+    const globalErrors = findGlobalErrors({
+        fields: fields,
+        errors: data.errors,
     })
 
     return div(
-        {id: 'settings', className: 'page'},
+        { id: 'settings', className: 'page' },
         h1('Settings'),
-        form(instanceFields),
+        form({
+            fields: instanceFields,
+            errors: globalErrors,
+        }),
         hr(),
         p(a(
-            {href: '/password'},
+            { href: '/password' },
             icon('password'),
             ' Change my password.'
         )),
         p(a(
-            {href: 'https://gravatar.com'},
+            { href: 'https://gravatar.com' },
             icon('update'),
             ' Update my avatar on Gravatar.'
         ))

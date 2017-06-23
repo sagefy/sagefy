@@ -23,6 +23,10 @@ def insert_user(data, db_conn):
     """
 
     schema = user_schema
+    if 'email' in data:
+        data['email'] = data['email'].lower().strip()
+    if 'name' in data:
+        data['name'] = data['name'].lower().strip()
     data, errors = insert_document(schema, data, db_conn)
     if not errors:
         add_user_to_es(data)
@@ -36,6 +40,10 @@ def update_user(prev_data, data, db_conn):
 
     schema = user_schema
     data = omit(data, ('password',))
+    if 'email' in data:
+        data['email'] = data['email'].lower().strip()
+    if 'name' in data:
+        data['name'] = data['name'].lower().strip()
     data, errors = update_document(schema, prev_data, data, db_conn)
     if not errors:
         add_user_to_es(data)

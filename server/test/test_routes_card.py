@@ -86,12 +86,6 @@ def test_get_card(db_conn, cards_table, cards_parameters_table, units_table,
     assert response['card']['kind'] == 'video'
     # Unit
     assert response['unit']['name'] == 'Wildwood'
-    # Versions
-    assert len(response['versions']) == 2
-    assert response['versions'][0]['kind'] == 'video'
-    # Topics
-    assert len(response['topics']) == 2
-    assert response['topics'][0]['entity']['id'] == 'abcd'
     # Requires
     assert len(response['requires']) == 1
     assert response['requires'][0]['entity_id'] == 'zxyz'

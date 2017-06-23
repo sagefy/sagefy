@@ -1,14 +1,13 @@
-const {li, label, input} = require('../../modules/tags')
+const { li, label, input } = require('../../modules/tags')
 
-module.exports = (data) =>
+module.exports = data =>
     li(
         label(
             {
-                className: 'form-field--select__label' + (
+                className: `form-field--select__label${
                     data.disabled ?
                         ' form-field--select__label--disabled' :
-                        ''
-                )
+                        ''}`,
             },
             input({
                 type: data.multiple ? 'checkbox' : 'radio',

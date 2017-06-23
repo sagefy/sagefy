@@ -19,7 +19,7 @@
     "rules": {
         "semi": ["error", "never"],
         "indent": ["error", 4],
-        "max-len": ["error", 80],
+        // "max-len": ["error", 80],
         "max-depth": ["error", 4],
         // "max-lines": ["error", 300],
         "max-params": ["error", 3],
@@ -35,15 +35,9 @@
         "consistent-return": "off",
         "radix": "off",
         "no-plusplus": "off",
-        // "arrow-parens": ["error", "as-needed", { "requireForBlockBody": false }],
         "no-nested-ternary": "off",
 
         // temporary
-        "object-curly-spacing": "off",
-        "comma-dangle": "off",
-        "arrow-parens": "off",
-        "prefer-template": "off",
-        "keyword-spacing": "off",
         "no-mixed-operators": "off",
         "no-loop-func": "off",
         "no-shadow": "off",

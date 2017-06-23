@@ -12,7 +12,7 @@
 */
 
 const c = require('../../modules/content').get
-const {ul} = require('../../modules/tags')
+const { ul } = require('../../modules/tags')
 const optionTemplate = require('./form_field_select_option.tmpl')
 
 module.exports = (data) => {
@@ -23,8 +23,8 @@ module.exports = (data) => {
     const html = []
 
     html.push(ul(
-        {className: 'form-field--select__ul' +
-            (data.inline ? ' form-field--select__ul--inline' : '')
+        { className: `form-field--select__ul${
+            data.inline ? ' form-field--select__ul--inline' : ''}`,
         },
         data.options.map(o => optionTemplate({
             name: data.name,
@@ -34,7 +34,7 @@ module.exports = (data) => {
                      o.value === data.value :
                      o.value === data.default,
             label: o.label,
-            disabled: o.disabled
+            disabled: o.disabled,
         }))
     ))
 

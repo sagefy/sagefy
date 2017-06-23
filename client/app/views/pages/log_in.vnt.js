@@ -1,6 +1,6 @@
 const broker = require('../../modules/broker')
 const tasks = require('../../modules/tasks')
-const {getFormValues, parseFormValues} =
+const { getFormValues, parseFormValues } =
     require('../../modules/auxiliaries')
 const userSchema = require('../../schemas/user')
 
@@ -11,8 +11,8 @@ module.exports = broker.add({
         tasks.updateFormData(values)
         const errors = tasks.validateForm(
             values, userSchema, ['name', 'password'])
-        if(errors && errors.length) { return }
+        if (errors && errors.length) { return }
         values = parseFormValues(values)
         tasks.logInUser(values)
-    }
+    },
 })

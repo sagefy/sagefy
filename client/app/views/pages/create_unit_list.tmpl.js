@@ -1,15 +1,15 @@
-const {div, h1, h3, a, p, hr, ul, li} = require('../../modules/tags')
-const {unitWizard} = require('./create_shared.fn')
+const { div, h1, h3, a, p, hr, ul, li } = require('../../modules/tags')
+const { unitWizard } = require('./create_shared.fn')
 const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 
 module.exports = function createUnitList(data) {
-    const {units} = data.create
+    const { units } = data.create
     const selectedSubject = data.create.selectedSubject || {}
     const subjectName = selectedSubject.name || '???'
 
     return div(
-        {id: 'create', className: 'page create--unit-list'},
+        { id: 'create', className: 'page create--unit-list' },
         h1('Add Units to Subject'),
         unitWizard('list'),
 
@@ -18,13 +18,13 @@ module.exports = function createUnitList(data) {
         // TODO List of existing units (if any)
 
         units && units.length ? ul(
-            {className: 'create--unit-list__units'},
+            { className: 'create--unit-list__units' },
             units.map((unit, index) => li(
                 a(
                     {
-                        dataset: {index},
+                        dataset: { index },
                         href: '#',
-                        className: 'create--unit-list__remove'
+                        className: 'create--unit-list__remove',
                     },
                     icon('remove'),
                     ' Remove'
@@ -58,7 +58,7 @@ module.exports = function createUnitList(data) {
         a(
             {
                 href: '#',
-                className: 'create--unit-list__submit'
+                className: 'create--unit-list__submit',
             },
             icon('create'),
             ' Submit This Work'

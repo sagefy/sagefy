@@ -1,20 +1,20 @@
-const {required} = require('../modules/validations')
+const { required } = require('../modules/validations')
 
 module.exports = {
     id: {
         type: 'hidden',
-        validations: []
+        validations: [],
     },
     name: {
         type: 'text',
-        validations: [required]
+        validations: [required],
     },
     'entity.id': {
         type: 'hidden',
-        validations: [required]
+        validations: [required],
     },
     'entity.kind': {
         type: 'hidden',
-        validations: [required]
-    }
+        validations: [required],
+    },
 }

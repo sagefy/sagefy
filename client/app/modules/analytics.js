@@ -28,7 +28,7 @@ const trackEvent = (action) => {
             page: action.route,
         })
         ga('set', {
-            page: action.route
+            page: action.route,
         })
     } else {
         ga('send', {
@@ -40,4 +40,4 @@ const trackEvent = (action) => {
     }
 }
 
-module.exports = {startGoogleAnalytics, trackEvent}
+module.exports = { startGoogleAnalytics, trackEvent }

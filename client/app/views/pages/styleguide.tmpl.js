@@ -1,10 +1,10 @@
 // Note: we won't translate this copy as its dev specific
-const {div, h1, h2, p} = require('../../modules/tags')
+const { div, h1, h2, p } = require('../../modules/tags')
 const data = require('./styleguide.data.json')
 
 module.exports = () =>
     div(
-        {id: 'styleguide', className: 'page'},
+        { id: 'styleguide', className: 'page' },
         h1(
             'Style Guide & Component Library'
         ),
@@ -20,9 +20,9 @@ module.exports = () =>
 
 const writeStyleguide = () => {
     const tags = []
-    Object.keys(data).forEach(title => {
+    Object.keys(data).forEach((title) => {
         const o = data[title]
-        if(o) {
+        if (o) {
             tags.push(
                 h2(title),
                 o.description ? p(o.description) : null

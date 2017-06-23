@@ -1,6 +1,6 @@
 const broker = require('../../modules/broker')
 const tasks = require('../../modules/tasks')
-const {getFormValues, parseFormValues} = require('../../modules/auxiliaries')
+const { getFormValues, parseFormValues } = require('../../modules/auxiliaries')
 
 module.exports = broker.add({
     'submit #post-form.create form'(e, el) {

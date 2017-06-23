@@ -1,13 +1,13 @@
 /* eslint-disable no-underscore-dangle */
-const {div, h1, form, input, button, img,
- ul, li, a, p, h3, span, br} = require('../../modules/tags')
+const { div, h1, form, input, button, img,
+ ul, li, a, p, h3, span, br } = require('../../modules/tags')
 const spinner = require('../components/spinner.tmpl')
 const timeago = require('../components/timeago.tmpl')
 const icon = require('../components/icon.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
-const {ucfirst} = require('../../modules/auxiliaries')
+const { ucfirst } = require('../../modules/auxiliaries')
 
 // TODO-2 when receiving ?kind={kind}, then search using that as well.
 
@@ -19,23 +19,23 @@ module.exports = (data) => {
         type: 'text',
         placeholder: 'Search',
         name: 'search',
-        size: 40
+        size: 40,
     }
 
     inputOpts.value = data.searchQuery || null
 
     return div(
-        {id: 'search', className: 'page'},
+        { id: 'search', className: 'page' },
         h1('Search'),
         // TODO-2 add search filtering / ordering
         form(
-            {className: 'form--horizontal'},
+            { className: 'form--horizontal' },
             div(
-                {className: 'form-field form-field--search'},
+                { className: 'form-field form-field--search' },
                 input(inputOpts)
             ),
             button(
-                {type: 'submit'},
+                { type: 'submit' },
                 icon('search'),
                 ' Search'
             )
@@ -43,7 +43,7 @@ module.exports = (data) => {
         loading ? spinner() : null,
         data.searchResults && data.searchResults.length ? ul(
             data.searchResults.map(result => li(
-                r[result._type + 'Result'](result, asLearner)
+                r[`${result._type}Result`](result, asLearner)
             ))
         ) : null,
         data.searchResults && data.searchResults.length === 0 ?
@@ -56,71 +56,71 @@ module.exports = (data) => {
 
 const r = {}
 
-r.userResult = (result) =>
+r.userResult = result =>
     h3(
-        span({className: 'search__label'}, icon('user'), ' User'),
+        span({ className: 'search__label' }, icon('user'), ' User'),
         ' ',
         a(
-            {href: `/users/${result._source.id}`},
-            img({className: 'avatar', src: result._source.avatar}),
+            { href: `/users/${result._source.id}` },
+            img({ className: 'avatar', src: result._source.avatar }),
             ' ',
             result._source.name
         )
     )
 
-r.topicResult = (result) =>
+r.topicResult = result =>
     [
-        timeago(result._source.created, {right: true}),
+        timeago(result._source.created, { right: true }),
         h3(
-            span({className: 'search__label'}, icon('topic'), ' Topic'),
+            span({ className: 'search__label' }, icon('topic'), ' Topic'),
             ' ',
             a(
-                {href: `/topics/${result._source.id}`},
+                { href: `/topics/${result._source.id}` },
                 result._source.name
             )
         ),
         result._source.entity.name ? a(
             {
                 href:
-                    `/${result._source.entity.kind}/${result._source.entity.id}`
+                    `/${result._source.entity.kind}/${result._source.entity.id}`,
             },
             result._source.entity.name
-        ) : null
+        ) : null,
         // TODO-2 no of posts     ???
     ]
 
 r.postResult = (result) => {
     const href = `/topics/${result._source.topic_id}#${result._source.id}`
     return [
-        timeago(result._source.created, {right: true}),
+        timeago(result._source.created, { right: true }),
         h3(
-            span({className: 'search__label'},
+            span({ className: 'search__label' },
                 icon('post'), ' ', ucfirst(result._source.kind)),
             ' by ',
             a(
-                {href: `/users/${result._source.user.id}`},
+                { href: `/users/${result._source.user.id}` },
                 result._source.user.name
             )
         ),
         ' in topic: ',
         result._source.topic ? a(
-            {href: `/topics/${result._source.topic.id}`},
+            { href: `/topics/${result._source.topic.id}` },
             result._source.topic.name
         ) : null,
         br(),
         result._source.body,
         ' ',
         a(
-            {href},
+            { href },
             'To Post ',
             icon('next')
-        )
+        ),
         // TODO-3 entity kind       result._source.topic_id > ????
         // TODO-3 entity name       result._source.topic_id > ????
     ]
 }
 
-r.cardResult = (result) =>
+r.cardResult = result =>
     previewCardHead({
         url: `/cards/${result._source.entity_id}`,
         name: result._source.name,
@@ -130,7 +130,7 @@ r.cardResult = (result) =>
         // TODO-3 contents    ???
     })
 
-r.unitResult = (result) =>
+r.unitResult = result =>
     previewUnitHead({
         url: `/units/${result._source.entity_id}`,
         name: result._source.name,
@@ -144,7 +144,7 @@ r.subjectResult = (result, asLearner = false) =>
             {
                 id: result._source.entity_id,
                 href: '#',
-                className: 'add-to-my-subjects'
+                className: 'add-to-my-subjects',
             },
             icon('create'),
             ' Add to My Subjects'
@@ -164,5 +164,5 @@ r.subjectResult = (result, asLearner = false) =>
             },
             icon('unit'),
             ' View Units'
-        ) : null
+        ) : null,
     ]

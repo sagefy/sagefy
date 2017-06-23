@@ -41,7 +41,6 @@ def mark_notice_route(request, notice_id):
         return abort(404)
     if notice['user_id'] != current_user['id']:
         return abort(403)
-
     if 'read' not in request['params']:
         errors = [{
             'name': 'read',
@@ -56,5 +55,4 @@ def mark_notice_route(request, notice_id):
             'errors': errors,
             'ref': 'qR4CBtcfcYfWDTqK9JOXXLhO',
         }
-
     return 200, {'notice': deliver_notice(notice, access='private')}

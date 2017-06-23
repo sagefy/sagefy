@@ -6,13 +6,13 @@ const putUnitsInLayers = (units) => {
     let us = units.map(unit => { // eslint-disable-line
         return {
             id: unit.entity_id,
-            requires: unit.require_ids.filter((id) => ids.indexOf(id) > -1),
+            requires: unit.require_ids.filter(id => ids.indexOf(id) > -1),
         }
     })
     const layers = []
     let layer = 0
     while (us.length) {
-        Object.keys(us).forEach(i => {
+        Object.keys(us).forEach((i) => {
             const u = us[i]
             if (!u.requires.length) {
                 layers[layer] = layers[layer] || []
@@ -23,9 +23,9 @@ const putUnitsInLayers = (units) => {
                 })
             }
         })
-        us = us.filter((u) => u.requires.length)
-        layers[layer].forEach(u => {
-            us.forEach(o => {
+        us = us.filter(u => u.requires.length)
+        layers[layer].forEach((u) => {
+            us.forEach((o) => {
                 const index = o.requires.indexOf(u.id)
                 if (index > -1) {
                     o.requires.splice(index, 1)
@@ -62,7 +62,7 @@ const findUnit = (layers, id) => {
 const findLayer = (layers, id) => {
     let output
     layers.forEach((layer, i) => {
-        layer.forEach(unit => {
+        layer.forEach((unit) => {
             if (unit.id === id) {
                 output = i
                 return
@@ -77,5 +77,5 @@ module.exports = {
     orderLayers,
     calculatePoints,
     findUnit,
-    findLayer
+    findLayer,
 }

@@ -1,34 +1,34 @@
-const {dispatch, getState} = require('../modules/store')
+const { dispatch, getState } = require('../modules/store')
 const tasks = require('../modules/tasks')
-const {matchesRoute, ucfirst} = require('../modules/auxiliaries')
+const { matchesRoute, ucfirst } = require('../modules/auxiliaries')
 
 const routes = [
-    {path: '/settings', task: 'openSettingsRoute'},
-    {path: '/notices', task: 'listNotices'},
-    {path: '/users/{id}', task: 'openProfileRoute'},
-    {path: '/my_subjects', task: 'listUserSubjects'},
-    {path: '/follows', task: 'listFollows'},
-    {path: '/units/{id}', task: 'openUnitRoute'},
-    {path: '/subjects/{id}', task: 'openSubjectRoute'},
-    {path: '/cards/{id}', task: 'openCardRoute'},
-    {path: '/{kind}s/{id}/versions', task: 'openVersionsRoute'},
-    {path: '/topics/create', task: 'openCreateTopic'},
-    {path: '/topics/{id}/update', task: 'openUpdateTopic'},
-    {path: '/topics/{id}', task: 'openTopicRoute'},
-    {path: '/subjects/{id}/tree', task: 'openTreeRoute'},
-    {path: '/subjects/{id}/choose_unit', task: 'openChooseUnit'},
-    {path: '/cards/{id}/learn', task: 'openLearnCard'},
-    {path: '/topics/{id}/posts/{id}/update', task: 'openUpdatePost'},
-    {path: '/search', task: 'openSearch'},
-    {path: '/recommended_subjects', task: 'getRecommendedSubjects'},
-    {path: '/create/unit/find', task: 'openFindSubjectForUnits'},
+    { path: '/settings', task: 'openSettingsRoute' },
+    { path: '/notices', task: 'listNotices' },
+    { path: '/users/{id}', task: 'openProfileRoute' },
+    { path: '/my_subjects', task: 'listUserSubjects' },
+    { path: '/follows', task: 'listFollows' },
+    { path: '/units/{id}', task: 'openUnitRoute' },
+    { path: '/subjects/{id}', task: 'openSubjectRoute' },
+    { path: '/cards/{id}', task: 'openCardRoute' },
+    { path: '/{kind}s/{id}/versions', task: 'openVersionsRoute' },
+    { path: '/topics/create', task: 'openCreateTopic' },
+    { path: '/topics/{id}/update', task: 'openUpdateTopic' },
+    { path: '/topics/{id}', task: 'openTopicRoute' },
+    { path: '/subjects/{id}/tree', task: 'openTreeRoute' },
+    { path: '/subjects/{id}/choose_unit', task: 'openChooseUnit' },
+    { path: '/cards/{id}/learn', task: 'openLearnCard' },
+    { path: '/topics/{id}/posts/{id}/update', task: 'openUpdatePost' },
+    { path: '/search', task: 'openSearch' },
+    { path: '/recommended_subjects', task: 'getRecommendedSubjects' },
+    { path: '/create/unit/find', task: 'openFindSubjectForUnits' },
 ]
 
 module.exports = tasks.add({
     onRoute(path) {
-        dispatch({type: 'RESET_FORM_DATA'})
-        dispatch({type: 'RESET_ERRORS'})
-        dispatch({type: 'RESET_SEARCH'})
+        dispatch({ type: 'RESET_FORM_DATA' })
+        dispatch({ type: 'RESET_ERRORS' })
+        dispatch({ type: 'RESET_SEARCH' })
         for (const route of routes) {
             const args = matchesRoute(path, route.path)
             if (args) {
@@ -46,17 +46,14 @@ module.exports = tasks.add({
     },
 
     openProfileRoute(id) {
-        return tasks.getUser(id, {
-            avatar: 12 * 10,
-            subjects: true,
-            follows: true,
-            posts: true,
-        })
+        return tasks.getUserForProfile(id, { avatar: 12 * 10 })
     },
 
     openUnitRoute(id) {
         return Promise.all([
             tasks.getUnit(id),
+            tasks.listUnitVersions(id),
+            tasks.listTopics({ entity_id: id }),
             tasks.askFollow(id),
         ])
     },
@@ -64,6 +61,8 @@ module.exports = tasks.add({
     openSubjectRoute(id) {
         return Promise.all([
             tasks.getSubject(id),
+            tasks.listSubjectVersions(id),
+            tasks.listTopics({ entity_id: id }),
             tasks.askFollow(id),
         ])
     },
@@ -71,6 +70,8 @@ module.exports = tasks.add({
     openCardRoute(id) {
         return Promise.all([
             tasks.getCard(id),
+            tasks.listCardVersions(id),
+            tasks.listTopics({ entity_id: id }),
             tasks.askFollow(id),
         ])
     },
@@ -80,7 +81,7 @@ module.exports = tasks.add({
     },
 
     openCreateTopic() {
-        const {kind, id} = getState().routeQuery
+        const { kind, id } = getState().routeQuery
         return tasks[`get${ucfirst(kind)}`](id)
     },
 
@@ -114,11 +115,11 @@ module.exports = tasks.add({
     openSearch() {
         const q = getState().routeQuery.q
         if (q) {
-            return tasks.search({q})
+            return tasks.search({ q })
         }
     },
 
     openFindSubjectForUnits() {
         return tasks.getMyRecentSubjects()
-    }
+    },
 })

@@ -4,10 +4,6 @@ from framework.session import get_current_user, log_in_user, log_out_user
 from database.user import get_user, insert_user, deliver_user, get_avatar, \
     update_user, is_password_valid, get_email_token, is_valid_token, \
     update_user_password, list_users_by_user_ids
-from database.follow import list_follows, deliver_follow
-from database.user_subjects import list_user_subjects_entity
-from database.post import list_posts, deliver_post
-from database.subject import deliver_subject
 
 
 def _log_in(user):
@@ -47,40 +43,15 @@ def get_user_route(request, user_id):
 
     db_conn = request['db_conn']
     user = get_user({'id': user_id}, db_conn)
-    current_user = get_current_user(request)
-    # Posts if in request params
-    # Subjects if in request params and allowed
-    # Follows if in request params and allowed
     if not user:
         return abort(404)
-
-    data = {}
-    data['user'] = deliver_user(user,
-                                access='private'
-                                if current_user
-                                and user['id'] == current_user['id']
-                                else None)
-
-    # TODO-2 SPLITUP create new endpoints for these instead
-    if 'posts' in request['params']:
-        data['posts'] = [deliver_post(post) for post in
-                         list_posts({'user_id': user['id']}, db_conn)]
-    if ('subjects' in request['params']
-            and user['settings']['view_subjects'] == 'public'):
-        data['subjects'] = [
-            deliver_subject(subject)
-            for subject in list_user_subjects_entity(
-                user['id'],
-                {},
-                db_conn)]
-    if ('follows' in request['params']
-            and user['settings']['view_follows'] == 'public'):
-        data['follows'] = [deliver_follow(follow) for follow in
-                           list_follows({'user_id': user['id']}, db_conn)]
+    current_user = get_current_user(request)
+    access = 'private' if (current_user and
+                           user['id'] == current_user['id']) else None
+    data = {'user': deliver_user(user, access)}
     if 'avatar' in request['params']:
         size = int(request['params']['avatar']) or None
         data['avatar'] = get_avatar(user['email'], size)
-
     return 200, data
 
 
@@ -134,10 +105,9 @@ def log_in_route(request):
     db_conn = request['db_conn']
     name = request['params'].get('name') or ''
     name = name.lower().strip()
-
     user = get_user({'name': name}, db_conn)
     if not user:
-        user = get_user({'email': request['params'].get('name')}, db_conn)
+        user = get_user({'email': name}, db_conn)
     if not user:
         return 404, {
             'errors': [{

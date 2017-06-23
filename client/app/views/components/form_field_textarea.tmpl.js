@@ -1,6 +1,6 @@
-const {textarea} = require('../../modules/tags')
+const { textarea } = require('../../modules/tags')
 
-module.exports = (data) =>
+module.exports = data =>
     textarea({
         id: `ff-${data.name}`,
         name: data.name,

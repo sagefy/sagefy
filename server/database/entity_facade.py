@@ -3,9 +3,9 @@ from modules.memoize_redis import memoize_redis
 from modules.util import omit
 from database.entity_base import list_by_entity_ids, get_version, \
     start_accepted_query
-from database.unit import deliver_unit, update_unit
-from database.subject import deliver_subject, update_subject
-from database.card import deliver_card, update_card
+from database.unit import update_unit
+from database.subject import update_subject
+from database.card import update_card
 
 # if something breaks the import loop, it would likely be one
 # of these files:
@@ -149,15 +149,6 @@ def list_units_in_subject(main_subject, db_conn):
     # If we already have it stored, use that
     key = 'subject_{id}'.format(id=main_subject['entity_id'])
     return [data for data in memoize_redis(key, _)]
-
-
-def deliver_entity_by_kind(kind, entity):
-    if kind == 'card':
-        return deliver_card(entity, 'view')
-    if kind == 'unit':
-        return deliver_unit(entity, 'view')
-    if kind == 'subject':
-        return deliver_subject(entity, 'view')
 
 
 def get_entity_status(current_status, votes):

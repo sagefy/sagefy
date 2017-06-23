@@ -1,4 +1,4 @@
-const {div, p, a} = require('../../modules/tags')
+const { div, p, a } = require('../../modules/tags')
 const followButton = require('../components/follow_button.tmpl')
 const entityHeader = require('../components/entity_header.tmpl')
 const entityTopics = require('../components/entity_topics.tmpl')
@@ -12,25 +12,30 @@ module.exports = (data) => {
     const id = data.routeArgs[0]
     const subject = data.subjects && data.subjects[id]
 
-    if(!subject) { return spinner() }
+    if (!subject) { return spinner() }
 
     // const following = data.follows &&
     //            data.follows.find((f) => f.entity.id === subject.entity_id)
 
+    const subjectVersions = data.subjectVersions && data.subjectVersions[id]
+    const topics = Object.keys(data.topics)
+        .filter(topicId => data.topics[topicId].entity.id === id)
+        .map(topicId => data.topics[topicId])
+
     return div(
-        {id: 'subject', className: 'page'},
+        { id: 'subject', className: 'page' },
 
         followButton('subject', subject.entity_id, data.follows),
         entityHeader('subject', subject),
 
-        p({className: 'subject__body'}, subject.body),
+        p({ className: 'subject__body' }, subject.body),
         previewSubjectContent({
             status: subject.status,
             available: subject.available,
             created: subject.created,
             language: subject.language,
             members: subject.members,  // units and subjects: kind url name id
-            units: subject.units.map(unit => ({
+            units: subject.units && subject.units.map(unit => ({
                 name: unit.name,
                 url: `/units/${unit.entity_id}`,
             })),  // just a list of units: url name id
@@ -45,13 +50,13 @@ module.exports = (data) => {
         ), */
         p(
             a(
-                {href: `/subjects/${subject.entity_id}/tree`},
+                { href: `/subjects/${subject.entity_id}/tree` },
                 icon('subject'),
                 ' View Unit Tree'
             )
         ),
 
-        entityTopics('subject', subject.entity_id, subject.topics),
-        entityVersions('subject', subject.entity_id, subject.versions)
+        entityTopics('subject', subject.entity_id, topics),
+        entityVersions('subject', subject.entity_id, subjectVersions)
     )
 }

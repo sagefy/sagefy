@@ -74,12 +74,6 @@ def test_get_subject(db_conn,
     # Model
     assert response['subject']['entity_id'] == 'zytx'
     assert response['subject']['name'] == 'Wildwood'
-    # Topics
-    assert len(response['topics']) == 2
-    assert response['topics'][0]['entity']['kind'] == 'subject'
-    # Versions
-    assert len(response['versions']) == 2
-    assert response['versions'][1]['name'] == 'Umberwood'
     # Units
     assert len(response['units']) == 1
     assert response['units'][0]['entity_id'] == 'W'

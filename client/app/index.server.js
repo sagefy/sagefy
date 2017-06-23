@@ -1,8 +1,8 @@
 const express = require('express')
 const toHTML = require('vdom-to-html')
 const template = require('./views/index.tmpl')
-const {route} = require('./modules/route_actions')
-const {dispatch, getState, setReducer, resetState} = require('./modules/store')
+const { route } = require('./modules/route_actions')
+const { dispatch, getState, setReducer, resetState } = require('./modules/store')
 const reducer = require('./reducers/index')
 const cookieParser = require('cookie-parser')
 
@@ -40,7 +40,7 @@ app.get(/.*/, (request, response) => {
     const path = request.originalUrl
     console.log(path) // eslint-disable-line
     resetState() // make sure it doesn't use a pre-existing state
-    if(request.cookies) {
+    if (request.cookies) {
         dispatch({
             type: 'SET_CURRENT_USER_ID',
             currentUserID: request.cookies.currentUserID,

@@ -3,6 +3,8 @@ layout: docs
 title: What is Sagefy?
 ---
 
+_Learn anything, customized for you. And always free._
+
 **Sagefy is an open-content adaptive learning platform.**
 
 Sagefy is an _adaptive learning system_. Instead of planned and structured courses, small objects of learning content are joined through relationships. Adaptive learning algorithms decide optimal ordering. Sagefy optimizes for learner knowledge and goals. No more learning things you already know. No more learning things you aren’t ready for. Sagefy stays focused on what you want to learn.

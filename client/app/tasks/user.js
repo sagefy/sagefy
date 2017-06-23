@@ -1,13 +1,13 @@
-const {dispatch} = require('../modules/store')
+const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     createUser(data) {
         dispatch({
-            type: 'SET_SENDING_ON'
+            type: 'SET_SENDING_ON',
         })
-        dispatch({type: 'CREATE_USER'})
+        dispatch({ type: 'CREATE_USER' })
         return request({
             method: 'POST',
             url: '/s/users',
@@ -24,7 +24,7 @@ module.exports = tasks.add({
                 // Hard redirect to get the HTTP_ONLY cookie
                 // TODO-1 if subject_id is a param, auto add to user's subjects
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
             .catch((errors) => {
@@ -34,16 +34,16 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
     },
 
     updateUser(data) {
         dispatch({
-            type: 'SET_SENDING_ON'
+            type: 'SET_SENDING_ON',
         })
-        dispatch({type: 'UPDATE_USER', id: data.id})
+        dispatch({ type: 'UPDATE_USER', id: data.id })
         return request({
             method: 'PUT',
             url: `/s/users/${data.id}`,
@@ -56,7 +56,7 @@ module.exports = tasks.add({
                     message: 'update user success',
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
             .catch((errors) => {
@@ -66,13 +66,13 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
     },
 
     getCurrentUser() {
-        dispatch({type: 'GET_CURRENT_USER'})
+        dispatch({ type: 'GET_CURRENT_USER' })
         return request({
             method: 'GET',
             url: '/s/users/current',
@@ -97,8 +97,26 @@ module.exports = tasks.add({
             })
     },
 
+    getUserForProfile(id, opts = {}) {
+        return tasks.getUser(id, opts)
+            /* .then((/userResponse) => {
+                // const {user} = userResponse
+                const calls = []
+                /*
+                TODO-1 update so that these stores are by user_id
+                otherwise there's no way to tell the difference...
+                if (user.settings.view_follows === 'public') {
+                    calls.push(tasks.listFollows(user.id))
+                }
+                if (user.settings.view_subjects === 'public') {
+                    calls.push(tasks.listUserSubjects(user.id))
+                } /
+                return Promise.all(calls)
+            }) */
+    },
+
     getUser(id, opts = {}) {
-        dispatch({type: 'GET_USER', id})
+        dispatch({ type: 'GET_USER', id })
         return request({
             method: 'GET',
             url: `/s/users/${id}`,
@@ -106,14 +124,13 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 const user = response.user
-                ;['avatar', 'posts', 'subjects', 'follows'].forEach((t) => {
-                    if (response[t]) { user[t] = response[t] }
-                })
+                if (response.avatar) { user.avatar = response.avatar }
                 dispatch({
                     type: 'ADD_USER',
                     message: 'get user success',
                     user,
                 })
+                return response
             })
             .catch((errors) => {
                 dispatch({
@@ -126,25 +143,25 @@ module.exports = tasks.add({
 
     listUsers(userIds, opts = {}) {
         const size = opts.size || 48
-        dispatch({type: 'LIST_USERS', userIds, size})
+        dispatch({ type: 'LIST_USERS', userIds, size })
         return request({
             method: 'GET',
             url: '/s/users',
             data: {
                 user_ids: userIds.join(','),
-                size
+                size,
             },
         })
             .then((response) => {
-                const {users} = response
-                users.forEach(user => {
+                const { users } = response
+                users.forEach((user) => {
                     dispatch({
                         type: 'ADD_USER',
                         message: 'get user success',
                         user,
                     })
                 })
-                const {avatars} = response
+                const { avatars } = response
                 dispatch({
                     type: 'ADD_USER_AVATARS',
                     avatars,
@@ -161,9 +178,9 @@ module.exports = tasks.add({
 
     logInUser(data) {
         dispatch({
-            type: 'SET_SENDING_ON'
+            type: 'SET_SENDING_ON',
         })
-        dispatch({type: 'LOG_IN_USER'})
+        dispatch({ type: 'LOG_IN_USER' })
         return request({
             method: 'POST',
             url: '/s/sessions',
@@ -179,7 +196,7 @@ module.exports = tasks.add({
                 // TODO-2 move to listener
                 window.location = '/my_subjects'
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
             .catch((errors) => {
@@ -189,16 +206,16 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
     },
 
     logOutUser() {
         dispatch({
-            type: 'SET_SENDING_ON'
+            type: 'SET_SENDING_ON',
         })
-        dispatch({type: 'LOG_OUT_USER'})
+        dispatch({ type: 'LOG_OUT_USER' })
         return request({
             method: 'DELETE',
             url: '/s/sessions',
@@ -212,7 +229,7 @@ module.exports = tasks.add({
                 // Hard redirect to delete the HTTP_ONLY cookie
                 // TODO-2 move to listener
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
             .catch((errors) => {
@@ -222,16 +239,16 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
     },
 
     getUserPasswordToken(data) {
         dispatch({
-            type: 'SET_SENDING_ON'
+            type: 'SET_SENDING_ON',
         })
-        dispatch({type: 'GET_PASSWORD_TOKEN'})
+        dispatch({ type: 'GET_PASSWORD_TOKEN' })
         return request({
             method: 'POST',
             url: '/s/password_tokens',
@@ -244,7 +261,7 @@ module.exports = tasks.add({
                     message: 'get password token success',
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
             .catch((errors) => {
@@ -254,16 +271,16 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
     },
 
     createUserPassword(data) {
         dispatch({
-            type: 'SET_SENDING_ON'
+            type: 'SET_SENDING_ON',
         })
-        dispatch({type: 'CREATE_PASSWORD'})
+        dispatch({ type: 'CREATE_PASSWORD' })
         return request({
             method: 'POST',
             url: `/s/users/${data.id}/password`,
@@ -279,7 +296,7 @@ module.exports = tasks.add({
                 // TODO-2 move to listener
                 window.location = '/my_subjects'
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
             .catch((errors) => {
@@ -289,8 +306,8 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
-    }
+    },
 })

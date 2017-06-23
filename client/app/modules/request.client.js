@@ -1,6 +1,6 @@
-const {parseJSON, isString, convertDataToGet} = require('./utilities')
+const { parseJSON, isString, convertDataToGet } = require('./utilities')
 
-module.exports = function ajax({method, url, data}) {
+module.exports = function ajax({ method, url, data }) {
     method = method.toUpperCase()
     if (method === 'GET') {
         url = convertDataToGet(url, data)

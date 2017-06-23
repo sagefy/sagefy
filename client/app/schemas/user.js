@@ -1,41 +1,41 @@
-const {required, email, minlength, isOneOf} = require('../modules/validations')
+const { required, email, minlength, isOneOf } = require('../modules/validations')
 
 module.exports = {
     name: {
         type: 'text',
         validations: [
-            required
-        ]
+            required,
+        ],
     },
     email: {
         type: 'email',
         validations: [
             required,
-            email
-        ]
+            email,
+        ],
     },
     password: {
         type: 'password',
         validations: [
             required,
-            [minlength, 8]
-        ]
+            [minlength, 8],
+        ],
     },
     'settings.email_frequency': {
         type: 'select',
         multiple: false,
         options: [{
-            value: 'immediate'
+            value: 'immediate',
         }, {
-            value: 'daily'
+            value: 'daily',
         }, {
-            value: 'weekly'
+            value: 'weekly',
         }, {
-            value: 'never'
+            value: 'never',
         }],
         validations: [
             required,
-            [isOneOf, 'immediate', 'daily', 'weekly', 'never']
-        ]
-    }
+            [isOneOf, 'immediate', 'daily', 'weekly', 'never'],
+        ],
+    },
 }

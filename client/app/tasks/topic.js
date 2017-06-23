@@ -1,14 +1,14 @@
-const {dispatch} = require('../modules/store')
+const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
-const {shallowCopy} = require('../modules/utilities')
+const { shallowCopy } = require('../modules/utilities')
 
 module.exports = tasks.add({
     getTopic(id) {
-        dispatch({type: 'GET_TOPIC', id})
+        dispatch({ type: 'GET_TOPIC', id })
         return request({
             method: 'GET',
-            url: `/s/topics/${id}`
+            url: `/s/topics/${id}`,
         })
             .then((response) => {
                 dispatch({
@@ -28,20 +28,47 @@ module.exports = tasks.add({
             })
     },
 
+    listTopics(opts = {}) {
+        dispatch({ type: 'LIST_TOPICS', opts })
+        return request({
+            method: 'GET',
+            url: '/s/topics',
+            data: opts,
+        })
+        .then((response) => {
+            response.topics.forEach((topic) => {
+                dispatch({
+                    type: 'ADD_TOPIC',
+                    message: 'create topic success',
+                    topic: topic,
+                    id: topic.id,
+                })
+            })
+            return response
+        })
+        .catch((errors) => {
+            dispatch({
+                type: 'SET_ERRORS',
+                message: 'list topics failure',
+                errors,
+            })
+        })
+    },
+
     createTopicWithPost(data) {
         return tasks.createTopic(data)
             .then((response) => {
                 const post = shallowCopy(data.post)
                 post.topic_id = response.topic.id
-                return tasks.createPost({post})
+                return tasks.createPost({ post })
             })
     },
 
     createTopic(data) {
         dispatch({
-            type: 'SET_SENDING_ON'
+            type: 'SET_SENDING_ON',
         })
-        dispatch({type: 'CREATE_TOPIC'})
+        dispatch({ type: 'CREATE_TOPIC' })
         return request({
             method: 'POST',
             url: '/s/topics',
@@ -55,7 +82,7 @@ module.exports = tasks.add({
                     id: response.topic.id,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
                 return response
             })
@@ -66,14 +93,14 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
     },
 
     updateTopic(data) {
-        dispatch({type: 'SET_SENDING_ON'})
-        dispatch({type: 'UPDATE_TOPIC'})
+        dispatch({ type: 'SET_SENDING_ON' })
+        dispatch({ type: 'UPDATE_TOPIC' })
         return request({
             method: 'PUT',
             url: `/s/topics/${data.topic.id}`,
@@ -88,7 +115,7 @@ module.exports = tasks.add({
                 })
                 tasks.route(`/topics/${data.topic.id}`)
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
             .catch((errors) => {
@@ -98,8 +125,8 @@ module.exports = tasks.add({
                     errors,
                 })
                 dispatch({
-                    type: 'SET_SENDING_OFF'
+                    type: 'SET_SENDING_OFF',
                 })
             })
-    }
+    },
 })

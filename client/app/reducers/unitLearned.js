@@ -1,7 +1,7 @@
-const {shallowCopy} = require('../modules/utilities')
+const { shallowCopy } = require('../modules/utilities')
 
-module.exports = function unitLearned(state = {}, action = {type: ''}) {
-    if(action.type === 'ADD_UNIT_LEARNED') {
+module.exports = function unitLearned(state = {}, action = { type: '' }) {
+    if (action.type === 'ADD_UNIT_LEARNED') {
         state = shallowCopy(state)
         state[action.unit_id] = action.learned
         return state

@@ -1,38 +1,38 @@
-const {required} = require('../modules/validations')
+const { required } = require('../modules/validations')
 
 module.exports = {
     id: {
         type: 'hidden',
-        validations: []
+        validations: [],
     },
     user_id: {
         type: 'hidden',
-        validations: []
+        validations: [],
     },
     topic_id: {
         type: 'hidden',
-        validations: []
+        validations: [],
     },
     body: {
         type: 'textarea',
         validations: [
-            required
-        ]
+            required,
+        ],
     },
     kind: {
         type: 'select',
         options: [
-            {value: 'post'},
-            {value: 'proposal'},
-            {value: 'vote'}
+            { value: 'post' },
+            { value: 'proposal' },
+            { value: 'vote' },
         ],
         default: 'post',
         validations: [
-            required
-        ]
+            required,
+        ],
     },
     replies_to_id: {
         type: 'hidden',
-        validations: []
-    }
+        validations: [],
+    },
 }

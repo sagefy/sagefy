@@ -1,14 +1,13 @@
-const {span} = require('../../modules/tags')
-const {timeAgo} = require('../../modules/auxiliaries')
+const { span } = require('../../modules/tags')
+const { timeAgo } = require('../../modules/auxiliaries')
 
-module.exports = (time, {right} = {}) =>
+module.exports = (time, { right } = {}) =>
     span(
         {
-            className: 'timeago' + (
+            className: `timeago${
                 right ?
                     ' timeago--right' :
-                    ''
-            )
+                    ''}`,
         },
         timeAgo(time)
     )

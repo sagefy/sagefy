@@ -13,10 +13,6 @@ def encrypt_password(value):
     return value
 
 
-def lowercase_and_strip(s):
-    return s.lower().strip()
-
-
 schema = extend({}, default, {
     'tablename': 'users',
     'fields': {
@@ -27,12 +23,10 @@ schema = extend({}, default, {
         },
         'name': {
             'validate': (is_required, is_string,),
-            'bundle': lowercase_and_strip,
             'unique': True,
         },
         'email': {
             'validate': (is_required, is_email,),
-            'bundle': lowercase_and_strip,
             'unique': True,
             'access': ('private',),
         },
@@ -44,7 +38,6 @@ schema = extend({}, default, {
         'settings': {
             'validate': (is_required,),
             'default': {},
-            'access': ('private',),
             'embed': {
                 'email_frequency': {
                     'validate': (is_required, is_string, (
@@ -57,14 +50,12 @@ schema = extend({}, default, {
                     'validate': (is_required, is_string, (
                         is_one_of, 'public', 'private'
                     )),
-                    'access': ('private',),
                     'default': 'private',
                 },
                 'view_follows': {
                     'validate': (is_required, is_string, (
                         is_one_of, 'public', 'private'
                     )),
-                    'access': ('private',),
                     'default': 'private',
                 },
             }

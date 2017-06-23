@@ -12,8 +12,8 @@ const read = (s) => {
 
 // Get the cookie value at a particular key.
 const get = (key) => {
-    if(typeof document === 'undefined') { return null }
-    const name = key + '='
+    if (typeof document === 'undefined') { return null }
+    const name = `${key}=`
     const cookies = document.cookie.split(';')
     for (let c of cookies) {
         c = c.trim()
@@ -26,12 +26,12 @@ const get = (key) => {
 
 // Set the cookie value at a specific key.
 const set = (key, value, time = 31556926) => {
-    if(typeof document === 'undefined') { return }
-    if(value === null || value === undefined) { return }
+    if (typeof document === 'undefined') { return }
+    if (value === null || value === undefined) { return }
     document.cookie = [
-        encode(key), '=', '' + value,
+        encode(key), '=', `${value}`,
         ';path=/',
-        `;max-age=${time}`
+        `;max-age=${time}`,
     ].join('')
     return document.cookie
 }

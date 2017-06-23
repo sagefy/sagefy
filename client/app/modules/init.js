@@ -5,16 +5,16 @@ const createElement = require('virtual-dom/create-element')
 const virtualize = require('vdom-virtualize')
 
 const store = require('./store')
-const {getState} = require('./store')
+const { getState } = require('./store')
 const broker = require('./broker')
 
 module.exports = function init(options) {
-    const {view, el} = options
+    const { view, el } = options
 
     let tree
     let root
 
-    if(el.innerHTML.trim()) {
+    if (el.innerHTML.trim()) {
         tree = virtualize(el)
         root = el.children[0]
     } else {

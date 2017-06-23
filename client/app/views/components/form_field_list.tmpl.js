@@ -1,11 +1,11 @@
-const {table, thead, tfoot, tbody, tr, th, td, a} =
+const { table, thead, tfoot, tbody, tr, th, td, a } =
     require('../../modules/tags')
-const {ucfirst} = require('../../modules/auxiliaries')
+const { ucfirst } = require('../../modules/auxiliaries')
 const formFieldInput = require('./form_field_input.tmpl')
 const formFieldSelect = require('./form_field_select.tmpl')
 const icon = require('./icon.tmpl')
 
-const field = ({name, index, col, row, lock}) => {
+const field = ({ name, index, col, row, lock }) => {
     if (lock) { return row[col.name] }
 
     if (col.type === 'select') {
@@ -46,11 +46,11 @@ module.exports = (data) => {
     const columns = data.columns || []
 
     return table(
-        {attributes: {'data-name': data.name}},
+        { attributes: { 'data-name': data.name } },
         thead(
             tr(
                 columns.map(col => th(
-                    {attributes: {'data-col': col.name}},
+                    { attributes: { 'data-col': col.name } },
                     ucfirst(col.name)
                 )),
                 // TODO-2 th()  // For reordering
@@ -60,9 +60,9 @@ module.exports = (data) => {
         tfoot(
             tr(
                 td(
-                    {colSpan: columns.length + 1},  // TODO-2 +2 reordering
+                    { colSpan: columns.length + 1 },  // TODO-2 +2 reordering
                     a(
-                        {href: '#', className: 'form-field--list__add-row'},
+                        { href: '#', className: 'form-field--list__add-row' },
                         icon('create'),
                         ' Add Row'
                     )
@@ -93,8 +93,8 @@ module.exports = (data) => {
                             href: '#',
                             className: 'form-field--list__remove-row',
                             attributes: {
-                                'data-index': index
-                            }
+                                'data-index': index,
+                            },
                         },
                         icon('remove')
                     )

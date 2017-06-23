@@ -1,10 +1,10 @@
-const {dispatch} = require('../modules/store')
+const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
 module.exports = tasks.add({
     getUnit(id) {
-        dispatch({type: 'GET_UNIT', id})
+        dispatch({ type: 'GET_UNIT', id })
         return request({
             method: 'GET',
             url: `/s/units/${id}`,
@@ -12,12 +12,9 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 const unit = response.unit
-                ;['topics', 'versions'].forEach(r => {
-                    unit[r] = response[r]
-                })
                 unit.relationships = []
-                ;['belongs_to', 'requires', 'required_by'].forEach((r) =>
-                    response[r].forEach((e) =>
+                ;['belongs_to', 'requires', 'required_by'].forEach(r =>
+                    response[r].forEach(e =>
                         unit.relationships.push({
                             kind: r,
                             entity: e,
@@ -40,7 +37,7 @@ module.exports = tasks.add({
     },
 
     listUnitVersions(id) {
-        dispatch({type: 'LIST_UNIT_VERSIONS', id})
+        dispatch({ type: 'LIST_UNIT_VERSIONS', id })
         return request({
             method: 'GET',
             url: `/s/units/${id}/versions`,
@@ -77,8 +74,8 @@ module.exports = tasks.add({
                     .then((response) => {
                         allResponses.push(response.version)
                         count++
-                        if(count === total) {
-                            resolve({units: allResponses})
+                        if (count === total) {
+                            resolve({ units: allResponses })
                         }
                     })
                     .catch((errors) => {
@@ -91,5 +88,5 @@ module.exports = tasks.add({
                     })
             })
         })
-    }
+    },
 })

@@ -1,7 +1,7 @@
 const tasks = {}
 tasks.add = function addTasks(givenTasks) {
     Object.keys(givenTasks)
-        .forEach(key => {
+        .forEach((key) => {
             tasks[key] = givenTasks[key]
         })
     return givenTasks

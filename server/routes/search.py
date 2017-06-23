@@ -26,5 +26,4 @@ def search_route(request):
         from_=request['params'].get('skip') or 0,
         # TODO-2 sort=request['params'].get('order') or 'score:desc',
     )
-
     return 200, result['hits']

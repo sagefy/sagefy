@@ -1,5 +1,5 @@
-const {div, a, p} = require('../../modules/tags')
-const {isNumber} = require('../../modules/utilities')
+const { div, a, p } = require('../../modules/tags')
+const { isNumber } = require('../../modules/utilities')
 const spinner = require('../components/spinner.tmpl')
 // const c = require('../../modules/content').get
 const icon = require('../components/icon.tmpl')
@@ -12,7 +12,7 @@ module.exports = (data) => {
     const id = data.routeArgs[0]
     const card = data.learnCards && data.learnCards[id]
 
-    if(!card) { return spinner() }
+    if (!card) { return spinner() }
 
     const pLearned = data.unitLearned && data.unitLearned[card.unit_id]
 
@@ -43,13 +43,13 @@ module.exports = (data) => {
             {
                 id: 'card-learn',
                 className: `page ${card.kind} ${mode}`,
-                key: 'WbrGhHy5aUCmBVtHnlmTdJ1x'
+                key: 'WbrGhHy5aUCmBVtHnlmTdJ1x',
             },
 
             kind(card, mode),
 
             data.cardFeedback ? p(
-                {className: `card-learner__feedback--${feedbackLabel}`},
+                { className: `card-learner__feedback--${feedbackLabel}` },
                 icon(feedbackLabel),
                 ' ',
                 data.cardFeedback
@@ -59,7 +59,7 @@ module.exports = (data) => {
                 a(
                     {
                         id,
-                        className: 'continue card-learner__continue'
+                        className: 'continue card-learner__continue',
                     },
                     'Continue ',
                     icon('next')
@@ -71,10 +71,10 @@ module.exports = (data) => {
                 key: '0Xe4fksADWwm9qWOMuTl7thD',
                 className: 'card-learn__progress',
                 style: {
-                    width: pLearned * 100 + '%'
-                }
+                    width: `${pLearned * 100}%`,
+                },
             }
-        ) : null
+        ) : null,
     ]
 }
 
