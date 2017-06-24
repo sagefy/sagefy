@@ -90,12 +90,6 @@ module.exports = tasks.add({
                     tree: response,
                     id,
                 })
-                if (response.next && response.next.path) {
-                    dispatch({
-                        type: 'SET_NEXT',
-                        next: response.next,
-                    })
-                }
             })
             .catch((errors) => {
                 dispatch({

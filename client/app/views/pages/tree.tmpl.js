@@ -36,13 +36,6 @@ module.exports = (data) => {
     const currentUnit = treeData.units.find(u =>
         u.entity_id === data.currentTreeUnit)
 
-    let chooseUnitID
-    let cardId
-    if (data.next) {
-        chooseUnitID = matchesRoute(data.next.path, '/s/subjects/{id}/units')[0]
-        cardId = matchesRoute(data.next.path, '/s/cards/{id}/learn')[0]
-    }
-
     return div(
         { id: 'tree', className: 'page' },
         h1(`Tree: ${treeData.subjects.name}`),
@@ -68,20 +61,7 @@ module.exports = (data) => {
                 preWidth,
                 buckets: treeData.buckets,
             })
-        ),
-        chooseUnitID ? p(a(
-            {
-                className: 'tree__continue',
-                href: `/subjects/${chooseUnitID}/choose_unit`,
-            },
-            'Next ',
-            icon('next')
-        )) : null,
-        cardId ? p(a(
-            { className: 'tree__continue', href: `/cards/${cardId}/learn` },
-            'Next ',
-            icon('next')
-        )) : null
+        )
     )
 }
 

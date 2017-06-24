@@ -108,13 +108,6 @@ def get_subject_tree_route(request, subject_id):
     - Learner view progress in subject
     - Subject complete
 
-    NEXT STATE
-    GET View Subject Tree
-        -> GET Choose Subject ...when subject is complete
-        -> GET Choose Unit    ...when in learn or review mode
-        -> GET Learn Card     ...when in diagnosis
-            (Unit auto chosen)
-
     TODO-2 merge with get_subject_units_route
     TODO-2 simplify this method
     """
@@ -132,7 +125,6 @@ def get_subject_tree_route(request, subject_id):
     current_user = get_current_user(request)
     if not current_user:
         return 200, output
-    context = get_learning_context(current_user) if current_user else {}
     buckets = traverse(db_conn, current_user, subject)
     output['buckets'] = {
         'diagnose': [u['entity_id'] for u in buckets['diagnose']],
@@ -140,38 +132,6 @@ def get_subject_tree_route(request, subject_id):
         'learn': [u['entity_id'] for u in buckets['learn']],
         'done': [u['entity_id'] for u in buckets['done']],
     }
-    # If we are just previewing, don't update anything
-    if subject_id != context.get('subject', {}).get('entity_id'):
-        return 200, output
-    # When in diagnosis, choose the unit and card automagically.
-    if buckets['diagnose']:
-        unit = buckets['diagnose'][0]
-        card = choose_card(db_conn, current_user, unit)
-        next_ = {
-            'method': 'GET',
-            'path': '/s/cards/{card_id}/learn'
-                    .format(card_id=card['entity_id']),
-        }
-        set_learning_context(
-            current_user,
-            next=next_, unit=unit, card=card)
-    # When in learn or review mode, lead me to choose a unit.
-    elif buckets['review'] or buckets['learn']:
-        next_ = {
-            'method': 'GET',
-            'path': '/s/subjects/{subject_id}/units'
-                    .format(subject_id=subject_id),
-        }
-        set_learning_context(current_user, next=next_)
-    # If the subject is complete, lead the learner to choose another subject.
-    else:
-        next_ = {
-            'method': 'GET',
-            'path': '/s/users/{user_id}/subjects'
-                    .format(user_id=current_user['id']),
-        }
-        set_learning_context(current_user, next=next_, unit=None, subject=None)
-    output['next'] = next_
     return 200, output
 
 

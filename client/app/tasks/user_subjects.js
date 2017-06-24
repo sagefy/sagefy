@@ -63,7 +63,6 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 dispatch({ type: 'CHOOSE_SUBJECT_SUCCESS', subjectId })
-                tasks.route(`/subjects/${subjectId}/tree`)
                 tasks.updateMenuContext({
                     subject: subjectId,
                     unit: false,
@@ -73,6 +72,7 @@ module.exports = tasks.add({
                     type: 'SET_NEXT',
                     next: response.next,
                 })
+                tasks.route(`/subjects/${subjectId}/choose_unit`)
             })
             .catch((errors) => {
                 dispatch({
