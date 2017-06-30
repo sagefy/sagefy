@@ -32,13 +32,9 @@ These instructions assume you are using Mac OS X.
   pm2 start /var/www/client/app/index.server.js
   cd /var/www/client
   pm2 start npm -- start
-  pm2 logs
   ````
 14. Start up Nginx:
   ````
-  ++ In a new terminal...
-  cd sagefy  # wherever this is for you
-  vagrant ssh
   sudo nginx -s stop
   sudo nginx -c /var/www/setup/nginx.conf
   ````
@@ -68,6 +64,7 @@ Tailing the Logs
 
     sudo tail -F /var/log/nginx/error.log
     sudo tail -F /tmp/uwsgi.log
+    sudo tail -F /tmp/uwsgi-suggest.log
     pm2 logs
 
 Deploy steps

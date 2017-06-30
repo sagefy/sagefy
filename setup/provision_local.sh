@@ -46,7 +46,12 @@ sudo /etc/init.d/rethinkdb restart
 sudo add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt-get update
-sudo apt-get -y install postgresql-9.6
+sudo apt-get -y install postgresql-9.6 postgresql-contrib
+sudo -u postgres createdb sagefy
+sudo -u postgres createdb test
+sudo -u postgres psql -U postgres -d sagefy -a -f /var/www/setup/sagefy_tables.sql
+sudo -u postgres psql -U postgres -d test -a -f /var/www/setup/sagefy_tables.sql
+sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
 
 #### Elasticsearch ############################################################
 

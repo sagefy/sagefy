@@ -5,3 +5,4 @@ passlib==1.6.2
 rethinkdb>=2.0.0,<3.0.0
 pyyaml==3.11
 elasticsearch>=2.0.0,<3.0.0
+psycopg2==2.7.1

@@ -30,20 +30,6 @@ CREATE TRIGGER update_users_modified
     BEFORE UPDATE ON users
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
-/* NB subject_ids >>> subject_id */
-
-CREATE TABLE users_subjects (
-    id          char(24)        PRIMARY KEY,
-    created     timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    user_id     char(24)        NOT NULL REFERENCES users (id),
-    subject_id  char(24)        NOT NULL REFERENCES subjects (id)
-);
-
-CREATE TRIGGER update_users_subjects_modified
-    BEFORE UPDATE ON users_subjects
-    FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
-
 CREATE TYPE entity_kind AS ENUM(
     'card',
     'unit',
@@ -231,6 +217,20 @@ CREATE TRIGGER update_cards_parameters_modified
     BEFORE UPDATE ON cards_parameters
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
+/* NB subject_ids >>> subject_id */
+
+CREATE TABLE users_subjects (
+    id          char(24)        PRIMARY KEY,
+    created     timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    user_id     char(24)        NOT NULL REFERENCES users (id),
+    subject_id  char(24)        NOT NULL /* TODO REFERENCES subjects (entity_id) */
+);
+
+CREATE TRIGGER update_users_subjects_modified
+    BEFORE UPDATE ON users_subjects
+    FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+
 CREATE TABLE responses (
     id          char(24)        PRIMARY KEY,
     created     timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -248,3 +248,34 @@ CREATE TABLE responses (
 CREATE TRIGGER update_responses_modified
     BEFORE UPDATE ON responses
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+
+CREATE TABLE suggests (
+  id          char(24)        PRIMARY KEY,
+  created     timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  name        text            NOT NULL,
+  body        text            NOT NULL
+);
+
+CREATE TRIGGER update_suggests_modified
+    BEFORE UPDATE ON suggests
+    FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+
+CREATE TABLE suggests_followers (
+  id          char(24)        PRIMARY KEY,
+  created     timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  suggest_id  char(24)        NOT NULL REFERENCES suggests (id),
+  email       text            NULL,
+  session_id  char(24)        NULL,
+  user_id     char(24)        NULL,
+  CHECK (session_id IS NOT NULL OR user_id IS NOT NULL),
+  UNIQUE (suggest_id, session_id),
+  UNIQUE (suggest_id, user_id)
+);
+
+CREATE TRIGGER update_suggests_followers_modified
+    BEFORE UPDATE ON suggests_followers
+    FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+
+/* Later: comments, bids, sponsors */
