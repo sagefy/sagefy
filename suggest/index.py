@@ -2,6 +2,8 @@ from random import SystemRandom
 import string
 import psycopg2
 import psycopg2.extras
+from cgi import parse_qs
+import re
 
 random = SystemRandom()
 
@@ -19,16 +21,31 @@ skip = '&"\'<>/'
 
 
 def html_escape(text):
-    """Produce entities within text."""
+    if not isinstance(text, str):
+        return None
     return "".join(html_escape_table.get(c, c) for c in text)
 
 
 def ensure_id(id_):
+    if not isinstance(id_, str):
+        return None
     return ''.join(filter(lambda x: x in allowed, id_))
 
 
 def skip_bad(text):
+    if not isinstance(text, str):
+        return None
     return ''.join(filter(lambda x: x not in skip, text))
+
+
+def is_email(value):
+    """
+    Ensure the given value is formatted as an email.
+    """
+
+    if value is None:
+        return
+    return re.match(r'\S+@\S+\.\S+', value)
 
 
 def uniqid():
@@ -42,6 +59,14 @@ def uniqid():
                       + string.digits)
         for i in range(24)
     )
+
+
+def clean_email(email):
+    if email:
+        email = skip_bad(email)
+        if not is_email(email):
+            email = None
+    return email
 
 
 def list_suggests(conn):
@@ -90,14 +115,15 @@ def insert_suggest(conn, suggest):
         with cur:
             name = skip_bad(suggest['name'])
             body = skip_bad(suggest['body'])
+            id_ = uniqid()
             cur.execute("""
                 INSERT INTO suggests
                 (id, created, modified, name, body)
                 VALUES
                 (%s, current_timestamp, current_timestamp, %s, %s)
-            """, (uniqid(), name, body))
+            """, (id_, name, body))
             conn.commit()
-            succeeded = True
+            succeeded = id_
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     return succeeded
@@ -110,16 +136,17 @@ def insert_follow(conn, follow):
         with cur:
             suggest_id = ensure_id(follow['suggest_id'])
             session_id = ensure_id(follow['session_id'])
-            email = follow['email']
+            email = clean_email(follow.get('email'))
             user_id = None
+            id_ = uniqid()
             cur.execute("""
                 INSERT INTO suggests_followers
                 (id, created, modified, suggest_id, email, session_id, user_id)
                 VALUES
-                (%s, current_timestamp, current_timestamp, %s, %s %s, %s)
-            """, (uniqid(), suggest_id, email, session_id, user_id))
+                (%s, current_timestamp, current_timestamp, %s, %s, %s, %s)
+            """, (id_, suggest_id, email, session_id, user_id))
             conn.commit()
-            succeeded = True
+            succeeded = id_
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     return succeeded
@@ -294,6 +321,24 @@ def post_subject_route(conn, environ, start_response):
 
     """
 
+    d = read_post_form_data(environ)
+    suggest_id = insert_suggest(conn, {
+        'name': skip_bad(d.get('name')),
+        'body': skip_bad(d.get('body')),
+    })
+    if not suggest_id:
+        start_response('400 Bad Request', [
+            ('Content-Type', 'text/html; charset=utf-8')
+        ])
+        return ['Failed. Press back and try again.'.encode()]
+    insert_follow(conn, {
+        'email': clean_email(d.get('email')),
+        'suggest_id': ensure_id(suggest_id),
+        'session_id': uniqid(),  # TODO ensure_id(d.get('session_id')),
+    })
+    start_response('302 Found', [('Location', '/suggest')])
+    return ['1'.encode()]
+
 
 def get_upvote_form(conn, environ, start_response):
     """
@@ -314,7 +359,7 @@ def get_upvote_form(conn, environ, start_response):
         <h1>Upvote a Subject</h1>
         <h2>Suggest Subjects by Sagefy</h2>
         <form method="POST">
-            <input type="hidden" value="{id}" />
+            <input type="hidden" value="{id}" name="suggest_id" />
             <p>
                 <label for="email">Your Email Address (optional)</label>
                 <input type="email" name="email" id="email" />
@@ -330,7 +375,27 @@ def get_upvote_form(conn, environ, start_response):
     return [html.encode()]
 
 
+def read_post_form_data(environ):
+    try:
+        request_body_size = int(environ.get('CONTENT_LENGTH', 0))
+    except (ValueError):
+        request_body_size = 0
+    request_body = environ['wsgi.input'].read(request_body_size)
+    d = parse_qs(request_body)
+    d = {k.decode(): v[0].decode() for k, v in d.items()}
+    return d
+
+
 def post_upvote_form(conn, environ, start_response):
     """
 
     """
+
+    d = read_post_form_data(environ)
+    insert_follow(conn, {
+        'email': clean_email(d.get('email')),
+        'suggest_id': ensure_id(d.get('suggest_id')),
+        'session_id': uniqid(),  # TODO ensure_id(d.get('session_id')),
+    })
+    start_response('302 Found', [('Location', '/suggest')])
+    return ['1'.encode()]
