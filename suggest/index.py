@@ -198,10 +198,13 @@ stylesheet = """
     h1, h2, h3 { font-weight: normal; }
     h1 { margin: 0; }
     h2 { text-indent: 2em; margin-top: 0; font-style: italic; }
-    button, .button { background: #517b9e; color: white;
-        text-decoration: none; padding: 0.5em 1em;
-        border-radius: 5px; border: 0; cursor: pointer; }
-    button:hover, .button:hover { background: #76b1e2; color: white; }
+    button, .button { background: #517b9e;
+        background-image: linear-gradient(#5d88ac,#486e8d);
+        color: white; text-decoration: none; padding: 0.5em 1em;
+        border-radius: 2px; border: 0; cursor: pointer; }
+    button:hover, .button:hover { background: #76b1e2; color: white;
+        background-image: linear-gradient(#83b2da,#5b9ace);
+    }
     input[type="text"], input[type="email"], textarea {
         display: block; font-size: 16px; padding: 0.25em 0.5em;
         width: 30em;
