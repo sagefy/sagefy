@@ -4,6 +4,9 @@ import psycopg2
 import psycopg2.extras
 from cgi import parse_qs
 import re
+from http.cookies import SimpleCookie
+from datetime import datetime, timedelta
+
 
 random = SystemRandom()
 
@@ -69,6 +72,37 @@ def clean_email(email):
     return email
 
 
+def pull_cookies(environ):
+    """
+    Pulls and formats cookies stored by user for domain.
+    <http://pwp.stevecassidy.net/wsgi/cookies.html>
+    """
+
+    cookie = SimpleCookie(environ.get('HTTP_COOKIE', ''))
+    return {key: morsel.value for key, morsel in cookie.items()}
+
+
+def get_session_id(environ):
+    """
+    """
+
+    cookies = pull_cookies(environ)
+    return ensure_id(
+        cookies.get('suggest_session_id', uniqid())
+    )
+
+
+def get_set_cookie_header(session_id):
+    expires = ((datetime.utcnow() + timedelta(weeks=2))
+               .strftime('%a, %d-%b-%Y %H:%M:%S GMT'))
+    return ('Set-Cookie', '; '.join([
+        'suggest_session_id={session_id}',
+        'expires={expires}',
+        'Path=/',
+        'HttpOnly',
+    ]).format(session_id=session_id, expires=expires))
+
+
 def list_suggests(conn):
     data = None
     try:
@@ -85,24 +119,26 @@ def list_suggests(conn):
             """)
             data = cur.fetchall()
         data = [row for row in data]
-        # TODO join in count of follows per suggest
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     return data
 
 
 def list_my_follows(conn, session_id):
-    data = None
+    if not session_id:
+        return []
+    data = []
     try:
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         with cur:
             cur.execute("""
                 SELECT *
-                FROM suggests_follows
+                FROM suggests_followers
                 WHERE session_id=%s
                 ORDER BY created DESC;
-            """, ensure_id(session_id))
+            """, (ensure_id(session_id),))
             data = cur.fetchall()
+        data = [row['suggest_id'] for row in data]
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     return data
@@ -243,26 +279,37 @@ def get_homepage_route(conn, environ, start_response):
     suggests = list_suggests(conn)
     suggests_html = '<p><em>No subjects added yet.</em></p>'
     if suggests:
-        suggests_html = ''.join("""
-            <li>
-                <div class="votes">
-                    <span class="count">{count}</span>
-                    <p><a href="/suggest/upvote/{id}">+1 Upvote</a></p>
-                    <!-- TODO condition if already upvoted -->
-                </div>
-                <div class="info">
-                    <h3>{name}</h3>
-                    <small>Created {created}</small>
-                    <p>{body}</p>
-                </div>
-            </li>
-        """.format(
-            count=suggest['count'] if isinstance(suggest['count'], int) else 0,
-            id=ensure_id(suggest['id']),
-            name=html_escape(suggest['name']),
-            created='{:%Y-%m-%d %H:%M}'.format(suggest['created']),
-            body=html_escape(suggest['body'])
-        ) for suggest in suggests)
+        session_id = get_session_id(environ)
+        my_follows = list_my_follows(conn, session_id)
+        suggests_html = ''
+        for suggest in suggests:
+            upvote_html = """
+                <p><a href="/suggest/upvote/{id}">+1 Upvote</a></p>
+            """.format(id=ensure_id(suggest['id']))
+            if suggest['id'] in my_follows:
+                upvote_html = """<p><em>√ Upvoted</em></p>"""
+            suggests_html += """
+                <li>
+                    <div class="votes">
+                        <span class="count">{count}</span>
+                        {upvote_html}
+                        <!-- TODO condition if already upvoted -->
+                    </div>
+                    <div class="info">
+                        <h3>{name}</h3>
+                        <small>Created {created}</small>
+                        <p>{body}</p>
+                    </div>
+                </li>
+            """.format(
+                count=(suggest['count']
+                       if isinstance(suggest['count'], int)
+                       else 0),
+                upvote_html=upvote_html,
+                name=html_escape(suggest['name']),
+                created='{:%Y-%m-%d %H:%M}'.format(suggest['created']),
+                body=html_escape(suggest['body'])
+            )
         suggests_html = '<ul class="subjects">' + suggests_html + '</ul>'
     html = """
     <!doctype html>
@@ -340,6 +387,7 @@ def post_subject_route(conn, environ, start_response):
     """
 
     d = read_post_form_data(environ)
+    session_id = get_session_id(environ)
     suggest_id = insert_suggest(conn, {
         'name': skip_bad(d.get('name')),
         'body': skip_bad(d.get('body')),
@@ -352,10 +400,13 @@ def post_subject_route(conn, environ, start_response):
     insert_follow(conn, {
         'email': clean_email(d.get('email')),
         'suggest_id': ensure_id(suggest_id),
-        'session_id': uniqid(),  # TODO ensure_id(d.get('session_id')),
+        'session_id': session_id,
     })
-    start_response('302 Found', [('Location', '/suggest')])
-    return ['1'.encode()]
+    start_response('302 Found', [
+        get_set_cookie_header(session_id),
+        ('Location', '/suggest'),
+    ])
+    return ['...'.encode()]
 
 
 def get_upvote_form(conn, environ, start_response):
@@ -411,10 +462,14 @@ def post_upvote_form(conn, environ, start_response):
     """
 
     d = read_post_form_data(environ)
+    session_id = get_session_id(environ)
     insert_follow(conn, {
         'email': clean_email(d.get('email')),
         'suggest_id': ensure_id(d.get('suggest_id')),
-        'session_id': uniqid(),  # TODO ensure_id(d.get('session_id')),
+        'session_id': session_id,
     })
-    start_response('302 Found', [('Location', '/suggest')])
-    return ['1'.encode()]
+    start_response('302 Found', [
+        get_set_cookie_header(session_id),
+        ('Location', '/suggest'),
+    ])
+    return ['...'.encode()]
