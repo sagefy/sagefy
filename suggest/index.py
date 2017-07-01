@@ -196,8 +196,6 @@ stylesheet = """
     a { color: #517b9e; }
     a:hover { color: #76b1e2; }
     h1, h2, h3 { font-weight: normal; }
-    h1 { margin: 0; }
-    h2 { text-indent: 2em; margin-top: 0; font-style: italic; }
     button, .button { background: #517b9e;
         background-image: linear-gradient(#5d88ac,#486e8d);
         color: white; text-decoration: none; padding: 0.5em 1em;
@@ -319,19 +317,22 @@ def get_homepage_route(conn, environ, start_response):
     <title>Suggest Subjects - by Sagefy</title>
     {stylesheet}
     <main>
-        <h1>Suggest Subjects</h1>
-        <h2>by <a href="/">
-            <img src="/astrolabe.svg" width="24" /> Sagefy</a></h2>
+        <h1>
+            Suggest Subjects
+            <small>by <a href="/">
+                <img src="/astrolabe.svg" width="24" /> Sagefy</a></small>
+        </h1>
         <p><strong>Can't find a free online learning experience
            for what you want to learn? <br />
-           <em>Request and upvote here!</em></strong></p>
-        <p>You can also post here if you're thinking about building <br />
-            a new online learning experience... see if there's interest.</p>
-        <p>No sign-up or log-in required.</p>
+           <em>Request and upvote here!</em></strong>
+           No sign-up or log-in required.</p>
         <a class="button" href="/suggest/add">
             + Add a new subject
         </a>
         {suggests_html}
+        <p><small>You can also post here if you're thinking about building
+                  a new online learning experience... see if there's interest.
+                  </small></p>
         <p><small>&copy; Copyright 2017 Sagefy.
             All rights reserved.</small></p>
     </main>
