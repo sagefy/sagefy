@@ -196,6 +196,7 @@ stylesheet = """
     a { color: #517b9e; }
     a:hover { color: #76b1e2; }
     h1, h2, h3 { font-weight: normal; }
+    h1 { margin-bottom: 0; }
     button, .button { background: #517b9e;
         background-image: linear-gradient(#5d88ac,#486e8d);
         color: white; text-decoration: none; padding: 0.5em 1em;
@@ -209,7 +210,7 @@ stylesheet = """
         border: 1px solid #a09e91;
     }
     button { display: block; font-size: 16px; }
-    .subjects { list-style: none; padding: 0; margin-top: 2em; }
+    .subjects { list-style: none; padding: 0; margin-top: 3em; }
     .subjects li { border-bottom: 1px solid #a09e91; }
     .subjects h3 { margin-bottom: 0; }
     .subjects .count { font-size: 2em; }
@@ -319,7 +320,7 @@ def get_homepage_route(conn, environ, start_response):
     <main>
         <h1>
             Suggest Subjects
-            <small>by <a href="/">
+            <small>&ndash; by <a href="/">
                 <img src="/astrolabe.svg" width="24" /> Sagefy</a></small>
         </h1>
         <p><strong>Can't find a free online learning experience
