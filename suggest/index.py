@@ -197,6 +197,7 @@ stylesheet = """
     a:hover { color: #76b1e2; }
     h1, h2, h3 { font-weight: normal; }
     h1 { margin-bottom: 0; }
+    h2 { margin-top: 0; }
     button, .button { background: #517b9e;
         background-image: linear-gradient(#5d88ac,#486e8d);
         color: white; text-decoration: none; padding: 0.5em 1em;
