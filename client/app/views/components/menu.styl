@@ -43,12 +43,16 @@ description: |
     border-bottom 0
     border-bottom-right-radius 6px
     text-align center
+    color $base-color(43)
+    @extend $font-size-small
 
     .selected &
         background transparent
+        color $base-color(70)
 
     &:hover
         background white
+        color $base-color(60)
         border-bottom 1px solid $base-color(80)
         border-right 1px solid $base-color(80)
 
@@ -60,21 +64,12 @@ description: |
         color $base-color(90)
 
 .menu__trigger .icon-menu
-.menu__trigger .icon-sagefy
-    color $base-color(43)
-    @extend $font-size-large
-
-    .selected &
-      color $base-color(70)
-
-.menu__label
-    color $base-color(43)
-    @extend $font-size-small
-    margin 0
+    @extend $font-size-big
+    vertical-align middle
     line-height 1
 
-    .selected &
-      color $base-color(70)
+.menu__label
+    line-height 1
 
 .menu__close
     position absolute
