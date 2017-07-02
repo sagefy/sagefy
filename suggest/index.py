@@ -296,7 +296,6 @@ def get_homepage_route(conn, environ, start_response):
                     <div class="votes">
                         <span class="count">{count}</span>
                         {upvote_html}
-                        <!-- TODO condition if already upvoted -->
                     </div>
                     <div class="info">
                         <h3>{name}</h3>

@@ -111,7 +111,7 @@ module.exports = (data) => {
                     className: 'menu__trigger',
                 },
                 div({ className: 'menu__logo' }),
-                p({ className: 'menu__label' }, 'Menu'),
+                icon('menu'),
                 data.open ?
                     span({ className: 'menu__close' }, icon('remove')) :
                     null

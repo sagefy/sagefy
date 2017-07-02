@@ -36,12 +36,12 @@ description: |
 .menu__trigger
     position fixed
     display inline-block
-    bottom 0
+    top 0
     left 0
     padding ($unit / 2)
-    background alpha($base-color(99), 0.8)
+    background $base-color(98)
     border-bottom 0
-    border-top-right-radius 6px
+    border-bottom-right-radius 6px
     text-align center
 
     .selected &
@@ -49,7 +49,7 @@ description: |
 
     &:hover
         background white
-        border-top 1px solid $base-color(80)
+        border-bottom 1px solid $base-color(80)
         border-right 1px solid $base-color(80)
 
     .selected &:hover
@@ -59,16 +59,13 @@ description: |
     &:hover .menu__close
         color $base-color(90)
 
-.menu__logo
-    $h = $unit * 5
-    height $h
-    width ($h * 270.0 / 365.0)
-    display block
-    background-image url('/astrolabe.svg')
-    background-size contain
+.menu__trigger .icon-menu
+.menu__trigger .icon-sagefy
+    color $base-color(43)
+    @extend $font-size-large
 
     .selected &
-        background-image url('/astrolabe_light.svg')
+      color $base-color(70)
 
 .menu__label
     color $base-color(43)
