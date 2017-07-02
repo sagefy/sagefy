@@ -6,6 +6,7 @@ from cgi import parse_qs
 import re
 from http.cookies import SimpleCookie
 from datetime import datetime, timedelta
+from random import sample
 
 
 random = SystemRandom()
@@ -119,6 +120,11 @@ def list_suggests(conn):
             """)
             data = cur.fetchall()
         data = [row for row in data]
+        if len(data) > 3:
+            top = sample(data, 3)
+            top_ids = [row['id'] for row in top]
+            data = [row for row in data if row['id'] not in top_ids]
+            data = top + data
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     return data
