@@ -7,22 +7,18 @@
 // TODO-2 Migrate this all to BEM syntax
 .tree
     vertical-align top
-    background $accent-color(45)
-    box-shadow 0 0 10px $accent-color(45)
-    border-radius $border-radius
+    background $base-color(99)
+    box-shadow 0 0 10px $base-color(90)
+
+    path
+    line
+        stroke $base-color(80)
 
     circle
         stroke $base-color(75)
         stroke-width 2px
-        fill $accent-color(45)
+        fill transparent
         cursor pointer
-
-        &:hover
-            stroke $base-color(80)
-
-        &.selected
-            fill $base-color(97)
-            stroke $base-color(80)
 
         &.done
             fill $good-color(60)
@@ -30,17 +26,15 @@
 
         &.learn
         &.review
-            fill $accent-color(60)
-            stroke $accent-color(90)
+            stroke $accent-color(65)
+            fill $accent-color(97)
 
-    path
-        fill $accent-color(70)
+        &.blocked
+            stroke $bad-color(65)
+            fill $bad-color(97)
 
-    .unit-require
-        stroke $accent-color(70)
+        &:hover
+            filter drop-shadow( 0 0 2px $accent-color(90) )
 
-    .name-line
-        stroke $base-color(80)
-
-.tree__current-unit
-    fill $good-color(97)
+        &.selected
+            filter drop-shadow( 0 0 2px $accent-color(40) )
