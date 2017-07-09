@@ -115,7 +115,7 @@ def select_subject_route(request, user_id, subject_id):
     set_learning_context(current_user, subject=subject)
     buckets = traverse(db_conn, current_user, subject)
     # When in diagnosis, choose the unit and card automagically.
-    if buckets['diagnose']:
+    if buckets.get('diagnose'):
         unit = buckets['diagnose'][0]
         card = choose_card(db_conn, current_user, unit)
         next_ = {
@@ -127,7 +127,7 @@ def select_subject_route(request, user_id, subject_id):
             current_user,
             next=next_, unit=unit, card=card)
     # When in learn or review mode, lead me to choose a unit.
-    elif buckets['review'] or buckets['learn']:
+    elif buckets.get('review') or buckets.get('learn'):
         next_ = {
             'method': 'GET',
             'path': '/s/subjects/{subject_id}/units'

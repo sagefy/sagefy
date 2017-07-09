@@ -176,7 +176,7 @@ def respond_to_card_route(request, card_id):
         buckets = traverse(db_conn, current_user, subject)
 
         # If there are units to be diagnosed...
-        if buckets['diagnose']:
+        if buckets.get('diagnose'):
             unit = buckets['diagnose'][0]
             next_card = choose_card(db_conn, current_user, unit)
             next_ = {
@@ -189,7 +189,7 @@ def respond_to_card_route(request, card_id):
                 card=next_card.data, unit=unit, next=next_)
 
         # If there are units to be learned or reviewed...
-        elif buckets['learn'] or buckets['review']:
+        elif buckets.get('learn') or buckets.get('review'):
             next_ = {
                 'method': 'GET',
                 'path': '/s/subjects/{subject_id}/units'

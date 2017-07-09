@@ -1,4 +1,4 @@
-from modules.sequencer.params import max_learned, max_belief, diag_belief
+from modules.sequencer.params import max_learned, max_belief  # , diag_belief
 from database.response import get_latest_response
 from modules.sequencer.formulas import calculate_belief
 from time import time
@@ -21,23 +21,39 @@ def traverse(db_conn, user, subject):
         - needs units under the status "review" or "learn", in priority order
     """
 
-    buckets = {
-        'diagnose': [],
-        'learn': [],
-        'review': [],
-        'done': [],
-    }
-
     units = list_units_in_subject(subject, db_conn)
+    unit_statuses = {
+        unit['entity_id']: judge(db_conn, unit, user)
+        for unit in units
+    }
+    dependents = match_unit_dependents(units)
     for unit in units:
-        status = judge(db_conn, unit, user)
-        buckets[status].append(unit)
+        unit_id = unit['entity_id']
+        unit_status = unit_statuses[unit_id]
+        if unit_status != 'learn':
+            continue
+        unit_deps = dependents[unit_id]
+        for dep_id in unit_deps:
+            if unit_statuses[dep_id] == 'learn':
+                unit_statuses[dep_id] = 'blocked'
+
+    buckets = {}
+    buckets['learn'] = order_units_by_need([
+        unit for unit in units
+        if unit_statuses[unit['entity_id']] == 'learn'
+    ])
+    buckets['blocked'] = [
+        unit for unit in units
+        if unit_statuses[unit['entity_id']] == 'blocked'
+    ]
+    buckets['done'] = [
+        unit for unit in units
+        if unit_statuses[unit['entity_id']] == 'done'
+    ]
 
     # Make sure the buckets are in the correct orderings
-    buckets['diagnose'] = order_units_by_need(buckets['diagnose'])
-    buckets['diagnose'].reverse()
-    buckets['learn'] = order_units_by_need(buckets['learn'])
-    buckets['review'] = order_units_by_need(buckets['review'])
+    # TODO-2 implement review and diagnose statuses.
+    # Diagnose should be in reverse.
 
     return buckets
 
@@ -68,7 +84,7 @@ def order_units_by_need(units):
 
 def match_unit_dependents(units):
     """
-    For each unit, provide a subject of units that depend on the given unit.
+    For each unit, provide a set of units that depend on the given unit.
     """
 
     ids_to_units = {unit['entity_id']: unit for unit in units}
@@ -109,14 +125,15 @@ def judge(db_conn, unit, user):
         learned = 0
         belief = 0
 
-    if learned >= max_learned:
-        if belief > max_belief:
+    if learned >= max_learned and belief > max_belief:
             return "done"
 
-        if belief <= max_belief:
-            return "review"
+    return "learn"
 
-    if belief > diag_belief:
-        return "learn"
+    # if learned >= max_learned and belief <= max_belief:
+    #     return "review"
 
-    return "diagnose"
+    # if belief > diag_belief:
+    #     return "learn"
+
+    # return "diagnose"

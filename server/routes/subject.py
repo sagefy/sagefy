@@ -127,8 +127,9 @@ def get_subject_tree_route(request, subject_id):
         return 200, output
     buckets = traverse(db_conn, current_user, subject)
     output['buckets'] = {
-        'diagnose': [u['entity_id'] for u in buckets['diagnose']],
-        'review': [u['entity_id'] for u in buckets['review']],
+        # 'diagnose': [u['entity_id'] for u in buckets['diagnose']],
+        # 'review': [u['entity_id'] for u in buckets['review']],
+        'blocked': [u['entity_id'] for u in buckets['blocked']],
         'learn': [u['entity_id'] for u in buckets['learn']],
         'done': [u['entity_id'] for u in buckets['done']],
     }
