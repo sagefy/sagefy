@@ -59,6 +59,7 @@ def traverse(db_conn, user, subject):
 
 
 def order_units_by_need(units):
+    # TODO-1 use both learn and blocked units
     """
     Order the given units by the number of units dependent.
 
