@@ -12,6 +12,9 @@ User Research and Experience
 - [Good UI](http://goodui.org/)
 - [Mo2L](http://www.elearning-usability.com/use.html)
 - [Usability checklist](http://userium.com/)
+- [The Distribution of Users’ Computer Skills: Worse Than You Think](https://www.nngroup.com/articles/computer-skill-levels/)
+- [The Rise and Decline of an Open Collaboration System:
+How Wikipedia's reaction to popularity is causing its decline](https://www-users.cs.umn.edu/~halfak/publications/The_Rise_and_Decline/halfaker13rise-preprint.pdf)
 
 Learning Science
 ----------------
@@ -27,6 +30,9 @@ Learning Science
 - [Why Flunking Exams Is Actually a Good Thing](http://www.nytimes.com/2014/09/07/magazine/why-flunking-exams-is-actually-a-good-thing.html)
 - [How I Rewired My Brain to Become Fluent in Math](http://nautil.us/issue/17/big-bangs/how-i-rewired-my-brain-to-become-fluent-in-math-rd) - An argument in favor of elaborate rehearsal, "go deep"
 - [The Effects of Spaced Practice and Spaced Review on Recall and Retention Using Computer Assisted Instruction.](http://files.eric.ed.gov/fulltext/ED427772.pdf) -- Carlous Caple, 1996
+- [Teacher spends two days as a student and is shocked at what she learns](https://www.washingtonpost.com/news/answer-sheet/wp/2014/10/24/teacher-spends-two-days-as-a-student-and-is-shocked-at-what-she-learned/?utm_term=.d24b17e6ce83)
+- [What is Personalized Learning?](https://medium.com/personalizing-the-learning-experience-insights/what-is-personalized-learning-bc874799b6f)
+- [Not All Practice Makes Perfect](http://nautil.us/issue/35/boundaries/not-all-practice-makes-perfect)
 
 Gamification
 ------------
@@ -41,6 +47,8 @@ Gamification
 - [Designing for Behavioral Change in Health](http://www.uxbooth.com/articles/designing-for-behavioral-change-in-health/)
 - [eLearning & Gamification: The Octalysis Framework](http://iconlogic.blogs.com/weblog/2012/12/elearning-gamification-the-octalysis-framework.html)
 - [Gamification: Using Game Mechanics to Enhance eLearning](http://elearnmag.acm.org/featured.cfm?aid=2031772)
+- [Twelve  tips  to  stimulate  intrinsic  motivation
+in  students](http://selfdeterminationtheory.org/SDT/documents/2011_KusurkarEtAl_MedTeacher.pdf)
 
 
 Statistics, Data science and Machine learning
