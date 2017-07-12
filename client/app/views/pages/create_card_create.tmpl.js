@@ -44,7 +44,7 @@ const videoFields = allKindsFields.concat([{
 }, {
     label: 'Video ID',
     name: 'video_id',
-    description: 'You can find the video ID in the URL.',
+    description: 'You can find the video ID in the URL. Look for https://www.youtube.com/watch?v=VIDEO_ID_HERE',
 }, {
     type: 'submit',
     name: 'submit',
