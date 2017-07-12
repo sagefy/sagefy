@@ -68,7 +68,7 @@ module.exports = function createUnitCreate(data) {
         a(
             { href: '/create/unit/list' },
             icon('back'),
-            ' Back to List of Units'
+            ' Cancel & Back to List of Units'
         )
     )
 }

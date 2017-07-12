@@ -132,7 +132,7 @@ module.exports = function createCardCreate(data) {
         a(
             { href: '/create/card/list' },
             icon('back'),
-            ' Back to List of Cards'
+            ' Cancel & Back to List of Cards'
         )
     )
 }
