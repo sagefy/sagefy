@@ -14,6 +14,7 @@ module.exports = function createUnitList(data) {
         unitWizard('list'),
 
         h3(`The following units will be added to ${subjectName}`),
+        p('We won\'t save the new/added units until you "Submit These Units".'),
 
         // TODO List of existing units (if any)
 
@@ -61,7 +62,7 @@ module.exports = function createUnitList(data) {
                 className: 'create--unit-list__submit',
             },
             icon('create'),
-            ' Submit This Work'
+            ' Submit These Units'
         ),
         a(
             {

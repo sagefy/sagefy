@@ -1,4 +1,4 @@
-const { div, h1, a } = require('../../modules/tags')
+const { div, h1, p, a } = require('../../modules/tags')
 const { unitWizard } = require('./create_shared.fn')
 const { extend } = require('../../modules/utilities')
 const unitSchema = require('../../schemas/unit')
@@ -64,6 +64,7 @@ module.exports = function createUnitCreate(data) {
             fields: instanceFields,
             errors: globalErrors,
         }),
+        p('After you submit here, "Submit These Units" on the list page to finish.'),
         a(
             { href: '/create/unit/list' },
             icon('back'),

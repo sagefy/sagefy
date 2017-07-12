@@ -1,4 +1,4 @@
-const { div, h1, a } = require('../../modules/tags')
+const { div, h1, a, p } = require('../../modules/tags')
 const { cardWizard } = require('./create_shared.fn')
 const { extend } = require('../../modules/utilities')
 const cardSchema = require('../../schemas/card')
@@ -128,6 +128,7 @@ module.exports = function createCardCreate(data) {
             fields: instanceFields,
             errors: globalErrors,
         }),
+        p('After you submit here, "Submit These Cards" on the list page to finish.'),
         a(
             { href: '/create/card/list' },
             icon('back'),

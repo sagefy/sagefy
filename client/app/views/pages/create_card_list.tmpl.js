@@ -14,6 +14,7 @@ module.exports = function createCardList(data) {
         cardWizard('list'),
 
         h3(`The following cards will be added to ${unitName}`),
+        p('We won\'t save the new cards until you "Submit These Cards".'),
 
         // TODO List of existing units (if any)
 
@@ -53,7 +54,7 @@ module.exports = function createCardList(data) {
                 className: 'create--card-list__submit',
             },
             icon('create'),
-            ' Submit This Work'
+            ' Submit These Cards'
         ),
         a(
             {
