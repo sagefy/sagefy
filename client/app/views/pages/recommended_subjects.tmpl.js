@@ -1,4 +1,4 @@
-const { div, h1, ul, li, a, hr } = require('../../modules/tags')
+const { div, h1, p, ul, li, a, hr } = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
@@ -34,6 +34,7 @@ module.exports = (data) => {
     return div(
         { id: 'recommended-subjects', className: 'page' },
         h1('Recommended Subjects'),
+        p('Want to add a subject here? Email <support@sagefy.org> and let us know!'),
         ul(
             data.recommendedSubjects.map(subject => li(subjectResult(subject)))
         ),
