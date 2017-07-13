@@ -23,7 +23,8 @@ module.exports = (data) => {
         header(
             h1('An Introduction to Electronic Music'),
             p('A small taste of the basics of electronic music. Learn the concepts behind creating and modifying sounds in an electronic music system. Learn the ideas behind the tools and systems we use to create electronic music.'),
-            cta
+            cta,
+            ' – Forever free.'
             // TODO-2 social media sharing links
         ),
         section(

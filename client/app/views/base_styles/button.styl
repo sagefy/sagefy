@@ -7,12 +7,10 @@ description: Buttons are one of the most recognized elements of web design. Sage
 
 button-background($color, $raise = 5, $reduce = 5)
     background-color $color
-    background-image -webkit-linear-gradient(lighten($color, $raise), darken($color, $reduce))
     background-image linear-gradient(lighten($color, $raise), darken($color, $reduce))
 
 button-background-inv($color, $raise = 5, $reduce = 5)
     background-color $color
-    background-image -webkit-linear-gradient(darken($color, $reduce), lighten($color, $raise))
     background-image linear-gradient(darken($color, $reduce), lighten($color, $raise))
 
 $base-button
