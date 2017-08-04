@@ -80,7 +80,8 @@ module.exports = tasks.add({
                 dispatch({
                     type: 'SET_SENDING_OFF',
                 })
-                tasks.route(`/topics/${topicId}`)
+                tasks.route(`/topics/${topicId}`) // TODO-2 only when in form
+                return response
             })
             .catch((errors) => {
                 dispatch({

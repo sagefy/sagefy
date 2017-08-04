@@ -125,6 +125,7 @@ module.exports = tasks.add({
 
     createSubjectProposal(data) {
         let topicId
+        let subjectId
         tasks.createTopic({ topic: data.topic })
             .then((topicResponse) => {
                 topicId = topicResponse.topic.id
@@ -137,7 +138,11 @@ module.exports = tasks.add({
                     kind: 'subject',
                     id: subjectResponse.version.id,
                 }]
+                subjectId = subjectResponse.version.entity_id
                 return tasks.createPost({ post })
+            })
+            .then(() => {
+                return tasks.route(`/subjects/${subjectId}`)
             })
     },
 
@@ -201,6 +206,9 @@ module.exports = tasks.add({
                 }
                 return tasks.createPost({ post })
             })
+            .then(() => {
+                return tasks.route(`/subjects/${selectedSubject.id}`)
+            })
     },
 
     createCardsProposal() {
@@ -234,6 +242,9 @@ module.exports = tasks.add({
                     })),
                 }
                 return tasks.createPost({ post })
+            })
+            .then(() => {
+                return tasks.route(`/units/${selectedUnit.id}`)
             })
     },
 })
