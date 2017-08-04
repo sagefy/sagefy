@@ -7,7 +7,7 @@ title: Planning
     - [Planning: Menu Items](Planning-Menu-Items)
 - [Planning: Contributors MVP](Planning-Contributors-MVP)
     - [Planning: Contributor Ratings](Planning-Contributor-Ratings)
-    - [Planning: Markdown Features](Planning-Markdown-Features)
+    - [Planning: Formatting Features](Planning-Formatting-Features)
 - [Planning: Learners MVP](Planning-Learners-MVP)
     - [Planning: Machine Learning Requirements](Planning-Machine-Learning-Requirements)
     - [Planning: Sequencer](Planning-Sequencer)
