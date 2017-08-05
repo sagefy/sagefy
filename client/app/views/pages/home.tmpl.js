@@ -95,7 +95,7 @@ module.exports = data => {
               {className: 'home__ul--popular-subjects'},
               li(
                 previewSubjectHead({
-                  url:  '/subjects/CgDRJPfzJuTR916HdmosA3A8/landing',
+                  url:  '/subjects/JAFGYFWhILcsiByyH2O9frcU/landing',
                   name: 'An Introduction to Electronic Music',
                   body: 'A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.',
                 })

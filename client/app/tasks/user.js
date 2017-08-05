@@ -1,6 +1,7 @@
-const { dispatch } = require('../modules/store')
+const { dispatch, getState } = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
+
 
 module.exports = tasks.add({
     createUser(data) {
@@ -8,6 +9,8 @@ module.exports = tasks.add({
             type: 'SET_SENDING_ON',
         })
         dispatch({ type: 'CREATE_USER' })
+        const { routeQuery } = getState()
+        const subjectId = routeQuery.subject_id
         return request({
             method: 'POST',
             url: '/s/users',
@@ -19,13 +22,19 @@ module.exports = tasks.add({
                     currentUserID: response.user.id,
                     message: 'create user success',
                 })
+                return dispatch({
+                    type: 'SET_SENDING_OFF',
+                })
+            })
+            .then(() => {
+                if (!subjectId) { return }
+                // if subject_id is a param, auto add to user's subjects
+                return tasks.addUserSubject(subjectId)
+            })
+            .then(() => {
                 // TODO-2 make this a listener
                 window.location = '/my_subjects'
                 // Hard redirect to get the HTTP_ONLY cookie
-                // TODO-1 if subject_id is a param, auto add to user's subjects
-                dispatch({
-                    type: 'SET_SENDING_OFF',
-                })
             })
             .catch((errors) => {
                 dispatch({

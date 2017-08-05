@@ -5,7 +5,7 @@ const icon = require('../components/icon.tmpl')
 module.exports = (data) => {
     const id = data.routeArgs[0]
 
-    if (id !== 'CgDRJPfzJuTR916HdmosA3A8') { return div() }
+    if (id !== 'JAFGYFWhILcsiByyH2O9frcU') { return div() }
 
     const cta = a(
         { href: `/sign_up?subject_id=${id}`, className: 'subjects-landing__cta' },

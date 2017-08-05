@@ -42,6 +42,7 @@ module.exports = tasks.add({
                     message: 'add user subject success',
                 })
                 tasks.route('/my_subjects')
+                return response
             })
             .catch((errors) => {
                 dispatch({
