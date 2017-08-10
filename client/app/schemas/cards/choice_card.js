@@ -14,10 +14,7 @@ module.exports = extend({}, cardSchema, {
             {
                 name: 'correct',
                 type: 'select',
-                options: [
-                    { value: 'true' },
-                    { value: 'false' },
-                ],
+                options: [{ value: 'true' }, { value: 'false' }],
             },
             { name: 'value', type: 'text' },
             { name: 'feedback', type: 'text' },
@@ -26,10 +23,7 @@ module.exports = extend({}, cardSchema, {
     order: {
         type: 'select',
         validations: [required],
-        options: [
-            { value: 'random' },
-            { value: 'set' },
-        ],
+        options: [{ value: 'random' }, { value: 'set' }],
         default: 'random',
     },
     max_options_to_show: {

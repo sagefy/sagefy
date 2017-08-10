@@ -9,7 +9,9 @@ const request = () => {
 }
 
 const getQueryParams = (path) => {
-    if (path.indexOf('?') === -1) { return {} }
+    if (path.indexOf('?') === -1) {
+        return {}
+    }
     return qs.get(path.split('?')[1])
 }
 
@@ -30,7 +32,9 @@ const route = (path) => {
         routeQuery: getQueryParams(path),
         title: findTitle(path),
     })
-    if (tasks.onRoute) { return tasks.onRoute(path) }
+    if (tasks.onRoute) {
+        return tasks.onRoute(path)
+    }
 }
 
 if (typeof window !== 'undefined') {

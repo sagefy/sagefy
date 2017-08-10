@@ -12,22 +12,16 @@ const previewSubject = require('../components/preview_subject.tmpl')
 module.exports = (data) => {
     const [kind, id] = data.routeArgs
     const versions = data[`${kind}Versions`] && data[`${kind}Versions`][id]
-    if (!versions) { return spinner() }
+    if (!versions) {
+        return spinner()
+    }
     const latestAccepted = versions.find(v => v.status === 'accepted')
 
     return div(
         { id: 'versions', className: 'page' },
         h1(`Versions: ${latestAccepted.name}`),
-        p(
-            a(
-                { href: `/${kind}s/${id}` },
-                icon('back'),
-                ` See ${kind} page`
-            )
-        ),
-        ul(
-            versions.map(version => li(row(kind, version)))
-        )
+        p(a({ href: `/${kind}s/${id}` }, icon('back'), ` See ${kind} page`)),
+        ul(versions.map(version => li(row(kind, version))))
     )
 
     // TODO-2 paginate
@@ -35,16 +29,20 @@ module.exports = (data) => {
 
 const row = (kind, version) => {
     if (kind === 'card') {
-        return previewCard(Object.assign({}, version, {
-            unit: { name: version.unit_id },
-            requires: version.require_ids.map(id => ({ id })),
-        }))
+        return previewCard(
+            Object.assign({}, version, {
+                unit: { name: version.unit_id },
+                requires: version.require_ids.map(id => ({ id })),
+            })
+        )
     }
 
     if (kind === 'unit') {
-        return previewUnit(Object.assign({}, version, {
-            requires: version.require_ids.map(id => ({ id })),
-        }))
+        return previewUnit(
+            Object.assign({}, version, {
+                requires: version.require_ids.map(id => ({ id })),
+            })
+        )
     }
 
     if (kind === 'subject') {

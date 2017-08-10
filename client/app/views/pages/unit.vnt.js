@@ -1,5 +1,3 @@
 const broker = require('../../modules/broker')
 
-module.exports = broker.add({
-
-})
+module.exports = broker.add({})

@@ -16,9 +16,6 @@ module.exports = extend({}, post, {
     response: {
         type: 'select',
         validations: [required],
-        options: [
-            { value: 'true' },
-            { value: 'false' },
-        ],
+        options: [{ value: 'true' }, { value: 'false' }],
     },
 })

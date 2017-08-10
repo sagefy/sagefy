@@ -10,9 +10,6 @@ module.exports = extend({}, cardSchema, {
     site: {
         type: 'select',
         validations: [required],
-        options: [
-            { value: 'youtube' },
-            { value: 'vimeo' },
-        ],
+        options: [{ value: 'youtube' }, { value: 'vimeo' }],
     },
 })

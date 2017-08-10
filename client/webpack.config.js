@@ -1,18 +1,22 @@
 module.exports = {
     module: {
-        loaders: [{
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader'
-        }, {
-            test: /\.json$/,
-            loader: 'json-loader'
-        }, {
-            test: /\.txt$/,
-            loader: 'raw-loader'
-        }]
+        loaders: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+            },
+            {
+                test: /\.json$/,
+                loader: 'json-loader',
+            },
+            {
+                test: /\.txt$/,
+                loader: 'raw-loader',
+            },
+        ],
     },
     externals: {
-        './request.server': 'var undefined'
-    }
+        './request.server': 'var undefined',
+    },
 }

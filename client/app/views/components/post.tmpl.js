@@ -6,24 +6,38 @@ const previewUnit = require('./preview_unit.tmpl')
 const previewSubject = require('./preview_subject.tmpl')
 
 const renderProposal = (data) => {
-    if (!data.kind === 'proposal') { return }
+    if (!data.kind === 'proposal') {
+        return
+    }
     const entityVersions = data.entityVersionsFull || []
     return div(
         { className: 'post__proposal' },
         entityVersions.map((version) => {
             const { entityKind } = version
             if (entityKind === 'card') {
-                return [previewCard(Object.assign({}, version, {
-                    unit: { name: version.unit_id },
-                    requires: version.require_ids &&
-                        version.require_ids.map(id => ({ id })),
-                })), hr()]
+                return [
+                    previewCard(
+                        Object.assign({}, version, {
+                            unit: { name: version.unit_id },
+                            requires:
+                                version.require_ids &&
+                                version.require_ids.map(id => ({ id })),
+                        })
+                    ),
+                    hr(),
+                ]
             }
             if (entityKind === 'unit') {
-                return [previewUnit(Object.assign({}, version, {
-                    requires: version.require_ids &&
-                        version.require_ids.map(id => ({ id })),
-                })), hr()]
+                return [
+                    previewUnit(
+                        Object.assign({}, version, {
+                            requires:
+                                version.require_ids &&
+                                version.require_ids.map(id => ({ id })),
+                        })
+                    ),
+                    hr(),
+                ]
             }
             if (entityKind === 'subject') {
                 return [previewSubject(version), hr()]
@@ -34,7 +48,9 @@ const renderProposal = (data) => {
 }
 
 const voteResponse = (response) => {
-    if (!response) { return }
+    if (!response) {
+        return
+    }
     return [
         span(
             {
@@ -76,14 +92,16 @@ module.exports = (data, currentUserID) => {
                 data.user.name || '???'
             ),
             div(
-                data.replies_to_id ? a(
-                    {
-                        className: 'post__in-reply',
-                        href: `/topics/${data.topic_id}#${data.replies_to_id}`,
-                    },
-                    icon('reply'),
-                    ' In Reply'
-                ) : null,
+                data.replies_to_id
+                    ? a(
+                        {
+                            className: 'post__in-reply',
+                            href: `/topics/${data.topic_id}#${data.replies_to_id}`,
+                        },
+                          icon('reply'),
+                          ' In Reply'
+                      )
+                    : null,
                 data.replies_to_id ? ' ' : null,
                 data.kind === 'proposal' ? h3('Proposal') : null,
                 voteResponse(data.response),
@@ -92,27 +110,36 @@ module.exports = (data, currentUserID) => {
             data.kind === 'proposal' ? renderProposal(data) : null,
             div(
                 { className: 'post__footer' },
-                currentUserID === data.user_id ? a(
-                    { href: `/topics/${topicId}/posts/${data.id}/update` },
-                    icon('update'),
-                    ' Edit'
-                ) : a(
-                    { href: `/topics/${topicId}/posts/create?` +
-                           `replies_to_id=${data.id}` },
-                    icon('reply'),
-                    ' Reply'
-                ),
+                currentUserID === data.user_id
+                    ? a(
+                        {
+                            href: `/topics/${topicId}/posts/${data.id}/update`,
+                        },
+                          icon('update'),
+                          ' Edit'
+                      )
+                    : a(
+                        {
+                            href:
+                                  `/topics/${topicId}/posts/create?` +
+                                  `replies_to_id=${data.id}`,
+                        },
+                          icon('reply'),
+                          ' Reply'
+                      ),
                 /* PP@ data.kind === 'proposal' ? a(
                     {href: `/topics/${topicId}/posts/create?` +
                            `replies_to_id=${data.id}&kind=vote`},
                     icon('vote'),
                     ' Vote'
                 ) : null, */
-                data.kind === 'proposal' ? a(
-                    { href: '/create' },
-                    icon('create'),
-                    ' Create Another Proposal'
-                ) : null,
+                data.kind === 'proposal'
+                    ? a(
+                          { href: '/create' },
+                          icon('create'),
+                          ' Create Another Proposal'
+                      )
+                    : null,
                 a(
                     { href: `/topics/${data.topicID}#${data.id}` },
                     icon('post'),

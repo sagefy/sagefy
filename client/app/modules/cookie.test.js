@@ -2,8 +2,7 @@ const cookie = require('../../app/modules/cookie')
 
 describe('Cookie', () => {
     it('should parse a cookie value', () =>
-        expect(cookie.read('""+"')).to.equal('" ')
-    )
+        expect(cookie.read('""+"')).to.equal('" '))
 
     it('should get a cookie', () => {
         document.cookie = 'test=abcd;path=/;max-age=30'

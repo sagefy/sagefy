@@ -18,10 +18,7 @@ module.exports = (data) => {
         data.error ? 'form-field--bad' : '',
         data.good ? 'form-field--good' : '',
     ].join(' ')
-    return div(
-        { className: classes },
-        m(data)
-    )
+    return div({ className: classes }, m(data))
 }
 
 const m = (data) => {
@@ -29,8 +26,10 @@ const m = (data) => {
     if (data.label && ['button', 'submit'].indexOf(data.type) === -1) {
         nodes.push(kindTmpl.label(data))
     }
-    if (['text', 'email', 'number', 'password', 'hidden']
-        .indexOf(data.type) > -1) {
+    if (
+        ['text', 'email', 'number', 'password', 'hidden'].indexOf(data.type) >
+        -1
+    ) {
         nodes.push(kindTmpl.input(data))
     }
     if (data.type === 'textarea') {
@@ -49,11 +48,9 @@ const m = (data) => {
         nodes.push(kindTmpl.entities(data))
     }
     if (data.error) {
-        nodes.push(span(
-            { className: 'form-field__feedback' },
-            icon('bad'),
-            data.error
-        ))
+        nodes.push(
+            span({ className: 'form-field__feedback' }, icon('bad'), data.error)
+        )
     }
     if (data.description) {
         nodes.push(

@@ -9,11 +9,13 @@ module.exports = function previewCardHead({
     url = false,
     labelKind = false,
 }) {
-    const cardKindLabel = kind ? span(
-        { className: 'preview--card__kind' },
-        icon(kind.toLowerCase()),
-        ucfirst(kind)
-    ) : null
+    const cardKindLabel = kind
+        ? span(
+              { className: 'preview--card__kind' },
+              icon(kind.toLowerCase()),
+              ucfirst(kind)
+          )
+        : null
     return div(
         { className: 'preview--card__head' },
         previewName({

@@ -12,7 +12,9 @@ module.exports = (data) => {
     const id = data.routeArgs[0]
     const card = data.learnCards && data.learnCards[id]
 
-    if (!card) { return spinner() }
+    if (!card) {
+        return spinner()
+    }
 
     const pLearned = data.unitLearned && data.unitLearned[card.unit_id]
 
@@ -45,16 +47,15 @@ module.exports = (data) => {
                 className: `page ${card.kind} ${mode}`,
                 key: 'WbrGhHy5aUCmBVtHnlmTdJ1x',
             },
-
             kind(card, mode),
-
-            data.cardFeedback ? p(
-                { className: `card-learner__feedback--${feedbackLabel}` },
-                icon(feedbackLabel),
-                ' ',
-                data.cardFeedback
-            ) : null,
-
+            data.cardFeedback
+                ? p(
+                      { className: `card-learner__feedback--${feedbackLabel}` },
+                      icon(feedbackLabel),
+                      ' ',
+                      data.cardFeedback
+                  )
+                : null,
             p(
                 a(
                     {
@@ -66,15 +67,15 @@ module.exports = (data) => {
                 )
             )
         ),
-        pLearned ? div(
-            {
+        pLearned
+            ? div({
                 key: '0Xe4fksADWwm9qWOMuTl7thD',
                 className: 'card-learn__progress',
                 style: {
                     width: `${pLearned * 100}%`,
                 },
-            }
-        ) : null,
+            })
+            : null,
     ]
 }
 

@@ -1,6 +1,9 @@
 const { div } = require('../../modules/tags')
-const { previewCommon, previewRequires, previewTags } =
-    require('./preview_shared.fn')
+const {
+    previewCommon,
+    previewRequires,
+    previewTags,
+} = require('./preview_shared.fn')
 
 // TODO-2 show diff option
 

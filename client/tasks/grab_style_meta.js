@@ -15,17 +15,15 @@ const build = (g, fn) => {
         .on('match', (path) => {
             const contents = fs.readFileSync(path, 'utf-8')
             ;(contents.match(/---(?!---)((.|\n)*?)---/g) || [])
-                .filter((el) => /---/.test(el))
-                .map((el) => el.replace(/---/g, ''))
+                .filter(el => /---/.test(el))
+                .map(el => el.replace(/---/g, ''))
                 .forEach((y) => {
                     y = yaml.load(y)
                     // y.description = markdown(y.description)
                     data[y.title] = y
                 })
         })
-        .on('end', () =>
-            fn(data)
-        )
+        .on('end', () => fn(data))
 }
 
 module.exports = build

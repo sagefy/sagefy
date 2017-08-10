@@ -12,31 +12,32 @@ module.exports = function createUnitList(data) {
         { id: 'create', className: 'page create--unit-list' },
         h1('Add Units to Subject'),
         unitWizard('list'),
-
         h3(`The following units will be added to ${subjectName}`),
         p('We won\'t save the new/added units until you "Submit These Units".'),
-
         // TODO List of existing units (if any)
 
-        units && units.length ? ul(
-            { className: 'create--unit-list__units' },
-            units.map((unit, index) => li(
-                a(
-                    {
-                        dataset: { index },
-                        href: '#',
-                        className: 'create--unit-list__remove',
-                    },
-                    icon('remove'),
-                    ' Remove'
-                ),
-                previewUnitHead({
-                    name: unit.name,
-                    body: unit.body,
-                })
-            ))
-        ) : p('No units added yet.'),
-
+        units && units.length
+            ? ul(
+                  { className: 'create--unit-list__units' },
+                  units.map((unit, index) =>
+                      li(
+                          a(
+                              {
+                                  dataset: { index },
+                                  href: '#',
+                                  className: 'create--unit-list__remove',
+                              },
+                              icon('remove'),
+                              ' Remove'
+                          ),
+                          previewUnitHead({
+                              name: unit.name,
+                              body: unit.body,
+                          })
+                      )
+                  )
+              )
+            : p('No units added yet.'),
         a(
             {
                 className: 'create--unit-list__create',
@@ -53,9 +54,7 @@ module.exports = function createUnitList(data) {
             icon('search'),
             ' Add an Existing Unit'
         ),
-
         hr(),
-
         a(
             {
                 href: '#',

@@ -1,7 +1,9 @@
-const ga = window.ga = window.ga || (() => {
-    window.ga.q = window.ga.q || []
-    window.ga.q.push(arguments)
-})
+const ga = window.ga =
+    window.ga ||
+    (() => {
+        window.ga.q = window.ga.q || []
+        window.ga.q.push(arguments)
+    })
 
 const startGoogleAnalytics = () => {
     window.GoogleAnalyticsObject = 'ga'

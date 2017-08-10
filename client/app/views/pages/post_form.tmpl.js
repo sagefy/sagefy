@@ -3,7 +3,10 @@ const { div, h1 } = require('../../modules/tags')
 const form = require('../components/form.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const { extend } = require('../../modules/utilities')
-const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
+const {
+    createFieldsData,
+    findGlobalErrors,
+} = require('../../modules/auxiliaries')
 const { getFields, getSchema } = require('./post_form.fn')
 
 // TODO-1 Currently there is no way to update an existing entity from the UI,
@@ -27,17 +30,20 @@ module.exports = (data) => {
     const [topicID, postID] = data.routeArgs
     let post
     if (postID) {
-        post = data.topicPosts &&
-               data.topicPosts[topicID].find(post => post.id === postID)
+        post =
+            data.topicPosts &&
+            data.topicPosts[topicID].find(post => post.id === postID)
     }
 
-    if (postID && !post) { return spinner() }
+    if (postID && !post) {
+        return spinner()
+    }
 
     const formData = extend({}, data.formData, {
         'post.id': postID,
         'post.topic_id': topicID,
-        'post.replies_to_id': (post && post.replies_to_id) ||
-                              data.routeQuery.replies_to_id,
+        'post.replies_to_id':
+            (post && post.replies_to_id) || data.routeQuery.replies_to_id,
         'post.kind': post && post.kind,
         'post.body': post && post.body,
         'post.response': post ? `${post.response}` : null,

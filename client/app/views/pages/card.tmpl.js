@@ -6,8 +6,15 @@ const entityTopics = require('../components/entity_topics.tmpl')
 const entityVersions = require('../components/entity_versions.tmpl')
 const entityRelationships = require('../components/entity_relationships.tmpl')
 
-const assessments = ['choice', 'number', 'match', 'formula',
-                     'writing', 'upload', 'embed']
+const assessments = [
+    'choice',
+    'number',
+    'match',
+    'formula',
+    'writing',
+    'upload',
+    'embed',
+]
 const threeDigits = num => Math.round(num * 1000) / 1000
 
 const previewCardContent = require('../components/preview_card_content.tmpl')
@@ -15,7 +22,9 @@ const previewCardContent = require('../components/preview_card_content.tmpl')
 module.exports = (data) => {
     const id = data.routeArgs[0]
     const card = data.cards && data.cards[id]
-    if (!card) { return spinner() }
+    if (!card) {
+        return spinner()
+    }
     const cardVersions = data.cardVersions && data.cardVersions[id]
 
     const topics = Object.keys(data.topics)

@@ -4,14 +4,7 @@ Utilities are one-off functions that are used throughout the framework.
 const util = {}
 
 // Test for types.
-;[
-    'Object',
-    'Array',
-    'Function',
-    'Date',
-    'String',
-    'RegExp',
-].forEach((type) => {
+;['Object', 'Array', 'Function', 'Date', 'String', 'RegExp'].forEach((type) => {
     util[`is${type}`] = (a) => {
         return Object.prototype.toString.call(a) === `[object ${type}]`
     }
@@ -33,15 +26,23 @@ util.extend = (target, ...injects) => {
     injects.forEach((inject) => {
         Object.keys(inject).forEach((prop) => {
             const val = inject[prop]
-            if (util.isUndefined(val)) { return }
+            if (util.isUndefined(val)) {
+                return
+            }
             if (util.isDate(val)) {
                 target[prop] = new Date(val)
             } else if (util.isArray(val)) {
-                if (!util.isArray(target[prop])) { target[prop] = [] }
+                if (!util.isArray(target[prop])) {
+                    target[prop] = []
+                }
                 target[prop] = util.extend([], target[prop], val)
-            } else if (util.isObject(val) &&
-                       val.constructor === objectConstructor) {
-                if (!util.isObject(target[prop])) { target[prop] = {} }
+            } else if (
+                util.isObject(val) &&
+                val.constructor === objectConstructor
+            ) {
+                if (!util.isObject(target[prop])) {
+                    target[prop] = {}
+                }
                 target[prop] = util.extend({}, target[prop], val)
             } else {
                 target[prop] = val
@@ -108,10 +109,12 @@ util.parameterize = (obj) => {
 
 util.convertDataToGet = (url, data) => {
     url += url.indexOf('?') > -1 ? '&' : '?'
-    url += util.parameterize(util.extend(
-        data || {},
-        { _: +new Date() }  // Cachebreaker
-    ))
+    url += util.parameterize(
+        util.extend(
+            data || {},
+            { _: +new Date() } // Cachebreaker
+        )
+    )
     return url
 }
 

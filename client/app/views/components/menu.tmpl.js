@@ -12,12 +12,12 @@ const items = {
     home: { url: '/' },
     my_subjects: { title: 'My Subjects', icon: 'subject' },
     log_in: { title: 'Log In', icon: 'log-in' },
-    terms: { },
-    contact: { },
-    notices: { },  // TODO-2 poll and show unread count
-    settings: { },
+    terms: {},
+    contact: {},
+    notices: {}, // TODO-2 poll and show unread count
+    settings: {},
     log_out: { url: '#log_out', title: 'Log Out', icon: 'log-out' },
-    search: { },
+    search: {},
     discuss_card: {
         url: '/search?kind=topic&q={id}',
         title: 'Discuss Card',
@@ -33,30 +33,27 @@ const items = {
         title: 'Discuss Subjects',
         icon: 'post',
     },
-    create: { },
+    create: {},
 }
 
 // For items that don't have them
 // Use the name to populate title and url automatically
 // And set the default icon to be painfully obviously wrong
 Object.keys(items).forEach((name) => {
-    items[name] = extend({
-        name: name,
-        title: ucfirst(name),
-        url: `/${underscored(name)}`,
-        icon: name,
-    }, items[name] || {})
+    items[name] = extend(
+        {
+            name: name,
+            title: ucfirst(name),
+            url: `/${underscored(name)}`,
+            icon: name,
+        },
+        items[name] || {}
+    )
 })
 
 // For each state, a list of the menu items to appear
 const menus = {
-    loggedOut: [
-        'home',
-        'log_in',
-        'search',
-        'contact',
-        'terms',
-    ],
+    loggedOut: ['home', 'log_in', 'search', 'contact', 'terms'],
     loggedIn: [
         'my_subjects',
         'search',
@@ -99,25 +96,19 @@ const addContextItems = (menuItems, { card, unit, subject }) => {
 module.exports = (data) => {
     let menuItems = menus[data.kind].map(name => items[name])
     menuItems = addContextItems(menuItems, data.context)
-    return nav(
-        { className: data.open ? 'menu selected' : 'menu' },
-        [
-            data.open ? div(
-                { className: 'menu__overlay' }
-            ) : null,
-            a(
-                {
-                    href: '#',
-                    className: 'menu__trigger',
-                },
-                div({ className: 'menu__logo' }),
-                icon('menu'),
-                div({ className: 'menu__label' }, 'Menu')
-            ),
-            data.open ? ul(
-                { className: 'menu__items' },
-                menuItems.map(d => menuItem(d))
-            ) : null,
-        ]
-    )
+    return nav({ className: data.open ? 'menu selected' : 'menu' }, [
+        data.open ? div({ className: 'menu__overlay' }) : null,
+        a(
+            {
+                href: '#',
+                className: 'menu__trigger',
+            },
+            div({ className: 'menu__logo' }),
+            icon('menu'),
+            div({ className: 'menu__label' }, 'Menu')
+        ),
+        data.open
+            ? ul({ className: 'menu__items' }, menuItems.map(d => menuItem(d)))
+            : null,
+    ])
 }

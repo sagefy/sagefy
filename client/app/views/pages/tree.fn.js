@@ -3,7 +3,8 @@ const distance = 36
 
 const putUnitsInLayers = (units) => {
     const ids = units.map(unit => unit.entity_id)
-    let us = units.map(unit => { // eslint-disable-line
+    let us = units.map((unit) => {
+        // eslint-disable-line
         return {
             id: unit.entity_id,
             requires: unit.require_ids.filter(id => ids.indexOf(id) > -1),
@@ -43,8 +44,11 @@ const orderLayers = layers => layers
 const calculatePoints = (layers, nodeWidth) => {
     layers.forEach((layer, i) => {
         layer.forEach((unit, j) => {
-            unit.x = distance + radius + j * (distance + radius * 2) +
-                     (nodeWidth - layer.length) * (radius * 2 + distance) / 2
+            unit.x =
+                distance +
+                radius +
+                j * (distance + radius * 2) +
+                (nodeWidth - layer.length) * (radius * 2 + distance) / 2
             unit.y = i * (distance + radius * 2) + distance + radius
         })
     })
@@ -54,7 +58,9 @@ const calculatePoints = (layers, nodeWidth) => {
 const findUnit = (layers, id) => {
     for (const layer of layers) {
         for (const unit of layer) {
-            if (unit.id === id) { return unit }
+            if (unit.id === id) {
+                return unit
+            }
         }
     }
 }

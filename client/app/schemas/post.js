@@ -15,21 +15,13 @@ module.exports = {
     },
     body: {
         type: 'textarea',
-        validations: [
-            required,
-        ],
+        validations: [required],
     },
     kind: {
         type: 'select',
-        options: [
-            { value: 'post' },
-            { value: 'proposal' },
-            { value: 'vote' },
-        ],
+        options: [{ value: 'post' }, { value: 'proposal' }, { value: 'vote' }],
         default: 'post',
-        validations: [
-            required,
-        ],
+        validations: [required],
     },
     replies_to_id: {
         type: 'hidden',

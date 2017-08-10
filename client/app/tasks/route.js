@@ -38,9 +38,11 @@ module.exports = tasks.add({
     },
 
     openSettingsRoute() {
-        if (!getState().currentUserID ||
+        if (
+            !getState().currentUserID ||
             !getState().users ||
-            !getState().users[getState().currentUserID]) {
+            !getState().users[getState().currentUserID]
+        ) {
             return tasks.getCurrentUser()
         }
     },
@@ -90,10 +92,7 @@ module.exports = tasks.add({
     },
 
     openTopicRoute(id) {
-        return Promise.all([
-            tasks.listPostsForTopic(id),
-            tasks.askFollow(id),
-        ])
+        return Promise.all([tasks.listPostsForTopic(id), tasks.askFollow(id)])
     },
 
     openTreeRoute(id) {
@@ -108,7 +107,7 @@ module.exports = tasks.add({
         return tasks.getCardForLearn(id)
     },
 
-    openUpdatePost(topicID/* , postID */) {
+    openUpdatePost(topicID /* , postID */) {
         return tasks.listPostsForTopic(topicID)
     },
 

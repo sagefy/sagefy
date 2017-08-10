@@ -21,17 +21,17 @@ const escape = (str) => {
         '<': '&lt;',
         '>': '&gt;',
         '"': '&quot;',
-        '\'': '&#x27;',
+        "'": '&#x27;',
         '`': '&#x60;',
     }
 
-    return (str.toString()).replace(/[&<>"'`]/g, char => chars[char])
+    return str.toString().replace(/[&<>"'`]/g, char => chars[char])
 }
 
 // From http://ejohn.org/files/pretty.js
 // TODO-3 move copy to content directory
 const timeAgo = (str) => {
-    const diff = (new Date()).getTime() - (new Date(str)).getTime()
+    const diff = new Date().getTime() - new Date(str).getTime()
     const days = Math.floor(diff / (24 * 60 * 60 * 1000))
     const hours = Math.floor(diff / (60 * 60 * 1000))
     const minutes = Math.floor(diff / (60 * 1000))
@@ -61,22 +61,20 @@ const debounce = function debounce(fn, delay) {
     let timer = null
     return function debounceInternal(...args) {
         clearTimeout(timer)
-        timer = setTimeout(() =>
-            fn.apply(this, args)
-        , delay)
+        timer = setTimeout(() => fn.apply(this, args), delay)
     }
 }
 
 // Determine if a given path matches this router.
 // Returns either false or array, where array is matches parameters.
 const matchesRoute = (docPath, viewPath) => {
-    if (!docPath) { return false }
-    docPath = docPath.split('?')[0]  // Only match the pre-query params
+    if (!docPath) {
+        return false
+    }
+    docPath = docPath.split('?')[0] // Only match the pre-query params
     if (isString(viewPath)) {
         viewPath = new RegExp(
-            `^${
-            viewPath.replace(/\{([\d\w_\$]+)\}/g, '([^/]+)')
-            }$`
+            `^${viewPath.replace(/\{([\d\w_\$]+)\}/g, '([^/]+)')}$`
         )
     }
     const match = docPath.match(viewPath)
@@ -151,21 +149,30 @@ const mergeArraysByKey = (A, B, key = 'id') => {
 const getFormValues = (form) => {
     const data = {}
     const forEach = (nl, fn) => Array.prototype.forEach.call(nl, fn)
-    forEach(form.querySelectorAll([
-        'input[type="text"]',
-        'input[type="email"]',
-        'input[type="password"]',
-        'input[type="hidden"]',
-        'textarea',
-    ].join(', ')), (el) => {
-        data[el.name] = valuefy(el.value)
-    })
+    forEach(
+        form.querySelectorAll(
+        [
+            'input[type="text"]',
+            'input[type="email"]',
+            'input[type="password"]',
+            'input[type="hidden"]',
+            'textarea',
+        ].join(', ')
+        ),
+        (el) => {
+            data[el.name] = valuefy(el.value)
+        }
+    )
     forEach(form.querySelectorAll('[type=radio]'), (el) => {
-        if (el.checked) { data[el.name] = valuefy(el.value) }
+        if (el.checked) {
+            data[el.name] = valuefy(el.value)
+        }
     })
     forEach(form.querySelectorAll('[type=checkbox]'), (el) => {
         data[el.name] = data[el.name] || []
-        if (el.checked) { data[el.name].push(valuefy(el.value)) }
+        if (el.checked) {
+            data[el.name].push(valuefy(el.value))
+        }
     })
     return data
 }
@@ -181,8 +188,9 @@ const parseFormValues = (data) => {
         } else {
             let prev = output
             let next
-            const names = key.split('.').map(n =>
-                (/^\d+$/).test(n) ? parseInt(n) : n)
+            const names = key
+                .split('.')
+                .map(n => /^\d+$/.test(n) ? parseInt(n) : n)
             names.forEach((name, i) => {
                 if (i === names.length - 1) {
                     prev[name] = value
@@ -245,8 +253,12 @@ function createFieldsData({
     if (errors) {
         errors.forEach((error) => {
             let field = fields.filter(f => f.name === error.name)
-            if (field) { field = field[0] }
-            if (field) { field.error = error.message }
+            if (field) {
+                field = field[0]
+            }
+            if (field) {
+                field.error = error.message
+            }
         })
     }
 
@@ -257,24 +269,34 @@ function createFieldsData({
         if (matches) {
             const [, pre, index, col] = matches
             let field = fields.filter(f => f.name === pre)
-            if (field) { field = field[0] }
+            if (field) {
+                field = field[0]
+            }
             if (field) {
                 field.value = field.value || []
                 field.value[index] = field.value[index] || {}
                 field.value[index][col] = value
             }
-        // For every other kind of field...
+            // For every other kind of field...
         } else {
             let field = fields.filter(f => f.name === name)
-            if (field) { field = field[0] }
-            if (field) { field.value = value }
+            if (field) {
+                field = field[0]
+            }
+            if (field) {
+                field.value = value
+            }
         }
     })
 
     if (sending) {
         let field = fields.filter(f => f.type === 'submit')
-        if (field) { field = field[0] }
-        if (field) { field.disabled = true }
+        if (field) {
+            field = field[0]
+        }
+        if (field) {
+            field.disabled = true
+        }
     }
 
     return fields
@@ -282,9 +304,8 @@ function createFieldsData({
 
 function findGlobalErrors({ fields, errors }) {
     const fieldNames = fields.map(field => field.name)
-    return errors.filter(error =>
-        !error.name ||
-        fieldNames.indexOf(error.name) === -1
+    return errors.filter(
+        error => !error.name || fieldNames.indexOf(error.name) === -1
     )
 }
 

@@ -22,10 +22,7 @@ module.exports = () =>
             li(
                 strong('I have an idea for the software.'),
                 br(),
-                a(
-                    { href: uvUrl },
-                    'Add it to our feedback forum.'
-                )
+                a({ href: uvUrl }, 'Add it to our feedback forum.')
             ),
             li(
                 strong('I found a bug.'),
@@ -35,37 +32,25 @@ module.exports = () =>
                     'Add to Github issues'
                 ),
                 '. For security issues ',
-                a(
-                    { href: 'mailto:support@sagefy.org' },
-                    'send us an email'
-                ),
+                a({ href: 'mailto:support@sagefy.org' }, 'send us an email'),
                 '.'
             ),
             li(
                 strong('My copyright has been violated.'),
                 br(),
-                a(
-                    { href: 'mailto:support@sagefy.com' },
-                    'Send us an email'
-                ),
+                a({ href: 'mailto:support@sagefy.com' }, 'Send us an email'),
                 '.'
             ),
             li(
                 strong('I need help with my account.'),
                 br(),
-                a(
-                    { href: 'mailto:support@sagefy.com' },
-                    'Send us an email'
-                ),
+                a({ href: 'mailto:support@sagefy.com' }, 'Send us an email'),
                 '.'
             ),
             li(
-                strong('I\'m a media person.'),
+                strong("I'm a media person."),
                 br(),
-                a(
-                    { href: 'mailto:support@sagefy.com' },
-                    'Send us an email'
-                ),
+                a({ href: 'mailto:support@sagefy.com' }, 'Send us an email'),
                 '.'
             )
         )

@@ -1,7 +1,6 @@
 const broker = require('../../modules/broker')
 const tasks = require('../../modules/tasks')
-const { getFormValues, parseFormValues } =
-    require('../../modules/auxiliaries')
+const { getFormValues, parseFormValues } = require('../../modules/auxiliaries')
 const subjectSchema = require('../../schemas/subject')
 const unitSchema = require('../../schemas/unit')
 const cardSchema = require('../../schemas/card')
@@ -10,7 +9,7 @@ const { closest } = require('../../modules/utilities')
 module.exports = broker.add({
     'click .create__route'(e, el) {
         if (e) e.preventDefault()
-        const [,, kind, step] = el.pathname.split('/')
+        const [, , kind, step] = el.pathname.split('/')
         tasks.resetCreate()
         tasks.updateCreateRoute({ kind, step })
     },
@@ -19,9 +18,15 @@ module.exports = broker.add({
         if (e) e.preventDefault()
         let values = getFormValues(el)
         values = parseFormValues(values)
-        const errors = tasks.validateForm(values, subjectSchema,
-            ['name', 'language', 'body', 'members'])
-        if (errors && errors.length) { return }
+        const errors = tasks.validateForm(values, subjectSchema, [
+            'name',
+            'language',
+            'body',
+            'members',
+        ])
+        if (errors && errors.length) {
+            return
+        }
         const data = {
             topic: {
                 name: `Create a Subject: ${values.name}`,
@@ -47,12 +52,18 @@ module.exports = broker.add({
         if (e) e.preventDefault()
         let values = getFormValues(el)
         values = parseFormValues(values)
-        values.require_ids = values.require_ids &&
-            values.require_ids.map(rmap => rmap.id) ||
+        values.require_ids =
+            (values.require_ids && values.require_ids.map(rmap => rmap.id)) ||
             []
-        const errors = tasks.validateForm(values, unitSchema,
-            ['name', 'language', 'body', 'require_ids'])
-        if (errors && errors.length) { return }
+        const errors = tasks.validateForm(values, unitSchema, [
+            'name',
+            'language',
+            'body',
+            'require_ids',
+        ])
+        if (errors && errors.length) {
+            return
+        }
         tasks.addMemberToAddUnits(values)
         tasks.route('/create/unit/list')
     },
@@ -172,9 +183,14 @@ module.exports = broker.add({
         if (e) e.preventDefault()
         let values = getFormValues(el)
         values = parseFormValues(values)
-        const errors = tasks.validateForm(values, cardSchema,
-            ['name', 'language', 'kind'])
-        if (errors && errors.length) { return }
+        const errors = tasks.validateForm(values, cardSchema, [
+            'name',
+            'language',
+            'kind',
+        ])
+        if (errors && errors.length) {
+            return
+        }
         tasks.addMemberToAddCards(values)
         tasks.route('/create/card/list')
     },

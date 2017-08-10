@@ -5,32 +5,30 @@ const request = require('../modules/request')
 
 function flatten(arr) {
     return arr.reduce(
-        (acc, val) => acc.concat(
-            Array.isArray(val) ? flatten(val) : val
-        ),
+        (acc, val) => acc.concat(Array.isArray(val) ? flatten(val) : val),
         []
     )
 }
 
 module.exports = tasks.add({
     listPostsForTopic(id) {
-        return tasks.listPosts(id)
-            .then((response) => {
-                const userIds = response.posts.map(post => post.user_id)
-                const entityVersions = flatten(response.posts
+        return tasks.listPosts(id).then((response) => {
+            const userIds = response.posts.map(post => post.user_id)
+            const entityVersions = flatten(
+                response.posts
                     .filter(post => post.kind === 'proposal')
-                    .map(post => post.entity_versions))
-                return Promise.all([
-                    tasks.getTopic(id)
-                        .then((response) => {
-                            const kind = response.topic.entity.kind
-                            const entityId = response.topic.entity.id
-                            return tasks.getEntity(kind, entityId)
-                        }),
-                    tasks.listUsers(userIds, { size: 48 }),
-                    tasks.listEntityVersionsByTopic(id, entityVersions),
-                ])
-            })
+                    .map(post => post.entity_versions)
+            )
+            return Promise.all([
+                tasks.getTopic(id).then((response) => {
+                    const kind = response.topic.entity.kind
+                    const entityId = response.topic.entity.id
+                    return tasks.getEntity(kind, entityId)
+                }),
+                tasks.listUsers(userIds, { size: 48 }),
+                tasks.listEntityVersionsByTopic(id, entityVersions),
+            ])
+        })
     },
 
     listPosts(id) {

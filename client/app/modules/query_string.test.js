@@ -10,5 +10,4 @@ describe('Query String', () =>
             d: false,
             e: 1.1,
         })
-    })
-)
+    }))

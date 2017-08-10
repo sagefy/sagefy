@@ -108,7 +108,7 @@ module.exports = function create(state = {}, action = { type: '' }) {
     }
     if (action.type === 'ADD_MEMBER_TO_ADD_UNITS') {
         state = shallowCopy(state)
-        state.units = state.units && state.units.slice() || []
+        state.units = (state.units && state.units.slice()) || []
         state.units.push({
             kind: action.kind,
             id: action.id,
@@ -122,7 +122,7 @@ module.exports = function create(state = {}, action = { type: '' }) {
     }
     if (action.type === 'ADD_MEMBER_TO_ADD_CARDS') {
         state = shallowCopy(state)
-        state.cards = state.cards && state.cards.slice() || []
+        state.cards = (state.cards && state.cards.slice()) || []
         state.cards.push(action.values)
         return state
     }
@@ -157,10 +157,12 @@ module.exports = function create(state = {}, action = { type: '' }) {
         let { values = {} } = action
         const { name, columns } = action
         values = translateListOfRows(values, name)
-        values[name].push(columns.reduce((o, key) => {
-            o[key] = ''
-            return o
-        }, {}))
+        values[name].push(
+            columns.reduce((o, key) => {
+                o[key] = ''
+                return o
+            }, {})
+        )
         state.proposedCard = values
         return state
     }

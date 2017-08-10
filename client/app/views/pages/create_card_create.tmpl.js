@@ -5,28 +5,30 @@ const cardSchema = require('../../schemas/card')
 const videoCardSchema = require('../../schemas/cards/video_card')
 const choiceCardSchema = require('../../schemas/cards/choice_card')
 const form = require('../components/form.tmpl')
-const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
+const {
+    createFieldsData,
+    findGlobalErrors,
+} = require('../../modules/auxiliaries')
 const icon = require('../components/icon.tmpl')
 
-const allKindsFields = [{
-    label: 'Card Name',
-    name: 'name',
-}, {
-    label: 'Card Language',
-    name: 'language',
-    options: [
-        { label: 'English' },
-    ],
-    value: 'en',
-}, {
-    label: 'Card Kind',
-    name: 'kind',
-    options: [
-        { label: 'Video' },
-        { label: 'Choice' },
-    ],
-    inline: true,
-}]
+const allKindsFields = [
+    {
+        label: 'Card Name',
+        name: 'name',
+    },
+    {
+        label: 'Card Language',
+        name: 'language',
+        options: [{ label: 'English' }],
+        value: 'en',
+    },
+    {
+        label: 'Card Kind',
+        name: 'kind',
+        options: [{ label: 'Video' }, { label: 'Choice' }],
+        inline: true,
+    },
+]
 
 /* {
    name: 'require_ids',
@@ -34,54 +36,58 @@ const allKindsFields = [{
    description: 'List the cards required before this card.',
 }, */
 
-const videoFields = allKindsFields.concat([{
-    label: 'Video Site',
-    name: 'site',
-    options: [
-        { label: 'YouTube' },
-        { label: 'Vimeo' },
-    ],
-}, {
-    label: 'Video ID',
-    name: 'video_id',
-    description: 'You can find the video ID in the URL. Look for https://www.youtube.com/watch?v=VIDEO_ID_HERE',
-}, {
-    type: 'submit',
-    name: 'submit',
-    label: 'Create Video Card',
-    icon: 'create',
-}])
+const videoFields = allKindsFields.concat([
+    {
+        label: 'Video Site',
+        name: 'site',
+        options: [{ label: 'YouTube' }, { label: 'Vimeo' }],
+    },
+    {
+        label: 'Video ID',
+        name: 'video_id',
+        description:
+            'You can find the video ID in the URL. Look for https://www.youtube.com/watch?v=VIDEO_ID_HERE',
+    },
+    {
+        type: 'submit',
+        name: 'submit',
+        label: 'Create Video Card',
+        icon: 'create',
+    },
+])
 
-const choiceFields = allKindsFields.concat([{
-    label: 'Question or Prompt',
-    name: 'body',
-}, {
-    label: 'Response Options',
-    name: 'options',
-    columns: [
-        { options: [
-            { label: 'Yes' },
-            { label: 'No' },
-        ] },
-        {},
-        {},
-    ],
-}, {
-    label: 'Order',
-    name: 'order',
-    options: [
-        { label: 'Random' },
-        { label: 'Set' },
-    ],
-}, {
-    label: 'Max Options to Show',
-    name: 'max_options_to_show',
-}, {
-    type: 'submit',
-    name: 'submit',
-    label: 'Create Choice Card',
-    icon: 'create',
-}])
+const choiceFields = allKindsFields.concat([
+    {
+        label: 'Question or Prompt',
+        name: 'body',
+    },
+    {
+        label: 'Response Options',
+        name: 'options',
+        columns: [
+            {
+                options: [{ label: 'Yes' }, { label: 'No' }],
+            },
+            {},
+            {},
+        ],
+    },
+    {
+        label: 'Order',
+        name: 'order',
+        options: [{ label: 'Random' }, { label: 'Set' }],
+    },
+    {
+        label: 'Max Options to Show',
+        name: 'max_options_to_show',
+    },
+    {
+        type: 'submit',
+        name: 'submit',
+        label: 'Create Choice Card',
+        icon: 'create',
+    },
+])
 
 allKindsFields.forEach((field, index) => {
     allKindsFields[index] = extend({}, allKindsFields[field.name] || {}, field)
@@ -96,16 +102,18 @@ choiceFields.forEach((field, index) => {
 })
 
 module.exports = function createCardCreate(data) {
-    const proposedCard = data.create && data.create.proposedCard || {}
+    const proposedCard = (data.create && data.create.proposedCard) || {}
     const cardKind = proposedCard.kind
 
-    const fields = cardKind === 'video' ? videoFields
-        : cardKind === 'choice' ? choiceFields
-        : allKindsFields
+    const fields =
+        cardKind === 'video'
+            ? videoFields
+            : cardKind === 'choice' ? choiceFields : allKindsFields
 
-    const schema = cardKind === 'video' ? videoCardSchema
-        : cardKind === 'choice' ? choiceCardSchema
-        : cardSchema
+    const schema =
+        cardKind === 'video'
+            ? videoCardSchema
+            : cardKind === 'choice' ? choiceCardSchema : cardSchema
 
     const instanceFields = createFieldsData({
         schema,
@@ -128,7 +136,9 @@ module.exports = function createCardCreate(data) {
             fields: instanceFields,
             errors: globalErrors,
         }),
-        p('After you submit here, "Submit These Cards" on the list page to finish.'),
+        p(
+            'After you submit here, "Submit These Cards" on the list page to finish.'
+        ),
         a(
             { href: '/create/card/list' },
             icon('back'),

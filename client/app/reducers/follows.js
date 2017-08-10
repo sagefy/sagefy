@@ -2,19 +2,16 @@ const { mergeArraysByKey } = require('../modules/auxiliaries')
 
 module.exports = function follows(state = [], action = { type: '' }) {
     if (action.type === 'LIST_FOLLOWS_SUCCESS') {
-        const follows = mergeArraysByKey(
-            state,
-            action.follows,
-            'id'
-        )
+        const follows = mergeArraysByKey(state, action.follows, 'id')
         return follows
     }
     if (action.type === 'ASK_FOLLOW_SUCCESS') {
-        if (action.follows.length === 0) { return }
+        if (action.follows.length === 0) {
+            return
+        }
         const follow = action.follows[0]
         const follows = state
-        const index = follows.findIndex(f =>
-            f.entity.id === action.entityID)
+        const index = follows.findIndex(f => f.entity.id === action.entityID)
         if (index > -1) {
             follows[index] = follow
         } else {
@@ -31,8 +28,7 @@ module.exports = function follows(state = [], action = { type: '' }) {
     }
     if (action.type === 'UNFOLLOW_SUCCESS') {
         const follows = state
-        const i = follows.findIndex(follow =>
-            follow.id === action.id)
+        const i = follows.findIndex(follow => follow.id === action.id)
         follows.splice(i, 1)
         return follows
     }

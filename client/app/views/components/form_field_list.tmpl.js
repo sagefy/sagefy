@@ -1,12 +1,22 @@
-const { table, thead, tfoot, tbody, tr, th, td, a } =
-    require('../../modules/tags')
+const {
+    table,
+    thead,
+    tfoot,
+    tbody,
+    tr,
+    th,
+    td,
+    a,
+} = require('../../modules/tags')
 const { ucfirst } = require('../../modules/auxiliaries')
 const formFieldInput = require('./form_field_input.tmpl')
 const formFieldSelect = require('./form_field_select.tmpl')
 const icon = require('./icon.tmpl')
 
 const field = ({ name, index, col, row, lock }) => {
-    if (lock) { return row[col.name] }
+    if (lock) {
+        return row[col.name]
+    }
 
     if (col.type === 'select') {
         return formFieldSelect({
@@ -49,18 +59,20 @@ module.exports = (data) => {
         { attributes: { 'data-name': data.name } },
         thead(
             tr(
-                columns.map(col => th(
-                    { attributes: { 'data-col': col.name } },
-                    ucfirst(col.name)
-                )),
+                columns.map(col =>
+                    th(
+                        { attributes: { 'data-col': col.name } },
+                        ucfirst(col.name)
+                    )
+                ),
                 // TODO-2 th()  // For reordering
-                th()  // For deleting
+                th() // For deleting
             )
         ),
         tfoot(
             tr(
                 td(
-                    { colSpan: columns.length + 1 },  // TODO-2 +2 reordering
+                    { colSpan: columns.length + 1 }, // TODO-2 +2 reordering
                     a(
                         { href: '#', className: 'form-field--list__add-row' },
                         icon('create'),
@@ -70,36 +82,40 @@ module.exports = (data) => {
             )
         ),
         tbody(
-            value.map((row, index) => tr(
-                columns.map(col => td(
-                    field({
-                        name: data.name,
-                        index,
-                        col,
-                        row,
-                        lock: data.lock,
-                    })
-                )),
-                // TODO-2 move row td(
-                //     a(
-                //         {title: 'Reorder', href: '#', className: 'move-row'}
-                //         icon('move')
-                //     )
-                // )
-                td(
-                    a(
-                        {
-                            title: 'Remove',
-                            href: '#',
-                            className: 'form-field--list__remove-row',
-                            attributes: {
-                                'data-index': index,
+            value.map((row, index) =>
+                tr(
+                    columns.map(col =>
+                        td(
+                            field({
+                                name: data.name,
+                                index,
+                                col,
+                                row,
+                                lock: data.lock,
+                            })
+                        )
+                    ),
+                    // TODO-2 move row td(
+                    //     a(
+                    //         {title: 'Reorder', href: '#', className: 'move-row'}
+                    //         icon('move')
+                    //     )
+                    // )
+                    td(
+                        a(
+                            {
+                                title: 'Remove',
+                                href: '#',
+                                className: 'form-field--list__remove-row',
+                                attributes: {
+                                    'data-index': index,
+                                },
                             },
-                        },
-                        icon('remove')
+                            icon('remove')
+                        )
                     )
                 )
-            ))
+            )
         )
     )
 }

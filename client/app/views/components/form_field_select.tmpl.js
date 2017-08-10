@@ -22,21 +22,27 @@ module.exports = (data) => {
 
     const html = []
 
-    html.push(ul(
-        { className: `form-field--select__ul${
-            data.inline ? ' form-field--select__ul--inline' : ''}`,
-        },
-        data.options.map(o => optionTemplate({
-            name: data.name,
-            muliple: data.multiple,
-            value: o.value,
-            checked: data.value ?
-                     o.value === data.value :
-                     o.value === data.default,
-            label: o.label,
-            disabled: o.disabled,
-        }))
-    ))
+    html.push(
+        ul(
+            {
+                className: `form-field--select__ul${data.inline
+                    ? ' form-field--select__ul--inline'
+                    : ''}`,
+            },
+            data.options.map(o =>
+                optionTemplate({
+                    name: data.name,
+                    muliple: data.multiple,
+                    value: o.value,
+                    checked: data.value
+                        ? o.value === data.value
+                        : o.value === data.default,
+                    label: o.label,
+                    disabled: o.disabled,
+                })
+            )
+        )
+    )
 
     // if data.showOverlay
     //     html.push(

@@ -9,9 +9,9 @@ module.exports = broker.add({
     },
 
     // 'change input[type="search"]': debounce((e, el) =>
-        // TODO-3 search options
+    // TODO-3 search options
     // , 200)
 
     // 'change input[type="radio"], input[type="checkbox"]': (e, el) =>
-        // TODO-3 update .select__selected to show list of selected names
+    // TODO-3 update .select__selected to show list of selected names
 })

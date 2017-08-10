@@ -12,31 +12,32 @@ module.exports = function createCardList(data) {
         { id: 'create', className: 'page create--card-list' },
         h1('Add Cards to Unit'),
         cardWizard('list'),
-
         h3(`The following cards will be added to ${unitName}`),
         p('We won\'t save the new cards until you "Submit These Cards".'),
-
         // TODO List of existing units (if any)
 
-        cards && cards.length ? ul(
-            { className: 'create--card-list__cards' },
-            cards.map((card, index) => li(
-                a(
-                    {
-                        dataset: { index },
-                        href: '#',
-                        className: 'create--card-list__remove',
-                    },
-                    icon('remove'),
-                    ' Remove'
-                ),
-                previewCardHead({
-                    name: card.name,
-                    kind: card.kind,
-                })
-            ))
-        ) : p('No cards added yet.'),
-
+        cards && cards.length
+            ? ul(
+                  { className: 'create--card-list__cards' },
+                  cards.map((card, index) =>
+                      li(
+                          a(
+                              {
+                                  dataset: { index },
+                                  href: '#',
+                                  className: 'create--card-list__remove',
+                              },
+                              icon('remove'),
+                              ' Remove'
+                          ),
+                          previewCardHead({
+                              name: card.name,
+                              kind: card.kind,
+                          })
+                      )
+                  )
+              )
+            : p('No cards added yet.'),
         a(
             {
                 className: 'create--card-list__create',
@@ -45,9 +46,7 @@ module.exports = function createCardList(data) {
             icon('create'),
             ' Create a New Card'
         ),
-
         hr(),
-
         a(
             {
                 href: '#',

@@ -5,9 +5,5 @@ module.exports = ({ name, message }) =>
     li(
         { className: 'form__error' },
         icon('bad'),
-        [
-            ' ',
-            name ? `${name}: ` : '',
-            message,
-        ].join('')
+        [' ', name ? `${name}: ` : '', message].join('')
     )

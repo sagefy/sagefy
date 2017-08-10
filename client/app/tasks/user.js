@@ -2,7 +2,6 @@ const { dispatch, getState } = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
 
-
 module.exports = tasks.add({
     createUser(data) {
         dispatch({
@@ -27,7 +26,9 @@ module.exports = tasks.add({
                 })
             })
             .then(() => {
-                if (!subjectId) { return }
+                if (!subjectId) {
+                    return
+                }
                 // if subject_id is a param, auto add to user's subjects
                 return tasks.addUserSubject(subjectId)
             })
@@ -108,7 +109,7 @@ module.exports = tasks.add({
 
     getUserForProfile(id, opts = {}) {
         return tasks.getUser(id, opts)
-            /* .then((/userResponse) => {
+        /* .then((/userResponse) => {
                 // const {user} = userResponse
                 const calls = []
                 /*
@@ -133,7 +134,9 @@ module.exports = tasks.add({
         })
             .then((response) => {
                 const user = response.user
-                if (response.avatar) { user.avatar = response.avatar }
+                if (response.avatar) {
+                    user.avatar = response.avatar
+                }
                 dispatch({
                     type: 'ADD_USER',
                     message: 'get user success',

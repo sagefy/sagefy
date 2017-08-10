@@ -14,11 +14,7 @@ module.exports = (data) => {
     return div(
         { id: 'follows', className: 'page' },
         h1('Follows'),
-        a(
-            { href: '/notices' },
-            icon('back'),
-            ' Back to notices.'
-        ),
+        a({ href: '/notices' }, icon('back'), ' Back to notices.'),
         follows(
             data.follows.map((follow) => {
                 const ofKinds = data[`${follow.entity.kind}s`] || {}
@@ -32,15 +28,10 @@ module.exports = (data) => {
 }
 
 const follows = (data) => {
-    if (data.length) { return ul(data.map(f => follow(f))) }
-    return p(
-        'No follows. ',
-        a(
-            { href: '/search' },
-            icon('search'),
-            ' Search'
-        )
-    )
+    if (data.length) {
+        return ul(data.map(f => follow(f)))
+    }
+    return p('No follows. ', a({ href: '/search' }, icon('search'), ' Search'))
 }
 
 const follow = (data) => {
@@ -57,18 +48,16 @@ const follow = (data) => {
             icon('remove'),
             ' Unfollow'
         ),
-        kind === 'unit' ?
-            previewUnitHead({ name, body, labelKind: true }) :
-        kind === 'subject' ?
-            previewSubjectHead({ name, body, labelKind: true }) :
-        kind === 'card' ?
-            previewCardHead({
-                name,
-                kind: data.entityFull.kind,
-                labelKind: true,
-            }) :
-        kind === 'topic' ?
-            'A topic' :
-            null
+        kind === 'unit'
+            ? previewUnitHead({ name, body, labelKind: true })
+            : kind === 'subject'
+              ? previewSubjectHead({ name, body, labelKind: true })
+              : kind === 'card'
+                ? previewCardHead({
+                    name,
+                    kind: data.entityFull.kind,
+                    labelKind: true,
+                })
+                : kind === 'topic' ? 'A topic' : null
     )
 }

@@ -30,7 +30,12 @@ module.exports = tasks.add({
     },
 
     addMemberToAddUnits({
-        id, version, name, body, language = 'en', require_ids = [],
+        id,
+        version,
+        name,
+        body,
+        language = 'en',
+        require_ids = [],
     }) {
         dispatch({
             type: 'ADD_MEMBER_TO_ADD_UNITS',
@@ -52,7 +57,7 @@ module.exports = tasks.add({
 
     removeMemberFromCreateSubject({ id }) {
         // TODO-2 switch to undo
-        if(window.confirm('Remove member?')) {  // eslint-disable-line
+        if (window.confirm('Remove member?')) { // eslint-disable-line
             dispatch({
                 type: 'REMOVE_MEMBER_FROM_CREATE_SUBJECT',
                 id,
@@ -62,7 +67,7 @@ module.exports = tasks.add({
 
     removeUnitFromSubject({ index }) {
         // TODO-2 switch to undo
-        if(window.confirm('Remove unit?')) {  // eslint-disable-line
+        if (window.confirm('Remove unit?')) { // eslint-disable-line
             dispatch({
                 type: 'REMOVE_UNIT_FROM_SUBJECT',
                 index,
@@ -72,7 +77,7 @@ module.exports = tasks.add({
 
     removeCardFromUnit({ index }) {
         // TODO-2 switch to undo
-        if(window.confirm('Remove card?')) {  // eslint-disable-line
+        if (window.confirm('Remove card?')) { // eslint-disable-line
             dispatch({
                 type: 'REMOVE_CARD_FROM_UNIT',
                 index,
@@ -126,7 +131,8 @@ module.exports = tasks.add({
     createSubjectProposal(data) {
         let topicId
         let subjectId
-        tasks.createTopic({ topic: data.topic })
+        tasks
+            .createTopic({ topic: data.topic })
             .then((topicResponse) => {
                 topicId = topicResponse.topic.id
                 return tasks.createNewSubjectVersion(data.subject)
@@ -134,10 +140,12 @@ module.exports = tasks.add({
             .then((subjectResponse) => {
                 const post = copy(data.post)
                 post.topic_id = topicId
-                post.entity_versions = [{
-                    kind: 'subject',
-                    id: subjectResponse.version.id,
-                }]
+                post.entity_versions = [
+                    {
+                        kind: 'subject',
+                        id: subjectResponse.version.id,
+                    },
+                ]
                 subjectId = subjectResponse.version.entity_id
                 return tasks.createPost({ post })
             })
@@ -159,28 +167,32 @@ module.exports = tasks.add({
 
         let topicId
         let unitVersionIds
-        return tasks.createTopic({ topic })
+        return tasks
+            .createTopic({ topic })
             .then((topicResponse) => {
                 topicId = topicResponse.topic.id
-                const newUnits = state.create.units
-                    .filter(unit => !unit.id)
+                const newUnits = state.create.units.filter(unit => !unit.id)
                 return tasks.createNewUnitVersions(newUnits)
             })
             .then((unitsResponse) => {
                 const existingUnitIds = state.create.units
                     .map(unit => unit.id)
                     .filter(unitId => unitId)
-                const newUnitIds = unitsResponse.units
-                    .map(unit => unit.entity_id)
+                const newUnitIds = unitsResponse.units.map(
+                    unit => unit.entity_id
+                )
                 const unitIds = [].concat(existingUnitIds, newUnitIds)
 
                 const existingUnitVersionIds = state.create.units
                     .map(unit => unit.version)
                     .filter(version => version)
-                const newUnitVersionIds = unitsResponse.units
-                    .map(unit => unit.id)
-                unitVersionIds = []
-                    .concat(existingUnitVersionIds, newUnitVersionIds)
+                const newUnitVersionIds = unitsResponse.units.map(
+                    unit => unit.id
+                )
+                unitVersionIds = [].concat(
+                    existingUnitVersionIds,
+                    newUnitVersionIds
+                )
 
                 const subject = {
                     entity_id: selectedSubject.id,
@@ -196,13 +208,17 @@ module.exports = tasks.add({
                     kind: 'proposal',
                     body: 'Add Units to Subject',
                     topic_id: topicId,
-                    entity_versions: [{
-                        kind: 'subject',
-                        id: subjectResponse.version.id,
-                    }].concat(unitVersionIds.map(unitId => ({
-                        id: unitId,
-                        kind: 'unit',
-                    }))),
+                    entity_versions: [
+                        {
+                            kind: 'subject',
+                            id: subjectResponse.version.id,
+                        },
+                    ].concat(
+                        unitVersionIds.map(unitId => ({
+                            id: unitId,
+                            kind: 'unit',
+                        }))
+                    ),
                 }
                 return tasks.createPost({ post })
             })
@@ -222,13 +238,16 @@ module.exports = tasks.add({
             },
         }
         let topicId
-        return tasks.createTopic({ topic })
+        return tasks
+            .createTopic({ topic })
             .then((topicResponse) => {
                 topicId = topicResponse.topic.id
                 let { cards } = state.create
-                cards = cards.map(card => Object.assign({}, card, {
-                    unit_id: selectedUnit.id,
-                }))
+                cards = cards.map(card =>
+                    Object.assign({}, card, {
+                        unit_id: selectedUnit.id,
+                    })
+                )
                 return tasks.createNewCardVersions(cards)
             })
             .then((cardsResponse) => {

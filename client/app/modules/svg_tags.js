@@ -1,9 +1,7 @@
 const h = require('virtual-dom/virtual-hyperscript/svg')
 
 // https://developer.mozilla.org/en-US/docs/Web/SVG/Element
-const names = [
-    'svg', 'circle', 'line', 'text',
-]
+const names = ['svg', 'circle', 'line', 'text']
 
 const tags = {}
 const objConstructor = {}.constructor

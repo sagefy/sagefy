@@ -2,38 +2,47 @@ const { div, h1 } = require('../../modules/tags')
 const { extend } = require('../../modules/utilities')
 const subjectSchema = require('../../schemas/subject')
 const form = require('../components/form.tmpl')
-const { createFieldsData, findGlobalErrors } = require('../../modules/auxiliaries')
+const {
+    createFieldsData,
+    findGlobalErrors,
+} = require('../../modules/auxiliaries')
 
-const fields = [{
-    label: 'Subject Name',
-    name: 'name',
-}, {
-    label: 'Subject Language',
-    name: 'language',
-    options: [
-        { label: 'English' },
-    ],
-    value: 'en',
-}, {
-    label: 'Subject Goal',
-    description: 'Start with a verb, such as: Compute the value of ' +
-                 'dividing two whole numbers.',
-    name: 'body',
-}, {
-    name: 'members',
-    label: 'Subject Members',
-    description: 'Choose a list of units and subjects. ' +
-                 'Cycles are not allowed.',
-    add: {
-        label: 'Add an Existing Unit or Subject',
-        url: '#',
+const fields = [
+    {
+        label: 'Subject Name',
+        name: 'name',
     },
-}, {
-    type: 'submit',
-    name: 'submit',
-    label: 'Create Subject',
-    icon: 'create',
-}]
+    {
+        label: 'Subject Language',
+        name: 'language',
+        options: [{ label: 'English' }],
+        value: 'en',
+    },
+    {
+        label: 'Subject Goal',
+        description:
+            'Start with a verb, such as: Compute the value of ' +
+            'dividing two whole numbers.',
+        name: 'body',
+    },
+    {
+        name: 'members',
+        label: 'Subject Members',
+        description:
+            'Choose a list of units and subjects. '
+            + 'Cycles are not allowed.',
+        add: {
+            label: 'Add an Existing Unit or Subject',
+            url: '#',
+        },
+    },
+    {
+        type: 'submit',
+        name: 'submit',
+        label: 'Create Subject',
+        icon: 'create',
+    },
+]
 
 fields.forEach((field, index) => {
     fields[index] = extend({}, subjectSchema[field.name] || {}, field)

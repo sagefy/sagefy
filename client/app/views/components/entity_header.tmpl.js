@@ -10,11 +10,7 @@ module.exports = (kind, entity) => {
 
     return header(
         { className: 'entity-header' },
-        span(
-            { className: 'entity-header__kind' },
-            icon(kind),
-            ` ${title}`
-        ),
+        span({ className: 'entity-header__kind' }, icon(kind), ` ${title}`),
         h1(entity.name)
     )
 }

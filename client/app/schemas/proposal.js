@@ -9,11 +9,7 @@ module.exports = extend({}, post, {
     },
     'entity_version.kind': {
         type: 'select',
-        options: [
-            { value: 'card' },
-            { value: 'unit' },
-            { value: 'subject' },
-        ],
+        options: [{ value: 'card' }, { value: 'unit' }, { value: 'subject' }],
         validations: [required],
     },
 })

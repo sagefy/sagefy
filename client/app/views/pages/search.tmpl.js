@@ -1,6 +1,19 @@
 /* eslint-disable no-underscore-dangle */
-const { div, h1, form, input, button, img,
- ul, li, a, p, h3, span, br } = require('../../modules/tags')
+const {
+    div,
+    h1,
+    form,
+    input,
+    button,
+    img,
+    ul,
+    li,
+    a,
+    p,
+    h3,
+    span,
+    br,
+} = require('../../modules/tags')
 const spinner = require('../components/spinner.tmpl')
 const timeago = require('../components/timeago.tmpl')
 const icon = require('../components/icon.tmpl')
@@ -34,21 +47,19 @@ module.exports = (data) => {
                 { className: 'form-field form-field--search' },
                 input(inputOpts)
             ),
-            button(
-                { type: 'submit' },
-                icon('search'),
-                ' Search'
-            )
+            button({ type: 'submit' }, icon('search'), ' Search')
         ),
         loading ? spinner() : null,
-        data.searchResults && data.searchResults.length ? ul(
-            data.searchResults.map(result => li(
-                r[`${result._type}Result`](result, asLearner)
-            ))
-        ) : null,
-        data.searchResults && data.searchResults.length === 0 ?
-            p('No results found.') :
-            null
+        data.searchResults && data.searchResults.length
+            ? ul(
+                  data.searchResults.map(result =>
+                      li(r[`${result._type}Result`](result, asLearner))
+                  )
+              )
+            : null,
+        data.searchResults && data.searchResults.length === 0
+            ? p('No results found.')
+            : null
     )
 
     // TODO-2 pagination
@@ -68,34 +79,36 @@ r.userResult = result =>
         )
     )
 
-r.topicResult = result =>
-    [
-        timeago(result._source.created, { right: true }),
-        h3(
-            span({ className: 'search__label' }, icon('topic'), ' Topic'),
-            ' ',
-            a(
-                { href: `/topics/${result._source.id}` },
-                result._source.name
-            )
-        ),
-        result._source.entity.name ? a(
+r.topicResult = result => [
+    timeago(result._source.created, { right: true }),
+    h3(
+        span({ className: 'search__label' }, icon('topic'), ' Topic'),
+        ' ',
+        a({ href: `/topics/${result._source.id}` }, result._source.name)
+    ),
+    result._source.entity.name
+        ? a(
             {
-                href:
-                    `/${result._source.entity.kind}/${result._source.entity.id}`,
+                href: `/${result._source.entity.kind}/${result._source.entity
+                      .id}`,
             },
-            result._source.entity.name
-        ) : null,
-        // TODO-2 no of posts     ???
-    ]
+              result._source.entity.name
+          )
+        : null,
+    // TODO-2 no of posts     ???
+]
 
 r.postResult = (result) => {
     const href = `/topics/${result._source.topic_id}#${result._source.id}`
     return [
         timeago(result._source.created, { right: true }),
         h3(
-            span({ className: 'search__label' },
-                icon('post'), ' ', ucfirst(result._source.kind)),
+            span(
+                { className: 'search__label' },
+                icon('post'),
+                ' ',
+                ucfirst(result._source.kind)
+            ),
             ' by ',
             a(
                 { href: `/users/${result._source.user.id}` },
@@ -103,18 +116,16 @@ r.postResult = (result) => {
             )
         ),
         ' in topic: ',
-        result._source.topic ? a(
-            { href: `/topics/${result._source.topic.id}` },
-            result._source.topic.name
-        ) : null,
+        result._source.topic
+            ? a(
+                  { href: `/topics/${result._source.topic.id}` },
+                  result._source.topic.name
+              )
+            : null,
         br(),
         result._source.body,
         ' ',
-        a(
-            { href },
-            'To Post ',
-            icon('next')
-        ),
+        a({ href }, 'To Post ', icon('next')),
         // TODO-3 entity kind       result._source.topic_id > ????
         // TODO-3 entity name       result._source.topic_id > ????
     ]
@@ -138,31 +149,35 @@ r.unitResult = result =>
         labelKind: true,
     })
 
-r.subjectResult = (result, asLearner = false) =>
-    [
-        asLearner ? a(  // TODO-2 if already in subjects, don't show this button
+r.subjectResult = (result, asLearner = false) => [
+    asLearner
+        ? a(
+              // TODO-2 if already in subjects, don't show this button
             {
                 id: result._source.entity_id,
                 href: '#',
                 className: 'add-to-my-subjects',
             },
-            icon('create'),
-            ' Add to My Subjects'
-        ) : null,
+              icon('create'),
+              ' Add to My Subjects'
+          )
+        : null,
 
-        previewSubjectHead({
-            url: `/subjects/${result._source.entity_id}`,
-            name: result._source.name,
-            body: result._source.body,
-            labelKind: true,
-        }),
-        asLearner ? ' ' : null,
-        asLearner ? a(
+    previewSubjectHead({
+        url: `/subjects/${result._source.entity_id}`,
+        name: result._source.name,
+        body: result._source.body,
+        labelKind: true,
+    }),
+    asLearner ? ' ' : null,
+    asLearner
+        ? a(
             {
                 href: `/subjects/${result._source.entity_id}/tree`,
                 className: 'view-units',
             },
-            icon('unit'),
-            ' View Units'
-        ) : null,
-    ]
+              icon('unit'),
+              ' View Units'
+          )
+        : null,
+]

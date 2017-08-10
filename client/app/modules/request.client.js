@@ -8,10 +8,7 @@ module.exports = function ajax({ method, url, data }) {
     const request = new XMLHttpRequest()
     request.open(method, url, true)
     request.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-    request.setRequestHeader(
-        'Content-Type',
-        'application/json; charset=UTF-8'
-    )
+    request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
     const promise = new Promise((resolve, reject) => {
         request.onload = function onload() {
             if (this.status < 400 && this.status >= 200) {

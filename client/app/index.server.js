@@ -2,7 +2,12 @@ const express = require('express')
 const toHTML = require('vdom-to-html')
 const template = require('./views/index.tmpl')
 const { route } = require('./modules/route_actions')
-const { dispatch, getState, setReducer, resetState } = require('./modules/store')
+const {
+    dispatch,
+    getState,
+    setReducer,
+    resetState,
+} = require('./modules/store')
 const reducer = require('./reducers/index')
 const cookieParser = require('cookie-parser')
 
@@ -49,11 +54,13 @@ app.get(/.*/, (request, response) => {
     global.requestCookie = `session_id=${request.cookies.session_id}`
     const promise = route(path)
     if (promise) {
-        promise.then(() => {
-            response.status(200).send(render())
-        }).catch((error) => {
-            console.error(error) // eslint-disable-line
-        })
+        promise
+            .then(() => {
+                response.status(200).send(render())
+            })
+            .catch((error) => {
+                console.error(error) // eslint-disable-line
+            })
     } else {
         response.status(200).send(render())
     }

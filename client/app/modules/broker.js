@@ -39,7 +39,9 @@ module.exports = {
             while (el && el !== this.el) {
                 Object.keys(this.events[type]).forEach((selector) => {
                     const fn = this.events[type][selector]
-                    if (el.matches(selector)) { fn.call(this, e, el) }
+                    if (el.matches(selector)) {
+                        fn.call(this, e, el)
+                    }
                 })
                 el = el.parentNode
             }

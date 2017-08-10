@@ -6,7 +6,6 @@ const {
     calculatePoints,
     findUnit,
 } = require('./tree.fn')
-const { matchesRoute } = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 
@@ -20,7 +19,9 @@ module.exports = (data) => {
     const id = data.routeArgs[0]
     const treeData = data.subjectTrees && data.subjectTrees[id]
 
-    if (!treeData) { return spinner() }
+    if (!treeData) {
+        return spinner()
+    }
 
     const asLearner = data.route.indexOf('as_learner') > -1
     const asContrib = !asLearner
@@ -28,25 +29,31 @@ module.exports = (data) => {
     let layers = orderLayers(putUnitsInLayers(treeData.units))
     const nodeHeight = layers.length
     const nodeWidth = Math.max.apply(null, layers.map(l => l.length))
-    const preWidth = width = nodeWidth * radius * 2 + (nodeWidth + 1) * distance
-    if (data.currentTreeUnit) { width += 12 * (6 * 2 + 5) }
+    const preWidth = width =
+        nodeWidth * radius * 2 + (nodeWidth + 1) * distance
+    if (data.currentTreeUnit) {
+        width += 12 * (6 * 2 + 5)
+    }
     const height = nodeHeight * radius * 2 + (nodeHeight + 1) * distance
     layers = calculatePoints(layers, nodeWidth)
 
-    const currentUnit = treeData.units.find(u =>
-        u.entity_id === data.currentTreeUnit)
+    const currentUnit = treeData.units.find(
+        u => u.entity_id === data.currentTreeUnit
+    )
 
     return div(
         { id: 'tree', className: 'page' },
         h1(`Tree: ${treeData.subjects.name}`),
-        asContrib ? p(a(
-            { href: `/subjects/${id}` },
-            icon('subject'),
-            ' View subject information'
-        )) : null,
-        p(
-          'You can click the nodes to see the unit name.'
-        ),
+        asContrib
+            ? p(
+                  a(
+                      { href: `/subjects/${id}` },
+                      icon('subject'),
+                      ' View subject information'
+                  )
+              )
+            : null,
+        p('You can click the nodes to see the unit name.'),
         svg(
             {
                 class: 'tree',
@@ -82,12 +89,14 @@ const renderLines = (layers) => {
             unit.requires.forEach((req) => {
                 req = findUnit(layers, req)
                 if (req) {
-                    nodes.push(unitLine({
-                        x1: req.x,
-                        y1: req.y,
-                        x2: unit.x,
-                        y2: unit.y,
-                    }))
+                    nodes.push(
+                        unitLine({
+                            x1: req.x,
+                            y1: req.y,
+                            x2: unit.x,
+                            y2: unit.y,
+                        })
+                    )
                 }
             })
         })
@@ -115,26 +124,34 @@ const renderPoints = (layers, buckets, currentUnit) => {
 
 const renderCurrent = (layers, currentUnit, preWidth) => {
     const nodes = []
-    if (!currentUnit) { return nodes }
+    if (!currentUnit) {
+        return nodes
+    }
     layers.forEach((layer) => {
         layer.forEach((unit) => {
-            if (unit.id !== currentUnit.entity_id) { return }
-            nodes.push(line({
-                class: 'name-line',
-                x1: preWidth,
-                y1: unit.y,
-                x2: unit.x + radius,
-                y2: unit.y,
-                'stroke-width': 2,
-            }))
-            nodes.push(text(
-                {
-                    class: 'tree__current-unit',
-                    x: preWidth,
-                    y: unit.y + 6,
-                },
-                currentUnit.name
-            ))
+            if (unit.id !== currentUnit.entity_id) {
+                return
+            }
+            nodes.push(
+                line({
+                    class: 'name-line',
+                    x1: preWidth,
+                    y1: unit.y,
+                    x2: unit.x + radius,
+                    y2: unit.y,
+                    'stroke-width': 2,
+                })
+            )
+            nodes.push(
+                text(
+                    {
+                        class: 'tree__current-unit',
+                        x: preWidth,
+                        y: unit.y + 6,
+                    },
+                    currentUnit.name
+                )
+            )
         })
     })
     return nodes

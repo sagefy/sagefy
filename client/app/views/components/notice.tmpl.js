@@ -9,9 +9,6 @@ module.exports = data =>
             className: data.read ? 'notice' : 'notice notice--unread',
             id: data.id,
         },
-        span(
-            { className: 'notice__when' },
-            timeAgo(data.created)
-        ),
+        span({ className: 'notice__when' }, timeAgo(data.created)),
         data.body
     )

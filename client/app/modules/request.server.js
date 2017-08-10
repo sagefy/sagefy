@@ -12,37 +12,42 @@ module.exports = function httpRequest({ method, url, data }) {
         done = resolve
         fail = reject
     })
-    const request = http.request({
-        hostname: 'localhost',
-        port: 8653,
-        path: url,
-        method: method,
-        headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-            'X-Requested-With': 'Node.js',
-            Cookie: global.requestCookie || '',
+    const request = http.request(
+        {
+            hostname: 'localhost',
+            port: 8653,
+            path: url,
+            method: method,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'X-Requested-With': 'Node.js',
+                Cookie: global.requestCookie || '',
+            },
         },
-    }, (response) => {
-        let body = ''
-        response.setEncoding('utf8')
-        response.on('data', (d) => { body += d })
-        response.on('end', () => {
-            let responseData = ''
-            try {
-                responseData = JSON.parse(body)
-            } catch (e) {
-                responseData = body
-            }
-            const statusCode = response.statusCode
-            if (statusCode < 400 && statusCode >= 200) {
-                done(responseData)
-            } else if (isString(responseData)) {
-                fail(responseData)
-            } else {
-                fail(responseData.errors)
-            }
-        })
-    })
+        (response) => {
+            let body = ''
+            response.setEncoding('utf8')
+            response.on('data', (d) => {
+                body += d
+            })
+            response.on('end', () => {
+                let responseData = ''
+                try {
+                    responseData = JSON.parse(body)
+                } catch (e) {
+                    responseData = body
+                }
+                const statusCode = response.statusCode
+                if (statusCode < 400 && statusCode >= 200) {
+                    done(responseData)
+                } else if (isString(responseData)) {
+                    fail(responseData)
+                } else {
+                    fail(responseData.errors)
+                }
+            })
+        }
+    )
     if (method !== 'GET') {
         request.write(JSON.stringify(data || {}))
     }

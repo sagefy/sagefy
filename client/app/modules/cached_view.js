@@ -11,10 +11,12 @@ function cachedView(viewFn, log) {
         const viewKey = incomingProps.key || defaultKey
         const incomingPropsKeys = Object.keys(incomingProps)
         const cachedPropsKeys = cache[viewKey].propKeys
-        if (cache[viewKey] &&
+        if (
+            cache[viewKey] &&
             incomingPropsKeys.length === cachedPropsKeys.length &&
-            cachedPropsKeys.every(k =>
-                cache[viewKey].props[k] === incomingProps[k])
+            cachedPropsKeys.every(
+                k => cache[viewKey].props[k] === incomingProps[k]
+            )
         ) {
             if (log) log(true)
             return cache[viewKey].value

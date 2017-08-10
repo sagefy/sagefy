@@ -26,7 +26,7 @@
     "watch-scripts": "npm run prep-scripts && webpack --watch ./app/index.js ./distribution/index.js -v",
     "compress-scripts": "npm run build-scripts && uglifyjs --compress --mangle --output distribution/index.js -- distribution/index.js",
     "prep-scripts": "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"npm run build-styleguide\" \"npm run compile-content\"",
-    "lint-scripts": "eslint \"app/**/*.js\" \"test/**/*.js\"",
+    "lint-scripts": "eslint \"app/**/*.js\" \"tasks/**/*.js\"",
     "run-tests": "mocha -R min \"app/**/*.test.js\" -r ./tasks/test_setup.js",
     "translate-md": "node ./tasks/translate_md.js",
     "run-server": "node ./app/index.server.js"

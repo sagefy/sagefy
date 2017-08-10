@@ -2,7 +2,6 @@ const { div, h1, p, a, ul, li, small } = require('../../modules/tags')
 const info = require('../components/entity_info.tmpl')
 const icon = require('../components/icon.tmpl')
 
-
 module.exports = () => {
     return div(
         { id: 'create', className: 'page' },
@@ -11,14 +10,18 @@ module.exports = () => {
             { className: 'create__options' },
             li(
                 a(
-                    { className: 'create__route ',
-                      href: '/create/subject/create' },
+                    {
+                        className: 'create__route ',
+                        href: '/create/subject/create',
+                    },
                     icon('subject'),
                     ' Create a Subject'
                 ),
                 ' Start here. ',
-                small(' (You can add existing units and ',
-                      'subjects to the new subject.)')
+                small(
+                    ' (You can add existing units and ',
+                    'subjects to the new subject.)'
+                )
             ),
             li(
                 a(

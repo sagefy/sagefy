@@ -5,11 +5,7 @@ module.exports = function searchResults(state = [], action = { type: '' }) {
         return []
     }
     if (action.type === 'ADD_SEARCH_RESULTS') {
-        return mergeArraysByKey(
-            state,
-            action.results,
-            'id'
-        )
+        return mergeArraysByKey(state, action.results, 'id')
     }
     return state
 }

@@ -4,9 +4,7 @@ module.exports = {
     language: {
         type: 'select',
         validations: [required],
-        options: [
-            { value: 'en' },
-        ],
+        options: [{ value: 'en' }],
     },
     unit_id: {
         type: 'text',
@@ -19,9 +17,7 @@ module.exports = {
     tags: {
         type: 'list',
         validations: [],
-        columns: [
-            { name: 'tag', type: 'text' },
-        ],
+        columns: [{ name: 'tag', type: 'text' }],
     },
     require_ids: {
         type: 'entities',
@@ -30,9 +26,6 @@ module.exports = {
     kind: {
         type: 'select',
         validations: [required],
-        options: [
-            { value: 'video' },
-            { value: 'choice' },
-        ],
+        options: [{ value: 'video' }, { value: 'choice' }],
     },
 }

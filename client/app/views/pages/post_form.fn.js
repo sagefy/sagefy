@@ -17,13 +17,10 @@ const schemas = {
 
 const getFields = (formData) => {
     const fields = []
-
-    ;[
-        'post.id',
-        'post.topic_id',
-        'post.replies_to_id',
-    ].forEach((name) => {
-        if (formData[name]) { fields.push({ name }) }
+    ;['post.id', 'post.topic_id', 'post.replies_to_id'].forEach((name) => {
+        if (formData[name]) {
+            fields.push({ name })
+        }
     })
 
     /* PP@ fields.push({
@@ -51,10 +48,7 @@ const getFields = (formData) => {
     if (formData['post.kind'] === 'vote') {
         fields.push({
             name: 'post.response',
-            options: [
-                { label: 'Yes, I agree' },
-                { label: 'No, I dissent' },
-            ],
+            options: [{ label: 'Yes, I agree' }, { label: 'No, I dissent' }],
             inline: true,
             label: 'Response',
             disabled: !!formData['post.id'],
@@ -63,12 +57,14 @@ const getFields = (formData) => {
 
     fields.push({
         name: 'post.body',
-        label: formData['post.kind'] === 'proposal' ?
-               'Proposal Summary' :
-               'Post Body',
-        description: formData['post.kind'] === 'proposal' ?
-                      'Describe the value of this proposal.'
-                      : null,
+        label:
+            formData['post.kind'] === 'proposal'
+                ? 'Proposal Summary'
+                : 'Post Body',
+        description:
+            formData['post.kind'] === 'proposal'
+                ? 'Describe the value of this proposal.'
+                : null,
     })
 
     // TODO PP@ update proposal handling

@@ -1,8 +1,5 @@
-const { div, h1, p, img, h3, header, ul, li } =
-    require('../../modules/tags')
-const {
-  timeAgo,
-} = require('../../modules/auxiliaries')
+const { div, h1, p, img, h3, header, ul, li } = require('../../modules/tags')
+const { timeAgo } = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
@@ -11,7 +8,9 @@ const previewCardHead = require('../components/preview_card_head.tmpl')
 module.exports = (data) => {
     const [id] = data.routeArgs
     const user = data.users && data.users[id]
-    if (!user) { return spinner() }
+    if (!user) {
+        return spinner()
+    }
 
     return div(
         { id: 'profile', className: 'page' },
@@ -26,51 +25,51 @@ module.exports = (data) => {
     )
 }
 
-const showSubjects = (user, subjects) =>
-    [
-        h3(`${user.name} is learning:`),
-        ul(
-            { className: 'profile__options' },
-            subjects.map(subject => li(
+const showSubjects = (user, subjects) => [
+    h3(`${user.name} is learning:`),
+    ul(
+        { className: 'profile__options' },
+        subjects.map(subject =>
+            li(
                 previewSubjectHead({
                     url: `/subjects/${subject.entity_id}`,
                     name: subject.name,
                     body: subject.body,
                 })
-            ))
-        ),
-    ]
-    // TODO-2 and link to search
+            )
+        )
+    ),
+]
+// TODO-2 and link to search
 
-const showFollows = (user, follows) =>
-    [
-        h3(`${user.name} follows:`),
-        ul(
-            { className: 'profile__options' },
-            follows.map((follow) => {
-                const e = follow.entity
-                const kind = e.kind
-                return li(
-                    kind === 'subject' ?
-                        previewSubjectHead({
-                            url: `/subjects/${e.id}`,
-                            name: e.id, // TODO-2 update to real name & body
-                        }) :
-                    kind === 'unit' ?
-                        previewUnitHead({
-                            url: `/units/${e.id}`,
-                            name: e.id,
-                        }) :
-                    kind === 'card' ?
-                        previewCardHead({
+const showFollows = (user, follows) => [
+    h3(`${user.name} follows:`),
+    ul(
+        { className: 'profile__options' },
+        follows.map((follow) => {
+            const e = follow.entity
+            const kind = e.kind
+            return li(
+                kind === 'subject'
+                    ? previewSubjectHead({
+                        url: `/subjects/${e.id}`,
+                        name: e.id, // TODO-2 update to real name & body
+                    })
+                    : kind === 'unit'
+                      ? previewUnitHead({
+                          url: `/units/${e.id}`,
+                          name: e.id,
+                      })
+                      : kind === 'card'
+                        ? previewCardHead({
                             url: `/cards/${e.id}`,
                             name: e.id,
-                        }) :
-                    kind === 'topic' ?
-                        'topic' :  // TODO-2
-                        null
-                )
-            })
-        ),
-        // TODO-2 and link to search
-    ]
+                        })
+                        : kind === 'topic'
+                          ? 'topic' // TODO-2
+                          : null
+            )
+        })
+    ),
+    // TODO-2 and link to search
+]

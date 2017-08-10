@@ -3,5 +3,4 @@ const { div } = require('../../modules/tags')
 
 // see: https://github.com/Matt-Esch/virtual-dom/issues/345
 
-module.exports = () =>
-    div()
+module.exports = () => div()

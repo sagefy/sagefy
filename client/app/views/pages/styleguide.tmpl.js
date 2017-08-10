@@ -5,9 +5,7 @@ const data = require('./styleguide.data.json')
 module.exports = () =>
     div(
         { id: 'styleguide', className: 'page' },
-        h1(
-            'Style Guide & Component Library'
-        ),
+        h1('Style Guide & Component Library'),
         p(
             'Welcome to the Sagefy Style Guide. ',
             'This page covers the styling and ',
@@ -23,10 +21,7 @@ const writeStyleguide = () => {
     Object.keys(data).forEach((title) => {
         const o = data[title]
         if (o) {
-            tags.push(
-                h2(title),
-                o.description ? p(o.description) : null
-            )
+            tags.push(h2(title), o.description ? p(o.description) : null)
         }
     })
     return tags

@@ -35,33 +35,32 @@ module.exports = tasks.add({
             url: '/s/topics',
             data: opts,
         })
-        .then((response) => {
-            response.topics.forEach((topic) => {
+            .then((response) => {
+                response.topics.forEach((topic) => {
+                    dispatch({
+                        type: 'ADD_TOPIC',
+                        message: 'create topic success',
+                        topic: topic,
+                        id: topic.id,
+                    })
+                })
+                return response
+            })
+            .catch((errors) => {
                 dispatch({
-                    type: 'ADD_TOPIC',
-                    message: 'create topic success',
-                    topic: topic,
-                    id: topic.id,
+                    type: 'SET_ERRORS',
+                    message: 'list topics failure',
+                    errors,
                 })
             })
-            return response
-        })
-        .catch((errors) => {
-            dispatch({
-                type: 'SET_ERRORS',
-                message: 'list topics failure',
-                errors,
-            })
-        })
     },
 
     createTopicWithPost(data) {
-        return tasks.createTopic(data)
-            .then((response) => {
-                const post = shallowCopy(data.post)
-                post.topic_id = response.topic.id
-                return tasks.createPost({ post })
-            })
+        return tasks.createTopic(data).then((response) => {
+            const post = shallowCopy(data.post)
+            post.topic_id = response.topic.id
+            return tasks.createPost({ post })
+        })
     },
 
     createTopic(data) {

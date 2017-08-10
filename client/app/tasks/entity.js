@@ -22,23 +22,25 @@ module.exports = tasks.add({
                     method: 'GET',
                     url: `/s/${ev.kind}s/versions/${ev.id}`,
                 })
-                .then((response) => {
-                    const ahh = ev.kind.toUpperCase()
-                    dispatch({
-                        type: `ADD_TOPIC_POST_VERSIONS_${ahh}`,
-                        version: response.version,
+                    .then((response) => {
+                        const ahh = ev.kind.toUpperCase()
+                        dispatch({
+                            type: `ADD_TOPIC_POST_VERSIONS_${ahh}`,
+                            version: response.version,
+                        })
+                        count++
+                        if (count === total) {
+                            resolve()
+                        }
                     })
-                    count++
-                    if (count === total) { resolve() }
-                })
-                .catch((errors) => {
-                    dispatch({
-                        type: 'SET_ERRORS',
-                        message: 'get versions for topic failure',
-                        errors,
+                    .catch((errors) => {
+                        dispatch({
+                            type: 'SET_ERRORS',
+                            message: 'get versions for topic failure',
+                            errors,
+                        })
+                        reject()
                     })
-                    reject()
-                })
             })
         })
         //
@@ -54,22 +56,24 @@ module.exports = tasks.add({
                     method: 'GET',
                     url: `/s/${entity.kind}s/${entity.id}`,
                 })
-                .then((response) => {
-                    dispatch({
-                        type: `ADD_${entity.kind.toUpperCase()}`,
-                        [entity.kind]: response[entity.kind],
+                    .then((response) => {
+                        dispatch({
+                            type: `ADD_${entity.kind.toUpperCase()}`,
+                            [entity.kind]: response[entity.kind],
+                        })
+                        count++
+                        if (count === total) {
+                            resolve()
+                        }
                     })
-                    count++
-                    if (count === total) { resolve() }
-                })
-                .catch((errors) => {
-                    dispatch({
-                        type: 'SET_ERRORS',
-                        message: 'list entities follows failure',
-                        errors,
+                    .catch((errors) => {
+                        dispatch({
+                            type: 'SET_ERRORS',
+                            message: 'list entities follows failure',
+                            errors,
+                        })
+                        reject()
                     })
-                    reject()
-                })
             })
         })
     },

@@ -1,6 +1,15 @@
 /* eslint-disable no-underscore-dangle */
-const { div, h1, a, form, button, input, ul, li, p } =
-    require('../../modules/tags')
+const {
+    div,
+    h1,
+    a,
+    form,
+    button,
+    input,
+    ul,
+    li,
+    p,
+} = require('../../modules/tags')
 const { unitWizard } = require('./create_shared.fn')
 const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
@@ -36,29 +45,33 @@ module.exports = function createUnitAdd(data) {
                 ' Search'
             )
         ),
-        searchResults && searchResults.length ? ul(
-            { className: 'create--unit-add__results' },
-            searchResults.map(result => li(
-                a(
-                    {
-                        href: '/create/unit/list',
-                        className: 'create--unit-add__add',
-                        dataset: {
-                            kind: result._type,
-                            id: result._id,
-                            version: result._source.id,
-                            name: result._source.name,
-                            body: result._source.body,
-                        },
-                    },
-                    icon('create'),
-                    ' Add to Subject'
-                ),
-                previewUnitHead({
-                    name: result._source.name,
-                    body: result._source.body,
-                })
-            ))
-        ) : p('No results.')
+        searchResults && searchResults.length
+            ? ul(
+                  { className: 'create--unit-add__results' },
+                  searchResults.map(result =>
+                      li(
+                          a(
+                              {
+                                  href: '/create/unit/list',
+                                  className: 'create--unit-add__add',
+                                  dataset: {
+                                      kind: result._type,
+                                      id: result._id,
+                                      version: result._source.id,
+                                      name: result._source.name,
+                                      body: result._source.body,
+                                  },
+                              },
+                              icon('create'),
+                              ' Add to Subject'
+                          ),
+                          previewUnitHead({
+                              name: result._source.name,
+                              body: result._source.body,
+                          })
+                      )
+                  )
+              )
+            : p('No results.')
     )
 }

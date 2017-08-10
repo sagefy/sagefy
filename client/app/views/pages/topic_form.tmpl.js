@@ -2,8 +2,12 @@ const { div, h1, p, strong } = require('../../modules/tags')
 const form = require('../components/form.tmpl')
 const getPostFields = require('./post_form.fn').getFields
 const getPostSchema = require('./post_form.fn').getSchema
-const { createFieldsData, prefixObjectKeys, ucfirst, findGlobalErrors } =
-    require('../../modules/auxiliaries')
+const {
+    createFieldsData,
+    prefixObjectKeys,
+    ucfirst,
+    findGlobalErrors,
+} = require('../../modules/auxiliaries')
 const { extend } = require('../../modules/utilities')
 const topicSchema = require('../../schemas/topic')
 const spinner = require('../components/spinner.tmpl')
@@ -29,20 +33,26 @@ const getFields = (formData) => {
             name: 'topic.id',
         })
     }
-    fields = fields.concat([{
-        name: 'topic.entity.id',
-    }, {
-        name: 'topic.entity.kind',
-    }, {
-        name: 'topic.name',
-        label: 'Topic Name',
-    }])
+    fields = fields.concat([
+        {
+            name: 'topic.entity.id',
+        },
+        {
+            name: 'topic.entity.kind',
+        },
+        {
+            name: 'topic.name',
+            label: 'Topic Name',
+        },
+    ])
     return fields
 }
 
 const getTopicID = (data) => {
     const match = data.route.match(/^\/topics\/([\d\w]+)\/update$/)
-    if (match) { return match[1] }
+    if (match) {
+        return match[1]
+    }
     return null
 }
 
@@ -88,13 +98,16 @@ module.exports = (data) => {
         topic = data.topics && data.topics[topicID]
     }
 
-    if (topicID && !topic) { return spinner() }
+    if (topicID && !topic) {
+        return spinner()
+    }
 
     const formData = extend({}, data.formData, {
         'topic.id': topic && topic.id,
         'topic.name': topic && topic.name,
-        'topic.entity.kind': topic && topic.entity.kind || data.routeQuery.kind,
-        'topic.entity.id': topic && topic.entity.kind || data.routeQuery.id,
+        'topic.entity.kind':
+            (topic && topic.entity.kind) || data.routeQuery.kind,
+        'topic.entity.id': (topic && topic.entity.kind) || data.routeQuery.id,
     })
 
     let fields = getFields(formData)

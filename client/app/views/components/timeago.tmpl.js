@@ -4,10 +4,7 @@ const { timeAgo } = require('../../modules/auxiliaries')
 module.exports = (time, { right } = {}) =>
     span(
         {
-            className: `timeago${
-                right ?
-                    ' timeago--right' :
-                    ''}`,
+            className: `timeago${right ? ' timeago--right' : ''}`,
         },
         timeAgo(time)
     )
