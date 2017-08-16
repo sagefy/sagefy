@@ -285,4 +285,17 @@ CREATE TRIGGER update_suggests_followers_modified
     BEFORE UPDATE ON suggests_followers
     FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
-/* Later: comments, bids, sponsors */
+/*
+
+Later: comments, bids, sponsors
+
+suggests_comments
+- id, created, modified, suggest_id, user_id, body
+
+suggests_bids
+- id, created, modified, suggest_id, user_id, status, data[price, duration, scope, background]
+
+suggests_sponsors
+- id, created, modified, bid_id, user_id, price, status, expires_at
+
+*/
