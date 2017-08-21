@@ -33,6 +33,7 @@ Learning Science
 - [Teacher spends two days as a student and is shocked at what she learns](https://www.washingtonpost.com/news/answer-sheet/wp/2014/10/24/teacher-spends-two-days-as-a-student-and-is-shocked-at-what-she-learned/?utm_term=.d24b17e6ce83)
 - [What is Personalized Learning?](https://medium.com/personalizing-the-learning-experience-insights/what-is-personalized-learning-bc874799b6f)
 - [Not All Practice Makes Perfect](http://nautil.us/issue/35/boundaries/not-all-practice-makes-perfect)
+- [Failures of Bridge International](https://www.nytimes.com/2017/06/27/magazine/can-a-tech-start-up-successfully-educate-children-in-the-developing-world.html)
 
 Gamification
 ------------
@@ -112,6 +113,8 @@ Learning platforms
 - [ScootPad](https://scootpad.com/)
 - [Lingualia](http://www.lingualia.com/)
 - [Smart Sparrow](https://www.smartsparrow.com/)
+- [Mindspark](https://mindspark.in/)
+- [Geekie](https://translate.google.com/translate?hl=en&sl=pt&u=http://www.geekie.com.br/&prev=search)
 
 ### Flash card based
 
@@ -140,6 +143,8 @@ Learning platforms
 - [CanvasLMS](http://www.instructure.com/)
 - [TopXY](http://interactyx.com/)
 - [SnapWiz](http://snapwiz.com/)
+- [Summit Learning](https://www.summitlearning.org/)
+- [H20 Harvard Law](https://h2o.law.harvard.edu/)
 
 ### Instructional design
 - [Articulate Storyline](http://www.articulate.com/products/storyline-overview.php)
