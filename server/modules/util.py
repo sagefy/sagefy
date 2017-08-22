@@ -6,8 +6,6 @@ from random import SystemRandom
 import string
 from datetime import datetime
 import collections
-import rethinkdb
-
 
 random = SystemRandom()
 
@@ -71,9 +69,6 @@ def json_serial(val):
 
     if isinstance(val, datetime):
         return val.isoformat()
-
-    if isinstance(val, rethinkdb.ast.Now):
-        return datetime.now().isoformat()
 
     return val
 

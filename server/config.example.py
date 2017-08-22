@@ -5,7 +5,9 @@ config = {
     'mail_username': 'admin@example.com',
     'mail_server': 'smtp.sparkpostmail.com',
     'mail_port': 587,
-    'rdb_host': 'localhost',
-    'rdb_port': 28015,
-    'rdb_db': 'sagefy',
+    # db
+    'host': 'localhost',
+    'dbname': 'sagefy',
+    'user': 'postgres',
+    'password': 'postgres',
 }

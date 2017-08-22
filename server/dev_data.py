@@ -1,24 +1,26 @@
-import rethinkdb as r
-from framework.database import setup_db, make_db_connection, \
+import psycopg2
+import psycopg2.extras
+from framework.database import make_db_connection, \
     close_db_connection
 from framework.elasticsearch import es
 from passlib.hash import bcrypt
 from modules.sequencer.params import precision
-from modules.util import uniqid
 from config import config
 from es_populate import es_populate
 import yaml
 import os
 from framework.redis import redis
+from datetime import datetime, timezone
+import uuid
 
 
 if not config['debug']:
     raise Exception('You must be in debug mode to wipe the DB.')
 
-setup_db()
+psycopg2.extras.register_uuid()
 db_conn = make_db_connection()
 
-for kind in (
+for tablename in reversed((
     'users',
     'units',
     'cards',
@@ -30,10 +32,11 @@ for kind in (
     'notices',
     'users_subjects',
     'responses',
-):
-    (r.table(kind)
-      .delete()
-      .run(db_conn))
+)):
+    cur = db_conn.cursor()
+    with cur:
+        cur.execute("DELETE FROM {tablename};".format(tablename=tablename))
+        db_conn.commit()
 
 es.indices.delete(index='entity', ignore=[400, 404])
 
@@ -47,87 +50,155 @@ stream = open(
 sample_data = yaml.load(stream)
 stream.close()
 
-(r.table('users')
-    .insert([{
-        'id': 'doris',
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
-        'name': 'doris',
-        'email': 'doris@example.com',
-        'password': bcrypt.encrypt('example1'),
-        'settings': {
-            'email_frequency': 'daily',
-            'view_subjects': 'public',
-            'view_follows': 'public',
-        }
-    }, {
-        'id': 'eileen',
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
-        'name': 'eileen',
-        'email': 'eileen@example.com',
-        'password': bcrypt.encrypt('example1'),
-        'settings': {
-            'email_frequency': 'daily',
-            'view_subjects': 'public',
-            'view_follows': 'public',
-        }
-    }])
-    .run(db_conn))
+doris_id = uuid.uuid4()
+eileen_id = uuid.uuid4()
 
+users = [{
+    'id': doris_id,
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'name': 'doris',
+    'email': 'doris@example.com',
+    'password': bcrypt.encrypt('example1'),
+    'settings': psycopg2.extras.Json({
+        'email_frequency': 'daily',
+        'view_subjects': 'public',
+        'view_follows': 'public',
+    })
+}, {
+    'id': eileen_id,
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'name': 'eileen',
+    'email': 'eileen@example.com',
+    'password': bcrypt.encrypt('example1'),
+    'settings': psycopg2.extras.Json({
+        'email_frequency': 'daily',
+        'view_subjects': 'public',
+        'view_follows': 'public',
+    })
+}]
+
+for user in users:
+    cur = db_conn.cursor()
+    with cur:
+        cur.execute("""
+            INSERT INTO users
+            (  id  ,   created  ,   modified  ,
+               name  ,   email,   password  ,   settings)
+            VALUES
+            (%(id)s, %(created)s, %(modified)s,
+             %(name)s, %(email)s, %(password)s, %(settings)s);
+        """, user)
+        db_conn.commit()
+
+
+# We have to translate the sample IDs to UUIDs
+entity_ids_lookup = {}
 
 for sample_id, unit_data in sample_data['units'].items():
-    unit_data['entity_id'] = sample_id
-    unit_data['version_id'] = uniqid()
-    r.table('units').insert({
-        'id': unit_data['version_id'],
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
-        'entity_id': unit_data['entity_id'],
-        'previous_id': None,
-        'language': 'en',
-        'status': 'accepted',
-        'available': True,
-        'tags': [],
-        'name': unit_data['name'],
-        'body': unit_data['body'],
-        'require_ids': unit_data['require_ids'],
-    }).run(db_conn)
+    unit_data['version_id'] = uuid.uuid4()
+    if sample_id in entity_ids_lookup:
+        unit_data['entity_id'] = entity_ids_lookup[sample_id]
+    else:
+        unit_data['entity_id'] = entity_ids_lookup[sample_id] = uuid.uuid4()
+
+    u_require_ids = []
+    for id_ in unit_data['require_ids']:
+        if id_ not in entity_ids_lookup:
+            entity_ids_lookup[id_] = uuid.uuid4()
+        u_require_ids.append(entity_ids_lookup[id_])
+    unit_data['require_ids'] = u_require_ids
+
+    cur = db_conn.cursor()
+    # Dropping foreign key checks so the ordering doesn't matter.
+    with cur:
+        cur.execute("""
+            BEGIN;
+            ALTER TABLE units DISABLE TRIGGER ALL;
+            INSERT INTO units_entity_id
+            (  entity_id  )
+            VALUES
+            (%(entity_id)s);
+            INSERT INTO units
+            (  version_id  ,   created  ,   modified  ,
+               entity_id  ,   previous_id  ,   language  ,   status  ,
+               available  ,   tags  ,   name  ,   user_id  ,
+               body  ,   require_ids  )
+            VALUES
+            (%(version_id)s, %(created)s, %(modified)s,
+             %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
+             %(available)s, %(tags)s, %(name)s, %(user_id)s,
+             %(body)s, %(require_ids)s);
+            ALTER TABLE units ENABLE TRIGGER ALL;
+            COMMIT;
+        """, {
+            'version_id': unit_data['version_id'],
+            'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+            'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+            'entity_id': unit_data['entity_id'],
+            'previous_id': None,
+            'language': 'en',
+            'status': 'accepted',
+            'available': True,
+            'tags': [],
+            'name': unit_data['name'],
+            'user_id': doris_id,
+            'body': unit_data['body'],
+            'require_ids': unit_data['require_ids'],
+        })
+        db_conn.commit()
 
 
 for card_data in sample_data['cards']['video']:
-    card_data['entity_id'] = uniqid()
-    r.table('cards').insert({
-        'id': uniqid(),
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
-        'entity_id': card_data['entity_id'],
-        'previous_id': None,
-        'language': 'en',
-        'name': 'A Video',
-        'status': 'accepted',
-        'available': True,
-        'tags': [],
-        'kind': 'video',
-        'site': 'youtube',
-        'video_id': card_data['video_id'],
-        'unit_id': card_data['unit'],
-        'require_ids': [],
-    }).run(db_conn)
-    r.table('cards_parameters').insert({
-        'id': uniqid(),
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
-        'entity_id': card_data['entity_id'],
-    }).run(db_conn)
+    card_data['entity_id'] = uuid.uuid4()
+
+    cur = db_conn.cursor()
+    with cur:
+        cur.execute("""
+            INSERT INTO cards_entity_id
+            (  entity_id  )
+            VALUES
+            (%(entity_id)s);
+            INSERT INTO cards
+            (  version_id  ,   created  ,   modified  ,
+               entity_id  ,   previous_id  ,   language  ,   status  ,
+               available  ,   tags  ,   name  ,   user_id  ,
+               unit_id  ,   require_ids  ,   kind  ,   data  )
+            VALUES
+            (%(version_id)s, %(created)s, %(modified)s,
+             %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
+             %(available)s, %(tags)s, %(name)s, %(user_id)s,
+             %(unit_id)s, %(require_ids)s, %(kind)s, %(data)s);
+        """, {
+            'version_id': uuid.uuid4(),
+            'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+            'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+            'entity_id': card_data['entity_id'],
+            'previous_id': None,
+            'language': 'en',
+            'name': 'A Video',
+            'status': 'accepted',
+            'available': True,
+            'tags': [],
+            'user_id': doris_id,
+            'kind': 'video',
+            'data': psycopg2.extras.Json({
+                'site': 'youtube',
+                'video_id': card_data['video_id'],
+            }),
+            'unit_id': entity_ids_lookup[card_data['unit']],
+            'require_ids': [],
+        })
+        db_conn.commit()
 
 
 for card_data in sample_data['cards']['choice']:
-    card_data['entity_id'] = uniqid()
+    card_data['entity_id'] = uuid.uuid4()
     r.table('cards').insert({
-        'id': uniqid(),
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
+        'id': uuid.uuid4(),
+        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'entity_id': card_data['entity_id'],
         'previous_id': None,
         'language': 'en',
@@ -150,9 +221,9 @@ for card_data in sample_data['cards']['choice']:
         'require_ids': [],
     }).run(db_conn)
     r.table('cards_parameters').insert({
-        'id': uniqid(),
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
+        'id': uuid.uuid4(),
+        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'entity_id': card_data['entity_id'],
         'guess_distribution': {
             str(h): 1 - (0.5 - h) ** 2
@@ -163,14 +234,30 @@ for card_data in sample_data['cards']['choice']:
             for h in [h / precision for h in range(1, precision)]
         }
     }).run(db_conn)
+    """
 
+        cur = db_conn.cursor()
+        with cur:
+            cur.execute(""
+                INSERT INTO cards_parameters
+                (  id  ,   created  ,   modified  ,   entity_id  )
+                VALUES
+                (%(id)s, %(created)s, %(modified)s, %(entity_id)s);
+            "", {
+                'id': uuid.uuid4(),
+                'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+                'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+                'entity_id': card_data['entity_id'],
+            })
+            db_conn.commit()
+    """
 
 for sample_id, subject_data in sample_data['subjects'].items():
     subject_data['entity_id'] = sample_id
     r.table('subjects').insert({
-        'id': uniqid(),
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
+        'id': uuid.uuid4(),
+        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'entity_id': subject_data['entity_id'],
         'previous_id': None,
         'language': 'en',
@@ -184,12 +271,12 @@ for sample_id, subject_data in sample_data['subjects'].items():
 
 
 for sample_id, unit_data in sample_data['units'].items():
-    topic_id = uniqid()
-    proposal_id = uniqid()
+    topic_id = uuid.uuid4()
+    proposal_id = uuid.uuid4()
     r.table('topics').insert({
         'id': topic_id,
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
+        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'user_id': 'doris',
         'name': '%s is fun' % unit_data['name'],
         'entity': {
@@ -198,9 +285,9 @@ for sample_id, unit_data in sample_data['units'].items():
         }
     }).run(db_conn)
     r.table('posts').insert([{
-        'id': uniqid(),
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
+        'id': uuid.uuid4(),
+        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'user_id': 'doris',
         'topic_id': topic_id,
         'body': '%s is such learning funness. ' % unit_data['name'] +
@@ -210,8 +297,8 @@ for sample_id, unit_data in sample_data['units'].items():
         'replies_to_id': None,
     }, {
         'id': proposal_id,
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
+        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'user_id': 'doris',
         'topic_id': topic_id,
         'body': 'I think we should do something to %s.' % unit_data['name'],
@@ -223,9 +310,9 @@ for sample_id, unit_data in sample_data['units'].items():
         }],
         'name': 'Lets change %s' % unit_data['name'],
     }, {
-        'id': uniqid(),
-        'created': r.time(2014, 1, 2, 'Z'),
-        'modified': r.time(2014, 1, 2, 'Z'),
+        'id': uuid.uuid4(),
+        'created': datetime(2014, 1, 2, tzinfo=timezone.utc),
+        'modified': datetime(2014, 1, 2, tzinfo=timezone.utc),
         'user_id': 'doris',
         'topic_id': topic_id,
         'body': 'I agree.',
@@ -234,9 +321,9 @@ for sample_id, unit_data in sample_data['units'].items():
         'response': True,
     }]).run(db_conn)
     r.table('follows').insert({
-        'id': uniqid(),
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
+        'id': uuid.uuid4(),
+        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'user_id': 'doris',
         'entity': {
             'id': unit_data['entity_id'],
@@ -244,9 +331,9 @@ for sample_id, unit_data in sample_data['units'].items():
         }
     }).run(db_conn)
     r.table('notices').insert({
-        'id': uniqid(),
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
+        'id': uuid.uuid4(),
+        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'user_id': 'doris',
         'kind': 'create_topic',
         'data': {
@@ -262,8 +349,8 @@ for sample_id, unit_data in sample_data['units'].items():
 
 r.table('users_subjects').insert({
     'id': 'doris-subjects',
-    'created': r.time(2014, 1, 1, 'Z'),
-    'modified': r.time(2014, 1, 1, 'Z'),
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
     'user_id': 'doris',
     'subject_ids': [
         sample_id

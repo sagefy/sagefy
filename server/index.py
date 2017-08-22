@@ -7,9 +7,6 @@ from config import config
 import framework.index as framework
 framework.update_config(config)
 
-from framework.database import setup_db
-setup_db()
-
 import routes.public
 import routes.user
 import routes.notice

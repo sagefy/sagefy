@@ -1,5 +1,5 @@
 import rethinkdb as r
-from framework.database import setup_db, make_db_connection, \
+from framework.database import make_db_connection, \
     close_db_connection
 from framework.elasticsearch import es
 from modules.util import json_prep, pick
@@ -7,7 +7,6 @@ from database.user import get_avatar
 
 
 def es_populate():
-    setup_db()
     db_conn = make_db_connection()
 
     # Empty the database
