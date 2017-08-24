@@ -1,4 +1,5 @@
-import rethinkdb as r
+import psycopg2
+import psycopg2.extras
 from framework.database import make_db_connection, \
     close_db_connection
 from framework.elasticsearch import es
@@ -13,7 +14,12 @@ def es_populate():
     es.indices.delete(index='entity', ignore=[400, 404])
 
     # Add users
-    users = r.table('users').run(db_conn)
+    cur = db_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    with cur:
+        cur.execute("SELECT * FROM users;")
+        data = cur.fetchall()
+        users = [row for row in data]
+        db_conn.commit()
     for user in users:
         data = pick(json_prep(user), ('id', 'name'))
         data['avatar'] = get_avatar(user['email'])
@@ -25,15 +31,17 @@ def es_populate():
         )
 
     # Add units
-    units = (r.table('units')
-              .filter(r.row['status'].eq('accepted'))
-              .group('entity_id')
-              .max('created')
-              .default(None)
-              .ungroup()
-              .map(r.row['reduction'])
-              .run(db_conn))
-
+    cur = db_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    with cur:
+        cur.execute("""
+            SELECT DISTINCT ON (entity_id) *
+            FROM units
+            WHERE status = 'accepted'
+            ORDER BY entity_id, created DESC;
+        """)
+        data = cur.fetchall()
+        units = [row for row in data]
+        db_conn.commit()
     for unit in units:
         es.index(
             index='entity',
@@ -43,14 +51,17 @@ def es_populate():
         )
 
     # Add cards
-    cards = (r.table('cards')
-              .filter(r.row['status'].eq('accepted'))
-              .group('entity_id')
-              .max('created')
-              .default(None)
-              .ungroup()
-              .map(r.row['reduction'])
-              .run(db_conn))
+    cur = db_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    with cur:
+        cur.execute("""
+            SELECT DISTINCT ON (entity_id) *
+            FROM cards
+            WHERE status = 'accepted'
+            ORDER BY entity_id, created DESC;
+        """)
+        data = cur.fetchall()
+        cards = [row for row in data]
+        db_conn.commit()
     for card in cards:
         es.index(
             index='entity',
@@ -60,14 +71,17 @@ def es_populate():
         )
 
     # Add subjects
-    subjects = (r.table('subjects')
-                 .filter(r.row['status'].eq('accepted'))
-                 .group('entity_id')
-                 .max('created')
-                 .default(None)
-                 .ungroup()
-                 .map(r.row['reduction'])
-                 .run(db_conn))
+    cur = db_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    with cur:
+        cur.execute("""
+            SELECT DISTINCT ON (entity_id) *
+            FROM subjects
+            WHERE status = 'accepted'
+            ORDER BY entity_id, created DESC;
+        """)
+        data = cur.fetchall()
+        subjects = [row for row in data]
+        db_conn.commit()
     for subject in subjects:
         es.index(
             index='entity',
@@ -76,6 +90,8 @@ def es_populate():
             id=subject['entity_id'],
         )
 
+    """
+    TODO-1 fix these
     # Add topics
     topics = r.table('topics').run(db_conn)
     for topic in topics:
@@ -104,6 +120,7 @@ def es_populate():
             body=data,
             id=post['id'],
         )
+    """
 
     close_db_connection(db_conn)
 
