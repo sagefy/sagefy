@@ -12,6 +12,18 @@ import os
 from framework.redis import redis
 from datetime import datetime, timezone
 import uuid
+import base64
+
+
+def convert_uuid_to_slug(my_uuid):
+    assert isinstance(my_uuid, uuid.UUID)
+    return base64.urlsafe_b64encode(my_uuid.bytes)[:-2].decode()
+
+
+def convert_slug_to_uuid(slug):
+    assert isinstance(slug, str)
+    slug = slug[0:22]
+    return uuid.UUID(bytes=base64.urlsafe_b64decode(slug + '=='))
 
 
 if not config['debug']:
@@ -152,7 +164,6 @@ for sample_id, unit_data in sample_data['units'].items():
 
 for card_data in sample_data['cards']['video']:
     card_data['entity_id'] = uuid.uuid4()
-
     cur = db_conn.cursor()
     with cur:
         cur.execute("""
@@ -195,81 +206,122 @@ for card_data in sample_data['cards']['video']:
 
 for card_data in sample_data['cards']['choice']:
     card_data['entity_id'] = uuid.uuid4()
-    r.table('cards').insert({
-        'id': uuid.uuid4(),
-        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'entity_id': card_data['entity_id'],
-        'previous_id': None,
-        'language': 'en',
-        'name': card_data['body'],
-        'status': 'accepted',
-        'available': True,
-        'tags': [],
-        'kind': 'choice',
-        'body': card_data['body'],
-        'options': [
-            {
-                'correct': opt['correct'] == 'Y',
-                'value': opt['value'],
-                'feedback': opt['feedback'],
-            } for opt in card_data['options']
-        ],
-        'order': 'random',
-        'max_options_to_show': 4,
-        'unit_id': card_data['unit'],
-        'require_ids': [],
-    }).run(db_conn)
-    r.table('cards_parameters').insert({
-        'id': uuid.uuid4(),
-        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'entity_id': card_data['entity_id'],
-        'guess_distribution': {
-            str(h): 1 - (0.5 - h) ** 2
-            for h in [h / precision for h in range(1, precision)]
-        },
-        'slip_distribution': {
-            str(h): 1 - (0.25 - h) ** 2
-            for h in [h / precision for h in range(1, precision)]
-        }
-    }).run(db_conn)
-    """
+    cur = db_conn.cursor()
+    with cur:
+        cur.execute("""
+            INSERT INTO cards_entity_id
+            (  entity_id  )
+            VALUES
+            (%(entity_id)s);
+            INSERT INTO cards
+            (  version_id  ,   created  ,   modified  ,
+               entity_id  ,   previous_id  ,   language  ,   status  ,
+               available  ,   tags  ,   name  ,   user_id  ,
+               unit_id  ,   require_ids  ,   kind  ,   data  )
+            VALUES
+            (%(version_id)s, %(created)s, %(modified)s,
+             %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
+             %(available)s, %(tags)s, %(name)s, %(user_id)s,
+             %(unit_id)s, %(require_ids)s, %(kind)s, %(data)s);
+            INSERT INTO cards_parameters
+            (  id  ,   created  ,   modified,
+              entity_id  ,   guess_distribution  ,   slip_distribution  )
+            VALUES
+            (%(id)s, %(created)s, %(modified)s,
+             %(entity_id)s, %(guess_distribution)s, %(slip_distribution)s);
+        """, {
+            'id': uuid.uuid4(),
+            'version_id': uuid.uuid4(),
+            'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+            'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+            'entity_id': card_data['entity_id'],
+            'previous_id': None,
+            'language': 'en',
+            'name': card_data['body'],
+            'status': 'accepted',
+            'available': True,
+            'tags': [],
+            'user_id': doris_id,
+            'kind': 'choice',
+            'data': psycopg2.extras.Json({
+                'body': card_data['body'],
+                'options': [
+                    {
+                        'id': convert_uuid_to_slug(uuid.uuid4()),
+                        'correct': opt['correct'] == 'Y',
+                        'value': opt['value'],
+                        'feedback': opt['feedback'],
+                    } for opt in card_data['options']
+                ],
+                'order': 'random',
+                'max_options_to_show': 4,
+            }),
+            'unit_id': entity_ids_lookup[card_data['unit']],
+            'require_ids': [],
+            'guess_distribution': psycopg2.extras.Json({
+                str(h): 1 - (0.5 - h) ** 2
+                for h in [h / precision for h in range(1, precision)]
+            }),
+            'slip_distribution': psycopg2.extras.Json({
+                str(h): 1 - (0.25 - h) ** 2
+                for h in [h / precision for h in range(1, precision)]
+            }),
+        })
+        db_conn.commit()
 
-        cur = db_conn.cursor()
-        with cur:
-            cur.execute(""
-                INSERT INTO cards_parameters
-                (  id  ,   created  ,   modified  ,   entity_id  )
-                VALUES
-                (%(id)s, %(created)s, %(modified)s, %(entity_id)s);
-            "", {
-                'id': uuid.uuid4(),
-                'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-                'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-                'entity_id': card_data['entity_id'],
-            })
-            db_conn.commit()
-    """
 
 for sample_id, subject_data in sample_data['subjects'].items():
-    subject_data['entity_id'] = sample_id
-    r.table('subjects').insert({
-        'id': uuid.uuid4(),
-        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'entity_id': subject_data['entity_id'],
-        'previous_id': None,
-        'language': 'en',
-        'name': subject_data['name'],
-        'status': 'accepted',
-        'available': True,
-        'tags': [],
-        'body': subject_data['body'],
-        'members': subject_data['members'],
-    }).run(db_conn)
+    if sample_id in entity_ids_lookup:
+        subject_data['entity_id'] = entity_ids_lookup[sample_id]
+    else:
+        subject_data['entity_id'] = entity_ids_lookup[sample_id] = uuid.uuid4()
 
+    u_members = []
+    for member in subject_data['members']:
+        if member['id'] not in entity_ids_lookup:
+            entity_ids_lookup[member['id']] = uuid.uuid4()
+        u_members.append({
+            'id': convert_uuid_to_slug(entity_ids_lookup[member['id']]),
+            'kind': member['kind'],
+        })
+    subject_data['members'] = u_members
 
+    cur = db_conn.cursor()
+    with cur:
+        cur.execute("""
+            INSERT INTO subjects_entity_id
+            (  entity_id  )
+            VALUES
+            (%(entity_id)s);
+            INSERT INTO subjects
+            (  version_id  ,   created  ,   modified  ,
+               entity_id  ,   previous_id  ,   language  ,   status  ,
+               available  ,   tags  ,   name  ,   user_id  ,
+               body  ,   members  )
+            VALUES
+            (%(version_id)s, %(created)s, %(modified)s,
+             %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
+             %(available)s, %(tags)s, %(name)s, %(user_id)s,
+             %(body)s, %(members)s);
+        """, {
+            'version_id': uuid.uuid4(),
+            'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+            'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+            'entity_id': subject_data['entity_id'],
+            'previous_id': None,
+            'language': 'en',
+            'name': subject_data['name'],
+            'status': 'accepted',
+            'available': True,
+            'tags': [],
+            'user_id': doris_id,
+            'body': subject_data['body'],
+            'members': psycopg2.extras.Json(subject_data['members']),
+        })
+        db_conn.commit()
+
+"""
+TODO-1 Finish these
 for sample_id, unit_data in sample_data['units'].items():
     topic_id = uuid.uuid4()
     proposal_id = uuid.uuid4()
@@ -357,6 +409,7 @@ r.table('users_subjects').insert({
         for sample_id, subject_data in sample_data['subjects'].items()
     ],
 }).run(db_conn)
+"""
 
 close_db_connection(db_conn)
 
