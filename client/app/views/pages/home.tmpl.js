@@ -156,7 +156,7 @@ module.exports = data => {
                                       '/subjects/JAFGYFWhILcsiByyH2O9frcU/landing',
                                   name: 'An Introduction to Electronic Music',
                                   body:
-                                      'A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.',
+                                      'A small taste of the basics of electronic music. Learn the concepts behind creating and modifying sounds in an electronic music system. Learn the ideas behind the tools and systems we use to create electronic music.',
                               })
                           )
                       ),
