@@ -13,9 +13,12 @@ def _log_in(user):
     """
 
     session_id = log_in_user(user)
+    print('^^^')
     if session_id:
+        delivered_user = deliver_user(user, access='private')
+        print('***', delivered_user)
         return 200, {
-            'user': deliver_user(user, access='private'),
+            'user': delivered_user,
             'cookies': {
                 'session_id': session_id
             },
@@ -87,7 +90,8 @@ def create_user_route(request):
     """
 
     db_conn = request['db_conn']
-    user, errors = insert_user(request['params'], db_conn)
+    user, errors = insert_user(db_conn, request['params'])
+    print('###', user, errors)
     if len(errors):
         return 400, {
             'errors': errors,

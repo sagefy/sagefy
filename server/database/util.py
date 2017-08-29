@@ -17,7 +17,13 @@ def insert_row(db_conn, schema, query, data):
     if errors:
         return None, errors
     data = bundle_fields(schema, data)
-    errors = save_row(db_conn, query, data)
+
+    # TODO-1 fix this ###
+    if data.get('settings'):
+        data['settings'] = psycopg2.extras.Json(data['settings'])
+    ###
+
+    data, errors = save_row(db_conn, query, data)
     return data, errors
 
 
@@ -34,7 +40,7 @@ def update_row(db_conn, schema, query, prev_data, data):
     if errors:
         return None, errors
     data = bundle_fields(schema, data)
-    errors = save_row(db_conn, query, data)
+    data, errors = save_row(db_conn, query, data)
     return data, errors
 
 
@@ -50,9 +56,9 @@ def save_row(db_conn, query, params):
         db_curr = db_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         with db_curr:
             db_curr.execute(query, params)
-            data = db_curr.fetchall()[0]
+            data = db_curr.fetchone()
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+        print(query, error)
         errors = [{'message': '@@ db error @@'}]
         # TODO-1 parse through errors, make user friendly
     return data, errors
@@ -63,10 +69,15 @@ def get_row(db_conn, query, params):
     Get a single row using psycopg2.
     """
 
-    rows = list_rows(db_conn, query, params)
-    if len(rows):
-        return rows[0]
-    return None
+    data = None
+    try:
+        db_curr = db_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        with db_curr:
+            db_curr.execute(query, params)
+            data = db_curr.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    return data
 
 
 def list_rows(db_conn, query, params):
@@ -206,9 +217,9 @@ def prepare_document(schema, data, db_conn):
     errors = validate_fields(schema, data)
     if errors:
         return data, errors
-    errors = validate_unique_fields(schema, data, db_conn)
-    if errors:
-        return data, errors
+    # errors = validate_unique_fields(schema, data, db_conn)
+    # if errors:
+    #     return data, errors
     if 'validate' in schema:
         for fn in schema['validate']:
             errors = fn(schema, data, db_conn)
@@ -282,27 +293,27 @@ def validate_fields(schema, data):
     return errors
 
 
-def validate_unique_fields(schema, data, db_conn):
-    """
-    Test all top-level fields marked as unique.
-    """
-
-    errors = []
-
-    def _(data, field_name, field_schema, prefix):
-        if ('unique' not in field_schema or
-                data.get(field_name) is None):
-            return
-        query = (r.table(schema['tablename'])
-                  .filter(r.row[field_name] == data.get(field_name))
-                  .filter(r.row['id'] != data['id']))
-        if len(list(query.run(db_conn))) > 0:
-            errors.append({
-                'name': prefix + field_name,
-                'message': c('unique'),
-            })
-    recurse_embeds(_, data, schema['fields'])
-    return errors
+# def validate_unique_fields(schema, data, db_conn):
+#     """
+#     Test all top-level fields marked as unique.
+#     """
+#
+#     errors = []
+#
+#     def _(data, field_name, field_schema, prefix):
+#         if ('unique' not in field_schema or
+#                 data.get(field_name) is None):
+#             return
+#         query = (r.table(schema['tablename'])
+#                   .filter(r.row[field_name] == data.get(field_name))
+#                   .filter(r.row['id'] != data['id']))
+#         if len(list(query.run(db_conn))) > 0:
+#             errors.append({
+#                 'name': prefix + field_name,
+#                 'message': c('unique'),
+#             })
+#     recurse_embeds(_, data, schema['fields'])
+#     return errors
 
 
 def bundle_fields(schema, data):

@@ -24,20 +24,20 @@ def insert_user(db_conn, data):
     schema = user_schema
     query = """
         INSERT INTO users
-        (  name  ,   email  ,   password  ,  settings  )
+        (  name  ,   email  ,   password  ,   settings  )
         VALUES
-        (%(name)s, %(email)s, %(password), %(settings)s)
+        (%(name)s, %(email)s, %(password)s, %(settings)s)
         RETURNING *;
     """
     data = {
         'name': data['name'].lower().strip(),
         'email': data['email'].lower().strip(),
         'password': data['password'],
-        'settings': psycopg2.extras.Json({
+        'settings': {
             'email_frequency': 'daily',
             'view_subjects': 'private',
             'view_follows': 'private',
-        }),
+        },
     }
     user, errors = insert_row(db_conn, schema, query, data)
     if not errors:
