@@ -6,12 +6,17 @@ from random import SystemRandom
 import string
 from datetime import datetime
 import collections
+import uuid
+import base64
 
 random = SystemRandom()
 
 
 def uniqid():
     """
+    DEPRECATED. Switching to UUID to save space.
+    Using urlsafe_b64 to make it look nicer/shorter in UI.
+    -----
     Generate a unique string with 24 characters.
     https://stackoverflow.com/a/2257449
     """
@@ -21,6 +26,26 @@ def uniqid():
                       + string.digits)
         for i in range(24)
     )
+
+
+# uuid.uuid4()  create a new UUID
+
+
+def convert_uuid_to_slug(my_uuid):
+    """
+    Example
+    Current ID: 'JAFGYFWhILcsiByyH2O9frcU'
+    To UUID: UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
+    Back to Slug: 'JAFGYFWhILcsiByyH2O9fg'
+    """
+    assert isinstance(my_uuid, uuid.UUID)
+    return base64.urlsafe_b64encode(my_uuid.bytes)[:-2].decode()
+
+
+def convert_slug_to_uuid(slug):
+    assert isinstance(slug, str)
+    slug = slug[0:22]
+    return uuid.UUID(bytes=base64.urlsafe_b64decode(slug + '=='))
 
 
 def pick(d, keys):
