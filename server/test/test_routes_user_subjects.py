@@ -1,5 +1,5 @@
 import routes.user_subjects
-import rethinkdb as r
+
 import pytest
 
 xfail = pytest.mark.xfail

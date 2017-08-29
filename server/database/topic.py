@@ -1,4 +1,3 @@
-import rethinkdb as r
 from modules.util import json_prep, pick
 from framework.elasticsearch import es
 from schemas.topic import schema as topic_schema
@@ -9,6 +8,13 @@ from database.util import insert_document, update_document, deliver_fields, \
 def insert_topic(data, db_conn):
     """
     Create a new topic.
+
+    *M2P Insert a Topic
+
+        INSERT INTO topics
+        (  user_id  ,   entity_id  ,   entity_kind  ,   name  )
+        VALUES
+        (%(user_id)s, %(entity_id)s, %(entity_kind)s, %(name)s);
     """
 
     schema = topic_schema
@@ -21,6 +27,12 @@ def insert_topic(data, db_conn):
 def update_topic(prev_data, data, db_conn):
     """
     Update an existing topic.
+
+    *M2P Update a Topic Name
+
+        UPDATE topics
+        SET name = %(name)s
+        WHERE id = %(id)s;
     """
 
     schema = topic_schema
@@ -34,6 +46,13 @@ def update_topic(prev_data, data, db_conn):
 def get_topic(params, db_conn):
     """
     Get the topic matching the parameters.
+
+    *M2P Get Topic by ID
+
+        SELECT *
+        FROM topics
+        WHERE id = %(id)s
+        LIMIT 1;
     """
 
     tablename = topic_schema['tablename']
@@ -43,6 +62,13 @@ def get_topic(params, db_conn):
 def list_topics(params, db_conn):
     """
     Get a list of topics in Sagefy.
+
+    *M2P List Topics (All)
+
+        SELECT *
+        FROM topics
+        ORDER BY created DESC;
+        /* TODO OFFSET LIMIT */
     """
 
     schema = topic_schema
@@ -63,6 +89,14 @@ def list_topics_by_entity_id(entity_id, params, db_conn):
     """
     Get a list of models matching the provided keyword arguments.
     Return empty array when no models match.
+
+    *M2P List Topics by EID
+
+    SELECT *
+    FROM topics
+    WHERE entity_id = %(entity_id)s
+    ORDER BY created DESC;
+    /* TODO OFFSET LIMIT */
     """
 
     limit = params.get('limit') or 10

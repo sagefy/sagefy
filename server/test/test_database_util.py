@@ -1,5 +1,5 @@
 import pytest
-import rethinkdb as r
+
 from conftest import table
 from test_config import config
 import database.util as util

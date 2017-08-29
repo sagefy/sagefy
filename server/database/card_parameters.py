@@ -9,6 +9,12 @@ from modules.sequencer.params import init_guess, init_slip, precision, \
 
 def get_card_parameters(params, db_conn):
     """
+    *M2P Get Card Parameters
+
+        SELECT *
+        FROM cards_parameters
+        WHERE entity_id = %(entity_id)s
+        LIMIT 1;
     """
 
     tablename = card_parameters_schema['tablename']
@@ -17,6 +23,14 @@ def get_card_parameters(params, db_conn):
 
 def insert_card_parameters(data, db_conn):
     """
+    *M2P Insert Card Parameters [hidden]
+
+        INSERT INTO cards_parameters
+        (  created  ,   modified  ,   entity_id  ,
+           guess_distribution  ,   slip_distribution  )
+        VALUES
+        (%(created)s, %(modified)s, %(entity_id)s,
+         %(guess_distribution)s, %(slip_distribution)s);
     """
 
     schema = card_parameters_schema
@@ -25,6 +39,12 @@ def insert_card_parameters(data, db_conn):
 
 def update_card_parameters(prev_data, data, db_conn):
     """
+    *M2P Update Card Parameters [hidden]
+
+        UPDATE card_parameters
+        SET guess_distribution = %(guess_distribution)s,
+            slip_distribution = %(slip_distribution)s
+        WHERE entity_id = %(entity_id)s;
     """
 
     schema = card_parameters_schema

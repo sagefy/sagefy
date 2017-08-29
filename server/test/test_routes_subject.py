@@ -1,5 +1,5 @@
 import pytest
-import rethinkdb as r
+
 import routes.subject
 
 

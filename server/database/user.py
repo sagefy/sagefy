@@ -11,7 +11,6 @@ from modules.util import uniqid, pick, compact_dict, json_serial, \
     omit, json_prep
 from modules.content import get as c
 from framework.mail import send_mail
-import rethinkdb as r
 
 # TODO-2 should we use this to test passwords?
 # https://github.com/dropbox/python-zxcvbn
@@ -20,6 +19,15 @@ import rethinkdb as r
 def insert_user(data, db_conn):
     """
     Save the user to the database.
+
+    *M2P Insert User
+
+        !!! Make sure password is bcrypt first.
+
+        INSERT INTO users
+        (  name  ,   email  ,   password  ,  settings  )
+        VALUES
+        (%(name)s, %(email)s, %(password), %(settings)s);
     """
 
     schema = user_schema
@@ -36,6 +44,12 @@ def insert_user(data, db_conn):
 def update_user(prev_data, data, db_conn):
     """
     Overwrite update method to remove password.
+
+    *M2P Update User (no password)
+
+        UPDATE users
+        SET name = %(name)s, email = %(email)s, settings = %(settings)s
+        WHERE id = %(id)s;
     """
 
     schema = user_schema
@@ -53,6 +67,14 @@ def update_user(prev_data, data, db_conn):
 def update_user_password(prev_data, data, db_conn):
     """
     Overwrite update method to add password.
+
+    *M2P Update User Password
+
+        !!! Make sure password is bcrypt first.
+
+        UPDATE users
+        SET password = %(password)s
+        WHERE id = %(id)s;
     """
 
     schema = user_schema
@@ -80,6 +102,13 @@ def add_user_to_es(user):
 def get_user(params, db_conn):
     """
     Get the user matching the parameters.
+
+    *M2P Get User (By ID)
+
+        SELECT *
+        FROM users
+        WHERE id = %(id)s
+        LIMIT 1;
     """
 
     tablename = user_schema['tablename']
@@ -89,6 +118,13 @@ def get_user(params, db_conn):
 def list_users(params, db_conn):
     """
     Get a list of all users of Sagefy.
+
+    *M2P List Users (All)
+
+        SELECT id
+        FROM users
+        ORDER BY created DESC;
+        /* TODO OFFSET LIMIT */
     """
 
     schema = user_schema
@@ -99,6 +135,14 @@ def list_users(params, db_conn):
 def list_users_by_user_ids(user_ids, db_conn):
     """
     Get a list of users by their user id.
+
+    *M2P List Users (By ID)
+
+        SELECT *
+        FROM users
+        WHERE id in $(ids)s
+        ORDER BY created DESC;
+        /* TODO OFFSET LIMIT */
     """
     schema = user_schema
     query = (r.table(schema['tablename'])

@@ -2,7 +2,7 @@ from schemas.index import schema as default
 from schemas.index import update_modified
 from modules.validations import is_required, is_email, is_string, \
     has_min_length, is_one_of
-import rethinkdb as r
+
 from passlib.hash import bcrypt
 from modules.util import extend
 

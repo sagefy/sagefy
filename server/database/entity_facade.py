@@ -1,4 +1,3 @@
-import rethinkdb as r
 from modules.memoize_redis import memoize_redis
 from modules.util import omit
 from database.entity_base import list_by_entity_ids, get_version, \

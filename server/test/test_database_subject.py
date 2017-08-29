@@ -1,4 +1,4 @@
-import rethinkdb as r
+
 from database.entity_base import list_by_entity_ids, get_latest_accepted
 from database.entity_facade import list_subjects_by_unit_id, \
     list_units_in_subject

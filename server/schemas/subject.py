@@ -2,7 +2,7 @@ from schemas.entity_base import schema as entity_schema
 from modules.util import extend
 from modules.validations import is_required, is_string, is_list, is_one_of, \
     has_min_length
-import rethinkdb as r
+
 from database.entity_base import list_by_entity_ids
 
 """

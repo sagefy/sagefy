@@ -1,5 +1,5 @@
 from database.response import insert_response, get_latest_response
-import rethinkdb as r
+
 
 
 def test_created(db_conn, responses_table):

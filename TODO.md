@@ -1,13 +1,11 @@
 - TODO-3 Add JSON schema to Web API document
     https://github.com/heiskr/sagefy/wiki/Web-API
     http://json-schema.org/
-- TODO-3 Service: Remove models and all `self` arguments
 - TODO-2 Relabel all Menu items to start with Verbs #
 - TODO-3 Autoscaling web server
 - TODO-2 Plan on cleaning up tests
 - TODO-2 UI: Have the store update via an immutable reducer method
 - TODO-3 Notifications UI: Add an icon per notification type
-- TODO-3 Explore isomorphic rendering
 - TODO-3 Setup AB testing system for UI
     Check out http://www.evanmiller.org/sequential-ab-testing.html
 - TODO-3 Consider Python 3.5's async & await in API

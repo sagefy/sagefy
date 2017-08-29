@@ -1,4 +1,4 @@
-import rethinkdb as r
+
 import pytest
 from database.entity_base import get_latest_accepted
 

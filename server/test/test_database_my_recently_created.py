@@ -2,7 +2,7 @@ from conftest import create_user_in_db
 from database.my_recently_created import get_my_recent_proposals, \
     get_proposal_entity_versions, get_my_recently_created_units, \
     get_my_recently_created_subjects
-import rethinkdb as r
+
 
 
 def create_some_proposals(posts_table, units_table, subjects_table, db_conn):

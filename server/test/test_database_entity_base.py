@@ -1,7 +1,7 @@
 import pytest
 from database.entity_base import get_versions, get_latest_accepted, \
     list_requires, list_required_by
-import rethinkdb as r
+
 
 
 xfail = pytest.mark.xfail

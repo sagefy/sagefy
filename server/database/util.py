@@ -1,4 +1,3 @@
-import rethinkdb as r
 from modules.util import omit, extend, pick
 from copy import deepcopy
 from modules.content import get as c

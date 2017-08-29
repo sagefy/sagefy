@@ -2,7 +2,7 @@ from schemas.index import schema as default
 from modules.validations import is_required, is_string, is_one_of, \
     has_min_length
 from modules.util import extend
-import rethinkdb as r
+
 
 
 def is_valid_topic_id(schema, data, db_conn):

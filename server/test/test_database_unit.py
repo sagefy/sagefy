@@ -1,4 +1,4 @@
-import rethinkdb as r
+
 from database.unit import insert_unit
 
 

@@ -1,4 +1,4 @@
-import rethinkdb as r
+
 import json
 import routes.card
 from framework.redis import redis

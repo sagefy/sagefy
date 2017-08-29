@@ -1,6 +1,6 @@
 import pytest
 from conftest import create_user_in_db
-import rethinkdb as r
+
 import routes.post
 
 xfail = pytest.mark.xfail

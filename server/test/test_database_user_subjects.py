@@ -1,7 +1,7 @@
 from database.user_subjects import insert_user_subjects, \
     list_user_subjects_entity
 # get_user_subjects, append_user_subjects, remove_user_subjects,
-import rethinkdb as r
+
 
 
 def test_user(db_conn, users_subjects_table):

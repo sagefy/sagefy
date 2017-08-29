@@ -1,4 +1,4 @@
-import rethinkdb as r
+
 from database.follow import insert_follow, list_follows
 # from database.follow import get_follow, \
 #     deliver_follow, delete_follow, get_user_ids_by_followed_entity

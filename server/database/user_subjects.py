@@ -11,6 +11,13 @@ Record the list of subjects the learner has added.
 def insert_user_subjects(data, db_conn):
     """
     Add a new user subjects entry to the database.
+
+    *M2P Insert User Subject Relation
+
+        INSERT INTO users_subjects
+        (  user_id  ,   subject_id  )
+        VALUES
+        (%(user_id)s, %(subject_id)s);
     """
 
     schema = user_subjects_schema
@@ -20,6 +27,14 @@ def insert_user_subjects(data, db_conn):
 def get_user_subjects(user_id, db_conn):
     """
     Get the user subjects entry for a user from the database.
+
+    *M2P List User Subjects by User ID
+
+        SELECT *
+        FROM users_subjects
+        WHERE user_id = %(user_id)s
+        ORDER BY created DESC;
+        /* TODO OFFSET LIMIT */
     """
 
     tablename = user_subjects_schema['tablename']
@@ -42,6 +57,10 @@ def append_user_subjects(user_id, subject_id, db_conn):
 def remove_user_subjects(user_id, subject_id, db_conn):
     """
     Remove a subject from a user's list of subjects.
+
+    *M2P Delete User Subject
+
+        DELETE FROM users_subjects WHERE id = %(id)s;
     """
 
     prev_data = get_user_subjects(user_id, db_conn)

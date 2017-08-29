@@ -1,4 +1,4 @@
-import rethinkdb as r
+
 from modules.util import uniqid
 
 

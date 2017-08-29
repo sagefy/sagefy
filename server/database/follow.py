@@ -1,4 +1,3 @@
-import rethinkdb as r
 from schemas.follow import schema as follow_schema
 from database.util import get_document, prepare_document, insert_document, \
     deliver_fields, delete_document
@@ -7,6 +6,13 @@ from database.util import get_document, prepare_document, insert_document, \
 def get_follow(params, db_conn):
     """
     Find a specific follow (entity <-> user).
+
+    *M2P Get Follow by User ID AND EID
+
+        SELECT *
+        FROM follows
+        WHERE user_id = %(user_id)s AND entity_id = %(entity_id)s
+        LIMIT 1;
     """
 
     schema = follow_schema
@@ -19,6 +25,22 @@ def list_follows(params, db_conn):
     Get a list of models matching the provided arguments.
     Also adds pagination capabilities.
     Returns empty array when no models match.
+
+    *M2P List Follows by User ID
+
+        SELECT *
+        FROM follows
+        WHERE user_id = %(user_id)s
+        ORDER BY created DESC;
+        /* TODO OFFSET LIMIT */
+
+    *M2P List Follows by EID
+
+        SELECT *
+        FROM follows
+        WHERE entity_id = %(entity_id)s
+        ORDER BY created DESC;
+        /* TODO OFFSET LIMIT */
     """
 
     schema = follow_schema
@@ -43,6 +65,13 @@ def list_follows(params, db_conn):
 def insert_follow(data, db_conn):
     """
     Create a new follow (user <-> entity).
+
+    *M2P Insert Follow
+
+        INSERT INTO follows
+        (  user_id  ,   entity_id  ,   entity_kind  )
+        VALUES
+        (%(user_id)s, %(entity_id)s, %(entity_kind)s);
     """
 
     # TODO-2 move these to schema-level 'validate' fns instead.
@@ -73,6 +102,10 @@ def deliver_follow(data, access=None):
 def delete_follow(doc_id, db_conn):
     """
     Remove a follow from the database.
+
+    *M2P Delete Follow
+
+        DELETE FROM follows WHERE id = %(id)s;
     """
 
     schema = follow_schema

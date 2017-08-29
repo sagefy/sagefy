@@ -1,7 +1,6 @@
 from schemas.notice import schema as notice_schema
 from database.util import insert_document, update_document, deliver_fields, \
     get_document
-import rethinkdb as r
 from modules.content import get as c
 from copy import deepcopy
 
@@ -39,6 +38,13 @@ def get_notice(params, db_conn):
 def insert_notice(data, db_conn):
     """
     Create a new notice.
+
+    *M2P Insert a Notice [hidden]
+
+        INSERT INTO notices
+        (  user_id  ,   kind  ,   data  )
+        VALUES
+        (%(user_id)s, %(kind)s, %(data)s);
     """
 
     schema = notice_schema
@@ -50,6 +56,15 @@ def list_notices(params, db_conn):
     Get a list of models matching the provided arguments.
     Also adds pagination capabilities.
     Returns empty array when no models match.
+
+
+    *M2P List Notices by User ID
+
+        SELECT *
+        FROM notices
+        WHERE user_id = %(user_id)s
+        ORDER BY created DESC;
+        /* TODO OFFSET LIMIT */
     """
 
     limit = params.get('limit') or 10
@@ -72,6 +87,12 @@ def list_notices(params, db_conn):
 def mark_notice_as_read(notice, db_conn):
     """
     Marks the notice as read.
+
+    *M2P Mark Notice as Read
+
+        UPDATE notices
+        SET read = TRUE
+        WHERE id = %(id)s;
     """
 
     schema = notice_schema
@@ -81,6 +102,12 @@ def mark_notice_as_read(notice, db_conn):
 def mark_notice_as_unread(notice, db_conn):
     """
     Marks the notice as unread.
+
+    *M2P Mark Notice as Unread
+
+        UPDATE notices
+        SET read = FALSE
+        WHERE id = %(id)s;
     """
 
     schema = notice_schema

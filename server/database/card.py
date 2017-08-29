@@ -19,6 +19,20 @@ def get_card_schema(data):
 def insert_card(db_conn, data):
     """
     Create a card, saving to ES.
+
+    *M2P Insert Card Version
+
+        WITH temp AS (
+            INSERT INTO cards_entity_id (entity_id) VALUES (uuid_generate_v4())
+            RETURNING entity_id
+        )
+        INSERT INTO cards
+        (entity_id  ,   previous_id  ,   name  ,   user_id  ,   unit_id  ,
+           require_ids  ,   kind  ,   data  )
+        SELECT
+         entity_id  , %(previous_id)s, %(name)s, %(user_id)s, %(unit_id)s,
+         %(require_ids)s, %(kind)s, %(data)s
+        FROM temp;
     """
 
     schema = get_card_schema(data)
@@ -36,6 +50,12 @@ def insert_card(db_conn, data):
 def update_card(prev_data, data, db_conn):
     """
     Update a card.
+
+    *M2P Update Card Version Status [hidden]
+
+        UPDATE cards
+        SET status = %(status)s
+        WHERE version_id = %(version_id)s;
     """
 
     schema = get_card_schema(data)
@@ -100,3 +120,57 @@ def deliver_card(data, access=None):
             data['options'] = data['options'][:data['max_options_to_show']]
 
     return deliver_fields(schema, data, access)
+
+
+"""
+*M2P Get Latest Accepted Card Version by EID
+
+    SELECT DISTINCT ON (entity_id) *
+    FROM cards
+    WHERE status = 'accepted' AND entity_id = %(entity_id)s
+    ORDER BY entity_id, created DESC;
+    /* TODO LIMIT */
+
+*M2P List Latest Accepted Card Versions by EIDs
+
+    SELECT DISTINCT ON (entity_id) *
+    FROM cards
+    WHERE status = 'accepted' AND entity_id in %(entity_ids)s
+    ORDER BY entity_id, created DESC;
+    /* TODO LIMIT OFFSET */
+
+*M2P List Card Versions by VIDs
+
+    SELECT *
+    FROM cards
+    WHERE version_id in %(version_ids)s
+    ORDER BY created DESC;
+    /* TODO LIMIT OFFSET */
+
+*M2P List Card Versions by EID
+
+    SELECT *
+    FROM cards
+    WHERE entity_id = %(entity_id)s
+    ORDER BY created DESC;
+    /* TODO LIMIT OFFSET */
+
+*M2P List Latest Version of Required Cards by EID
+
+    1. Get Latest Accepted Card Version by EID
+    2. List Latest Accepted Card Versions by EIDs (require_ids)
+
+*M2P List Latest Version of Required By Cards by EID
+
+    WITH temp as (
+        SELECT DISTINCT ON (entity_id) *
+        FROM cards
+        WHERE status = 'accepted'
+        ORDER BY entity_id, created DESC
+    )
+    SELECT *
+    FROM temp
+    WHERE %(entity_id)s in require_ids
+    ORDER BY created DESC;
+    /* TODO LIMIT OFFSET */
+"""

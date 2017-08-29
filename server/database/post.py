@@ -5,7 +5,6 @@ from schemas.proposal import schema as proposal_schema
 from schemas.vote import schema as vote_schema
 from database.util import insert_document, update_document, deliver_fields, \
     get_document
-import rethinkdb as r
 
 
 def get_post_schema(data):
@@ -21,6 +20,33 @@ def get_post_schema(data):
 def insert_post(data, db_conn):
     """
     Create a new post.
+
+    *M2P Create a new Post
+
+        POST:
+
+        INSERT INTO posts
+        (  user_id  ,   topic_id  ,   kind  ,   body  ,   replies_to_id  )
+        VALUES
+        (%(user_id)s, %(topic_id)s, %(kind)s, %(body)s, %(replies_to_id)s);
+
+        PROPOSAL:
+
+        INSERT INTO posts
+        (  user_id  ,   topic_id  ,   kind  ,   body  ,
+           replies_to_id  ,   entity_versions  )
+        VALUES
+        (%(user_id)s, %(topic_id)s, %(kind)s, %(body)s,
+         %(replies_to_id)s, %(entity_versions)s);
+
+        VOTE:
+
+        INSERT INTO posts
+        (  user_id  ,   topic_id  ,   kind  ,   body  ,
+           replies_to_id  ,   response  )
+        VALUES
+        (%(user_id)s, %(topic_id)s, %(kind)s, %(body)s,
+         %(replies_to_id)s, %(response)s);
     """
 
     schema = get_post_schema(data)
@@ -33,6 +59,26 @@ def insert_post(data, db_conn):
 def update_post(prev_data, data, db_conn):
     """
     Update an existing post.
+
+    *M2P Update Post (fields limited)
+
+        POST:
+
+        UPDATE posts
+        SET body = %(body)s
+        WHERE id = %(id)s AND kind = 'post';
+
+        PROPOSAL:
+
+        UPDATE posts
+        SET body = %(body)s
+        WHERE id = %(id)s AND kind = 'proposal';
+
+        VOTE:
+
+        UPDATE posts
+        SET body = %(body)s, response = %(response)s
+        WHERE id = %(id)s AND kind = 'vote';
     """
 
     schema = get_post_schema(data)
@@ -50,6 +96,13 @@ def update_post(prev_data, data, db_conn):
 def get_post(params, db_conn):
     """
     Get the post matching the parameters.
+
+    *M2P Get Post by ID
+
+        SELECT *
+        FROM posts
+        WHERE id = %(id)s
+        LIMIT 1;
     """
 
     tablename = post_schema['tablename']
@@ -59,6 +112,22 @@ def get_post(params, db_conn):
 def list_posts(params, db_conn):
     """
     Get a list of posts in Sagefy.
+
+    *M2P List Posts by Topic ID
+
+        SELECT *
+        FROM posts
+        WHERE topic_id = %(topic_id)s
+        ORDER BY created ASC;
+        /* TODO OFFSET LIMIT */
+
+    *M2P List Posts by User ID
+
+        SELECT *
+        FROM posts
+        WHERE user_id = %(user_id)s
+        ORDER BY created ASC;
+        /* TODO OFFSET LIMIT */
     """
 
     skip = params.get('skip') or 0

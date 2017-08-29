@@ -3,7 +3,7 @@ from schemas.post import is_valid_topic_id, is_valid_reply
 from modules.validations import is_required, is_string, is_boolean
 from modules.util import extend
 from database.entity_base import get_version
-import rethinkdb as r
+
 
 
 def is_unique_vote(schema, data, db_conn):
