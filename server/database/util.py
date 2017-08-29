@@ -1,6 +1,99 @@
 from modules.util import omit, extend, pick
 from copy import deepcopy
 from modules.content import get as c
+import psycopg2
+import psycopg2.extras
+
+
+def insert_row(db_conn, schema, query, data):
+    """
+    Validate a row, then insert the row.
+    """
+
+    data = omit(data, ('id', 'created', 'modified'))
+    # TODO-2 is it possible to have postgres do this work of
+    #        validating/preparing?
+    data, errors = prepare_document(schema, data, db_conn)
+    if errors:
+        return errors
+    data = bundle_fields(schema, data)
+    errors = save_row(db_conn, query, data)
+    return errors
+
+
+def update_row(db_conn, schema, query, prev_data, data):
+    """
+    Validate changes, then update row.
+    """
+
+    data = omit(data, ('id', 'created', 'modified'))
+    data = extend({}, prev_data, data)
+    # TODO-2 is it possible to have postgres do this work of
+    #        validating/preparing?
+    data, errors = prepare_document(schema, data, db_conn)
+    if errors:
+        return errors
+    data = bundle_fields(schema, data)
+    errors = save_row(db_conn, query, data)
+    return errors
+
+
+def save_row(db_conn, query, params):
+    """
+    Insert or update a row using psycopg2.
+    Validate data before using!
+    """
+
+    errors = []
+    try:
+        db_curr = db_conn.cursor()
+        with db_curr:
+            db_curr.execute(query, params)
+            db_conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+        errors = [{'message': '@@ db error @@'}]
+        # TODO-1 parse through errors, make user friendly
+    return errors
+
+
+def get_row(db_conn, query, params):
+    """
+    Get a single row using psycopg2.
+    """
+
+    rows = list_rows(db_conn, query, params)
+    if len(rows):
+        return rows[0]
+    return None
+
+
+def list_rows(db_conn, query, params):
+    """
+    List rows using psycopg2.
+    """
+
+    data = None
+    try:
+        db_curr = db_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        with db_curr:
+            db_curr.execute(query, params)
+            data = db_curr.fetchall()
+        data = [row for row in data]
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    return data
+
+
+def delete_rows(db_conn, query, params):
+    """
+    Delete a row using psycopg2.
+    """
+
+    return save_row(db_conn, query, params)
+
+
+###############################################################################
 
 
 def insert_document(schema, data, db_conn):

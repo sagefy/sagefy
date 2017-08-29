@@ -157,7 +157,7 @@ def list_users_by_user_ids(user_ids, db_conn):
 #     Overwrite delete method to delete in Elasticsearch.
 #     """
 #
-#     # TODO-2 should we validate the delete worked before going to ES?
+#     # TODO-3 validate the delete worked before going to ES
 #     tablename = user_schema['tablename']
 #     es.delete(
 #         index='entity',
