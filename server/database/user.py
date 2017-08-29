@@ -2,8 +2,7 @@ from schemas.user import schema as user_schema
 import urllib
 import hashlib
 from passlib.hash import bcrypt
-from database.util import insert_document, update_document, \
-    get_document, deliver_fields
+from database.util import insert_row, update_row, get_row, deliver_fields
 from framework.elasticsearch import es
 import json
 from framework.redis import redis
@@ -11,34 +10,39 @@ from modules.util import uniqid, pick, compact_dict, json_serial, \
     omit, json_prep
 from modules.content import get as c
 from framework.mail import send_mail
+import psycopg2.extras
 
 # TODO-2 should we use this to test passwords?
 # https://github.com/dropbox/python-zxcvbn
 
 
-def insert_user(data, db_conn):
+def insert_user(db_conn, data):
     """
     Save the user to the database.
-
-    *M2P Insert User
-
-        !!! Make sure password is bcrypt first.
-
-        INSERT INTO users
-        (  name  ,   email  ,   password  ,  settings  )
-        VALUES
-        (%(name)s, %(email)s, %(password), %(settings)s);
     """
 
     schema = user_schema
-    if 'email' in data:
-        data['email'] = data['email'].lower().strip()
-    if 'name' in data:
-        data['name'] = data['name'].lower().strip()
-    data, errors = insert_document(schema, data, db_conn)
+    query = """
+        INSERT INTO users
+        (  name  ,   email  ,   password  ,  settings  )
+        VALUES
+        (%(name)s, %(email)s, %(password), %(settings)s)
+        RETURNING *;
+    """
+    data = {
+        'name': data['name'].lower().strip(),
+        'email': data['email'].lower().strip(),
+        'password': data['password'],
+        'settings': psycopg2.extras.Json({
+            'email_frequency': 'daily',
+            'view_subjects': 'private',
+            'view_follows': 'private',
+        }),
+    }
+    user, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         add_user_to_es(data)
-    return data, errors
+    return user, errors
 
 
 def update_user(prev_data, data, db_conn):
@@ -49,7 +53,8 @@ def update_user(prev_data, data, db_conn):
 
         UPDATE users
         SET name = %(name)s, email = %(email)s, settings = %(settings)s
-        WHERE id = %(id)s;
+        WHERE id = %(id)s
+        RETURNING *;
     """
 
     schema = user_schema
@@ -74,7 +79,8 @@ def update_user_password(prev_data, data, db_conn):
 
         UPDATE users
         SET password = %(password)s
-        WHERE id = %(id)s;
+        WHERE id = %(id)s
+        RETURNING *;
     """
 
     schema = user_schema

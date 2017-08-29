@@ -22,7 +22,8 @@ def insert_unit(db_conn, data):
         SELECT
          entity_id  , %(previous_id)s, %(name)s, %(user_id)s,
          %(body)s, %(require_ids)s
-        FROM temp;
+        FROM temp
+        RETURNING *;
     """
 
     schema = unit_schema
@@ -40,7 +41,8 @@ def update_unit(prev_data, data, db_conn):
 
         UPDATE units
         SET status = %(status)s
-        WHERE version_id = %(version_id)s;
+        WHERE version_id = %(version_id)s
+        RETURNING *;
     """
 
     schema = unit_schema

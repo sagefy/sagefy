@@ -15,10 +15,10 @@ def insert_row(db_conn, schema, query, data):
     #        validating/preparing?
     data, errors = prepare_document(schema, data, db_conn)
     if errors:
-        return errors
+        return None, errors
     data = bundle_fields(schema, data)
     errors = save_row(db_conn, query, data)
-    return errors
+    return data, errors
 
 
 def update_row(db_conn, schema, query, prev_data, data):
@@ -32,29 +32,30 @@ def update_row(db_conn, schema, query, prev_data, data):
     #        validating/preparing?
     data, errors = prepare_document(schema, data, db_conn)
     if errors:
-        return errors
+        return None, errors
     data = bundle_fields(schema, data)
     errors = save_row(db_conn, query, data)
-    return errors
+    return data, errors
 
 
 def save_row(db_conn, query, params):
     """
     Insert or update a row using psycopg2.
     Validate data before using!
+    Probably best to not call this directly: use `insert` or `update` instead.
     """
 
-    errors = []
+    data, errors = None, []
     try:
-        db_curr = db_conn.cursor()
+        db_curr = db_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         with db_curr:
             db_curr.execute(query, params)
-            db_conn.commit()
+            data = db_curr.fetchall()[0]
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
         errors = [{'message': '@@ db error @@'}]
         # TODO-1 parse through errors, make user friendly
-    return errors
+    return data, errors
 
 
 def get_row(db_conn, query, params):

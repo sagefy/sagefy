@@ -30,7 +30,8 @@ def insert_card_parameters(data, db_conn):
            guess_distribution  ,   slip_distribution  )
         VALUES
         (%(created)s, %(modified)s, %(entity_id)s,
-         %(guess_distribution)s, %(slip_distribution)s);
+         %(guess_distribution)s, %(slip_distribution)s)
+        RETURNING *;
     """
 
     schema = card_parameters_schema
@@ -44,7 +45,8 @@ def update_card_parameters(prev_data, data, db_conn):
         UPDATE card_parameters
         SET guess_distribution = %(guess_distribution)s,
             slip_distribution = %(slip_distribution)s
-        WHERE entity_id = %(entity_id)s;
+        WHERE entity_id = %(entity_id)s
+        RETURNING *;
     """
 
     schema = card_parameters_schema

@@ -44,7 +44,8 @@ def insert_notice(data, db_conn):
         INSERT INTO notices
         (  user_id  ,   kind  ,   data  )
         VALUES
-        (%(user_id)s, %(kind)s, %(data)s);
+        (%(user_id)s, %(kind)s, %(data)s)
+        RETURNING *;
     """
 
     schema = notice_schema
@@ -92,7 +93,8 @@ def mark_notice_as_read(notice, db_conn):
 
         UPDATE notices
         SET read = TRUE
-        WHERE id = %(id)s;
+        WHERE id = %(id)s
+        RETURNING *;
     """
 
     schema = notice_schema
@@ -107,7 +109,8 @@ def mark_notice_as_unread(notice, db_conn):
 
         UPDATE notices
         SET read = FALSE
-        WHERE id = %(id)s;
+        WHERE id = %(id)s
+        RETURNING *;
     """
 
     schema = notice_schema

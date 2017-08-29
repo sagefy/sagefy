@@ -17,7 +17,8 @@ def insert_user_subjects(data, db_conn):
         INSERT INTO users_subjects
         (  user_id  ,   subject_id  )
         VALUES
-        (%(user_id)s, %(subject_id)s);
+        (%(user_id)s, %(subject_id)s)
+        RETURNING *;
     """
 
     schema = user_subjects_schema

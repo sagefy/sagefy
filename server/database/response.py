@@ -13,7 +13,8 @@ def insert_response(data, db_conn):
            response  ,   score  ,   learned  )
         VALUES
         (%(user_id)s, %(card_id)s, %(unit_id)s,
-         %(response)s, %(score)s, %(learned)s);
+         %(response)s, %(score)s, %(learned)s)
+        RETURNING *;
     """
 
     schema = response_schema

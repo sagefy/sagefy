@@ -28,7 +28,8 @@ def insert_post(data, db_conn):
         INSERT INTO posts
         (  user_id  ,   topic_id  ,   kind  ,   body  ,   replies_to_id  )
         VALUES
-        (%(user_id)s, %(topic_id)s, %(kind)s, %(body)s, %(replies_to_id)s);
+        (%(user_id)s, %(topic_id)s, %(kind)s, %(body)s, %(replies_to_id)s)
+        RETURNING *;
 
         PROPOSAL:
 
@@ -37,7 +38,8 @@ def insert_post(data, db_conn):
            replies_to_id  ,   entity_versions  )
         VALUES
         (%(user_id)s, %(topic_id)s, %(kind)s, %(body)s,
-         %(replies_to_id)s, %(entity_versions)s);
+         %(replies_to_id)s, %(entity_versions)s)
+        RETURNING *;
 
         VOTE:
 
@@ -46,7 +48,8 @@ def insert_post(data, db_conn):
            replies_to_id  ,   response  )
         VALUES
         (%(user_id)s, %(topic_id)s, %(kind)s, %(body)s,
-         %(replies_to_id)s, %(response)s);
+         %(replies_to_id)s, %(response)s)
+        RETURNING *;
     """
 
     schema = get_post_schema(data)
@@ -66,19 +69,22 @@ def update_post(prev_data, data, db_conn):
 
         UPDATE posts
         SET body = %(body)s
-        WHERE id = %(id)s AND kind = 'post';
+        WHERE id = %(id)s AND kind = 'post'
+        RETURNING *;
 
         PROPOSAL:
 
         UPDATE posts
         SET body = %(body)s
-        WHERE id = %(id)s AND kind = 'proposal';
+        WHERE id = %(id)s AND kind = 'proposal'
+        RETURNING *;
 
         VOTE:
 
         UPDATE posts
         SET body = %(body)s, response = %(response)s
-        WHERE id = %(id)s AND kind = 'vote';
+        WHERE id = %(id)s AND kind = 'vote'
+        RETURNING *;
     """
 
     schema = get_post_schema(data)

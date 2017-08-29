@@ -71,7 +71,8 @@ def insert_follow(data, db_conn):
         INSERT INTO follows
         (  user_id  ,   entity_id  ,   entity_kind  )
         VALUES
-        (%(user_id)s, %(entity_id)s, %(entity_kind)s);
+        (%(user_id)s, %(entity_id)s, %(entity_kind)s)
+        RETURNING *;
     """
 
     # TODO-2 move these to schema-level 'validate' fns instead.

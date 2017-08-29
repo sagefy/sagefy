@@ -22,7 +22,8 @@ def insert_subject(db_conn, data):
         SELECT
          entity_id  , %(previous_id)s, %(name)s, %(user_id)s,
          %(body)s, %(members)s
-        FROM temp;
+        FROM temp
+        RETURNING *;
     """
 
     schema = subject_schema
@@ -40,7 +41,8 @@ def update_subject(prev_data, data, db_conn):
 
         UPDATE subjects
         SET status = %(status)s
-        WHERE version_id = %(version_id)s;
+        WHERE version_id = %(version_id)s
+        RETURNING *;
     """
 
     schema = subject_schema

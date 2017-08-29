@@ -32,7 +32,8 @@ def insert_card(db_conn, data):
         SELECT
          entity_id  , %(previous_id)s, %(name)s, %(user_id)s, %(unit_id)s,
          %(require_ids)s, %(kind)s, %(data)s
-        FROM temp;
+        FROM temp
+        RETURNING *;
     """
 
     schema = get_card_schema(data)
@@ -55,7 +56,8 @@ def update_card(prev_data, data, db_conn):
 
         UPDATE cards
         SET status = %(status)s
-        WHERE version_id = %(version_id)s;
+        WHERE version_id = %(version_id)s
+        RETURNING *;
     """
 
     schema = get_card_schema(data)

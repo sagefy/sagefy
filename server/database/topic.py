@@ -14,7 +14,8 @@ def insert_topic(data, db_conn):
         INSERT INTO topics
         (  user_id  ,   entity_id  ,   entity_kind  ,   name  )
         VALUES
-        (%(user_id)s, %(entity_id)s, %(entity_kind)s, %(name)s);
+        (%(user_id)s, %(entity_id)s, %(entity_kind)s, %(name)s)
+        RETURNING *;
     """
 
     schema = topic_schema
@@ -32,7 +33,8 @@ def update_topic(prev_data, data, db_conn):
 
         UPDATE topics
         SET name = %(name)s
-        WHERE id = %(id)s;
+        WHERE id = %(id)s
+        RETURNING *;
     """
 
     schema = topic_schema
