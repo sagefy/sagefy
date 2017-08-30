@@ -79,7 +79,7 @@ def update(db_conn, user, card, response):
                              learned, guess_distribution, slip_distribution)
 
     response['learned'] = updates['learned']
-    response, errors = insert_response(response, db_conn)
+    response, errors = insert_response(db_conn, response)
     if errors:
         return {'errors': errors, 'feedback': feedback}
 

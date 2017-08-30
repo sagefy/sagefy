@@ -27,13 +27,13 @@ def insert_subject(db_conn, data):
     """
 
     schema = subject_schema
-    subject, errors = insert_entity(schema, db_conn, data)
+    subject, errors = insert_entity(db_conn, schema, data)
     if not errors:
         save_entity_to_es('subject', deliver_subject(subject, access='view'))
     return subject, errors
 
 
-def update_subject(prev_data, data, db_conn):
+def update_subject(db_conn, prev_data, data):
     """
     Update a card.
 
@@ -46,7 +46,7 @@ def update_subject(prev_data, data, db_conn):
     """
 
     schema = subject_schema
-    subject, errors = update_entity(schema, prev_data, data, db_conn)
+    subject, errors = update_entity(db_conn, schema, prev_data, data)
     if not errors:
         save_entity_to_es('subject', deliver_subject(subject, access='view'))
     return subject, errors

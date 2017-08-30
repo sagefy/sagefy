@@ -87,9 +87,9 @@ def test_traverse(db_conn, units_table, users_table, responses_table,
     assert subjects_table
     add_test_subject(db_conn,
                      users_table, units_table, responses_table, subjects_table)
-    subject = get_latest_accepted('subjects', db_conn, entity_id='fghj4567')
+    subject = get_latest_accepted(db_conn, 'subjects', entity_id='fghj4567')
     assert subject is not None
-    user = get_user({'id': 'user'}, db_conn)
+    user = get_user(db_conn, {'id': 'user'})
     buckets = traverse(db_conn, user, subject)
     assert buckets['learn'][0]['entity_id'] in ('subtract', 'multiply')
     assert buckets['learn'][1]['entity_id'] in ('subtract', 'multiply')
@@ -114,8 +114,8 @@ def test_judge_diagnose(db_conn, users_table, units_table, responses_table):
     """
 
     add_test_subject(db_conn, users_table, units_table, responses_table)
-    unit = get_latest_accepted('units', db_conn, entity_id='divide')
-    user = get_user({'id': 'user'}, db_conn)
+    unit = get_latest_accepted(db_conn, 'units', entity_id='divide')
+    user = get_user(db_conn, {'id': 'user'})
     assert judge(db_conn, unit, user) == "diagnose"
 
 
@@ -126,8 +126,8 @@ def test_judge_review(db_conn, users_table, units_table, responses_table):
     """
 
     add_test_subject(db_conn, users_table, units_table, responses_table)
-    unit = get_latest_accepted('units', db_conn, entity_id='subtract')
-    user = get_user({'id': 'user'}, db_conn)
+    unit = get_latest_accepted(db_conn, 'units', entity_id='subtract')
+    user = get_user(db_conn, {'id': 'user'})
     assert judge(db_conn, unit, user) == "review"
 
 
@@ -137,8 +137,8 @@ def test_judge_learn(db_conn, units_table, users_table, responses_table):
     """
 
     add_test_subject(db_conn, users_table, units_table, responses_table)
-    unit = get_latest_accepted('units', db_conn, entity_id='multiply')
-    user = get_user({'id': 'user'}, db_conn)
+    unit = get_latest_accepted(db_conn, 'units', entity_id='multiply')
+    user = get_user(db_conn, {'id': 'user'})
     assert judge(db_conn, unit, user) == "learn"
 
 
@@ -148,8 +148,8 @@ def test_judge_done(db_conn, units_table, users_table, responses_table):
     """
 
     add_test_subject(db_conn, users_table, units_table, responses_table)
-    unit = get_latest_accepted('units', db_conn, entity_id='add')
-    user = get_user({'id': 'user'}, db_conn)
+    unit = get_latest_accepted(db_conn, 'units', entity_id='add')
+    user = get_user(db_conn, {'id': 'user'})
     assert judge(db_conn, unit, user) == "done"
 
 

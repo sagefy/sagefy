@@ -36,10 +36,10 @@ def sitemap_route(request):
             ))
             # TODO-2 ...and versions pages
     # Topic
-    for topic in list_topics({}, db_conn):
+    for topic in list_topics(db_conn, {}):
         sitemap.add('https://sagefy.org/topics/{id}'.format(id=topic['id']))
     # User
-    users = [deliver_user(user) for user in list_users({}, db_conn)]
+    users = [deliver_user(db_conn, user) for user in list_users({})]
     for user in users:
         sitemap.add('https://sagefy.org/users/{id}'.format(id=user['id']))
     sitemap = '\n'.join(sitemap)

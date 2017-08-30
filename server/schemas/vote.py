@@ -6,7 +6,7 @@ from database.entity_base import get_version
 
 
 
-def is_unique_vote(schema, data, db_conn):
+def is_unique_vote(db_conn, schema, data):
     """
     Ensure a user can only vote once per proposal.
     """
@@ -21,7 +21,7 @@ def is_unique_vote(schema, data, db_conn):
     return []
 
 
-def is_valid_reply_kind(schema, data, db_conn):
+def is_valid_reply_kind(db_conn, schema, data):
     """
     A vote can reply to a proposal.
     A vote cannot reply to a proposal that is accepted or declined.

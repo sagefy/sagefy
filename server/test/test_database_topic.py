@@ -13,10 +13,10 @@ def test_user_id(db_conn, topics_table):
             'kind': 'card',
         }
     }
-    topic, errors = insert_topic(topic_data, db_conn)
+    topic, errors = insert_topic(db_conn, topic_data)
     assert len(errors) == 1
     topic_data['user_id'] = 'Q'
-    topic, errors = insert_topic(topic_data, db_conn)
+    topic, errors = insert_topic(db_conn, topic_data)
     assert len(errors) == 0
 
 
@@ -32,10 +32,10 @@ def test_name(db_conn, topics_table):
             'kind': 'card',
         }
     }
-    topic, errors = insert_topic(topic_data, db_conn)
+    topic, errors = insert_topic(db_conn, topic_data)
     assert len(errors) == 1
     topic_data['name'] = 'A'
-    topic, errors = insert_topic(topic_data, db_conn)
+    topic, errors = insert_topic(db_conn, topic_data)
     assert len(errors) == 0
 
 
@@ -48,13 +48,13 @@ def test_entity(db_conn, topics_table):
         'user_id': 'Q',
         'name': 'A',
     }
-    topic, errors = insert_topic(topic_data, db_conn)
+    topic, errors = insert_topic(db_conn, topic_data)
     assert len(errors) == 2
     topic_data['entity'] = {
         'id': 'A',
         'kind': 'card',
     }
-    topic, errors = insert_topic(topic_data, db_conn)
+    topic, errors = insert_topic(db_conn, topic_data)
     assert len(errors) == 0
 
 
@@ -82,5 +82,5 @@ def test_list_by_entity_id(db_conn, topics_table):
         }
     }]).run(db_conn)
 
-    topics = list_topics_by_entity_id('A', {}, db_conn)
+    topics = list_topics_by_entity_id(db_conn, 'A', {})
     assert len(topics) == 2

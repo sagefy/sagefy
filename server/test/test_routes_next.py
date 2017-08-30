@@ -11,7 +11,7 @@ def test_seq_next(db_conn, session):
         'cookies': {'session_id': session},
         'db_conn': db_conn,
     }
-    user = get_user({'id': 'abcd1234'}, db_conn)
+    user = get_user(db_conn, {'id': 'abcd1234'})
     set_learning_context(user, next={
         'method': 'DANCE',
         'path': '/s/unicorns'

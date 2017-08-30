@@ -7,7 +7,7 @@ from modules.sequencer.params import init_guess, init_slip, precision, \
     init_transit
 
 
-def get_card_parameters(params, db_conn):
+def get_card_parameters(db_conn, params):
     """
     *M2P Get Card Parameters
 
@@ -18,10 +18,10 @@ def get_card_parameters(params, db_conn):
     """
 
     tablename = card_parameters_schema['tablename']
-    return get_document(tablename, params, db_conn)
+    return get_document(db_conn, tablename, params)
 
 
-def insert_card_parameters(data, db_conn):
+def insert_card_parameters(db_conn, data):
     """
     *M2P Insert Card Parameters [hidden]
 
@@ -35,10 +35,10 @@ def insert_card_parameters(data, db_conn):
     """
 
     schema = card_parameters_schema
-    return insert_document(schema, data, db_conn)
+    return insert_document(db_conn, schema, data)
 
 
-def update_card_parameters(prev_data, data, db_conn):
+def update_card_parameters(db_conn, prev_data, data):
     """
     *M2P Update Card Parameters [hidden]
 
@@ -50,7 +50,7 @@ def update_card_parameters(prev_data, data, db_conn):
     """
 
     schema = card_parameters_schema
-    return update_document(schema, prev_data, data, db_conn)
+    return update_document(db_conn, schema, prev_data, data)
 
 
 def get_distribution(card_parameters, kind):

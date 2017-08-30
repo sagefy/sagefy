@@ -1,7 +1,7 @@
 from database.post import insert_post
 
 
-def create_proposal(posts_table, units_table, db_conn):
+def create_proposal(db_conn, posts_table, units_table):
     posts_table.insert({
         'id': 'D',
         'user_id': 'C',
@@ -27,7 +27,7 @@ def test_user(db_conn, posts_table, units_table):
     Expect a vote to require a user id.
     """
 
-    create_proposal(posts_table, units_table, db_conn)
+    create_proposal(db_conn, posts_table, units_table)
     vote, errors = insert_post({
         'kind': 'vote',
         'topic_id': 'B',
@@ -36,7 +36,7 @@ def test_user(db_conn, posts_table, units_table):
     }, db_conn)
     assert len(errors) == 1
     vote['user_id'] = 'A'
-    vote, errors = insert_post(vote, db_conn)
+    vote, errors = insert_post(db_conn, vote)
     assert len(errors) == 0
 
 
@@ -45,7 +45,7 @@ def test_topic(db_conn, posts_table, units_table):
     Expect a vote to require a topic id.
     """
 
-    create_proposal(posts_table, units_table, db_conn)
+    create_proposal(db_conn, posts_table, units_table)
     vote, errors = insert_post({
         'kind': 'vote',
         'user_id': 'A',
@@ -54,7 +54,7 @@ def test_topic(db_conn, posts_table, units_table):
     }, db_conn)
     assert len(errors) == 1
     vote['topic_id'] = 'B'
-    vote, errors = insert_post(vote, db_conn)
+    vote, errors = insert_post(db_conn, vote)
     assert len(errors) == 0
 
 
@@ -63,7 +63,7 @@ def test_body(db_conn, posts_table, units_table):
     Expect a vote to allow, but not require, a body.
     """
 
-    create_proposal(posts_table, units_table, db_conn)
+    create_proposal(db_conn, posts_table, units_table)
     vote, errors = insert_post({
         'kind': 'vote',
         'user_id': 'A',
@@ -74,7 +74,7 @@ def test_body(db_conn, posts_table, units_table):
     assert len(errors) == 0
     vote['body'] = 'A'
     vote['user_id'] = 'B'
-    vote, errors = insert_post(vote, db_conn)
+    vote, errors = insert_post(db_conn, vote)
     assert len(errors) == 0
 
 
@@ -83,7 +83,7 @@ def test_replies(db_conn, posts_table, units_table):
     Expect a vote to require a replies to id.
     """
 
-    create_proposal(posts_table, units_table, db_conn)
+    create_proposal(db_conn, posts_table, units_table)
     vote, errors = insert_post({
         'kind': 'vote',
         'user_id': 'A',
@@ -92,7 +92,7 @@ def test_replies(db_conn, posts_table, units_table):
     }, db_conn)
     assert len(errors) == 1
     vote['replies_to_id'] = 'D'
-    vote, errors = insert_post(vote, db_conn)
+    vote, errors = insert_post(db_conn, vote)
     assert len(errors) == 0
 
 
@@ -101,7 +101,7 @@ def test_response(db_conn, posts_table, units_table):
     Expect a vote to require a response.
     """
 
-    create_proposal(posts_table, units_table, db_conn)
+    create_proposal(db_conn, posts_table, units_table)
     vote, errors = insert_post({
         'kind': 'vote',
         'user_id': 'A',
@@ -110,5 +110,5 @@ def test_response(db_conn, posts_table, units_table):
     }, db_conn)
     assert len(errors) == 1
     vote['response'] = True
-    vote, errors = insert_post(vote, db_conn)
+    vote, errors = insert_post(db_conn, vote)
     assert len(errors) == 0

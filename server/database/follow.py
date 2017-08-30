@@ -64,7 +64,7 @@ def list_follows_by_entity(db_conn, params):
     return list_rows(db_conn, query, params)
 
 
-def insert_follow(data, db_conn):
+def insert_follow(db_conn, data):
     """
     Create a new follow (user <-> entity).
     """
@@ -85,13 +85,13 @@ def insert_follow(data, db_conn):
     return data, errors
 
     schema = follow_schema
-    data, errors = prepare_document(schema, data, db_conn)
+    data, errors = prepare_document(db_conn, schema, data)
     if errors:
         return None, errors
-    errors = is_valid_entity(data, db_conn)
+    errors = is_valid_entity(db_conn, data)
     if errors:
         return None, errors
-    return insert_document(schema, data, db_conn)
+    return insert_document(db_conn, schema, data)
 
 
 def deliver_follow(data, access=None):
@@ -118,7 +118,7 @@ def delete_follow(db_conn, id_):
     return delete_row(db_conn, query, params)
 
 
-def is_valid_entity(follow, db_conn):
+def is_valid_entity(db_conn, follow):
     """
     Check that the entity ID of the follow is valid.
     """
@@ -138,7 +138,7 @@ def is_valid_entity(follow, db_conn):
     return []
 
 
-def get_user_ids_by_followed_entity(entity_id, entity_kind, db_conn):
+def get_user_ids_by_followed_entity(db_conn, entity_id, entity_kind):
     """
     Produce a list of `user_id`s for a given entity.
     """

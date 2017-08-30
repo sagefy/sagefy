@@ -15,7 +15,7 @@ def get_follows_route(request):
     current_user = get_current_user(request)
     user_id = request['params'].get('user_id')
     if user_id:
-        user = get_user({'id': user_id}, db_conn)
+        user = get_user(db_conn, {'id': user_id})
         if not user:
             return abort(404)
         if (user != current_user and
@@ -27,7 +27,7 @@ def get_follows_route(request):
             return abort(401)
     params = dict(**request['params'])
     params['user_id'] = user['id']
-    follows = list_follows(params, db_conn)
+    follows = list_follows(db_conn, params)
     return 200, {
         'follows': [deliver_follow(follow, access='private')
                     for follow in follows]
@@ -46,7 +46,7 @@ def follow_route(request):
         return abort(401)
     follow_data = dict(**request['params'])
     follow_data['user_id'] = current_user['id']
-    follow, errors = insert_follow(follow_data, db_conn)
+    follow, errors = insert_follow(db_conn, follow_data)
     if errors:
         return 400, {
             'errors': errors,
@@ -65,12 +65,12 @@ def unfollow_route(request, follow_id):
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    follow = get_follow({'id': follow_id}, db_conn)
+    follow = get_follow(db_conn, {'id': follow_id})
     if not follow:
         return abort(404)
     if follow['user_id'] != current_user['id']:
         return abort(403)
-    errors = delete_follow(follow['id'], db_conn)
+    errors = delete_follow(db_conn, follow['id'])
     if errors:
         return 400, {
             'errors': errors,

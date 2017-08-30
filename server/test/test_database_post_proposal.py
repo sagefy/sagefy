@@ -31,7 +31,7 @@ def test_user_id(db_conn, posts_table, units_table):
     }, db_conn)
     assert len(errors) == 1
     proposal['user_id'] = 'A'
-    proposal, errors = insert_post(proposal, db_conn)
+    proposal, errors = insert_post(db_conn, proposal)
     assert len(errors) == 0
 
 
@@ -52,7 +52,7 @@ def test_topic(db_conn, posts_table, units_table):
     }, db_conn)
     assert len(errors) == 1
     proposal['topic_id'] = 'B'
-    proposal, errors = insert_post(proposal, db_conn)
+    proposal, errors = insert_post(db_conn, proposal)
     assert len(errors) == 0
 
 
@@ -73,7 +73,7 @@ def test_body(db_conn, posts_table, units_table):
     }, db_conn)
     assert len(errors) == 1
     proposal['body'] = 'C'
-    proposal, errors = insert_post(proposal, db_conn)
+    proposal, errors = insert_post(db_conn, proposal)
     assert len(errors) == 0
 
 
@@ -120,5 +120,5 @@ def test_entity(db_conn, posts_table, units_table):
         'id': 'D',
         'kind': 'unit'
     }]
-    proposal, errors = insert_post(proposal, db_conn)
+    proposal, errors = insert_post(db_conn, proposal)
     assert len(errors) == 0

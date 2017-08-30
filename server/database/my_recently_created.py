@@ -2,7 +2,7 @@ from database.post import list_posts
 from database.entity_base import list_by_version_ids
 
 
-def get_my_recent_proposals(current_user, db_conn):
+def get_my_recent_proposals(db_conn, current_user):
     """
     Gets a list of the user's most recent proposals.
     """
@@ -28,23 +28,23 @@ def get_proposal_entity_versions(proposals, kind):
     return entity_ids
 
 
-def get_my_recently_created_units(current_user, db_conn):
+def get_my_recently_created_units(db_conn, current_user):
     """
     Get the user's most recently created units.
     """
 
-    proposals = get_my_recent_proposals(current_user, db_conn)
+    proposals = get_my_recent_proposals(db_conn, current_user)
     unit_version_ids = get_proposal_entity_versions(proposals, 'unit')
-    units = list_by_version_ids('units', db_conn, unit_version_ids)
+    units = list_by_version_ids(db_conn, 'units', unit_version_ids)
     return units
 
 
-def get_my_recently_created_subjects(current_user, db_conn):
+def get_my_recently_created_subjects(db_conn, current_user):
     """
     Get the user's most recently created subjects.
     """
 
-    proposals = get_my_recent_proposals(current_user, db_conn)
+    proposals = get_my_recent_proposals(db_conn, current_user)
     subject_version_ids = get_proposal_entity_versions(proposals, 'subject')
-    subjects = list_by_version_ids('subjects', db_conn, subject_version_ids)
+    subjects = list_by_version_ids(db_conn, 'subjects', subject_version_ids)
     return subjects

@@ -54,7 +54,7 @@ def test_list(db_conn, notices_table):
         {'id': 3, 'user_id': 22, 'kind': 'create_proposal'},
         {'id': 4, 'user_id': 22, 'kind': 'create_proposal'},
     ]).run(db_conn)
-    notices = list_notices({'user_id': 22}, db_conn)
+    notices = list_notices(db_conn, {'user_id': 22})
     assert len(notices) == 4
 
 
@@ -68,7 +68,7 @@ def test_list_user(db_conn, notices_table):
         {'id': 3, 'user_id': 24, 'kind': 'create_proposal'},
         {'id': 4, 'user_id': 25, 'kind': 'create_proposal'},
     ]).run(db_conn)
-    notices = list_notices({'user_id': 22}, db_conn)
+    notices = list_notices(db_conn, {'user_id': 22})
     assert len(notices) == 2
 
 
@@ -80,9 +80,9 @@ def test_list_paginate(db_conn, notices_table):
         notices_table.insert({
             'id': i, 'user_id': 22, 'kind': 'create_proposal',
         }).run(db_conn)
-    notices = list_notices({'user_id': 22}, db_conn)
+    notices = list_notices(db_conn, {'user_id': 22})
     assert len(notices) == 10
-    notices = list_notices({'user_id': 22, 'skip': 20}, db_conn)
+    notices = list_notices(db_conn, {'user_id': 22, 'skip': 20})
     assert len(notices) == 5
 
 
@@ -95,7 +95,7 @@ def test_list_unread(db_conn, notices_table):
         {'id': 3, 'user_id': 22, 'kind': 'create_proposal', 'read': False},
         {'id': 4, 'user_id': 22, 'kind': 'create_proposal', 'read': False},
     ]).run(db_conn)
-    notices = list_notices({'user_id': 22, 'read': False}, db_conn)
+    notices = list_notices(db_conn, {'user_id': 22, 'read': False})
     assert len(notices) == 2
     assert notices[0]['id'] in (3, 4)
     assert notices[1]['id'] in (3, 4)
@@ -115,7 +115,7 @@ def test_list_tag(db_conn, notices_table):
         {'id': 4, 'user_id': 22, 'kind': 'create_proposal',
             'tags': ['apple', 'peach']},
     ]).run(db_conn)
-    notices = list_notices({'user_id': 22, 'tag': 'apple'}, db_conn)
+    notices = list_notices(db_conn, {'user_id': 22, 'tag': 'apple'})
     assert len(notices) == 2
     assert 'apple' in notices[0]['tags']
     assert 'apple' in notices[1]['tags']
@@ -125,7 +125,7 @@ def test_list_empty(db_conn, notices_table):
     """
     Expect to get an empty list when run out of notices.
     """
-    notices = list_notices({'user_id': 22}, db_conn)
+    notices = list_notices(db_conn, {'user_id': 22})
     assert len(notices) == 0
 
 
@@ -144,7 +144,7 @@ def test_notices_kind(db_conn, notices_table):
         {'id': 4, 'user_id': 22, 'kind': 'new_topic',
             'tags': ['apple', 'peach']},
     ]).run(db_conn)
-    notices = list_notices({'user_id': 22, 'kind': 'create_proposal'}, db_conn)
+    notices = list_notices(db_conn, {'user_id': 22, 'kind': 'create_proposal'})
     assert len(notices) == 2
     assert notices[0]['kind'] == 'create_proposal'
     assert notices[1]['kind'] == 'create_proposal'
@@ -202,7 +202,7 @@ def test_mark_as_read(db_conn, notices_table):
         'tags': ['test']
     }, db_conn)
     assert notice['read'] is False
-    notice, errors = mark_notice_as_read(notice, db_conn)
+    notice, errors = mark_notice_as_read(db_conn, notice)
     assert len(errors) == 0
     assert notice['read'] is True
     record = notices_table.filter({'user_id': 'abcd1234'}).run(db_conn)
@@ -222,7 +222,7 @@ def test_mark_unread(db_conn, notices_table):
         'read': True
     }, db_conn)
     assert notice['read'] is True
-    notice, errors = mark_notice_as_unread(notice, db_conn)
+    notice, errors = mark_notice_as_unread(db_conn, notice)
     assert len(errors) == 0
     assert notice['read'] is False
     record = notices_table.filter({'user_id': 'abcd1234'}).run(db_conn)

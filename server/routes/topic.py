@@ -19,7 +19,7 @@ def get_topic_route(request, topic_id):
     """
 
     db_conn = request['db_conn']
-    topic = get_topic({'id': topic_id}, db_conn)
+    topic = get_topic(db_conn, {'id': topic_id})
     if not topic:
         return 404, {
             'errors': [{
@@ -40,7 +40,7 @@ def list_topics_route(request):
     db_conn = request['db_conn']
     entity_id = request['params'].get('entity_id')
     if entity_id:
-        topics = list_topics_by_entity_id(entity_id, {}, db_conn)
+        topics = list_topics_by_entity_id(db_conn, entity_id, {})
         return 200, {'topics': [
             deliver_topic(topic)
             for topic in topics
@@ -71,7 +71,7 @@ def create_topic_route(request):
             'ref': 'zknSd46f2hRNjSjVHCg6YLwN'
         }
     topic_data['user_id'] = current_user['id']
-    topic, errors = insert_topic(topic_data, db_conn)
+    topic, errors = insert_topic(db_conn, topic_data)
     if len(errors):
         return 400, {
             'errors': errors,
@@ -122,7 +122,7 @@ def update_topic_route(request, topic_id):
         return abort(401)
 
     # ## STEP 1) Find existing topic instance ## #
-    topic = get_topic({'id': topic_id}, db_conn)
+    topic = get_topic(db_conn, {'id': topic_id})
     if not topic:
         return abort(404)
     if topic['user_id'] != current_user['id']:
@@ -130,7 +130,7 @@ def update_topic_route(request, topic_id):
 
     # ## STEP 2) Validate and save topic instance ## #
     topic_data = request['params']
-    topic, errors = update_topic(topic, topic_data, db_conn)
+    topic, errors = update_topic(db_conn, topic, topic_data)
     if errors:
         return 400, {
             'errors': errors,

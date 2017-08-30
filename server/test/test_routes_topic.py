@@ -5,7 +5,7 @@ import routes.topic
 xfail = pytest.mark.xfail
 
 
-def create_topic_in_db(topics_table, db_conn, user_id='abcd1234'):
+def create_topic_in_db(db_conn, topics_table, user_id='abcd1234'):
     topics_table.insert({
         'id': 'wxyz7890',
         'created': r.now(),
@@ -70,7 +70,7 @@ def test_topic_update(db_conn, users_table, topics_table,
     Expect to update topic name.
     """
 
-    create_topic_in_db(topics_table, db_conn)
+    create_topic_in_db(db_conn, topics_table)
     request = {
         'cookies': {
             'session_id': session
@@ -92,7 +92,7 @@ def test_update_topic_author(db_conn, users_table, topics_table,
     Expect update topic to require original author.
     """
 
-    create_topic_in_db(topics_table, db_conn, user_id="qwerty")
+    create_topic_in_db(db_conn, topics_table, user_id="qwerty")
     request = {
         'cookies': {
             'session_id': session
@@ -115,7 +115,7 @@ def test_update_topic_fields(db_conn, users_table, topics_table,
     Expect update topic to only change name.
     """
 
-    create_topic_in_db(topics_table, db_conn)
+    create_topic_in_db(db_conn, topics_table)
     request = {
         'cookies': {
             'session_id': session

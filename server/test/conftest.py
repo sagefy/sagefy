@@ -20,7 +20,7 @@ from framework.database import make_db_connection, close_db_connection
 import framework.session
 
 
-def create_user_in_db(users_table, db_conn):
+def create_user_in_db(db_conn, users_table):
     return users_table.insert({
         'id': 'abcd1234',
         'name': 'test',
@@ -49,14 +49,14 @@ def db_conn(request):
 
 
 @pytest.fixture
-def session(request, db_conn, users_table):
-    create_user_in_db(users_table, db_conn)
+def session(db_conn, request, users_table):
+    create_user_in_db(db_conn, users_table)
     session_id = log_in()
     request.addfinalizer(lambda: log_out(session_id))
     return session_id
 
 
-def table(name, request, db_conn):
+def table(db_conn, name, request):
     """
     Ensure the table is freshly empty after use.
     """
@@ -67,55 +67,55 @@ def table(name, request, db_conn):
 
 
 @pytest.fixture
-def users_table(request, db_conn):
-    return table('users', request, db_conn)
+def users_table(db_conn, request):
+    return table(db_conn, 'users', request)
 
 
 @pytest.fixture
-def notices_table(request, db_conn):
-    return table('notices', request, db_conn)
+def notices_table(db_conn, request):
+    return table(db_conn, 'notices', request)
 
 
 @pytest.fixture
-def topics_table(request, db_conn):
-    return table('topics', request, db_conn)
+def topics_table(db_conn, request):
+    return table(db_conn, 'topics', request)
 
 
 @pytest.fixture
-def posts_table(request, db_conn):
-    return table('posts', request, db_conn)
+def posts_table(db_conn, request):
+    return table(db_conn, 'posts', request)
 
 
 @pytest.fixture
-def cards_table(request, db_conn):
-    return table('cards', request, db_conn)
+def cards_table(db_conn, request):
+    return table(db_conn, 'cards', request)
 
 
 @pytest.fixture
-def cards_parameters_table(request, db_conn):
-    return table('cards_parameters', request, db_conn)
+def cards_parameters_table(db_conn, request):
+    return table(db_conn, 'cards_parameters', request)
 
 
 @pytest.fixture
-def units_table(request, db_conn):
-    return table('units', request, db_conn)
+def units_table(db_conn, request):
+    return table(db_conn, 'units', request)
 
 
 @pytest.fixture
-def subjects_table(request, db_conn):
-    return table('subjects', request, db_conn)
+def subjects_table(db_conn, request):
+    return table(db_conn, 'subjects', request)
 
 
 @pytest.fixture
-def follows_table(request, db_conn):
-    return table('follows', request, db_conn)
+def follows_table(db_conn, request):
+    return table(db_conn, 'follows', request)
 
 
 @pytest.fixture
-def users_subjects_table(request, db_conn):
-    return table('users_subjects', request, db_conn)
+def users_subjects_table(db_conn, request):
+    return table(db_conn, 'users_subjects', request)
 
 
 @pytest.fixture
-def responses_table(request, db_conn):
-    return table('responses', request, db_conn)
+def responses_table(db_conn, request):
+    return table(db_conn, 'responses', request)

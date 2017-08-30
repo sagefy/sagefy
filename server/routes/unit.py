@@ -17,12 +17,12 @@ def get_unit_route(request, unit_id):
     """
 
     db_conn = request['db_conn']
-    unit = get_latest_accepted('units', db_conn, unit_id)
+    unit = get_latest_accepted(db_conn, 'units', unit_id)
     if not unit:
         return abort(404)
     # TODO-2 SPLITUP create new endpoints for these instead
-    requires = list_requires('units', db_conn, unit_id)
-    required_by = list_required_by('units', db_conn, unit_id)
+    requires = list_requires(db_conn, 'units', unit_id)
+    required_by = list_required_by(db_conn, 'units', unit_id)
     subjects = list_subjects_by_unit_id(db_conn, unit_id)
     return 200, {
         'unit': deliver_unit(unit),
@@ -44,7 +44,7 @@ def list_units_route(request):
     if not entity_ids:
         return abort(404)
     entity_ids = entity_ids.split(',')
-    units = list_by_entity_ids('units', db_conn, entity_ids)
+    units = list_by_entity_ids(db_conn, 'units', entity_ids)
     if not units:
         return abort(404)
     return 200, {'units': [deliver_unit(unit, 'view') for unit in units]}
@@ -95,7 +95,7 @@ def get_my_recently_created_units_route(request):
     if not current_user:
         return abort(401)
     db_conn = request['db_conn']
-    units = get_my_recently_created_units(current_user, db_conn)
+    units = get_my_recently_created_units(db_conn, current_user)
     return 200, {
         'units': [deliver_unit(unit) for unit in units],
     }
@@ -137,7 +137,7 @@ def create_existing_unit_version_route(request, unit_id):
     next_data = deepcopy(request['params'])
     next_data['entity_id'] = unit_id
     next_data['user_id'] = current_user['id']
-    current_unit = get_latest_accepted('units', db_conn, entity_id=unit_id)
+    current_unit = get_latest_accepted(db_conn, 'units', entity_id=unit_id)
     if not current_unit:
         return abort(404)
     unit_data = extend({}, current_unit, next_data)

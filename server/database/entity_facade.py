@@ -82,7 +82,7 @@ def list_subjects_by_unit_id(db_conn, unit_id):
     return [data for data in memoize_redis(key, _)]
 
 
-def list_units_in_subject(main_subject, db_conn):
+def list_units_in_subject(db_conn, main_subject):
     """
     Get the list of units contained within the subject.
     Recursive. Connecting.
@@ -108,7 +108,7 @@ def list_units_in_subject(main_subject, db_conn):
                     member['id']
                     for member in subject.get('members')
                     if member['kind'] == 'subject'})
-            subjects = list_by_entity_ids('subjects', db_conn, subject_ids)
+            subjects = list_by_entity_ids(db_conn, 'subjects', subject_ids)
 
         # *** Second, we need to find all
         #     the required connecting units. ***
@@ -116,7 +116,7 @@ def list_units_in_subject(main_subject, db_conn):
         next_grab, units, unit_requires = unit_ids, [], {}
 
         while next_grab:
-            tier_units = list_by_entity_ids('units', db_conn, next_grab)
+            tier_units = list_by_entity_ids(db_conn, 'units', next_grab)
             units += tier_units
             next_grab = set()
 
@@ -194,12 +194,12 @@ def update_entity_statuses(db_conn, proposal):
         if changed:
             entity_version['status'] = status
             if entity_kind == 'card':
-                update_card(entity_version, {'status': status}, db_conn)
+                update_card(db_conn, entity_version, {'status': status})
             elif entity_kind == 'unit':
-                update_unit(entity_version, {'status': status}, db_conn)
+                update_unit(db_conn, entity_version, {'status': status})
             elif entity_kind == 'subject':
-                update_subject(entity_version, {'status': status}, db_conn)
-            user = get_user({'id': proposal['user_id']}, db_conn)
+                update_subject(db_conn, entity_version, {'status': status})
+            user = get_user(db_conn, {'id': proposal['user_id']})
             send_notices(
                 db_conn,
                 entity_id=version_id,

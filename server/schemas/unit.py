@@ -16,23 +16,23 @@ which may contain about five to eight minutes of information and
 """
 
 
-def ensure_requires(schema, data, db_conn):
+def ensure_requires(db_conn, schema, data):
     """
 
     """
 
-    units = list_by_entity_ids('units', db_conn, data['require_ids'])
+    units = list_by_entity_ids(db_conn, 'units', data['require_ids'])
     if len(data['require_ids']) != len(units):
         return [{'message': 'Didn\'t find all requires.'}]
     return []
 
 
-def ensure_no_cycles(schema, data, db_conn):
+def ensure_no_cycles(db_conn, schema, data):
     """
     Ensure no require cycles form.
     """
 
-    if find_requires_cycle('units', data, db_conn):
+    if find_requires_cycle(db_conn, 'units', data):
         return [{'message': 'Found a cycle in requires.'}]
     return []
 

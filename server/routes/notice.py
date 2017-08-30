@@ -17,7 +17,7 @@ def list_notices_route(request):
     if not current_user:
         return abort(401)
     params = extend({}, request['params'], {'user_id': current_user['id']})
-    notices = list_notices(params, db_conn)
+    notices = list_notices(db_conn, params)
     output = {'notices': [deliver_notice(notice, access='private')
                           for notice in notices]}
     return 200, output
@@ -36,7 +36,7 @@ def mark_notice_route(request, notice_id):
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    notice = get_notice({'id': notice_id}, db_conn)
+    notice = get_notice(db_conn, {'id': notice_id})
     if not notice:
         return abort(404)
     if notice['user_id'] != current_user['id']:
@@ -47,9 +47,9 @@ def mark_notice_route(request, notice_id):
             'message': 'You must specify read or unread.',
         }]
     elif request['params'].get('read') is True:
-        notice, errors = mark_notice_as_read(notice, db_conn)
+        notice, errors = mark_notice_as_read(db_conn, notice)
     elif request['params'].get('read') is False:
-        notice, errors = mark_notice_as_unread(notice, db_conn)
+        notice, errors = mark_notice_as_unread(db_conn, notice)
     if len(errors):
         return 400, {
             'errors': errors,

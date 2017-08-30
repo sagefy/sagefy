@@ -60,14 +60,14 @@ vases_schema = extend({}, default, {
 
 
 @pytest.fixture
-def vases_table(request, db_conn):
+def vases_table(db_conn, request):
     tablename = 'vases'
     tables = r.db(config['rdb_db']).table_list().run(db_conn)
     if tablename and tablename not in tables:
         (r.db(config['rdb_db'])
           .table_create(tablename)
           .run(db_conn))
-    return table(tablename, request, db_conn)
+    return table(db_conn, tablename, request)
 
 
 def test_insert_document(db_conn, vases_table):
@@ -81,7 +81,7 @@ def test_insert_document(db_conn, vases_table):
         ],
         'soil': {'color': 'black'}
     }
-    document, errors = util.insert_document(schema, data, db_conn)
+    document, errors = util.insert_document(db_conn, schema, data)
     subdoc = pick(document, ('name', 'plants', 'soil'))
     subdata = pick(data, ('name', 'plants', 'soil'))
     assert document['id'] != data['id']
@@ -99,7 +99,7 @@ def test_update_document(db_conn):
         ],
         'soil': {'color': 'black'}
     }
-    document1, errors1 = util.insert_document(schema, data1, db_conn)
+    document1, errors1 = util.insert_document(db_conn, schema, data1)
     subdoc1 = pick(document1, ('name', 'plants', 'soil'))
     subdata1 = pick(data1, ('name', 'plants', 'soil'))
     data2 = {
@@ -127,7 +127,7 @@ def test_save_document(db_conn, vases_table):
         ],
         'soil': {'color': 'black'}
     }
-    document, errors = util.save_document(schema, data, db_conn)
+    document, errors = util.save_document(db_conn, schema, data)
     subdoc = pick(document, ('name', 'plants', 'soil'))
     assert len(errors) == 0
     assert subdoc == data
@@ -167,7 +167,7 @@ def create_test_data_set(db_conn, vases_table):
     errors = []
     docs = []
     for d in data:
-        doc, e = util.insert_document(schema, d, db_conn)
+        doc, e = util.insert_document(db_conn, schema, d)
         if e:
             errors.append(e)
         docs.append(doc)
@@ -179,7 +179,7 @@ def test_get_document(db_conn, vases_table):
     tablename = 'vases'
     create_test_data_set(db_conn, vases_table)
     params = {'name': 'modern'}
-    document = util.get_document(tablename, params, db_conn)
+    document = util.get_document(db_conn, tablename, params)
     assert document['name'] == 'modern'
     assert document['soil'] == {'color': 'black'}
 
@@ -188,7 +188,7 @@ def test_list_documents(db_conn, vases_table):
     tablename = 'vases'
     create_test_data_set(db_conn, vases_table)
     params = {'shape': 'round'}
-    documents = list(util.list_documents(tablename, params, db_conn))
+    documents = list(db_conn, util.list_documents(tablename, params))
     assert len(documents) == 2
 
 
@@ -196,9 +196,9 @@ def test_delete_document(db_conn, vases_table):
     tablename = 'vases'
     documents = create_test_data_set(db_conn, vases_table)
     assert len(documents) == 3
-    util.delete_document(tablename, documents[0]['id'], db_conn)
+    util.delete_document(db_conn, tablename, documents[0]['id'])
     params = {}
-    documents = list(util.list_documents(tablename, params, db_conn))
+    documents = list(db_conn, util.list_documents(tablename, params))
     assert len(documents) == 2
 
 
@@ -251,7 +251,7 @@ def test_prepare_document(db_conn, vases_table):
         ],
         'soil': {'color': 'black'}
     }
-    result, errors = util.prepare_document(schema, data, db_conn)
+    result, errors = util.prepare_document(db_conn, schema, data)
     assert not errors
     result = omit(result, ('id', 'modified', 'created',))
     assert result == omit(data, ('id',))
@@ -330,11 +330,11 @@ def test_validate_unique_fields(db_conn, vases_table):
         ],
         'soil': {'color': 'black'}
     }
-    errors = util.validate_unique_fields(schema, data, db_conn)
+    errors = util.validate_unique_fields(db_conn, schema, data)
     assert len(errors) == 1
     assert errors == [{'message': 'Must be unique.', 'name': 'name'}]
     data['name'] = 'starry'
-    errors = util.validate_unique_fields(schema, data, db_conn)
+    errors = util.validate_unique_fields(db_conn, schema, data)
     assert len(errors) == 0
 
 

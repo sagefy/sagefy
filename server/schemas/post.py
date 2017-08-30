@@ -5,7 +5,7 @@ from modules.util import extend
 
 
 
-def is_valid_topic_id(schema, data, db_conn):
+def is_valid_topic_id(db_conn, schema, data):
     """
     TODO-3 Ensure the topic is valid.
            Is there a way to allow for 'in memory only' topic?
@@ -15,7 +15,7 @@ def is_valid_topic_id(schema, data, db_conn):
     return []
 
 
-def is_valid_reply(schema, data, db_conn):
+def is_valid_reply(db_conn, schema, data):
     """
     A reply must belong to the same topic.
     - A post can reply to a post, proposal, or vote.

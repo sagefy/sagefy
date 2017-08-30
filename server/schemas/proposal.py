@@ -6,7 +6,7 @@ from modules.validations import is_required, is_string, is_one_of, is_list, \
 from modules.util import extend
 
 
-def validate_entity_versions(schema, data, db_conn):
+def validate_entity_versions(db_conn, schema, data):
     """
     Ensure all the entity versions exist.
     """

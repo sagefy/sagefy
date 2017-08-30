@@ -31,10 +31,10 @@ def test_user(db_conn, responses_table):
         'score': 0.9,
         'learned': 0.9,
     }
-    response, errors = insert_response(repsonse_data, db_conn)
+    response, errors = insert_response(db_conn, repsonse_data)
     assert len(errors) == 1
     repsonse_data['user_id'] = 'A'
-    response, errors = insert_response(repsonse_data, db_conn)
+    response, errors = insert_response(db_conn, repsonse_data)
     assert len(errors) == 0
 
 
@@ -50,10 +50,10 @@ def test_card(db_conn, responses_table):
         'score': 0.9,
         'learned': 0.9,
     }
-    response, errors = insert_response(response_data, db_conn)
+    response, errors = insert_response(db_conn, response_data)
     assert len(errors) == 1
     response_data['card_id'] = 'AFJ'
-    response, errors = insert_response(response_data, db_conn)
+    response, errors = insert_response(db_conn, response_data)
     assert len(errors) == 0
 
 
@@ -69,10 +69,10 @@ def test_unit(db_conn, responses_table):
         'score': 0.9,
         'learned': 0.9,
     }
-    response, errors = insert_response(response_data, db_conn)
+    response, errors = insert_response(db_conn, response_data)
     assert len(errors) == 1
     response_data['unit_id'] = 'A24JLD'
-    response, errors = insert_response(response_data, db_conn)
+    response, errors = insert_response(db_conn, response_data)
     assert len(errors) == 0
 
 
@@ -88,10 +88,10 @@ def test_response(db_conn, responses_table):
         'score': 0.9,
         'learned': 0.9,
     }
-    response, errors = insert_response(response_data, db_conn)
+    response, errors = insert_response(db_conn, response_data)
     assert len(errors) == 1
     response_data['response'] = 42
-    response, errors = insert_response(response_data, db_conn)
+    response, errors = insert_response(db_conn, response_data)
     assert len(errors) == 0
 
 
@@ -107,16 +107,16 @@ def test_score(db_conn, responses_table):
         'response': 42,
         'learned': 0.9,
     }
-    response, errors = insert_response(response_data, db_conn)
+    response, errors = insert_response(db_conn, response_data)
     assert len(errors) == 1
     response_data['score'] = 1.1
-    response, errors = insert_response(response_data, db_conn)
+    response, errors = insert_response(db_conn, response_data)
     assert len(errors) == 1
     response_data['score'] = 0
-    response, errors = insert_response(response_data, db_conn)
+    response, errors = insert_response(db_conn, response_data)
     assert len(errors) == 0
     response_data['score'] = 1
-    response, errors = insert_response(response_data, db_conn)
+    response, errors = insert_response(db_conn, response_data)
     assert len(errors) == 0
 
 
@@ -139,4 +139,4 @@ def test_get_latest(db_conn, responses_table):
         'modified': r.now(),
     }]).run(db_conn)
 
-    assert get_latest_response('abcd1234', 'apple', db_conn)['id'] == 'A'
+    assert get_latest_response(db_conn, 'abcd1234', 'apple')['id'] == 'A'

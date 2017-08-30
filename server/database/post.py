@@ -18,7 +18,7 @@ def get_post_schema(data):
     return mapping.get(kind) or post_schema
 
 
-def insert_post(data, db_conn):
+def insert_post(db_conn, data):
     """
     Create a new post.
     """
@@ -40,11 +40,11 @@ def insert_post(data, db_conn):
     ))
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
-        add_post_to_es(data, db_conn)
+        add_post_to_es(db_conn, data)
     return data, errors
 
 
-def insert_proposal(data, db_conn):
+def insert_proposal(db_conn, data):
     """
     Create a new proposal.
     """
@@ -69,11 +69,11 @@ def insert_proposal(data, db_conn):
     ))
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
-        add_post_to_es(data, db_conn)
+        add_post_to_es(db_conn, data)
     return data, errors
 
 
-def insert_vote(data, db_conn):
+def insert_vote(db_conn, data):
     """
     Create a new vote.
     """
@@ -98,11 +98,11 @@ def insert_vote(data, db_conn):
     ))
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
-        add_post_to_es(data, db_conn)
+        add_post_to_es(db_conn, data)
     return data, errors
 
 
-def update_post(prev_data, data, db_conn):
+def update_post(db_conn, prev_data, data):
     """
     Update an existing post.
     """
@@ -120,11 +120,11 @@ def update_post(prev_data, data, db_conn):
     }
     data, errors = update_row(db_conn, schema, query, prev_data, data)
     if not errors:
-        add_post_to_es(data, db_conn)
+        add_post_to_es(db_conn, data)
     return data, errors
 
 
-def update_proposal(prev_data, data, db_conn):
+def update_proposal(db_conn, prev_data, data):
     """
     Update an existing proposal.
     """
@@ -142,11 +142,11 @@ def update_proposal(prev_data, data, db_conn):
     }
     data, errors = update_row(db_conn, schema, query, prev_data, data)
     if not errors:
-        add_post_to_es(data, db_conn)
+        add_post_to_es(db_conn, data)
     return data, errors
 
 
-def update_vote(prev_data, data, db_conn):
+def update_vote(db_conn, prev_data, data):
     """
     Update an existing vote.
     """
@@ -165,11 +165,11 @@ def update_vote(prev_data, data, db_conn):
     }
     data, errors = update_row(db_conn, schema, query, prev_data, data)
     if not errors:
-        add_post_to_es(data, db_conn)
+        add_post_to_es(db_conn, data)
     return data, errors
 
 
-def get_post(params, db_conn):
+def get_post(db_conn, params):
     """
     Get the post matching the parameters.
     """
@@ -186,7 +186,7 @@ def get_post(params, db_conn):
     return get_row(db_conn, query, params)
 
 
-def list_posts_by_topic(params, db_conn):
+def list_posts_by_topic(db_conn, params):
     """
     Get a list of posts in Sagefy.
     """
@@ -204,7 +204,7 @@ def list_posts_by_topic(params, db_conn):
     return list_rows(db_conn, query, params)
 
 
-def list_posts_by_user(params, db_conn):
+def list_posts_by_user(db_conn, params):
     """
     Get a list of posts in Sagefy.
     """
@@ -229,7 +229,7 @@ def deliver_post(data, access=None):
     return deliver_fields(schema, data, access)
 
 
-def add_post_to_es(post, db_conn):
+def add_post_to_es(db_conn, post):
     """
     Upsert the post data into elasticsearch.
     """
@@ -238,10 +238,10 @@ def add_post_to_es(post, db_conn):
     from database.user import get_user, deliver_user
 
     data = json_prep(deliver_post(post))
-    topic = get_topic({'id': post['topic_id']}, db_conn)
+    topic = get_topic(db_conn, {'id': post['topic_id']})
     if topic:
         data['topic'] = json_prep(deliver_topic(topic))
-    user = get_user({'id': post['user_id']}, db_conn)
+    user = get_user(db_conn, {'id': post['user_id']})
     if user:
         data['user'] = json_prep(deliver_user(user))
 

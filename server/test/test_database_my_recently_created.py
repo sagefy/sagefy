@@ -5,7 +5,7 @@ from database.my_recently_created import get_my_recent_proposals, \
 
 
 
-def create_some_proposals(posts_table, units_table, subjects_table, db_conn):
+def create_some_proposals(db_conn, posts_table, units_table, subjects_table):
     """
     Create some proposals to check the calls.
     """
@@ -75,10 +75,10 @@ def test_get_my_recent_proposals(db_conn, posts_table, users_table,
     Get the user's most recent proposals.
     """
 
-    create_user_in_db(users_table, db_conn)
+    create_user_in_db(db_conn, users_table)
     current_user = users_table.get('abcd1234').run(db_conn)
-    create_some_proposals(posts_table, units_table, subjects_table, db_conn)
-    proposals = get_my_recent_proposals(current_user, db_conn)
+    create_some_proposals(db_conn, posts_table, units_table, subjects_table)
+    proposals = get_my_recent_proposals(db_conn, current_user)
     assert len(proposals) == 2
 
 
@@ -112,10 +112,10 @@ def test_get_my_recently_created_units(db_conn, posts_table, subjects_table,
     Get the user's most recent units.
     """
 
-    create_user_in_db(users_table, db_conn)
+    create_user_in_db(db_conn, users_table)
     current_user = users_table.get('abcd1234').run(db_conn)
-    create_some_proposals(posts_table, units_table, subjects_table, db_conn)
-    units = get_my_recently_created_units(current_user, db_conn)
+    create_some_proposals(db_conn, posts_table, units_table, subjects_table)
+    units = get_my_recently_created_units(db_conn, current_user)
     assert len(units) == 2
     assert units[0]['entity_id'] == 'D'
     assert units[1]['entity_id'] == 'F'
@@ -127,10 +127,10 @@ def test_get_my_recently_created_subjects(db_conn, posts_table, units_table,
     Get the user's most recent subjects.
     """
 
-    create_user_in_db(users_table, db_conn)
+    create_user_in_db(db_conn, users_table)
     current_user = users_table.get('abcd1234').run(db_conn)
-    create_some_proposals(posts_table, units_table, subjects_table, db_conn)
-    subjects = get_my_recently_created_subjects(current_user, db_conn)
+    create_some_proposals(db_conn, posts_table, units_table, subjects_table)
+    subjects = get_my_recently_created_subjects(db_conn, current_user)
     assert len(subjects) == 2
     assert subjects[0]['entity_id'] == 'A'
     assert subjects[1]['entity_id'] == 'C'

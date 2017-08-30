@@ -36,7 +36,7 @@ def serve(environ, start_response):
     """
 
     db_conn = make_db_connection()
-    request = construct_request(environ, db_conn)
+    request = construct_request(db_conn, environ)
     code, data = call_handler(request)
     close_db_connection(db_conn)
     response_headers = [('Content-Type', 'application/json; charset=utf-8')]
@@ -52,7 +52,7 @@ def serve(environ, start_response):
     return [body]
 
 
-def construct_request(environ, db_conn):
+def construct_request(db_conn, environ):
     """
     Produce a request `object`
     given a body (get), query string (put, post), and cookies.

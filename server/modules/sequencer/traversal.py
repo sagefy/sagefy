@@ -21,7 +21,7 @@ def traverse(db_conn, user, subject):
         - needs units under the status "review" or "learn", in priority order
     """
 
-    units = list_units_in_subject(subject, db_conn)
+    units = list_units_in_subject(db_conn, subject)
     unit_statuses = {
         unit['entity_id']: judge(db_conn, unit, user)
         for unit in units

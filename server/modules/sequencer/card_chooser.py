@@ -49,7 +49,7 @@ def choose_card(db_conn, user, unit):
     if not len(cards):
         return None
 
-    previous_response = get_latest_response(user['id'], unit_id, db_conn)
+    previous_response = get_latest_response(db_conn, user['id'], unit_id)
     if previous_response:
         learned = previous_response['learned']
         # Don't allow the previous card as the next card

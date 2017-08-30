@@ -4,7 +4,7 @@ from database.card import insert_card
 xfail = pytest.mark.xfail
 
 
-def test_choice_body(cards_table, db_conn):
+def test_choice_body(db_conn, cards_table):
     """
     Expect a choice card to require a body (question).
     """

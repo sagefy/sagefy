@@ -27,7 +27,7 @@ come_back: -
 """
 
 
-def get_notice(params, db_conn):
+def get_notice(db_conn, params):
     """
     Get the user matching the parameters.
     """
@@ -44,7 +44,7 @@ def get_notice(params, db_conn):
     return get_row(db_conn, query, params)
 
 
-def insert_notice(data, db_conn):
+def insert_notice(db_conn, data):
     """
     Create a new notice.
     """
@@ -100,7 +100,7 @@ def mark_notice_as_read(db_conn, notice):
     return data, errors
 
 
-def mark_notice_as_unread(notice, db_conn):
+def mark_notice_as_unread(db_conn, notice):
     """
     Marks the notice as unread.
     """

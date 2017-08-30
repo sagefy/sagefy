@@ -73,4 +73,4 @@ def list_user_subjects_entity(db_conn, user_id, params):
     # TODO-3 limit = params.get('limit') or 10
     # TODO-3 skip = params.get('skip') or 0
     subject_ids = [data['subject_id'] for data in user_subjects]
-    return list_by_entity_ids('subjects', db_conn, subject_ids)
+    return list_by_entity_ids(db_conn, 'subjects', subject_ids)

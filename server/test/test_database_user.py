@@ -11,7 +11,7 @@ def test_user_name_required(db_conn):
     Ensure a name is required.
     """
     user = {}
-    user, errors = insert_user(user, db_conn)
+    user, errors = insert_user(db_conn, user)
     assert len(errors) > 0
     assert 'name' in [e['name'] for e in errors]
 
@@ -26,7 +26,7 @@ def test_user_name_unique(db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234'
     }
-    user, errors = insert_user(user, db_conn)
+    user, errors = insert_user(db_conn, user)
     assert len(errors) > 0
     assert 'name' in [e['name'] for e in errors]
     assert 'Must be unique.' in [e['message'] for e in errors]
@@ -37,7 +37,7 @@ def test_user_email_required(db_conn):
     Ensure an email is required.
     """
     user = {}
-    user, errors = insert_user(user, db_conn)
+    user, errors = insert_user(db_conn, user)
     assert len(errors) > 0
     assert 'email' in [e['name'] for e in errors]
 
@@ -65,7 +65,7 @@ def test_user_email_format(db_conn):
     Ensure an email is formatted.
     """
     user = {'email': 'other'}
-    user, errors = insert_user(user, db_conn)
+    user, errors = insert_user(db_conn, user)
     assert 'email' in [e['name'] for e in errors]
     assert 'Must be an email.' in [e['message'] for e in errors]
 
@@ -75,7 +75,7 @@ def test_user_password_required(db_conn):
     Ensure a password is required.
     """
     user = {}
-    user, errors = insert_user(user, db_conn)
+    user, errors = insert_user(db_conn, user)
     assert len(errors) > 0
     assert 'password' in [e['name'] for e in errors]
 
@@ -85,7 +85,7 @@ def test_user_password_minlength(db_conn):
     Ensure an password is long enough.
     """
     user = {'password': 'abcd'}
-    user, errors = insert_user(user, db_conn)
+    user, errors = insert_user(db_conn, user)
     assert 'password' in [e['name'] for e in errors]
     assert 'Must have minimum length of 8.' in [e['message'] for e in errors]
 
@@ -158,7 +158,7 @@ def test_get_email_token(db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234',
     }).run(db_conn)
-    user = get_user({'id': 'abcd1234'}, db_conn)
+    user = get_user(db_conn, {'id': 'abcd1234'})
     token = get_email_token(user, send_email=False)
     assert redis.get('user_password_token_abcd1234')
     assert token
@@ -176,7 +176,7 @@ def test_is_valid_token(db_conn, users_table):
         'email': 'test@example.com',
         'password': 'abcd1234',
     }).run(db_conn)
-    user = get_user({'id': 'abcd1234'}, db_conn)
+    user = get_user(db_conn, {'id': 'abcd1234'})
     token = get_email_token(user, send_email=False)
     assert is_valid_token(user, token)
     assert not is_valid_token(user, 'abcd1234')
@@ -228,7 +228,7 @@ def test_get_learning_context(db_conn, users_table):
         'password': 'abcd1234',
     }).run(db_conn)
 
-    user = get_user({'id': 'abcd1234'}, db_conn)
+    user = get_user(db_conn, {'id': 'abcd1234'})
 
     redis.set('learning_context_abcd1234', json.dumps({
         'card': {'entity_id': 'A'},
@@ -257,7 +257,7 @@ def test_set_learning_context(db_conn, users_table):
         'password': 'abcd1234',
     }).run(db_conn)
 
-    user = get_user({'id': 'abcd1234'}, db_conn)
+    user = get_user(db_conn, {'id': 'abcd1234'})
 
     set_learning_context(user, card={'entity_id': 'A'})
     assert get_learning_context(user) == {

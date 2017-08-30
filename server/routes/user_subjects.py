@@ -23,7 +23,7 @@ def get_user_subjects_route(request, user_id):
     db_conn = request['db_conn']
     current_user = get_current_user(request)
     if not current_user or current_user['id'] != user_id:
-        user = get_user({'id': user_id}, db_conn)
+        user = get_user(db_conn, {'id': user_id})
         if not user:
             return abort(404)
         if (user != current_user and
@@ -65,10 +65,10 @@ def add_subject_route(request, user_id, subject_id):
         return abort(401)
     if user_id != current_user['id']:
         return abort(403)
-    subject = get_latest_accepted('subjects', db_conn, entity_id=subject_id)
+    subject = get_latest_accepted(db_conn, 'subjects', entity_id=subject_id)
     if not subject:
         return abort(404)
-    user_subject = get_user_subjects(user_id, db_conn)
+    user_subject = get_user_subjects(db_conn, user_id)
     if user_subject and subject_id in user_subject['subject_ids']:
         return 400, {
             'errors': [{
@@ -111,7 +111,7 @@ def select_subject_route(request, user_id, subject_id):
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    subject = get_latest_accepted('subjects', db_conn, subject_id)
+    subject = get_latest_accepted(db_conn, 'subjects', subject_id)
     set_learning_context(current_user, subject=subject)
     buckets = traverse(db_conn, current_user, subject)
     # When in diagnosis, choose the unit and card automagically.
@@ -157,7 +157,7 @@ def remove_subject_route(request, user_id, subject_id):
         return abort(401)
     if user_id != current_user['id']:
         return abort(403)
-    user_subject = get_user_subjects(user_id, db_conn)
+    user_subject = get_user_subjects(db_conn, user_id)
     if not user_subject:
         return 404, {
             'errors': [{'message': 'User does not have subjects.'}],
@@ -165,7 +165,7 @@ def remove_subject_route(request, user_id, subject_id):
         }
     if subject_id not in user_subject['subject_ids']:
         return abort(404)
-    user_subject, errors = remove_user_subjects(user_id, subject_id, db_conn)
+    user_subject, errors = remove_user_subjects(db_conn, user_id, subject_id)
     if errors:
         return 400, {
             'errors': errors,

@@ -12,7 +12,7 @@ A graph is automatically formed based on the units and subjects specified.
 """
 
 
-def is_valid_members(schema, data, db_conn):
+def is_valid_members(db_conn, schema, data):
     """
 
     """
@@ -31,7 +31,7 @@ def is_valid_members(schema, data, db_conn):
     return []
 
 
-def ensure_no_cycles(schema, data, db_conn):
+def ensure_no_cycles(db_conn, schema, data):
     """
     Ensure no membership cycles form.
     """
@@ -48,7 +48,7 @@ def ensure_no_cycles(schema, data, db_conn):
             for member in members
             if member['kind'] == 'subject'
         ]
-        entities = list_by_entity_ids('subjects', db_conn, entity_ids)
+        entities = list_by_entity_ids(db_conn, 'subjects', entity_ids)
         for entity in entities:
             if entity['entity_id'] == main_id:
                 found['cycle'] = True

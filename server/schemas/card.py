@@ -18,7 +18,7 @@ assessment_kinds = ('choice', 'number', 'match', 'formula',
 asynchronous_kinds = ('writing', 'upload', 'embed')
 
 
-def is_valid_unit(schema, data, db_conn):
+def is_valid_unit(db_conn, schema, data):
     query = (r.table('units')
               .filter(r.row['entity_id'] == data['unit_id'])
               .filter(r.row['status'].eq('accepted'))
@@ -29,23 +29,23 @@ def is_valid_unit(schema, data, db_conn):
     return []
 
 
-def ensure_requires(schema, data, db_conn):
+def ensure_requires(db_conn, schema, data):
     """
 
     """
 
-    cards = list_by_entity_ids('cards', db_conn, data['require_ids'])
+    cards = list_by_entity_ids(db_conn, 'cards', data['require_ids'])
     if len(data['require_ids']) != len(cards):
         return [{'message': 'Didn\'t find all requires.'}]
     return []
 
 
-def ensure_no_cycles(schema, data, db_conn):
+def ensure_no_cycles(db_conn, schema, data):
     """
     Ensure no require cycles form.
     """
 
-    if find_requires_cycle('cards', data, db_conn):
+    if find_requires_cycle(db_conn, 'cards', data):
         return [{'message': 'Found a cycle in requires.'}]
 
     return []

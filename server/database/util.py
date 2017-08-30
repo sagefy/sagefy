@@ -13,7 +13,7 @@ def insert_row(db_conn, schema, query, data):
     data = omit(data, ('id', 'created', 'modified'))
     # TODO-2 is it possible to have postgres do this work of
     #        validating/preparing?
-    data, errors = prepare_document(schema, data, db_conn)
+    data, errors = prepare_document(db_conn, schema, data)
     if errors:
         return None, errors
     data = bundle_fields(schema, data)
@@ -36,7 +36,7 @@ def update_row(db_conn, schema, query, prev_data, data):
     data = extend({}, prev_data, data)
     # TODO-2 is it possible to have postgres do this work of
     #        validating/preparing?
-    data, errors = prepare_document(schema, data, db_conn)
+    data, errors = prepare_document(db_conn, schema, data)
     if errors:
         return None, errors
     data = bundle_fields(schema, data)
@@ -114,17 +114,17 @@ def delete_row(db_conn, query, params):
 ###############################################################################
 
 
-def insert_document(schema, data, db_conn):
+def insert_document(db_conn, schema, data):
     """
     Create a new document.
     Return document and errors if failed.
     """
 
     data = omit(data, ('id', 'created', 'modified'))
-    return save_document(schema, data, db_conn)
+    return save_document(db_conn, schema, data)
 
 
-def update_document(schema, prev_data, data, db_conn):
+def update_document(db_conn, schema, prev_data, data):
     """
     Update the document in the database.
     Return document and errors if failed.
@@ -134,17 +134,17 @@ def update_document(schema, prev_data, data, db_conn):
 
     data = omit(data, ('id', 'created', 'modified'))
     data = extend({}, prev_data, data)
-    return save_document(schema, data, db_conn)
+    return save_document(db_conn, schema, data)
 
 
-def save_document(schema, data, db_conn):
+def save_document(db_conn, schema, data):
     """
     NOTICE: You should use `insert_document` or `update_document` instead.
     Insert the document in the database.
     Return document and errors if failed.
     """
 
-    data, errors = prepare_document(schema, data, db_conn)
+    data, errors = prepare_document(db_conn, schema, data)
     if errors:
         return data, errors
     data = bundle_fields(schema, data)
@@ -153,7 +153,7 @@ def save_document(schema, data, db_conn):
     return data, errors
 
 
-def get_document(tablename, params, db_conn):
+def get_document(db_conn, tablename, params):
     """
     Get one document which matches the provided keyword arguments.
     Return None when there's no matching document.
@@ -173,7 +173,7 @@ def get_document(tablename, params, db_conn):
     return data
 
 
-def list_documents(tablename, params, db_conn):
+def list_documents(db_conn, tablename, params):
     """
     Get a list of documents matching the provided keyword arguments.
     Return empty array when no documents match.
@@ -184,7 +184,7 @@ def list_documents(tablename, params, db_conn):
              .run(db_conn))
 
 
-def delete_document(tablename, doc_id, db_conn):
+def delete_document(db_conn, tablename, doc_id):
     """
     Remove the document from the database.
     """
@@ -212,7 +212,7 @@ def recurse_embeds(fn, data, schema, prefix=''):
                                '%s%s.%i.' % (prefix, field_name, i))
 
 
-def prepare_document(schema, data, db_conn):
+def prepare_document(db_conn, schema, data):
     """
     Prepare a document to be saved.
     """
@@ -223,12 +223,12 @@ def prepare_document(schema, data, db_conn):
     errors = validate_fields(schema, data)
     if errors:
         return data, errors
-    # errors = validate_unique_fields(schema, data, db_conn)
+    # errors = validate_unique_fields(db_conn, schema, data)
     # if errors:
     #     return data, errors
     if 'validate' in schema:
         for fn in schema['validate']:
-            errors = fn(schema, data, db_conn)
+            errors = fn(db_conn, schema, data)
             if errors:
                 return data, errors
     return data, []
@@ -299,7 +299,7 @@ def validate_fields(schema, data):
     return errors
 
 
-# def validate_unique_fields(schema, data, db_conn):
+# def validate_unique_fields(db_conn, schema, data):
 #     """
 #     Test all top-level fields marked as unique.
 #     """

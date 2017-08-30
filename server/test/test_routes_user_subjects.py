@@ -5,7 +5,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def prep(subjects_table, users_subjects_table, db_conn):
+def prep(db_conn, subjects_table, users_subjects_table):
     subjects_table.insert([{
         'entity_id': 'A1',
         'name': 'A',
@@ -53,7 +53,7 @@ def test_get_user_subjects(db_conn, session, subjects_table,
     Expect to get a list of the user's subjects.
     """
 
-    prep(subjects_table, users_subjects_table, db_conn)
+    prep(db_conn, subjects_table, users_subjects_table)
     request = {
         'cookies': {'session_id': session},
         'params': {},

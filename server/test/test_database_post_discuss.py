@@ -26,7 +26,7 @@ def test_list_posts_facade(db_conn, posts_table):
         'kind': 'post',
     }]
     posts_table.insert(posts_data).run(db_conn)
-    posts = list_posts({'topic_id': 'wxyz7890'}, db_conn)
+    posts = list_posts(db_conn, {'topic_id': 'wxyz7890'})
     assert len(posts) == 2
     assert posts[0]['id'] in ('fghj4567', 'yuio6789')
     assert posts[1]['id'] in ('fghj4567', 'yuio6789')

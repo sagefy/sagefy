@@ -31,5 +31,5 @@ def test_get_latest_accepted(db_conn, cards_table):
         'kind': 'video'
     }]).run(db_conn)
 
-    e = get_latest_accepted('cards', db_conn, 'A')
+    e = get_latest_accepted(db_conn, 'cards', 'A')
     assert e['id'] == 'B2'

@@ -212,7 +212,7 @@ def test_list_by_entity_ids(db_conn, subjects_table):
         'modified': r.now(),
         'status': 'accepted',
     }]).run(db_conn)
-    subjects = list_by_entity_ids('subjects', db_conn, ['A1', 'C3'])
+    subjects = list_by_entity_ids(db_conn, 'subjects', ['A1', 'C3'])
     assert subjects[0]['body'] in ('Apple', 'Coconut')
     assert subjects[0]['body'] in ('Apple', 'Coconut')
 
@@ -374,7 +374,7 @@ def test_list_units(db_conn, units_table, subjects_table):
         }]
     }]).run(db_conn)
 
-    subject = get_latest_accepted('subjects', db_conn, entity_id='S')
-    cards = list_units_in_subject(subject, db_conn)
+    subject = get_latest_accepted(db_conn, 'subjects', entity_id='S')
+    cards = list_units_in_subject(db_conn, subject)
     card_ids = set(card['entity_id'] for card in cards)
     assert card_ids == {'B', 'V', 'Q', 'N'}

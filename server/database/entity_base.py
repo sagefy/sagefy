@@ -22,7 +22,7 @@ def start_accepted_query(tablename):
              .map(r.row['reduction']))
 
 
-def get_latest_accepted(tablename, db_conn, entity_id):
+def get_latest_accepted(db_conn, tablename, entity_id):
     """
     Get the latest accepted version of the card.
     """
@@ -43,7 +43,7 @@ def get_latest_accepted(tablename, db_conn, entity_id):
         return documents[0]
 
 
-def list_by_entity_ids(tablename, db_conn, entity_ids):
+def list_by_entity_ids(db_conn, tablename, entity_ids):
     """
     Get a list of entities by a list of entity IDs.
     """
@@ -62,7 +62,7 @@ def list_by_entity_ids(tablename, db_conn, entity_ids):
     # TODO-2 index in unit and subject
 
 
-def list_by_version_ids(tablename, db_conn, version_ids):
+def list_by_version_ids(db_conn, tablename, version_ids):
     """
     ???
     """
@@ -78,10 +78,10 @@ def list_by_version_ids(tablename, db_conn, version_ids):
               .filter(r.row['status'].eq('accepted')))
     docs = query.run(db_conn)
     entity_ids = [fields['entity_id'] for fields in docs]
-    return list_by_entity_ids(tablename, db_conn, entity_ids)
+    return list_by_entity_ids(db_conn, tablename, entity_ids)
 
 
-def get_versions(tablename, db_conn, entity_id, limit=10, skip=0, **params):
+def get_versions(db_conn, tablename, entity_id, limit=10, skip=0, **params):
     """
     Get the latest accepted version of the card.
     """
@@ -100,7 +100,7 @@ def get_versions(tablename, db_conn, entity_id, limit=10, skip=0, **params):
     return [fields for fields in query.run(db_conn)]
 
 
-def list_requires(tablename, db_conn, entity_id, limit=10, skip=0, **params):
+def list_requires(db_conn, tablename, entity_id, limit=10, skip=0, **params):
     """
     Get the same kind of entity that this one requires.
     """
@@ -109,7 +109,7 @@ def list_requires(tablename, db_conn, entity_id, limit=10, skip=0, **params):
     if not entity_id:
         return []
 
-    entity = get_latest_accepted(tablename, db_conn, entity_id=entity_id)
+    entity = get_latest_accepted(db_conn, tablename, entity_id=entity_id)
 
     # TODO-2 this query should have an index in card and unit
     query = (start_accepted_query(tablename)
@@ -142,7 +142,7 @@ def list_required_by(tablename, db_conn, entity_id,
     return [fields for fields in query.run(db_conn)]
 
 
-def insert_entity(schema, db_conn, data):
+def insert_entity(db_conn, schema, data):
     """
     When a user creates a new version,
     don't accept certain fields.
@@ -156,16 +156,16 @@ def insert_entity(schema, db_conn, data):
             schema['tablename'], db_conn, data['entity_id'])
         if latest:
             data['previous_id'] = latest['id']
-    return insert_document(schema, data, db_conn)
+    return insert_document(db_conn, schema, data)
 
 
-def update_entity(schema, prev_data, data, db_conn):
+def update_entity(db_conn, schema, prev_data, data):
     """
     Only allow changes to the status on update.
     """
 
     data = pick(data, ('status', 'available'))
-    return update_document(schema, prev_data, data, db_conn)
+    return update_document(db_conn, schema, prev_data, data)
 
 
 def save_entity_to_es(kind, data):
@@ -184,7 +184,7 @@ def save_entity_to_es(kind, data):
         )
 
 
-def find_requires_cycle(tablename, data, db_conn):
+def find_requires_cycle(db_conn, tablename, data):
     """
     Inspect own requires to see if a cycle is formed.
     """
@@ -198,7 +198,7 @@ def find_requires_cycle(tablename, data, db_conn):
     def _(require_ids):
         if found['cycle']:
             return
-        entities = list_by_entity_ids(tablename, db_conn, require_ids)
+        entities = list_by_entity_ids(db_conn, tablename, require_ids)
         for entity in entities:
             if entity['entity_id'] == main_id:
                 found['cycle'] = True

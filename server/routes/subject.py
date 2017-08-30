@@ -21,7 +21,7 @@ def get_recommended_subjects(request):
     entity_ids = ('JAFGYFWhILcsiByyH2O9frcU',)
     if config['debug']:
         entity_ids = ('subjectAll',)
-    subjects = list_by_entity_ids('subjects', db_conn, entity_ids)
+    subjects = list_by_entity_ids(db_conn, 'subjects', entity_ids)
     if not subjects:
         return abort(404)
     return 200, {
@@ -36,11 +36,11 @@ def get_subject_route(request, subject_id):
     """
 
     db_conn = request['db_conn']
-    subject = get_latest_accepted('subjects', db_conn, subject_id)
+    subject = get_latest_accepted(db_conn, 'subjects', subject_id)
     if not subject:
         return abort(404)
     # TODO-2 SPLITUP create new endpoints for these instead
-    units = list_units_in_subject(subject, db_conn)
+    units = list_units_in_subject(db_conn, subject)
     return 200, {
         'subject': deliver_subject(subject),
         # TODO-3 subject parameters
@@ -59,7 +59,7 @@ def list_subjects_route(request):
     if not entity_ids:
         return abort(404)
     entity_ids = entity_ids.split(',')
-    subjects = list_by_entity_ids('subjects', db_conn, entity_ids)
+    subjects = list_by_entity_ids(db_conn, 'subjects', entity_ids)
     if not subjects:
         return abort(404)
     return 200, {
@@ -113,10 +113,10 @@ def get_subject_tree_route(request, subject_id):
     """
 
     db_conn = request['db_conn']
-    subject = get_latest_accepted('subjects', db_conn, entity_id=subject_id)
+    subject = get_latest_accepted(db_conn, 'subjects', entity_id=subject_id)
     if not subject:
         return abort(404)
-    units = list_units_in_subject(subject, db_conn)
+    units = list_units_in_subject(db_conn, subject)
     # For the menu, it must return the name and ID of the subject
     output = {
         'subjects': deliver_subject(subject),
@@ -160,7 +160,7 @@ def get_subject_units_route(request, subject_id):
                       unit_id='{unit_id}'),
     }
     set_learning_context(current_user, next=next_)
-    subject = get_latest_accepted('subjects', db_conn, subject_id)
+    subject = get_latest_accepted(db_conn, 'subjects', subject_id)
     # Pull a list of up to 5 units to choose from based on priority.
     buckets = traverse(db_conn, current_user, subject)
     units = buckets['learn'][:5]
@@ -189,7 +189,7 @@ def choose_unit_route(request, subject_id, unit_id):
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    unit = get_latest_accepted('units', db_conn, unit_id)
+    unit = get_latest_accepted(db_conn, 'units', unit_id)
     if not unit:
         return abort(404)
     # If the unit isn't in the subject...
@@ -233,7 +233,7 @@ def get_my_recently_created_subjects_route(request):
     if not current_user:
         return abort(401)
     db_conn = request['db_conn']
-    subjects = get_my_recently_created_subjects(current_user, db_conn)
+    subjects = get_my_recently_created_subjects(db_conn, current_user)
     return 200, {
         'subjects': [deliver_subject(subject) for subject in subjects],
     }

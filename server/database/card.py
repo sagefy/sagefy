@@ -42,13 +42,13 @@ def insert_card(db_conn, data):
             'name': 'kind',
             'message': 'Missing card kind.',
         }]
-    card, errors = insert_entity(schema, db_conn, data)
+    card, errors = insert_entity(db_conn, schema, data)
     if not errors:
         save_entity_to_es('card', deliver_card(card, access='view'))
     return card, errors
 
 
-def update_card(prev_data, data, db_conn):
+def update_card(db_conn, prev_data, data):
     """
     Update a card.
 
@@ -66,7 +66,7 @@ def update_card(prev_data, data, db_conn):
             'name': 'kind',
             'message': 'Missing card kind.',
         }]
-    card, errors = update_entity(schema, prev_data, data, db_conn)
+    card, errors = update_entity(db_conn, schema, prev_data, data)
     if not errors:
         save_entity_to_es('card', deliver_card(card, access='view'))
     return card, errors

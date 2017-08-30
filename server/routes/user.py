@@ -42,7 +42,7 @@ def get_user_route(request, user_id):
     """
 
     db_conn = request['db_conn']
-    user = get_user({'id': user_id}, db_conn)
+    user = get_user(db_conn, {'id': user_id})
     if not user:
         return abort(404)
     current_user = get_current_user(request)
@@ -66,7 +66,7 @@ def list_users_route(request):
     if not user_ids:
         return abort(404)
     user_ids = user_ids.split(',')
-    users = list_users_by_user_ids(user_ids, db_conn)
+    users = list_users_by_user_ids(db_conn, user_ids)
     if not users:
         return abort(404)
     size = int(request['params'].get('avatar') or 0) or None
@@ -105,9 +105,9 @@ def log_in_route(request):
     db_conn = request['db_conn']
     name = request['params'].get('name') or ''
     name = name.lower().strip()
-    user = get_user({'name': name}, db_conn)
+    user = get_user(db_conn, {'name': name})
     if not user:
-        user = get_user({'email': name}, db_conn)
+        user = get_user(db_conn, {'email': name})
     if not user:
         return 404, {
             'errors': [{
@@ -150,13 +150,13 @@ def update_user_route(request, user_id):
     """
 
     db_conn = request['db_conn']
-    user = get_user({'id': user_id}, db_conn)
+    user = get_user(db_conn, {'id': user_id})
     current_user = get_current_user(request)
     if not user:
         return abort(404)
     if not user['id'] == current_user['id']:
         return abort(401)
-    user, errors = update_user(user, request['params'], db_conn)
+    user, errors = update_user(db_conn, user, request['params'])
     if len(errors):
         return 400, {
             'errors': errors,
@@ -172,7 +172,7 @@ def create_token_route(request):
     """
 
     db_conn = request['db_conn']
-    user = get_user({'email': request['params'].get('email')}, db_conn)
+    user = get_user(db_conn, {'email': request['params'].get('email')})
     if not user:
         return abort(404)
     get_email_token(user)
@@ -186,7 +186,7 @@ def create_password_route(request, user_id):
     """
 
     db_conn = request['db_conn']
-    user = get_user({'id': user_id}, db_conn)
+    user = get_user(db_conn, {'id': user_id})
     if not user:
         return abort(404)
     token = request['params'].get('token')
@@ -194,5 +194,5 @@ def create_password_route(request, user_id):
     if not valid:
         return abort(403)
     given_password = request['params'].get('password')
-    update_user_password(user, {'password': given_password}, db_conn)
+    update_user_password(db_conn, user, {'password': given_password})
     return _log_in(user)
