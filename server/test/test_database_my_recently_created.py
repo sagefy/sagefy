@@ -39,33 +39,33 @@ def create_some_proposals(db_conn, posts_table, units_table, subjects_table):
         'id': 'A1',
         'entity_id': 'A',
         'status': 'accepted',
-        'created': r.now(),
+        'created': datetime.utcnow(),
     }, {
         'id': 'B1',
         'entity_id': 'B',
         'status': 'accepted',
-        'created': r.now(),
+        'created': datetime.utcnow(),
     }, {
         'id': 'C1',
         'entity_id': 'C',
         'status': 'accepted',
-        'created': r.now(),
+        'created': datetime.utcnow(),
     }]).run(db_conn)
     units_table.insert([{
         'id': 'D1',
         'entity_id': 'D',
         'status': 'accepted',
-        'created': r.now(),
+        'created': datetime.utcnow(),
     }, {
         'id': 'E1',
         'entity_id': 'E',
         'status': 'accepted',
-        'created': r.now(),
+        'created': datetime.utcnow(),
     }, {
         'id': 'F1',
         'entity_id': 'F',
         'status': 'accepted',
-        'created': r.now(),
+        'created': datetime.utcnow(),
     }]).run(db_conn)
 
 

@@ -129,14 +129,14 @@ def test_get_latest(db_conn, responses_table):
         'id': 'A',
         'user_id': 'abcd1234',
         'unit_id': 'apple',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
     }, {
         'id': 'B',
         'user_id': 'abcd1234',
         'unit_id': 'banana',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
     }]).run(db_conn)
 
     assert get_latest_response(db_conn, 'abcd1234', 'apple')['id'] == 'A'

@@ -33,41 +33,41 @@ def add_test_subject(db_conn,
         units_table.insert([{
             'entity_id': 'add',
             'status': 'accepted',
-            'created': r.now()
+            'created': datetime.utcnow()
         }, {
             'entity_id': 'subtract',
             'require_ids': ['add'],
             'status': 'accepted',
-            'created': r.now()
+            'created': datetime.utcnow()
         }, {
             'entity_id': 'multiply',
             'require_ids': ['add'],
             'status': 'accepted',
-            'created': r.now()
+            'created': datetime.utcnow()
         }, {
             'entity_id': 'divide',
             'require_ids': ['multiply', 'subtract'],
             'status': 'accepted',
-            'created': r.now()
+            'created': datetime.utcnow()
         }]).run(db_conn)
 
     if responses_table:
         responses_table.insert([{
             'user_id': 'user', 'unit_id': 'add', 'learned': 0.99,
-            'created': r.now()
+            'created': datetime.utcnow()
         }, {
             'user_id': 'user', 'unit_id': 'multiply', 'learned': 0.0,
-            'created': r.now()
+            'created': datetime.utcnow()
         }, {
             'user_id': 'user', 'unit_id': 'subtract', 'learned': 0.99,
-            'created': r.time(2004, 11, 3, 'Z')
+            'created': datetime(2004, 11, 3, tzinfo=timezone.utc)
         }]).run(db_conn)
 
     if subjects_table:
         subjects_table.insert({
             'entity_id': 'fghj4567',
             'status': 'accepted',
-            'created': r.time(2004, 11, 1, 'Z'),
+            'created': datetime(2004, 11, 1, tzinfo=timezone.utc),
             'members': [
                 {'id': 'add', 'kind': 'unit'},
                 {'id': 'subtract', 'kind': 'unit'},

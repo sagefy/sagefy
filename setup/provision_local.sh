@@ -29,18 +29,6 @@ sudo apt-get -y install python3-pip
 sudo pip3 install -r /var/www/server/requirements.txt
 sudo pip3 install pytest coverage flake8
 
-#### Rethink ##################################################################
-
-source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | sudo tee /etc/apt/sources.list.d/rethinkdb.list
-wget -qO- http://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
-sudo apt-get -y update
-sudo apt-get -y install rethinkdb
-# Restart with init.d
-sudo cp /var/www/setup/rethinkdb.conf /etc/rethinkdb/instances.d/instance1.conf
-sudo /etc/init.d/rethinkdb restart
-# Securing RethinkDB: https://rethinkdb.com/docs/security/
-# TODO-1 Use socks to access the admin UI
-
 #### Postgres #################################################################
 
 sudo add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
@@ -129,7 +117,7 @@ sudo apt-get -y install nginx
 # TODO-1 Setup file system monitoring do.co/1GfDGYN
 # TODO-1 Setup Digital Ocean private networking do.co/1nrFJE3
 # TODO-1 Setup loggly
-# TODO-1 Setup automated backups (especially of RethinkDB)
+# TODO-1 Setup automated backups (especially of PostgresQL)
 # TODO-1 setup auto updating on ubuntu
 # TODO-2 Re-read bit.ly/1mERm9F
 

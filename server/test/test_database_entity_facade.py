@@ -14,19 +14,19 @@ def test_get_latest_accepted(db_conn, cards_table):
     cards_table.insert([{
         'id': 'A1',
         'entity_id': 'A',
-        'created': r.time(2004, 11, 3, 'Z'),
+        'created': datetime(2004, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
         'kind': 'video'
     }, {
         'id': 'B2',
         'entity_id': 'A',
-        'created': r.time(2005, 11, 3, 'Z'),
+        'created': datetime(2005, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
         'kind': 'video'
     }, {
         'id': 'C3',
         'entity_id': 'B',
-        'created': r.time(2006, 11, 3, 'Z'),
+        'created': datetime(2006, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
         'kind': 'video'
     }]).run(db_conn)

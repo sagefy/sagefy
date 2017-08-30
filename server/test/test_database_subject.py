@@ -187,29 +187,29 @@ def test_list_by_entity_ids(db_conn, subjects_table):
         'entity_id': 'A1',
         'name': 'A',
         'body': 'Apple',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }, {
         'entity_id': 'B2',
         'name': 'B',
         'body': 'Banana',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }, {
         'entity_id': 'C3',
         'name': 'C',
         'body': 'Coconut',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }, {
         'entity_id': 'D4',
         'name': 'D',
         'body': 'Date',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }]).run(db_conn)
     subjects = list_by_entity_ids(db_conn, 'subjects', ['A1', 'C3'])
@@ -225,8 +225,8 @@ def test_list_by_unit_ids(db_conn, units_table, subjects_table):
 
     units_table.insert({
         'entity_id': 'Z',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'name': 'Z',
     }).run(db_conn)
@@ -235,8 +235,8 @@ def test_list_by_unit_ids(db_conn, units_table, subjects_table):
         'entity_id': 'A',
         'name': 'Apple',
         'body': 'Apple',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'members': [{
             'kind': 'unit',
@@ -246,8 +246,8 @@ def test_list_by_unit_ids(db_conn, units_table, subjects_table):
         'entity_id': 'B1',
         'name': 'Banana',
         'body': 'Banana',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'members': [{
             'kind': 'subject',
@@ -257,8 +257,8 @@ def test_list_by_unit_ids(db_conn, units_table, subjects_table):
         'entity_id': 'B2',
         'name': 'Blueberry',
         'body': 'Blueberry',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'members': [{
             'kind': 'subject',
@@ -268,8 +268,8 @@ def test_list_by_unit_ids(db_conn, units_table, subjects_table):
         'entity_id': 'B3',
         'name': 'Brazil Nut',
         'body': 'Brazil Nut',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'members': [{
             'kind': 'subject',
@@ -279,8 +279,8 @@ def test_list_by_unit_ids(db_conn, units_table, subjects_table):
         'entity_id': 'C',
         'name': 'Coconut',
         'body': 'Coconut',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'members': [{
             'kind': 'subject',
@@ -293,8 +293,8 @@ def test_list_by_unit_ids(db_conn, units_table, subjects_table):
         'entity_id': 'D',
         'name': 'Date',
         'body': 'Date',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted'
     }]).run(db_conn)
 
@@ -312,34 +312,34 @@ def test_list_units(db_conn, units_table, subjects_table):
     units_table.insert([{
         'entity_id': 'B',
         'name': 'B',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'require_ids': ['A', 'N']
     }, {
         'entity_id': 'V',
         'name': 'V',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'require_ids': ['Q']
     }, {
         'entity_id': 'Q',
         'name': 'Q',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }, {
         'entity_id': 'A',
         'name': 'A',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }, {
         'entity_id': 'N',
         'name': 'N',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'require_ids': ['Q', 'A']
     }]).run(db_conn)
@@ -348,8 +348,8 @@ def test_list_units(db_conn, units_table, subjects_table):
         'entity_id': 'T',
         'name': 'TRex',
         'body': 'TRex',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'members': [{
             'kind': 'unit',
@@ -362,8 +362,8 @@ def test_list_units(db_conn, units_table, subjects_table):
         'entity_id': 'S',
         'name': 'Saurus',
         'body': 'Saurus',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'members': [{
             'kind': 'subject',

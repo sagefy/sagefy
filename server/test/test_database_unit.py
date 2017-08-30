@@ -120,7 +120,7 @@ def test_requires(db_conn, units_table):
         'user_id': 'abcd1234',
         'entity_id': 'A',
         'status': 'accepted',
-        'created': r.now(),
+        'created': datetime.utcnow(),
     }).run(db_conn)
     unit, errors = insert_unit(db_conn, {
         'user_id': 'abcd1234',

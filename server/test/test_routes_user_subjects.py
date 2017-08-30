@@ -10,29 +10,29 @@ def prep(db_conn, subjects_table, users_subjects_table):
         'entity_id': 'A1',
         'name': 'A',
         'body': 'Apple',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }, {
         'entity_id': 'B2',
         'name': 'B',
         'body': 'Banana',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }, {
         'entity_id': 'C3',
         'name': 'C',
         'body': 'Coconut',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }, {
         'entity_id': 'D4',
         'name': 'D',
         'body': 'Date',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }]).run(db_conn)
     users_subjects_table.insert({
@@ -41,8 +41,8 @@ def prep(db_conn, subjects_table, users_subjects_table):
             'A1',
             'C3',
         ],
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
     }).run(db_conn)
 
 
@@ -102,8 +102,8 @@ def test_add_subject(db_conn, session, subjects_table, users_subjects_table):
         'entity_id': 'A1',
         'name': 'A',
         'body': 'Apple',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }).run(db_conn)
 
@@ -166,8 +166,8 @@ def test_add_subject_already_added(db_conn, session, subjects_table,
         'entity_id': 'A1',
         'name': 'A',
         'body': 'Apple',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }).run(db_conn)
 
@@ -193,8 +193,8 @@ def test_select_subject_route(db_conn, session, subjects_table,
         'entity_id': 'A1',
         'name': 'A',
         'body': 'Apple',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }).run(db_conn)
 
@@ -218,8 +218,8 @@ def test_remove_subject(db_conn, session, subjects_table,
         'entity_id': 'A1',
         'name': 'A',
         'body': 'Apple',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }).run(db_conn)
 

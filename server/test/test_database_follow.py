@@ -60,24 +60,24 @@ def test_list_user(db_conn, follows_table):
 
     follows_table.insert([{
         'user_id': 'JFldl93k',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'entity': {
             'kind': 'card',
             'id': 'JFlsjFm',
         },
     }, {
         'user_id': 'abcd1234',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'entity': {
             'kind': 'card',
             'id': 'JFlsjFm',
         },
     }, {
         'user_id': 'abcd1234',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'entity': {
             'kind': 'unit',
             'id': 'u39Fdjf0',
@@ -95,24 +95,24 @@ def test_list_kind(db_conn, follows_table):
 
     follows_table.insert([{
         'user_id': 'JFldl93k',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'entity': {
             'kind': 'card',
             'id': 'JFlsjFm',
         },
     }, {
         'user_id': 'abcd1234',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'entity': {
             'kind': 'card',
             'id': 'JFlsjFm',
         },
     }, {
         'user_id': 'abcd1234',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'entity': {
             'kind': 'unit',
             'id': 'u39Fdjf0',
@@ -130,24 +130,24 @@ def test_list_id(db_conn, follows_table):
 
     follows_table.insert([{
         'user_id': 'JFldl93k',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'entity': {
             'kind': 'card',
             'id': 'JFlsjFm',
         },
     }, {
         'user_id': 'abcd1234',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'entity': {
             'kind': 'card',
             'id': 'JFlsjFm',
         },
     }, {
         'user_id': 'abcd1234',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'entity': {
             'kind': 'unit',
             'id': 'u39Fdjf0',

@@ -13,7 +13,7 @@ We Use
     - [Nginx](http://wiki.nginx.org/Main)
     - [TravisCI](https://travis-ci.org/)
 - Databases
-    - [RethinkDB](http://rethinkdb.com/)
+    - [PostgresQL](https://www.postgresql.org/)
     - [Redis](http://redis.io/)
     - [ElasticSearch](https://github.com/elasticsearch/elasticsearch)
 - API

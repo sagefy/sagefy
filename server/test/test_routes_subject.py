@@ -14,8 +14,8 @@ def test_get_subject(db_conn,
 
     subjects_table.insert([{
         'entity_id': 'zytx',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'name': 'Wildwood',
         'members': [{
@@ -24,8 +24,8 @@ def test_get_subject(db_conn,
         }]
     }, {
         'entity_id': 'zytx',
-        'created': r.time(1986, 11, 3, 'Z'),
-        'modified': r.time(1986, 11, 3, 'Z'),
+        'created': datetime(1986, 11, 3, tzinfo=timezone.utc),
+        'modified': datetime(1986, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
         'name': 'Umberwood',
     }]).run(db_conn)
@@ -33,14 +33,14 @@ def test_get_subject(db_conn,
     units_table.insert({
         'entity_id': 'W',
         'name': 'Wood',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }).run(db_conn)
 
     topics_table.insert([{
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'A Modest Proposal',
         'entity': {
@@ -48,8 +48,8 @@ def test_get_subject(db_conn,
             'kind': 'subject'
         }
     }, {
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'Another Proposal',
         'entity': {
@@ -57,8 +57,8 @@ def test_get_subject(db_conn,
             'kind': 'subject'
         }
     }, {
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'A Third Proposal',
         'entity': {

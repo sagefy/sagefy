@@ -32,7 +32,7 @@
     See http://ianfeather.co.uk/a-maintainable-style-guide/
 - TODO-3 User referrals   Invite a friend card
 - TODO-3 Elasticsearch to support event logging
-- TODO-3 Research graph queries  See rethinkdb/rethinkdb#2751
+- TODO-3 Research graph queries
 - TODO-2 Delete Account Process
 - TODO-2 Contribute to Sagefy card
 - TODO-2 Consider user discussion statistics

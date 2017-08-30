@@ -15,17 +15,17 @@ def test_latest_accepted_card(db_conn, cards_table):
     cards_table.insert([{
         'id': 'A1',
         'entity_id': 'A',
-        'created': r.time(2004, 11, 3, 'Z'),
+        'created': datetime(2004, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
     }, {
         'id': 'B2',
         'entity_id': 'A',
-        'created': r.time(2005, 11, 3, 'Z'),
+        'created': datetime(2005, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
     }, {
         'id': 'C3',
         'entity_id': 'B',
-        'created': r.time(2006, 11, 3, 'Z'),
+        'created': datetime(2006, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
     }]).run(db_conn)
 
@@ -41,17 +41,17 @@ def test_latest_accepted(db_conn, units_table):
     units_table.insert([{
         'id': 'A1',
         'entity_id': 'A',
-        'created': r.time(2004, 11, 3, 'Z'),
+        'created': datetime(2004, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
     }, {
         'id': 'B2',
         'entity_id': 'A',
-        'created': r.time(2005, 11, 3, 'Z'),
+        'created': datetime(2005, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
     }, {
         'id': 'C3',
         'entity_id': 'B',
-        'created': r.time(2006, 11, 3, 'Z'),
+        'created': datetime(2006, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
     }]).run(db_conn)
 
@@ -67,17 +67,17 @@ def test_latest_accepted_subject(db_conn, subjects_table):
     subjects_table.insert([{
         'id': 'A1',
         'entity_id': 'A',
-        'created': r.time(2004, 11, 3, 'Z'),
+        'created': datetime(2004, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
     }, {
         'id': 'B2',
         'entity_id': 'A',
-        'created': r.time(2005, 11, 3, 'Z'),
+        'created': datetime(2005, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
     }, {
         'id': 'C3',
         'entity_id': 'B',
-        'created': r.time(2006, 11, 3, 'Z'),
+        'created': datetime(2006, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
     }]).run(db_conn)
 
@@ -93,16 +93,16 @@ def test_get_versions(db_conn, cards_table):
     cards_table.insert([{
         'id': 'A1',
         'entity_id': 'A',
-        'created': r.time(2004, 11, 3, 'Z'),
+        'created': datetime(2004, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
     }, {
         'id': 'B2',
         'entity_id': 'A',
-        'created': r.time(2005, 11, 3, 'Z'),
+        'created': datetime(2005, 11, 3, tzinfo=timezone.utc),
     }, {
         'id': 'C3',
         'entity_id': 'B',
-        'created': r.time(2006, 11, 3, 'Z'),
+        'created': datetime(2006, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
     }]).run(db_conn)
 
@@ -119,30 +119,30 @@ def test_list_requires(db_conn, cards_table):
     cards_table.insert([{
         'entity_id': 'abcd',
         'unit_id': 'zytx',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'video',
         'require_ids': ['zxyz'],
     }, {
         'entity_id': 'abcd',
         'unit_id': 'zytx',
-        'created': r.time(1986, 11, 3, 'Z'),
-        'modified': r.time(1986, 11, 3, 'Z'),
+        'created': datetime(1986, 11, 3, tzinfo=timezone.utc),
+        'modified': datetime(1986, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
         'kind': 'video',
     }, {
         'entity_id': 'zxyz',
         'unit_id': 'zytx',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'video',
     }, {
         'entity_id': 'qwer',
         'unit_id': 'zytx',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'choice',
         'require_ids': ['abcd'],
@@ -162,30 +162,30 @@ def test_list_required_by(db_conn, cards_table):
     cards_table.insert([{
         'entity_id': 'abcd',
         'unit_id': 'zytx',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'video',
         'require_ids': ['zxyz'],
     }, {
         'entity_id': 'abcd',
         'unit_id': 'zytx',
-        'created': r.time(1986, 11, 3, 'Z'),
-        'modified': r.time(1986, 11, 3, 'Z'),
+        'created': datetime(1986, 11, 3, tzinfo=timezone.utc),
+        'modified': datetime(1986, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
         'kind': 'video',
     }, {
         'entity_id': 'zxyz',
         'unit_id': 'zytx',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'video',
     }, {
         'entity_id': 'qwer',
         'unit_id': 'zytx',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'choice',
         'require_ids': ['abcd'],

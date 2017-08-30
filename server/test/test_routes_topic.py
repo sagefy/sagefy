@@ -8,8 +8,8 @@ xfail = pytest.mark.xfail
 def create_topic_in_db(db_conn, topics_table, user_id='abcd1234'):
     topics_table.insert({
         'id': 'wxyz7890',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': user_id,
         'name': 'A Modest Proposal',
         'entity': {

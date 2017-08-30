@@ -92,15 +92,15 @@ Set up:
     ++ ssh into the server ++
     sudo pip3 install --upgrade --ignore-installed b2
     cd /var/www
-    mkdir rethinkdb-bu
+    mkdir dbbu
 
 Run:
 
     ++ ssh into the server ++
-    cd /var/www/rethinkdb-bu
-    rethinkdb dump
+    cd /var/www/dbbu
+    TODO-1 update: dump the database into a file
     b2 authorize_account xxx xxxxxxxx  # see dashlane
-    b2 sync /var/www/rethinkdb-bu b2:sagefy-rethinkdb-backup2
+    b2 sync /var/www/dbbu b2:sagefy-dbbu
 
 TODO:
 

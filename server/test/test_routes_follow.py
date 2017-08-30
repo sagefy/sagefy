@@ -9,8 +9,8 @@ def test_follow(db_conn, session, cards_table, follows_table):
 
     cards_table.insert({
         'entity_id': 'ABCD',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'video',
     }).run(db_conn)
@@ -82,8 +82,8 @@ def test_follow_409(db_conn, session, cards_table, follows_table):
     }).run(db_conn)
     cards_table.insert({
         'entity_id': 'JFlsjFm',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
     }).run(db_conn)
 
@@ -167,24 +167,24 @@ def test_get_follows(db_conn, session, follows_table):
     """
     follows_table.insert([{
         'user_id': 'JFldl93k',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'entity': {
             'kind': 'card',
             'id': 'JFlsjFm',
         },
     }, {
         'user_id': 'abcd1234',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'entity': {
             'kind': 'card',
             'id': 'JFlsjFm',
         },
     }, {
         'user_id': 'abcd1234',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'entity': {
             'kind': 'unit',
             'id': 'u39Fdjf0',

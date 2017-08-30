@@ -10,27 +10,27 @@ def test_get_unit(db_conn,
 
     units_table.insert([{
         'entity_id': 'zytx',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'name': 'Wildwood',
         'require_ids': ['ntza'],
     }, {
         'entity_id': 'zytx',
-        'created': r.time(1986, 11, 3, 'Z'),
-        'modified': r.time(1986, 11, 3, 'Z'),
+        'created': datetime(1986, 11, 3, tzinfo=timezone.utc),
+        'modified': datetime(1986, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
         'name': 'Umberwood',
     }, {
         'entity_id': 'ntza',
-        'created': r.time(1986, 11, 3, 'Z'),
-        'modified': r.time(1986, 11, 3, 'Z'),
+        'created': datetime(1986, 11, 3, tzinfo=timezone.utc),
+        'modified': datetime(1986, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
         'name': 'Limberwood',
     }, {
         'entity_id': 'tyui',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'name': 'Wildwood',
         'require_ids': ['zytx'],
@@ -39,8 +39,8 @@ def test_get_unit(db_conn,
     subjects_table.insert({
         'entity_id': 'W',
         'name': 'Woods',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'members': [{
             'kind': 'unit',
@@ -49,8 +49,8 @@ def test_get_unit(db_conn,
     }).run(db_conn)
 
     topics_table.insert([{
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'A Modest Proposal',
         'entity': {
@@ -58,8 +58,8 @@ def test_get_unit(db_conn,
             'kind': 'unit'
         }
     }, {
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'Another Proposal',
         'entity': {
@@ -67,8 +67,8 @@ def test_get_unit(db_conn,
             'kind': 'unit'
         }
     }, {
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'A Third Proposal',
         'entity': {

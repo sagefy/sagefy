@@ -16,30 +16,30 @@ def test_get_card(db_conn, cards_table, cards_parameters_table, units_table,
     cards_table.insert([{
         'entity_id': 'abcd',
         'unit_id': 'zytx',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'video',
         'require_ids': ['zxyz'],
     }, {
         'entity_id': 'abcd',
         'unit_id': 'zytx',
-        'created': r.time(1986, 11, 3, 'Z'),
-        'modified': r.time(1986, 11, 3, 'Z'),
+        'created': datetime(1986, 11, 3, tzinfo=timezone.utc),
+        'modified': datetime(1986, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
         'kind': 'video',
     }, {
         'entity_id': 'zxyz',
         'unit_id': 'zytx',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'video',
     }, {
         'entity_id': 'qwer',
         'unit_id': 'zytx',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'choice',
         'require_ids': ['abcd'],
@@ -51,15 +51,15 @@ def test_get_card(db_conn, cards_table, cards_parameters_table, units_table,
 
     units_table.insert({
         'entity_id': 'zytx',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'name': 'Wildwood',
     }).run(db_conn)
 
     topics_table.insert([{
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'A Modest Proposal',
         'entity': {
@@ -67,8 +67,8 @@ def test_get_card(db_conn, cards_table, cards_parameters_table, units_table,
             'kind': 'card'
         }
     }, {
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'Another Proposal',
         'entity': {
@@ -114,8 +114,8 @@ def test_learn_card(db_conn, session, cards_table):
     cards_table.insert({
         'entity_id': 'tyui4567',
         'unit_id': 'vbnm7890',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'choice',
         'name': 'Meaning of Life',
@@ -180,8 +180,8 @@ def test_learn_card_400(db_conn, cards_table, session):
     cards_table.insert({
         'entity_id': 'tyui4567',
         'unit_id': 'vbnm7890',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'choice',
         'name': 'Meaning of Life',
@@ -220,8 +220,8 @@ def test_respond_card(db_conn, units_table, cards_table,
     cards_table.insert([{
         'entity_id': 'tyui4567',
         'unit_id': 'vbnm7890',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'choice',
         'name': 'Meaning of Life',
@@ -240,8 +240,8 @@ def test_respond_card(db_conn, units_table, cards_table,
     }, {
         'entity_id': 'abcd1234',
         'unit_id': 'vbnm7890',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'choice',
         'name': 'Meaning of Love',
@@ -261,7 +261,7 @@ def test_respond_card(db_conn, units_table, cards_table,
 
     units_table.insert({
         'entity_id': 'vbnm7890',
-        'created': r.now(),
+        'created': datetime.utcnow(),
     }).run(db_conn)
 
     redis.set('learning_context_abcd1234', json.dumps({
@@ -317,8 +317,8 @@ def test_respond_card_400a(db_conn, session, cards_table):
     cards_table.insert({
         'entity_id': 'tyui4567',
         'unit_id': 'vbnm7890',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'choice',
         'name': 'Meaning of Life',
@@ -360,8 +360,8 @@ def test_respond_card_400b(db_conn, session, cards_table):
     cards_table.insert({
         'entity_id': 'tyui4567',
         'unit_id': 'vbnm7890',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'choice',
         'name': 'Meaning of Life',

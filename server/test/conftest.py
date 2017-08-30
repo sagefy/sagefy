@@ -26,8 +26,8 @@ def create_user_in_db(db_conn, users_table):
         'name': 'test',
         'email': 'test@example.com',
         'password': bcrypt.encrypt('abcd1234'),
-        'created': r.now(),
-        'modified': r.now()
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow()
     }).run(db_conn)
 
 

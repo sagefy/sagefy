@@ -156,10 +156,10 @@ def respond_to_card_route(request, card_id):
     context = get_learning_context(current_user)
     if context.get('card', {}).get('entity_id') != card['entity_id']:
         return abort(400)
-    r = seq_update(db_conn, current_user, card,
-                   request['params'].get('response'))
-    errors, response, feedback = (r.get('errors'), r.get('response'),
-                                  r.get('feedback'))
+    result = seq_update(db_conn, current_user, card,
+                        request['params'].get('response'))
+    errors, response, feedback = (result.get('errors'), result.get('response'),
+                                  result.get('feedback'))
     if errors:
         return 400, {
             'errors': errors,

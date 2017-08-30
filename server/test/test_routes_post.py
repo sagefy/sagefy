@@ -9,8 +9,8 @@ xfail = pytest.mark.xfail
 def create_topic_in_db(db_conn, topics_table, user_id='abcd1234'):
     topics_table.insert({
         'id': 'wxyz7890',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': user_id,
         'name': 'A Modest Proposal',
         'entity': {
@@ -23,8 +23,8 @@ def create_topic_in_db(db_conn, topics_table, user_id='abcd1234'):
 def create_post_in_db(db_conn, posts_table, user_id='abcd1234'):
     posts_table.insert({
         'id': 'jklm',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': user_id,
         'topic_id': 'wxyz7890',
         'body': '''A Modest Proposal for Preventing the Children of Poor
@@ -37,8 +37,8 @@ def create_post_in_db(db_conn, posts_table, user_id='abcd1234'):
 def create_proposal_in_db(db_conn, posts_table, units_table):
     posts_table.insert({
         'id': 'jklm',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'topic_id': 'wxyz7890',
         'body': '''A Modest Proposal for Preventing the Children of Poor
@@ -55,8 +55,8 @@ def create_proposal_in_db(db_conn, posts_table, units_table):
 
     units_table.insert({
         'id': 'slash-1',
-        'created': r.time(2014, 1, 1, 'Z'),
-        'modified': r.time(2014, 1, 1, 'Z'),
+        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'entity_id': 'slash',
         'previous_id': None,
         'language': 'en',
@@ -78,8 +78,8 @@ def test_get_posts(db_conn, users_table, topics_table, posts_table):
     create_topic_in_db(db_conn, topics_table)
     posts_table.insert([{
         'id': 'jklm',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'topic_id': 'wxyz7890',
         'body': '''A Modest Proposal for Preventing the Children of Poor
@@ -88,8 +88,8 @@ def test_get_posts(db_conn, users_table, topics_table, posts_table):
         'kind': 'post',
     }, {
         'id': 'tyui',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'topic_id': 'wxyz7890',
         'body': 'A follow up.',
@@ -130,8 +130,8 @@ def test_get_posts_paginate(db_conn, users_table, topics_table,
     for i in range(0, 25):
         posts_table.insert({
             'id': 'jklm%s' % i,
-            'created': r.now(),
-            'modified': r.now(),
+            'created': datetime.utcnow(),
+            'modified': datetime.utcnow(),
             'user_id': 'abcd1234',
             'topic_id': 'wxyz7890',
             'body': 'test %s' % i,
@@ -180,8 +180,8 @@ def test_get_posts_votes(db_conn, users_table, units_table, topics_table,
     create_proposal_in_db(db_conn, posts_table, units_table)
     posts_table.insert({
         'id': 'asdf4567',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'kind': 'vote',
         'body': 'Hooray!',
         'proposal_id': 'jklm',
@@ -415,8 +415,8 @@ def test_update_vote(db_conn, users_table, topics_table,
     create_proposal_in_db(db_conn, posts_table, units_table)
     posts_table.insert({
         'id': 'vbnm1234',
-        'created': r.now(),
-        'modified': r.now(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'topic_id': 'wxyz7890',
         'proposal_id': 'jklm',
