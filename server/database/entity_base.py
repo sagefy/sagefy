@@ -1,7 +1,5 @@
 from framework.elasticsearch import es
 from modules.util import json_prep
-from modules.util import omit, pick
-from database.util import insert_document, update_document
 
 
 def start_accepted_query(tablename):
@@ -140,32 +138,6 @@ def list_required_by(tablename, db_conn, entity_id,
              .limit(limit))
 
     return [fields for fields in query.run(db_conn)]
-
-
-def insert_entity(db_conn, schema, data):
-    """
-    When a user creates a new version,
-    don't accept certain fields.
-
-    Also, find the previous_id.
-    """
-
-    data = omit(data, ('version_id', 'status', 'available', 'previous_id'))
-    if 'entity_id' in data:
-        latest = get_latest_accepted(
-            schema['tablename'], db_conn, data['entity_id'])
-        if latest:
-            data['previous_id'] = latest['id']
-    return insert_document(db_conn, schema, data)
-
-
-def update_entity(db_conn, schema, prev_data, data):
-    """
-    Only allow changes to the status on update.
-    """
-
-    data = pick(data, ('status', 'available'))
-    return update_document(db_conn, schema, prev_data, data)
 
 
 def save_entity_to_es(kind, data):
