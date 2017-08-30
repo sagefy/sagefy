@@ -41,7 +41,7 @@ def insert_user(db_conn, data):
     }
     user, errors = insert_row(db_conn, schema, query, data)
     if not errors:
-        add_user_to_es(data)
+        add_user_to_es(user)
     return user, errors
 
 

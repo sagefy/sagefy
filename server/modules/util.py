@@ -95,7 +95,7 @@ def json_serial(val):
     if isinstance(val, datetime):
         return val.isoformat()
     if isinstance(val, uuid.UUID):
-        return convert_slug_to_uuid(val)
+        return convert_uuid_to_slug(val)
     return val
 
 

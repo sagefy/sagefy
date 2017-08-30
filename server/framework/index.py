@@ -47,9 +47,7 @@ def serve(environ, start_response):
     if isinstance(data, str):
         body = data.encode()
     elif isinstance(data, dict):
-        print('$$$', data)
         body = json.dumps(data, default=json_serial, ensure_ascii=False)
-        print('&&&', body)
         body = body.encode()
     return [body]
 
