@@ -1,13 +1,16 @@
 from schemas.response import schema as response_schema
-from database.util import insert_document, deliver_fields
+from database.util import deliver_fields
+from database.util import insert_row, get_row
+from modules.util import pick
 
 
-def insert_response(data, db_conn):
+def insert_response(db_conn, data):
     """
     Create a new response.
+    """
 
-    *M2P Insert Response
-
+    schema = response_schema
+    query = """
         INSERT INTO responses
         (  user_id  ,   card_id  ,   unit_id  ,
            response  ,   score  ,   learned  )
@@ -16,33 +19,34 @@ def insert_response(data, db_conn):
          %(response)s, %(score)s, %(learned)s)
         RETURNING *;
     """
+    data = pick(data, (
+        'user_id',
+        'card_id',
+        'unit_id',
+        'response',
+        'score',
+        'learned'
+    ))
+    return insert_row(db_conn, schema, query, data)
 
-    schema = response_schema
-    return insert_document(schema, data, db_conn)
 
-
-def get_latest_response(user_id, unit_id, db_conn):
+def get_latest_response(db_conn, user_id, unit_id):
     """
     Get the latest response given a user ID and a unit ID.
+    """
 
-    *M2P List Responses by User ID and Unit EID
-
+    query = """
         SELECT *
         FROM responses
         WHERE user_id = %(user_id)s AND unit_id = %(unit_id)s
-        ORDER BY created DESC;
-        /* TODO LIMIT OFFSET */
+        ORDER BY created DESC
+        LIMIT 1;
     """
-
-    tablename = response_schema['tablename']
-    query = (r.table(tablename)
-              .filter(r.row['user_id'].eq(user_id))
-              .filter(r.row['unit_id'].eq(unit_id))
-              .max('created')
-              .default(None))
-    document = query.run(db_conn)
-    if document:
-        return document
+    params = {
+        'user_id': user_id,
+        'unit_id': unit_id,
+    }
+    return get_row(db_conn, query, params)
 
 
 def deliver_response(data, access=None):

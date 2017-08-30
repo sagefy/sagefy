@@ -100,7 +100,8 @@ CREATE TABLE follows (
     modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_id     uuid            NOT NULL REFERENCES users (id),
     entity_id   uuid            NOT NULL, /* ISSUE cant ref across tables */
-    entity_kind follow_kind     NOT NULL
+    entity_kind follow_kind     NOT NULL,
+    UNIQUE (user_id, entity_id)
 );
 
 CREATE TABLE units_entity_id (
@@ -185,7 +186,8 @@ CREATE TABLE users_subjects (
     created     timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_id     uuid            NOT NULL REFERENCES users (id),
-    subject_id  uuid            NOT NULL REFERENCES subjects_entity_id (entity_id)
+    subject_id  uuid            NOT NULL REFERENCES subjects_entity_id (entity_id),
+    UNIQUE (user_id, subject_id)
 );
 
 CREATE TABLE responses (

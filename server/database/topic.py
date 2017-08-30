@@ -1,81 +1,83 @@
-from modules.util import json_prep, pick
 from framework.elasticsearch import es
 from schemas.topic import schema as topic_schema
-from database.util import insert_document, update_document, deliver_fields, \
-    get_document
+from database.util import deliver_fields
+from database.util import insert_row, update_row, get_row, list_rows
+from modules.util import json_prep, pick
+from modules.util import convert_slug_to_uuid
 
 
-def insert_topic(data, db_conn):
+def insert_topic(db_conn, data):
     """
     Create a new topic.
+    """
 
-    *M2P Insert a Topic
-
+    schema = topic_schema
+    query = """
         INSERT INTO topics
         (  user_id  ,   entity_id  ,   entity_kind  ,   name  )
         VALUES
         (%(user_id)s, %(entity_id)s, %(entity_kind)s, %(name)s)
         RETURNING *;
     """
-
-    schema = topic_schema
-    data, errors = insert_document(schema, data, db_conn)
+    data = pick(data, ('user_id', 'entity_id', 'entity_kind', 'name'))
+    data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         add_topic_to_es(data)
     return data, errors
 
 
-def update_topic(prev_data, data, db_conn):
+def update_topic(db_conn, prev_data, data):
     """
-    Update an existing topic.
+    Update an existing topic. Only the name can be changed.
+    """
 
-    *M2P Update a Topic Name
-
+    schema = topic_schema
+    query = """
         UPDATE topics
         SET name = %(name)s
         WHERE id = %(id)s
         RETURNING *;
     """
-
-    schema = topic_schema
-    data = pick(data, ('name',))
-    data, errors = update_document(schema, prev_data, data, db_conn)
+    data = {
+        'id': convert_slug_to_uuid(prev_data['id']),
+        'name': data['name'],
+    }
+    data, errors = update_row(db_conn, schema, query, prev_data, data)
     if not errors:
         add_topic_to_es(data)
     return data, errors
 
 
-def get_topic(params, db_conn):
+def get_topic(db_conn, params):
     """
     Get the topic matching the parameters.
+    """
 
-    *M2P Get Topic by ID
-
+    query = """
         SELECT *
         FROM topics
         WHERE id = %(id)s
         LIMIT 1;
     """
+    params = {
+        'id': params['id'],
+    }
+    return get_row(db_conn, query, params)
 
-    tablename = topic_schema['tablename']
-    return get_document(tablename, params, db_conn)
 
-
-def list_topics(params, db_conn):
+def list_topics(db_conn, params):
     """
-    Get a list of topics in Sagefy.
+    Get a list of _all_ topics in Sagefy.
+    """
 
-    *M2P List Topics (All)
-
+    query = """
         SELECT *
         FROM topics
         ORDER BY created DESC;
         /* TODO OFFSET LIMIT */
     """
-
-    schema = topic_schema
-    query = r.table(schema['tablename'])
-    return list(query.run(db_conn))
+    params = {}
+    return list_rows(db_conn, query, params)
 
 
 def deliver_topic(data, access=None):
@@ -87,30 +89,23 @@ def deliver_topic(data, access=None):
     return deliver_fields(schema, data, access)
 
 
-def list_topics_by_entity_id(entity_id, params, db_conn):
+def list_topics_by_entity_id(db_conn, entity_id, params):
     """
     Get a list of models matching the provided keyword arguments.
     Return empty array when no models match.
-
-    *M2P List Topics by EID
-
-    SELECT *
-    FROM topics
-    WHERE entity_id = %(entity_id)s
-    ORDER BY created DESC;
-    /* TODO OFFSET LIMIT */
     """
 
-    limit = params.get('limit') or 10
-    skip = params.get('skip') or 0
-    tablename = topic_schema['tablename']
-    documents = (r.table(tablename)
-                  .filter(r.row['entity']['id'] == entity_id)
-                  .order_by(r.desc('created'))
-                  .limit(limit)
-                  .skip(skip)
-                  .run(db_conn))
-    return documents
+    query = """
+        SELECT *
+        FROM topics
+        WHERE entity_id = %(entity_id)s
+        ORDER BY created DESC;
+        /* TODO OFFSET LIMIT */
+    """
+    params = {
+        'entity_id': entity_id,
+    }
+    return list_rows(db_conn, query, params)
 
 
 def add_topic_to_es(topic):

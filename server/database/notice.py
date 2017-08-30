@@ -1,8 +1,9 @@
 from schemas.notice import schema as notice_schema
-from database.util import insert_document, update_document, deliver_fields, \
-    get_document
+from database.util import deliver_fields
 from modules.content import get as c
 from copy import deepcopy
+from database.util import insert_row, save_row, get_row, list_rows
+from modules.util import convert_slug_to_uuid, pick
 
 # done-- implement create_topic notice
 # done-- implement create_proposal notice
@@ -31,90 +32,91 @@ def get_notice(params, db_conn):
     Get the user matching the parameters.
     """
 
-    tablename = notice_schema['tablename']
-    return get_document(tablename, params, db_conn)
+    query = """
+        SELECT *
+        FROM notices
+        WHERE id = %(id)s
+        LIMIT 1;
+    """
+    params = {
+        'id': params['id'],
+    }
+    return get_row(db_conn, query, params)
 
 
 def insert_notice(data, db_conn):
     """
     Create a new notice.
+    """
 
-    *M2P Insert a Notice [hidden]
-
+    schema = notice_schema
+    query = """
         INSERT INTO notices
         (  user_id  ,   kind  ,   data  )
         VALUES
         (%(user_id)s, %(kind)s, %(data)s)
         RETURNING *;
     """
+    data = pick(data, ('user_id', 'kind', 'data'))
+    data, errors = insert_row(db_conn, schema, query, data)
+    return data, errors
 
-    schema = notice_schema
-    return insert_document(schema, data, db_conn)
 
-
-def list_notices(params, db_conn):
+def list_notices(db_conn, params):
     """
     Get a list of models matching the provided arguments.
     Also adds pagination capabilities.
     Returns empty array when no models match.
+    TODO-2 add filters for kind, tags, read
+    """
 
-
-    *M2P List Notices by User ID
-
+    query = """
         SELECT *
         FROM notices
         WHERE user_id = %(user_id)s
         ORDER BY created DESC;
         /* TODO OFFSET LIMIT */
     """
-
-    limit = params.get('limit') or 10
-    skip = params.get('skip') or 0
-    schema = notice_schema
-    query = (r.table(schema['tablename'])
-              .filter(r.row['user_id'] == params.get('user_id'))
-              .filter(r.row['kind'] == params.get('kind')
-                      if params.get('kind') is not None else True)
-              .filter(r.row['tags'].contains(params.get('tag'))
-                      if params.get('tag') is not None else True)
-              .filter(r.row['read'] == params.get('read')
-                      if params.get('read') is not None else True)
-              .order_by(r.desc('created'))
-              .skip(skip)
-              .limit(limit))
-    return list(query.run(db_conn))
+    params = pick(params, ('user_id',))
+    return list_rows(db_conn, query, params)
 
 
-def mark_notice_as_read(notice, db_conn):
+def mark_notice_as_read(db_conn, notice):
     """
     Marks the notice as read.
+    """
 
-    *M2P Mark Notice as Read
-
+    query = """
         UPDATE notices
         SET read = TRUE
         WHERE id = %(id)s
         RETURNING *;
     """
-
-    schema = notice_schema
-    return update_document(schema, notice, {'read': True}, db_conn)
+    data = {
+        'id': convert_slug_to_uuid(notice['id']),
+    }
+    # Skipping validation here... there's only one field changing.
+    data, errors = save_row(db_conn, query, data)
+    return data, errors
 
 
 def mark_notice_as_unread(notice, db_conn):
     """
     Marks the notice as unread.
+    """
 
-    *M2P Mark Notice as Unread
-
+    query = """
         UPDATE notices
         SET read = FALSE
         WHERE id = %(id)s
         RETURNING *;
     """
-
-    schema = notice_schema
-    return update_document(schema, notice, {'read': False}, db_conn)
+    data = {
+        'id': convert_slug_to_uuid(notice['id']),
+    }
+    # Skipping validation here... there's only one field changing.
+    data, errors = save_row(db_conn, query, data)
+    return data, errors
 
 
 def get_notice_body(notice):

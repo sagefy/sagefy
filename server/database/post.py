@@ -1,10 +1,11 @@
 from framework.elasticsearch import es
-from modules.util import json_prep, pick, omit
+from modules.util import json_prep, pick
 from schemas.post import schema as post_schema
 from schemas.proposal import schema as proposal_schema
 from schemas.vote import schema as vote_schema
-from database.util import insert_document, update_document, deliver_fields, \
-    get_document
+from database.util import deliver_fields
+from database.util import insert_row, update_row, get_row, list_rows
+from modules.util import convert_slug_to_uuid
 
 
 def get_post_schema(data):
@@ -20,19 +21,36 @@ def get_post_schema(data):
 def insert_post(data, db_conn):
     """
     Create a new post.
+    """
 
-    *M2P Create a new Post
-
-        POST:
-
+    schema = get_post_schema(data)
+    query = """
         INSERT INTO posts
         (  user_id  ,   topic_id  ,   kind  ,   body  ,   replies_to_id  )
         VALUES
         (%(user_id)s, %(topic_id)s, %(kind)s, %(body)s, %(replies_to_id)s)
         RETURNING *;
+    """
+    data = pick(data, (
+        'user_id',
+        'topic_id',
+        'kind',
+        'body',
+        'replies_to_id',
+    ))
+    data, errors = insert_row(db_conn, schema, query, data)
+    if not errors:
+        add_post_to_es(data, db_conn)
+    return data, errors
 
-        PROPOSAL:
 
+def insert_proposal(data, db_conn):
+    """
+    Create a new proposal.
+    """
+
+    schema = get_post_schema(data)
+    query = """
         INSERT INTO posts
         (  user_id  ,   topic_id  ,   kind  ,   body  ,
            replies_to_id  ,   entity_versions  )
@@ -40,9 +58,28 @@ def insert_post(data, db_conn):
         (%(user_id)s, %(topic_id)s, %(kind)s, %(body)s,
          %(replies_to_id)s, %(entity_versions)s)
         RETURNING *;
+    """
+    data = pick(data, (
+        'user_id',
+        'topic_id',
+        'kind',
+        'body',
+        'replies_to_id',
+        'entity_versions',
+    ))
+    data, errors = insert_row(db_conn, schema, query, data)
+    if not errors:
+        add_post_to_es(data, db_conn)
+    return data, errors
 
-        VOTE:
 
+def insert_vote(data, db_conn):
+    """
+    Create a new vote.
+    """
+
+    schema = get_post_schema(data)
+    query = """
         INSERT INTO posts
         (  user_id  ,   topic_id  ,   kind  ,   body  ,
            replies_to_id  ,   response  )
@@ -51,9 +88,15 @@ def insert_post(data, db_conn):
          %(replies_to_id)s, %(response)s)
         RETURNING *;
     """
-
-    schema = get_post_schema(data)
-    data, errors = insert_document(schema, data, db_conn)
+    data = pick(data, (
+        'user_id',
+        'topic_id',
+        'kind',
+        'body',
+        'replies_to_id',
+        'response',
+    ))
+    data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         add_post_to_es(data, db_conn)
     return data, errors
@@ -62,38 +105,65 @@ def insert_post(data, db_conn):
 def update_post(prev_data, data, db_conn):
     """
     Update an existing post.
+    """
 
-    *M2P Update Post (fields limited)
-
-        POST:
-
+    schema = get_post_schema(data)
+    query = """
         UPDATE posts
         SET body = %(body)s
         WHERE id = %(id)s AND kind = 'post'
         RETURNING *;
+    """
+    data = {
+        'id': convert_slug_to_uuid(prev_data['id']),
+        'body': data['body'],
+    }
+    data, errors = update_row(db_conn, schema, query, prev_data, data)
+    if not errors:
+        add_post_to_es(data, db_conn)
+    return data, errors
 
-        PROPOSAL:
 
+def update_proposal(prev_data, data, db_conn):
+    """
+    Update an existing proposal.
+    """
+
+    schema = get_post_schema(data)
+    query = """
         UPDATE posts
         SET body = %(body)s
         WHERE id = %(id)s AND kind = 'proposal'
         RETURNING *;
+    """
+    data = {
+        'id': convert_slug_to_uuid(prev_data['id']),
+        'body': data['body'],
+    }
+    data, errors = update_row(db_conn, schema, query, prev_data, data)
+    if not errors:
+        add_post_to_es(data, db_conn)
+    return data, errors
 
-        VOTE:
 
+def update_vote(prev_data, data, db_conn):
+    """
+    Update an existing vote.
+    """
+
+    schema = get_post_schema(data)
+    query = """
         UPDATE posts
         SET body = %(body)s, response = %(response)s
         WHERE id = %(id)s AND kind = 'vote'
         RETURNING *;
     """
-
-    schema = get_post_schema(data)
-    post_kind = prev_data['kind']
-    if post_kind is 'post' or post_kind is 'proposal':
-        data = pick(data, ('body',))
-    elif post_kind is 'vote':
-        data = pick(data, ('body', 'response',))
-    data, errors = update_document(schema, prev_data, data, db_conn)
+    data = {
+        'id': convert_slug_to_uuid(prev_data['id']),
+        'body': data['body'],
+        'response': data['response'],
+    }
+    data, errors = update_row(db_conn, schema, query, prev_data, data)
     if not errors:
         add_post_to_es(data, db_conn)
     return data, errors
@@ -102,49 +172,52 @@ def update_post(prev_data, data, db_conn):
 def get_post(params, db_conn):
     """
     Get the post matching the parameters.
+    """
 
-    *M2P Get Post by ID
-
+    query = """
         SELECT *
         FROM posts
         WHERE id = %(id)s
         LIMIT 1;
     """
+    params = {
+        'id': params['id'],
+    }
+    return get_row(db_conn, query, params)
 
-    tablename = post_schema['tablename']
-    return get_document(tablename, params, db_conn)
 
-
-def list_posts(params, db_conn):
+def list_posts_by_topic(params, db_conn):
     """
     Get a list of posts in Sagefy.
+    """
 
-    *M2P List Posts by Topic ID
-
+    query = """
         SELECT *
         FROM posts
         WHERE topic_id = %(topic_id)s
         ORDER BY created ASC;
         /* TODO OFFSET LIMIT */
+    """
+    params = {
+        'topic_id': params['topic_id'],
+    }
+    return list_rows(db_conn, query, params)
 
-    *M2P List Posts by User ID
 
+def list_posts_by_user(params, db_conn):
+    """
+    Get a list of posts in Sagefy.
+    """
+
+    query = """
         SELECT *
         FROM posts
         WHERE user_id = %(user_id)s
         ORDER BY created ASC;
         /* TODO OFFSET LIMIT */
     """
-
-    skip = params.get('skip') or 0
-    limit = params.get('limit') or 10
-    params = omit(params, ('skip', 'limit',))
-    query = (r.table(post_schema['tablename'])
-              .filter(params)
-              .order_by(r.asc('created'))
-              .skip(skip)
-              .limit(limit))
-    return list(query.run(db_conn))
+    params = pick(params, ('user_id',))
+    return list_rows(db_conn, query, params)
 
 
 def deliver_post(data, access=None):

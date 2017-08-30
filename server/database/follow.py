@@ -1,88 +1,91 @@
 from schemas.follow import schema as follow_schema
-from database.util import get_document, prepare_document, insert_document, \
-    deliver_fields, delete_document
+from database.util import deliver_fields
+from database.util import insert_row, get_row, list_rows, delete_row
+from module.util import pick
 
 
-def get_follow(params, db_conn):
+def get_follow(db_conn, user_id, entity_id):
     """
     Find a specific follow (entity <-> user).
+    """
 
-    *M2P Get Follow by User ID AND EID
-
+    query = """
         SELECT *
         FROM follows
         WHERE user_id = %(user_id)s AND entity_id = %(entity_id)s
         LIMIT 1;
     """
+    params = {
+        'user_id': user_id,
+        'entity_id': entity_id,
+    }
+    return get_row(db_conn, query, params)
 
-    schema = follow_schema
-    tablename = schema['tablename']
-    return get_document(tablename, params, db_conn)
 
-
-def list_follows(params, db_conn):
+def list_follows_by_user(db_conn, params):
     """
     Get a list of models matching the provided arguments.
     Also adds pagination capabilities.
     Returns empty array when no models match.
+    TODO-3 filter by entity kind as well
+    """
 
-    *M2P List Follows by User ID
-
+    query = """
         SELECT *
         FROM follows
         WHERE user_id = %(user_id)s
         ORDER BY created DESC;
         /* TODO OFFSET LIMIT */
+    """
+    params = {
+        'user_id': params['user_id'],
+    }
+    return list_rows(db_conn, query, params)
 
-    *M2P List Follows by EID
 
+def list_follows_by_entity(db_conn, params):
+    """
+    Get a list of models matching the provided arguments.
+    Also adds pagination capabilities.
+    Returns empty array when no models match.
+    TODO-3 Also filter by kind.
+    """
+
+    query = """
         SELECT *
         FROM follows
         WHERE entity_id = %(entity_id)s
         ORDER BY created DESC;
         /* TODO OFFSET LIMIT */
     """
-
-    schema = follow_schema
-    user_id = params.get('user_id')
-    limit = params.get('limit') or 10
-    skip = params.get('skip') or 0
-    kind = params.get('kind')
-    entity_id = params.get('entity_id')
-    query = (r.table(schema['tablename'])
-              .order_by(r.desc('created'))
-              .filter(r.row['user_id'] == user_id
-                      if user_id is not None else True)
-              .filter(r.row['entity']['kind'] == kind
-                      if kind is not None else True)
-              .filter(r.row['entity']['id'] == entity_id
-                      if entity_id is not None else True)
-              .skip(skip)
-              .limit(limit))
-    return query.run(db_conn)
+    params = {
+        'entity_id': params['entity_id'],
+    }
+    return list_rows(db_conn, query, params)
 
 
 def insert_follow(data, db_conn):
     """
     Create a new follow (user <-> entity).
-
-    *M2P Insert Follow
-
-        INSERT INTO follows
-        (  user_id  ,   entity_id  ,   entity_kind  )
-        VALUES
-        (%(user_id)s, %(entity_id)s, %(entity_kind)s)
-        RETURNING *;
     """
 
     # TODO-2 move these to schema-level 'validate' fns instead.
     # See database/util.py: for fn in schema['validate']:
 
     schema = follow_schema
+    query = """
+        INSERT INTO follows
+        (  user_id  ,   entity_id  ,   entity_kind  )
+        VALUES
+        (%(user_id)s, %(entity_id)s, %(entity_kind)s)
+        RETURNING *;
+    """
+    data = pick(data, ('user_id', 'entity_id', 'entity_kind'))
+    data, errors = insert_row(db_conn, schema, query, data)
+    return data, errors
+
+    schema = follow_schema
     data, errors = prepare_document(schema, data, db_conn)
-    if errors:
-        return None, errors
-    errors = validate_uniqueness(data, db_conn)
     if errors:
         return None, errors
     errors = is_valid_entity(data, db_conn)
@@ -100,32 +103,19 @@ def deliver_follow(data, access=None):
     return deliver_fields(schema, data, access)
 
 
-def delete_follow(doc_id, db_conn):
+def delete_follow(db_conn, id_):
     """
     Remove a follow from the database.
-
-    *M2P Delete Follow
-
-        DELETE FROM follows WHERE id = %(id)s;
     """
 
-    schema = follow_schema
-    tablename = schema['tablename']
-    return delete_document(tablename, doc_id, db_conn)
-
-
-def validate_uniqueness(follow, db_conn):
+    query = """
+        DELETE FROM follows
+        WHERE id = %(id)s;
     """
-    Ensure the user is not already following the entity BEFORE insert.
-    """
-
-    prev = list_follows({
-        'user_id': follow['user_id'],
-        'entity_id': follow['entity']['id'],
-    }, db_conn)
-    if prev:
-        return [{'message': 'Already followed.'}]
-    return []
+    params = {
+        'id': id_,
+    }
+    return delete_row(db_conn, query, params)
 
 
 def is_valid_entity(follow, db_conn):
