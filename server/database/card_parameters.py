@@ -2,55 +2,70 @@ from schemas.card_parameters import schema as card_parameters_schema
 from modules.sequencer.pmf import init_pmf, \
     get_guess_pmf_value, \
     get_slip_pmf_value
-from database.util import insert_document, update_document, get_document
 from modules.sequencer.params import init_guess, init_slip, precision, \
     init_transit
+from database.util import insert_row, update_row, get_row
+from modules.util import convert_slug_to_uuid, pick
 
 
 def get_card_parameters(db_conn, params):
     """
-    *M2P Get Card Parameters
-
+    Get Card Parameters
+    """
+    query = """
         SELECT *
         FROM cards_parameters
         WHERE entity_id = %(entity_id)s
         LIMIT 1;
     """
-
-    tablename = card_parameters_schema['tablename']
-    return get_document(db_conn, tablename, params)
+    params = {
+        'entity_id': params['entity_id'],
+    }
+    return get_row(db_conn, query, params)
 
 
 def insert_card_parameters(db_conn, data):
     """
-    *M2P Insert Card Parameters [hidden]
-
-        INSERT INTO cards_parameters
-        (  created  ,   modified  ,   entity_id  ,
-           guess_distribution  ,   slip_distribution  )
-        VALUES
-        (%(created)s, %(modified)s, %(entity_id)s,
-         %(guess_distribution)s, %(slip_distribution)s)
-        RETURNING *;
+    Insert Card Parameters [hidden]
     """
 
     schema = card_parameters_schema
-    return insert_document(db_conn, schema, data)
+    query = """
+        INSERT INTO cards_parameters
+        (  entity_id  ,   guess_distribution  ,   slip_distribution  )
+        VALUES
+        (%(entity_id)s, %(guess_distribution)s, %(slip_distribution)s)
+        RETURNING *;
+    """
+    data = pick(data, (
+        'entity_id',
+        'guess_distribution',
+        'slip_distribution',
+    ))
+    data, errors = insert_row(db_conn, schema, query, data)
+    return data, errors
 
 
 def update_card_parameters(db_conn, prev_data, data):
     """
-    *M2P Update Card Parameters [hidden]
+    Update Card Parameters [hidden]
+    """
 
+    schema = card_parameters_schema
+    query = """
         UPDATE card_parameters
         SET guess_distribution = %(guess_distribution)s,
             slip_distribution = %(slip_distribution)s
         WHERE entity_id = %(entity_id)s
         RETURNING *;
     """
-
-    schema = card_parameters_schema
-    return update_document(db_conn, schema, prev_data, data)
+    data = {
+        'entity_id': convert_slug_to_uuid(prev_data['entity_id']),
+        'guess_distribution': data['guess_distribution'],
+        'slip_distribution': data['slip_distribution'],
+    }
+    data, errors = update_row(db_conn, schema, query, prev_data, data)
+    return data, errors
 
 
 def get_distribution(card_parameters, kind):
