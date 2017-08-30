@@ -15,7 +15,7 @@ module.exports = broker.add({
         /* PP@ if (values.post && values.post.kind === 'proposal') {
             if (values.entity && values.entity.require_ids) {
                 values.entity.require_ids = values.entity.require_ids
-                    .map((r) => r.id).filter((r) => r)
+                    .map((require) => require.id).filter((require) => require)
             }
             if (values.post &&
                 values.post.entity_version

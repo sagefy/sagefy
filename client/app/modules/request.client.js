@@ -30,11 +30,11 @@ module.exports = function ajax({ method, url, data }) {
 }
 
 // Try to parse the errors array or just return the error text.
-function parseAjaxErrors(r) {
-    if (!r.responseText) {
+function parseAjaxErrors(response) {
+    if (!response.responseText) {
         return null
     }
-    const errors = parseJSON(r.responseText)
+    const errors = parseJSON(response.responseText)
     if (isString(errors)) {
         return errors
     }

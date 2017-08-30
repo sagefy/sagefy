@@ -1,6 +1,5 @@
 from modules.util import omit, extend, pick
 from copy import deepcopy
-from modules.content import get as c
 import psycopg2
 import psycopg2.extras
 
@@ -114,88 +113,6 @@ def delete_row(db_conn, query, params):
 ###############################################################################
 
 
-def insert_document(db_conn, schema, data):
-    """
-    Create a new document.
-    Return document and errors if failed.
-    """
-
-    data = omit(data, ('id', 'created', 'modified'))
-    return save_document(db_conn, schema, data)
-
-
-def update_document(db_conn, schema, prev_data, data):
-    """
-    Update the document in the database.
-    Return document and errors if failed.
-    NOTICE: `prev_data` should be the _return_ of `insert_document`, not the
-            originally provided data.
-    """
-
-    data = omit(data, ('id', 'created', 'modified'))
-    data = extend({}, prev_data, data)
-    return save_document(db_conn, schema, data)
-
-
-def save_document(db_conn, schema, data):
-    """
-    NOTICE: You should use `insert_document` or `update_document` instead.
-    Insert the document in the database.
-    Return document and errors if failed.
-    """
-
-    data, errors = prepare_document(db_conn, schema, data)
-    if errors:
-        return data, errors
-    data = bundle_fields(schema, data)
-    r.table(schema['tablename']).insert(data, conflict='update').run(db_conn)
-    data = r.table(schema['tablename']).get(data['id']).run(db_conn)
-    return data, errors
-
-
-def get_document(db_conn, tablename, params):
-    """
-    Get one document which matches the provided keyword arguments.
-    Return None when there's no matching document.
-    """
-
-    data = None
-    if params.get('id'):
-        data = (r.table(tablename)
-                 .get(params.get('id'))
-                 .run(db_conn))
-    else:
-        data = list(r.table(tablename)
-                     .filter(params)
-                     .limit(1)
-                     .run(db_conn))
-        data = data[0] if len(data) > 0 else None
-    return data
-
-
-def list_documents(db_conn, tablename, params):
-    """
-    Get a list of documents matching the provided keyword arguments.
-    Return empty array when no documents match.
-    """
-
-    return (r.table(tablename)
-             .filter(params)
-             .run(db_conn))
-
-
-def delete_document(db_conn, tablename, doc_id):
-    """
-    Remove the document from the database.
-    """
-
-    r.table(tablename).get(doc_id).delete().run(db_conn)
-    return None
-
-
-###############################################################################
-
-
 def recurse_embeds(fn, data, schema, prefix=''):
     for field_name, field_schema in schema.items():
         fn(data, field_name, field_schema, prefix)
@@ -223,9 +140,6 @@ def prepare_document(db_conn, schema, data):
     errors = validate_fields(schema, data)
     if errors:
         return data, errors
-    # errors = validate_unique_fields(db_conn, schema, data)
-    # if errors:
-    #     return data, errors
     if 'validate' in schema:
         for fn in schema['validate']:
             errors = fn(db_conn, schema, data)
@@ -297,29 +211,6 @@ def validate_fields(schema, data):
                 break
     recurse_embeds(_, data, schema['fields'])
     return errors
-
-
-# def validate_unique_fields(db_conn, schema, data):
-#     """
-#     Test all top-level fields marked as unique.
-#     """
-#
-#     errors = []
-#
-#     def _(data, field_name, field_schema, prefix):
-#         if ('unique' not in field_schema or
-#                 data.get(field_name) is None):
-#             return
-#         query = (r.table(schema['tablename'])
-#                   .filter(r.row[field_name] == data.get(field_name))
-#                   .filter(r.row['id'] != data['id']))
-#         if len(list(query.run(db_conn))) > 0:
-#             errors.append({
-#                 'name': prefix + field_name,
-#                 'message': c('unique'),
-#             })
-#     recurse_embeds(_, data, schema['fields'])
-#     return errors
 
 
 def bundle_fields(schema, data):
