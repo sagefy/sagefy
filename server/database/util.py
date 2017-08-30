@@ -40,6 +40,12 @@ def update_row(db_conn, schema, query, prev_data, data):
     if errors:
         return None, errors
     data = bundle_fields(schema, data)
+
+    # TODO-1 fix this ###
+    if data.get('settings'):
+        data['settings'] = psycopg2.extras.Json(data['settings'])
+    ###
+
     data, errors = save_row(db_conn, query, data)
     return data, errors
 
@@ -97,7 +103,7 @@ def list_rows(db_conn, query, params):
     return data
 
 
-def delete_rows(db_conn, query, params):
+def delete_row(db_conn, query, params):
     """
     Delete a row using psycopg2.
     """

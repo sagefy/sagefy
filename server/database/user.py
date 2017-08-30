@@ -2,15 +2,16 @@ from schemas.user import schema as user_schema
 import urllib
 import hashlib
 from passlib.hash import bcrypt
-from database.util import insert_row, update_row, get_row, deliver_fields
+from database.util import insert_row, update_row, get_row, list_rows, \
+    delete_row, deliver_fields
 from framework.elasticsearch import es
 import json
 from framework.redis import redis
 from modules.util import uniqid, pick, compact_dict, json_serial, \
-    omit, json_prep
+    json_prep, convert_slug_to_uuid
 from modules.content import get as c
 from framework.mail import send_mail
-import psycopg2.extras
+
 
 # TODO-2 should we use this to test passwords?
 # https://github.com/dropbox/python-zxcvbn
@@ -39,53 +40,53 @@ def insert_user(db_conn, data):
             'view_follows': 'private',
         },
     }
-    user, errors = insert_row(db_conn, schema, query, data)
-    if not errors:
-        add_user_to_es(user)
-    return user, errors
-
-
-def update_user(prev_data, data, db_conn):
-    """
-    Overwrite update method to remove password.
-
-    *M2P Update User (no password)
-
-        UPDATE users
-        SET name = %(name)s, email = %(email)s, settings = %(settings)s
-        WHERE id = %(id)s
-        RETURNING *;
-    """
-
-    schema = user_schema
-    data = omit(data, ('password',))
-    if 'email' in data:
-        data['email'] = data['email'].lower().strip()
-    if 'name' in data:
-        data['name'] = data['name'].lower().strip()
-    data, errors = update_document(schema, prev_data, data, db_conn)
+    data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         add_user_to_es(data)
     return data, errors
 
 
-def update_user_password(prev_data, data, db_conn):
+def update_user(db_conn, prev_data, data):
     """
-    Overwrite update method to add password.
+    Update the user. Does not update password!
+    """
 
-    *M2P Update User Password
+    schema = user_schema
+    query = """
+        UPDATE users
+        SET name = %(name)s, email = %(email)s, settings = %(settings)s
+        WHERE id = %(id)s
+        RETURNING *;
+    """
+    data = {
+        'id': convert_slug_to_uuid(prev_data['id']),
+        'name': data['name'].lower().strip(),
+        'email': data['email'].lower().strip(),
+        'settings': data['settings'],
+    }
+    data, errors = update_row(db_conn, schema, query, prev_data, data)
+    if not errors:
+        add_user_to_es(data)
+    return data, errors
 
-        !!! Make sure password is bcrypt first.
 
+def update_user_password(db_conn, prev_data, data):
+    """
+    Update the user's password
+    """
+
+    schema = user_schema
+    query = """
         UPDATE users
         SET password = %(password)s
         WHERE id = %(id)s
         RETURNING *;
     """
-
-    schema = user_schema
-    data = pick(data, ('password',))
-    data, errors = update_document(schema, prev_data, data, db_conn)
+    data = {
+        'id': convert_slug_to_uuid(prev_data['id']),
+        'password': data['password'],
+    }
+    data, errors = update_row(db_conn, schema, query, prev_data, data)
     return data, errors
 
 
@@ -96,7 +97,6 @@ def add_user_to_es(user):
 
     data = json_prep(deliver_user(user))
     data['avatar'] = get_avatar(user['email'])
-
     return es.index(
         index='entity',
         doc_type='user',
@@ -105,72 +105,75 @@ def add_user_to_es(user):
     )
 
 
-def get_user(params, db_conn):
+def get_user(db_conn, params):
     """
-    Get the user matching the parameters.
+    Get the user by ID.
+    """
 
-    *M2P Get User (By ID)
-
+    query = """
         SELECT *
         FROM users
         WHERE id = %(id)s
         LIMIT 1;
     """
+    params = {
+        'id': params['id'],
+    }
+    return get_row(db_conn, query, params)
 
-    tablename = user_schema['tablename']
-    return get_document(tablename, params, db_conn)
 
-
-def list_users(params, db_conn):
+def list_users(db_conn, params):
     """
-    Get a list of all users of Sagefy.
+    Get a list of _all_ users of Sagefy.
+    """
 
-    *M2P List Users (All)
-
+    query = """
         SELECT id
         FROM users
         ORDER BY created DESC;
         /* TODO OFFSET LIMIT */
     """
-
-    schema = user_schema
-    query = r.table(schema['tablename'])
-    return list(query.run(db_conn))
+    params = {}
+    return list_rows(db_conn, query, params)
 
 
-def list_users_by_user_ids(user_ids, db_conn):
+def list_users_by_user_ids(db_conn, user_ids):
     """
     Get a list of users by their user id.
+    """
 
-    *M2P List Users (By ID)
-
+    query = """
         SELECT *
         FROM users
         WHERE id in $(ids)s
         ORDER BY created DESC;
         /* TODO OFFSET LIMIT */
     """
-    schema = user_schema
-    query = (r.table(schema['tablename'])
-              .filter(lambda user:
-                      r.expr(user_ids)
-                      .contains(user['id'])))
-    return list(query.run(db_conn))
+    params = {
+        'ids': user_ids,
+    }
+    return list_rows(db_conn, query, params)
 
 
-# def delete_user(doc_id, db_conn):
-#     """
-#     Overwrite delete method to delete in Elasticsearch.
-#     """
-#
-#     # TODO-3 validate the delete worked before going to ES
-#     tablename = user_schema['tablename']
-#     es.delete(
-#         index='entity',
-#         doc_type='user',
-#         id=doc_id,
-#     )
-#     return delete_document(tablename, doc_id, db_conn)
+def delete_user(db_conn, user_id):
+    """
+    Delete a user.
+    """
+    query = """
+        DELETE FROM users
+        WHERE id = %(id)s;
+    """
+    params = {
+        'id': user_id,
+    }
+    data, errors = delete_row(db_conn, query, params)
+    if not errors:
+        es.delete(
+            index='entity',
+            doc_type='user',
+            id=user_id,
+        )
+    return data, errors
 
 
 def deliver_user(data, access=None):
@@ -202,7 +205,6 @@ def get_avatar(email, size=24):
         return ''
     if not size:
         size = 24
-
     hash_ = hashlib.md5(email.lower().encode('utf-8')).hexdigest()
     params = urllib.parse.urlencode({'d': 'mm', 's': str(size)})
     gravatar_url = "https://www.gravatar.com/avatar/" + hash_ + "?" + params
