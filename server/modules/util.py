@@ -33,16 +33,25 @@ def uniqid():
 
 def convert_uuid_to_slug(my_uuid):
     """
-    Example
-    Current ID: 'JAFGYFWhILcsiByyH2O9frcU'
-    To UUID: UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
-    Back to Slug: 'JAFGYFWhILcsiByyH2O9fg'
+    Example:
+
+    my_uuid = uuid.UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
+    convert_uuid_to_slug(my_uuid)
+    -> 'JAFGYFWhILcsiByyH2O9fg'
     """
     assert isinstance(my_uuid, uuid.UUID)
     return base64.urlsafe_b64encode(my_uuid.bytes)[:-2].decode()
 
 
 def convert_slug_to_uuid(slug):
+    """
+    Example:
+
+    convert_slug_to_uuid('JAFGYFWhILcsiByyH2O9frcU')
+    -> UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
+    convert_slug_to_uuid('JAFGYFWhILcsiByyH2O9fg')
+    -> UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
+    """
     assert isinstance(slug, str)
     slug = slug[0:22]
     return uuid.UUID(bytes=base64.urlsafe_b64decode(slug + '=='))

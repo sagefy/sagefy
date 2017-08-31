@@ -1,7 +1,10 @@
 from framework.routes import get
 from database.user import list_users, deliver_user
 from database.topic import list_topics
-from database.entity_base import start_accepted_query
+from database.card import list_all_card_entity_ids
+from database.unit import list_all_unit_entity_ids
+from database.subject import list_all_subject_entity_ids
+
 
 defaults = {
     'https://sagefy.org/',
@@ -26,13 +29,16 @@ def sitemap_route(request):
     db_conn = request['db_conn']
     sitemap = defaults | set()
     # Card, unit, subject
-    kinds = ('card', 'unit', 'subject',)
-    for kind in kinds:
-        query = start_accepted_query('%ss' % kind)
-        for entity in query.run(db_conn):  # TODO move this to DB file
-            sitemap.add('https://sagefy.org/{kind}s/{id}'.format(
-                id=entity['entity_id'],
-                kind=kind
+    kinds = {
+        'cards': list_all_card_entity_ids(db_conn),
+        'units': list_all_unit_entity_ids(db_conn),
+        'subjects': list_all_subject_entity_ids(db_conn),
+    }
+    for tablename, entity_ids in kinds.items():
+        for entity_id in entity_ids:
+            sitemap.add('https://sagefy.org/{tablename}/{id}'.format(
+                id=entity_id,
+                kind=tablename[:-1],
             ))
             # TODO-2 ...and versions pages
     # Topic

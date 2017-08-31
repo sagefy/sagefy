@@ -1,5 +1,4 @@
 
-from database.entity_base import list_by_entity_ids, get_latest_accepted
 from database.entity_facade import list_subjects_by_unit_id, \
     list_units_in_subject
 import pytest
@@ -178,7 +177,7 @@ def test_members(db_conn, subjects_table, units_table):
     assert len(errors) == 0
 
 
-def test_list_by_entity_ids(db_conn, subjects_table):
+def test_list_latest_accepted_subjects(db_conn, subjects_table):
     """
     Expect to list subjects by given entity IDs.
     """
@@ -212,7 +211,7 @@ def test_list_by_entity_ids(db_conn, subjects_table):
         'modified': datetime.utcnow(),
         'status': 'accepted',
     }]).run(db_conn)
-    subjects = list_by_entity_ids(db_conn, 'subjects', ['A1', 'C3'])
+    subjects = list_latest_accepted_subjects(db_conn, ['A1', 'C3'])
     assert subjects[0]['body'] in ('Apple', 'Coconut')
     assert subjects[0]['body'] in ('Apple', 'Coconut')
 
@@ -374,7 +373,7 @@ def test_list_units(db_conn, units_table, subjects_table):
         }]
     }]).run(db_conn)
 
-    subject = get_latest_accepted(db_conn, 'subjects', entity_id='S')
+    subject = get_latest_accepted_subject(db_conn, entity_id='S')
     cards = list_units_in_subject(db_conn, subject)
     card_ids = set(card['entity_id'] for card in cards)
     assert card_ids == {'B', 'V', 'Q', 'N'}

@@ -2,8 +2,6 @@ from schemas.entity_base import schema as entity_schema
 from modules.util import extend
 from modules.validations import is_required, is_string, is_list, is_one_of
 
-from database.entity_base import list_by_entity_ids
-
 """
 A subject is a collection of units and other subjects.
 Subjects can vary greatly in scale.
@@ -47,7 +45,7 @@ def ensure_no_cycles(db_conn, schema, data):
             for member in members
             if member['kind'] == 'subject'
         ]
-        entities = list_by_entity_ids(db_conn, 'subjects', entity_ids)
+        entities = list_latest_accepted_subjects(db_conn, entity_ids)
         for entity in entities:
             if entity['entity_id'] == main_id:
                 found['cycle'] = True

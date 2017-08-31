@@ -1,7 +1,6 @@
 from schemas.post import schema as post_schema
 from schemas.post import is_valid_reply
 from modules.util import extend
-from database.entity_base import get_version
 
 
 def is_unique_vote(db_conn, schema, data):

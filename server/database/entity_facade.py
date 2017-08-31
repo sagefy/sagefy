@@ -1,7 +1,5 @@
 from modules.memoize_redis import memoize_redis
 from modules.util import omit
-from database.entity_base import list_by_entity_ids, get_version, \
-    start_accepted_query
 from database.unit import update_unit
 from database.subject import update_subject
 from database.card import update_card
@@ -13,35 +11,7 @@ from modules.notices import send_notices
 from database.user import get_user
 
 
-def instance_entities(data):
-    """
-    Given a kind and some json, call insert on that kind
-    and return the results.
-    A little safer.
-    """
-
-    fields = ('id', 'created', 'modified',
-              'entity_id', 'previous_id', 'status', 'available')
-    entities = []
-    if 'cards' in data:
-        for card_data in data['cards']:
-            entities.push(
-                ('card', omit(card_data, fields))
-            )
-    if 'units' in data:
-        entities = entities + [
-            ('unit', omit(unit_data, fields))
-            for unit_data in data['units']
-        ]
-    if 'subjects' in data:
-        entities = entities + [
-            ('subject', omit(subject_data, fields))
-            for subject_data in data['subjects']
-        ]
-    return entities
-
-
-def list_subjects_by_unit_id(db_conn, unit_id):
+def list_subjects_by_unit_recursive(db_conn, unit_id):
     """
     Get a list of subjects which contain the given member ID. Recursive.
 
@@ -52,11 +22,7 @@ def list_subjects_by_unit_id(db_conn, unit_id):
         # *** First, find the list of subjects
         #     directly containing the member ID. ***
 
-        query = (start_accepted_query('subjects')
-                 .filter(r.row['members'].contains(
-                     lambda member: member['id'] == unit_id
-                 )))
-        subjects = query.run(db_conn)
+        subjects = list_subjects_by_unit_flat(db_conn, unit_id)
 
         # *** Second, find all the subjects containing
         #     those subjects... recursively. ***
@@ -64,17 +30,13 @@ def list_subjects_by_unit_id(db_conn, unit_id):
         found_subjects, all_subjects = subjects, []
 
         while found_subjects:
+            all_subjects += found_subjects
             subject_ids = {
                 subject['entity_id']
                 for subject in found_subjects
             }
-            all_subjects += found_subjects
-            query = (start_accepted_query('subjects')
-                     .filter(r.row['members'].contains(
-                         lambda member:
-                             r.expr(subject_ids).contains(member['id'])
-                     )))
-            found_subjects = query.run(db_conn)
+            for subject_id in subject_ids:
+                found_subjects += list_subject_parents(db_conn, subject_id)
 
         return all_subjects
 
@@ -82,7 +44,7 @@ def list_subjects_by_unit_id(db_conn, unit_id):
     return [data for data in memoize_redis(key, _)]
 
 
-def list_units_in_subject(db_conn, main_subject):
+def list_units_in_subject_recursive(db_conn, main_subject):
     """
     Get the list of units contained within the subject.
     Recursive. Connecting.
@@ -108,7 +70,7 @@ def list_units_in_subject(db_conn, main_subject):
                     member['id']
                     for member in subject.get('members')
                     if member['kind'] == 'subject'})
-            subjects = list_by_entity_ids(db_conn, 'subjects', subject_ids)
+            subjects = list_latest_accepted_subjects(db_conn, subject_ids)
 
         # *** Second, we need to find all
         #     the required connecting units. ***
@@ -116,7 +78,7 @@ def list_units_in_subject(db_conn, main_subject):
         next_grab, units, unit_requires = unit_ids, [], {}
 
         while next_grab:
-            tier_units = list_by_entity_ids(db_conn, 'units', next_grab)
+            tier_units = list_latest_accepted_units(db_conn, next_grab)
             units += tier_units
             next_grab = set()
 

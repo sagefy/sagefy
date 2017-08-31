@@ -1,6 +1,5 @@
 from schemas.post import schema as post_schema
 from schemas.post import is_valid_reply
-from database.entity_base import get_version
 from modules.validations import is_required, is_string, is_one_of, is_list, \
     has_min_length
 from modules.util import extend

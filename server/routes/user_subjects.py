@@ -4,8 +4,7 @@ from database.user import set_learning_context, get_user
 from database.user_subjects import insert_user_subjects, get_user_subjects, \
     append_user_subjects, remove_user_subjects, \
     list_user_subjects_entity
-from database.entity_base import get_latest_accepted
-from database.subject import deliver_subject
+from database.subject import deliver_subject, get_latest_accepted_subject
 from modules.sequencer.traversal import traverse
 from modules.sequencer.card_chooser import choose_card
 
@@ -65,7 +64,7 @@ def add_subject_route(request, user_id, subject_id):
         return abort(401)
     if user_id != current_user['id']:
         return abort(403)
-    subject = get_latest_accepted(db_conn, 'subjects', entity_id=subject_id)
+    subject = get_latest_accepted_subject(db_conn, subject_id)
     if not subject:
         return abort(404)
     user_subject = get_user_subjects(db_conn, user_id)
@@ -111,7 +110,7 @@ def select_subject_route(request, user_id, subject_id):
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    subject = get_latest_accepted(db_conn, 'subjects', subject_id)
+    subject = get_latest_accepted_subject(db_conn, subject_id)
     set_learning_context(current_user, subject=subject)
     buckets = traverse(db_conn, current_user, subject)
     # When in diagnosis, choose the unit and card automagically.

@@ -4,9 +4,9 @@ from random import shuffle, random
 from math import floor
 from functools import reduce
 from database.response import get_latest_response
+from database.card import list_random_cards_in_unit
 from database.card_parameters import get_card_parameters, \
     get_card_parameters_values
-from database.entity_base import start_accepted_query
 from schemas.card import assessment_kinds
 
 
@@ -38,16 +38,13 @@ def choose_card(db_conn, user, unit):
     # TODO-3 simplify this method
 
     unit_id = unit['entity_id']
-    query = (start_accepted_query('cards')
-             .filter({'unit_id': unit_id})
-             .sample(10))  # TODO-2 index
-    # TODO-2 move to database file
-    # TODO-2 is the sample value decent?
-    # TODO-2 has the learner seen this card recently?
 
-    cards = [d for d in query.run(db_conn)]
+    cards = list_random_cards_in_unit(db_conn, unit_id)
     if not len(cards):
         return None
+
+    # TODO-2 is the sample value decent?
+    # TODO-2 has the learner seen this card recently?
 
     previous_response = get_latest_response(db_conn, user['id'], unit_id)
     if previous_response:

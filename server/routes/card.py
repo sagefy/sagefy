@@ -7,10 +7,8 @@ from database.user import get_learning_context, set_learning_context
 from database.response import deliver_response
 from database.card_parameters import get_card_parameters, \
     get_card_parameters_values
-from database.entity_base import get_latest_accepted, get_versions, \
-    list_requires, list_required_by, list_by_entity_ids, get_version
-from database.card import deliver_card, insert_card
-from database.unit import deliver_unit
+from database.card import deliver_card, insert_card, get_latest_accepted_card
+from database.unit import deliver_unit, get_latest_accepted_unit
 from modules.util import extend
 from copy import deepcopy
 
@@ -25,15 +23,15 @@ def get_card_route(request, card_id):
     """
 
     db_conn = request['db_conn']
-    card = get_latest_accepted(db_conn, 'cards', card_id)
+    card = get_latest_accepted_card(db_conn, card_id)
     if not card:
         return abort(404)
-    unit = get_latest_accepted(db_conn, 'units', entity_id=card['unit_id'])
+    unit = get_latest_accepted_unit(db_conn, card['unit_id'])
     if not unit:
         return abort(404)
     # TODO-2 SPLITUP create new endpoints for these instead
-    requires = list_requires(db_conn, 'cards', entity_id=card_id)
-    required_by = list_required_by(db_conn, 'cards', entity_id=card_id)
+    requires = list_required_cards(db_conn, card_id)
+    required_by = list_required_by_cards(db_conn, card_id)
     params = get_card_parameters(db_conn, {'entity_id': card_id})
     return 200, {
         'card': deliver_card(card, access='view'),
@@ -56,7 +54,7 @@ def list_cards_route(request):
     if not entity_ids:
         return abort(404)
     entity_ids = entity_ids.split(',')
-    cards = list_by_entity_ids(db_conn, 'cards', entity_ids)
+    cards = list_latest_accepted_cards(db_conn, entity_ids)
     if not cards:
         return abort(404)
     return 200, {'cards': [deliver_card(card, 'view') for card in cards]}
@@ -76,7 +74,7 @@ def learn_card_route(request, card_id):
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    card = get_latest_accepted(db_conn, 'cards', card_id)
+    card = get_latest_accepted_card(db_conn, card_id)
     if not card:
         return abort(404)
     # Make sure the current unit id matches the card
@@ -104,12 +102,7 @@ def get_card_versions_route(request, card_id):
     """
 
     db_conn = request['db_conn']
-    versions = get_versions(
-        'cards',
-        db_conn,
-        entity_id=card_id,
-        **request['params']
-    )
+    versions = list_one_card_versions(db_conn, card_id)
     return 200, {
         'versions': [
             deliver_card(version, access='view')
@@ -125,7 +118,7 @@ def get_card_version_route(request, version_id):
     """
 
     db_conn = request['db_conn']
-    card_version = get_version(db_conn, 'cards', version_id)
+    card_version = get_card_version(db_conn, version_id)
     if not card_version:
         return abort(404)
     return 200, {'version': card_version}
@@ -149,7 +142,7 @@ def respond_to_card_route(request, card_id):
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    card = get_latest_accepted(db_conn, 'cards', card_id)
+    card = get_latest_accepted_card(db_conn, card_id)
     if not card:
         return abort(404)
     # Make sure the card is the current one
@@ -265,7 +258,7 @@ def create_existing_card_version_route(request, card_id):
     next_data = deepcopy(request['params'])
     next_data['entity_id'] = card_id
     next_data['user_id'] = current_user['id']
-    current_card = get_latest_accepted(db_conn, 'cards', entity_id=card_id)
+    current_card = get_latest_accepted_card(db_conn, card_id)
     if not current_card:
         return abort(404)
     card_data = extend({}, current_card, next_data)

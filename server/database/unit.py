@@ -29,7 +29,7 @@ def insert_unit(db_conn, data):
         RETURNING *;
     """
     previous_id = None  # TODO-1
-    # latest = get_latest_accepted(..., entity_id)
+    # latest = get_latest_accepted_unit(..., entity_id)
     # if latest: data['previous_id'] = latest['version_id']
     data = {
         FALSE
@@ -167,12 +167,18 @@ def list_required_by_units():
     """
 
 
-def list_units_by_subject():
+def list_units_by_subject_flat(db_conn, subject_id):
     """
     *M2P List Units by Subject EID
 
         TBD
     """
+
+    query = """
+
+    """
+    params = {}
+    return list_rows(db_conn, query, params)
 
 
 def list_my_recently_created_units(db_conn, user_id):

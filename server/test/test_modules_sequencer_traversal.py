@@ -3,7 +3,6 @@ from modules.sequencer.traversal import traverse, \
     match_unit_dependents, order_units_by_need, judge
 
 from database.user import get_user
-from database.entity_base import list_by_entity_ids, get_latest_accepted
 
 
 xfail = pytest.mark.xfail
@@ -87,7 +86,7 @@ def test_traverse(db_conn, units_table, users_table, responses_table,
     assert subjects_table
     add_test_subject(db_conn,
                      users_table, units_table, responses_table, subjects_table)
-    subject = get_latest_accepted(db_conn, 'subjects', entity_id='fghj4567')
+    subject = get_latest_accepted_subject(db_conn, entity_id='fghj4567')
     assert subject is not None
     user = get_user(db_conn, {'id': 'user'})
     buckets = traverse(db_conn, user, subject)
@@ -114,7 +113,7 @@ def test_judge_diagnose(db_conn, users_table, units_table, responses_table):
     """
 
     add_test_subject(db_conn, users_table, units_table, responses_table)
-    unit = get_latest_accepted(db_conn, 'units', entity_id='divide')
+    unit = get_latest_accepted_unit(db_conn, entity_id='divide')
     user = get_user(db_conn, {'id': 'user'})
     assert judge(db_conn, unit, user) == "diagnose"
 
@@ -126,7 +125,7 @@ def test_judge_review(db_conn, users_table, units_table, responses_table):
     """
 
     add_test_subject(db_conn, users_table, units_table, responses_table)
-    unit = get_latest_accepted(db_conn, 'units', entity_id='subtract')
+    unit = get_latest_accepted_unit(db_conn, entity_id='subtract')
     user = get_user(db_conn, {'id': 'user'})
     assert judge(db_conn, unit, user) == "review"
 
@@ -137,7 +136,7 @@ def test_judge_learn(db_conn, units_table, users_table, responses_table):
     """
 
     add_test_subject(db_conn, users_table, units_table, responses_table)
-    unit = get_latest_accepted(db_conn, 'units', entity_id='multiply')
+    unit = get_latest_accepted_unit(db_conn, entity_id='multiply')
     user = get_user(db_conn, {'id': 'user'})
     assert judge(db_conn, unit, user) == "learn"
 
@@ -148,7 +147,7 @@ def test_judge_done(db_conn, units_table, users_table, responses_table):
     """
 
     add_test_subject(db_conn, users_table, units_table, responses_table)
-    unit = get_latest_accepted(db_conn, 'units', entity_id='add')
+    unit = get_latest_accepted_unit(db_conn, entity_id='add')
     user = get_user(db_conn, {'id': 'user'})
     assert judge(db_conn, unit, user) == "done"
 
@@ -159,7 +158,7 @@ def test_match_unit_dependents(db_conn, units_table):
     """
 
     add_test_subject(db_conn, units_table=units_table)
-    units = list_by_entity_ids('units', db_conn, [
+    units = list_latest_accepted_units(db_conn, [
         'add', 'subtract', 'multiply', 'divide',
     ])
     deps = match_unit_dependents(units)
@@ -175,7 +174,7 @@ def test_order(db_conn, units_table):
     """
 
     add_test_subject(db_conn, units_table=units_table)
-    units = list_by_entity_ids('units', db_conn, [
+    units = list_latest_accepted_units(db_conn, [
         'add', 'subtract', 'multiply', 'divide',
     ])
     units = order_units_by_need(units)

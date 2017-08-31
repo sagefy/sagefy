@@ -44,7 +44,7 @@ def insert_card(db_conn, data):
         RETURNING *;
     """
     previous_id = None  # TODO-1
-    # latest = get_latest_accepted(..., entity_id)
+    # latest = get_latest_accepted_card(..., entity_id)
     # if latest: data['previous_id'] = latest['version_id']
     data = {
         FALSE
@@ -226,3 +226,28 @@ def list_required_by_cards():
         ORDER BY created DESC;
         /* TODO LIMIT OFFSET */
     """
+
+
+def list_random_cards_in_unit(db_conn, unit_id, limit=10):
+    """
+    Choose 10 random cards from the DB within a given unit.
+    """
+
+    query = """
+        WITH temp as (
+            SELECT DISTINCT ON (entity_id) *
+            FROM cards
+            WHERE status = 'accepted'
+            ORDER BY entity_id, created DESC
+        )
+        SELECT *
+        FROM temp
+        WHERE unit_id = %(unit_id)s
+        ORDER BY random()
+        LIMIT %(limit)s;
+    """
+    params = {
+        'limit': limit,
+        'unit_id': unit_id,
+    }
+    return list_rows(db_conn, query, params)

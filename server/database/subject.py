@@ -29,7 +29,7 @@ def insert_subject(db_conn, data):
         RETURNING *;
     """
     previous_id = None  # TODO-1
-    # latest = get_latest_accepted(..., entity_id)
+    # latest = get_latest_accepted_subject(..., entity_id)
     # if latest: data['previous_id'] = latest['version_id']
     data = {
         FALSE
@@ -139,11 +139,23 @@ def list_one_subject_versions(db_conn, entity_id):
     return list_rows(db_conn, query, params)
 
 
-def list_subjects_by_unit(db_conn, unit_id):
+def list_subjects_by_unit_flat(db_conn, unit_id):
     """
     *M2P List Subjects by Unit EID
 
         TBD
+    """
+
+    query = """
+
+    """
+    params = {}
+    return list_rows(db_conn, query, params)
+
+
+def list_subject_parents(db_conn, subject_id):
+    """
+        *M2P TBD
     """
 
     query = """

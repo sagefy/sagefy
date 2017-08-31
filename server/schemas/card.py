@@ -1,7 +1,7 @@
 from schemas.entity_base import schema as entity_schema
 from modules.util import extend
 
-from database.entity_base import list_by_entity_ids, find_requires_cycle
+from database.entity_base import find_requires_cycle
 
 """
 Cards are the smallest entity in the Sagefy data structure system.
@@ -33,7 +33,7 @@ def ensure_requires(db_conn, schema, data):
 
     """
 
-    cards = list_by_entity_ids(db_conn, 'cards', data['require_ids'])
+    cards = list_latest_accepted_cards(db_conn, data['require_ids'])
     if len(data['require_ids']) != len(cards):
         return [{'message': 'Didn\'t find all requires.'}]
     return []

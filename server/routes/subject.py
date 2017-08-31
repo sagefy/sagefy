@@ -4,13 +4,12 @@ from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
 from database.user import get_learning_context, set_learning_context
 from database.my_recently_created import get_my_recently_created_subjects
-from database.entity_base import list_by_entity_ids, get_latest_accepted, \
-    get_versions, get_version
 from config import config
 from database.entity_facade import list_subjects_by_unit_id, \
     list_units_in_subject
-from database.subject import deliver_subject, insert_subject
-from database.unit import deliver_unit
+from database.subject import deliver_subject, insert_subject, \
+    get_latest_accepted_subject
+from database.unit import deliver_unit, get_latest_accepted_unit
 from modules.util import extend
 from copy import deepcopy
 
@@ -21,7 +20,7 @@ def get_recommended_subjects(request):
     entity_ids = ('JAFGYFWhILcsiByyH2O9frcU',)
     if config['debug']:
         entity_ids = ('subjectAll',)
-    subjects = list_by_entity_ids(db_conn, 'subjects', entity_ids)
+    subjects = list_latest_accepted_subjects(db_conn, entity_ids)
     if not subjects:
         return abort(404)
     return 200, {
@@ -36,7 +35,7 @@ def get_subject_route(request, subject_id):
     """
 
     db_conn = request['db_conn']
-    subject = get_latest_accepted(db_conn, 'subjects', subject_id)
+    subject = get_latest_accepted_subject(db_conn, subject_id)
     if not subject:
         return abort(404)
     # TODO-2 SPLITUP create new endpoints for these instead
@@ -59,7 +58,7 @@ def list_subjects_route(request):
     if not entity_ids:
         return abort(404)
     entity_ids = entity_ids.split(',')
-    subjects = list_by_entity_ids(db_conn, 'subjects', entity_ids)
+    subjects = list_latest_accepted_subjects(db_conn, entity_ids)
     if not subjects:
         return abort(404)
     return 200, {
@@ -74,8 +73,7 @@ def get_subject_versions_route(request, subject_id):
     """
 
     db_conn = request['db_conn']
-    versions = get_versions(
-        'subjects', db_conn, entity_id=subject_id, **request['params'])
+    versions = list_one_subject_versions(db_conn, subject_id)
     return 200, {
         'versions': [
             deliver_subject(version, access='view')
@@ -91,7 +89,7 @@ def get_subject_version_route(request, version_id):
     """
 
     db_conn = request['db_conn']
-    subject_version = get_version(db_conn, 'subjects', version_id)
+    subject_version = get_subject_version(db_conn, version_id)
     if not subject_version:
         return abort(404)
     return 200, {'version': subject_version}
@@ -113,7 +111,7 @@ def get_subject_tree_route(request, subject_id):
     """
 
     db_conn = request['db_conn']
-    subject = get_latest_accepted(db_conn, 'subjects', entity_id=subject_id)
+    subject = get_latest_accepted_subject(db_conn, subject_id)
     if not subject:
         return abort(404)
     units = list_units_in_subject(db_conn, subject)
@@ -160,7 +158,7 @@ def get_subject_units_route(request, subject_id):
                       unit_id='{unit_id}'),
     }
     set_learning_context(current_user, next=next_)
-    subject = get_latest_accepted(db_conn, 'subjects', subject_id)
+    subject = get_latest_accepted_subject(db_conn, subject_id)
     # Pull a list of up to 5 units to choose from based on priority.
     buckets = traverse(db_conn, current_user, subject)
     units = buckets['learn'][:5]
@@ -189,7 +187,7 @@ def choose_unit_route(request, subject_id, unit_id):
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    unit = get_latest_accepted(db_conn, 'units', unit_id)
+    unit = get_latest_accepted_unit(db_conn, unit_id)
     if not unit:
         return abort(404)
     # If the unit isn't in the subject...
@@ -275,8 +273,7 @@ def create_existing_subject_version_route(request, subject_id):
     next_data = deepcopy(request['params'])
     next_data['entity_id'] = subject_id
     next_data['user_id'] = current_user['id']
-    current_subject = get_latest_accepted(
-        'subjects', db_conn, entity_id=subject_id)
+    current_subject = get_latest_accepted_subject(db_conn, subject_id)
     if not current_subject:
         return abort(404)
     subject_data = extend({}, current_subject, next_data)
