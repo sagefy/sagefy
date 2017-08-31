@@ -1,6 +1,6 @@
 from schemas.index import schema as default
-from modules.validations import is_required, is_email, is_string, \
-    has_min_length, is_one_of
+from modules.validations import is_required, is_string, has_min_length, \
+    is_one_of
 
 from passlib.hash import bcrypt
 from modules.util import extend
@@ -21,7 +21,6 @@ schema = extend({}, default, {
         'name': {
         },
         'email': {
-            'validate': (is_email,),
             'access': ('private',),
         },
         'password': {

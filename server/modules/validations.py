@@ -73,7 +73,8 @@ def is_string_or_number(value):
 
 def is_language(value):
     """
-    Entity must be ISO 639-1 code.
+    Entity must be BPC 47 code.
+    https://tools.ietf.org/rfc/bcp/bcp47.txt
     """
 
     if value is None:

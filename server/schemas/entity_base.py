@@ -1,6 +1,5 @@
 from schemas.index import schema as default
 from modules.util import extend
-from modules.validations import is_language
 
 """
 The model represents a **version** of an entity, not an entity itself.
@@ -13,9 +12,7 @@ schema = extend({}, default, {
     'fields': {
         'entity_id': {},
         'previous_id': {},
-        'language': {
-            'validate': (is_language,)
-        },
+        'language': {},
         'name': {},
         'status': {},
         'available': {},

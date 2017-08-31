@@ -48,7 +48,8 @@ CREATE TABLE users (
     created     timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     name        text            NOT NULL UNIQUE,
-    email       text            NOT NULL UNIQUE,
+    email       text            NOT NULL UNIQUE
+        CONSTRAINT email_check CHECK (email ~* '^\S+@\S+\.\S+$'),
     password    varchar(60)     NOT NULL,
     settings    jsonb           NOT NULL
         /* jsonb?: add new settings without alter table */
@@ -114,7 +115,8 @@ CREATE TABLE units (
     modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     entity_id   uuid            NOT NULL REFERENCES units_entity_id (entity_id),
     previous_id uuid            NULL REFERENCES units (version_id),
-    language    varchar(5)      NOT NULL DEFAULT 'en',
+    language    varchar(5)      NOT NULL DEFAULT 'en'
+        CONSTRAINT lang_check CHECK (language ~* '^\w{2}(-\w{2})?$'),
     name        text            NOT NULL,
     status      entity_status   NOT NULL DEFAULT 'pending',
     available   boolean         NOT NULL DEFAULT TRUE,
