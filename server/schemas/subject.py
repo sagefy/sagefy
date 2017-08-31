@@ -1,7 +1,6 @@
 from schemas.entity_base import schema as entity_schema
 from modules.util import extend
-from modules.validations import is_required, is_string, is_list, is_one_of, \
-    has_min_length
+from modules.validations import is_required, is_string, is_list, is_one_of
 
 from database.entity_base import list_by_entity_ids
 
@@ -68,9 +67,7 @@ def ensure_no_cycles(db_conn, schema, data):
 schema = extend({}, entity_schema, {
     'tablename': 'subjects',
     'fields': {
-        'body': {
-            'validate': (is_required, is_string, (has_min_length, 1),)
-        },
+        'body': {},
         'members': {
             'validate': (is_required, is_list,),
             'embed_many': {

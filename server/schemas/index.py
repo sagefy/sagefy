@@ -1,12 +1,9 @@
 schema = {
     'tablename': '',
     'fields': {
-        'id': {
-        },
-        'created': {
-        },
-        'modified': {
-        }
+        'id': {},
+        'created': {},
+        'modified': {},
     },
     'validate': tuple(),
 }

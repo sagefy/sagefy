@@ -1,5 +1,5 @@
 from schemas.post import schema as post_schema
-from schemas.post import is_valid_topic_id, is_valid_reply
+from schemas.post import is_valid_reply
 from database.entity_base import get_version
 from modules.validations import is_required, is_string, is_one_of, is_list, \
     has_min_length
@@ -31,7 +31,7 @@ def validate_entity_versions(db_conn, schema, data):
 schema = extend({}, post_schema, {
     'fields': {
         'entity_versions': {
-            'validate': (is_required, is_list, (has_min_length, 1)),
+            'validate': (is_list, (has_min_length, 1)),
             'embed_many': {
                 'id': {
                     'validate': (is_required, is_string,),
@@ -44,5 +44,5 @@ schema = extend({}, post_schema, {
             }
         },
     },
-    'validate': (is_valid_topic_id, is_valid_reply, validate_entity_versions),
+    'validate': (is_valid_reply, validate_entity_versions),
 })

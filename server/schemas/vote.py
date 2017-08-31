@@ -1,9 +1,7 @@
 from schemas.post import schema as post_schema
-from schemas.post import is_valid_topic_id, is_valid_reply
-from modules.validations import is_required, is_string, is_boolean
+from schemas.post import is_valid_reply
 from modules.util import extend
 from database.entity_base import get_version
-
 
 
 def is_unique_vote(db_conn, schema, data):
@@ -47,31 +45,13 @@ def is_valid_reply_kind(db_conn, schema, data):
     return []
 
 
-# For votes, a body is not required but optional,
-# But a replies to id is required
-
 schema = extend({}, post_schema, {
     'fields': {
-        # The only true unique field of a vote...
-        # Where True is yes, False is no
-        'response': {
-            'validate': (is_required, is_boolean,),
-        }
+        'response': {}
     },
     'validate': (
-        is_valid_topic_id,
         is_valid_reply,
         is_unique_vote,
         is_valid_reply_kind,
     ),
 })
-
-# A vote does not require a body
-schema['fields']['body'] = {
-    'validate': (is_string,)
-}
-
-# But a vote does require a proposal
-schema['fields']['replies_to_id'] = {
-    'validate': (is_required, is_string,)
-}

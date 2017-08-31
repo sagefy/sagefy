@@ -1,5 +1,4 @@
 from schemas.entity_base import schema as entity_schema
-from modules.validations import is_required, is_list, is_string, is_one_of
 from modules.util import extend
 
 from database.entity_base import list_by_entity_ids, find_requires_cycle
@@ -54,21 +53,9 @@ def ensure_no_cycles(db_conn, schema, data):
 schema = extend({}, entity_schema, {
     'tablename': 'cards',
     'fields': {
-        'unit_id': {
-            'validate': (is_required, is_string,)
-        },
-        'require_ids': {
-            'validate': (is_list,),
-            'default': []
-        },
-        'kind': {
-            'validate': (is_required, is_string,
-                         (is_one_of, 'video',  # 'page', 'audio', 'slideshow',
-                                     'choice',  # 'number', 'match', 'formula',
-                                     # 'writing', 'upload', 'embed'
-                                     # only video & choice to start
-                          ))
-        },
+        'unit_id': {},
+        'require_ids': {},
+        'kind': {},
     },
     'validate': (is_valid_unit, ensure_requires, ensure_no_cycles),
 })

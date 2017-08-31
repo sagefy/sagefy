@@ -122,7 +122,7 @@ CREATE TABLE units (
     user_id     uuid            NOT NULL REFERENCES users (id),
     /* and the rest.... */
     body        text            NOT NULL,
-    require_ids uuid[]          NOT NULL  /* ISSUE no ELEMENT */
+    require_ids uuid[]          NOT NULL DEFAULT array[]::uuid[]  /* ISSUE no ELEMENT */
 );
 
 CREATE TABLE subjects_entity_id (
@@ -165,7 +165,7 @@ CREATE TABLE cards (
     user_id     uuid            NOT NULL REFERENCES users (id),
     /* and the rest.... */
     unit_id     uuid            NOT NULL REFERENCES units_entity_id (entity_id),
-    require_ids uuid[]          NOT NULL, /* ISSUE no ELEMENT */
+    require_ids uuid[]          NOT NULL DEFAULT array[]::uuid[], /* ISSUE no ELEMENT */
     kind        card_kind       NOT NULL,
     data        jsonb           NOT NULL
         /* jsonb?: varies per kind */

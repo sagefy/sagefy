@@ -40,13 +40,8 @@ def ensure_no_cycles(db_conn, schema, data):
 schema = extend({}, entity_schema, {
     'tablename': 'units',
     'fields': {
-        'body': {
-            'validate': (is_required, is_string, (has_min_length, 1),)
-        },
-        'require_ids': {
-            'validate': (is_list,),
-            'default': []
-        },
+        'body': {},
+        'require_ids': {},
     },
     'validate': (ensure_requires, ensure_no_cycles),
 })

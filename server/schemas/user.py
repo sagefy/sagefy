@@ -19,19 +19,17 @@ schema = extend({}, default, {
             'access': ('private',),
         },
         'name': {
-            'validate': (is_required, is_string,),
         },
         'email': {
-            'validate': (is_required, is_email,),
+            'validate': (is_email,),
             'access': ('private',),
         },
         'password': {
-            'validate': (is_required, is_string, (has_min_length, 8)),
+            'validate': ((has_min_length, 8),),
             'access': ('PaSsWoRd',),
             'bundle': encrypt_password,
         },
         'settings': {
-            'validate': (is_required,),
             'default': {},
             'embed': {
                 'email_frequency': {
