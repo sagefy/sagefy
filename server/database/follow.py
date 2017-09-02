@@ -81,17 +81,11 @@ def insert_follow(db_conn, data):
         RETURNING *;
     """
     data = pick(data, ('user_id', 'entity_id', 'entity_kind'))
-    data, errors = insert_row(db_conn, schema, query, data)
-    return data, errors
-
-    schema = follow_schema
-    data, errors = prepare_row(db_conn, schema, data)
-    if errors:
-        return None, errors
     errors = is_valid_entity(db_conn, data)
     if errors:
-        return None, errors
-    return insert_document(db_conn, schema, data)
+        return data, [{'message': 'invalid entity'}]
+    data, errors = insert_row(db_conn, schema, query, data)
+    return data, errors
 
 
 def deliver_follow(data, access=None):
@@ -126,7 +120,7 @@ def is_valid_entity(db_conn, follow):
     kind = follow['entity_kind']
     stuff = None
     if kind == 'topic':
-        stuff = get_topic(db_conn, {'id': follow['id']})
+        stuff = get_topic(db_conn, {'id': follow['entity_id']})
     else:
         stuff = list_one_entity_versions(db_conn, kind, follow['entity_id'])
     if not stuff:
