@@ -3,6 +3,7 @@ from database.entity_facade import list_subjects_by_unit_id, \
     list_units_in_subject
 import pytest
 from database.subject import insert_subject
+from datetime import datetime
 
 xfail = pytest.mark.xfail
 
