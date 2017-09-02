@@ -140,19 +140,21 @@ def list_one_unit_versions(db_conn, entity_id):
     return list_rows(db_conn, query, params)
 
 
-def list_required_units():
+def list_required_units(db_conn, entity_id):
     """
-    *M2P List Latest Version of Required Units by EID
-
-        1. Get Latest Accepted Unit Version by EID
-        2. List Latest Accepted Unit Versions by EIDs (require_ids)
+    List Latest Version of Required Units by EID
     """
 
+    later_unit = get_latest_accepted_unit(db_conn, entity_id)
+    return list_latest_accepted_units(db_conn, later_unit['require_ids'])
 
-def list_required_by_units():
+
+def list_required_by_units(db_conn, entity_id):
     """
-    *M2P List Latest Version of Required By Units by EID
+    List Latest Version of Required By Units by EID
+    """
 
+    query = """
         WITH temp as (
             SELECT DISTINCT ON (entity_id) *
             FROM units
@@ -165,20 +167,24 @@ def list_required_by_units():
         ORDER BY created DESC;
         /* TODO LIMIT OFFSET */
     """
+    params = {
+        'entity_id': entity_id,
+    }
+    return list_rows(db_conn, query, params)
 
 
 def list_units_by_subject_flat(db_conn, subject_id):
     """
-    *M2P List Units by Subject EID
-
-        TBD
+    List Units by Subject EID
     """
 
-    query = """
-
-    """
-    params = {}
-    return list_rows(db_conn, query, params)
+    subject = get_latest_accepted_subject(db_conn, subject_id)
+    unit_ids = [
+        member['id']
+        for member in subject['members']
+        if member['kind'] == 'unit'
+    ]
+    return list_latest_accepted_units(db_conn, unit_ids)
 
 
 def list_my_recently_created_units(db_conn, user_id):

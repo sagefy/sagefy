@@ -141,28 +141,40 @@ def list_one_subject_versions(db_conn, entity_id):
 
 def list_subjects_by_unit_flat(db_conn, unit_id):
     """
-    *M2P List Subjects by Unit EID
-
-        TBD
+    List Subjects by Unit EID
     """
 
     query = """
-
+        WITH temp AS (
+            SELECT DISTINCT ON (entity_id) *
+            FROM subjects
+            WHERE status = 'accepted'
+            ORDER BY entity_id, created DESC
+        )
+        SELECT *
+        FROM temp
+        WHERE %(unit_id)s @> members
+        ORDER BY created DESC;
+        /* TODO limit offset */
     """
-    params = {}
+    params = {
+        'unit_id': unit_id,
+    }
     return list_rows(db_conn, query, params)
 
 
 def list_subject_parents(db_conn, subject_id):
     """
-        *M2P TBD
+    List the direct parents of the subject specified.
     """
 
-    query = """
-
-    """
-    params = {}
-    return list_rows(db_conn, query, params)
+    subject = get_latest_accepted_subject(db_conn, subject_id)
+    parent_ids = [
+        member['id']
+        for member in subject['members']
+        if member['kind'] == 'subject'
+    ]
+    return list_latest_accepted_subjects(db_conn, parent_ids)
 
 
 def list_my_recently_created_subjects(db_conn, user_id):

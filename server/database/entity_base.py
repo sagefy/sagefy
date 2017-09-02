@@ -21,7 +21,6 @@ def save_entity_to_es(kind, data):
 def find_requires_cycle(db_conn, tablename, data):
     """
     Inspect own requires to see if a cycle is formed.
-    M2P
     """
 
     assert tablename in ('cards', 'units', 'subjects')

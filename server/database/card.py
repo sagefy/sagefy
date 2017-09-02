@@ -201,19 +201,21 @@ def list_one_card_versions(db_conn, entity_id):
     return list_rows(db_conn, query, params)
 
 
-def list_required_cards():
+def list_required_cards(db_conn, entity_id):
     """
-    *M2P List Latest Version of Required Cards by EID
-
-        1. Get Latest Accepted Card Version by EID
-        2. List Latest Accepted Card Versions by EIDs (require_ids)
+    List Latest Version of Required Cards by EID
     """
 
+    later_card = get_latest_accepted_card(db_conn, entity_id)
+    return list_latest_accepted_cards(db_conn, later_card['require_ids'])
 
-def list_required_by_cards():
+
+def list_required_by_cards(db_conn, entity_id):
     """
-    *M2P List Latest Version of Required By Cards by EID
+    List Latest Version of Required By Cards by EID
+    """
 
+    query = """
         WITH temp as (
             SELECT DISTINCT ON (entity_id) *
             FROM cards
@@ -226,6 +228,10 @@ def list_required_by_cards():
         ORDER BY created DESC;
         /* TODO LIMIT OFFSET */
     """
+    params = {
+        'entity_id': entity_id,
+    }
+    return list_rows(db_conn, query, params)
 
 
 def list_random_cards_in_unit(db_conn, unit_id, limit=10):
