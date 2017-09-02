@@ -83,6 +83,8 @@ CREATE TABLE posts (
         CHECK (kind <> 'vote' OR response IS NOT NULL)
 );
 
+CREATE UNIQUE INDEX posts_vote_unique_idx ON posts (user_id, replies_to_id) WHERE kind = 'vote';
+
 CREATE TABLE notices (
     id          uuid            PRIMARY KEY DEFAULT uuid_generate_v4(),
     created     timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,

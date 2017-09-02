@@ -1,5 +1,6 @@
 from schemas.index import schema as default
 from modules.util import extend
+from database.post import get_post
 
 
 def is_valid_reply(db_conn, schema, data):
@@ -11,9 +12,7 @@ def is_valid_reply(db_conn, schema, data):
     """
 
     if data.get('replies_to_id'):
-        query = (r.table('posts')
-                  .get(data['replies_to_id']))
-        post_data = query.run(db_conn)
+        post_data = get_post(db_conn, {'id': data['replies_to_id']})
         if post_data['topic_id'] != data['topic_id']:
             return [{'message': 'A reply must be in the same topic.'}]
     return []

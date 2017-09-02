@@ -16,13 +16,16 @@ def is_valid_members(db_conn, schema, data):
 
     # TODO-3 this is going to be slow
     for member_desc in data['members']:
-        query = (r.table(member_desc['kind'] + 's')
-                  .filter(r.row['entity_id'] == member_desc['id']))
-        vs = [e for e in query.run(db_conn)]
-        if not vs:
+        entity_id, kind = member_desc['id'], member_desc['kind']
+        entity = None
+        if kind == 'unit':
+            entity = get_latest_accepted_unit(entity_id)
+        elif kind == 'subject':
+            entity = get_latest_accepted_subject(entity_id)
+        if not entity:
             return [{
                 'message': 'Not a valid entity.',
-                'value': member_desc['id'],
+                'value': entity_id,
             }]
 
     return []

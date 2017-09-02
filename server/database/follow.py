@@ -85,7 +85,7 @@ def insert_follow(db_conn, data):
     return data, errors
 
     schema = follow_schema
-    data, errors = prepare_document(db_conn, schema, data)
+    data, errors = prepare_row(db_conn, schema, data)
     if errors:
         return None, errors
     errors = is_valid_entity(db_conn, data)
@@ -123,18 +123,14 @@ def is_valid_entity(db_conn, follow):
     Check that the entity ID of the follow is valid.
     """
 
-    kind = follow['entity']['kind']
-
-    query = (r.table(kind + 's')
-              .filter(r.row[
-                  'id' if kind == 'topic' else 'entity_id'
-              ] == follow['entity']['id']))
-
-    entities = [e for e in query.run(db_conn)]
-
-    if not entities:
+    kind = follow['entity_kind']
+    stuff = None
+    if kind == 'topic':
+        stuff = get_topic(db_conn, {'id': follow['id']})
+    else:
+        stuff = list_one_entity_versions(db_conn, kind, follow['entity_id'])
+    if not stuff:
         return [{'message': 'Not a valid entity'}]
-
     return []
 
 
@@ -143,10 +139,5 @@ def get_user_ids_by_followed_entity(db_conn, entity_id, entity_kind):
     Produce a list of `user_id`s for a given entity.
     """
 
-    schema = follow_schema
-    tablename = schema['tablename']
-    query = (r.table(tablename)
-              .filter(r.row['entity']['id'] == entity_id)
-              .filter(r.row['entity']['kind'] == entity_kind))
-    fields_list = query.run(db_conn)
-    return [fields['user_id'] for fields in fields_list]
+    follows = list_follows_by_entity(db_conn, {'entity_id': entity_id})
+    return [fields['user_id'] for fields in follows]

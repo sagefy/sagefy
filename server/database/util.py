@@ -12,7 +12,7 @@ def insert_row(db_conn, schema, query, data):
     data = omit(data, ('id', 'created', 'modified'))
     # TODO-2 is it possible to have postgres do this work of
     #        validating/preparing?
-    data, errors = prepare_document(db_conn, schema, data)
+    data, errors = prepare_row(db_conn, schema, data)
     if errors:
         return None, errors
     data = bundle_fields(schema, data)
@@ -35,7 +35,7 @@ def update_row(db_conn, schema, query, prev_data, data):
     data = extend({}, prev_data, data)
     # TODO-2 is it possible to have postgres do this work of
     #        validating/preparing?
-    data, errors = prepare_document(db_conn, schema, data)
+    data, errors = prepare_row(db_conn, schema, data)
     if errors:
         return None, errors
     data = bundle_fields(schema, data)
@@ -129,7 +129,7 @@ def recurse_embeds(fn, data, schema, prefix=''):
                                '%s%s.%i.' % (prefix, field_name, i))
 
 
-def prepare_document(db_conn, schema, data):
+def prepare_row(db_conn, schema, data):
     """
     Prepare a document to be saved.
     """

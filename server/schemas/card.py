@@ -17,17 +17,6 @@ assessment_kinds = ('choice', 'number', 'match', 'formula',
 asynchronous_kinds = ('writing', 'upload', 'embed')
 
 
-def is_valid_unit(db_conn, schema, data):
-    query = (r.table('units')
-              .filter(r.row['entity_id'] == data['unit_id'])
-              .filter(r.row['status'].eq('accepted'))
-              .limit(1))
-    units = query.run(db_conn)
-    if not units:
-        return [{'name': 'unit_id', 'message': 'Not a valid unit.'}]
-    return []
-
-
 def ensure_requires(db_conn, schema, data):
     """
 
@@ -57,5 +46,5 @@ schema = extend({}, entity_schema, {
         'require_ids': {},
         'kind': {},
     },
-    'validate': (is_valid_unit, ensure_requires, ensure_no_cycles),
+    'validate': (ensure_requires, ensure_no_cycles),
 })
