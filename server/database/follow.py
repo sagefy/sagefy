@@ -2,6 +2,8 @@ from schemas.follow import schema as follow_schema
 from database.util import deliver_fields
 from database.util import insert_row, get_row, list_rows, delete_row
 from module.util import pick
+from database.topic import get_topic
+from database.entity_facade import list_one_entity_versions
 
 
 def get_follow(db_conn, user_id, entity_id):

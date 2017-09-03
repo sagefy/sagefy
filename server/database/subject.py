@@ -20,20 +20,14 @@ def insert_subject(db_conn, data):
             RETURNING entity_id
         )
         INSERT INTO subjects
-        (entity_id  ,   previous_id  ,   name  ,   user_id  ,
+        (entity_id  ,   name  ,   user_id  ,
            body  ,   members  )
         SELECT
-         entity_id  , %(previous_id)s, %(name)s, %(user_id)s,
+         entity_id  , %(name)s, %(user_id)s,
          %(body)s, %(members)s
         FROM temp
         RETURNING *;
     """
-    previous_id = None  # TODO-1
-    # latest = get_latest_accepted_subject(..., entity_id)
-    # if latest: data['previous_id'] = latest['version_id']
-    data = {
-        FALSE
-    }
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         save_entity_to_es('subject', deliver_subject(data, access='view'))
@@ -41,6 +35,14 @@ def insert_subject(db_conn, data):
 
 
 # TODO insert subject version
+"""
+    previous_id = None  # TODO-1
+    # latest = get_latest_accepted_subject(..., entity_id)
+    # if latest: data['previous_id'] = latest['version_id']
+    data = {
+        FALSE
+    }
+"""
 
 
 def update_subject(db_conn, prev_data, data):

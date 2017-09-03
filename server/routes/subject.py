@@ -12,6 +12,8 @@ from database.subject import deliver_subject, insert_subject, \
 from database.unit import deliver_unit, get_latest_accepted_unit
 from modules.util import extend
 from copy import deepcopy
+from database.subject import list_latest_accepted_subjects, \
+    list_one_subject_versions, get_subject_version
 
 
 @get('/s/subjects/recommended')

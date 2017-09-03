@@ -1,6 +1,10 @@
 from schemas.entity_base import schema as entity_schema
 from modules.util import extend
 from modules.validations import is_required, is_string, is_list, is_one_of
+from database.unit import get_latest_accepted_unit
+from database.subject import get_latest_accepted_subject, \
+    list_latest_accepted_subjects
+
 
 """
 A subject is a collection of units and other subjects.

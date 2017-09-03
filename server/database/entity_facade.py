@@ -1,5 +1,4 @@
 from modules.memoize_redis import memoize_redis
-from modules.util import omit
 from database.unit import update_unit
 from database.subject import update_subject
 from database.card import update_card
@@ -9,6 +8,26 @@ from database.card import update_card
 from database.post import list_posts
 from modules.notices import send_notices
 from database.user import get_user
+
+from database.card import get_card_version, list_latest_accepted_cards
+from database.subject import list_subjects_by_unit_flat, \
+    list_subject_parents, list_latest_accepted_subjects, \
+    get_unit_version
+from database.unit import list_latest_accepted_units, \
+    get_subject_version
+
+
+def get_entity_version(db_conn, kind, version_id):
+    """
+
+    """
+
+    if kind == 'card':
+        return get_card_version(db_conn, version_id)
+    if kind == 'unit':
+        return get_unit_version(db_conn, version_id)
+    if kind == 'subject':
+        return get_subject_version(db_conn, version_id)
 
 
 def list_subjects_by_unit_recursive(db_conn, unit_id):
@@ -146,7 +165,7 @@ def update_entity_statuses(db_conn, proposal):
         version_id = p_entity_version['id']
 
         tablename = '%ss' % entity_kind
-        entity_version = get_version(db_conn, tablename, version_id)
+        entity_version = get_entity_version(db_conn, tablename, version_id)
         votes = list_posts({
             'kind': 'vote',
             'replies_to_id': proposal['id'],
@@ -176,3 +195,35 @@ def update_entity_statuses(db_conn, proposal):
                     'entity_name': entity_version['name'],
                 }
             )
+
+
+def find_requires_cycle(db_conn, tablename, data):
+    """
+    Inspect own requires to see if a cycle is formed.
+    """
+
+    assert tablename in ('cards', 'units')
+
+    seen = set()
+    main_id = data['entity_id']
+    found = {'cycle': False}
+
+    def _(require_ids):
+        if found['cycle']:
+            return
+        if tablename == 'cards':
+            entities = list_latest_accepted_cards(db_conn, require_ids)
+        elif tablename == 'units':
+            entities = list_latest_accepted_units(db_conn, require_ids)
+        for entity in entities:
+            if entity['entity_id'] == main_id:
+                found['cycle'] = True
+                break
+            if entity['entity_id'] not in seen:
+                seen.add(entity['entity_id'])
+                if 'require_ids' in entity:
+                    _(entity['require_ids'])
+
+    _(data['require_ids'])
+
+    return found['cycle']

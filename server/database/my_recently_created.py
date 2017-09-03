@@ -1,4 +1,7 @@
 from database.post import list_posts
+from database.unit import list_many_unit_versions
+from database.subject import list_many_subject_versions
+
 
 def get_my_recent_proposals(db_conn, current_user):
     """

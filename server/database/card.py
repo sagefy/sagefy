@@ -35,27 +35,30 @@ def insert_card(db_conn, data):
             RETURNING entity_id
         )
         INSERT INTO cards
-        (entity_id  ,   previous_id  ,   name  ,   user_id  ,   unit_id  ,
+        (entity_id  ,   name  ,   user_id  ,   unit_id  ,
            require_ids  ,   kind  ,   data  )
         SELECT
-         entity_id  , %(previous_id)s, %(name)s, %(user_id)s, %(unit_id)s,
+         entity_id  , %(name)s, %(user_id)s, %(unit_id)s,
          %(require_ids)s, %(kind)s, %(data)s
         FROM temp
         RETURNING *;
     """
-    previous_id = None  # TODO-1
-    # latest = get_latest_accepted_card(..., entity_id)
-    # if latest: data['previous_id'] = latest['version_id']
-    data = {
-        FALSE
-    }
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         save_entity_to_es('card', deliver_card(data, access='view'))
     return data, errors
 
 
-# TODO insert card version
+# TODO insert card version, adding in previous version
+"""
+    previous_id = None  # TODO-1
+    latest = get_latest_accepted_card(db_conn, entity_id)
+    # if latest: data['previous_id'] = latest['version_id']
+    data = {
+        FALSE
+    }
+"""
+
 
 def update_card(db_conn, prev_data, data):
     """

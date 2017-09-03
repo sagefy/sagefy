@@ -2,7 +2,8 @@
 from database.entity_facade import list_subjects_by_unit_id, \
     list_units_in_subject
 import pytest
-from database.subject import insert_subject
+from database.subject import insert_subject, list_latest_accepted_subjects, \
+    get_latest_accepted_subject
 from datetime import datetime
 
 xfail = pytest.mark.xfail

@@ -1,6 +1,8 @@
 from schemas.post import schema as post_schema
 from schemas.post import is_valid_reply
 from modules.util import extend
+from database.post import get_post
+from database.entity_facade import get_version
 
 
 def is_valid_reply_kind(db_conn, schema, data):

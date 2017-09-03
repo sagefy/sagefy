@@ -3,6 +3,8 @@ from modules.sequencer.traversal import traverse, \
     match_unit_dependents, order_units_by_need, judge
 from database.user import get_user
 from datetime import datetime, timezone
+from database.subject import get_latest_accepted_subject
+from database.unit import get_latest_accepted_unit, list_latest_accepted_units
 
 
 xfail = pytest.mark.xfail

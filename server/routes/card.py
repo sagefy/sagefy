@@ -11,6 +11,8 @@ from database.card import deliver_card, insert_card, get_latest_accepted_card
 from database.unit import deliver_unit, get_latest_accepted_unit
 from modules.util import extend
 from copy import deepcopy
+from database.card import list_required_cards, list_required_by_cards, \
+    list_latest_accepted_cards, list_one_card_versions, get_card_version
 
 # from modules.sequencer.params import max_learned
 

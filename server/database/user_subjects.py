@@ -4,6 +4,7 @@ Record the list of subjects the learner has added.
 
 from schemas.user_subjects import schema as user_subjects_schema
 from database.util import insert_row, list_rows, delete_row
+from database.subject import list_by_latest_subjects
 
 
 def insert_user_subject(db_conn, data):

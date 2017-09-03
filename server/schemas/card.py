@@ -1,6 +1,6 @@
 from schemas.entity_base import schema as entity_schema
 from modules.util import extend
-
+from database.card import list_latest_accepted_cards
 from database.entity_base import find_requires_cycle
 
 """

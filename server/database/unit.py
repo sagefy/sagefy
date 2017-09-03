@@ -5,6 +5,7 @@ from database.util import deliver_fields
 from database.entity_base import save_entity_to_es
 from database.util import insert_row, update_row, get_row, list_rows
 from modules.util import convert_slug_to_uuid
+from database.subject import get_latest_accepted_subject
 
 
 def insert_unit(db_conn, data):
@@ -20,27 +21,29 @@ def insert_unit(db_conn, data):
             RETURNING entity_id
         )
         INSERT INTO units
-        (entity_id  ,   previous_id  ,   name  ,   user_id  ,
+        (entity_id  ,   name  ,   user_id  ,
            body  ,   require_ids  )
         SELECT
-         entity_id  , %(previous_id)s, %(name)s, %(user_id)s,
+         entity_id  , %(name)s, %(user_id)s,
          %(body)s, %(require_ids)s
         FROM temp
         RETURNING *;
     """
-    previous_id = None  # TODO-1
-    # latest = get_latest_accepted_unit(..., entity_id)
-    # if latest: data['previous_id'] = latest['version_id']
-    data = {
-        FALSE
-    }
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         save_entity_to_es('unit', deliver_unit(data, access='view'))
     return data, errors
 
 
-# TODO insert unit version
+# TODO insert unit version, adding in previous version
+"""
+    previous_id = None  # TODO-1
+    # latest = get_latest_accepted_unit(..., entity_id)
+    # if latest: data['previous_id'] = latest['version_id']
+    data = {
+        FALSE
+    }
+"""
 
 
 def update_unit(db_conn, prev_data, data):

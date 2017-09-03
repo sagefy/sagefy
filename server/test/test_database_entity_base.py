@@ -1,6 +1,9 @@
 import pytest
 from datetime import datetime, timezone
-
+from database.card import get_latest_accepted_card
+from database.unit import get_latest_accepted_unit
+from database.subject import get_latest_accepted_subject
+from database.card import list_required_cards, list_required_by_cards
 
 xfail = pytest.mark.xfail
 
