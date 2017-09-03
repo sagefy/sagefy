@@ -7,5 +7,5 @@ schema = extend({}, default, {
         'user_id': {},
         'entity_id': {},
         'entity_kind': {},
-    }
+    },
 })

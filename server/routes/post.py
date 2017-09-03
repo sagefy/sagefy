@@ -4,7 +4,7 @@ from framework.session import get_current_user
 from database.follow import insert_follow
 from database.topic import get_topic
 from database.post import deliver_post, insert_post, \
-    list_posts, get_post, update_post
+    list_posts_by_topic, get_post, update_post
 from database.entity_facade import update_entity_statuses
 from modules.notices import send_notices
 from copy import deepcopy
@@ -31,7 +31,7 @@ def get_posts_route(request, topic_id):
             }],
             'ref': 'pgnNbqSP1VUWkOYq8MVGPrSS',
         }
-    posts = list_posts({
+    posts = list_posts_by_topic({
         'limit': request['params'].get('limit') or 10,
         'skip': request['params'].get('skip') or 0,
         'topic_id': topic_id,

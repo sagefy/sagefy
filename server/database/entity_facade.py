@@ -1,20 +1,12 @@
 from modules.memoize_redis import memoize_redis
-from database.unit import update_unit
-from database.subject import update_subject
-from database.card import update_card
-
-# if something breaks the import loop, it would likely be one
-# of these files:
-from database.post import list_posts
-from modules.notices import send_notices
 from database.user import get_user
-
-from database.card import get_card_version, list_latest_accepted_cards
+from database.card import get_card_version, list_latest_accepted_cards, \
+    update_card, list_one_card_versions
 from database.subject import list_subjects_by_unit_flat, \
     list_subject_parents, list_latest_accepted_subjects, \
-    get_unit_version
+    get_subject_version, update_subject, list_one_subject_versions
 from database.unit import list_latest_accepted_units, \
-    get_subject_version
+    update_unit, get_unit_version, list_one_unit_versions
 
 
 def get_entity_version(db_conn, kind, version_id):
@@ -59,7 +51,7 @@ def list_subjects_by_unit_recursive(db_conn, unit_id):
 
         return all_subjects
 
-    key = 'list_subjects_by_unit_id_{id}'.format(id=unit_id)
+    key = 'list_subjects_by_unit_{id}'.format(id=unit_id)
     return [data for data in memoize_redis(key, _)]
 
 
@@ -159,6 +151,9 @@ def update_entity_statuses(db_conn, proposal):
     Move to accepted or blocked if qualified.
     """
 
+    from database.post import list_posts
+    from modules.notices import send_notices
+
     # Get the entity version
     for p_entity_version in proposal['entity_versions']:
         entity_kind = p_entity_version['kind']
@@ -227,3 +222,16 @@ def find_requires_cycle(db_conn, tablename, data):
     _(data['require_ids'])
 
     return found['cycle']
+
+
+def list_one_entity_versions(db_conn, kind, entity_id):
+    """
+
+    """
+
+    if kind == 'card':
+        return list_one_card_versions(db_conn, entity_id)
+    if kind == 'unit':
+        return list_one_unit_versions(db_conn, entity_id)
+    if kind == 'subject':
+        return list_one_subject_versions(db_conn, entity_id)

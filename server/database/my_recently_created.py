@@ -1,6 +1,6 @@
-from database.post import list_posts
 from database.unit import list_many_unit_versions
 from database.subject import list_many_subject_versions
+from database.util import list_rows
 
 
 def get_my_recent_proposals(db_conn, current_user):
@@ -8,11 +8,17 @@ def get_my_recent_proposals(db_conn, current_user):
     Gets a list of the user's most recent proposals.
     """
 
-    return list_posts({
+    query = """
+        SELECT *
+        FROM posts
+        WHERE kind = proposal AND user_id = %(user_id)s
+        ORDER BY created DESC;
+        /* TODO offset limit */
+    """
+    params = {
         'user_id': current_user['id'],
-        'kind': 'proposal',
-        'limit': 100,
-    }, db_conn)
+    }
+    return list_rows(db_conn, query, params)
 
 
 def get_proposal_entity_versions(proposals, kind):

@@ -1,5 +1,5 @@
 
-from database.entity_facade import list_subjects_by_unit_id, \
+from database.entity_facade import list_subjects_by_unit, \
     list_units_in_subject
 import pytest
 from database.subject import insert_subject, list_latest_accepted_subjects, \
@@ -299,7 +299,7 @@ def test_list_by_unit_ids(db_conn, units_table, subjects_table):
         'status': 'accepted'
     }]).run(db_conn)
 
-    subjects = list_subjects_by_unit_id(db_conn, 'Z')
+    subjects = list_subjects_by_unit(db_conn, 'Z')
     subject_ids = set(subject['entity_id'] for subject in subjects)
     assert subject_ids == {'A', 'B1', 'B2', 'C'}
 

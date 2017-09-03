@@ -4,9 +4,7 @@ from modules.util import extend
 schema = extend({}, default, {
     'tablename': 'users_subjects',
     'fields': {
-        'user_id': {
-        },
-        'subject_ids': {
-        },
-    }
+        'user_id': {},
+        'subject_ids': {},
+    },
 })

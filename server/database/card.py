@@ -17,6 +17,29 @@ def get_card_schema(data):
             return choice_card_schema
 
 
+def ensure_requires(db_conn, data):
+    """
+
+    """
+
+    cards = list_latest_accepted_cards(db_conn, data['require_ids'])
+    if len(data['require_ids']) != len(cards):
+        return [{'message': 'Didn\'t find all requires.'}]
+    return []
+
+
+def ensure_no_cycles(db_conn, data):
+    """
+    Ensure no require cycles form.
+    """
+
+    from database.entity_facade import find_requires_cycle
+
+    if find_requires_cycle(db_conn, 'cards', data):
+        return [{'message': 'Found a cycle in requires.'}]
+    return []
+
+
 def insert_card(db_conn, data):
     """
     Create a card, saving to ES.
@@ -43,6 +66,9 @@ def insert_card(db_conn, data):
         FROM temp
         RETURNING *;
     """
+    errors = ensure_requires(db_conn, data) + ensure_no_cycles(db_conn, data)
+    if errors:
+        return None, errors
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         save_entity_to_es('card', deliver_card(data, access='view'))
@@ -188,6 +214,22 @@ def list_many_card_versions(db_conn, version_ids):
     return list_rows(db_conn, query, params)
 
 
+def get_card_version(db_conn, version_id):
+    """
+    Get a card version.
+    """
+
+    query = """
+        SELECT *
+        FROM cards
+        WHERE version_id = %(version_id)s
+        ORDER BY created DESC;
+        /* TODO LIMIT OFFSET */
+    """
+    params = {'version_id': version_id}
+    return list_rows(db_conn, query, params)
+
+
 def list_one_card_versions(db_conn, entity_id):
     """
     List Card Versions by EID
@@ -260,3 +302,19 @@ def list_random_cards_in_unit(db_conn, unit_id, limit=10):
         'unit_id': unit_id,
     }
     return list_rows(db_conn, query, params)
+
+
+def list_all_card_entity_ids(db_conn):
+    """
+    List all card entity ids.
+    """
+
+    query = """
+        SELECT entity_id
+        FROM cards;
+    """
+    params = {}
+    return [
+        row['entity_id']
+        for row in list_rows(db_conn, query, params)
+    ]

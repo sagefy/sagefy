@@ -1,9 +1,8 @@
 from framework.routes import get, post, abort
 from framework.session import get_current_user
 from database.my_recently_created import get_my_recently_created_units
-from database.entity_facade import list_subjects_by_unit_id
 from database.unit import deliver_unit, insert_unit, get_latest_accepted_unit
-from database.subject import deliver_subject
+from database.subject import deliver_subject, list_subjects_by_unit_flat
 from copy import deepcopy
 from modules.util import extend
 from database.unit import list_required_units, list_required_by_units, \
@@ -23,7 +22,7 @@ def get_unit_route(request, unit_id):
     # TODO-2 SPLITUP create new endpoints for these instead
     requires = list_required_units(db_conn, unit_id)
     required_by = list_required_by_units(db_conn, unit_id)
-    subjects = list_subjects_by_unit_id(db_conn, unit_id)
+    subjects = list_subjects_by_unit_flat(db_conn, unit_id)
     return 200, {
         'unit': deliver_unit(unit),
         # TODO-3 unit parameters

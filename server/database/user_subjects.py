@@ -4,7 +4,7 @@ Record the list of subjects the learner has added.
 
 from schemas.user_subjects import schema as user_subjects_schema
 from database.util import insert_row, list_rows, delete_row
-from database.subject import list_by_latest_subjects
+from database.subject import list_latest_accepted_subjects
 
 
 def insert_user_subject(db_conn, data):
@@ -73,4 +73,4 @@ def list_user_subjects_entity(db_conn, user_id, params):
     # TODO-3 limit = params.get('limit') or 10
     # TODO-3 skip = params.get('skip') or 0
     subject_ids = [data['subject_id'] for data in user_subjects]
-    return list_by_latest_subjects(db_conn, subject_ids)
+    return list_latest_accepted_subjects(db_conn, subject_ids)

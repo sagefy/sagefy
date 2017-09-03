@@ -7,9 +7,67 @@ from database.util import insert_row, update_row, get_row, list_rows
 from modules.util import convert_slug_to_uuid
 
 
+def is_valid_members(db_conn, data):
+    """
+
+    """
+
+    from database.unit import get_latest_accepted_unit
+
+    # TODO-3 this is going to be slow
+    for member_desc in data['members']:
+        entity_id, kind = member_desc['id'], member_desc['kind']
+        entity = None
+        if kind == 'unit':
+            entity = get_latest_accepted_unit(entity_id)
+        elif kind == 'subject':
+            entity = get_latest_accepted_subject(entity_id)
+        if not entity:
+            return [{
+                'message': 'Not a valid entity.',
+                'value': entity_id,
+            }]
+
+    return []
+
+
+def ensure_no_cycles(db_conn, data):
+    """
+    Ensure no membership cycles form.
+    """
+
+    seen = set()
+    main_id = data['entity_id']
+    found = {'cycle': False}
+
+    def _(members):
+        if found['cycle']:
+            return
+        entity_ids = [
+            member['id']
+            for member in members
+            if member['kind'] == 'subject'
+        ]
+        entities = list_latest_accepted_subjects(db_conn, entity_ids)
+        for entity in entities:
+            if entity['entity_id'] == main_id:
+                found['cycle'] = True
+                break
+            if entity['entity_id'] not in seen:
+                seen.add(entity['entity_id'])
+                _(entity['members'])
+
+    _(data['members'])
+
+    if found['cycle']:
+        return [{'message': 'Found a cycle in membership.'}]
+
+    return []
+
+
 def insert_subject(db_conn, data):
     """
-    Create a card, saving to ES.
+    Create a subject, saving to ES.
     """
 
     schema = subject_schema
@@ -28,6 +86,9 @@ def insert_subject(db_conn, data):
         FROM temp
         RETURNING *;
     """
+    errors = is_valid_members(db_conn, data) + ensure_no_cycles(db_conn, data)
+    if errors:
+        return None, errors
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         save_entity_to_es('subject', deliver_subject(data, access='view'))
@@ -47,7 +108,7 @@ def insert_subject(db_conn, data):
 
 def update_subject(db_conn, prev_data, data):
     """
-    Update a card version's status and available. [hidden]
+    Update a subject version's status and available. [hidden]
     """
 
     schema = subject_schema
@@ -125,6 +186,22 @@ def list_many_subject_versions(db_conn, version_ids):
     return list_rows(db_conn, query, params)
 
 
+def get_subject_version(db_conn, version_id):
+    """
+    Get a subject version.
+    """
+
+    query = """
+        SELECT *
+        FROM subjects
+        WHERE version_id = %(version_id)s
+        ORDER BY created DESC;
+        /* TODO LIMIT OFFSET */
+    """
+    params = {'version_id': version_id}
+    return list_rows(db_conn, query, params)
+
+
 def list_one_subject_versions(db_conn, entity_id):
     """
     List Subjects Versions by EID
@@ -193,3 +270,19 @@ def list_my_recently_created_subjects(db_conn, user_id):
     """
     params = {'user_id': user_id}
     return list_rows(db_conn, query, params)
+
+
+def list_all_subject_entity_ids(db_conn):
+    """
+    List all subject entity ids.
+    """
+
+    query = """
+        SELECT entity_id
+        FROM subjects;
+    """
+    params = {}
+    return [
+        row['entity_id']
+        for row in list_rows(db_conn, query, params)
+    ]

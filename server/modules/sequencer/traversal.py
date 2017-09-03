@@ -2,7 +2,7 @@ from modules.sequencer.params import max_learned, max_belief  # , diag_belief
 from database.response import get_latest_response
 from modules.sequencer.formulas import calculate_belief
 from time import time
-from database.entity_facade import list_units_in_subject
+from database.entity_facade import list_units_in_subject_recursive
 
 
 def traverse(db_conn, user, subject):
@@ -21,7 +21,7 @@ def traverse(db_conn, user, subject):
         - needs units under the status "review" or "learn", in priority order
     """
 
-    units = list_units_in_subject(db_conn, subject)
+    units = list_units_in_subject_recursive(db_conn, subject)
     unit_statuses = {
         unit['entity_id']: judge(db_conn, unit, user)
         for unit in units

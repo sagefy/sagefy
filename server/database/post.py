@@ -18,6 +18,76 @@ def get_post_schema(data):
     return mapping.get(kind) or post_schema
 
 
+def is_valid_reply(db_conn, data):
+    """
+    For Post, Proposal, Vote.
+
+    A reply must belong to the same topic.
+    - A post can reply to a post, proposal, or vote.
+    - A proposal can reply to a post, proposal, or vote.
+    - A vote may only reply to a proposal.
+    """
+
+    if data.get('replies_to_id'):
+        post_data = get_post(db_conn, {'id': data['replies_to_id']})
+        if post_data['topic_id'] != data['topic_id']:
+            return [{'message': 'A reply must be in the same topic.'}]
+    return []
+
+
+def validate_entity_versions(db_conn, data):
+    """
+    For Proposal.
+
+    Ensure all the entity versions exist.
+    """
+
+    from database.entity_facade import get_entity_version
+
+    for p_entity_version in data['entity_versions']:
+        entity_kind = p_entity_version['kind']
+        version_id = p_entity_version['id']
+        entity_version = get_entity_version(db_conn, entity_kind, version_id)
+        if not entity_version:
+            return [{
+                'name': 'entity_versions',
+                'message': 'Not a valid version: {entity_kind} {version_id}'
+                .format(
+                    entity_kind=entity_kind,
+                    version_id=version_id
+                ),
+            }]
+    return []
+
+
+def is_valid_reply_kind(db_conn, data):
+    """
+    For Vote.
+
+    A vote can reply to a proposal.
+    A vote cannot reply to a proposal that is accepted or declined.
+    A user cannot vote on their own proposal.
+    """
+
+    from database.entity_facade import get_entity_version
+
+    proposal_data = get_post(db_conn, {'id': data['replies_to_id']})
+    if not proposal_data:
+        return [{'message': 'No proposal found.'}]
+    if proposal_data['kind'] != 'proposal':
+        return [{'message': 'A vote must reply to a proposal.'}]
+    if proposal_data['user_id'] == data['user_id']:
+        return [{'message': 'You cannot vote on your own proposal.'}]
+    entity_kind = proposal_data['entity_versions'][0]['kind']
+    version_id = proposal_data['entity_versions'][0]['id']
+    entity_version = get_entity_version(db_conn, entity_kind, version_id)
+    if not entity_version:
+        return [{'message': 'No entity version for proposal.'}]
+    if entity_version['status'] in ('accepted', 'declined'):
+        return [{'message': 'Proposal is already complete.'}]
+    return []
+
+
 def insert_post(db_conn, data):
     """
     Create a new post.
@@ -38,6 +108,9 @@ def insert_post(db_conn, data):
         'body',
         'replies_to_id',
     ))
+    errors = is_valid_reply(db_conn, data)
+    if errors:
+        return None, errors
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         add_post_to_es(db_conn, data)
@@ -67,6 +140,12 @@ def insert_proposal(db_conn, data):
         'replies_to_id',
         'entity_versions',
     ))
+    errors = is_valid_reply(db_conn, data)
+    if errors:
+        return None, errors
+    errors = validate_entity_versions(db_conn, data)
+    if errors:
+        return None, errors
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         add_post_to_es(db_conn, data)
@@ -96,6 +175,12 @@ def insert_vote(db_conn, data):
         'replies_to_id',
         'response',
     ))
+    errors = is_valid_reply(db_conn, data)
+    if errors:
+        return None, errors
+    errors = is_valid_reply_kind(db_conn, data)
+    if errors:
+        return None, errors
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         add_post_to_es(db_conn, data)

@@ -6,9 +6,7 @@ schema = extend({}, default, {
     'fields': {
         'user_id': {},
         'kind': {},
-        'data': {
-            'default': {},
-        },
+        'data': {},
         'read': {},
         'tags': {},
     }

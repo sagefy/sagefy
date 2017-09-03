@@ -5,11 +5,11 @@ from modules.sequencer.card_chooser import choose_card
 from database.user import get_learning_context, set_learning_context
 from database.my_recently_created import get_my_recently_created_subjects
 from config import config
-from database.entity_facade import list_subjects_by_unit_id, \
-    list_units_in_subject
 from database.subject import deliver_subject, insert_subject, \
     get_latest_accepted_subject
+from database.entity_facade import list_subjects_by_unit_recursive
 from database.unit import deliver_unit, get_latest_accepted_unit
+from database.entity_facade import list_units_in_subject_recursive
 from modules.util import extend
 from copy import deepcopy
 from database.subject import list_latest_accepted_subjects, \
@@ -41,7 +41,7 @@ def get_subject_route(request, subject_id):
     if not subject:
         return abort(404)
     # TODO-2 SPLITUP create new endpoints for these instead
-    units = list_units_in_subject(db_conn, subject)
+    units = list_units_in_subject_recursive(db_conn, subject)
     return 200, {
         'subject': deliver_subject(subject),
         # TODO-3 subject parameters
@@ -116,7 +116,7 @@ def get_subject_tree_route(request, subject_id):
     subject = get_latest_accepted_subject(db_conn, subject_id)
     if not subject:
         return abort(404)
-    units = list_units_in_subject(db_conn, subject)
+    units = list_units_in_subject_recursive(db_conn, subject)
     # For the menu, it must return the name and ID of the subject
     output = {
         'subjects': deliver_subject(subject),
@@ -196,7 +196,7 @@ def choose_unit_route(request, subject_id, unit_id):
     context = get_learning_context(current_user)
     subject_ids = [
         subject['entity_id']
-        for subject in list_subjects_by_unit_id(db_conn, unit_id)]
+        for subject in list_subjects_by_unit_recursive(db_conn, unit_id)]
     if context.get('subject', {}).get('entity_id') not in subject_ids:
         return abort(400)
     status = judge(db_conn, unit, current_user)

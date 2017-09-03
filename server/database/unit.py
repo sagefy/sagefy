@@ -5,12 +5,34 @@ from database.util import deliver_fields
 from database.entity_base import save_entity_to_es
 from database.util import insert_row, update_row, get_row, list_rows
 from modules.util import convert_slug_to_uuid
-from database.subject import get_latest_accepted_subject
+
+
+def ensure_requires(db_conn, data):
+    """
+
+    """
+
+    units = list_latest_accepted_units(db_conn, data['require_ids'])
+    if len(data['require_ids']) != len(units):
+        return [{'message': 'Didn\'t find all requires.'}]
+    return []
+
+
+def ensure_no_cycles(db_conn, data):
+    """
+    Ensure no require cycles form.
+    """
+
+    from database.entity_facade import find_requires_cycle
+
+    if find_requires_cycle(db_conn, 'units', data):
+        return [{'message': 'Found a cycle in requires.'}]
+    return []
 
 
 def insert_unit(db_conn, data):
     """
-    Create a card, saving to ES.
+    Create a unit, saving to ES.
     """
 
     schema = unit_schema
@@ -29,6 +51,9 @@ def insert_unit(db_conn, data):
         FROM temp
         RETURNING *;
     """
+    errors = ensure_requires(db_conn, data) + ensure_no_cycles(db_conn, data)
+    if errors:
+        return None, errors
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         save_entity_to_es('unit', deliver_unit(data, access='view'))
@@ -48,7 +73,7 @@ def insert_unit(db_conn, data):
 
 def update_unit(db_conn, prev_data, data):
     """
-    Update a card versions's status and available. [hidden]
+    Update a unit versions's status and available. [hidden]
     """
 
     schema = unit_schema
@@ -127,6 +152,22 @@ def list_many_unit_versions(db_conn, version_ids):
     return list_rows(db_conn, query, params)
 
 
+def get_unit_version(db_conn, version_id):
+    """
+    Get a unit version.
+    """
+
+    query = """
+        SELECT *
+        FROM units
+        WHERE version_id = %(version_id)s
+        ORDER BY created DESC;
+        /* TODO LIMIT OFFSET */
+    """
+    params = {'version_id': version_id}
+    return list_rows(db_conn, query, params)
+
+
 def list_one_unit_versions(db_conn, entity_id):
     """
     List Unit Versions by EID
@@ -181,6 +222,8 @@ def list_units_by_subject_flat(db_conn, subject_id):
     List Units by Subject EID
     """
 
+    from database.subject import get_latest_accepted_subject
+
     subject = get_latest_accepted_subject(db_conn, subject_id)
     unit_ids = [
         member['id']
@@ -204,3 +247,19 @@ def list_my_recently_created_units(db_conn, user_id):
     """
     params = {'user_id': user_id}
     return list_rows(db_conn, query, params)
+
+
+def list_all_unit_entity_ids(db_conn):
+    """
+    List all unit entity ids.
+    """
+
+    query = """
+        SELECT entity_id
+        FROM units;
+    """
+    params = {}
+    return [
+        row['entity_id']
+        for row in list_rows(db_conn, query, params)
+    ]

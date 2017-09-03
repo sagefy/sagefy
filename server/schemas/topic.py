@@ -7,8 +7,7 @@ schema = extend({}, default, {
     'fields': {
         'user_id': {},
         'name': {},
-        'entity_id': {  # TODO-1 validate foreign (circular)
-        },
+        'entity_id': {},
         'entity_kind': {},
     }
 })

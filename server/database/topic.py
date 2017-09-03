@@ -6,6 +6,8 @@ from modules.util import json_prep, pick
 from modules.util import convert_slug_to_uuid
 
 
+# TODO-1 validate foreign on entity_id
+
 def insert_topic(db_conn, data):
     """
     Create a new topic.

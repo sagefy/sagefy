@@ -18,8 +18,7 @@ schema = extend({}, default, {
         'modified': {
             'access': ('private',),
         },
-        'name': {
-        },
+        'name': {},
         'email': {
             'access': ('private',),
         },
@@ -53,5 +52,4 @@ schema = extend({}, default, {
             }
         }
     },
-    'validate': tuple(),
 })

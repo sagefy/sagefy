@@ -9,6 +9,6 @@ schema = extend({}, default, {
         'unit_id': {},
         'response': {},
         'score': {},
-        'learned': {}
-    }
+        'learned': {},
+    },
 })

@@ -1,6 +1,6 @@
 from framework.routes import get, post, delete, abort
 from framework.session import get_current_user
-from database.follow import get_follow, list_follows, insert_follow, \
+from database.follow import get_follow, list_follows_by_user, insert_follow, \
     deliver_follow, delete_follow
 from database.user import get_user
 
@@ -27,7 +27,7 @@ def get_follows_route(request):
             return abort(401)
     params = dict(**request['params'])
     params['user_id'] = user['id']
-    follows = list_follows(db_conn, params)
+    follows = list_follows_by_user(db_conn, params)
     return 200, {
         'follows': [deliver_follow(follow, access='private')
                     for follow in follows]

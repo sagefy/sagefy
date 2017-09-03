@@ -22,35 +22,39 @@ def has_correct_options(options):
 
 schema = extend({}, card_schema, {
     'fields': {
-        'body': {  # Question field
-            'validate': (is_required, is_string,),
-        },
-        'options': {  # Available answers
-            'validate': (is_required, is_list, (has_min_length, 1),
-                         has_correct_options),
-            'embed_many': {
-                'value': {
+        'data': {
+            'embed': {
+                'body': {  # Question field
                     'validate': (is_required, is_string,),
                 },
-                'correct': {
-                    'validate': (is_required, is_boolean,),
+                'options': {  # Available answers
+                    'validate': (is_required, is_list, (has_min_length, 1),
+                                 has_correct_options),
+                    'embed_many': {
+                        'value': {
+                            'validate': (is_required, is_string,),
+                        },
+                        'correct': {
+                            'validate': (is_required, is_boolean,),
+                            'access': ('view',),
+                        },
+                        'feedback': {
+                            'validate': (is_required, is_string,),
+                            'access': ('view',),
+                        },
+                    }
+                },
+                'order': {
+                    'validate': (is_string, (is_one_of, 'random', 'set')),
+                    'default': 'random',
                     'access': ('view',),
                 },
-                'feedback': {
-                    'validate': (is_required, is_string,),
+                'max_options_to_show': {
+                    'validate': (is_integer,),
+                    'default': 4,
                     'access': ('view',),
                 },
-            }
+            },
         },
-        'order': {
-            'validate': (is_string, (is_one_of, 'random', 'set')),
-            'default': 'random',
-            'access': ('view',),
-        },
-        'max_options_to_show': {
-            'validate': (is_integer,),
-            'default': 4,
-            'access': ('view',),
-        }
-    }
+    },
 })
