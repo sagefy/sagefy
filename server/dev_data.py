@@ -13,7 +13,7 @@ from framework.redis import redis
 from datetime import datetime, timezone
 import uuid
 from modules.util import convert_uuid_to_slug
-from database.util import save_row
+from database.util import save_row, delete_row
 
 
 if not config['debug']:
@@ -88,7 +88,8 @@ for user in users:
            name  ,   email,   password  ,   settings)
         VALUES
         (%(id)s, %(created)s, %(modified)s,
-         %(name)s, %(email)s, %(password)s, %(settings)s);
+         %(name)s, %(email)s, %(password)s, %(settings)s)
+        RETURNING *;
     """
     params = user
     save_row(db_conn, query, params)
@@ -96,6 +97,11 @@ for user in users:
 
 # We have to translate the sample IDs to UUIDs
 entity_ids_lookup = {}
+
+query = """
+    ALTER TABLE units DISABLE TRIGGER ALL;
+"""
+delete_row(db_conn, query, {})
 
 for sample_id, unit_data in sample_data['units'].items():
     unit_data['version_id'] = uuid.uuid4()
@@ -111,11 +117,8 @@ for sample_id, unit_data in sample_data['units'].items():
         u_require_ids.append(entity_ids_lookup[id_])
     unit_data['require_ids'] = u_require_ids
 
-    cur = db_conn.cursor()
     # Dropping foreign key checks so the ordering doesn't matter.
     query = """
-        BEGIN;
-        ALTER TABLE units DISABLE TRIGGER ALL;
         INSERT INTO units_entity_id
         (  entity_id  )
         VALUES
@@ -129,9 +132,8 @@ for sample_id, unit_data in sample_data['units'].items():
         (%(version_id)s, %(created)s, %(modified)s,
          %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
          %(available)s, %(tags)s, %(name)s, %(user_id)s,
-         %(body)s, %(require_ids)s);
-        ALTER TABLE units ENABLE TRIGGER ALL;
-        COMMIT;
+         %(body)s, %(require_ids)s)
+        RETURNING *;
     """
     params = {
         'version_id': unit_data['version_id'],
@@ -150,6 +152,10 @@ for sample_id, unit_data in sample_data['units'].items():
     }
     save_row(db_conn, query, params)
 
+query = """
+    ALTER TABLE units ENABLE TRIGGER ALL;
+"""
+delete_row(db_conn, query, {})
 
 for card_data in sample_data['cards']['video']:
     card_data['entity_id'] = uuid.uuid4()
@@ -167,7 +173,8 @@ for card_data in sample_data['cards']['video']:
         (%(version_id)s, %(created)s, %(modified)s,
          %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
          %(available)s, %(tags)s, %(name)s, %(user_id)s,
-         %(unit_id)s, %(require_ids)s, %(kind)s, %(data)s);
+         %(unit_id)s, %(require_ids)s, %(kind)s, %(data)s)
+        RETURNING *;
     """
     params = {
         'version_id': uuid.uuid4(),
@@ -194,7 +201,6 @@ for card_data in sample_data['cards']['video']:
 
 for card_data in sample_data['cards']['choice']:
     card_data['entity_id'] = uuid.uuid4()
-    cur = db_conn.cursor()
     query = """
         INSERT INTO cards_entity_id
         (  entity_id  )
@@ -215,7 +221,8 @@ for card_data in sample_data['cards']['choice']:
           entity_id  ,   guess_distribution  ,   slip_distribution  )
         VALUES
         (%(id)s, %(created)s, %(modified)s,
-         %(entity_id)s, %(guess_distribution)s, %(slip_distribution)s);
+         %(entity_id)s, %(guess_distribution)s, %(slip_distribution)s)
+        RETURNING *;
     """
     params = {
         'id': uuid.uuid4(),
@@ -288,7 +295,8 @@ for sample_id, subject_data in sample_data['subjects'].items():
         (%(version_id)s, %(created)s, %(modified)s,
          %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
          %(available)s, %(tags)s, %(name)s, %(user_id)s,
-         %(body)s, %(members)s);
+         %(body)s, %(members)s)
+        RETURNING *;
     """
     params = {
         'version_id': uuid.uuid4(),
@@ -307,84 +315,135 @@ for sample_id, subject_data in sample_data['subjects'].items():
     }
     save_row(db_conn, query, params)
 
-"""
-TODO-1 Finish these
+
 for sample_id, unit_data in sample_data['units'].items():
     topic_id = uuid.uuid4()
     proposal_id = uuid.uuid4()
-    r.table('topics').insert({
+    query = """
+        INSERT INTO topics
+        (  id, created, modified,
+           user_id, name, entity_id, entity_kind)
+        VALUES
+        (%(id)s, %(created)s, %(modified)s,
+         %(user_id)s, %(name)s, %(entity_id)s, %(entity_kind)s)
+        RETURNING *;
+    """
+    params = {
         'id': topic_id,
         'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'user_id': 'doris',
+        'user_id': doris_id,
         'name': '%s is fun' % unit_data['name'],
-        'entity': {
-            'id': unit_data['entity_id'],
-            'kind': 'unit',
-        }
-    }).run(db_conn)
-    r.table('posts').insert([{
+        'entity_id': unit_data['entity_id'],
+        'entity_kind': 'unit',
+    }
+    save_row(db_conn, query, params)
+
+    posts = [{
         'id': uuid.uuid4(),
         'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'user_id': 'doris',
+        'user_id': doris_id,
         'topic_id': topic_id,
         'body': '%s is such learning funness. ' % unit_data['name'] +
                 'I dream about it all day long. ' +
                 'What could be better?',
         'kind': 'post',
         'replies_to_id': None,
+        'entity_versions': psycopg2.extras.Json([]),
+        'response': None,
     }, {
         'id': proposal_id,
         'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'user_id': 'doris',
+        'user_id': doris_id,
         'topic_id': topic_id,
         'body': 'I think we should do something to %s.' % unit_data['name'],
         'kind': 'proposal',
         'replies_to_id': None,
-        'entity_versions': [{
-            'id': unit_data['version_id'],
+        'entity_versions': psycopg2.extras.Json([{
+            'id': convert_uuid_to_slug(unit_data['version_id']),
             'kind': 'unit',
-        }],
+        }]),
         'name': 'Lets change %s' % unit_data['name'],
+        'response': None,
     }, {
         'id': uuid.uuid4(),
         'created': datetime(2014, 1, 2, tzinfo=timezone.utc),
         'modified': datetime(2014, 1, 2, tzinfo=timezone.utc),
-        'user_id': 'doris',
+        'user_id': doris_id,
         'topic_id': topic_id,
         'body': 'I agree.',
         'kind': 'vote',
         'replies_to_id': proposal_id,
         'response': True,
-    }]).run(db_conn)
-    r.table('follows').insert({
+        'entity_versions': psycopg2.extras.Json([]),
+    }]
+
+    for post in posts:
+        query = """
+            INSERT INTO posts
+            (id, created, modified,
+             kind, body, replies_to_id,
+             entity_versions, response, user_id,
+             topic_id)
+            VALUES
+            (%(id)s, %(created)s, %(modified)s,
+             %(kind)s, %(body)s, %(replies_to_id)s,
+             %(entity_versions)s, %(response)s, %(user_id)s,
+             %(topic_id)s)
+            RETURNING *;
+        """
+        params = post
+        save_row(db_conn, query, params)
+
+    query = """
+        INSERT INTO follows
+        (id, created, modified,
+         user_id, entity_id, entity_kind)
+        VALUES
+        (%(id)s, %(created)s, %(modified)s,
+         %(user_id)s, %(entity_id)s, %(entity_kind)s)
+        RETURNING *;
+    """
+    params = {
         'id': uuid.uuid4(),
         'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'user_id': 'doris',
-        'entity': {
-            'id': unit_data['entity_id'],
-            'kind': 'unit',
-        }
-    }).run(db_conn)
-    r.table('notices').insert({
+        'user_id': doris_id,
+        'entity_id': unit_data['entity_id'],
+        'entity_kind': 'unit',
+    }
+    save_row(db_conn, query, params)
+
+    query = """
+        INSERT INTO notices
+        (id, created, modified,
+         user_id, kind, data, read, tags)
+        VALUES
+        (%(id)s, %(created)s, %(modified)s,
+         %(user_id)s, %(kind)s, %(data)s, %(read)s, %(tags)s)
+        RETURNING *;
+    """
+    params = {
         'id': uuid.uuid4(),
         'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'user_id': 'doris',
+        'user_id': doris_id,
         'kind': 'create_topic',
-        'data': {
+        'data': psycopg2.extras.Json({
             'user_name': 'Eileen',
             'topic_name': '%s is fun' % unit_data['name'],
             'entity_kind': 'unit',
             'entity_name': unit_data['name'],
-        },
+        }),
         'read': False,
         'tags': [],
-    }).run(db_conn)
+    }
+    save_row(db_conn, query, params)
 
+"""
+TODO
 
 r.table('users_subjects').insert({
     'id': 'doris-subjects',
@@ -396,6 +455,7 @@ r.table('users_subjects').insert({
         for sample_id, subject_data in sample_data['subjects'].items()
     ],
 }).run(db_conn)
+
 """
 
 close_db_connection(db_conn)

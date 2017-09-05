@@ -1,8 +1,9 @@
-from modules.util import extend
+from modules.util import extend, convert_uuid_to_slug
 from modules.validations import is_required, is_string, is_list, \
     is_one_of, is_boolean, is_integer, has_min_length
 from schemas.card import schema as card_schema
 from modules.content import get as c
+import uuid
 
 
 def has_correct_options(options):
@@ -20,6 +21,10 @@ def has_correct_options(options):
         return c('error_need_correct')
 
 
+def create_uuid_b64():
+    return convert_uuid_to_slug(uuid.uuid4())
+
+
 schema = extend({}, card_schema, {
     'fields': {
         'data': {
@@ -31,6 +36,10 @@ schema = extend({}, card_schema, {
                     'validate': (is_required, is_list, (has_min_length, 1),
                                  has_correct_options),
                     'embed_many': {
+                        'id': {
+                            'validate': (is_required, is_string,),
+                            'default': create_uuid_b64,
+                        },
                         'value': {
                             'validate': (is_required, is_string,),
                         },
