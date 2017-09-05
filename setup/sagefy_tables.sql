@@ -50,7 +50,8 @@ CREATE TABLE users (
     name        text            NOT NULL UNIQUE,
     email       text            NOT NULL UNIQUE
         CONSTRAINT email_check CHECK (email ~* '^\S+@\S+\.\S+$'),
-    password    varchar(60)     NOT NULL,
+    password    varchar(60)     NOT NULL
+        CONSTRAINT pass_check CHECK (password ~* '^\$2a\$.*$'),
     settings    jsonb           NOT NULL
         /* jsonb?: add new settings without alter table */
 );

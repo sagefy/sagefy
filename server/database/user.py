@@ -7,8 +7,8 @@ from database.util import insert_row, update_row, get_row, list_rows, \
 from framework.elasticsearch import es
 import json
 from framework.redis import redis
-from modules.util import uniqid, pick, compact_dict, json_serial, \
-    json_prep, convert_slug_to_uuid
+from modules.util import pick, compact_dict, json_serial, \
+    json_prep, convert_slug_to_uuid, convert_uuid_to_slug
 from modules.content import get as c
 from framework.mail import send_mail
 import uuid
@@ -294,21 +294,23 @@ def get_email_token(user, send_email=True):
     Create an email token for the user to reset their password.
     """
 
-    token = uniqid()
+    token = convert_uuid_to_slug(uuid.uuid4())
+    slugged_user_id = convert_uuid_to_slug(user['id'])
     redis.setex(
-        'user_password_token_{id}'.format(id=user['id']),  # key
+        'user_password_token_{id}'.format(id=slugged_user_id),  # key
         60 * 10,  # time
-        bcrypt.encrypt(user['id'] + token)  # value
+        bcrypt.encrypt(slugged_user_id + token)  # value
     )
     if send_email:
+        url = '%(base)spassword?id=%(id)s&token=%(token)s' % {
+            'base': 'https://sagefy.org/',
+            'id': slugged_user_id,
+            'token': token,
+        }
         send_mail(
             subject='Sagefy - Reset Password',
             recipient=user['email'],
-            body=c('change_password_url').replace(
-                '{url}',
-                '%spassword?id=%s&token=%s' %
-                ('https://sagefy.org/', user['id'], token)
-            )
+            body=c('change_password_url').replace('{url}', url)
         )
     return token
 
@@ -318,10 +320,11 @@ def is_valid_token(user, token):
     Ensure the given token is valid.
     """
 
-    key = 'user_password_token_{id}'.format(id=user['id'])
+    slugged_user_id = convert_slug_to_uuid(user['id'])
+    key = 'user_password_token_{id}'.format(id=slugged_user_id)
     entoken = redis.get(key)
     redis.delete(key)
     if entoken:
         entoken = entoken.decode()
-        return bcrypt.verify(user['id'] + token, entoken)
+        return bcrypt.verify(slugged_user_id + token, entoken)
     return False
