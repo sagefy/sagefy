@@ -1,6 +1,7 @@
 from database.user import get_user
 from framework.redis import redis
-from modules.util import uniqid
+from modules.util import convert_uuid_to_slug
+import uuid
 
 
 def get_current_user(request):
@@ -11,9 +12,10 @@ def get_current_user(request):
     cookies = request.get('cookies', {})
     session_id = cookies.get('session_id')
     user_id = redis.get(session_id)
+    db_conn = request['db_conn']
     if user_id:
         user_id = user_id.decode()
-        return get_user({'id': user_id}, request['db_conn'])
+        return get_user(db_conn, {'id': user_id})
 
 
 def log_in_user(user):
@@ -21,11 +23,11 @@ def log_in_user(user):
     Log in the given user.
     """
 
-    session_id = uniqid()
+    session_id = convert_uuid_to_slug(uuid.uuid4())
     redis.setex(
         session_id,
         2 * 7 * 24 * 60 * 60,
-        user['id'],
+        convert_uuid_to_slug(user['id']),
     )
     return session_id
 

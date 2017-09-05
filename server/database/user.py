@@ -11,6 +11,7 @@ from modules.util import uniqid, pick, compact_dict, json_serial, \
     json_prep, convert_slug_to_uuid
 from modules.content import get as c
 from framework.mail import send_mail
+import uuid
 
 
 # TODO-2 should we use this to test passwords?
@@ -107,6 +108,19 @@ def add_user_to_es(user):
 
 def get_user(db_conn, params):
     """
+    Facade over id v email.
+    """
+
+    if params.get('id'):
+        return get_user_by_id(db_conn, params)
+    if params.get('email'):
+        return get_user_by_email(db_conn, params)
+    if params.get('name'):
+        return get_user_by_name(db_conn, params)
+
+
+def get_user_by_id(db_conn, params):
+    """
     Get the user by ID.
     """
 
@@ -117,7 +131,41 @@ def get_user(db_conn, params):
         LIMIT 1;
     """
     params = {
-        'id': params['id'],
+        'id': convert_slug_to_uuid(params['id']),
+    }
+    return get_row(db_conn, query, params)
+
+
+def get_user_by_email(db_conn, params):
+    """
+    Get the user by email.
+    """
+
+    query = """
+        SELECT *
+        FROM users
+        WHERE email = %(email)s
+        LIMIT 1;
+    """
+    params = {
+        'email': params['email'],
+    }
+    return get_row(db_conn, query, params)
+
+
+def get_user_by_name(db_conn, params):
+    """
+    Get the user by name.
+    """
+
+    query = """
+        SELECT *
+        FROM users
+        WHERE name = %(name)s
+        LIMIT 1;
+    """
+    params = {
+        'name': params['name'],
     }
     return get_row(db_conn, query, params)
 

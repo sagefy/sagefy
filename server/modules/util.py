@@ -39,6 +39,9 @@ def convert_uuid_to_slug(my_uuid):
     convert_uuid_to_slug(my_uuid)
     -> 'JAFGYFWhILcsiByyH2O9fg'
     """
+
+    if isinstance(my_uuid, str):
+        return my_uuid
     assert isinstance(my_uuid, uuid.UUID)
     return base64.urlsafe_b64encode(my_uuid.bytes)[:-2].decode()
 
@@ -52,6 +55,9 @@ def convert_slug_to_uuid(slug):
     convert_slug_to_uuid('JAFGYFWhILcsiByyH2O9fg')
     -> UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
     """
+
+    if isinstance(slug, uuid.UUID):
+        return slug
     assert isinstance(slug, str)
     slug = slug[0:22]
     return uuid.UUID(bytes=base64.urlsafe_b64decode(slug + '=='))
