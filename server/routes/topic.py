@@ -79,26 +79,24 @@ def create_topic_route(request):
         }
 
     # ## STEP 2) Add author as a follower
-    insert_follow({
+    insert_follow(db_conn, {
         'user_id': current_user['id'],
-        'entity': {
-            'id': topic['id'],
-            'kind': 'topic',
-        }
-    }, db_conn)
+        'entity_id': topic['id'],
+        'entity_kind': 'topic',
+    })
     # TODO-2 also follow the entity automatically IF needed
 
     # ## STEP 3) Send out any needed notices
     send_notices(
         db_conn,
-        entity_id=topic['entity']['id'],
-        entity_kind=topic['entity']['kind'],
+        entity_id=topic['entity_id'],
+        entity_kind=topic['entity_kind'],
         notice_kind='create_topic',
         notice_data={
             'user_name': current_user['name'],
             'topic_name': topic['name'],
-            'entity_kind': topic['entity']['kind'],
-            'entity_name': topic['entity']['id'],
+            'entity_kind': topic['entity_kind'],
+            'entity_name': topic['entity_id'],
         }
     )
 

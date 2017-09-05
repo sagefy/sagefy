@@ -8,10 +8,8 @@ module.exports = broker.add({
         }
         const [kind, id] = el.id.split('_')
         tasks.follow({
-            entity: {
-                id: id,
-                kind: kind,
-            },
+            entity_id: id,
+            entity_kind: kind,
         })
     },
 })

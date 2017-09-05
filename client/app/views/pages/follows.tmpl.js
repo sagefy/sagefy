@@ -17,8 +17,8 @@ module.exports = (data) => {
         a({ href: '/notices' }, icon('back'), ' Back to notices.'),
         follows(
             data.follows.map((follow) => {
-                const ofKinds = data[`${follow.entity.kind}s`] || {}
-                const entity = ofKinds[follow.entity.id]
+                const ofKinds = data[`${follow.entity_kind}s`] || {}
+                const entity = ofKinds[follow.entity_id]
                 follow = copy(follow)
                 follow.entityFull = entity || {}
                 return follow
@@ -35,7 +35,7 @@ const follows = (data) => {
 }
 
 const follow = (data) => {
-    const { kind } = data.entity
+    const kind = data.entity_kind
     const { name, body } = data.entityFull
     return li(
         { className: 'follow' },

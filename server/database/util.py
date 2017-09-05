@@ -91,7 +91,7 @@ def list_rows(db_conn, query, params):
     List rows using psycopg2.
     """
 
-    data = None
+    data = []
     try:
         db_curr = db_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         with db_curr:
@@ -108,7 +108,17 @@ def delete_row(db_conn, query, params):
     Delete a row using psycopg2.
     """
 
-    return save_row(db_conn, query, params)
+    errors = []
+    try:
+        db_curr = db_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        with db_curr:
+            db_curr.execute(query, params)
+            db_conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(query, error)
+        errors = [{'message': '@@ db error @@'}]
+        # TODO-1 parse through errors, make user friendly
+    return errors
 
 
 ###############################################################################

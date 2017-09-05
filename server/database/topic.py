@@ -22,6 +22,8 @@ def insert_topic(db_conn, data):
         RETURNING *;
     """
     data = pick(data, ('user_id', 'entity_id', 'entity_kind', 'name'))
+    if data.get('entity_id'):
+        data['entity_id'] = convert_slug_to_uuid(data['entity_id'])
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         add_topic_to_es(data)
@@ -62,7 +64,7 @@ def get_topic(db_conn, params):
         LIMIT 1;
     """
     params = {
-        'id': params['id'],
+        'id': convert_slug_to_uuid(params['id']),
     }
     return get_row(db_conn, query, params)
 

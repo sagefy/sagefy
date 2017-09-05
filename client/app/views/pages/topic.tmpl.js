@@ -76,8 +76,8 @@ module.exports = (data) => {
 }
 
 const entity = (topic, data) => {
-    const entityKind = topic.entity.kind
-    const entityID = topic.entity.id
+    const entityKind = topic.entity_kind
+    const entityID = topic.entity_id
     const entityObj =
         entityKind === 'card'
             ? data.cards[entityID]

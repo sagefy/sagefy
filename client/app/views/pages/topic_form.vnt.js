@@ -52,7 +52,7 @@ module.exports = broker.add({
         tasks.updateFormData(values)
     },
 
-    'change #topic-form.create [name="entity.kind"]'(e, el) {
+    'change #topic-form.create [name="entity_kind"]'(e, el) {
         const form = closest(el, 'form')
         const values = getFormValues(form)
         tasks.updateFormData(values)

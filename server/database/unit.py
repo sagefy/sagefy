@@ -115,7 +115,7 @@ def get_latest_accepted_unit(db_conn, entity_id):
         /* TODO LIMIT */
     """
     params = {
-        'entity_id': entity_id,
+        'entity_id': convert_slug_to_uuid(entity_id),
     }
     return get_row(db_conn, query, params)
 
@@ -180,7 +180,7 @@ def list_one_unit_versions(db_conn, entity_id):
         ORDER BY created DESC;
         /* TODO LIMIT OFFSET */
     """
-    params = {'entity_id': entity_id}
+    params = {'entity_id': convert_slug_to_uuid(entity_id)}
     return list_rows(db_conn, query, params)
 
 

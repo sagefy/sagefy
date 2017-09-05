@@ -1,7 +1,7 @@
 from schemas.follow import schema as follow_schema
 from database.util import deliver_fields
 from database.util import insert_row, get_row, list_rows, delete_row
-from modules.util import pick
+from modules.util import pick, convert_slug_to_uuid
 from database.topic import get_topic
 from database.entity_facade import list_one_entity_versions
 
@@ -20,6 +20,23 @@ def get_follow(db_conn, user_id, entity_id):
     params = {
         'user_id': user_id,
         'entity_id': entity_id,
+    }
+    return get_row(db_conn, query, params)
+
+
+def get_follow_by_id(db_conn, follow_id):
+    """
+    Find a specific follow (entity <-> user).
+    """
+
+    query = """
+        SELECT *
+        FROM follows
+        WHERE id = %(id)s
+        LIMIT 1;
+    """
+    params = {
+        'id': convert_slug_to_uuid(follow_id),
     }
     return get_row(db_conn, query, params)
 
@@ -83,6 +100,11 @@ def insert_follow(db_conn, data):
         RETURNING *;
     """
     data = pick(data, ('user_id', 'entity_id', 'entity_kind'))
+    data = {
+        'user_id': convert_slug_to_uuid(data.get('user_id')),
+        'entity_id': convert_slug_to_uuid(data.get('entity_id')),
+        'entity_kind': data.get('entity_kind'),
+    }
     errors = is_valid_entity(db_conn, data)
     if errors:
         return data, [{'message': 'invalid entity'}]
@@ -109,7 +131,7 @@ def delete_follow(db_conn, id_):
         WHERE id = %(id)s;
     """
     params = {
-        'id': id_,
+        'id': convert_slug_to_uuid(id_),
     }
     return delete_row(db_conn, query, params)
 

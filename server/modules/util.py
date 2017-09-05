@@ -3,29 +3,12 @@ Short, one-off methods that could potentially be reused anywhere.
 """
 
 from random import SystemRandom
-import string
 from datetime import datetime
 import collections
 import uuid
 import base64
 
 random = SystemRandom()
-
-
-def uniqid():
-    """
-    DEPRECATED. Switching to UUID to save space.
-    Using urlsafe_b64 to make it look nicer/shorter in UI.
-    -----
-    Generate a unique string with 24 characters.
-    https://stackoverflow.com/a/2257449
-    """
-    return ''.join(
-        random.choice(string.ascii_lowercase
-                      + string.ascii_uppercase
-                      + string.digits)
-        for i in range(24)
-    )
 
 
 # uuid.uuid4()  create a new UUID

@@ -35,10 +35,10 @@ const getFields = (formData) => {
     }
     fields = fields.concat([
         {
-            name: 'topic.entity.id',
+            name: 'topic.entity_id',
         },
         {
-            name: 'topic.entity.kind',
+            name: 'topic.entity_kind',
         },
         {
             name: 'topic.name',
@@ -76,8 +76,8 @@ const getEntitySummary = (data) => {
 
     if (topicID) {
         topic = data.topics && data.topics[topicID]
-        kind = topic.entity.kind
-        id = topic.entity.id
+        kind = topic.entity_kind
+        id = topic.entity_id
     } else {
         kind = data.routeQuery.kind
         id = data.routeQuery.id
@@ -105,9 +105,9 @@ module.exports = (data) => {
     const formData = extend({}, data.formData, {
         'topic.id': topic && topic.id,
         'topic.name': topic && topic.name,
-        'topic.entity.kind':
-            (topic && topic.entity.kind) || data.routeQuery.kind,
-        'topic.entity.id': (topic && topic.entity.kind) || data.routeQuery.id,
+        'topic.entity_kind':
+            (topic && topic.entity_kind) || data.routeQuery.kind,
+        'topic.entity_id': (topic && topic.entity_id) || data.routeQuery.id,
     })
 
     let fields = getFields(formData)

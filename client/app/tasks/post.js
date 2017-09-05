@@ -21,8 +21,8 @@ module.exports = tasks.add({
             )
             return Promise.all([
                 tasks.getTopic(id).then((response) => {
-                    const kind = response.topic.entity.kind
-                    const entityId = response.topic.entity.id
+                    const kind = response.topic.entity_kind
+                    const entityId = response.topic.entity_id
                     return tasks.getEntity(kind, entityId)
                 }),
                 tasks.listUsers(userIds, { size: 48 }),

@@ -1,6 +1,7 @@
 from framework.routes import get, post, delete, abort
 from framework.session import get_current_user
-from database.follow import get_follow, list_follows_by_user, insert_follow, \
+from database.follow import get_follow_by_id, list_follows_by_user, \
+    insert_follow, \
     deliver_follow, delete_follow
 from database.user import get_user
 
@@ -65,12 +66,12 @@ def unfollow_route(request, follow_id):
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    follow = get_follow(db_conn, {'id': follow_id})
+    follow = get_follow_by_id(db_conn, follow_id)
     if not follow:
         return abort(404)
     if follow['user_id'] != current_user['id']:
         return abort(403)
-    errors = delete_follow(db_conn, follow['id'])
+    errors = delete_follow(db_conn, follow_id)
     if errors:
         return 400, {
             'errors': errors,

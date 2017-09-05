@@ -1,19 +1,5 @@
 from modules import util
-import string
 import datetime
-
-
-def test_uniqid_length():
-    # Expect the length of the ID to be 24
-    assert len(util.uniqid()) is 24
-
-
-def test_uniqid_charset():
-    # Expect the ID to only have numbers and letters (mixed case)
-    uid = util.uniqid()
-    for c in uid:
-        assert c in (string.ascii_lowercase + string.ascii_uppercase +
-                     string.digits)
 
 
 def test_pick():

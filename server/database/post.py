@@ -101,13 +101,15 @@ def insert_post(db_conn, data):
         (%(user_id)s, %(topic_id)s, %(kind)s, %(body)s, %(replies_to_id)s)
         RETURNING *;
     """
-    data = pick(data, (
-        'user_id',
-        'topic_id',
-        'kind',
-        'body',
-        'replies_to_id',
-    ))
+    data = {
+        'user_id': convert_slug_to_uuid(data['user_id']),
+        'topic_id': convert_slug_to_uuid(data['topic_id']),
+        'kind': data['kind'],
+        'body': data.get('body'),
+        'replies_to_id': data.get('replies_to_id'),
+    }
+    if not data.get('replies_to_id'):
+        data['replies_to_id'] = None
     errors = is_valid_reply(db_conn, data)
     if errors:
         return None, errors

@@ -9,11 +9,11 @@ module.exports = {
         type: 'text',
         validations: [required],
     },
-    'entity.id': {
+    entity_id: {
         type: 'hidden',
         validations: [required],
     },
-    'entity.kind': {
+    entity_kind: {
         type: 'hidden',
         validations: [required],
     },

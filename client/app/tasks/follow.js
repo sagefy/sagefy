@@ -50,7 +50,7 @@ module.exports = tasks.add({
     },
 
     follow(data) {
-        dispatch({ type: 'FOLLOW', id: data.entity.id })
+        dispatch({ type: 'FOLLOW', id: data.entity_id })
         return request({
             method: 'POST',
             url: '/s/follows',
