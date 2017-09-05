@@ -39,7 +39,7 @@ def get_notice(db_conn, params):
         LIMIT 1;
     """
     params = {
-        'id': params['id'],
+        'id': convert_slug_to_uuid(params['id']),
     }
     return get_row(db_conn, query, params)
 
@@ -77,7 +77,9 @@ def list_notices(db_conn, params):
         ORDER BY created DESC;
         /* TODO OFFSET LIMIT */
     """
-    params = pick(params, ('user_id',))
+    params = {
+        'user_id': convert_slug_to_uuid(params['user_id'])
+    }
     return list_rows(db_conn, query, params)
 
 
