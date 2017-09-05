@@ -62,6 +62,7 @@ def save_row(db_conn, query, params):
         with db_curr:
             db_curr.execute(query, params)
             data = db_curr.fetchone()
+            db_conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         print(query, error)
         errors = [{'message': '@@ db error @@'}]
