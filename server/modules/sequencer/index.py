@@ -59,12 +59,11 @@ def update(db_conn, user, card, response):
     }
 
     card_parameters = get_card_parameters(
-        {'entity_id': card['entity_id']},
-        db_conn
+        db_conn,
+        {'entity_id': card['entity_id']}
     ) or {}
-    previous_response = get_latest_response(user['id'],
-                                            card['unit_id'],
-                                            db_conn)
+    previous_response = get_latest_response(db_conn, user['id'],
+                                            card['unit_id'])
 
     now = time()
     time_delta = now - (int(previous_response['created'].strftime("%s"))
@@ -92,14 +91,14 @@ def update(db_conn, user, card, response):
     }
     if card_parameters.get('id'):
         _, errors = update_card_parameters(
+            db_conn,
             card_parameters,
-            updated_card_parameters,
-            db_conn
+            updated_card_parameters
         )
     else:
         _, errors = insert_card_parameters(
-            updated_card_parameters,
-            db_conn
+            db_conn,
+            updated_card_parameters
         )
 
     if errors:

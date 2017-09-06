@@ -13,6 +13,7 @@ from modules.util import extend
 from copy import deepcopy
 from database.card import list_required_cards, list_required_by_cards, \
     list_latest_accepted_cards, list_one_card_versions, get_card_version
+from modules.util import convert_uuid_to_slug
 
 # from modules.sequencer.params import max_learned
 
@@ -81,12 +82,17 @@ def learn_card_route(request, card_id):
         return abort(404)
     # Make sure the current unit id matches the card
     context = get_learning_context(current_user)
-    if context.get('unit', {}).get('entity_id') != card['unit_id']:
-        return abort(400)
+    context_unit_id = context.get('unit', {}).get('entity_id')
+    if context_unit_id != convert_uuid_to_slug(card['unit_id']):
+        return 400, {
+            'errors': [{
+                'message': 'card not in current unit.',
+            }],
+        }
     next_ = {
         'method': 'POST',
         'path': '/s/cards/{card_id}/responses'
-                .format(card_id=card['entity_id'])
+                .format(card_id=convert_uuid_to_slug(card['entity_id']))
     }
     set_learning_context(current_user, card=card, next=next_)
     return 200, {
@@ -149,8 +155,13 @@ def respond_to_card_route(request, card_id):
         return abort(404)
     # Make sure the card is the current one
     context = get_learning_context(current_user)
-    if context.get('card', {}).get('entity_id') != card['entity_id']:
-        return abort(400)
+    context_card_id = context.get('card', {}).get('entity_id')
+    if context_card_id != convert_uuid_to_slug(card['entity_id']):
+        return 400, {
+            'errors': [{
+                'message': 'Not the current card.'
+            }]
+        }
     result = seq_update(db_conn, current_user, card,
                         request['params'].get('response'))
     errors, response, feedback = (result.get('errors'), result.get('response'),
@@ -177,7 +188,7 @@ def respond_to_card_route(request, card_id):
             next_ = {
                 'method': 'GET',
                 'path': '/s/cards/{card_id}/learn'
-                        .format(card_id=next_card['entity_id']),
+                        .format(card_id=convert_uuid_to_slug(next_card['entity_id'])),
             }
             set_learning_context(
                 current_user,
@@ -188,7 +199,7 @@ def respond_to_card_route(request, card_id):
             next_ = {
                 'method': 'GET',
                 'path': '/s/subjects/{subject_id}/units'
-                        .format(subject_id=subject['entity_id']),
+                        .format(subject_id=convert_uuid_to_slug(subject['entity_id'])),
             }
             set_learning_context(current_user,
                                  card=None, unit=None, next=next_)
@@ -198,7 +209,7 @@ def respond_to_card_route(request, card_id):
             next_ = {
                 'method': 'GET',
                 'path': '/s/subjects/{subject_id}/tree'
-                        .format(subject_id=subject['entity_id']),
+                        .format(subject_id=convert_uuid_to_slug(subject['entity_id'])),
             }
             set_learning_context(current_user,
                                  card=None, unit=None, next=next_)
@@ -210,7 +221,7 @@ def respond_to_card_route(request, card_id):
             next_ = {
                 'method': 'GET',
                 'path': '/s/cards/{card_id}/learn'
-                        .format(card_id=next_card['entity_id']),
+                        .format(card_id=convert_uuid_to_slug(next_card['entity_id'])),
             }
             set_learning_context(current_user, card=next_card, next=next_)
         else:

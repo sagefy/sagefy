@@ -40,7 +40,7 @@ def test_choice_options(db_conn, cards_table):
         'body': 'Testing 1234',
     })
     assert len(errors) == 1
-    card['options'] = [{
+    card['data']['options'] = [{
         'value': 'abadaba',
         'correct': True,
         'feedback': 'Bazaaa...'

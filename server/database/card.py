@@ -120,8 +120,8 @@ def validate_card_response(card, response):
 
     # If not a choice card, return [{'message': 'No response is valid.'}]
 
-    values = [opt['value'] for opt in card['options']]
-    if response not in values:
+    ids = [opt['id'] for opt in card['data']['options']]
+    if response not in ids:
         return [{'message': 'Value is not an option.'}]
     return []
 
@@ -134,8 +134,8 @@ def score_card_response(card, response):
 
     # If not a choice card, raise Exception("No method implemented.")
 
-    for opt in card['options']:
-        if response == opt['value']:
+    for opt in card['data']['options']:
+        if response == opt['id']:
             if opt['correct']:
                 return 1.0, opt['feedback']
             else:
@@ -304,7 +304,7 @@ def list_random_cards_in_unit(db_conn, unit_id, limit=10):
     """
     params = {
         'limit': limit,
-        'unit_id': unit_id,
+        'unit_id': convert_slug_to_uuid(unit_id),
     }
     return list_rows(db_conn, query, params)
 

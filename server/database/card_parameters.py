@@ -6,6 +6,7 @@ from modules.sequencer.params import init_guess, init_slip, precision, \
     init_transit
 from database.util import insert_row, update_row, get_row
 from modules.util import convert_slug_to_uuid, pick
+import psycopg2.extras
 
 
 def get_card_parameters(db_conn, params):
@@ -53,7 +54,7 @@ def update_card_parameters(db_conn, prev_data, data):
 
     schema = card_parameters_schema
     query = """
-        UPDATE card_parameters
+        UPDATE cards_parameters
         SET guess_distribution = %(guess_distribution)s,
             slip_distribution = %(slip_distribution)s
         WHERE entity_id = %(entity_id)s
@@ -61,8 +62,8 @@ def update_card_parameters(db_conn, prev_data, data):
     """
     data = {
         'entity_id': convert_slug_to_uuid(prev_data['entity_id']),
-        'guess_distribution': data['guess_distribution'],
-        'slip_distribution': data['slip_distribution'],
+        'guess_distribution': psycopg2.extras.Json(data['guess_distribution']),
+        'slip_distribution': psycopg2.extras.Json(data['slip_distribution']),
     }
     data, errors = update_row(db_conn, schema, query, prev_data, data)
     return data, errors

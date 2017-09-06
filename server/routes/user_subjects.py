@@ -104,7 +104,7 @@ def select_subject_route(request, user_id, subject_id):
         next_ = {
             'method': 'GET',
             'path': '/s/cards/{card_id}/learn'
-                    .format(card_id=card['entity_id']),
+                    .format(card_id=convert_uuid_to_slug(card['entity_id'])),
         }
         set_learning_context(
             current_user,
@@ -114,7 +114,7 @@ def select_subject_route(request, user_id, subject_id):
         next_ = {
             'method': 'GET',
             'path': '/s/subjects/{subject_id}/units'
-                    .format(subject_id=subject_id),
+                    .format(subject_id=convert_uuid_to_slug(subject_id)),
         }
         set_learning_context(current_user, next=next_)
     # If the subject is complete, lead the learner to choose another subject.
@@ -122,7 +122,7 @@ def select_subject_route(request, user_id, subject_id):
         next_ = {
             'method': 'GET',
             'path': '/s/users/{user_id}/subjects'
-                    .format(user_id=current_user['id']),
+                    .format(user_id=convert_uuid_to_slug(current_user['id'])),
         }
         set_learning_context(current_user, next=next_, unit=None, subject=None)
     return 200, {'next': next_}

@@ -201,18 +201,26 @@ def choose_unit_route(request, subject_id, unit_id):
     ]
     context_subject_id = context.get('subject', {}).get('entity_id')
     if context_subject_id not in subject_ids:
-        return abort(400)
-    status = judge(db_conn, unit, current_user)
+        return 400, {
+            'errors': [{
+                'message': 'Unit not in subject.'
+            }]
+        }
     # Or, the unit doesn't need to be learned...
+    status = judge(db_conn, unit, current_user)
     if status == "done":
-        return abort(400)
+        return 400, {
+            'errors': [{
+                'message': 'Unit not needed.'
+            }]
+        }
     # Choose a card for the learner to learn
     card = choose_card(db_conn, current_user, unit)
     if card:
         next_ = {
             'method': 'GET',
             'path': '/s/cards/{card_id}/learn'
-                    .format(card_id=card['entity_id']),
+                    .format(card_id=convert_uuid_to_slug(card['entity_id'])),
         }
     else:
         next_ = {}
