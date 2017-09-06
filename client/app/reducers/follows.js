@@ -11,7 +11,7 @@ module.exports = function follows(state = [], action = { type: '' }) {
         }
         const follow = action.follows[0]
         const follows = state
-        const index = follows.findIndex(f => f.entity.id === action.entityID)
+        const index = follows.findIndex(f => f.entity_id === action.entityID)
         if (index > -1) {
             follows[index] = follow
         } else {

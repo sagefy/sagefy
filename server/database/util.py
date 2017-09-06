@@ -20,6 +20,8 @@ def insert_row(db_conn, schema, query, data):
     # TODO-1 fix this ###
     if data.get('settings'):
         data['settings'] = psycopg2.extras.Json(data['settings'])
+    if data.get('data'):
+        data['data'] = psycopg2.extras.Json(data['data'])
     ###
 
     data, errors = save_row(db_conn, query, data)
@@ -43,6 +45,8 @@ def update_row(db_conn, schema, query, prev_data, data):
     # TODO-1 fix this ###
     if data.get('settings'):
         data['settings'] = psycopg2.extras.Json(data['settings'])
+    if data.get('data'):
+        data['data'] = psycopg2.extras.Json(data['data'])
     ###
 
     data, errors = save_row(db_conn, query, data)

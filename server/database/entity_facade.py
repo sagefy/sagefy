@@ -161,10 +161,10 @@ def update_entity_statuses(db_conn, proposal):
 
         tablename = '%ss' % entity_kind
         entity_version = get_entity_version(db_conn, tablename, version_id)
-        votes = list_posts({
+        votes = list_posts(db_conn, {
             'kind': 'vote',
             'replies_to_id': proposal['id'],
-        }, db_conn)
+        })
         changed, status = get_entity_status(entity_version['status'], votes)
 
         if changed:

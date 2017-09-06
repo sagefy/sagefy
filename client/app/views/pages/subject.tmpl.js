@@ -16,11 +16,11 @@ module.exports = (data) => {
     }
 
     // const following = data.follows &&
-    //            data.follows.find((f) => f.entity.id === subject.entity_id)
+    //            data.follows.find((f) => f.entity_id === subject.entity_id)
 
     const subjectVersions = data.subjectVersions && data.subjectVersions[id]
     const topics = Object.keys(data.topics)
-        .filter(topicId => data.topics[topicId].entity.id === id)
+        .filter(topicId => data.topics[topicId].entity_id === id)
         .map(topicId => data.topics[topicId])
 
     return div(

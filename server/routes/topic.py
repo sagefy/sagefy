@@ -10,6 +10,7 @@ from database.follow import insert_follow
 from database.topic import get_topic, deliver_topic, \
     update_topic, insert_topic, list_topics_by_entity_id
 from modules.content import get as c
+from modules.util import convert_uuid_to_slug
 
 
 @get('/s/topics/{topic_id}')
@@ -96,7 +97,7 @@ def create_topic_route(request):
             'user_name': current_user['name'],
             'topic_name': topic['name'],
             'entity_kind': topic['entity_kind'],
-            'entity_name': topic['entity_id'],
+            'entity_name': convert_uuid_to_slug(topic['entity_id']),
         }
     )
 

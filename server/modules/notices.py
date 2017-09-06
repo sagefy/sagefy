@@ -10,10 +10,10 @@ def send_notices(db_conn, entity_id, entity_kind, notice_kind, notice_data):
 
     user_ids = get_user_ids_by_followed_entity(db_conn, entity_id, entity_kind)
     for user_id in user_ids:
-        notice, errors = insert_notice({
+        notice, errors = insert_notice(db_conn, {
             'user_id': user_id,
             'kind': notice_kind,
             'data': notice_data,
-        }, db_conn)
+        })
         if errors:
             raise Exception(errors)

@@ -74,7 +74,7 @@ const matchesRoute = (docPath, viewPath) => {
     docPath = docPath.split('?')[0] // Only match the pre-query params
     if (isString(viewPath)) {
         viewPath = new RegExp(
-            `^${viewPath.replace(/\{([\d\w_\$]+)\}/g, '([^/]+)')}$`
+            `^${viewPath.replace(/\{([\d\w\-_\$]+)\}/g, '([^/]+)')}$`
         )
     }
     const match = docPath.match(viewPath)

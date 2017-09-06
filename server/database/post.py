@@ -268,7 +268,7 @@ def get_post(db_conn, params):
         LIMIT 1;
     """
     params = {
-        'id': params['id'],
+        'id': convert_slug_to_uuid(params['id']),
     }
     return get_row(db_conn, query, params)
 
@@ -286,7 +286,7 @@ def list_posts_by_topic(db_conn, params):
         /* TODO OFFSET LIMIT */
     """
     params = {
-        'topic_id': params['topic_id'],
+        'topic_id': convert_slug_to_uuid(params['topic_id']),
     }
     return list_rows(db_conn, query, params)
 

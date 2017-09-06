@@ -28,7 +28,7 @@ module.exports = (data) => {
     const cardVersions = data.cardVersions && data.cardVersions[id]
 
     const topics = Object.keys(data.topics)
-        .filter(topicId => data.topics[topicId].entity.id === id)
+        .filter(topicId => data.topics[topicId].entity_id === id)
         .map(topicId => data.topics[topicId])
 
     const params = card.card_parameters || {}

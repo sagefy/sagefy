@@ -4,6 +4,7 @@ from framework.session import get_current_user, log_in_user, log_out_user
 from database.user import get_user, insert_user, deliver_user, get_avatar, \
     update_user, is_password_valid, get_email_token, is_valid_token, \
     update_user_password, list_users_by_user_ids
+from modules.util import convert_uuid_to_slug
 
 
 def _log_in(user):
@@ -71,7 +72,7 @@ def list_users_route(request):
         return abort(404)
     size = int(request['params'].get('avatar') or 0) or None
     avatars = {
-        user['id']: get_avatar(user['email'], size)
+        convert_uuid_to_slug(user['id']): get_avatar(user['email'], size)
         for user in users
     }
     return 200, {

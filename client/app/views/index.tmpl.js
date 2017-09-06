@@ -90,7 +90,7 @@ const routes = [
         tmpl: require('./pages/create.tmpl'),
     },
     {
-        path: /^\/topics\/(create|[\d\w]+\/update)$/,
+        path: /^\/topics\/(create|[\d\w-_]+\/update)$/,
         tmpl: require('./pages/topic_form.tmpl'),
         // Must be before `topic`
     },
@@ -123,7 +123,7 @@ const routes = [
         tmpl: require('./pages/subject.tmpl'),
     },
     {
-        path: /^\/(card|unit|subject)s\/([\w\d-]+)\/versions$/,
+        path: /^\/(card|unit|subject)s\/([\w\d-_]+)\/versions$/,
         tmpl: require('./pages/versions.tmpl'),
     },
     {

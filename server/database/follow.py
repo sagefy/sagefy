@@ -78,7 +78,7 @@ def list_follows_by_entity(db_conn, params):
         /* TODO OFFSET LIMIT */
     """
     params = {
-        'entity_id': params['entity_id'],
+        'entity_id': convert_slug_to_uuid(params['entity_id']),
     }
     return list_rows(db_conn, query, params)
 

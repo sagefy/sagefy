@@ -8,6 +8,7 @@ from database.post import deliver_post, insert_post, \
 from database.entity_facade import update_entity_statuses
 from modules.notices import send_notices
 from copy import deepcopy
+from modules.util import convert_uuid_to_slug
 
 # TODO-1 remove /topics/{topic_id} from these routes.
 # TODO-2 re-enable diffs see object_diff
@@ -31,11 +32,11 @@ def get_posts_route(request, topic_id):
             }],
             'ref': 'pgnNbqSP1VUWkOYq8MVGPrSS',
         }
-    posts = list_posts_by_topic({
+    posts = list_posts_by_topic(db_conn, {
         'limit': request['params'].get('limit') or 10,
         'skip': request['params'].get('skip') or 0,
         'topic_id': topic_id,
-    }, db_conn)
+    })
     return 200, {
         'posts': [deliver_post(p) for p in posts],
     }
@@ -101,7 +102,7 @@ def create_post_route(request, topic_id):
             'user_name': current_user['name'],
             'topic_name': topic['name'],
             'entity_kind': topic['entity_kind'],
-            'entity_name': topic['entity_id'],
+            'entity_name': convert_uuid_to_slug(topic['entity_id']),
         }
     )
 

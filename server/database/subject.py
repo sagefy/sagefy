@@ -4,7 +4,8 @@ from schemas.subject import schema as subject_schema
 from database.util import deliver_fields
 from database.entity_base import save_entity_to_es
 from database.util import insert_row, update_row, get_row, list_rows
-from modules.util import convert_slug_to_uuid
+from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
+import re
 
 
 def is_valid_members(db_conn, data):
@@ -225,6 +226,9 @@ def list_subjects_by_unit_flat(db_conn, unit_id):
     List Subjects by Unit EID
     """
 
+    unit_id = convert_uuid_to_slug(unit_id)
+    # ENSURE THIS IS SQL SAFE
+    unit_id = re.sub(r'[^a-zA-Z0-9\-\_]', '', unit_id)
     query = """
         WITH temp AS (
             SELECT DISTINCT ON (entity_id) *
@@ -234,13 +238,11 @@ def list_subjects_by_unit_flat(db_conn, unit_id):
         )
         SELECT *
         FROM temp
-        WHERE %(unit_id)s @> members
+        WHERE members @> '[{"id":"%(unit_id)s"}]'
         ORDER BY created DESC;
         /* TODO limit offset */
-    """
-    params = {
-        'unit_id': unit_id,
-    }
+    """ % {'unit_id': unit_id}
+    params = {}
     return list_rows(db_conn, query, params)
 
 

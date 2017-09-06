@@ -193,12 +193,16 @@ def list_users_by_user_ids(db_conn, user_ids):
     query = """
         SELECT *
         FROM users
-        WHERE id in $(ids)s
+        WHERE id in %(user_ids)s
         ORDER BY created DESC;
         /* TODO OFFSET LIMIT */
     """
+    user_ids = tuple([
+        convert_slug_to_uuid(user_id)
+        for user_id in user_ids
+    ])
     params = {
-        'ids': user_ids,
+        'user_ids': user_ids,
     }
     return list_rows(db_conn, query, params)
 

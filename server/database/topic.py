@@ -107,7 +107,7 @@ def list_topics_by_entity_id(db_conn, entity_id, params):
         /* TODO OFFSET LIMIT */
     """
     params = {
-        'entity_id': entity_id,
+        'entity_id': convert_slug_to_uuid(entity_id),
     }
     return list_rows(db_conn, query, params)
 

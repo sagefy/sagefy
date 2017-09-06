@@ -28,14 +28,16 @@ module.exports = function previewCardContent({
     created,
     language,
     unit, // name, url = false
-    // video fields
-    video_id,
-    site,
-    // choice fields
-    body,
-    options, // [{correct, value, feedback}]
-    order,
-    maxOptionsToShow,
+    data: {
+        // video fields
+        video_id,
+        site,
+        // choice fields
+        body,
+        options, // [{correct, value, feedback}]
+        order,
+        maxOptionsToShow,
+    },
     // then all...
     requires,
     tags,

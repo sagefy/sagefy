@@ -17,6 +17,7 @@ module.exports = tasks.add({
         const total = entityVersions.length
         let count = 0
         return new Promise((resolve, reject) => {
+            if (total === 0) { resolve() }
             entityVersions.forEach((ev) => {
                 request({
                     method: 'GET',
