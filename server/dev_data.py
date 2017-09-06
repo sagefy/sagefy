@@ -24,9 +24,12 @@ db_conn = make_db_connection()
 
 for tablename in reversed((
     'users',
+    'units_entity_id',
     'units',
+    'cards_entity_id',
     'cards',
     'cards_parameters',
+    'subjects_entity_id',
     'subjects',
     'topics',
     'posts',

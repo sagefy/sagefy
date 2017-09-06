@@ -6,6 +6,7 @@ from database.user_subjects import insert_user_subject, list_user_subjects, \
 from database.subject import deliver_subject, get_latest_accepted_subject
 from modules.sequencer.traversal import traverse
 from modules.sequencer.card_chooser import choose_card
+from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
 
 
 @get('/s/users/{user_id}/subjects')
@@ -20,7 +21,7 @@ def get_user_subjects_route(request, user_id):
 
     db_conn = request['db_conn']
     current_user = get_current_user(request)
-    if not current_user or current_user['id'] != user_id:
+    if not current_user or current_user['id'] != convert_slug_to_uuid(user_id):
         user = get_user(db_conn, {'id': user_id})
         if not user:
             return abort(404)
@@ -31,8 +32,8 @@ def get_user_subjects_route(request, user_id):
         user = current_user
         if not current_user:
             return abort(401)
-    user_subjects = list_user_subjects_entity(
-        user_id, request['params'], db_conn)
+    params = request['params']
+    user_subjects = list_user_subjects_entity(db_conn, user_id, params)
     response = {
         'subjects': [
             deliver_subject(subject)
@@ -61,30 +62,19 @@ def add_subject_route(request, user_id, subject_id):
     current_user = get_current_user(request)
     if not current_user:
         return abort(401)
-    if user_id != current_user['id']:
+    if convert_slug_to_uuid(user_id) != current_user['id']:
         return abort(403)
     subject = get_latest_accepted_subject(db_conn, subject_id)
     if not subject:
         return abort(404)
-    user_subject = list_user_subjects(db_conn, user_id)
-    if user_subject and subject_id in user_subject['subject_ids']:
-        return 400, {
-            'errors': [{
-                'name': 'subject_id',
-                'message': 'Subject is already added.',
-            }],
-            'ref': 'kPZ95zM3oxFDGGl8vBdR3J3o',
-        }
-    user_subject, errors = insert_user_subject(db_conn, {
-        'user_id': user_id,
-        'subject_ids': [subject_id],
-    })
+    # TODO-1 handle if subject already added
+    user_subject, errors = insert_user_subject(db_conn, user_id, subject_id)
     if errors:
         return 400, {
             'errors': errors,
             'ref': 'zCFUbLBTg9n2DnTkQYbqO4X9'
         }
-    return 200, {'subjects': user_subject['subject_ids']}
+    return 200, {'user_subject': user_subject}
 
 
 @put('/s/users/{user_id}/subjects/{subject_id}')
@@ -150,13 +140,18 @@ def remove_subject_route(request, user_id, subject_id):
         return abort(401)
     if user_id != current_user['id']:
         return abort(403)
-    user_subject = list_user_subjects(db_conn, user_id)
-    if not user_subject:
+    user_subjects = list_user_subjects(db_conn, user_id)
+    if not user_subjects:
         return 404, {
             'errors': [{'message': 'User does not have subjects.'}],
             'ref': '8huZbvEAYOP8LcZb2sXbqNOC'
         }
-    if subject_id not in user_subject['subject_ids']:
+    matches = [
+        us
+        for us in user_subjects
+        if convert_uuid_to_slug(us['subject_id']) == subject_id
+    ]
+    if not matches:
         return abort(404)
     user_subject, errors = remove_user_subject(db_conn, user_id, subject_id)
     if errors:
@@ -164,4 +159,4 @@ def remove_subject_route(request, user_id, subject_id):
             'errors': errors,
             'ref': 'qIfll1e7dbP9V9jmC8FkCwsa'
         }
-    return 200, {'subjects': user_subject['subject_ids']}
+    return 200, {}

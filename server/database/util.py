@@ -64,7 +64,7 @@ def save_row(db_conn, query, params):
             data = db_curr.fetchone()
             db_conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
-        print(query, error)
+        print(error)
         errors = [{'message': '@@ db error @@'}]
         # TODO-1 parse through errors, make user friendly
     return data, errors
@@ -115,7 +115,7 @@ def delete_row(db_conn, query, params):
             db_curr.execute(query, params)
             db_conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
-        print(query, error)
+        print(error)
         errors = [{'message': '@@ db error @@'}]
         # TODO-1 parse through errors, make user friendly
     return errors

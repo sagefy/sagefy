@@ -5,6 +5,6 @@ schema = extend({}, default, {
     'tablename': 'users_subjects',
     'fields': {
         'user_id': {},
-        'subject_ids': {},
+        'subject_id': {},
     },
 })

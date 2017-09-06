@@ -5,9 +5,10 @@ Record the list of subjects the learner has added.
 from schemas.user_subjects import schema as user_subjects_schema
 from database.util import insert_row, list_rows, delete_row
 from database.subject import list_latest_accepted_subjects
+from modules.util import convert_slug_to_uuid
 
 
-def insert_user_subject(db_conn, data):
+def insert_user_subject(db_conn, user_id, subject_id):
     """
     Add a new user subjects entry to the database.
     """
@@ -21,8 +22,8 @@ def insert_user_subject(db_conn, data):
         RETURNING *;
     """
     data = {
-        'user_id': data['user_id'],
-        'subject_id': data['subject_id'],
+        'user_id': convert_slug_to_uuid(user_id),
+        'subject_id': convert_slug_to_uuid(subject_id),
     }
     data, errors = insert_row(db_conn, schema, query, data)
     return data, errors
@@ -40,7 +41,7 @@ def list_user_subjects(db_conn, user_id):
         ORDER BY created DESC;
         /* TODO OFFSET LIMIT */
     """
-    params = {'user_id': user_id}
+    params = {'user_id': convert_slug_to_uuid(user_id)}
     return list_rows(db_conn, query, params)
 
 
@@ -54,11 +55,11 @@ def remove_user_subject(db_conn, user_id, subject_id):
         WHERE user_id = %(user_id)s AND subject_id = %(subject_id)s;
     """
     params = {
-        'user_id': user_id,
-        'subject_id': subject_id,
+        'user_id': convert_slug_to_uuid(user_id),
+        'subject_id': convert_slug_to_uuid(subject_id),
     }
-    data, errors = delete_row(db_conn, query, params)
-    return data, errors
+    errors = delete_row(db_conn, query, params)
+    return errors
 
 
 def list_user_subjects_entity(db_conn, user_id, params):
@@ -69,7 +70,7 @@ def list_user_subjects_entity(db_conn, user_id, params):
 
     # TODO-2 each subject -- needs review?
     # TODO-2 order by last reviewed time
-    user_subjects = list_user_subjects(db_conn, user_id, )
+    user_subjects = list_user_subjects(db_conn, user_id)
     # TODO-3 limit = params.get('limit') or 10
     # TODO-3 skip = params.get('skip') or 0
     subject_ids = [data['subject_id'] for data in user_subjects]

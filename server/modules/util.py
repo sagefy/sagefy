@@ -2,27 +2,28 @@
 Short, one-off methods that could potentially be reused anywhere.
 """
 
-from random import SystemRandom
 from datetime import datetime
 import collections
 import uuid
 import base64
 
-random = SystemRandom()
-
-
 # uuid.uuid4()  create a new UUID
+
+"""
+Example:
+
+my_uuid = uuid.UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
+convert_uuid_to_slug(my_uuid)
+-> 'JAFGYFWhILcsiByyH2O9fg'
+
+convert_slug_to_uuid('JAFGYFWhILcsiByyH2O9frcU')
+-> UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
+convert_slug_to_uuid('JAFGYFWhILcsiByyH2O9fg')
+-> UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
+"""
 
 
 def convert_uuid_to_slug(my_uuid):
-    """
-    Example:
-
-    my_uuid = uuid.UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
-    convert_uuid_to_slug(my_uuid)
-    -> 'JAFGYFWhILcsiByyH2O9fg'
-    """
-
     if isinstance(my_uuid, str):
         return my_uuid
     assert isinstance(my_uuid, uuid.UUID)
@@ -30,15 +31,6 @@ def convert_uuid_to_slug(my_uuid):
 
 
 def convert_slug_to_uuid(slug):
-    """
-    Example:
-
-    convert_slug_to_uuid('JAFGYFWhILcsiByyH2O9frcU')
-    -> UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
-    convert_slug_to_uuid('JAFGYFWhILcsiByyH2O9fg')
-    -> UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
-    """
-
     if isinstance(slug, uuid.UUID):
         return slug
     assert isinstance(slug, str)

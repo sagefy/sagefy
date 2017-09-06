@@ -187,6 +187,8 @@ def list_latest_accepted_cards(db_conn, entity_ids):
     List Latest Accepted Card Versions by EIDs
     """
 
+    if not entity_ids:
+        return []
     query = """
         SELECT DISTINCT ON (entity_id) *
         FROM cards
@@ -194,7 +196,7 @@ def list_latest_accepted_cards(db_conn, entity_ids):
         ORDER BY entity_id, created DESC;
         /* TODO LIMIT OFFSET */
     """
-    params = {'entity_ids': entity_ids}
+    params = {'entity_ids': tuple(entity_ids)}
     return list_rows(db_conn, query, params)
 
 
