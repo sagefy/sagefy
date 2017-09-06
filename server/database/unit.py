@@ -134,7 +134,10 @@ def list_latest_accepted_units(db_conn, entity_ids):
         ORDER BY entity_id, created DESC;
         /* TODO LIMIT OFFSET */
     """
-    params = {'entity_ids': tuple(entity_ids)}
+    params = {'entity_ids': tuple([
+        convert_slug_to_uuid(entity_id)
+        for entity_id in entity_ids
+    ])}
     return list_rows(db_conn, query, params)
 
 

@@ -14,6 +14,7 @@ from modules.util import extend
 from copy import deepcopy
 from database.subject import list_latest_accepted_subjects, \
     list_one_subject_versions, get_subject_version
+from modules.util import convert_uuid_to_slug
 
 
 @get('/s/subjects/recommended')
@@ -195,9 +196,11 @@ def choose_unit_route(request, subject_id, unit_id):
     # If the unit isn't in the subject...
     context = get_learning_context(current_user)
     subject_ids = [
-        subject['entity_id']
-        for subject in list_subjects_by_unit_recursive(db_conn, unit_id)]
-    if context.get('subject', {}).get('entity_id') not in subject_ids:
+        convert_uuid_to_slug(subject['entity_id'])
+        for subject in list_subjects_by_unit_recursive(db_conn, unit_id)
+    ]
+    context_subject_id = context.get('subject', {}).get('entity_id')
+    if context_subject_id not in subject_ids:
         return abort(400)
     status = judge(db_conn, unit, current_user)
     # Or, the unit doesn't need to be learned...

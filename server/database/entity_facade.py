@@ -7,6 +7,7 @@ from database.subject import list_subjects_by_unit_flat, \
     get_subject_version, update_subject, list_one_subject_versions
 from database.unit import list_latest_accepted_units, \
     update_unit, get_unit_version, list_one_unit_versions
+from modules.util import convert_uuid_to_slug
 
 
 def get_entity_version(db_conn, kind, version_id):
@@ -46,6 +47,7 @@ def list_subjects_by_unit_recursive(db_conn, unit_id):
                 subject['entity_id']
                 for subject in found_subjects
             }
+            found_subjects = []
             for subject_id in subject_ids:
                 found_subjects += list_subject_parents(db_conn, subject_id)
 
@@ -100,6 +102,7 @@ def list_units_in_subject_recursive(db_conn, main_subject):
                 require_ids = unit_requires[unit_id] = \
                     set(unit.get('require_ids'))
                 for require_id in require_ids:
+                    require_id = convert_uuid_to_slug(require_id)
                     if require_id in unit_ids:
                         ids = {unit_id}
                         while ids:

@@ -169,7 +169,10 @@ def list_latest_accepted_subjects(db_conn, entity_ids):
         ORDER BY entity_id, created DESC;
         /* TODO LIMIT OFFSET */
     """
-    params = {'entity_ids': tuple(entity_ids)}
+    params = {'entity_ids': tuple([
+        convert_slug_to_uuid(entity_id)
+        for entity_id in entity_ids
+    ])}
     return list_rows(db_conn, query, params)
 
 
@@ -251,13 +254,24 @@ def list_subject_parents(db_conn, subject_id):
     List the direct parents of the subject specified.
     """
 
-    subject = get_latest_accepted_subject(db_conn, subject_id)
-    parent_ids = [
-        member['id']
-        for member in subject['members']
-        if member['kind'] == 'subject'
-    ]
-    return list_latest_accepted_subjects(db_conn, parent_ids)
+    subject_id = convert_uuid_to_slug(subject_id)
+    # ENSURE THIS IS SQL SAFE
+    subject_id = re.sub(r'[^a-zA-Z0-9\-\_]', '', subject_id)
+    query = """
+        WITH temp AS (
+            SELECT DISTINCT ON (entity_id) *
+            FROM subjects
+            WHERE status = 'accepted'
+            ORDER BY entity_id, created DESC
+        )
+        SELECT *
+        FROM temp
+        WHERE members @> '[{"id":"%(subject_id)s"}]'
+        ORDER BY created DESC;
+        /* TODO limit offset */
+    """ % {'subject_id': subject_id}
+    params = {}
+    return list_rows(db_conn, query, params)
 
 
 def list_my_recently_created_subjects(db_conn, user_id):

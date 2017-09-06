@@ -1,7 +1,7 @@
 from schemas.response import schema as response_schema
 from database.util import deliver_fields
 from database.util import insert_row, get_row
-from modules.util import pick
+from modules.util import pick, convert_slug_to_uuid
 
 
 def insert_response(db_conn, data):
@@ -43,8 +43,8 @@ def get_latest_response(db_conn, user_id, unit_id):
         LIMIT 1;
     """
     params = {
-        'user_id': user_id,
-        'unit_id': unit_id,
+        'user_id': convert_slug_to_uuid(user_id),
+        'unit_id': convert_slug_to_uuid(unit_id),
     }
     return get_row(db_conn, query, params)
 

@@ -112,9 +112,9 @@ def judge(db_conn, unit, user):
     """
 
     response = get_latest_response(
+        db_conn,
         user['id'],
-        unit['entity_id'],
-        db_conn
+        unit['entity_id']
     )
     if response:
         learned = response['learned']

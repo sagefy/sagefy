@@ -70,8 +70,8 @@ def choose_card(db_conn, user, unit):
             return nonassessment[0]
         for card in assessment:
             params = get_card_parameters(
-                {'entity_id': card['entity_id']},
-                db_conn
+                db_conn,
+                {'entity_id': card['entity_id']}
             )
             if params:
                 values = get_card_parameters_values(params)
