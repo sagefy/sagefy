@@ -30,10 +30,8 @@ module.exports = broker.add({
         const data = {
             topic: {
                 name: `Create a Subject: ${values.name}`,
-                entity: {
-                    id: '1rk0jS5EGEavSG4NBxRvPkZf',
-                    kind: 'unit',
-                },
+                entity_id: '1rk0jS5EGEavSG4NBxRvPkZf',
+                entity_kind: 'unit',
             },
             post: {
                 kind: 'proposal',

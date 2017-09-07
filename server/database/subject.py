@@ -6,6 +6,7 @@ from database.entity_base import save_entity_to_es
 from database.util import insert_row, update_row, get_row, list_rows
 from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
 import re
+import psycopg2.extras
 
 
 def is_valid_members(db_conn, data):
@@ -20,9 +21,9 @@ def is_valid_members(db_conn, data):
         entity_id, kind = member_desc['id'], member_desc['kind']
         entity = None
         if kind == 'unit':
-            entity = get_latest_accepted_unit(entity_id)
+            entity = get_latest_accepted_unit(db_conn, entity_id)
         elif kind == 'subject':
-            entity = get_latest_accepted_subject(entity_id)
+            entity = get_latest_accepted_subject(db_conn, entity_id)
         if not entity:
             return [{
                 'message': 'Not a valid entity.',
@@ -38,7 +39,6 @@ def ensure_no_cycles(db_conn, data):
     """
 
     seen = set()
-    main_id = data['entity_id']
     found = {'cycle': False}
 
     def _(members):
@@ -51,7 +51,7 @@ def ensure_no_cycles(db_conn, data):
         ]
         entities = list_latest_accepted_subjects(db_conn, entity_ids)
         for entity in entities:
-            if entity['entity_id'] == main_id:
+            if entity['entity_id'] in entity_ids:
                 found['cycle'] = True
                 break
             if entity['entity_id'] not in seen:
@@ -87,6 +87,12 @@ def insert_subject(db_conn, data):
         FROM temp
         RETURNING *;
     """
+    data = {
+        'name': data['name'],
+        'user_id': convert_slug_to_uuid(data['user_id']),
+        'body': data['body'],
+        'members': data.get('members', []),
+    }
     errors = is_valid_members(db_conn, data) + ensure_no_cycles(db_conn, data)
     if errors:
         return None, errors

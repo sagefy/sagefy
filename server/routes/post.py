@@ -77,7 +77,7 @@ def create_post_route(request, topic_id):
     post_kind = post_data.get('kind')
 
     # ## STEP 2) Validate and save post
-    post_, post_errors = insert_post(db_conn, post_data)
+    post_, post_errors = insert_post(db_conn, post_data)  # TODO-0
     if len(post_errors):
         return 400, {
             'errors': post_errors,
@@ -110,7 +110,7 @@ def create_post_route(request, topic_id):
     if post_kind == 'proposal':
         update_entity_statuses(db_conn, post_)
     if post_kind == 'vote':
-        proposal = get_post(db_conn, {'id': post_['replies_to_id']})
+        proposal = get_post(db_conn, {'id': post_['replies_to_id']})  # TODO-0
         update_entity_statuses(db_conn, proposal)
 
     # ## STEP 6) Return response
@@ -144,7 +144,7 @@ def update_post_route(request, topic_id, post_id):
 
     # ## STEP 2) Validate and save post instance ## #
     post_data = request['params']
-    post_, errors = update_post(db_conn, post_, post_data)
+    post_, errors = update_post(db_conn, post_, post_data)  # TODO-0
     if errors:
         return 400, {
             'errors': errors,
@@ -155,7 +155,7 @@ def update_post_route(request, topic_id, post_id):
     if post_kind == 'proposal':
         update_entity_statuses(db_conn, post_)
     if post_kind == 'vote':
-        proposal = get_post(db_conn, {'id': post_['replies_to_id']})
+        proposal = get_post(db_conn, {'id': post_['replies_to_id']})  # TODO-0
         update_entity_statuses(db_conn, proposal)
 
     # ## STEP 4) Return response ## #

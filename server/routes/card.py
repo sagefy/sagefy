@@ -275,7 +275,7 @@ def create_existing_card_version_route(request, card_id):
     if not current_card:
         return abort(404)
     card_data = extend({}, current_card, next_data)
-    card, errors = insert_card(db_conn, card_data)
+    # card, errors = insert_card(db_conn, card_data)
     if len(errors):
         return 400, {
             'errors': errors,

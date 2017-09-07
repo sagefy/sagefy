@@ -140,7 +140,8 @@ CREATE TABLE subjects (
     modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     entity_id   uuid            NOT NULL REFERENCES subjects_entity_id (entity_id),
     previous_id uuid            NULL REFERENCES subjects (version_id),
-    language    varchar(5)      NOT NULL DEFAULT 'en',
+    language    varchar(5)      NOT NULL DEFAULT 'en'
+        CONSTRAINT lang_check CHECK (language ~* '^\w{2}(-\w{2})?$'),
     name        text            NOT NULL,
     status      entity_status   NOT NULL DEFAULT 'pending',
     available   boolean         NOT NULL DEFAULT TRUE,
@@ -162,7 +163,8 @@ CREATE TABLE cards (
     modified    timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     entity_id   uuid            NOT NULL REFERENCES cards_entity_id (entity_id),
     previous_id uuid            NULL REFERENCES cards (version_id),
-    language    varchar(5)      NOT NULL DEFAULT 'en',
+    language    varchar(5)      NOT NULL DEFAULT 'en'
+        CONSTRAINT lang_check CHECK (language ~* '^\w{2}(-\w{2})?$'),
     name        text            NOT NULL,
     status      entity_status   NOT NULL DEFAULT 'pending',
     available   boolean         NOT NULL DEFAULT TRUE,

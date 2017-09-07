@@ -143,7 +143,7 @@ module.exports = tasks.add({
                 post.entity_versions = [
                     {
                         kind: 'subject',
-                        id: subjectResponse.version.id,
+                        id: subjectResponse.version.version_id,
                     },
                 ]
                 subjectId = subjectResponse.version.entity_id
@@ -159,10 +159,8 @@ module.exports = tasks.add({
         const { selectedSubject } = state.create
         const topic = {
             name: 'Add Units to This Subject',
-            entity: {
-                id: selectedSubject.id,
-                kind: 'subject',
-            },
+            entity_id: selectedSubject.id,
+            entity_kind: 'subject',
         }
 
         let topicId
@@ -232,10 +230,8 @@ module.exports = tasks.add({
         const { selectedUnit } = state.create
         const topic = {
             name: 'Add Cards to This Unit',
-            entity: {
-                id: selectedUnit.id,
-                kind: 'unit',
-            },
+            entity_id: selectedUnit.id,
+            entity_kind: 'unit',
         }
         let topicId
         return tasks
