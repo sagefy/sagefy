@@ -88,37 +88,8 @@ def list_units_in_subject_recursive(db_conn, main_subject):
         # *** Second, we need to find all
         #     the required connecting units. ***
 
-        next_grab, units, unit_requires = unit_ids, [], {}
-
-        while next_grab:
-            tier_units = list_latest_accepted_units(db_conn, next_grab)
-            units += tier_units
-            next_grab = set()
-
-            for unit in tier_units:
-                if 'require_ids' not in unit:
-                    continue
-                unit_id = unit['entity_id']
-                require_ids = unit_requires[unit_id] = \
-                    set(unit.get('require_ids'))
-                for require_id in require_ids:
-                    require_id = convert_uuid_to_slug(require_id)
-                    if require_id in unit_ids:
-                        ids = {unit_id}
-                        while ids:
-                            unit_ids.update(ids)
-                            ids = {unit_id
-                                   for unit_id, require_ids
-                                   in unit_requires.items()
-                                   if unit_id not in unit_ids
-                                   and require_ids & ids}
-                    elif require_id not in unit_requires:
-                        next_grab.add(require_id)
-
-        units = [unit
-                 for unit in units
-                 if unit['entity_id'] in unit_ids]
-
+        units = list_latest_accepted_units(db_conn, unit_ids)
+        # TODO-2 what about required units outside the subject?
         return units
 
     # If we already have it stored, use that
