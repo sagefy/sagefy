@@ -45,8 +45,8 @@ def validate_entity_versions(db_conn, data):
     from database.entity_facade import get_entity_version
 
     for p_entity_version in data['entity_versions']:
-        entity_kind = p_entity_version['kind']
-        version_id = p_entity_version['id']
+        entity_kind = p_entity_version.get('kind')
+        version_id = p_entity_version.get('id')
         entity_version = get_entity_version(db_conn, entity_kind, version_id)
         if not entity_version:
             return [{

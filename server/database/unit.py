@@ -130,6 +130,23 @@ def deliver_unit(data, access=None):
     return deliver_fields(schema, data, access)
 
 
+def does_unit_exist(db_conn, entity_id):
+    """
+    Just... is this a valid unit entity_id.
+    """
+
+    query = """
+        SELECT entity_id
+        FROM units_entity_id
+        WHERE entity_id = %(entity_id)s
+        LIMIT 1;
+    """
+    params = {
+        'entity_id': convert_slug_to_uuid(entity_id),
+    }
+    return get_row(db_conn, query, params)
+
+
 def get_latest_accepted_unit(db_conn, entity_id):
     """
     Get Latest Accepted Unit Version by EID

@@ -209,7 +209,7 @@ module.exports = tasks.add({
                     entity_versions: [
                         {
                             kind: 'subject',
-                            id: subjectResponse.version.id,
+                            id: subjectResponse.version.version_id,
                         },
                     ].concat(
                         unitVersionIds.map(unitId => ({

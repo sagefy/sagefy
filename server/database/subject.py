@@ -14,16 +14,16 @@ def is_valid_members(db_conn, data):
 
     """
 
-    from database.unit import get_latest_accepted_unit
+    from database.unit import does_unit_exist
 
     # TODO-3 this is going to be slow
     for member_desc in data['members']:
         entity_id, kind = member_desc['id'], member_desc['kind']
         entity = None
         if kind == 'unit':
-            entity = get_latest_accepted_unit(db_conn, entity_id)
+            entity = does_unit_exist(db_conn, entity_id)
         elif kind == 'subject':
-            entity = get_latest_accepted_subject(db_conn, entity_id)
+            entity = does_subject_exist(db_conn, entity_id)
         if not entity:
             return [{
                 'message': 'Not a valid entity.',
@@ -161,6 +161,23 @@ def deliver_subject(data, access=None):
 
     schema = subject_schema
     return deliver_fields(schema, data, access)
+
+
+def does_subject_exist(db_conn, entity_id):
+    """
+    Just... is this a valid subject entity_id.
+    """
+
+    query = """
+        SELECT entity_id
+        FROM subjects_entity_id
+        WHERE entity_id = %(entity_id)s
+        LIMIT 1;
+    """
+    params = {
+        'entity_id': convert_slug_to_uuid(entity_id),
+    }
+    return get_row(db_conn, query, params)
 
 
 def get_latest_accepted_subject(db_conn, entity_id):
