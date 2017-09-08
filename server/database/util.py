@@ -19,7 +19,7 @@ def convert_fields_to_pgjson(data):
     )
     for field in fields:
         if data.get(field):
-            data[field] = psycopg2.extras.Json(data)
+            data[field] = psycopg2.extras.Json(data[field])
     return data
 
 
@@ -74,7 +74,9 @@ def save_row(db_conn, query, params):
             db_conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         print('DB Error', query, error)
-        errors = [{'message': '@@ db error @@'}]
+        errors = [{
+            'message': 'There was an error. Contact <support@sagefy.org>.'
+        }]
         # TODO-1 parse through errors, make user friendly
     return data, errors
 
