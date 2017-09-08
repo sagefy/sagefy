@@ -19,7 +19,7 @@ def convert_fields_to_pgjson(data):
     )
     for field in fields:
         if data.get(field):
-            data[field] = psycopg2.extras.Json(field)
+            data[field] = psycopg2.extras.Json(data)
     return data
 
 
