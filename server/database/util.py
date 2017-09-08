@@ -4,6 +4,25 @@ import psycopg2
 import psycopg2.extras
 
 
+def convert_fields_to_pgjson(data):
+    """
+    Whatever. Ughh.. TODO-1 fix this.
+    """
+
+    fields = (
+        'settings',
+        'data',
+        'members',
+        'entity_versions',
+        'guess_distribution',
+        'slip_distribution',
+    )
+    for field in fields:
+        if data.get(field):
+            data[field] = psycopg2.extras.Json(field)
+    return data
+
+
 def insert_row(db_conn, schema, query, data):
     """
     Validate a row, then insert the row.
@@ -16,18 +35,7 @@ def insert_row(db_conn, schema, query, data):
     if errors:
         return None, errors
     data = bundle_fields(schema, data)
-
-    # TODO-1 fix this ###
-    if data.get('settings'):
-        data['settings'] = psycopg2.extras.Json(data['settings'])
-    if data.get('data'):
-        data['data'] = psycopg2.extras.Json(data['data'])
-    if data.get('members'):
-        data['members'] = psycopg2.extras.Json(data['members'])
-    if data.get('entity_versions'):
-        data['entity_versions'] = psycopg2.extras.Json(data['entity_versions'])
-    ###
-
+    data = convert_fields_to_pgjson(data)  # TODO-1 fix this
     data, errors = save_row(db_conn, query, data)
     return data, errors
 
@@ -45,18 +53,7 @@ def update_row(db_conn, schema, query, prev_data, data):
     if errors:
         return None, errors
     data = bundle_fields(schema, data)
-
-    # TODO-1 fix this ###
-    if data.get('settings'):
-        data['settings'] = psycopg2.extras.Json(data['settings'])
-    if data.get('data'):
-        data['data'] = psycopg2.extras.Json(data['data'])
-    if data.get('members'):
-        data['members'] = psycopg2.extras.Json(data['members'])
-    if data.get('entity_versions'):
-        data['entity_versions'] = psycopg2.extras.Json(data['entity_versions'])
-    ###
-
+    data = convert_fields_to_pgjson(data)  # TODO-1 fix this
     data, errors = save_row(db_conn, query, data)
     return data, errors
 

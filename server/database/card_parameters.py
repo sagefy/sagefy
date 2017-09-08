@@ -62,8 +62,8 @@ def update_card_parameters(db_conn, prev_data, data):
     """
     data = {
         'entity_id': convert_slug_to_uuid(prev_data['entity_id']),
-        'guess_distribution': psycopg2.extras.Json(data['guess_distribution']),
-        'slip_distribution': psycopg2.extras.Json(data['slip_distribution']),
+        'guess_distribution': data['guess_distribution'],
+        'slip_distribution': data['slip_distribution'],
     }
     data, errors = update_row(db_conn, schema, query, prev_data, data)
     return data, errors
