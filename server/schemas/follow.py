@@ -1,6 +1,6 @@
 from schemas.index import schema as default
 from modules.util import extend
-from modules.validation import is_required, is_uuid, is_string, is_one_of
+from modules.validations import is_required, is_uuid, is_string, is_one_of
 
 
 schema = extend({}, default, {

@@ -1,6 +1,6 @@
 from schemas.entity_base import schema as entity_schema
 from modules.util import extend
-from modules.valiations import is_required, is_uuid, is_list, is_string, \
+from modules.validations import is_required, is_uuid, is_list, is_string, \
     is_one_of, is_dict, is_list_of_uuids
 
 """
