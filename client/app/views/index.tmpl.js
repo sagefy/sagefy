@@ -90,7 +90,7 @@ const routes = [
         tmpl: require('./pages/create.tmpl'),
     },
     {
-        path: /^\/topics\/(create|[\d\w-_]+\/update)$/,
+        path: /^\/topics\/(create|[\d\w\-_]+\/update)$/,
         tmpl: require('./pages/topic_form.tmpl'),
         // Must be before `topic`
     },

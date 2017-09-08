@@ -49,7 +49,7 @@ const getFields = (formData) => {
 }
 
 const getTopicID = (data) => {
-    const match = data.route.match(/^\/topics\/([\d\w]+)\/update$/)
+    const match = data.route.match(/^\/topics\/([\d\w\-_]+)\/update$/)
     if (match) {
         return match[1]
     }

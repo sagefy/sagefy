@@ -80,7 +80,7 @@ const routes = [
         title: 'Create',
     },
     {
-        path: /^\/topics\/(create|[\d\w]+\/update)$/,
+        path: /^\/topics\/(create|[\d\w\-_]+\/update)$/,
         title: 'Topic',
         // Must be before `topic`
     },
