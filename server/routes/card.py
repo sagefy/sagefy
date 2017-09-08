@@ -9,10 +9,10 @@ from database.card_parameters import get_card_parameters, \
     get_card_parameters_values
 from database.card import deliver_card, insert_card, get_latest_accepted_card
 from database.unit import deliver_unit, get_latest_accepted_unit
-from modules.util import extend
 from copy import deepcopy
 from database.card import list_required_cards, list_required_by_cards, \
-    list_latest_accepted_cards, list_one_card_versions, get_card_version
+    list_latest_accepted_cards, list_one_card_versions, get_card_version, \
+    insert_card_version
 from modules.util import convert_uuid_to_slug
 
 # from modules.sequencer.params import max_learned
@@ -188,7 +188,8 @@ def respond_to_card_route(request, card_id):
             next_ = {
                 'method': 'GET',
                 'path': '/s/cards/{card_id}/learn'
-                        .format(card_id=convert_uuid_to_slug(next_card['entity_id'])),
+                        .format(card_id=convert_uuid_to_slug(
+                                next_card['entity_id'])),
             }
             set_learning_context(
                 current_user,
@@ -199,7 +200,8 @@ def respond_to_card_route(request, card_id):
             next_ = {
                 'method': 'GET',
                 'path': '/s/subjects/{subject_id}/units'
-                        .format(subject_id=convert_uuid_to_slug(subject['entity_id'])),
+                        .format(subject_id=convert_uuid_to_slug(
+                                subject['entity_id'])),
             }
             set_learning_context(current_user,
                                  card=None, unit=None, next=next_)
@@ -209,7 +211,8 @@ def respond_to_card_route(request, card_id):
             next_ = {
                 'method': 'GET',
                 'path': '/s/subjects/{subject_id}/tree'
-                        .format(subject_id=convert_uuid_to_slug(subject['entity_id'])),
+                        .format(subject_id=convert_uuid_to_slug(
+                                subject['entity_id'])),
             }
             set_learning_context(current_user,
                                  card=None, unit=None, next=next_)
@@ -221,7 +224,8 @@ def respond_to_card_route(request, card_id):
             next_ = {
                 'method': 'GET',
                 'path': '/s/cards/{card_id}/learn'
-                        .format(card_id=convert_uuid_to_slug(next_card['entity_id'])),
+                        .format(card_id=convert_uuid_to_slug(
+                                next_card['entity_id'])),
             }
             set_learning_context(current_user, card=next_card, next=next_)
         else:
@@ -271,11 +275,10 @@ def create_existing_card_version_route(request, card_id):
     next_data = deepcopy(request['params'])
     next_data['entity_id'] = card_id
     next_data['user_id'] = current_user['id']
-    current_card = get_latest_accepted_card(db_conn, card_id)
-    if not current_card:
+    current_data = get_latest_accepted_card(db_conn, card_id)
+    if not current_data:
         return abort(404)
-    card_data = extend({}, current_card, next_data)
-    # card, errors = insert_card(db_conn, card_data)
+    card, errors = insert_card_version(db_conn, current_data, next_data)
     if len(errors):
         return 400, {
             'errors': errors,

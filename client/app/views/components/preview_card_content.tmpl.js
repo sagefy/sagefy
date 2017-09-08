@@ -37,7 +37,7 @@ module.exports = function previewCardContent({
         options, // [{correct, value, feedback}]
         order,
         maxOptionsToShow,
-    },
+    } = {},
     // then all...
     requires,
     tags,

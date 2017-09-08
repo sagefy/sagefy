@@ -7,6 +7,7 @@ from database.util import deliver_fields
 from database.entity_base import save_entity_to_es
 from database.util import insert_row, save_row, get_row, list_rows
 from modules.util import convert_slug_to_uuid
+import uuid
 
 
 def get_card_schema(data):
@@ -22,8 +23,8 @@ def ensure_requires(db_conn, data):
 
     """
 
-    cards = list_latest_accepted_cards(db_conn, data['require_ids'])
-    if len(data['require_ids']) != len(cards):
+    cards = list_latest_accepted_cards(db_conn, data.get('require_ids', []))
+    if len(data.get('require_ids', [])) != len(cards):
         return [{'message': 'Didn\'t find all requires.'}]
     return []
 
@@ -42,7 +43,7 @@ def ensure_no_cycles(db_conn, data):
 
 def insert_card(db_conn, data):
     """
-    Create a card, saving to ES.
+    Create a new version of a new card, saving to ES.
     """
 
     schema = get_card_schema(data)
@@ -52,20 +53,26 @@ def insert_card(db_conn, data):
             'message': 'Missing card kind.',
         }]
     query = """
-        WITH temp AS (
-            INSERT INTO cards_entity_id (entity_id)
-            VALUES (uuid_generate_v4())
-            RETURNING entity_id
-        )
+        INSERT INTO cards_entity_id (entity_id)
+        VALUES (%(entity_id)s);
         INSERT INTO cards
-        (entity_id  ,   name  ,   user_id  ,   unit_id  ,
+        (  entity_id  ,   name  ,   user_id  ,   unit_id  ,
            require_ids  ,   kind  ,   data  )
-        SELECT
-         entity_id  , %(name)s, %(user_id)s, %(unit_id)s,
-         %(require_ids)s, %(kind)s, %(data)s
-        FROM temp
+        VALUES
+        (%(entity_id)s, %(name)s, %(user_id)s, %(unit_id)s,
+         %(require_ids)s, %(kind)s, %(data)s)
         RETURNING *;
     """
+    data = {
+        'entity_id': uuid.uuid4(),
+        'name': data['name'],
+        'user_id': convert_slug_to_uuid(data['user_id']),
+        'unit_id': convert_slug_to_uuid(data['unit_id']),
+        'require_ids': [convert_slug_to_uuid(require_id)
+                        for require_id in data.get('require_ids', [])],
+        'kind': data.get('kind'),
+        'data': data.get('data'),
+    }
     errors = ensure_requires(db_conn, data) + ensure_no_cycles(db_conn, data)
     if errors:
         return None, errors
@@ -75,15 +82,46 @@ def insert_card(db_conn, data):
     return data, errors
 
 
-# TODO insert card version, adding in previous version
-"""
-    previous_id = None  # TODO-1
-    latest = get_latest_accepted_card(db_conn, entity_id)
-    # if latest: data['previous_id'] = latest['version_id']
+def insert_card_version(db_conn, current_data, next_data):
+    """
+    Create a new version of an existing card, saving to ES.
+    """
+
+    schema = get_card_schema(current_data)
+    if not schema:
+        return None, [{
+            'name': 'kind',
+            'message': 'Missing card kind.',
+        }]
+    query = """
+        INSERT INTO cards
+        (  entity_id  ,   previous_id  ,   name  ,   user_id  ,   unit_id  ,
+           require_ids  ,   kind  ,   data  )
+        VALUES
+        (%(entity_id)s, %(previous_id)s, %(name)s, %(user_id)s, %(unit_id)s,
+         %(require_ids)s, %(kind)s, %(data)s)
+        RETURNING *;
+    """
     data = {
-        FALSE
+        'entity_id': current_data['entity_id'],
+        'previous_id': current_data['version_id'],
+        'user_id': convert_slug_to_uuid(next_data['user_id']),
+        'kind': current_data['kind'],
+        'name': next_data.get('name') or current_data('name'),
+        'unit_id': convert_slug_to_uuid(next_data.get('unit_id') or
+                                        current_data.get('unit_id')),
+        'require_ids': [convert_slug_to_uuid(require_id)
+                        for require_id in next_data.get('require_ids')
+                        or current_data.get('require_ids')],
+        'data': next_data.get('data') or current_data.get('data'),
     }
-"""
+    errors = ensure_requires(db_conn, data) + ensure_no_cycles(db_conn, data)
+    if errors:
+        return None, errors
+    data, errors = insert_row(db_conn, schema, query, data)
+    if not errors:
+        save_entity_to_es('card', deliver_card(data, access='view'))
+    return data, errors
 
 
 def update_card(db_conn, version_id, status):

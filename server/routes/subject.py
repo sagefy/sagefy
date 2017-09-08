@@ -10,10 +10,9 @@ from database.subject import deliver_subject, insert_subject, \
 from database.entity_facade import list_subjects_by_unit_recursive
 from database.unit import deliver_unit, get_latest_accepted_unit
 from database.entity_facade import list_units_in_subject_recursive
-from modules.util import extend
 from copy import deepcopy
 from database.subject import list_latest_accepted_subjects, \
-    list_one_subject_versions, get_subject_version
+    list_one_subject_versions, get_subject_version, insert_subject_version
 from modules.util import convert_uuid_to_slug
 
 
@@ -286,11 +285,10 @@ def create_existing_subject_version_route(request, subject_id):
     next_data = deepcopy(request['params'])
     next_data['entity_id'] = subject_id
     next_data['user_id'] = current_user['id']
-    current_subject = get_latest_accepted_subject(db_conn, subject_id)
-    if not current_subject:
+    current_data = get_latest_accepted_subject(db_conn, subject_id)
+    if not current_data:
         return abort(404)
-    subject_data = extend({}, current_subject, next_data)
-    # subject, errors = insert_subject(db_conn, subject_data)
+    subject, errors = insert_subject_version(db_conn, current_data, next_data)
     if len(errors):
         return 400, {
             'errors': errors,

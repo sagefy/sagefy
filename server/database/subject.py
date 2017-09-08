@@ -6,6 +6,7 @@ from database.entity_base import save_entity_to_es
 from database.util import insert_row, save_row, get_row, list_rows
 from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
 import re
+import uuid
 
 
 def is_valid_members(db_conn, data):
@@ -67,26 +68,23 @@ def ensure_no_cycles(db_conn, data):
 
 def insert_subject(db_conn, data):
     """
-    Create a subject, saving to ES.
+    Create a new version of a new a subject, saving to ES.
     """
 
     schema = subject_schema
     query = """
-        WITH temp AS (
-            INSERT INTO subjects_entity_id (entity_id)
-            VALUES (uuid_generate_v4())
-            RETURNING entity_id
-        )
+        INSERT INTO subjects_entity_id (entity_id)
+        VALUES (%(entity_id)s);
         INSERT INTO subjects
-        (entity_id  ,   name  ,   user_id  ,
+        (  entity_id  ,   name  ,   user_id  ,
            body  ,   members  )
-        SELECT
-         entity_id  , %(name)s, %(user_id)s,
-         %(body)s, %(members)s
-        FROM temp
+        VALUES
+        (%(entity_id)s, %(name)s, %(user_id)s,
+         %(body)s, %(members)s)
         RETURNING *;
     """
     data = {
+        'entity_id': uuid.uuid4(),
         'name': data['name'],
         'user_id': convert_slug_to_uuid(data['user_id']),
         'body': data['body'],
@@ -101,15 +99,38 @@ def insert_subject(db_conn, data):
     return data, errors
 
 
-# TODO insert subject version
-"""
-    previous_id = None  # TODO-1
-    # latest = get_latest_accepted_subject(..., entity_id)
-    # if latest: data['previous_id'] = latest['version_id']
+def insert_subject_version(db_conn, current_data, next_data):
+    """
+    Create a new version of an existing subject.
+    """
+
+    schema = subject_schema
+    query = """
+        INSERT INTO subjects
+        (  entity_id  ,   previous_id  ,   name  ,   user_id  ,
+           body  ,   members  )
+        VALUES
+        (%(entity_id)s, %(previous_id)s, %(name)s, %(user_id)s,
+         %(body)s, %(members)s)
+        RETURNING *;
+    """
     data = {
-        FALSE
+        'entity_id': current_data['entity_id'],
+        'previous_id': current_data['version_id'],
+        'user_id': convert_slug_to_uuid(next_data['user_id']),
+        'name': next_data.get('name') or current_data.get('name'),
+        'body': next_data.get('body') or current_data.get('body'),
+        'members': (next_data.get('members') or
+                    current_data.get('members') or
+                    []),
     }
-"""
+    errors = is_valid_members(db_conn, data) + ensure_no_cycles(db_conn, data)
+    if errors:
+        return None, errors
+    data, errors = insert_row(db_conn, schema, query, data)
+    if not errors:
+        save_entity_to_es('subject', deliver_subject(data, access='view'))
+    return data, errors
 
 
 def update_subject(db_conn, version_id, status):

@@ -185,7 +185,7 @@ module.exports = tasks.add({
                     .map(unit => unit.version)
                     .filter(version => version)
                 const newUnitVersionIds = unitsResponse.units.map(
-                    unit => unit.id
+                    unit => unit.version_id
                 )
                 unitVersionIds = [].concat(
                     existingUnitVersionIds,

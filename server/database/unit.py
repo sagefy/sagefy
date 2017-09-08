@@ -5,6 +5,7 @@ from database.util import deliver_fields
 from database.entity_base import save_entity_to_es
 from database.util import insert_row, save_row, get_row, list_rows
 from modules.util import convert_slug_to_uuid
+import uuid
 
 
 def ensure_requires(db_conn, data):
@@ -32,25 +33,29 @@ def ensure_no_cycles(db_conn, data):
 
 def insert_unit(db_conn, data):
     """
-    Create a unit, saving to ES.
+    Create a new version of a new unit, saving to ES.
     """
 
     schema = unit_schema
     query = """
-        WITH temp AS (
-            INSERT INTO units_entity_id (entity_id)
-            VALUES (uuid_generate_v4())
-            RETURNING entity_id
-        )
+        INSERT INTO units_entity_id (entity_id)
+        VALUES (%(entity_id)s);
         INSERT INTO units
-        (entity_id  ,   name  ,   user_id  ,
+        (  entity_id  ,   name  ,   user_id  ,
            body  ,   require_ids  )
-        SELECT
-         entity_id  , %(name)s, %(user_id)s,
-         %(body)s, %(require_ids)s
-        FROM temp
+        VALUES
+        (%(entity_id)s  , %(name)s, %(user_id)s,
+         %(body)s, %(require_ids)s)
         RETURNING *;
     """
+    data = {
+        'entity_id': uuid.uuid4(),
+        'name': data['name'],
+        'user_id': convert_slug_to_uuid(data['user_id']),
+        'body': data['body'],
+        'require_ids': [convert_slug_to_uuid(require_id)
+                        for require_id in data['require_ids']],
+    }
     errors = ensure_requires(db_conn, data) + ensure_no_cycles(db_conn, data)
     if errors:
         return None, errors
@@ -60,15 +65,39 @@ def insert_unit(db_conn, data):
     return data, errors
 
 
-# TODO insert unit version, adding in previous version
-"""
-    previous_id = None  # TODO-1
-    # latest = get_latest_accepted_unit(..., entity_id)
-    # if latest: data['previous_id'] = latest['version_id']
+def insert_unit_version(db_conn, current_data, next_data):
+    """
+    Create a new version of a existing unit, saving to ES.
+    """
+
+    schema = unit_schema
+    query = """
+        INSERT INTO units
+        (  entity_id  ,   previous_id  ,   name  ,   user_id  ,
+           body  ,   require_ids  )
+        VALUES
+        (%(entity_id)s, %(previous_id)s, %(name)s, %(user_id)s,
+         %(body)s, %(require_ids)s)
+        RETURNING *;
+    """
     data = {
-        FALSE
+        'entity_id': current_data['entity_id'],
+        'previous_id': current_data['version_id'],
+        'user_id': convert_slug_to_uuid(next_data['user_id']),
+        'name': next_data.get('name') or current_data.get('name'),
+        'body': next_data.get('body') or current_data.get('body'),
+        'require_ids': [convert_slug_to_uuid(require_id)
+                        for require_id in
+                        next_data.get('require_ids') or
+                        current_data.get('require_ids')],
     }
-"""
+    errors = ensure_requires(db_conn, data) + ensure_no_cycles(db_conn, data)
+    if errors:
+        return None, errors
+    data, errors = insert_row(db_conn, schema, query, data)
+    if not errors:
+        save_entity_to_es('unit', deliver_unit(data, access='view'))
+    return data, errors
 
 
 def update_unit(db_conn, version_id, status):

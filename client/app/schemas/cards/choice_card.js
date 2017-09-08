@@ -3,11 +3,11 @@ const { extend } = require('../../modules/utilities')
 const cardSchema = require('../card')
 
 module.exports = extend({}, cardSchema, {
-    body: {
+    'data.body': {
         type: 'textarea',
         validations: [required],
     },
-    options: {
+    'data.options': {
         type: 'list',
         validations: [required],
         columns: [
@@ -20,13 +20,13 @@ module.exports = extend({}, cardSchema, {
             { name: 'feedback', type: 'text' },
         ],
     },
-    order: {
+    'data.order': {
         type: 'select',
         validations: [required],
         options: [{ value: 'random' }, { value: 'set' }],
         default: 'random',
     },
-    max_options_to_show: {
+    'data.max_options_to_show': {
         type: 'number',
         validations: [required],
         default: 4,

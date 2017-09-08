@@ -3,7 +3,7 @@ import psycopg2.extras
 from framework.database import make_db_connection, \
     close_db_connection
 from framework.elasticsearch import es
-from modules.util import json_prep, pick
+from modules.util import json_prep, pick, convert_uuid_to_slug
 from database.user import get_avatar
 
 
@@ -27,7 +27,7 @@ def es_populate():
             index='entity',
             doc_type='user',
             body=data,
-            id=user['id'],
+            id=convert_uuid_to_slug(user['id']),
         )
 
     # Add units
@@ -47,7 +47,7 @@ def es_populate():
             index='entity',
             doc_type='unit',
             body=json_prep(unit),
-            id=unit['entity_id'],
+            id=convert_uuid_to_slug(unit['entity_id']),
         )
 
     # Add cards
@@ -67,7 +67,7 @@ def es_populate():
             index='entity',
             doc_type='card',
             body=json_prep(card),
-            id=card['entity_id'],
+            id=convert_uuid_to_slug(card['entity_id']),
         )
 
     # Add subjects
@@ -87,7 +87,7 @@ def es_populate():
             index='entity',
             doc_type='subject',
             body=json_prep(subject),
-            id=subject['entity_id'],
+            id=convert_uuid_to_slug(subject['entity_id']),
         )
 
     """

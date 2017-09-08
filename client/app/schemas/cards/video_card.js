@@ -3,11 +3,11 @@ const { extend } = require('../../modules/utilities')
 const cardSchema = require('../card')
 
 module.exports = extend({}, cardSchema, {
-    video_id: {
+    'data.video_id': {
         type: 'text',
         validations: [required],
     },
-    site: {
+    'data.site': {
         type: 'select',
         validations: [required],
         options: [{ value: 'youtube' }, { value: 'vimeo' }],

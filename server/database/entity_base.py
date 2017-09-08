@@ -1,5 +1,5 @@
 from framework.elasticsearch import es
-from modules.util import json_prep
+from modules.util import json_prep, convert_uuid_to_slug
 
 
 def save_entity_to_es(kind, data):
@@ -14,5 +14,5 @@ def save_entity_to_es(kind, data):
             index='entity',
             doc_type=kind,
             body=body,
-            id=data['entity_id'],
+            id=convert_uuid_to_slug(data['entity_id']),
         )

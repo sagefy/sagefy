@@ -39,12 +39,12 @@ const allKindsFields = [
 const videoFields = allKindsFields.concat([
     {
         label: 'Video Site',
-        name: 'site',
+        name: 'data.site',
         options: [{ label: 'YouTube' }, { label: 'Vimeo' }],
     },
     {
         label: 'Video ID',
-        name: 'video_id',
+        name: 'data.video_id',
         description:
             'You can find the video ID in the URL. Look for https://www.youtube.com/watch?v=VIDEO_ID_HERE',
     },
@@ -59,11 +59,11 @@ const videoFields = allKindsFields.concat([
 const choiceFields = allKindsFields.concat([
     {
         label: 'Question or Prompt',
-        name: 'body',
+        name: 'data.body',
     },
     {
         label: 'Response Options',
-        name: 'options',
+        name: 'data.options',
         columns: [
             {
                 options: [{ label: 'Yes' }, { label: 'No' }],
@@ -74,12 +74,12 @@ const choiceFields = allKindsFields.concat([
     },
     {
         label: 'Order',
-        name: 'order',
+        name: 'data.order',
         options: [{ label: 'Random' }, { label: 'Set' }],
     },
     {
         label: 'Max Options to Show',
-        name: 'max_options_to_show',
+        name: 'data.max_options_to_show',
     },
     {
         type: 'submit',

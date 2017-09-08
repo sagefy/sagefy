@@ -4,9 +4,9 @@ from database.my_recently_created import get_my_recently_created_units
 from database.unit import deliver_unit, insert_unit, get_latest_accepted_unit
 from database.subject import deliver_subject, list_subjects_by_unit_flat
 from copy import deepcopy
-from modules.util import extend
 from database.unit import list_required_units, list_required_by_units, \
-    list_latest_accepted_units, list_one_unit_versions, get_unit_version
+    list_latest_accepted_units, list_one_unit_versions, get_unit_version, \
+    insert_unit_version
 
 
 @get('/s/units/{unit_id}')
@@ -131,11 +131,10 @@ def create_existing_unit_version_route(request, unit_id):
     next_data = deepcopy(request['params'])
     next_data['entity_id'] = unit_id
     next_data['user_id'] = current_user['id']
-    current_unit = get_latest_accepted_unit(db_conn, unit_id)
-    if not current_unit:
+    current_data = get_latest_accepted_unit(db_conn, unit_id)
+    if not current_data:
         return abort(404)
-    unit_data = extend({}, current_unit, next_data)
-    # unit, errors = insert_unit(db_conn, unit_data)
+    unit, errors = insert_unit_version(db_conn, current_data, next_data)
     if len(errors):
         return 400, {
             'errors': errors,
