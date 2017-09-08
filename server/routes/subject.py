@@ -4,7 +4,6 @@ from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
 from database.user import get_learning_context, set_learning_context
 from database.my_recently_created import get_my_recently_created_subjects
-from config import config
 from database.subject import deliver_subject, insert_subject, \
     get_latest_accepted_subject
 from database.entity_facade import list_subjects_by_unit_recursive
@@ -12,17 +11,15 @@ from database.unit import deliver_unit, get_latest_accepted_unit
 from database.entity_facade import list_units_in_subject_recursive
 from copy import deepcopy
 from database.subject import list_latest_accepted_subjects, \
-    list_one_subject_versions, get_subject_version, insert_subject_version
+    list_one_subject_versions, get_subject_version, insert_subject_version, \
+    get_recommended_subjects
 from modules.util import convert_uuid_to_slug
 
 
 @get('/s/subjects/recommended')
-def get_recommended_subjects(request):
+def get_recommended_subjects_route(request):
     db_conn = request['db_conn']
-    entity_ids = ('JAFGYFWhILcsiByyH2O9frcU',)
-    if config['debug']:
-        entity_ids = ('subjectAll',)
-    subjects = list_latest_accepted_subjects(db_conn, entity_ids)
+    subjects = get_recommended_subjects(db_conn)
     if not subjects:
         return abort(404)
     return 200, {

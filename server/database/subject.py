@@ -347,3 +347,21 @@ def list_all_subject_entity_ids(db_conn):
         row['entity_id']
         for row in list_rows(db_conn, query, params)
     ]
+
+
+def get_recommended_subjects(db_conn):
+    """
+    list recommended subjects
+    """
+
+    query = """
+        SELECT DISTINCT ON (entity_id) *
+        FROM subjects
+        WHERE status = 'accepted' AND name = %(name)s
+        ORDER BY entity_id, created DESC;
+        /* TODO LIMIT OFFSET */
+    """
+    params = {
+        'name': 'An Introduction to Electronic Music',
+    }
+    return list_rows(db_conn, query, params)
