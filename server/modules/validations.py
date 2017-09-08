@@ -1,5 +1,6 @@
 import re
 from modules.content import get as c
+import uuid
 
 
 def is_required(value):
@@ -57,6 +58,18 @@ def is_integer(value):
 
     if not isinstance(value, int):
         return c('integer')
+
+
+def is_uuid(value):
+    """
+    Ensure the given value is a UUID.
+    """
+
+    if value is None:
+        return
+
+    if not isinstance(value, uuid.UUID):
+        return c('uuid')
 
 
 def is_string_or_number(value):

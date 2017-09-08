@@ -5,7 +5,7 @@ from schemas.cards.choice_card import schema as choice_card_schema
 from copy import deepcopy
 from database.util import deliver_fields
 from database.entity_base import save_entity_to_es
-from database.util import insert_row, update_row, get_row, list_rows
+from database.util import insert_row, save_row, get_row, list_rows
 from modules.util import convert_slug_to_uuid
 
 
@@ -86,17 +86,11 @@ def insert_card(db_conn, data):
 """
 
 
-def update_card(db_conn, prev_data, data):
+def update_card(db_conn, version_id, status):
     """
     Update a card version's status and available. [hidden]
     """
 
-    schema = get_card_schema(data)
-    if not schema:
-        return data, [{
-            'name': 'kind',
-            'message': 'Missing card kind.',
-        }]
     query = """
         UPDATE cards
         SET status = %(status)s
@@ -104,9 +98,10 @@ def update_card(db_conn, prev_data, data):
         RETURNING *;
     """
     data = {
-        'id': convert_slug_to_uuid(prev_data['id']),
+        'version_id': convert_slug_to_uuid(version_id),
+        'status': status,
     }
-    data, errors = update_row(db_conn, schema, query, prev_data, data)
+    data, errors = save_row(db_conn, query, data)
     if not errors:
         save_entity_to_es('card', deliver_card(data, access='view'))
     return data, errors
@@ -231,8 +226,8 @@ def get_card_version(db_conn, version_id):
         ORDER BY created DESC;
         /* TODO LIMIT OFFSET */
     """
-    params = {'version_id': version_id}
-    return list_rows(db_conn, query, params)
+    params = {'version_id': convert_slug_to_uuid(version_id)}
+    return get_row(db_conn, query, params)
 
 
 def list_one_card_versions(db_conn, entity_id):

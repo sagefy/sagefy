@@ -134,14 +134,14 @@ def insert_proposal(db_conn, data):
          %(replies_to_id)s, %(entity_versions)s)
         RETURNING *;
     """
-    data = pick(data, (
-        'user_id',
-        'topic_id',
-        'kind',
-        'body',
-        'replies_to_id',
-        'entity_versions',
-    ))
+    data = {
+        'user_id': convert_slug_to_uuid(data['user_id']),
+        'topic_id': convert_slug_to_uuid(data['topic_id']),
+        'kind': data['kind'],
+        'body': data.get('body'),
+        'replies_to_id': data.get('replies_to_id'),
+        'entity_versions': data['entity_versions'],
+    }
     errors = is_valid_reply(db_conn, data)
     if errors:
         return None, errors
@@ -169,14 +169,14 @@ def insert_vote(db_conn, data):
          %(replies_to_id)s, %(response)s)
         RETURNING *;
     """
-    data = pick(data, (
-        'user_id',
-        'topic_id',
-        'kind',
-        'body',
-        'replies_to_id',
-        'response',
-    ))
+    data = {
+        'user_id': convert_slug_to_uuid(data['user_id']),
+        'topic_id': convert_slug_to_uuid(data['topic_id']),
+        'kind': data['kind'],
+        'body': data.get('body'),
+        'replies_to_id': data.get('replies_to_id'),
+        'response': data['response'],
+    }
     errors = is_valid_reply(db_conn, data)
     if errors:
         return None, errors
@@ -338,3 +338,21 @@ def add_post_to_es(db_conn, post):
         body=data,
         id=post['id'],
     )
+
+
+def list_votes_by_proposal(db_conn, proposal_id):
+    """
+    List votes for a given proposal.
+    """
+
+    query = """
+        SELECT *
+        FROM posts
+        WHERE kind = 'vote' AND replies_to_id = %(proposal_id)s
+        ORDER BY created DESC;
+        /* TODO OFFSET LIMIT */
+    """
+    params = {
+        'proposal_id': convert_slug_to_uuid(proposal_id),
+    }
+    return list_rows(db_conn, query, params)

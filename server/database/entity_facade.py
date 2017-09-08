@@ -154,7 +154,7 @@ def update_entity_statuses(db_conn, proposal):
     Move to accepted or blocked if qualified.
     """
 
-    from database.post import list_posts
+    from database.post import list_votes_by_proposal
     from modules.notices import send_notices
 
     # Get the entity version
@@ -162,22 +162,18 @@ def update_entity_statuses(db_conn, proposal):
         entity_kind = p_entity_version['kind']
         version_id = p_entity_version['id']
 
-        tablename = '%ss' % entity_kind
-        entity_version = get_entity_version(db_conn, tablename, version_id)
-        votes = list_posts(db_conn, {
-            'kind': 'vote',
-            'replies_to_id': proposal['id'],
-        })
+        entity_version = get_entity_version(db_conn, entity_kind, version_id)
+        votes = list_votes_by_proposal(db_conn, proposal['id'])
         changed, status = get_entity_status(entity_version['status'], votes)
 
         if changed:
             entity_version['status'] = status
             if entity_kind == 'card':
-                update_card(db_conn, entity_version, {'status': status})
+                update_card(db_conn, entity_version['version_id'], status)
             elif entity_kind == 'unit':
-                update_unit(db_conn, entity_version, {'status': status})
+                update_unit(db_conn, entity_version['version_id'], status)
             elif entity_kind == 'subject':
-                update_subject(db_conn, entity_version, {'status': status})
+                update_subject(db_conn, entity_version['version_id'], status)
             user = get_user(db_conn, {'id': proposal['user_id']})
             send_notices(
                 db_conn,

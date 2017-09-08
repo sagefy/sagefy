@@ -24,6 +24,8 @@ def insert_row(db_conn, schema, query, data):
         data['data'] = psycopg2.extras.Json(data['data'])
     if data.get('members'):
         data['members'] = psycopg2.extras.Json(data['members'])
+    if data.get('entity_versions'):
+        data['entity_versions'] = psycopg2.extras.Json(data['entity_versions'])
     ###
 
     data, errors = save_row(db_conn, query, data)
@@ -51,6 +53,8 @@ def update_row(db_conn, schema, query, prev_data, data):
         data['data'] = psycopg2.extras.Json(data['data'])
     if data.get('members'):
         data['members'] = psycopg2.extras.Json(data['members'])
+    if data.get('entity_versions'):
+        data['entity_versions'] = psycopg2.extras.Json(data['entity_versions'])
     ###
 
     data, errors = save_row(db_conn, query, data)
@@ -72,7 +76,7 @@ def save_row(db_conn, query, params):
             data = db_curr.fetchone()
             db_conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+        print('DB Error', query, error)
         errors = [{'message': '@@ db error @@'}]
         # TODO-1 parse through errors, make user friendly
     return data, errors
@@ -90,7 +94,7 @@ def get_row(db_conn, query, params):
             db_curr.execute(query, params)
             data = db_curr.fetchone()
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+        print('DB Error', query, error)
     return data
 
 
@@ -107,7 +111,7 @@ def list_rows(db_conn, query, params):
             data = db_curr.fetchall()
         data = [row for row in data]
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+        print('DB Error', query, error)
     return data
 
 
@@ -123,7 +127,7 @@ def delete_row(db_conn, query, params):
             db_curr.execute(query, params)
             db_conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+        print('DB Error', query, error)
         errors = [{'message': '@@ db error @@'}]
         # TODO-1 parse through errors, make user friendly
     return errors

@@ -252,7 +252,7 @@ module.exports = tasks.add({
                     body: 'Add Cards to Unit',
                     topic_id: topicId,
                     entity_versions: cardsResponse.cards.map(card => ({
-                        id: card.id,
+                        id: card.version_id,
                         kind: 'card',
                     })),
                 }

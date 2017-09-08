@@ -3,10 +3,9 @@
 from schemas.subject import schema as subject_schema
 from database.util import deliver_fields
 from database.entity_base import save_entity_to_es
-from database.util import insert_row, update_row, get_row, list_rows
+from database.util import insert_row, save_row, get_row, list_rows
 from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
 import re
-import psycopg2.extras
 
 
 def is_valid_members(db_conn, data):
@@ -113,12 +112,11 @@ def insert_subject(db_conn, data):
 """
 
 
-def update_subject(db_conn, prev_data, data):
+def update_subject(db_conn, version_id, status):
     """
     Update a subject version's status and available. [hidden]
     """
 
-    schema = subject_schema
     query = """
         UPDATE subjects
         SET status = %(status)s
@@ -126,9 +124,10 @@ def update_subject(db_conn, prev_data, data):
         RETURNING *;
     """
     data = {
-        'id': convert_slug_to_uuid(prev_data['id']),
+        'version_id': convert_slug_to_uuid(version_id),
+        'status': status,
     }
-    data, errors = update_row(db_conn, schema, query, prev_data, data)
+    data, errors = save_row(db_conn, query, data)
     if not errors:
         save_entity_to_es('subject', deliver_subject(data, access='view'))
     return data, errors
@@ -210,8 +209,8 @@ def get_subject_version(db_conn, version_id):
         ORDER BY created DESC;
         /* TODO LIMIT OFFSET */
     """
-    params = {'version_id': version_id}
-    return list_rows(db_conn, query, params)
+    params = {'version_id': convert_slug_to_uuid(version_id)}
+    return get_row(db_conn, query, params)
 
 
 def list_one_subject_versions(db_conn, entity_id):

@@ -4,7 +4,8 @@ from framework.session import get_current_user
 from database.follow import insert_follow
 from database.topic import get_topic
 from database.post import deliver_post, insert_post, \
-    list_posts_by_topic, get_post, update_post
+    list_posts_by_topic, get_post, update_post, insert_proposal, \
+    insert_vote, update_proposal, update_vote
 from database.entity_facade import update_entity_statuses
 from modules.notices import send_notices
 from copy import deepcopy
@@ -77,7 +78,12 @@ def create_post_route(request, topic_id):
     post_kind = post_data.get('kind')
 
     # ## STEP 2) Validate and save post
-    post_, post_errors = insert_post(db_conn, post_data)  # TODO-0
+    if post_kind == 'proposal':
+        post_, post_errors = insert_proposal(db_conn, post_data)
+    elif post_kind == 'vote':
+        post_, post_errors = insert_vote(db_conn, post_data)
+    else:
+        post_, post_errors = insert_post(db_conn, post_data)
     if len(post_errors):
         return 400, {
             'errors': post_errors,
@@ -144,7 +150,12 @@ def update_post_route(request, topic_id, post_id):
 
     # ## STEP 2) Validate and save post instance ## #
     post_data = request['params']
-    post_, errors = update_post(db_conn, post_, post_data)  # TODO-0
+    if post_kind == 'proposal':
+        post_, errors = update_proposal(db_conn, post_, post_data)
+    elif post_kind == 'vote':
+        post_, errors = update_vote(db_conn, post_, post_data)
+    else:
+        post_, errors = update_post(db_conn, post_, post_data)
     if errors:
         return 400, {
             'errors': errors,

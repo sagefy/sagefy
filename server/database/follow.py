@@ -91,6 +91,14 @@ def insert_follow(db_conn, data):
     # TODO-2 move these to schema-level 'validate' fns instead.
     # See database/util.py: for fn in schema['validate']:
 
+    already_has = get_follow(
+        db_conn,
+        convert_slug_to_uuid(data.get('user_id')),
+        convert_slug_to_uuid(data.get('entity_id'))
+    )
+    if already_has:
+        return {}, []
+
     schema = follow_schema
     query = """
         INSERT INTO follows
