@@ -35,6 +35,7 @@ schema = extend({}, default, {
                           'blocked',
                           'declined',
                           'accepted')),
+            'default': 'pending',
         },
         'available': {
             'validate': (is_required, is_boolean,),
