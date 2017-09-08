@@ -1,9 +1,17 @@
+from modules.validations import is_uuid, is_datetime
+
 schema = {
     'tablename': '',
     'fields': {
-        'id': {},
-        'created': {},
-        'modified': {},
+        'id': {
+            'validate': (is_uuid,),
+        },
+        'created': {
+            'validate': (is_datetime,),
+        },
+        'modified': {
+            'validate': (is_datetime,),
+        },
     },
     'validate': tuple(),
 }

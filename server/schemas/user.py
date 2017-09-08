@@ -1,7 +1,6 @@
 from schemas.index import schema as default
 from modules.validations import is_required, is_string, has_min_length, \
-    is_one_of
-
+    is_one_of, is_email, is_dict
 from passlib.hash import bcrypt
 from modules.util import extend
 
@@ -18,16 +17,20 @@ schema = extend({}, default, {
         'modified': {
             'access': ('private',),
         },
-        'name': {},
+        'name': {
+            'validate': (is_required, is_string,),
+        },
         'email': {
+            'validate': (is_required, is_string, is_email,),
             'access': ('private',),
         },
         'password': {
-            'validate': ((has_min_length, 8),),
+            'validate': (is_required, is_string, (has_min_length, 8),),
             'access': ('PaSsWoRd',),
             'bundle': encrypt_password,
         },
         'settings': {
+            'validate': (is_required, is_dict),
             'default': {},
             'embed': {
                 'email_frequency': {

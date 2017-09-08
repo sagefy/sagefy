@@ -1,6 +1,7 @@
 import re
 from modules.content import get as c
 import uuid
+from datetime import datetime
 
 
 def is_required(value):
@@ -70,6 +71,18 @@ def is_uuid(value):
 
     if not isinstance(value, uuid.UUID):
         return c('uuid')
+
+
+def is_datetime(value):
+    """
+    Ensure the given value is a datetime.
+    """
+
+    if value is None:
+        return
+
+    if not isinstance(value, datetime):
+        return c('datetime')
 
 
 def is_string_or_number(value):
@@ -195,3 +208,31 @@ def is_list_of_strings(value):
     for v in value:
         if not isinstance(v, str):
             return c('string')
+
+
+def is_list_of_uuids(value):
+    """
+    Ensure the value is a list of UUIDs.
+    """
+
+    if value is None:
+        return
+
+    if not isinstance(value, list):
+        return c('list')
+
+    for v in value:
+        if not isinstance(v, uuid.UUID):
+            return c('uuid')
+
+
+def is_in_range(value, minv, maxv):
+    """
+    Is within a numeric range.
+    """
+
+    if value is None:
+        return
+
+    if value < minv or value > maxv:
+        return 'Value is out of range.'

@@ -1,5 +1,7 @@
 from schemas.entity_base import schema as entity_schema
 from modules.util import extend
+from modules.validations import is_required, is_string, is_list, \
+    is_list_of_uuids
 
 """
 A unit is the medium size in the Sagefy data structure system.
@@ -15,7 +17,12 @@ which may contain about five to eight minutes of information and
 schema = extend({}, entity_schema, {
     'tablename': 'units',
     'fields': {
-        'body': {},
-        'require_ids': {},
+        'body': {
+            'validate': (is_required, is_string,),
+        },
+        'require_ids': {
+            'validate': (is_required, is_list, is_list_of_uuids),
+            'default': [],
+        },
     },
 })

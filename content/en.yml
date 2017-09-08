@@ -2,6 +2,7 @@ en:
     boolean: Must be true or false.
     change_password_url: To change your password, please visit {url}
     clear: Clear
+    datetime: Must be a datetime.
     dict: Must be a dict.
     email: Must be an email.
     en_us: American English
@@ -41,4 +42,5 @@ en:
     string: Must be a string.
     unique: Must be unique.
     url: Must be a full URL.
+    uuid: Must be a UUID.
     welcome: Welcome to the Sagefy Service.

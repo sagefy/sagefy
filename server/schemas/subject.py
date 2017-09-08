@@ -12,7 +12,9 @@ A graph is automatically formed based on the units and subjects specified.
 schema = extend({}, entity_schema, {
     'tablename': 'subjects',
     'fields': {
-        'body': {},
+        'body': {
+            'validate': (is_required, is_string,),
+        },
         'members': {
             'validate': (is_required, is_list,),
             'embed_many': {
