@@ -98,7 +98,8 @@ Run:
 
     ++ ssh into the server ++
     cd /var/www/dbbu
-    TODO-1 update: dump the database into a file
+    today=`date '+%Y_%m_%d__%H_%M_%S'`
+    sudo -u postgres pg_dump sagefy > "sagefy-$today.sql"
     b2 authorize_account xxx xxxxxxxx  # see dashlane
     b2 sync /var/www/dbbu b2:sagefy-dbbu
 
