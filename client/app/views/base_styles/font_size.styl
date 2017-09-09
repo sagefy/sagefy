@@ -6,14 +6,13 @@ description: |
 
     - small
     - normal
-    - accent
     - large
     - big
     - epic
 ---
 */
 
-for g in (small 14 24) (normal 16 24) (accent 18 24) (large 20 24) (big 24 36) (epic 32 36)
+for g in (small 14 24) (normal 18 24) (large 20 24) (big 24 36) (epic 32 36)
     $font-size-{g[0]}
         font-size unit(g[1], "px")
         line-height unit(g[2], "px")
