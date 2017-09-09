@@ -14,9 +14,9 @@ module.exports = () => {
         },
         h1('The Suggest Page is Down Temporarily'),
         p(
-            'A new Suggest page with more capabilities is in progress.',
+            'A new Suggest page with more capabilities is in progress. ',
             'If you have ideas for free online learning courses, ',
-            'You can share your idea on our ',
+            'you can share your idea on our ',
             a(
                 { href: 'https://sagefy.uservoice.com/forums/233394-general' },
                 'UserVoice forum'

@@ -145,6 +145,10 @@ const routes = [
         title: 'An Introduction to Electronic Music',
     },
     {
+        path: /^\/suggest.*$/,
+        title: 'Suggest free online learning experiences',
+    },
+    {
         path: /^\/?$/,
         title: 'Home',
         // Must be 2nd to last
