@@ -3,18 +3,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ page.title }} – Sagefy</title>
 <link rel="stylesheet" href="https://sagefy.org/index.css?___">
-<style>img{max-width: 100%}</style>
+<style>
+    img {
+        max-width: 100%
+    }
+    .docs-nav {
+        padding-left: 0;
+    }
+    .docs-nav li {
+        display: inline-block;
+        margin-right: 24px;
+    }
+</style>
 <body>
     <main>
         <div class="page">
-            <h1>{{ page.title }}</h1>
-            {{ content }}
-            <hr />
             <img src="https://raw.githubusercontent.com/heiskr/sagefy/master/client/app/images/astrolabe.png" height="48">
-            <h3>Sagefy</h3>
-            <p><strong>Learn anything, customized for you.</strong> And always free.</p>
-            <p><em>An open-content adaptive learning platform.</em></p>
-            <ul>
+            <h3>Sagefy Docs</h3>
+            <ul class="docs-nav">
                 <li><a href="/">Home</a></li>
                 <li><a href="/Ideas">Ideas</a></li>
                 <li><a href="/Data-Structure">Data Structure</a></li>
@@ -26,7 +32,12 @@
                 <li><a href="/Reference">Reference</a></li>
                 <li><a href="/Web-API">Web API</a></li>
             </ul>
+            <h1>{{ page.title }}</h1>
+            {{ content }}
             <hr />
+            <h3>Sagefy</h3>
+            <p><strong>Learn anything, customized for you.</strong> And always free.</p>
+            <p><em>An open-content adaptive learning platform.</em></p>
             <p>
                 &copy; Copyright Sagefy 2017. All contents are licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>
             </p>
