@@ -1,4 +1,3 @@
-import rethinkdb as r
 import psycopg2
 from modules.util import convert_slug_to_uuid, delete_row
 from database.util import save_row
@@ -17,7 +16,7 @@ from modules.util import convert_uuid_to_slug
 dirname = os.path.realpath(__file__).replace('/server/dev_data.py', '')
 
 stream = open(
-    '%s/server/intro_electronic_music_example_collection.yaml' % (dirname,),
+    './intro_electronic_music_example_collection.yaml',
     'r'
 )
 sample_data = yaml.load(stream)
@@ -25,12 +24,6 @@ stream.close()
 
 psycopg2.extras.register_uuid()
 
-r_db_conn = r.connect(
-    host='localhost',
-    port=28015,
-    db='sagefy',
-    timeout=60,
-)
 pg_db_conn = make_db_connection()
 
 es.indices.delete(index='entity', ignore=[400, 404])
@@ -39,26 +32,26 @@ redis.flushall()
 
 founder_id = convert_slug_to_uuid('NNKkHsjE3pEOW0wsPaQJm9MD')
 
-users = r.table('users').run(r_db_conn)
 
-for user in users:
-    query = """
-        INSERT INTO users
-        (id, created, modified, name, email, password, settings)
-        VALUES
-        (%(id)s, %(created)s, %(modified)s, %(name)s,
-         %(email)s, %(password)s, %(settings)s);
-    """
-    params = {
-        'id': convert_slug_to_uuid(user['id']),
-        'created': user['created'],
-        'modified': user['modified'],
-        'name': user['name'],
-        'email': user['email'],
-        'password': user['password'],
-        'settings': psycopg2.extras.Json(user['settings']),
-    }
-    save_row(pg_db_conn, query, params)
+for tablename in reversed((
+    'units_entity_id',
+    'units',
+    'cards_entity_id',
+    'cards',
+    'cards_parameters',
+    'subjects_entity_id',
+    'subjects',
+    'topics',
+    'posts',
+    'follows',
+    'notices',
+    'users_subjects',
+    'responses',
+)):
+    cur = pg_db_conn.cursor()
+    with cur:
+        cur.execute("DELETE FROM {tablename};".format(tablename=tablename))
+        pg_db_conn.commit()
 
 
 query = """
@@ -279,23 +272,5 @@ for sample_id, subject_data in sample_data['subjects'].items():
         'members': psycopg2.extras.Json(subject_data['members']),
     }
 
-
-# users_subjects - intro electronic music...
-electronic_subject_eid = entity_ids_lookup['subjectAll']
-for user in users:
-    query = """
-        INSERT INTO users_subjects
-        (user_id, subject_id)
-        VALUES
-        (%(user_id)s, %(subject_id)s);
-    """
-    params = {
-        'user_id': convert_slug_to_uuid(user['id']),
-        'subject_id': electronic_subject_eid,
-    }
-    save_row(pg_db_conn, query, params)
-
-
-r_db_conn.close()
 pg_db_conn.close()
 es_populate()
