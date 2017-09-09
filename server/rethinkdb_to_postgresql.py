@@ -275,6 +275,7 @@ for sample_id, subject_data in sample_data['subjects'].items():
         'body': subject_data['body'],
         'members': psycopg2.extras.Json(subject_data['members']),
     }
+    save_row(pg_db_conn, query, params)
 
 pg_db_conn.close()
 es_populate()
