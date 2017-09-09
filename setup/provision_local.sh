@@ -27,7 +27,7 @@ sudo apt-get -y install python3-dev
 sudo apt-get -y install python3-setuptools
 sudo apt-get -y install python3-pip
 sudo pip3 install -r /var/www/server/requirements.txt
-sudo pip3 install pytest coverage flake8
+sudo pip3 install pytest coverage flake8  # LOCAL ONLY
 
 #### Postgres #################################################################
 
@@ -36,9 +36,9 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 sudo apt-get update
 sudo apt-get -y install postgresql-9.6 postgresql-contrib
 sudo -u postgres createdb sagefy
-sudo -u postgres createdb test
-sudo -u postgres psql -U postgres -d sagefy -a -f /var/www/setup/sagefy_tables.sql
-sudo -u postgres psql -U postgres -d test -a -f /var/www/setup/sagefy_tables.sql
+sudo -u postgres createdb test # LOCAL ONLY
+sudo -u postgres psql -U postgres -d sagefy -a -f /var/www/setup/sagefy_tables.sql  # LOCAL ONLY
+sudo -u postgres psql -U postgres -d test -a -f /var/www/setup/sagefy_tables.sql  # LOCAL ONLY
 sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
 
 #### Elasticsearch ############################################################
