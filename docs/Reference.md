@@ -34,6 +34,7 @@ Learning Science
 - [What is Personalized Learning?](https://medium.com/personalizing-the-learning-experience-insights/what-is-personalized-learning-bc874799b6f)
 - [Not All Practice Makes Perfect](http://nautil.us/issue/35/boundaries/not-all-practice-makes-perfect)
 - [Failures of Bridge International](https://www.nytimes.com/2017/06/27/magazine/can-a-tech-start-up-successfully-educate-children-in-the-developing-world.html)
+- ["Learning How To Learn" course notes on Reddit](https://www.reddit.com/r/GetMotivated/comments/5950tm/text_i_just_finished_the_online_coursera_course/)
 
 Gamification
 ------------
@@ -115,6 +116,7 @@ Learning platforms
 - [Smart Sparrow](https://www.smartsparrow.com/)
 - [Mindspark](https://mindspark.in/)
 - [Geekie](https://translate.google.com/translate?hl=en&sl=pt&u=http://www.geekie.com.br/&prev=search)
+- [Kwyk](https://www.kwyk.fr/)
 
 ### Flash card based
 
