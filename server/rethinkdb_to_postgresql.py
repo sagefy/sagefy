@@ -1,6 +1,6 @@
 import psycopg2
-from modules.util import convert_slug_to_uuid, delete_row
-from database.util import save_row
+from modules.util import convert_slug_to_uuid
+from database.util import save_row, delete_row
 from framework.database import make_db_connection
 from framework.elasticsearch import es
 from framework.redis import redis
