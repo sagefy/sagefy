@@ -22,25 +22,19 @@ These instructions assume you are using Mac OS X.
   sudo uwsgi --stop /tmp/uwsgi-master.pid
   sudo uwsgi --ini /var/www/setup/uwsgi_local.ini
   ````
-12. Start up suggest:
-  ````
-  sudo uwsgi --stop /tmp/uwsgi-suggest-master.pid
-  sudo uwsgi --ini /var/www/setup/uwsgi_suggest.ini
-  ````
-13. Start up the web client:
+12. Start up the web client:
   ````
   pm2 start /var/www/client/app/index.server.js
   cd /var/www/client
   pm2 start npm -- start
   ````
-14. Start up Nginx:
+13. Start up Nginx:
   ````
   sudo nginx -s stop
   sudo nginx -c /var/www/setup/nginx.conf
   ````
-15. In your browser, visit `http://doris/s/`, there should be a welcome message.
-16. In your browser, visit `http://doris/`, the home page should be working. Try to sign up for an account.
-17. In your browser, visit `http://doris/suggest`, the suggest page should open.
+14. In your browser, visit `http://doris/s/`, there should be a welcome message.
+15. In your browser, visit `http://doris/`, the home page should be working. Try to sign up for an account.
 
 Note that pm2 is not properly watching JavaScript files. To rebuild the JS:
 
@@ -64,7 +58,6 @@ Tailing the Logs
 
     sudo tail -F /var/log/nginx/error.log
     sudo tail -F /tmp/uwsgi.log
-    sudo tail -F /tmp/uwsgi-suggest.log
     pm2 logs
 
 Deploy steps

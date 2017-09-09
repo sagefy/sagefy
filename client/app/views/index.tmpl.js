@@ -155,6 +155,10 @@ const routes = [
         tmpl: require('./pages/subjects_landing.tmpl'),
     },
     {
+        path: /^\/suggest.*$/,
+        tmpl: require('./pages/suggest.tmpl'),
+    },
+    {
         path: /^\/?$/,
         tmpl: require('./pages/home.tmpl'),
         // Must be 2nd to last
