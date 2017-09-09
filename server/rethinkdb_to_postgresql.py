@@ -92,7 +92,8 @@ for sample_id, unit_data in sample_data['units'].items():
         (%(version_id)s, %(created)s, %(modified)s,
          %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
          %(available)s, %(tags)s, %(name)s, %(user_id)s,
-         %(body)s, %(require_ids)s);
+         %(body)s, %(require_ids)s)
+        RETURNING *;
     """
     params = {
         'version_id': unit_data['version_id'],
@@ -134,7 +135,8 @@ for card_data in sample_data['cards']['video']:
         (%(version_id)s, %(created)s, %(modified)s,
          %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
          %(available)s, %(tags)s, %(name)s, %(user_id)s,
-         %(unit_id)s, %(require_ids)s, %(kind)s, %(data)s);
+         %(unit_id)s, %(require_ids)s, %(kind)s, %(data)s)
+        RETURNING *;
     """
     params = {
         'version_id': uuid.uuid4(),
@@ -181,7 +183,8 @@ for card_data in sample_data['cards']['choice']:
           entity_id  ,   guess_distribution  ,   slip_distribution  )
         VALUES
         (%(id)s, %(created)s, %(modified)s,
-         %(entity_id)s, %(guess_distribution)s, %(slip_distribution)s);
+         %(entity_id)s, %(guess_distribution)s, %(slip_distribution)s)
+        RETURNING *;
     """
     params = {
         'id': uuid.uuid4(),
@@ -254,7 +257,8 @@ for sample_id, subject_data in sample_data['subjects'].items():
         (%(version_id)s, %(created)s, %(modified)s,
          %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
          %(available)s, %(tags)s, %(name)s, %(user_id)s,
-         %(body)s, %(members)s);
+         %(body)s, %(members)s)
+        RETURNING *;
     """
     params = {
         'version_id': uuid.uuid4(),
