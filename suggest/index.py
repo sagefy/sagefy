@@ -327,7 +327,7 @@ def get_homepage_route(conn, environ, start_response):
         <h1>
             Suggest Subjects
             <small>&ndash; by <a href="/">
-                <img src="/astrolabe.svg" width="24" /> Sagefy</a></small>
+                <img src="/astrolabe.svg" width="26" /> Sagefy</a></small>
         </h1>
         <p><strong>Can't find a free online learning experience
            for what you want to learn? <br />
