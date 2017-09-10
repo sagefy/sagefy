@@ -37,7 +37,7 @@ def sitemap_route(request):
     }
     for kind, entity_ids in kinds.items():
         for entity_id in entity_ids:
-            sitemap.add('https://sagefy.org/{kind}/{id}'.format(
+            sitemap.add('https://sagefy.org/{kind}s/{id}'.format(
                 id=convert_uuid_to_slug(entity_id),
                 kind=kind,
             ))
