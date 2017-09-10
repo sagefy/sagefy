@@ -39,17 +39,19 @@ def serve(environ, start_response):
     request = construct_request(db_conn, environ)
     code, data = call_handler(request)
     close_db_connection(db_conn)
-    response_headers = [('Content-Type', 'application/json; charset=utf-8')]
+    response_headers = []
     if isinstance(data, dict):
+        response_headers += [
+            ('Content-Type', 'application/json; charset=utf-8')
+        ]
         response_headers += set_cookie_headers(data.pop('cookies', {}))
+    else:
+        response_headers += [('Content-Type', 'text/plain; charset=utf-8')]
     status = str(code) + ' ' + status_codes.get(code, 'Unknown')
     start_response(status, response_headers)
-    if isinstance(data, str):
-        body = data.encode()
-    elif isinstance(data, dict):
-        body = json.dumps(data, default=json_serial, ensure_ascii=False)
-        body = body.encode()
-    return [body]
+    if isinstance(data, dict):
+        data = json.dumps(data, default=json_serial, ensure_ascii=False)
+    return [data.encode()]
 
 
 def construct_request(db_conn, environ):
