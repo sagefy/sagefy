@@ -23,7 +23,6 @@ $base-button
     cursor pointer
     transition all 0.2s
     text-align center
-    box-shadow 0 1px 3px rgba(0, 0, 0, 0.2)
 
     &:focus
         outline 0
@@ -35,9 +34,9 @@ $base-button
 button
 input[type="button"]
     @extend $base-button
-
     button-background $base-color(90)
     color $base-color(43)
+    box-shadow 0 1px 3px rgba(0, 0, 0, 0.1)
 
     &:hover, &:focus
         color $base-color(20)
@@ -56,9 +55,9 @@ input[type="button"]
 button[type="submit"]
 $button--accent
     @extend $base-button
-
     button-background $accent-color(50)
     color $accent-color(99)
+    box-shadow 0 1px 3px rgba(0, 0, 0, 0.2)
 
     &:hover, &:focus
         color white
@@ -77,9 +76,9 @@ $button--accent
 
 $button--good
     @extend $base-button
-
     button-background $good-color(90)
     color $good-color(43)
+    box-shadow 0 1px 3px rgba(0, 0, 0, 0.1)
 
     &:hover, &:focus
         color $good-color(20)
@@ -97,9 +96,9 @@ $button--good
 
 $button--bad
     @extend $base-button
-
     button-background $bad-color(90), 3, 2
     color $bad-color(43)
+    box-shadow 0 1px 3px rgba(0, 0, 0, 0.1)
 
     &:hover, &:focus
         color $bad-color(20)
