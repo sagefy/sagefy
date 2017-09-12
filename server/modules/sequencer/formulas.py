@@ -43,8 +43,7 @@ def calculate_belief(learned, time_delta):
     return exp(-1 * time_delta * (1 - learned) / belief_factor)
 
 
-def update_learned(score, learned, guess, slip, transit,
-                   time_delta):
+def update_learned(score, learned, guess, slip, transit, time_delta):
     """
     Given a learner response,
     determines how likely the learner knows the skill.
