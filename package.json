@@ -1,0 +1,19 @@
+{
+  "name": "sagefy-watcher",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently -p \"[{name}]\" --names watch-server,watch-client-node,watch-client-static \"npm run watch-server\" \"npm run watch-client-node\" \"npm run watch-client-static\"",
+    "watch-server": "onchange 'server/**/*.py' -- docker-compose restart server",
+    "watch-client-node": "onchange 'client/**/*.{js,styl}' -- docker-compose restart client",
+    "watch-client-static": "cd client && npm start",
+    "test": "exit 0"
+  },
+  "author": "Sagefy",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "concurrently": "3.5.0",
+    "onchange": "3.2.1"
+  }
+}

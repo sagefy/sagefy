@@ -14,7 +14,7 @@ module.exports = function httpRequest({ method, url, data }) {
     })
     const request = http.request(
         {
-            hostname: 'localhost',
+            hostname: 'server',
             port: 8653,
             path: url,
             method: method,

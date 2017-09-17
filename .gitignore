@@ -46,3 +46,6 @@ var
 sagefy_rsa.pub
 elasticsearch-*
 rethinkdb-bu
+elasticsearch-data
+postgres-data
+postgres-test-data

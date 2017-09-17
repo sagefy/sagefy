@@ -1,15 +1,10 @@
 """
-Makes content in ../content in YAML format available to the Python code.
+Makes content in /content in YAML format available to the Python code.
 """
 
-
 import yaml
-import os
 
 files = {}
-
-dirname = os.path.realpath(__file__).replace('/server/modules/content.py', '')
-
 
 def get(key, language='en'):
     """
@@ -17,7 +12,7 @@ def get(key, language='en'):
     """
 
     if language not in files:
-        stream = open('%s/content/%s.yml' % (dirname, language), 'r')
+        stream = open('/content/%s.yml' % (language,), 'r')
         files[language] = yaml.load(stream)[language]
         stream.close()
 
