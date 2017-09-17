@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/heiskr/sagefy/master/client/app/images/astrolabe.png" height="72">
+<img src="https://raw.githubusercontent.com/heiskr/sagefy/master/nginx/statics/astrolabe.png" height="72">
 
 # Sagefy
 
