@@ -6,23 +6,23 @@
 
 _Sagefy is an open-content adaptive learning platform._
 
-Sagefy is an _adaptive learning system_. Instead of planned and structured courses, small objects of learning content are joined through relationships. Adaptive learning algorithms decide optimal ordering. Sagefy optimizes for learner knowledge and goals. No more learning things you already know. No more learning things you aren’t ready for. Sagefy stays focused on what you want to learn.
+**Adaptive Learning.** Get the most out of your time and effort spent. Sagefy optimizes based on what you already know and what your goal is.
 
-Open-content systems allow anyone to view, share, create, and edit content. Like most open-content systems, Sagefy works through consensus-driven decision making. Sagefy is open source and freely available.
-
-Sagefy uses learning science research in its [structure](https://github.com/heiskr/sagefy/wiki/Data-Structure) and [ideas](https://github.com/heiskr/sagefy/wiki/Ideas).
+**Open-Content.** Anyone can view, share, create, and edit content. Open-content means that Sagefy reaches a range of learning subjects.
 
 For more information, watch this 3 minute [YouTube video].
 
-- [Site], [Docs], [Twitter]
+- [Site], [Docs], [Twitter], [Gitter], [Setup]
 
+[YouTube video]: https://youtu.be/gFn4Q9tx7Qs
 [Site]: https://sagefy.org
 [Twitter]: https://twitter.com/sagefyorg
+[Gitter]: https://gitter.im/heiskr/sagefy
 [Docs]: https://docs.sagefy.org
-[YouTube video]: https://youtu.be/gFn4Q9tx7Qs
+[Setup]: https://github.com/heiskr/sagefy/blob/master/SETUP.md
 
-[![Setup](https://img.shields.io/badge/get-setup-brightgreen.svg?style=flat)](https://github.com/heiskr/sagefy/blob/master/SETUP.md) [![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy) ![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=<badge_key>)
- [![Gitter](https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg?style=flat)](https://gitter.im/heiskr/sagefy)
+[![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy)
+![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=<badge_key>)
 
 All contents in this project are licensed under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
