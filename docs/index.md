@@ -3,15 +3,27 @@ layout: docs
 title: What is Sagefy?
 ---
 
-_Learn anything, customized for you. And always free._
 
-**Sagefy is an open-content adaptive learning platform.**
+**Learn anything, customized for you.** _And always free._
 
-Sagefy is an _adaptive learning system_. Instead of planned and structured courses, small objects of learning content are joined through relationships. Adaptive learning algorithms decide optimal ordering. Sagefy optimizes for learner knowledge and goals. No more learning things you already know. No more learning things you aren’t ready for. Sagefy stays focused on what you want to learn.
+_Sagefy is an open-content adaptive learning platform._
 
-Open-content systems allow anyone to view, share, create, and edit content. Like most open-content systems, Sagefy works through consensus-driven decision making. Sagefy is open source and freely available.
+**Adaptive Learning.** Get the most out of your time and effort spent. Sagefy optimizes based on what you already know and what your goal is.
+
+**Open-Content.** Anyone can view, share, create, and edit content. Open-content means that Sagefy reaches a range of learning subjects.
 
 Sagefy uses learning science research in its [Data Structure](Data-Structure) and [Ideas](Ideas).
+
+For more information, watch this 3 minute [YouTube video].
+
+- [Site], [Docs], [Twitter], [Gitter], [Setup]
+
+[YouTube video]: https://youtu.be/gFn4Q9tx7Qs
+[Site]: https://sagefy.org
+[Twitter]: https://twitter.com/sagefyorg
+[Gitter]: https://gitter.im/heiskr/sagefy
+[Docs]: https://docs.sagefy.org
+[Setup]: https://github.com/heiskr/sagefy/blob/master/SETUP.md
 
 All contents in this project are licensed under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
