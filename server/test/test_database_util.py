@@ -1,7 +1,3 @@
-import pytest
-
-from conftest import table
-from test_config import config
 import database.util as util
 from modules.util import extend, pick, omit
 from schemas.index import schema as default
