@@ -19,17 +19,18 @@ framework.update_config(config)
 
 from framework.database import make_db_connection, close_db_connection
 import framework.session
+from database.user import insert_user
 
 
-def create_user_in_db(db_conn, users_table):
-    return users_table.insert({
+def create_user_in_db(db_conn):
+    return insert_user(db_conn, {
         'id': 'abcd1234',
         'name': 'test',
         'email': 'test@example.com',
         'password': bcrypt.encrypt('abcd1234'),
         'created': datetime.utcnow(),
         'modified': datetime.utcnow()
-    }).run(db_conn)
+    })
 
 
 def log_in():
@@ -55,68 +56,3 @@ def session(db_conn, request, users_table):
     session_id = log_in()
     request.addfinalizer(lambda: log_out(session_id))
     return session_id
-
-
-def table(db_conn, name, request):
-    """
-    Ensure the table is freshly empty after use.
-    """
-    table = r.table(name)
-    table.delete().run(db_conn)
-    request.addfinalizer(lambda: table.delete().run(db_conn))
-    return table
-
-
-@pytest.fixture
-def users_table(db_conn, request):
-    return table(db_conn, 'users', request)
-
-
-@pytest.fixture
-def notices_table(db_conn, request):
-    return table(db_conn, 'notices', request)
-
-
-@pytest.fixture
-def topics_table(db_conn, request):
-    return table(db_conn, 'topics', request)
-
-
-@pytest.fixture
-def posts_table(db_conn, request):
-    return table(db_conn, 'posts', request)
-
-
-@pytest.fixture
-def cards_table(db_conn, request):
-    return table(db_conn, 'cards', request)
-
-
-@pytest.fixture
-def cards_parameters_table(db_conn, request):
-    return table(db_conn, 'cards_parameters', request)
-
-
-@pytest.fixture
-def units_table(db_conn, request):
-    return table(db_conn, 'units', request)
-
-
-@pytest.fixture
-def subjects_table(db_conn, request):
-    return table(db_conn, 'subjects', request)
-
-
-@pytest.fixture
-def follows_table(db_conn, request):
-    return table(db_conn, 'follows', request)
-
-
-@pytest.fixture
-def users_subjects_table(db_conn, request):
-    return table(db_conn, 'users_subjects', request)
-
-
-@pytest.fixture
-def responses_table(db_conn, request):
-    return table(db_conn, 'responses', request)
