@@ -7,7 +7,6 @@ from database.subject import list_subjects_by_unit_flat, \
     get_subject_version, update_subject, list_one_subject_versions
 from database.unit import list_latest_accepted_units, \
     update_unit, get_unit_version, list_one_unit_versions
-from modules.util import convert_uuid_to_slug
 
 
 def get_entity_version(db_conn, kind, version_id):

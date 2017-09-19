@@ -59,17 +59,6 @@ vases_schema = extend({}, default, {
 })
 
 
-@pytest.fixture
-def vases_table(db_conn, request):
-    tablename = 'vases'
-    tables = r.db(config['rdb_db']).table_list().run(db_conn)
-    if tablename and tablename not in tables:
-        (r.db(config['rdb_db'])
-          .table_create(tablename)
-          .run(db_conn))
-    return table(db_conn, tablename, request)
-
-
 def test_insert_document(db_conn, vases_table):
     schema = vases_schema
     data = {

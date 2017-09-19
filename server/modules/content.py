@@ -6,6 +6,7 @@ import yaml
 
 files = {}
 
+
 def get(key, language='en'):
     """
     Given a filename, key and language, get the matching content.

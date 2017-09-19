@@ -6,7 +6,6 @@ from modules.sequencer.params import init_guess, init_slip, precision, \
     init_transit
 from database.util import insert_row, update_row, get_row
 from modules.util import convert_slug_to_uuid, pick
-import psycopg2.extras
 
 
 def get_card_parameters(db_conn, params):
