@@ -10,9 +10,7 @@ from database.unit import get_latest_accepted_unit, list_latest_accepted_units
 xfail = pytest.mark.xfail
 
 
-def add_test_subject(db_conn,
-                     users_table=None, units_table=None, responses_table=None,
-                     subjects_table=None):
+def add_test_subject(db_conn):
     """
     Add doesn't require anything.
     Multiply requires add.
@@ -25,69 +23,63 @@ def add_test_subject(db_conn,
     Divide needs to be diagnosed.
     """
 
-    if users_table:
-        users_table.insert({
-            'id': 'user'
-        }).run(db_conn)
+    users_table.insert({
+        'id': 'user'
+    }).run(db_conn)
 
-    if units_table:
-        units_table.insert([{
-            'entity_id': 'add',
-            'status': 'accepted',
-            'created': datetime.utcnow()
-        }, {
-            'entity_id': 'subtract',
-            'require_ids': ['add'],
-            'status': 'accepted',
-            'created': datetime.utcnow()
-        }, {
-            'entity_id': 'multiply',
-            'require_ids': ['add'],
-            'status': 'accepted',
-            'created': datetime.utcnow()
-        }, {
-            'entity_id': 'divide',
-            'require_ids': ['multiply', 'subtract'],
-            'status': 'accepted',
-            'created': datetime.utcnow()
-        }]).run(db_conn)
+    units_table.insert([{
+        'entity_id': 'add',
+        'status': 'accepted',
+        'created': datetime.utcnow()
+    }, {
+        'entity_id': 'subtract',
+        'require_ids': ['add'],
+        'status': 'accepted',
+        'created': datetime.utcnow()
+    }, {
+        'entity_id': 'multiply',
+        'require_ids': ['add'],
+        'status': 'accepted',
+        'created': datetime.utcnow()
+    }, {
+        'entity_id': 'divide',
+        'require_ids': ['multiply', 'subtract'],
+        'status': 'accepted',
+        'created': datetime.utcnow()
+    }]).run(db_conn)
 
-    if responses_table:
-        responses_table.insert([{
-            'user_id': 'user', 'unit_id': 'add', 'learned': 0.99,
-            'created': datetime.utcnow()
-        }, {
-            'user_id': 'user', 'unit_id': 'multiply', 'learned': 0.0,
-            'created': datetime.utcnow()
-        }, {
-            'user_id': 'user', 'unit_id': 'subtract', 'learned': 0.99,
-            'created': datetime(2004, 11, 3, tzinfo=timezone.utc)
-        }]).run(db_conn)
+    responses_table.insert([{
+        'user_id': 'user', 'unit_id': 'add', 'learned': 0.99,
+        'created': datetime.utcnow()
+    }, {
+        'user_id': 'user', 'unit_id': 'multiply', 'learned': 0.0,
+        'created': datetime.utcnow()
+    }, {
+        'user_id': 'user', 'unit_id': 'subtract', 'learned': 0.99,
+        'created': datetime(2004, 11, 3, tzinfo=timezone.utc)
+    }]).run(db_conn)
 
-    if subjects_table:
-        subjects_table.insert({
-            'entity_id': 'fghj4567',
-            'status': 'accepted',
-            'created': datetime(2004, 11, 1, tzinfo=timezone.utc),
-            'members': [
-                {'id': 'add', 'kind': 'unit'},
-                {'id': 'subtract', 'kind': 'unit'},
-                {'id': 'multiply', 'kind': 'unit'},
-                {'id': 'divide', 'kind': 'unit'},
-            ]
-        }).run(db_conn)
+    subjects_table.insert({
+        'entity_id': 'fghj4567',
+        'status': 'accepted',
+        'created': datetime(2004, 11, 1, tzinfo=timezone.utc),
+        'members': [
+            {'id': 'add', 'kind': 'unit'},
+            {'id': 'subtract', 'kind': 'unit'},
+            {'id': 'multiply', 'kind': 'unit'},
+            {'id': 'divide', 'kind': 'unit'},
+        ]
+    }).run(db_conn)
 
 
-def test_traverse(db_conn, units_table, users_table, responses_table,
-                  subjects_table):
+def test_traverse(db_conn):
     """
     Expect to take a list of units and traverse them correctly.
     Basic test.
     """
 
     assert subjects_table
-    add_test_subject(db_conn,
-                     users_table, units_table, responses_table, subjects_table)
+    add_test_subject(db_conn)
     subject = get_latest_accepted_subject(db_conn, entity_id='fghj4567')
     assert subject is not None
     user = get_user(db_conn, {'id': 'user'})
@@ -109,57 +101,57 @@ Traverse should output units in order.
 
 
 @xfail
-def test_judge_diagnose(db_conn, users_table, units_table, responses_table):
+def test_judge_diagnose(db_conn):
     """
     Expect to add no known ability to "diagnose".
     """
 
-    add_test_subject(db_conn, users_table, units_table, responses_table)
+    add_test_subject(db_conn)
     unit = get_latest_accepted_unit(db_conn, entity_id='divide')
     user = get_user(db_conn, {'id': 'user'})
     assert judge(db_conn, unit, user) == "diagnose"
 
 
 @xfail
-def test_judge_review(db_conn, users_table, units_table, responses_table):
+def test_judge_review(db_conn):
     """
     Expect to add older, high ability to "review".
     """
 
-    add_test_subject(db_conn, users_table, units_table, responses_table)
+    add_test_subject(db_conn)
     unit = get_latest_accepted_unit(db_conn, entity_id='subtract')
     user = get_user(db_conn, {'id': 'user'})
     assert judge(db_conn, unit, user) == "review"
 
 
-def test_judge_learn(db_conn, units_table, users_table, responses_table):
+def test_judge_learn(db_conn):
     """
     Expect to add known low ability to "learn".
     """
 
-    add_test_subject(db_conn, users_table, units_table, responses_table)
+    add_test_subject(db_conn)
     unit = get_latest_accepted_unit(db_conn, entity_id='multiply')
     user = get_user(db_conn, {'id': 'user'})
     assert judge(db_conn, unit, user) == "learn"
 
 
-def test_judge_done(db_conn, units_table, users_table, responses_table):
+def test_judge_done(db_conn):
     """
     Expect to show "done".
     """
 
-    add_test_subject(db_conn, users_table, units_table, responses_table)
+    add_test_subject(db_conn)
     unit = get_latest_accepted_unit(db_conn, entity_id='add')
     user = get_user(db_conn, {'id': 'user'})
     assert judge(db_conn, unit, user) == "done"
 
 
-def test_match_unit_dependents(db_conn, units_table):
+def test_match_unit_dependents(db_conn):
     """
     Expect to order units by the number of depending units.
     """
 
-    add_test_subject(db_conn, units_table=units_table)
+    add_test_subject(db_conn)
     units = list_latest_accepted_units(db_conn, [
         'add', 'subtract', 'multiply', 'divide',
     ])
@@ -170,12 +162,12 @@ def test_match_unit_dependents(db_conn, units_table):
     assert len(deps['divide']) == 0
 
 
-def test_order(db_conn, units_table):
+def test_order(db_conn):
     """
     Expect to order units by the number of depending units.
     """
 
-    add_test_subject(db_conn, units_table=units_table)
+    add_test_subject(db_conn)
     units = list_latest_accepted_units(db_conn, [
         'add', 'subtract', 'multiply', 'divide',
     ])

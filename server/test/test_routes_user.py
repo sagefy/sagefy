@@ -7,18 +7,18 @@ from database.user import get_user, get_email_token
 xfail = pytest.mark.xfail
 
 
-def test_user_get(db_conn, users_table):
+def test_user_get(db_conn):
     """
     Ensure a user can be retrieved by ID.
     """
 
-    create_user_in_db(db_conn, users_table)
+    create_user_in_db(db_conn)
     request = {'params': {}, 'db_conn': db_conn}
     code, response = routes.user.get_user_route(request, 'abcd1234')
     assert response['user']['name'] == 'test'
 
 
-def test_user_get_failed(db_conn, users_table):
+def test_user_get_failed(db_conn):
     """
     Ensure a no user is returned when ID doesn't match.
     """
@@ -28,12 +28,12 @@ def test_user_get_failed(db_conn, users_table):
     assert 'errors' in response
 
 
-def test_user_log_in(db_conn, users_table):
+def test_user_log_in(db_conn):
     """
     Ensure a user can log in.
     """
 
-    create_user_in_db(db_conn, users_table)
+    create_user_in_db(db_conn)
     request = {
         'params': {'name': 'test', 'password': 'abcd1234'},
         'db_conn': db_conn
@@ -42,7 +42,7 @@ def test_user_log_in(db_conn, users_table):
     assert 'test@example.com' == response['user']['email']
 
 
-def test_user_log_in_none(db_conn, users_table):
+def test_user_log_in_none(db_conn):
     """
     Ensure a user can't log in if no user by name.
     """
@@ -55,12 +55,12 @@ def test_user_log_in_none(db_conn, users_table):
     assert 'errors' in response
 
 
-def test_user_log_in_password_fail(db_conn, users_table):
+def test_user_log_in_password_fail(db_conn):
     """
     Ensure a user can't log in if password is wrong.
     """
 
-    create_user_in_db(db_conn, users_table)
+    create_user_in_db(db_conn)
     request = {
         'params': {'name': 'test', 'password': '1234abcd'},
         'db_conn': db_conn
@@ -69,12 +69,12 @@ def test_user_log_in_password_fail(db_conn, users_table):
     assert 'errors' in response
 
 
-def test_user_log_out(db_conn, users_table):
+def test_user_log_out(db_conn):
     """
     Ensure a user can log out.
     """
 
-    create_user_in_db(db_conn, users_table)
+    create_user_in_db(db_conn)
     request = {
         'params': {'name': 'test', 'password': 'abcd1234'},
         'db_conn': db_conn
@@ -98,7 +98,7 @@ def test_user_get_current(db_conn, session):
     assert response['user']['name'] == 'test'
 
 
-def test_user_get_current_failed(db_conn, users_table):
+def test_user_get_current_failed(db_conn):
     """
     Ensure no user is returned when logged out.
     """
@@ -107,7 +107,7 @@ def test_user_get_current_failed(db_conn, users_table):
     assert code == 401
 
 
-def test_user_create(db_conn, users_table):
+def test_user_create(db_conn):
     """
     Ensure a user can be created.
     """
@@ -125,7 +125,7 @@ def test_user_create(db_conn, users_table):
     assert response['user']['name'] == 'test'
 
 
-def test_user_create_failed(db_conn, users_table):
+def test_user_create_failed(db_conn):
     """
     Ensure a user will fail to create when invalid.
     """
@@ -157,7 +157,7 @@ def test_user_update(db_conn, session):
     assert response['user']['email'] == 'other@example.com'
 
 
-def test_user_update_none(db_conn, users_table):
+def test_user_update_none(db_conn):
     """
     Ensure a user won't update if not exist.
     """
@@ -175,7 +175,7 @@ def test_user_update_none(db_conn, users_table):
     assert 'errors' in response
 
 
-def test_user_update_self_only(db_conn, users_table, session):
+def test_user_update_self_only(db_conn, session):
     """
     Ensure a user can only update herself.
     """
@@ -200,7 +200,7 @@ def test_user_update_self_only(db_conn, users_table, session):
     assert 'errors' in response
 
 
-def test_user_update_invalid(db_conn, users_table, session):
+def test_user_update_invalid(db_conn, session):
     """
     Ensure a user won't update if invalid.
     """
@@ -218,34 +218,34 @@ def test_user_update_invalid(db_conn, users_table, session):
     assert 'errors' in response
 
 
-def test_user_token_fail(db_conn, users_table):
+def test_user_token_fail(db_conn):
     """
     Expect to create a token so the user can get a new password.
     """
 
-    create_user_in_db(db_conn, users_table)
+    create_user_in_db(db_conn)
     request = {'params': {'email': 'other'}, 'db_conn': db_conn}
     code, response = routes.user.create_token_route(request)
     assert code == 404
 
 
-def test_user_token_success(db_conn, users_table):
+def test_user_token_success(db_conn):
     """
     Expect to create a token so the user can get a new password.
     """
 
-    create_user_in_db(db_conn, users_table)
+    create_user_in_db(db_conn)
     request = {'params': {'email': 'test@example.com'}, 'db_conn': db_conn}
     code, response = routes.user.create_token_route(request)
     assert code == 200
 
 
-def test_user_create_password_fail(db_conn, users_table):
+def test_user_create_password_fail(db_conn):
     """
     Expect a user to be able to reset their password.
     """
 
-    create_user_in_db(db_conn, users_table)
+    create_user_in_db(db_conn)
     user = get_user(db_conn, {'id': 'abcd1234'})
     pw1 = user['password']
     get_email_token(user, send_email=False)
@@ -263,12 +263,12 @@ def test_user_create_password_fail(db_conn, users_table):
     assert user['password'] == pw1
 
 
-def test_user_create_password_ok(db_conn, users_table):
+def test_user_create_password_ok(db_conn):
     """
     Expect a user to be able to reset their password.
     """
 
-    create_user_in_db(db_conn, users_table)
+    create_user_in_db(db_conn)
     user = get_user(db_conn, {'id': 'abcd1234'})
     pw1 = user['password']
     token = get_email_token(user, send_email=False)

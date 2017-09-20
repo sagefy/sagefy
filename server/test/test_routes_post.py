@@ -7,7 +7,7 @@ import routes.post
 xfail = pytest.mark.xfail
 
 
-def create_topic_in_db(db_conn, topics_table, user_id='abcd1234'):
+def create_topic_in_db(db_conn, user_id='abcd1234'):
     topics_table.insert({
         'id': 'wxyz7890',
         'created': datetime.utcnow(),
@@ -21,7 +21,7 @@ def create_topic_in_db(db_conn, topics_table, user_id='abcd1234'):
     }).run(db_conn)
 
 
-def create_post_in_db(db_conn, posts_table, user_id='abcd1234'):
+def create_post_in_db(db_conn, user_id='abcd1234'):
     posts_table.insert({
         'id': 'jklm',
         'created': datetime.utcnow(),
@@ -35,7 +35,7 @@ def create_post_in_db(db_conn, posts_table, user_id='abcd1234'):
     }).run(db_conn)
 
 
-def create_proposal_in_db(db_conn, posts_table, units_table):
+def create_proposal_in_db(db_conn):
     posts_table.insert({
         'id': 'jklm',
         'created': datetime.utcnow(),
@@ -70,13 +70,13 @@ def create_proposal_in_db(db_conn, posts_table, units_table):
     }).run(db_conn)
 
 
-def test_get_posts(db_conn, users_table, topics_table, posts_table):
+def test_get_posts(db_conn):
     """
     Expect to get posts for given topic.
     """
 
-    create_user_in_db(db_conn, users_table)
-    create_topic_in_db(db_conn, topics_table)
+    create_user_in_db(db_conn)
+    create_topic_in_db(db_conn)
     posts_table.insert([{
         'id': 'jklm',
         'created': datetime.utcnow(),
@@ -107,8 +107,7 @@ def test_get_posts(db_conn, users_table, topics_table, posts_table):
             or 'Beneficial to the Publick' in response['posts'][1]['body'])
 
 
-def test_get_posts_not_topic(db_conn, users_table, topics_table,
-                             posts_table):
+def test_get_posts_not_topic(db_conn):
     """
     Expect 404 to get posts for a nonexistant topic.
     """
@@ -121,13 +120,12 @@ def test_get_posts_not_topic(db_conn, users_table, topics_table,
     assert code == 404
 
 
-def test_get_posts_paginate(db_conn, users_table, topics_table,
-                            posts_table):
+def test_get_posts_paginate(db_conn):
     """
     Expect get posts for topic to paginate.
     """
-    create_user_in_db(db_conn, users_table)
-    create_topic_in_db(db_conn, topics_table)
+    create_user_in_db(db_conn)
+    create_topic_in_db(db_conn)
     for i in range(0, 25):
         posts_table.insert({
             'id': 'jklm%s' % i,
@@ -151,15 +149,14 @@ def test_get_posts_paginate(db_conn, users_table, topics_table,
     assert len(response['posts']) == 5
 
 
-def test_get_posts_proposal(db_conn, users_table, units_table, topics_table,
-                            posts_table):
+def test_get_posts_proposal(db_conn):
     """
     Expect get posts for topic to render a proposal correctly.
     """
 
-    create_user_in_db(db_conn, users_table)
-    create_topic_in_db(db_conn, topics_table)
-    create_proposal_in_db(db_conn, posts_table, units_table)
+    create_user_in_db(db_conn)
+    create_topic_in_db(db_conn)
+    create_proposal_in_db(db_conn)
 
     request = {
         'params': {},
@@ -170,15 +167,14 @@ def test_get_posts_proposal(db_conn, users_table, units_table, topics_table,
     assert response['posts'][0]['kind'] == 'proposal'
 
 
-def test_get_posts_votes(db_conn, users_table, units_table, topics_table,
-                         posts_table):
+def test_get_posts_votes(db_conn):
     """
     Expect get posts for topic to render votes correctly.
     """
 
-    create_user_in_db(db_conn, users_table)
-    create_topic_in_db(db_conn, topics_table)
-    create_proposal_in_db(db_conn, posts_table, units_table)
+    create_user_in_db(db_conn)
+    create_topic_in_db(db_conn)
+    create_proposal_in_db(db_conn)
     posts_table.insert({
         'id': 'asdf4567',
         'created': datetime.utcnow(),
@@ -202,13 +198,13 @@ def test_get_posts_votes(db_conn, users_table, units_table, topics_table,
     assert response['posts'][1]['kind'] in ('proposal', 'vote')
 
 
-def test_create_post(db_conn, users_table, topics_table, posts_table,
+def test_create_post(db_conn,
                      session):
     """
     Expect create post.
     """
 
-    create_topic_in_db(db_conn, topics_table)
+    create_topic_in_db(db_conn)
     request = {
         'cookies': {'session_id': session},
         'params': {
@@ -226,13 +222,12 @@ def test_create_post(db_conn, users_table, topics_table, posts_table,
     assert 'Beneficial to the Publick' in response['post']['body']
 
 
-def test_create_post_errors(db_conn, users_table, topics_table,
-                            posts_table, session):
+def test_create_post_errors(db_conn, session):
     """
     Expect create post missing field to show errors.
     """
 
-    create_topic_in_db(db_conn, topics_table)
+    create_topic_in_db(db_conn)
     request = {
         'cookies': {'session_id': session},
         'params': {
@@ -246,13 +241,12 @@ def test_create_post_errors(db_conn, users_table, topics_table,
     assert 'errors' in response
 
 
-def test_create_post_log_in(db_conn, users_table, topics_table,
-                            posts_table):
+def test_create_post_log_in(db_conn):
     """
     Expect create post to require log in.
     """
 
-    create_topic_in_db(db_conn, topics_table)
+    create_topic_in_db(db_conn)
     request = {
         'params': {
             # Should default to > 'kind': 'post',
@@ -271,13 +265,12 @@ def test_create_post_log_in(db_conn, users_table, topics_table,
 
 
 @xfail
-def test_create_post_proposal(db_conn, users_table, topics_table,
-                              posts_table, session):
+def test_create_post_proposal(db_conn, session):
     """
     Expect create post to create a proposal.
     """
 
-    create_topic_in_db(db_conn, topics_table)
+    create_topic_in_db(db_conn)
     request = {
         'params': {
             'kind': 'proposal',
@@ -294,13 +287,12 @@ def test_create_post_proposal(db_conn, users_table, topics_table,
 
 
 @xfail
-def test_create_post_vote(db_conn, users_table, topics_table,
-                          posts_table, session):
+def test_create_post_vote(db_conn, session):
     """
     Expect create post to create a vote.
     """
 
-    create_topic_in_db(db_conn, topics_table)
+    create_topic_in_db(db_conn)
     request = {
         'params': {
             'kind': 'vote',
@@ -315,15 +307,14 @@ def test_create_post_vote(db_conn, users_table, topics_table,
     assert response['post']['kind'] == 'vote'
 
 
-def test_update_post_log_in(db_conn, users_table, topics_table,
-                            posts_table):
+def test_update_post_log_in(db_conn):
     """
     Expect update post to require log in.
     """
 
-    create_user_in_db(db_conn, users_table)
-    create_topic_in_db(db_conn, topics_table)
-    create_post_in_db(db_conn, posts_table)
+    create_user_in_db(db_conn)
+    create_topic_in_db(db_conn)
+    create_post_in_db(db_conn)
     request = {
         'params': {
             'body': 'Update.'
@@ -337,14 +328,13 @@ def test_update_post_log_in(db_conn, users_table, topics_table,
     assert 'errors' in response
 
 
-def test_update_post_author(db_conn, users_table, topics_table,
-                            posts_table, session):
+def test_update_post_author(db_conn, session):
     """
     Expect update post to require own post.
     """
 
-    create_topic_in_db(db_conn, topics_table)
-    create_post_in_db(db_conn, posts_table, user_id='1234yuio')
+    create_topic_in_db(db_conn)
+    create_post_in_db(db_conn, user_id='1234yuio')
     request = {
         'cookies': {'session_id': session},
         'params': {
@@ -358,14 +348,13 @@ def test_update_post_author(db_conn, users_table, topics_table,
     assert 'errors' in response
 
 
-def test_update_post_body(db_conn, users_table, topics_table,
-                          posts_table, session):
+def test_update_post_body(db_conn, session):
     """
     Expect update post to change body for general post.
     """
 
-    create_topic_in_db(db_conn, topics_table)
-    create_post_in_db(db_conn, posts_table)
+    create_topic_in_db(db_conn)
+    create_post_in_db(db_conn)
     request = {
         'cookies': {'session_id': session},
         'params': {
@@ -381,14 +370,13 @@ def test_update_post_body(db_conn, users_table, topics_table,
 
 
 @xfail
-def test_update_proposal(db_conn, users_table, topics_table,
-                         posts_table, units_table, session):
+def test_update_proposal(db_conn, session):
     """
     Expect update post to handle proposals correctly.
     """
 
-    create_topic_in_db(db_conn, topics_table)
-    create_proposal_in_db(db_conn, posts_table, units_table)
+    create_topic_in_db(db_conn)
+    create_proposal_in_db(db_conn)
 
     request = {
         'cookies': {'session_id': session},
@@ -405,15 +393,14 @@ def test_update_proposal(db_conn, users_table, topics_table,
 
 
 @xfail
-def test_update_vote(db_conn, users_table, topics_table,
-                     posts_table, units_table, session):
+def test_update_vote(db_conn, session):
     """
     Expect update vote to handle proposals correctly.
     """
 
-    create_user_in_db(db_conn, users_table)
-    create_topic_in_db(db_conn, topics_table)
-    create_proposal_in_db(db_conn, posts_table, units_table)
+    create_user_in_db(db_conn)
+    create_topic_in_db(db_conn)
+    create_proposal_in_db(db_conn)
     posts_table.insert({
         'id': 'vbnm1234',
         'created': datetime.utcnow(),

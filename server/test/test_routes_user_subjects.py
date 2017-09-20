@@ -6,7 +6,7 @@ import pytest
 xfail = pytest.mark.xfail
 
 
-def prep(db_conn, subjects_table, users_subjects_table):
+def prep(db_conn):
     subjects_table.insert([{
         'entity_id': 'A1',
         'name': 'A',
@@ -47,14 +47,13 @@ def prep(db_conn, subjects_table, users_subjects_table):
     }).run(db_conn)
 
 
-def test_get_user_subjects(db_conn, session, subjects_table,
-                           users_subjects_table):
+def test_get_user_subjects(db_conn, session):
 
     """
     Expect to get a list of the user's subjects.
     """
 
-    prep(db_conn, subjects_table, users_subjects_table)
+    prep(db_conn)
     request = {
         'cookies': {'session_id': session},
         'params': {},
@@ -68,7 +67,7 @@ def test_get_user_subjects(db_conn, session, subjects_table,
 
 
 @xfail
-def test_get_user_subjects_401(db_conn, users_subjects_table):
+def test_get_user_subjects_401(db_conn):
     """
     Expect get user subjects to 401 when not logged in.
     """
@@ -80,7 +79,7 @@ def test_get_user_subjects_401(db_conn, users_subjects_table):
 
 
 @xfail
-def test_get_user_subjects_403(db_conn, session, users_subjects_table):
+def test_get_user_subjects_403(db_conn, session):
     """
     Expect to 403 if trying to get other user's subjects.
     """
@@ -94,7 +93,7 @@ def test_get_user_subjects_403(db_conn, session, users_subjects_table):
     assert code == 403
 
 
-def test_add_subject(db_conn, session, subjects_table, users_subjects_table):
+def test_add_subject(db_conn, session):
     """
     Expect to add a subject to the user's list.
     """
@@ -118,7 +117,7 @@ def test_add_subject(db_conn, session, subjects_table, users_subjects_table):
     assert 'A1' in response['subjects']
 
 
-def test_add_subject_401(db_conn, users_subjects_table):
+def test_add_subject_401(db_conn):
     """
     Expect to 401 when trying to add a subject but not logged in.
     """
@@ -129,7 +128,7 @@ def test_add_subject_401(db_conn, users_subjects_table):
     assert code == 401
 
 
-def test_add_subject_403(db_conn, session, users_subjects_table):
+def test_add_subject_403(db_conn, session):
     """
     Expect to 403 when attempt to add to another user's subjects.
     """
@@ -143,7 +142,7 @@ def test_add_subject_403(db_conn, session, users_subjects_table):
     assert code == 403
 
 
-def test_add_subject_404(db_conn, session, users_subjects_table):
+def test_add_subject_404(db_conn, session):
     """
     Expect to 404 if subject not found.
     """
@@ -157,8 +156,7 @@ def test_add_subject_404(db_conn, session, users_subjects_table):
     assert code == 404
 
 
-def test_add_subject_already_added(db_conn, session, subjects_table,
-                                   users_subjects_table):
+def test_add_subject_already_added(db_conn, session):
     """
     Expect to 400 if already added subject.
     """
@@ -184,8 +182,7 @@ def test_add_subject_already_added(db_conn, session, subjects_table,
     assert code == 400
 
 
-def test_select_subject_route(db_conn, session, subjects_table,
-                              users_subjects_table):
+def test_select_subject_route(db_conn, session):
     """
     Expect to select a subject.
     """
@@ -209,8 +206,7 @@ def test_select_subject_route(db_conn, session, subjects_table,
     assert response['next']['path'] == '/s/subjects/A1/tree'
 
 
-def test_remove_subject(db_conn, session, subjects_table,
-                        users_subjects_table):
+def test_remove_subject(db_conn, session):
     """
     Expect to remove a subject from the user's list.
     """
@@ -238,7 +234,7 @@ def test_remove_subject(db_conn, session, subjects_table,
     assert code == 200
 
 
-def test_remove_subject_401(db_conn, users_subjects_table):
+def test_remove_subject_401(db_conn):
     """
     Expect to 401 when trying to remove a user subject not logged in.
     """
@@ -251,7 +247,7 @@ def test_remove_subject_401(db_conn, users_subjects_table):
     assert code == 401
 
 
-def test_remove_subject_403(db_conn, session, users_subjects_table):
+def test_remove_subject_403(db_conn, session):
     """
     Expect forbidden when trying to remove another user's subject.
     """
@@ -265,7 +261,7 @@ def test_remove_subject_403(db_conn, session, users_subjects_table):
     assert code == 403
 
 
-def test_remove_subject_404(db_conn, session, users_subjects_table):
+def test_remove_subject_404(db_conn, session):
     """
     Expect to not found when trying to delete an unadded subject.
     """

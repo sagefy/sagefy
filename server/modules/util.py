@@ -34,6 +34,7 @@ def convert_slug_to_uuid(slug):
     if isinstance(slug, uuid.UUID):
         return slug
     assert isinstance(slug, str)
+    assert len(slug) in (22, 24)
     slug = slug[0:22]
     return uuid.UUID(bytes=base64.urlsafe_b64decode(slug + '=='))
 

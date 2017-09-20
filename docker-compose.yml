@@ -10,6 +10,7 @@ services:
       POSTGRES_USER: sagefy
     volumes:
      - ./postgres-data:/var/lib/postgresql/data
+     - ./postgres:/www
   postgres-test:
     # https://hub.docker.com/_/postgres/
     image: 'postgres:9.6-alpine'
@@ -20,6 +21,7 @@ services:
       POSTGRES_USER: test
     volumes:
      - ./postgres-test-data:/var/lib/postgresql/data
+     - ./postgres:/www
   redis:
     # https://hub.docker.com/_/redis/
     image: 'redis:3.2-alpine'
@@ -40,6 +42,9 @@ services:
     volumes:
      - ./server:/www
      - ./content:/content
+    links:
+     - postgres
+     - postgres-test
   client:
     # https://hub.docker.com/_/node/
     build: ./client

@@ -55,7 +55,7 @@ vases_schema = extend({}, default, {
 })
 
 
-def test_insert_document(db_conn, vases_table):
+def test_insert_row(db_conn):
     schema = vases_schema
     data = {
         'id': 'haxxor',
@@ -66,7 +66,7 @@ def test_insert_document(db_conn, vases_table):
         ],
         'soil': {'color': 'black'}
     }
-    document, errors = util.insert_document(db_conn, schema, data)
+    document, errors = util.insert_row(db_conn, schema, data)
     subdoc = pick(document, ('name', 'plants', 'soil'))
     subdata = pick(data, ('name', 'plants', 'soil'))
     assert document['id'] != data['id']
@@ -74,7 +74,7 @@ def test_insert_document(db_conn, vases_table):
     assert subdoc == subdata
 
 
-def test_update_document(db_conn):
+def test_update_row(db_conn):
     schema = vases_schema
     data1 = {
         'name': 'celestial',
@@ -84,14 +84,14 @@ def test_update_document(db_conn):
         ],
         'soil': {'color': 'black'}
     }
-    document1, errors1 = util.insert_document(db_conn, schema, data1)
+    document1, errors1 = util.insert_row(db_conn, schema, data1)
     subdoc1 = pick(document1, ('name', 'plants', 'soil'))
     subdata1 = pick(data1, ('name', 'plants', 'soil'))
     data2 = {
         'id': 'haxxor',
         'name': 'zen',
     }
-    document2, errors2 = util.update_document(schema,
+    document2, errors2 = util.update_row(schema,
                                               document1, data2, db_conn)
     subdoc2 = pick(document2, ('name', 'plants', 'soil'))
     subdata2 = pick(data2, ('name', 'plants', 'soil'))
@@ -102,7 +102,7 @@ def test_update_document(db_conn):
     assert subdoc2 == extend({}, subdata1, subdata2)
 
 
-def test_save_document(db_conn, vases_table):
+def test_save_row(db_conn):
     schema = vases_schema
     data = {
         'name': 'celestial',
@@ -112,13 +112,13 @@ def test_save_document(db_conn, vases_table):
         ],
         'soil': {'color': 'black'}
     }
-    document, errors = util.save_document(db_conn, schema, data)
+    document, errors = util.save_row(db_conn, schema, data)
     subdoc = pick(document, ('name', 'plants', 'soil'))
     assert len(errors) == 0
     assert subdoc == data
 
 
-def create_test_data_set(db_conn, vases_table):
+def create_test_data_set(db_conn):
     """
     Create a set of fake data.
     """
@@ -152,7 +152,7 @@ def create_test_data_set(db_conn, vases_table):
     errors = []
     docs = []
     for d in data:
-        doc, e = util.insert_document(db_conn, schema, d)
+        doc, e = util.insert_row(db_conn, schema, d)
         if e:
             errors.append(e)
         docs.append(doc)
@@ -160,30 +160,30 @@ def create_test_data_set(db_conn, vases_table):
     return docs
 
 
-def test_get_document(db_conn, vases_table):
+def test_get_row(db_conn):
     tablename = 'vases'
-    create_test_data_set(db_conn, vases_table)
+    create_test_data_set(db_conn)
     params = {'name': 'modern'}
-    document = util.get_document(db_conn, tablename, params)
+    document = util.get_row(db_conn, tablename, params)
     assert document['name'] == 'modern'
     assert document['soil'] == {'color': 'black'}
 
 
-def test_list_documents(db_conn, vases_table):
+def test_list_rows(db_conn):
     tablename = 'vases'
-    create_test_data_set(db_conn, vases_table)
+    create_test_data_set(db_conn)
     params = {'shape': 'round'}
-    documents = list(db_conn, util.list_documents(tablename, params))
+    documents = list(db_conn, util.list_rows(tablename, params))
     assert len(documents) == 2
 
 
-def test_delete_document(db_conn, vases_table):
+def test_delete_row(db_conn):
     tablename = 'vases'
-    documents = create_test_data_set(db_conn, vases_table)
+    documents = create_test_data_set(db_conn)
     assert len(documents) == 3
-    util.delete_document(db_conn, tablename, documents[0]['id'])
+    util.delete_row(db_conn, tablename, documents[0]['id'])
     params = {}
-    documents = list(db_conn, util.list_documents(tablename, params))
+    documents = list(db_conn, util.list_rows(tablename, params))
     assert len(documents) == 2
 
 
@@ -223,9 +223,9 @@ def test_recurse_embeds():
     }
 
 
-def test_prepare_document(db_conn, vases_table):
+def test_prepare_row(db_conn):
     schema = vases_schema
-    create_test_data_set(db_conn, vases_table)
+    create_test_data_set(db_conn)
     data = {
         'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
         'name': ' celestial ',
@@ -236,7 +236,7 @@ def test_prepare_document(db_conn, vases_table):
         ],
         'soil': {'color': 'black'}
     }
-    result, errors = util.prepare_document(db_conn, schema, data)
+    result, errors = util.prepare_row(db_conn, schema, data)
     assert not errors
     result = omit(result, ('id', 'modified', 'created',))
     assert result == omit(data, ('id',))
@@ -302,8 +302,8 @@ def test_validate_fields():
     assert shape_error['message'] == 'Must be one of round, square, triangle.'
 
 
-def test_validate_unique_fields(db_conn, vases_table):
-    create_test_data_set(db_conn, vases_table)
+def test_validate_unique_fields(db_conn):
+    create_test_data_set(db_conn)
     schema = vases_schema
     data = {
         'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',

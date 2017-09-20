@@ -6,8 +6,8 @@ config = {
     'mail_server': 'smtp.sparkpostmail.com',
     'mail_port': 587,
     # db
-    'host': 'localhost',
+    'host': 'postgres',
     'dbname': 'sagefy',
-    'user': 'postgres',
-    'password': 'postgres',
+    'user': 'sagefy',
+    'port': 5432,
 }

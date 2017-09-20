@@ -8,13 +8,14 @@ from modules.sequencer.params import precision
 from config import config
 from es_populate import es_populate
 import yaml
-import os
 from framework.redis import redis
 from datetime import datetime, timezone
 import uuid
 from modules.util import convert_uuid_to_slug
 from database.util import save_row, delete_row
+import framework.index as framework
 
+framework.update_config(config)
 
 if not config['debug']:
     raise Exception('You must be in debug mode to wipe the DB.')
@@ -47,11 +48,7 @@ es.indices.delete(index='entity', ignore=[400, 404])
 
 redis.flushall()
 
-dirname = os.path.realpath(__file__).replace('/server/dev_data.py', '')
-stream = open(
-    '%s/server/intro_electronic_music_example_collection.yaml' % (dirname,),
-    'r'
-)
+stream = open('/www/intro_electronic_music_example_collection.yaml', 'r')
 sample_data = yaml.load(stream)
 stream.close()
 

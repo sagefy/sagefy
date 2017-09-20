@@ -8,8 +8,7 @@ from datetime import datetime, timezone
 xfail = pytest.mark.xfail
 
 
-def test_get_card(db_conn, cards_table, cards_parameters_table, units_table,
-                  topics_table):
+def test_get_card(db_conn):
     """
     Expect to get the card information for displaying to a contributor.
     """
@@ -107,7 +106,7 @@ def test_get_card_404(db_conn):
     assert code == 404
 
 
-def test_learn_card(db_conn, session, cards_table):
+def test_learn_card(db_conn, session):
     """
     Expect to get a card for learn mode. (200)
     """
@@ -172,7 +171,7 @@ def test_learn_card_404(db_conn, session):
     assert code == 404
 
 
-def test_learn_card_400(db_conn, cards_table, session):
+def test_learn_card_400(db_conn, session):
     """
     Expect the card for learn mode to make sense,
     given the learner context. (400)
@@ -211,9 +210,7 @@ def test_learn_card_400(db_conn, cards_table, session):
     redis.delete('learning_context_abcd1234')
 
 
-def test_respond_card(db_conn, units_table, cards_table,
-                      cards_parameters_table,
-                      responses_table, session):
+def test_respond_card(db_conn, session):
     """
     Expect to respond to a card. (200)
     """
@@ -309,7 +306,7 @@ def test_respond_card_404(db_conn, session):
     assert code == 404
 
 
-def test_respond_card_400a(db_conn, session, cards_table):
+def test_respond_card_400a(db_conn, session):
     """
     Expect the card being responded to make sense,
     given the learner context. (400)
@@ -353,7 +350,7 @@ def test_respond_card_400a(db_conn, session, cards_table):
     redis.delete('learning_context_abcd1234')
 
 
-def test_respond_card_400b(db_conn, session, cards_table):
+def test_respond_card_400b(db_conn, session):
     """
     Expect response to a card to make sense. (400)
     """

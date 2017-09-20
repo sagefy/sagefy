@@ -7,8 +7,7 @@ from datetime import datetime, timezone
 xfail = pytest.mark.xfail
 
 
-def test_get_subject(db_conn,
-                     subjects_table, units_table, topics_table):
+def test_get_subject(db_conn):
     """
     Expect to get the subject information for displaying to a contributor.
     """

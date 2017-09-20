@@ -12,8 +12,7 @@ def test_search(db_conn):
 
 
 @xfail
-def test_search_sort(db_conn, users_table, topics_table,
-                     posts_table):
+def test_search_sort(db_conn):
     """
     Expect to sort in search.
     """
@@ -21,8 +20,7 @@ def test_search_sort(db_conn, users_table, topics_table,
 
 
 @xfail
-def test_search_paginate(db_conn, users_table, topics_table,
-                         posts_table):
+def test_search_paginate(db_conn):
     """
     Expect to paginate in search.
     """
@@ -30,8 +28,7 @@ def test_search_paginate(db_conn, users_table, topics_table,
 
 
 @xfail
-def test_search_blank(db_conn, users_table, topics_table,
-                      posts_table):
+def test_search_blank(db_conn):
     """
     Expect a blank search result.
     """

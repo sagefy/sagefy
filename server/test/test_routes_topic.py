@@ -5,7 +5,7 @@ import routes.topic
 xfail = pytest.mark.xfail
 
 
-def create_topic_in_db(db_conn, topics_table, user_id='abcd1234'):
+def create_topic_in_db(db_conn, user_id='abcd1234'):
     topics_table.insert({
         'id': 'wxyz7890',
         'created': datetime.utcnow(),
@@ -19,7 +19,7 @@ def create_topic_in_db(db_conn, topics_table, user_id='abcd1234'):
     }).run(db_conn)
 
 
-def test_create_topic(db_conn, session, topics_table, posts_table):
+def test_create_topic(db_conn, session):
     """
     Expect to create a topic with post.
     """
@@ -43,8 +43,7 @@ def test_create_topic(db_conn, session, topics_table, posts_table):
     assert response['topic']['name'] == 'An entity'
 
 
-def test_create_topic_log_in(db_conn, users_table, topics_table,
-                             posts_table):
+def test_create_topic_log_in(db_conn):
     """
     Expect create topic to fail when logged out.
     """
@@ -64,13 +63,12 @@ def test_create_topic_log_in(db_conn, users_table, topics_table,
     assert 'errors' in response
 
 
-def test_topic_update(db_conn, users_table, topics_table,
-                      posts_table, session):
+def test_topic_update(db_conn, session):
     """
     Expect to update topic name.
     """
 
-    create_topic_in_db(db_conn, topics_table)
+    create_topic_in_db(db_conn)
     request = {
         'cookies': {
             'session_id': session
@@ -86,13 +84,12 @@ def test_topic_update(db_conn, users_table, topics_table,
     assert response['topic']['name'] == 'Another entity'
 
 
-def test_update_topic_author(db_conn, users_table, topics_table,
-                             posts_table, session):
+def test_update_topic_author(db_conn, session):
     """
     Expect update topic to require original author.
     """
 
-    create_topic_in_db(db_conn, topics_table, user_id="qwerty")
+    create_topic_in_db(db_conn, user_id="qwerty")
     request = {
         'cookies': {
             'session_id': session
@@ -109,13 +106,12 @@ def test_update_topic_author(db_conn, users_table, topics_table,
 
 
 @xfail
-def test_update_topic_fields(db_conn, users_table, topics_table,
-                             posts_table, session):
+def test_update_topic_fields(db_conn, session):
     """
     Expect update topic to only change name.
     """
 
-    create_topic_in_db(db_conn, topics_table)
+    create_topic_in_db(db_conn)
     request = {
         'cookies': {
             'session_id': session

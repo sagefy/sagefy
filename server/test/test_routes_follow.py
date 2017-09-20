@@ -3,7 +3,7 @@ import routes.follow
 from datetime import datetime
 
 
-def test_follow(db_conn, session, cards_table, follows_table):
+def test_follow(db_conn, session):
     """
     Expect to follow an entity.
     """
@@ -30,7 +30,7 @@ def test_follow(db_conn, session, cards_table, follows_table):
     assert code == 200
 
 
-def test_follow_401(db_conn, follows_table):
+def test_follow_401(db_conn):
     """
     Expect to fail to follow entity if not logged in.
     """
@@ -48,7 +48,7 @@ def test_follow_401(db_conn, follows_table):
     assert code == 401
 
 
-def test_follow_400a(db_conn, session, follows_table):
+def test_follow_400a(db_conn, session):
     """
     Expect to fail to follow entity if not found entity.
     """
@@ -68,7 +68,7 @@ def test_follow_400a(db_conn, session, follows_table):
     assert len(response['errors']) == 1
 
 
-def test_follow_409(db_conn, session, cards_table, follows_table):
+def test_follow_409(db_conn, session):
     """
     Expect to fail to follow entity if already followed.
     """
@@ -102,7 +102,7 @@ def test_follow_409(db_conn, session, cards_table, follows_table):
     assert code == 400
 
 
-def test_follow_400b(db_conn, session, follows_table):
+def test_follow_400b(db_conn, session):
     """
     Expect to fail to follow entity if the request is nonsense.
     """
@@ -116,7 +116,7 @@ def test_follow_400b(db_conn, session, follows_table):
     assert code == 400
 
 
-def test_unfollow(db_conn, session, follows_table):
+def test_unfollow(db_conn, session):
     """
     Expect to unfollow an entity.
     """
@@ -138,7 +138,7 @@ def test_unfollow(db_conn, session, follows_table):
     assert code == 200
 
 
-def test_unfollow_401(db_conn, follows_table):
+def test_unfollow_401(db_conn):
     """
     Expect to fail to unfollow an entity if not logged in.
     """
@@ -149,7 +149,7 @@ def test_unfollow_401(db_conn, follows_table):
     assert code == 401
 
 
-def test_unfollow_404(db_conn, session, follows_table):
+def test_unfollow_404(db_conn, session):
     """
     Expect to fail to unfollow an entity if no entity.
     """
@@ -162,7 +162,7 @@ def test_unfollow_404(db_conn, session, follows_table):
     assert code == 404
 
 
-def test_get_follows(db_conn, session, follows_table):
+def test_get_follows(db_conn, session):
     """
     Expect to get a list of follows for user.
     """
@@ -203,7 +203,7 @@ def test_get_follows(db_conn, session, follows_table):
     assert len(response['follows']) == 2
 
 
-def test_get_follows_401(db_conn, follows_table):
+def test_get_follows_401(db_conn):
     """
     Expect fail to to get a list of follows for user if not logged in.
     """

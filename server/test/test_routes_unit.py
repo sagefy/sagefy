@@ -3,8 +3,7 @@ import routes.unit
 from datetime import datetime, timezone
 
 
-def test_get_unit(db_conn,
-                  units_table, subjects_table, topics_table):
+def test_get_unit(db_conn):
     """
     Expect to get the unit information for displaying to a contributor.
     """
