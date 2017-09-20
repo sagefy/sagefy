@@ -46,7 +46,8 @@ Access Postgres REPL:
 
 Run server tests:
 
-    docker-compose run server py.test
+    docker-compose run server coverage run --module py.test
+    docker-compose run server coverage report --omit="test/*"
 
 Run client tests:
 
