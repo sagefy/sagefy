@@ -36,15 +36,15 @@ Only three **heading** levels. In some cases, the `h1` tag is already used, so t
 
 **Embedded iframes** use `i[name][ref]` then `[ref]: http://youtube.com/Ij32rjS`.
 
-**Preformatted block**: Always use three ticks. Indent is otherwise ignored. (Later on... Name of language for syntax highlighting (GFM).)
+**Preformatted block**: Always use three ticks. 
 
 **Blockquote** with `>`. Can be nested.
 
-**Tables**: Use `|` to split columns, and `-` to split header row (GFM).
-
-Emoji supported, use `:emoji:` format.
+**Tables**: Use `|` to split columns, and `-` to split header row.
 
 Later on...
+- Syntax highlighting?
+- Emoji supported, use `:emoji:` format.
 - Inline TeX ?
 - Super and sub script? Small text? Quotes? Date times?
 - Smart quotes, ellipse, dashes...
