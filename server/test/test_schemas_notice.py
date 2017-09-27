@@ -1,0 +1,1 @@
+import schemas.notice  # noqa
