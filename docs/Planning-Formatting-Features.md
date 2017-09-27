@@ -7,7 +7,7 @@ _No_ inline HTML. Auto escape inline characters.
 
 **Paragraphs** have at least one blank line between them.
 
-**Emphasis**: one set of `/` for italic, `*` bullets for bold, `_` for underscore.
+**Emphasis**: one set of `/` for italic, `*` bullets for bold.
 
 **Strikethrough** using double `~` tilde characters (GFM).
 
