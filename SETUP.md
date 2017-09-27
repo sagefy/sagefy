@@ -12,10 +12,8 @@ These instructions assume you are using Mac OS X.
 3. `cp server/config.dev.example.py server/config.py`
 4. `docker-compose up -d`
 5. Create database schemas (when first time):
-
-    docker exec -it sagefy_postgres_1 psql -U sagefy -a -f /www/sagefy_tables.sql
-    docker exec -it sagefy_postgres-test_1 psql -U test -a -f /www/sagefy_tables.sql
-
+    - `docker exec -it sagefy_postgres_1 psql -U sagefy -a -f /www/sagefy_tables.sql`
+    - `docker exec -it sagefy_postgres-test_1 psql -U test -a -f /www/sagefy_tables.sql`
 6. Create Dev Data: `docker-compose run server python /www/dev_data.py`
 7. In your browser, visit `http://localhost/s/`, there should be a welcome message.
 8. In your browser, visit `http://localhost/`, the home page should be working. Try to sign up for an account.
