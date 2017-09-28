@@ -1,7 +1,7 @@
 from modules.validations import is_required, is_boolean, is_string, \
     is_number, is_language, is_list, is_email, has_min_length, is_one_of, \
     is_list_of_strings, is_url, is_string_or_number, is_integer, \
-    has_max_length, is_dict, is_uuid, is_list_of_strings, is_in_range, \
+    has_max_length, is_dict, is_uuid, is_in_range, \
     is_datetime, is_list_of_uuids
 import uuid
 from datetime import datetime
