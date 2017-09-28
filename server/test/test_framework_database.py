@@ -1,6 +1,14 @@
-import pytest
-
-xfail = pytest.mark.xfail
+from framework.database import config, make_db_connection, close_db_connection
 
 
-# skip
+def test_make_and_close_db_connection():
+    db_conn = make_db_connection()
+    assert not isinstance(db_conn, str)
+    close_db_connection(db_conn)
+
+
+def test_make_db_conn_err():
+    prev_host = config['host']
+    config['host'] = 'AHHHH!'
+    assert isinstance(make_db_connection(), str)
+    config['host'] = prev_host

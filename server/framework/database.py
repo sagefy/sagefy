@@ -30,6 +30,7 @@ def make_db_connection():
     except (Exception, psycopg2.DatabaseError) as error:
         print("I cannot connect to PostgresQL.")
         print(error)
+        return "I cannot connect to PostgresQL."
     return db_conn
 
 
