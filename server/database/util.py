@@ -77,6 +77,7 @@ def save_row(db_conn, query, params):
         errors = [{
             'message': 'There was an error. Contact <support@sagefy.org>.'
         }]
+        db_conn.rollback()
         # TODO-1 parse through errors, make user friendly
     return data, errors
 
@@ -94,6 +95,7 @@ def get_row(db_conn, query, params):
             data = db_curr.fetchone()
     except (Exception, psycopg2.DatabaseError) as error:
         print('DB Error', query, error)
+        db_conn.rollback()
     return data
 
 
@@ -111,6 +113,7 @@ def list_rows(db_conn, query, params):
         data = [row for row in data]
     except (Exception, psycopg2.DatabaseError) as error:
         print('DB Error', query, error)
+        db_conn.rollback()
     return data
 
 
@@ -128,6 +131,7 @@ def delete_row(db_conn, query, params):
     except (Exception, psycopg2.DatabaseError) as error:
         print('DB Error', query, error)
         errors = [{'message': '@@ db error @@'}]
+        db_conn.rollback()
         # TODO-1 parse through errors, make user friendly
     return errors
 

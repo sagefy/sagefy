@@ -62,9 +62,15 @@ def wipe_db(db_conn, request):
         'responses',
     )):
         cur = db_conn.cursor()
-        with cur:
-            cur.execute("DELETE FROM {tablename};".format(tablename=tablename))
-            db_conn.commit()
+        try:
+            with cur:
+                cur.execute(
+                    "DELETE FROM {tablename};"
+                    .format(tablename=tablename)
+                )
+                db_conn.commit()
+        except Exception:
+            db_conn.rollback()
 
 
 @pytest.fixture
