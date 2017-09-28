@@ -4,14 +4,6 @@ from modules.validations import is_required, is_string, is_list, is_number, \
     is_string_or_number, is_boolean, has_min_length
 
 
-def is_list_of_variables(vars):
-    """
-    TODO-3 Ensure the data provided is a list of variables, with
-    corresponding information.
-    """
-    pass
-
-
 card_schema = {}  # TODO-3 import card_schema
 
 schema = extend({}, card_schema, {
@@ -36,7 +28,7 @@ schema = extend({}, card_schema, {
             }
         },
         'variables': {
-            'validate': (is_required, is_list, is_list_of_variables,),
+            'validate': (is_required, is_list,),  # TODO-3 is_list_of_variables
         },
         'range': {
             'validate': (is_required, is_number,),

@@ -39,6 +39,13 @@ def convert_slug_to_uuid(slug):
     return uuid.UUID(bytes=base64.urlsafe_b64decode(slug + '=='))
 
 
+def create_uuid_b64():
+    """
+    Create a new Base 64 UUID.
+    """
+    return convert_uuid_to_slug(uuid.uuid4())
+
+
 def pick(d, keys):
     """
     Return a dictionary with only the specified keys.
