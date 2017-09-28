@@ -14,15 +14,12 @@ def memoize_redis(key, fn, time=24 * 60 * 60, *args, **kwargs):
             data = json.loads(data.decode())
         except:
             pass
-
     if data:
         return data
-
     data = fn(*args, **kwargs)
-
     redis.setex(key, time, json.dumps(
         data,
         default=json_serial,
-        ensure_ascii=False))
-
+        ensure_ascii=False
+    ))
     return data
