@@ -55,6 +55,10 @@ vases_schema = extend({}, default, {
 })
 
 
+def test_convert_fields_to_pgjson():
+    assert False
+
+
 def test_insert_row(db_conn):
     schema = vases_schema
     data = {
@@ -91,8 +95,7 @@ def test_update_row(db_conn):
         'id': 'haxxor',
         'name': 'zen',
     }
-    document2, errors2 = util.update_row(schema,
-                                              document1, data2, db_conn)
+    document2, errors2 = util.update_row(schema, document1, data2, db_conn)
     subdoc2 = pick(document2, ('name', 'plants', 'soil'))
     subdata2 = pick(data2, ('name', 'plants', 'soil'))
     assert len(errors1) == 0

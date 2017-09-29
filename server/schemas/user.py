@@ -18,10 +18,11 @@ schema = extend({}, default, {
             'access': ('private',),
         },
         'name': {
-            'validate': (is_required, is_string,),
+            'validate': (is_required, is_string, (has_min_length, 1),),
         },
         'email': {
-            'validate': (is_required, is_string, is_email,),
+            'validate': (is_required, is_string,
+                         (has_min_length, 1), is_email,),
             'access': ('private',),
         },
         'password': {

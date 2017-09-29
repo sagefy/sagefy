@@ -1,8 +1,5 @@
 from framework.index import valuefy, serve, call_handler, construct_request, \
     pull_query_string, pull_body, pull_cookies, set_cookie_headers
-import pytest
-
-xfail = pytest.mark.xfail
 
 
 def test_serve():

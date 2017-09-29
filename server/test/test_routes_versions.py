@@ -1,9 +1,3 @@
-import pytest
-
-xfail = pytest.mark.xfail
-
-
-@xfail
 def test_version(app):
     """
     Expect to filter to versions.
@@ -11,7 +5,6 @@ def test_version(app):
     assert False
 
 
-@xfail
 def test_version_name(app):
     """
     Expect to search versions by proposal name.
@@ -19,7 +12,6 @@ def test_version_name(app):
     assert False
 
 
-@xfail
 def test_version_entity(app):
     """
     Expect to filter versions by entity.
@@ -27,7 +19,6 @@ def test_version_entity(app):
     assert False
 
 
-@xfail
 def test_version_entity_kind(app):
     """
     Expect to filter versions by entity kind.
@@ -35,7 +26,6 @@ def test_version_entity_kind(app):
     assert False
 
 
-@xfail
 def test_version_accepted(app):
     """
     Expect to filter version by accepted.

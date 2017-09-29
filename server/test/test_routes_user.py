@@ -1,10 +1,11 @@
 from passlib.hash import bcrypt
 from conftest import create_user_in_db
 import routes.user
-import pytest
 from database.user import get_user, get_email_token
+from conftest import raw_insert_user
 
-xfail = pytest.mark.xfail
+
+user_id = '1SbHc12NTLKMtDJmE83AJg'
 
 
 def test_user_get(db_conn):
@@ -14,7 +15,8 @@ def test_user_get(db_conn):
 
     create_user_in_db(db_conn)
     request = {'params': {}, 'db_conn': db_conn}
-    code, response = routes.user.get_user_route(request, 'abcd1234')
+    code, response = routes.user.get_user_route(request, user_id)
+    assert code == 200
     assert response['user']['name'] == 'test'
 
 
@@ -24,7 +26,7 @@ def test_user_get_failed(db_conn):
     """
 
     request = {'params': {}, 'db_conn': db_conn}
-    code, response = routes.user.get_user_route(request, 'abcd1234')
+    code, response = routes.user.get_user_route(request, user_id)
     assert 'errors' in response
 
 
@@ -103,8 +105,19 @@ def test_user_get_current_failed(db_conn):
     Ensure no user is returned when logged out.
     """
 
-    code, response = routes.user.get_current_user_route({})
+    code, response = routes.user.get_current_user_route({'db_conn': db_conn})
     assert code == 401
+
+
+def test_list_users_route(db_conn, session):
+    code, response = routes.user.list_users_route({
+        'params': {
+            'user_ids': user_id,
+        },
+        'db_conn': db_conn,
+    })
+    assert code == 200
+    assert len(response['users']) == 1
 
 
 def test_user_create(db_conn):
@@ -152,7 +165,7 @@ def test_user_update(db_conn, session):
         },
         'db_conn': db_conn
     }
-    code, response = routes.user.update_user_route(request, 'abcd1234')
+    code, response = routes.user.update_user_route(request, user_id)
     assert code == 200
     assert response['user']['email'] == 'other@example.com'
 
@@ -171,7 +184,7 @@ def test_user_update_none(db_conn):
         },
         'db_conn': db_conn
     }
-    code, response = routes.user.update_user_route(request, 'abcd1234')
+    code, response = routes.user.update_user_route(request, user_id)
     assert 'errors' in response
 
 
@@ -180,13 +193,11 @@ def test_user_update_self_only(db_conn, session):
     Ensure a user can only update herself.
     """
 
-    users_table.insert({
-        'id': '1234abcd',
+    raw_insert_user(db_conn, {
         'name': 'other',
         'email': 'other@example.com',
         'password': bcrypt.encrypt('1234abcd'),
-    }).run(db_conn)
-
+    })
     request = {
         'params': {
             'email': 'other@example.com'
@@ -196,7 +207,7 @@ def test_user_update_self_only(db_conn, session):
         },
         'db_conn': db_conn
     }
-    code, response = routes.user.update_user_route(request, '1234abcd')
+    code, response = routes.user.update_user_route(request, user_id)
     assert 'errors' in response
 
 
@@ -214,7 +225,7 @@ def test_user_update_invalid(db_conn, session):
         },
         'db_conn': db_conn
     }
-    code, response = routes.user.update_user_route(request, 'abcd1234')
+    code, response = routes.user.update_user_route(request, user_id)
     assert 'errors' in response
 
 
@@ -246,7 +257,7 @@ def test_user_create_password_fail(db_conn):
     """
 
     create_user_in_db(db_conn)
-    user = get_user(db_conn, {'id': 'abcd1234'})
+    user = get_user(db_conn, {'id': user_id})
     pw1 = user['password']
     get_email_token(user, send_email=False)
 
@@ -257,9 +268,9 @@ def test_user_create_password_fail(db_conn):
         },
         'db_conn': db_conn
     }
-    code, response = routes.user.create_password_route(request, 'abcd1234')
+    code, response = routes.user.create_password_route(request, user_id)
     assert code == 403
-    user = get_user(db_conn, {'id': 'abcd1234'})
+    user = get_user(db_conn, {'id': user_id})
     assert user['password'] == pw1
 
 
@@ -269,7 +280,7 @@ def test_user_create_password_ok(db_conn):
     """
 
     create_user_in_db(db_conn)
-    user = get_user(db_conn, {'id': 'abcd1234'})
+    user = get_user(db_conn, {'id': user_id})
     pw1 = user['password']
     token = get_email_token(user, send_email=False)
 
@@ -280,7 +291,7 @@ def test_user_create_password_ok(db_conn):
         },
         'db_conn': db_conn
     }
-    code, response = routes.user.create_password_route(request, 'abcd1234')
+    code, response = routes.user.create_password_route(request, user_id)
     assert code == 200
-    user = get_user(db_conn, {'id': 'abcd1234'})
+    user = get_user(db_conn, {'id': user_id})
     assert user['password'] != pw1

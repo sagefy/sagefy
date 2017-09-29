@@ -1,13 +1,9 @@
-import pytest
 from modules.sequencer.traversal import traverse, \
     match_unit_dependents, order_units_by_need, judge
 from database.user import get_user
 from datetime import datetime, timezone
 from database.subject import get_latest_accepted_subject
 from database.unit import get_latest_accepted_unit, list_latest_accepted_units
-
-
-xfail = pytest.mark.xfail
 
 
 def add_test_subject(db_conn):
@@ -100,7 +96,6 @@ Traverse should output units in order.
 """
 
 
-@xfail
 def test_judge_diagnose(db_conn):
     """
     Expect to add no known ability to "diagnose".
@@ -112,7 +107,6 @@ def test_judge_diagnose(db_conn):
     assert judge(db_conn, unit, user) == "diagnose"
 
 
-@xfail
 def test_judge_review(db_conn):
     """
     Expect to add older, high ability to "review".

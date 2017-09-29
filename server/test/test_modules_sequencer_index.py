@@ -1,11 +1,6 @@
-import pytest
-
-xfail = pytest.mark.xfail
-
-
 # TODO-3 outline tests  https://docs.sagefy.org/f_planning/sequencer
 
-@xfail
+
 def test_x(app):
     """
     Expect ...

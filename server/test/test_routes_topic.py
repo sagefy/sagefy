@@ -1,8 +1,5 @@
-import pytest
 from datetime import datetime
 import routes.topic
-
-xfail = pytest.mark.xfail
 
 
 def create_topic_in_db(db_conn, user_id='abcd1234'):
@@ -17,6 +14,14 @@ def create_topic_in_db(db_conn, user_id='abcd1234'):
             'kind': 'unit'
         }
     }).run(db_conn)
+
+
+def test_get_topic_route():
+    assert False
+
+
+def test_list_topics_route():
+    assert False
 
 
 def test_create_topic(db_conn, session):
@@ -105,7 +110,6 @@ def test_update_topic_author(db_conn, session):
     assert 'errors' in response
 
 
-@xfail
 def test_update_topic_fields(db_conn, session):
     """
     Expect update topic to only change name.

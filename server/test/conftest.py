@@ -15,11 +15,16 @@ import framework.index as framework
 framework.update_config(config)
 from framework.database import make_db_connection, close_db_connection
 import framework.session
-from database.user import insert_user
+from modules.util import convert_slug_to_uuid
+from raw_insert import raw_insert_user
+
+
+user_id = '1SbHc12NTLKMtDJmE83AJg'
 
 
 def create_user_in_db(db_conn):
-    return insert_user(db_conn, {
+    raw_insert_user(db_conn, {
+        'id': convert_slug_to_uuid(user_id),
         'name': 'test',
         'email': 'test@example.com',
         'password': 'abcd1234',
@@ -27,7 +32,7 @@ def create_user_in_db(db_conn):
 
 
 def log_in():
-    return framework.session.log_in_user({'id': 'abcd1234'})
+    return framework.session.log_in_user({'id': user_id})
 
 
 def log_out(session_id):

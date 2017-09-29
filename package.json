@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently -p \"[{name}]\" --names watch-server,watch-client-node,watch-client-static \"npm run watch-server\" \"npm run watch-client-node\" \"npm run watch-client-static\"",
+    "start": "concurrently -p \"[{name}]\" --names watch-server,watch-client-node,watch-client-static \"yarn run watch-server\" \"yarn run watch-client-node\" \"yarn run watch-client-static\"",
     "watch-server": "onchange 'server/**/*.py' -- docker-compose restart server",
     "watch-client-node": "onchange 'client/**/*.{js,styl}' -- docker-compose restart client",
-    "watch-client-static": "cd client && npm start",
+    "watch-client-static": "cd client && yarn install && yarn start",
     "test": "exit 0"
   },
   "author": "Sagefy",

@@ -18,7 +18,6 @@ def send_mail(subject, recipient, body):
 
     if config['test']:
         return True
-
     sent = False
     msg = MIMEText(body, 'plain')
     msg['Subject'] = subject

@@ -1,10 +1,9 @@
-import pytest
-
 import routes.subject
 from datetime import datetime, timezone
 
 
-xfail = pytest.mark.xfail
+def test_get_recommended_subjects_route():
+    assert False
 
 
 def test_get_subject(db_conn):
@@ -92,7 +91,18 @@ def test_get_subject_404(db_conn):
     assert code == 404
 
 
-@xfail
+def test_list_subjects_route():
+    assert False
+
+
+def test_get_subject_versions_route():
+    assert False
+
+
+def test_get_subject_version_route():
+    assert False
+
+
 def test_subject_tree():
     """
     Expect to get subject information in tree format.
@@ -101,7 +111,6 @@ def test_subject_tree():
     assert False
 
 
-@xfail
 def test_subject_tree_401():
     """
     Expect to fail to get subject in tree format if not log in. (401)
@@ -110,7 +119,6 @@ def test_subject_tree_401():
     assert False
 
 
-@xfail
 def test_subject_tree_404():
     """
     Expect to fail to get subject in tree format if no subject. (404)
@@ -119,7 +127,6 @@ def test_subject_tree_404():
     assert False
 
 
-@xfail
 def test_subject_tree_400():
     """
     Expect to fail to get subject in tree format
@@ -129,7 +136,6 @@ def test_subject_tree_400():
     assert False
 
 
-@xfail
 def test_subject_units():
     """
     Expect to provide list of units to choose from.
@@ -138,7 +144,6 @@ def test_subject_units():
     assert False
 
 
-@xfail
 def test_subject_units_401():
     """
     Expect to fail to provide list of units if not log in. (401)
@@ -147,7 +152,6 @@ def test_subject_units_401():
     assert False
 
 
-@xfail
 def test_subject_units_404():
     """
     Expect to fail to provide list of units if subject not found. (404)
@@ -156,7 +160,6 @@ def test_subject_units_404():
     assert False
 
 
-@xfail
 def test_subject_units_400():
     """
     Expect to fail to provide list of units if request is nonsense. (400)
@@ -165,7 +168,6 @@ def test_subject_units_400():
     assert False
 
 
-@xfail
 def test_choose_unit():
     """
     Expect to let a learner choose their unit.
@@ -174,7 +176,6 @@ def test_choose_unit():
     assert False
 
 
-@xfail
 def test_choose_unit_401():
     """
     Expect to fail to choose unit if not log in. (401)
@@ -183,7 +184,6 @@ def test_choose_unit_401():
     assert False
 
 
-@xfail
 def test_choose_unit_404():
     """
     Expect to fail to choose unit if unit doesn't exist. (404)
@@ -192,7 +192,6 @@ def test_choose_unit_404():
     assert False
 
 
-@xfail
 def test_choose_unit_400():
     """
     Expect to fail to choose unit if request is nonsense. (400)
@@ -201,7 +200,6 @@ def test_choose_unit_400():
     assert False
 
 
-@xfail
 def test_choose_unit_extra():
     """
     Expect choose unit to show time estimate and learning objective.
@@ -210,7 +208,6 @@ def test_choose_unit_extra():
     assert False
 
 
-@xfail
 def test_choose_unit_avail():
     """
     Expect choose unit to only show available units. (No requires remaining.)
@@ -219,10 +216,21 @@ def test_choose_unit_avail():
     assert False
 
 
-@xfail
 def test_choose_unit_ordering():
     """
     Expect to prefer units with more dependencies in choose unit.
     """
 
+    assert False
+
+
+def test_get_my_recently_created_subjects_route():
+    assert False
+
+
+def test_create_new_subject_version_route():
+    assert False
+
+
+def test_create_existing_subject_version_route():
     assert False

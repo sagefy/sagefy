@@ -1,10 +1,6 @@
-import pytest
 from conftest import create_user_in_db
 from datetime import datetime, timezone
-
 import routes.post
-
-xfail = pytest.mark.xfail
 
 
 def create_topic_in_db(db_conn, user_id='abcd1234'):
@@ -264,7 +260,6 @@ def test_create_post_log_in(db_conn):
     assert 'errors' in response
 
 
-@xfail
 def test_create_post_proposal(db_conn, session):
     """
     Expect create post to create a proposal.
@@ -286,7 +281,6 @@ def test_create_post_proposal(db_conn, session):
     assert response['post']['kind'] == 'proposal'
 
 
-@xfail
 def test_create_post_vote(db_conn, session):
     """
     Expect create post to create a vote.
@@ -369,7 +363,6 @@ def test_update_post_body(db_conn, session):
     assert 'Update' in response['post']['body']
 
 
-@xfail
 def test_update_proposal(db_conn, session):
     """
     Expect update post to handle proposals correctly.
@@ -392,7 +385,6 @@ def test_update_proposal(db_conn, session):
     assert 'declined' in response['post']['status']
 
 
-@xfail
 def test_update_vote(db_conn, session):
     """
     Expect update vote to handle proposals correctly.

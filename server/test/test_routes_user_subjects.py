@@ -1,10 +1,6 @@
 import routes.user_subjects
 from datetime import datetime
 
-import pytest
-
-xfail = pytest.mark.xfail
-
 
 def prep(db_conn):
     subjects_table.insert([{
@@ -66,7 +62,6 @@ def test_get_user_subjects(db_conn, session):
     assert response['subjects'][0]['body'] in ('Apple', 'Coconut')
 
 
-@xfail
 def test_get_user_subjects_401(db_conn):
     """
     Expect get user subjects to 401 when not logged in.
@@ -78,7 +73,6 @@ def test_get_user_subjects_401(db_conn):
     assert code == 401
 
 
-@xfail
 def test_get_user_subjects_403(db_conn, session):
     """
     Expect to 403 if trying to get other user's subjects.

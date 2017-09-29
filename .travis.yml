@@ -9,19 +9,22 @@ addons:
 before_install:
     - nvm install 6.11.0
     - cp server/config.dev.example.py server/config.py
+    - cp server/test/test_config_travis.py server/test/test_config.py
 install:
     - pip install -r server/requirements.txt
     - pip install pytest coverage flake8
-    - ls ~/virtualenv/
     - source ~/virtualenv/python2.7/bin/activate
     - nvm use 6.11.0
-    - 'cd client && npm install && cd ..'
+    - 'cd client && yarn install && cd ..'
     - source ~/virtualenv/python3.6/bin/activate
 script:
-    - 'cd server && flake8 && cd ..'
-    - coverage run --module py.test server
+    - cd server
+    - flake8
+    - coverage run --module py.test
+    - cd ../client
     - nvm use 6.11.0
-    - 'cd client && npm test && cd ..'
+    - yarn test
+    - cd ..
 after_success:
     - coverage report --omit="server/test/*,*site-packages*,*distutils*"
 notifications:

@@ -1,11 +1,7 @@
-import pytest
 from conftest import create_user_in_db, log_in
 from framework.session import get_current_user, log_in_user, log_out_user
 from database.user import get_user
 from framework.redis import redis
-
-
-xfail = pytest.mark.xfail
 
 
 def test_get_current_user(db_conn):

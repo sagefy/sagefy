@@ -1,11 +1,7 @@
-import pytest
 import framework.routes as routes
 import re
 from framework.routes import get, post, put, delete, abort, \
     build_path_pattern, find_path
-
-
-xfail = pytest.mark.xfail
 
 
 def test_get():

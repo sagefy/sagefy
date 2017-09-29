@@ -32,9 +32,9 @@ def insert_user(db_conn, data):
         RETURNING *;
     """
     data = {
-        'name': data['name'].lower().strip(),
-        'email': data['email'].lower().strip(),
-        'password': data['password'],
+        'name': data.get('name', '').lower().strip(),
+        'email': data.get('email', '').lower().strip(),
+        'password': data.get('password', ''),
         'settings': {
             'email_frequency': 'daily',
             'view_subjects': 'private',
@@ -61,9 +61,9 @@ def update_user(db_conn, prev_data, data):
     """
     data = {
         'id': convert_slug_to_uuid(prev_data['id']),
-        'name': data['name'].lower().strip(),
-        'email': data['email'].lower().strip(),
-        'settings': data['settings'],
+        'name': data.get('name', '').lower().strip() or None,
+        'email': data.get('email', '').lower().strip() or None,
+        'settings': data.get('settings'),
     }
     data, errors = update_row(db_conn, schema, query, prev_data, data)
     if not errors:
@@ -268,7 +268,7 @@ def get_learning_context(user):
     Get the learning context of the user.
     """
 
-    key = 'learning_context_{id}'.format(id=user['id'])
+    key = 'learning_context_{id}'.format(id=convert_uuid_to_slug(user['id']))
     try:
         context = json.loads(redis.get(key).decode())
     except:
@@ -288,7 +288,7 @@ def set_learning_context(user, **d):
     d = pick(d, ('card', 'unit', 'subject', 'next'))
     context.update(d)
     context = compact_dict(context)
-    key = 'learning_context_{id}'.format(id=user['id'])
+    key = 'learning_context_{id}'.format(id=convert_uuid_to_slug(user['id']))
     redis.setex(key, 10 * 60, json.dumps(context, default=json_serial))
     return context
 
@@ -324,7 +324,7 @@ def is_valid_token(user, token):
     Ensure the given token is valid.
     """
 
-    slugged_user_id = convert_slug_to_uuid(user['id'])
+    slugged_user_id = convert_uuid_to_slug(user['id'])
     key = 'user_password_token_{id}'.format(id=slugged_user_id)
     entoken = redis.get(key)
     redis.delete(key)

@@ -3,8 +3,6 @@ import psycopg2.extras
 from framework.database import make_db_connection, \
     close_db_connection
 from framework.elasticsearch import es
-from passlib.hash import bcrypt
-from modules.sequencer.params import precision
 from config import config
 from es_populate import es_populate
 import yaml
@@ -14,6 +12,7 @@ import uuid
 from modules.util import convert_uuid_to_slug
 from database.util import save_row, delete_row
 import framework.index as framework
+from test.raw_insert import raw_insert_user, raw_insert_cards, raw_insert_units
 
 framework.update_config(config)
 
@@ -61,43 +60,34 @@ users = [{
     'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
     'name': 'doris',
     'email': 'doris@example.com',
-    'password': bcrypt.encrypt('example1'),
-    'settings': psycopg2.extras.Json({
+    'password': 'example1',
+    'settings': {
         'email_frequency': 'daily',
         'view_subjects': 'public',
         'view_follows': 'public',
-    })
+    },
 }, {
     'id': eileen_id,
     'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
     'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
     'name': 'eileen',
     'email': 'eileen@example.com',
-    'password': bcrypt.encrypt('example1'),
-    'settings': psycopg2.extras.Json({
+    'password': 'example1',
+    'settings': {
         'email_frequency': 'daily',
         'view_subjects': 'public',
         'view_follows': 'public',
-    })
+    },
 }]
 
 for user in users:
-    query = """
-        INSERT INTO users
-        (  id  ,   created  ,   modified  ,
-           name  ,   email,   password  ,   settings)
-        VALUES
-        (%(id)s, %(created)s, %(modified)s,
-         %(name)s, %(email)s, %(password)s, %(settings)s)
-        RETURNING *;
-    """
-    params = user
-    save_row(db_conn, query, params)
+    raw_insert_user(db_conn, user)
 
 
 # We have to translate the sample IDs to UUIDs
 entity_ids_lookup = {}
 
+# Dropping foreign key checks so the ordering doesn't matter.
 query = """
     ALTER TABLE units DISABLE TRIGGER ALL;
 """
@@ -117,7 +107,6 @@ for sample_id, unit_data in sample_data['units'].items():
         u_require_ids.append(entity_ids_lookup[id_])
     unit_data['require_ids'] = u_require_ids
 
-    # Dropping foreign key checks so the ordering doesn't matter.
     query = """
         INSERT INTO units_entity_id
         (  entity_id  )
@@ -159,71 +148,31 @@ delete_row(db_conn, query, {})
 
 for card_data in sample_data['cards']['video']:
     card_data['entity_id'] = uuid.uuid4()
-    query = """
-        INSERT INTO cards_entity_id
-        (  entity_id  )
-        VALUES
-        (%(entity_id)s);
-        INSERT INTO cards
-        (  version_id  ,   created  ,   modified  ,
-           entity_id  ,   previous_id  ,   language  ,   status  ,
-           available  ,   tags  ,   name  ,   user_id  ,
-           unit_id  ,   require_ids  ,   kind  ,   data  )
-        VALUES
-        (%(version_id)s, %(created)s, %(modified)s,
-         %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
-         %(available)s, %(tags)s, %(name)s, %(user_id)s,
-         %(unit_id)s, %(require_ids)s, %(kind)s, %(data)s)
-        RETURNING *;
-    """
     params = {
         'version_id': uuid.uuid4(),
         'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'entity_id': card_data['entity_id'],
         'previous_id': None,
-        'language': 'en',
+        # 'language': 'en',
         'name': 'A Video',
-        'status': 'accepted',
-        'available': True,
-        'tags': [],
+        # 'status': 'accepted',
+        # 'available': True,
+        # 'tags': [],
         'user_id': doris_id,
         'kind': 'video',
-        'data': psycopg2.extras.Json({
+        'data': {
             'site': 'youtube',
             'video_id': card_data['video_id'],
-        }),
+        },
         'unit_id': entity_ids_lookup[card_data['unit']],
         'require_ids': [],
     }
-    save_row(db_conn, query, params)
+    raw_insert_cards(db_conn, [params])
 
 
 for card_data in sample_data['cards']['choice']:
     card_data['entity_id'] = uuid.uuid4()
-    query = """
-        INSERT INTO cards_entity_id
-        (  entity_id  )
-        VALUES
-        (%(entity_id)s);
-        INSERT INTO cards
-        (  version_id  ,   created  ,   modified  ,
-           entity_id  ,   previous_id  ,   language  ,   status  ,
-           available  ,   tags  ,   name  ,   user_id  ,
-           unit_id  ,   require_ids  ,   kind  ,   data  )
-        VALUES
-        (%(version_id)s, %(created)s, %(modified)s,
-         %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
-         %(available)s, %(tags)s, %(name)s, %(user_id)s,
-         %(unit_id)s, %(require_ids)s, %(kind)s, %(data)s);
-        INSERT INTO cards_parameters
-        (  id  ,   created  ,   modified,
-          entity_id  ,   guess_distribution  ,   slip_distribution  )
-        VALUES
-        (%(id)s, %(created)s, %(modified)s,
-         %(entity_id)s, %(guess_distribution)s, %(slip_distribution)s)
-        RETURNING *;
-    """
     params = {
         'id': uuid.uuid4(),
         'version_id': uuid.uuid4(),
@@ -231,14 +180,14 @@ for card_data in sample_data['cards']['choice']:
         'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'entity_id': card_data['entity_id'],
         'previous_id': None,
-        'language': 'en',
+        # 'language': 'en',
         'name': card_data['body'],
-        'status': 'accepted',
-        'available': True,
-        'tags': [],
+        # 'status': 'accepted',
+        # 'available': True,
+        # 'tags': [],
         'user_id': doris_id,
         'kind': 'choice',
-        'data': psycopg2.extras.Json({
+        'data': {
             'body': card_data['body'],
             'options': [
                 {
@@ -250,19 +199,11 @@ for card_data in sample_data['cards']['choice']:
             ],
             'order': 'random',
             'max_options_to_show': 4,
-        }),
+        },
         'unit_id': entity_ids_lookup[card_data['unit']],
         'require_ids': [],
-        'guess_distribution': psycopg2.extras.Json({
-            str(h): 1 - (0.5 - h) ** 2
-            for h in [h / precision for h in range(1, precision)]
-        }),
-        'slip_distribution': psycopg2.extras.Json({
-            str(h): 1 - (0.25 - h) ** 2
-            for h in [h / precision for h in range(1, precision)]
-        }),
     }
-    save_row(db_conn, query, params)
+    raw_insert_cards(db_conn, [params])
 
 
 for sample_id, subject_data in sample_data['subjects'].items():
@@ -281,39 +222,22 @@ for sample_id, subject_data in sample_data['subjects'].items():
         })
     subject_data['members'] = u_members
 
-    query = """
-        INSERT INTO subjects_entity_id
-        (  entity_id  )
-        VALUES
-        (%(entity_id)s);
-        INSERT INTO subjects
-        (  version_id  ,   created  ,   modified  ,
-           entity_id  ,   previous_id  ,   language  ,   status  ,
-           available  ,   tags  ,   name  ,   user_id  ,
-           body  ,   members  )
-        VALUES
-        (%(version_id)s, %(created)s, %(modified)s,
-         %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
-         %(available)s, %(tags)s, %(name)s, %(user_id)s,
-         %(body)s, %(members)s)
-        RETURNING *;
-    """
     params = {
         'version_id': uuid.uuid4(),
         'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'entity_id': subject_data['entity_id'],
         'previous_id': None,
-        'language': 'en',
+        # 'language': 'en',
         'name': subject_data['name'],
-        'status': 'accepted',
-        'available': True,
-        'tags': [],
+        # 'status': 'accepted',
+        # 'available': True,
+        # 'tags': [],
         'user_id': doris_id,
         'body': subject_data['body'],
         'members': psycopg2.extras.Json(subject_data['members']),
     }
-    save_row(db_conn, query, params)
+    raw_insert_units(db_conn, [params])
 
 
 for sample_id, unit_data in sample_data['units'].items():

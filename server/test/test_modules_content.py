@@ -1,7 +1,4 @@
 from modules import content
-import pytest
-
-xfail = pytest.mark.xfail
 
 
 def test_get():
@@ -16,7 +13,6 @@ def test_get_default():
             content.get('required', 'en'))
 
 
-@xfail
 def test_get_no_country():
     # Expect to show base language if missing country-specific.
     assert False

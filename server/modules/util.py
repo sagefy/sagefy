@@ -119,7 +119,7 @@ def extend(base, *injects):
             if isinstance(value, collections.Mapping):
                 _ = extend(base.get(key, {}), value)
                 base[key] = _
-            else:
+            elif injector[key] is not None:
                 base[key] = injector[key]
     return base
 

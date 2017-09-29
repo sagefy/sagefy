@@ -1,6 +1,58 @@
-
 import routes.follow
 from datetime import datetime
+
+
+def test_list_follows_route(db_conn, session):
+    """
+    Expect to get a list of follows for user.
+    """
+    follows_table.insert([{
+        'user_id': 'JFldl93k',
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
+        'entity': {
+            'kind': 'card',
+            'id': 'JFlsjFm',
+        },
+    }, {
+        'user_id': 'abcd1234',
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
+        'entity': {
+            'kind': 'card',
+            'id': 'JFlsjFm',
+        },
+    }, {
+        'user_id': 'abcd1234',
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
+        'entity': {
+            'kind': 'unit',
+            'id': 'u39Fdjf0',
+        },
+    }]).run(db_conn)
+
+    request = {
+        'cookies': {'session_id': session},
+        'params': {},
+        'db_conn': db_conn,
+    }
+    code, response = routes.follow.get_follows_route(request)
+
+    assert code == 200
+    assert len(response['follows']) == 2
+
+
+def test_list_follows_route_401(db_conn):
+    """
+    Expect fail to to get a list of follows for user if not logged in.
+    """
+
+    code, response = routes.follow.get_follows_route({
+        'params': {},
+        'db_conn': db_conn,
+    })
+    assert code == 401
 
 
 def test_follow(db_conn, session):
@@ -161,55 +213,3 @@ def test_unfollow_404(db_conn, session):
     code, response = routes.follow.unfollow_route(request, 'JIkfo034n')
     assert code == 404
 
-
-def test_get_follows(db_conn, session):
-    """
-    Expect to get a list of follows for user.
-    """
-    follows_table.insert([{
-        'user_id': 'JFldl93k',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'entity': {
-            'kind': 'card',
-            'id': 'JFlsjFm',
-        },
-    }, {
-        'user_id': 'abcd1234',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'entity': {
-            'kind': 'card',
-            'id': 'JFlsjFm',
-        },
-    }, {
-        'user_id': 'abcd1234',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'entity': {
-            'kind': 'unit',
-            'id': 'u39Fdjf0',
-        },
-    }]).run(db_conn)
-
-    request = {
-        'cookies': {'session_id': session},
-        'params': {},
-        'db_conn': db_conn,
-    }
-    code, response = routes.follow.get_follows_route(request)
-
-    assert code == 200
-    assert len(response['follows']) == 2
-
-
-def test_get_follows_401(db_conn):
-    """
-    Expect fail to to get a list of follows for user if not logged in.
-    """
-
-    code, response = routes.follow.get_follows_route({
-        'params': {},
-        'db_conn': db_conn,
-    })
-    assert code == 401
