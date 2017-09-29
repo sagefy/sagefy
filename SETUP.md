@@ -57,7 +57,7 @@ Run server tests:
 
 Run client tests:
 
-    docker-compose run client npm test
+    docker-compose run client yarn test
 
 [Wipe Docker completely](http://bit.ly/2xrbmWb):
 
@@ -67,13 +67,13 @@ Run client tests:
 Deploy steps
 ------------
 
-TODO Update these to use docker-compose. (npm deploy, database backup before deploy!)
+TODO Update these to use docker-compose. (yarn deploy, database backup before deploy!)
 
     ++ ssh into the server ++
     cd /var/www
     sudo git pull origin master
     cd client
-    sudo npm run deploy
+    sudo npm run deploy  # TODO yarn
     sudo cp -a app/images/* distribution/ && sudo cp -a app/*.{html,txt,ico} distribution/
     pm2 restart all
 

@@ -89,11 +89,11 @@ sudo apt-get -y install software-properties-common
 sudo apt-get -y install python-software-properties python g++ make
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
-sudo npm install -g pm2
+sudo yarn global add pm2
 cd /var/www/client
-sudo npm install
+sudo yarn install
 
-# >>> TODO npm run deploy
+# >>> TODO yarn run deploy
 
 # >>> TODO Restore production Postgres data
 
