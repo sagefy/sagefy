@@ -1,5 +1,5 @@
 
-def test_update(app):
+def test_update():
     """
     Expect to choose an appropriate card.
     """

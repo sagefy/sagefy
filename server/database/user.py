@@ -102,7 +102,7 @@ def add_user_to_es(user):
         index='entity',
         doc_type='user',
         body=data,
-        id=data['id'],
+        id=convert_uuid_to_slug(data['id']),
     )
 
 
@@ -218,14 +218,14 @@ def delete_user(db_conn, user_id):
     params = {
         'id': user_id,
     }
-    data, errors = delete_row(db_conn, query, params)
+    errors = delete_row(db_conn, query, params)
     if not errors:
         es.delete(
             index='entity',
             doc_type='user',
-            id=user_id,
+            id=convert_uuid_to_slug(user_id),
         )
-    return data, errors
+    return errors
 
 
 def deliver_user(data, access=None):

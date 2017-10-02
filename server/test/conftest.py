@@ -16,19 +16,19 @@ framework.update_config(config)
 from framework.database import make_db_connection, close_db_connection
 import framework.session
 from modules.util import convert_slug_to_uuid
-from raw_insert import raw_insert_user
+from raw_insert import raw_insert_users
 
 
 user_id = '1SbHc12NTLKMtDJmE83AJg'
 
 
 def create_user_in_db(db_conn):
-    raw_insert_user(db_conn, {
+    raw_insert_users(db_conn, [{
         'id': convert_slug_to_uuid(user_id),
         'name': 'test',
         'email': 'test@example.com',
         'password': 'abcd1234',
-    })
+    }])
 
 
 def log_in():
@@ -50,32 +50,33 @@ def db_conn(request):
 
 @pytest.fixture(autouse=True)
 def wipe_db(db_conn, request):
-    for tablename in reversed((
-        'users',
-        'units_entity_id',
-        'units',
-        'cards_entity_id',
-        'cards',
-        'cards_parameters',
-        'subjects_entity_id',
-        'subjects',
-        'topics',
-        'posts',
-        'follows',
-        'notices',
-        'users_subjects',
-        'responses',
-    )):
-        cur = db_conn.cursor()
-        try:
-            with cur:
-                cur.execute(
-                    "DELETE FROM {tablename};"
-                    .format(tablename=tablename)
-                )
-                db_conn.commit()
-        except Exception:
-            db_conn.rollback()
+    query = ''.join([
+        "DELETE FROM {tablename};"
+        .format(tablename=tablename)
+        for tablename in reversed((
+            'users',
+            'units_entity_id',
+            'units',
+            'cards_entity_id',
+            'cards',
+            'cards_parameters',
+            'subjects_entity_id',
+            'subjects',
+            'topics',
+            'posts',
+            'follows',
+            'notices',
+            'users_subjects',
+            'responses',
+        ))
+    ])
+    cur = db_conn.cursor()
+    try:
+        with cur:
+            cur.execute(query)
+            db_conn.commit()
+    except Exception:
+        db_conn.rollback()
 
 
 @pytest.fixture

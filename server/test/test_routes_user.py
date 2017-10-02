@@ -2,7 +2,7 @@ from passlib.hash import bcrypt
 from conftest import create_user_in_db
 import routes.user
 from database.user import get_user, get_email_token
-from conftest import raw_insert_user
+from conftest import raw_insert_users
 
 
 user_id = '1SbHc12NTLKMtDJmE83AJg'
@@ -193,11 +193,11 @@ def test_user_update_self_only(db_conn, session):
     Ensure a user can only update herself.
     """
 
-    raw_insert_user(db_conn, {
+    raw_insert_users(db_conn, [{
         'name': 'other',
         'email': 'other@example.com',
         'password': bcrypt.encrypt('1234abcd'),
-    })
+    }])
     request = {
         'params': {
             'email': 'other@example.com'

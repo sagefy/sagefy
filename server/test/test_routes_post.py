@@ -1,24 +1,23 @@
 from conftest import create_user_in_db
 from datetime import datetime, timezone
 import routes.post
+from raw_insert import raw_insert_topics, raw_insert_posts, raw_insert_units
 
 
 def create_topic_in_db(db_conn, user_id='abcd1234'):
-    topics_table.insert({
+    raw_insert_topics(db_conn, [{
         'id': 'wxyz7890',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
         'user_id': user_id,
         'name': 'A Modest Proposal',
-        'entity': {
-            'id': 'efgh5678',
-            'kind': 'unit'
-        }
-    }).run(db_conn)
+        'entity_id': 'efgh5678',
+        'entity_kind': 'unit',
+    }])
 
 
 def create_post_in_db(db_conn, user_id='abcd1234'):
-    posts_table.insert({
+    raw_insert_posts(db_conn, [{
         'id': 'jklm',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
@@ -28,11 +27,25 @@ def create_post_in_db(db_conn, user_id='abcd1234'):
             People From Being a Burthen to Their Parents or Country, and
             for Making Them Beneficial to the Publick.''',
         'kind': 'post',
-    }).run(db_conn)
+    }])
 
 
 def create_proposal_in_db(db_conn):
-    posts_table.insert({
+    raw_insert_units(db_conn, [{
+        'id': 'slash-1',
+        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'entity_id': 'slash',
+        'previous_id': None,
+        'language': 'en',
+        'name': 'Dividing two numbers.',
+        'status': 'accepted',
+        'available': True,
+        'tags': ['math'],
+        'body': 'The joy and pleasure of dividing numbers.',
+        'require_ids': ['plus', 'minus', 'times'],
+    }])
+    raw_insert_posts(db_conn, [{
         'id': 'jklm',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
@@ -48,22 +61,7 @@ def create_proposal_in_db(db_conn):
             'id': 'slash-1',
             'kind': 'unit',
         }],
-    }).run(db_conn)
-
-    units_table.insert({
-        'id': 'slash-1',
-        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-        'entity_id': 'slash',
-        'previous_id': None,
-        'language': 'en',
-        'name': 'Dividing two numbers.',
-        'status': 'accepted',
-        'available': True,
-        'tags': ['math'],
-        'body': 'The joy and pleasure of dividing numbers.',
-        'require_ids': ['plus', 'minus', 'times'],
-    }).run(db_conn)
+    }])
 
 
 def test_get_posts(db_conn):
@@ -73,7 +71,7 @@ def test_get_posts(db_conn):
 
     create_user_in_db(db_conn)
     create_topic_in_db(db_conn)
-    posts_table.insert([{
+    raw_insert_posts(db_conn, [{
         'id': 'jklm',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
@@ -91,7 +89,7 @@ def test_get_posts(db_conn):
         'topic_id': 'wxyz7890',
         'body': 'A follow up.',
         'kind': 'post',
-    }]).run(db_conn)
+    }])
 
     request = {
         'params': {},
@@ -122,17 +120,15 @@ def test_get_posts_paginate(db_conn):
     """
     create_user_in_db(db_conn)
     create_topic_in_db(db_conn)
-    for i in range(0, 25):
-        posts_table.insert({
-            'id': 'jklm%s' % i,
-            'created': datetime.utcnow(),
-            'modified': datetime.utcnow(),
-            'user_id': 'abcd1234',
-            'topic_id': 'wxyz7890',
-            'body': 'test %s' % i,
-            'kind': 'post',
-        }).run(db_conn)
-
+    raw_insert_posts(db_conn, [{
+        'id': 'jklm%s' % i,
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
+        'user_id': 'abcd1234',
+        'topic_id': 'wxyz7890',
+        'body': 'test %s' % i,
+        'kind': 'post',
+    } for i in range(0, 25)])
     request = {
         'params': {},
         'db_conn': db_conn
@@ -171,7 +167,7 @@ def test_get_posts_votes(db_conn):
     create_user_in_db(db_conn)
     create_topic_in_db(db_conn)
     create_proposal_in_db(db_conn)
-    posts_table.insert({
+    raw_insert_posts(db_conn, [{
         'id': 'asdf4567',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
@@ -181,7 +177,7 @@ def test_get_posts_votes(db_conn):
         'topic_id': 'wxyz7890',
         'response': True,
         'user_id': 'abcd1234',
-    }).run(db_conn)
+    }])
 
     request = {
         'params': {},
@@ -194,8 +190,7 @@ def test_get_posts_votes(db_conn):
     assert response['posts'][1]['kind'] in ('proposal', 'vote')
 
 
-def test_create_post(db_conn,
-                     session):
+def test_create_post(db_conn, session):
     """
     Expect create post.
     """
@@ -393,7 +388,7 @@ def test_update_vote(db_conn, session):
     create_user_in_db(db_conn)
     create_topic_in_db(db_conn)
     create_proposal_in_db(db_conn)
-    posts_table.insert({
+    raw_insert_posts(db_conn, [{
         'id': 'vbnm1234',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
@@ -404,7 +399,7 @@ def test_update_vote(db_conn, session):
         'response': False,
         'kind': 'vote',
         'replies_to_id': 'val2345t',
-    }).run(db_conn)
+    }])
 
     request = {
         'cookies': {'session_id': session},

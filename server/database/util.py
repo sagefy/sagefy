@@ -18,7 +18,7 @@ def convert_fields_to_pgjson(data):
         'slip_distribution',
     )
     for field in fields:
-        if data.get(field):
+        if data.get(field) is not None:
             data[field] = psycopg2.extras.Json(data[field])
     return data
 
@@ -166,11 +166,6 @@ def prepare_row(db_conn, schema, data):
     errors = validate_fields(schema, data)
     if errors:
         return data, errors
-    if 'validate' in schema:
-        for fn in schema['validate']:
-            errors = fn(db_conn, schema, data)
-            if errors:
-                return data, errors
     return data, []
 
 
@@ -267,9 +262,6 @@ def deliver_fields(schema, data, access=None):
                 data.get(field_name) is not None and
                 access not in field_schema['access']):
             del data[field_name]
-
-        elif 'deliver' in field_schema and data.get(field_name):
-            data[field_name] = field_schema['deliver'](data[field_name])
 
     data = deepcopy(data)
     recurse_embeds(_, data, schema['fields'])

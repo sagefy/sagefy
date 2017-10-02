@@ -1,5 +1,6 @@
 import routes.subject
 from datetime import datetime, timezone
+from raw_insert import raw_insert_subjects, raw_insert_units, raw_insert_topics
 
 
 def test_get_recommended_subjects_route():
@@ -11,7 +12,15 @@ def test_get_subject(db_conn):
     Expect to get the subject information for displaying to a contributor.
     """
 
-    subjects_table.insert([{
+    raw_insert_units(db_conn, [{
+        'entity_id': 'W',
+        'name': 'Wood',
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
+        'status': 'accepted',
+    }])
+
+    raw_insert_subjects(db_conn, [{
         'entity_id': 'zytx',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
@@ -27,44 +36,30 @@ def test_get_subject(db_conn):
         'modified': datetime(1986, 11, 3, tzinfo=timezone.utc),
         'status': 'accepted',
         'name': 'Umberwood',
-    }]).run(db_conn)
+    }])
 
-    units_table.insert({
-        'entity_id': 'W',
-        'name': 'Wood',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'status': 'accepted',
-    }).run(db_conn)
-
-    topics_table.insert([{
+    raw_insert_topics(db_conn, [{
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'A Modest Proposal',
-        'entity': {
-            'id': 'zytx',
-            'kind': 'subject'
-        }
+        'entity_id': 'zytx',
+        'entity_kind': 'subject',
     }, {
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'Another Proposal',
-        'entity': {
-            'id': 'zytx',
-            'kind': 'subject'
-        }
+        'entity_id': 'zytx',
+        'entity_kind': 'subject',
     }, {
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'A Third Proposal',
-        'entity': {
-            'id': 'abcd',
-            'kind': 'card'
-        }
-    }]).run(db_conn)
+        'entity_id': 'abcd',
+        'entity_kind': 'card',
+    }])
 
     code, response = routes.subject.get_subject_route({
         'db_conn': db_conn

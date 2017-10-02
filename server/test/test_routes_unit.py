@@ -1,6 +1,6 @@
-
 import routes.unit
 from datetime import datetime, timezone
+from raw_insert import raw_insert_units, raw_insert_subjects, raw_insert_topics
 
 
 def test_get_unit(db_conn):
@@ -8,7 +8,7 @@ def test_get_unit(db_conn):
     Expect to get the unit information for displaying to a contributor.
     """
 
-    units_table.insert([{
+    raw_insert_units(db_conn, [{
         'entity_id': 'zytx',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
@@ -34,9 +34,9 @@ def test_get_unit(db_conn):
         'status': 'accepted',
         'name': 'Wildwood',
         'require_ids': ['zytx'],
-    }]).run(db_conn)
+    }])
 
-    subjects_table.insert({
+    raw_insert_subjects(db_conn, {
         'entity_id': 'W',
         'name': 'Woods',
         'created': datetime.utcnow(),
@@ -46,36 +46,30 @@ def test_get_unit(db_conn):
             'kind': 'unit',
             'id': 'zytx',
         }]
-    }).run(db_conn)
+    })
 
-    topics_table.insert([{
+    raw_insert_topics(db_conn, [{
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'A Modest Proposal',
-        'entity': {
-            'id': 'zytx',
-            'kind': 'unit'
-        }
+        'entity_id': 'zytx',
+        'entity_kind': 'unit',
     }, {
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'Another Proposal',
-        'entity': {
-            'id': 'zytx',
-            'kind': 'unit'
-        }
+        'entity_id': 'zytx',
+        'entity_kind': 'unit',
     }, {
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
         'user_id': 'abcd1234',
         'name': 'A Third Proposal',
-        'entity': {
-            'id': 'abcd',
-            'kind': 'card'
-        }
-    }]).run(db_conn)
+        'entity_id': 'abcd',
+        'entity_kind': 'card',
+    }])
 
     code, response = routes.unit.get_unit_route({
         'db_conn': db_conn

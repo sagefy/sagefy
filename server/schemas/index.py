@@ -27,8 +27,6 @@ schema = {
 #               bundle happens AFTER validate. be careful!
 # - default:    default value of the field
 #               can be a value or a function to call
-# - deliver:    tranform the data before sending out to the client
-#               can also be used for permissions
 # - access:     control which client can access this field's information
 # - unique:     True will check to make sure no other row has
 #               the same value not needed on `id` field,

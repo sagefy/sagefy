@@ -1,12 +1,232 @@
 import database.util as util
-from modules.util import extend, pick, omit
+from database.util import insert_row, update_row, save_row, get_row, \
+    list_rows, delete_row, convert_fields_to_pgjson
+from modules.util import extend, omit, convert_slug_to_uuid
 from schemas.index import schema as default
 from modules.validations import is_required, is_string, \
     has_min_length, is_one_of
+from conftest import user_id
+import uuid
+from datetime import datetime
+import psycopg2.extras
+from schemas.user import schema as user_schema
+
+
+def test_convert_fields_to_pgjson():
+    params = {
+        'data': {},
+    }
+    result = convert_fields_to_pgjson(params)
+    assert not isinstance(result['data'], dict)
+
+
+def test_insert_row(db_conn):
+    query = """
+        INSERT INTO users
+        (  name  ,   email  ,   password  ,   settings  )
+        VALUES
+        (%(name)s, %(email)s, %(password)s, %(settings)s)
+        RETURNING *;
+    """
+    data = {
+        'name': 'Hi',
+        'email': 'hi@example.com',
+        'password': 'abcd1234',
+        'settings': {},
+    }
+    result, errors = insert_row(db_conn, user_schema, query, data)
+    assert not errors
+    assert result
+
+
+def test_insert_row_err(db_conn):
+    query = """
+        INSERT INTO users
+        (  name  ,   email  ,   password  ,   settings  )
+        VALUES
+        (%(name)s, %(email)s, %(password)s, %(settings)s)
+        RETURNING *;
+    """
+    data = {
+        'name': 'Hi',
+        'email': 'hi@example.com',
+        'password': 'abcd',
+        'settings': {},
+    }
+    result, errors = insert_row(db_conn, user_schema, query, data)
+    assert errors
+    assert not result
+
+
+def test_update_row(db_conn, session):
+    query = """
+        UPDATE users
+        SET name = %(name)s
+        WHERE id = %(id)s
+        RETURNING *;
+    """
+    prev_data = {
+        'id': convert_slug_to_uuid(user_id),
+        'email': 'test@example.com',
+        'password': '$2a$abcd1234',
+    }
+    data = {
+        'name': 'Hello!',
+    }
+    result, errors = update_row(db_conn, user_schema, query, prev_data, data)
+    assert not errors
+    assert result
+
+
+def test_update_row_error(db_conn, session):
+    query = """
+        UPDATE users
+        SET name = %(name)s
+        WHERE id = %(id)s
+        RETURNING *;
+    """
+    prev_data = {
+        'id': convert_slug_to_uuid(user_id),
+        'email': 'test@example.com',
+        'password': '$2a$ab',
+    }
+    data = {
+        'name': 'Hello!',
+    }
+    result, errors = update_row(db_conn, user_schema, query, prev_data, data)
+    assert errors
+    assert not result
+
+
+def test_save_row(db_conn):
+    query = """
+        INSERT INTO users
+        (  id  ,   created  ,   modified  ,
+           name  ,   email  ,   password  ,   settings)
+        VALUES
+        (%(id)s, %(created)s, %(modified)s,
+         %(name)s, %(email)s, %(password)s, %(settings)s)
+        RETURNING *;
+    """
+    params = {
+        'id': uuid.uuid4(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
+        'name': 'Hi',
+        'email': 'hi@example.com',
+        'password': '$2a$abcd1234',
+        'settings': psycopg2.extras.Json({}),
+    }
+    result, errors = save_row(db_conn, query, params)
+    assert not errors
+    assert result
+
+
+def test_save_row_error(db_conn):
+    query = """
+        INSERT INTO users
+        (  id  ,   created  ,   modified  ,
+           name  ,   email  ,   password  ,   settings)
+        VALUES
+        (%(id)s, %(created)s, %(modified)s,
+         %(name)s, %(email)s, %(password)s, %(settings)s)
+        RETURNING *;
+    """
+    params = {
+        'id': uuid.uuid4(),
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
+        'name': 'Hi',
+        'email': 'hi@example.com',
+        'password': '',
+        'settings': psycopg2.extras.Json({}),
+    }
+    result, errors = save_row(db_conn, query, params)
+    assert errors
+    assert not result
+
+
+def test_get_row(db_conn, session):
+    query = """
+        SELECT *
+        FROM users
+        WHERE id = %(id)s
+        LIMIT 1;
+    """
+    params = {
+        'id': convert_slug_to_uuid(user_id),
+    }
+    result = get_row(db_conn, query, params)
+    assert result['id'] == convert_slug_to_uuid(user_id)
+
+
+def test_get_row_error(db_conn):
+    query = "a;"
+    params = {}
+    result = get_row(db_conn, query, params)
+    assert result is None
+
+
+def test_list_rows(db_conn, session):
+    query = """
+        SELECT id
+        FROM users
+        ORDER BY created DESC;
+        /* TODO OFFSET LIMIT */
+    """
+    params = {}
+    result = list_rows(db_conn, query, params)
+    assert result[0]['id'] == convert_slug_to_uuid(user_id)
+
+
+def test_list_rows_error(db_conn):
+    query = "a;"
+    params = {}
+    result = list_rows(db_conn, query, params)
+    assert result == []
+
+
+def test_delete_row(db_conn, session):
+    params = {
+        'id': convert_slug_to_uuid(user_id),
+    }
+
+    def get():
+        query = """
+            SELECT *
+            FROM users
+            WHERE id = %(id)s
+            LIMIT 1;
+        """
+        result = get_row(db_conn, query, params)
+        return result
+
+    assert get()
+    query = """
+        DELETE FROM users
+        WHERE id = %(id)s;
+    """
+    errors = delete_row(db_conn, query, params)
+    assert not errors
+    assert not get()
+
+
+def test_delete_row_error(db_conn):
+    query = "a;"
+    params = {}
+    errors = delete_row(db_conn, query, params)
+    assert errors
+
+
+###############################################################################
 
 
 def lowercase_and_strip(s):
     return s.lower().strip()
+
+
+def default_brown():
+    return 'brown'
 
 
 vases_schema = extend({}, default, {
@@ -40,7 +260,7 @@ vases_schema = extend({}, default, {
             'access': ('private',),
             'embed': {
                 'color': {
-                    'default': 'brown',
+                    'default': default_brown,
                     'bundle': lowercase_and_strip,
                     'validate': (is_required, (is_one_of,
                                                'brown',
@@ -55,78 +275,11 @@ vases_schema = extend({}, default, {
 })
 
 
-def test_convert_fields_to_pgjson():
-    assert False
-
-
-def test_insert_row(db_conn):
-    schema = vases_schema
-    data = {
-        'id': 'haxxor',
-        'name': 'celestial',
-        'plants': [
-            {'species': 'zzplant', 'quantity': 2},
-            {'species': 'rubbertree', 'quantity': 1},
-        ],
-        'soil': {'color': 'black'}
-    }
-    document, errors = util.insert_row(db_conn, schema, data)
-    subdoc = pick(document, ('name', 'plants', 'soil'))
-    subdata = pick(data, ('name', 'plants', 'soil'))
-    assert document['id'] != data['id']
-    assert len(errors) == 0
-    assert subdoc == subdata
-
-
-def test_update_row(db_conn):
-    schema = vases_schema
-    data1 = {
-        'name': 'celestial',
-        'plants': [
-            {'species': 'zzplant', 'quantity': 2},
-            {'species': 'rubbertree', 'quantity': 1},
-        ],
-        'soil': {'color': 'black'}
-    }
-    document1, errors1 = util.insert_row(db_conn, schema, data1)
-    subdoc1 = pick(document1, ('name', 'plants', 'soil'))
-    subdata1 = pick(data1, ('name', 'plants', 'soil'))
-    data2 = {
-        'id': 'haxxor',
-        'name': 'zen',
-    }
-    document2, errors2 = util.update_row(schema, document1, data2, db_conn)
-    subdoc2 = pick(document2, ('name', 'plants', 'soil'))
-    subdata2 = pick(data2, ('name', 'plants', 'soil'))
-    assert len(errors1) == 0
-    assert subdoc1 == subdata1
-    assert document1['id'] == document2['id']
-    assert len(errors2) == 0
-    assert subdoc2 == extend({}, subdata1, subdata2)
-
-
-def test_save_row(db_conn):
-    schema = vases_schema
-    data = {
-        'name': 'celestial',
-        'plants': [
-            {'species': 'zzplant', 'quantity': 2},
-            {'species': 'rubbertree', 'quantity': 1},
-        ],
-        'soil': {'color': 'black'}
-    }
-    document, errors = util.save_row(db_conn, schema, data)
-    subdoc = pick(document, ('name', 'plants', 'soil'))
-    assert len(errors) == 0
-    assert subdoc == data
-
-
 def create_test_data_set(db_conn):
     """
     Create a set of fake data.
     """
 
-    schema = vases_schema
     data = [{
         'name': 'celestial',
         'shape': 'round',
@@ -152,45 +305,7 @@ def create_test_data_set(db_conn):
         ],
         'soil': {'color': 'black'}
     }]
-    errors = []
-    docs = []
-    for d in data:
-        doc, e = util.insert_row(db_conn, schema, d)
-        if e:
-            errors.append(e)
-        docs.append(doc)
-    assert not errors
-    return docs
-
-
-def test_get_row(db_conn):
-    tablename = 'vases'
-    create_test_data_set(db_conn)
-    params = {'name': 'modern'}
-    document = util.get_row(db_conn, tablename, params)
-    assert document['name'] == 'modern'
-    assert document['soil'] == {'color': 'black'}
-
-
-def test_list_rows(db_conn):
-    tablename = 'vases'
-    create_test_data_set(db_conn)
-    params = {'shape': 'round'}
-    documents = list(db_conn, util.list_rows(tablename, params))
-    assert len(documents) == 2
-
-
-def test_delete_row(db_conn):
-    tablename = 'vases'
-    documents = create_test_data_set(db_conn)
-    assert len(documents) == 3
-    util.delete_row(db_conn, tablename, documents[0]['id'])
-    params = {}
-    documents = list(db_conn, util.list_rows(tablename, params))
-    assert len(documents) == 2
-
-
-###############################################################################
+    return data
 
 
 def test_recurse_embeds():
@@ -230,7 +345,7 @@ def test_prepare_row(db_conn):
     schema = vases_schema
     create_test_data_set(db_conn)
     data = {
-        'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
+        'id': uuid.uuid4(),
         'name': ' celestial ',
         'shape': 'round',
         'plants': [
@@ -303,27 +418,6 @@ def test_validate_fields():
     assert plants_error['message'] == 'Must have minimum length of 1.'
     shape_error = find(lambda e: e['name'] == 'shape', errors)
     assert shape_error['message'] == 'Must be one of round, square, triangle.'
-
-
-def test_validate_unique_fields(db_conn):
-    create_test_data_set(db_conn)
-    schema = vases_schema
-    data = {
-        'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
-        'name': 'celestial',
-        'shape': 'round',
-        'plants': [
-            {'species': 'zzplant', 'quantity': 2},
-            {'species': 'rubbertree', 'quantity': 1},
-        ],
-        'soil': {'color': 'black'}
-    }
-    errors = util.validate_unique_fields(db_conn, schema, data)
-    assert len(errors) == 1
-    assert errors == [{'message': 'Must be unique.', 'name': 'name'}]
-    data['name'] = 'starry'
-    errors = util.validate_unique_fields(db_conn, schema, data)
-    assert len(errors) == 0
 
 
 def test_bundle_fields():

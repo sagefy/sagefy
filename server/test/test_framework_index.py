@@ -34,16 +34,45 @@ def test_call_handler():
     assert 'errors' in response
 
 
+def test_call_handler_other():
+    """
+    Expect to call the handler matching the path.
+    """
+
+    code, response = call_handler({
+        'method': 'WAFFLE',
+        'path': '/foo',
+    })
+
+    assert code == 405
+    assert 'errors' in response
+
+
+def test_call_handler_real():
+    """
+    Expect to call the handler matching the path.
+    """
+
+    import routes.public  # noqa
+
+    code, response = call_handler({
+        'method': 'GET',
+        'path': '/s/',
+    })
+
+    assert code == 200
+
+
 def test_construct_request():
     """
     Expect to contruct a request dictionary.
     """
 
-    request = construct_request({
+    request = construct_request({}, {
         'REQUEST_METHOD': 'WAFFLE',
         'PATH_INFO': '/waffle',
         'SCRIPT_NAME': '',
-    }, {})
+    })
     assert isinstance(request, dict)
 
 
@@ -53,10 +82,11 @@ def test_pull_query_string():
     """
 
     assert pull_query_string({
-        'QUERY_STRING': 'foo=1&bar=baz'
+        'QUERY_STRING': 'foo=1&bar=baz&maa'
     }) == {
         'foo': 1,
         'bar': 'baz',
+        'maa': '',
     }
 
 
@@ -89,6 +119,21 @@ def test_pull_body():
     }) == {
         'foo': 1,
     }
+
+
+def test_pull_body_fail():
+    """
+    Expect to default to empty body
+    """
+
+    class Input(object):
+        def read(self, length):
+            return None
+
+    assert pull_body({
+        'CONTENT_LENGTH': 9,
+        'wsgi.input': Input()
+    }) == {}
 
 
 def test_pull_cookies():

@@ -3,7 +3,7 @@ from schemas.topic import schema as topic_schema
 from database.util import deliver_fields
 from database.util import insert_row, update_row, get_row, list_rows
 from modules.util import json_prep, pick
-from modules.util import convert_slug_to_uuid
+from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
 
 
 # TODO-1 validate foreign on entity_id
@@ -122,5 +122,5 @@ def add_topic_to_es(topic):
         index='entity',
         doc_type='topic',
         body=data,
-        id=data['id'],
+        id=convert_uuid_to_slug(data['id']),
     )

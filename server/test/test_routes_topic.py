@@ -1,9 +1,10 @@
 from datetime import datetime
 import routes.topic
+from raw_insert import raw_insert_topics
 
 
 def create_topic_in_db(db_conn, user_id='abcd1234'):
-    topics_table.insert({
+    raw_insert_topics(db_conn, [{
         'id': 'wxyz7890',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
@@ -13,7 +14,7 @@ def create_topic_in_db(db_conn, user_id='abcd1234'):
             'id': 'efgh5678',
             'kind': 'unit'
         }
-    }).run(db_conn)
+    }])
 
 
 def test_get_topic_route():

@@ -10,9 +10,12 @@ from framework.redis import redis
 from datetime import datetime, timezone
 import uuid
 from modules.util import convert_uuid_to_slug
-from database.util import save_row, delete_row
+from database.util import delete_row
 import framework.index as framework
-from test.raw_insert import raw_insert_user, raw_insert_cards, raw_insert_units
+from test.raw_insert import raw_insert_users, raw_insert_cards, \
+    raw_insert_units, raw_insert_subjects, raw_insert_topics, \
+    raw_insert_posts, raw_insert_follows, raw_insert_notices
+
 
 framework.update_config(config)
 
@@ -79,9 +82,7 @@ users = [{
         'view_follows': 'public',
     },
 }]
-
-for user in users:
-    raw_insert_user(db_conn, user)
+raw_insert_users(db_conn, users)
 
 
 # We have to translate the sample IDs to UUIDs
@@ -107,39 +108,23 @@ for sample_id, unit_data in sample_data['units'].items():
         u_require_ids.append(entity_ids_lookup[id_])
     unit_data['require_ids'] = u_require_ids
 
-    query = """
-        INSERT INTO units_entity_id
-        (  entity_id  )
-        VALUES
-        (%(entity_id)s);
-        INSERT INTO units
-        (  version_id  ,   created  ,   modified  ,
-           entity_id  ,   previous_id  ,   language  ,   status  ,
-           available  ,   tags  ,   name  ,   user_id  ,
-           body  ,   require_ids  )
-        VALUES
-        (%(version_id)s, %(created)s, %(modified)s,
-         %(entity_id)s, %(previous_id)s, %(language)s, %(status)s,
-         %(available)s, %(tags)s, %(name)s, %(user_id)s,
-         %(body)s, %(require_ids)s)
-        RETURNING *;
-    """
     params = {
         'version_id': unit_data['version_id'],
         'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'entity_id': unit_data['entity_id'],
         'previous_id': None,
-        'language': 'en',
-        'status': 'accepted',
-        'available': True,
-        'tags': [],
+        # 'language': 'en',
+        # 'status': 'accepted',
+        # 'available': True,
+        # 'tags': [],
         'name': unit_data['name'],
         'user_id': doris_id,
         'body': unit_data['body'],
         'require_ids': unit_data['require_ids'],
     }
-    save_row(db_conn, query, params)
+    raw_insert_units(db_conn, [params])
+
 
 query = """
     ALTER TABLE units ENABLE TRIGGER ALL;
@@ -235,23 +220,14 @@ for sample_id, subject_data in sample_data['subjects'].items():
         # 'tags': [],
         'user_id': doris_id,
         'body': subject_data['body'],
-        'members': psycopg2.extras.Json(subject_data['members']),
+        'members': subject_data['members'],
     }
-    raw_insert_units(db_conn, [params])
+    raw_insert_subjects(db_conn, [params])
 
 
 for sample_id, unit_data in sample_data['units'].items():
     topic_id = uuid.uuid4()
     proposal_id = uuid.uuid4()
-    query = """
-        INSERT INTO topics
-        (  id, created, modified,
-           user_id, name, entity_id, entity_kind)
-        VALUES
-        (%(id)s, %(created)s, %(modified)s,
-         %(user_id)s, %(name)s, %(entity_id)s, %(entity_kind)s)
-        RETURNING *;
-    """
     params = {
         'id': topic_id,
         'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
@@ -261,7 +237,7 @@ for sample_id, unit_data in sample_data['units'].items():
         'entity_id': unit_data['entity_id'],
         'entity_kind': 'unit',
     }
-    save_row(db_conn, query, params)
+    raw_insert_topics(db_conn, [params])
 
     posts = [{
         'id': uuid.uuid4(),
@@ -274,7 +250,6 @@ for sample_id, unit_data in sample_data['units'].items():
                 'What could be better?',
         'kind': 'post',
         'replies_to_id': None,
-        'entity_versions': psycopg2.extras.Json([]),
         'response': None,
     }, {
         'id': proposal_id,
@@ -285,10 +260,10 @@ for sample_id, unit_data in sample_data['units'].items():
         'body': 'I think we should do something to %s.' % unit_data['name'],
         'kind': 'proposal',
         'replies_to_id': None,
-        'entity_versions': psycopg2.extras.Json([{
+        'entity_versions': [{
             'id': convert_uuid_to_slug(unit_data['version_id']),
             'kind': 'unit',
-        }]),
+        }],
         'name': 'Lets change %s' % unit_data['name'],
         'response': None,
     }, {
@@ -301,35 +276,9 @@ for sample_id, unit_data in sample_data['units'].items():
         'kind': 'vote',
         'replies_to_id': proposal_id,
         'response': True,
-        'entity_versions': psycopg2.extras.Json([]),
     }]
+    raw_insert_posts(db_conn, posts)
 
-    for post in posts:
-        query = """
-            INSERT INTO posts
-            (id, created, modified,
-             kind, body, replies_to_id,
-             entity_versions, response, user_id,
-             topic_id)
-            VALUES
-            (%(id)s, %(created)s, %(modified)s,
-             %(kind)s, %(body)s, %(replies_to_id)s,
-             %(entity_versions)s, %(response)s, %(user_id)s,
-             %(topic_id)s)
-            RETURNING *;
-        """
-        params = post
-        save_row(db_conn, query, params)
-
-    query = """
-        INSERT INTO follows
-        (id, created, modified,
-         user_id, entity_id, entity_kind)
-        VALUES
-        (%(id)s, %(created)s, %(modified)s,
-         %(user_id)s, %(entity_id)s, %(entity_kind)s)
-        RETURNING *;
-    """
     params = {
         'id': uuid.uuid4(),
         'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
@@ -338,33 +287,24 @@ for sample_id, unit_data in sample_data['units'].items():
         'entity_id': unit_data['entity_id'],
         'entity_kind': 'unit',
     }
-    save_row(db_conn, query, params)
+    raw_insert_follows(db_conn, [params])
 
-    query = """
-        INSERT INTO notices
-        (id, created, modified,
-         user_id, kind, data, read, tags)
-        VALUES
-        (%(id)s, %(created)s, %(modified)s,
-         %(user_id)s, %(kind)s, %(data)s, %(read)s, %(tags)s)
-        RETURNING *;
-    """
     params = {
         'id': uuid.uuid4(),
         'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
         'user_id': doris_id,
         'kind': 'create_topic',
-        'data': psycopg2.extras.Json({
+        'data': {
             'user_name': 'Eileen',
             'topic_name': '%s is fun' % unit_data['name'],
             'entity_kind': 'unit',
             'entity_name': unit_data['name'],
-        }),
+        },
         'read': False,
         'tags': [],
     }
-    save_row(db_conn, query, params)
+    raw_insert_notices(db_conn, [params])
 
 """
 TODO

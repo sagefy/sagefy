@@ -31,7 +31,7 @@ def calculate_difficulty(guess, slip):
     # where the right answer lowers learned, and the wrong answer increases it
     if guess + slip > 1:
         return float("inf")
-    return calculate_correct(guess, slip, 0.5)
+    return calculate_incorrect(guess, slip, 0.5)
 
 
 def calculate_belief(learned, time_delta):

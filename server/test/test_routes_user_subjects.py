@@ -1,9 +1,10 @@
 import routes.user_subjects
 from datetime import datetime
+from raw_insert import raw_insert_subjects, raw_insert_user_subjects
 
 
 def prep(db_conn):
-    subjects_table.insert([{
+    raw_insert_subjects(db_conn, [{
         'entity_id': 'A1',
         'name': 'A',
         'body': 'Apple',
@@ -31,8 +32,8 @@ def prep(db_conn):
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
         'status': 'accepted',
-    }]).run(db_conn)
-    users_subjects_table.insert({
+    }])
+    raw_insert_user_subjects(db_conn, [{
         'user_id': 'abcd1234',
         'subject_ids': [
             'A1',
@@ -40,7 +41,18 @@ def prep(db_conn):
         ],
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
-    }).run(db_conn)
+    }])
+
+
+def create_one_topic(db_conn):
+    raw_insert_subjects(db_conn, [{
+        'entity_id': 'A1',
+        'name': 'A',
+        'body': 'Apple',
+        'created': datetime.utcnow(),
+        'modified': datetime.utcnow(),
+        'status': 'accepted',
+    }])
 
 
 def test_get_user_subjects(db_conn, session):
@@ -92,15 +104,7 @@ def test_add_subject(db_conn, session):
     Expect to add a subject to the user's list.
     """
 
-    subjects_table.insert({
-        'entity_id': 'A1',
-        'name': 'A',
-        'body': 'Apple',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'status': 'accepted',
-    }).run(db_conn)
-
+    create_one_topic(db_conn)
     request = {
         'cookies': {'session_id': session},
         'db_conn': db_conn
@@ -155,15 +159,7 @@ def test_add_subject_already_added(db_conn, session):
     Expect to 400 if already added subject.
     """
 
-    subjects_table.insert({
-        'entity_id': 'A1',
-        'name': 'A',
-        'body': 'Apple',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'status': 'accepted',
-    }).run(db_conn)
-
+    create_one_topic(db_conn)
     request = {
         'cookies': {'session_id': session},
         'db_conn': db_conn,
@@ -181,15 +177,7 @@ def test_select_subject_route(db_conn, session):
     Expect to select a subject.
     """
 
-    subjects_table.insert({
-        'entity_id': 'A1',
-        'name': 'A',
-        'body': 'Apple',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'status': 'accepted',
-    }).run(db_conn)
-
+    create_one_topic(db_conn)
     request = {
         'cookies': {'session_id': session},
         'db_conn': db_conn,
@@ -205,20 +193,11 @@ def test_remove_subject(db_conn, session):
     Expect to remove a subject from the user's list.
     """
 
-    subjects_table.insert({
-        'entity_id': 'A1',
-        'name': 'A',
-        'body': 'Apple',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'status': 'accepted',
-    }).run(db_conn)
-
-    users_subjects_table.insert({
+    create_one_topic(db_conn)
+    raw_insert_user_subjects(db_conn, [{
         'user_id': 'abcd1234',
         'subject_ids': ['A1'],
-    }).run(db_conn)
-
+    }])
     request = {
         'cookies': {'session_id': session},
         'db_conn': db_conn,

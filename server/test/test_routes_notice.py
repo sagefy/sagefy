@@ -1,23 +1,22 @@
 import routes.notice
-from database.notice import insert_notice
+from database.notice import insert_notice, get_notice
+from raw_insert import raw_insert_notices
 
 
 def test_list(db_conn, session):
     """
     Expect to get a list of 10 notices by user ID.
     """
-    for i in range(0, 10):
-        insert_notice(db_conn, {
-            'user_id': 'abcd1234',
-            'kind': 'create_proposal',
-            'data': {
-                'user_name': '',
-                'proposal_name': '',
-                'entity_kind': '',
-                'entity_name': '',
-            }
-        })
-
+    raw_insert_notices(db_conn, [{
+        'user_id': 'abcd1234',
+        'kind': 'create_proposal',
+        'data': {
+            'user_name': '',
+            'proposal_name': '',
+            'entity_kind': '',
+            'entity_name': '',
+        }
+    } for i in range(0, 10)])
     request = {
         'cookies': {'session_id': session},
         'params': {},
@@ -47,17 +46,16 @@ def test_list_paginate(db_conn, session):
     Expect to paginate lists of notices.
     """
 
-    for i in range(0, 25):
-        insert_notice(db_conn, {
-            'user_id': 'abcd1234',
-            'kind': 'create_proposal',
-            'data': {
-                'user_name': '',
-                'proposal_name': '',
-                'entity_kind': '',
-                'entity_name': '',
-            }
-        })
+    raw_insert_notices(db_conn, [{
+        'user_id': 'abcd1234',
+        'kind': 'create_proposal',
+        'data': {
+            'user_name': '',
+            'proposal_name': '',
+            'entity_kind': '',
+            'entity_name': '',
+        }
+    } for i in range(0, 25)])
 
     request = {
         'cookies': {'session_id': session},
@@ -98,7 +96,7 @@ def test_mark(db_conn, session):
     code, response = routes.notice.mark_notice_route(request, nid)
     assert code == 200
     assert response['notice']['read'] is True
-    record = notices_table.get(nid).run(db_conn)
+    record = get_notice(db_conn, nid)
     assert record['read'] is True
 
 
@@ -124,7 +122,7 @@ def test_mark_no_user(db_conn):
     }
     code, response = routes.notice.mark_notice_route(request, nid)
     assert code == 401
-    record = notices_table.get(nid).run(db_conn)
+    record = get_notice(db_conn, {'id': nid})
     assert record['read'] is False
 
 
@@ -166,5 +164,5 @@ def test_mark_not_owned(db_conn, session):
     }
     code, response = routes.notice.mark_notice_route(request, nid)
     assert code == 403
-    record = notices_table.get(nid).run(db_conn)
+    record = get_notice(db_conn, {'id': nid})
     assert record['read'] is False

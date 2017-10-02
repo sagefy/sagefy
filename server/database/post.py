@@ -5,7 +5,7 @@ from schemas.proposal import schema as proposal_schema
 from schemas.vote import schema as vote_schema
 from database.util import deliver_fields
 from database.util import insert_row, update_row, get_row, list_rows
-from modules.util import convert_slug_to_uuid
+from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
 
 
 def get_post_schema(data):
@@ -336,7 +336,7 @@ def add_post_to_es(db_conn, post):
         index='entity',
         doc_type='post',
         body=data,
-        id=post['id'],
+        id=convert_uuid_to_slug(post['id']),
     )
 
 

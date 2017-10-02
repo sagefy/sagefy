@@ -4,6 +4,8 @@ from database.user import get_user
 from datetime import datetime, timezone
 from database.subject import get_latest_accepted_subject
 from database.unit import get_latest_accepted_unit, list_latest_accepted_units
+from raw_insert import raw_insert_users, raw_insert_units, \
+    raw_insert_responses, raw_insert_subjects
 
 
 def add_test_subject(db_conn):
@@ -19,11 +21,11 @@ def add_test_subject(db_conn):
     Divide needs to be diagnosed.
     """
 
-    users_table.insert({
+    raw_insert_users(db_conn, [{
         'id': 'user'
-    }).run(db_conn)
+    }])
 
-    units_table.insert([{
+    raw_insert_units(db_conn, [{
         'entity_id': 'add',
         'status': 'accepted',
         'created': datetime.utcnow()
@@ -42,9 +44,9 @@ def add_test_subject(db_conn):
         'require_ids': ['multiply', 'subtract'],
         'status': 'accepted',
         'created': datetime.utcnow()
-    }]).run(db_conn)
+    }])
 
-    responses_table.insert([{
+    raw_insert_responses(db_conn, [{
         'user_id': 'user', 'unit_id': 'add', 'learned': 0.99,
         'created': datetime.utcnow()
     }, {
@@ -53,9 +55,9 @@ def add_test_subject(db_conn):
     }, {
         'user_id': 'user', 'unit_id': 'subtract', 'learned': 0.99,
         'created': datetime(2004, 11, 3, tzinfo=timezone.utc)
-    }]).run(db_conn)
+    }])
 
-    subjects_table.insert({
+    raw_insert_subjects(db_conn, {
         'entity_id': 'fghj4567',
         'status': 'accepted',
         'created': datetime(2004, 11, 1, tzinfo=timezone.utc),
@@ -65,7 +67,7 @@ def add_test_subject(db_conn):
             {'id': 'multiply', 'kind': 'unit'},
             {'id': 'divide', 'kind': 'unit'},
         ]
-    }).run(db_conn)
+    })
 
 
 def test_traverse(db_conn):
@@ -74,7 +76,6 @@ def test_traverse(db_conn):
     Basic test.
     """
 
-    assert subjects_table
     add_test_subject(db_conn)
     subject = get_latest_accepted_subject(db_conn, entity_id='fghj4567')
     assert subject is not None

@@ -1,5 +1,5 @@
 
-def test_x(app):
+def test_x():
     """
     Expect ...
     """

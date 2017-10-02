@@ -1,7 +1,7 @@
 # TODO-3 outline tests  https://docs.sagefy.org/f_planning/sequencer
 
 
-def test_x(app):
+def test_x():
     """
     Expect ...
     """

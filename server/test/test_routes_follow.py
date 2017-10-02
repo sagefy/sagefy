@@ -1,36 +1,31 @@
 import routes.follow
 from datetime import datetime
+from raw_insert import raw_insert_follows, raw_insert_cards
 
 
 def test_list_follows_route(db_conn, session):
     """
     Expect to get a list of follows for user.
     """
-    follows_table.insert([{
+    raw_insert_follows(db_conn, [{
         'user_id': 'JFldl93k',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
-        'entity': {
-            'kind': 'card',
-            'id': 'JFlsjFm',
-        },
+        'entity_kind': 'card',
+        'entity_id': 'JFlsjFm',
     }, {
         'user_id': 'abcd1234',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
-        'entity': {
-            'kind': 'card',
-            'id': 'JFlsjFm',
-        },
+        'entity_kind': 'card',
+        'entity_id': 'JFlsjFm',
     }, {
         'user_id': 'abcd1234',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
-        'entity': {
-            'kind': 'unit',
-            'id': 'u39Fdjf0',
-        },
-    }]).run(db_conn)
+        'entity_kind': 'unit',
+        'entity_id': 'u39Fdjf0',
+    }])
 
     request = {
         'cookies': {'session_id': session},
@@ -60,13 +55,13 @@ def test_follow(db_conn, session):
     Expect to follow an entity.
     """
 
-    cards_table.insert({
+    raw_insert_cards(db_conn, [{
         'entity_id': 'ABCD',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
         'status': 'accepted',
         'kind': 'video',
-    }).run(db_conn)
+    }])
 
     request = {
         'cookies': {'session_id': session},
@@ -125,20 +120,18 @@ def test_follow_409(db_conn, session):
     Expect to fail to follow entity if already followed.
     """
 
-    follows_table.insert({
-        'id': 'JIkfo034n',
-        'user_id': 'abcd1234',
-        'entity': {
-            'kind': 'card',
-            'id': 'JFlsjFm',
-        },
-    }).run(db_conn)
-    cards_table.insert({
+    raw_insert_cards(db_conn, [{
         'entity_id': 'JFlsjFm',
         'created': datetime.utcnow(),
         'modified': datetime.utcnow(),
         'status': 'accepted',
-    }).run(db_conn)
+    }])
+    raw_insert_follows(db_conn, [{
+        'id': 'JIkfo034n',
+        'user_id': 'abcd1234',
+        'entity_kind': 'card',
+        'entity_id': 'JFlsjFm',
+    }])
 
     request = {
         'cookies': {'session_id': session},
@@ -173,14 +166,12 @@ def test_unfollow(db_conn, session):
     Expect to unfollow an entity.
     """
 
-    follows_table.insert({
+    raw_insert_follows(db_conn, [{
         'id': 'JIkfo034n',
         'user_id': 'abcd1234',
-        'entity': {
-            'kind': 'card',
-            'id': 'JFlsjFm',
-        },
-    }).run(db_conn)
+        'entity_kind': 'card',
+        'entity_id': 'JFlsjFm',
+    }])
 
     request = {
         'cookies': {'session_id': session},
@@ -212,4 +203,3 @@ def test_unfollow_404(db_conn, session):
     }
     code, response = routes.follow.unfollow_route(request, 'JIkfo034n')
     assert code == 404
-

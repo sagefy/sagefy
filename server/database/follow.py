@@ -18,8 +18,8 @@ def get_follow(db_conn, user_id, entity_id):
         LIMIT 1;
     """
     params = {
-        'user_id': user_id,
-        'entity_id': entity_id,
+        'user_id': convert_slug_to_uuid(user_id),
+        'entity_id': convert_slug_to_uuid(entity_id),
     }
     return get_row(db_conn, query, params)
 
@@ -57,7 +57,7 @@ def list_follows_by_user(db_conn, params):
         /* TODO OFFSET LIMIT */
     """
     params = {
-        'user_id': params['user_id'],
+        'user_id': convert_slug_to_uuid(params['user_id']),
     }
     return list_rows(db_conn, query, params)
 
@@ -88,16 +88,16 @@ def insert_follow(db_conn, data):
     Create a new follow (user <-> entity).
     """
 
-    # TODO-2 move these to schema-level 'validate' fns instead.
-    # See database/util.py: for fn in schema['validate']:
-
     already_has = get_follow(
         db_conn,
         convert_slug_to_uuid(data.get('user_id')),
         convert_slug_to_uuid(data.get('entity_id'))
     )
     if already_has:
-        return {}, []
+        return {}, [{
+            'name': 'entity_id',
+            'message': 'You already followed this entity.'
+        }]
 
     schema = follow_schema
     query = """
@@ -115,7 +115,7 @@ def insert_follow(db_conn, data):
     }
     errors = is_valid_entity(db_conn, data)
     if errors:
-        return data, [{'message': 'invalid entity'}]
+        return None, [{'message': 'invalid entity'}]
     data, errors = insert_row(db_conn, schema, query, data)
     return data, errors
 

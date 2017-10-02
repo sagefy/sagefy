@@ -38,18 +38,22 @@ def serve(environ, start_response):
     db_conn = make_db_connection()
     request = construct_request(db_conn, environ)
     code, data = call_handler(request)
+    is_json = isinstance(data, dict)
     close_db_connection(db_conn)
-    response_headers = []
-    if isinstance(data, dict):
-        response_headers += [
-            ('Content-Type', 'application/json; charset=utf-8')
-        ]
-        response_headers += set_cookie_headers(data.pop('cookies', {}))
-    else:
-        response_headers += [('Content-Type', 'text/plain; charset=utf-8')]
+    content_type = (
+        ('Content-Type', 'application/json; charset=utf-8')
+        if is_json
+        else ('Content-Type', 'text/plain; charset=utf-8')
+    )
+    cookie_headers = (
+        set_cookie_headers(data.pop('cookies', {}))
+        if is_json
+        else []
+    )
+    response_headers = [content_type] + cookie_headers
     status = str(code) + ' ' + status_codes.get(code, 'Unknown')
     start_response(status, response_headers)
-    if isinstance(data, dict):
+    if is_json:
         data = json.dumps(data, default=json_serial, ensure_ascii=False)
     return [data.encode()]
 
@@ -60,18 +64,18 @@ def construct_request(db_conn, environ):
     given a body (get), query string (put, post), and cookies.
     """
 
-    request = {}
-
-    request['method'] = environ['REQUEST_METHOD']
-    request['path'] = environ['SCRIPT_NAME'] + environ['PATH_INFO']
-    request['db_conn'] = db_conn
-    request['cookies'] = pull_cookies(environ)
-
-    if request['method'] == 'GET':
-        request['params'] = pull_query_string(environ)
-    elif request['method'] in ('PUT', 'POST'):
-        request['params'] = pull_body(environ)
-
+    method = environ['REQUEST_METHOD']
+    request = {
+        'method': method,
+        'path': environ['SCRIPT_NAME'] + environ['PATH_INFO'],
+        'db_conn': db_conn,
+        'cookies': pull_cookies(environ),
+        'params': (pull_query_string(environ)
+                   if method == 'GET'
+                   else pull_body(environ)
+                   if method in ('PUT', 'POST')
+                   else {})
+    }
     return request
 
 
@@ -84,15 +88,12 @@ def call_handler(request):
     method = request['method']
     if method not in ('GET', 'POST', 'PUT', 'DELETE'):
         return abort(405)
-
     path = request['path']
     handler, parameters = find_path(method, path)
     if not handler:
         return abort(404)
-
     try:
         return handler(request=request, **parameters)
-
     except Exception:
         if config['debug']:
             return 500, format_exc()
