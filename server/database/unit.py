@@ -10,7 +10,7 @@ import uuid
 
 def ensure_requires(db_conn, data):
     """
-
+    Make sure every required unit actually exists.
     """
 
     units = list_latest_accepted_units(db_conn, data['require_ids'])
@@ -54,7 +54,7 @@ def insert_unit(db_conn, data):
         'user_id': convert_slug_to_uuid(data['user_id']),
         'body': data['body'],
         'require_ids': [convert_slug_to_uuid(require_id)
-                        for require_id in data['require_ids']],
+                        for require_id in data.get('require_ids', [])],
     }
     errors = ensure_requires(db_conn, data) + ensure_no_cycles(db_conn, data)
     if errors:
@@ -89,7 +89,7 @@ def insert_unit_version(db_conn, current_data, next_data):
         'require_ids': [convert_slug_to_uuid(require_id)
                         for require_id in
                         next_data.get('require_ids') or
-                        current_data.get('require_ids')],
+                        current_data.get('require_ids') or []],
     }
     errors = ensure_requires(db_conn, data) + ensure_no_cycles(db_conn, data)
     if errors:
@@ -198,7 +198,7 @@ def list_many_unit_versions(db_conn, version_ids):
         ORDER BY created DESC;
         /* TODO LIMIT OFFSET */
     """
-    params = {'version_ids': version_ids}
+    params = {'version_ids': tuple(version_ids)}
     return list_rows(db_conn, query, params)
 
 
