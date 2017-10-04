@@ -92,6 +92,7 @@ def test_list_follows_by_entity(db_conn):
     create_test_follows(db_conn)
     params = {
         'entity_id': test_unit_uuid,
+        'entity_kind': 'unit',
     }
     follows = list_follows_by_entity(db_conn, params)
     assert follows

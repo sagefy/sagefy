@@ -4,7 +4,7 @@ from modules.sequencer.params import precision
 import psycopg2.extras
 from database.util import save_row
 from passlib.hash import bcrypt
-from modules.util import convert_slug_to_uuid
+from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
 
 
 user_id = '1SbHc12NTLKMtDJmE83AJg'
@@ -277,13 +277,47 @@ def raw_insert_notices(db_conn, notices):
 
 def raw_insert_user_subjects(db_conn, user_subjects):
     for user_subject in user_subjects:
-        query = ""
-        params = {}
+        query = """
+            INSERT INTO users_subjects
+            (id, created, modified,
+             user_id, subject_id)
+            VALUES
+            (%(id)s, %(created)s, %(modified)s,
+             %(user_id)s, %(subject_id)s)
+            RETURNING *;
+        """
+        params = {
+            'id': user_subject.get('id', uuid.uuid4()),
+            'created': user_subject.get('created', datetime.utcnow()),
+            'modified': user_subject.get('modified', datetime.utcnow()),
+            'user_id': user_subject.get('user_id'),
+            'subject_id': user_subject.get('subject_id'),
+        }
         save_row(db_conn, query, params)
 
 
 def raw_insert_responses(db_conn, responses):
     for response in responses:
-        query = ""
-        params = {}
+        query = """
+            INSERT INTO responses
+            (id, created, modified,
+             user_id, card_id, unit_id,
+             response, score, learned)
+            VALUES
+            (%(id)s, %(created)s, %(modified)s,
+             %(user_id)s, %(card_id)s, %(unit_id)s,
+             %(response)s, %(score)s, %(learned)s)
+            RETURNING *;
+        """
+        params = {
+            'id': response.get('id', uuid.uuid4()),
+            'created': response.get('created', datetime.utcnow()),
+            'modified': response.get('modified', datetime.utcnow()),
+            'user_id': convert_slug_to_uuid(response.get('user_id')),
+            'card_id': convert_slug_to_uuid(response.get('card_id')),
+            'unit_id': convert_slug_to_uuid(response.get('unit_id')),
+            'response': convert_uuid_to_slug(response.get('response')),
+            'score': response.get('score'),
+            'learned': response.get('learned'),
+        }
         save_row(db_conn, query, params)

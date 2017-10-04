@@ -30,7 +30,8 @@ def is_valid_reply(db_conn, data):
 
     if data.get('replies_to_id'):
         post_data = get_post(db_conn, {'id': data['replies_to_id']})
-        if post_data['topic_id'] != data['topic_id']:
+        if (not post_data
+                or post_data.get('topic_id') != data.get('topic_id')):
             return [{'message': 'A reply must be in the same topic.'}]
     return []
 
@@ -93,7 +94,7 @@ def insert_post(db_conn, data):
     Create a new post.
     """
 
-    schema = get_post_schema(data)
+    schema = post_schema
     query = """
         INSERT INTO posts
         (  user_id  ,   topic_id  ,   kind  ,   body  ,   replies_to_id  )
@@ -104,12 +105,10 @@ def insert_post(db_conn, data):
     data = {
         'user_id': convert_slug_to_uuid(data['user_id']),
         'topic_id': convert_slug_to_uuid(data['topic_id']),
-        'kind': data['kind'],
+        'kind': 'post',
         'body': data.get('body'),
-        'replies_to_id': data.get('replies_to_id'),
+        'replies_to_id': data.get('replies_to_id') or None,
     }
-    if not data.get('replies_to_id'):
-        data['replies_to_id'] = None
     errors = is_valid_reply(db_conn, data)
     if errors:
         return None, errors
@@ -124,7 +123,7 @@ def insert_proposal(db_conn, data):
     Create a new proposal.
     """
 
-    schema = get_post_schema(data)
+    schema = proposal_schema
     query = """
         INSERT INTO posts
         (  user_id  ,   topic_id  ,   kind  ,   body  ,
@@ -137,7 +136,7 @@ def insert_proposal(db_conn, data):
     data = {
         'user_id': convert_slug_to_uuid(data['user_id']),
         'topic_id': convert_slug_to_uuid(data['topic_id']),
-        'kind': data['kind'],
+        'kind': 'proposal',
         'body': data.get('body'),
         'replies_to_id': data.get('replies_to_id'),
         'entity_versions': data['entity_versions'],
@@ -159,7 +158,7 @@ def insert_vote(db_conn, data):
     Create a new vote.
     """
 
-    schema = get_post_schema(data)
+    schema = vote_schema
     query = """
         INSERT INTO posts
         (  user_id  ,   topic_id  ,   kind  ,   body  ,
@@ -172,7 +171,7 @@ def insert_vote(db_conn, data):
     data = {
         'user_id': convert_slug_to_uuid(data['user_id']),
         'topic_id': convert_slug_to_uuid(data['topic_id']),
-        'kind': data['kind'],
+        'kind': 'vote',
         'body': data.get('body'),
         'replies_to_id': data.get('replies_to_id'),
         'response': data['response'],
@@ -194,7 +193,7 @@ def update_post(db_conn, prev_data, data):
     Update an existing post.
     """
 
-    schema = get_post_schema(data)
+    schema = post_schema
     query = """
         UPDATE posts
         SET body = %(body)s
@@ -203,7 +202,7 @@ def update_post(db_conn, prev_data, data):
     """
     data = {
         'id': convert_slug_to_uuid(prev_data['id']),
-        'body': data['body'],
+        'body': data['body'] or prev_data['body'],
     }
     data, errors = update_row(db_conn, schema, query, prev_data, data)
     if not errors:
@@ -216,7 +215,7 @@ def update_proposal(db_conn, prev_data, data):
     Update an existing proposal.
     """
 
-    schema = get_post_schema(data)
+    schema = proposal_schema
     query = """
         UPDATE posts
         SET body = %(body)s
@@ -225,7 +224,7 @@ def update_proposal(db_conn, prev_data, data):
     """
     data = {
         'id': convert_slug_to_uuid(prev_data['id']),
-        'body': data['body'],
+        'body': data['body'] or prev_data['body'],
     }
     data, errors = update_row(db_conn, schema, query, prev_data, data)
     if not errors:
@@ -238,7 +237,7 @@ def update_vote(db_conn, prev_data, data):
     Update an existing vote.
     """
 
-    schema = get_post_schema(data)
+    schema = vote_schema
     query = """
         UPDATE posts
         SET body = %(body)s, response = %(response)s
@@ -247,8 +246,10 @@ def update_vote(db_conn, prev_data, data):
     """
     data = {
         'id': convert_slug_to_uuid(prev_data['id']),
-        'body': data['body'],
-        'response': data['response'],
+        'body': data['body'] or prev_data['body'],
+        'response': (data['response']
+                     if data['response'] is not None
+                     else prev_data['response']),
     }
     data, errors = update_row(db_conn, schema, query, prev_data, data)
     if not errors:

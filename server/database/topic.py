@@ -118,7 +118,7 @@ def add_topic_to_es(topic):
     """
 
     data = json_prep(deliver_topic(topic))
-    es.index(
+    return es.index(
         index='entity',
         doc_type='topic',
         body=data,

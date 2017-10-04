@@ -73,12 +73,13 @@ def list_follows_by_entity(db_conn, params):
     query = """
         SELECT *
         FROM follows
-        WHERE entity_id = %(entity_id)s
+        WHERE entity_id = %(entity_id)s AND entity_kind = %(entity_kind)s
         ORDER BY created DESC;
         /* TODO OFFSET LIMIT */
     """
     params = {
         'entity_id': convert_slug_to_uuid(params['entity_id']),
+        'entity_kind': params['entity_kind'],
     }
     return list_rows(db_conn, query, params)
 
@@ -165,5 +166,8 @@ def get_user_ids_by_followed_entity(db_conn, entity_id, entity_kind):
     Produce a list of `user_id`s for a given entity.
     """
 
-    follows = list_follows_by_entity(db_conn, {'entity_id': entity_id})
+    follows = list_follows_by_entity(db_conn, {
+        'entity_id': entity_id,
+        'entity_kind': entity_kind,
+    })
     return [fields['user_id'] for fields in follows]
