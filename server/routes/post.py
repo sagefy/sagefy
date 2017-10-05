@@ -30,8 +30,8 @@ def get_posts_route(request, topic_id):
             'errors': [{
                 'name': 'topic_id',
                 'message': c('no_topic'),
+                'ref': 'vtnCzkc9S6Olp_l5AHsG_A',
             }],
-            'ref': 'pgnNbqSP1VUWkOYq8MVGPrSS',
         }
     posts = list_posts_by_topic(db_conn, {
         'limit': request['params'].get('limit') or 10,
@@ -52,15 +52,15 @@ def create_post_route(request, topic_id):
     db_conn = request['db_conn']
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'rIRQxwqcRRSwWi2ies4YfA')
     topic = get_topic(db_conn, {'id': topic_id})
     if not topic:
         return 404, {
             'errors': [{
                 'name': 'topic_id',
                 'message': c('no_topic'),
+                'ref': 'DRuU_wBOSaWR-SBYm0Rd2g',
             }],
-            'ref': 'PCSFCxsJtnlP0x9WzbPoKcwM',
         }
 
     # ## STEP 1) Create post
@@ -70,8 +70,8 @@ def create_post_route(request, topic_id):
             'errors': [{
                 'name': 'post',
                 'message': 'Missing post data.',
+                'ref': '8eKpBWShSI6jfmdXjXb5WQ',
             }],
-            'ref': 'ykQpZwJKq54MTCxgkx0p6baW'
         }
     post_data['user_id'] = current_user['id']
     post_data['topic_id'] = topic_id
@@ -87,7 +87,7 @@ def create_post_route(request, topic_id):
     if len(post_errors):
         return 400, {
             'errors': post_errors,
-            'ref': 'tux33ztgFj9ittSpS7WKIkq7'
+            'ref': 'GakpqCGjS2KZhbTIBYOpVQ'
         }
 
     # ## STEP 3) Add author as a follower
@@ -138,14 +138,14 @@ def update_post_route(request, topic_id, post_id):
     db_conn = request['db_conn']
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'RGGeXRuNTQ2lZVukUzXNNw')
 
     # ## STEP 1) Find existing post instance ## #
     post_ = get_post(db_conn, {'id': post_id})
     if not post_:
-        return abort(404)
+        return abort(404, 'HOSjVbXlSRihzU9_kRynIQ')
     if post_['user_id'] != current_user['id']:
-        return abort(403)
+        return abort(403, 'K8UUA1TIQLuLBNev_y2sbw')
     post_kind = post_['kind']
 
     # ## STEP 2) Validate and save post instance ## #
@@ -159,7 +159,7 @@ def update_post_route(request, topic_id, post_id):
     if errors:
         return 400, {
             'errors': errors,
-            'ref': 'E4LFwRv2WEJZks7use7TCpww'
+            'ref': 'rBj6wR4LQH6Kxym0P0-3OA'
         }
 
     # ## STEP 3) Make updates based on proposal / vote status ## #

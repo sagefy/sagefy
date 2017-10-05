@@ -32,7 +32,11 @@ def is_valid_reply(db_conn, data):
         post_data = get_post(db_conn, {'id': data['replies_to_id']})
         if (not post_data
                 or post_data.get('topic_id') != data.get('topic_id')):
-            return [{'message': 'A reply must be in the same topic.'}]
+            return [{
+                'name': 'replies_to_id',
+                'message': 'A reply must be in the same topic.',
+                'ref': 'RmjIAVPpRQCEXTADnTzhkQ',
+            }]
     return []
 
 
@@ -57,6 +61,7 @@ def validate_entity_versions(db_conn, data):
                     entity_kind=entity_kind,
                     version_id=version_id
                 ),
+                'ref': 'p4MMkyqaS8u4Z3AIAh4d0w',
             }]
     return []
 
@@ -74,18 +79,38 @@ def is_valid_reply_kind(db_conn, data):
 
     proposal_data = get_post(db_conn, {'id': data['replies_to_id']})
     if not proposal_data:
-        return [{'message': 'No proposal found.'}]
+        return [{
+            'name': 'replies_to_id',
+            'message': 'No proposal found.',
+            'ref': 'B9x2Np5mQQyNYLKv3j9rCQ',
+        }]
     if proposal_data['kind'] != 'proposal':
-        return [{'message': 'A vote must reply to a proposal.'}]
+        return [{
+            'name': 'replies_to_id',
+            'message': 'A vote must reply to a proposal.',
+            'ref': 'qq3Im6MDS5iDYji2h645Ug',
+        }]
     if proposal_data['user_id'] == data['user_id']:
-        return [{'message': 'You cannot vote on your own proposal.'}]
+        return [{
+            'name': 'replies_to_id',
+            'message': 'You cannot vote on your own proposal.',
+            'ref': 'sVuOAjaJTcqvCrd7DewDLw',
+        }]
     entity_kind = proposal_data['entity_versions'][0]['kind']
     version_id = proposal_data['entity_versions'][0]['id']
     entity_version = get_entity_version(db_conn, entity_kind, version_id)
     if not entity_version:
-        return [{'message': 'No entity version for proposal.'}]
+        return [{
+            'name': 'replies_to_id',
+            'message': 'No entity version for proposal.',
+            'ref': 'NVhViFxxQVCcfehbtui4Rg',
+        }]
     if entity_version['status'] in ('accepted', 'declined'):
-        return [{'message': 'Proposal is already complete.'}]
+        return [{
+            'name': 'replies_to_id',
+            'message': 'Proposal is already complete.',
+            'ref': 'ute0nhymRXORNxHxRDF9eA',
+        }]
     return []
 
 

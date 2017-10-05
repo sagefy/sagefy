@@ -25,7 +25,11 @@ def ensure_requires(db_conn, data):
 
     cards = list_latest_accepted_cards(db_conn, data.get('require_ids', []))
     if len(data.get('require_ids', [])) != len(cards):
-        return [{'message': 'Didn\'t find all requires.'}]
+        return [{
+            'name': 'require_ids',
+            'message': 'Didn\'t find all requires.',
+            'ref': 'qbASvY61QNyI_MkYSgEhTQ',
+        }]
     return []
 
 
@@ -37,7 +41,11 @@ def ensure_no_cycles(db_conn, data):
     from database.entity_facade import find_requires_cycle
 
     if find_requires_cycle(db_conn, 'cards', data):
-        return [{'message': 'Found a cycle in requires.'}]
+        return [{
+            'name': 'require_ids',
+            'message': 'Found a cycle in requires.',
+            'ref': 'Vxd7Ed32S4WW1pumEIPRxg',
+        }]
     return []
 
 
@@ -48,9 +56,10 @@ def insert_card(db_conn, data):
 
     schema = get_card_schema(data)
     if not schema:
-        return data, [{
+        return None, [{
             'name': 'kind',
             'message': 'Missing card kind.',
+            'ref': 'aQ58K_s6TAimzMegrIAk3g',
         }]
     query = """
         INSERT INTO cards_entity_id (entity_id)
@@ -92,6 +101,7 @@ def insert_card_version(db_conn, current_data, next_data):
         return None, [{
             'name': 'kind',
             'message': 'Missing card kind.',
+            'ref': 'xASOK-O6Qw-8f2shCrHs9A',
         }]
     query = """
         INSERT INTO cards
@@ -107,12 +117,12 @@ def insert_card_version(db_conn, current_data, next_data):
         'previous_id': current_data['version_id'],
         'user_id': convert_slug_to_uuid(next_data['user_id']),
         'kind': current_data['kind'],
-        'name': next_data.get('name') or current_data('name'),
+        'name': next_data.get('name') or current_data.get('name'),
         'unit_id': convert_slug_to_uuid(next_data.get('unit_id') or
                                         current_data.get('unit_id')),
         'require_ids': [convert_slug_to_uuid(require_id)
                         for require_id in next_data.get('require_ids')
-                        or current_data.get('require_ids')],
+                        or current_data.get('require_ids') or []],
         'data': next_data.get('data') or current_data.get('data'),
     }
     errors = ensure_requires(db_conn, data) + ensure_no_cycles(db_conn, data)
@@ -155,7 +165,10 @@ def validate_card_response(card, response):
 
     ids = [opt['id'] for opt in card['data']['options']]
     if response not in ids:
-        return [{'message': 'Value is not an option.'}]
+        return [{
+            'message': 'Value is not an option.',
+            'ref': 'SOxwW64dTyCWdTAdp0ImdQ',
+        }]
     return []
 
 
@@ -166,15 +179,13 @@ def score_card_response(card, response):
     """
 
     # If not a choice card, raise Exception("No method implemented.")
-
     for opt in card['data']['options']:
         if response == opt['id']:
             if opt['correct']:
                 return 1.0, opt['feedback']
             else:
                 return 0.0, opt['feedback']
-
-    return 0.0, 'Default error ajflsdvco'
+    return 0.0, 'Default error Vqjk9WHrR0CSVKQeZZ8svQ'
 
 
 def deliver_card(data, access=None):
@@ -186,14 +197,15 @@ def deliver_card(data, access=None):
     if not schema:
         schema = card_schema
     data = deepcopy(data)
-
-    if access is 'learn' and data['kind'] is 'choice':
-        if data['order'] == 'random':
-            shuffle(data['options'])
-
-        if data['max_options_to_show']:
-            data['options'] = data['options'][:data['max_options_to_show']]
-
+    kind = data['kind']
+    order = data['data'].get('order')
+    max_options_to_show = data['data'].get('max_options_to_show')
+    if access == 'learn' and kind == 'choice':
+        if order == 'random':
+            shuffle(data['data']['options'])
+        if max_options_to_show:
+            data['data']['options'] = (data['data']['options']
+                                       [:max_options_to_show])
     return deliver_fields(schema, data, access)
 
 
@@ -248,7 +260,7 @@ def list_many_card_versions(db_conn, version_ids):
         ORDER BY created DESC;
         /* TODO LIMIT OFFSET */
     """
-    params = {'version_ids': version_ids}
+    params = {'version_ids': tuple(version_ids)}
     return list_rows(db_conn, query, params)
 
 

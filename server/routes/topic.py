@@ -27,7 +27,7 @@ def get_topic_route(request, topic_id):
                 'name': 'topic_id',
                 'message': c('no_topic'),
             }],
-            'ref': 'lWX0Scbdx5y8YcHA7wm7Jfm4',
+            'ref': 'o5V4uBFXQC6WNeyKrhn5kA',
         }
     return 200, {'topic': deliver_topic(topic)}
 
@@ -47,7 +47,7 @@ def list_topics_route(request):
             for topic in topics
         ]}
     else:
-        return abort(404)
+        return abort(404, '4ubANCBYSvCABWyqvjH62A')
 
 
 @post('/s/topics')
@@ -59,7 +59,7 @@ def create_topic_route(request):
     db_conn = request['db_conn']
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'WJ50hh2STw-5ujy62wyXew')
 
     # ## STEP 1) Create topic
     topic_data = request['params']
@@ -67,16 +67,16 @@ def create_topic_route(request):
         return 400, {
             'errors': [{
                 'name': 'topic',
-                'message': 'Missing topic data.'
+                'message': 'Missing topic data.',
+                'ref': 'PmocSz4OQUGa2T7x98yVlg',
             }],
-            'ref': 'zknSd46f2hRNjSjVHCg6YLwN'
         }
     topic_data['user_id'] = current_user['id']
     topic, errors = insert_topic(db_conn, topic_data)
     if len(errors):
         return 400, {
             'errors': errors,
-            'ref': 'TAY5pX3ghWBkSIVGTHzpQySa'
+            'ref': 'UoyXf_vwSWee0tCWgxg4Zw'
         }
 
     # ## STEP 2) Add author as a follower
@@ -118,14 +118,14 @@ def update_topic_route(request, topic_id):
     db_conn = request['db_conn']
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'ZUiN62FFR3OcBM6s8UJSmg')
 
     # ## STEP 1) Find existing topic instance ## #
     topic = get_topic(db_conn, {'id': topic_id})
     if not topic:
-        return abort(404)
+        return abort(404, 'MXzNqBU6SN28tNtRXW9rNw')
     if topic['user_id'] != current_user['id']:
-        return abort(403)
+        return abort(403, 'MZZbJNt3RK-4kVMo2rROWA')
 
     # ## STEP 2) Validate and save topic instance ## #
     topic_data = request['params']
@@ -133,7 +133,7 @@ def update_topic_route(request, topic_id):
     if errors:
         return 400, {
             'errors': errors,
-            'ref': 'k7ItNedf0I0vXfiIUcDtvHgQ',
+            'ref': 'zu7VABcJT5qCzF7BHNCH5w',
         }
 
     # ## STEP 3) Return response ## #

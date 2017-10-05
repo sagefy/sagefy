@@ -97,7 +97,8 @@ def insert_follow(db_conn, data):
     if already_has:
         return {}, [{
             'name': 'entity_id',
-            'message': 'You already followed this entity.'
+            'message': 'You already followed this entity.',
+            'ref': 'EqvXy6p0TneEnB1qD__fdg',
         }]
 
     schema = follow_schema
@@ -116,7 +117,11 @@ def insert_follow(db_conn, data):
     }
     errors = is_valid_entity(db_conn, data)
     if errors:
-        return None, [{'message': 'invalid entity'}]
+        return None, [{
+            'name': 'entity_id',
+            'message': 'invalid entity',
+            'ref': 'ph-XrElITuyixCzqu_OTTA',
+        }]
     data, errors = insert_row(db_conn, schema, query, data)
     return data, errors
 
@@ -157,7 +162,11 @@ def is_valid_entity(db_conn, follow):
     else:
         stuff = list_one_entity_versions(db_conn, kind, follow['entity_id'])
     if not stuff:
-        return [{'message': 'Not a valid entity'}]
+        return [{
+            'name': 'entity_id',
+            'message': 'Not a valid entity',
+            'ref': '_ubTBizJQDuBfS5f0Xb5qQ',
+        }]
     return []
 
 

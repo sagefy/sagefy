@@ -21,7 +21,7 @@ def get_recommended_subjects_route(request):
     db_conn = request['db_conn']
     subjects = get_recommended_subjects(db_conn)
     if not subjects:
-        return abort(404)
+        return abort(404, '44bN2oD3TuOWc8wrgRmeeA')
     return 200, {
         'subjects': [deliver_subject(subject) for subject in subjects]
     }
@@ -36,7 +36,7 @@ def get_subject_route(request, subject_id):
     db_conn = request['db_conn']
     subject = get_latest_accepted_subject(db_conn, subject_id)
     if not subject:
-        return abort(404)
+        return abort(404, 'pY3NrIXFTuaxy2F0dnf7Cg')
     # TODO-2 SPLITUP create new endpoints for these instead
     units = list_units_in_subject_recursive(db_conn, subject)
     return 200, {
@@ -55,11 +55,11 @@ def list_subjects_route(request):
     db_conn = request['db_conn']
     entity_ids = request['params'].get('entity_ids')
     if not entity_ids:
-        return abort(404)
+        return abort(404, 'COhZEG0GTW6L2bPh6AYsfw')
     entity_ids = entity_ids.split(',')
     subjects = list_latest_accepted_subjects(db_conn, entity_ids)
     if not subjects:
-        return abort(404)
+        return abort(404, 'ZlLFtBwdS-Sj49ASUoGPZw')
     return 200, {
         'subjects': [deliver_subject(subject, 'view') for subject in subjects]
     }
@@ -90,7 +90,7 @@ def get_subject_version_route(request, version_id):
     db_conn = request['db_conn']
     subject_version = get_subject_version(db_conn, version_id)
     if not subject_version:
-        return abort(404)
+        return abort(404, 'w4tZ5D0iRNmfwNTaD-sXzQ')
     return 200, {'version': subject_version}
 
 
@@ -112,7 +112,7 @@ def get_subject_tree_route(request, subject_id):
     db_conn = request['db_conn']
     subject = get_latest_accepted_subject(db_conn, subject_id)
     if not subject:
-        return abort(404)
+        return abort(404, '66ejBlFdQ4aYy5MBuP501Q')
     units = list_units_in_subject_recursive(db_conn, subject)
     # For the menu, it must return the name and ID of the subject
     output = {
@@ -147,7 +147,7 @@ def get_subject_units_route(request, subject_id):
     # TODO-3 simplify this method. should it be part of the models?
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'p_wleq0FRQ2HEuHKOJIb7Q')
     context = get_learning_context(current_user)
     next_ = {
         'method': 'POST',
@@ -185,10 +185,10 @@ def choose_unit_route(request, subject_id, unit_id):
     db_conn = request['db_conn']
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'NcrRkqIlSW-BkcWLBkwORQ')
     unit = get_latest_accepted_unit(db_conn, unit_id)
     if not unit:
-        return abort(404)
+        return abort(404, 'PIti_qwAQ7WXwQwNZertxw')
     # If the unit isn't in the subject...
     context = get_learning_context(current_user)
     subject_ids = [
@@ -199,7 +199,8 @@ def choose_unit_route(request, subject_id, unit_id):
     if context_subject_id not in subject_ids:
         return 400, {
             'errors': [{
-                'message': 'Unit not in subject.'
+                'message': 'Unit not in subject.',
+                'ref': 'r32fH0eCRZCivJoh-hKwZQ',
             }]
         }
     # Or, the unit doesn't need to be learned...
@@ -207,7 +208,8 @@ def choose_unit_route(request, subject_id, unit_id):
     if status == "done":
         return 400, {
             'errors': [{
-                'message': 'Unit not needed.'
+                'message': 'Unit not needed.',
+                'ref': 'YTU27E63Rfiy3Rqmqd6Bew',
             }]
         }
     # Choose a card for the learner to learn
@@ -238,7 +240,7 @@ def get_my_recently_created_subjects_route(request):
 
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'MEnwdloNQLWEVnZNT1YRFg')
     db_conn = request['db_conn']
     subjects = get_my_recently_created_subjects(db_conn, current_user)
     return 200, {
@@ -254,17 +256,17 @@ def create_new_subject_version_route(request):
 
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'TFsImo88TtuYyfYPq4eDwg')
     db_conn = request['db_conn']
     data = deepcopy(request['params'])
     if 'entity_id' in data:
-        return abort(403)
+        return abort(403, 'HoZHBw0kTfe87HgWZZJ2tg')
     data['user_id'] = current_user['id']
     subject, errors = insert_subject(db_conn, data)
     if len(errors):
         return 400, {
             'errors': errors,
-            'ref': 'VBXxZqIzq5Tui8MVmaz8JsIM',
+            'ref': 'niK3wz6xQn-0pDUzK1T59w',
         }
     return 200, {'version': deliver_subject(subject, 'view')}
 
@@ -277,18 +279,18 @@ def create_existing_subject_version_route(request, subject_id):
 
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'h5Y9A96sThqLJV-4tMuf3A')
     db_conn = request['db_conn']
     next_data = deepcopy(request['params'])
     next_data['entity_id'] = subject_id
     next_data['user_id'] = current_user['id']
     current_data = get_latest_accepted_subject(db_conn, subject_id)
     if not current_data:
-        return abort(404)
+        return abort(404, '4upY7gTvQWSKJwgi0rhBQg')
     subject, errors = insert_subject_version(db_conn, current_data, next_data)
     if len(errors):
         return 400, {
             'errors': errors,
-            'ref': 'IrwkwrwhIfRHchkbeerGHX5V',
+            'ref': 'QYUbgqfTQk2dXMmOC4DBSA',
         }
     return 200, {'version': deliver_subject(subject, 'view')}

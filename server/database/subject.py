@@ -26,8 +26,10 @@ def is_valid_members(db_conn, data):
             entity = does_subject_exist(db_conn, entity_id)
         if not entity:
             return [{
+                'name': 'id',
                 'message': 'Not a valid entity.',
                 'value': entity_id,
+                'ref': 'qKUTNkDuSiGLh0PZdhu9Xw',
             }]
 
     return []
@@ -61,7 +63,11 @@ def ensure_no_cycles(db_conn, data):
     _(data['members'])
 
     if found['cycle']:
-        return [{'message': 'Found a cycle in membership.'}]
+        return [{
+            'name': 'members',
+            'message': 'Found a cycle in membership.',
+            'ref': 'PfEdjTllRpqh_bKGM9oyTA',
+        }]
 
     return []
 

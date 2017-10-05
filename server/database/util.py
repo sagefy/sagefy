@@ -75,7 +75,8 @@ def save_row(db_conn, query, params):
     except (Exception, psycopg2.DatabaseError) as error:
         print('DB Error', query, error)
         errors = [{
-            'message': 'There was an error. Contact <support@sagefy.org>.'
+            'message': 'There was an error. Contact <support@sagefy.org>.',
+            'ref': 'pu7amyK_REGFYCpUSfbdMw',
         }]
         db_conn.rollback()
         # TODO-1 parse through errors, make user friendly
@@ -130,7 +131,10 @@ def delete_row(db_conn, query, params):
             db_conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         print('DB Error', query, error)
-        errors = [{'message': '@@ db error @@'}]
+        errors = [{
+            'message': 'There was an error. Contact <support@sagefy.org>.',
+            'ref': 'hpaIei7gT9SwihpJxRYYQA',
+        }]
         db_conn.rollback()
         # TODO-1 parse through errors, make user friendly
     return errors
@@ -228,6 +232,7 @@ def validate_fields(schema, data):
                 errors.append({
                     'name': prefix + field_name,
                     'message': error,
+                    'ref': '02PtyWvDQTKJkcD-nuSftg',
                 })
                 break
     recurse_embeds(_, data, schema['fields'])

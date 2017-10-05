@@ -21,7 +21,7 @@ def _log_in(user):
                 'session_id': session_id
             },
         }
-    return abort(401)
+    return abort(401, '7d26HxmZRCSabhgE4GAxGQ')
 
 
 @get('/s/users/current')
@@ -32,7 +32,7 @@ def get_current_user_route(request):
 
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'l9BCKn1zQ5KRgFRYujqU7g')
     return 200, {'user': deliver_user(current_user, access='private')}
 
 
@@ -45,7 +45,7 @@ def get_user_route(request, user_id):
     db_conn = request['db_conn']
     user = get_user(db_conn, {'id': user_id})
     if not user:
-        return abort(404)
+        return abort(404, 'Tp5JnWO1SWms2lTdhw3bJQ')
     current_user = get_current_user(request)
     access = 'private' if (current_user and
                            user['id'] == current_user['id']) else None
@@ -65,11 +65,11 @@ def list_users_route(request):
     db_conn = request['db_conn']
     user_ids = request['params'].get('user_ids')
     if not user_ids:
-        return abort(404)
+        return abort(404, 'pNkIvKNRSNiXe4QtQiYdqQ')
     user_ids = user_ids.split(',')
     users = list_users_by_user_ids(db_conn, user_ids)
     if not users:
-        return abort(404)
+        return abort(404, 'lYgUJ4jaRv2jpcti0j-5Yw')
     size = int(request['params'].get('avatar') or 0) or None
     avatars = {
         convert_uuid_to_slug(user['id']): get_avatar(user['email'], size)
@@ -92,7 +92,7 @@ def create_user_route(request):
     if len(errors):
         return 400, {
             'errors': errors,
-            'ref': 'YEcBnqf4vyA2pckIy70R789B',
+            'ref': 'zy5VJ9zlQ-qWRUi9rETenw',
         }
     return _log_in(user)
 
@@ -114,8 +114,8 @@ def log_in_route(request):
             'errors': [{
                 'name': 'name',
                 'message': c('no_user'),
+                'ref': 'dfhMHDFbT42CmRRmN14gdA',
             }],
-            'ref': 'FYIPOI8g2nzrIEcJYSDAfmti'
         }
     real_encrypted_password = user['password']
     given_password = request['params'].get('password')
@@ -124,8 +124,8 @@ def log_in_route(request):
             'errors': [{
                 'name': 'password',
                 'message': c('no_match'),
+                'ref': 'DTarUzzsSLKarq-uIsXkFQ',
             }],
-            'ref': 'UwCRydZ7Agi7LYKv9c1y07ft'
         }
     return _log_in(user)
 
@@ -154,14 +154,14 @@ def update_user_route(request, user_id):
     user = get_user(db_conn, {'id': user_id})
     current_user = get_current_user(request)
     if not user:
-        return abort(404)
+        return abort(404, 'Fw7IK0u9TXWxs3Rp15AY1g')
     if not user['id'] == current_user['id']:
-        return abort(401)
+        return abort(401, '7QK-6fOcQW-sA99KHtcARA')
     user, errors = update_user(db_conn, user, request['params'])
     if len(errors):
         return 400, {
             'errors': errors,
-            'ref': 'AS7LCAWiOOyeEbNOrbsegVY9',
+            'ref': '61YNw4gWTAKRQxXLYiznBw',
         }
     return 200, {'user': deliver_user(user, access='private')}
 
@@ -175,9 +175,9 @@ def create_token_route(request):
     db_conn = request['db_conn']
     user = get_user(db_conn, {'email': request['params'].get('email')})
     if not user:
-        return abort(404)
+        return abort(404, 'AyuDktXTTJqNOp6TV5A3yA')
     get_email_token(user)
-    return 200, {}
+    return 200, {}  # NB do not output token
 
 
 @post('/s/users/{user_id}/password')
@@ -189,11 +189,11 @@ def create_password_route(request, user_id):
     db_conn = request['db_conn']
     user = get_user(db_conn, {'id': user_id})
     if not user:
-        return abort(404)
+        return abort(404, 'FstipA94SDa0qZ3IwRtcMQ')
     token = request['params'].get('token')
     valid = is_valid_token(user, token)
     if not valid:
-        return abort(403)
+        return abort(403, 'qe27rSkpQbi49-pbqEl7Kw')
     given_password = request['params'].get('password')
     update_user_password(db_conn, user, {'password': given_password})
     return _log_in(user)

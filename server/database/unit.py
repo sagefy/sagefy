@@ -15,7 +15,11 @@ def ensure_requires(db_conn, data):
 
     units = list_latest_accepted_units(db_conn, data['require_ids'])
     if len(data['require_ids']) != len(units):
-        return [{'message': 'Didn\'t find all requires.'}]
+        return [{
+            'name': 'require_ids',
+            'message': 'Didn\'t find all requires.',
+            'ref': 'wpd1JttyS02i8jN1CFM78w',
+        }]
     return []
 
 
@@ -27,7 +31,11 @@ def ensure_no_cycles(db_conn, data):
     from database.entity_facade import find_requires_cycle
 
     if find_requires_cycle(db_conn, 'units', data):
-        return [{'message': 'Found a cycle in requires.'}]
+        return [{
+            'name': 'require_ids',
+            'message': 'Found a cycle in requires.',
+            'ref': '5Ld85zgEQmGfAF7HkRRVvA',
+        }]
     return []
 
 

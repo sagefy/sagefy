@@ -76,11 +76,12 @@ def find_path(method, path):
     return None, {}
 
 
-def abort(code):
+def abort(code, ref=''):
     """
     A standardized way to abort
     """
 
     return code, {'errors': [{
-        'message': str(code) + ' ' + status_codes.get(code, 'Unknown')
+        'message': str(code) + ' ' + status_codes.get(code, 'Unknown'),
+        'ref': ref,
     }]}

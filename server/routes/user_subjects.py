@@ -24,14 +24,14 @@ def get_user_subjects_route(request, user_id):
     if not current_user or current_user['id'] != convert_slug_to_uuid(user_id):
         user = get_user(db_conn, {'id': user_id})
         if not user:
-            return abort(404)
+            return abort(404, 'MhNh85CERQe6Zgv-qRO6Zg')
         if (user != current_user and
                 user['settings']['view_subjects'] != 'public'):
-            return abort(403)
+            return abort(403, 'TcKwVsp9Q6WAkJSV-QKuSQ')
     else:
         user = current_user
         if not current_user:
-            return abort(401)
+            return abort(401, 'mP_wjbKqSkWOqphxwXt7fw')
     params = request['params']
     user_subjects = list_user_subjects_entity(db_conn, user_id, params)
     response = {
@@ -61,18 +61,18 @@ def add_subject_route(request, user_id, subject_id):
     db_conn = request['db_conn']
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'FOcE-QweTEuronDPd6lIyQ')
     if convert_slug_to_uuid(user_id) != current_user['id']:
-        return abort(403)
+        return abort(403, 'CoCLK9yUQ0O8fA4S4vS_HQ')
     subject = get_latest_accepted_subject(db_conn, subject_id)
     if not subject:
-        return abort(404)
+        return abort(404, 'm8rffEXsQGSmKbO2ee1Zkg')
     # TODO-1 handle if subject already added
     user_subject, errors = insert_user_subject(db_conn, user_id, subject_id)
     if errors:
         return 400, {
             'errors': errors,
-            'ref': 'zCFUbLBTg9n2DnTkQYbqO4X9'
+            'ref': 'hL92UUGXQk6OhOggTZzarA'
         }
     return 200, {'user_subject': user_subject}
 
@@ -93,7 +93,7 @@ def select_subject_route(request, user_id, subject_id):
     db_conn = request['db_conn']
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'f8IynoM9RLmW0Ae14_Hukw')
     subject = get_latest_accepted_subject(db_conn, subject_id)
     set_learning_context(current_user, subject=subject)
     buckets = traverse(db_conn, current_user, subject)
@@ -137,14 +137,17 @@ def remove_subject_route(request, user_id, subject_id):
     db_conn = request['db_conn']
     current_user = get_current_user(request)
     if not current_user:
-        return abort(401)
+        return abort(401, 'DHlX2XTsTO-1Hhfr9GXkJw')
     if user_id != current_user['id']:
-        return abort(403)
+        return abort(403, '8yt2d8K1RNKidGIVU1CaOA')
     user_subjects = list_user_subjects(db_conn, user_id)
     if not user_subjects:
         return 404, {
-            'errors': [{'message': 'User does not have subjects.'}],
-            'ref': '8huZbvEAYOP8LcZb2sXbqNOC'
+            'errors': [{
+                'name': 'user_id',
+                'message': 'User does not have subjects.',
+                'ref': 'nttevgwMRsOwiT_ul0SmHQ',
+            }],
         }
     matches = [
         us
@@ -152,11 +155,11 @@ def remove_subject_route(request, user_id, subject_id):
         if convert_uuid_to_slug(us['subject_id']) == subject_id
     ]
     if not matches:
-        return abort(404)
+        return abort(404, 'AQV0c9qfSdO7Ql2IC8l0bw')
     user_subject, errors = remove_user_subject(db_conn, user_id, subject_id)
     if errors:
         return 400, {
             'errors': errors,
-            'ref': 'qIfll1e7dbP9V9jmC8FkCwsa'
+            'ref': 'h1BKySSTT0SgH2OTTnSVlA'
         }
     return 200, {}
