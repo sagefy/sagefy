@@ -14,7 +14,7 @@ from test_config import config
 import framework.index as framework
 framework.update_config(config)
 from framework.database import make_db_connection, close_db_connection
-import framework.session
+from framework.session import log_in_user, log_out_user
 from modules.util import convert_slug_to_uuid
 from raw_insert import raw_insert_users
 
@@ -32,11 +32,11 @@ def create_user_in_db(db_conn):
 
 
 def log_in():
-    return framework.session.log_in_user({'id': user_id})
+    return log_in_user({'id': user_id})
 
 
 def log_out(session_id):
-    return framework.session.log_out_user({
+    return log_out_user({
         'cookies': {'session_id': session_id}
     })
 

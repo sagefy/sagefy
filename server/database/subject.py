@@ -45,21 +45,20 @@ def ensure_no_cycles(db_conn, data):
 
     def _(members):
         if found['cycle']:
-            return
         entity_ids = [
-            member['id']
+            convert_slug_to_uuid(member['id'])
             for member in members
             if member['kind'] == 'subject'
         ]
         entities = list_latest_accepted_subjects(db_conn, entity_ids)
         for entity in entities:
-            if entity['entity_id'] in entity_ids:
+            if entity['entity_id'] in seen:
                 found['cycle'] = True
                 break
-            if entity['entity_id'] not in seen:
-                seen.add(entity['entity_id'])
-                _(entity['members'])
+            seen.add(entity['entity_id'])
+            _(entity['members'])
 
+    seen.add(data['entity_id'])
     _(data['members'])
 
     if found['cycle']:
@@ -237,7 +236,7 @@ def list_many_subject_versions(db_conn, version_ids):
         ORDER BY created DESC;
         /* TODO LIMIT OFFSET */
     """
-    params = {'version_ids': version_ids}
+    params = {'version_ids': tuple(version_ids)}
     return list_rows(db_conn, query, params)
 
 

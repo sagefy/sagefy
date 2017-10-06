@@ -161,18 +161,18 @@ def test_is_valid_reply_kind(db_conn):
     # 1  Doesn't reply to anything
     data = {'replies_to_id': uuid.uuid4()}
     errors = is_valid_reply_kind(db_conn, data)
-    assert errors == [{'message': 'No proposal found.'}]
+    assert errors[0]['message'] == 'No proposal found.'
     # 2  Doesn't reply to a proposal
     data = {'replies_to_id': post_uuid}
     errors = is_valid_reply_kind(db_conn, data)
-    assert errors == [{'message': 'A vote must reply to a proposal.'}]
+    assert errors[0]['message'] == 'A vote must reply to a proposal.'
     # 3  Trying to vote on own proposal
     data = {
         'replies_to_id': proposal_uuid,
         'user_id': user_uuid,
     }
     errors = is_valid_reply_kind(db_conn, data)
-    assert errors == [{'message': 'You cannot vote on your own proposal.'}]
+    assert errors[0]['message'] == 'You cannot vote on your own proposal.'
     # 4  Voting on a proposal with no entity version
     bad_proposal_uuid = uuid.uuid4()
     posts = [{
@@ -192,14 +192,14 @@ def test_is_valid_reply_kind(db_conn):
         'user_id': user_b_uuid,
     }
     errors = is_valid_reply_kind(db_conn, data)
-    assert errors == [{'message': 'No entity version for proposal.'}]
+    assert errors[0]['message'] == 'No entity version for proposal.'
     # 5  Voting on a an already complete proposal
     data = {
         'replies_to_id': proposal_uuid,
         'user_id': user_b_uuid,
     }
     errors = is_valid_reply_kind(db_conn, data)
-    assert errors == [{'message': 'Proposal is already complete.'}]
+    assert errors[0]['message'] == 'Proposal is already complete.'
     # 6  Voting a on a valid proposal
     update_unit(db_conn, test_unit_version_uuid, status='pending')
     data = {
