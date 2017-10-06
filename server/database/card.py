@@ -260,7 +260,10 @@ def list_many_card_versions(db_conn, version_ids):
         ORDER BY created DESC;
         /* TODO LIMIT OFFSET */
     """
-    params = {'version_ids': tuple(version_ids)}
+    params = {'version_ids': tuple(
+        convert_slug_to_uuid(vid)
+        for vid in version_ids
+    )}
     return list_rows(db_conn, query, params)
 
 

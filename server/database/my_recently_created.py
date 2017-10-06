@@ -11,7 +11,7 @@ def get_my_recent_proposals(db_conn, current_user):
     query = """
         SELECT *
         FROM posts
-        WHERE kind = proposal AND user_id = %(user_id)s
+        WHERE kind = 'proposal' AND user_id = %(user_id)s
         ORDER BY created DESC;
         /* TODO offset limit */
     """
