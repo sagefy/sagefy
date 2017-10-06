@@ -44,7 +44,6 @@ def ensure_no_cycles(db_conn, data):
     found = {'cycle': False}
 
     def _(members):
-        if found['cycle']:
         entity_ids = [
             convert_slug_to_uuid(member['id'])
             for member in members
