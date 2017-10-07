@@ -14,6 +14,7 @@ def get_entity_version(db_conn, kind, version_id):
 
     """
 
+    assert kind in ('card', 'unit', 'subject')
     if kind == 'card':
         return get_card_version(db_conn, version_id)
     if kind == 'unit':
@@ -22,24 +23,48 @@ def get_entity_version(db_conn, kind, version_id):
         return get_subject_version(db_conn, version_id)
 
 
+def list_one_entity_versions(db_conn, kind, entity_id):
+    """
+
+    """
+
+    assert kind in ('card', 'unit', 'subject')
+    if kind == 'card':
+        return list_one_card_versions(db_conn, entity_id)
+    if kind == 'unit':
+        return list_one_unit_versions(db_conn, entity_id)
+    if kind == 'subject':
+        return list_one_subject_versions(db_conn, entity_id)
+
+
+def update_entity_status_by_kind(db_conn, kind, version_id, status):
+    """
+
+    """
+
+    assert kind in ('card', 'unit', 'subject')
+    if kind == 'card':
+        return update_card(db_conn, version_id, status)
+    if kind == 'unit':
+        return update_unit(db_conn, version_id, status)
+    if kind == 'subject':
+        return update_subject(db_conn, version_id, status)
+
+
 def list_subjects_by_unit_recursive(db_conn, unit_id):
     """
     Get a list of subjects which contain the given member ID. Recursive.
-
-    # TODO-2 is there a way to simplify this method?
+    TODO-2 is there a way to simplify this method?
     """
 
     def _():
         # *** First, find the list of subjects
         #     directly containing the member ID. ***
-
         subjects = list_subjects_by_unit_flat(db_conn, unit_id)
 
         # *** Second, find all the subjects containing
         #     those subjects... recursively. ***
-
         found_subjects, all_subjects = subjects, []
-
         while found_subjects:
             all_subjects += found_subjects
             subject_ids = {
@@ -49,7 +74,6 @@ def list_subjects_by_unit_recursive(db_conn, unit_id):
             found_subjects = []
             for subject_id in subject_ids:
                 found_subjects += list_subject_parents(db_conn, subject_id)
-
         return all_subjects
 
     key = 'list_subjects_by_unit_{id}'.format(id=unit_id)
@@ -60,17 +84,14 @@ def list_units_in_subject_recursive(db_conn, main_subject):
     """
     Get the list of units contained within the subject.
     Recursive. Connecting.
-
-    TODO-2 OMG break into smaller functions
+    TODO-2 what about required units outside the subject?
     """
 
     def _():
         # *** First, we need to break down
         #     the subject into a list of known units. ***
-
         unit_ids = set()
         subjects = [main_subject]
-
         while subjects:
             subject_ids = set()
             for subject in subjects:
@@ -86,14 +107,40 @@ def list_units_in_subject_recursive(db_conn, main_subject):
 
         # *** Second, we need to find all
         #     the required connecting units. ***
-
         units = list_latest_accepted_units(db_conn, unit_ids)
-        # TODO-2 what about required units outside the subject?
         return units
 
     # If we already have it stored, use that
     key = 'subject_{id}'.format(id=main_subject['entity_id'])
     return [data for data in memoize_redis(key, _)]
+
+
+def find_requires_cycle(db_conn, tablename, data):
+    """
+    Inspect own requires to see if a cycle is formed.
+    """
+
+    assert tablename in ('cards', 'units')
+    seen = set()
+    main_id = data['entity_id']
+    found = {'cycle': False}
+
+    def _(require_ids):
+        if tablename == 'cards':
+            entities = list_latest_accepted_cards(db_conn, require_ids)
+        elif tablename == 'units':
+            entities = list_latest_accepted_units(db_conn, require_ids)
+        for entity in entities:
+            if entity['entity_id'] == main_id:
+                found['cycle'] = True
+                break
+            if entity['entity_id'] not in seen:
+                seen.add(entity['entity_id'])
+                if 'require_ids' in entity:
+                    _(entity['require_ids'])
+
+    _(data['require_ids'])
+    return found['cycle']
 
 
 def get_entity_status(current_status, votes):
@@ -127,24 +174,20 @@ def update_entity_statuses(db_conn, proposal):
     from database.post import list_votes_by_proposal
     from modules.notices import send_notices
 
-    # Get the entity version
-    for p_entity_version in proposal['entity_versions']:
-        entity_kind = p_entity_version['kind']
-        version_id = p_entity_version['id']
-
+    for ev in proposal['entity_versions']:
+        entity_kind, version_id = ev['kind'], ev['id']
         entity_version = get_entity_version(db_conn, entity_kind, version_id)
         votes = list_votes_by_proposal(db_conn, proposal['id'])
         changed, status = get_entity_status(entity_version['status'], votes)
-
         if changed:
             entity_version['status'] = status
-            if entity_kind == 'card':
-                update_card(db_conn, entity_version['version_id'], status)
-            elif entity_kind == 'unit':
-                update_unit(db_conn, entity_version['version_id'], status)
-            elif entity_kind == 'subject':
-                update_subject(db_conn, entity_version['version_id'], status)
             user = get_user(db_conn, {'id': proposal['user_id']})
+            update_entity_status_by_kind(
+                db_conn,
+                kind=entity_kind,
+                version_id=version_id,
+                status=status
+            )
             send_notices(
                 db_conn,
                 entity_id=version_id,
@@ -159,48 +202,3 @@ def update_entity_statuses(db_conn, proposal):
                     'entity_name': entity_version['name'],
                 }
             )
-
-
-def find_requires_cycle(db_conn, tablename, data):
-    """
-    Inspect own requires to see if a cycle is formed.
-    """
-
-    assert tablename in ('cards', 'units')
-
-    seen = set()
-    main_id = data['entity_id']
-    found = {'cycle': False}
-
-    def _(require_ids):
-        if found['cycle']:
-            return
-        if tablename == 'cards':
-            entities = list_latest_accepted_cards(db_conn, require_ids)
-        elif tablename == 'units':
-            entities = list_latest_accepted_units(db_conn, require_ids)
-        for entity in entities:
-            if entity['entity_id'] == main_id:
-                found['cycle'] = True
-                break
-            if entity['entity_id'] not in seen:
-                seen.add(entity['entity_id'])
-                if 'require_ids' in entity:
-                    _(entity['require_ids'])
-
-    _(data['require_ids'])
-
-    return found['cycle']
-
-
-def list_one_entity_versions(db_conn, kind, entity_id):
-    """
-
-    """
-
-    if kind == 'card':
-        return list_one_card_versions(db_conn, entity_id)
-    if kind == 'unit':
-        return list_one_unit_versions(db_conn, entity_id)
-    if kind == 'subject':
-        return list_one_subject_versions(db_conn, entity_id)
