@@ -1,7 +1,8 @@
-from conftest import create_user_in_db, log_in
+from conftest import user_id, create_user_in_db, log_in
 from framework.session import get_current_user, log_in_user, log_out_user
 from database.user import get_user
 from framework.redis import redis
+from modules.util import convert_slug_to_uuid
 
 
 def test_get_current_user(db_conn):
@@ -16,7 +17,7 @@ def test_get_current_user(db_conn):
         'db_conn': db_conn,
     })
     assert user
-    assert user['id'] == 'abcd1234'
+    assert user['id'] == convert_slug_to_uuid(user_id)
 
 
 def test_log_in_user(db_conn):
@@ -25,10 +26,10 @@ def test_log_in_user(db_conn):
     """
 
     create_user_in_db(db_conn)
-    user = get_user(db_conn, {'id': 'abcd1234'})
+    user = get_user(db_conn, {'id': user_id})
     token = log_in_user(user)
     assert token
-    assert redis.get(token).decode() == 'abcd1234'
+    assert redis.get(token).decode() == user_id
 
 
 def test_log_out_user(db_conn):
@@ -37,9 +38,9 @@ def test_log_out_user(db_conn):
     """
 
     create_user_in_db(db_conn)
-    user = get_user(db_conn, {'id': 'abcd1234'})
+    user = get_user(db_conn, {'id': user_id})
     token = log_in_user(user)
-    assert redis.get(token).decode() == 'abcd1234'
+    assert redis.get(token).decode() == user_id
     log_out_user({
         'cookies': {'session_id': token},
         'db_conn': db_conn,
