@@ -74,11 +74,14 @@ def list_notices(db_conn, params):
         SELECT *
         FROM notices
         WHERE user_id = %(user_id)s
-        ORDER BY created DESC;
-        /* TODO OFFSET LIMIT */
+        ORDER BY created DESC
+        LIMIT %(limit)s
+        OFFSET %(offset)s;
     """
     params = {
-        'user_id': convert_slug_to_uuid(params['user_id'])
+        'user_id': convert_slug_to_uuid(params['user_id']),
+        'limit': params.get('limit') or 10,
+        'offset': params.get('offset') or 0,
     }
     return list_rows(db_conn, query, params)
 
