@@ -1,6 +1,13 @@
 import routes.follow
-from datetime import datetime
-from raw_insert import raw_insert_follows, raw_insert_cards
+from conftest import user_id
+from raw_insert import raw_insert_follows, raw_insert_units, \
+    raw_insert_users
+import uuid
+
+card_a_uuid = uuid.uuid4()
+card_b_uuid = uuid.uuid4()
+unit_a_uuid = uuid.uuid4()
+follow_a_uuid = uuid.uuid4()
 
 
 def test_list_follows_route(db_conn, session):
@@ -8,23 +15,13 @@ def test_list_follows_route(db_conn, session):
     Expect to get a list of follows for user.
     """
     raw_insert_follows(db_conn, [{
-        'user_id': 'JFldl93k',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
+        'user_id': user_id,
         'entity_kind': 'card',
-        'entity_id': 'JFlsjFm',
+        'entity_id': card_b_uuid,
     }, {
-        'user_id': 'abcd1234',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'entity_kind': 'card',
-        'entity_id': 'JFlsjFm',
-    }, {
-        'user_id': 'abcd1234',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
+        'user_id': user_id,
         'entity_kind': 'unit',
-        'entity_id': 'u39Fdjf0',
+        'entity_id': unit_a_uuid,
     }])
 
     request = {
@@ -55,21 +52,17 @@ def test_follow(db_conn, session):
     Expect to follow an entity.
     """
 
-    raw_insert_cards(db_conn, [{
-        'entity_id': 'ABCD',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'status': 'accepted',
-        'kind': 'video',
+    raw_insert_units(db_conn, [{
+        'entity_id': unit_a_uuid,
+        'name': 'Foo',
+        'body': 'Foo',
     }])
 
     request = {
         'cookies': {'session_id': session},
         'params': {
-            'entity': {
-                'kind': 'card',
-                'id': 'ABCD',
-            }
+            'entity_kind': 'unit',
+            'entity_id': unit_a_uuid,
         },
         'db_conn': db_conn
     }
@@ -84,10 +77,8 @@ def test_follow_401(db_conn):
 
     request = {
         'params': {
-            'entity': {
-                'kind': 'card',
-                'id': 'ABCD',
-            }
+            'entity_kind': 'unit',
+            'entity_id': unit_a_uuid,
         },
         'db_conn': db_conn
     }
@@ -103,10 +94,8 @@ def test_follow_400a(db_conn, session):
     request = {
         'cookies': {'session_id': session},
         'params': {
-            'entity': {
-                'kind': 'card',
-                'id': '???',
-            }
+            'entity_kind': 'unit',
+            'entity_id': unit_a_uuid,
         },
         'db_conn': db_conn
     }
@@ -120,42 +109,24 @@ def test_follow_409(db_conn, session):
     Expect to fail to follow entity if already followed.
     """
 
-    raw_insert_cards(db_conn, [{
-        'entity_id': 'JFlsjFm',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'status': 'accepted',
+    raw_insert_units(db_conn, [{
+        'entity_id': unit_a_uuid,
+        'name': 'Foo',
+        'body': 'Foo',
     }])
     raw_insert_follows(db_conn, [{
-        'id': 'JIkfo034n',
-        'user_id': 'abcd1234',
-        'entity_kind': 'card',
-        'entity_id': 'JFlsjFm',
+        'user_id': user_id,
+        'entity_kind': 'unit',
+        'entity_id': unit_a_uuid,
     }])
 
     request = {
         'cookies': {'session_id': session},
         'params': {
-            'entity': {
-                'kind': 'card',
-                'id': 'JFlsjFm',
-            }
+            'entity_kind': 'unit',
+            'entity_id': unit_a_uuid,
         },
         'db_conn': db_conn
-    }
-    code, response = routes.follow.follow_route(request)
-    assert code == 400
-
-
-def test_follow_400b(db_conn, session):
-    """
-    Expect to fail to follow entity if the request is nonsense.
-    """
-
-    request = {
-        'cookies': {'session_id': session},
-        'params': {},
-        'db_conn': db_conn,
     }
     code, response = routes.follow.follow_route(request)
     assert code == 400
@@ -167,17 +138,17 @@ def test_unfollow(db_conn, session):
     """
 
     raw_insert_follows(db_conn, [{
-        'id': 'JIkfo034n',
-        'user_id': 'abcd1234',
-        'entity_kind': 'card',
-        'entity_id': 'JFlsjFm',
+        'id': follow_a_uuid,
+        'user_id': user_id,
+        'entity_kind': 'unit',
+        'entity_id': unit_a_uuid,
     }])
 
     request = {
         'cookies': {'session_id': session},
         'db_conn': db_conn
     }
-    code, response = routes.follow.unfollow_route(request, 'JIkfo034n')
+    code, response = routes.follow.unfollow_route(request, follow_a_uuid)
     assert code == 200
 
 
@@ -188,8 +159,35 @@ def test_unfollow_401(db_conn):
 
     code, response = routes.follow.unfollow_route({
         'db_conn': db_conn
-    }, 'JIkfo034n')
+    }, follow_a_uuid)
     assert code == 401
+
+
+def test_unfollow_403(db_conn, session):
+    """
+    Expect to unfollow an entity.
+    """
+
+    user_b_uuid = uuid.uuid4()
+    raw_insert_users(db_conn, [{
+        'id': user_b_uuid,
+        'name': 'other',
+        'email': 'other@example.com',
+        'password': 'abcd1234',
+    }])
+    raw_insert_follows(db_conn, [{
+        'id': follow_a_uuid,
+        'user_id': user_b_uuid,
+        'entity_kind': 'unit',
+        'entity_id': unit_a_uuid,
+    }])
+
+    request = {
+        'cookies': {'session_id': session},
+        'db_conn': db_conn
+    }
+    code, response = routes.follow.unfollow_route(request, follow_a_uuid)
+    assert code == 403
 
 
 def test_unfollow_404(db_conn, session):
@@ -201,5 +199,5 @@ def test_unfollow_404(db_conn, session):
         'cookies': {'session_id': session},
         'db_conn': db_conn
     }
-    code, response = routes.follow.unfollow_route(request, 'JIkfo034n')
+    code, response = routes.follow.unfollow_route(request, follow_a_uuid)
     assert code == 404
