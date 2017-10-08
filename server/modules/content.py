@@ -13,11 +13,12 @@ def get(key, language='en'):
     """
 
     if language not in files:
-        stream = open('/content/%s.yml' % (language,), 'r')
-        files[language] = yaml.load(stream)[language]
-        stream.close()
-
+        try:
+            stream = open('/content/%s.yml' % (language,), 'r')
+            files[language] = yaml.load(stream)[language]
+            stream.close()
+        except:
+            files[language] = files['en']
     s = files[language][key]
-    assert s, "Not Found > {lang} @ {key}".format(lang=language,
-                                                  key=key)
+    assert s, "Not Found > {lang} @ {key}".format(lang=language, key=key)
     return s

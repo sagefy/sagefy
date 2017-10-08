@@ -15,4 +15,5 @@ def test_get_default():
 
 def test_get_no_country():
     # Expect to show base language if missing country-specific.
-    assert False
+    assert (content.get('required', 'xx') ==
+            content.get('required', 'en'))

@@ -67,15 +67,15 @@ Run client tests:
 Deploy steps
 ------------
 
-TODO Update these to use docker-compose. (yarn deploy, database backup before deploy!)
+How to deploy the latest master:
 
     ++ ssh into the server ++
     cd /var/www
-    sudo git pull origin master
-    cd client
-    sudo npm run deploy  # TODO yarn
-    sudo cp -a app/images/* distribution/ && sudo cp -a app/*.{html,txt,ico} distribution/
-    pm2 restart all
+    ++ back up the database ++
+    git pull origin master
+    docker-compose run client yarn run deploy
+    docker-compose restart server
+    docker-compose restart client
 
 Things to fix:
 
@@ -95,5 +95,5 @@ Run:
     b2 authorize_account xxx xxxxxxxx  # see dashlane
     b2 sync /var/www/dbbu b2:sagefy-dbbu
 
-TODO update these to scripts and docker-compose
+TODO update these to scripts to docker-compose
 TODO Set up as a cron job... fix the environment :)

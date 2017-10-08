@@ -1,7 +1,1 @@
-
-def test_x():
-    """
-    Expect ...
-    """
-
-    assert False
+import modules.sequencer.params  # noqa
