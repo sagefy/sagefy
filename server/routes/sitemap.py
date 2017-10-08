@@ -19,7 +19,7 @@ defaults = {
 
 
 @get('/s/sitemap.txt')
-def sitemap_route(request):
+def get_sitemap_route(request):
     """
     Generate a sitemap so Google can find Sagefy's content.
     Should be linked to from https://sagefy.org/robots.txt
