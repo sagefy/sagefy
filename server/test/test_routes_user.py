@@ -2,10 +2,9 @@ from passlib.hash import bcrypt
 from conftest import create_user_in_db
 import routes.user
 from database.user import get_user, get_email_token
-from conftest import raw_insert_users
-
-
-user_id = '1SbHc12NTLKMtDJmE83AJg'
+from conftest import user_id
+from raw_insert import raw_insert_users
+from modules.util import convert_uuid_to_slug
 
 
 def test_user_get(db_conn):
@@ -112,7 +111,7 @@ def test_user_get_current_failed(db_conn):
 def test_list_users_route(db_conn, session):
     code, response = routes.user.list_users_route({
         'params': {
-            'user_ids': user_id,
+            'user_ids': convert_uuid_to_slug(user_id),
         },
         'db_conn': db_conn,
     })

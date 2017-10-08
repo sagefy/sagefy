@@ -5,9 +5,7 @@ import psycopg2.extras
 from database.util import save_row
 from passlib.hash import bcrypt
 from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
-
-
-user_id = '1SbHc12NTLKMtDJmE83AJg'
+from conftest import user_id
 
 
 def raw_insert_users(db_conn, users):

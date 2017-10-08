@@ -5,12 +5,11 @@ from database.user_subjects import insert_user_subject, list_user_subjects, \
     remove_user_subject, list_user_subjects_entity
 from database.subject import deliver_subject, get_latest_accepted_subject
 from modules.sequencer.traversal import traverse
-from modules.sequencer.card_chooser import choose_card
 from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
 
 
 @get('/s/users/{user_id}/subjects')
-def get_user_subjects_route(request, user_id):
+def list_user_subjects_route(request, user_id):
     """
     Get the list of subjects the user has added.
 
@@ -21,17 +20,15 @@ def get_user_subjects_route(request, user_id):
 
     db_conn = request['db_conn']
     current_user = get_current_user(request)
-    if not current_user or current_user['id'] != convert_slug_to_uuid(user_id):
+    # Get the user in question
+    if current_user and current_user['id'] == user_id:
+        user = current_user
+    else:
         user = get_user(db_conn, {'id': user_id})
         if not user:
             return abort(404, 'MhNh85CERQe6Zgv-qRO6Zg')
-        if (user != current_user and
-                user['settings']['view_subjects'] != 'public'):
+        if user['settings']['view_subjects'] != 'public':
             return abort(403, 'TcKwVsp9Q6WAkJSV-QKuSQ')
-    else:
-        user = current_user
-        if not current_user:
-            return abort(401, 'mP_wjbKqSkWOqphxwXt7fw')
     params = request['params']
     user_subjects = list_user_subjects_entity(db_conn, user_id, params)
     response = {
@@ -98,19 +95,20 @@ def select_subject_route(request, user_id, subject_id):
     set_learning_context(current_user, subject=subject)
     buckets = traverse(db_conn, current_user, subject)
     # When in diagnosis, choose the unit and card automagically.
-    if buckets.get('diagnose'):
-        unit = buckets['diagnose'][0]
-        card = choose_card(db_conn, current_user, unit)
-        next_ = {
-            'method': 'GET',
-            'path': '/s/cards/{card_id}/learn'
-                    .format(card_id=convert_uuid_to_slug(card['entity_id'])),
-        }
-        set_learning_context(
-            current_user,
-            next=next_, unit=unit, card=card)
+    # if buckets.get('diagnose'):
+    #     unit = buckets['diagnose'][0]
+    #     card = choose_card(db_conn, current_user, unit)
+    #     next_ = {
+    #         'method': 'GET',
+    #         'path': '/s/cards/{card_id}/learn'
+    #                 .format(card_id=convert_uuid_to_slug(card['entity_id'])),
+    #     }
+    #     set_learning_context(
+    #         current_user,
+    #         next=next_, unit=unit, card=card)
     # When in learn or review mode, lead me to choose a unit.
-    elif buckets.get('review') or buckets.get('learn'):
+    # elif buckets.get('review') or
+    if buckets.get('learn'):
         next_ = {
             'method': 'GET',
             'path': '/s/subjects/{subject_id}/units'
@@ -152,11 +150,12 @@ def remove_subject_route(request, user_id, subject_id):
     matches = [
         us
         for us in user_subjects
-        if convert_uuid_to_slug(us['subject_id']) == subject_id
+        if (convert_slug_to_uuid(us['subject_id']) ==
+            convert_slug_to_uuid(subject_id))
     ]
     if not matches:
         return abort(404, 'AQV0c9qfSdO7Ql2IC8l0bw')
-    user_subject, errors = remove_user_subject(db_conn, user_id, subject_id)
+    errors = remove_user_subject(db_conn, user_id, subject_id)
     if errors:
         return 400, {
             'errors': errors,

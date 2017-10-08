@@ -3,7 +3,8 @@ import routes.card
 from framework.redis import redis
 from datetime import datetime, timezone
 import uuid
-from raw_insert import user_id, raw_insert_cards, raw_insert_units
+from conftest import user_id
+from raw_insert import raw_insert_cards, raw_insert_units
 from modules.util import convert_uuid_to_slug
 
 

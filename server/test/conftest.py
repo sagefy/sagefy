@@ -16,13 +16,14 @@ framework.update_config(config)
 from framework.database import make_db_connection, close_db_connection
 from framework.session import log_in_user, log_out_user
 from modules.util import convert_slug_to_uuid
-from raw_insert import raw_insert_users
+import uuid
 
 
-user_id = '1SbHc12NTLKMtDJmE83AJg'
+user_id = uuid.uuid4()
 
 
 def create_user_in_db(db_conn):
+    from raw_insert import raw_insert_users
     raw_insert_users(db_conn, [{
         'id': convert_slug_to_uuid(user_id),
         'name': 'test',
