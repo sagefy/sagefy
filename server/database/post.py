@@ -227,7 +227,7 @@ def update_post(db_conn, prev_data, data):
     """
     data = {
         'id': convert_slug_to_uuid(prev_data['id']),
-        'body': data['body'] or prev_data['body'],
+        'body': data.get('body') or prev_data.get('body'),
     }
     data, errors = update_row(db_conn, schema, query, prev_data, data)
     if not errors:
@@ -249,7 +249,7 @@ def update_proposal(db_conn, prev_data, data):
     """
     data = {
         'id': convert_slug_to_uuid(prev_data['id']),
-        'body': data['body'] or prev_data['body'],
+        'body': data.get('body') or prev_data.get('body'),
     }
     data, errors = update_row(db_conn, schema, query, prev_data, data)
     if not errors:
@@ -271,7 +271,7 @@ def update_vote(db_conn, prev_data, data):
     """
     data = {
         'id': convert_slug_to_uuid(prev_data['id']),
-        'body': data['body'] or prev_data['body'],
+        'body': data.get('body') or prev_data.get('body'),
         'response': (data['response']
                      if data['response'] is not None
                      else prev_data['response']),
@@ -308,11 +308,14 @@ def list_posts_by_topic(db_conn, params):
         SELECT *
         FROM posts
         WHERE topic_id = %(topic_id)s
-        ORDER BY created ASC;
-        /* TODO OFFSET LIMIT */
+        ORDER BY created ASC
+        OFFSET %(offset)s
+        LIMIT %(limit)s;
     """
     params = {
         'topic_id': convert_slug_to_uuid(params['topic_id']),
+        'offset': params.get('offset') or 0,
+        'limit': params.get('limit') or 10,
     }
     return list_rows(db_conn, query, params)
 

@@ -195,7 +195,8 @@ def test_user_update_self_only(db_conn, session):
     raw_insert_users(db_conn, [{
         'name': 'other',
         'email': 'other@example.com',
-        'password': bcrypt.encrypt('1234abcd'),
+        # NOTE do not use rounds this low in production
+        'password': bcrypt.encrypt('1234abcd', rounds=4),
     }])
     request = {
         'params': {

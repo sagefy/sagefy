@@ -25,7 +25,8 @@ def raw_insert_users(db_conn, users):
             'modified': user.get('modified', datetime.utcnow()),
             'name': user.get('name'),
             'email': user.get('email'),
-            'password': bcrypt.encrypt(user.get('password')),
+            # NOTE do not set rounds this low in production!
+            'password': bcrypt.encrypt(user.get('password'), rounds=4),
             'settings': psycopg2.extras.Json(user.get('settings', {
                 'email_frequency': 'daily',
                 'view_subjects': 'public',

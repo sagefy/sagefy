@@ -72,6 +72,6 @@ def list_user_subjects_entity(db_conn, user_id, params):
     # TODO-2 order by last reviewed time
     user_subjects = list_user_subjects(db_conn, user_id)
     # TODO-3 limit = params.get('limit') or 10
-    # TODO-3 skip = params.get('skip') or 0
+    # TODO-3 offset = params.get('offset') or 0
     subject_ids = [data['subject_id'] for data in user_subjects]
     return list_latest_accepted_subjects(db_conn, subject_ids)

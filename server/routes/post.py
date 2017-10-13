@@ -34,8 +34,8 @@ def get_posts_route(request, topic_id):
             }],
         }
     posts = list_posts_by_topic(db_conn, {
-        'limit': request['params'].get('limit') or 10,
-        'skip': request['params'].get('skip') or 0,
+        'limit': request['params'].get('limit'),
+        'offset': request['params'].get('offset'),
         'topic_id': topic_id,
     })
     return 200, {

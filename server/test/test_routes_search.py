@@ -1,4 +1,6 @@
 import routes.search  # noqa
+import pytest
+xfail = pytest.mark.xfail
 
 
 def test_search():
@@ -8,6 +10,7 @@ def test_search():
     assert False
 
 
+@xfail
 def test_search_sort():
     """
     Expect to sort in search.
@@ -15,6 +18,7 @@ def test_search_sort():
     assert False
 
 
+@xfail
 def test_search_paginate():
     """
     Expect to paginate in search.
@@ -22,6 +26,7 @@ def test_search_paginate():
     assert False
 
 
+@xfail
 def test_search_blank():
     """
     Expect a blank search result.
@@ -29,6 +34,7 @@ def test_search_blank():
     assert False
 
 
+@xfail
 def test_sort_created():
     """
     Expect to sort results by created at time.
@@ -36,6 +42,7 @@ def test_sort_created():
     assert False
 
 
+@xfail
 def test_sort_modified():
     """
     Expect to sort results by modified time.
@@ -43,6 +50,7 @@ def test_sort_modified():
     assert False
 
 
+@xfail
 def test_sort_language():
     """
     Expect to filter results by language.
@@ -50,6 +58,7 @@ def test_sort_language():
     assert False
 
 
+@xfail
 def test_users():
     """
     Expect to filter results to users.
@@ -57,6 +66,7 @@ def test_users():
     assert False
 
 
+@xfail
 def test_user_name():
     """
     Expect to search users by name.
@@ -64,6 +74,7 @@ def test_user_name():
     assert False
 
 
+@xfail
 def test_topic():
     """
     Expect to filter results to topics.
@@ -71,6 +82,7 @@ def test_topic():
     assert False
 
 
+@xfail
 def test_topic_name():
     """
     Expect to search topics by name.
@@ -78,6 +90,7 @@ def test_topic_name():
     assert False
 
 
+@xfail
 def test_topic_entity():
     """
     Expect to filter topics by entity.
@@ -85,6 +98,7 @@ def test_topic_entity():
     assert False
 
 
+@xfail
 def test_topic_entity_kind():
     """
     Expect to filter topics by entity kind.
@@ -92,6 +106,7 @@ def test_topic_entity_kind():
     assert False
 
 
+@xfail
 def test_topisession():
     """
     Expect to filter topics by user.
@@ -99,6 +114,7 @@ def test_topisession():
     assert False
 
 
+@xfail
 def test_topic_posts():
     """
     Expect to sort topics by number of posts.
@@ -106,6 +122,7 @@ def test_topic_posts():
     assert False
 
 
+@xfail
 def test_post():
     """
     Expect to filter results to posts (all kinds).
@@ -113,6 +130,7 @@ def test_post():
     assert False
 
 
+@xfail
 def test_post_body():
     """
     Expect to search posts by body.
@@ -120,6 +138,7 @@ def test_post_body():
     assert False
 
 
+@xfail
 def test_post_topic():
     """
     Expect to filter posts by topic.
@@ -127,6 +146,7 @@ def test_post_topic():
     assert False
 
 
+@xfail
 def test_post_entity():
     """
     Expect to filter posts by entity.
@@ -134,6 +154,7 @@ def test_post_entity():
     assert False
 
 
+@xfail
 def test_post_entity_kind():
     """
     Expect to filter posts by entity kind.
@@ -141,6 +162,7 @@ def test_post_entity_kind():
     assert False
 
 
+@xfail
 def test_post_user():
     """
     Expect to filter posts by user.
@@ -148,6 +170,7 @@ def test_post_user():
     assert False
 
 
+@xfail
 def test_proposal():
     """
     Expect to filter to proposals.
@@ -155,6 +178,7 @@ def test_proposal():
     assert False
 
 
+@xfail
 def test_proposal_status():
     """
     Expect to filter proposals by status.
@@ -162,6 +186,7 @@ def test_proposal_status():
     assert False
 
 
+@xfail
 def test_proposal_action():
     """
     Expect to filter proposals by action.
@@ -169,6 +194,7 @@ def test_proposal_action():
     assert False
 
 
+@xfail
 def test_vote():
     """
     Expect to filter to votes.
@@ -176,6 +202,7 @@ def test_vote():
     assert False
 
 
+@xfail
 def test_vote_response():
     """
     Expect to filter votes by response.
@@ -183,6 +210,7 @@ def test_vote_response():
     assert False
 
 
+@xfail
 def test_card():
     """
     Expect to filter to cards.
@@ -190,6 +218,7 @@ def test_card():
     assert False
 
 
+@xfail
 def test_card_name():
     """
     Expect to search cards by name and contents.
@@ -197,6 +226,7 @@ def test_card_name():
     assert False
 
 
+@xfail
 def test_card_unit():
     """
     Expect to filter cards by unit.
@@ -204,6 +234,7 @@ def test_card_unit():
     assert False
 
 
+@xfail
 def test_card_require():
     """
     Expect to filter cards by requires.
@@ -211,6 +242,7 @@ def test_card_require():
     assert False
 
 
+@xfail
 def test_card_required_by():
     """
     Expect to filter cards by required by.
@@ -218,6 +250,7 @@ def test_card_required_by():
     assert False
 
 
+@xfail
 def test_card_kind():
     """
     Expect to filter cards by kind.
@@ -225,6 +258,7 @@ def test_card_kind():
     assert False
 
 
+@xfail
 def test_card_tag():
     """
     Expect to filter cards by tag.
@@ -232,6 +266,7 @@ def test_card_tag():
     assert False
 
 
+@xfail
 def test_unit():
     """
     Expect to filter to units.
@@ -239,6 +274,7 @@ def test_unit():
     assert False
 
 
+@xfail
 def test_unit_name():
     """
     Expect to search units by name and body.
@@ -246,6 +282,7 @@ def test_unit_name():
     assert False
 
 
+@xfail
 def test_unit_subject():
     """
     Expect to filter units by subjects.
@@ -253,6 +290,7 @@ def test_unit_subject():
     assert False
 
 
+@xfail
 def test_unit_requires():
     """
     Expect to filter units by requires.
@@ -260,6 +298,7 @@ def test_unit_requires():
     assert False
 
 
+@xfail
 def test_unit_required_by():
     """
     Expect to filter units by required by.
@@ -267,6 +306,7 @@ def test_unit_required_by():
     assert False
 
 
+@xfail
 def test_unit_tag():
     """
     Expect to filter units by tag.
@@ -274,6 +314,7 @@ def test_unit_tag():
     assert False
 
 
+@xfail
 def test_unit_learners():
     """
     Expect to sort units by number of learners.
@@ -281,6 +322,7 @@ def test_unit_learners():
     assert False
 
 
+@xfail
 def test_subject():
     """
     Expect to filter to subjects.
@@ -288,6 +330,7 @@ def test_subject():
     assert False
 
 
+@xfail
 def test_subject_name():
     """
     Expect to search subjects by name and body.
@@ -295,6 +338,7 @@ def test_subject_name():
     assert False
 
 
+@xfail
 def test_subject_containing():
     """
     Expect to filter subjects by unit containing.
@@ -302,6 +346,7 @@ def test_subject_containing():
     assert False
 
 
+@xfail
 def test_subject_tag():
     """
     Expect to filter subjects by tag.
@@ -309,6 +354,7 @@ def test_subject_tag():
     assert False
 
 
+@xfail
 def test_subject_learners():
     """
     Expect to sort subjects by number of learners.

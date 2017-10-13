@@ -150,7 +150,8 @@ def test_deliver_user(db_conn):
 
 def test_is_password_valid():
     real_password = 'elephants'
-    real_encrypted_password = bcrypt.encrypt(real_password)
+    # NOTE do not set rounds this low in production!
+    real_encrypted_password = bcrypt.encrypt(real_password, rounds=4)
     given_password = None
     assert not is_password_valid(real_encrypted_password, given_password)
     given_password = 'monkeys'

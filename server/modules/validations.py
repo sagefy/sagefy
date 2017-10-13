@@ -11,6 +11,8 @@ def is_required(value):
 
     if value is None:
         return c('required')
+    if isinstance(value, str) and value == '':
+        return c('required')
 
 
 def is_boolean(value):
