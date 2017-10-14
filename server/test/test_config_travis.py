@@ -7,7 +7,7 @@ config = {
     'mail_server': 'smtp.sparkpostmail.com',
     'mail_port': 587,
     # db
-    'host': 'postgres',
+    'host': 'localhost',
     'dbname': 'postgres',
     'user': 'postgres',
     'port': 5432,

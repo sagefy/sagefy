@@ -19,7 +19,7 @@ These instructions assume you are using Mac OS X.
     1. Create database schemas (when first time):
         - `docker exec -it sagefy_postgres_1 psql -U sagefy -a -f /www/sagefy_tables.sql`
         - `docker exec -it sagefy_postgres-test_1 psql -U test -a -f /www/sagefy_tables.sql`
-    2. Create dev data: `docker-compose run server python /www/dev_data.py`
+    2. Create dev data: `docker-compose run server python /www/test/dev_data.py`
 5. Verify
     1. In your browser, visit `http://localhost/s/`, there should be a welcome message.
     2. In your browser, visit `http://localhost/`, the home page should be working.

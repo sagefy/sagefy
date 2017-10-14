@@ -1,3 +1,14 @@
+# via https://stackoverflow.com/a/11158224
+import os
+import sys
+import inspect
+currentdir = os.path.dirname(
+    os.path.abspath(
+        inspect.getfile(
+            inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir)
+
 import psycopg2
 import psycopg2.extras
 from framework.database import make_db_connection, \

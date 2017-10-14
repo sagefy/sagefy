@@ -10,5 +10,5 @@ config = {
     'host': 'postgres-test',
     'dbname': 'test',
     'user': 'test',
-    'port': 5433,
+    'port': 5432,
 }

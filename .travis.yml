@@ -17,6 +17,8 @@ install:
     - nvm use 6.11.0
     - 'cd client && yarn install && cd ..'
     - source ~/virtualenv/python3.6/bin/activate
+before_script:
+    - psql -U postgres -a -f ./postgres/sagefy_tables.sql
 script:
     - cd server
     - flake8

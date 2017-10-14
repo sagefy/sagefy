@@ -25,7 +25,7 @@ def send_mail(subject, recipient, body):
     msg['To'] = recipient
     conn = None
     try:
-        conn = SMTP(config['mail_server'], config['mail_port'])
+        conn = SMTP(config['mail_server'], config['mail_port'], timeout=5)
         conn.set_debuglevel(False)
         conn.login(config['mail_username'], config['mail_password'])
         conn.sendmail(msg['To'], [recipient], msg.as_string())

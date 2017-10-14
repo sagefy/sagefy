@@ -10,5 +10,5 @@ def test_make_and_close_db_connection():
 def test_make_db_conn_err():
     prev_host = config['host']
     config['host'] = 'AHHHH!'
-    assert isinstance(make_db_connection(), str)
+    assert not make_db_connection()
     config['host'] = prev_host
