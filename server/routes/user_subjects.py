@@ -21,7 +21,7 @@ def list_user_subjects_route(request, user_id):
     db_conn = request['db_conn']
     current_user = get_current_user(request)
     # Get the user in question
-    if current_user and current_user['id'] == user_id:
+    if current_user and current_user['id'] == convert_slug_to_uuid(user_id):
         user = current_user
     else:
         user = get_user(db_conn, {'id': user_id})
