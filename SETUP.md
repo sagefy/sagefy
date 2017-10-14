@@ -13,7 +13,6 @@ These instructions assume you are using Mac OS X.
 2. Grab the code
     1. Clone the repository: `git clone https://github.com/heiskr/sagefy.git`
     2. Enter the directory: `cd sagefy`
-    3. `cp server/config.dev.example.py server/config.py`
 3. Start it up: `docker-compose up -d`
 4. Get some data
     1. Create database schemas (when first time):

@@ -2,6 +2,7 @@
 Makes content in /content in YAML format available to the Python code.
 """
 
+import os
 import yaml
 
 files = {}
@@ -14,7 +15,10 @@ def get(key, language='en'):
 
     if language not in files:
         try:
-            stream = open('/content/%s.yml' % (language,), 'r')
+            path = '/content/%s.yml' % (language,)
+            if os.environ.get('TRAVIS'):
+                path = '../content/%s.yml' % (language,)
+            stream = open(path, 'r')
             files[language] = yaml.load(stream)[language]
             stream.close()
         except:
