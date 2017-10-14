@@ -1,15 +1,7 @@
-# TODO-3 outline tests  https://docs.sagefy.org/f_planning/sequencer
-
-
-def test_x():
-    """
-    Expect ...
-    """
-
-    assert False
-
+import modules.sequencer.index  # noqa
 
 """
+# TODO-3 outline tests  https://docs.sagefy.org/f_planning/sequencer
 Expect to estimate diagnosis duration.
 Expect to show progress in diagnosis.
 Expect end of diagnosis to return to tree.

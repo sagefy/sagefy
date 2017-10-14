@@ -1,7 +1,1 @@
-
-def test_update():
-    """
-    Expect to choose an appropriate card.
-    """
-
-    assert False
+import modules.sequencer.card_chooser  # noqa
