@@ -1,13 +1,20 @@
-import routes.search  # noqa
 import pytest
 xfail = pytest.mark.xfail
+
+from routes.search import search_route
 
 
 def test_search():
     """
     Expect to search by query.
     """
-    assert False
+    request = {
+        'params': {
+            'q': 'music',
+        },
+    }
+    code, response = search_route(request)
+    assert code == 200
 
 
 @xfail

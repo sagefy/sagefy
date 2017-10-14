@@ -1,6 +1,7 @@
 from framework.routes import get, abort
 from framework.session import get_current_user
 from database.user import get_learning_context
+from modules.util import convert_uuid_to_slug
 
 
 @get('/s/next')
@@ -26,6 +27,6 @@ def next_route(request):
         'next': {
             'method': 'GET',
             'path': '/s/users/{user_id}/subjects'
-                    .format(user_id=current_user['id']),
+                    .format(user_id=convert_uuid_to_slug(current_user['id'])),
         }
     }

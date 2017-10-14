@@ -1,101 +1,111 @@
-import routes.unit
-from datetime import datetime, timezone
-from raw_insert import raw_insert_units, raw_insert_subjects, raw_insert_topics
+from routes.unit import get_unit_route, \
+    list_units_route, \
+    get_unit_versions_route, \
+    get_unit_version_route, \
+    get_my_recently_created_units_route, \
+    create_new_unit_version_route, \
+    create_existing_unit_version_route
+from conftest import user_id
+from raw_insert import raw_insert_units
+import uuid
+
+unit_a_uuid = uuid.uuid4()
+unit_version_a_uuid = uuid.uuid4()
+unit_b_uuid = uuid.uuid4()
 
 
-def test_get_unit(db_conn):
-    """
-    Expect to get the unit information for displaying to a contributor.
-    """
-
-    raw_insert_units(db_conn, [{
-        'entity_id': 'zytx',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'status': 'accepted',
-        'name': 'Wildwood',
-        'require_ids': ['ntza'],
+def create_route_unit_test_data(db_conn):
+    units = [{
+        'version_id': unit_version_a_uuid,
+        'user_id': user_id,
+        'entity_id': unit_a_uuid,
+        'name': 'test unit add',
+        'body': 'adding numbers is fun'
     }, {
-        'entity_id': 'zytx',
-        'created': datetime(1986, 11, 3, tzinfo=timezone.utc),
-        'modified': datetime(1986, 11, 3, tzinfo=timezone.utc),
-        'status': 'accepted',
-        'name': 'Umberwood',
-    }, {
-        'entity_id': 'ntza',
-        'created': datetime(1986, 11, 3, tzinfo=timezone.utc),
-        'modified': datetime(1986, 11, 3, tzinfo=timezone.utc),
-        'status': 'accepted',
-        'name': 'Limberwood',
-    }, {
-        'entity_id': 'tyui',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'status': 'accepted',
-        'name': 'Wildwood',
-        'require_ids': ['zytx'],
-    }])
+        'user_id': user_id,
+        'entity_id': unit_b_uuid,
+        'name': 'test unit subtract',
+        'body': 'subtracting numbers is fun',
+        'require_ids': [unit_a_uuid],
+    }]
+    raw_insert_units(db_conn, units)
 
-    raw_insert_subjects(db_conn, {
-        'entity_id': 'W',
-        'name': 'Woods',
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'status': 'accepted',
-        'members': [{
-            'kind': 'unit',
-            'id': 'zytx',
-        }]
-    })
 
-    raw_insert_topics(db_conn, [{
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'user_id': 'abcd1234',
-        'name': 'A Modest Proposal',
-        'entity_id': 'zytx',
-        'entity_kind': 'unit',
-    }, {
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'user_id': 'abcd1234',
-        'name': 'Another Proposal',
-        'entity_id': 'zytx',
-        'entity_kind': 'unit',
-    }, {
-        'created': datetime.utcnow(),
-        'modified': datetime.utcnow(),
-        'user_id': 'abcd1234',
-        'name': 'A Third Proposal',
-        'entity_id': 'abcd',
-        'entity_kind': 'card',
-    }])
-
-    code, response = routes.unit.get_unit_route({
-        'db_conn': db_conn
-    }, 'zytx')
+def test_get_unit_route(db_conn, session):
+    create_route_unit_test_data(db_conn)
+    request = {
+        'db_conn': db_conn,
+    }
+    code, response = get_unit_route(request, unit_id)
+    assert not response.get('errors')
     assert code == 200
-    # Model
-    assert response['unit']['entity_id'] == 'zytx'
-    assert response['unit']['name'] == 'Wildwood'
-    # Requires
-    assert len(response['requires']) == 1
-    assert response['requires'][0]['entity_id'] == 'ntza'
-    # Required By
-    assert len(response['required_by']) == 1
-    assert response['required_by'][0]['entity_id'] == 'tyui'
-    # Subjects
-    assert len(response['belongs_to']) == 1
-    assert response['belongs_to'][0]['entity_id'] == 'W'
-    # TODO-3 sequencer data: learners, quality, difficulty
+    assert response['unit']
+    # TODO requires
+    # TODO required_by
+    # TODO belongs_to
 
 
-def test_get_unit_404(db_conn):
-    """
-    Expect to fail to get an unknown unit (404).
-    """
+def test_list_units_route(db_conn, session):
+    create_route_unit_test_data(db_conn)
+    request = {
+        'db_conn': db_conn,
+    }
+    code, response = list_units_route(request)
+    assert not response.get('errors')
+    assert code == 200
+    assert response['units']
 
-    code, response = routes.unit.get_unit_route({
-        'db_conn': db_conn
-    }, 'zytx')
-    assert code == 404
+
+def test_get_unit_versions_route(db_conn, session):
+    create_route_unit_test_data(db_conn)
+    request = {
+        'db_conn': db_conn,
+    }
+    code, response = get_unit_versions_route(request, unit_id)
+    assert not response.get('errors')
+    assert code == 200
+    assert response['versions']
+
+
+def test_get_unit_version_route(db_conn, session):
+    create_route_unit_test_data(db_conn)
+    request = {
+        'db_conn': db_conn,
+    }
+    code, response = get_unit_version_route(request, version_id)
+    assert not response.get('errors')
+    assert code == 200
+    assert response['version']
+
+
+def test_get_my_recently_created_units_route(db_conn, session):
+    create_route_unit_test_data(db_conn)
+    request = {
+        'db_conn': db_conn,
+    }
+    code, response = get_my_recently_created_units_route(request)
+    assert not response.get('errors')
+    assert code == 200
+    assert response['units']
+
+
+def test_create_new_unit_version_route(db_conn, session):
+    create_route_unit_test_data(db_conn)
+    request = {
+        'db_conn': db_conn,
+    }
+    code, response = create_new_unit_version_route(request)
+    assert not response.get('errors')
+    assert code == 200
+    assert response['version']
+
+
+def test_create_existing_unit_version_route(db_conn, session):
+    create_route_unit_test_data(db_conn)
+    request = {
+        'db_conn': db_conn,
+    }
+    code, response = create_existing_unit_version_route(request, unit_id)
+    assert not response.get('errors')
+    assert code == 200
+    assert response['version']

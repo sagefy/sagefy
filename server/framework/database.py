@@ -11,7 +11,7 @@ config = {
     'host': 'localhost',
     'dbname': 'sagefy',
     'user': 'postgres',
-    'password': 'postgres',
+    'port': 5432,
 }
 
 
@@ -23,15 +23,14 @@ def make_db_connection():
     Create a database connection.
     """
 
+    db_config = pick(config, ('host', 'dbname', 'user', 'port'))
+    print('db_config', db_config)
     try:
-        db_conn = psycopg2.connect(
-            **pick(config, ('host', 'dbname', 'user', 'password'))
-        )
+        db_conn = psycopg2.connect(**db_config)
+        return db_conn
     except (Exception, psycopg2.DatabaseError) as error:
         print("I cannot connect to PostgresQL.")
         print(error)
-        return "I cannot connect to PostgresQL."
-    return db_conn
 
 
 def close_db_connection(db_conn):

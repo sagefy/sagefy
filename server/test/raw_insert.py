@@ -39,11 +39,10 @@ def raw_insert_users(db_conn, users):
 def raw_insert_cards(db_conn, cards):
     for card in cards:
         query = """
-            INSERT INTO cards_entity_id
-            (  entity_id  )
-            VALUES
-            (%(entity_id)s);
-             INSERT INTO cards
+            INSERT INTO cards_entity_id (entity_id)
+            VALUES (%(entity_id)s)
+            ON CONFLICT DO NOTHING;
+            INSERT INTO cards
             (  version_id  ,   created  ,   modified  ,
                entity_id  ,   previous_id  ,   language  ,   status  ,
                available  ,   tags  ,   name  ,   user_id  ,
@@ -98,10 +97,9 @@ def raw_insert_cards(db_conn, cards):
 def raw_insert_units(db_conn, units):
     for unit in units:
         query = """
-            INSERT INTO units_entity_id
-            (  entity_id  )
-            VALUES
-            (%(entity_id)s);
+            INSERT INTO units_entity_id (entity_id)
+            VALUES (%(entity_id)s)
+            ON CONFLICT DO NOTHING;
             INSERT INTO units
             (  version_id  ,   created  ,   modified  ,
                entity_id  ,   previous_id  ,   language  ,   status  ,
@@ -135,10 +133,9 @@ def raw_insert_units(db_conn, units):
 def raw_insert_subjects(db_conn, subjects):
     for subject in subjects:
         query = """
-            INSERT INTO subjects_entity_id
-            (  entity_id  )
-            VALUES
-            (%(entity_id)s);
+            INSERT INTO subjects_entity_id (entity_id)
+            VALUES (%(entity_id)s)
+            ON CONFLICT DO NOTHING;
             INSERT INTO subjects
             (  version_id  ,   created  ,   modified  ,
                entity_id  ,   previous_id  ,   language  ,   status  ,

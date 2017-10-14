@@ -1,5 +1,7 @@
 import routes.next
 from database.user import get_user, set_learning_context
+from conftest import user_id
+from modules.util import convert_uuid_to_slug
 
 
 def test_seq_next(db_conn, session):
@@ -11,7 +13,7 @@ def test_seq_next(db_conn, session):
         'cookies': {'session_id': session},
         'db_conn': db_conn,
     }
-    user = get_user(db_conn, {'id': 'abcd1234'})
+    user = get_user(db_conn, {'id': user_id})
     set_learning_context(user, next={
         'method': 'DANCE',
         'path': '/s/unicorns'
@@ -36,6 +38,20 @@ def test_seq_next_default(db_conn, session):
     assert response == {
         'next': {
             'method': 'GET',
-            'path': '/s/users/abcd1234/subjects',
+            'path': '/s/users/{user_id}/subjects'.format(
+                user_id=convert_uuid_to_slug(user_id)
+            ),
         }
     }
+
+
+def test_seq_next_401(db_conn, session):
+    """
+    Expect sequencer route to say where to go next if no current state.
+    """
+
+    request = {
+        'db_conn': db_conn,
+    }
+    code, response = routes.next.next_route(request)
+    assert code == 401
