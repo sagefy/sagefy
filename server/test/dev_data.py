@@ -9,12 +9,12 @@ currentdir = os.path.dirname(
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
+from config import config
 import psycopg2
 import psycopg2.extras
 from framework.database import make_db_connection, \
     close_db_connection
 from framework.elasticsearch import es
-from config import config
 from es_populate import es_populate
 import yaml
 from framework.redis import redis
@@ -22,13 +22,10 @@ from datetime import datetime, timezone
 import uuid
 from modules.util import convert_uuid_to_slug
 from database.util import delete_row
-import framework.index as framework
 from test.raw_insert import raw_insert_users, raw_insert_cards, \
     raw_insert_units, raw_insert_subjects, raw_insert_topics, \
     raw_insert_posts, raw_insert_follows, raw_insert_notices
 
-
-framework.update_config(config)
 
 if not config['debug']:
     raise Exception('You must be in debug mode to wipe the DB.')

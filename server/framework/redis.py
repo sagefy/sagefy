@@ -1,3 +1,7 @@
 from redis import StrictRedis
+from config import config
 
-redis = StrictRedis(host='redis', port=6379)
+redis = StrictRedis(
+    host=config['redis_host'],
+    port=config['redis_port']
+)

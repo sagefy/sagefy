@@ -4,15 +4,7 @@ On each request, we create and close a new connection.
 
 import psycopg2
 import psycopg2.extras
-from modules.util import pick
-
-
-config = {
-    'host': 'localhost',
-    'dbname': 'sagefy',
-    'user': 'postgres',
-    'port': 5432,
-}
+from config import config
 
 
 psycopg2.extras.register_uuid()
@@ -23,8 +15,12 @@ def make_db_connection():
     Create a database connection.
     """
 
-    db_config = pick(config, ('host', 'dbname', 'user', 'port'))
-    print('db_config', db_config)
+    db_config = {
+        'host': config['pg_host'],
+        'dbname': config['pg_dbname'],
+        'user': config['pg_user'],
+        'port': config['pg_port'],
+    }
     try:
         db_conn = psycopg2.connect(**db_config)
         return db_conn

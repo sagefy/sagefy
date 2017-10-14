@@ -1,14 +1,6 @@
 from email.mime.text import MIMEText
 from smtplib import SMTP
-
-config = {
-    'mail_sender': 'support@example.com',
-    'mail_password': 'wW6Yd6jJHBVilJHX',
-    'mail_username': 'admin@example.com',
-    'mail_server': 'smtp.sparkpostmail.com',
-    'mail_port': 587,
-    'test': False,
-}
+from config import config
 
 
 def send_mail(subject, recipient, body):
@@ -25,7 +17,11 @@ def send_mail(subject, recipient, body):
     msg['To'] = recipient
     conn = None
     try:
-        conn = SMTP(config['mail_server'], config['mail_port'], timeout=5)
+        conn = SMTP(
+            config['mail_server'],
+            config['mail_port'],
+            timeout=5
+        )
         conn.set_debuglevel(False)
         conn.login(config['mail_username'], config['mail_password'])
         conn.sendmail(msg['To'], [recipient], msg.as_string())

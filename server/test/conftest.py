@@ -2,6 +2,7 @@
 import os
 import sys
 import inspect
+sys._called_from_test = True
 currentdir = os.path.dirname(
     os.path.abspath(
         inspect.getfile(
@@ -10,9 +11,6 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
 import pytest
-from test_config import config
-import framework.index as framework
-framework.update_config(config)
 from framework.database import make_db_connection, close_db_connection
 from framework.session import log_in_user, log_out_user
 from modules.util import convert_slug_to_uuid

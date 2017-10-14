@@ -10,24 +10,8 @@ from traceback import format_exc
 from framework.status_codes import status_codes
 from framework.database import make_db_connection, close_db_connection
 from framework.routes import find_path, abort
-import framework.database
-import framework.mail
 from modules.util import json_serial
-
-
-config = {
-    'debug': False,
-}
-
-
-def update_config(conf_):
-    """
-    Updates configs for various modules.
-    """
-
-    config.update(conf_)
-    framework.database.config.update(conf_)
-    framework.mail.config.update(conf_)
+import config
 
 
 def serve(environ, start_response):

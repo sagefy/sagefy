@@ -3,10 +3,6 @@ Welcome to Sagefy.
 """
 # flake8: noqa
 
-from config import config
-import framework.index as framework
-framework.update_config(config)
-
 import routes.public
 import routes.user
 import routes.notice
