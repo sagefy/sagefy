@@ -1,4 +1,4 @@
-import routes.public
+import routes.public  # TODO-2 switch to direct imports
 
 
 def test_welcome():

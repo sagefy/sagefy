@@ -1,6 +1,6 @@
 from passlib.hash import bcrypt
 from conftest import create_user_in_db
-import routes.user
+import routes.user  # TODO-2 switch to direct imports
 from database.user import get_user, get_email_token
 from conftest import user_id
 from raw_insert import raw_insert_users

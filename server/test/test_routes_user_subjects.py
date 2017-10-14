@@ -1,4 +1,4 @@
-import routes.user_subjects
+import routes.user_subjects  # TODO-2 switch to direct imports
 from raw_insert import raw_insert_subjects, raw_insert_user_subjects, \
     raw_insert_units
 import uuid

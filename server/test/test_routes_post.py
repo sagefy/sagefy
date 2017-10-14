@@ -1,5 +1,5 @@
 from conftest import create_user_in_db, user_id
-import routes.post
+import routes.post  # TODO-2 switch to direct imports
 from raw_insert import raw_insert_topics, raw_insert_posts, raw_insert_units, \
     raw_insert_users
 import uuid

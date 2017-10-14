@@ -1,4 +1,4 @@
-import routes.follow
+import routes.follow  # TODO-2 switch to direct imports
 from conftest import user_id
 from raw_insert import raw_insert_follows, raw_insert_units, \
     raw_insert_users

@@ -1,5 +1,5 @@
 import json
-import routes.card
+import routes.card  # TODO-2 switch to direct imports
 from framework.redis import redis
 from datetime import datetime, timezone
 import uuid
