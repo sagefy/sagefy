@@ -253,6 +253,8 @@ def list_many_card_versions(db_conn, version_ids):
     List Card Versions by VIDs
     """
 
+    if not len(version_ids):
+        return []
     query = """
         SELECT *
         FROM cards

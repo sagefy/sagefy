@@ -1,12 +1,11 @@
 from framework.routes import get, post, abort
 from framework.session import get_current_user
-from database.my_recently_created import get_my_recently_created_units
 from database.unit import deliver_unit, insert_unit, get_latest_accepted_unit
 from database.subject import deliver_subject, list_subjects_by_unit_flat
 from copy import deepcopy
 from database.unit import list_required_units, list_required_by_units, \
     list_latest_accepted_units, list_one_unit_versions, get_unit_version, \
-    insert_unit_version
+    insert_unit_version, list_my_recently_created_units
 
 
 @get('/s/units/{unit_id}')
@@ -89,7 +88,7 @@ def get_my_recently_created_units_route(request):
     if not current_user:
         return abort(401, '2fReKMNNQg6BhnmfBI3UiQ')
     db_conn = request['db_conn']
-    units = get_my_recently_created_units(db_conn, current_user)
+    units = list_my_recently_created_units(db_conn, current_user['id'])
     return 200, {
         'units': [deliver_unit(unit) for unit in units],
     }

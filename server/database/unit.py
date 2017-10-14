@@ -199,6 +199,8 @@ def list_many_unit_versions(db_conn, version_ids):
     List Unit Versions by VIDs
     """
 
+    if not len(version_ids):
+        return []
     query = """
         SELECT *
         FROM units
