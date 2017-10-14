@@ -20,7 +20,8 @@ For more information, watch this 3 minute [YouTube video].
 [Setup]: https://github.com/heiskr/sagefy/blob/master/SETUP.md
 
 [![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy)
-![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=<badge_key>)
+[<img src="https://i.imgur.com/M5xPVWm.png" height="20">](https://www.browserstack.com)
+
 
 All contents in this project are licensed under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
