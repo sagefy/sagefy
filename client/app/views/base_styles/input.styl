@@ -5,8 +5,9 @@ description: Range elements do not use sliders. Instead, ranges are input as two
 ---
 */
 
-$box-shadow-input = inset 0 1px 2px $base-color(95), 0 0 1px 1px $base-color(78)
-$box-shadow-input-focus = inset 0 1px 2px $base-color(95), 0 1px 0 white
+$box-shadow-input = inset 0 1px 2px $base-color(95), 0 1px 0 white
+$box-shadow-input-focus = inset 0 1px 2px $base-color(95), 0 0 1px 1px $base-color(78)
+
 
 input[type="text"]
 input[type="password"]
@@ -21,7 +22,7 @@ textarea
     background white
     border-radius $border-radius
     line-height $unit * 2
-    box-shadow $box-shadow-input-focus
+    box-shadow $box-shadow-input
     transition box-shadow 0.2s
     max-width 100%
 
@@ -30,7 +31,7 @@ textarea
         outline 0
 
     &:focus
-        box-shadow $box-shadow-input
+        box-shadow $box-shadow-input-focus
 
     &[disabled]
         background none
@@ -69,7 +70,7 @@ input[type="radio"]
     position relative
     vertical-align middle
     width 13px
-    box-shadow $box-shadow-input-focus
+    box-shadow $box-shadow-input
     cursor pointer
 
     &:checked
@@ -86,10 +87,10 @@ input[type="radio"]
 
     &:focus
         outline 0
-        box-shadow $box-shadow-input
+        box-shadow $box-shadow-input-focus
 
         &:checked
-            box-shadow $box-shadow-input
+            box-shadow $box-shadow-input-focus
 
     &[disabled]
         background none
