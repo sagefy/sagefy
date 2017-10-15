@@ -72,9 +72,10 @@ How to deploy the latest master:
     cd /var/www
     ++ back up the database ++
     git pull origin master
-    docker-compose run client yarn run deploy
+    yarn run deploy
     docker-compose restart server
     docker-compose restart client
+    docker-compose restart nginx
 
 Things to fix:
 
@@ -90,9 +91,8 @@ Run:
     ++ ssh into the server ++
     cd /var/www/dbbu
     today=`date '+%Y_%m_%d__%H_%M_%S'`
-    sudo -u postgres pg_dump sagefy > "sagefy-$today.sql"
+    docker exec -it www_postgres_1 pg_dump -U sagefy -a sagefy > "sagefy-$today.sql"
     b2 authorize_account xxx xxxxxxxx  # see dashlane
     b2 sync /var/www/dbbu b2:sagefy-dbbu
 
-TODO update these to scripts to docker-compose
 TODO Set up as a cron job... fix the environment :)
