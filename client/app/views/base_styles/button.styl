@@ -36,7 +36,7 @@ input[type="button"]
     @extend $base-button
     button-background $base-color(90)
     color $base-color(43)
-    box-shadow 0 1px 3px rgba(0, 0, 0, 0.1)
+    box-shadow $box-shadow-light
 
     &:hover, &:focus
         color $base-color(20)
@@ -57,7 +57,7 @@ $button--accent
     @extend $base-button
     button-background $accent-color(50)
     color $accent-color(99)
-    box-shadow 0 1px 3px rgba(0, 0, 0, 0.2)
+    box-shadow $box-shadow-mid
 
     &:hover, &:focus
         color white
@@ -78,7 +78,7 @@ $button--good
     @extend $base-button
     button-background $good-color(90)
     color $good-color(43)
-    box-shadow 0 1px 3px rgba(0, 0, 0, 0.1)
+    box-shadow $box-shadow-light
 
     &:hover, &:focus
         color $good-color(20)
@@ -98,7 +98,7 @@ $button--bad
     @extend $base-button
     button-background $bad-color(90), 3, 2
     color $bad-color(43)
-    box-shadow 0 1px 3px rgba(0, 0, 0, 0.1)
+    box-shadow $box-shadow-light
 
     &:hover, &:focus
         color $bad-color(20)

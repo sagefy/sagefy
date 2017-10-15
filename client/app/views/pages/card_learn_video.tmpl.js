@@ -10,7 +10,7 @@ module.exports = data =>
                 : data.data.site === 'vimeo'
                   ? `https://player.vimeo.com/video/${data.data.video_id}`
                   : '',
-        width: 672,
-        height: 336,
+        width: 13 * 58,
+        height: 13 * 58 * 9 / 16,
         allowfullscreen: true,
     })
