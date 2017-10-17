@@ -262,6 +262,380 @@ cards:
       video_id: DnDjkPVUlos
     - unit: unitOscS
       video_id: iB2N585gEKg
+  page:
+    - unit: unitIntro
+      name: Electronic Music
+      body: >
+        Let's start by asking the most basic question: well, what exactly is electronic music?
+
+        Electronic means a device we operate using an electric current. We often say "acoustic" to mean the opposite of electronic: created without the use of electric current.
+
+        So what's music? Music is an art form of combining and organizing sounds to create something interesting.
+
+        In the modern world, electronic devices reproduce most music we hear. But when we say, "electronic music," we usually mean music that uses electronic devices as a primary source... instead of simply a reproduction of acoustic music.
+
+        The subject of electronic music includes synthesis, sampling, analysis, modification, reproduction, protocols, and systems.
+
+        Let's define each of those.
+
+        Sound synthesis is a process of combining two or more sounds to create a new sound.
+
+        Sound sampling is a technique of taking a small piece of prerecorded sound and reproducing the sound, often with modification.
+
+        Sound analysis is a method of breaking down a sound into smaller components and numbers so we can compare and make decisions based on those things.
+
+        Sound modification is a technique of taking an existing sound and changing the sound.
+
+        Sound reproduction is a technique of taking an existing sound and then outputting the sound in a new format.
+
+        Protocols are standard means of communicating data between components.
+
+        A system is a combination of components that produces a larger result.
+
+        We'll explore more about electronic music in the upcoming units.
+    - unit: unitParams
+      name: Sound Parameters
+      body: >
+        There are five basic parameters of sound: amplitude, frequency, duration, phase, and spectrum. For each parameter, I will define the parameter, define how we measure the parameter, and how we perceive the parameter. Physical parameters and perceptual parameters are different.
+
+        The most basic parameter is amplitude. Amplitude is the intensity of a sound. We measure amplitude in decibels. We perceive amplitude as volume or how loud or soft a sound is.
+
+        The next parameter is frequency. Frequency is the speed of a sound. We measure frequency in hertz, also known as cycles per second. We perceive frequency as pitch, or how high or low a sound is.
+
+        The third parameter is duration. Duration is how long a sound is. We measure duration in time, such as milliseconds and seconds. When duration forms a pattern, we perceive this pattern as rhythm, or the time pattern of the sound.
+
+        The second to last measure is phase. Phase is how much the sound is offset in cycle. We often measure phase in degrees or radians. We perceive phase as indicating the location and direction of a sound. Phase is one of several characteristics that inform our sense of space of sound.
+
+        The last parameter is the spectrum. The spectrum is how amplitude is distributed over a set of frequencies, over time. We measure the spectrum by the sound's components of amplitude, frequency, duration, and phase. We perceive the spectrum as the color of the sound, also known as timbre. For example, color is what makes a clarinet sound different from a violin.
+
+        There are five basic parameters of sound: amplitude, frequency, duration, phase, and spectrum. We perceive them as: volume, pitch, rhythm, space, and color. In upcoming units, we'll talk about how to create sound using and changing these parameters.
+    - unit: unitHuman
+      name: Human Hearing
+      body: >
+        In this unit, I'll discuss the physical capabilities of the human hearing system in regards to the five basic parameters of sound: amplitude, frequency, duration, phase, and spectrum.
+
+        Our hearing ability is very sensitive. In many ways, our hearing has the largest range of perception of any of our senses.
+
+        As we age, our hearing ability declines. Protect your hearing by listening at lower volumes, taking frequent breaks from loud sounds, and use ear plugs in loud environments.
+
+        Because decibel is a relative measure, we talk about decibels in normal earth sound pressure levels, or "dBspl". We can perceive sounds from 0 dBspl to 140 dBspl. Anything above 120 dBspl will cause pain. You should avoid listening to anything over 100 dBspl for more than 15 minutes, as the sound may cause hearing damage. Recommended levels for music listening and mixing are usually 80 to 90 dBspl. Conversational speech is 60 to 70 dBspl. Below 10 dBspl, and our hearing will turn inward, causing us to hear our own heartbeat and breath.
+
+        Most commonly you will hear the frequency range of human hearing is 20 Hz to 20,000 Hz, or 20 kHz. In reality, the upper part of the range is different with each person. Anything over 15 kHz is difficult for us to perceive. Our perception of frequency is not linear. We perceive 20-40 Hz as the same size as 10-20 kHz! We can separate human hearing into 10 "octaves". Our hearing is the most sensitive between 1.5 kHz and 5 kHz, which corresponds with the most important parts of human speech. We do not perceive frequencies evenly. In an upcoming unit, we'll discuss how our sensitivity varies over frequency in amplitude.
+
+        In terms of duration, we can perceive anything over 35 milliseconds in length. Under 35 milliseconds, and while we will still hear the sound, we likely won't notice the sound. Duration and rhythm are the most innate part of music to humans. We use rhythm in our heart beat, breathing, sleep, motor movement, as well as social coordination.
+
+        We use many cues to determine the location of a sound. The overall volume of a sound helps us to determine how close or how far a sound is. Also, sounds further away have reduced high-frequency content. We use the comparative amplitude between our two ears to determine the direction of the sound. Also, a sound reaching one ear slightly faster than the other informs our sense of direction. If a sound moves towards us or away from us, our perception of the pitch of the sound changes over that movement, also known as the Doppler effect. While we are excellent at perceiving distance and side-to-side, we have some difficulty with forward-and-back, and the most difficult axis is above-and-below.
+    - unit: unitCurves
+      name: Hearing Curves
+      body: >
+        We do not perceive sounds evenly over the frequency range. At the same amplitude, we perceive some frequencies as louder than others. We call a graph that shows how our hearing varies over frequency and amplitude, a hearing curve. Often, these hearing curves are shown as equal-loudness contours. Meaning, how would you have to change a sound in order to have the sound appear 'neural' to our ears? Historically, we called these graphs Fletcher-Munson curves, but updated models are available.
+
+        We do not perceive sounds evenly over the frequency range because of two primary reasons. First, our anatomy. The ear is shaped to be more sensitive to certain bands of frequencies. Which leads to the second reason. We are most sensitive to specific bands of frequencies because those bands are more important to us to survive. In particular, the range in which human voices project is our clearest area of hearing.
+
+        There's two ways to interpret this sensitivity. First, frequency. We're particularly poor at hearing frequencies below 100 Hz and above 10,000 Hz. The range between 1.5 kHz and 5 kHz is the area we perceive as the loudest; with the maximum being around 3.5 kHz.
+
+        The second interesting parameter here is amplitude. At the loudest part of our range, 100 dbSpl and above, our sensitivity over frequency has less variation. At our regular hearing level, 60-70 dbSpl, there's a moderate amount of difference in perceived volume. As the sounds become softer, the difference in volume over frequency grows tremendously.
+    - unit: unitDigital
+      name: Digital Representation
+      body: >
+        We represent digital sound quite differently than analog sound. While computers are impressive at doing arithmetic at lightning speeds, the computer must represent sound as numbers instead of physical signals.
+
+        The computer understands sound as a long series of large numbers. We often call this series an "array". Each number represents a specific amplitude for a very small amount of time.
+
+        For album quality audio, each number represents 1 / 44,100th of a second! Each number can range from 0 to 65535. And in computer fashion, each number must be an exact integer.
+
+        The amount of time each sample represents refers to the "sample rate". The most common sample rate is 44,100, also known as 44.1k. We also often use 48k and other rates. This rate is literally the amount of numbers per second.
+
+        The possible range of each number is the "bit depth". 16 bit numbers, or 0 to 65535, are the most common. 24 and 32 bit systems are becoming more regular. Computers often represent numbers in the range of 0 to 2 to the power of some value minus 1. 16 bits means 2 to the power of 16, and we subtract 1 at the top of the range to allow for 0.
+
+        44.1k sample rate and 16 bit depth is way more than sufficient for human listening capabilities. Sometimes we use faster sample rates and larger bit depths so when we modify sounds to the extreme, we don't drop below the needed amounts for human listening.
+    - unit: unitAdc
+      name: Analog to Digital
+      body: >
+        How to we get physical sounds into a digital format?
+
+        We call the process of taking a physical, or "analog", signal to a digital signal "Analog-to-Digital Conversion", or ADC.
+
+        A sound emits from a musical instrument or device.
+        A microphone takes the pressure in the air into a diaphragm.
+        The movement of the diaphragm indicates the change in amplitude over time.
+        The energy from the diaphragm travels to a digital converter.
+        The converter changes the the amplitude over time into a waveform.
+        Sometimes, this digital converter can also provide electric current to the microphone to operate, and in this case we call the converting device a preamp.
+        The digital converter samples the analog waveform from the microphone in a process known as quantification.
+        The digital converter measures the continuous analog signal at regular intervals and converts the samples to an integer representing the amplitude at that moment in time.
+        Finally, the converter sends the array of integers representing the sound into the computer.
+
+        Physical sounds have two areas: compression and rarefaction.
+        In compression, the air molecules are dense, and in rarefaction, the air molecules are spaced apart.
+        So for any given frequency, you need two pieces of data to represent these two stages.
+        You need double the sampling rate as the highest frequency in the sound in order to represent the sound.
+        We can reasonably expect no human can hear frequencies above 22,050 Hz.
+        Therefore, album quality audio has a sampling rate of 44,100 times per second.
+        The idea that the sampling rate needs to be twice the highest audible frequency stems from the Nyquist-Shannon sampling theorem.
+
+        We refer to the process of returning to an analog signal as "Digital-to-Analog Conversion", also known as DAC.
+
+        To go back to a physical sound for playback, a device changes the array of integers back into an analog signal first, and then this analog signal is sent to the speakers.
+        The speakers move their diaphragms to match the analog signal, which creates changes in pressure in the air to create sound.
+    - unit: unitComplex
+      name: Complex Waves
+      body: >
+        The sine wave is the simplest sound in existence.
+
+        In fact, all other sound is simply a combination of multiple sine waves. This idea is known as the Fourier theorem. If we look at the triangle wave, we can see the sine waves make up the triangle wave.
+
+        The most prominent or focal sine wave is known as the fundamental frequency. The fundamental frequency is the pitch we perceive the sound at.
+
+        The other frequencies are what produce the color of the sound. The combination of many sine waves with different frequencies, amplitudes, and phases, all of which change over time, is the spectrum, or what gives the sound color.
+
+        When a sine wave is an integer multiple of the fundamental frequency, we call the wave harmonic. In our triangle wave, all of the frequencies are harmonic.
+
+        When a sine wave is not an integer multiple of the fundamental frequency, we call the wave inharmonic. Inharmonic frequencies often give sounds unique colors.
+
+        When many inharmonic waves surround a single area, we call this area a formant. Importantly, we use the formants to understand speech and emotion.
+
+        We can directly change the individual sine waves within a complex wave. This technique is known as spectral editing.
+    - unit: unitOsc
+      name: Oscillators
+      body: >
+        An oscillator creates sound. The sound an oscillator creates is in a simple, repeating cycle. Different types of oscillators produce different kinds of simple sound waves. The five most basic types of oscillators are sine, triangle, square, rectangle, and sawtooth.
+
+        Sine waves are the simplest sound in the universe. And, sine oscillators are the simplest oscillators. You can create any other oscillator by combining sine oscillators. Sine oscillators take inputs of amplitude and frequency, and sometimes phase. Sometimes sine oscillators are also called circle oscillators.
+
+        Triangle waves are a mathematical combination of sine waves. We make triangle waves from only odd numbered harmonics. This means that above the fundamental frequency, the next is at 3 times the fundamental, then 5 times, and so on. Each of the amplitudes of these is at 1 / (h^2). Triangle waves have a pleasing, gentle sound. We call them "triangle waves" because the shape looks like triangles.
+
+        The square wave is like the triangle wave. We make square waves from only odd numbered harmonics just like the triangle wave. Each of the amplitudes of these is at 1 / h instead of 1 / (h^2). This characteristic means square waves have a fuller sound. We call them "square waves" because the shape looks like boxes with 90 degree angles.
+
+        The rectangle wave is the sister of the square wave. The amplitude ratio stays the same at 1 / h. The duty cycle changes which harmonics the oscillator choses to output. The duty cycle informs the oscillator which harmonics to skip. Rectangle waves do not have a pleasing sound. We use rectangle waves often as inputs to other sound producing and changing modules.
+
+        The sawtooth wave is the richest of the basic oscillators. The sawtooth wave sounds harsh. But, by modifying the sound with filtering, we can produce a wide range of different colors. The amplitude ratio is the same as the square and rectangle wave at 1 / h. But, we include all harmonics, including the even number harmonics. Like the triangle and square wave, we call them "sawtooth waves" because they look like the teeth on a saw.
+
+        These fives types are not the only types of oscillators. There are an infinite number of different types of oscillators, each with different mathematical and sound color properties.
+    - unit: unitNoise
+      name: Noise
+      body: >
+        Noise is a generated random signal. Noise is a collection of signals with random amplitudes and frequencies within specific parameters over time. As our brain has almost nothing to make sense of, we perceive noise different than other sound source. Noise often sounds like percussive instruments. A noise generator is a sound module that creates a noise signal.
+
+        The most common types of noise used are white, pink, and brown.
+
+        White noise is a noise signal where all frequencies have equal amplitude over linear space. For example, 40 Hz to 60 Hz has the same amplitude as 400 Hz to 420 Hz. Recall that humans do not perceive frequencies evenly. Because of this, white noise is harsh to listen to. White noise is  commonly used with a filter to shape the color of the sound.
+
+        Pink noise is a noise signal where the amplitudes are equal over logarithmic space. This means 40Hz and 60Hz have the same amplitude as 400 Hz to 600 Hz. This means the amplitude distribution matches the human perception of frequency ranges. As a result, pink noise is smoother than white noise. Pink noise is often used to simulate natural environments and in reverberation engines.
+
+        Brown noise is a noise signal where the amplitudes are equal over 1/frequency^2. This means brown noise has a soft sound, like a gentle blowing wind.
+
+        There are many types of noise generators beyond the ones mentioned here. Artists use a variety of noise types to add interest to their work.
+    - unit: unitAdd
+      name: Additive Synthesis
+      body: >
+        Sound synthesis is the process of combining two or more sounds. Additive synthesis is a sound generating process. Additive synthesis combines waves in a variety of amplitudes, frequencies, and phases. These waves may change in these properties over time. Often these waves are all sine waves. The purpose of additive synthesis is to replicate an existing color. Or, we can use additive synthesis to explore new sound colors.
+
+        All sounds are many sines waves playing at the same time. Additive synthesis can create any sound possible. In fact, most non-sine oscillators use -- or used -- additive synthesis to generate their sound. For example, the square wave starts with a sine wave at its fundamental frequency. Then, the module adds more sine waves at the odd numbered harmonics at amplitudes of 1 / h. The result is the square wave sound.
+
+        An important feature of additive synthesis that the properties -- amplitude, frequency, and phase -- vary over time. Some additive synthesizers will also add variation in the space of the sound. The beginning, middle, and end of a sound will have a somewhat different colors.
+
+        Additive synthesis is likely the most powerful technique to produce sounds. But, the process can be expensive for the computer to calculate.
+    - unit: unitSub
+      name: Subtractive Synthesis
+      body: >
+        Sound synthesis is the process of combining two or more sounds. Noise is a generated random signal. Noise is a collection of signals with random amplitudes and frequencies within specific parameters over time. A filter is a sound modifying module that reduces or eliminates the amplitude of frequency ranges.
+
+        Subtractive synthesis is a sound generating process. We pass a sound generating module into one or more filter modules. The filter modules remove parts of the signal. The result is a sound with a unique color. We most often use noise signals to start with in subtractive synthesis. Rich sounds, such as sawtooth waves and rectangle waves, can provide interesting starting points as well.
+
+        An example of natural subtractive synthesis is the human voice. When we make the sound "shhh", we change the shape of our mouth, tongue, and throat to soften and remove parts of the otherwise white noise sound.
+
+        Like additive synthesis, the filtering properties -- frequency, amplitude, and phase -- can vary over time. The properties may also vary in space. Subtractive synthesis is often cheaper to calculate than additive synthesis.
+    - unit: unitSample
+      name: Samplers
+      body: >
+        A sample is a short piece of prerecorded sound that we have loaded into the computer's memory. A sampler is a sound generating module that can play back samples.
+
+        A sampler can play the sound back in a variety of ways. Some examples include: playing the sample in reverse, slowing down playback, speeding up playback, or looping sections of the sample. Looping is particularly popular. We can find interesting new rhythms and colors just by changing the start and stop times of the loop.
+
+        Drum machines are an example of a sampler. The drum samples, which are usually less than a second in length, are prerecorded. When the drum machine receives input, it plays a sample. The drum machine can play back the samples in preset or live modified patterns.
+
+        Most early electronic music is in the category of "tape music". Tape music started as taking physical tapes of music and sounds, and cutting them up, and adhering the pieces back together to create a new piece. We can simulate this experience in modern computer software.
+    - unit: unitFilters
+      name: Filters
+      body: >
+        Filtering is the process of reducing or eliminating the amplitude of selected frequencies in the spectrum of a sound signal. Filtering is one of the most important electronic music tools. We use filters to shape sounds, to bring out new colors, and to balance sounds together.
+
+        The four main types of filters are low-pass, high-pass, band-reject, and band-pass. A low-pass filter reduces or eliminates high-frequency content. A high-pass filter reduces or eliminates low-frequency content. A band-reject filter reduces or eliminates content within a specific frequency range. A band-pass filter reduces or eliminates content outside of a specific frequency range. There are many types of filters, these are the four most common categories. We can describe most other filters by these four types of filters.
+
+        A filter typically has three parameters. The first is cutoff, which is the frequency or frequencies where the filtering will begin to occur. The gain is the amount of amplitude that we will impact. In some filters, if there's no gain parameters then the filter is removing the other content. Finally, the third common parameter we call "q", "slope", or "bandwidth". This parameter determines how smooth the transition is from unfiltered to filtered content.
+
+        Filters are often combined with other filters and sound effects. Remember that while you can make a filter with set properties, it is also possible to change these parameters over time. For example, a delay effect may apply filtering to the delayed copies of the sound source. Filtering is the most common sound changing technique we use in electronic music.
+    - unit: unitModulation
+      name: Modulation
+      body: >
+        Modulation is the technique of varying parameters to sound generators and sound modifiers over time. Modulation is important, because without change over time music is boring. We can modulate just about any parameter, just as frequency, amplitude, phase, copies of the source, and so on.
+
+        We can even modulate the entire signal, such as in the case of ring modulation. In ring modulation, a source signal is multiplied by another, simple signal such as a sine wave. This effect can produce dramatic results.
+    - unit: unitLfo
+      name: Low Frequency Oscillators
+      body: >
+        A low frequency oscillator is an oscillator with a frequency below the human range of hearing, below 30 Hz or so. We can't directly hear a low frequency oscillator. A low frequency oscillator can be any wave shape. Most common is the sine wave. We can use square, triangle, rectangle, sawtooth, and just about any other form as a low frequency oscillator. Like any other oscillator, low frequency oscillators have the parameters of shape, amplitude, and frequency.
+
+        The purpose of a low frequency oscillator is to change a parameter, or many parameters, of either a sound generator or sound modifier. For example, we can put a low frequency oscillator as the source of a cutoff frequency to a filter. We will discuss common use cases of low frequency oscillators in the "modulation effects" unit. By changing parameters over time, we can add interest to our music. Change is good!
+    - unit: unitModEffects
+      name: Modulation Effects
+      body: >
+        Common effects that use low-frequency oscillators are vibrato, tremolo, phaser, flange, and chorus. These are bold effects that can add interest to the music. While each has a different sound, they are all based on the principle of modifying a parameter with a low-frequency oscillator.
+
+        Vibrato is the effect of modulating the _frequency_ of a sound source. Opera singers use this technique often on extended notes to maintain the listener's interest. String players use vibrato by quickly sliding their fingers up and down on the string. Vibrato sounds like the sound is oscillating between being slightly darker and slightly brighter. Vibrato has four parameters. First is the wet/dry mix. The dry is the source signal, the wet is the effected signal. The second parameter is delay time. Usually, we don't start vibrato immediately, but after 3 to 8 milliseconds. Another parameter is the depth of the modulation. This is the amplitude of the modulating signal. An increase in depth will cause the signal to fluctuate in a larger range of frequencies. The fourth and final parameter is the modulation rate. This impacts how quickly the vibrato changes from the higher frequency to the lower frequency and back again.
+
+        Tremolo is the effect of modulating the _amplitude_ of a sound source. String players, such as violinists, use tremolo often by shaking their bow on the string. Tremolo sounds like a shaking or rumbling sound. There's two parameters to tremolo, rate and depth. Depth determines the range of change in amplitude. Rate determines how quickly the amplitude changes from high to low and back again.
+
+        Phasers and flange effects modify the _spectrum_ of the sound source over time. Both create a copy of the source signal with a slight delay, between 1 and 20 milliseconds. Then, the effect mixes the "wet" signal with the "dry" signal. The effect on both is similar, adding a 'warbling' sound to the source. Normally these are dramatic effects, but some composers use phasers and flangers more subtly. Like other effects mentioned here, these effects have a wet/dry mix, delay, depth, and rate. Flangers tend to sound more like a natural oscillator. Phasers tend to sound more exotic. This is because flangers cause harmonic frequencies, but phasers cause inharmonic frequencies.
+
+        Chorus is one of the most common effects. Chorus makes the sound source appear to be a group of instruments playing the same part instead of a single instrument. An example would be the difference between a single flute playing a part versus several flutes playing the same part at the same time. Chorus works by making copies of the original sound source. The effect delays each copy in a variety of durations, usually 20-80ms. Also, each delayed copy is slightly changed in pitch as well. Chorus has similar parameters to the other effects listed here: wet/dry, delay, depth (usually less than 10%), and rate (usually less than 10 Hz).
+    - unit: unitAmpModifiers
+      name: Amplitude Modifiers
+      body: >
+        An amplitude modifier impacts the sound source's amplitude. There are many kinds of amplitude modifiers. The most basic is a gain effect. Compressors, expanders, de-essers, and multi-pressors are the most common. Yet, there are a larger range of amplitude changing effects. We use amplitude modifiers to control unwieldy sound sources and to create balance between sound sources.
+
+        Gain is the simplest amplitude modifier. Gain simply changes the overall amplitude of the signal. A -5 dB gain will remove 5 dB from the sound signal at all times.
+
+        Compressors ensure that a sound signal never gets too loud. Compressors work by reducing the proportion of the amplitude over a threshold amplitude. So a sound can be soft, but we will limit the sound in how loud it can get. There are five parameters to compressors. First, is the threshold. We will reduce any amplitude over the threshold. Second, is ratio. The ratio determines how much we will reduce the amplitudes over the threshold. Gain is the third parameter. Sometimes, the compressor can impact the overall volume too much, so gain can restore the overall amplitude. The "knee" parameter determines how quickly the reduction will come into effect. A soft knee create a gradual change. A hard knee is a more noticeable change. Finally compressors have attack and release parameters. These parameters impact how quickly the compressor will respond to changes in amplitude.
+
+        Compressors can be dangerous. While convenient, compressors can cause the music to lose some of its liveliness. I advise erring on the side of using too little compression instead of using too much compression.
+
+        An expander works identical to a compressor, yet the impact of the ratio parameter changes. Instead of decreasing the amplitude, an expander increases the amplitude. We can use this effect when a compressor removed too much signal previously. Or, we can use the effect on drums and percussive instruments to add more pop.
+
+        A de-esser is a special type of compressor for vocals. As the name suggests, a de-esser can target a specific band of frequencies, such as "esss" sounds, and reduce the amplitude on specific ranges. A de-esser is common to give the sound a more natural appearance.
+
+        Finally, a multi-pressor is a collection of individual compressors for specific frequency ranges. So there would be one compressor for bass frequencies, one for low-mids, one for high-mids, and one for high frequencies, for example. We use multi-pressors commonly on the entire output for the music instead of on an individual instrument to help balance the mix.
+    - unit: unitEnvelopes
+      name: Envelopes
+      body: >
+        An envelope is a special type of amplitude modifier that changes amplitude over time. The common purpose of an envelope is to give synthetic sounds natural shapes.
+
+        A natural sound has four stages: attack, decay, sustain, and release. During the attack phase, the sound ramps up from zero amplitude to its highest amplitude. During the decay stage, the sound ramps back down to a somewhat lower amplitude level. The sustain phase holds that amplitude until release. The release phase then returns the amplitude back down to zero.
+
+        We emulate this phenomenon electronically. Attack, decay, sustain, and release. We measure attack, decay, and release in time. We measure sustain in relative amplitude.
+
+        These don't need to be static properties. It can be interesting to change them over time. A slow attack on softer notes, for example.
+
+        Not all envelopes are ADSR envelopes. Some envelopes skip the decay and/or sustain phases. More complex models are also available.
+    - unit: unitEqualization
+      name: Equalization
+      body: >
+        An equalizer is a sound modifying module that helps to balance the frequencies of the incoming signal. The equalizer changes the spectral content of the sound. We build equalizers from a combination of filters and gain. We often use equalizers to make multiple sound sources combine together clearly by avoiding overlapping frequency ranges.
+
+        The typical ranges are: low bass, mid bass, upper bass, low mids, high mids, and highs. Each of these ranges has unique properties for human hearing. For example, too many low mids can make the sound dark and muddy. Too many highs will make the sound harsh.
+
+        An equalizer is essentially a collection of different types of filters. Each filter has the same properties as a normal filter: type, cutoff (or frequency), q (or slope, range), and gain.
+    - unit: unitDistortion
+      name: Distortion
+      body: >
+        Distortion is a sound effect that adds noise to a sound source. Distortion can sound warm, fuzzy, or dirty depending on the type of distortion we use. A classic use is on electric guitar. There are many types of distortion. Traditional distortion is clipping, or overexerting the system, forcing the sound system to add noise. Modern distortion effects often emulate physical modules such as guitar amplifiers.
+
+        Distortion effects vary widely in their parameters, but almost all include a wet/dry mix. Dry is the original signal, wet is the effected signal. Amplitude and frequency are common parameters as well. Amplitude impacts the overall effect of the distortion. Frequency impacts the color of the distortion.
+    - unit: unitDelay
+      name: Delay
+      body: >
+        Delay is a sound changing module that plays the sound source more than once at different times. The delay plays copies of the original sound source at later times. The classic delay effect sounds like an echo (echo, echo). We can use delay to create a sense of ambience, texture, and even rhythm. This simple effect is endless in variation.
+
+        A simple delay plays a second copy of the original sound source at a later time. A feedback delay doesn't just play back a straight copy of the sound source. A feedback delay plays the combination of the original sound source and the previous copies as well. A multitap delay can trigger more than one copy, often within the rhythm of the music.
+
+        Delay effects come in a variety of styles, but have a few common parameters. One parameter is the number of iterations that will play back. Tempo sync is a common feature as well, which lines up the delayed playback to the rhythm of the music. Each iteration has its own parameters, usually duration, gain, and filtering.
+
+        Delay has a relationship to flanger, phaser, and chorus. These modules play back copies of the original sound. The main difference is the duration of the delay. Flanger and phaser have delays of 1-20ms, chorus is usually 20-80ms, while the delay effect is longer than 80ms.
+    - unit: unitReverberation
+      name: Reverberation
+      body: >
+        Reverberation is a natural phenomenon where a sound source reflects off of surfaces, creating a sense of space. Different environments have different types of reverberation. A cathedral is quite different from a small bathroom, for example. In electronic music, we simulate these environments using reverberation modules.
+
+        Reverberation comes in a wide variety of flavors. The simplest reverberation engines are like delay. A spring reverb is a simple effect caused by passing the sound through a spring. A plate reverb is an effect created by passing the sound through a metal plate. We can emulate these simple physical techniques with digital technology. Most reverberation engines use a technique called convolution. In convolution reverberation, we record a noise with its reflections in a physical space. Then, we combine the room information with the source signal. The result is the sound appears to be in that environment.
+
+        Because there are so many types of reverberation engines out there, the parameters are different too. Almost all reverberation engines will allow you to set a wet/dry mix. Dry is the original signal, wet is the effected signal. Predelay is the amount of time between the original source and the start of reverberation. Early reflections are the initial, loudest reverberations. Ratio and depth will impact the number and intensity of the reflections. Decay time sets how long the reverberation will sound for. Room size, density, frequency, and panning all change the color of the reflections and inform the sense of space.
+    - unit: unitFFT
+      name: Fast Fourier Transform
+      body: >
+        Every sound breaks down into a collection of sine waves, each with its own frequency, amplitude, and phase. This is the Fourier theorem.
+
+        Normally, we represent our audio signal as amplitude over time.
+
+        Sometimes, we'd like the frequency information as well. A Fast Fourier Transform, or FFT, breaks down a sound into its component parts. So instead of amplitude over time, we have a series of windows, each with amplitude over frequency. An Inverse Fast Fourier Transform, or IFFT, takes the component parts and puts them back together.
+
+        For a specified range in time, we can change our representation from amplitude over time to amplitude over frequency. We call each of these ranges a "window". A window is usually short, usually 0 to 20ms. A series of windows gives us time, amplitude, and frequency. However, we lose some information with each window. We must decide whether we want more accurate duration or more accurate frequency information. Short windows provide accurate duration but poor frequency. Long windows provide accurate frequency but poor duration.
+
+        So what's so great about the Fast Fourier Transform? First off, we can use FFT to analyze a sound source. We can determine the fundamental frequency of a given sound source. We can detect changes in the frequency content over time.
+
+        We can also change the result of the FFT analysis. Then, we apply an Inverse FFT on the analysis to result in changes of the frequency content of the sound. For example, filters often use FFT. Think of autotune. Morphing of sounds. Compressing audio file size by eliminating unheard frequencies. The applications are truly endless.
+    - unit: unitSpatialization
+      name: Spatialization
+      body: >
+        Panning is the technique of shifting the amplitudes of a sound source between sound channels. Stereo panning is the technique of shifting the amplitudes of a sound source between a left channel and a right channel.
+
+        Spatialization is the technique of setting a sound in three-dimensional space. Natural sounds exist in space, and our brains are experts at determining the location and direction of sounds. Adding spatialization adds curiosity and depth.
+
+        We use many cues to determine the location and direction of a sound. In the sound realm, we use amplitude, phase, time-gap, high-frequency content, and reverberation.
+
+        A close sound is louder, a further away sound is softer.
+
+        If a sound arrives at the left ear faster than the right ear, we perceive the sound as coming from the left. The delay between ears, which informs our sense of space of the sound, we call "Interaural Time Delay". Phase information in the sound also informs our brain of the location and direction.
+
+        A sound close has its full spectrum, while a sound further away loses some of its high frequency content.
+
+        Finally, reverberation informs our sense of space. A closer sound will appear to have less reverberation, while a sound further away will have more reverberation.
+
+        Sometimes, small movements of the head can greatly increase our understanding of the space of the sound. We constantly make small head movements.
+
+        If a sound moves towards us, we perceive the sound as having a higher pitch. If a sound moves away from us, we perceive the sound as having a lower pitch. We call this the Doppler effect.
+
+        There are three dimensions when we set a sound in space: distance, elevation, and azimuth. Distance is how far the sound is from the observer. Elevation is how much above or below the sound is. Azimuth is how much to the left, right, in front, or in back the sound is.
+
+        Binaural audio simulates three-dimensional sound using headphones, which is two channels of audio. Binaural audio works by encoding all the cues of space of sound. Most binaural recordings use a manakin with two specialized microphones inside.
+
+        We can also simulate binaural audio using a Head-Related Transfer Function. A HRTF is a collection of mathematical constructs that simulate space cues on sound sources.
+
+        Another technology that enables spatialization is Ambisonics. In ambisonics, there are four channels of audio: X Y Z and W. We can route to any number of speakers in any arrangement around the observer. Many toolkits will allow the sound designer to set each sound source's distance, elevation, and azimuth. Then the software will automatically set each sound in space and create the four channels. Ambisonics uses mathematical models to route the four channels to the speakers. These models give each sound source a sense of space. With ambisonics, we can scale and spatialize a single recording for anything from 2 speakers to 512 speakers and beyond.
+    - unit: unitSynthesizer
+      name: A Basic Synthesizer
+      body: >
+        Sound synthesis is the process of combining sounds to create new sounds. A synthesizer combines sound creating and modifying modules to create new sounds. Synthesizers come in a large range of styles and purposes. Some synthesizers have a specific purpose, like creating pad sounds or percussive instruments. Some synthesizers are more general purpose.
+
+        For this video, we will discuss a basic two-oscillator synthesizer. There are many other types of synthesizers. Most have a similar base pattern. Recall the five basic properties of sound: amplitude, frequency, phase, duration, and spectrum. Our synthesizer will combine all of these properties.
+
+        You can imagine the input as a MIDI keyboard. Which note I press is the frequency. The effort I press the key with is amplitude. How long I press the key is duration. So we start with frequency, amplitude, and duration.
+
+        Frequency informs our two oscillators. Detuning one of our oscillators slightly can add an interesting effect. Duration and amplitude will feed into our ADSR envelope. Those two things will combine to create shaped notes at the correct pitch. Then, a second set of gain nodes allows us to balance the sound between the two oscillators. A filter can change the color of sound by reducing unpleasant frequency content. Then, we can set the sound in space with panning. Finally, we end at a gain node, so we can mix this synthesizer with other instruments. Its easy to expand on this very basic synthesizer. Adding effects such as delay, reverb, distortion, and compression can add interest. Using low-frequency oscillators can add continuous change to our sound, adding depth.
+    - unit: unitMixers
+      name: Mixers
+      body: >
+        A mixer is a module that combines many sound sources.
+
+        Each sound source is in a track. Each track has an input, a gain module with a slider, and a visual meter of amplitude. Some mixers also include filters, amplitude modifiers, panning, or other effects as options per track. Some mixers allow us to change their parameters over time. Even more, some mixers allow for advanced signal routing functions. The purpose of these additional features is to balance the sound sources to create a pleasant or interesting overall result.
+
+        A mixer can be any of analog hardware, digital hardware, or software device. Within a digital audio workstation, the mixer is usually software. Sometimes mixers are also known as mixing consoles.
+    - unit: unitMonoPoly
+      name: Monophony and Polyphony
+      body: >
+        Monophony is a capability of an instrument meaning: can create either zero or one sounds at a given time. Polyphony is a capability of an instrument meaning: the instrument can create multiple sounds at the same time. For example, a bassoon is a monophonic instrument because the player can only have one sound at a time. A piano is polyphonic because on a piano we can play multiple notes at the same time.
+
+        Polyphonic instruments have a number of voices. The number of voices determines how many sounds the instrument can create at the same time. If we signal a note past the maximum, then either the new note won't play or the oldest note cuts out.
+
+        Polyphony takes extra consideration when building a synthesizer or other sound module. Normally, polyphony means we need to clone several modules in our synthesizer each time we receive a note.
+    - unit: unitMidi
+      name: MIDI, Musical Instrument Digital Interface
+      body: >
+        MIDI, or Musical Instrument Digital Interface, is a protocol for communicating data between music and sound devices. The MIDI Manufacturers created the standard in 1983.
+
+        MIDI has two things: channels and events. Each channel contains events that specify note-on and off, pitch, and volume. Some channels may also carry events that specify control messages for panning, vibrato, cues, and tempo.
+
+        MIDI allows for one device to specify input parameters, while another device interprets those parameters and creates sound. An input may be a keyboard, sequencer, or drum pad. An output may be a synthesizer, a sampler, a drum machine, or a computer. MIDI interfaces may also route the information across several input and output devices. Normally, the OUT of one device is connected to the IN of another device. We can also daisy chain devices. Daisy chaining means that we can pass data through, creating a flow through multiple devices.
+
+        All messages in MIDI are 8-bit. That means each message must be an integer between 0 and 127. Each connection in a MIDI system may carry sixteen channels. The MIDI channels index at 0. So the channels are 0 through 15. As you can imagine, these limitations were practical for 1983. But, for many of today's systems, MIDI's limits don't allow a great range of expression.
+    - unit: unitOscS
+      name: OSC, Open Sound Control
+      body: >
+        Open sound control is a protocol for communicating music and sound data between devices. Many consider OSC to be a successor or complement to MIDI. Open Sound Control expands on the capability of MIDI. With OSC we are almost unlimited in how we can communicate between devices.
+
+        There is only one channel in Open Sound Control. However, we can create many events at the same time. Each event has a few properties: the time, an address, a type, and a value. The address serves the purpose of a MIDI channel. Addresses allow us to route events to the matching device. The type tells us the parameter involved, such as pitch, volume, or any other parameter we desire. Unlike MIDI, we are not limited to integers between 0 and 127. Instead, we can use an integer, a floating point number, words, or arbitrary data such as audio or video. Floating point numbers allow an almost unlimited range, usually between 0 and 1. So we can specific 0.5 or 0.498 or almost any value we'd like.
+
+        Open Sound Control allows us to communicate between devices with very few limitations. While MIDI is still dominant, we can use OSC in situations where we need more flexibility and greater scale.
   choice:
     - unit: unitIntro
       body: What does "electronic" mean?

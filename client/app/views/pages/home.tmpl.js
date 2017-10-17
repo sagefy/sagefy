@@ -87,21 +87,30 @@ module.exports = data => {
                       h2('Why learn with Sagefy?'),
                       ul(
                           { className: 'home__ul--why' },
-                          li(w(icon('learn')), em(' Learn any subject.')),
+                          li(
+                              w(icon('learn')),
+                              span(' Learn any subject.')
+                          ),
                           li(
                               w(icon('create')),
-                              em(' Create and edit any content.')
+                              span(' Create and edit any content.')
                           ),
                           li(
                               w(icon('fast')),
-                              em(' Skip what you already know.')
+                              span(' Skip what you already know.')
                           ),
                           li(
                               w(icon('grow')),
-                              em(' Build up to where you need to be.')
+                              span(' Build up to where you need to be.')
                           ),
-                          li(w(icon('search')), em(' Choose your own path.')),
-                          li(w(icon('topic')), em(' Discussion built in.'))
+                          li(
+                              w(icon('search')),
+                              span(' Choose your own path.')
+                          ),
+                          li(
+                              w(icon('topic')),
+                              span(' Discussion built in.')
+                          )
                       ),
                       cta
                   ),
