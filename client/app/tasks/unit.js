@@ -89,4 +89,26 @@ module.exports = tasks.add({
             })
         })
     },
+
+    getMyRecentUnits() {
+        dispatch({ type: 'GET_MY_RECENT_UNITS' })
+        return request({
+            method: 'GET',
+            url: '/s/units:get_my_recently_created',
+            data: {},
+        })
+            .then((response) => {
+                dispatch({
+                    type: 'SET_MY_RECENT_UNITS',
+                    units: response.units,
+                })
+            })
+            .catch((errors) => {
+                dispatch({
+                    type: 'SET_ERRORS',
+                    message: 'get my recent units failure',
+                    errors,
+                })
+            })
+    },
 })

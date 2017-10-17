@@ -105,7 +105,10 @@ A writing card prompts the learner to write something. Similar in concept to a m
 
 - body: Prompt (Markdown)
 - max_characters: The maximum number of characters a learner may enter. Defaults to 0, which means no limit.
-- rubric: ???
+- rubric:
+    - (many) body: Description of the item and expected results.
+    - value: How much weight this item gets.
+    - scoring: ??? Scoring options for item.
 
 ### Upload Card
 

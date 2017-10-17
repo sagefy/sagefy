@@ -1,12 +1,14 @@
 from modules.util import extend
 from modules.validations import is_required, is_string
+from schemas.card import schema as card_schema
 
-card_schema = {}  # TODO-3 import card_schema
 
 schema = extend({}, card_schema, {
     'fields': {
-        'body': {
-            'validate': (is_required, is_string,)
+        'data': {
+            'body': {
+                'validate': (is_required, is_string,)
+            },
         },
     }
 })

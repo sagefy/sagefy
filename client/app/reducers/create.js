@@ -90,6 +90,11 @@ module.exports = function create(state = {}, action = { type: '' }) {
         state.myRecentSubjects = action.subjects
         return state
     }
+    if (action.type === 'SET_MY_RECENT_UNITS') {
+        state = shallowCopy(state)
+        state.myRecentUnits = action.units
+        return state
+    }
     if (action.type === 'CREATE_CHOOSE_SUBJECT_FOR_UNITS') {
         state = shallowCopy(state)
         state.selectedSubject = {

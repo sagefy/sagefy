@@ -22,6 +22,7 @@ const routes = [
     { path: '/search', task: 'openSearch' },
     { path: '/recommended_subjects', task: 'getRecommendedSubjects' },
     { path: '/create/unit/find', task: 'openFindSubjectForUnits' },
+    { path: '/create/card/find', task: 'openFindUnitForCards' },
 ]
 
 module.exports = tasks.add({
@@ -121,4 +122,8 @@ module.exports = tasks.add({
     openFindSubjectForUnits() {
         return tasks.getMyRecentSubjects()
     },
+
+    openFindUnitForCards() {
+        return tasks.getMyRecentUnits()
+    }
 })
