@@ -125,5 +125,5 @@ module.exports = tasks.add({
 
     openFindUnitForCards() {
         return tasks.getMyRecentUnits()
-    }
+    },
 })
