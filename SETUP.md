@@ -72,6 +72,7 @@ How to deploy the latest master:
     cd /var/www
     ++ back up the database ++
     git pull origin master
+    cd client
     yarn run deploy
     docker-compose restart server
     docker-compose restart client
