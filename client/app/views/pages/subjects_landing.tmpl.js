@@ -198,7 +198,7 @@ module.exports = (data) => {
                     )
                 ),
                 li(
-                    h3('Complex Techniques'),
+                    h3('Systems'),
                     ul(
                         li(
                             strong('Fast Fourier Transform'),
@@ -208,6 +208,32 @@ module.exports = (data) => {
                             strong('Spatialization'),
                             ': Describe acoustic panning and spatialization.'
                         ),
+                        li(
+                            strong('Basic Synthesizer'),
+                            ': Describe a basic synthesizer configuration.'
+                        ),
+                        li(
+                            strong('Mixers'),
+                            ': Describe a mixer.'
+                        ),
+                        li(
+                            strong('Monophony and Polyphony'),
+                            ': Describe polyphonic synthesis.'
+                        ),
+                        li(
+                            strong('Musical Instrument Digital Interface'),
+                            ': Describe the basics of the MIDI protocol.'
+                        ),
+                        li(
+                            strong('Open Sound Control'),
+                            ': Describe the basics of the OSC protocol.'
+                        )
+                    )
+                ),
+                li(
+                    h3('Complex Techniques'),
+                    ul(
+
                         li(
                             strong('Frequency Modulation Synthesis'),
                             small(' Coming soon!'),
@@ -237,28 +263,6 @@ module.exports = (data) => {
                             strong('Vocoding'),
                             small(' Coming soon!'),
                             ': Describe vocoding.'
-                        )
-                    )
-                ),
-                li(
-                    h3('Systems'),
-                    ul(
-                        li(
-                            strong('Basic Synthesizer'),
-                            ': Describe a basic synthesizer configuration.'
-                        ),
-                        li(strong('Mixers'), ': Describe a mixer.'),
-                        li(
-                            strong('Monophony and Polyphony'),
-                            ': Describe polyphonic synthesis.'
-                        ),
-                        li(
-                            strong('Musical Instrument Digital Interface'),
-                            ': Describe the basics of the MIDI protocol.'
-                        ),
-                        li(
-                            strong('Open Sound Control'),
-                            ': Describe the basics of the OSC protocol.'
                         )
                     )
                 )
