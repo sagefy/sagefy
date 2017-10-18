@@ -161,8 +161,7 @@ module.exports = data => {
                           { className: 'home__ul--popular-subjects' },
                           li(
                               previewSubjectHead({
-                                  url:
-                                      '/subjects/JAFGYFWhILcsiByyH2O9frcU/landing',
+                                  url: '/subjects/UIe3mx3UTQKHDG2zLyHI5w/landing',
                                   name: 'An Introduction to Electronic Music',
                                   body:
                                       'A small taste of the basics of electronic music. Learn the concepts behind creating and modifying sounds in an electronic music system. Learn the ideas behind the tools and systems we use to create electronic music.',
