@@ -266,31 +266,51 @@ cards:
     - unit: unitIntro
       name: Electronic Music
       body: >
+        # What is Electronic Music?
+
         Let's start by asking the most basic question: well, what exactly is electronic music?
 
         Electronic means a device we operate using an electric current. We often say "acoustic" to mean the opposite of electronic: created without the use of electric current.
 
+        !!01-what-is-electronic-music.002.jpeg
+
         So what's music? Music is an art form of combining and organizing sounds to create something interesting.
+
+        !!01-what-is-electronic-music.003.jpeg
 
         In the modern world, electronic devices reproduce most music we hear. But when we say, "electronic music," we usually mean music that uses electronic devices as a primary source... instead of simply a reproduction of acoustic music.
 
-        The subject of electronic music includes synthesis, sampling, analysis, modification, reproduction, protocols, and systems.
+        # What topics does Electronic Music Cover?
 
-        Let's define each of those.
+        The subject of electronic music includes synthesis, sampling, analysis, modification, reproduction, protocols, and systems. Let's define each of those.
 
         Sound synthesis is a process of combining two or more sounds to create a new sound.
 
+        !!01-what-is-electronic-music.006.jpeg
+
         Sound sampling is a technique of taking a small piece of prerecorded sound and reproducing the sound, often with modification.
+
+        !!01-what-is-electronic-music.007.jpeg
 
         Sound analysis is a method of breaking down a sound into smaller components and numbers so we can compare and make decisions based on those things.
 
+        !!01-what-is-electronic-music.008.jpeg
+
         Sound modification is a technique of taking an existing sound and changing the sound.
+
+        !!01-what-is-electronic-music.009.jpeg
 
         Sound reproduction is a technique of taking an existing sound and then outputting the sound in a new format.
 
+        !!01-what-is-electronic-music.010.jpeg
+
         Protocols are standard means of communicating data between components.
 
+        !!01-what-is-electronic-music.011.jpeg
+
         A system is a combination of components that produces a larger result.
+
+        !!01-what-is-electronic-music.012.jpeg
 
         We'll explore more about electronic music in the upcoming units.
     - unit: unitParams
@@ -298,15 +318,37 @@ cards:
       body: >
         There are five basic parameters of sound: amplitude, frequency, duration, phase, and spectrum. For each parameter, I will define the parameter, define how we measure the parameter, and how we perceive the parameter. Physical parameters and perceptual parameters are different.
 
+        !!02-sound-parameters.007.jpeg
+
+        # Amplitude
+
         The most basic parameter is amplitude. Amplitude is the intensity of a sound. We measure amplitude in decibels. We perceive amplitude as volume or how loud or soft a sound is.
+
+        !!02-sound-parameters.002.jpeg
+
+        # Frequency
 
         The next parameter is frequency. Frequency is the speed of a sound. We measure frequency in hertz, also known as cycles per second. We perceive frequency as pitch, or how high or low a sound is.
 
+        !!02-sound-parameters.003.jpeg
+
+        # Duration
+
         The third parameter is duration. Duration is how long a sound is. We measure duration in time, such as milliseconds and seconds. When duration forms a pattern, we perceive this pattern as rhythm, or the time pattern of the sound.
+
+        !!02-sound-parameters.004.jpeg
+
+        # Phase
 
         The second to last measure is phase. Phase is how much the sound is offset in cycle. We often measure phase in degrees or radians. We perceive phase as indicating the location and direction of a sound. Phase is one of several characteristics that inform our sense of space of sound.
 
+        !!02-sound-parameters.005.jpeg
+
+        # Spectrum
+
         The last parameter is the spectrum. The spectrum is how amplitude is distributed over a set of frequencies, over time. We measure the spectrum by the sound's components of amplitude, frequency, duration, and phase. We perceive the spectrum as the color of the sound, also known as timbre. For example, color is what makes a clarinet sound different from a violin.
+
+        !!02-sound-parameters.006.jpeg
 
         There are five basic parameters of sound: amplitude, frequency, duration, phase, and spectrum. We perceive them as: volume, pitch, rhythm, space, and color. In upcoming units, we'll talk about how to create sound using and changing these parameters.
     - unit: unitHuman
@@ -316,13 +358,27 @@ cards:
 
         Our hearing ability is very sensitive. In many ways, our hearing has the largest range of perception of any of our senses.
 
+        !!03-human-hearing.002.jpeg
+
         As we age, our hearing ability declines. Protect your hearing by listening at lower volumes, taking frequent breaks from loud sounds, and use ear plugs in loud environments.
+
+        # Amplitude
 
         Because decibel is a relative measure, we talk about decibels in normal earth sound pressure levels, or "dBspl". We can perceive sounds from 0 dBspl to 140 dBspl. Anything above 120 dBspl will cause pain. You should avoid listening to anything over 100 dBspl for more than 15 minutes, as the sound may cause hearing damage. Recommended levels for music listening and mixing are usually 80 to 90 dBspl. Conversational speech is 60 to 70 dBspl. Below 10 dBspl, and our hearing will turn inward, causing us to hear our own heartbeat and breath.
 
+        !! 03-human-hearing.004.jpeg
+
+        # Frequency
+
         Most commonly you will hear the frequency range of human hearing is 20 Hz to 20,000 Hz, or 20 kHz. In reality, the upper part of the range is different with each person. Anything over 15 kHz is difficult for us to perceive. Our perception of frequency is not linear. We perceive 20-40 Hz as the same size as 10-20 kHz! We can separate human hearing into 10 "octaves". Our hearing is the most sensitive between 1.5 kHz and 5 kHz, which corresponds with the most important parts of human speech. We do not perceive frequencies evenly. In an upcoming unit, we'll discuss how our sensitivity varies over frequency in amplitude.
 
+        !!03-human-hearing.005.jpeg
+
+        # Duration
+
         In terms of duration, we can perceive anything over 35 milliseconds in length. Under 35 milliseconds, and while we will still hear the sound, we likely won't notice the sound. Duration and rhythm are the most innate part of music to humans. We use rhythm in our heart beat, breathing, sleep, motor movement, as well as social coordination.
+
+        # Space
 
         We use many cues to determine the location of a sound. The overall volume of a sound helps us to determine how close or how far a sound is. Also, sounds further away have reduced high-frequency content. We use the comparative amplitude between our two ears to determine the direction of the sound. Also, a sound reaching one ear slightly faster than the other informs our sense of direction. If a sound moves towards us or away from us, our perception of the pitch of the sound changes over that movement, also known as the Doppler effect. While we are excellent at perceiving distance and side-to-side, we have some difficulty with forward-and-back, and the most difficult axis is above-and-below.
     - unit: unitCurves
@@ -330,9 +386,15 @@ cards:
       body: >
         We do not perceive sounds evenly over the frequency range. At the same amplitude, we perceive some frequencies as louder than others. We call a graph that shows how our hearing varies over frequency and amplitude, a hearing curve. Often, these hearing curves are shown as equal-loudness contours. Meaning, how would you have to change a sound in order to have the sound appear 'neural' to our ears? Historically, we called these graphs Fletcher-Munson curves, but updated models are available.
 
+        !!04-hearing-curves.002.jpeg
+
         We do not perceive sounds evenly over the frequency range because of two primary reasons. First, our anatomy. The ear is shaped to be more sensitive to certain bands of frequencies. Which leads to the second reason. We are most sensitive to specific bands of frequencies because those bands are more important to us to survive. In particular, the range in which human voices project is our clearest area of hearing.
 
+        !!04-hearing-curves.003.jpeg
+
         There's two ways to interpret this sensitivity. First, frequency. We're particularly poor at hearing frequencies below 100 Hz and above 10,000 Hz. The range between 1.5 kHz and 5 kHz is the area we perceive as the loudest; with the maximum being around 3.5 kHz.
+
+        !!04-hearing-curves.004.jpeg
 
         The second interesting parameter here is amplitude. At the loudest part of our range, 100 dbSpl and above, our sensitivity over frequency has less variation. At our regular hearing level, 60-70 dbSpl, there's a moderate amount of difference in perceived volume. As the sounds become softer, the difference in volume over frequency grows tremendously.
     - unit: unitDigital
@@ -340,11 +402,25 @@ cards:
       body: >
         We represent digital sound quite differently than analog sound. While computers are impressive at doing arithmetic at lightning speeds, the computer must represent sound as numbers instead of physical signals.
 
+        !!05-digital-representation.002.jpeg
+
+        # Representation
+
         The computer understands sound as a long series of large numbers. We often call this series an "array". Each number represents a specific amplitude for a very small amount of time.
+
+        !!05-digital-representation.003.jpeg
 
         For album quality audio, each number represents 1 / 44,100th of a second! Each number can range from 0 to 65535. And in computer fashion, each number must be an exact integer.
 
+        !!05-digital-representation.003.jpeg
+
+        # Sample Rate
+
         The amount of time each sample represents refers to the "sample rate". The most common sample rate is 44,100, also known as 44.1k. We also often use 48k and other rates. This rate is literally the amount of numbers per second.
+
+        # Bit Depth
+
+        !! 05-digital-representation.005.jpeg
 
         The possible range of each number is the "bit depth". 16 bit numbers, or 0 to 65535, are the most common. 24 and 32 bit systems are becoming more regular. Computers often represent numbers in the range of 0 to 2 to the power of some value minus 1. 16 bits means 2 to the power of 16, and we subtract 1 at the top of the range to allow for 0.
 
@@ -356,6 +432,8 @@ cards:
 
         We call the process of taking a physical, or "analog", signal to a digital signal "Analog-to-Digital Conversion", or ADC.
 
+        # Analog to Digital
+
         A sound emits from a musical instrument or device.
         A microphone takes the pressure in the air into a diaphragm.
         The movement of the diaphragm indicates the change in amplitude over time.
@@ -366,6 +444,10 @@ cards:
         The digital converter measures the continuous analog signal at regular intervals and converts the samples to an integer representing the amplitude at that moment in time.
         Finally, the converter sends the array of integers representing the sound into the computer.
 
+        !!06-analog-to-digital.002.jpeg
+
+        # Sound in Air, Humans
+
         Physical sounds have two areas: compression and rarefaction.
         In compression, the air molecules are dense, and in rarefaction, the air molecules are spaced apart.
         So for any given frequency, you need two pieces of data to represent these two stages.
@@ -374,28 +456,54 @@ cards:
         Therefore, album quality audio has a sampling rate of 44,100 times per second.
         The idea that the sampling rate needs to be twice the highest audible frequency stems from the Nyquist-Shannon sampling theorem.
 
-        We refer to the process of returning to an analog signal as "Digital-to-Analog Conversion", also known as DAC.
+        !!06-analog-to-digital.003.jpeg
+
+        # Returning to Analog
+
+         We refer to the process of returning to an analog signal as "Digital-to-Analog Conversion", also known as DAC.
 
         To go back to a physical sound for playback, a device changes the array of integers back into an analog signal first, and then this analog signal is sent to the speakers.
         The speakers move their diaphragms to match the analog signal, which creates changes in pressure in the air to create sound.
+
+        !!06-analog-to-digital.005.jpeg
     - unit: unitComplex
       name: Complex Waves
       body: >
         The sine wave is the simplest sound in existence.
 
+        !!07-complex-waves.002.jpeg
+
+        # The Composition of Sound
+
         In fact, all other sound is simply a combination of multiple sine waves. This idea is known as the Fourier theorem. If we look at the triangle wave, we can see the sine waves make up the triangle wave.
+
+        !!07-complex-waves.003.jpeg
 
         The most prominent or focal sine wave is known as the fundamental frequency. The fundamental frequency is the pitch we perceive the sound at.
 
+        !!07-complex-waves.004.jpeg
+
         The other frequencies are what produce the color of the sound. The combination of many sine waves with different frequencies, amplitudes, and phases, all of which change over time, is the spectrum, or what gives the sound color.
+
+        !!07-complex-waves.005.jpeg
+
+        # Harmonics and Inharmonics
 
         When a sine wave is an integer multiple of the fundamental frequency, we call the wave harmonic. In our triangle wave, all of the frequencies are harmonic.
 
+        !!07-complex-waves.006.jpeg
+
         When a sine wave is not an integer multiple of the fundamental frequency, we call the wave inharmonic. Inharmonic frequencies often give sounds unique colors.
+
+        !!07-complex-waves.007.jpeg
 
         When many inharmonic waves surround a single area, we call this area a formant. Importantly, we use the formants to understand speech and emotion.
 
+        !!07-complex-waves.008.jpeg
+
         We can directly change the individual sine waves within a complex wave. This technique is known as spectral editing.
+
+        !!07-complex-waves.009.jpeg
     - unit: unitOsc
       name: Oscillators
       body: >
