@@ -255,6 +255,9 @@ module.exports = data => {
                     a({ href: 'https://stories.sagefy.org/' }, 'Stories (Blog)')
                 ),
                 li(
+                    a({ href: 'http://newsletter.sagefy.org/up' }, 'Updates')
+                ),
+                li(
                     a(
                         {
                             href:

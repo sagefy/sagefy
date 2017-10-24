@@ -16,13 +16,14 @@ Sagefy uses learning science research in its [Data Structure](Data-Structure) an
 
 For more information, watch this 3 minute [YouTube video].
 
-- [Site], [Docs], [Twitter], [Gitter], [Setup]
+- [Site], [Docs], [Twitter], [Updates], [Gitter], [Setup]
 
 [YouTube video]: https://youtu.be/gFn4Q9tx7Qs
 [Site]: https://sagefy.org
-[Twitter]: https://twitter.com/sagefyorg
-[Gitter]: https://gitter.im/heiskr/sagefy
 [Docs]: https://docs.sagefy.org
+[Twitter]: https://twitter.com/sagefyorg
+[Updates]: http://newsletter.sagefy.org/up
+[Gitter]: https://gitter.im/heiskr/sagefy
 [Setup]: https://github.com/heiskr/sagefy/blob/master/SETUP.md
 
 All contents in this project are licensed under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0).
