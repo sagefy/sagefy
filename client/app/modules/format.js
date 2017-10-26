@@ -52,11 +52,7 @@ function inline(s) {
     }
     if (s[startIndex] === '!') {
         const endIndex = startIndex + s.substring(startIndex).indexOf(')')
-        console.log('###', s)
-        console.log('s', startIndex)
-        console.log('e', endIndex)
         const match = INLINE_IMAGE_RE.exec(s)
-        console.log('m', match)
         if (!match) {
             return [
                 s.substring(0, endIndex),
