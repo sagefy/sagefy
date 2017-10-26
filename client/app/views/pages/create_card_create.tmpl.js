@@ -3,6 +3,7 @@ const { cardWizard } = require('./create_shared.fn')
 const { extend } = require('../../modules/utilities')
 const cardSchema = require('../../schemas/card')
 const videoCardSchema = require('../../schemas/cards/video_card')
+const pageCardSchema = require('../../schemas/cards/page_card')
 const choiceCardSchema = require('../../schemas/cards/choice_card')
 const form = require('../components/form.tmpl')
 const {
@@ -25,7 +26,7 @@ const allKindsFields = [
     {
         label: 'Card Kind',
         name: 'kind',
-        options: [{ label: 'Video' }, { label: 'Choice' }],
+        options: [{ label: 'Video' }, { label: 'Choice' }, { label: 'Page' }],
         inline: true,
     },
 ]
@@ -52,6 +53,20 @@ const videoFields = allKindsFields.concat([
         type: 'submit',
         name: 'submit',
         label: 'Create Video Card',
+        icon: 'create',
+    },
+])
+
+const pageFields = allKindsFields.concat([
+    {
+        label: 'Body',
+        name: 'data.body',
+        description: 'Format with: _ ** # ![]().',
+    },
+    {
+        type: 'submit',
+        name: 'submit',
+        label: 'Create Page Card',
         icon: 'create',
     },
 ])
@@ -97,6 +112,10 @@ videoFields.forEach((field, index) => {
     videoFields[index] = extend({}, videoFields[field.name] || {}, field)
 })
 
+pageFields.forEach((field, index) => {
+    pageFields[index] = extend({}, pageFields[field.name] || {}, field)
+})
+
 choiceFields.forEach((field, index) => {
     choiceFields[index] = extend({}, choiceFields[field.name] || {}, field)
 })
@@ -107,13 +126,21 @@ module.exports = function createCardCreate(data) {
 
     const fields =
         cardKind === 'video'
-            ? videoFields
-            : cardKind === 'choice' ? choiceFields : allKindsFields
+        ? videoFields
+        : cardKind === 'page'
+        ? pageFields
+        : cardKind === 'choice'
+        ? choiceFields
+        : allKindsFields
 
     const schema =
         cardKind === 'video'
-            ? videoCardSchema
-            : cardKind === 'choice' ? choiceCardSchema : cardSchema
+        ? videoCardSchema
+        : cardKind === 'page'
+        ? pageCardSchema
+        : cardKind === 'choice'
+        ? choiceCardSchema
+        : cardSchema
 
     const instanceFields = createFieldsData({
         schema,

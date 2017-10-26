@@ -1,6 +1,7 @@
 from random import shuffle
 from schemas.card import schema as card_schema
 from schemas.cards.video_card import schema as video_card_schema
+from schemas.cards.page_card import schema as page_card_schema
 from schemas.cards.choice_card import schema as choice_card_schema
 from copy import deepcopy
 from database.util import deliver_fields
@@ -14,6 +15,8 @@ def get_card_schema(data):
     if 'kind' in data:
         if data['kind'] == 'video':
             return video_card_schema
+        if data['kind'] == 'page':
+            return page_card_schema
         if data['kind'] == 'choice':
             return choice_card_schema
 

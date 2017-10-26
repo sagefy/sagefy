@@ -3,7 +3,6 @@ const {
     div,
     a,
     iframe,
-    p,
     ul,
     li,
     strong,
@@ -19,6 +18,7 @@ const {
     previewTags,
 } = require('./preview_shared.fn')
 const icon = require('./icon.tmpl')
+const format = require('../../modules/format')
 // TODO-2 show diff option
 
 module.exports = function previewCardContent({
@@ -33,7 +33,7 @@ module.exports = function previewCardContent({
         video_id,
         site,
         // choice fields
-        body,
+        body, // also for page kind
         options, // [{correct, value, feedback}]
         order,
         maxOptionsToShow,
@@ -62,7 +62,7 @@ module.exports = function previewCardContent({
                 allowfullscreen: true,
             })
             : null,
-        body ? p(body) : null,
+        body ? div(format(body, { highestHeading: 2 })) : null,
         options && options.length
             ? ul(
                   options.map(option =>

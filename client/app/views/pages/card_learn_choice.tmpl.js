@@ -1,11 +1,12 @@
 const { div, ul, li, input, label } = require('../../modules/tags')
+const format = require('../../modules/format')
 
 module.exports = (data, mode) => {
     const { body, options } = data.data
     const disabled = mode === 'next-please'
 
     return [
-        div(body),
+        div(format(body)),
         ul(
             { className: 'options card-learn__options' },
             options.map(option =>
@@ -26,7 +27,7 @@ module.exports = (data, mode) => {
                             htmlFor: option.id,
                             disabled: disabled,
                         },
-                        option.value
+                        format(option.value)
                     )
                 )
             )

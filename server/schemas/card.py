@@ -11,10 +11,9 @@ collaborate with a small group to tackle a challenge,
 or create other cards.
 """
 
-assessment_kinds = ('choice', 'number', 'match', 'formula',
-                    'writing', 'upload', 'embed')
+assessment_kinds = ('choice',)
 
-asynchronous_kinds = ('writing', 'upload', 'embed')
+asynchronous_kinds = tuple()
 
 schema = extend({}, entity_schema, {
     'tablename': 'cards',
@@ -28,7 +27,7 @@ schema = extend({}, entity_schema, {
         },
         'kind': {
             'validate': (is_required, is_string,
-                         (is_one_of, 'video', 'choice')),
+                         (is_one_of, 'video', 'page', 'choice')),
         },
         'data': {
             'validate': (is_required, is_dict,),

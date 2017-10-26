@@ -6,6 +6,7 @@ const icon = require('../components/icon.tmpl')
 
 const kindTmpl = {}
 kindTmpl.video = require('./card_learn_video.tmpl')
+kindTmpl.page = require('./card_learn_page.tmpl')
 kindTmpl.choice = require('./card_learn_choice.tmpl')
 
 module.exports = (data) => {
@@ -19,7 +20,7 @@ module.exports = (data) => {
     const pLearned = data.unitLearned && data.unitLearned[card.unit_id]
 
     let mode
-    if (card.kind === 'video') {
+    if (card.kind === 'video' || card.kind === 'page') {
         mode = 'next-please'
     } else if (card.kind === 'choice') {
         if (isNumber(data.cardResponse.score)) {
@@ -82,6 +83,9 @@ module.exports = (data) => {
 const kind = (card, mode) => {
     if (card.kind === 'video') {
         return kindTmpl.video(card, mode)
+    }
+    if (card.kind === 'page') {
+        return kindTmpl.page(card, mode)
     }
     if (card.kind === 'choice') {
         return kindTmpl.choice(card, mode)

@@ -30,4 +30,11 @@ module.exports = broker.add({
         }
         tasks.respondToCard(el.id, {}, true)
     },
+
+    'click #card-learn.page .continue'(e, el) {
+        if (e) {
+            e.preventDefault()
+        }
+        tasks.respondToCard(el.id, {}, true)
+    },
 })
