@@ -8,17 +8,19 @@ db_conn = make_db_connection()
 users = list_users(db_conn, {})
 
 for user in users:
-    send_mail(
-        subject='Welcome to Sagefy',
-        recipient=user['email'],
-        body="""
-        Welcome to Sagefy!
+    print('email', user.get('email'))
+    if user.get('email'):
+        send_mail(
+            subject='Welcome to Sagefy',
+            recipient=user['email'],
+            body="""
+            Welcome to Sagefy!
 
-        If you are interested in biweekly updates on Sagefy's progress,
-        sign up at http://newsletter.sagefy.org/up
+            If you are interested in biweekly updates on Sagefy's progress,
+            sign up at http://newsletter.sagefy.org/up
 
-        Thank you!
-        """
-    )
+            Thank you!
+            """
+        )
 
 close_db_connection(db_conn)
