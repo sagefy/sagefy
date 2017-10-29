@@ -188,7 +188,7 @@ def list_users(db_conn, params):
     """
 
     query = """
-        SELECT id
+        SELECT *
         FROM users
         ORDER BY created DESC;
         /* TODO OFFSET LIMIT */
