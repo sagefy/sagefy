@@ -34,7 +34,7 @@
     "cookie-parser": "1.4.3",
     "express": "4.14.0",
     "font-awesome": "4.5.0",
-    "normalize.css": "3.0.3",
+    "normalize.css": "7.0.0",
     "vdom-to-html": "2.3.0",
     "vdom-virtualize": "2.0.0",
     "virtual-dom": "2.1.1"
