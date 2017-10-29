@@ -44,6 +44,18 @@ def insert_user(db_conn, data):
     data, errors = insert_row(db_conn, schema, query, data)
     if not errors:
         add_user_to_es(data)
+        send_mail(
+            subject='Welcome to Sagefy',
+            recipient=data['email'],
+            body="""
+            Welcome to Sagefy!
+
+            If you are interested in biweekly updates on Sagefy's progress,
+            sign up at http://newsletter.sagefy.org/up
+
+            Thank you!
+            """
+        )
     return data, errors
 
 
