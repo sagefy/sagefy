@@ -9,13 +9,35 @@ import json
 from framework.redis import redis
 from modules.util import pick, compact_dict, json_serial, \
     json_prep, convert_slug_to_uuid, convert_uuid_to_slug
-from modules.content import get as c
 from framework.mail import send_mail
 import uuid
 
 
 # TODO-2 should we use this to test passwords?
 # https://github.com/dropbox/python-zxcvbn
+
+welcome_text = """
+Welcome to Sagefy!
+
+If you did not create this account, please reply immediately.
+
+If you are interested in biweekly updates on Sagefy's progress,
+sign up at http://newsletter.sagefy.org/up
+
+Thank you!
+"""
+
+token_text = """
+To change your password, please visit {url}
+
+If you did not request a password change, please reply immediately.
+"""
+
+password_text = """
+You updated your Sagefy password.
+
+If you did not change your password, please reply immediately.
+"""
 
 
 def insert_user(db_conn, data):
@@ -47,14 +69,7 @@ def insert_user(db_conn, data):
         send_mail(
             subject='Welcome to Sagefy',
             recipient=data['email'],
-            body="""
-            Welcome to Sagefy!
-
-            If you are interested in biweekly updates on Sagefy's progress,
-            sign up at http://newsletter.sagefy.org/up
-
-            Thank you!
-            """
+            body=welcome_text,
         )
     return data, errors
 
@@ -100,6 +115,12 @@ def update_user_password(db_conn, prev_data, data):
         'password': data['password'],
     }
     data, errors = update_row(db_conn, schema, query, prev_data, data)
+    if not errors:
+        send_mail(
+            subject='Sagefy - Password Updated',
+            recipient=data['email'],
+            body=password_text,
+        )
     return data, errors
 
 
@@ -305,7 +326,7 @@ def set_learning_context(user, **d):
     return context
 
 
-def get_email_token(user, send_email=True):
+def get_email_token(user):
     """
     Create an email token for the user to reset their password.
     """
@@ -317,17 +338,16 @@ def get_email_token(user, send_email=True):
         60 * 10,  # time
         bcrypt.encrypt(slugged_user_id + token)  # value
     )
-    if send_email:
-        url = '%(base)spassword?id=%(id)s&token=%(token)s' % {
-            'base': 'https://sagefy.org/',
-            'id': slugged_user_id,
-            'token': token,
-        }
-        send_mail(
-            subject='Sagefy - Reset Password',
-            recipient=user['email'],
-            body=c('change_password_url').replace('{url}', url)
-        )
+    url = '%(base)spassword?id=%(id)s&token=%(token)s' % {
+        'base': 'https://sagefy.org/',
+        'id': slugged_user_id,
+        'token': token,
+    }
+    send_mail(
+        subject='Sagefy - Reset Password Request',
+        recipient=user['email'],
+        body=token_text.replace('{url}', url)
+    )
     return token
 
 
