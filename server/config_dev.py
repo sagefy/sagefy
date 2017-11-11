@@ -2,7 +2,7 @@ config = {
     'debug': True,
     'test': False,
     'mail_sender': 'support@sagefy.org',
-    'mail_password': 'd5f24b70ff8bafce17d82c7debafaa2234753d8c',
+    'mail_password': 'wW6Yd6jJHBVilJHX',
     'mail_username': 'SMTP_Injection',
     'mail_server': 'smtp.sparkpostmail.com',
     'mail_port': 587,
