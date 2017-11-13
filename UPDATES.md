@@ -6,6 +6,31 @@ You can sign up for email updates at http://newsletter.sagefy.org/up
 
 ------
 
+## 2017 Nov 13 
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2017 Oct 30 - 2017 Nov 12
+
+Didn't complete as much as hoped.
+
+- Posted on Product Hunt: https://www.producthunt.com/posts/sagefy/
+- Updated transactional email copy to include reply-to-unsubscribe copy.
+- Deployed build process and outlined script for Web Audio API examples. Started on Amplitude example.
+
+### Upcoming Two Weeks: 2017 Nov 13 - 2017 Nov 26
+
+- Build 5 interactive examples for the Intro to Electronic Music: Sound Parameters unit.
+- Build "embed (view)" card kind (name pending)
+
+### Feedback
+
+Feel free to reply to this address! You can also go to
+https://sagefy.uservoice.com/forums/233394-general
+and add feedback or ideas there.
+
+------
+
 ## 2017 Oct 30
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
