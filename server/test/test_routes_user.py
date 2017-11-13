@@ -259,7 +259,7 @@ def test_user_create_password_fail(db_conn):
     create_user_in_db(db_conn)
     user = get_user(db_conn, {'id': user_id})
     pw1 = user['password']
-    get_email_token(user, send_email=False)
+    get_email_token(user)
 
     request = {
         'params': {
@@ -282,7 +282,7 @@ def test_user_create_password_ok(db_conn):
     create_user_in_db(db_conn)
     user = get_user(db_conn, {'id': user_id})
     pw1 = user['password']
-    token = get_email_token(user, send_email=False)
+    token = get_email_token(user)
 
     request = {
         'params': {

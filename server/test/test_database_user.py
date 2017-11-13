@@ -190,7 +190,7 @@ def test_set_learning_context(db_conn):
 def test_get_email_token(db_conn):
     create_test_users(db_conn)
     user = get_user_by_id(db_conn, {'id': user_a_uuid})
-    token = get_email_token(user, send_email=True)
+    token = get_email_token(user)
     assert token
 
 
@@ -198,7 +198,7 @@ def test_is_valid_token(db_conn):
     assert not is_valid_token({'id': uuid.uuid4()}, '')
     create_test_users(db_conn)
     user = get_user_by_id(db_conn, {'id': user_a_uuid})
-    token = get_email_token(user, send_email=False)
+    token = get_email_token(user)
     assert not is_valid_token(user, 'qyzjosinmal1234')
-    token = get_email_token(user, send_email=False)
+    token = get_email_token(user)
     assert is_valid_token(user, token)
