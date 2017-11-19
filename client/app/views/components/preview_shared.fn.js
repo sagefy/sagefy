@@ -9,17 +9,24 @@ function hasValue(val) {
 }
 
 const shared = {
-    previewName({ name, kind, url, labelKind }) {
+    previewName({ name, kind, url, labelKind, cardKindLabel }) {
         const label = labelKind
-            ? span(
+            ? cardKindLabel
+              ? span(
+                  { className: 'preview__kind-label' },
+                  icon(kind),
+                  ' ',
+                  `${ucfirst(cardKindLabel)} ${ucfirst(kind)}`
+                )
+              : span(
                   { className: 'preview__kind-label' },
                   icon(kind),
                   ' ',
                   ucfirst(kind)
-              )
+                )
             : icon(kind)
         return url
-            ? a({ href: url }, h3(label, ' ', name))
+            ? h3(label, ' ', a({ href: url }, name))
             : h3(label, ' ', name)
     },
 
