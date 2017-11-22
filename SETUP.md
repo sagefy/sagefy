@@ -78,12 +78,6 @@ How to deploy the latest master:
     docker-compose restart client
     docker-compose restart nginx
 
-Things to fix:
-
-- The server should not know about git
-- Fix permissions so we don't have to run `cp` by itself.
-- We should need to restart uwsgi, which should not be in watch mode on prod.
-
 Back up the database
 --------------------
 
@@ -96,4 +90,8 @@ Run:
     b2 authorize_account xxx xxxxxxxx  # see dashlane
     b2 sync /var/www/dbbu b2:sagefy-dbbu
 
-TODO Set up as a cron job... fix the environment :)
+Things to fix:
+--------------
+
+- TODO The server should not know about git
+- TODO Set up as a cron job... fix the environment :)
