@@ -66,9 +66,9 @@ module.exports = function previewCardContent({
             : null,
         url
           ? iframe({
-            src: url,
-            width: 300,
-            height: 200,
+              src: url,
+              width: 300,
+              height: 200,
           })
           : null,
         body ? div(format(body, { highestHeading: 2 })) : null,
