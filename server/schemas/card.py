@@ -27,7 +27,7 @@ schema = extend({}, entity_schema, {
         },
         'kind': {
             'validate': (is_required, is_string,
-                         (is_one_of, 'video', 'page', 'choice')),
+                         (is_one_of, 'video', 'page', 'unscored_embed', 'choice')),
         },
         'data': {
             'validate': (is_required, is_dict,),

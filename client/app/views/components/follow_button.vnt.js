@@ -6,7 +6,7 @@ module.exports = broker.add({
         if (e) {
             e.preventDefault()
         }
-        const [kind, id] = el.id.split('_')
+        const [, kind, id] = el.id.match(/^(.*?)_(.*?)$/)
         tasks.follow({
             entity_id: id,
             entity_kind: kind,

@@ -188,6 +188,30 @@ for card_data in sample_data['cards']['page']:
     raw_insert_cards(db_conn, [params])
 
 
+for card_data in sample_data['cards']['unscored_embed']:
+    card_data['entity_id'] = uuid.uuid4()
+    params = {
+        'version_id': uuid.uuid4(),
+        'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+        'entity_id': card_data['entity_id'],
+        'previous_id': None,
+        # 'language': 'en',
+        'name': 'An Example',
+        # 'status': 'accepted',
+        # 'available': True,
+        # 'tags': [],
+        'user_id': doris_id,
+        'kind': 'unscored_embed',
+        'data': {
+            'url': card_data['url'],
+        },
+        'unit_id': entity_ids_lookup[card_data['unit']],
+        'require_ids': [],
+    }
+    raw_insert_cards(db_conn, [params])
+
+
 for card_data in sample_data['cards']['choice']:
     card_data['entity_id'] = uuid.uuid4()
     params = {

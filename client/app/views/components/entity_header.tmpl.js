@@ -1,11 +1,11 @@
 const { header, span, h1 } = require('../../modules/tags')
-const { ucfirst } = require('../../modules/auxiliaries')
+const { titleize } = require('../../modules/auxiliaries')
 const icon = require('./icon.tmpl')
 
 module.exports = (kind, entity) => {
-    let title = ucfirst(kind)
+    let title = titleize(kind)
     if (kind === 'card') {
-        title = `${ucfirst(entity.kind)} ${title}`
+        title = `${titleize(entity.kind)} ${title}`
     }
 
     return header(

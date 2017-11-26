@@ -262,6 +262,9 @@ cards:
       video_id: DnDjkPVUlos
     - unit: unitOscS
       video_id: iB2N585gEKg
+  unscored_embed:
+    - unit: unitIntro
+      url: https://example.com
   page:
     - unit: unitIntro
       name: Electronic Music

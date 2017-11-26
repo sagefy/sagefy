@@ -8,6 +8,7 @@ const kindTmpl = {}
 kindTmpl.video = require('./card_learn_video.tmpl')
 kindTmpl.page = require('./card_learn_page.tmpl')
 kindTmpl.choice = require('./card_learn_choice.tmpl')
+kindTmpl.unscoredEmbed = require('./card_learn_unscored_embed.tmpl')
 
 module.exports = (data) => {
     const id = data.routeArgs[0]
@@ -20,7 +21,7 @@ module.exports = (data) => {
     const pLearned = data.unitLearned && data.unitLearned[card.unit_id]
 
     let mode
-    if (card.kind === 'video' || card.kind === 'page') {
+    if (card.kind === 'video' || card.kind === 'page' || card.kind === 'unscored_embed') {
         mode = 'next-please'
     } else if (card.kind === 'choice') {
         if (isNumber(data.cardResponse.score)) {
@@ -86,6 +87,9 @@ const kind = (card, mode) => {
     }
     if (card.kind === 'page') {
         return kindTmpl.page(card, mode)
+    }
+    if (card.kind === 'unscored_embed') {
+        return kindTmpl.unscoredEmbed(card, mode)
     }
     if (card.kind === 'choice') {
         return kindTmpl.choice(card, mode)

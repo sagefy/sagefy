@@ -41,6 +41,7 @@ CREATE TYPE entity_status AS ENUM(
 CREATE TYPE card_kind AS ENUM(
     'video',
     'page',
+    'unscored_embed',
     'choice'
 );
 

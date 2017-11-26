@@ -11,6 +11,11 @@ const isLoggedIn = () => cookie.get('logged_in') === '1'
 // Capitalizes the first letter of a string
 const ucfirst = (str = '') => str.charAt(0).toUpperCase() + str.slice(1)
 
+// Turns underscore or camel into title case
+const titleize = (str = '') => underscored(str).split('_').map(
+    w => w.charAt(0).toUpperCase() + w.substr(1)
+).join(' ')
+
 // Replaces dashes and spaces with underscores, ready to be used in an URL
 const underscored = str => str.replace(/[-\s]+/g, '_').toLowerCase()
 
@@ -321,6 +326,7 @@ const prefixObjectKeys = (prefix, obj) => {
 module.exports = {
     isLoggedIn,
     ucfirst,
+    titleize,
     underscored,
     escape,
     timeAgo,

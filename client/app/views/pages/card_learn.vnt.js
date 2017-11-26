@@ -37,4 +37,11 @@ module.exports = broker.add({
         }
         tasks.respondToCard(el.id, {}, true)
     },
+
+    'click #card-learn.unscored_embed .continue'(e, el) {
+        if (e) {
+            e.preventDefault()
+        }
+        tasks.respondToCard(el.id, {}, true)
+    },
 })

@@ -26,6 +26,6 @@ module.exports = {
     kind: {
         type: 'select',
         validations: [required],
-        options: [{ value: 'video' }, { value: 'choice' }, { value: 'page' }],
+        options: [{ value: 'video' }, { value: 'choice' }, { value: 'page' }, { value: 'unscored_embed' }],
     },
 }

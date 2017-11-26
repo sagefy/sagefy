@@ -4,6 +4,7 @@ const { extend } = require('../../modules/utilities')
 const cardSchema = require('../../schemas/card')
 const videoCardSchema = require('../../schemas/cards/video_card')
 const pageCardSchema = require('../../schemas/cards/page_card')
+const unscoredEmbedCardSchema = require('../../schemas/cards/unscored_embed_card')
 const choiceCardSchema = require('../../schemas/cards/choice_card')
 const form = require('../components/form.tmpl')
 const {
@@ -26,7 +27,7 @@ const allKindsFields = [
     {
         label: 'Card Kind',
         name: 'kind',
-        options: [{ label: 'Video' }, { label: 'Choice' }, { label: 'Page' }],
+        options: [{ label: 'Video' }, { label: 'Choice' }, { label: 'Page' }, { label: 'Unscored Embed' }],
         inline: true,
     },
 ]
@@ -67,6 +68,20 @@ const pageFields = allKindsFields.concat([
         type: 'submit',
         name: 'submit',
         label: 'Create Page Card',
+        icon: 'create',
+    },
+])
+
+const unscoredEmbedFields = allKindsFields.concat([
+    {
+        label: 'URL',
+        name: 'data.url',
+        description: 'Use `https`. Full URL.',
+    },
+    {
+        type: 'submit',
+        name: 'submit',
+        label: 'Create Unscored Embed Card',
         icon: 'create',
     },
 ])
@@ -116,6 +131,10 @@ pageFields.forEach((field, index) => {
     pageFields[index] = extend({}, pageFields[field.name] || {}, field)
 })
 
+unscoredEmbedFields.forEach((field, index) => {
+    unscoredEmbedFields[index] = extend({}, unscoredEmbedFields[field.name] || {}, field)
+})
+
 choiceFields.forEach((field, index) => {
     choiceFields[index] = extend({}, choiceFields[field.name] || {}, field)
 })
@@ -127,19 +146,31 @@ module.exports = function createCardCreate(data) {
     const fields =
         cardKind === 'video'
         ? videoFields
+
         : cardKind === 'page'
         ? pageFields
+
+        : cardKind === 'unscored_embed'
+        ? unscoredEmbedFields
+
         : cardKind === 'choice'
         ? choiceFields
+
         : allKindsFields
 
     const schema =
         cardKind === 'video'
         ? videoCardSchema
+
         : cardKind === 'page'
         ? pageCardSchema
+
+        : cardKind === 'unscored_embed'
+        ? unscoredEmbedCardSchema
+
         : cardKind === 'choice'
         ? choiceCardSchema
+
         : cardSchema
 
     const instanceFields = createFieldsData({

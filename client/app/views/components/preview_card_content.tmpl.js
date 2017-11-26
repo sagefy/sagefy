@@ -37,6 +37,8 @@ module.exports = function previewCardContent({
         options, // [{correct, value, feedback}]
         order,
         maxOptionsToShow,
+        // unscored embed fields
+        url,
     } = {},
     // then all...
     requires,
@@ -62,6 +64,13 @@ module.exports = function previewCardContent({
                 allowfullscreen: true,
             })
             : null,
+        url
+          ? iframe({
+            src: url,
+            width: 300,
+            height: 200,
+          })
+          : null,
         body ? div(format(body, { highestHeading: 2 })) : null,
         options && options.length
             ? ul(
