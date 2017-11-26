@@ -22,6 +22,7 @@ module.exports = (data, mode) => {
                         // The key ensures the input doesn't stay selected
                         // when changing questions
                     }),
+                    ' ',
                     label(
                         {
                             htmlFor: option.id,

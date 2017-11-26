@@ -3,7 +3,7 @@ const tasks = require('../../modules/tasks')
 const { closest } = require('../../modules/utilities')
 
 module.exports = broker.add({
-    'click #card-learn.choice.answer .continue'(e, el) {
+    'click #card-learn.choice-kind.answer .continue'(e, el) {
         if (e) {
             e.preventDefault()
         }
@@ -17,28 +17,28 @@ module.exports = broker.add({
         }
     },
 
-    'click #card-learn.choice.next-please .continue'(e) {
+    'click #card-learn.choice-kind.next-please .continue'(e) {
         if (e) {
             e.preventDefault()
         }
         tasks.nextState()
     },
 
-    'click #card-learn.video .continue'(e, el) {
+    'click #card-learn.video-kind .continue'(e, el) {
         if (e) {
             e.preventDefault()
         }
         tasks.respondToCard(el.id, {}, true)
     },
 
-    'click #card-learn.page .continue'(e, el) {
+    'click #card-learn.page-kind .continue'(e, el) {
         if (e) {
             e.preventDefault()
         }
         tasks.respondToCard(el.id, {}, true)
     },
 
-    'click #card-learn.unscored_embed .continue'(e, el) {
+    'click #card-learn.unscored_embed-kind .continue'(e, el) {
         if (e) {
             e.preventDefault()
         }
