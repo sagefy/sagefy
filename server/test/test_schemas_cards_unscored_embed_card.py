@@ -1,1 +1,1 @@
-import schemas.cards.unscored_embed  # noqa
+import schemas.cards.unscored_embed_card  # noqa
