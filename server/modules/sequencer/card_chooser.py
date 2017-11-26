@@ -7,10 +7,10 @@ from database.response import get_latest_response
 from database.card import list_random_cards_in_unit
 from database.card_parameters import get_card_parameters, \
     get_card_parameters_values
-from schemas.card import assessment_kinds
+from schemas.card import scored_kinds
 
 
-p_assessment_map = {
+p_scored_map = {
     0: 0.7,
     1: 0.7,
     2: 0.7,
@@ -59,16 +59,16 @@ def choose_card(db_conn, user, unit):
         learned = init_learned
 
     shuffle(cards)
-    assessment, nonassessment = partition(
+    scored, unscored = partition(
         cards,
-        lambda c: c['kind'] in assessment_kinds
+        lambda c: c['kind'] in scored_kinds
     )
-    choose_assessment = random() < p_assessment_map[floor(learned * 10)]
+    choose_scored = random() < p_scored_map[floor(learned * 10)]
 
-    if choose_assessment:
-        if not len(assessment) and len(nonassessment):
-            return nonassessment[0]
-        for card in assessment:
+    if choose_scored:
+        if not len(scored) and len(unscored):
+            return unscored[0]
+        for card in scored:
             params = get_card_parameters(
                 db_conn,
                 {'entity_id': card['entity_id']}
@@ -82,12 +82,12 @@ def choose_card(db_conn, user, unit):
                     return card
             else:
                 return card
-        return assessment[0]
+        return scored[0]
 
-    if len(nonassessment):
-        return nonassessment[0]
+    if len(unscored):
+        return unscored[0]
 
-    if len(assessment):
-        return assessment[0]
+    if len(scored):
+        return scored[0]
 
     return None

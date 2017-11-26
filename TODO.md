@@ -19,7 +19,7 @@
 - TODO-3 Update GET /units/{id} with sequencer information
 - TODO-3 Update GET /subjects/{id} with sequencer information
 - TODO-2 User Subjects: Order subjects by last reviewed, pagination
-- TODO-3 Plan for Rubrics for async assessment card kinds
+- TODO-3 Plan for Rubrics for async scored card kinds
 - TODO-3 Donate Card
 - TODO-3 User Personal Stats Pages
 - TODO-3 Review Good UI for more todos
@@ -42,7 +42,7 @@
 - TODO-2 Consider external search engine indexing (terms, contact, entity info, topic, versions, search)
 - TODO-2 Audio card kind
 - TODO-2 Interactive card kind
-- TODO-3 Consider asynchronous (peer review) assessment cards
+- TODO-3 Consider peer-scored cards
 - TODO-2 Number Card Kind
 - TODO-2 Page card capability
 - TODO-2 Analytics planning

@@ -12,7 +12,7 @@ Non-Sequencer Applications
 - Matching up learners with other learners and mentors.
 - Alter cards based on size of group (single, two, three...)
 - Features: tags, kinds and formats, other learner performance, etc.
-- Deal with asynchronous assessment
+- Deal with peer scoring
 - Determine when the learner should take a break.
 - Given unit difficulties, determine time to complete a subject.
 - Assess validity of cards, units, and subjects.

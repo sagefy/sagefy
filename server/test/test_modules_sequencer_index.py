@@ -6,9 +6,9 @@ Expect to estimate diagnosis duration.
 Expect to show progress in diagnosis.
 Expect end of diagnosis to return to tree.
 Expect to show progress in learning unit.
-Expect to focus on non-assessment cards for low learned.
+Expect to focus on unscored cards for low learned.
 Expect to focus on medium difficulty card for medium learned.
-Expect to intervene with non-assessment after pattern of incorrect responses.
+Expect to intervene with unscored after pattern of incorrect responses.
 Expect to focus on challenging cards for high learned.
 Expect to follow card require chains.
 Expect to follow unit require chains.

@@ -7,10 +7,10 @@ _This documents kinds of cards that may appear in the Sagefy system._
 
 Anywhere that lists "Markdown" as available may embed images, math, video, audio, interactive...
 
-Non-Assessment Card Kinds
+Unscored Card Kinds
 -------------------------
 
-Non-assessment cards do not have require a learner answer.
+Unscored cards do not have require a learner response.
 
 ### Video Card
 
@@ -39,10 +39,16 @@ An embedded slideshow from a popular slideshow hosting site.
 - site: slideshare, ...
 - slideshow_id
 
-Synchronous Assessment Card Kinds
+### Unscored Embed Card
+
+An embedded unscored learning object.
+
+- url
+
+Scored Card Kinds
 ---------------------------------
 
-Synchronous assessment cards require a response from the learner and are graded immediately and automatically.
+Scored cards require a response from the learner and are graded immediately and automatically.
 
 ### Choice Card
 
@@ -68,6 +74,21 @@ The learner responds with a specific number.
 - range: A number which means the answer must be plus or minus within this range. For example, if I say the answer is `6`, but the range is `0.01`, then learners may respond between `5.99` and `6.01`.
 - default_incorrect_feedback: If none of the options matches the learners response, then the learner will get this feedback. (Markdown)
 
+### Formula Card
+
+Same as the number card, but allows for variables to be present.
+TODO combine with number?
+
+- body: Question. (Markdown)
+- options: List of available options
+    - value: Number
+    - correct: At least one option must be marked as correct.
+    - feedback: What to tell the learner if they respond with option. (Markdown)
+- variables:
+    - ???
+- range: A number which means the answer must be plus or minus within this range. For example, if I say the answer is `6`, but the range is `0.01`, then learners may respond between `5.99` and `6.01`.
+- default_incorrect_feedback: If none of the options matches the learners response, then the learner will get this feedback. (Markdown)
+
 ### Match Card
 
 The learner responds with text, and it is checked against text or pattern. This card can represent fill-in-the-blank and short answer types of questions.
@@ -80,24 +101,14 @@ The learner responds with text, and it is checked against text or pattern. This 
 - default_incorrect_feedback: If none of the options matches the learners response, then the learner will get this feedback. (Markdown)
 - case_sensitive: Whether the card should force case sensitivity. Defaults to false.
 
-### Formula Card
+### Scored Embed Card
 
-Same as the number card, but allows for variables to be present.
+TODO
 
-- body: Question. (Markdown)
-- options: List of available options
-    - value: Number
-    - correct: At least one option must be marked as correct.
-    - feedback: What to tell the learner if they respond with option. (Markdown)
-- variables:
-    - ???
-- range: A number which means the answer must be plus or minus within this range. For example, if I say the answer is `6`, but the range is `0.01`, then learners may respond between `5.99` and `6.01`.
-- default_incorrect_feedback: If none of the options matches the learners response, then the learner will get this feedback. (Markdown)
-
-Asynchronous Assessment Card Kinds
+Peer-Scored Card Kinds
 ----------------------------------
 
-Asynchronous assessment cards require a response from the learner, but are graded by other learners according to the rubric. Learners are notified of their score after receiving sufficient reviews.
+Peer-scored cards require a response from the learner, but are graded by other learners according to the rubric. Learners are notified of their score after receiving sufficient reviews.
 
 ### Writing Card
 
@@ -110,7 +121,15 @@ A writing card prompts the learner to write something. Similar in concept to a m
     - value: How much weight this item gets.
     - scoring: ??? Scoring options for item.
 
-### Upload Card
+### Record Audio Card
+
+TODO
+
+### Record Video Card
+
+TODO
+
+### Peer-Scored File Card
 
 An upload card prompts the learner to upload something to be peer reviewed.
 
@@ -118,15 +137,9 @@ An upload card prompts the learner to upload something to be peer reviewed.
 - file_extensions: Kinds of extensions that are allowed, such as documents (txt, md, doc), images (png, jpg), audio (wav, mp3), and video (mov).
 - rubric: ???
 
-Other Card Kinds
-----------------
+### Peer-Scored Embed Card
 
-### Embed Card
-
-Embed cards are basically, an `<iframe>`. Embed cards may be non-assessment, synchronous assessment, or asynchronous assessment.
-
-- url:
-- rubric: ???
+TODO
 
 Card Tags
 ---------

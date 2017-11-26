@@ -6,7 +6,7 @@ const entityTopics = require('../components/entity_topics.tmpl')
 const entityVersions = require('../components/entity_versions.tmpl')
 const entityRelationships = require('../components/entity_relationships.tmpl')
 
-const assessments = [
+const scored = [
     'choice',
     'number',
     'match',
@@ -32,7 +32,7 @@ module.exports = (data) => {
         .map(topicId => data.topics[topicId])
 
     const params = card.card_parameters || {}
-    const assess = card.kind in assessments
+    const scr = card.kind in scored
     return div(
         { id: 'card', className: 'page' },
         followButton('card', card.entity_id, data.follows),
@@ -41,8 +41,8 @@ module.exports = (data) => {
         h2('Stats'),
         ul(
             li(`Number of Learners: ${params.num_learners}`),
-            assess ? li(`Guess: ${threeDigits(params.guess)}`) : null,
-            assess ? li(`Slip: ${threeDigits(params.slip)}`) : null,
+            scr ? li(`Guess: ${threeDigits(params.guess)}`) : null,
+            scr ? li(`Slip: ${threeDigits(params.slip)}`) : null,
             li(`Transit: ${threeDigits(params.transit)} (Default)`)
         ),
         entityRelationships('card', card),

@@ -11,9 +11,9 @@ collaborate with a small group to tackle a challenge,
 or create other cards.
 """
 
-assessment_kinds = ('choice',)
+scored_kinds = ('choice',)
 
-asynchronous_kinds = tuple()
+peer_scored_kinds = tuple()
 
 schema = extend({}, entity_schema, {
     'tablename': 'cards',

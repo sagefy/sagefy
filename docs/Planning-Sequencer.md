@@ -24,7 +24,7 @@ Also see [Data Structure](Data-Structure) for definitions of **card**, **unit**,
 
 **Difficulty** - Refers to how likely either the specific learner or the general learner to respond well.
 
-**Assessment Cards** - Cards which have an assessment element, such as choosing an answer or typing in an answer.
+**Scored Cards** - Cards which have an response element, such as choosing an answer or typing in an answer.
 
 Requirements
 ------------
@@ -76,7 +76,7 @@ The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) an
 
 **Learner-Card Ability** - $$p(correct)$$
 
-- _Definition_ - How likely is the learner to respond to the given card well? (Only applies to assessment cards.)
+- _Definition_ - How likely is the learner to respond to the given card well? (Only applies to scored cards.)
 - _When_ - Selecting the next card. Assessing Learner-Unit Ability.
 - _Factors_ - Learner-unit ability, card difficulty, guess, slip.
 - _Formula_ - `learned * (1 - slip) + (1 - learned) * guess`
@@ -120,9 +120,9 @@ The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) an
 
 **Card Difficulty** - $$p(guess)$$ and $$p(slip)$$
 
-- _Definition_ - How likely is the typical learner to answer well? (Only applies to assessment cards.)
-    - **Guess** - How likely is the typical learner, without ability, to randomly guess towards a good answer? (Only applies to assessment cards.)
-    - **Slip** - How likely is the typical learner, with ability, to answer poorly? (Only applies to assessment cards.)
+- _Definition_ - How likely is the typical learner to answer well? (Only applies to scored cards.)
+    - **Guess** - How likely is the typical learner, without ability, to randomly guess towards a good answer? (Only applies to scored cards.)
+    - **Slip** - How likely is the typical learner, with ability, to answer poorly? (Only applies to scored cards.)
 - _When_ - Computing learner-unit ability. Selecting the next card.
 - _Factors_ - Prior, response, learner-unit ability, guess, slip.
 - _Formula_ -
@@ -172,7 +172,7 @@ The page says I will take a diagnostic assessment. It estimates how long it will
 
 I start the diagnostic assessment. The system picks a unit near the end of the subject.
 
-The questions are all synchronous assessment. The system continues to ask me questions from the last units in the subject until it is confident in its finding. For any units I am at less than proficient ability, it diagnoses the required units. Required units do not have to be explicitly defined in the subject, just within other units. The system shows my progress on screen towards completing the diagnostic assessment. If I leave, I can come back later and finish the assessment. If I've already completed units previously, it will use those ratings. Questions do not present feedback in diagnostic assessment.
+The questions are all immediately scored. The system continues to ask me questions from the last units in the subject until it is confident in its finding. For any units I am at less than proficient ability, it diagnoses the required units. Required units do not have to be explicitly defined in the subject, just within other units. The system shows my progress on screen towards completing the diagnostic assessment. If I leave, I can come back later and finish the assessment. If I've already completed units previously, it will use those ratings. Questions do not present feedback in diagnostic assessment.
 
 When there are no units left with requires below proficiency, the diagnostic assessment ends. Again I see the tree within the metrics for each unit.
 
@@ -180,9 +180,9 @@ When there are no units left with requires below proficiency, the diagnostic ass
 
 It starts from the furthest branches. I first choose which unit to start with. It emphasizes one of the units by default. It shows the learning objective and estimated difficulty (time) for each unit.
 
-I practice with the unit. I can see my progress on the unit at the bottom of the screen. I receive feedback on questions with assessment.
+I practice with the unit. I can see my progress on the unit at the bottom of the screen. I receive feedback on scored questions.
 
-If I have low ability, the system will add more high quality non-assessment cards, like videos. It also uses assessment cards that I am highly likely to answer correctly. If I have moderate ability, the system focuses on medium likelihood cards. Non-assessment cards are shown if I get multiple answers incorrect. If I have high ability, the system focuses on lower likelihood cards. The system prefers to follow require chains in sequence for cards. If I gain significantly or reach proficient ability, the system recommends I switch to a different unit.
+If I have low ability, the system will add more high quality unscored cards, like videos. It also uses scored cards that I am highly likely to answer correctly. If I have moderate ability, the system focuses on medium likelihood cards. Unscored cards are shown if I get multiple answers incorrect. If I have high ability, the system focuses on lower likelihood cards. The system prefers to follow require chains in sequence for cards. If I gain significantly or reach proficient ability, the system recommends I switch to a different unit.
 
 The subject is complete when all cards have proficient ability with confidence. I'm encouraged to find a new subject.
 
