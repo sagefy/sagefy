@@ -69,8 +69,8 @@ Deploy steps
 How to deploy the latest master:
 
     ++ ssh into the server ++
-    cd /var/www
     ++ back up the database ++
+    cd /var/www
     git pull origin master
     cd client
     yarn run deploy
