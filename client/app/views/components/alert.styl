@@ -2,46 +2,46 @@
 ---
 title: Alert
 description: |
-    Systemic-alerts are often used when an error has occured. Alerts are fixed to the page until a user chooses to close them.
+  Systemic-alerts are often used when an error has occured. Alerts are fixed to the page until a user chooses to close them.
 ---
 */
 
 .alert
-    border-radius $border-radius
-    display block
-    padding ($unit / 2)
-    margin $unit 0
-    background $base-color(90)
-    color $base-color(43)
+  border-radius $border-radius
+  display block
+  padding ($unit / 2)
+  margin $unit 0
+  background $base-color(90)
+  color $base-color(43)
 
 .alert__close
-    float right
-    color $base-color(43)
-    border-color $base-color(43)
+  float right
+  color $base-color(43)
+  border-color $base-color(43)
 
 .alert--bad
-    @extend .alert
-    background $bad-color(90)
-    color $bad-color(43)
+  @extend .alert
+  background $bad-color(90)
+  color $bad-color(43)
 
 .alert--bad__close
-    color $bad-color(43)
-    border-color $bad-color(43)
+  color $bad-color(43)
+  border-color $bad-color(43)
 
 .alert--good
-    @extend .alert
-    background $good-color(90)
-    color $good-color(43)
+  @extend .alert
+  background $good-color(90)
+  color $good-color(43)
 
 .alert--good__close
-    color $good-color(43)
-    border-color $good-color(43)
+  color $good-color(43)
+  border-color $good-color(43)
 
 .alert--accent
-    @extend .alert
-    background $accent-color(90)
-    color $accent-color(43)
+  @extend .alert
+  background $accent-color(90)
+  color $accent-color(43)
 
 .alert--accent__close
-    color $accent-color(43)
-    border-color $accent-color(43)
+  color $accent-color(43)
+  border-color $accent-color(43)

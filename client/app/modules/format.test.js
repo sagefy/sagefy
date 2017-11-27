@@ -25,28 +25,28 @@ const imageExample = 'I love ![An Image](https://example.com/.img) images.'
 const imageHtml = '<div>I love <img src="https://example.com/.img" title="An Image"> images.</div>'
 
 describe('format', () => {
-    it('should not paragraph a single line of text', () => {
-        const result = format(singleLineExample)
-        expect(result).equal(singleLineExample)
-    })
+  it('should not paragraph a single line of text', () => {
+    const result = format(singleLineExample)
+    expect(result).equal(singleLineExample)
+  })
 
-    it('should format paragraphs', () => {
-        const html = toHTML(div(format(paragraphExample)))
-        expect(html).equal(paragraphHtml)
-    })
+  it('should format paragraphs', () => {
+    const html = toHTML(div(format(paragraphExample)))
+    expect(html).equal(paragraphHtml)
+  })
 
-    it('should format a heading', () => {
-        const html = toHTML(div(format(headingExample)))
-        expect(html).equal(headingHtml)
-    })
+  it('should format a heading', () => {
+    const html = toHTML(div(format(headingExample)))
+    expect(html).equal(headingHtml)
+  })
 
-    it('should format inliners', () => {
-        const html = toHTML(div(format(inlineExample)))
-        expect(html).equal(inlineHtml)
-    })
+  it('should format inliners', () => {
+    const html = toHTML(div(format(inlineExample)))
+    expect(html).equal(inlineHtml)
+  })
 
-    it('should format inline images', () => {
-        const html = toHTML(div(format(imageExample)))
-        expect(html).equal(imageHtml)
-    })
+  it('should format inline images', () => {
+    const html = toHTML(div(format(imageExample)))
+    expect(html).equal(imageHtml)
+  })
 })

@@ -1,25 +1,25 @@
 .choose-unit__engage
-    @extend $button--good
-    float left
+  @extend $button--good
+  float left
 
-    &.choose-unit__engage--first
-        @extend $button--accent
+  &.choose-unit__engage--first
+    @extend $button--accent
 
 .choose-unit__recommended
-    @extend $label--accent
+  @extend $label--accent
 
 // TODO-2 Migrate this all to BEM syntax
 #choose-unit
-    .units
-        @extend $list-options
+  .units
+    @extend $list-options
 
-        > li
-            > div
-                margin-left cols(2)
+    > li
+      > div
+        margin-left cols(2)
 
-            h3
-                display inline-block
-                margin-right $unit
+      h3
+        display inline-block
+        margin-right $unit
 
-    .recommended
-        background $good-color(95) !important // TODO-2 ugh
+  .recommended
+    background $good-color(95) !important // TODO-2 ugh

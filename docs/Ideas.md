@@ -72,9 +72,9 @@ The strongest predictor of how much we will learn is what we already know. Every
 
 - Cards and units have requires, which ensures the learner has sufficient prior knowledge.
 - The algorithms which sequence show cards, units, and subjects that are available to the learner.
-    - The algorithms which sequence the entities focus on improving the learner's prior knowledge.
-    - A diagnostic assessment means learners can build prior knowledge where lacking.
-    - A learner with high prior knowledge can skip to more relevant areas.
+  - The algorithms which sequence the entities focus on improving the learner's prior knowledge.
+  - A diagnostic assessment means learners can build prior knowledge where lacking.
+  - A learner with high prior knowledge can skip to more relevant areas.
 
 4) Adhere to Goals
 ------------------

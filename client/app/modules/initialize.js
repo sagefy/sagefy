@@ -45,40 +45,40 @@ require('../views/pages/create.vnt')
 
 // Log all recorder events to the console and analytics
 function logAllActions() {
-    bind((state, action) => {
-        console.log(action.type, action, state) // eslint-disable-line
-    })
+  bind((state, action) => {
+    console.log(action.type, action, state) // eslint-disable-line
+  })
 }
 
 function trackAllActions() {
-    bind((state, action) => {
-        trackEvent(action)
-    })
+  bind((state, action) => {
+    trackEvent(action)
+  })
 }
 
 function updateTitle() {
-    bind((state, action) => {
-        if (action.type === 'SET_ROUTE') {
-            setTitle(action.title)
-        }
-    })
+  bind((state, action) => {
+    if (action.type === 'SET_ROUTE') {
+      setTitle(action.title)
+    }
+  })
 }
 
 // Start up the application
 function go() {
-    logAllActions()
-    trackAllActions()
-    updateTitle()
-    setReducer(reducer)
-    dispatch({
-        type: 'SET_CURRENT_USER_ID',
-        currentUserID: cookie.get('currentUserID'),
-    })
-    route(window.location.pathname + window.location.search)
-    init({
-        view: indexView,
-        el: document.body,
-    })
+  logAllActions()
+  trackAllActions()
+  updateTitle()
+  setReducer(reducer)
+  dispatch({
+    type: 'SET_CURRENT_USER_ID',
+    currentUserID: cookie.get('currentUserID'),
+  })
+  route(window.location.pathname + window.location.search)
+  init({
+    view: indexView,
+    el: document.body,
+  })
 }
 
 module.exports = { go, logAllActions, trackAllActions }

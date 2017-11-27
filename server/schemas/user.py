@@ -6,9 +6,9 @@ from modules.util import extend
 
 
 def encrypt_password(value):
-    if value and not value.startswith('$2a$'):
-        return bcrypt.encrypt(value)
-    return value
+  if value and not value.startswith('$2a$'):
+    return bcrypt.encrypt(value)
+  return value
 
 
 schema = extend({}, default, {

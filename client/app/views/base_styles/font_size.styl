@@ -2,17 +2,17 @@
 ---
 title: Font Sizes
 description: |
-    Font sizes are fuzzified by names. Available sizes are:
+  Font sizes are fuzzified by names. Available sizes are:
 
-    - small
-    - normal
-    - large
-    - big
-    - epic
+  - small
+  - normal
+  - large
+  - big
+  - epic
 ---
 */
 
 for g in (small 14 26) (normal 18 26) (large 20 26) (big 24 39) (epic 32 39)
-    $font-size-{g[0]}
-        font-size unit(g[1], "px")
-        line-height unit(g[2], "px")
+  $font-size-{g[0]}
+    font-size unit(g[1], "px")
+    line-height unit(g[2], "px")

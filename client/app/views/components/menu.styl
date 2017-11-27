@@ -2,90 +2,90 @@
 ---
 title: Menu
 description: |
-    Sagefy's most common navigational element is a simple menu. The user clicks on the Sagefy icon, and a pane of menu options provides the user with more functionality. This helps to prevent cognitive overload.
+  Sagefy's most common navigational element is a simple menu. The user clicks on the Sagefy icon, and a pane of menu options provides the user with more functionality. This helps to prevent cognitive overload.
 ---
 */
 
 .menu
-    display inline-block
-    position fixed
+  display inline-block
+  position fixed
 
-    &.selected
-        z-index 2
-        top 0
-        left 0
-        width 100%
-        height 100%
-
-        display flex
-        justify-content center
-        align-items center
-
-.menu--global
-    @extend .menu
-
-.menu__overlay
-    display block
-    background rgba($base-color(20), 0.95)
+  &.selected
+    z-index 2
+    top 0
+    left 0
     width 100%
     height 100%
-    position fixed
-    top 0
-    left 0
-
-.menu__trigger
-    position fixed
-    display inline-block
-    top 0
-    left 0
-    padding ($unit / 2)
-    background $base-color(98)
-    border-bottom 0
-    border-bottom-right-radius 6px
-    text-align center
-    color $base-color(43)
-    @extend $font-size-small
-
-    .selected &
-        background transparent
-        color $base-color(70)
-
-    &:hover
-        background white
-        color $base-color(60)
-        border-bottom 1px solid $base-color(80)
-        border-right 1px solid $base-color(80)
-
-    .selected &:hover
-        background $base-color(35)
-        border 0
-
-    &:hover .menu__close
-        color $base-color(90)
-
-.menu__trigger .icon-menu
-    @extend $font-size-big
-    vertical-align middle
-    line-height 1
-
-.menu__label
-    line-height 1
-
-.menu__close
-    position absolute
-    top 0
-    right ($unit / 2)
-    display inline-block
-    color $base-color(66)
-
-.menu__items
-    @extend $row
-    padding $unit
-    position relative
-    list-style none
-    width 100%
 
     display flex
     justify-content center
     align-items center
-    flex-flow row wrap
+
+.menu--global
+  @extend .menu
+
+.menu__overlay
+  display block
+  background rgba($base-color(20), 0.95)
+  width 100%
+  height 100%
+  position fixed
+  top 0
+  left 0
+
+.menu__trigger
+  position fixed
+  display inline-block
+  top 0
+  left 0
+  padding ($unit / 2)
+  background $base-color(98)
+  border-bottom 0
+  border-bottom-right-radius 6px
+  text-align center
+  color $base-color(43)
+  @extend $font-size-small
+
+  .selected &
+    background transparent
+    color $base-color(70)
+
+  &:hover
+    background white
+    color $base-color(60)
+    border-bottom 1px solid $base-color(80)
+    border-right 1px solid $base-color(80)
+
+  .selected &:hover
+    background $base-color(35)
+    border 0
+
+  &:hover .menu__close
+    color $base-color(90)
+
+.menu__trigger .icon-menu
+  @extend $font-size-big
+  vertical-align middle
+  line-height 1
+
+.menu__label
+  line-height 1
+
+.menu__close
+  position absolute
+  top 0
+  right ($unit / 2)
+  display inline-block
+  color $base-color(66)
+
+.menu__items
+  @extend $row
+  padding $unit
+  position relative
+  list-style none
+  width 100%
+
+  display flex
+  justify-content center
+  align-items center
+  flex-flow row wrap

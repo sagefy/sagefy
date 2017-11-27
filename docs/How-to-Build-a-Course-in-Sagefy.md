@@ -25,22 +25,22 @@ For this part, you'll need to break down your course into units. Here's the proc
 So the first thing I did when I wanted to create my "Introduction to Electronic Music" course was I listed out the topics I wanted to cover. So for this course, my list is:
 
 1. Introduction to Electronic Music [Subject]
-    1. Foundation [Subject]
-        1. Definition [Unit]
-        2. Sound Parameters [Unit]
-        3. Human Hearing [Unit]
-        4. Hearing Curves [Unit]
-        5. Digital Representation [Unit]
-        6. Analog to Digital [Unit]
-        7. Complex Waves [Unit]
-    2. Creating Sound [Subject]
-        1. ... [Unit]
-    3. Changing Sound [Subject]
-        1. ... [Unit]
-    4. Complex Techniques [Subject]
-        1. ... [Unit]
-    5. Systems [Subject]
-        1. ... [Unit]
+  1. Foundation [Subject]
+    1. Definition [Unit]
+    2. Sound Parameters [Unit]
+    3. Human Hearing [Unit]
+    4. Hearing Curves [Unit]
+    5. Digital Representation [Unit]
+    6. Analog to Digital [Unit]
+    7. Complex Waves [Unit]
+  2. Creating Sound [Subject]
+    1. ... [Unit]
+  3. Changing Sound [Subject]
+    1. ... [Unit]
+  4. Complex Techniques [Subject]
+    1. ... [Unit]
+  5. Systems [Subject]
+    1. ... [Unit]
 
 Each of these topics will correlate with a single unit. You might find that your topics are too large for one unit and need to be broken down. I've been trying to keep my content in video lengths of about 3-5 minutes and about 10-20 multiple choice questions per unit at this time.
 
@@ -50,45 +50,45 @@ For each unit, I've created a single video and several multiple choice questions
 
 Each subject will require a description of the subject, and each unit will require a specific learning goal. The "Foundation"'s subject description is:
 
-    A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.
+  A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.
 
 And then each unit has a specific learning goal. For example the goal for the "Sound Parameters" unit is:
 
-    Describe the basic parameters of sound: amplitude, frequency, pitch, phase, and timbre.
+  Describe the basic parameters of sound: amplitude, frequency, pitch, phase, and timbre.
 
 Some of the units require knowledge from other units. For example, the "Sound Parameters" requires the "What is Electronic Music?" unit.
 
 Here's a sample from my own planning document:
 
 
-    Subject - Foundation
+  Subject - Foundation
 
-    A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.
+  A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.
 
-    https://sagefy.org/subjects/CgDRJPfzJuTR916HdmosA3A8
+  https://sagefy.org/subjects/CgDRJPfzJuTR916HdmosA3A8
 
-    -------
+  -------
 
-    ### 01 Electronic Music
-    https://sagefy.org/units/bH8bQhEm0s1bnFiyrbIUochk
+  ### 01 Electronic Music
+  https://sagefy.org/units/bH8bQhEm0s1bnFiyrbIUochk
 
-    Define electronic music and the subjects electronic music covers
+  Define electronic music and the subjects electronic music covers
 
-    - Requires: None
+  - Requires: None
 
-    ### 02 Sound Parameters
-    https://sagefy.org/units/iMrZb5NbqVTiTBP8QD8lr6SJ
+  ### 02 Sound Parameters
+  https://sagefy.org/units/iMrZb5NbqVTiTBP8QD8lr6SJ
 
-    Describe the basic parameters of sound: amplitude, frequency, duration, phase, and timbre.
+  Describe the basic parameters of sound: amplitude, frequency, duration, phase, and timbre.
 
-    - Requires: 01 Electronic Music
+  - Requires: 01 Electronic Music
 
-    ### 03 Human Hearing
-    https://sagefy.org/units/PNmRDSiLwO9lFnCAKl5fUS2L
+  ### 03 Human Hearing
+  https://sagefy.org/units/PNmRDSiLwO9lFnCAKl5fUS2L
 
-    Describe common properties of human hearing, as hearing pertains to electronic music. (Frequency, Amplitude, Spatialization, Hidden Fundamental...)
+  Describe common properties of human hearing, as hearing pertains to electronic music. (Frequency, Amplitude, Spatialization, Hidden Fundamental...)
 
-    - Requires: 02 Sound Parameters
+  - Requires: 02 Sound Parameters
 
 ------
 

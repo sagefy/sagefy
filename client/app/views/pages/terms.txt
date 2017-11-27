@@ -51,9 +51,9 @@ Sagefy does not sell or rent personally identifying information
 to third-parties.
 
 Sagefy may share information to law enforcement without notice only
-    a) if required by law,
-    b) to defend Sagefy's rights and property, or
-    c) to ensure personal safety or public safety.
+  a) if required by law,
+  b) to defend Sagefy's rights and property, or
+  c) to ensure personal safety or public safety.
 
 If Sagefy merges with or is acquired by another organization,
 data will be transferred to that organization.

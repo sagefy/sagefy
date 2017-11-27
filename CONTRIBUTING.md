@@ -32,7 +32,7 @@ For each pull request:
 Global Code Styling
 -------------------
 
-- Four spaces per tab, unless its a generated file where two is the norm.
+- Two spaces per tab.
 - No extra whitespace at the ends of lines.
 - A single line break at the end of the file.
 - A maximum of 80 characters per line.
@@ -48,7 +48,7 @@ Python
 ------
 
 - Use [Flake8](https://flake8.readthedocs.org/en/2.0/) for Python formatting.
-    - Flake8 is the merger of [pep8](https://github.com/jcrocholl/pep8) and [PyFlakes](https://launchpad.net/pyflakes).
+  - Flake8 is the merger of [pep8](https://github.com/jcrocholl/pep8) and [PyFlakes](https://launchpad.net/pyflakes).
 - Methods should be no longer than 12 statements.
 - Request and response formatting: see [RESTish](https://github.com/heiskr/sagefy/wiki/RESTish).
 - DocStrings should follow [PEP-0257](http://legacy.python.org/dev/peps/pep-0257/) and when relevant the [NumPy convention](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt).
@@ -67,9 +67,9 @@ Database
 - Use `kind` for kind or type.
 - When the number of kinds is unknown, use `tags` instead.
 - When the relationship is...
-    - 1 to 1: Should probably use embedding. Otherwise, use the same ID for both.
-    - 1 to many: Put the "1" ID into the "many" rows.
-    - Many to many: Embed IDs, otherwise use a join table.
+  - 1 to 1: Should probably use embedding. Otherwise, use the same ID for both.
+  - 1 to many: Put the "1" ID into the "many" rows.
+  - Many to many: Embed IDs, otherwise use a join table.
 
 JavaScript
 ------------
@@ -85,19 +85,19 @@ Stylus
 - Use the [BEM](http://bem.info/method/) naming convention where appropriate.
 - Mobile is the first and default styling. Use `@media (min-width...)` and never use `@media (max-width...)`.
 - General guidelines:
-    - Lowercase selectors.
-    - Use extend first.
-    - No duplicate properties.
-    - Empty line after blocks of properties.
-    - No empty rules.
-    - Use leading zeros.
-    - Merge selectors.
-    - Don't go more than 3 levels deep.
-    - Hyphen for names.
-    - Spell correctly.
-    - Use shorthands.
-    - Space after commas.
-    - Zero is unitless.
+  - Lowercase selectors.
+  - Use extend first.
+  - No duplicate properties.
+  - Empty line after blocks of properties.
+  - No empty rules.
+  - Use leading zeros.
+  - Merge selectors.
+  - Don't go more than 3 levels deep.
+  - Hyphen for names.
+  - Spell correctly.
+  - Use shorthands.
+  - Space after commas.
+  - Zero is unitless.
 
 HTML
 ----

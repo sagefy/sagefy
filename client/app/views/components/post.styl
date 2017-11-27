@@ -6,67 +6,67 @@ description: TBD
 */
 
 .post
-    padding $unit 0
+  padding $unit 0
 
-    &:hover
-        background $base-color(97)
+  &:hover
+    background $base-color(97)
 
 .post__avatar
-    float left
+  float left
 
-    a
-        border-bottom none
+  a
+    border-bottom none
 
 .post__content
-    margin-left $unit * 5
+  margin-left $unit * 5
 
 .post__name
-    color $base-color(60)
-    margin 0
-    border-bottom none
+  color $base-color(60)
+  margin 0
+  border-bottom none
 
 .post__when
-    @extend $font-size-small
-    float right
-    color $base-color(66)
-    margin 0 0 $unit $unit
+  @extend $font-size-small
+  float right
+  color $base-color(66)
+  margin 0 0 $unit $unit
 
 .post__footer
-    @extend $font-size-small
-    opacity 0.2
-    transition opacity 0.2s linear
-    text-align right
+  @extend $font-size-small
+  opacity 0.2
+  transition opacity 0.2s linear
+  text-align right
 
-    .post:hover &
-        opacity 1
+  .post:hover &
+    opacity 1
 
-    a
-        margin-left $unit
+  a
+    margin-left $unit
 
 .post__in-reply
-    @extend $font-size-small
-    @extend $label
-    border-bottom none
+  @extend $font-size-small
+  @extend $label
+  border-bottom none
 
 .post__proposal
-    padding $unit
-    margin-top $unit
-    background $base-color(95)
+  padding $unit
+  margin-top $unit
+  background $base-color(95)
 
 .post__proposal-status--pending
-    @extend $label
+  @extend $label
 
 .post__proposal-status--blocked
-    @extend $label--bad
+  @extend $label--bad
 
 .post__proposal-status--accepted
-    @extend $label--good
+  @extend $label--good
 
 .post__proposal-status--declined
-    @extend $label
+  @extend $label
 
 .post__vote--good
-    @extend $label--good
+  @extend $label--good
 
 .post__vote--bad
-    @extend $label--bad
+  @extend $label--bad

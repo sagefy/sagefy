@@ -6,18 +6,18 @@ from modules.content import get as c
 
 
 def has_correct_options(options):
-    """
-    Ensure the list of options has at least one correct option.
-    """
+  """
+  Ensure the list of options has at least one correct option.
+  """
 
-    has_correct = False
+  has_correct = False
 
-    for option in options:
-        if option.get('correct') is True:
-            has_correct = True
+  for option in options:
+    if option.get('correct') is True:
+      has_correct = True
 
-    if not has_correct:
-        return c('error_need_correct')
+  if not has_correct:
+    return c('error_need_correct')
 
 
 schema = extend({}, card_schema, {

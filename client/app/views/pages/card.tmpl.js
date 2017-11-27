@@ -7,46 +7,46 @@ const entityVersions = require('../components/entity_versions.tmpl')
 const entityRelationships = require('../components/entity_relationships.tmpl')
 
 const scored = [
-    'choice',
-    'number',
-    'match',
-    'formula',
-    'writing',
-    'upload',
-    'embed',
+  'choice',
+  'number',
+  'match',
+  'formula',
+  'writing',
+  'upload',
+  'embed',
 ]
 const threeDigits = num => Math.round(num * 1000) / 1000
 
 const previewCardContent = require('../components/preview_card_content.tmpl')
 
 module.exports = (data) => {
-    const id = data.routeArgs[0]
-    const card = data.cards && data.cards[id]
-    if (!card) {
-        return spinner()
-    }
-    const cardVersions = data.cardVersions && data.cardVersions[id]
+  const id = data.routeArgs[0]
+  const card = data.cards && data.cards[id]
+  if (!card) {
+    return spinner()
+  }
+  const cardVersions = data.cardVersions && data.cardVersions[id]
 
-    const topics = Object.keys(data.topics)
-        .filter(topicId => data.topics[topicId].entity_id === id)
-        .map(topicId => data.topics[topicId])
+  const topics = Object.keys(data.topics)
+    .filter(topicId => data.topics[topicId].entity_id === id)
+    .map(topicId => data.topics[topicId])
 
-    const params = card.card_parameters || {}
-    const scr = card.kind in scored
-    return div(
-        { id: 'card', className: 'page' },
-        followButton('card', card.entity_id, data.follows),
-        entityHeader('card', card),
-        previewCardContent(card),
-        h2('Stats'),
-        ul(
-            li(`Number of Learners: ${params.num_learners}`),
-            scr ? li(`Guess: ${threeDigits(params.guess)}`) : null,
-            scr ? li(`Slip: ${threeDigits(params.slip)}`) : null,
-            li(`Transit: ${threeDigits(params.transit)} (Default)`)
-        ),
-        entityRelationships('card', card),
-        entityTopics('card', card.entity_id, topics),
-        entityVersions('card', card.entity_id, cardVersions)
-    )
+  const params = card.card_parameters || {}
+  const scr = card.kind in scored
+  return div(
+    { id: 'card', className: 'page' },
+    followButton('card', card.entity_id, data.follows),
+    entityHeader('card', card),
+    previewCardContent(card),
+    h2('Stats'),
+    ul(
+      li(`Number of Learners: ${params.num_learners}`),
+      scr ? li(`Guess: ${threeDigits(params.guess)}`) : null,
+      scr ? li(`Slip: ${threeDigits(params.slip)}`) : null,
+      li(`Transit: ${threeDigits(params.transit)} (Default)`)
+    ),
+    entityRelationships('card', card),
+    entityTopics('card', card.entity_id, topics),
+    entityVersions('card', card.entity_id, cardVersions)
+  )
 }

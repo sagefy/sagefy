@@ -1,23 +1,23 @@
 // TODO-2 Migrate this all to BEM syntax
 #card-learn.choice
-    .options
-        li
-            @extend $clearfix
+  .options
+    li
+      @extend $clearfix
 
-            &.disabled
-                color $base-color(70)
+      &.disabled
+        color $base-color(70)
 
-            *
-                cursor pointer
+      *
+        cursor pointer
 
-            &.disabled *
-                cursor default
+      &.disabled *
+        cursor default
 
-        input[type="radio"]
-        input[type="checkbox"]
-            margin-top 8px
-            float left
+    input[type="radio"]
+    input[type="checkbox"]
+      margin-top 8px
+      float left
 
-        label
-            margin-left $unit * 2
-            display block
+    label
+      margin-left $unit * 2
+      display block

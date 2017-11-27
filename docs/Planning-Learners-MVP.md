@@ -34,10 +34,10 @@ Learner Endpoints
 - POST `/s/users/{id}/subjects/` <- Add to my subjects
 - DELETE `/s/users/{id}/subjects/{id}` <- Remove from my subjects
 - GET `/s/sequencer/next`
-    - parameters: subject_id
-    - returns: reference to one of the following endpoints
+  - parameters: subject_id
+  - returns: reference to one of the following endpoints
 - GET `/s/subjects/{id}/tree` <- Show tree
-    - returns: what would be the next action?
+  - returns: what would be the next action?
 - GET `/s/subjects/{id}/units` <- Choose Unit screen
 - PUT `/s/subjects/{id}/units/{id}` <- Unit chosen
 - GET `/s/cards/{id}/learn` <- Render card

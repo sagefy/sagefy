@@ -6,25 +6,25 @@ description: The `q` and `cite` tags are used together to indicate a quote and a
 */
 
 q
-    font-style italic
+  font-style italic
 
 cite
-    font-style normal
-    font-variant small-caps
-    color $base-color(43)
+  font-style normal
+  font-variant small-caps
+  color $base-color(43)
 
-    &:before
-        color $base-color(90)
-        content "\2022  "
+  &:before
+    color $base-color(90)
+    content "\2022  "
 
 blockquote
-    border-left 2px solid $base-color(90)
-    padding-left $unit
-    margin $unit 0 $unit $unit
+  border-left 2px solid $base-color(90)
+  padding-left $unit
+  margin $unit 0 $unit $unit
 
-    q
-        @extend $font-size-large
-        margin-bottom: 0
+  q
+    @extend $font-size-large
+    margin-bottom: 0
 
-    q, cite
-        display block
+  q, cite
+    display block

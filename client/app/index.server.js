@@ -3,10 +3,10 @@ const toHTML = require('vdom-to-html')
 const template = require('./views/index.tmpl')
 const { route } = require('./modules/route_actions')
 const {
-    dispatch,
-    getState,
-    setReducer,
-    resetState,
+  dispatch,
+  getState,
+  setReducer,
+  resetState,
 } = require('./modules/store')
 const reducer = require('./reducers/index')
 const cookieParser = require('cookie-parser')
@@ -31,42 +31,42 @@ const html = `
 <script>window.preload={state}</script>
 </body>
 `
-    .replace(/\n/g, '')
-    .replace(/___/g, Date.now())
+  .replace(/\n/g, '')
+  .replace(/___/g, Date.now())
 
 function render() {
-    const state = getState()
-    return html
-        .replace('{title}', state.routeTitle)
-        .replace('{body}', toHTML(template(state)))
-        .replace('{state}', JSON.stringify(state))
+  const state = getState()
+  return html
+    .replace('{title}', state.routeTitle)
+    .replace('{body}', toHTML(template(state)))
+    .replace('{state}', JSON.stringify(state))
 }
 
 app.get(/.*/, (request, response) => {
-    const path = request.originalUrl
-    console.log(path) // eslint-disable-line
-    resetState() // make sure it doesn't use a pre-existing state
-    if (request.cookies) {
-        dispatch({
-            type: 'SET_CURRENT_USER_ID',
-            currentUserID: request.cookies.currentUserID,
-        })
-    }
-    global.requestCookie = `session_id=${request.cookies.session_id}`
-    const promise = route(path)
-    if (promise) {
-        promise
-            .then(() => {
-                response.status(200).send(render())
-            })
-            .catch((error) => {
-                console.error(error) // eslint-disable-line
-            })
-    } else {
+  const path = request.originalUrl
+  console.log(path) // eslint-disable-line
+  resetState() // make sure it doesn't use a pre-existing state
+  if (request.cookies) {
+    dispatch({
+      type: 'SET_CURRENT_USER_ID',
+      currentUserID: request.cookies.currentUserID,
+    })
+  }
+  global.requestCookie = `session_id=${request.cookies.session_id}`
+  const promise = route(path)
+  if (promise) {
+    promise
+      .then(() => {
         response.status(200).send(render())
-    }
+      })
+      .catch((error) => {
+        console.error(error) // eslint-disable-line
+      })
+  } else {
+    response.status(200).send(render())
+  }
 })
 
 app.listen(5984, () => {
-    console.log('serving app realness') // eslint-disable-line
+  console.log('serving app realness') // eslint-disable-line
 })

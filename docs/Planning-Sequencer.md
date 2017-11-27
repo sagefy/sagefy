@@ -31,20 +31,20 @@ Requirements
 
 I write these requirements with the assumption of using Bayesian Knowledge Tracing. In BKT, the following formulas are assumed:
 
-    correct = learned * (1 - slip) + (1 - learned) * guess
-    incorrect = learned * slip + (1 - learned) * (1 - guess)
+  correct = learned * (1 - slip) + (1 - learned) * guess
+  incorrect = learned * slip + (1 - learned) * (1 - guess)
 
-    learned0 = (
-        score
-        * learned
-        * calc_correct(1, guess, slip)
-        / calc_correct(learned, guess, slip)
-        + (1 - score)
-        * learned
-        * calc_incorrect(1, guess, slip)
-        / calc_incorrect(learned, guess, slip)
-    )
-    learned = learned0 + (1 - learned0) * transit
+  learned0 = (
+    score
+    * learned
+    * calc_correct(1, guess, slip)
+    / calc_correct(learned, guess, slip)
+    + (1 - score)
+    * learned
+    * calc_incorrect(1, guess, slip)
+    / calc_incorrect(learned, guess, slip)
+  )
+  learned = learned0 + (1 - learned0) * transit
 
 - correct: the probability of the learner getting the answer correct
 - incorrect: the probability of the learner getting the answer incorrect
@@ -58,16 +58,16 @@ Requirements:
 
 - `guess`, `slip`, and `transit` should be **unique** to each card (item), not to each skill (unit). We need to be able to choose cards that suit the learner's current `learned` for the skill. We also need to be able to monitor high quality v low quality cards.
 - `guess`, `slip`, and `transit` should update **per response**. We will be much more capable of scaling out if we can avoid having to do any large all-at-once type of calculations.
-    - `guess` should increase with correct answers and decrease with incorrect answers, proportional to `1 - learned`.
-    - `slip` should increase with incorrect answers and decrease with correct answers, proportional to `learned`.
-    - `transit` should increase if the following card gets a correct answer, and decrease if the following card gets an incorrect answer. `transit` should be based on `learned` and `correct`.
+  - `guess` should increase with correct answers and decrease with incorrect answers, proportional to `1 - learned`.
+  - `slip` should increase with incorrect answers and decrease with correct answers, proportional to `learned`.
+  - `transit` should increase if the following card gets a correct answer, and decrease if the following card gets an incorrect answer. `transit` should be based on `learned` and `correct`.
 - The model for estimating `guess`, `slip`, and `transit` should beat static guesses (such as 0.3, 0.1, and 0.05). We want to ensure the model produces real results.
 - We need to know a way of letting the user know, based on what `learned` was and how much time has passed, when the learner should review the unit. We can call this parameter `belief`.
 - `learned` should be able to account for time. If a learner doesn't answer in a long time, our prediction of `learned` should go down.
 - We'll want to avoid having to look at previous responses and statistics too much, as it would cost in terms of database queries. Preferably, all the results of calculation should be stored in a key-value store and not in the main database.
 - We need aggregates to help learners with:
-    1. Searching for new subjects
-    2. Estimating time to complete units and subjects
+  1. Searching for new subjects
+  2. Estimating time to complete units and subjects
 
 Parameters
 ----------
@@ -87,8 +87,8 @@ The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) an
 - _When_ - Diagnostic assessment. When to change units. When unit is complete. When to review. Forming completion tree.
 - _Factors_ - Prior, response, learner-card ability, card difficulty, guess, slip. (Retention: should degrade learner-unit ability's confidence over time.)
 - _Formula_ -
-    - 1) `learned = learned * (slip || 1 - slip) / (p(correct) || p(incorrect))`
-    - 2) `learned = learned + (1 - learned) * transit`
+  - 1) `learned = learned * (slip || 1 - slip) / (p(correct) || p(incorrect))`
+  - 2) `learned = learned + (1 - learned) * transit`
 
 **Learner-Subject Ability**
 
@@ -121,15 +121,15 @@ The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) an
 **Card Difficulty** - $$p(guess)$$ and $$p(slip)$$
 
 - _Definition_ - How likely is the typical learner to answer well? (Only applies to scored cards.)
-    - **Guess** - How likely is the typical learner, without ability, to randomly guess towards a good answer? (Only applies to scored cards.)
-    - **Slip** - How likely is the typical learner, with ability, to answer poorly? (Only applies to scored cards.)
+  - **Guess** - How likely is the typical learner, without ability, to randomly guess towards a good answer? (Only applies to scored cards.)
+  - **Slip** - How likely is the typical learner, with ability, to answer poorly? (Only applies to scored cards.)
 - _When_ - Computing learner-unit ability. Selecting the next card.
 - _Factors_ - Prior, response, learner-unit ability, guess, slip.
 - _Formula_ -
-    - Guess and Slip both use a PMF. The hypotheses are 0 to 1 with a step of 0.01. Each update, we update each hypothesis by `prior * likelihood`, then we normalize the PMF so its probabilities to 1.
-    - `guess[hypothesis] = prior * (score * correct(learned, hypothesis, slip) + (1 - score) * incorrect(learned, hypothesis, slip))`
-    - `slip[hypothesis] = prior * (score * correct(learned, guess, hypothesis) + (1 - score) * incorrect(learned, guess, hypothesis))`
-    - `difficulty = 0.5 * guess + 0.5 * (1 - slip)`
+  - Guess and Slip both use a PMF. The hypotheses are 0 to 1 with a step of 0.01. Each update, we update each hypothesis by `prior * likelihood`, then we normalize the PMF so its probabilities to 1.
+  - `guess[hypothesis] = prior * (score * correct(learned, hypothesis, slip) + (1 - score) * incorrect(learned, hypothesis, slip))`
+  - `slip[hypothesis] = prior * (score * correct(learned, guess, hypothesis) + (1 - score) * incorrect(learned, guess, hypothesis))`
+  - `difficulty = 0.5 * guess + 0.5 * (1 - slip)`
 
 **Unit Difficulty**
 
@@ -221,9 +221,9 @@ Finally, we diagnose node "D" with low ability. Append to Ready, and there are 2
 
 We also have the following lists:
 
-    Diagnose: []
-    Ready: [A, C, B, E, H, D]
-    Learned: [F, G]
+  Diagnose: []
+  Ready: [A, C, B, E, H, D]
+  Learned: [F, G]
 
 We are now ready to starting the learning process.
 

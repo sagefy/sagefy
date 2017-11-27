@@ -26,68 +26,68 @@ p_scored_map = {
 
 
 def partition(l, p):
-    return reduce(lambda x, y: x[not p(y)].append(y) or x, l, ([], []))
+  return reduce(lambda x, y: x[not p(y)].append(y) or x, l, ([], []))
 
 
 def choose_card(db_conn, user, unit):
-    """
-    Given a user and a unit, choose an appropriate card.
-    Return a card instance.
-    """
+  """
+  Given a user and a unit, choose an appropriate card.
+  Return a card instance.
+  """
 
-    # TODO-3 simplify this method
+  # TODO-3 simplify this method
 
-    unit_id = unit['entity_id']
+  unit_id = unit['entity_id']
 
-    cards = list_random_cards_in_unit(db_conn, unit_id)
-    if not len(cards):
-        return None
-
-    # TODO-2 is the sample value decent?
-    # TODO-2 has the learner seen this card recently?
-
-    previous_response = get_latest_response(db_conn, user['id'], unit_id)
-    if previous_response:
-        learned = previous_response['learned']
-        # Don't allow the previous card as the next card
-        cards = [
-            card
-            for card in cards
-            if card['entity_id'] != previous_response['card_id']
-        ]
-    else:
-        learned = init_learned
-
-    shuffle(cards)
-    scored, unscored = partition(
-        cards,
-        lambda c: c['kind'] in scored_kinds
-    )
-    choose_scored = random() < p_scored_map[floor(learned * 10)]
-
-    if choose_scored:
-        if not len(scored) and len(unscored):
-            return unscored[0]
-        for card in scored:
-            params = get_card_parameters(
-                db_conn,
-                {'entity_id': card['entity_id']}
-            )
-            if params:
-                values = get_card_parameters_values(params)
-                guess = values['guess']
-                slip = values['slip']
-                correct = calculate_correct(guess, slip, learned)
-                if 0.25 < correct < 0.75:
-                    return card
-            else:
-                return card
-        return scored[0]
-
-    if len(unscored):
-        return unscored[0]
-
-    if len(scored):
-        return scored[0]
-
+  cards = list_random_cards_in_unit(db_conn, unit_id)
+  if not len(cards):
     return None
+
+  # TODO-2 is the sample value decent?
+  # TODO-2 has the learner seen this card recently?
+
+  previous_response = get_latest_response(db_conn, user['id'], unit_id)
+  if previous_response:
+    learned = previous_response['learned']
+    # Don't allow the previous card as the next card
+    cards = [
+        card
+        for card in cards
+        if card['entity_id'] != previous_response['card_id']
+    ]
+  else:
+    learned = init_learned
+
+  shuffle(cards)
+  scored, unscored = partition(
+      cards,
+      lambda c: c['kind'] in scored_kinds
+  )
+  choose_scored = random() < p_scored_map[floor(learned * 10)]
+
+  if choose_scored:
+    if not len(scored) and len(unscored):
+      return unscored[0]
+    for card in scored:
+      params = get_card_parameters(
+          db_conn,
+          {'entity_id': card['entity_id']}
+      )
+      if params:
+        values = get_card_parameters_values(params)
+        guess = values['guess']
+        slip = values['slip']
+        correct = calculate_correct(guess, slip, learned)
+        if 0.25 < correct < 0.75:
+          return card
+      else:
+        return card
+    return scored[0]
+
+  if len(unscored):
+    return unscored[0]
+
+  if len(scored):
+    return scored[0]
+
+  return None

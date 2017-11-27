@@ -63,35 +63,35 @@ Screen Requirements
 
 ### Log In
 - Username or email
-    - Error
+  - Error
 - Password
-    - Error
-    - I forgot my password
+  - Error
+  - I forgot my password
 - Log In Button
 - Create Account link
 
 ### Create Account
 - Username
-    - Validate unique; error
+  - Validate unique; error
 - Email
-    - Validate unique; error
+  - Validate unique; error
 - Password
-    - Requirements; error
+  - Requirements; error
 - You agree to TOS
 - Create account button
 - Log In link
 - Success: Check inbox, spam, support link; validate email address
-    - Then log in, Thanks for making account!
+  - Then log in, Thanks for making account!
 
 ### New Password
 - Wizard steps
-    - 1) Enter email
-    - 2) Check inbox
-    - 3) Create password
+  - 1) Enter email
+  - 2) Check inbox
+  - 3) Create password
 - 1) Email (to confirm you own account), send token button
 - 2) Check inbox, few minutes, check spam, support link
 - 3) Password field (requirements/errors), update password
-    - Then log in, notify user of new password
+  - Then log in, notify user of new password
 
 ### Settings
 - Autosave fields
@@ -100,9 +100,9 @@ Screen Requirements
 - Password => link to create a new password
 - Avatar (requirements, errors, etc)
 - Notices settings, for each:
-    - Site notice
-    - Email
-    - Timing (immediate, daily, weekly...)
+  - Site notice
+  - Email
+  - Timing (immediate, daily, weekly...)
 
 ### Terms
 - List terms and privacy policy
@@ -112,14 +112,14 @@ Screen Requirements
 
 ### Inbox (Notices)
 - List notices
-    - Filter notices by type
-    - Each notice:
-        - Image
-        - Subject
-        - Body
-        - Action
-        - Seen/unseen status
-        - Time ago
+  - Filter notices by type
+  - Each notice:
+    - Image
+    - Subject
+    - Body
+    - Action
+    - Seen/unseen status
+    - Time ago
 
 Wireframes
 ----------
