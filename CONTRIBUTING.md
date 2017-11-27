@@ -121,12 +121,6 @@ If it needs to work under a variety of conditions, isolate it. If it has a hard 
 
 We don't want issues to recur. That also means we can write fewer tests up-front if we know new tests will be created as needed later.
 
-Ansible and Configuration
--------------------------
-
-- Use the `setup` directory.
-- More guidelines TBD.
-
 Other Documentation
 -------------------
 
