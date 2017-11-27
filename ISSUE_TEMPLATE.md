@@ -1,6 +1,7 @@
 Thank you for contributing to Sagefy! Please check the following:
 
 - [ ] I searched existing issues first.
+- [ ] I provided a short description.
 - [ ] I provided step-by-step instructions.
 - [ ] I provided a screenshot, as available.
 - [ ] I provided logs, as available.
