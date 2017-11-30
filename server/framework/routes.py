@@ -2,11 +2,11 @@ import re
 from framework.status_codes import status_codes
 
 
-routes = {
-    'GET': [],
-    'POST': [],
-    'PUT': [],
-    'DELETE': [],
+ROUTES = {
+  'GET': [],
+  'POST': [],
+  'PUT': [],
+  'DELETE': [],
 }
 
 
@@ -16,7 +16,7 @@ def get(path):
   """
 
   def decorator(handler):
-    routes['GET'].append((build_path_pattern(path), handler,))
+    ROUTES['GET'].append((build_path_pattern(path), handler,))
     return handler
   return decorator
 
@@ -27,7 +27,7 @@ def post(path):
   """
 
   def decorator(handler):
-    routes['POST'].append((build_path_pattern(path), handler,))
+    ROUTES['POST'].append((build_path_pattern(path), handler,))
     return handler
   return decorator
 
@@ -38,7 +38,7 @@ def put(path):
   """
 
   def decorator(handler):
-    routes['PUT'].append((build_path_pattern(path), handler,))
+    ROUTES['PUT'].append((build_path_pattern(path), handler,))
     return handler
   return decorator
 
@@ -49,7 +49,7 @@ def delete(path):
   """
 
   def decorator(handler):
-    routes['DELETE'].append((build_path_pattern(path), handler,))
+    ROUTES['DELETE'].append((build_path_pattern(path), handler,))
     return handler
   return decorator
 
@@ -69,7 +69,7 @@ def find_path(method, path):
   Given a method and a path,
   find the route that matches.
   """
-  for pattern, handler in routes[method]:
+  for pattern, handler in ROUTES[method]:
     match = pattern.match(path)
     if match:
       return handler, match.groupdict()
@@ -82,6 +82,6 @@ def abort(code, ref=''):
   """
 
   return code, {'errors': [{
-      'message': str(code) + ' ' + status_codes.get(code, 'Unknown'),
-      'ref': ref,
+    'message': str(code) + ' ' + status_codes.get(code, 'Unknown'),
+    'ref': ref,
   }]}

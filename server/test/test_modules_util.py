@@ -1,3 +1,4 @@
+# pylint: disable=all
 from modules import util
 from modules.util import convert_uuid_to_slug, convert_slug_to_uuid, \
     create_uuid_b64, json_serial

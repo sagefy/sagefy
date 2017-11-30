@@ -1,3 +1,5 @@
+# pylint: disable=all
+
 from database.unit import ensure_requires, \
     ensure_no_cycles, \
     insert_unit, \

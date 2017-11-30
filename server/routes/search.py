@@ -18,12 +18,11 @@ def search_route(request):
 
   # elasticsearch doc: http://bit.ly/1NdvIoi
   result = es.search(
-      index="entity",
-      doc_type=request['params'].get('kind') or
-      "user,card,unit,subject,topic,post",
-      q=request['params'].get('q'),
-      size=request['params'].get('limit') or 10,
-      from_=request['params'].get('offset') or 0,
-      # TODO-2 sort=request['params'].get('order') or 'score:desc',
+    index="entity",
+    doc_type=request['params'].get('kind') or "user,card,unit,subject,topic,post",
+    q=request['params'].get('q'),
+    size=request['params'].get('limit') or 10,
+    from_=request['params'].get('offset') or 0,
+    # TODO-2 sort=request['params'].get('order') or 'score:desc',
   )
   return 200, result['hits']

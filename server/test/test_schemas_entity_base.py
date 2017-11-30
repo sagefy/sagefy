@@ -1,1 +1,1 @@
-import schemas.entity_base  # noqa
+import schemas.entity_base  # pylint: disable=W0611

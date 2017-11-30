@@ -1,12 +1,13 @@
 # TODO all saves should go to ES
 
+import re
+import uuid
+
 from schemas.subject import schema as subject_schema
 from database.util import deliver_fields
 from database.entity_base import save_entity_to_es
 from database.util import insert_row, save_row, get_row, list_rows
 from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
-import re
-import uuid
 
 
 def is_valid_members(db_conn, data):
@@ -26,10 +27,10 @@ def is_valid_members(db_conn, data):
       entity = does_subject_exist(db_conn, entity_id)
     if not entity:
       return [{
-          'name': 'id',
-          'message': 'Not a valid entity.',
-          'value': entity_id,
-          'ref': 'qKUTNkDuSiGLh0PZdhu9Xw',
+        'name': 'id',
+        'message': 'Not a valid entity.',
+        'value': entity_id,
+        'ref': 'qKUTNkDuSiGLh0PZdhu9Xw',
       }]
 
   return []
@@ -45,9 +46,9 @@ def ensure_no_cycles(db_conn, data):
 
   def _(members):
     entity_ids = [
-        convert_slug_to_uuid(member['id'])
-        for member in members
-        if member['kind'] == 'subject'
+      convert_slug_to_uuid(member['id'])
+      for member in members
+      if member['kind'] == 'subject'
     ]
     entities = list_latest_accepted_subjects(db_conn, entity_ids)
     for entity in entities:
@@ -62,9 +63,9 @@ def ensure_no_cycles(db_conn, data):
 
   if found['cycle']:
     return [{
-        'name': 'members',
-        'message': 'Found a cycle in membership.',
-        'ref': 'PfEdjTllRpqh_bKGM9oyTA',
+      'name': 'members',
+      'message': 'Found a cycle in membership.',
+      'ref': 'PfEdjTllRpqh_bKGM9oyTA',
     }]
 
   return []
@@ -88,11 +89,11 @@ def insert_subject(db_conn, data):
     RETURNING *;
   """
   data = {
-      'entity_id': uuid.uuid4(),
-      'name': data['name'],
-      'user_id': convert_slug_to_uuid(data['user_id']),
-      'body': data['body'],
-      'members': data.get('members', []),
+    'entity_id': uuid.uuid4(),
+    'name': data['name'],
+    'user_id': convert_slug_to_uuid(data['user_id']),
+    'body': data['body'],
+    'members': data.get('members', []),
   }
   errors = is_valid_members(db_conn, data) + ensure_no_cycles(db_conn, data)
   if errors:
@@ -119,14 +120,14 @@ def insert_subject_version(db_conn, current_data, next_data):
     RETURNING *;
   """
   data = {
-      'entity_id': current_data['entity_id'],
-      'previous_id': current_data['version_id'],
-      'user_id': convert_slug_to_uuid(next_data['user_id']),
-      'name': next_data.get('name') or current_data.get('name'),
-      'body': next_data.get('body') or current_data.get('body'),
-      'members': (next_data.get('members') or
-                  current_data.get('members') or
-                  []),
+    'entity_id': current_data['entity_id'],
+    'previous_id': current_data['version_id'],
+    'user_id': convert_slug_to_uuid(next_data['user_id']),
+    'name': next_data.get('name') or current_data.get('name'),
+    'body': next_data.get('body') or current_data.get('body'),
+    'members': (next_data.get('members') or
+                current_data.get('members') or
+                []),
   }
   errors = is_valid_members(db_conn, data) + ensure_no_cycles(db_conn, data)
   if errors:
@@ -149,8 +150,8 @@ def update_subject(db_conn, version_id, status):
     RETURNING *;
   """
   data = {
-      'version_id': convert_slug_to_uuid(version_id),
-      'status': status,
+    'version_id': convert_slug_to_uuid(version_id),
+    'status': status,
   }
   data, errors = save_row(db_conn, query, data)
   if not errors:
@@ -179,7 +180,7 @@ def does_subject_exist(db_conn, entity_id):
     LIMIT 1;
   """
   params = {
-      'entity_id': convert_slug_to_uuid(entity_id),
+    'entity_id': convert_slug_to_uuid(entity_id),
   }
   return get_row(db_conn, query, params)
 
@@ -197,7 +198,7 @@ def get_latest_accepted_subject(db_conn, entity_id):
     /* TODO LIMIT */
   """
   params = {
-      'entity_id': convert_slug_to_uuid(entity_id),
+    'entity_id': convert_slug_to_uuid(entity_id),
   }
   return get_row(db_conn, query, params)
 
@@ -217,8 +218,8 @@ def list_latest_accepted_subjects(db_conn, entity_ids):
     /* TODO LIMIT OFFSET */
   """
   params = {'entity_ids': tuple([
-      convert_slug_to_uuid(entity_id)
-      for entity_id in entity_ids
+    convert_slug_to_uuid(entity_id)
+    for entity_id in entity_ids
   ])}
   return list_rows(db_conn, query, params)
 
@@ -228,7 +229,7 @@ def list_many_subject_versions(db_conn, version_ids):
   List Subject Versions by VIDs
   """
 
-  if not len(version_ids):
+  if not version_ids:
     return []
   query = """
     SELECT *
@@ -238,8 +239,8 @@ def list_many_subject_versions(db_conn, version_ids):
     /* TODO LIMIT OFFSET */
   """
   params = {'version_ids': tuple(
-      convert_slug_to_uuid(vid)
-      for vid in version_ids
+    convert_slug_to_uuid(vid)
+    for vid in version_ids
   )}
   return list_rows(db_conn, query, params)
 
@@ -326,7 +327,7 @@ def list_subject_parents(db_conn, subject_id):
   return list_rows(db_conn, query, params)
 
 
-def list_my_recently_created_subjects(db_conn, user_id):
+def list_my_recently_created_subjects(db_conn, user_id):  # pylint: disable=C0103
   """
   List My Recently Created Subjects (by User ID)
   """
@@ -353,8 +354,8 @@ def list_all_subject_entity_ids(db_conn):
   """
   params = {}
   return [
-      row['entity_id']
-      for row in list_rows(db_conn, query, params)
+    row['entity_id']
+    for row in list_rows(db_conn, query, params)
   ]
 
 
@@ -371,6 +372,6 @@ def get_recommended_subjects(db_conn):
     /* TODO LIMIT OFFSET */
   """
   params = {
-      'name': 'An Introduction to Electronic Music',
+    'name': 'An Introduction to Electronic Music',
   }
   return list_rows(db_conn, query, params)

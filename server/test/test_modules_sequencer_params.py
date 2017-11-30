@@ -1,1 +1,1 @@
-import modules.sequencer.params  # noqa
+import modules.sequencer.params  # pylint: disable=all

@@ -32,17 +32,18 @@ def list_user_subjects_route(request, user_id):
   params = request['params']
   user_subjects = list_user_subjects_entity(db_conn, user_id, params)
   response = {
-      'subjects': [
-          deliver_subject(subject)
-          for subject in user_subjects
-      ]
+    'subjects': [
+      deliver_subject(subject)
+      for subject in user_subjects
+    ]
   }
   if current_user == user:
     next_ = {
-        'method': 'POST',
-        'path': '/s/users/{user_id}/subjects/{subject_id}'
-        .format(user_id=current_user['id'],
-                subject_id='{subject_id}'),
+      'method': 'POST',
+      'path': '/s/users/{user_id}/subjects/{subject_id}'.format(
+        user_id=current_user['id'],
+        subject_id='{subject_id}'
+      ),
     }
     set_learning_context(current_user, next=next_)
     response['next'] = next_
@@ -68,14 +69,14 @@ def add_subject_route(request, user_id, subject_id):
   user_subject, errors = insert_user_subject(db_conn, user_id, subject_id)
   if errors:
     return 400, {
-        'errors': errors,
-        'ref': 'hL92UUGXQk6OhOggTZzarA'
+      'errors': errors,
+      'ref': 'hL92UUGXQk6OhOggTZzarA'
     }
   return 200, {'user_subject': user_subject}
 
 
 @put('/s/users/{user_id}/subjects/{subject_id}')
-def select_subject_route(request, user_id, subject_id):
+def select_subject_route(request, user_id, subject_id):  # pylint: disable=W0613
   """
   Select the subject to work on.
 
@@ -110,17 +111,19 @@ def select_subject_route(request, user_id, subject_id):
   # elif buckets.get('review') or
   if buckets.get('learn'):
     next_ = {
-        'method': 'GET',
-        'path': '/s/subjects/{subject_id}/units'
-        .format(subject_id=convert_uuid_to_slug(subject_id)),
+      'method': 'GET',
+      'path': '/s/subjects/{subject_id}/units'.format(
+        subject_id=convert_uuid_to_slug(subject_id)
+      ),
     }
     set_learning_context(current_user, next=next_)
   # If the subject is complete, lead the learner to choose another subject.
   else:
     next_ = {
-        'method': 'GET',
-        'path': '/s/users/{user_id}/subjects'
-        .format(user_id=convert_uuid_to_slug(current_user['id'])),
+      'method': 'GET',
+      'path': '/s/users/{user_id}/subjects'.format(
+        user_id=convert_uuid_to_slug(current_user['id'])
+      ),
     }
     set_learning_context(current_user, next=next_, unit=None, subject=None)
   return 200, {'next': next_}
@@ -141,24 +144,24 @@ def remove_subject_route(request, user_id, subject_id):
   user_subjects = list_user_subjects(db_conn, user_id)
   if not user_subjects:
     return 404, {
-        'errors': [{
-            'name': 'user_id',
-            'message': 'User does not have subjects.',
-            'ref': 'nttevgwMRsOwiT_ul0SmHQ',
-        }],
+      'errors': [{
+        'name': 'user_id',
+        'message': 'User does not have subjects.',
+        'ref': 'nttevgwMRsOwiT_ul0SmHQ',
+      }],
     }
   matches = [
-      us
-      for us in user_subjects
-      if (convert_slug_to_uuid(us['subject_id']) ==
-          convert_slug_to_uuid(subject_id))
+    us
+    for us in user_subjects
+    if (convert_slug_to_uuid(us['subject_id']) ==
+        convert_slug_to_uuid(subject_id))
   ]
   if not matches:
     return abort(404, 'AQV0c9qfSdO7Ql2IC8l0bw')
   errors = remove_user_subject(db_conn, user_id, subject_id)
   if errors:
     return 400, {
-        'errors': errors,
-        'ref': 'h1BKySSTT0SgH2OTTnSVlA'
+      'errors': errors,
+      'ref': 'h1BKySSTT0SgH2OTTnSVlA'
     }
   return 200, {}

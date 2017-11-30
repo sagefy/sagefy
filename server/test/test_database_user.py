@@ -1,3 +1,5 @@
+# pylint: disable=all
+
 from database.user import insert_user, \
     update_user, \
     update_user_password, \

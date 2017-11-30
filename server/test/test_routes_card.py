@@ -1,3 +1,4 @@
+# pylint: disable=all
 import json
 import routes.card  # TODO-2 switch to direct imports
 from framework.redis import redis

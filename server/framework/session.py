@@ -1,7 +1,7 @@
-from database.user import get_user
-from framework.redis import redis
-from modules.util import convert_uuid_to_slug
 import uuid
+from framework.redis import redis
+from database.user import get_user  # pylint: disable=E0611
+from modules.util import convert_uuid_to_slug
 
 
 def get_current_user(request):
@@ -25,9 +25,9 @@ def log_in_user(user):
 
   session_id = convert_uuid_to_slug(uuid.uuid4())
   redis.setex(
-      session_id,
-      2 * 7 * 24 * 60 * 60,
-      convert_uuid_to_slug(user['id']),
+    session_id,
+    2 * 7 * 24 * 60 * 60,
+    convert_uuid_to_slug(user['id']),
   )
   return session_id
 

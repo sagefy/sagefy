@@ -1,3 +1,4 @@
+# pylint: disable=C0103
 from database.card_parameters import get_card_parameters, \
     insert_card_parameters, \
     update_card_parameters, \
@@ -9,14 +10,14 @@ from database.card_parameters import get_card_parameters, \
     get_transit, \
     get_num_learners, \
     get_card_parameters_values
-from test_database_card import create_card_test_data, card_a_uuid, card_b_uuid
 from database.card import get_latest_accepted_card
+from test_database_card import create_card_test_data, card_a_uuid, card_b_uuid
 
 
 def test_get_card_parameters(db_conn):
   create_card_test_data(db_conn)
   params = {
-      'entity_id': card_b_uuid,
+    'entity_id': card_b_uuid,
   }
   card_params = get_card_parameters(db_conn, params)
   assert card_params
@@ -25,9 +26,9 @@ def test_get_card_parameters(db_conn):
 def test_insert_card_parameters(db_conn):
   create_card_test_data(db_conn)
   data = {
-      'entity_id': card_a_uuid,
-      'guess_distribution': {},
-      'slip_distribution': {},
+    'entity_id': card_a_uuid,
+    'guess_distribution': {},
+    'slip_distribution': {},
   }
   cp, errors = insert_card_parameters(db_conn, data)
   assert not errors
@@ -38,8 +39,8 @@ def test_update_card_parameters(db_conn):
   create_card_test_data(db_conn)
   prev_data = get_latest_accepted_card(db_conn, entity_id=card_b_uuid)
   data = {
-      'guess_distribution': {},
-      'slip_distribution': {},
+    'guess_distribution': {},
+    'slip_distribution': {},
   }
   cp, errors = update_card_parameters(db_conn, prev_data, data)
   assert not errors
@@ -49,13 +50,13 @@ def test_update_card_parameters(db_conn):
 def test_get_distribution(db_conn):
   create_card_test_data(db_conn)
   params = {
-      'entity_id': card_b_uuid,
+    'entity_id': card_b_uuid,
   }
   card_params = get_card_parameters(db_conn, params)
   dist = get_distribution(card_params, kind='guess')
   assert dist
   params = {
-      'entity_id': card_a_uuid,
+    'entity_id': card_a_uuid,
   }
   card_params = get_card_parameters(db_conn, params) or {}
   dist = get_distribution(card_params, kind='slip')
@@ -77,7 +78,7 @@ def test_bundle_distribution():
 def test_get_guess(db_conn):
   create_card_test_data(db_conn)
   params = {
-      'entity_id': card_b_uuid,
+    'entity_id': card_b_uuid,
   }
   card_params = get_card_parameters(db_conn, params)
   assert get_guess(card_params) == 0.41
@@ -86,7 +87,7 @@ def test_get_guess(db_conn):
 def test_get_slip(db_conn):
   create_card_test_data(db_conn)
   params = {
-      'entity_id': card_b_uuid,
+    'entity_id': card_b_uuid,
   }
   card_params = get_card_parameters(db_conn, params)
   assert 0.27 < get_slip(card_params) < 0.28
@@ -103,7 +104,7 @@ def test_get_num_learners():
 def test_get_card_parameters_values(db_conn):
   create_card_test_data(db_conn)
   params = {
-      'entity_id': card_b_uuid,
+    'entity_id': card_b_uuid,
   }
   card_params = get_card_parameters(db_conn, params)
   result = get_card_parameters_values(card_params)

@@ -22,8 +22,8 @@ def insert_user_subject(db_conn, user_id, subject_id):
     RETURNING *;
   """
   data = {
-      'user_id': convert_slug_to_uuid(user_id),
-      'subject_id': convert_slug_to_uuid(subject_id),
+    'user_id': convert_slug_to_uuid(user_id),
+    'subject_id': convert_slug_to_uuid(subject_id),
   }
   data, errors = insert_row(db_conn, schema, query, data)
   return data, errors
@@ -55,14 +55,14 @@ def remove_user_subject(db_conn, user_id, subject_id):
     WHERE user_id = %(user_id)s AND subject_id = %(subject_id)s;
   """
   params = {
-      'user_id': convert_slug_to_uuid(user_id),
-      'subject_id': convert_slug_to_uuid(subject_id),
+    'user_id': convert_slug_to_uuid(user_id),
+    'subject_id': convert_slug_to_uuid(subject_id),
   }
   errors = delete_row(db_conn, query, params)
   return errors
 
 
-def list_user_subjects_entity(db_conn, user_id, params):
+def list_user_subjects_entity(db_conn, user_id, params): # pylint: disable=W0613
   """
   Join the user's subject_ids with subject information.
   Return empty list when there's no matching documents.

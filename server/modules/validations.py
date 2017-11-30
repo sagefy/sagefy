@@ -1,7 +1,7 @@
 import re
-from modules.content import get as c
 import uuid
 from datetime import datetime
+from modules.content import get as c
 
 
 def is_required(value):
@@ -160,18 +160,18 @@ def is_url(value):
     return c('url')
 
 
-def has_min_length(value, ln):
+def has_min_length(value, leng):
   """
   Ensure the given value is a minimum length.
   """
   if value is None:
     return
 
-  if not value or len(value) < ln:
-    return c('minlength').replace('{length}', str(ln))
+  if not value or len(value) < leng:
+    return c('minlength').replace('{length}', str(leng))
 
 
-def has_max_length(value, ln):
+def has_max_length(value, leng):
   """
   Ensure the given value is a maximum length.
   """
@@ -179,8 +179,8 @@ def has_max_length(value, ln):
   if value is None:
     return
 
-  if not value or len(value) > ln:
-    return c('maxlength').replace('{length}', str(ln))
+  if not value or len(value) > leng:
+    return c('maxlength').replace('{length}', str(leng))
 
 
 def is_one_of(value, *options):
@@ -207,8 +207,8 @@ def is_list_of_strings(value):
   if not isinstance(value, list):
     return c('list')
 
-  for v in value:
-    if not isinstance(v, str):
+  for entry in value:
+    if not isinstance(entry, str):
       return c('string')
 
 
@@ -223,8 +223,8 @@ def is_list_of_uuids(value):
   if not isinstance(value, list):
     return c('list')
 
-  for v in value:
-    if not isinstance(v, uuid.UUID):
+  for entry in value:
+    if not isinstance(entry, uuid.UUID):
       return c('uuid')
 
 

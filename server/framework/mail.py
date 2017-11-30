@@ -2,7 +2,7 @@ from email.mime.text import MIMEText
 from smtplib import SMTP
 from config import config
 
-footer_text = """
+FOOTER_TEXT = """
 
 
 This is a transactional email from Sagefy.
@@ -23,22 +23,24 @@ def send_mail(subject, recipient, body):
   if config['test']:
     return True
   sent = False
-  msg = MIMEText(body + footer_text, 'plain')
+  msg = MIMEText(body + FOOTER_TEXT, 'plain')
   msg['Subject'] = subject
   msg['From'] = config['mail_sender']
   msg['To'] = recipient
   conn = None
   try:
     conn = SMTP(
-        config['mail_server'],
-        config['mail_port'],
-        timeout=5
+      config['mail_server'],
+      config['mail_port'],
+      timeout=5
     )
     conn.set_debuglevel(False)
     conn.login(config['mail_username'], config['mail_password'])
     conn.sendmail(msg['To'], [recipient], msg.as_string())
     sent = True
+  except:
+    pass
   finally:
     if conn:
       conn.close()
-    return sent
+  return sent

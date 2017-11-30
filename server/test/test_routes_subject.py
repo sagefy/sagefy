@@ -1,3 +1,4 @@
+# pylint: disable=all
 import pytest
 xfail = pytest.mark.xfail
 

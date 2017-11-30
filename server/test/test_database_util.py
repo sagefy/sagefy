@@ -1,3 +1,5 @@
+# pylint: disable=all
+
 import database.util as util
 from database.util import insert_row, update_row, save_row, get_row, \
     list_rows, delete_row, convert_fields_to_pgjson

@@ -23,7 +23,7 @@ We Use
   - [SparkPost](https://sparkpost.com/)
   - Testing
     - [py.test](http://pytest.org/latest/)
-    - [Flake8](https://pypi.python.org/pypi/flake8)
+    - [pylint](https://www.pylint.org/)
     - [Coverage.py](http://nedbatchelder.com/code/coverage/)
 - UI
   - [npm](https://npmjs.org/)

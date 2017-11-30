@@ -47,8 +47,7 @@ Naming Conventions
 Python
 ------
 
-- Use [Flake8](https://flake8.readthedocs.org/en/2.0/) for Python formatting.
-  - Flake8 is the merger of [pep8](https://github.com/jcrocholl/pep8) and [PyFlakes](https://launchpad.net/pyflakes).
+- Use [Pylint](https://www.pylint.org/) for Python formatting.
 - Methods should be no longer than 12 statements.
 - Request and response formatting: see [RESTish](https://github.com/heiskr/sagefy/wiki/RESTish).
 - DocStrings should follow [PEP-0257](http://legacy.python.org/dev/peps/pep-0257/) and when relevant the [NumPy convention](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt).

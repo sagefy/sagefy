@@ -1,3 +1,4 @@
+# pylint: disable=all
 from routes.unit import get_unit_route, \
     list_units_route, \
     get_unit_versions_route, \

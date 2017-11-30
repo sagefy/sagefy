@@ -1,3 +1,4 @@
+# pylint: disable=all
 from routes.topic import get_topic_route, \
     list_topics_route, \
     create_topic_route, \

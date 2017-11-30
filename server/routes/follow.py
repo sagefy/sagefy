@@ -20,7 +20,7 @@ def get_follows_route(request):
     if not user:
       return abort(404, 'sYkDuhNmReOrKyR0xsBmHg')
     if (user != current_user and
-            user['settings']['view_follows'] != 'public'):
+        user['settings']['view_follows'] != 'public'):
       return abort(403, 'FnH15Y3MRma6bU2gXqzjQQ')
   else:
     user = current_user
@@ -30,8 +30,8 @@ def get_follows_route(request):
   params['user_id'] = user['id']
   follows = list_follows_by_user(db_conn, params)
   return 200, {
-      'follows': [deliver_follow(follow, access='private')
-                  for follow in follows]
+    'follows': [deliver_follow(follow, access='private')
+                for follow in follows]
   }
 
 
@@ -51,8 +51,8 @@ def follow_route(request):
   follow, errors = insert_follow(db_conn, follow_data)
   if errors:
     return 400, {
-        'errors': errors,
-        'ref': 'R4AAxO7PT7udr2huRHIbnA'
+      'errors': errors,
+      'ref': 'R4AAxO7PT7udr2huRHIbnA'
     }
   return 200, {'follow': deliver_follow(follow, access='private')}
 
@@ -75,7 +75,7 @@ def unfollow_route(request, follow_id):
   errors = delete_follow(db_conn, follow_id)
   if errors:
     return 400, {
-        'errors': errors,
-        'ref': 'l32PmWmPSp6J4RXLzQph1A'
+      'errors': errors,
+      'ref': 'l32PmWmPSp6J4RXLzQph1A'
     }
   return 200, {}

@@ -1,3 +1,4 @@
+# pylint: disable=all
 import routes.notice  # TODO-2 switch to direct imports
 from database.notice import insert_notice, get_notice
 from raw_insert import raw_insert_users, \

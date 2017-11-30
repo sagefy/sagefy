@@ -10,6 +10,8 @@ from raw_insert import raw_insert_users, \
     raw_insert_units, \
     raw_insert_topics
 
+# pylint: disable=all
+
 user_uuid = uuid.uuid4()
 user_b_uuid = uuid.uuid4()
 test_unit_uuid = uuid.uuid4()

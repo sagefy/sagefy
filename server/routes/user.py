@@ -1,10 +1,10 @@
-from modules.content import get as c
 from framework.routes import get, post, put, delete, abort
 from framework.session import get_current_user, log_in_user, log_out_user
+from modules.content import get as c
+from modules.util import convert_uuid_to_slug
 from database.user import get_user, insert_user, deliver_user, get_avatar, \
     update_user, is_password_valid, get_email_token, is_valid_token, \
     update_user_password, list_users_by_user_ids
-from modules.util import convert_uuid_to_slug
 
 
 def _log_in(user):
@@ -16,10 +16,10 @@ def _log_in(user):
   session_id = log_in_user(user)
   if session_id:
     return 200, {
-        'user': deliver_user(user, access='private'),
-        'cookies': {
-            'session_id': session_id
-        },
+      'user': deliver_user(user, access='private'),
+      'cookies': {
+        'session_id': session_id
+      },
     }
   return abort(401, '7d26HxmZRCSabhgE4GAxGQ')
 
@@ -72,12 +72,12 @@ def list_users_route(request):
     return abort(404, 'lYgUJ4jaRv2jpcti0j-5Yw')
   size = int(request['params'].get('avatar') or 0) or None
   avatars = {
-      convert_uuid_to_slug(user['id']): get_avatar(user['email'], size)
-      for user in users
+    convert_uuid_to_slug(user['id']): get_avatar(user['email'], size)
+    for user in users
   }
   return 200, {
-      'users': [deliver_user(user, None) for user in users],
-      'avatars': avatars,
+    'users': [deliver_user(user, None) for user in users],
+    'avatars': avatars,
   }
 
 
@@ -89,10 +89,10 @@ def create_user_route(request):
 
   db_conn = request['db_conn']
   user, errors = insert_user(db_conn, request['params'])
-  if len(errors):
+  if errors:
     return 400, {
-        'errors': errors,
-        'ref': 'zy5VJ9zlQ-qWRUi9rETenw',
+      'errors': errors,
+      'ref': 'zy5VJ9zlQ-qWRUi9rETenw',
     }
   return _log_in(user)
 
@@ -111,21 +111,21 @@ def log_in_route(request):
     user = get_user(db_conn, {'email': name})
   if not user:
     return 404, {
-        'errors': [{
-            'name': 'name',
-            'message': c('no_user'),
-            'ref': 'dfhMHDFbT42CmRRmN14gdA',
-        }],
+      'errors': [{
+        'name': 'name',
+        'message': c('no_user'),
+        'ref': 'dfhMHDFbT42CmRRmN14gdA',
+      }],
     }
   real_encrypted_password = user['password']
   given_password = request['params'].get('password')
   if not is_password_valid(real_encrypted_password, given_password):
     return 400, {
-        'errors': [{
-            'name': 'password',
-            'message': c('no_match'),
-            'ref': 'DTarUzzsSLKarq-uIsXkFQ',
-        }],
+      'errors': [{
+        'name': 'password',
+        'message': c('no_match'),
+        'ref': 'DTarUzzsSLKarq-uIsXkFQ',
+      }],
     }
   return _log_in(user)
 
@@ -138,9 +138,9 @@ def log_out_route(request):
 
   log_out_user(request)
   return 200, {
-      'cookies': {
-          'session_id': None
-      }
+    'cookies': {
+      'session_id': None
+    }
   }
 
 
@@ -158,10 +158,10 @@ def update_user_route(request, user_id):
   if not user['id'] == current_user['id']:
     return abort(401, '7QK-6fOcQW-sA99KHtcARA')
   user, errors = update_user(db_conn, user, request['params'])
-  if len(errors):
+  if errors:
     return 400, {
-        'errors': errors,
-        'ref': '61YNw4gWTAKRQxXLYiznBw',
+      'errors': errors,
+      'ref': '61YNw4gWTAKRQxXLYiznBw',
     }
   return 200, {'user': deliver_user(user, access='private')}
 

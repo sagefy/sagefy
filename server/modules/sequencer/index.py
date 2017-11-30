@@ -2,14 +2,14 @@
 Primary learning sequencer.
 """
 
+from time import time
 from database.card_parameters import get_card_parameters, get_distribution, \
     bundle_distribution, insert_card_parameters, update_card_parameters
+from database.response import get_latest_response, insert_response
+from database.card import validate_card_response, score_card_response
 from modules.sequencer.update import update as formula_update
 from modules.sequencer.params import init_learned
-from database.response import get_latest_response, insert_response
-from time import time
 from schemas.card import scored_kinds
-from database.card import validate_card_response, score_card_response
 
 """
 Card
@@ -31,7 +31,7 @@ Subject
 """
 
 
-def update(db_conn, user, card, response):
+def update(db_conn, user, card, response):  # pylint: disable=R0914
   """
   Update the card's parameters (and its parents')
   when given a response.
@@ -41,8 +41,8 @@ def update(db_conn, user, card, response):
 
   if card['kind'] not in scored_kinds:
     return {
-        'response': {},
-        'feedback': '',
+      'response': {},
+      'feedback': '',
     }
 
   errors = validate_card_response(card, response)
@@ -51,16 +51,16 @@ def update(db_conn, user, card, response):
 
   score, feedback = score_card_response(card, response)
   response = {
-      'user_id': user['id'],
-      'card_id': card['entity_id'],
-      'unit_id': card['unit_id'],
-      'response': response,
-      'score': score,
+    'user_id': user['id'],
+    'card_id': card['entity_id'],
+    'unit_id': card['unit_id'],
+    'response': response,
+    'score': score,
   }
 
   card_parameters = get_card_parameters(
-      db_conn,
-      {'entity_id': card['entity_id']}
+    db_conn,
+    {'entity_id': card['entity_id']}
   ) or {}
   previous_response = get_latest_response(db_conn, user['id'],
                                           card['unit_id'])
@@ -83,22 +83,22 @@ def update(db_conn, user, card, response):
     return {'errors': errors, 'feedback': feedback}
 
   updated_card_parameters = {
-      'entity_id': card['entity_id'],
-      'guess_distribution':
-      bundle_distribution(updates['guess_distribution']),
-      'slip_distribution':
-      bundle_distribution(updates['slip_distribution']),
+    'entity_id': card['entity_id'],
+    'guess_distribution':
+    bundle_distribution(updates['guess_distribution']),
+    'slip_distribution':
+    bundle_distribution(updates['slip_distribution']),
   }
   if card_parameters.get('id'):
     _, errors = update_card_parameters(
-        db_conn,
-        card_parameters,
-        updated_card_parameters
+      db_conn,
+      card_parameters,
+      updated_card_parameters
     )
   else:
     _, errors = insert_card_parameters(
-        db_conn,
-        updated_card_parameters
+      db_conn,
+      updated_card_parameters
     )
 
   if errors:

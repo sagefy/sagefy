@@ -21,12 +21,13 @@ def next_route(request):
   # else 'next' is GET Choose Subject
   if context.get('next'):
     return 200, {
-        'next': context['next']
+      'next': context['next']
     }
   return 200, {
-      'next': {
-          'method': 'GET',
-          'path': '/s/users/{user_id}/subjects'
-          .format(user_id=convert_uuid_to_slug(current_user['id'])),
-      }
+    'next': {
+      'method': 'GET',
+      'path': '/s/users/{user_id}/subjects'.format(
+        user_id=convert_uuid_to_slug(current_user['id'])
+      ),
+    }
   }

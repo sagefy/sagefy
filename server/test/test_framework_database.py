@@ -1,3 +1,5 @@
+# pylint: disable=all
+
 from framework.database import make_db_connection, close_db_connection
 from config import config
 

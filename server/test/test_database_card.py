@@ -1,3 +1,6 @@
+# pylint: disable=C0103
+import uuid
+
 from database.card import get_card_schema, \
     ensure_requires, \
     ensure_no_cycles, \
@@ -24,8 +27,6 @@ from raw_insert import raw_insert_users, \
 from schemas.cards.video_card import schema as video_card_schema
 from schemas.cards.choice_card import schema as choice_card_schema
 
-import uuid
-
 from modules.util import convert_uuid_to_slug
 
 
@@ -43,62 +44,61 @@ test_card_option2_uuid = uuid.uuid4()
 
 def create_card_test_data(db_conn):
   users = [{
-      'id': user_a_uuid,
-      'name': 'test',
-      'email': 'test@example.com',
-      'password': 'abcd1234',
+    'id': user_a_uuid,
+    'name': 'test',
+    'email': 'test@example.com',
+    'password': 'abcd1234',
   }, {
-      'id': user_b_uuid,
-      'name': 'other',
-      'email': 'other@example.com',
-      'password': 'abcd1234',
+    'id': user_b_uuid,
+    'name': 'other',
+    'email': 'other@example.com',
+    'password': 'abcd1234',
   }]
   raw_insert_users(db_conn, users)
   units = [{
-      'version_id': unit_version_a_uuid,
-      'user_id': user_a_uuid,
-      'entity_id': unit_a_uuid,
-      'name': 'test unit add',
-      'body': 'adding numbers is fun'
+    'version_id': unit_version_a_uuid,
+    'user_id': user_a_uuid,
+    'entity_id': unit_a_uuid,
+    'name': 'test unit add',
+    'body': 'adding numbers is fun'
   }]
   raw_insert_units(db_conn, units)
   cards = [{
-      'version_id': card_version_a_uuid,
-      'entity_id': card_a_uuid,
-      'unit_id': unit_a_uuid,
-      'user_id': user_a_uuid,
-      'status': 'accepted',
-      'kind': 'video',
-      'name': 'Meaning of Life Video',
-      'data': {
-          'site': 'youtube',
-          'video_id': convert_uuid_to_slug(uuid.uuid4()),
-      },
+    'version_id': card_version_a_uuid,
+    'entity_id': card_a_uuid,
+    'unit_id': unit_a_uuid,
+    'user_id': user_a_uuid,
+    'status': 'accepted',
+    'kind': 'video',
+    'name': 'Meaning of Life Video',
+    'data': {
+      'site': 'youtube',
+      'video_id': convert_uuid_to_slug(uuid.uuid4()),
+    },
   }, {
-      'version_id': card_version_b_uuid,
-      'user_id': user_a_uuid,
-      'entity_id': card_b_uuid,
-      'unit_id': unit_a_uuid,
-      'user_id': user_a_uuid,
-      'kind': 'choice',
-      'name': 'Meaning of Life',
-      'data': {
-          'body': 'What is the meaning of life?',
-          'options': [{
-              'id': convert_uuid_to_slug(test_card_option1_uuid),
-              'value': '42',
-              'correct': True,
-              'feedback': 'Yay!',
-          }, {
-              'id': convert_uuid_to_slug(test_card_option2_uuid),
-              'value': 'love',
-              'correct': False,
-              'feedback': 'Boo!',
-          }],
-          'order': 'set',
-          'max_options_to_show': 4,
-      },
-      'require_ids': [card_a_uuid]
+    'version_id': card_version_b_uuid,
+    'entity_id': card_b_uuid,
+    'unit_id': unit_a_uuid,
+    'user_id': user_a_uuid,
+    'kind': 'choice',
+    'name': 'Meaning of Life',
+    'data': {
+      'body': 'What is the meaning of life?',
+      'options': [{
+        'id': convert_uuid_to_slug(test_card_option1_uuid),
+        'value': '42',
+        'correct': True,
+        'feedback': 'Yay!',
+      }, {
+        'id': convert_uuid_to_slug(test_card_option2_uuid),
+        'value': 'love',
+        'correct': False,
+        'feedback': 'Boo!',
+      }],
+      'order': 'set',
+      'max_options_to_show': 4,
+    },
+    'require_ids': [card_a_uuid]
   }]
   raw_insert_cards(db_conn, cards)
 
@@ -106,22 +106,22 @@ def create_card_test_data(db_conn):
 def test_get_card_schema(db_conn):
   create_card_test_data(db_conn)
   assert get_card_schema({
-      'kind': 'video',
+    'kind': 'video',
   }) == video_card_schema
   assert get_card_schema({
-      'kind': 'choice',
+    'kind': 'choice',
   }) == choice_card_schema
 
 
 def test_ensure_requires(db_conn):
   create_card_test_data(db_conn)
   data = {
-      'require_ids': [card_a_uuid, uuid.uuid4()],
+    'require_ids': [card_a_uuid, uuid.uuid4()],
   }
   errors = ensure_requires(db_conn, data)
   assert errors
   data = {
-      'require_ids': [card_a_uuid, card_b_uuid],
+    'require_ids': [card_a_uuid, card_b_uuid],
   }
   errors = ensure_requires(db_conn, data)
   assert not errors
@@ -141,49 +141,49 @@ def test_insert_card(db_conn):
   create_card_test_data(db_conn)
   # A Bad kind
   data = {
-      'version_id': uuid.uuid4(),
-      'entity_id': uuid.uuid4(),
-      'unit_id': unit_a_uuid,
-      'user_id': user_a_uuid,
-      'status': 'accepted',
-      'kind': 'dinosaur',
-      'name': 'Story of Love Video',
-      'data': {},
+    'version_id': uuid.uuid4(),
+    'entity_id': uuid.uuid4(),
+    'unit_id': unit_a_uuid,
+    'user_id': user_a_uuid,
+    'status': 'accepted',
+    'kind': 'dinosaur',
+    'name': 'Story of Love Video',
+    'data': {},
   }
   card, errors = insert_card(db_conn, data)
   assert errors
   assert not card
   # A bad require
   data = {
-      'version_id': uuid.uuid4(),
-      'entity_id': uuid.uuid4(),
-      'unit_id': unit_a_uuid,
-      'user_id': user_a_uuid,
-      'status': 'accepted',
-      'kind': 'video',
-      'name': 'Story of Love Video',
-      'data': {
-          'site': 'youtube',
-          'video_id': convert_uuid_to_slug(uuid.uuid4()),
-      },
-      'require_ids': [uuid.uuid4()],
+    'version_id': uuid.uuid4(),
+    'entity_id': uuid.uuid4(),
+    'unit_id': unit_a_uuid,
+    'user_id': user_a_uuid,
+    'status': 'accepted',
+    'kind': 'video',
+    'name': 'Story of Love Video',
+    'data': {
+      'site': 'youtube',
+      'video_id': convert_uuid_to_slug(uuid.uuid4()),
+    },
+    'require_ids': [uuid.uuid4()],
   }
   card, errors = insert_card(db_conn, data)
   assert errors
   assert not card
   # For real
   data = {
-      'version_id': uuid.uuid4(),
-      'entity_id': uuid.uuid4(),
-      'unit_id': unit_a_uuid,
-      'user_id': user_a_uuid,
-      'status': 'accepted',
-      'kind': 'video',
-      'name': 'Story of Love Video',
-      'data': {
-          'site': 'youtube',
-          'video_id': convert_uuid_to_slug(uuid.uuid4()),
-      },
+    'version_id': uuid.uuid4(),
+    'entity_id': uuid.uuid4(),
+    'unit_id': unit_a_uuid,
+    'user_id': user_a_uuid,
+    'status': 'accepted',
+    'kind': 'video',
+    'name': 'Story of Love Video',
+    'data': {
+      'site': 'youtube',
+      'video_id': convert_uuid_to_slug(uuid.uuid4()),
+    },
   }
   card, errors = insert_card(db_conn, data)
   assert not errors
@@ -196,7 +196,7 @@ def test_insert_card_version(db_conn):
   # A bad kind
   current_data['kind'] = 'elephant'
   next_data = {
-      'user_id': user_b_uuid,
+    'user_id': user_b_uuid,
   }
   version, errors = insert_card_version(db_conn, current_data, next_data)
   assert errors
@@ -204,20 +204,20 @@ def test_insert_card_version(db_conn):
   current_data['kind'] = 'video'
   # A bad require
   next_data = {
-      'user_id': user_b_uuid,
-      'require_ids': [uuid.uuid4()],
+    'user_id': user_b_uuid,
+    'require_ids': [uuid.uuid4()],
   }
   version, errors = insert_card_version(db_conn, current_data, next_data)
   assert errors
   assert not version
   # For real
   next_data = {
-      'user_id': user_b_uuid,
-      'name': 'Story of Apathy Video',
-      'data': {
-          'site': 'youtube',
-          'video_id': convert_uuid_to_slug(uuid.uuid4()),
-      }
+    'user_id': user_b_uuid,
+    'name': 'Story of Apathy Video',
+    'data': {
+      'site': 'youtube',
+      'video_id': convert_uuid_to_slug(uuid.uuid4()),
+    }
   }
   version, errors = insert_card_version(db_conn, current_data, next_data)
   assert not errors
@@ -229,9 +229,9 @@ def test_update_card(db_conn):
   current_data = get_card_version(db_conn, version_id=card_version_a_uuid)
   assert current_data['status'] == 'accepted'
   card, errors = update_card(
-      db_conn,
-      version_id=card_version_a_uuid,
-      status='pending'
+    db_conn,
+    version_id=card_version_a_uuid,
+    status='pending'
   )
   assert not errors
   assert card['status'] == 'pending'
@@ -241,13 +241,13 @@ def test_validate_card_response(db_conn):
   create_card_test_data(db_conn)
   card = get_card_version(db_conn, version_id=card_version_b_uuid)
   errors = validate_card_response(
-      card,
-      response=convert_uuid_to_slug(uuid.uuid4())
+    card,
+    response=convert_uuid_to_slug(uuid.uuid4())
   )
   assert errors
   errors = validate_card_response(
-      card,
-      response=convert_uuid_to_slug(test_card_option1_uuid)
+    card,
+    response=convert_uuid_to_slug(test_card_option1_uuid)
   )
   assert not errors
 
@@ -256,18 +256,18 @@ def test_score_card_response(db_conn):
   create_card_test_data(db_conn)
   card = get_card_version(db_conn, version_id=card_version_b_uuid)
   score, feedback = score_card_response(
-      card,
-      response=convert_uuid_to_slug(test_card_option1_uuid)
+    card,
+    response=convert_uuid_to_slug(test_card_option1_uuid)
   )
   assert score == 1
   score, feedback = score_card_response(
-      card,
-      response=convert_uuid_to_slug(test_card_option2_uuid)
+    card,
+    response=convert_uuid_to_slug(test_card_option2_uuid)
   )
   assert score == 0
   score, feedback = score_card_response(
-      card,
-      response=convert_uuid_to_slug(uuid.uuid4())
+    card,
+    response=convert_uuid_to_slug(uuid.uuid4())
   )
   assert score == 0
   assert 'Vqjk9WHrR0CSVKQeZZ8svQ' in feedback
@@ -305,8 +305,8 @@ def test_get_latest_accepted_card(db_conn):
 def test_list_latest_accepted_cards(db_conn):
   create_card_test_data(db_conn)
   cards = list_latest_accepted_cards(db_conn, entity_ids=[
-      card_a_uuid,
-      card_b_uuid,
+    card_a_uuid,
+    card_b_uuid,
   ])
   assert cards
   assert len(cards) == 2
@@ -319,8 +319,8 @@ def test_list_latest_accepted_cards(db_conn):
 def test_list_many_card_versions(db_conn):
   create_card_test_data(db_conn)
   versions = list_many_card_versions(db_conn, version_ids=[
-      card_version_a_uuid,
-      card_version_b_uuid,
+    card_version_a_uuid,
+    card_version_b_uuid,
   ])
   assert versions
   assert len(versions) == 2

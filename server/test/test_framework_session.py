@@ -1,3 +1,4 @@
+# pylint: disable=all
 from conftest import user_id, create_user_in_db, log_in
 from framework.session import get_current_user, log_in_user, log_out_user
 from database.user import get_user

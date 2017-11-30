@@ -1,3 +1,4 @@
+# pylint: disable=all
 from framework.mail import config, send_mail
 
 

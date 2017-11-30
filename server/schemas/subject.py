@@ -9,24 +9,24 @@ Subjects can vary greatly in scale.
 A graph is automatically formed based on the units and subjects specified.
 """
 
-schema = extend({}, entity_schema, {
-    'tablename': 'subjects',
-    'fields': {
-        'body': {
-            'validate': (is_required, is_string,),
-        },
-        'members': {
-            'validate': (is_required, is_list,),
-            'embed_many': {
-                'id': {
-                    'validate': (is_required, is_string,),
-                },
-                'kind': {
-                    'validate': (is_required, is_string, (
-                        is_one_of, 'unit', 'subject'
-                    )),
-                }
-            }
-        }
+schema = extend({}, entity_schema, {  # pylint: disable=C0103
+  'tablename': 'subjects',
+  'fields': {
+    'body': {
+      'validate': (is_required, is_string,),
     },
+    'members': {
+      'validate': (is_required, is_list,),
+      'embed_many': {
+        'id': {
+          'validate': (is_required, is_string,),
+        },
+        'kind': {
+          'validate': (is_required, is_string, (
+            is_one_of, 'unit', 'subject'
+          )),
+        }
+      }
+    }
+  },
 })

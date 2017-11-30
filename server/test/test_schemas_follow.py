@@ -1,1 +1,1 @@
-import schemas.follow  # noqa
+import schemas.follow  # pylint: disable=W0611

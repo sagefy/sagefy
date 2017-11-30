@@ -1,1 +1,1 @@
-import schemas.card_parameters  # noqa
+import schemas.card_parameters   # pylint: disable=W0611

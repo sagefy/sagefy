@@ -1,19 +1,19 @@
 from framework.elasticsearch import es
 from modules.util import json_prep, pick
+from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
 from schemas.post import schema as post_schema
 from schemas.proposal import schema as proposal_schema
 from schemas.vote import schema as vote_schema
 from database.util import deliver_fields
 from database.util import insert_row, update_row, get_row, list_rows
-from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
 
 
 def get_post_schema(data):
   kind = data.get('kind')
   mapping = {
-      'post': post_schema,
-      'proposal': proposal_schema,
-      'vote': vote_schema,
+    'post': post_schema,
+    'proposal': proposal_schema,
+    'vote': vote_schema,
   }
   return mapping.get(kind) or post_schema
 
@@ -31,11 +31,11 @@ def is_valid_reply(db_conn, data):
   if data.get('replies_to_id'):
     post_data = get_post(db_conn, {'id': data['replies_to_id']})
     if (not post_data
-            or post_data.get('topic_id') != data.get('topic_id')):
+        or post_data.get('topic_id') != data.get('topic_id')):
       return [{
-          'name': 'replies_to_id',
-          'message': 'A reply must be in the same topic.',
-          'ref': 'RmjIAVPpRQCEXTADnTzhkQ',
+        'name': 'replies_to_id',
+        'message': 'A reply must be in the same topic.',
+        'ref': 'RmjIAVPpRQCEXTADnTzhkQ',
       }]
   return []
 
@@ -55,13 +55,12 @@ def validate_entity_versions(db_conn, data):
     entity_version = get_entity_version(db_conn, entity_kind, version_id)
     if not entity_version:
       return [{
-          'name': 'entity_versions',
-          'message': 'Not a valid version: {entity_kind} {version_id}'
-          .format(
-              entity_kind=entity_kind,
-              version_id=version_id
-          ),
-          'ref': 'p4MMkyqaS8u4Z3AIAh4d0w',
+        'name': 'entity_versions',
+        'message': 'Not a valid version: {entity_kind} {version_id}'.format(
+          entity_kind=entity_kind,
+          version_id=version_id
+        ),
+        'ref': 'p4MMkyqaS8u4Z3AIAh4d0w',
       }]
   return []
 
@@ -80,36 +79,36 @@ def is_valid_reply_kind(db_conn, data):
   proposal_data = get_post(db_conn, {'id': data['replies_to_id']})
   if not proposal_data:
     return [{
-        'name': 'replies_to_id',
-        'message': 'No proposal found.',
-        'ref': 'B9x2Np5mQQyNYLKv3j9rCQ',
+      'name': 'replies_to_id',
+      'message': 'No proposal found.',
+      'ref': 'B9x2Np5mQQyNYLKv3j9rCQ',
     }]
   if proposal_data['kind'] != 'proposal':
     return [{
-        'name': 'replies_to_id',
-        'message': 'A vote must reply to a proposal.',
-        'ref': 'qq3Im6MDS5iDYji2h645Ug',
+      'name': 'replies_to_id',
+      'message': 'A vote must reply to a proposal.',
+      'ref': 'qq3Im6MDS5iDYji2h645Ug',
     }]
   if proposal_data['user_id'] == data['user_id']:
     return [{
-        'name': 'replies_to_id',
-        'message': 'You cannot vote on your own proposal.',
-        'ref': 'sVuOAjaJTcqvCrd7DewDLw',
+      'name': 'replies_to_id',
+      'message': 'You cannot vote on your own proposal.',
+      'ref': 'sVuOAjaJTcqvCrd7DewDLw',
     }]
   entity_kind = proposal_data['entity_versions'][0]['kind']
   version_id = proposal_data['entity_versions'][0]['id']
   entity_version = get_entity_version(db_conn, entity_kind, version_id)
   if not entity_version:
     return [{
-        'name': 'replies_to_id',
-        'message': 'No entity version for proposal.',
-        'ref': 'NVhViFxxQVCcfehbtui4Rg',
+      'name': 'replies_to_id',
+      'message': 'No entity version for proposal.',
+      'ref': 'NVhViFxxQVCcfehbtui4Rg',
     }]
   if entity_version['status'] in ('accepted', 'declined'):
     return [{
-        'name': 'replies_to_id',
-        'message': 'Proposal is already complete.',
-        'ref': 'ute0nhymRXORNxHxRDF9eA',
+      'name': 'replies_to_id',
+      'message': 'Proposal is already complete.',
+      'ref': 'ute0nhymRXORNxHxRDF9eA',
     }]
   return []
 
@@ -128,11 +127,11 @@ def insert_post(db_conn, data):
     RETURNING *;
   """
   data = {
-      'user_id': convert_slug_to_uuid(data['user_id']),
-      'topic_id': convert_slug_to_uuid(data['topic_id']),
-      'kind': 'post',
-      'body': data.get('body'),
-      'replies_to_id': data.get('replies_to_id') or None,
+    'user_id': convert_slug_to_uuid(data['user_id']),
+    'topic_id': convert_slug_to_uuid(data['topic_id']),
+    'kind': 'post',
+    'body': data.get('body'),
+    'replies_to_id': data.get('replies_to_id') or None,
   }
   errors = is_valid_reply(db_conn, data)
   if errors:
@@ -159,12 +158,12 @@ def insert_proposal(db_conn, data):
     RETURNING *;
   """
   data = {
-      'user_id': convert_slug_to_uuid(data['user_id']),
-      'topic_id': convert_slug_to_uuid(data['topic_id']),
-      'kind': 'proposal',
-      'body': data.get('body'),
-      'replies_to_id': data.get('replies_to_id'),
-      'entity_versions': data['entity_versions'],
+    'user_id': convert_slug_to_uuid(data['user_id']),
+    'topic_id': convert_slug_to_uuid(data['topic_id']),
+    'kind': 'proposal',
+    'body': data.get('body'),
+    'replies_to_id': data.get('replies_to_id'),
+    'entity_versions': data['entity_versions'],
   }
   errors = is_valid_reply(db_conn, data)
   if errors:
@@ -194,12 +193,12 @@ def insert_vote(db_conn, data):
     RETURNING *;
   """
   data = {
-      'user_id': convert_slug_to_uuid(data['user_id']),
-      'topic_id': convert_slug_to_uuid(data['topic_id']),
-      'kind': 'vote',
-      'body': data.get('body'),
-      'replies_to_id': data.get('replies_to_id'),
-      'response': data['response'],
+    'user_id': convert_slug_to_uuid(data['user_id']),
+    'topic_id': convert_slug_to_uuid(data['topic_id']),
+    'kind': 'vote',
+    'body': data.get('body'),
+    'replies_to_id': data.get('replies_to_id'),
+    'response': data['response'],
   }
   errors = is_valid_reply(db_conn, data)
   if errors:
@@ -226,8 +225,8 @@ def update_post(db_conn, prev_data, data):
     RETURNING *;
   """
   data = {
-      'id': convert_slug_to_uuid(prev_data['id']),
-      'body': data.get('body') or prev_data.get('body'),
+    'id': convert_slug_to_uuid(prev_data['id']),
+    'body': data.get('body') or prev_data.get('body'),
   }
   data, errors = update_row(db_conn, schema, query, prev_data, data)
   if not errors:
@@ -248,8 +247,8 @@ def update_proposal(db_conn, prev_data, data):
     RETURNING *;
   """
   data = {
-      'id': convert_slug_to_uuid(prev_data['id']),
-      'body': data.get('body') or prev_data.get('body'),
+    'id': convert_slug_to_uuid(prev_data['id']),
+    'body': data.get('body') or prev_data.get('body'),
   }
   data, errors = update_row(db_conn, schema, query, prev_data, data)
   if not errors:
@@ -270,11 +269,11 @@ def update_vote(db_conn, prev_data, data):
     RETURNING *;
   """
   data = {
-      'id': convert_slug_to_uuid(prev_data['id']),
-      'body': data.get('body') or prev_data.get('body'),
-      'response': (data['response']
-                   if data['response'] is not None
-                   else prev_data['response']),
+    'id': convert_slug_to_uuid(prev_data['id']),
+    'body': data.get('body') or prev_data.get('body'),
+    'response': (data['response']
+                 if data['response'] is not None
+                 else prev_data['response']),
   }
   data, errors = update_row(db_conn, schema, query, prev_data, data)
   if not errors:
@@ -294,7 +293,7 @@ def get_post(db_conn, params):
     LIMIT 1;
   """
   params = {
-      'id': convert_slug_to_uuid(params['id']),
+    'id': convert_slug_to_uuid(params['id']),
   }
   return get_row(db_conn, query, params)
 
@@ -313,9 +312,9 @@ def list_posts_by_topic(db_conn, params):
     LIMIT %(limit)s;
   """
   params = {
-      'topic_id': convert_slug_to_uuid(params['topic_id']),
-      'offset': params.get('offset') or 0,
-      'limit': params.get('limit') or 10,
+    'topic_id': convert_slug_to_uuid(params['topic_id']),
+    'offset': params.get('offset') or 0,
+    'limit': params.get('limit') or 10,
   }
   return list_rows(db_conn, query, params)
 
@@ -362,10 +361,10 @@ def add_post_to_es(db_conn, post):
     data['user'] = json_prep(deliver_user(user))
 
   return es.index(
-      index='entity',
-      doc_type='post',
-      body=data,
-      id=convert_uuid_to_slug(post['id']),
+    index='entity',
+    doc_type='post',
+    body=data,
+    id=convert_uuid_to_slug(post['id']),
   )
 
 
@@ -382,6 +381,6 @@ def list_votes_by_proposal(db_conn, proposal_id):
     /* TODO OFFSET LIMIT */
   """
   params = {
-      'proposal_id': convert_slug_to_uuid(proposal_id),
+    'proposal_id': convert_slug_to_uuid(proposal_id),
   }
   return list_rows(db_conn, query, params)

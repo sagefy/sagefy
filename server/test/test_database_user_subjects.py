@@ -1,3 +1,5 @@
+# pylint: disable=all
+
 from database.user_subjects import insert_user_subject, \
     list_user_subjects, \
     remove_user_subject, \

@@ -1,3 +1,4 @@
+import uuid
 from database.entity_facade import get_entity_version, \
     list_one_entity_versions, \
     update_entity_status_by_kind, \
@@ -6,16 +7,16 @@ from database.entity_facade import get_entity_version, \
     get_entity_status, \
     update_entity_statuses, \
     find_requires_cycle
-import uuid
+from database.unit import get_unit_version
+from database.card import get_card_version
+from database.subject import get_latest_accepted_subject
+from database.post import get_post
 from test_database_unit import create_unit_test_data, \
     unit_b_uuid as XU_unit_b_uuid, \
     unit_version_a_uuid as XU_unit_version_a_uuid
 from test_database_card import create_card_test_data, \
     card_b_uuid as XU_card_b_uuid, \
     card_version_a_uuid as XU_card_version_a_uuid
-from database.unit import get_unit_version
-from database.card import get_card_version
-from database.subject import get_latest_accepted_subject
 from raw_insert import raw_insert_users, \
     raw_insert_units, \
     raw_insert_subjects, \
@@ -23,8 +24,8 @@ from raw_insert import raw_insert_users, \
     raw_insert_topics, \
     raw_insert_posts
 from modules.util import convert_uuid_to_slug
-from database.post import get_post
 
+# pylint: disable=C0103
 
 user_a_uuid = uuid.uuid4()
 unit_a_uuid = uuid.uuid4()
@@ -35,10 +36,10 @@ subject_b_uuid = uuid.uuid4()
 
 def create_test_user(db_conn):
   users = [{
-      'id': user_a_uuid,
-      'name': 'test',
-      'email': 'test@example.com',
-      'password': 'abcd1234',
+    'id': user_a_uuid,
+    'name': 'test',
+    'email': 'test@example.com',
+    'password': 'abcd1234',
   }]
   raw_insert_users(db_conn, users)
 
@@ -46,75 +47,75 @@ def create_test_user(db_conn):
 def create_recurse_test_data(db_conn):
   create_test_user(db_conn)
   units = [{
-      'user_id': user_a_uuid,
-      'entity_id': unit_a_uuid,
-      'name': 'test unit add',
-      'body': 'adding numbers is fun'
+    'user_id': user_a_uuid,
+    'entity_id': unit_a_uuid,
+    'name': 'test unit add',
+    'body': 'adding numbers is fun'
   }, {
-      'user_id': user_a_uuid,
-      'entity_id': unit_b_uuid,
-      'name': 'test unit subtract',
-      'body': 'subtracting numbers is fun',
+    'user_id': user_a_uuid,
+    'entity_id': unit_b_uuid,
+    'name': 'test unit subtract',
+    'body': 'subtracting numbers is fun',
   }]
   raw_insert_units(db_conn, units)
   subjects = [{
-      'entity_id': subject_a_uuid,
-      'name': 'Math',
-      'user_id': user_a_uuid,
-      'body': 'Math is fun.',
-      'members': [{
-          'kind': 'unit',
-          'id': convert_uuid_to_slug(unit_a_uuid),
-      }, {
-          'kind': 'unit',
-          'id': convert_uuid_to_slug(unit_b_uuid),
-      }],
+    'entity_id': subject_a_uuid,
+    'name': 'Math',
+    'user_id': user_a_uuid,
+    'body': 'Math is fun.',
+    'members': [{
+      'kind': 'unit',
+      'id': convert_uuid_to_slug(unit_a_uuid),
+    }, {
+      'kind': 'unit',
+      'id': convert_uuid_to_slug(unit_b_uuid),
+    }],
   }, {
-      'entity_id': subject_b_uuid,
-      'name': 'Art',
-      'user_id': user_a_uuid,
-      'body': 'Art is fun.',
-      'members': [{
-          'kind': 'subject',
-          'id': convert_uuid_to_slug(subject_a_uuid),
-      }],
+    'entity_id': subject_b_uuid,
+    'name': 'Art',
+    'user_id': user_a_uuid,
+    'body': 'Art is fun.',
+    'members': [{
+      'kind': 'subject',
+      'id': convert_uuid_to_slug(subject_a_uuid),
+    }],
   }]
   raw_insert_subjects(db_conn, subjects)
 
 
 def test_get_entity_version(db_conn):
   assert not get_entity_version(
-      db_conn,
-      kind='card',
-      version_id=uuid.uuid4()
+    db_conn,
+    kind='card',
+    version_id=uuid.uuid4()
   )
   assert not get_entity_version(
-      db_conn,
-      kind='unit',
-      version_id=uuid.uuid4()
+    db_conn,
+    kind='unit',
+    version_id=uuid.uuid4()
   )
   assert not get_entity_version(
-      db_conn,
-      kind='subject',
-      version_id=uuid.uuid4()
+    db_conn,
+    kind='subject',
+    version_id=uuid.uuid4()
   )
 
 
 def test_list_one_entity_versions(db_conn):
   assert not list_one_entity_versions(
-      db_conn,
-      kind='card',
-      entity_id=uuid.uuid4()
+    db_conn,
+    kind='card',
+    entity_id=uuid.uuid4()
   )
   assert not list_one_entity_versions(
-      db_conn,
-      kind='unit',
-      entity_id=uuid.uuid4()
+    db_conn,
+    kind='unit',
+    entity_id=uuid.uuid4()
   )
   assert not list_one_entity_versions(
-      db_conn,
-      kind='subject',
-      entity_id=uuid.uuid4()
+    db_conn,
+    kind='subject',
+    entity_id=uuid.uuid4()
   )
 
 
@@ -124,59 +125,59 @@ def test_update_entity_status_by_kind(db_conn):
   card_version_a_uuid = uuid.uuid4()
   subject_version_a_uuid = uuid.uuid4()
   units = [{
-      'version_id': unit_version_a_uuid,
-      'user_id': user_a_uuid,
-      'entity_id': unit_a_uuid,
-      'name': 'test unit add',
-      'body': 'adding numbers is fun',
-      'status': 'pending',
+    'version_id': unit_version_a_uuid,
+    'user_id': user_a_uuid,
+    'entity_id': unit_a_uuid,
+    'name': 'test unit add',
+    'body': 'adding numbers is fun',
+    'status': 'pending',
   }]
   raw_insert_units(db_conn, units)
   cards = [{
-      'version_id': card_version_a_uuid,
-      'status': 'pending',
-      'entity_id': uuid.uuid4(),
-      'unit_id': unit_a_uuid,
-      'user_id': user_a_uuid,
-      'kind': 'video',
-      'name': 'Meaning of Life Video',
-      'data': {
-          'site': 'youtube',
-          'video_id': convert_uuid_to_slug(uuid.uuid4()),
-      },
+    'version_id': card_version_a_uuid,
+    'status': 'pending',
+    'entity_id': uuid.uuid4(),
+    'unit_id': unit_a_uuid,
+    'user_id': user_a_uuid,
+    'kind': 'video',
+    'name': 'Meaning of Life Video',
+    'data': {
+      'site': 'youtube',
+      'video_id': convert_uuid_to_slug(uuid.uuid4()),
+    },
   }]
   raw_insert_cards(db_conn, cards)
   subjects = [{
-      'version_id': subject_version_a_uuid,
-      'status': 'pending',
-      'entity_id': subject_a_uuid,
-      'name': 'Math',
-      'user_id': user_a_uuid,
-      'body': 'Math is fun.',
-      'members': [],
+    'version_id': subject_version_a_uuid,
+    'status': 'pending',
+    'entity_id': subject_a_uuid,
+    'name': 'Math',
+    'user_id': user_a_uuid,
+    'body': 'Math is fun.',
+    'members': [],
   }]
   raw_insert_subjects(db_conn, subjects)
   unit, errors = update_entity_status_by_kind(
-      db_conn,
-      kind='unit',
-      version_id=unit_version_a_uuid,
-      status='accepted'
+    db_conn,
+    kind='unit',
+    version_id=unit_version_a_uuid,
+    status='accepted'
   )
   assert not errors
   assert unit['status'] == 'accepted'
   card, errors = update_entity_status_by_kind(
-      db_conn,
-      kind='card',
-      version_id=card_version_a_uuid,
-      status='accepted'
+    db_conn,
+    kind='card',
+    version_id=card_version_a_uuid,
+    status='accepted'
   )
   assert not errors
   assert card['status'] == 'accepted'
   subject, errors = update_entity_status_by_kind(
-      db_conn,
-      kind='subject',
-      version_id=subject_version_a_uuid,
-      status='accepted'
+    db_conn,
+    kind='subject',
+    version_id=subject_version_a_uuid,
+    status='accepted'
   )
   assert not errors
   assert subject['status'] == 'accepted'
@@ -238,32 +239,32 @@ def test_update_entity_statuses(db_conn):
   topic_uuid = uuid.uuid4()
   proposal_uuid = uuid.uuid4()
   units = [{
-      'version_id': unit_version_a_uuid,
-      'user_id': user_a_uuid,
-      'entity_id': unit_a_uuid,
-      'name': 'test unit add',
-      'body': 'adding numbers is fun',
-      'status': 'pending',
+    'version_id': unit_version_a_uuid,
+    'user_id': user_a_uuid,
+    'entity_id': unit_a_uuid,
+    'name': 'test unit add',
+    'body': 'adding numbers is fun',
+    'status': 'pending',
   }]
   raw_insert_units(db_conn, units)
   topics = [{
-      'id': topic_uuid,
-      'user_id': user_a_uuid,
-      'entity_id': unit_a_uuid,
-      'entity_kind': 'unit',
-      'name': 'Lets talk about adding numbers',
+    'id': topic_uuid,
+    'user_id': user_a_uuid,
+    'entity_id': unit_a_uuid,
+    'entity_kind': 'unit',
+    'name': 'Lets talk about adding numbers',
   }]
   raw_insert_topics(db_conn, topics)
   posts = [{
-      'id': proposal_uuid,
-      'kind': 'proposal',
-      'body': 'A new version',
-      'entity_versions': [{
-          'id': convert_uuid_to_slug(unit_version_a_uuid),
-          'kind': 'unit',
-      }],
-      'user_id': user_a_uuid,
-      'topic_id': topic_uuid,
+    'id': proposal_uuid,
+    'kind': 'proposal',
+    'body': 'A new version',
+    'entity_versions': [{
+      'id': convert_uuid_to_slug(unit_version_a_uuid),
+      'kind': 'unit',
+    }],
+    'user_id': user_a_uuid,
+    'topic_id': topic_uuid,
   }]
   raw_insert_posts(db_conn, posts)
   proposal = get_post(db_conn, {'id': proposal_uuid})

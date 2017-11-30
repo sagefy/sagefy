@@ -1,1 +1,1 @@
-import schemas.vote  # noqa
+import schemas.vote  # pylint: disable=W0611

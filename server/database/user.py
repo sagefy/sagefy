@@ -1,22 +1,23 @@
-from schemas.user import schema as user_schema
 import urllib
 import hashlib
+import json
+import uuid
+
+from framework.elasticsearch import es
+from framework.redis import redis
+from framework.mail import send_mail
+from schemas.user import schema as user_schema
 from passlib.hash import bcrypt
 from database.util import insert_row, update_row, get_row, list_rows, \
     delete_row, deliver_fields
-from framework.elasticsearch import es
-import json
-from framework.redis import redis
 from modules.util import pick, compact_dict, json_serial, \
     json_prep, convert_slug_to_uuid, convert_uuid_to_slug
-from framework.mail import send_mail
-import uuid
 
 
 # TODO-2 should we use this to test passwords?
 # https://github.com/dropbox/python-zxcvbn
 
-welcome_text = """
+WELCOME_TEXT = """
 Welcome to Sagefy!
 
 If you did not create this account, please reply immediately.
@@ -27,13 +28,13 @@ sign up at http://newsletter.sagefy.org/up
 Thank you!
 """
 
-token_text = """
+TOKEN_TEXT = """
 To change your password, please visit {url}
 
 If you did not request a password change, please reply immediately.
 """
 
-password_text = """
+PASSWORD_TEXT = """
 You updated your Sagefy password.
 
 If you did not change your password, please reply immediately.
@@ -54,22 +55,22 @@ def insert_user(db_conn, data):
     RETURNING *;
   """
   data = {
-      'name': data.get('name', '').lower().strip(),
-      'email': data.get('email', '').lower().strip(),
-      'password': data.get('password', ''),
-      'settings': {
-          'email_frequency': 'daily',
-          'view_subjects': 'private',
-          'view_follows': 'private',
-      },
+    'name': data.get('name', '').lower().strip(),
+    'email': data.get('email', '').lower().strip(),
+    'password': data.get('password', ''),
+    'settings': {
+      'email_frequency': 'daily',
+      'view_subjects': 'private',
+      'view_follows': 'private',
+    },
   }
   data, errors = insert_row(db_conn, schema, query, data)
   if not errors:
     add_user_to_es(data)
     send_mail(
-        subject='Welcome to Sagefy',
-        recipient=data['email'],
-        body=welcome_text,
+      subject='Welcome to Sagefy',
+      recipient=data['email'],
+      body=WELCOME_TEXT,
     )
   return data, errors
 
@@ -87,10 +88,10 @@ def update_user(db_conn, prev_data, data):
     RETURNING *;
   """
   data = {
-      'id': convert_slug_to_uuid(prev_data['id']),
-      'name': data.get('name', '').lower().strip() or None,
-      'email': data.get('email', '').lower().strip() or None,
-      'settings': data.get('settings'),
+    'id': convert_slug_to_uuid(prev_data['id']),
+    'name': data.get('name', '').lower().strip() or None,
+    'email': data.get('email', '').lower().strip() or None,
+    'settings': data.get('settings'),
   }
   data, errors = update_row(db_conn, schema, query, prev_data, data)
   if not errors:
@@ -111,15 +112,15 @@ def update_user_password(db_conn, prev_data, data):
     RETURNING *;
   """
   data = {
-      'id': convert_slug_to_uuid(prev_data['id']),
-      'password': data['password'],
+    'id': convert_slug_to_uuid(prev_data['id']),
+    'password': data['password'],
   }
   data, errors = update_row(db_conn, schema, query, prev_data, data)
   if not errors:
     send_mail(
-        subject='Sagefy - Password Updated',
-        recipient=data['email'],
-        body=password_text,
+      subject='Sagefy - Password Updated',
+      recipient=data['email'],
+      body=PASSWORD_TEXT,
     )
   return data, errors
 
@@ -132,10 +133,10 @@ def add_user_to_es(user):
   data = json_prep(deliver_user(user))
   data['avatar'] = get_avatar(user['email'])
   return es.index(
-      index='entity',
-      doc_type='user',
-      body=data,
-      id=convert_uuid_to_slug(data['id']),
+    index='entity',
+    doc_type='user',
+    body=data,
+    id=convert_uuid_to_slug(data['id']),
   )
 
 
@@ -164,7 +165,7 @@ def get_user_by_id(db_conn, params):
     LIMIT 1;
   """
   params = {
-      'id': convert_slug_to_uuid(params['id']),
+    'id': convert_slug_to_uuid(params['id']),
   }
   return get_row(db_conn, query, params)
 
@@ -181,7 +182,7 @@ def get_user_by_email(db_conn, params):
     LIMIT 1;
   """
   params = {
-      'email': params['email'],
+    'email': params['email'],
   }
   return get_row(db_conn, query, params)
 
@@ -198,7 +199,7 @@ def get_user_by_name(db_conn, params):
     LIMIT 1;
   """
   params = {
-      'name': params['name'],
+    'name': params['name'],
   }
   return get_row(db_conn, query, params)
 
@@ -231,11 +232,11 @@ def list_users_by_user_ids(db_conn, user_ids):
     /* TODO OFFSET LIMIT */
   """
   user_ids = tuple([
-      convert_slug_to_uuid(user_id)
-      for user_id in user_ids
+    convert_slug_to_uuid(user_id)
+    for user_id in user_ids
   ])
   params = {
-      'user_ids': user_ids,
+    'user_ids': user_ids,
   }
   return list_rows(db_conn, query, params)
 
@@ -249,14 +250,14 @@ def delete_user(db_conn, user_id):
     WHERE id = %(id)s;
   """
   params = {
-      'id': user_id,
+    'id': user_id,
   }
   errors = delete_row(db_conn, query, params)
   if not errors:
     es.delete(
-        index='entity',
-        doc_type='user',
-        id=convert_uuid_to_slug(user_id),
+      index='entity',
+      doc_type='user',
+      id=convert_uuid_to_slug(user_id),
     )
   return errors
 
@@ -291,7 +292,7 @@ def get_avatar(email, size=24):
   if not size:
     size = 24
   hash_ = hashlib.md5(email.lower().encode('utf-8')).hexdigest()
-  params = urllib.parse.urlencode({'d': 'mm', 's': str(size)})
+  params = urllib.parse.urlencode({'d': 'mm', 's': str(size)})  # pylint: disable=E1101
   gravatar_url = "https://www.gravatar.com/avatar/" + hash_ + "?" + params
   return gravatar_url
 
@@ -334,19 +335,19 @@ def get_email_token(user):
   token = convert_uuid_to_slug(uuid.uuid4())
   slugged_user_id = convert_uuid_to_slug(user['id'])
   redis.setex(
-      'user_password_token_{id}'.format(id=slugged_user_id),  # key
-      60 * 10,  # time
-      bcrypt.encrypt(slugged_user_id + token)  # value
+    'user_password_token_{id}'.format(id=slugged_user_id),  # key
+    60 * 10,  # time
+    bcrypt.encrypt(slugged_user_id + token)  # value
   )
   url = '%(base)spassword?id=%(id)s&token=%(token)s' % {
-      'base': 'https://sagefy.org/',
-      'id': slugged_user_id,
-      'token': token,
+    'base': 'https://sagefy.org/',
+    'id': slugged_user_id,
+    'token': token,
   }
   send_mail(
-      subject='Sagefy - Reset Password Request',
-      recipient=user['email'],
-      body=token_text.replace('{url}', url)
+    subject='Sagefy - Reset Password Request',
+    recipient=user['email'],
+    body=TOKEN_TEXT.replace('{url}', url)
   )
   return token
 

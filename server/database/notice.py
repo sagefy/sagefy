@@ -1,9 +1,11 @@
-from schemas.notice import schema as notice_schema
-from database.util import deliver_fields
-from modules.content import get as c
 from copy import deepcopy
-from database.util import insert_row, save_row, get_row, list_rows
+
+from schemas.notice import schema as notice_schema
+from modules.content import get as c
 from modules.util import convert_slug_to_uuid, pick
+from database.util import insert_row, save_row, get_row, list_rows
+from database.util import deliver_fields
+
 
 # done-- implement create_topic notice
 # done-- implement create_proposal notice
@@ -39,7 +41,7 @@ def get_notice(db_conn, params):
     LIMIT 1;
   """
   params = {
-      'id': convert_slug_to_uuid(params['id']),
+    'id': convert_slug_to_uuid(params['id']),
   }
   return get_row(db_conn, query, params)
 
@@ -79,9 +81,9 @@ def list_notices(db_conn, params):
     OFFSET %(offset)s;
   """
   params = {
-      'user_id': convert_slug_to_uuid(params['user_id']),
-      'limit': params.get('limit') or 10,
-      'offset': params.get('offset') or 0,
+    'user_id': convert_slug_to_uuid(params['user_id']),
+    'limit': params.get('limit') or 10,
+    'offset': params.get('offset') or 0,
   }
   return list_rows(db_conn, query, params)
 
@@ -98,7 +100,7 @@ def mark_notice_as_read(db_conn, notice):
     RETURNING *;
   """
   data = {
-      'id': convert_slug_to_uuid(notice['id']),
+    'id': convert_slug_to_uuid(notice['id']),
   }
   # Skipping validation here... there's only one field changing.
   data, errors = save_row(db_conn, query, data)
@@ -117,7 +119,7 @@ def mark_notice_as_unread(db_conn, notice):
     RETURNING *;
   """
   data = {
-      'id': convert_slug_to_uuid(notice['id']),
+    'id': convert_slug_to_uuid(notice['id']),
   }
   # Skipping validation here... there's only one field changing.
   data, errors = save_row(db_conn, query, data)

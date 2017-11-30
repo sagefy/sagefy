@@ -4,8 +4,8 @@ from modules.sequencer.pmf import init_pmf, \
     get_slip_pmf_value
 from modules.sequencer.params import init_guess, init_slip, precision, \
     init_transit
-from database.util import insert_row, update_row, get_row
 from modules.util import convert_slug_to_uuid, pick
+from database.util import insert_row, update_row, get_row
 
 
 def get_card_parameters(db_conn, params):
@@ -19,7 +19,7 @@ def get_card_parameters(db_conn, params):
     LIMIT 1;
   """
   params = {
-      'entity_id': convert_slug_to_uuid(params['entity_id']),
+    'entity_id': convert_slug_to_uuid(params['entity_id']),
   }
   return get_row(db_conn, query, params)
 
@@ -38,9 +38,9 @@ def insert_card_parameters(db_conn, data):
     RETURNING *;
   """
   data = pick(data, (
-      'entity_id',
-      'guess_distribution',
-      'slip_distribution',
+    'entity_id',
+    'guess_distribution',
+    'slip_distribution',
   ))
   data, errors = insert_row(db_conn, schema, query, data)
   return data, errors
@@ -60,9 +60,9 @@ def update_card_parameters(db_conn, prev_data, data):
     RETURNING *;
   """
   data = {
-      'entity_id': convert_slug_to_uuid(prev_data['entity_id']),
-      'guess_distribution': data['guess_distribution'],
-      'slip_distribution': data['slip_distribution'],
+    'entity_id': convert_slug_to_uuid(prev_data['entity_id']),
+    'guess_distribution': data['guess_distribution'],
+    'slip_distribution': data['slip_distribution'],
   }
   data, errors = update_row(db_conn, schema, query, prev_data, data)
   return data, errors
@@ -81,8 +81,8 @@ def get_distribution(card_parameters, kind):
   else:
     init = init_guess if kind == 'guess' else init_slip
     distribution = {
-        h: 1 - (init - h) ** 2
-        for h in [h / precision for h in range(1, precision)]
+      h: 1 - (init - h) ** 2
+      for h in [h / precision for h in range(1, precision)]
     }
     card_parameters[key] = distribution
   if kind == 'guess':
@@ -148,8 +148,8 @@ def get_card_parameters_values(card_parameters):
   """
 
   return {
-      'guess': get_guess(card_parameters),
-      'slip': get_slip(card_parameters),
-      'transit': get_transit(),
-      'num_learners': get_num_learners(),
+    'guess': get_guess(card_parameters),
+    'slip': get_slip(card_parameters),
+    'transit': get_transit(),
+    'num_learners': get_num_learners(),
   }

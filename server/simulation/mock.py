@@ -3,6 +3,8 @@ Simulates learner responses for a unit. Can be used for prototyping and testing
 learner models.
 """
 
+# pylint: disable=C0103
+
 from random import uniform, triangular, sample, randrange
 from modules.sequencer.params import max_learned, \
     init_guess, init_slip, init_transit
@@ -38,9 +40,9 @@ def main(num_learners=100, num_cards=10):
   cards = create_cards(num_cards)
   learners = create_learners(num_learners)
   return {
-      'responses': create_responses(learners, cards),
-      'learners': learners,
-      'cards': cards,
+    'responses': create_responses(learners, cards),
+    'learners': learners,
+    'cards': cards,
   }
 
 
@@ -51,10 +53,10 @@ def create_cards(num_cards):
   """
 
   return [{
-      'name': i,
-      'guess': triangular(*guess),
-      'slip': triangular(*slip),
-      'transit': triangular(*transit),
+    'name': i,
+    'guess': triangular(*guess),
+    'slip': triangular(*slip),
+    'transit': triangular(*transit),
   } for i in range(num_cards)]
 
 
@@ -63,9 +65,9 @@ def create_learners(num_learners):
   """
 
   return [{
-      'name': i,
-      'learned': 0,
-      'start_time': int(uniform(*session_gap) * num_learners / 2),
+    'name': i,
+    'learned': 0,
+    'start_time': int(uniform(*session_gap) * num_learners / 2),
   } for i in range(num_learners)]
 
 
@@ -79,7 +81,7 @@ def create_responses(learners, cards):
 
   for learner in learners:
     responses += create_responses_as_learner(
-        learner, learner['start_time'], cards)
+      learner, learner['start_time'], cards)
 
   responses = sorted(responses, key=lambda d: d['time'])
   return responses
@@ -101,10 +103,10 @@ def create_responses_as_learner(learner, start_time, cards):
     score = get_score(learner['learned'], card)
 
     responses.append({
-        'learner': learner['name'],
-        'time': time,
-        'card': card['name'],
-        'score': score,
+      'learner': learner['name'],
+      'time': time,
+      'card': card['name'],
+      'score': score,
     })
 
     prev_time = time

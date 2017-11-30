@@ -1,3 +1,6 @@
+# pylint: disable=C0103,W0612,W0613,W0621,C0330,C0413,R0914,W0212
+import uuid
+
 # via https://stackoverflow.com/a/11158224
 import os
 import sys
@@ -10,11 +13,10 @@ currentdir = os.path.dirname(
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
-import pytest
 from framework.database import make_db_connection, close_db_connection
 from framework.session import log_in_user, log_out_user
+import pytest
 from modules.util import convert_slug_to_uuid
-import uuid
 
 
 user_id = uuid.uuid4()

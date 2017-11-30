@@ -1,7 +1,7 @@
-from modules.sequencer.params import max_learned, max_belief  # , diag_belief
-from database.response import get_latest_response
-from modules.sequencer.formulas import calculate_belief
 from time import time
+from modules.sequencer.params import max_learned, max_belief  # , diag_belief
+from modules.sequencer.formulas import calculate_belief
+from database.response import get_latest_response
 from database.entity_facade import list_units_in_subject_recursive
 
 
@@ -23,8 +23,8 @@ def traverse(db_conn, user, subject):
 
   units = list_units_in_subject_recursive(db_conn, subject)
   unit_statuses = {
-      unit['entity_id']: judge(db_conn, unit, user)
-      for unit in units
+    unit['entity_id']: judge(db_conn, unit, user)
+    for unit in units
   }
   dependents = match_unit_dependents(units)
   for unit in units:
@@ -39,16 +39,16 @@ def traverse(db_conn, user, subject):
 
   buckets = {}
   buckets['learn'] = order_units_by_need([
-      unit for unit in units
-      if unit_statuses[unit['entity_id']] == 'learn'
+    unit for unit in units
+    if unit_statuses[unit['entity_id']] == 'learn'
   ])
   buckets['blocked'] = [
-      unit for unit in units
-      if unit_statuses[unit['entity_id']] == 'blocked'
+    unit for unit in units
+    if unit_statuses[unit['entity_id']] == 'blocked'
   ]
   buckets['done'] = [
-      unit for unit in units
-      if unit_statuses[unit['entity_id']] == 'done'
+    unit for unit in units
+    if unit_statuses[unit['entity_id']] == 'done'
   ]
 
   # Make sure the buckets are in the correct orderings
@@ -112,9 +112,9 @@ def judge(db_conn, unit, user):
   """
 
   response = get_latest_response(
-      db_conn,
-      user['id'],
-      unit['entity_id']
+    db_conn,
+    user['id'],
+    unit['entity_id']
   )
   if response:
     learned = response['learned']
@@ -127,7 +127,7 @@ def judge(db_conn, unit, user):
     belief = 0
 
   if learned >= max_learned and belief > max_belief:
-      return "done"
+    return "done"
 
   return "learn"
 

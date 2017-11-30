@@ -43,17 +43,17 @@ def mark_notice_route(request, notice_id):
     return abort(403, 'xPkb7MYXRIOaI7HeV9U37A')
   if 'read' not in request['params']:
     errors = [{
-        'name': 'read',
-        'message': 'You must specify read or unread.',
-        'ref': 'bvtS4G4jQnaLlVSLyUXjVg',
+      'name': 'read',
+      'message': 'You must specify read or unread.',
+      'ref': 'bvtS4G4jQnaLlVSLyUXjVg',
     }]
   elif request['params'].get('read') is True:
     notice, errors = mark_notice_as_read(db_conn, notice)
   elif request['params'].get('read') is False:
     notice, errors = mark_notice_as_unread(db_conn, notice)
-  if len(errors):
+  if errors:
     return 400, {
-        'errors': errors,
-        'ref': 'FeEtTWJJQv22dTpz8y5fZA',
+      'errors': errors,
+      'ref': 'FeEtTWJJQv22dTpz8y5fZA',
     }
   return 200, {'notice': deliver_notice(notice, access='private')}

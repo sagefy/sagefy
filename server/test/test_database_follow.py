@@ -1,3 +1,4 @@
+# pylint: disable=all
 from database.follow import get_follow, \
     get_follow_by_id, \
     list_follows_by_user, \

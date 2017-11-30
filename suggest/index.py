@@ -1,13 +1,14 @@
-from random import SystemRandom
-import string
-import psycopg2
-import psycopg2.extras
+# pylint: disable=C0103,W0110,W1505
+# pylint: disable=all
 from cgi import parse_qs
 import re
 from http.cookies import SimpleCookie
 from datetime import datetime, timedelta
 from random import sample
-
+from random import SystemRandom
+import string
+import psycopg2
+import psycopg2.extras
 
 random = SystemRandom()
 
@@ -58,9 +59,11 @@ def uniqid():
   https://stackoverflow.com/a/2257449
   """
   return ''.join(
-    random.choice(string.ascii_lowercase
-            + string.ascii_uppercase
-            + string.digits)
+    random.choice(
+      string.ascii_lowercase
+      + string.ascii_uppercase
+      + string.digits
+    )
     for i in range(24)
   )
 
@@ -94,8 +97,7 @@ def get_session_id(environ):
 
 
 def get_set_cookie_header(session_id):
-  expires = ((datetime.utcnow() + timedelta(weeks=2))
-         .strftime('%a, %d-%b-%Y %H:%M:%S GMT'))
+  expires = ((datetime.utcnow() + timedelta(weeks=2)).strftime('%a, %d-%b-%Y %H:%M:%S GMT'))
   return ('Set-Cookie', '; '.join([
     'suggest_session_id={session_id}',
     'expires={expires}',

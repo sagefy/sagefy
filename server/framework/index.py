@@ -1,17 +1,17 @@
 # Standard lib imports
 import json
 import re
-from urllib.parse import unquote_plus
+from urllib.parse import unquote_plus  # pylint: disable=E0611
 from http.cookies import SimpleCookie
 from datetime import datetime, timedelta
 from traceback import format_exc
 
 # Own imports
+import config
 from framework.status_codes import status_codes
 from framework.database import make_db_connection, close_db_connection
 from framework.routes import find_path, abort
 from modules.util import json_serial
-import config
 
 
 def serve(environ, start_response):
@@ -25,14 +25,14 @@ def serve(environ, start_response):
   is_json = isinstance(data, dict)
   close_db_connection(db_conn)
   content_type = (
-      ('Content-Type', 'application/json; charset=utf-8')
-      if is_json
-      else ('Content-Type', 'text/plain; charset=utf-8')
+    ('Content-Type', 'application/json; charset=utf-8')
+    if is_json
+    else ('Content-Type', 'text/plain; charset=utf-8')
   )
   cookie_headers = (
-      set_cookie_headers(data.pop('cookies', {}))
-      if is_json
-      else []
+    set_cookie_headers(data.pop('cookies', {}))
+    if is_json
+    else []
   )
   response_headers = [content_type] + cookie_headers
   status = str(code) + ' ' + status_codes.get(code, 'Unknown')
@@ -50,15 +50,15 @@ def construct_request(db_conn, environ):
 
   method = environ['REQUEST_METHOD']
   request = {
-      'method': method,
-      'path': environ['SCRIPT_NAME'] + environ['PATH_INFO'],
-      'db_conn': db_conn,
-      'cookies': pull_cookies(environ),
-      'params': (pull_query_string(environ)
-                 if method == 'GET'
-                 else pull_body(environ)
-                 if method in ('PUT', 'POST')
-                 else {})
+    'method': method,
+    'path': environ['SCRIPT_NAME'] + environ['PATH_INFO'],
+    'db_conn': db_conn,
+    'cookies': pull_cookies(environ),
+    'params': (pull_query_string(environ)
+               if method == 'GET'
+               else pull_body(environ)
+               if method in ('PUT', 'POST')
+               else {})
   }
   return request
 
@@ -79,7 +79,7 @@ def call_handler(request):
   try:
     return handler(request=request, **parameters)
   except Exception:
-    if config['debug']:
+    if config['debug']:  # pylint: disable=unsubscriptable-object
       return 500, format_exc()
     return abort(500)
 
@@ -153,11 +153,11 @@ def set_cookie_headers(cookies):
   expires = ((datetime.utcnow() + timedelta(weeks=2))
              .strftime('%a, %d-%b-%Y %H:%M:%S GMT'))
   return [
-      ('Set-Cookie', '; '.join([
-          '{key}={value}',
-          'expires={expires}',
-          'Path=/',
-          'HttpOnly',
-      ]).format(key=key, value=value, expires=expires))
-      for key, value in cookies.items()
+    ('Set-Cookie', '; '.join([
+      '{key}={value}',
+      'expires={expires}',
+      'Path=/',
+      'HttpOnly',
+    ]).format(key=key, value=value, expires=expires))
+    for key, value in cookies.items()
   ]

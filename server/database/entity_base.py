@@ -11,8 +11,8 @@ def save_entity_to_es(kind, data):
   body = json_prep(data)
   if data['status'] == 'accepted':
     return es.index(
-        index='entity',
-        doc_type=kind,
-        body=body,
-        id=convert_uuid_to_slug(data['entity_id']),
+      index='entity',
+      doc_type=kind,
+      body=body,
+      id=convert_uuid_to_slug(data['entity_id']),
     )

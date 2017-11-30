@@ -1,5 +1,5 @@
 # TODO-3 write comments explaining each parameter
-
+# pylint: disable=C0103
 init_learned = 0.4
 max_learned = 0.99
 init_guess = 0.3

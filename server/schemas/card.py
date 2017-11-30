@@ -11,31 +11,36 @@ collaborate with a small group to tackle a challenge,
 or create other cards.
 """
 
-scored_kinds = ('choice',)
+scored_kinds = ('choice',)   # pylint: disable=C0103
 
-peer_scored_kinds = tuple()
+peer_scored_kinds = tuple()    # pylint: disable=C0103
 
-schema = extend({}, entity_schema, {
-    'tablename': 'cards',
-    'fields': {
-        'unit_id': {
-            'validate': (is_required, is_uuid,)
-        },
-        'require_ids': {
-            'validate': (is_required, is_list, is_list_of_uuids),
-            'default': [],
-        },
-        'kind': {
-            'validate': (is_required, is_string,
-                         (is_one_of,
-                          'video',
-                          'page',
-                          'unscored_embed',
-                          'choice')),
-        },
-        'data': {
-            'validate': (is_required, is_dict,),
-            'default': {},
-        },
+schema = extend({}, entity_schema, {  # pylint: disable=C0103
+  'tablename': 'cards',
+  'fields': {
+    'unit_id': {
+      'validate': (is_required, is_uuid,)
     },
+    'require_ids': {
+      'validate': (is_required, is_list, is_list_of_uuids),
+      'default': [],
+    },
+    'kind': {
+      'validate': (
+        is_required,
+        is_string,
+        (
+          is_one_of,
+          'video',
+          'page',
+          'unscored_embed',
+          'choice'
+        )
+      ),
+    },
+    'data': {
+      'validate': (is_required, is_dict,),
+      'default': {},
+    },
+  },
 })

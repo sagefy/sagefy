@@ -68,8 +68,8 @@ def list_subjects_by_unit_recursive(db_conn, unit_id):
     while found_subjects:
       all_subjects += found_subjects
       subject_ids = {
-          subject['entity_id']
-          for subject in found_subjects
+        subject['entity_id']
+        for subject in found_subjects
       }
       found_subjects = []
       for subject_id in subject_ids:
@@ -96,13 +96,15 @@ def list_units_in_subject_recursive(db_conn, main_subject):
       subject_ids = set()
       for subject in subjects:
         unit_ids.update({
-            member['id']
-            for member in subject.get('members')
-            if member['kind'] == 'unit'})
+          member['id']
+          for member in subject.get('members')
+          if member['kind'] == 'unit'
+        })
         subject_ids.update({
-            member['id']
-            for member in subject.get('members')
-            if member['kind'] == 'subject'})
+          member['id']
+          for member in subject.get('members')
+          if member['kind'] == 'subject'
+        })
       subjects = list_latest_accepted_subjects(db_conn, subject_ids)
 
     # *** Second, we need to find all
@@ -143,7 +145,7 @@ def find_requires_cycle(db_conn, tablename, data):
   return found['cycle']
 
 
-def get_entity_status(current_status, votes):
+def get_entity_status(current_status, votes):  # pylint: disable=W0613
   """
   Returns (changed, status) ... one of:
   (True, 'accepted|blocked|pending')
@@ -174,8 +176,8 @@ def update_entity_statuses(db_conn, proposal):
   from database.post import list_votes_by_proposal
   from modules.notices import send_notices
 
-  for ev in proposal['entity_versions']:
-    entity_kind, version_id = ev['kind'], ev['id']
+  for eev in proposal['entity_versions']:
+    entity_kind, version_id = eev['kind'], eev['id']
     entity_version = get_entity_version(db_conn, entity_kind, version_id)
     votes = list_votes_by_proposal(db_conn, proposal['id'])
     changed, status = get_entity_status(entity_version['status'], votes)
@@ -183,22 +185,22 @@ def update_entity_statuses(db_conn, proposal):
       entity_version['status'] = status
       user = get_user(db_conn, {'id': proposal['user_id']})
       update_entity_status_by_kind(
-          db_conn,
-          kind=entity_kind,
-          version_id=version_id,
-          status=status
+        db_conn,
+        kind=entity_kind,
+        version_id=version_id,
+        status=status
       )
       send_notices(
-          db_conn,
-          entity_id=version_id,
-          entity_kind=entity_kind,
-          notice_kind=('block_proposal'
-                       if status == 'blocked' else
-                       'accept_proposal'),
-          notice_data={
-              'user_name': user['name'],
-              'proposal_name': proposal['body'],
-              'entity_kind': entity_kind,
-              'entity_name': entity_version['name'],
-          }
+        db_conn,
+        entity_id=version_id,
+        entity_kind=entity_kind,
+        notice_kind=('block_proposal'
+                     if status == 'blocked' else
+                     'accept_proposal'),
+        notice_data={
+          'user_name': user['name'],
+          'proposal_name': proposal['body'],
+          'entity_kind': entity_kind,
+          'entity_name': entity_version['name'],
+        }
       )

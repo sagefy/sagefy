@@ -1,3 +1,4 @@
+# pylint: disable=all
 from passlib.hash import bcrypt
 from conftest import create_user_in_db
 import routes.user  # TODO-2 switch to direct imports

@@ -20,12 +20,12 @@ def insert_response(db_conn, data):
     RETURNING *;
   """
   data = pick(data, (
-      'user_id',
-      'card_id',
-      'unit_id',
-      'response',
-      'score',
-      'learned'
+    'user_id',
+    'card_id',
+    'unit_id',
+    'response',
+    'score',
+    'learned'
   ))
   return insert_row(db_conn, schema, query, data)
 
@@ -43,8 +43,8 @@ def get_latest_response(db_conn, user_id, unit_id):
     LIMIT 1;
   """
   params = {
-      'user_id': convert_slug_to_uuid(user_id),
-      'unit_id': convert_slug_to_uuid(unit_id),
+    'user_id': convert_slug_to_uuid(user_id),
+    'unit_id': convert_slug_to_uuid(unit_id),
   }
   return get_row(db_conn, query, params)
 

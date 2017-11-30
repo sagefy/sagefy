@@ -1,11 +1,12 @@
 # TODO all saves should go to ES
 
+import uuid
+
 from schemas.unit import schema as unit_schema
 from database.util import deliver_fields
 from database.entity_base import save_entity_to_es
 from database.util import insert_row, save_row, get_row, list_rows
 from modules.util import convert_slug_to_uuid
-import uuid
 
 
 def ensure_requires(db_conn, data):
@@ -16,9 +17,9 @@ def ensure_requires(db_conn, data):
   units = list_latest_accepted_units(db_conn, data['require_ids'])
   if len(data['require_ids']) != len(units):
     return [{
-        'name': 'require_ids',
-        'message': 'Didn\'t find all requires.',
-        'ref': 'wpd1JttyS02i8jN1CFM78w',
+      'name': 'require_ids',
+      'message': 'Didn\'t find all requires.',
+      'ref': 'wpd1JttyS02i8jN1CFM78w',
     }]
   return []
 
@@ -32,9 +33,9 @@ def ensure_no_cycles(db_conn, data):
 
   if find_requires_cycle(db_conn, 'units', data):
     return [{
-        'name': 'require_ids',
-        'message': 'Found a cycle in requires.',
-        'ref': '5Ld85zgEQmGfAF7HkRRVvA',
+      'name': 'require_ids',
+      'message': 'Found a cycle in requires.',
+      'ref': '5Ld85zgEQmGfAF7HkRRVvA',
     }]
   return []
 
@@ -57,12 +58,12 @@ def insert_unit(db_conn, data):
     RETURNING *;
   """
   data = {
-      'entity_id': uuid.uuid4(),
-      'name': data['name'],
-      'user_id': convert_slug_to_uuid(data['user_id']),
-      'body': data['body'],
-      'require_ids': [convert_slug_to_uuid(require_id)
-                      for require_id in data.get('require_ids', [])],
+    'entity_id': uuid.uuid4(),
+    'name': data['name'],
+    'user_id': convert_slug_to_uuid(data['user_id']),
+    'body': data['body'],
+    'require_ids': [convert_slug_to_uuid(require_id)
+                    for require_id in data.get('require_ids', [])],
   }
   errors = ensure_requires(db_conn, data) + ensure_no_cycles(db_conn, data)
   if errors:
@@ -89,15 +90,15 @@ def insert_unit_version(db_conn, current_data, next_data):
     RETURNING *;
   """
   data = {
-      'entity_id': current_data['entity_id'],
-      'previous_id': current_data['version_id'],
-      'user_id': convert_slug_to_uuid(next_data['user_id']),
-      'name': next_data.get('name') or current_data.get('name'),
-      'body': next_data.get('body') or current_data.get('body'),
-      'require_ids': [convert_slug_to_uuid(require_id)
-                      for require_id in
-                      next_data.get('require_ids') or
-                      current_data.get('require_ids') or []],
+    'entity_id': current_data['entity_id'],
+    'previous_id': current_data['version_id'],
+    'user_id': convert_slug_to_uuid(next_data['user_id']),
+    'name': next_data.get('name') or current_data.get('name'),
+    'body': next_data.get('body') or current_data.get('body'),
+    'require_ids': [convert_slug_to_uuid(require_id)
+                    for require_id in
+                    next_data.get('require_ids') or
+                    current_data.get('require_ids') or []],
   }
   errors = ensure_requires(db_conn, data) + ensure_no_cycles(db_conn, data)
   if errors:
@@ -120,8 +121,8 @@ def update_unit(db_conn, version_id, status):
     RETURNING *;
   """
   data = {
-      'version_id': convert_slug_to_uuid(version_id),
-      'status': status,
+    'version_id': convert_slug_to_uuid(version_id),
+    'status': status,
   }
   data, errors = save_row(db_conn, query, data)
   if not errors:
@@ -150,7 +151,7 @@ def does_unit_exist(db_conn, entity_id):
     LIMIT 1;
   """
   params = {
-      'entity_id': convert_slug_to_uuid(entity_id),
+    'entity_id': convert_slug_to_uuid(entity_id),
   }
   return get_row(db_conn, query, params)
 
@@ -168,7 +169,7 @@ def get_latest_accepted_unit(db_conn, entity_id):
     /* TODO LIMIT */
   """
   params = {
-      'entity_id': convert_slug_to_uuid(entity_id),
+    'entity_id': convert_slug_to_uuid(entity_id),
   }
   return get_row(db_conn, query, params)
 
@@ -188,8 +189,8 @@ def list_latest_accepted_units(db_conn, entity_ids):
     /* TODO LIMIT OFFSET */
   """
   params = {'entity_ids': tuple([
-      convert_slug_to_uuid(entity_id)
-      for entity_id in entity_ids
+    convert_slug_to_uuid(entity_id)
+    for entity_id in entity_ids
   ])}
   return list_rows(db_conn, query, params)
 
@@ -199,7 +200,7 @@ def list_many_unit_versions(db_conn, version_ids):
   List Unit Versions by VIDs
   """
 
-  if not len(version_ids):
+  if not version_ids:
     return []
   query = """
     SELECT *
@@ -209,8 +210,8 @@ def list_many_unit_versions(db_conn, version_ids):
     /* TODO LIMIT OFFSET */
   """
   params = {'version_ids': tuple(
-      convert_slug_to_uuid(vid)
-      for vid in version_ids
+    convert_slug_to_uuid(vid)
+    for vid in version_ids
   )}
   return list_rows(db_conn, query, params)
 
@@ -275,7 +276,7 @@ def list_required_by_units(db_conn, entity_id):
     /* TODO LIMIT OFFSET */
   """
   params = {
-      'entity_id': convert_slug_to_uuid(entity_id),
+    'entity_id': convert_slug_to_uuid(entity_id),
   }
   return list_rows(db_conn, query, params)
 
@@ -289,9 +290,9 @@ def list_units_by_subject_flat(db_conn, subject_id):
 
   subject = get_latest_accepted_subject(db_conn, subject_id)
   unit_ids = [
-      member['id']
-      for member in subject['members']
-      if member['kind'] == 'unit'
+    member['id']
+    for member in subject['members']
+    if member['kind'] == 'unit'
   ]
   return list_latest_accepted_units(db_conn, unit_ids)
 
@@ -323,6 +324,6 @@ def list_all_unit_entity_ids(db_conn):
   """
   params = {}
   return [
-      row['entity_id']
-      for row in list_rows(db_conn, query, params)
+    row['entity_id']
+    for row in list_rows(db_conn, query, params)
   ]

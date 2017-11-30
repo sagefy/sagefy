@@ -1,3 +1,4 @@
+# pylint: disable=all
 from modules.sequencer.pmf import init_pmf, update_pmf, normalize_pmf, \
     get_pmf_value
 

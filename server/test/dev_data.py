@@ -1,3 +1,5 @@
+# pylint: disable=C0103,C0330,C0413,wrong-import-order
+
 # via https://stackoverflow.com/a/11158224
 import os
 import sys
@@ -9,22 +11,22 @@ currentdir = os.path.dirname(
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
+import uuid
+from datetime import datetime, timezone
 from config import config
-import psycopg2
-import psycopg2.extras
 from framework.database import make_db_connection, \
     close_db_connection
 from framework.elasticsearch import es
-from es_populate import es_populate
-import yaml
 from framework.redis import redis
-from datetime import datetime, timezone
-import uuid
-from modules.util import convert_uuid_to_slug
-from database.util import delete_row
 from test.raw_insert import raw_insert_users, raw_insert_cards, \
     raw_insert_units, raw_insert_subjects, raw_insert_topics, \
     raw_insert_posts, raw_insert_follows, raw_insert_notices
+import psycopg2
+import psycopg2.extras
+from es_populate import es_populate
+import yaml
+from modules.util import convert_uuid_to_slug
+from database.util import delete_row
 
 
 if not config['debug']:
@@ -66,29 +68,29 @@ doris_id = uuid.uuid4()
 eileen_id = uuid.uuid4()
 
 users = [{
-    'id': doris_id,
-    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-    'name': 'doris',
-    'email': 'doris@example.com',
-    'password': 'example1',
-    'settings': {
-        'email_frequency': 'daily',
-        'view_subjects': 'public',
-        'view_follows': 'public',
-    },
+  'id': doris_id,
+  'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+  'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+  'name': 'doris',
+  'email': 'doris@example.com',
+  'password': 'example1',
+  'settings': {
+    'email_frequency': 'daily',
+    'view_subjects': 'public',
+    'view_follows': 'public',
+  },
 }, {
-    'id': eileen_id,
-    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-    'name': 'eileen',
-    'email': 'eileen@example.com',
-    'password': 'example1',
-    'settings': {
-        'email_frequency': 'daily',
-        'view_subjects': 'public',
-        'view_follows': 'public',
-    },
+  'id': eileen_id,
+  'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+  'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+  'name': 'eileen',
+  'email': 'eileen@example.com',
+  'password': 'example1',
+  'settings': {
+    'email_frequency': 'daily',
+    'view_subjects': 'public',
+    'view_follows': 'public',
+  },
 }]
 raw_insert_users(db_conn, users)
 
@@ -117,22 +119,21 @@ for sample_id, unit_data in sample_data['units'].items():
   unit_data['require_ids'] = u_require_ids
 
   params = {
-      'version_id': unit_data['version_id'],
-      'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'entity_id': unit_data['entity_id'],
-      'previous_id': None,
-      # 'language': 'en',
-      # 'status': 'accepted',
-      # 'available': True,
-      # 'tags': [],
-      'name': unit_data['name'],
-      'user_id': doris_id,
-      'body': unit_data['body'],
-      'require_ids': unit_data['require_ids'],
+    'version_id': unit_data['version_id'],
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'entity_id': unit_data['entity_id'],
+    'previous_id': None,
+    # 'language': 'en',
+    # 'status': 'accepted',
+    # 'available': True,
+    # 'tags': [],
+    'name': unit_data['name'],
+    'user_id': doris_id,
+    'body': unit_data['body'],
+    'require_ids': unit_data['require_ids'],
   }
   raw_insert_units(db_conn, [params])
-
 
 query = """
   ALTER TABLE units ENABLE TRIGGER ALL;
@@ -142,24 +143,24 @@ delete_row(db_conn, query, {})
 for card_data in sample_data['cards']['video']:
   card_data['entity_id'] = uuid.uuid4()
   params = {
-      'version_id': uuid.uuid4(),
-      'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'entity_id': card_data['entity_id'],
-      'previous_id': None,
-      # 'language': 'en',
-      'name': 'A Video',
-      # 'status': 'accepted',
-      # 'available': True,
-      # 'tags': [],
-      'user_id': doris_id,
-      'kind': 'video',
-      'data': {
-          'site': 'youtube',
-          'video_id': card_data['video_id'],
-      },
-      'unit_id': entity_ids_lookup[card_data['unit']],
-      'require_ids': [],
+    'version_id': uuid.uuid4(),
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'entity_id': card_data['entity_id'],
+    'previous_id': None,
+    # 'language': 'en',
+    'name': 'A Video',
+    # 'status': 'accepted',
+    # 'available': True,
+    # 'tags': [],
+    'user_id': doris_id,
+    'kind': 'video',
+    'data': {
+      'site': 'youtube',
+      'video_id': card_data['video_id'],
+    },
+    'unit_id': entity_ids_lookup[card_data['unit']],
+    'require_ids': [],
   }
   raw_insert_cards(db_conn, [params])
 
@@ -167,23 +168,23 @@ for card_data in sample_data['cards']['video']:
 for card_data in sample_data['cards']['page']:
   card_data['entity_id'] = uuid.uuid4()
   params = {
-      'version_id': uuid.uuid4(),
-      'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'entity_id': card_data['entity_id'],
-      'previous_id': None,
-      # 'language': 'en',
-      'name': card_data['name'],
-      # 'status': 'accepted',
-      # 'available': True,
-      # 'tags': [],
-      'user_id': doris_id,
-      'kind': 'page',
-      'data': {
-          'body': card_data['body'],
-      },
-      'unit_id': entity_ids_lookup[card_data['unit']],
-      'require_ids': [],
+    'version_id': uuid.uuid4(),
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'entity_id': card_data['entity_id'],
+    'previous_id': None,
+    # 'language': 'en',
+    'name': card_data['name'],
+    # 'status': 'accepted',
+    # 'available': True,
+    # 'tags': [],
+    'user_id': doris_id,
+    'kind': 'page',
+    'data': {
+      'body': card_data['body'],
+    },
+    'unit_id': entity_ids_lookup[card_data['unit']],
+    'require_ids': [],
   }
   raw_insert_cards(db_conn, [params])
 
@@ -191,23 +192,23 @@ for card_data in sample_data['cards']['page']:
 for card_data in sample_data['cards']['unscored_embed']:
   card_data['entity_id'] = uuid.uuid4()
   params = {
-      'version_id': uuid.uuid4(),
-      'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'entity_id': card_data['entity_id'],
-      'previous_id': None,
-      # 'language': 'en',
-      'name': 'An Example',
-      # 'status': 'accepted',
-      # 'available': True,
-      # 'tags': [],
-      'user_id': doris_id,
-      'kind': 'unscored_embed',
-      'data': {
-          'url': card_data['url'],
-      },
-      'unit_id': entity_ids_lookup[card_data['unit']],
-      'require_ids': [],
+    'version_id': uuid.uuid4(),
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'entity_id': card_data['entity_id'],
+    'previous_id': None,
+    # 'language': 'en',
+    'name': 'An Example',
+    # 'status': 'accepted',
+    # 'available': True,
+    # 'tags': [],
+    'user_id': doris_id,
+    'kind': 'unscored_embed',
+    'data': {
+      'url': card_data['url'],
+    },
+    'unit_id': entity_ids_lookup[card_data['unit']],
+    'require_ids': [],
   }
   raw_insert_cards(db_conn, [params])
 
@@ -215,34 +216,32 @@ for card_data in sample_data['cards']['unscored_embed']:
 for card_data in sample_data['cards']['choice']:
   card_data['entity_id'] = uuid.uuid4()
   params = {
-      'id': uuid.uuid4(),
-      'version_id': uuid.uuid4(),
-      'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'entity_id': card_data['entity_id'],
-      'previous_id': None,
-      # 'language': 'en',
-      'name': card_data['body'],
-      # 'status': 'accepted',
-      # 'available': True,
-      # 'tags': [],
-      'user_id': doris_id,
-      'kind': 'choice',
-      'data': {
-          'body': card_data['body'],
-          'options': [
-              {
-                  'id': convert_uuid_to_slug(uuid.uuid4()),
-                  'correct': opt['correct'] == 'Y',
-                  'value': opt['value'],
-                  'feedback': opt['feedback'],
-              } for opt in card_data['options']
-          ],
-          'order': 'random',
-          'max_options_to_show': 4,
-      },
-      'unit_id': entity_ids_lookup[card_data['unit']],
-      'require_ids': [],
+    'id': uuid.uuid4(),
+    'version_id': uuid.uuid4(),
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'entity_id': card_data['entity_id'],
+    'previous_id': None,
+    # 'language': 'en',
+    'name': card_data['body'],
+    # 'status': 'accepted',
+    # 'available': True,
+    # 'tags': [],
+    'user_id': doris_id,
+    'kind': 'choice',
+    'data': {
+      'body': card_data['body'],
+      'options': [{
+        'id': convert_uuid_to_slug(uuid.uuid4()),
+        'correct': opt['correct'] == 'Y',
+        'value': opt['value'],
+        'feedback': opt['feedback'],
+      } for opt in card_data['options']],
+      'order': 'random',
+      'max_options_to_show': 4,
+    },
+    'unit_id': entity_ids_lookup[card_data['unit']],
+    'require_ids': [],
   }
   raw_insert_cards(db_conn, [params])
 
@@ -258,25 +257,25 @@ for sample_id, subject_data in sample_data['subjects'].items():
     if member['id'] not in entity_ids_lookup:
       entity_ids_lookup[member['id']] = uuid.uuid4()
     u_members.append({
-        'id': convert_uuid_to_slug(entity_ids_lookup[member['id']]),
-        'kind': member['kind'],
+      'id': convert_uuid_to_slug(entity_ids_lookup[member['id']]),
+      'kind': member['kind'],
     })
   subject_data['members'] = u_members
 
   params = {
-      'version_id': uuid.uuid4(),
-      'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'entity_id': subject_data['entity_id'],
-      'previous_id': None,
-      # 'language': 'en',
-      'name': subject_data['name'],
-      # 'status': 'accepted',
-      # 'available': True,
-      # 'tags': [],
-      'user_id': doris_id,
-      'body': subject_data['body'],
-      'members': subject_data['members'],
+    'version_id': uuid.uuid4(),
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'entity_id': subject_data['entity_id'],
+    'previous_id': None,
+    # 'language': 'en',
+    'name': subject_data['name'],
+    # 'status': 'accepted',
+    # 'available': True,
+    # 'tags': [],
+    'user_id': doris_id,
+    'body': subject_data['body'],
+    'members': subject_data['members'],
   }
   raw_insert_subjects(db_conn, [params])
 
@@ -285,80 +284,80 @@ for sample_id, unit_data in sample_data['units'].items():
   topic_id = uuid.uuid4()
   proposal_id = uuid.uuid4()
   params = {
-      'id': topic_id,
-      'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'user_id': doris_id,
-      'name': '%s is fun' % unit_data['name'],
-      'entity_id': unit_data['entity_id'],
-      'entity_kind': 'unit',
+    'id': topic_id,
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'user_id': doris_id,
+    'name': '%s is fun' % unit_data['name'],
+    'entity_id': unit_data['entity_id'],
+    'entity_kind': 'unit',
   }
   raw_insert_topics(db_conn, [params])
 
   posts = [{
-      'id': uuid.uuid4(),
-      'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'user_id': doris_id,
-      'topic_id': topic_id,
-      'body': '%s is such learning funness. ' % unit_data['name'] +
-      'I dream about it all day long. ' +
-      'What could be better?',
-      'kind': 'post',
-      'replies_to_id': None,
-      'response': None,
+    'id': uuid.uuid4(),
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'user_id': doris_id,
+    'topic_id': topic_id,
+    'body': '%s is such learning funness. ' % unit_data['name'] +
+            'I dream about it all day long. ' +
+            'What could be better?',
+    'kind': 'post',
+    'replies_to_id': None,
+    'response': None,
   }, {
-      'id': proposal_id,
-      'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'user_id': doris_id,
-      'topic_id': topic_id,
-      'body': 'I think we should do something to %s.' % unit_data['name'],
-      'kind': 'proposal',
-      'replies_to_id': None,
-      'entity_versions': [{
-          'id': convert_uuid_to_slug(unit_data['version_id']),
-          'kind': 'unit',
-      }],
-      'name': 'Lets change %s' % unit_data['name'],
-      'response': None,
+    'id': proposal_id,
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'user_id': doris_id,
+    'topic_id': topic_id,
+    'body': 'I think we should do something to %s.' % unit_data['name'],
+    'kind': 'proposal',
+    'replies_to_id': None,
+    'entity_versions': [{
+      'id': convert_uuid_to_slug(unit_data['version_id']),
+      'kind': 'unit',
+    }],
+    'name': 'Lets change %s' % unit_data['name'],
+    'response': None,
   }, {
-      'id': uuid.uuid4(),
-      'created': datetime(2014, 1, 2, tzinfo=timezone.utc),
-      'modified': datetime(2014, 1, 2, tzinfo=timezone.utc),
-      'user_id': doris_id,
-      'topic_id': topic_id,
-      'body': 'I agree.',
-      'kind': 'vote',
-      'replies_to_id': proposal_id,
-      'response': True,
+    'id': uuid.uuid4(),
+    'created': datetime(2014, 1, 2, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 2, tzinfo=timezone.utc),
+    'user_id': doris_id,
+    'topic_id': topic_id,
+    'body': 'I agree.',
+    'kind': 'vote',
+    'replies_to_id': proposal_id,
+    'response': True,
   }]
   raw_insert_posts(db_conn, posts)
 
   params = {
-      'id': uuid.uuid4(),
-      'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'user_id': doris_id,
-      'entity_id': unit_data['entity_id'],
-      'entity_kind': 'unit',
+    'id': uuid.uuid4(),
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'user_id': doris_id,
+    'entity_id': unit_data['entity_id'],
+    'entity_kind': 'unit',
   }
   raw_insert_follows(db_conn, [params])
 
   params = {
-      'id': uuid.uuid4(),
-      'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
-      'user_id': doris_id,
-      'kind': 'create_topic',
-      'data': {
-          'user_name': 'Eileen',
-          'topic_name': '%s is fun' % unit_data['name'],
-          'entity_kind': 'unit',
-          'entity_name': unit_data['name'],
-      },
-      'read': False,
-      'tags': [],
+    'id': uuid.uuid4(),
+    'created': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'modified': datetime(2014, 1, 1, tzinfo=timezone.utc),
+    'user_id': doris_id,
+    'kind': 'create_topic',
+    'data': {
+      'user_name': 'Eileen',
+      'topic_name': '%s is fun' % unit_data['name'],
+      'entity_kind': 'unit',
+      'entity_name': unit_data['name'],
+    },
+    'read': False,
+    'tags': [],
   }
   raw_insert_notices(db_conn, [params])
 

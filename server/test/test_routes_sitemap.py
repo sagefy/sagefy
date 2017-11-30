@@ -1,3 +1,4 @@
+# pylint: disable=all
 from routes.sitemap import get_sitemap_route
 from raw_insert import raw_insert_users, \
     raw_insert_units, \

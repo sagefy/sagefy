@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 import routes.public  # TODO-2 switch to direct imports
 
 

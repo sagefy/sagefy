@@ -43,8 +43,8 @@ def update_topic(db_conn, prev_data, data):
     RETURNING *;
   """
   data = {
-      'id': convert_slug_to_uuid(prev_data['id']),
-      'name': data['name'],
+    'id': convert_slug_to_uuid(prev_data['id']),
+    'name': data['name'],
   }
   data, errors = update_row(db_conn, schema, query, prev_data, data)
   if not errors:
@@ -64,7 +64,7 @@ def get_topic(db_conn, params):
     LIMIT 1;
   """
   params = {
-      'id': convert_slug_to_uuid(params['id']),
+    'id': convert_slug_to_uuid(params['id']),
   }
   return get_row(db_conn, query, params)
 
@@ -107,7 +107,7 @@ def list_topics_by_entity_id(db_conn, entity_id, params):
     /* TODO OFFSET LIMIT */
   """
   params = {
-      'entity_id': convert_slug_to_uuid(entity_id),
+    'entity_id': convert_slug_to_uuid(entity_id),
   }
   return list_rows(db_conn, query, params)
 
@@ -119,8 +119,8 @@ def add_topic_to_es(topic):
 
   data = json_prep(deliver_topic(topic))
   return es.index(
-      index='entity',
-      doc_type='topic',
-      body=data,
-      id=convert_uuid_to_slug(data['id']),
+    index='entity',
+    doc_type='topic',
+    body=data,
+    id=convert_uuid_to_slug(data['id']),
   )

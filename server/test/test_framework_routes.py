@@ -1,7 +1,9 @@
-import framework.routes as routes
 import re
+from framework.routes import ROUTES
 from framework.routes import get, post, put, delete, abort, \
     build_path_pattern, find_path
+
+# pylint: disable=all
 
 
 def test_get():
@@ -9,18 +11,18 @@ def test_get():
   Expect to add a handler to GET.
   """
 
-  start_ln = len(routes.routes['GET'])
+  start_ln = len(ROUTES['GET'])
 
   @get('/s/foo')
   def foo_route(request):
     return 200, ''
 
-  for path, fn in routes.routes['GET']:
+  for path, fn in ROUTES['GET']:
     if fn == foo_route:
       found = (path, fn)
   assert found
-  routes.routes['GET'].remove(found)
-  assert len(routes.routes['GET']) == start_ln
+  ROUTES['GET'].remove(found)
+  assert len(ROUTES['GET']) == start_ln
 
 
 def test_post():
@@ -28,18 +30,18 @@ def test_post():
   Expect to add a handler to POST.
   """
 
-  start_ln = len(routes.routes['POST'])
+  start_ln = len(ROUTES['POST'])
 
   @post('/s/foo')
   def foo_route(request):
     return 200, ''
 
-  for path, fn in routes.routes['POST']:
+  for path, fn in ROUTES['POST']:
     if fn == foo_route:
       found = (path, fn)
   assert found
-  routes.routes['POST'].remove(found)
-  assert len(routes.routes['POST']) == start_ln
+  ROUTES['POST'].remove(found)
+  assert len(ROUTES['POST']) == start_ln
 
 
 def test_put():
@@ -47,18 +49,18 @@ def test_put():
   Expect to add a handler to PUT.
   """
 
-  start_ln = len(routes.routes['PUT'])
+  start_ln = len(ROUTES['PUT'])
 
   @put('/s/foo')
   def foo_route(request):
     return 200, ''
 
-  for path, fn in routes.routes['PUT']:
+  for path, fn in ROUTES['PUT']:
     if fn == foo_route:
       found = (path, fn)
   assert found
-  routes.routes['PUT'].remove(found)
-  assert len(routes.routes['PUT']) == start_ln
+  ROUTES['PUT'].remove(found)
+  assert len(ROUTES['PUT']) == start_ln
 
 
 def test_delete():
@@ -66,18 +68,18 @@ def test_delete():
   Expect to add a handler to DELETE.
   """
 
-  start_ln = len(routes.routes['DELETE'])
+  start_ln = len(ROUTES['DELETE'])
 
   @delete('/s/foo')
   def foo_route(request):
     return 200, ''
 
-  for path, fn in routes.routes['DELETE']:
+  for path, fn in ROUTES['DELETE']:
     if fn == foo_route:
       found = (path, fn)
   assert found
-  routes.routes['DELETE'].remove(found)
-  assert len(routes.routes['DELETE']) == start_ln
+  ROUTES['DELETE'].remove(found)
+  assert len(ROUTES['DELETE']) == start_ln
 
 
 def test_build_path_pattern():
@@ -98,7 +100,7 @@ def test_find_path():
   Find a handler matching a path.
   """
 
-  start_ln = len(routes.routes['GET'])
+  start_ln = len(ROUTES['GET'])
 
   @get('/s/foo/{u_id}')
   def foo_route(request):
@@ -110,8 +112,8 @@ def test_find_path():
   assert params == {'u_id': 'a1'}
 
   path = re.compile('^/s/foo/(?P<u_id>[\w\-]+)/?$')
-  routes.routes['GET'].remove((path, fn))
-  assert len(routes.routes['GET']) == start_ln
+  ROUTES['GET'].remove((path, fn))
+  assert len(ROUTES['GET']) == start_ln
 
 
 def test_abort():

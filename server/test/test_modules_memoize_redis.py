@@ -1,3 +1,4 @@
+# pylint: disable=all
 from framework.redis import redis
 from modules.memoize_redis import memoize_redis
 

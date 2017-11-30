@@ -1,3 +1,4 @@
+# pylint: disable=all
 from modules.sequencer.formulas import calculate_correct, \
     calculate_incorrect, \
     calculate_difficulty, \
@@ -46,12 +47,12 @@ def test_calculate_belief():
 
 def test_update_learned():
   value = update_learned(
-      score=1,
-      learned=0.5,
-      guess=0.25,
-      slip=0.05,
-      transit=0.05,
-      time_delta=60 * 60
+    score=1,
+    learned=0.5,
+    guess=0.25,
+    slip=0.05,
+    transit=0.05,
+    time_delta=60 * 60
   )
   assert value > 0.8 and value < 0.81
 

@@ -1,5 +1,6 @@
-from modules.util import omit, extend, pick
+# pylint: disable=W0613,C0103
 from copy import deepcopy
+from modules.util import omit, extend, pick
 import psycopg2
 import psycopg2.extras
 
@@ -10,12 +11,12 @@ def convert_fields_to_pgjson(data):
   """
 
   fields = (
-      'settings',
-      'data',
-      'members',
-      'entity_versions',
-      'guess_distribution',
-      'slip_distribution',
+    'settings',
+    'data',
+    'members',
+    'entity_versions',
+    'guess_distribution',
+    'slip_distribution',
   )
   for field in fields:
     if data.get(field) is not None:
@@ -72,11 +73,11 @@ def save_row(db_conn, query, params):
       db_curr.execute(query, params)
       data = db_curr.fetchone()
       db_conn.commit()
-  except (Exception, psycopg2.DatabaseError) as error:
+  except (Exception, psycopg2.DatabaseError) as error:  #
     print('DB Error', query, error)
     errors = [{
-        'message': 'There was an error. Contact <support@sagefy.org>.',
-        'ref': 'pu7amyK_REGFYCpUSfbdMw',
+      'message': 'There was an error. Contact <support@sagefy.org>.',
+      'ref': 'pu7amyK_REGFYCpUSfbdMw',
     }]
     db_conn.rollback()
     # TODO-1 parse through errors, make user friendly
@@ -132,8 +133,8 @@ def delete_row(db_conn, query, params):
   except (Exception, psycopg2.DatabaseError) as error:
     print('DB Error', query, error)
     errors = [{
-        'message': 'There was an error. Contact <support@sagefy.org>.',
-        'ref': 'hpaIei7gT9SwihpJxRYYQA',
+      'message': 'There was an error. Contact <support@sagefy.org>.',
+      'ref': 'hpaIei7gT9SwihpJxRYYQA',
     }]
     db_conn.rollback()
     # TODO-1 parse through errors, make user friendly
@@ -230,9 +231,9 @@ def validate_fields(schema, data):
         error = fn(data.get(field_name))
       if error:
         errors.append({
-            'name': prefix + field_name,
-            'message': error,
-            'ref': '02PtyWvDQTKJkcD-nuSftg',
+          'name': prefix + field_name,
+          'message': error,
+          'ref': '02PtyWvDQTKJkcD-nuSftg',
         })
         break
   recurse_embeds(_, data, schema['fields'])
@@ -265,7 +266,7 @@ def deliver_fields(schema, data, access=None):
   def _(data, field_name, field_schema, prefix):
     if ('access' in field_schema and
         data.get(field_name) is not None and
-            access not in field_schema['access']):
+        access not in field_schema['access']):
       del data[field_name]
 
   data = deepcopy(data)

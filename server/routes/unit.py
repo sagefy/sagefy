@@ -1,8 +1,8 @@
+from copy import deepcopy
 from framework.routes import get, post, abort
 from framework.session import get_current_user
 from database.unit import deliver_unit, insert_unit, get_latest_accepted_unit
 from database.subject import deliver_subject, list_subjects_by_unit_flat
-from copy import deepcopy
 from database.unit import list_required_units, list_required_by_units, \
     list_latest_accepted_units, list_one_unit_versions, get_unit_version, \
     insert_unit_version, list_my_recently_created_units
@@ -23,11 +23,11 @@ def get_unit_route(request, unit_id):
   required_by = list_required_by_units(db_conn, unit_id)
   subjects = list_subjects_by_unit_flat(db_conn, unit_id)
   return 200, {
-      'unit': deliver_unit(unit),
-      # TODO-3 unit parameters
-      'requires': [deliver_unit(require) for require in requires],
-      'required_by': [deliver_unit(require) for require in required_by],
-      'belongs_to': [deliver_subject(subject) for subject in subjects],
+    'unit': deliver_unit(unit),
+    # TODO-3 unit parameters
+    'requires': [deliver_unit(require) for require in requires],
+    'required_by': [deliver_unit(require) for require in required_by],
+    'belongs_to': [deliver_subject(subject) for subject in subjects],
   }
 
 
@@ -57,10 +57,10 @@ def get_unit_versions_route(request, unit_id):
   db_conn = request['db_conn']
   versions = list_one_unit_versions(db_conn, unit_id)
   return 200, {
-      'versions': [
-          deliver_unit(version, access='view')
-          for version in versions
-      ]
+    'versions': [
+      deliver_unit(version, access='view')
+      for version in versions
+    ]
   }
 
 
@@ -79,7 +79,7 @@ def get_unit_version_route(request, version_id):
 
 # TODO-1 move to /s/users/{user_id}/units (?)
 @get('/s/units:get_my_recently_created')
-def get_my_recently_created_units_route(request):
+def get_my_recently_created_units_route(request):  # pylint: disable=C0103
   """
   Get the units the user most recently created.
   """
@@ -90,7 +90,7 @@ def get_my_recently_created_units_route(request):
   db_conn = request['db_conn']
   units = list_my_recently_created_units(db_conn, current_user['id'])
   return 200, {
-      'units': [deliver_unit(unit) for unit in units],
+    'units': [deliver_unit(unit) for unit in units],
   }
 
 
@@ -109,16 +109,16 @@ def create_new_unit_version_route(request):
     return abort(403, '2LEzNrxlRL6YyAarsC7MAg')
   data['user_id'] = current_user['id']
   unit, errors = insert_unit(db_conn, data)
-  if len(errors):
+  if errors:
     return 400, {
-        'errors': errors,
-        'ref': 'bNAxJ9RBS_SDJcLpe7K0Gg',
+      'errors': errors,
+      'ref': 'bNAxJ9RBS_SDJcLpe7K0Gg',
     }
   return 200, {'version': deliver_unit(unit, 'view')}
 
 
 @post('/s/units/{unit_id}/versions')
-def create_existing_unit_version_route(request, unit_id):
+def create_existing_unit_version_route(request, unit_id):  # pylint: disable=C0103
   """
   Create a new unit version for an existing unit.
   """
@@ -134,9 +134,9 @@ def create_existing_unit_version_route(request, unit_id):
   if not current_data:
     return abort(404, 'SDJ6WP_gRe28hmsTEKejsg')
   unit, errors = insert_unit_version(db_conn, current_data, next_data)
-  if len(errors):
+  if errors:
     return 400, {
-        'errors': errors,
-        'ref': 'Oy9dmO9BRiSciigcbeiqrQ',
+      'errors': errors,
+      'ref': 'Oy9dmO9BRiSciigcbeiqrQ',
     }
   return 200, {'version': deliver_unit(unit, 'view')}

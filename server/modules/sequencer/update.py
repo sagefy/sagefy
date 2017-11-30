@@ -56,20 +56,20 @@ def update(score, time_delta, learned,
                             guess, slip, transit,
                             time_delta)
   guess_distribution = update_pmf(guess_distribution, {
-      'score': score,
-      'learned': learned,
-      'guess': guess,
-      'slip': slip,
+    'score': score,
+    'learned': learned,
+    'guess': guess,
+    'slip': slip,
   }, get_guess_pmf_likelihood)
   slip_distribution = update_pmf(slip_distribution, {
-      'score': score,
-      'learned': learned,
-      'guess': guess,
-      'slip': slip,
+    'score': score,
+    'learned': learned,
+    'guess': guess,
+    'slip': slip,
   }, get_slip_pmf_likelihood)
 
   return {
-      'learned': learned2,
-      'guess_distribution': guess_distribution,
-      'slip_distribution': slip_distribution,
+    'learned': learned2,
+    'guess_distribution': guess_distribution,
+    'slip_distribution': slip_distribution,
   }

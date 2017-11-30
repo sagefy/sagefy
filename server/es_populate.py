@@ -23,10 +23,10 @@ def es_populate():
     data = pick(json_prep(user), ('id', 'name'))
     data['avatar'] = get_avatar(user['email'])
     es.index(
-        index='entity',
-        doc_type='user',
-        body=data,
-        id=convert_uuid_to_slug(user['id']),
+      index='entity',
+      doc_type='user',
+      body=data,
+      id=convert_uuid_to_slug(user['id']),
     )
 
   # Add units
@@ -43,10 +43,10 @@ def es_populate():
     db_conn.commit()
   for unit in units:
     es.index(
-        index='entity',
-        doc_type='unit',
-        body=json_prep(unit),
-        id=convert_uuid_to_slug(unit['entity_id']),
+      index='entity',
+      doc_type='unit',
+      body=json_prep(unit),
+      id=convert_uuid_to_slug(unit['entity_id']),
     )
 
   # Add cards
@@ -63,10 +63,10 @@ def es_populate():
     db_conn.commit()
   for card in cards:
     es.index(
-        index='entity',
-        doc_type='card',
-        body=json_prep(card),
-        id=convert_uuid_to_slug(card['entity_id']),
+      index='entity',
+      doc_type='card',
+      body=json_prep(card),
+      id=convert_uuid_to_slug(card['entity_id']),
     )
 
   # Add subjects
@@ -83,10 +83,10 @@ def es_populate():
     db_conn.commit()
   for subject in subjects:
     es.index(
-        index='entity',
-        doc_type='subject',
-        body=json_prep(subject),
-        id=convert_uuid_to_slug(subject['entity_id']),
+      index='entity',
+      doc_type='subject',
+      body=json_prep(subject),
+      id=convert_uuid_to_slug(subject['entity_id']),
     )
 
   """

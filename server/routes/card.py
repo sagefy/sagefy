@@ -1,5 +1,8 @@
+from copy import deepcopy
+
 from framework.session import get_current_user
 from framework.routes import get, post, abort
+from modules.util import convert_uuid_to_slug
 from modules.sequencer.index import update as seq_update
 from modules.sequencer.traversal import traverse, judge
 from modules.sequencer.card_chooser import choose_card
@@ -9,11 +12,10 @@ from database.card_parameters import get_card_parameters, \
     get_card_parameters_values
 from database.card import deliver_card, insert_card, get_latest_accepted_card
 from database.unit import deliver_unit, get_latest_accepted_unit
-from copy import deepcopy
 from database.card import list_required_cards, list_required_by_cards, \
     list_latest_accepted_cards, list_one_card_versions, get_card_version, \
     insert_card_version
-from modules.util import convert_uuid_to_slug
+
 
 # from modules.sequencer.params import max_learned
 
@@ -37,12 +39,12 @@ def get_card_route(request, card_id):
   required_by = list_required_by_cards(db_conn, card_id)
   params = get_card_parameters(db_conn, {'entity_id': card_id})
   return 200, {
-      'card': deliver_card(card, access='view'),
-      'card_parameters': (get_card_parameters_values(params)
-                          if params else None),
-      'unit': deliver_unit(unit),
-      'requires': [deliver_card(require) for require in requires],
-      'required_by': [deliver_card(require) for require in required_by],
+    'card': deliver_card(card, access='view'),
+    'card_parameters': (get_card_parameters_values(params)
+                        if params else None),
+    'unit': deliver_unit(unit),
+    'requires': [deliver_card(require) for require in requires],
+    'required_by': [deliver_card(require) for require in required_by],
   }
 
 
@@ -85,23 +87,24 @@ def learn_card_route(request, card_id):
   context_unit_id = context.get('unit', {}).get('entity_id')
   if context_unit_id != convert_uuid_to_slug(card['unit_id']):
     return 400, {
-        'errors': [{
-            'name': 'unit_id',
-            'message': 'card not in current unit.',
-            'ref': 'd6rhaoCuRdW0f9j8AlMXBQ',
-        }],
+      'errors': [{
+        'name': 'unit_id',
+        'message': 'card not in current unit.',
+        'ref': 'd6rhaoCuRdW0f9j8AlMXBQ',
+      }],
     }
   next_ = {
-      'method': 'POST',
-      'path': '/s/cards/{card_id}/responses'
-      .format(card_id=convert_uuid_to_slug(card['entity_id']))
+    'method': 'POST',
+    'path': '/s/cards/{card_id}/responses'.format(
+      card_id=convert_uuid_to_slug(card['entity_id'])
+    )
   }
   set_learning_context(current_user, card=card, next=next_)
   return 200, {
-      'card': deliver_card(card, access='learn'),
-      'subject': context.get('subject'),
-      'unit': context.get('unit'),
-      'next': next_,
+    'card': deliver_card(card, access='learn'),
+    'subject': context.get('subject'),
+    'unit': context.get('unit'),
+    'next': next_,
   }
 
 
@@ -114,10 +117,10 @@ def get_card_versions_route(request, card_id):
   db_conn = request['db_conn']
   versions = list_one_card_versions(db_conn, card_id)
   return 200, {
-      'versions': [
-          deliver_card(version, access='view')
-          for version in versions
-      ]
+    'versions': [
+      deliver_card(version, access='view')
+      for version in versions
+    ]
   }
 
 
@@ -135,7 +138,7 @@ def get_card_version_route(request, version_id):
 
 
 @post('/s/cards/{card_id}/responses')
-def respond_to_card_route(request, card_id):
+def respond_to_card_route(request, card_id):  # pylint: disable=R0914
   """
   Record and process a learner's response to a card.
 
@@ -160,10 +163,10 @@ def respond_to_card_route(request, card_id):
   context_card_id = context.get('card', {}).get('entity_id')
   if context_card_id != convert_uuid_to_slug(card['entity_id']):
     return 400, {
-        'errors': [{
-            'message': 'Not the current card.',
-            'ref': 'XfmF52NmQnK_bbaxx-p8dg',
-        }]
+      'errors': [{
+        'message': 'Not the current card.',
+        'ref': 'XfmF52NmQnK_bbaxx-p8dg',
+      }]
     }
   result = seq_update(db_conn, current_user, card,
                       request['params'].get('response'))
@@ -171,8 +174,8 @@ def respond_to_card_route(request, card_id):
                                 result.get('feedback'))
   if errors:
     return 400, {
-        'errors': errors,
-        'ref': 'HfuW7_B-TByy8yh4FwgdrA',
+      'errors': errors,
+      'ref': 'HfuW7_B-TByy8yh4FwgdrA',
     }
 
   subject = context.get('subject')
@@ -189,22 +192,25 @@ def respond_to_card_route(request, card_id):
       unit = buckets['diagnose'][0]
       next_card = choose_card(db_conn, current_user, unit)
       next_ = {
-          'method': 'GET',
-          'path': '/s/cards/{card_id}/learn'
-          .format(card_id=convert_uuid_to_slug(
-              next_card['entity_id'])),
+        'method': 'GET',
+        'path': '/s/cards/{card_id}/learn'.format(
+          card_id=convert_uuid_to_slug(next_card['entity_id'])
+        ),
       }
       set_learning_context(
-          current_user,
-          card=next_card.data, unit=unit, next=next_)
+        current_user,
+        card=next_card.data,
+        unit=unit,
+        next=next_
+      )
 
     # If there are units to be learned or reviewed...
     elif buckets.get('learn') or buckets.get('review'):
       next_ = {
-          'method': 'GET',
-          'path': '/s/subjects/{subject_id}/units'
-          .format(subject_id=convert_uuid_to_slug(
-              subject['entity_id'])),
+        'method': 'GET',
+        'path': '/s/subjects/{subject_id}/units'.format(
+          subject_id=convert_uuid_to_slug(subject['entity_id'])
+        ),
       }
       set_learning_context(current_user,
                            card=None, unit=None, next=next_)
@@ -212,10 +218,10 @@ def respond_to_card_route(request, card_id):
     # If we are out of units...
     else:
       next_ = {
-          'method': 'GET',
-          'path': '/s/subjects/{subject_id}/tree'
-          .format(subject_id=convert_uuid_to_slug(
-              subject['entity_id'])),
+        'method': 'GET',
+        'path': '/s/subjects/{subject_id}/tree'.format(
+          subject_id=convert_uuid_to_slug(subject['entity_id'])
+        ),
       }
       set_learning_context(current_user,
                            card=None, unit=None, next=next_)
@@ -225,10 +231,10 @@ def respond_to_card_route(request, card_id):
     next_card = choose_card(db_conn, current_user, unit)
     if next_card:
       next_ = {
-          'method': 'GET',
-          'path': '/s/cards/{card_id}/learn'
-          .format(card_id=convert_uuid_to_slug(
-              next_card['entity_id'])),
+        'method': 'GET',
+        'path': '/s/cards/{card_id}/learn'.format(
+          card_id=convert_uuid_to_slug(next_card['entity_id'])
+        ),
       }
       set_learning_context(current_user, card=next_card, next=next_)
     else:
@@ -236,9 +242,9 @@ def respond_to_card_route(request, card_id):
       set_learning_context(current_user, next=next_)
 
   return 200, {
-      'response': deliver_response(response),
-      'feedback': feedback,
-      'next': next_,
+    'response': deliver_response(response),
+    'feedback': feedback,
+    'next': next_,
   }
 
 
@@ -257,16 +263,16 @@ def create_new_card_version_route(request):
     return abort(403, 'sdXoDQ-tRweCUg35MUcUEA')
   data['user_id'] = current_user['id']
   card, errors = insert_card(db_conn, data)
-  if len(errors):
+  if errors:
     return 400, {
-        'errors': errors,
-        'ref': '8X-cJFZPQIyyAJJWmfiS7A',
+      'errors': errors,
+      'ref': '8X-cJFZPQIyyAJJWmfiS7A',
     }
   return 200, {'version': deliver_card(card, 'view')}
 
 
 @post('/s/cards/{card_id}/versions')
-def create_existing_card_version_route(request, card_id):
+def create_existing_card_version_route(request, card_id):  # pylint: disable=C0103
   """
   Create a new card version for an existing card.
   """
@@ -282,9 +288,9 @@ def create_existing_card_version_route(request, card_id):
   if not current_data:
     return abort(404, 'dQvoI_OjQY2U-GeyP8fsTA')
   card, errors = insert_card_version(db_conn, current_data, next_data)
-  if len(errors):
+  if errors:
     return 400, {
-        'errors': errors,
-        'ref': 'DyKLB28gT6CYGdyQ9smOKQ',
+      'errors': errors,
+      'ref': 'DyKLB28gT6CYGdyQ9smOKQ',
     }
   return 200, {'version': deliver_card(card, 'view')}
