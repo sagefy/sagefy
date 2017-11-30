@@ -66,9 +66,9 @@ Database
 - Use `kind` for kind or type.
 - When the number of kinds is unknown, use `tags` instead.
 - When the relationship is...
-  - 1 to 1: Should probably use embedding. Otherwise, use the same ID for both.
-  - 1 to many: Put the "1" ID into the "many" rows.
-  - Many to many: Embed IDs, otherwise use a join table.
+    - 1 to 1: Should probably use embedding. Otherwise, use the same ID for both.
+    - 1 to many: Put the "1" ID into the "many" rows.
+    - Many to many: Embed IDs, otherwise use a join table.
 
 JavaScript
 ------------
@@ -84,19 +84,19 @@ Stylus
 - Use the [BEM](http://bem.info/method/) naming convention where appropriate.
 - Mobile is the first and default styling. Use `@media (min-width...)` and never use `@media (max-width...)`.
 - General guidelines:
-  - Lowercase selectors.
-  - Use extend first.
-  - No duplicate properties.
-  - Empty line after blocks of properties.
-  - No empty rules.
-  - Use leading zeros.
-  - Merge selectors.
-  - Don't go more than 3 levels deep.
-  - Hyphen for names.
-  - Spell correctly.
-  - Use shorthands.
-  - Space after commas.
-  - Zero is unitless.
+    - Lowercase selectors.
+    - Use extend first.
+    - No duplicate properties.
+    - Empty line after blocks of properties.
+    - No empty rules.
+    - Use leading zeros.
+    - Merge selectors.
+    - Don't go more than 3 levels deep.
+    - Hyphen for names.
+    - Spell correctly.
+    - Use shorthands.
+    - Space after commas.
+    - Zero is unitless.
 
 HTML
 ----
