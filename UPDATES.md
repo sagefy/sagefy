@@ -6,6 +6,48 @@ You can sign up for email updates at http://newsletter.sagefy.org/up
 
 ------
 
+## 2017 Dec 11
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2017 Nov 27 - 2017 Dec 10
+
+- No updates. Tis the season for illness :)
+
+### Upcoming Two Weeks: 2017 Dec 11 - 2017 Dec 24
+
+- Build 5 interactive examples for the Intro to Electronic Music: Sound Parameters unit.
+- Build 4 interactive examples for the Intro to Electronic Music: Human Hearing unit.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to
+https://sagefy.uservoice.com/forums/233394-general
+and add feedback or ideas there.
+
+------
+
+## 2017 Nov 27
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2017 Nov 13 - 2017 Nov 26
+
+- Created the new "unscored embed" card kind. Simply specify a URL and it will be embedded on the page! The name may seem silly... but there may be a "scored embed" and "peer-scored embed" in the future.
+
+### Upcoming Two Weeks: 2017 Nov 27 - 2017 Dec 10
+
+- Build 5 interactive examples for the Intro to Electronic Music: Sound Parameters unit.
+- Build 4 interactive examples for the Intro to Electronic Music: Human Hearing unit.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to
+https://sagefy.uservoice.com/forums/233394-general
+and add feedback or ideas there.
+
+------
+
 ## 2017 Nov 13 
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
