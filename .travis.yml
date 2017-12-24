@@ -19,7 +19,8 @@ before_script:
   - psql -U postgres -a -f ./postgres/sagefy_tables.sql
 script:
   - cd server
-  - find . -iname "*.py" | xargs pylint -j 4
+  - FILES=$(find . -iname "*.py")
+  - pylint $FILES -j 4
   - coverage run --module py.test
   - cd ../client
   - nvm use 6.11.0

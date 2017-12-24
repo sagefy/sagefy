@@ -50,7 +50,9 @@ Access Postgres REPL:
 
 Run server tests:
 
-    find . -iname "*.py" | xargs pylint -j 4
+    cd server
+    FILES=$(find . -iname "*.py")
+    pylint $FILES -j 4
     docker-compose run server coverage run --module py.test
     docker-compose run server coverage report --omit="test/*"
 
