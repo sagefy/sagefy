@@ -233,7 +233,7 @@ module.exports = data => {
               ),
               li(
                 strong('Closed Adaptive Systems'),
-                ': You should be able to pursue your own goals. Closed systems means only select topics are available. An open-content system like Sagefy reaches a range of topics.'
+                ': Pursue your own goals. Closed systems means only select topics are available. An open-content system like Sagefy reaches a range of topics.'
               ),
               li(
                 strong('Massive Online Courses'),

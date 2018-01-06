@@ -99,7 +99,7 @@ The learner responds with text, and it is checked against text or pattern. This 
   - correct: At least one option must be marked as correct.
   - feedback: What to tell the learner if they respond with option. (Markdown)
 - default_incorrect_feedback: If none of the options matches the learners response, then the learner will get this feedback. (Markdown)
-- case_sensitive: Whether the card should force case sensitivity. Defaults to false.
+- case_sensitive: Whether the card forces case sensitivity. Defaults to false.
 
 ### Scored Embed Card
 

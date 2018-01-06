@@ -48,16 +48,16 @@ Python
 ------
 
 - Use [Pylint](https://www.pylint.org/) for Python formatting.
-- Methods should be no longer than 12 statements.
+- Methods are no longer than 12 statements.
 - Request and response formatting: see [RESTish](https://github.com/heiskr/sagefy/wiki/RESTish).
-- DocStrings should follow [PEP-0257](http://legacy.python.org/dev/peps/pep-0257/) and when relevant the [NumPy convention](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt).
+- DocStrings follow [PEP-0257](http://legacy.python.org/dev/peps/pep-0257/) and when relevant the [NumPy convention](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt).
 
 Database
 --------
 
 - Table names are plural.
 - Field names are singular, unless an array.
-- Join tables should use both names, and both in plural form.
+- Join tables use both names, and both in plural form.
 - Don't use negative named booleans. Stay positive.
 - IDs are always randomly generated strings.
 - Include `created` and `modified`, using those exact names, when sensible.
@@ -66,7 +66,7 @@ Database
 - Use `kind` for kind or type.
 - When the number of kinds is unknown, use `tags` instead.
 - When the relationship is...
-    - 1 to 1: Should probably use embedding. Otherwise, use the same ID for both.
+    - 1 to 1: Probably use embedding. Otherwise, use the same ID for both.
     - 1 to many: Put the "1" ID into the "many" rows.
     - Many to many: Embed IDs, otherwise use a join table.
 
