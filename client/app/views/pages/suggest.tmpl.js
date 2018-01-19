@@ -1,13 +1,7 @@
-/* eslint-disable max-len */
-const {
-  div,
-  h1,
-  a,
-  p,
-} = require('../../modules/tags')
+const { div, h1, a, p } = require('../../modules/tags')
 
-module.exports = () => {
-  return div(
+module.exports = () =>
+  div(
     {
       id: 'suggest',
       className: 'page',
@@ -24,4 +18,3 @@ module.exports = () => {
       '.'
     )
   )
-}

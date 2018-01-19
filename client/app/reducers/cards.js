@@ -7,8 +7,8 @@ module.exports = function cards(state = {}, action = { type: '' }) {
     return state
   }
   if (action.type === 'GET_CARD_SUCCESS') {
-    const card = action.card
-    ;['card_parameters'].forEach((r) => {
+    const { card } = action
+    ;['card_parameters'].forEach(r => {
       card[r] = action[r]
     })
     card.relationships = [

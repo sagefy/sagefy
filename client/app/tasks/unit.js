@@ -10,8 +10,8 @@ module.exports = tasks.add({
       url: `/s/units/${id}`,
       data: {},
     })
-      .then((response) => {
-        const unit = response.unit
+      .then(response => {
+        const { unit } = response
         unit.relationships = []
         ;['belongs_to', 'requires', 'required_by'].forEach(r =>
           response[r].forEach(e =>
@@ -27,7 +27,7 @@ module.exports = tasks.add({
           unit,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'get unit failure',
@@ -43,7 +43,7 @@ module.exports = tasks.add({
       url: `/s/units/${id}/versions`,
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_UNIT_VERSIONS',
           versions: response.versions,
@@ -51,7 +51,7 @@ module.exports = tasks.add({
           message: 'list unit versions success',
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'list unit versions failure',
@@ -65,20 +65,20 @@ module.exports = tasks.add({
     const total = units.length
     const allResponses = []
     return new Promise((resolve, reject) => {
-      units.forEach((unit) => {
+      units.forEach(unit => {
         request({
           method: 'POST',
           url: '/s/units/versions',
           data: unit,
         })
-          .then((response) => {
+          .then(response => {
             allResponses.push(response.version)
-            count++
+            count += 1
             if (count === total) {
               resolve({ units: allResponses })
             }
           })
-          .catch((errors) => {
+          .catch(errors => {
             dispatch({
               type: 'SET_ERRORS',
               message: 'create new unit version failure',
@@ -97,13 +97,13 @@ module.exports = tasks.add({
       url: '/s/units:get_my_recently_created',
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'SET_MY_RECENT_UNITS',
           units: response.units,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'get my recent units failure',

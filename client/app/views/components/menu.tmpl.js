@@ -39,10 +39,10 @@ const items = {
 // For items that don't have them
 // Use the name to populate title and url automatically
 // And set the default icon to be painfully obviously wrong
-Object.keys(items).forEach((name) => {
+Object.keys(items).forEach(name => {
   items[name] = extend(
     {
-      name: name,
+      name,
       title: ucfirst(name),
       url: `/${underscored(name)}`,
       icon: name,
@@ -93,7 +93,7 @@ const addContextItems = (menuItems, { card, unit, subject }) => {
   return menuItems
 }
 
-module.exports = (data) => {
+module.exports = data => {
   let menuItems = menus[data.kind].map(name => items[name])
   menuItems = addContextItems(menuItems, data.context)
   return nav({ className: data.open ? 'menu selected' : 'menu' }, [

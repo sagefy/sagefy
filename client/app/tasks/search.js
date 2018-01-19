@@ -16,14 +16,14 @@ module.exports = tasks.add({
       url: '/s/search',
       data: { q, kind, skip, limit, order },
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_SEARCH_RESULTS',
           message: 'search success',
           results: response.hits,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'search failure',

@@ -11,8 +11,8 @@ module.exports = tasks.add({
       url: `/s/subjects/${id}`,
       data: {},
     })
-      .then((response) => {
-        const subject = response.subject
+      .then(response => {
+        const { subject } = response
         subject.unit = response.unit
         dispatch({
           type: 'ADD_SUBJECT',
@@ -20,7 +20,7 @@ module.exports = tasks.add({
           subject,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'get subject failure',
@@ -36,14 +36,14 @@ module.exports = tasks.add({
       url: '/s/subjects/recommended',
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'SET_RECOMMENDED_SUBJECTS',
           message: 'get recommended subjects success',
           recommendedSubjects: response.subjects,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'get recommended subjects failure',
@@ -59,7 +59,7 @@ module.exports = tasks.add({
       url: `/s/subjects/${id}/versions`,
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_SUBJECT_VERSIONS',
           versions: response.versions,
@@ -67,7 +67,7 @@ module.exports = tasks.add({
           message: 'list subject versions success',
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'list subject versions failure',
@@ -83,7 +83,7 @@ module.exports = tasks.add({
       url: `/s/subjects/${id}/tree`,
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_SUBJECT_TREE',
           message: 'get subject tree success',
@@ -91,7 +91,7 @@ module.exports = tasks.add({
           id,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'get subject tree failure',
@@ -114,7 +114,7 @@ module.exports = tasks.add({
       url: `/s/subjects/${id}/units`,
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'SET_CHOOSE_UNIT',
           chooseUnit: response,
@@ -125,7 +125,7 @@ module.exports = tasks.add({
           next: response.next,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'get subject units failure',
@@ -141,7 +141,7 @@ module.exports = tasks.add({
       url: `/s/subjects/${subjectId}/units/${unitId}`,
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({ type: 'CHOOSE_UNIT_SUCCESS', subjectId, unitId })
         const { next } = response
         dispatch({
@@ -158,7 +158,7 @@ module.exports = tasks.add({
           tasks.route(`/cards/${args[0]}/learn`)
         }
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'choose unit failure',
@@ -174,13 +174,13 @@ module.exports = tasks.add({
       url: '/s/subjects:get_my_recently_created',
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'SET_MY_RECENT_SUBJECTS',
           subjects: response.subjects,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'get my recent subjects failure',
@@ -196,11 +196,11 @@ module.exports = tasks.add({
       url: '/s/subjects/versions',
       data,
     })
-      .then((response) => {
+      .then(response => {
         dispatch({ type: 'CREATE_NEW_SUBJECT_VERSION_SUCCESS' })
         return response
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'create new subject version failure',
@@ -216,11 +216,11 @@ module.exports = tasks.add({
       url: `/s/subjects/${data.entity_id}/versions`,
       data,
     })
-      .then((response) => {
+      .then(response => {
         dispatch({ type: 'CREATE_EXISTING_SUBJECT_VERSION_SUCCESS' })
         return response
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'create existing subject version failure',

@@ -1,5 +1,17 @@
 const { parseJSON, isString, convertDataToGet } = require('./utilities')
 
+// Try to parse the errors array or just return the error text.
+function parseAjaxErrors(response) {
+  if (!response.responseText) {
+    return null
+  }
+  const errors = parseJSON(response.responseText)
+  if (isString(errors)) {
+    return errors
+  }
+  return errors.errors
+}
+
 module.exports = function ajax({ method, url, data }) {
   method = method.toUpperCase()
   if (method === 'GET') {
@@ -18,7 +30,7 @@ module.exports = function ajax({ method, url, data }) {
       }
     }
     request.onerror = function onerror() {
-      reject(null)
+      reject(Error())
     }
   })
   if (method === 'GET') {
@@ -27,16 +39,4 @@ module.exports = function ajax({ method, url, data }) {
     request.send(JSON.stringify(data || {}))
   }
   return promise
-}
-
-// Try to parse the errors array or just return the error text.
-function parseAjaxErrors(response) {
-  if (!response.responseText) {
-    return null
-  }
-  const errors = parseJSON(response.responseText)
-  if (isString(errors)) {
-    return errors
-  }
-  return errors.errors
 }

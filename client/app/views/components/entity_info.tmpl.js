@@ -23,9 +23,7 @@ module.exports = () =>
         strong('card'),
         ' is a single learning activity.',
         br(),
-        small(
-          '(Examples: a 3-minute video or a multiple choice question.)'
-        )
+        small('(Examples: a 3-minute video or a multiple choice question.)')
       ),
       li(
         'A ',

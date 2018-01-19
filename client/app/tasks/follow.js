@@ -10,14 +10,14 @@ module.exports = tasks.add({
       url: '/s/follows',
       data: { user_id: userId, skip, limit, entities: true },
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'LIST_FOLLOWS_SUCCESS',
           follows: response.follows,
         })
         return tasks.listEntitiesByFollows(response.follows)
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'list follows failure',
@@ -33,14 +33,14 @@ module.exports = tasks.add({
       url: '/s/follows',
       data: { entity_id: entityID },
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ASK_FOLLOW_SUCCESS',
           follows: response.follows,
           entityID,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'ask follow failure',
@@ -54,15 +54,15 @@ module.exports = tasks.add({
     return request({
       method: 'POST',
       url: '/s/follows',
-      data: data,
+      data,
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'FOLLOW_SUCCESS',
           follow: response.follow,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'follow failure',
@@ -83,7 +83,7 @@ module.exports = tasks.add({
           id,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'unfollow failure',

@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb-base",
+  "extends": ["airbnb-base", "prettier"],
   "env": {
     "node": true,
     "browser": true,
@@ -7,7 +7,6 @@
   },
   "globals": {
     "expect": true,
-    "sinon": true
   },
   "parserOptions": {
     "ecmaVersion": 6,
@@ -17,34 +16,37 @@
     }
   },
   "rules": {
-    "semi": ["error", "never"],
-    "indent": ["error", 2],
-    // "max-len": ["error", 80],
     "max-depth": ["error", 4],
-    // "max-lines": ["error", 300],
+    "max-lines": ["error", 400],
     "max-params": ["error", 3],
-    // "max-statements": ["error", 14],
-    "max-statements-per-line": ["error", { "max": 2 }],
+    "max-statements": ["error", 20],
     "no-negated-condition": "error",
-    // "complexity": ["error", 10],
+    "complexity": ["error", 10],
     "no-useless-call": "error",
-    "no-extra-parens": ["error", "all", { "nestedBinaryExpressions": false }],
-
+    "object-shorthand": ["error", "always"],
     "no-param-reassign": "off",
-    "no-use-before-define": "off",
-    "consistent-return": "off",
-    "radix": "off",
-    "no-plusplus": "off",
     "no-nested-ternary": "off",
-
-    // temporary
-    "no-mixed-operators": "off",
-    "no-loop-func": "off",
-    "no-shadow": "off",
-    "object-shorthand": "off",
-    "arrow-body-style": "off",
-    "guard-for-in": "off",
-    "no-restricted-syntax": "off",
-    "no-confusing-arrow": "off"
-  }
+    "no-loop-func": "off"
+  },
+  "overrides": [
+    {
+      "files": ["app/reducers/**/*.js"],
+      "rules": {
+        "max-statements": "off",
+        "complexity": "off"
+      }
+    },
+    {
+      "files": ["**/*.test.js"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    },
+    {
+      "files": ["tasks/**/*.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ]
 }

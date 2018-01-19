@@ -1,9 +1,11 @@
-const ga = window.ga =
+window.ga =
   window.ga ||
   (() => {
     window.ga.q = window.ga.q || []
     window.ga.q.push(arguments)
   })
+
+const { ga } = window
 
 const startGoogleAnalytics = () => {
   window.GoogleAnalyticsObject = 'ga'
@@ -23,7 +25,7 @@ const startGoogleAnalytics = () => {
   ga('send', 'pageview')
 }
 
-const trackEvent = (action) => {
+const trackEvent = action => {
   if (action.type === 'SET_ROUTE') {
     ga('send', {
       hitType: 'pageview',

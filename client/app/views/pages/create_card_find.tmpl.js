@@ -63,10 +63,7 @@ module.exports = function createCardFind(data) {
     h2('Search for a Unit'),
     form(
       { className: 'form--horizontal create--card-find__form' },
-      div(
-        { className: 'form-field form-field--search' },
-        input(inputOpts)
-      ),
+      div({ className: 'form-field form-field--search' }, input(inputOpts)),
       button(
         { type: 'submit', className: 'create--card-find__search' },
         icon('search'),

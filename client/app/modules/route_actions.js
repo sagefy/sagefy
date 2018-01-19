@@ -4,28 +4,27 @@ const qs = require('./query_string')
 const pageTitles = require('../modules/page_titles')
 const { matchesRoute } = require('../modules/auxiliaries')
 
-const request = () => {
-  return window.location.pathname + window.location.search
-}
+const request = () => window.location.pathname + window.location.search
 
-const getQueryParams = (path) => {
+const getQueryParams = path => {
   if (path.indexOf('?') === -1) {
     return {}
   }
   return qs.get(path.split('?')[1])
 }
 
-const findTitle = (path) => {
-  for (let i = 0; i < pageTitles.length; i++) {
+const findTitle = path => {
+  for (let i = 0; i < pageTitles.length; i += 1) {
     const route = pageTitles[i]
     const args = matchesRoute(path, route.path)
     if (args) {
       return route.title
     }
   }
+  return ''
 }
 
-const route = (path) => {
+const route = path => {
   dispatch({
     type: 'SET_ROUTE',
     route: path,
@@ -35,6 +34,7 @@ const route = (path) => {
   if (tasks.onRoute) {
     return tasks.onRoute(path)
   }
+  return null
 }
 
 if (typeof window !== 'undefined') {
@@ -44,9 +44,9 @@ if (typeof window !== 'undefined') {
 }
 
 tasks.add({
-  route: (path) => {
+  route: path => {
     if (path !== request()) {
-      history.pushState({}, '', path)
+      window.history.pushState({}, '', path)
       route(path)
     }
   },

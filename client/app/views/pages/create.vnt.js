@@ -51,8 +51,7 @@ module.exports = broker.add({
     let values = getFormValues(el)
     values = parseFormValues(values)
     values.require_ids =
-      (values.require_ids && values.require_ids.map(rmap => rmap.id)) ||
-      []
+      (values.require_ids && values.require_ids.map(rmap => rmap.id)) || []
     const errors = tasks.validateForm(values, unitSchema, [
       'name',
       'language',
@@ -109,7 +108,7 @@ module.exports = broker.add({
 
   'click .create--subject-create .form-field--entities__remove'(e, el) {
     if (e) e.preventDefault()
-    const id = el.id
+    const { id } = el
     tasks.removeMemberFromCreateSubject({ id })
   },
 
@@ -151,7 +150,7 @@ module.exports = broker.add({
 
   'click .create--unit-list__remove'(e, el) {
     if (e) e.preventDefault()
-    const index = el.dataset.index
+    const { index } = el.dataset
     tasks.removeUnitFromSubject({ index })
   },
 
@@ -162,7 +161,7 @@ module.exports = broker.add({
 
   'click .create--card-list__remove'(e, el) {
     if (e) e.preventDefault()
-    const index = el.dataset.index
+    const { index } = el.dataset
     tasks.removeCardFromUnit({ index })
   },
 

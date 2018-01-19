@@ -4,27 +4,22 @@ Utilities are one-off functions that are used throughout the framework.
 const util = {}
 
 // Test for types.
-;['Object', 'Array', 'Function', 'Date', 'String', 'RegExp'].forEach((type) => {
-  util[`is${type}`] = (a) => {
-    return Object.prototype.toString.call(a) === `[object ${type}]`
-  }
+;['Object', 'Array', 'Function', 'Date', 'String', 'RegExp'].forEach(type => {
+  util[`is${type}`] = a =>
+    Object.prototype.toString.call(a) === `[object ${type}]`
 })
 
-util.isUndefined = (a) => {
-  return typeof a === 'undefined'
-}
+util.isUndefined = a => typeof a === 'undefined'
 
 // http://stackoverflow.com/a/9716488
-util.isNumber = (n) => {
-  return !isNaN(parseFloat(n)) && isFinite(n)
-}
+util.isNumber = n => !Number.isNaN(parseFloat(n)) && Number.isFinite(n)
 
 const objectConstructor = {}.constructor
 
 // Add the properties of the injects into the target.
 util.extend = (target, ...injects) => {
-  injects.forEach((inject) => {
-    Object.keys(inject).forEach((prop) => {
+  injects.forEach(inject => {
+    Object.keys(inject).forEach(prop => {
       const val = inject[prop]
       if (util.isUndefined(val)) {
         return
@@ -36,10 +31,7 @@ util.extend = (target, ...injects) => {
           target[prop] = []
         }
         target[prop] = util.extend([], target[prop], val)
-      } else if (
-        util.isObject(val) &&
-        val.constructor === objectConstructor
-      ) {
+      } else if (util.isObject(val) && val.constructor === objectConstructor) {
         if (!util.isObject(target[prop])) {
           target[prop] = {}
         }
@@ -54,7 +46,7 @@ util.extend = (target, ...injects) => {
 }
 
 // Makes a copy of the array or object.
-util.copy = (obj) => {
+util.copy = obj => {
   if (util.isObject(obj)) {
     return util.extend({}, obj)
   }
@@ -67,15 +59,14 @@ util.copy = (obj) => {
   return obj
 }
 
-util.shallowCopy = (obj) => {
-  return Object.keys(obj).reduce((next, key) => {
+util.shallowCopy = obj =>
+  Object.keys(obj).reduce((next, key) => {
     next[key] = obj[key]
     return next
   }, {})
-}
 
 // Try to parse a string as JSON, otherwise just return the string.
-util.parseJSON = (str) => {
+util.parseJSON = str => {
   try {
     return JSON.parse(str)
   } catch (e) {
@@ -97,13 +88,13 @@ util.closest = (element, selector, top = document.body) => {
 }
 
 // Convert an object to a query string for GET requests.
-util.parameterize = (obj) => {
+util.parameterize = obj => {
   obj = util.copy(obj)
   const pairs = []
-  for (const key in obj) {
+  Object.keys(obj).forEach(key => {
     const value = obj[key]
     pairs.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-  }
+  })
   return pairs.join('&').replace(/%20/g, '+')
 }
 

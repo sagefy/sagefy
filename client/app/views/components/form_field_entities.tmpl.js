@@ -4,7 +4,7 @@ const previewCardHead = require('./preview_card_head.tmpl')
 const previewUnitHead = require('./preview_unit_head.tmpl')
 const previewSubjectHead = require('./preview_subject_head.tmpl')
 
-module.exports = (data) => {
+module.exports = data => {
   const entities = data.value || data.default || []
   return div(
     entities.length
@@ -23,20 +23,20 @@ module.exports = (data) => {
               ),
               entity.kind === 'card'
                 ? previewCardHead({
-                  name: entity.name,
-                  kind: entity.kind,
-                })
-                : entity.kind === 'unit'
-                ? previewUnitHead({
-                  name: entity.name,
-                  body: entity.body,
-                })
-                : entity.kind === 'subject'
-                  ? previewSubjectHead({
                     name: entity.name,
-                    body: entity.body,
+                    kind: entity.kind,
                   })
-                  : null,
+                : entity.kind === 'unit'
+                  ? previewUnitHead({
+                      name: entity.name,
+                      body: entity.body,
+                    })
+                  : entity.kind === 'subject'
+                    ? previewSubjectHead({
+                        name: entity.name,
+                        body: entity.body,
+                      })
+                    : null,
               Object.keys(entity).map(key =>
                 input({
                   type: 'hidden',

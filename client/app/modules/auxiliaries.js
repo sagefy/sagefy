@@ -11,16 +11,18 @@ const isLoggedIn = () => cookie.get('logged_in') === '1'
 // Capitalizes the first letter of a string
 const ucfirst = (str = '') => str.charAt(0).toUpperCase() + str.slice(1)
 
-// Turns underscore or camel into title case
-const titleize = (str = '') => underscored(str).split('_').map(
-  w => w.charAt(0).toUpperCase() + w.substr(1)
-).join(' ')
-
 // Replaces dashes and spaces with underscores, ready to be used in an URL
 const underscored = str => str.replace(/[-\s]+/g, '_').toLowerCase()
 
+// Turns underscore or camel into title case
+const titleize = (str = '') =>
+  underscored(str)
+    .split('_')
+    .map(w => w.charAt(0).toUpperCase() + w.substr(1))
+    .join(' ')
+
 // From Handlebars
-const escape = (str) => {
+const escape = str => {
   const chars = {
     '&': '&amp;',
     '<': '&lt;',
@@ -35,7 +37,7 @@ const escape = (str) => {
 
 // From http://ejohn.org/files/pretty.js
 // TODO-3 move copy to content directory
-const timeAgo = (str) => {
+const timeAgo = str => {
   const diff = new Date().getTime() - new Date(str).getTime()
   const days = Math.floor(diff / (24 * 60 * 60 * 1000))
   const hours = Math.floor(diff / (60 * 60 * 1000))
@@ -76,23 +78,23 @@ const matchesRoute = (docPath, viewPath) => {
   if (!docPath) {
     return false
   }
-  docPath = docPath.split('?')[0] // Only match the pre-query params
+  ;[docPath] = docPath.split('?') // Only match the pre-query params
   if (isString(viewPath)) {
     viewPath = new RegExp(
-      `^${viewPath.replace(/\{([\d\w\-_\$]+)\}/g, '([^/]+)')}$`
+      `^${viewPath.replace(/\{([\d\w\-_$]+)\}/g, '([^/]+)')}$`
     )
   }
   const match = docPath.match(viewPath)
   return match ? match.slice(1) : false
 }
 
-const valuefy = (value) => {
+const valuefy = value => {
   if (typeof value === 'undefined') return undefined
   if (value === 'true') return true
   if (value === 'false') return false
   if (value === 'null') return null
   if (value.match(/^\d+\.\d+$/)) return parseFloat(value)
-  if (value.match(/^\d+$/)) return parseInt(value)
+  if (value.match(/^\d+$/)) return parseInt(value, 10)
   return decodeURIComponent(value)
 }
 
@@ -101,16 +103,9 @@ const truncate = (str, len) => {
   return `${str.slice(0, len)}...`
 }
 
-const compact = (A) => {
-  const _ = []
-  for (const a of A) {
-    if (a) {
-      _.push(a)
-    }
-  }
-  return _
-}
+const compact = arr => arr.filter(n => typeof n !== 'undefined' && n != null)
 
+/* eslint-disable max-statements */
 const mergeArraysByKey = (A, B, key = 'id') => {
   let a = 0
   let b = 0
@@ -127,53 +122,54 @@ const mergeArraysByKey = (A, B, key = 'id') => {
       if (A[a][key] === B[b2][key]) {
         while (b <= b2) {
           C.push(B[b])
-          b++
+          b += 1
         }
         found = true
         break
       }
-      b2++
+      b2 += 1
     }
 
     if (!found) {
       C.push(A[a])
     }
 
-    a++
+    a += 1
   }
 
   while (b < B.length) {
     C.push(B[b])
-    b++
+    b += 1
   }
 
   return C
 }
+/* eslint-enable max-statements */
 
 // Returns an object of the fields' value
-const getFormValues = (form) => {
+const getFormValues = form => {
   const data = {}
   const forEach = (nl, fn) => Array.prototype.forEach.call(nl, fn)
   forEach(
     form.querySelectorAll(
-    [
-      'input[type="text"]',
-      'input[type="email"]',
-      'input[type="password"]',
-      'input[type="hidden"]',
-      'textarea',
-    ].join(', ')
+      [
+        'input[type="text"]',
+        'input[type="email"]',
+        'input[type="password"]',
+        'input[type="hidden"]',
+        'textarea',
+      ].join(', ')
     ),
-    (el) => {
+    el => {
       data[el.name] = valuefy(el.value)
     }
   )
-  forEach(form.querySelectorAll('[type=radio]'), (el) => {
+  forEach(form.querySelectorAll('[type=radio]'), el => {
     if (el.checked) {
       data[el.name] = valuefy(el.value)
     }
   })
-  forEach(form.querySelectorAll('[type=checkbox]'), (el) => {
+  forEach(form.querySelectorAll('[type=checkbox]'), el => {
     data[el.name] = data[el.name] || []
     if (el.checked) {
       data[el.name].push(valuefy(el.value))
@@ -184,9 +180,9 @@ const getFormValues = (form) => {
 
 // Given a forms values as an object, parse any fields with `.`
 // in them to create a save-able object for the service
-const parseFormValues = (data) => {
+const parseFormValues = data => {
   const output = {}
-  for (const key in data) {
+  Object.keys(data).forEach(key => {
     const value = data[key]
     if (key.indexOf('.') === -1) {
       output[key] = value
@@ -195,7 +191,7 @@ const parseFormValues = (data) => {
       let next
       const names = key
         .split('.')
-        .map(n => /^\d+$/.test(n) ? parseInt(n) : n)
+        .map(n => (/^\d+$/.test(n) ? parseInt(n, 10) : n))
       names.forEach((name, i) => {
         if (i === names.length - 1) {
           prev[name] = value
@@ -210,7 +206,7 @@ const parseFormValues = (data) => {
         }
       })
     }
-  }
+  })
   return output
 }
 
@@ -219,8 +215,8 @@ const parseFormValues = (data) => {
 // Use this method for any sort of `create` or `update` call.
 const validateFormData = (data, schema, fields) => {
   const errors = []
-  ;(fields || Object.keys(schema)).forEach((fieldName) => {
-    schema[fieldName].validations.forEach((fn) => {
+  ;(fields || Object.keys(schema)).forEach(fieldName => {
+    schema[fieldName].validations.forEach(fn => {
       let error
       if (isArray(fn)) {
         error = fn[0](data[fieldName], ...fn.slice(1))
@@ -232,7 +228,6 @@ const validateFormData = (data, schema, fields) => {
           name: fieldName,
           message: error,
         })
-        return
       }
     })
   })
@@ -256,10 +251,10 @@ function createFieldsData({
   })
 
   if (errors) {
-    errors.forEach((error) => {
+    errors.forEach(error => {
       let field = fields.filter(f => f.name === error.name)
       if (field) {
-        field = field[0]
+        ;[field] = field
       }
       if (field) {
         field.error = error.message
@@ -267,7 +262,7 @@ function createFieldsData({
     })
   }
 
-  Object.keys(formData).forEach((name) => {
+  Object.keys(formData).forEach(name => {
     const value = formData[name]
     // All of this for the list input type
     const matches = name.match(/^(.*)\.(\d+)\.(.*)$/)
@@ -275,7 +270,7 @@ function createFieldsData({
       const [, pre, index, col] = matches
       let field = fields.filter(f => f.name === pre)
       if (field) {
-        field = field[0]
+        ;[field] = field
       }
       if (field) {
         field.value = field.value || []
@@ -286,7 +281,7 @@ function createFieldsData({
     } else {
       let field = fields.filter(f => f.name === name)
       if (field) {
-        field = field[0]
+        ;[field] = field
       }
       if (field) {
         field.value = value
@@ -297,7 +292,7 @@ function createFieldsData({
   if (sending) {
     let field = fields.filter(f => f.type === 'submit')
     if (field) {
-      field = field[0]
+      ;[field] = field
     }
     if (field) {
       field.disabled = true
@@ -316,7 +311,7 @@ function findGlobalErrors({ fields, errors }) {
 
 const prefixObjectKeys = (prefix, obj) => {
   const next = {}
-  Object.keys(obj).forEach((name) => {
+  Object.keys(obj).forEach(name => {
     const value = obj[name]
     next[prefix + name] = value
   })

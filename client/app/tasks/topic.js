@@ -10,7 +10,7 @@ module.exports = tasks.add({
       method: 'GET',
       url: `/s/topics/${id}`,
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_TOPIC',
           message: 'create topic success',
@@ -19,7 +19,7 @@ module.exports = tasks.add({
         })
         return response
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'get topic failure',
@@ -35,18 +35,18 @@ module.exports = tasks.add({
       url: '/s/topics',
       data: opts,
     })
-      .then((response) => {
-        response.topics.forEach((topic) => {
+      .then(response => {
+        response.topics.forEach(topic => {
           dispatch({
             type: 'ADD_TOPIC',
             message: 'create topic success',
-            topic: topic,
+            topic,
             id: topic.id,
           })
         })
         return response
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'list topics failure',
@@ -56,7 +56,7 @@ module.exports = tasks.add({
   },
 
   createTopicWithPost(data) {
-    return tasks.createTopic(data).then((response) => {
+    return tasks.createTopic(data).then(response => {
       const post = shallowCopy(data.post)
       post.topic_id = response.topic.id
       return tasks.createPost({ post })
@@ -73,7 +73,7 @@ module.exports = tasks.add({
       url: '/s/topics',
       data: data.topic,
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_TOPIC',
           message: 'create topic success',
@@ -85,7 +85,7 @@ module.exports = tasks.add({
         })
         return response
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'create topic failure',
@@ -105,7 +105,7 @@ module.exports = tasks.add({
       url: `/s/topics/${data.topic.id}`,
       data: data.topic,
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_TOPIC',
           topic: response.topic,
@@ -117,7 +117,7 @@ module.exports = tasks.add({
           type: 'SET_SENDING_OFF',
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'update topic failure',

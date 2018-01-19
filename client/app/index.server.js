@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require('express')
 const toHTML = require('vdom-to-html')
 const template = require('./views/index.tmpl')
@@ -44,7 +45,7 @@ function render() {
 
 app.get(/.*/, (request, response) => {
   const path = request.originalUrl
-  console.log(path) // eslint-disable-line
+  console.log(path)
   resetState() // make sure it doesn't use a pre-existing state
   if (request.cookies) {
     dispatch({
@@ -59,8 +60,8 @@ app.get(/.*/, (request, response) => {
       .then(() => {
         response.status(200).send(render())
       })
-      .catch((error) => {
-        console.error(error) // eslint-disable-line
+      .catch(error => {
+        console.error(error)
       })
   } else {
     response.status(200).send(render())
@@ -68,5 +69,5 @@ app.get(/.*/, (request, response) => {
 })
 
 app.listen(5984, () => {
-  console.log('serving app realness') // eslint-disable-line
+  console.log('serving app realness')
 })

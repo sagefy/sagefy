@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 const {
   div,
   header,
@@ -16,7 +15,7 @@ const {
 } = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
 
-module.exports = (data) => {
+module.exports = data => {
   const id = data.routeArgs[0]
 
   if (id !== 'UIe3mx3UTQKHDG2zLyHI5w') {
@@ -93,10 +92,7 @@ module.exports = (data) => {
         li(w(icon('grow')), ' Completely self-paced.'),
         li(w(icon('subject')), ' Choose your own path.'),
         li(w(icon('fast')), ' Skip content you already know.'),
-        li(
-          w(icon('post')),
-          ' Get support with our built-in discussions.'
-        )
+        li(w(icon('post')), ' Get support with our built-in discussions.')
       ),
       cta
     ),
@@ -165,10 +161,7 @@ module.exports = (data) => {
               strong('Filters'),
               ': Describe the basic types of filters: low-pass, high-pass, band-reject, and band-pass.'
             ),
-            li(
-              strong('Modulation'),
-              ': Describe modulation of sound signals.'
-            ),
+            li(strong('Modulation'), ': Describe modulation of sound signals.'),
             li(
               strong('Low Frequency Oscillators'),
               ': Describe low-frequency oscillators.'
@@ -191,10 +184,7 @@ module.exports = (data) => {
               ': Describe distortion and applying the effect to a signal.'
             ),
             li(strong('Delay'), ': Describe delay effects.'),
-            li(
-              strong('Reverberation'),
-              ': Describe reverberation effects.'
-            )
+            li(strong('Reverberation'), ': Describe reverberation effects.')
           )
         ),
         li(
@@ -212,10 +202,7 @@ module.exports = (data) => {
               strong('Basic Synthesizer'),
               ': Describe a basic synthesizer configuration.'
             ),
-            li(
-              strong('Mixers'),
-              ': Describe a mixer.'
-            ),
+            li(strong('Mixers'), ': Describe a mixer.'),
             li(
               strong('Monophony and Polyphony'),
               ': Describe polyphonic synthesis.'
@@ -233,7 +220,6 @@ module.exports = (data) => {
         li(
           h3('Complex Techniques'),
           ul(
-
             li(
               strong('Frequency Modulation Synthesis'),
               small(' Coming soon!'),

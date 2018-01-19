@@ -13,20 +13,19 @@ const isBlank = val =>
 // or return nothing if there is no problem.
 
 // Require there to be content.
-const required = (val) => {
+const required = val => {
   if (isBlank(val)) {
     return c('required')
   }
+  return null
 }
 
 // Require the field to be an email address if value is present.
-const email = (val) => {
-  if (
-    !isBlank(val) &&
-    (!util.isString(val) || !val.match(/^\S+@\S+\.\S+$/))
-  ) {
+const email = val => {
+  if (!isBlank(val) && (!util.isString(val) || !val.match(/^\S+@\S+\.\S+$/))) {
     return c('email')
   }
+  return null
 }
 
 // Require the field to contain a minimum length if value is present.
@@ -37,6 +36,7 @@ const minlength = (val, len) => {
   ) {
     return c('minlength').replace('{length}', len)
   }
+  return null
 }
 
 // Require the value to be one of defined options
@@ -44,6 +44,7 @@ const isOneOf = (val, ...opts) => {
   if (!isBlank(val) && opts.indexOf(val) === -1) {
     return c('options').replace('{options}', opts.join(' '))
   }
+  return null
 }
 
 module.exports = { required, email, minlength, isOneOf }

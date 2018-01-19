@@ -1,7 +1,7 @@
 const { ul, p } = require('../../modules/tags')
 const notice = require('./notice.tmpl')
 
-module.exports = (data) => {
+module.exports = data => {
   if (!data.length) {
     return p('No notices.')
   }

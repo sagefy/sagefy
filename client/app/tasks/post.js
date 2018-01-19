@@ -12,7 +12,7 @@ function flatten(arr) {
 
 module.exports = tasks.add({
   listPostsForTopic(id) {
-    return tasks.listPosts(id).then((response) => {
+    return tasks.listPosts(id).then(response => {
       const userIds = response.posts.map(post => post.user_id)
       const entityVersions = flatten(
         response.posts
@@ -20,9 +20,9 @@ module.exports = tasks.add({
           .map(post => post.entity_versions)
       )
       return Promise.all([
-        tasks.getTopic(id).then((response) => {
-          const kind = response.topic.entity_kind
-          const entityId = response.topic.entity_id
+        tasks.getTopic(id).then(xresponse => {
+          const kind = xresponse.topic.entity_kind
+          const entityId = xresponse.topic.entity_id
           return tasks.getEntity(kind, entityId)
         }),
         tasks.listUsers(userIds, { size: 48 }),
@@ -38,8 +38,8 @@ module.exports = tasks.add({
       url: `/s/topics/${id}/posts`,
       data: {},
     })
-      .then((response) => {
-        const posts = response.posts
+      .then(response => {
+        const { posts } = response
         dispatch({
           type: 'ADD_TOPIC_POSTS',
           message: 'list posts success',
@@ -48,7 +48,7 @@ module.exports = tasks.add({
         })
         return response
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'list posts failure',
@@ -68,7 +68,7 @@ module.exports = tasks.add({
       url: `/s/topics/${topicId}/posts`,
       data: data.post,
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_TOPIC_POSTS',
           message: 'create post success',
@@ -81,7 +81,7 @@ module.exports = tasks.add({
         tasks.route(`/topics/${topicId}`) // TODO-2 only when in form
         return response
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'create post failure',
@@ -105,7 +105,7 @@ module.exports = tasks.add({
       url: `/s/topics/${topicId}/posts/${id}`,
       data: data.post,
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'UPDATE_POST_SUCCESS',
           topicId,
@@ -117,7 +117,7 @@ module.exports = tasks.add({
           type: 'SET_SENDING_OFF',
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'update post failure',

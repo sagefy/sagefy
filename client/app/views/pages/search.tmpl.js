@@ -24,47 +24,6 @@ const { ucfirst } = require('../../modules/auxiliaries')
 
 // TODO-2 when receiving ?kind={kind}, then search using that as well.
 
-module.exports = (data) => {
-  const loading = data.searchQuery && !data.searchResults
-  const asLearner = data.route.indexOf('as_learner') > -1
-
-  const inputOpts = {
-    type: 'text',
-    placeholder: 'Search',
-    name: 'search',
-    size: 40,
-  }
-
-  inputOpts.value = data.searchQuery || null
-
-  return div(
-    { id: 'search', className: 'page' },
-    h1('Search'),
-    // TODO-2 add search filtering / ordering
-    form(
-      { className: 'form--horizontal' },
-      div(
-        { className: 'form-field form-field--search' },
-        input(inputOpts)
-      ),
-      button({ type: 'submit' }, icon('search'), ' Search')
-    ),
-    loading ? spinner() : null,
-    data.searchResults && data.searchResults.length
-      ? ul(
-          data.searchResults.map(result =>
-            li(r[`${result._type}Result`](result, asLearner))
-          )
-        )
-      : null,
-    data.searchResults && data.searchResults.length === 0
-      ? p('No results found.')
-      : null
-  )
-
-  // TODO-2 pagination
-}
-
 const r = {}
 
 r.userResult = result =>
@@ -88,17 +47,16 @@ r.topicResult = result => [
   ),
   result._source.entity.name
     ? a(
-      {
-        href: `/${result._source.entity.kind}/${result._source.entity
-            .id}`,
-      },
+        {
+          href: `/${result._source.entity.kind}/${result._source.entity.id}`,
+        },
         result._source.entity.name
       )
     : null,
   // TODO-2 no of posts   ???
 ]
 
-r.postResult = (result) => {
+r.postResult = result => {
   const href = `/topics/${result._source.topic_id}#${result._source.id}`
   return [
     timeago(result._source.created, { right: true }),
@@ -110,10 +68,7 @@ r.postResult = (result) => {
         ucfirst(result._source.kind)
       ),
       ' by ',
-      a(
-        { href: `/users/${result._source.user.id}` },
-        result._source.user.name
-      )
+      a({ href: `/users/${result._source.user.id}` }, result._source.user.name)
     ),
     ' in topic: ',
     result._source.topic
@@ -153,11 +108,11 @@ r.subjectResult = (result, asLearner = false) => [
   asLearner
     ? a(
         // TODO-2 if already in subjects, don't show this button
-      {
-        id: result._source.entity_id,
-        href: '#',
-        className: 'add-to-my-subjects',
-      },
+        {
+          id: result._source.entity_id,
+          href: '#',
+          className: 'add-to-my-subjects',
+        },
         icon('create'),
         ' Add to My Subjects'
       )
@@ -172,12 +127,50 @@ r.subjectResult = (result, asLearner = false) => [
   asLearner ? ' ' : null,
   asLearner
     ? a(
-      {
-        href: `/subjects/${result._source.entity_id}/tree`,
-        className: 'view-units',
-      },
+        {
+          href: `/subjects/${result._source.entity_id}/tree`,
+          className: 'view-units',
+        },
         icon('unit'),
         ' View Units'
       )
     : null,
 ]
+
+module.exports = data => {
+  const loading = data.searchQuery && !data.searchResults
+  const asLearner = data.route.indexOf('as_learner') > -1
+
+  const inputOpts = {
+    type: 'text',
+    placeholder: 'Search',
+    name: 'search',
+    size: 40,
+  }
+
+  inputOpts.value = data.searchQuery || null
+
+  return div(
+    { id: 'search', className: 'page' },
+    h1('Search'),
+    // TODO-2 add search filtering / ordering
+    form(
+      { className: 'form--horizontal' },
+      div({ className: 'form-field form-field--search' }, input(inputOpts)),
+      button({ type: 'submit' }, icon('search'), ' Search')
+    ),
+    loading ? spinner() : null,
+    data.searchResults && data.searchResults.length
+      ? ul(
+          data.searchResults.map(result =>
+            li(r[`${result._type}Result`](result, asLearner))
+          )
+        )
+      : null,
+    data.searchResults && data.searchResults.length === 0
+      ? p('No results found.')
+      : null
+  )
+
+  // TODO-2 pagination
+}

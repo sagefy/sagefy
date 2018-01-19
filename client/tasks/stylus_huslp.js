@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies, max-params, max-len */
+/* eslint-disable max-params */
 const husl = require('husl')
 const stylus = require('stylus')
 

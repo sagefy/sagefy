@@ -17,7 +17,7 @@ module.exports = (data, mode) => {
             name: 'choice',
             value: option.id,
             id: option.id,
-            disabled: disabled,
+            disabled,
             key: `${data.id}-${option.id}`,
             // The key ensures the input doesn't stay selected
             // when changing questions
@@ -26,7 +26,7 @@ module.exports = (data, mode) => {
           label(
             {
               htmlFor: option.id,
-              disabled: disabled,
+              disabled,
             },
             format(option.value)
           )

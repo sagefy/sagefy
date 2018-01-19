@@ -8,7 +8,20 @@ const icon = require('../components/icon.tmpl')
 
 // TODO-2 User doesn't show right after creating a new post in the topic view
 
-module.exports = (data) => {
+const entity = (topic, data) => {
+  const entityKind = topic.entity_kind
+  const entityID = topic.entity_id
+  const entityObj =
+    entityKind === 'card'
+      ? data.cards[entityID]
+      : entityKind === 'unit'
+        ? data.units[entityID]
+        : entityKind === 'subject' ? data.subjects[entityID] : {}
+  const entityName = (entityObj && entityObj.name) || ''
+  return h3(`${ucfirst(entityKind)}: ${entityName}`)
+}
+
+module.exports = data => {
   const id = data.routeArgs[0]
   const posts = data.topicPosts && data.topicPosts[id]
   const topic = data.topics && data.topics[id]
@@ -35,7 +48,7 @@ module.exports = (data) => {
     ),
     ul(
       { className: 'posts' },
-      posts.map((postData) => {
+      posts.map(postData => {
         const user = data.users[postData.user_id]
         return post(
           Object.assign({}, postData, {
@@ -46,13 +59,9 @@ module.exports = (data) => {
             entityVersionsFull:
               postData.kind === 'proposal' &&
               postData.entity_versions.map(ev =>
-                Object.assign(
-                  {},
-                  data.topicPostVersions[ev.kind][ev.id],
-                  {
-                    entityKind: ev.kind,
-                  }
-                )
+                Object.assign({}, data.topicPostVersions[ev.kind][ev.id], {
+                  entityKind: ev.kind,
+                })
               ),
           }),
           data.currentUserID
@@ -73,17 +82,4 @@ module.exports = (data) => {
       )
     )
   )
-}
-
-const entity = (topic, data) => {
-  const entityKind = topic.entity_kind
-  const entityID = topic.entity_id
-  const entityObj =
-    entityKind === 'card'
-      ? data.cards[entityID]
-      : entityKind === 'unit'
-        ? data.units[entityID]
-        : entityKind === 'subject' ? data.subjects[entityID] : {}
-  const entityName = (entityObj && entityObj.name) || ''
-  return h3(`${ucfirst(entityKind)}: ${entityName}`)
 }

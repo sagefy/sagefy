@@ -10,10 +10,7 @@ module.exports = broker.add({
     }
     let values = getFormValues(el)
     tasks.updateFormData(values)
-    const errors = tasks.validateForm(values, userSchema, [
-      'name',
-      'password',
-    ])
+    const errors = tasks.validateForm(values, userSchema, ['name', 'password'])
     if (errors && errors.length) {
       return
     }

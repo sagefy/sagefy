@@ -14,9 +14,7 @@ function cachedView(viewFn, log) {
     if (
       cache[viewKey] &&
       incomingPropsKeys.length === cachedPropsKeys.length &&
-      cachedPropsKeys.every(
-        k => cache[viewKey].props[k] === incomingProps[k]
-      )
+      cachedPropsKeys.every(k => cache[viewKey].props[k] === incomingProps[k])
     ) {
       if (log) log(true)
       return cache[viewKey].value

@@ -15,9 +15,9 @@ const schemas = {
   proposal: proposalSchema,
 }
 
-const getFields = (formData) => {
+const getFields = formData => {
   const fields = []
-  ;['post.id', 'post.topic_id', 'post.replies_to_id'].forEach((name) => {
+  ;['post.id', 'post.topic_id', 'post.replies_to_id'].forEach(name => {
     if (formData[name]) {
       fields.push({ name })
     }
@@ -58,9 +58,7 @@ const getFields = (formData) => {
   fields.push({
     name: 'post.body',
     label:
-      formData['post.kind'] === 'proposal'
-        ? 'Proposal Summary'
-        : 'Post Body',
+      formData['post.kind'] === 'proposal' ? 'Proposal Summary' : 'Post Body',
     description:
       formData['post.kind'] === 'proposal'
         ? 'Describe the value of this proposal.'
@@ -72,7 +70,7 @@ const getFields = (formData) => {
   return fields
 }
 
-const getSchema = (formData) => {
+const getSchema = formData => {
   const schema = {}
 
   if (formData['post.kind'] === 'proposal') {

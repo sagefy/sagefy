@@ -36,9 +36,11 @@ const field = ({ name, index, col, row, lock }) => {
       // TODO-3 default
     })
   }
+
+  return null
 }
 
-module.exports = (data) => {
+module.exports = data => {
   /*
   data.columns: array of field names
   data.values: array of objects
@@ -46,10 +48,8 @@ module.exports = (data) => {
   data.name
   */
 
-  let value
-  if (data.value && data.value.length) {
-    value = data.value
-  } else {
+  let { value } = data
+  if (!value || !value.length) {
     value = [{}]
   }
 
@@ -60,10 +60,7 @@ module.exports = (data) => {
     thead(
       tr(
         columns.map(col =>
-          th(
-            { attributes: { 'data-col': col.name } },
-            ucfirst(col.name)
-          )
+          th({ attributes: { 'data-col': col.name } }, ucfirst(col.name))
         ),
         // TODO-2 th()  // For reordering
         th() // For deleting

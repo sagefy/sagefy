@@ -60,7 +60,7 @@ module.exports = function createUnitCreate(data) {
   })
 
   const globalErrors = findGlobalErrors({
-    fields: fields,
+    fields,
     errors: data.errors,
   })
 

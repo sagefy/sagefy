@@ -1,6 +1,6 @@
 const { valuefy } = require('./auxiliaries')
 
-const get = (query) => {
+const get = query => {
   query =
     query ||
     (typeof window !== 'undefined' && window.location.search.substring(1))
@@ -9,7 +9,7 @@ const get = (query) => {
   }
   const params = query.split('&')
   const data = {}
-  params.forEach((param) => {
+  params.forEach(param => {
     const [key, value] = param.split('=')
     data[decodeURIComponent(key)] = valuefy(value)
   })

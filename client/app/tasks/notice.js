@@ -10,7 +10,7 @@ module.exports = tasks.add({
       data: { limit, skip },
       url: '/s/notices',
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'LIST_NOTICES_SUCCESS',
           message: 'list notices success',
@@ -19,7 +19,7 @@ module.exports = tasks.add({
           notices: response.notices,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'list notices failure',
@@ -35,7 +35,7 @@ module.exports = tasks.add({
       url: `/s/notices/${id}`,
       data: { read },
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'MARK_NOTICE_SUCCESS',
           message: 'mark notice success',
@@ -44,7 +44,7 @@ module.exports = tasks.add({
           notice: response.notice,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'mark notice failure',

@@ -15,7 +15,7 @@ const c = require('../../modules/content').get
 const { ul } = require('../../modules/tags')
 const optionTemplate = require('./form_field_select_option.tmpl')
 
-module.exports = (data) => {
+module.exports = data => {
   if (!data.options || data.options.length === 0) {
     return c('no_options')
   }
@@ -25,9 +25,9 @@ module.exports = (data) => {
   html.push(
     ul(
       {
-        className: `form-field--select__ul${data.inline
-          ? ' form-field--select__ul--inline'
-          : ''}`,
+        className: `form-field--select__ul${
+          data.inline ? ' form-field--select__ul--inline' : ''
+        }`,
       },
       data.options.map(o =>
         optionTemplate({

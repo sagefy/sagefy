@@ -1,3 +1,4 @@
+const get = require('lodash.get')
 const { div, h1, p, strong } = require('../../modules/tags')
 const form = require('../components/form.tmpl')
 const getPostFields = require('./post_form.fn').getFields
@@ -12,7 +13,7 @@ const { extend } = require('../../modules/utilities')
 const topicSchema = require('../../schemas/topic')
 const spinner = require('../components/spinner.tmpl')
 
-const classes = (formData) => {
+const classes = formData => {
   const topicID = formData['topic.id']
   const postKind = formData['post.kind']
   const entityKind = formData['post.entity_version.kind']
@@ -26,7 +27,7 @@ const classes = (formData) => {
   ].join(' ')
 }
 
-const getFields = (formData) => {
+const getFields = formData => {
   let fields = []
   if (formData['topic.id']) {
     fields.push({
@@ -48,7 +49,7 @@ const getFields = (formData) => {
   return fields
 }
 
-const getTopicID = (data) => {
+const getTopicID = data => {
   const match = data.route.match(/^\/topics\/([\d\w\-_]+)\/update$/)
   if (match) {
     return match[1]
@@ -66,48 +67,42 @@ const getEntityByKind = (data, kind, id) => {
   if (kind === 'subject') {
     return data.subjects && data.subjects[id]
   }
+  return null
 }
 
-const getEntitySummary = (data) => {
+const getEntitySummary = data => {
   const topicID = getTopicID(data)
   let topic
-  let kind
-  let id
+  let { kind } = data.routeQuery
+  let { id } = data.routeQuery
 
   if (topicID) {
     topic = data.topics && data.topics[topicID]
     kind = topic.entity_kind
     id = topic.entity_id
-  } else {
-    kind = data.routeQuery.kind
-    id = data.routeQuery.id
   }
 
   const entity = getEntityByKind(data, kind, id)
 
   return {
-    name: entity && entity.name,
+    name: get(entity, 'name'),
     kind,
   }
 }
 
-module.exports = (data) => {
+module.exports = data => {
   const topicID = getTopicID(data)
-  let topic
-  if (topicID) {
-    topic = data.topics && data.topics[topicID]
-  }
+  const topic = get(data, `topics[${topicID}]`, null)
 
   if (topicID && !topic) {
     return spinner()
   }
 
   const formData = extend({}, data.formData, {
-    'topic.id': topic && topic.id,
-    'topic.name': topic && topic.name,
-    'topic.entity_kind':
-      (topic && topic.entity_kind) || data.routeQuery.kind,
-    'topic.entity_id': (topic && topic.entity_id) || data.routeQuery.id,
+    'topic.id': get(topic, 'id'),
+    'topic.name': get(topic, 'name'),
+    'topic.entity_kind': get(topic, 'entity_kind', data.routeQuery.kind),
+    'topic.entity_id': get(topic, 'entity_id', data.routeQuery.id),
   })
 
   let fields = getFields(formData)
@@ -134,7 +129,7 @@ module.exports = (data) => {
   })
 
   const globalErrors = findGlobalErrors({
-    fields: fields,
+    fields,
     errors: data.errors,
   })
 
@@ -146,10 +141,7 @@ module.exports = (data) => {
       className: classes(formData),
     },
     h1(topicID ? 'Update Topic' : 'Create Topic'),
-    p(
-      strong(ucfirst((entity && entity.kind) || '')),
-      `: ${entity && entity.name}`
-    ),
+    p(strong(ucfirst(get(entity, 'kind', ''))), `: ${get(entity, 'name', '')}`),
     form({
       fields: instanceFields,
       errors: globalErrors,

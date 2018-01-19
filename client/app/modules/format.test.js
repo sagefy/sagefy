@@ -10,7 +10,8 @@ And some more even really great text.
 
 Finally, the last of it.
 `
-const paragraphHtml = '<div><p>This is some really great text.</p><p>And some more even really great text.</p><p>Finally, the last of it.</p></div>'
+const paragraphHtml =
+  '<div><p>This is some really great text.</p><p>And some more even really great text.</p><p>Finally, the last of it.</p></div>'
 const headingExample = `
 # I love _headings_
 
@@ -18,11 +19,13 @@ Hooray!
 
 Great text.
 `
-const headingHtml = '<div><h1>I love <em>headings</em></h1><p>Hooray!</p><p>Great text.</p></div>'
+const headingHtml =
+  '<div><h1>I love <em>headings</em></h1><p>Hooray!</p><p>Great text.</p></div>'
 const inlineExample = 'I _love_ **examples**.'
 const inlineHtml = '<div>I <em>love</em> <strong>examples</strong>.</div>'
 const imageExample = 'I love ![An Image](https://example.com/.img) images.'
-const imageHtml = '<div>I love <img src="https://example.com/.img" title="An Image"> images.</div>'
+const imageHtml =
+  '<div>I love <img src="https://example.com/.img" title="An Image"> images.</div>'
 
 describe('format', () => {
   it('should not paragraph a single line of text', () => {

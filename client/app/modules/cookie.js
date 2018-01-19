@@ -3,25 +3,26 @@ const encode = encodeURIComponent
 const decode = decodeURIComponent
 
 // Read and parse a cookie key/value.
-const read = (s) => {
+const read = s => {
   if (s.indexOf('"') === 0) {
-    s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\')
+    s = s
+      .slice(1, -1)
+      .replace(/\\"/g, '"')
+      .replace(/\\\\/g, '\\')
   }
   return decode(s.replace(/\+/g, ' '))
 }
 
 // Get the cookie value at a particular key.
-const get = (key) => {
+function get(key) {
   if (typeof document === 'undefined') {
     return null
   }
   const name = `${key}=`
   const cookies = document.cookie.split(';')
-  for (let c of cookies) {
-    c = c.trim()
-    if (c.indexOf(name) === 0) {
-      return read(c.substring(name.length))
-    }
+  const found = cookies.find(c => c.trim().indexOf(name) === 0)
+  if (found) {
+    return read(found.trim().substring(name.length))
   }
   return null
 }
@@ -29,10 +30,10 @@ const get = (key) => {
 // Set the cookie value at a specific key.
 const set = (key, value, time = 31556926) => {
   if (typeof document === 'undefined') {
-    return
+    return null
   }
   if (value === null || value === undefined) {
-    return
+    return null
   }
   document.cookie = [
     encode(key),
@@ -45,9 +46,7 @@ const set = (key, value, time = 31556926) => {
 }
 
 // Remove the cookie value at a specific key.
-const unset = (key) => {
-  return set(key, '', -1)
-}
+const unset = key => set(key, '', -1)
 
 module.exports = {
   read,

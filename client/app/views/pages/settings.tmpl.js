@@ -55,7 +55,7 @@ fields.forEach((field, index) => {
   fields[index] = extend({}, userSchema[field.name] || {}, field)
 })
 
-module.exports = (data) => {
+module.exports = data => {
   const user = data.users && data.users[data.currentUserID]
   if (!user) {
     return spinner()
@@ -79,7 +79,7 @@ module.exports = (data) => {
   })
 
   const globalErrors = findGlobalErrors({
-    fields: fields,
+    fields,
     errors: data.errors,
   })
 

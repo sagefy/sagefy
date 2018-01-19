@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // TODO-3 move copy to content directory
 const {
   div,
@@ -9,21 +7,17 @@ const {
   h1,
   h2,
   h3,
-  h4,
   h5,
   h6,
   p,
   a,
-  hr,
   strong,
   ul,
   ol,
   li,
   iframe,
-  br,
   footer,
   span,
-  em,
   section,
 } = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
@@ -69,9 +63,7 @@ module.exports = data => {
           section(
             hgroup(
               h2('What is Sagefy?'),
-              h5(
-                'Sagefy is an open-content adaptive learning platform.'
-              )
+              h5('Sagefy is an open-content adaptive learning platform.')
             ),
             p(
               strong('Adaptive Learning.'),
@@ -87,30 +79,12 @@ module.exports = data => {
             h2('Why learn with Sagefy?'),
             ul(
               { className: 'home__ul--why' },
-              li(
-                w(icon('learn')),
-                span(' Learn any subject.')
-              ),
-              li(
-                w(icon('create')),
-                span(' Create and edit any content.')
-              ),
-              li(
-                w(icon('fast')),
-                span(' Skip what you already know.')
-              ),
-              li(
-                w(icon('grow')),
-                span(' Build up to where you need to be.')
-              ),
-              li(
-                w(icon('search')),
-                span(' Choose your own path.')
-              ),
-              li(
-                w(icon('topic')),
-                span(' Discussion built in.')
-              )
+              li(w(icon('learn')), span(' Learn any subject.')),
+              li(w(icon('create')), span(' Create and edit any content.')),
+              li(w(icon('fast')), span(' Skip what you already know.')),
+              li(w(icon('grow')), span(' Build up to where you need to be.')),
+              li(w(icon('search')), span(' Choose your own path.')),
+              li(w(icon('topic')), span(' Discussion built in.'))
             ),
             cta
           ),
@@ -130,10 +104,7 @@ module.exports = data => {
                 img({ src: 'https://i.imgur.com/FNuekHE.png' }),
                 'Choose your unit.'
               ),
-              li(
-                img({ src: 'https://i.imgur.com/bT1FOpe.png' }),
-                'Learn.'
-              )
+              li(img({ src: 'https://i.imgur.com/bT1FOpe.png' }), 'Learn.')
             ),
             iframe({
               width: '560',
@@ -206,11 +177,7 @@ module.exports = data => {
                 'Focus on what you want to learn with ',
                 strong('no distractions.')
               ),
-              li(
-                w(icon('fast')),
-                strong('Skip'),
-                ' content you already know.'
-              ),
+              li(w(icon('fast')), strong('Skip'), ' content you already know.'),
               li(
                 w(icon('learn')),
                 'Learn ',
@@ -251,17 +218,12 @@ module.exports = data => {
       ul(
         li('© Copyright 2017 Sagefy.'),
         li(a({ href: 'https://docs.sagefy.org/' }, 'Docs')),
-        li(
-          a({ href: 'https://stories.sagefy.org/' }, 'Stories (Blog)')
-        ),
-        li(
-          a({ href: 'http://newsletter.sagefy.org/up' }, 'Updates')
-        ),
+        li(a({ href: 'https://stories.sagefy.org/' }, 'Stories (Blog)')),
+        li(a({ href: 'http://newsletter.sagefy.org/up' }, 'Updates')),
         li(
           a(
             {
-              href:
-                'https://sagefy.uservoice.com/forums/233394-general/',
+              href: 'https://sagefy.uservoice.com/forums/233394-general/',
             },
             icon('contact'),
             ' Support'

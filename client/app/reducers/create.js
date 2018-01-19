@@ -35,6 +35,21 @@
 */
 const { shallowCopy, copy } = require('../modules/utilities')
 
+function translateListOfRows(values, name) {
+  values = copy(values)
+  Object.keys(values).forEach(key => {
+    if (key.indexOf(name) === 0) {
+      const [, i, field] = key.split('.')
+      const index = parseInt(i, 10)
+      values[name] = values[name] || []
+      values[name][index] = values[name][index] || {}
+      values[name][index][field] = values[key]
+      delete values[key]
+    }
+  })
+  return values
+}
+
 module.exports = function create(state = {}, action = { type: '' }) {
   if (action.type === 'RESET_CREATE') {
     return {}
@@ -66,8 +81,9 @@ module.exports = function create(state = {}, action = { type: '' }) {
   if (action.type === 'REMOVE_MEMBER_FROM_CREATE_SUBJECT') {
     state = shallowCopy(state)
     state.subject = copy(state.subject || {})
-    const members = (state.subject.members || [])
-      .filter(member => member.id !== action.id)
+    const members = (state.subject.members || []).filter(
+      member => member.id !== action.id
+    )
     state.subject.members = members
     return state
   }
@@ -181,19 +197,4 @@ module.exports = function create(state = {}, action = { type: '' }) {
     return state
   }
   return state
-}
-
-function translateListOfRows(values, name) {
-  values = copy(values)
-  Object.keys(values).forEach((key) => {
-    if (key.indexOf(name) === 0) {
-      const [, i, field] = key.split('.')
-      const index = parseInt(i, 10)
-      values[name] = values[name] || []
-      values[name][index] = values[name][index] || {}
-      values[name][index][field] = values[key]
-      delete values[key]
-    }
-  })
-  return values
 }

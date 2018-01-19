@@ -10,7 +10,7 @@ const previewUnitContent = require('../components/preview_unit_content.tmpl')
 
 // TODO-2 This page should show a list of cards that the unit contains
 
-module.exports = (data) => {
+module.exports = data => {
   const id = data.routeArgs[0]
   const unit = data.units && data.units[id]
 
@@ -30,7 +30,7 @@ module.exports = (data) => {
     p({ className: 'unit__body' }, unit.body),
     previewUnitContent(
       Object.assign({}, unit, {
-        requires: unit.require_ids.map(id => ({ id })),
+        requires: unit.require_ids.map(rid => ({ id: rid })),
       })
     ),
     /* TODO-2 h2('Stats'),

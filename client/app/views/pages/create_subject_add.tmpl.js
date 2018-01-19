@@ -35,10 +35,7 @@ module.exports = function createSubjectAdd(data) {
     ),
     form(
       { className: 'form--horizontal create--subject-add__form' },
-      div(
-        { className: 'form-field form-field--search' },
-        input(inputOpts)
-      ),
+      div({ className: 'form-field form-field--search' }, input(inputOpts)),
       button(
         { type: 'submit', className: 'create--subject-add__search' },
         icon('search'),
@@ -66,15 +63,15 @@ module.exports = function createSubjectAdd(data) {
               ),
               result._type === 'subject'
                 ? previewSubjectHead({
-                  name: result._source.name,
-                  body: result._source.body,
-                })
+                    name: result._source.name,
+                    body: result._source.body,
+                  })
                 : result._type === 'unit'
-                ? previewUnitHead({
-                  name: result._source.name,
-                  body: result._source.body,
-                })
-                : null
+                  ? previewUnitHead({
+                      name: result._source.name,
+                      body: result._source.body,
+                    })
+                  : null
             )
           )
         )

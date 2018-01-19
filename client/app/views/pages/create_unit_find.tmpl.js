@@ -63,10 +63,7 @@ module.exports = function createUnitFind(data) {
     h2('Search for a Subject'),
     form(
       { className: 'form--horizontal create--unit-find__form' },
-      div(
-        { className: 'form-field form-field--search' },
-        input(inputOpts)
-      ),
+      div({ className: 'form-field form-field--search' }, input(inputOpts)),
       button(
         { type: 'submit', className: 'create--unit-find__search' },
         icon('search'),

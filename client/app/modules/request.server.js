@@ -17,17 +17,17 @@ module.exports = function httpRequest({ method, url, data }) {
       hostname: 'server',
       port: 8653,
       path: url,
-      method: method,
+      method,
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'X-Requested-With': 'Node.js',
         Cookie: global.requestCookie || '',
       },
     },
-    (response) => {
+    response => {
       let body = ''
       response.setEncoding('utf8')
-      response.on('data', (d) => {
+      response.on('data', d => {
         body += d
       })
       response.on('end', () => {
@@ -37,7 +37,7 @@ module.exports = function httpRequest({ method, url, data }) {
         } catch (e) {
           responseData = body
         }
-        const statusCode = response.statusCode
+        const { statusCode } = response
         if (statusCode < 400 && statusCode >= 200) {
           done(responseData)
         } else if (isString(responseData)) {

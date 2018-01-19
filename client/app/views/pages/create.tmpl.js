@@ -2,8 +2,8 @@ const { div, h1, p, a, ul, li, small } = require('../../modules/tags')
 const info = require('../components/entity_info.tmpl')
 const icon = require('../components/icon.tmpl')
 
-module.exports = () => {
-  return div(
+module.exports = () =>
+  div(
     { id: 'create', className: 'page' },
     h1('Create Cards, Units, and Subjects'),
     ul(
@@ -43,12 +43,7 @@ module.exports = () => {
     info(),
     p(
       'Do you want to change an existing card, unit, or subject? ',
-      a(
-        { href: '/search' },
-        icon('search'),
-        ' Search for it, then click edit'
-      ),
+      a({ href: '/search' }, icon('search'), ' Search for it, then click edit'),
       '.'
     )
   )
-}

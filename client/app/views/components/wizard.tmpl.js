@@ -7,9 +7,9 @@ module.exports = ({ options, state }) =>
       li(
         {
           href: '#',
-          className: `wizard__li${state === option.name
-            ? ' wizard__li--selected'
-            : ''}`,
+          className: `wizard__li${
+            state === option.name ? ' wizard__li--selected' : ''
+          }`,
         },
         option.label
       )

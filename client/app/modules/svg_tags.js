@@ -5,7 +5,7 @@ const names = ['svg', 'circle', 'line', 'text']
 
 const tags = {}
 const objConstructor = {}.constructor
-names.forEach((name) => {
+names.forEach(name => {
   tags[name] = (...args) => {
     if (args.length === 0) {
       return h(name)

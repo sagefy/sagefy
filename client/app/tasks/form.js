@@ -22,6 +22,7 @@ module.exports = tasks.add({
       return errors
     }
     dispatch({ type: 'FORM_IS_VALID' })
+    return null
   },
 
   addListFieldRow(values, name, columns) {

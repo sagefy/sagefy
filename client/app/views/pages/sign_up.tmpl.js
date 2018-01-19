@@ -18,8 +18,7 @@ const fields = [
     name: 'email',
     label: 'Email',
     description:
-      'We need your email to send notices ' +
-      'and to reset your password.',
+      'We need your email to send notices and to reset your password.',
     placeholder: 'ex: unicorn@example.com',
   },
   {
@@ -38,7 +37,7 @@ fields.forEach((field, index) => {
   fields[index] = extend({}, userSchema[field.name] || {}, field)
 })
 
-module.exports = (data) => {
+module.exports = data => {
   if (data.currentUserID) {
     return div('Logged in already.')
   }
@@ -52,7 +51,7 @@ module.exports = (data) => {
   })
 
   const globalErrors = findGlobalErrors({
-    fields: fields,
+    fields,
     errors: data.errors,
   })
 

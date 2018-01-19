@@ -44,29 +44,6 @@ passwordFields.forEach((field, index) => {
   passwordFields[index] = extend({}, userSchema[field.name] || {}, field)
 })
 
-module.exports = (data) => {
-  // TODO-3 the state should be provided solely by data,
-  //    the view should not be looking at the window query string
-  const { token, id } = data.routeQuery
-  const state = token && id ? 'password' : data.passwordPageState || 'email'
-  return div(
-    {
-      id: 'password',
-      className: `page ${state}`,
-    },
-    h1('Create a New Password'),
-    wizard({
-      options: [
-        { name: 'email', label: 'Enter Email' },
-        { name: 'inbox', label: 'Check Inbox' },
-        { name: 'password', label: 'Change Password' },
-      ],
-      state,
-    }),
-    getNodesForState(state, data)
-  )
-}
-
 const getNodesForState = (state, data) => {
   let instanceFields
   let globalErrors
@@ -107,4 +84,28 @@ const getNodesForState = (state, data) => {
       errors: globalErrors,
     })
   }
+  return null
+}
+
+module.exports = data => {
+  // TODO-3 the state should be provided solely by data,
+  //    the view should not be looking at the window query string
+  const { token, id } = data.routeQuery
+  const state = token && id ? 'password' : data.passwordPageState || 'email'
+  return div(
+    {
+      id: 'password',
+      className: `page ${state}`,
+    },
+    h1('Create a New Password'),
+    wizard({
+      options: [
+        { name: 'email', label: 'Enter Email' },
+        { name: 'inbox', label: 'Check Inbox' },
+        { name: 'password', label: 'Change Password' },
+      ],
+      state,
+    }),
+    getNodesForState(state, data)
+  )
 }

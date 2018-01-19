@@ -11,7 +11,7 @@ module.exports = tasks.add({
       url: `/s/cards/${id}`,
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'GET_CARD_SUCCESS',
           card: response.card,
@@ -22,7 +22,7 @@ module.exports = tasks.add({
           id,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'get card failure',
@@ -40,7 +40,7 @@ module.exports = tasks.add({
       url: `/s/cards/${id}/learn`,
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_LEARN_CARD',
           message: 'learn card success',
@@ -49,7 +49,7 @@ module.exports = tasks.add({
         })
         tasks.updateMenuContext({ card: id })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'learn card failure',
@@ -65,7 +65,7 @@ module.exports = tasks.add({
       url: `/s/cards/${id}/versions`,
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_CARD_VERSIONS',
           versions: response.versions,
@@ -73,7 +73,7 @@ module.exports = tasks.add({
           entity_id: id,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'list card versions failure',
@@ -90,9 +90,9 @@ module.exports = tasks.add({
     return request({
       method: 'POST',
       url: `/s/cards/${id}/responses`,
-      data: data,
+      data,
     })
-      .then((response) => {
+      .then(response => {
         if (response.next) {
           dispatch({
             type: 'SET_NEXT',
@@ -121,7 +121,7 @@ module.exports = tasks.add({
           tasks.nextState()
         }
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'respond to card failure',
@@ -137,7 +137,7 @@ module.exports = tasks.add({
   },
 
   nextState() {
-    const path = getState().next.path
+    const { path } = getState().next
     let args
     args = matchesRoute(path, '/s/cards/{id}/learn')
     if (args) {
@@ -165,20 +165,20 @@ module.exports = tasks.add({
     const total = cards.length
     const allResponses = []
     return new Promise((resolve, reject) => {
-      cards.forEach((card) => {
+      cards.forEach(card => {
         request({
           method: 'POST',
           url: '/s/cards/versions',
           data: card,
         })
-          .then((response) => {
+          .then(response => {
             allResponses.push(response.version)
-            count++
+            count += 1
             if (count === total) {
               resolve({ cards: allResponses })
             }
           })
-          .catch((errors) => {
+          .catch(errors => {
             dispatch({
               type: 'SET_ERRORS',
               message: 'create new card version failure',

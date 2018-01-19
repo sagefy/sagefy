@@ -13,9 +13,9 @@ module.exports = tasks.add({
     return request({
       method: 'POST',
       url: '/s/users',
-      data: data,
+      data,
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'SET_CURRENT_USER_ID',
           currentUserID: response.user.id,
@@ -27,7 +27,7 @@ module.exports = tasks.add({
       })
       .then(() => {
         if (!subjectId) {
-          return
+          return null
         }
         // if subject_id is a param, auto add to user's subjects
         return tasks.addUserSubject(subjectId)
@@ -37,7 +37,7 @@ module.exports = tasks.add({
         window.location = '/my_subjects'
         // Hard redirect to get the HTTP_ONLY cookie
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'create user failure',
@@ -57,9 +57,9 @@ module.exports = tasks.add({
     return request({
       method: 'PUT',
       url: `/s/users/${data.id}`,
-      data: data,
+      data,
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_USER',
           user: response.user,
@@ -69,7 +69,7 @@ module.exports = tasks.add({
           type: 'SET_SENDING_OFF',
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'update user failure',
@@ -87,7 +87,7 @@ module.exports = tasks.add({
       method: 'GET',
       url: '/s/users/current',
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'SET_CURRENT_USER_ID',
           currentUserID: response.user.id,
@@ -98,7 +98,7 @@ module.exports = tasks.add({
           message: 'get current user success',
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'get current user failure',
@@ -132,8 +132,8 @@ module.exports = tasks.add({
       url: `/s/users/${id}`,
       data: opts,
     })
-      .then((response) => {
-        const user = response.user
+      .then(response => {
+        const { user } = response
         if (response.avatar) {
           user.avatar = response.avatar
         }
@@ -144,7 +144,7 @@ module.exports = tasks.add({
         })
         return response
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'get user failure',
@@ -164,9 +164,9 @@ module.exports = tasks.add({
         size,
       },
     })
-      .then((response) => {
+      .then(response => {
         const { users } = response
-        users.forEach((user) => {
+        users.forEach(user => {
           dispatch({
             type: 'ADD_USER',
             message: 'get user success',
@@ -179,7 +179,7 @@ module.exports = tasks.add({
           avatars,
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'list users failure',
@@ -196,9 +196,9 @@ module.exports = tasks.add({
     return request({
       method: 'POST',
       url: '/s/sessions',
-      data: data,
+      data,
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'SET_CURRENT_USER_ID',
           currentUserID: response.user.id,
@@ -211,7 +211,7 @@ module.exports = tasks.add({
           type: 'SET_SENDING_OFF',
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'log in user failure',
@@ -244,7 +244,7 @@ module.exports = tasks.add({
           type: 'SET_SENDING_OFF',
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'log out user failure',
@@ -264,7 +264,7 @@ module.exports = tasks.add({
     return request({
       method: 'POST',
       url: '/s/password_tokens',
-      data: data,
+      data,
     })
       .then(() => {
         dispatch({
@@ -276,7 +276,7 @@ module.exports = tasks.add({
           type: 'SET_SENDING_OFF',
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'get password token failure',
@@ -296,9 +296,9 @@ module.exports = tasks.add({
     return request({
       method: 'POST',
       url: `/s/users/${data.id}/password`,
-      data: data,
+      data,
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'SET_CURRENT_USER_ID',
           message: 'create password success',
@@ -311,7 +311,7 @@ module.exports = tasks.add({
           type: 'SET_SENDING_OFF',
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'create password failure',

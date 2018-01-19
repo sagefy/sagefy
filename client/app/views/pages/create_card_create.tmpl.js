@@ -27,7 +27,12 @@ const allKindsFields = [
   {
     label: 'Card Kind',
     name: 'kind',
-    options: [{ label: 'Video' }, { label: 'Choice' }, { label: 'Page' }, { label: 'Unscored Embed' }],
+    options: [
+      { label: 'Video' },
+      { label: 'Choice' },
+      { label: 'Page' },
+      { label: 'Unscored Embed' },
+    ],
     inline: true,
   },
 ]
@@ -132,7 +137,11 @@ pageFields.forEach((field, index) => {
 })
 
 unscoredEmbedFields.forEach((field, index) => {
-  unscoredEmbedFields[index] = extend({}, unscoredEmbedFields[field.name] || {}, field)
+  unscoredEmbedFields[index] = extend(
+    {},
+    unscoredEmbedFields[field.name] || {},
+    field
+  )
 })
 
 choiceFields.forEach((field, index) => {
@@ -142,37 +151,20 @@ choiceFields.forEach((field, index) => {
 module.exports = function createCardCreate(data) {
   const proposedCard = (data.create && data.create.proposedCard) || {}
   const cardKind = proposedCard.kind
-
   const fields =
-    cardKind === 'video'
-    ? videoFields
-
-    : cardKind === 'page'
-    ? pageFields
-
-    : cardKind === 'unscored_embed'
-    ? unscoredEmbedFields
-
-    : cardKind === 'choice'
-    ? choiceFields
-
-    : allKindsFields
-
+    {
+      video: videoFields,
+      page: pageFields,
+      unscored_embed: unscoredEmbedFields,
+      choice: choiceFields,
+    }[cardKind] || allKindsFields
   const schema =
-    cardKind === 'video'
-    ? videoCardSchema
-
-    : cardKind === 'page'
-    ? pageCardSchema
-
-    : cardKind === 'unscored_embed'
-    ? unscoredEmbedCardSchema
-
-    : cardKind === 'choice'
-    ? choiceCardSchema
-
-    : cardSchema
-
+    {
+      video: videoCardSchema,
+      page: pageCardSchema,
+      unscored_embed: unscoredEmbedCardSchema,
+      choice: choiceCardSchema,
+    }[cardKind] || cardSchema
   const instanceFields = createFieldsData({
     schema,
     fields,
@@ -180,12 +172,10 @@ module.exports = function createCardCreate(data) {
     formData: proposedCard,
     sending: data.sending,
   })
-
   const globalErrors = findGlobalErrors({
-    fields: fields,
+    fields,
     errors: data.errors,
   })
-
   return div(
     { id: 'create', className: 'page create--card-create' },
     h1('Create a New Card for Unit'),

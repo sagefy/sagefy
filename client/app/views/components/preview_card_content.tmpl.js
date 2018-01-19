@@ -1,4 +1,4 @@
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, complexity */
 const {
   div,
   a,
@@ -56,20 +56,20 @@ module.exports = function previewCardContent({
       : null,
     video_id && site === 'youtube'
       ? iframe({
-        src:
+          src:
             `https://www.youtube.com/embed/${video_id}` +
             '?autoplay=0&modestbranding=1&rel=0',
-        width: 300,
-        height: 200,
-        allowfullscreen: true,
-      })
+          width: 300,
+          height: 200,
+          allowfullscreen: true,
+        })
       : null,
     url
       ? iframe({
-        src: url,
-        width: 300,
-        height: 200,
-      })
+          src: url,
+          width: 300,
+          height: 200,
+        })
       : null,
     body ? div(format(body, { highestHeading: 2 })) : null,
     options && options.length

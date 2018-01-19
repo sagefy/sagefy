@@ -3,7 +3,7 @@ const notices = require('../components/notices.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 
-module.exports = (data) => {
+module.exports = data => {
   // TODO-2 update this to use a status field
   if (!data.notices) {
     return spinner()

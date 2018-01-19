@@ -11,30 +11,33 @@ module.exports = tasks.add({
     } else if (kind === 'subject') {
       return tasks.getSubject(entityId)
     }
+    return null
   },
 
   listEntityVersionsByTopic(id, entityVersions) {
     const total = entityVersions.length
     let count = 0
     return new Promise((resolve, reject) => {
-      if (total === 0) { resolve() }
-      entityVersions.forEach((ev) => {
+      if (total === 0) {
+        resolve()
+      }
+      entityVersions.forEach(ev => {
         request({
           method: 'GET',
           url: `/s/${ev.kind}s/versions/${ev.id}`,
         })
-          .then((response) => {
+          .then(response => {
             const ahh = ev.kind.toUpperCase()
             dispatch({
               type: `ADD_TOPIC_POST_VERSIONS_${ahh}`,
               version: response.version,
             })
-            count++
+            count += 1
             if (count === total) {
               resolve()
             }
           })
-          .catch((errors) => {
+          .catch(errors => {
             dispatch({
               type: 'SET_ERRORS',
               message: 'get versions for topic failure',
@@ -52,22 +55,22 @@ module.exports = tasks.add({
     const total = entities.length
     let count = 0
     return new Promise((resolve, reject) => {
-      entities.forEach((entity) => {
+      entities.forEach(entity => {
         request({
           method: 'GET',
           url: `/s/${entity.kind}s/${entity.id}`,
         })
-          .then((response) => {
+          .then(response => {
             dispatch({
               type: `ADD_${entity.kind.toUpperCase()}`,
               [entity.kind]: response[entity.kind],
             })
-            count++
+            count += 1
             if (count === total) {
               resolve()
             }
           })
-          .catch((errors) => {
+          .catch(errors => {
             dispatch({
               type: 'SET_ERRORS',
               message: 'list entities follows failure',

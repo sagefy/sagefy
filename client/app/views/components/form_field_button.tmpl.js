@@ -1,8 +1,8 @@
 const { button } = require('../../modules/tags')
 const icon = require('./icon.tmpl')
 
-module.exports = (data) => {
-  return button(
+module.exports = data =>
+  button(
     {
       type: 'submit',
       disabled: data.disabled,
@@ -12,4 +12,3 @@ module.exports = (data) => {
     ' ',
     data.label
   )
-}

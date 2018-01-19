@@ -13,21 +13,19 @@ const shared = {
     const label = labelKind
       ? cardKindLabel
         ? span(
-          { className: 'preview__kind-label' },
-          icon(kind),
-          ' ',
-          `${ucfirst(cardKindLabel)} ${ucfirst(kind)}`
-        )
+            { className: 'preview__kind-label' },
+            icon(kind),
+            ' ',
+            `${ucfirst(cardKindLabel)} ${ucfirst(kind)}`
+          )
         : span(
-          { className: 'preview__kind-label' },
-          icon(kind),
-          ' ',
-          ucfirst(kind)
-        )
+            { className: 'preview__kind-label' },
+            icon(kind),
+            ' ',
+            ucfirst(kind)
+          )
       : icon(kind)
-    return url
-      ? h3(label, ' ', a({ href: url }, name))
-      : h3(label, ' ', name)
+    return url ? h3(label, ' ', a({ href: url }, name)) : h3(label, ' ', name)
   },
 
   previewCreated(created) {
@@ -42,8 +40,8 @@ const shared = {
             status === 'accepted'
               ? 'good'
               : status === 'blocked'
-              ? 'bad'
-              : status === 'declined' ? 'bad' : 'progress'
+                ? 'bad'
+                : status === 'declined' ? 'bad' : 'progress'
           ),
           ' ',
           ucfirst(status)
@@ -54,22 +52,14 @@ const shared = {
   previewAvailable(available) {
     return hasValue(available)
       ? available
-        ? span(
-          { className: 'preview__available' },
-          icon('good'),
-          ' Available'
-        )
+        ? span({ className: 'preview__available' }, icon('good'), ' Available')
         : span({ className: 'preview__hidden' }, icon('bad'), ' Hidden')
       : null
   },
 
   previewLanguage(language) {
     return language
-      ? span(
-          { className: 'preview__language' },
-          'Language: ',
-          em(c(language))
-        )
+      ? span({ className: 'preview__language' }, 'Language: ', em(c(language)))
       : null
   },
 
@@ -86,20 +76,17 @@ const shared = {
     // url name id
     return requires && requires.length
       ? [
-        h4('Requires'),
-        ul(
+          h4('Requires'),
+          ul(
             requires.map(require =>
               li(
                 require.url
-                  ? a(
-                    { href: require.url },
-                    require.name || require.id
-                  )
+                  ? a({ href: require.url }, require.name || require.id)
                   : require.name || require.id
               )
             )
           ),
-      ]
+        ]
       : null
   },
 

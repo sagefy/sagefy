@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-expressions */
-
 const _ = require('../../app/modules/utilities')
 
-const extend = _.extend
+const { extend } = _
 
 describe('Utilities', () => {
   describe('isObject', () => {

@@ -30,12 +30,14 @@ module.exports = tasks.add({
     dispatch({ type: 'RESET_FORM_DATA' })
     dispatch({ type: 'RESET_ERRORS' })
     dispatch({ type: 'RESET_SEARCH' })
-    for (const route of routes) {
+    const route = routes.find(xroute => matchesRoute(path, xroute.path))
+    if (route) {
       const args = matchesRoute(path, route.path)
       if (args) {
         return tasks[route.task].apply(null, args)
       }
     }
+    return null
   },
 
   openSettingsRoute() {
@@ -46,6 +48,7 @@ module.exports = tasks.add({
     ) {
       return tasks.getCurrentUser()
     }
+    return null
   },
 
   openProfileRoute(id) {
@@ -113,10 +116,11 @@ module.exports = tasks.add({
   },
 
   openSearch() {
-    const q = getState().routeQuery.q
+    const { q } = getState().routeQuery
     if (q) {
       return tasks.search({ q })
     }
+    return null
   },
 
   openFindSubjectForUnits() {

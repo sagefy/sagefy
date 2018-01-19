@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { dispatch, bind, setReducer } = require('./store')
 const reducer = require('../reducers/index')
 const init = require('./init')
@@ -46,7 +47,7 @@ require('../views/pages/create.vnt')
 // Log all recorder events to the console and analytics
 function logAllActions() {
   bind((state, action) => {
-    console.log(action.type, action, state) // eslint-disable-line
+    console.log(action.type, action, state)
   })
 }
 

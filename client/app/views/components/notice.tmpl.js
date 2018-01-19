@@ -1,5 +1,5 @@
 const { li, span } = require('../../modules/tags')
-const timeAgo = require('../../modules/auxiliaries').timeAgo
+const { timeAgo } = require('../../modules/auxiliaries')
 
 // TODO-2 add a link around the notice, and go to the appropriate page on click.
 

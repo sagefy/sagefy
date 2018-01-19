@@ -31,21 +31,21 @@ fields.forEach((field, index) => {
   fields[index] = extend({}, userSchema[field.name] || {}, field)
 })
 
-module.exports = (data) => {
+module.exports = data => {
   if (data.currentUserID) {
     div('Logged in already.')
   }
 
   const instanceFields = createFieldsData({
     schema: userSchema,
-    fields: fields,
+    fields,
     errors: data.errors,
     formData: data.formData,
     sending: data.sending,
   })
 
   const globalErrors = findGlobalErrors({
-    fields: fields,
+    fields,
     errors: data.errors,
   })
 

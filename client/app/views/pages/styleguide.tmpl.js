@@ -2,6 +2,17 @@
 const { div, h1, h2, p } = require('../../modules/tags')
 const data = require('./styleguide.data.json')
 
+const writeStyleguide = () => {
+  const tags = []
+  Object.keys(data).forEach(title => {
+    const o = data[title]
+    if (o) {
+      tags.push(h2(title), o.description ? p(o.description) : null)
+    }
+  })
+  return tags
+}
+
 module.exports = () =>
   div(
     { id: 'styleguide', className: 'page' },
@@ -15,17 +26,6 @@ module.exports = () =>
     ),
     writeStyleguide()
   )
-
-const writeStyleguide = () => {
-  const tags = []
-  Object.keys(data).forEach((title) => {
-    const o = data[title]
-    if (o) {
-      tags.push(h2(title), o.description ? p(o.description) : null)
-    }
-  })
-  return tags
-}
 
 // TODO-2 render description markdown => vdom
 // TODO-2 render example using .tmpl file

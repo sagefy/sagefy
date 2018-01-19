@@ -10,7 +10,7 @@ module.exports = broker.add({
   },
 
   // Do nothing on empty links
-  'click a[href="#"]': (e) => {
+  'click a[href="#"]': e => {
     e.preventDefault()
   },
 

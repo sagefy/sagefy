@@ -34,10 +34,7 @@ module.exports = function createSubjectAdd(data) {
     ),
     form(
       { className: 'form--horizontal create--unit-create-add__form' },
-      div(
-        { className: 'form-field form-field--search' },
-        input(inputOpts)
-      ),
+      div({ className: 'form-field form-field--search' }, input(inputOpts)),
       button(
         {
           type: 'submit',

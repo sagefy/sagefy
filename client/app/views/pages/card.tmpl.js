@@ -19,7 +19,7 @@ const threeDigits = num => Math.round(num * 1000) / 1000
 
 const previewCardContent = require('../components/preview_card_content.tmpl')
 
-module.exports = (data) => {
+module.exports = data => {
   const id = data.routeArgs[0]
   const card = data.cards && data.cards[id]
   if (!card) {

@@ -11,8 +11,8 @@ module.exports = broker.add({
     const form = closest(el, 'form')
     const values = getFormValues(form)
     const table = closest(el, 'table')
-    const name = table.dataset.name
-    const index = parseInt(el.dataset.index)
+    const { name } = table.dataset
+    const index = parseInt(el.dataset.index, 10)
     tasks.removeListFieldRow(values, name, index)
   },
 
@@ -23,9 +23,9 @@ module.exports = broker.add({
     const form = closest(el, 'form')
     const values = getFormValues(form)
     const table = closest(el, 'table')
-    const name = table.dataset.name
+    const { name } = table.dataset
     const columns = Array.prototype.map
-      .call(table.querySelectorAll('th'), el => el.dataset.col)
+      .call(table.querySelectorAll('th'), xel => xel.dataset.col)
       .filter(c => c)
     tasks.addListFieldRow(values, name, columns)
   },

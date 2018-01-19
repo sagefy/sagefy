@@ -1,4 +1,3 @@
-/* eslint-disable prefer-arrow-callback */
 const diff = require('virtual-dom/diff')
 const patch = require('virtual-dom/patch')
 const createElement = require('virtual-dom/create-element')
@@ -16,7 +15,7 @@ module.exports = function init(options) {
 
   if (el.innerHTML.trim()) {
     tree = virtualize(el)
-    root = el.children[0]
+    ;[root] = el.children
   } else {
     tree = view(getState())
     root = createElement(tree)
@@ -24,7 +23,7 @@ module.exports = function init(options) {
     el.appendChild(root)
   }
 
-  store.bind(function update(data) {
+  store.bind(data => {
     const next = view(data)
     root = patch(root, diff(tree, next))
     tree = next

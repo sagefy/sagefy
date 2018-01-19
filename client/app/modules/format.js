@@ -29,11 +29,13 @@ const { h1, h2, p, img, em, strong } = require('./tags')
 const headings = [h1, h2]
 
 const INLINE_RE = /(_)|(\*\*)|(!\[.*\]\(.*\))/g
-const INLINE_IMAGE_RE = /!\[(.*)\]\((.*)\)/  // dont use `g` flag with exec!
+const INLINE_IMAGE_RE = /!\[(.*)\]\((.*)\)/ // dont use `g` flag with exec!
 
 function inline(s) {
   const startIndex = s.search(INLINE_RE)
-  if (startIndex === -1) { return s }
+  if (startIndex === -1) {
+    return s
+  }
   if (s[startIndex] === '_') {
     const endIndex = startIndex + 1 + s.substring(startIndex + 1).indexOf('_')
     return [
@@ -54,10 +56,7 @@ function inline(s) {
     const endIndex = startIndex + s.substring(startIndex).indexOf(')')
     const match = INLINE_IMAGE_RE.exec(s)
     if (!match) {
-      return [
-        s.substring(0, endIndex),
-        inline(s.substring(endIndex + 1)),
-      ]
+      return [s.substring(0, endIndex), inline(s.substring(endIndex + 1))]
     }
     const title = match[1]
     const src = match[2]
@@ -67,6 +66,7 @@ function inline(s) {
       inline(s.substring(endIndex + 1)),
     ]
   }
+  return null
 }
 
 function block(s, config = {}) {
@@ -79,6 +79,8 @@ function block(s, config = {}) {
 
 module.exports = function format(full, config = {}) {
   full = full.trim()
-  if (full.indexOf('\n') === -1) { return inline(full, config) }
+  if (full.indexOf('\n') === -1) {
+    return inline(full, config)
+  }
   return full.split('\n\n').map(s => block(s, config))
 }

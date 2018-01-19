@@ -5,14 +5,14 @@ const previewCard = require('./preview_card.tmpl')
 const previewUnit = require('./preview_unit.tmpl')
 const previewSubject = require('./preview_subject.tmpl')
 
-const renderProposal = (data) => {
+const renderProposal = data => {
   if (!data.kind === 'proposal') {
-    return
+    return null
   }
   const entityVersions = data.entityVersionsFull || []
   return div(
     { className: 'post__proposal' },
-    entityVersions.map((version) => {
+    entityVersions.map(version => {
       const { entityKind } = version
       if (entityKind === 'card') {
         return [
@@ -20,8 +20,7 @@ const renderProposal = (data) => {
             Object.assign({}, version, {
               unit: { name: version.unit_id },
               requires:
-                version.require_ids &&
-                version.require_ids.map(id => ({ id })),
+                version.require_ids && version.require_ids.map(id => ({ id })),
             })
           ),
           hr(),
@@ -32,8 +31,7 @@ const renderProposal = (data) => {
           previewUnit(
             Object.assign({}, version, {
               requires:
-                version.require_ids &&
-                version.require_ids.map(id => ({ id })),
+                version.require_ids && version.require_ids.map(id => ({ id })),
             })
           ),
           hr(),
@@ -47,9 +45,9 @@ const renderProposal = (data) => {
   )
 }
 
-const voteResponse = (response) => {
+const voteResponse = response => {
   if (!response) {
-    return
+    return null
   }
   return [
     span(
@@ -94,10 +92,10 @@ module.exports = (data, currentUserID) => {
       div(
         data.replies_to_id
           ? a(
-            {
-              className: 'post__in-reply',
-              href: `/topics/${data.topic_id}#${data.replies_to_id}`,
-            },
+              {
+                className: 'post__in-reply',
+                href: `/topics/${data.topic_id}#${data.replies_to_id}`,
+              },
               icon('reply'),
               ' In Reply'
             )
@@ -112,18 +110,18 @@ module.exports = (data, currentUserID) => {
         { className: 'post__footer' },
         currentUserID === data.user_id
           ? a(
-            {
-              href: `/topics/${topicId}/posts/${data.id}/update`,
-            },
+              {
+                href: `/topics/${topicId}/posts/${data.id}/update`,
+              },
               icon('update'),
               ' Edit'
             )
           : a(
-            {
-              href:
+              {
+                href:
                   `/topics/${topicId}/posts/create?` +
                   `replies_to_id=${data.id}`,
-            },
+              },
               icon('reply'),
               ' Reply'
             ),
@@ -134,11 +132,7 @@ module.exports = (data, currentUserID) => {
           ' Vote'
         ) : null, */
         data.kind === 'proposal'
-          ? a(
-              { href: '/create' },
-              icon('create'),
-              ' Create Another Proposal'
-            )
+          ? a({ href: '/create' }, icon('create'), ' Create Another Proposal')
           : null,
         a(
           { href: `/topics/${data.topicID}#${data.id}` },

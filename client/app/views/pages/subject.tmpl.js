@@ -7,7 +7,7 @@ const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 const previewSubjectContent = require('../components/preview_subject_content.tmpl')
 
-module.exports = (data) => {
+module.exports = data => {
   const id = data.routeArgs[0]
   const subject = data.subjects && data.subjects[id]
 

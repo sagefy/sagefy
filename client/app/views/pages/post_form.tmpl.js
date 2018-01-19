@@ -1,3 +1,4 @@
+const get = require('lodash.get')
 const { div, h1 } = require('../../modules/tags')
 // const c = require('../../modules/content').get
 const form = require('../components/form.tmpl')
@@ -12,7 +13,7 @@ const { getFields, getSchema } = require('./post_form.fn')
 // TODO-1 Currently there is no way to update an existing entity from the UI,
 //    you can only propose a new entity.
 
-const classes = (formData) => {
+const classes = formData => {
   const postID = formData['post.id']
   const postKind = formData['post.kind']
   const entityKind = formData['post.entity_version.kind']
@@ -26,14 +27,11 @@ const classes = (formData) => {
   ].join(' ')
 }
 
-module.exports = (data) => {
+module.exports = data => {
   const [topicID, postID] = data.routeArgs
-  let post
-  if (postID) {
-    post =
-      data.topicPosts &&
-      data.topicPosts[topicID].find(post => post.id === postID)
-  }
+  const post = get(data, `topicPosts[${topicID}]`, []).find(
+    xpost => xpost.id === postID
+  )
 
   if (postID && !post) {
     return spinner()
@@ -42,12 +40,15 @@ module.exports = (data) => {
   const formData = extend({}, data.formData, {
     'post.id': postID,
     'post.topic_id': topicID,
-    'post.replies_to_id':
-      (post && post.replies_to_id) || data.routeQuery.replies_to_id,
-    'post.kind': post && post.kind,
-    'post.body': post && post.body,
+    'post.replies_to_id': get(
+      post,
+      'replies_to_id',
+      data.routeQuery.replies_to_id
+    ),
+    'post.kind': get(post, 'kind'),
+    'post.body': get(post, 'body'),
     'post.response': post ? `${post.response}` : null,
-    'post.name': post && post.name,
+    'post.name': get(post, 'name'),
   })
 
   const fields = getFields(formData)
@@ -67,7 +68,7 @@ module.exports = (data) => {
   })
 
   const globalErrors = findGlobalErrors({
-    fields: fields,
+    fields,
     errors: data.errors,
   })
 

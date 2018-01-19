@@ -1,7 +1,7 @@
 const { input } = require('../../modules/tags')
 
-module.exports = (data) => {
-  return input({
+module.exports = data =>
+  input({
     id: `ff-${data.name}`,
     name: data.name,
     placeholder: data.placeholder || '',
@@ -9,4 +9,3 @@ module.exports = (data) => {
     value: data.value || data.default || '',
     size: data.size || 40,
   })
-}

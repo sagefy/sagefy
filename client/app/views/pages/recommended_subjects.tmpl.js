@@ -28,7 +28,7 @@ const subjectResult = subject => [
   ),
 ]
 
-module.exports = (data) => {
+module.exports = data => {
   if (!data.recommendedSubjects.length) {
     return spinner()
   }
@@ -40,10 +40,6 @@ module.exports = (data) => {
     ),
     ul(data.recommendedSubjects.map(subject => li(subjectResult(subject)))),
     hr(),
-    a(
-      { href: '/search?mode=as_learner' },
-      icon('search'),
-      ' Search Subjects'
-    )
+    a({ href: '/search?mode=as_learner' }, icon('search'), ' Search Subjects')
   )
 }

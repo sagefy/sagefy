@@ -170,17 +170,18 @@ const routes = [
   },
 ]
 
-const findRouteTmpl = (data) => {
-  for (let i = 0; i < routes.length; i++) {
+const findRouteTmpl = data => {
+  for (let i = 0; i < routes.length; i += 1) {
     const route = routes[i]
     const args = matchesRoute(data.route, route.path)
     if (args) {
       return [route.tmpl, args]
     }
   }
+  return [() => {}, []]
 }
 
-module.exports = (data) => {
+module.exports = data => {
   const menuData = copy(data.menu)
   menuData.kind = data.currentUserID ? 'loggedIn' : 'loggedOut'
   const [route, args] = findRouteTmpl(data)

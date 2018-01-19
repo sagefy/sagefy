@@ -5,7 +5,24 @@ const icon = require('../components/icon.tmpl')
 const info = require('../components/entity_info.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 
-module.exports = (data) => {
+const userSubject = data =>
+  li(
+    { className: 'my-subject' },
+    button(
+      {
+        className: 'my-subjects__engage-subject',
+        id: data.entity_id,
+      },
+      'Engage ',
+      icon('next')
+    ),
+    div(
+      { className: 'my-subjects__my-subject-right' },
+      previewSubjectHead({ name: data.name, body: data.body })
+    )
+  )
+
+module.exports = data => {
   if (!data.userSubjects) {
     return spinner()
   }
@@ -49,20 +66,3 @@ module.exports = (data) => {
     info()
   )
 }
-
-const userSubject = data =>
-  li(
-    { className: 'my-subject' },
-    button(
-      {
-        className: 'my-subjects__engage-subject',
-        id: data.entity_id,
-      },
-      'Engage ',
-      icon('next')
-    ),
-    div(
-      { className: 'my-subjects__my-subject-right' },
-      previewSubjectHead({ name: data.name, body: data.body })
-    )
-  )

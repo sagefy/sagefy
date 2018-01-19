@@ -21,16 +21,13 @@ const fields = [
   {
     label: 'Subject Goal',
     description:
-      'Start with a verb, such as: Compute the value of ' +
-      'dividing two whole numbers.',
+      'Start with a verb, such as: Compute the value of dividing two whole numbers.',
     name: 'body',
   },
   {
     name: 'members',
     label: 'Subject Members',
-    description:
-      'Choose a list of units and subjects. '
-      + 'Cycles are not allowed.',
+    description: 'Choose a list of units and subjects. Cycles are not allowed.',
     add: {
       label: 'Add an Existing Unit or Subject',
       url: '#',
@@ -58,7 +55,7 @@ module.exports = function createSubjectCreate(data) {
   })
 
   const globalErrors = findGlobalErrors({
-    fields: fields,
+    fields,
     errors: data.errors,
   })
 

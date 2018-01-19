@@ -11,14 +11,14 @@ module.exports = tasks.add({
       url: `/s/users/${userID}/subjects`,
       data: { limit, skip },
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_USER_SUBJECTS',
           subjects: response.subjects,
           message: 'list user subjects success',
         })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'list user subjects failure',
@@ -35,7 +35,7 @@ module.exports = tasks.add({
       url: `/s/users/${userID}/subjects/${subjectId}`,
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({
           type: 'ADD_USER_SUBJECTS',
           subjects: [response.subject],
@@ -44,7 +44,7 @@ module.exports = tasks.add({
         tasks.route('/my_subjects')
         return response
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'add user sesubjectt failure',
@@ -62,7 +62,7 @@ module.exports = tasks.add({
       url: `/s/users/${userID}/subjects/${subjectId}`,
       data: {},
     })
-      .then((response) => {
+      .then(response => {
         dispatch({ type: 'CHOOSE_SUBJECT_SUCCESS', subjectId })
         tasks.updateMenuContext({
           subject: subjectId,
@@ -75,7 +75,7 @@ module.exports = tasks.add({
         })
         tasks.route(`/subjects/${subjectId}/choose_unit`)
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'choose subject failure',
@@ -96,7 +96,7 @@ module.exports = tasks.add({
         // TODO-1 remove from the state
         dispatch({ type: 'REMOVE_USER_SUBJECT_SUCCESS', subjectId })
       })
-      .catch((errors) => {
+      .catch(errors => {
         dispatch({
           type: 'SET_ERRORS',
           message: 'remove user subject failure',

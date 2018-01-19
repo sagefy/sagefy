@@ -28,17 +28,10 @@ module.exports = function createUnitAdd(data) {
     { id: 'create', className: 'page' },
     h1('Add an Existing Unit to Subject'),
     unitWizard('list'),
-    a(
-      { href: '/create/unit/list' },
-      icon('back'),
-      ' Back to List of Units'
-    ),
+    a({ href: '/create/unit/list' }, icon('back'), ' Back to List of Units'),
     form(
       { className: 'form--horizontal create--unit-add__form' },
-      div(
-        { className: 'form-field form-field--search' },
-        input(inputOpts)
-      ),
+      div({ className: 'form-field form-field--search' }, input(inputOpts)),
       button(
         { type: 'submit', className: 'create--unit-add__search' },
         icon('search'),

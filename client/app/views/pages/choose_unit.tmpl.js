@@ -4,7 +4,7 @@ const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 
-module.exports = (data) => {
+module.exports = data => {
   if (!Object.keys(data.chooseUnit).length) {
     return spinner()
   }
@@ -27,9 +27,9 @@ module.exports = (data) => {
           a(
             {
               id: unit.entity_id,
-              className: `choose-unit__engage${index === 0
-                ? ' choose-unit__engage--first'
-                : ''}`,
+              className: `choose-unit__engage${
+                index === 0 ? ' choose-unit__engage--first' : ''
+              }`,
             },
             'Engage ',
             icon('next')

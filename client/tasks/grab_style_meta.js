@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies,quotes */
 const glob = require('glob')
 const fs = require('fs')
 const yaml = require('js-yaml')
@@ -12,12 +11,12 @@ const yaml = require('js-yaml')
 const build = (g, fn) => {
   const data = {}
   glob(g)
-    .on('match', (path) => {
+    .on('match', path => {
       const contents = fs.readFileSync(path, 'utf-8')
       ;(contents.match(/---(?!---)((.|\n)*?)---/g) || [])
         .filter(el => /---/.test(el))
         .map(el => el.replace(/---/g, ''))
-        .forEach((y) => {
+        .forEach(y => {
           y = yaml.load(y)
           // y.description = markdown(y.description)
           data[y.title] = y
