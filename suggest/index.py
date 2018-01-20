@@ -342,7 +342,7 @@ def get_homepage_route(conn, environ, start_response):
     <p><small>You can also post here if you're thinking about building
           a new online learning experience... see if there's interest.
           </small></p>
-    <p><small>&copy; Copyright 2017 Sagefy.
+    <p><small>&copy; Copyright 2018 Sagefy.
       All rights reserved.</small></p>
   </main>
   {analytics}

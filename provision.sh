@@ -123,12 +123,12 @@ docker-compose up -d
 
 # >>> Restore production Postgres data
 # From your computer...
-scp ~/Desktop/sagefy-2017...sql annina@IPADDRESS:/var/www/postgres
+scp ~/Desktop/sagefy-2018...sql annina@IPADDRESS:/var/www/postgres
 # Then on server, verify file with ls
 cd /var/www/postgres
 ls
 # Create the data
-docker exec -it www_postgres_1 psql -U sagefy -a -f /www/sagefy-2017...sql
+docker exec -it www_postgres_1 psql -U sagefy -a -f /www/sagefy-2018...sql
 # verify with ` docker exec -it www_postgres_1 psql -U sagefy `
 # select count(*) from users;
 # select count(*) from subjects;
