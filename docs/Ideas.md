@@ -14,7 +14,7 @@ The ideas are the foundation of Sagefy's architecture. The ideas are broad and b
 7. Make It Real
 8. Learn Together
 
-## 1) Do One Thing at a Time
+## 1. Do One Thing at a Time
 
 Our memory system is powerful but limited. We are most effective when focusing on one task at a time.
 
@@ -73,9 +73,9 @@ The strongest predictor of how much we will learn is what we already know. Every
 
 * Cards and units have requires, which ensures the learner has sufficient prior knowledge.
 * The algorithms which sequence show cards, units, and subjects that are available to the learner.
-  * The algorithms which sequence the entities focus on improving the learner's prior knowledge.
-  * A diagnostic assessment means learners can build prior knowledge where lacking.
-  * A learner with high prior knowledge can skip to more relevant areas.
+* The algorithms which sequence the entities focus on improving the learner's prior knowledge.
+* A diagnostic assessment means learners can build prior knowledge where lacking.
+* A learner with high prior knowledge can skip to more relevant areas.
 
 ## 4. Build the Graph
 
