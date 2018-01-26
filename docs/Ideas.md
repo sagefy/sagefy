@@ -9,9 +9,10 @@ The ideas are the foundation of Sagefy's architecture. The ideas are broad and b
 2. Set & Adhere to Goals
 3. Adapt to Prior Knowledge
 4. Build the Graph
-5. Dive Deep
-6. Make It Real
-7. Learn Together
+5. Empower Choice
+6. Dive Deep
+7. Make It Real
+8. Learn Together
 
 1) Do One Thing at a Time
 
@@ -25,8 +26,9 @@ Our memory system is powerful but limited. We are most effective when focusing o
 * Avoid multitasking.
 * Prefer one source of input and one source of output at a time.
 * Scaffold the learner to success.
-* Avoid unnecessary choices.
+* Avoid extraneous choices.
 * Stay focused and eliminate tangents.
+* Account for memory limits -- chunking, pretraining, and modality.
 
 ### How does Sagefy implement this idea?
 
@@ -46,6 +48,9 @@ Defining small, achievable goals and constantly checking against them builds bet
 * Always define the goal.
 * Focus content on exploring the different facets of the goal.
 * Remove content that is not needed for the goal.
+* Eliminate distractions.
+* Define both knowledge and skills.
+* Keep the learner aware of their progress.
 
 ### How does Sagefy implement this idea?
 
@@ -67,6 +72,8 @@ The strongest predictor of how much we will learn is what we already know. Every
 * Focus on areas of weakness.
 * Focus on building knowledge.
 * Connect new information with prior knowledge.
+* Scaffold the learner to success.
+* Use assessment to optimize learning.
 
 ### How does Sagefy implement this idea?
 
@@ -80,7 +87,7 @@ The strongest predictor of how much we will learn is what we already know. Every
 
 ---
 
-Our memory system works by forming relationships. Mastery is the result of an organized thought process.
+Our memory system works by forming relationships. Mastery is the result of an organized thought process. Students link new information with information that they already know.
 
 ### What do we mean by "Build the Graph"?
 
@@ -88,6 +95,7 @@ Our memory system works by forming relationships. Mastery is the result of an or
 * Relate information to prior information.
 * Task the learner with organizational challenges.
 * Use technology to automate organization.
+* Keep the learner aware of their progress.
 
 ### How does Sagefy implement this idea?
 
@@ -98,7 +106,17 @@ Our memory system works by forming relationships. Mastery is the result of an or
 * Requires are available for cards and units, allowing for the system to automatically keep things organized with low effort.
 * Contributors do not organize courses, but simply describe relationships. The algorithms handle keeping things organized to the learner.
 
-5. Dive Deep
+5. Empower Choice
+
+---
+
+### What do we mean by "Empower Choice"?
+
+* Autonomy is an intrinsic motivator. Choice fuels autonomy.
+
+### How does Sagefy implement this idea?
+
+6. Dive Deep
 
 ---
 
@@ -106,11 +124,14 @@ Route memorizing isn't enough. We must be able to use our knowledge.
 
 ### What do we mean by "Dive Deep"?
 
+* Practice!
 * Go beyond route memorization. Challenge the learner to explain, analyse, apply, and synthesize.
 * Build metacognitive capabilities.
 * Go in for the long term. Use spaced repetition.
 * Focus on developing areas of weakness.
 * Remove barriers to going deep.
+* Effective, timely feedback.
+* Seek mastery. Learn components, integration, and application.
 
 ### How does Sagefy implement this idea?
 
@@ -119,7 +140,7 @@ Route memorizing isn't enough. We must be able to use our knowledge.
 * By removing complexity in the data structure, we make room for more depth by adding flexibility.
 * The system encourages spaced repetition to ensure maximum retention of knowledge.
 
-6. Make it Real
+7. Make it Real
 
 ---
 
@@ -131,13 +152,15 @@ We rely on real-life experiences to guide to our learning.
 * Use images and videos to connect with the visual processing center.
 * Present the problem first, and allow the learner to arrive at the solution.
 * Avoid overly formal or showy presentation.
+* Open-ended work, worked examples, problem-based learning, simulations, and games.
+* "Why?" -- Support the purpose of learning.
 
 ### How does Sagefy implement this idea?
 
 * The flexibility of card formats allows using audio, images, and video.
 * Cards can have requires, allowing for more involved projects based on problem-based learning.
 
-7. Learn Together
+8. Learn Together
 
 ---
 
@@ -154,6 +177,7 @@ We are more effective as team or as a community. Often, but not always.
 * Hold users accountable.
 * Don't cover up non-private information.
 * Invite and offer feedback regularly.
+* Peer tutoring and mentoring.
 
 ### How does Sagefy implement this idea?
 
