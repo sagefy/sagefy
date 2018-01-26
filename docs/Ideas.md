@@ -14,9 +14,7 @@ The ideas are the foundation of Sagefy's architecture. The ideas are broad and b
 7. Make It Real
 8. Learn Together
 
-1) Do One Thing at a Time
-
----
+## 1) Do One Thing at a Time
 
 Our memory system is powerful but limited. We are most effective when focusing on one task at a time.
 
@@ -37,9 +35,7 @@ Our memory system is powerful but limited. We are most effective when focusing o
 * When the learner must make a choice about which subject or unit to pursue, the learner is only presented with the choice.
 * A contributor can only change one entity at a time.
 
-2. Set & Adhere to Goals
-
----
+## 2. Set & Adhere to Goals
 
 Defining small, achievable goals and constantly checking against them builds better, more focused content.
 
@@ -59,9 +55,7 @@ Defining small, achievable goals and constantly checking against them builds bet
 * Subjects can be small or large, but they always have a single description.
 * Flagging enables users to remove irrelevant content.
 
-3. Adapt to Prior Knowledge
-
----
+## 3. Adapt to Prior Knowledge
 
 The strongest predictor of how much we will learn is what we already know. Every learning experience must be adapted to the learner's prior knowledge.
 
@@ -83,9 +77,7 @@ The strongest predictor of how much we will learn is what we already know. Every
   * A diagnostic assessment means learners can build prior knowledge where lacking.
   * A learner with high prior knowledge can skip to more relevant areas.
 
-4. Build the Graph
-
----
+## 4. Build the Graph
 
 Our memory system works by forming relationships. Mastery is the result of an organized thought process. Students link new information with information that they already know.
 
@@ -106,9 +98,7 @@ Our memory system works by forming relationships. Mastery is the result of an or
 * Requires are available for cards and units, allowing for the system to automatically keep things organized with low effort.
 * Contributors do not organize courses, but simply describe relationships. The algorithms handle keeping things organized to the learner.
 
-5. Empower Choice
-
----
+## 5. Empower Choice
 
 ### What do we mean by "Empower Choice"?
 
@@ -116,9 +106,7 @@ Our memory system works by forming relationships. Mastery is the result of an or
 
 ### How does Sagefy implement this idea?
 
-6. Dive Deep
-
----
+## 6. Dive Deep
 
 Route memorizing isn't enough. We must be able to use our knowledge.
 
@@ -140,9 +128,7 @@ Route memorizing isn't enough. We must be able to use our knowledge.
 * By removing complexity in the data structure, we make room for more depth by adding flexibility.
 * The system encourages spaced repetition to ensure maximum retention of knowledge.
 
-7. Make it Real
-
----
+## 7. Make it Real
 
 We rely on real-life experiences to guide to our learning.
 
@@ -160,9 +146,7 @@ We rely on real-life experiences to guide to our learning.
 * The flexibility of card formats allows using audio, images, and video.
 * Cards can have requires, allowing for more involved projects based on problem-based learning.
 
-8. Learn Together
-
----
+## 8. Learn Together
 
 We are more effective as team or as a community. Often, but not always.
 
