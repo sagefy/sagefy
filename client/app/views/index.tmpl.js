@@ -189,7 +189,6 @@ module.exports = data => {
   data.routeArgs = args
   return div(
     main(route(data)),
-    require('./components/menu.tmpl')(menuData),
-    require('./components/feedback.tmpl')() // TODO-2 Remove this component
+    require('./components/menu.tmpl')(menuData)
   )
 }
