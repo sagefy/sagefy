@@ -10,18 +10,18 @@ module.exports = {
     submit: {},
   },
 
-  init: function init(fn) {
+  init(fn) {
     fn.call(this)
   },
 
-  observe: function observer(el) {
+  observe(el) {
     this.el = el
     Object.keys(this.events).forEach(type => {
       this.el.addEventListener(type, this.delegate(type))
     })
   },
 
-  add: function add(obj) {
+  add(obj) {
     Object.keys(obj).forEach(query => {
       const fn = obj[query]
       const match = query.match(eventRegExp)
@@ -32,7 +32,7 @@ module.exports = {
     return obj
   },
 
-  delegate: function delegate(type) {
+  delegate(type) {
     return e => {
       let el = e.target
       while (el && el !== this.el) {
