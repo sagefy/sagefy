@@ -19,6 +19,7 @@ __pycache__
 *console.log
 bin
 build
+coverage
 develop-eggs
 dist
 eggs

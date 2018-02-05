@@ -35,7 +35,7 @@
     "prep-scripts":
       "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"yarn run build-styleguide\" \"yarn run compile-content\"",
     "lint-scripts": "eslint \"app/**/*.js\" \"tasks/**/*.js\"",
-    "run-tests": "mocha -R min \"app/**/*.test.js\" -r ./tasks/test_setup.js",
+    "run-tests": "jest",
     "translate-md": "node ./tasks/translate_md.js",
     "run-server": "node ./app/index.server.js",
     "precommit": "pretty-quick --staged"
@@ -56,7 +56,6 @@
     "babel-core": "6.5.2",
     "babel-loader": "6.2.7",
     "babel-preset-es2015": "6.16.0",
-    "chai": "3.3.0",
     "clean-css": "3.4.20",
     "concurrently": "3.1.0",
     "eslint": "4.15.0",
@@ -66,17 +65,19 @@
     "glob": "5.0.15",
     "husky": "0.14.3",
     "husl": "6.0.1",
+    "jest": "22.1.4",
     "jsdom": "6.5.1",
     "json-loader": "0.5.4",
-    "mocha": "2.3.3",
     "prettier": "1.10.2",
     "pretty-quick": "1.2.2",
     "raw-loader": "0.5.1",
-    "sinon": "1.17.1",
-    "sinon-chai": "2.8.0",
     "stylus": "0.52.4",
     "uglify-js": "2.7.4",
     "webpack": "1.13.3",
     "yamljs": "0.2.8"
+  },
+  "jest": {
+    "collectCoverageFrom": ["app/**/*.js"],
+    "collectCoverage": true
   }
 }

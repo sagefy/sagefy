@@ -30,26 +30,26 @@ const imageHtml =
 describe('format', () => {
   it('should not paragraph a single line of text', () => {
     const result = format(singleLineExample)
-    expect(result).equal(singleLineExample)
+    expect(result).toEqual(singleLineExample)
   })
 
   it('should format paragraphs', () => {
     const html = toHTML(div(format(paragraphExample)))
-    expect(html).equal(paragraphHtml)
+    expect(html).toEqual(paragraphHtml)
   })
 
   it('should format a heading', () => {
     const html = toHTML(div(format(headingExample)))
-    expect(html).equal(headingHtml)
+    expect(html).toEqual(headingHtml)
   })
 
   it('should format inliners', () => {
     const html = toHTML(div(format(inlineExample)))
-    expect(html).equal(inlineHtml)
+    expect(html).toEqual(inlineHtml)
   })
 
   it('should format inline images', () => {
     const html = toHTML(div(format(imageExample)))
-    expect(html).equal(imageHtml)
+    expect(html).toEqual(imageHtml)
   })
 })

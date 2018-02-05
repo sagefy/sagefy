@@ -10,25 +10,25 @@ const cookie = require('../../app/modules/cookie')
 describe('Auxiliaries', () => {
   it('should detect log in', () => {
     cookie.set('logged_in', '1')
-    expect(isLoggedIn()).to.be.true
+    expect(isLoggedIn()).toBe(true)
     cookie.set('logged_in', '0')
-    expect(isLoggedIn()).to.be.false
+    expect(isLoggedIn()).toBe(false)
     cookie.unset('logged_in')
   })
 
   it('should capitalize the first letter of a string', () => {
-    expect(ucfirst('unicorn')).to.equal('Unicorn')
+    expect(ucfirst('unicorn')).toEqual('Unicorn')
   })
 
   it('should underscore a name', () => {
-    expect(underscored('hip-po potu Mus')).to.equal('hip_po_potu_mus')
+    expect(underscored('hip-po potu Mus')).toEqual('hip_po_potu_mus')
   })
 
   it('should merge two arrays by a key', () => {
     const A = [{ k: 0, v: 1 }, { k: 1, v: 1 }, { k: 3, v: 1 }, { k: 7, v: 1 }]
     const B = [{ k: 1, v: 2 }, { k: 2, v: 2 }, { k: 7, v: 2 }, { k: 8, v: 2 }]
 
-    expect(mergeArraysByKey(A, B, 'k')).to.deep.equal([
+    expect(mergeArraysByKey(A, B, 'k')).toEqual([
       { k: 0, v: 1 },
       { k: 1, v: 2 },
       { k: 3, v: 1 },
@@ -42,14 +42,14 @@ describe('Auxiliaries', () => {
     const A = []
     const B = [{ k: 1, v: 2 }, { k: 2, v: 2 }, { k: 7, v: 2 }, { k: 8, v: 2 }]
 
-    expect(mergeArraysByKey(A, B, 'k')).to.deep.equal(B)
+    expect(mergeArraysByKey(A, B, 'k')).toEqual(B)
   })
 
   it('should merge an empty array', () => {
     const A = [{ k: 1, v: 2 }, { k: 2, v: 2 }, { k: 7, v: 2 }, { k: 8, v: 2 }]
     const B = []
 
-    expect(mergeArraysByKey(A, B, 'k')).to.deep.equal(A)
+    expect(mergeArraysByKey(A, B, 'k')).toEqual(A)
   })
 
   it('should parse form values into service friendly data', () => {
@@ -65,7 +65,7 @@ describe('Auxiliaries', () => {
       'd.1.b': 9,
     }
 
-    expect(parseFormValues(values)).to.deep.equal({
+    expect(parseFormValues(values)).toEqual({
       a: 1,
       b: {
         a: 2,

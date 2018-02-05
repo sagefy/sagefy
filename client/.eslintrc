@@ -3,7 +3,7 @@
   "env": {
     "node": true,
     "browser": true,
-    "mocha": true
+    "jest": true
   },
   "globals": {
     "expect": true,
@@ -34,12 +34,6 @@
       "rules": {
         "max-statements": "off",
         "complexity": "off"
-      }
-    },
-    {
-      "files": ["**/*.test.js"],
-      "rules": {
-        "no-unused-expressions": "off"
       }
     },
     {
