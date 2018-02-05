@@ -9,12 +9,15 @@ const util = {}
     Object.prototype.toString.call(a) === `[object ${type}]`
 })
 
+const objectConstructor = {}.constructor
+util.isPlainObject = function isPlainObject(val) {
+  return val.constructor === objectConstructor
+}
+
 util.isUndefined = a => typeof a === 'undefined'
 
 // http://stackoverflow.com/a/9716488
 util.isNumber = n => !Number.isNaN(parseFloat(n)) && Number.isFinite(n)
-
-const objectConstructor = {}.constructor
 
 // Add the properties of the injects into the target.
 util.extend = (target, ...injects) => {
@@ -31,7 +34,7 @@ util.extend = (target, ...injects) => {
           target[prop] = []
         }
         target[prop] = util.extend([], target[prop], val)
-      } else if (util.isObject(val) && val.constructor === objectConstructor) {
+      } else if (util.isObject(val) && util.isPlainObject(val)) {
         if (!util.isObject(target[prop])) {
           target[prop] = {}
         }
@@ -107,6 +110,22 @@ util.convertDataToGet = (url, data) => {
     )
   )
   return url
+}
+
+util.flatten = function flatten(arr) {
+  return arr.reduce(
+    (acc, val) => acc.concat(Array.isArray(val) ? flatten(val) : val),
+    []
+  )
+}
+
+util.omit = function omit(o, keys) {
+  return Object.keys(o).reduce((sum, key) => {
+    if (keys.indexOf(key) === -1) {
+      sum[key] = o[key]
+    }
+    return sum
+  }, {})
 }
 
 module.exports = util
