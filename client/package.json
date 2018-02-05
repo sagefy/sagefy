@@ -66,7 +66,6 @@
     "husky": "0.14.3",
     "husl": "6.0.1",
     "jest": "22.1.4",
-    "jsdom": "6.5.1",
     "json-loader": "0.5.4",
     "prettier": "1.10.2",
     "pretty-quick": "1.2.2",
