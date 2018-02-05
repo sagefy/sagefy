@@ -2,13 +2,7 @@
 const { dispatch } = require('../modules/store')
 const tasks = require('../modules/tasks')
 const request = require('../modules/request')
-
-function flatten(arr) {
-  return arr.reduce(
-    (acc, val) => acc.concat(Array.isArray(val) ? flatten(val) : val),
-    []
-  )
-}
+const { flatten } = require('../modules/utilities')
 
 module.exports = tasks.add({
   listPostsForTopic(id) {
