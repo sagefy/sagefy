@@ -48,9 +48,8 @@
     "font-awesome": "4.5.0",
     "lodash.get": "4.4.2",
     "normalize.css": "7.0.0",
-    "vdom-to-html": "2.3.0",
-    "vdom-virtualize": "2.0.0",
-    "virtual-dom": "2.1.1"
+    "snabbdom": "0.7.1",
+    "snabbdom-to-html": "5.1.0"
   },
   "devDependencies": {
     "babel": "6.5.2",

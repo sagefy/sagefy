@@ -1,5 +1,5 @@
 const format = require('./format')
-const toHTML = require('vdom-to-html')
+const toHTML = require('snabbdom-to-html')
 const { div } = require('./tags')
 
 const singleLineExample = 'This is some really great text.'

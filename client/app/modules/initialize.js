@@ -78,7 +78,7 @@ function go() {
   route(window.location.pathname + window.location.search)
   init({
     view: indexView,
-    el: document.body,
+    el: document.querySelector('.vdom'),
   })
 }
 

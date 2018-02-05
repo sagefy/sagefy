@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const express = require('express')
-const toHTML = require('vdom-to-html')
+const toHTML = require('snabbdom-to-html')
 const template = require('./views/index.tmpl')
 const { route } = require('./modules/route_actions')
 const {

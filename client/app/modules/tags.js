@@ -1,4 +1,5 @@
-const h = require('virtual-dom/h')
+const h = require('snabbdom/h').default
+const { isPlainObject, flatten, omit } = require('./utilities')
 
 const names = [
   // Super elements
@@ -98,19 +99,33 @@ const names = [
   'var',
   'mark',
   'span',
+
+  // https://developer.mozilla.org/en-US/docs/Web/SVG/Element
+  'svg',
+  'circle',
+  'line',
+  'text',
 ]
 
 const tags = {}
-const objConstructor = {}.constructor
 names.forEach(name => {
   tags[name] = (...args) => {
     if (args.length === 0) {
       return h(name)
     }
-    if (args[0] && args[0].constructor === objConstructor) {
-      return h(name, args[0], args.slice(1))
+    const args0 = args[0]
+    if (!args0 || !isPlainObject(args0) || args0.sel) {
+      return h(name, {}, flatten(args))
     }
-    return h(name, args)
+    return h(
+      name,
+      {
+        props: omit(args0, ['style', 'dataset']),
+        style: args0.style || {},
+        dataset: args0.dataset || {},
+      },
+      flatten(args.slice(1))
+    )
   }
 })
 

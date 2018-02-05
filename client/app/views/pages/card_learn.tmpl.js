@@ -64,14 +64,12 @@ module.exports = data => {
         )
       )
     ),
-    pLearned
-      ? div({
-          key: '0Xe4fksADWwm9qWOMuTl7thD',
-          className: 'card-learn__progress',
-          style: {
-            width: `${pLearned * 100}%`,
-          },
-        })
-      : null,
+    div({
+      key: '0Xe4fksADWwm9qWOMuTl7thD',
+      className: 'card-learn__progress',
+      style: {
+        width: `${(pLearned || 0) * 100}%`,
+      },
+    }),
   ]
 }

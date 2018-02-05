@@ -1,5 +1,5 @@
 const { div, h1, a, p } = require('../../modules/tags')
-const { svg, circle, line, text } = require('../../modules/svg_tags')
+const { svg, circle, line, text } = require('../../modules/tags')
 const {
   putUnitsInLayers,
   orderLayers,
@@ -16,7 +16,7 @@ const distance = 36
 
 const unitPoint = ({ id, x, y, className }, currentTreeUnit) =>
   circle({
-    class: className + (currentTreeUnit === id ? ' selected' : ''),
+    className: className + (currentTreeUnit === id ? ' selected' : ''),
     id,
     cx: x,
     cy: y,
@@ -25,7 +25,7 @@ const unitPoint = ({ id, x, y, className }, currentTreeUnit) =>
 
 const unitLine = ({ x1, y1, x2, y2 }) =>
   line({
-    class: 'unit-require',
+    className: 'unit-require',
     x1,
     y1,
     x2,
@@ -85,7 +85,7 @@ const renderCurrent = (layers, currentUnit, preWidth) => {
       }
       nodes.push(
         line({
-          class: 'name-line',
+          className: 'name-line',
           x1: preWidth,
           y1: unit.y,
           x2: unit.x + radius,
@@ -96,7 +96,7 @@ const renderCurrent = (layers, currentUnit, preWidth) => {
       nodes.push(
         text(
           {
-            class: 'tree__current-unit',
+            className: 'tree__current-unit',
             x: preWidth,
             y: unit.y + 6,
           },
@@ -160,9 +160,7 @@ module.exports = data => {
     p('You can click the nodes to see the unit name.'),
     svg(
       {
-        class: 'tree',
-        xmlns: 'http://www.w3.org/2000/svg',
-        version: '1.1',
+        className: 'tree',
         width,
         height,
       },

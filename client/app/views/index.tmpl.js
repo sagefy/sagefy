@@ -188,6 +188,7 @@ module.exports = data => {
   data = copy(data)
   data.routeArgs = args
   return div(
+    { className: 'vdom' },
     main(route(data)),
     require('./components/menu.tmpl')(menuData)
   )
