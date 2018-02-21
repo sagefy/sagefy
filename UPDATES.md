@@ -19,7 +19,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to https://sagefy.uservoice.com/forums/233394-general and add feedback or ideas there.
+Feel free to reply to this address! You can also go to https://sgef.cc/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Feb 5
 
@@ -40,7 +40,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sagefy.uservoice.com/forums/233394-general
+https://sgef.cc/feedback
 and add feedback or ideas there.
 
 ## UPDATE -- 2018 Jan 22
@@ -59,7 +59,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sagefy.uservoice.com/forums/233394-general
+https://sgef.cc/feedback
 and add feedback or ideas there.
 
 ## UPDATE -- 2017 Jan 8
@@ -78,7 +78,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sagefy.uservoice.com/forums/233394-general
+https://sgef.cc/feedback
 and add feedback or ideas there.
 
 ## UPDATE -- 2017 Dec 11
@@ -97,7 +97,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sagefy.uservoice.com/forums/233394-general
+https://sgef.cc/feedback
 and add feedback or ideas there.
 
 ## UPDATE -- 2017 Nov 27
@@ -116,7 +116,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sagefy.uservoice.com/forums/233394-general
+https://sgef.cc/feedback
 and add feedback or ideas there.
 
 ## UPDATE -- 2017 Nov 13 
@@ -139,7 +139,7 @@ Didn't complete as much as hoped.
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sagefy.uservoice.com/forums/233394-general
+https://sgef.cc/feedback
 and add feedback or ideas there.
 
 ## UPDATE -- 2017 Oct 30
@@ -185,5 +185,5 @@ This will also be a new card kind, though I haven't picked a name yet.
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sagefy.uservoice.com/forums/233394-general
+https://sgef.cc/feedback
 and add feedback or ideas there.
