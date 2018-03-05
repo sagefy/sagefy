@@ -4,7 +4,25 @@ This is a reverse chronological listing of updates on Sagefy's progress. I will 
 
 You can sign up for email updates at http://newsletter.sagefy.org/up
 
-## UPDATE -- 2017 Feb 19
+## UPDATE -- 2018 Mar 5
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2018 Feb 19 - 2018 Mar 4
+
+- Continuing on Medium article on the 8 "big ideas"
+- Built example for "Frequency and Pitch"
+- Working on next batch of interactive examples
+
+### Upcoming Two Weeks: 2018 Mar 5 - 2018 Mar 18
+
+- Build remaining 3 interactive examples for the Intro to Electronic Music: Sound Parameters unit.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+
+## UPDATE -- 2018 Feb 19
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
 
