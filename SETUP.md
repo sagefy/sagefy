@@ -1,32 +1,29 @@
-Setup
-=====
+# Setup
 
-Local Development
------------------
+## Local Development
 
 These instructions assume you are using Mac OS X.
 
 1. Install tools
-    1. Install [Docker for Mac](https://www.docker.com/docker-mac).
-    2. Install [Homebrew](https://brew.sh/).
-    3. Install yarn: `brew install yarn`
+   1. Install [Docker for Mac](https://www.docker.com/docker-mac).
+   2. Install [Homebrew](https://brew.sh/).
+   3. Install yarn: `brew install yarn`
 2. Grab the code
-    1. Clone the repository: `git clone https://github.com/heiskr/sagefy.git`
-    2. Enter the directory: `cd sagefy`
+   1. Clone the repository: `git clone https://github.com/heiskr/sagefy.git`
+   2. Enter the directory: `cd sagefy`
 3. Start it up: `docker-compose up -d`
 4. Get some data
-    1. Create database schemas (when first time):
-        - `docker exec -it sagefy_postgres_1 psql -U sagefy -a -f /www/sagefy_tables.sql`
-        - `docker exec -it sagefy_postgres-test_1 psql -U test -a -f /www/sagefy_tables.sql`
-    2. Create dev data: `docker-compose run server python /www/test/dev_data.py`
+   1. Create database schemas (when first time):
+      * `docker exec -it sagefy_postgres_1 psql -U sagefy -a -f /www/sagefy_tables.sql`
+      * `docker exec -it sagefy_postgres-test_1 psql -U test -a -f /www/sagefy_tables.sql`
+   2. Create dev data: `docker-compose run server python /www/test/dev_data.py`
 5. Verify
-    1. In your browser, visit `http://localhost/s/`, there should be a welcome message.
-    2. In your browser, visit `http://localhost/`, the home page should be working.
-    3. Try to sign up for an account.
+   1. In your browser, visit `http://localhost/s/`, there should be a welcome message.
+   2. In your browser, visit `http://localhost/`, the home page should be working.
+   3. Try to sign up for an account.
 6. Watch and rebuild: `yarn install && yarn start`
 
-Some Useful Commands
---------------------
+## Some Useful Commands
 
 To shut down local dev:
 
@@ -51,8 +48,7 @@ Access Postgres REPL:
 Run server tests:
 
     cd server
-    FILES=$(find . -iname "*.py")
-    pylint $FILES -j 4
+    pylint $(find . -iname "*.py") -j 4
     docker-compose run server coverage run --module py.test
     docker-compose run server coverage report --omit="test/*"
 
@@ -65,8 +61,7 @@ Run client tests:
     docker rm -f $(docker ps -a -q)
     docker rmi -f $(docker images -q)
 
-Deploy steps
-------------
+## Deploy steps
 
 How to deploy the latest master:
 
@@ -80,8 +75,7 @@ How to deploy the latest master:
     docker-compose restart client
     docker-compose restart nginx
 
-Back up the database
---------------------
+## Back up the database
 
 Run:
 
@@ -92,8 +86,7 @@ Run:
     b2 authorize_account xxx xxxxxxxx  # see dashlane
     b2 sync /var/www/dbbu b2:sagefy-dbbu
 
-Things to fix:
---------------
+## Things to fix:
 
-- TODO The server should not know about git
-- TODO Set up as a cron job... fix the environment :)
+* TODO The server should not know about git
+* TODO Set up as a cron job... fix the environment :)

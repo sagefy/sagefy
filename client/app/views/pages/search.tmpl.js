@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+const get = require('lodash.get')
 const {
   div,
   h1,
@@ -31,76 +32,88 @@ r.userResult = result =>
     span({ className: 'search__label' }, icon('user'), ' User'),
     ' ',
     a(
-      { href: `/users/${result._source.id}` },
-      img({ className: 'avatar', src: result._source.avatar }),
+      { href: `/users/${get(result, '_source.id')}` },
+      img({ className: 'avatar', src: get(result, '_source.avatar') }),
       ' ',
-      result._source.name
+      get(result, '_source.name')
     )
   )
 
 r.topicResult = result => [
-  timeago(result._source.created, { right: true }),
+  timeago(get(result, '_source.created'), { right: true }),
   h3(
     span({ className: 'search__label' }, icon('topic'), ' Topic'),
     ' ',
-    a({ href: `/topics/${result._source.id}` }, result._source.name)
+    a(
+      { href: `/topics/${get(result, '_source.id')}` },
+      get(result, '_source.name')
+    )
   ),
-  result._source.entity.name
+  get(result, '_source.entity.name')
     ? a(
         {
-          href: `/${result._source.entity.kind}/${result._source.entity.id}`,
+          href: `/${get(result, '_source.entity.kind')}/${get(
+            result,
+            '_source.entity.id'
+          )}`,
         },
-        result._source.entity.name
+        get(result, '_source.entity.name')
       )
     : null,
   // TODO-2 no of posts   ???
 ]
 
 r.postResult = result => {
-  const href = `/topics/${result._source.topic_id}#${result._source.id}`
+  const href = `/topics/${get(result, '_source.topic_id')}#${get(
+    result,
+    '_source.id'
+  )}`
   return [
-    timeago(result._source.created, { right: true }),
+    timeago(get(result, '_source.created'), { right: true }),
     h3(
       span(
         { className: 'search__label' },
         icon('post'),
         ' ',
-        ucfirst(result._source.kind)
+        ucfirst(get(result, '_source.kind'))
       ),
       ' by ',
-      a({ href: `/users/${result._source.user.id}` }, result._source.user.name)
+      a(
+        { href: `/users/${get(result, '_source.user.id')}` },
+        get(result, '_source.user.name')
+      )
     ),
     ' in topic: ',
-    result._source.topic
+    get(result, '_source.topic')
       ? a(
-          { href: `/topics/${result._source.topic.id}` },
-          result._source.topic.name
+          { href: `/topics/${get(result, '_source.topic.id')}` },
+          get(result, '_source.topic.name')
         )
       : null,
     br(),
-    result._source.body,
+    get(result, '_source.body'),
     ' ',
     a({ href }, 'To Post ', icon('next')),
-    // TODO-3 entity kind     result._source.topic_id > ????
-    // TODO-3 entity name     result._source.topic_id > ????
+    // TODO-3 entity kind     get(result, '_source.topic_id') > ????
+    // TODO-3 entity name     get(result, '_source.topic_id') > ????
   ]
 }
 
 r.cardResult = result =>
   previewCardHead({
-    url: `/cards/${result._source.entity_id}`,
-    name: result._source.name,
-    kind: result._source.kind,
+    url: `/cards/${get(result, '_source.entity_id')}`,
+    name: get(result, '_source.name'),
+    kind: get(result, '_source.kind'),
     labelKind: true,
-    // TODO-3 unit name   result._source.unit_id > ???
+    // TODO-3 unit name   get(result, '_source.unit_id') > ???
     // TODO-3 contents  ???
   })
 
 r.unitResult = result =>
   previewUnitHead({
-    url: `/units/${result._source.entity_id}`,
-    name: result._source.name,
-    body: result._source.body,
+    url: `/units/${get(result, '_source.entity_id')}`,
+    name: get(result, '_source.name'),
+    body: get(result, '_source.body'),
     labelKind: true,
   })
 
@@ -109,7 +122,7 @@ r.subjectResult = (result, asLearner = false) => [
     ? a(
         // TODO-2 if already in subjects, don't show this button
         {
-          id: result._source.entity_id,
+          id: get(result, '_source.entity_id'),
           href: '#',
           className: 'add-to-my-subjects',
         },
@@ -119,16 +132,16 @@ r.subjectResult = (result, asLearner = false) => [
     : null,
 
   previewSubjectHead({
-    url: `/subjects/${result._source.entity_id}`,
-    name: result._source.name,
-    body: result._source.body,
+    url: `/subjects/${get(result, '_source.entity_id')}`,
+    name: get(result, '_source.name'),
+    body: get(result, '_source.body'),
     labelKind: true,
   }),
   asLearner ? ' ' : null,
   asLearner
     ? a(
         {
-          href: `/subjects/${result._source.entity_id}/tree`,
+          href: `/subjects/${get(result, '_source.entity_id')}/tree`,
           className: 'view-units',
         },
         icon('unit'),
@@ -163,7 +176,7 @@ module.exports = data => {
     data.searchResults && data.searchResults.length
       ? ul(
           data.searchResults.map(result =>
-            li(r[`${result._type}Result`](result, asLearner))
+            li(r[`${get(result, '_type')}Result`](result, asLearner))
           )
         )
       : null,
