@@ -70,6 +70,7 @@ How to deploy the latest master:
     cd /var/www
     git pull origin master
     cd client
+    yarn install
     yarn run deploy
     docker-compose restart server
     docker-compose restart client
