@@ -35,6 +35,8 @@ Learning Science
 - [Not All Practice Makes Perfect](http://nautil.us/issue/35/boundaries/not-all-practice-makes-perfect)
 - [Failures of Bridge International](https://www.nytimes.com/2017/06/27/magazine/can-a-tech-start-up-successfully-educate-children-in-the-developing-world.html)
 - ["Learning How To Learn" course notes on Reddit](https://www.reddit.com/r/GetMotivated/comments/5950tm/text_i_just_finished_the_online_coursera_course/)
+- [Ed Tech Developer’s Guide](https://tech.ed.gov/files/2015/04/Developer-Toolkit.pdf)
+- [Kaplan Product Evaluation Checklist](http://kaplan.com/wp-content/uploads/2016/01/Kaplan-Way_Checklist_Summary_Sheet.pdf)
 
 Gamification
 ------------
