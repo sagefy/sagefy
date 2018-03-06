@@ -46,7 +46,6 @@ def follow_route(request):
   if not current_user:
     return abort(401, '0kW_gcpzQ7GomlCM28R8hw')
   follow_data = dict(**request['params'])
-  print(follow_data)
   follow_data['user_id'] = current_user['id']
   follow, errors = insert_follow(db_conn, follow_data)
   if errors:
