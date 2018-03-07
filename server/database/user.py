@@ -4,7 +4,7 @@ import json
 import uuid
 
 from framework.elasticsearch import es
-from framework.redis import redis
+from framework.redis import red
 from framework.mail import send_mail
 from schemas.user import schema as user_schema
 from passlib.hash import bcrypt
@@ -304,7 +304,7 @@ def get_learning_context(user):
 
   key = 'learning_context_{id}'.format(id=convert_uuid_to_slug(user['id']))
   try:
-    context = json.loads(redis.get(key).decode())
+    context = json.loads(red.get(key).decode())
   except:
     context = {}
   return context
@@ -323,7 +323,7 @@ def set_learning_context(user, **d):
   context.update(d)
   context = compact_dict(context)
   key = 'learning_context_{id}'.format(id=convert_uuid_to_slug(user['id']))
-  redis.setex(key, 10 * 60, json.dumps(context, default=json_serial))
+  red.setex(key, 10 * 60, json.dumps(context, default=json_serial))
   return context
 
 
@@ -334,7 +334,7 @@ def get_email_token(user):
 
   token = convert_uuid_to_slug(uuid.uuid4())
   slugged_user_id = convert_uuid_to_slug(user['id'])
-  redis.setex(
+  red.setex(
     'user_password_token_{id}'.format(id=slugged_user_id),  # key
     60 * 10,  # time
     bcrypt.encrypt(slugged_user_id + token)  # value
@@ -359,8 +359,8 @@ def is_valid_token(user, token):
 
   slugged_user_id = convert_uuid_to_slug(user['id'])
   key = 'user_password_token_{id}'.format(id=slugged_user_id)
-  entoken = redis.get(key)
-  redis.delete(key)
+  entoken = red.get(key)
+  red.delete(key)
   if entoken:
     entoken = entoken.decode()
     return bcrypt.verify(slugged_user_id + token, entoken)

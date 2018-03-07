@@ -1,5 +1,5 @@
 import uuid
-from framework.redis import redis
+from framework.redis import red
 from database.user import get_user  # pylint: disable=E0611
 from modules.util import convert_uuid_to_slug
 
@@ -11,7 +11,7 @@ def get_current_user(request):
 
   cookies = request.get('cookies', {})
   session_id = cookies.get('session_id')
-  user_id = redis.get(session_id)
+  user_id = red.get(session_id)
   db_conn = request['db_conn']
   if user_id:
     user_id = user_id.decode()
@@ -24,7 +24,7 @@ def log_in_user(user):
   """
 
   session_id = convert_uuid_to_slug(uuid.uuid4())
-  redis.setex(
+  red.setex(
     session_id,
     2 * 7 * 24 * 60 * 60,
     convert_uuid_to_slug(user['id']),
@@ -40,4 +40,4 @@ def log_out_user(request):
   cookies = request.get('cookies', {})
   session_id = cookies.get('session_id')
   if session_id:
-    redis.delete(session_id)
+    red.delete(session_id)

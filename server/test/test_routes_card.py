@@ -1,7 +1,7 @@
 # pylint: disable=all
 import json
 import routes.card  # TODO-2 switch to direct imports
-from framework.redis import redis
+from framework.redis import red
 from datetime import datetime, timezone
 import uuid
 from conftest import user_id
@@ -160,7 +160,7 @@ def test_learn_card(db_conn, session):
   redis_key = 'learning_context_{user_id}'.format(
       user_id=convert_uuid_to_slug(user_id)
   )
-  redis.set(
+  red.set(
       redis_key,
       json.dumps({
           'unit': {'entity_id': convert_uuid_to_slug(unit_id)},
@@ -171,7 +171,7 @@ def test_learn_card(db_conn, session):
       request,
       convert_uuid_to_slug(card_id)
   )
-  redis.delete(redis_key)
+  red.delete(redis_key)
   assert not response.get('errors')
   assert code == 200
   assert 'order' not in response['card']
@@ -215,7 +215,7 @@ def test_learn_card_400(db_conn, session):
   redis_key = 'learning_context_{user_id}'.format(
       user_id=convert_uuid_to_slug(user_id)
   )
-  redis.set(
+  red.set(
       redis_key,
       json.dumps({
           'unit': {'entity_id': convert_uuid_to_slug(uuid.uuid4())},
@@ -226,7 +226,7 @@ def test_learn_card_400(db_conn, session):
       request,
       convert_uuid_to_slug(card_id)
   )
-  redis.delete(redis_key)
+  red.delete(redis_key)
   assert code == 400
 
 
@@ -262,7 +262,7 @@ def test_respond_card(db_conn, session):
   redis_key = 'learning_context_{user_id}'.format(
       user_id=convert_uuid_to_slug(user_id)
   )
-  redis.set(
+  red.set(
       redis_key,
       json.dumps({
           'card': {'entity_id': convert_uuid_to_slug(card_id)},
@@ -275,7 +275,7 @@ def test_respond_card(db_conn, session):
       'db_conn': db_conn,
   }
   code, response = routes.card.respond_to_card_route(request, card_id)
-  redis.delete(redis_key)
+  red.delete(redis_key)
   assert not response.get('errors')
   assert code == 200
   assert 'response' in response
@@ -316,7 +316,7 @@ def test_respond_card_400a(db_conn, session):
   redis_key = 'learning_context_{user_id}'.format(
       user_id=convert_uuid_to_slug(user_id)
   )
-  redis.set(
+  red.set(
       redis_key,
       json.dumps({
           'card': {'entity_id': convert_uuid_to_slug(uuid.uuid4())},
@@ -329,7 +329,7 @@ def test_respond_card_400a(db_conn, session):
       'db_conn': db_conn,
   }
   code, response = routes.card.respond_to_card_route(request, card_id)
-  redis.delete(redis_key)
+  red.delete(redis_key)
   assert code == 400
   assert 'errors' in response
 
@@ -343,7 +343,7 @@ def test_respond_card_400b(db_conn, session):
   redis_key = 'learning_context_{user_id}'.format(
       user_id=convert_uuid_to_slug(user_id)
   )
-  redis.set(
+  red.set(
       redis_key,
       json.dumps({
           'card': {'entity_id': convert_uuid_to_slug(card_id)},
@@ -356,7 +356,7 @@ def test_respond_card_400b(db_conn, session):
       'db_conn': db_conn,
   }
   code, response = routes.card.respond_to_card_route(request, card_id)
-  redis.delete(redis_key)
+  red.delete(redis_key)
   assert code == 400
   assert 'errors' in response
 

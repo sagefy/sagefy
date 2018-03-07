@@ -1,5 +1,5 @@
 import json
-from framework.redis import redis
+from framework.redis import red
 from modules.util import json_serial
 
 
@@ -8,7 +8,7 @@ def memoize_redis(key, fnn, time=24 * 60 * 60, *args, **kwargs):
   Memoize the results of a function into Redis.
   """
 
-  data = redis.get(key)
+  data = red.get(key)
   if isinstance(data, bytes):
     try:
       data = json.loads(data.decode())
@@ -17,7 +17,7 @@ def memoize_redis(key, fnn, time=24 * 60 * 60, *args, **kwargs):
   if data:
     return data
   data = fnn(*args, **kwargs)
-  redis.setex(key, time, json.dumps(
+  red.setex(key, time, json.dumps(
     data,
     default=json_serial,
     ensure_ascii=False
