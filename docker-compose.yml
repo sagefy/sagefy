@@ -45,6 +45,8 @@ services:
     links:
      - postgres
      - postgres-test
+     - redis
+     - elasticsearch
   client:
     # https://hub.docker.com/_/node/
     build: ./client
