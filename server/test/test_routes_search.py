@@ -14,7 +14,7 @@ def test_search():
       'q': 'music',
     },
   }
-  code, response = search_route(request)
+  code, _ = search_route(request)
   assert code == 200
 
 

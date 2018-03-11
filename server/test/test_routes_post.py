@@ -121,7 +121,7 @@ def test_get_posts_not_topic(db_conn):
     'params': {},
     'db_conn': db_conn
   }
-  code, response = routes.post.get_posts_route(request, topic_a_uuid)
+  code, _ = routes.post.get_posts_route(request, topic_a_uuid)
   assert code == 404
 
 

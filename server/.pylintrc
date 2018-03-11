@@ -1,23 +1,22 @@
 [MASTER]
 
-disable=bare-except,broad-except,empty-docstring,fixme,import-error,invalid-name,missing-docstring,no-member,no-name-in-module,pointless-string-statement,redefined-outer-name,superfluous-parens,too-many-locals,unused-argument,unused-import,unused-variable
+disable=bare-except,broad-except,empty-docstring,fixme,import-error,invalid-name,missing-docstring,no-member,no-name-in-module,pointless-string-statement,redefined-outer-name,superfluous-parens,too-many-locals,unused-argument,unused-import
 
 # bare-except -- Fine with just handling it in general.
 # broad-except -- Fine with just handling it in general.
-# empty-docstring -- FIX
+# empty-docstring -- FIX (7)
 # fixme -- Would take a long time to address all of those.
 # import-error -- Seems related to import issues. Fix?
 # invalid-name -- Would be useful if it didn't enforce constant rule. Fix?
-# missing-docstring -- FIX
+# missing-docstring -- FIX (Many)
 # no-member -- Seems related to import issues. Fix?
 # no-name-in-module -- Seems related to import issues. Fix?
-# pointless-string-statement -- FIX
-# redefined-outer-name -- FIX
+# pointless-string-statement -- FIX (12)
+# redefined-outer-name -- FIX (8)
 # superfluous-parens -- Only happens with `print`. Fix?
-# too-many-locals -- FIX
-# unused-argument -- FIX
+# too-many-locals -- FIX (3)
+# unused-argument -- FIX (~50)
 # unused-import -- Seems related to import issues. Fix?
-# unused-variable -- FIX
 
 [REPORTS]
 

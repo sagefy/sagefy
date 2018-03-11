@@ -19,7 +19,7 @@ def test_list(db_conn, session):
       'entity_kind': '',
       'entity_name': '',
     }
-  } for i in range(0, 10)])
+  } for _ in range(0, 10)])
   request = {
     'cookies': {'session_id': session},
     'params': {},
@@ -40,7 +40,7 @@ def test_list_no_user(db_conn):
     'params': {},
     'db_conn': db_conn
   }
-  code, response = routes.notice.list_notices_route(request)
+  code, _ = routes.notice.list_notices_route(request)
   assert code == 401
 
 
@@ -58,7 +58,7 @@ def test_list_paginate(db_conn, session):
       'entity_kind': '',
       'entity_name': '',
     }
-  } for i in range(0, 25)])
+  } for _ in range(0, 25)])
 
   request = {
     'cookies': {'session_id': session},
@@ -66,6 +66,7 @@ def test_list_paginate(db_conn, session):
     'db_conn': db_conn,
   }
   code, response = routes.notice.list_notices_route(request)
+  assert code == 200
   assert len(response['notices']) == 10
   request.update({'params': {'offset': 10}})
   code, response = routes.notice.list_notices_route(request)
@@ -101,6 +102,7 @@ def test_mark(db_conn, session):
   assert response['notice']['read'] is True
   record = get_notice(db_conn, {'id': nid})
   assert record['read'] is True
+  assert not errors
 
 
 def test_mark_no_user(db_conn, session):
@@ -117,16 +119,17 @@ def test_mark_no_user(db_conn, session):
       'entity_name': '',
     }
   })
+  assert not errors
   nid = notice['id']
-
   request = {
     'params': {'read': True},
     'db_conn': db_conn
   }
-  code, response = routes.notice.mark_notice_route(request, nid)
+  code, _ = routes.notice.mark_notice_route(request, nid)
   assert code == 401
   record = get_notice(db_conn, {'id': nid})
   assert record['read'] is False
+
 
 
 def test_mark_no_notice(db_conn, session):
@@ -139,8 +142,7 @@ def test_mark_no_notice(db_conn, session):
     'params': {'read': True},
     'db_conn': db_conn,
   }
-  code, response = (routes.notice
-                    .mark_notice_route(request, user_id))
+  code, _ = (routes.notice.mark_notice_route(request, user_id))
   assert code == 404
 
 
@@ -165,6 +167,7 @@ def test_mark_not_owned(db_conn, session):
       'entity_name': '',
     }
   })
+  assert not errors
   nid = notice['id']
 
   request = {
@@ -172,7 +175,7 @@ def test_mark_not_owned(db_conn, session):
     'params': {'read': True},
     'db_conn': db_conn,
   }
-  code, response = routes.notice.mark_notice_route(request, nid)
+  code, _ = routes.notice.mark_notice_route(request, nid)
   assert code == 403
   record = get_notice(db_conn, {'id': nid})
   assert record['read'] is False

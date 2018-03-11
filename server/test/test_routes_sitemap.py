@@ -30,5 +30,5 @@ def test_get_sitemap_route(db_conn):
     'name': 'Lets talk about adding numbers',
   }])
   request = {'db_conn': db_conn}
-  code, response = get_sitemap_route(request)
+  code, _ = get_sitemap_route(request)
   assert code == 200

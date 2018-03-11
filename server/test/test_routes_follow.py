@@ -40,7 +40,7 @@ def test_list_follows_route_401(db_conn):
   Expect fail to to get a list of follows for user if not logged in.
   """
 
-  code, response = routes.follow.get_follows_route({
+  code, _ = routes.follow.get_follows_route({
     'params': {},
     'db_conn': db_conn,
   })
@@ -66,7 +66,7 @@ def test_follow(db_conn, session):
     },
     'db_conn': db_conn
   }
-  code, response = routes.follow.follow_route(request)
+  code, _ = routes.follow.follow_route(request)
   assert code == 200
 
 
@@ -82,7 +82,7 @@ def test_follow_401(db_conn):
     },
     'db_conn': db_conn
   }
-  code, response = routes.follow.follow_route(request)
+  code, _ = routes.follow.follow_route(request)
   assert code == 401
 
 
@@ -128,7 +128,7 @@ def test_follow_409(db_conn, session):
     },
     'db_conn': db_conn
   }
-  code, response = routes.follow.follow_route(request)
+  code, _ = routes.follow.follow_route(request)
   assert code == 400
 
 
@@ -148,7 +148,7 @@ def test_unfollow(db_conn, session):
     'cookies': {'session_id': session},
     'db_conn': db_conn
   }
-  code, response = routes.follow.unfollow_route(request, follow_a_uuid)
+  code, _ = routes.follow.unfollow_route(request, follow_a_uuid)
   assert code == 200
 
 
@@ -157,7 +157,7 @@ def test_unfollow_401(db_conn):
   Expect to fail to unfollow an entity if not logged in.
   """
 
-  code, response = routes.follow.unfollow_route({
+  code, _ = routes.follow.unfollow_route({
     'db_conn': db_conn
   }, follow_a_uuid)
   assert code == 401
@@ -186,7 +186,7 @@ def test_unfollow_403(db_conn, session):
     'cookies': {'session_id': session},
     'db_conn': db_conn
   }
-  code, response = routes.follow.unfollow_route(request, follow_a_uuid)
+  code, _ = routes.follow.unfollow_route(request, follow_a_uuid)
   assert code == 403
 
 
@@ -199,5 +199,5 @@ def test_unfollow_404(db_conn, session):
     'cookies': {'session_id': session},
     'db_conn': db_conn
   }
-  code, response = routes.follow.unfollow_route(request, follow_a_uuid)
+  code, _ = routes.follow.unfollow_route(request, follow_a_uuid)
   assert code == 404

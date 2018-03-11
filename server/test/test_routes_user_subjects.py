@@ -80,7 +80,7 @@ def test_list_user_subjects_route(db_conn, session):
 
 
 def test_list_user_subjects_route_other_404(db_conn, session):
-  code, response = routes.user_subjects.list_user_subjects_route({
+  code, _ = routes.user_subjects.list_user_subjects_route({
     'db_conn': db_conn,
   }, uuid.uuid4())
   assert code == 404
@@ -104,7 +104,7 @@ def test_list_user_subjects_route_other_403(db_conn):
     'params': {},
     'db_conn': db_conn,
   }
-  code, response = routes.user_subjects.list_user_subjects_route(
+  code, _ = routes.user_subjects.list_user_subjects_route(
     request, this_user_id)
   assert code == 403
 
@@ -130,7 +130,7 @@ def test_add_subject_401(db_conn):
   Expect to 401 when trying to add a subject but not logged in.
   """
 
-  code, response = routes.user_subjects.add_subject_route({
+  code, _ = routes.user_subjects.add_subject_route({
     'db_conn': db_conn
   }, user_id, subject_a_uuid)
   assert code == 401
@@ -145,7 +145,7 @@ def test_add_subject_403(db_conn, session):
     'cookies': {'session_id': session},
     'db_conn': db_conn,
   }
-  code, response = routes.user_subjects.add_subject_route(
+  code, _ = routes.user_subjects.add_subject_route(
     request, uuid.uuid4(), '2')
   assert code == 403
 
@@ -159,7 +159,7 @@ def test_add_subject_404(db_conn, session):
     'cookies': {'session_id': session},
     'db_conn': db_conn,
   }
-  code, response = routes.user_subjects.add_subject_route(
+  code, _ = routes.user_subjects.add_subject_route(
     request, user_id, uuid.uuid4())
   assert code == 404
 
@@ -174,10 +174,10 @@ def test_add_subject_already_added(db_conn, session):
     'cookies': {'session_id': session},
     'db_conn': db_conn,
   }
-  code, response = routes.user_subjects.add_subject_route(
+  code, _ = routes.user_subjects.add_subject_route(
     request, user_id, subject_a_uuid)
   assert code == 200
-  code, response = routes.user_subjects.add_subject_route(
+  code, _ = routes.user_subjects.add_subject_route(
     request, user_id, subject_a_uuid)
   assert code == 400
 
@@ -214,7 +214,7 @@ def test_remove_subject(db_conn, session):
     'cookies': {'session_id': session},
     'db_conn': db_conn,
   }
-  code, response = routes.user_subjects.remove_subject_route(
+  code, _ = routes.user_subjects.remove_subject_route(
     request, user_id, subject_a_uuid)
   assert code == 200
 
@@ -227,7 +227,7 @@ def test_remove_subject_401(db_conn):
   request = {
     'db_conn': db_conn,
   }
-  code, response = routes.user_subjects.remove_subject_route(
+  code, _ = routes.user_subjects.remove_subject_route(
     request, user_id, subject_a_uuid)
   assert code == 401
 
@@ -241,7 +241,7 @@ def test_remove_subject_403(db_conn, session):
     'cookies': {'session_id': session},
     'db_conn': db_conn,
   }
-  code, response = routes.user_subjects.remove_subject_route(
+  code, _ = routes.user_subjects.remove_subject_route(
     request, uuid.uuid4(), '2')
   assert code == 403
 
@@ -255,6 +255,6 @@ def test_remove_subject_404(db_conn, session):
     'cookies': {'session_id': session},
     'db_conn': db_conn,
   }
-  code, response = routes.user_subjects.remove_subject_route(
+  code, _ = routes.user_subjects.remove_subject_route(
     request, user_id, subject_a_uuid)
   assert code == 404

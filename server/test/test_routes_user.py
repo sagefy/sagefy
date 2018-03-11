@@ -27,6 +27,7 @@ def test_user_get_failed(db_conn):
 
   request = {'params': {}, 'db_conn': db_conn}
   code, response = routes.user.get_user_route(request, user_id)
+  assert code != 200
   assert 'errors' in response
 
 
@@ -41,6 +42,7 @@ def test_user_log_in(db_conn):
     'db_conn': db_conn
   }
   code, response = routes.user.log_in_route(request)
+  assert code == 200
   assert response['user']['email'] == 'test@example.com'
 
 
@@ -54,6 +56,7 @@ def test_user_log_in_none(db_conn):
     'db_conn': db_conn
   }
   code, response = routes.user.log_in_route(request)
+  assert code != 200
   assert 'errors' in response
 
 
@@ -68,6 +71,7 @@ def test_user_log_in_password_fail(db_conn):
     'db_conn': db_conn
   }
   code, response = routes.user.log_in_route(request)
+  assert code != 200
   assert 'errors' in response
 
 
@@ -97,6 +101,7 @@ def test_user_get_current(db_conn, session):
 
   request = {'cookies': {'session_id': session}, 'db_conn': db_conn}
   code, response = routes.user.get_current_user_route(request)
+  assert code == 200
   assert response['user']['name'] == 'test'
 
 
@@ -105,7 +110,7 @@ def test_user_get_current_failed(db_conn):
   Ensure no user is returned when logged out.
   """
 
-  code, response = routes.user.get_current_user_route({'db_conn': db_conn})
+  code, _ = routes.user.get_current_user_route({'db_conn': db_conn})
   assert code == 401
 
 
@@ -148,6 +153,7 @@ def test_user_create_failed(db_conn):
     'db_conn': db_conn
   }
   code, response = routes.user.create_user_route(request)
+  assert code != 200
   assert 'errors' in response
 
 
@@ -185,6 +191,7 @@ def test_user_update_none(db_conn):
     'db_conn': db_conn
   }
   code, response = routes.user.update_user_route(request, user_id)
+  assert code != 200
   assert 'errors' in response
 
 
@@ -209,6 +216,7 @@ def test_user_update_self_only(db_conn, session):
     'db_conn': db_conn
   }
   code, response = routes.user.update_user_route(request, user_id)
+  assert code != 200
   assert 'errors' in response
 
 
@@ -227,6 +235,7 @@ def test_user_update_invalid(db_conn, session):
     'db_conn': db_conn
   }
   code, response = routes.user.update_user_route(request, user_id)
+  assert code != 200
   assert 'errors' in response
 
 
@@ -237,7 +246,7 @@ def test_user_token_fail(db_conn):
 
   create_user_in_db(db_conn)
   request = {'params': {'email': 'other'}, 'db_conn': db_conn}
-  code, response = routes.user.create_token_route(request)
+  code, _ = routes.user.create_token_route(request)
   assert code == 404
 
 
@@ -248,7 +257,7 @@ def test_user_token_success(db_conn):
 
   create_user_in_db(db_conn)
   request = {'params': {'email': 'test@example.com'}, 'db_conn': db_conn}
-  code, response = routes.user.create_token_route(request)
+  code, _ = routes.user.create_token_route(request)
   assert code == 200
 
 
@@ -269,7 +278,7 @@ def test_user_create_password_fail(db_conn):
     },
     'db_conn': db_conn
   }
-  code, response = routes.user.create_password_route(request, user_id)
+  code, _ = routes.user.create_password_route(request, user_id)
   assert code == 403
   user = get_user(db_conn, {'id': user_id})
   assert user['password'] == pw1
@@ -292,7 +301,7 @@ def test_user_create_password_ok(db_conn):
     },
     'db_conn': db_conn
   }
-  code, response = routes.user.create_password_route(request, user_id)
+  code, _ = routes.user.create_password_route(request, user_id)
   assert code == 200
   user = get_user(db_conn, {'id': user_id})
   assert user['password'] != pw1

@@ -132,7 +132,7 @@ def test_get_card_404(db_conn):
   Expect to fail to get an unknown card. (404)
   """
 
-  code, response = routes.card.get_card_route({
+  code, _ = routes.card.get_card_route({
     'db_conn': db_conn
   }, convert_uuid_to_slug(uuid.uuid4()))
   assert code == 404
@@ -146,7 +146,7 @@ def test_list_cards_route(db_conn, session):
       'entity_ids': convert_uuid_to_slug(entity_id),
     },
   }
-  code, response = routes.card.list_cards_route(request)
+  code, _ = routes.card.list_cards_route(request)
   assert code == 200
 
 
@@ -185,7 +185,7 @@ def test_learn_card_401(db_conn):
   Expect to require log in to get a card for learn mode. (401)
   """
 
-  code, response = routes.card.learn_card_route({
+  code, _ = routes.card.learn_card_route({
     'db_conn': db_conn
   }, convert_uuid_to_slug(uuid.uuid4()))
   assert code == 401
@@ -197,7 +197,7 @@ def test_learn_card_404(db_conn, session):
   """
 
   request = {'cookies': {'session_id': session}, 'db_conn': db_conn}
-  code, response = routes.card.learn_card_route(
+  code, _ = routes.card.learn_card_route(
     request,
     convert_uuid_to_slug(uuid.uuid4())
   )
@@ -221,7 +221,7 @@ def test_learn_card_400(db_conn, session):
     })
   )
   request = {'cookies': {'session_id': session}, 'db_conn': db_conn}
-  code, response = routes.card.learn_card_route(
+  code, _ = routes.card.learn_card_route(
     request,
     convert_uuid_to_slug(card_id)
   )
@@ -286,7 +286,7 @@ def test_respond_card_401(db_conn):
   Expect to require log in to get an unknown card. (401)
   """
 
-  code, response = routes.card.respond_to_card_route({
+  code, _ = routes.card.respond_to_card_route({
     'db_conn': db_conn
   }, convert_uuid_to_slug(uuid.uuid4()))
   assert code == 401
@@ -297,7 +297,7 @@ def test_respond_card_404(db_conn, session):
   Expect to fail to respond to an unknown card. (404)
   """
 
-  code, response = routes.card.respond_to_card_route({
+  code, _ = routes.card.respond_to_card_route({
     'params': {'response': convert_uuid_to_slug(uuid.uuid4())},
     'cookies': {'session_id': session},
     'db_conn': db_conn,

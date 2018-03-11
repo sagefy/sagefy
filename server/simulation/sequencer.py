@@ -56,7 +56,7 @@ def main(num_learners=1000, num_cards=50):
 
   latest_response_per_learner = {}
 
-  for i, response in enumerate(responses):
+  for _, response in enumerate(responses):
     # response keys: learner, card, time, score
 
     if response['learner'] in latest_response_per_learner:

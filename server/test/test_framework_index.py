@@ -54,9 +54,9 @@ def test_call_handler_real():
   Expect to call the handler matching the path.
   """
 
-  import routes.public  # noqa
+  import routes.public  # pylint: disable=unused-variable
 
-  code, response = call_handler({
+  code, _ = call_handler({
     'method': 'GET',
     'path': '/s/',
   })

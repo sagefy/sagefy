@@ -54,5 +54,5 @@ def test_seq_next_401(db_conn, session):
   request = {
     'db_conn': db_conn,
   }
-  code, response = routes.next.next_route(request)
+  code, _ = routes.next.next_route(request)
   assert code == 401
