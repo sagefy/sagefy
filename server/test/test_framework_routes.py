@@ -1,9 +1,8 @@
+# pylint: disable=anomalous-backslash-in-string
 import re
 from framework.routes import ROUTES
 from framework.routes import get, post, put, delete, abort, \
   build_path_pattern, find_path
-
-
 
 
 def test_get():
