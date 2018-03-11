@@ -1,13 +1,15 @@
 [MASTER]
 
-disable=bare-except,broad-except,empty-docstring,fixme,import-error,invalid-name,missing-docstring,no-member,no-name-in-module,pointless-string-statement,redefined-outer-name,superfluous-parens,too-many-locals,unused-argument,unused-import
+disable=bare-except,broad-except,empty-docstring,fixme,import-error,inconsistent-return-statements,invalid-name,keyword-arg-before-vararg,missing-docstring,no-member,no-name-in-module,pointless-string-statement,redefined-outer-name,superfluous-parens,too-many-locals,unused-argument,unused-import
 
 # bare-except -- Fine with just handling it in general.
 # broad-except -- Fine with just handling it in general.
 # empty-docstring -- FIX (7)
 # fixme -- Would take a long time to address all of those.
 # import-error -- Seems related to import issues. Fix?
+# inconsistent-return-statements -- ? (~30)
 # invalid-name -- Would be useful if it didn't enforce constant rule. Fix?
+# keyword-arg-before-vararg -- ? (1)
 # missing-docstring -- FIX (Many)
 # no-member -- Seems related to import issues. Fix?
 # no-name-in-module -- Seems related to import issues. Fix?
