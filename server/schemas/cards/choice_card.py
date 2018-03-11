@@ -18,7 +18,7 @@ def has_correct_options(options):
     return c('error_need_correct')
 
 
-schema = extend({}, card_schema, {  # pylint: disable=C0103
+schema = extend({}, card_schema, {
   'fields': {
     'data': {
       'embed': {

@@ -2,7 +2,7 @@ from schemas.post import schema as post_schema
 from modules.util import extend
 from modules.validations import is_string, is_required, is_boolean, is_uuid
 
-schema = extend({}, post_schema, {  # pylint: disable=C0103
+schema = extend({}, post_schema, {
   'fields': {
     'response': {
       'validate': (is_required, is_boolean,),

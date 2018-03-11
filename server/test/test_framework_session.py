@@ -1,8 +1,7 @@
-# pylint: disable=all
-from conftest import user_id, create_user_in_db, log_in
 from framework.session import get_current_user, log_in_user, log_out_user
-from database.user import get_user
 from framework.redis_conn import red
+from conftest import user_id, create_user_in_db, log_in
+from database.user import get_user
 from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
 
 

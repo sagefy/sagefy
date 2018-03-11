@@ -125,7 +125,7 @@ def create_post_route(request, topic_id):
 
 
 @put('/s/topics/{topic_id}/posts/{post_id}')
-def update_post_route(request, topic_id, post_id):  # pylint: disable=W0613
+def update_post_route(request, topic_id, post_id):
   """
   Update an existing post. Must be one's own post.
   For post:

@@ -1,26 +1,24 @@
-# pylint: disable=all
-
-from database.unit import ensure_requires, \
-    ensure_no_cycles, \
-    insert_unit, \
-    insert_unit_version, \
-    update_unit, \
-    deliver_unit, \
-    does_unit_exist, \
-    get_latest_accepted_unit, \
-    list_latest_accepted_units, \
-    list_many_unit_versions, \
-    get_unit_version, \
-    list_one_unit_versions, \
-    list_required_units, \
-    list_required_by_units, \
-    list_units_by_subject_flat, \
-    list_my_recently_created_units, \
-    list_all_unit_entity_ids
-from raw_insert import raw_insert_users, \
-    raw_insert_units, \
-    raw_insert_subjects
 import uuid
+from database.unit import ensure_requires, \
+  ensure_no_cycles, \
+  insert_unit, \
+  insert_unit_version, \
+  update_unit, \
+  deliver_unit, \
+  does_unit_exist, \
+  get_latest_accepted_unit, \
+  list_latest_accepted_units, \
+  list_many_unit_versions, \
+  get_unit_version, \
+  list_one_unit_versions, \
+  list_required_units, \
+  list_required_by_units, \
+  list_units_by_subject_flat, \
+  list_my_recently_created_units, \
+  list_all_unit_entity_ids
+from raw_insert import raw_insert_users, \
+  raw_insert_units, \
+  raw_insert_subjects
 from modules.util import convert_uuid_to_slug
 
 user_a_uuid = uuid.uuid4()

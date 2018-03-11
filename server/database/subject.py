@@ -327,7 +327,7 @@ def list_subject_parents(db_conn, subject_id):
   return list_rows(db_conn, query, params)
 
 
-def list_my_recently_created_subjects(db_conn, user_id):  # pylint: disable=C0103
+def list_my_recently_created_subjects(db_conn, user_id):
   """
   List My Recently Created Subjects (by User ID)
   """

@@ -1,1 +1,1 @@
-import modules.sequencer.params  # pylint: disable=all
+import modules.sequencer.params

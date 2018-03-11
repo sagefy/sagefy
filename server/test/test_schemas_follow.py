@@ -1,1 +1,1 @@
-import schemas.follow  # pylint: disable=W0611
+import schemas.follow

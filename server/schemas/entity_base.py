@@ -10,7 +10,7 @@ The `id` attribute refers to a specific version of the entity.
 The `previous_id` attribute refers to the version based off.
 """
 
-schema = extend({}, default, {  # pylint: disable=C0103
+schema = extend({}, default, {
   'fields': {
     'version_id': {
       'validate': (is_uuid,),

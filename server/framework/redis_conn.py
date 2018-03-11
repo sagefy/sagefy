@@ -1,7 +1,7 @@
 from config import config
-from redis import StrictRedis  # pylint: disable=W0406
+from redis import StrictRedis
 
-red = StrictRedis(  # pylint: disable=C0103
+red = StrictRedis(
   host=config['redis_host'],
   port=config['redis_port']
 )

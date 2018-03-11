@@ -1,12 +1,12 @@
 from modules.memoize_redis import memoize_redis
 from database.user import get_user
 from database.card import get_card_version, list_latest_accepted_cards, \
-    update_card, list_one_card_versions
+  update_card, list_one_card_versions
 from database.subject import list_subjects_by_unit_flat, \
-    list_subject_parents, list_latest_accepted_subjects, \
-    get_subject_version, update_subject, list_one_subject_versions
+  list_subject_parents, list_latest_accepted_subjects, \
+  get_subject_version, update_subject, list_one_subject_versions
 from database.unit import list_latest_accepted_units, \
-    update_unit, get_unit_version, list_one_unit_versions
+  update_unit, get_unit_version, list_one_unit_versions
 
 
 def get_entity_version(db_conn, kind, version_id):
@@ -145,7 +145,7 @@ def find_requires_cycle(db_conn, tablename, data):
   return found['cycle']
 
 
-def get_entity_status(current_status, votes):  # pylint: disable=W0613
+def get_entity_status(current_status, votes):
   """
   Returns (changed, status) ... one of:
   (True, 'accepted|blocked|pending')

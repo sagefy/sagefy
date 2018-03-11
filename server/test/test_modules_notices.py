@@ -1,4 +1,4 @@
-# pylint: disable=all
+
 from modules.notices import send_notices
 from test_database_follow import test_unit_uuid, create_test_follows
 

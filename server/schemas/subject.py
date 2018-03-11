@@ -9,7 +9,7 @@ Subjects can vary greatly in scale.
 A graph is automatically formed based on the units and subjects specified.
 """
 
-schema = extend({}, entity_schema, {  # pylint: disable=C0103
+schema = extend({}, entity_schema, {
   'tablename': 'subjects',
   'fields': {
     'body': {

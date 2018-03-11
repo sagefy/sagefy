@@ -1,24 +1,24 @@
-# pylint: disable=all
+import uuid
 import pytest
-xfail = pytest.mark.xfail
 
 from routes.subject import \
-    get_recommended_subjects_route, \
-    get_subject_route, \
-    list_subjects_route, \
-    get_subject_versions_route, \
-    get_subject_version_route, \
-    get_subject_tree_route, \
-    get_subject_units_route, \
-    choose_unit_route, \
-    get_my_recently_created_subjects_route, \
-    create_new_subject_version_route, \
-    create_existing_subject_version_route
+  get_recommended_subjects_route, \
+  get_subject_route, \
+  list_subjects_route, \
+  get_subject_versions_route, \
+  get_subject_version_route, \
+  get_subject_tree_route, \
+  get_subject_units_route, \
+  choose_unit_route, \
+  get_my_recently_created_subjects_route, \
+  create_new_subject_version_route, \
+  create_existing_subject_version_route
 from conftest import user_id
-import uuid
 from raw_insert import raw_insert_units, raw_insert_subjects, raw_insert_cards
 from modules.util import convert_uuid_to_slug
 from database.user import get_user_by_id, set_learning_context
+
+xfail = pytest.mark.xfail
 
 user_a_uuid = uuid.uuid4()
 user_b_uuid = uuid.uuid4()

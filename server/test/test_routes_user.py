@@ -1,9 +1,9 @@
-# pylint: disable=all
+
 from passlib.hash import bcrypt
 from conftest import create_user_in_db
+from conftest import user_id
 import routes.user  # TODO-2 switch to direct imports
 from database.user import get_user, get_email_token
-from conftest import user_id
 from raw_insert import raw_insert_users
 from modules.util import convert_uuid_to_slug
 
@@ -41,7 +41,7 @@ def test_user_log_in(db_conn):
       'db_conn': db_conn
   }
   code, response = routes.user.log_in_route(request)
-  assert 'test@example.com' == response['user']['email']
+  assert response['user']['email'] == 'test@example.com'
 
 
 def test_user_log_in_none(db_conn):

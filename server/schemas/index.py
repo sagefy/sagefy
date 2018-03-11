@@ -1,6 +1,6 @@
 from modules.validations import is_uuid, is_datetime
 
-schema = {  # pylint: disable=C0103
+schema = {
   'tablename': '',
   'fields': {
     'id': {

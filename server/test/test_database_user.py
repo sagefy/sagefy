@@ -1,24 +1,22 @@
-# pylint: disable=all
-
-from database.user import insert_user, \
-    update_user, \
-    update_user_password, \
-    add_user_to_es, \
-    get_user, \
-    get_user_by_id, \
-    get_user_by_email, \
-    get_user_by_name, \
-    list_users, \
-    list_users_by_user_ids, \
-    delete_user, \
-    deliver_user, \
-    is_password_valid, \
-    get_avatar, \
-    get_learning_context, \
-    set_learning_context, \
-    get_email_token, \
-    is_valid_token
 import uuid
+from database.user import insert_user, \
+  update_user, \
+  update_user_password, \
+  add_user_to_es, \
+  get_user, \
+  get_user_by_id, \
+  get_user_by_email, \
+  get_user_by_name, \
+  list_users, \
+  list_users_by_user_ids, \
+  delete_user, \
+  deliver_user, \
+  is_password_valid, \
+  get_avatar, \
+  get_learning_context, \
+  set_learning_context, \
+  get_email_token, \
+  is_valid_token
 from raw_insert import raw_insert_users
 from passlib.hash import bcrypt
 

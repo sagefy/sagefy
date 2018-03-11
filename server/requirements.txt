@@ -4,3 +4,7 @@ passlib==1.6.2
 pyyaml==3.11
 elasticsearch>=2.0.0,<3.0.0
 psycopg2==2.7.1
+
+pytest==3.4.2
+coverage==4.5.1
+pylint=1.7.6

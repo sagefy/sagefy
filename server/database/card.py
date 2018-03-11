@@ -7,7 +7,7 @@ from schemas.cards.video_card import schema as video_card_schema
 from schemas.cards.page_card import schema as page_card_schema
 from schemas.cards.choice_card import schema as choice_card_schema
 from schemas.cards.unscored_embed_card \
-    import schema as unscored_embed_card_schema
+  import schema as unscored_embed_card_schema
 from database.util import deliver_fields
 from database.entity_base import save_entity_to_es
 from database.util import insert_row, save_row, get_row, list_rows

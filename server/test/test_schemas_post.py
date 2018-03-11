@@ -1,1 +1,1 @@
-import schemas.post  # pylint: disable=W0611
+import schemas.post

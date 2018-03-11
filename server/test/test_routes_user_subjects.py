@@ -1,8 +1,7 @@
-# pylint: disable=all
+import uuid
 import routes.user_subjects  # TODO-2 switch to direct imports
 from raw_insert import raw_insert_subjects, raw_insert_user_subjects, \
-    raw_insert_units
-import uuid
+  raw_insert_units
 from conftest import user_id
 from modules.util import convert_uuid_to_slug
 

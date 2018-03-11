@@ -2,7 +2,7 @@ from schemas.index import schema as default
 from modules.util import extend
 from modules.validations import is_required, is_uuid, is_dict
 
-schema = extend({}, default, { # pylint: disable=C0103
+schema = extend({}, default, {
   'tablename': 'cards_parameters',
   'fields': {
     'entity_id': {

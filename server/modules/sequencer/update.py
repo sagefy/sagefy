@@ -1,7 +1,7 @@
 from modules.sequencer.params import init_transit
 from modules.sequencer.pmf import update_pmf, \
-    get_guess_pmf_value, get_guess_pmf_likelihood, \
-    get_slip_pmf_value, get_slip_pmf_likelihood
+  get_guess_pmf_value, get_guess_pmf_likelihood, \
+  get_slip_pmf_value, get_slip_pmf_likelihood
 from modules.sequencer.formulas import update_learned
 
 

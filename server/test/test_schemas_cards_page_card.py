@@ -1,1 +1,1 @@
-import schemas.cards.page_card  # pylint: disable=W0611
+import schemas.cards.page_card

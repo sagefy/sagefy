@@ -1,30 +1,32 @@
-# pylint: disable=C0103,C0330,C0413,wrong-import-order
+# pylint: disable=wrong-import-position,wrong-import-order
+
+import uuid
+from datetime import datetime, timezone
+import yaml
+import psycopg2
+import psycopg2.extras
 
 # via https://stackoverflow.com/a/11158224
 import os
 import sys
 import inspect
 currentdir = os.path.dirname(
-    os.path.abspath(
-        inspect.getfile(
-            inspect.currentframe())))
+  os.path.abspath(
+    inspect.getfile(
+      inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
-import uuid
-from datetime import datetime, timezone
+
 from config import config
 from framework.database import make_db_connection, \
-    close_db_connection
+  close_db_connection
 from framework.elasticsearch_conn import es
 from framework.redis_conn import red
 from test.raw_insert import raw_insert_users, raw_insert_cards, \
-    raw_insert_units, raw_insert_subjects, raw_insert_topics, \
-    raw_insert_posts, raw_insert_follows, raw_insert_notices
-import psycopg2
-import psycopg2.extras
+  raw_insert_units, raw_insert_subjects, raw_insert_topics, \
+  raw_insert_posts, raw_insert_follows, raw_insert_notices
 from es_populate import es_populate
-import yaml
 from modules.util import convert_uuid_to_slug
 from database.util import delete_row
 
@@ -36,20 +38,20 @@ psycopg2.extras.register_uuid()
 db_conn = make_db_connection()
 
 for tablename in reversed((
-    'users',
-    'units_entity_id',
-    'units',
-    'cards_entity_id',
-    'cards',
-    'cards_parameters',
-    'subjects_entity_id',
-    'subjects',
-    'topics',
-    'posts',
-    'follows',
-    'notices',
-    'users_subjects',
-    'responses',
+  'users',
+  'units_entity_id',
+  'units',
+  'cards_entity_id',
+  'cards',
+  'cards_parameters',
+  'subjects_entity_id',
+  'subjects',
+  'topics',
+  'posts',
+  'follows',
+  'notices',
+  'users_subjects',
+  'responses',
 )):
   cur = db_conn.cursor()
   with cur:

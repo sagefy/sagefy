@@ -1,31 +1,31 @@
 import uuid
 from database.entity_facade import get_entity_version, \
-    list_one_entity_versions, \
-    update_entity_status_by_kind, \
-    list_subjects_by_unit_recursive, \
-    list_units_in_subject_recursive, \
-    get_entity_status, \
-    update_entity_statuses, \
-    find_requires_cycle
+  list_one_entity_versions, \
+  update_entity_status_by_kind, \
+  list_subjects_by_unit_recursive, \
+  list_units_in_subject_recursive, \
+  get_entity_status, \
+  update_entity_statuses, \
+  find_requires_cycle
 from database.unit import get_unit_version
 from database.card import get_card_version
 from database.subject import get_latest_accepted_subject
 from database.post import get_post
 from test_database_unit import create_unit_test_data, \
-    unit_b_uuid as XU_unit_b_uuid, \
-    unit_version_a_uuid as XU_unit_version_a_uuid
+  unit_b_uuid as XU_unit_b_uuid, \
+  unit_version_a_uuid as XU_unit_version_a_uuid
 from test_database_card import create_card_test_data, \
-    card_b_uuid as XU_card_b_uuid, \
-    card_version_a_uuid as XU_card_version_a_uuid
+  card_b_uuid as XU_card_b_uuid, \
+  card_version_a_uuid as XU_card_version_a_uuid
 from raw_insert import raw_insert_users, \
-    raw_insert_units, \
-    raw_insert_subjects, \
-    raw_insert_cards, \
-    raw_insert_topics, \
-    raw_insert_posts
+  raw_insert_units, \
+  raw_insert_subjects, \
+  raw_insert_cards, \
+  raw_insert_topics, \
+  raw_insert_posts
 from modules.util import convert_uuid_to_slug
 
-# pylint: disable=C0103
+
 
 user_a_uuid = uuid.uuid4()
 unit_a_uuid = uuid.uuid4()

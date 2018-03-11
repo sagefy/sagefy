@@ -1,10 +1,9 @@
-# pylint: disable=all
+import uuid
 import routes.notice  # TODO-2 switch to direct imports
 from database.notice import insert_notice, get_notice
 from raw_insert import raw_insert_users, \
-    raw_insert_notices
+  raw_insert_notices
 from conftest import user_id
-import uuid
 
 
 def test_list(db_conn, session):

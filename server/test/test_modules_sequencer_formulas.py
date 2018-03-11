@@ -1,9 +1,9 @@
-# pylint: disable=all
+
 from modules.sequencer.formulas import calculate_correct, \
-    calculate_incorrect, \
-    calculate_difficulty, \
-    calculate_belief, \
-    update_learned
+  calculate_incorrect, \
+  calculate_difficulty, \
+  calculate_belief, \
+  update_learned
 
 
 def test_calculate_correct():
@@ -127,11 +127,11 @@ def test_guess_learner():
     than a learner with a high learned when the answer is correct."""
 
   assert update_guess(1, 0.3, 0.1, 0.2) > \
-      update_guess(1, 0.3, 0.1, 0.8)
+    update_guess(1, 0.3, 0.1, 0.8)
   assert update_guess(1, 0.01, 0.01, 0.01) > \
-      update_guess(1, 0.01, 0.01, 0.99)
+    update_guess(1, 0.01, 0.01, 0.99)
   assert update_guess(1, 0.49, 0.49, 0.01) > \
-      update_guess(1, 0.49, 0.49, 0.99)
+    update_guess(1, 0.49, 0.49, 0.99)
 
 
 def test_guess_range():

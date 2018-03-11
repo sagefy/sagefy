@@ -1,14 +1,13 @@
-# pylint: disable=all
+import uuid
 from routes.unit import get_unit_route, \
-    list_units_route, \
-    get_unit_versions_route, \
-    get_unit_version_route, \
-    get_my_recently_created_units_route, \
-    create_new_unit_version_route, \
-    create_existing_unit_version_route
+  list_units_route, \
+  get_unit_versions_route, \
+  get_unit_version_route, \
+  get_my_recently_created_units_route, \
+  create_new_unit_version_route, \
+  create_existing_unit_version_route
 from conftest import user_id
 from raw_insert import raw_insert_units
-import uuid
 from modules.util import convert_uuid_to_slug
 
 unit_a_uuid = uuid.uuid4()

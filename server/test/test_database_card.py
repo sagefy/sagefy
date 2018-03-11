@@ -1,28 +1,28 @@
-# pylint: disable=C0103
+
 import uuid
 
 from database.card import get_card_schema, \
-    ensure_requires, \
-    ensure_no_cycles, \
-    insert_card, \
-    insert_card_version, \
-    update_card, \
-    validate_card_response, \
-    score_card_response, \
-    deliver_card, \
-    get_latest_accepted_card, \
-    list_latest_accepted_cards, \
-    list_many_card_versions, \
-    get_card_version, \
-    list_one_card_versions, \
-    list_required_cards, \
-    list_required_by_cards, \
-    list_random_cards_in_unit, \
-    list_all_card_entity_ids
+  ensure_requires, \
+  ensure_no_cycles, \
+  insert_card, \
+  insert_card_version, \
+  update_card, \
+  validate_card_response, \
+  score_card_response, \
+  deliver_card, \
+  get_latest_accepted_card, \
+  list_latest_accepted_cards, \
+  list_many_card_versions, \
+  get_card_version, \
+  list_one_card_versions, \
+  list_required_cards, \
+  list_required_by_cards, \
+  list_random_cards_in_unit, \
+  list_all_card_entity_ids
 
 from raw_insert import raw_insert_users, \
-    raw_insert_units, \
-    raw_insert_cards
+  raw_insert_units, \
+  raw_insert_cards
 
 from schemas.cards.video_card import schema as video_card_schema
 from schemas.cards.choice_card import schema as choice_card_schema

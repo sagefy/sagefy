@@ -1,17 +1,16 @@
-# pylint: disable=all
-
-import database.util as util
-from database.util import insert_row, update_row, save_row, get_row, \
-    list_rows, delete_row, convert_fields_to_pgjson
-from modules.util import extend, omit, convert_slug_to_uuid
-from schemas.index import schema as default
-from modules.validations import is_required, is_string, \
-    has_min_length, is_one_of
-from conftest import user_id
 import uuid
 from datetime import datetime
 import psycopg2.extras
+
+import database.util as util
+from database.util import insert_row, update_row, save_row, get_row, \
+  list_rows, delete_row, convert_fields_to_pgjson
+from modules.util import extend, omit, convert_slug_to_uuid
+from modules.validations import is_required, is_string, \
+  has_min_length, is_one_of
+from schemas.index import schema as default
 from schemas.user import schema as user_schema
+from conftest import user_id
 
 
 def test_convert_fields_to_pgjson():

@@ -72,7 +72,7 @@ def get_guess_pmf_likelihood(data, hypothesis):
   """
 
   score, learned, slip = \
-      data['score'], data['learned'], data['slip']
+    data['score'], data['learned'], data['slip']
   return (score
           * calculate_correct(hypothesis, slip, learned)
           + (1 - score)
@@ -97,7 +97,7 @@ def get_slip_pmf_likelihood(data, hypothesis):
   """
 
   score, learned, guess = \
-      data['score'], data['learned'], data['guess']
+    data['score'], data['learned'], data['guess']
   return (score
           * calculate_correct(guess, hypothesis, learned)
           + (1 - score)

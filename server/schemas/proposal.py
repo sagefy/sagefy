@@ -4,7 +4,7 @@ from modules.validations import is_required, is_string, is_one_of, is_list, \
 from modules.util import extend
 
 
-schema = extend({}, post_schema, {  # pylint: disable=C0103
+schema = extend({}, post_schema, {
   'fields': {
     'entity_versions': {
       'validate': (is_required, is_list, (has_min_length, 1)),

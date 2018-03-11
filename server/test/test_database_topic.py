@@ -1,16 +1,16 @@
-from database.topic import insert_topic, \
-    update_topic, \
-    get_topic, \
-    list_topics, \
-    deliver_topic, \
-    list_topics_by_entity_id, \
-    add_topic_to_es
 import uuid
+from database.topic import insert_topic, \
+  update_topic, \
+  get_topic, \
+  list_topics, \
+  deliver_topic, \
+  list_topics_by_entity_id, \
+  add_topic_to_es
 from raw_insert import raw_insert_users, \
-    raw_insert_units, \
-    raw_insert_topics
+  raw_insert_units, \
+  raw_insert_topics
 
-# pylint: disable=all
+
 
 user_uuid = uuid.uuid4()
 user_b_uuid = uuid.uuid4()

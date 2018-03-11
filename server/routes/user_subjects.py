@@ -76,7 +76,7 @@ def add_subject_route(request, user_id, subject_id):
 
 
 @put('/s/users/{user_id}/subjects/{subject_id}')
-def select_subject_route(request, user_id, subject_id):  # pylint: disable=W0613
+def select_subject_route(request, user_id, subject_id):
   """
   Select the subject to work on.
 

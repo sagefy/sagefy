@@ -79,7 +79,7 @@ def get_unit_version_route(request, version_id):
 
 # TODO-1 move to /s/users/{user_id}/units (?)
 @get('/s/units:get_my_recently_created')
-def get_my_recently_created_units_route(request):  # pylint: disable=C0103
+def get_my_recently_created_units_route(request):
   """
   Get the units the user most recently created.
   """
@@ -118,7 +118,7 @@ def create_new_unit_version_route(request):
 
 
 @post('/s/units/{unit_id}/versions')
-def create_existing_unit_version_route(request, unit_id):  # pylint: disable=C0103
+def create_existing_unit_version_route(request, unit_id):
   """
   Create a new unit version for an existing unit.
   """

@@ -1,1 +1,1 @@
-import modules.sequencer.card_chooser  # pylint: disable=W0611
+import modules.sequencer.card_chooser

@@ -1,4 +1,4 @@
-# pylint: disable=all
+
 import routes.next  # TODO-2 switch to direct imports
 from database.user import get_user, set_learning_context
 from conftest import user_id

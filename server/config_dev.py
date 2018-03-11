@@ -1,4 +1,4 @@
-config = {  # pylint: disable=C0103
+config = {
   'debug': True,
   'test': False,
   'mail_sender': 'support@sagefy.org',

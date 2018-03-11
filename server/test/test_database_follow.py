@@ -1,16 +1,15 @@
-# pylint: disable=all
-from database.follow import get_follow, \
-    get_follow_by_id, \
-    list_follows_by_user, \
-    list_follows_by_entity, \
-    insert_follow, \
-    deliver_follow, \
-    delete_follow, \
-    is_valid_entity, \
-    get_user_ids_by_followed_entity
 import uuid
+from database.follow import get_follow, \
+  get_follow_by_id, \
+  list_follows_by_user, \
+  list_follows_by_entity, \
+  insert_follow, \
+  deliver_follow, \
+  delete_follow, \
+  is_valid_entity, \
+  get_user_ids_by_followed_entity
 from raw_insert import raw_insert_follows, raw_insert_units, \
-    raw_insert_users
+  raw_insert_users
 
 
 user_uuid = uuid.uuid4()

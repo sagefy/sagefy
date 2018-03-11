@@ -11,7 +11,7 @@ def encrypt_password(value):
   return value
 
 
-schema = extend({}, default, {  # pylint: disable=C0103
+schema = extend({}, default, {
   'tablename': 'users',
   'fields': {
     'modified': {

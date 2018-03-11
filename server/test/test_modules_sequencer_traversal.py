@@ -1,19 +1,17 @@
-# pylint: disable=all
-import pytest
-xfail = pytest.mark.xfail
-
-from modules.sequencer.traversal import traverse, \
-    match_unit_dependents, order_units_by_need, judge
-from database.user import get_user
+import uuid
 from datetime import datetime, timezone
+import pytest
+from modules.sequencer.traversal import traverse, \
+  match_unit_dependents, order_units_by_need, judge
+from modules.util import convert_uuid_to_slug
+from database.user import get_user
 from database.subject import get_latest_accepted_subject
 from database.unit import get_latest_accepted_unit, list_latest_accepted_units
 from raw_insert import raw_insert_units, raw_insert_cards, \
-    raw_insert_responses, raw_insert_subjects
+  raw_insert_responses, raw_insert_subjects
 from conftest import user_id
-import uuid
-from modules.util import convert_uuid_to_slug
 
+xfail = pytest.mark.xfail
 
 unit_add_uuid = uuid.uuid4()
 unit_subtract_uuid = uuid.uuid4()
@@ -208,7 +206,7 @@ def test_match_unit_dependents(db_conn, session):
   assert len(deps[unit_add_uuid]) == 3
   assert len(deps[unit_multiply_uuid]) == 1
   assert len(deps[unit_subtract_uuid]) == 1
-  assert len(deps[unit_divide_uuid]) == 0
+  assert not deps[unit_divide_uuid]
 
 
 def test_order(db_conn, session):

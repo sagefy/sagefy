@@ -1,9 +1,9 @@
 from schemas.card_parameters import schema as card_parameters_schema
 from modules.sequencer.pmf import init_pmf, \
-    get_guess_pmf_value, \
-    get_slip_pmf_value
+  get_guess_pmf_value, \
+  get_slip_pmf_value
 from modules.sequencer.params import init_guess, init_slip, precision, \
-    init_transit
+  init_transit
 from modules.util import convert_slug_to_uuid, pick
 from database.util import insert_row, update_row, get_row
 
@@ -147,6 +147,7 @@ def get_card_parameters_values(card_parameters):
   Get the value outputs for the card parameters.
   """
 
+  card_parameters = card_parameters or {}
   return {
     'guess': get_guess(card_parameters),
     'slip': get_slip(card_parameters),

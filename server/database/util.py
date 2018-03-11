@@ -1,4 +1,4 @@
-# pylint: disable=W0613,C0103
+
 from copy import deepcopy
 from modules.util import omit, extend, pick
 import psycopg2

@@ -1,5 +1,5 @@
-# pylint: disable=C0103,W0110,W1505
-# pylint: disable=all
+
+
 from cgi import parse_qs
 import re
 from http.cookies import SimpleCookie

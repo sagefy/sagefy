@@ -1,1 +1,1 @@
-import schemas.notice  # pylint: disable=W0611
+import schemas.notice

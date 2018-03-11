@@ -4,7 +4,7 @@ Primary learning sequencer.
 
 from time import time
 from database.card_parameters import get_card_parameters, get_distribution, \
-    bundle_distribution, insert_card_parameters, update_card_parameters
+  bundle_distribution, insert_card_parameters, update_card_parameters
 from database.response import get_latest_response, insert_response
 from database.card import validate_card_response, score_card_response
 from modules.sequencer.update import update as formula_update
@@ -31,7 +31,7 @@ Subject
 """
 
 
-def update(db_conn, user, card, response):  # pylint: disable=R0914
+def update(db_conn, user, card, response):
   """
   Update the card's parameters (and its parents')
   when given a response.

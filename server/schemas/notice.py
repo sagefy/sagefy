@@ -4,7 +4,7 @@ from modules.validations import is_required, is_uuid, is_string, is_one_of, \
     is_dict, is_boolean, is_list, is_list_of_strings
 
 
-schema = extend({}, default, {  # pylint: disable=C0103
+schema = extend({}, default, {
   'tablename': 'notices',
   'fields': {
     'user_id': {

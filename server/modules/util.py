@@ -1,7 +1,7 @@
 """
 Short, one-off methods that could potentially be reused anywhere.
 """
-# pylint: disable=C0103
+
 
 from datetime import datetime
 import collections

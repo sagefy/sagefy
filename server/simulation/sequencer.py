@@ -2,26 +2,26 @@
 This document combines the formulas and the mock data, providing for
 'how good' the formulas actually are.
 """
+# pylint: disable=wrong-import-position,wrong-import-order
 
-# pylint: disable=C0103,W0612,C0330,C0413,R0914
 
 from math import sqrt
 import os
 import sys
 import inspect
 currentdir = os.path.dirname(
-    os.path.abspath(
-        inspect.getfile(
-            inspect.currentframe())))
+  os.path.abspath(
+    inspect.getfile(
+      inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
 from mock import main as create_responses
 from modules.sequencer.update import update
 from modules.sequencer.pmf import init_pmf, get_guess_pmf_value, \
-    get_slip_pmf_value
+  get_slip_pmf_value
 from modules.sequencer.params import init_learned, init_guess, \
-    init_slip, init_transit
+  init_slip, init_transit
 
 
 def get_learner(name, my_learners):

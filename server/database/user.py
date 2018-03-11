@@ -9,9 +9,9 @@ from framework.mail import send_mail
 from schemas.user import schema as user_schema
 from passlib.hash import bcrypt
 from database.util import insert_row, update_row, get_row, list_rows, \
-    delete_row, deliver_fields
+  delete_row, deliver_fields
 from modules.util import pick, compact_dict, json_serial, \
-    json_prep, convert_slug_to_uuid, convert_uuid_to_slug
+  json_prep, convert_slug_to_uuid, convert_uuid_to_slug
 
 
 # TODO-2 should we use this to test passwords?
@@ -292,7 +292,7 @@ def get_avatar(email, size=24):
   if not size:
     size = 24
   hash_ = hashlib.md5(email.lower().encode('utf-8')).hexdigest()
-  params = urllib.parse.urlencode({'d': 'mm', 's': str(size)})  # pylint: disable=E1101
+  params = urllib.parse.urlencode({'d': 'mm', 's': str(size)})
   gravatar_url = "https://www.gravatar.com/avatar/" + hash_ + "?" + params
   return gravatar_url
 

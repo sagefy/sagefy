@@ -1,4 +1,4 @@
-import modules.sequencer.index  # pylint: disable=W0611
+import modules.sequencer.index
 
 """
 # TODO-3 outline tests  https://docs.sagefy.org/f_planning/sequencer

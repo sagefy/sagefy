@@ -1,9 +1,9 @@
 import re
 from framework.routes import ROUTES
 from framework.routes import get, post, put, delete, abort, \
-    build_path_pattern, find_path
+  build_path_pattern, find_path
 
-# pylint: disable=all
+
 
 
 def test_get():

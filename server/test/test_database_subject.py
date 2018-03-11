@@ -1,27 +1,27 @@
 import uuid
 from database.subject import is_valid_members, \
-    ensure_no_cycles, \
-    insert_subject, \
-    insert_subject_version, \
-    update_subject, \
-    deliver_subject, \
-    does_subject_exist, \
-    get_latest_accepted_subject, \
-    list_latest_accepted_subjects, \
-    list_many_subject_versions, \
-    get_subject_version, \
-    list_one_subject_versions, \
-    list_subjects_by_unit_flat, \
-    list_subject_parents, \
-    list_my_recently_created_subjects, \
-    list_all_subject_entity_ids, \
-    get_recommended_subjects
+  ensure_no_cycles, \
+  insert_subject, \
+  insert_subject_version, \
+  update_subject, \
+  deliver_subject, \
+  does_subject_exist, \
+  get_latest_accepted_subject, \
+  list_latest_accepted_subjects, \
+  list_many_subject_versions, \
+  get_subject_version, \
+  list_one_subject_versions, \
+  list_subjects_by_unit_flat, \
+  list_subject_parents, \
+  list_my_recently_created_subjects, \
+  list_all_subject_entity_ids, \
+  get_recommended_subjects
 from raw_insert import raw_insert_users, \
-    raw_insert_units, \
-    raw_insert_subjects
+  raw_insert_units, \
+  raw_insert_subjects
 from modules.util import convert_uuid_to_slug
 
-# pylint: disable=C0103
+
 
 user_a_uuid = uuid.uuid4()
 user_b_uuid = uuid.uuid4()

@@ -1,14 +1,14 @@
 import uuid
 from database.notice import get_notice, \
-    insert_notice, \
-    list_notices, \
-    mark_notice_as_read, \
-    mark_notice_as_unread, \
-    get_notice_body, \
-    deliver_notice
+  insert_notice, \
+  list_notices, \
+  mark_notice_as_read, \
+  mark_notice_as_unread, \
+  get_notice_body, \
+  deliver_notice
 from raw_insert import raw_insert_notices, raw_insert_users
 
-# pylint: disable=C0103
+
 
 notice_a_id = uuid.uuid4()
 user_uuid = uuid.uuid4()

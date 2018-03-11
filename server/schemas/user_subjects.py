@@ -3,7 +3,7 @@ from modules.util import extend
 from modules.validations import is_required, is_uuid
 
 
-schema = extend({}, default, {  # pylint: disable=C0103
+schema = extend({}, default, {
   'tablename': 'users_subjects',
   'fields': {
     'user_id': {

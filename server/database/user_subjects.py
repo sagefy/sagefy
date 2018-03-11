@@ -62,7 +62,7 @@ def remove_user_subject(db_conn, user_id, subject_id):
   return errors
 
 
-def list_user_subjects_entity(db_conn, user_id, params): # pylint: disable=W0613
+def list_user_subjects_entity(db_conn, user_id, params):
   """
   Join the user's subject_ids with subject information.
   Return empty list when there's no matching documents.

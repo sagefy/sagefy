@@ -1,1 +1,1 @@
-import schemas.topic  # pylint: disable=W0611
+import schemas.topic

@@ -138,7 +138,7 @@ def get_card_version_route(request, version_id):
 
 
 @post('/s/cards/{card_id}/responses')
-def respond_to_card_route(request, card_id):  # pylint: disable=R0914
+def respond_to_card_route(request, card_id):
   """
   Record and process a learner's response to a card.
 
@@ -272,7 +272,7 @@ def create_new_card_version_route(request):
 
 
 @post('/s/cards/{card_id}/versions')
-def create_existing_card_version_route(request, card_id):  # pylint: disable=C0103
+def create_existing_card_version_route(request, card_id):
   """
   Create a new card version for an existing card.
   """

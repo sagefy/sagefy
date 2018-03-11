@@ -10,7 +10,6 @@ before_install:
   - nvm install 6.11.0
 install:
   - pip install -r server/requirements.txt
-  - pip install pytest coverage pylint
   - source ~/virtualenv/python2.7/bin/activate
   - nvm use 6.11.0
   - 'cd client && yarn install && cd ..'

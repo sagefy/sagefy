@@ -1,15 +1,15 @@
-# pylint: disable=C0103
+
 from database.card_parameters import get_card_parameters, \
-    insert_card_parameters, \
-    update_card_parameters, \
-    get_distribution, \
-    deliver_distribution, \
-    bundle_distribution, \
-    get_guess, \
-    get_slip, \
-    get_transit, \
-    get_num_learners, \
-    get_card_parameters_values
+  insert_card_parameters, \
+  update_card_parameters, \
+  get_distribution, \
+  deliver_distribution, \
+  bundle_distribution, \
+  get_guess, \
+  get_slip, \
+  get_transit, \
+  get_num_learners, \
+  get_card_parameters_values
 from database.card import get_latest_accepted_card
 from test_database_card import create_card_test_data, card_a_uuid, card_b_uuid
 

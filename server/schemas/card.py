@@ -11,11 +11,11 @@ collaborate with a small group to tackle a challenge,
 or create other cards.
 """
 
-scored_kinds = ('choice',)   # pylint: disable=C0103
+scored_kinds = ('choice',)
 
-peer_scored_kinds = tuple()    # pylint: disable=C0103
+peer_scored_kinds = tuple()
 
-schema = extend({}, entity_schema, {  # pylint: disable=C0103
+schema = extend({}, entity_schema, {
   'tablename': 'cards',
   'fields': {
     'unit_id': {

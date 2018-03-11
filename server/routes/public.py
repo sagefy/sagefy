@@ -3,7 +3,7 @@ from modules.content import get as c
 
 
 @get('/s')
-def index_route(request):  # pylint: disable=W0613
+def index_route(request):
   """
   View a documentation page.
   """

@@ -14,7 +14,7 @@ which may contain about five to eight minutes of information and
 30-60 minutes of practice to gain proficiency.
 """
 
-schema = extend({}, entity_schema, {  # pylint: disable=C0103
+schema = extend({}, entity_schema, {
   'tablename': 'units',
   'fields': {
     'body': {

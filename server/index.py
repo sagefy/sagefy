@@ -2,7 +2,7 @@
 Welcome to Sagefy.
 """
 
-# pylint: disable=W0611
+
 
 import routes.public
 import routes.user

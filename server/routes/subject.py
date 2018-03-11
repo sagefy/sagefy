@@ -173,7 +173,7 @@ def get_subject_units_route(request, subject_id):
 
 
 @post('/s/subjects/{subject_id}/units/{unit_id}')
-def choose_unit_route(request, subject_id, unit_id):  # pylint: disable=W0613
+def choose_unit_route(request, subject_id, unit_id):
   """
   Updates the learner's information based on the unit they have chosen.
 
@@ -235,7 +235,7 @@ def choose_unit_route(request, subject_id, unit_id):  # pylint: disable=W0613
 
 # TODO-1 move to /s/users/{user_id}/subjects (?)
 @get('/s/subjects:get_my_recently_created')
-def get_my_recently_created_subjects_route(request):  # pylint: disable=C0103
+def get_my_recently_created_subjects_route(request):
   """
   Get the subjects the user most recently created.
   """
@@ -251,7 +251,7 @@ def get_my_recently_created_subjects_route(request):  # pylint: disable=C0103
 
 
 @post('/s/subjects/versions')
-def create_new_subject_version_route(request):  # pylint: disable=C0103
+def create_new_subject_version_route(request):
   """
   Create a new subject version for a brand new subject.
   """
@@ -274,7 +274,7 @@ def create_new_subject_version_route(request):  # pylint: disable=C0103
 
 
 @post('/s/subjects/{subject_id}/versions')
-def create_existing_subject_version_route(request, subject_id):  # pylint: disable=C0103
+def create_existing_subject_version_route(request, subject_id):
   """
   Create a new subject version for an existing subject.
   """

@@ -3,7 +3,7 @@ Simulates learner responses for a unit. Can be used for prototyping and testing
 learner models.
 """
 
-# pylint: disable=C0103
+
 
 from random import uniform, triangular, sample, randrange
 from modules.sequencer.params import max_learned, \

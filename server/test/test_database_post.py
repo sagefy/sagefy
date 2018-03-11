@@ -1,28 +1,28 @@
 import uuid
 from database.post import get_post_schema, \
-    is_valid_reply, \
-    validate_entity_versions, \
-    is_valid_reply_kind, \
-    insert_post, \
-    insert_proposal, \
-    insert_vote, \
-    update_post, \
-    update_proposal, \
-    update_vote, \
-    get_post, \
-    list_posts_by_topic, \
-    list_posts_by_user, \
-    deliver_post, \
-    add_post_to_es, \
-    list_votes_by_proposal
+  is_valid_reply, \
+  validate_entity_versions, \
+  is_valid_reply_kind, \
+  insert_post, \
+  insert_proposal, \
+  insert_vote, \
+  update_post, \
+  update_proposal, \
+  update_vote, \
+  get_post, \
+  list_posts_by_topic, \
+  list_posts_by_user, \
+  deliver_post, \
+  add_post_to_es, \
+  list_votes_by_proposal
 from database.unit import update_unit
 from raw_insert import raw_insert_users, \
-    raw_insert_units, \
-    raw_insert_topics, \
-    raw_insert_posts
+  raw_insert_units, \
+  raw_insert_topics, \
+  raw_insert_posts
 from modules.util import convert_uuid_to_slug
 
-# pylint: disable=C0103
+
 
 user_uuid = uuid.uuid4()
 user_b_uuid = uuid.uuid4()

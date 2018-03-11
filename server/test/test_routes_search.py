@@ -1,8 +1,8 @@
-# pylint: disable=all
 import pytest
-xfail = pytest.mark.xfail
 
 from routes.search import search_route
+
+xfail = pytest.mark.xfail
 
 
 def test_search():

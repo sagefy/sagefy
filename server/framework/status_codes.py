@@ -1,5 +1,5 @@
 # From <http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html>
-status_codes = {  # pylint: disable=C0103
+status_codes = {
   100: 'Continue',
   101: 'Switching Protocols',
   200: 'OK',

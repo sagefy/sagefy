@@ -1,13 +1,12 @@
-# pylint: disable=all
-
-from database.user_subjects import insert_user_subject, \
-    list_user_subjects, \
-    remove_user_subject, \
-    list_user_subjects_entity
-from raw_insert import raw_insert_users, \
-    raw_insert_subjects, \
-    raw_insert_user_subjects
 import uuid
+from database.user_subjects import insert_user_subject, \
+  list_user_subjects, \
+  remove_user_subject, \
+  list_user_subjects_entity
+from raw_insert import raw_insert_users, \
+  raw_insert_subjects, \
+  raw_insert_user_subjects
+
 
 
 user_a_uuid = uuid.uuid4()

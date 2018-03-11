@@ -1,15 +1,15 @@
 import uuid
 
 from database.response import insert_response, \
-    get_latest_response, \
-    deliver_response
+  get_latest_response, \
+  deliver_response
 from raw_insert import raw_insert_users, \
-    raw_insert_units, \
-    raw_insert_cards, \
-    raw_insert_responses
+  raw_insert_units, \
+  raw_insert_cards, \
+  raw_insert_responses
 from modules.util import convert_uuid_to_slug
 
-# pylint: disable=C0103
+
 
 
 user_a_uuid = uuid.uuid4()
