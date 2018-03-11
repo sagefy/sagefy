@@ -1,6 +1,6 @@
 [MASTER]
 
-disable=bare-except,broad-except,empty-docstring,fixme,import-error,inconsistent-return-statements,invalid-name,keyword-arg-before-vararg,missing-docstring,no-member,no-name-in-module,pointless-string-statement,redefined-outer-name,superfluous-parens,too-many-locals,unused-argument,unused-import
+disable=bare-except,broad-except,empty-docstring,fixme,import-error,inconsistent-return-statements,invalid-name,keyword-arg-before-vararg,missing-docstring,no-member,no-name-in-module,pointless-string-statement,redefined-outer-name,superfluous-parens,too-many-locals,unexpected-keyword-arg,unused-argument,unused-import,wrong-import-order
 
 # bare-except -- Fine with just handling it in general.
 # broad-except -- Fine with just handling it in general.
@@ -17,8 +17,10 @@ disable=bare-except,broad-except,empty-docstring,fixme,import-error,inconsistent
 # redefined-outer-name -- FIX (8)
 # superfluous-parens -- Only happens with `print`. Fix?
 # too-many-locals -- FIX (3)
+# unexpected-keyword-arg -- Only happens in Travis?
 # unused-argument -- FIX (~50)
 # unused-import -- Seems related to import issues. Fix?
+# wrong-import-order -- Only happens in Travis?
 
 [REPORTS]
 
