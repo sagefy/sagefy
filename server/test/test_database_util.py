@@ -15,7 +15,7 @@ from conftest import user_id
 
 def test_convert_fields_to_pgjson():
   params = {
-      'data': {},
+    'data': {},
   }
   result = convert_fields_to_pgjson(params)
   assert not isinstance(result['data'], dict)
@@ -30,10 +30,10 @@ def test_insert_row(db_conn):
     RETURNING *;
   """
   data = {
-      'name': 'Hi',
-      'email': 'hi@example.com',
-      'password': 'abcd1234',
-      'settings': {},
+    'name': 'Hi',
+    'email': 'hi@example.com',
+    'password': 'abcd1234',
+    'settings': {},
   }
   result, errors = insert_row(db_conn, user_schema, query, data)
   assert not errors
@@ -49,10 +49,10 @@ def test_insert_row_err(db_conn):
     RETURNING *;
   """
   data = {
-      'name': 'Hi',
-      'email': 'hi@example.com',
-      'password': 'abcd',
-      'settings': {},
+    'name': 'Hi',
+    'email': 'hi@example.com',
+    'password': 'abcd',
+    'settings': {},
   }
   result, errors = insert_row(db_conn, user_schema, query, data)
   assert errors
@@ -67,12 +67,12 @@ def test_update_row(db_conn, session):
     RETURNING *;
   """
   prev_data = {
-      'id': convert_slug_to_uuid(user_id),
-      'email': 'test@example.com',
-      'password': '$2a$abcd1234',
+    'id': convert_slug_to_uuid(user_id),
+    'email': 'test@example.com',
+    'password': '$2a$abcd1234',
   }
   data = {
-      'name': 'Hello!',
+    'name': 'Hello!',
   }
   result, errors = update_row(db_conn, user_schema, query, prev_data, data)
   assert not errors
@@ -87,12 +87,12 @@ def test_update_row_error(db_conn, session):
     RETURNING *;
   """
   prev_data = {
-      'id': convert_slug_to_uuid(user_id),
-      'email': 'test@example.com',
-      'password': '$2a$ab',
+    'id': convert_slug_to_uuid(user_id),
+    'email': 'test@example.com',
+    'password': '$2a$ab',
   }
   data = {
-      'name': 'Hello!',
+    'name': 'Hello!',
   }
   result, errors = update_row(db_conn, user_schema, query, prev_data, data)
   assert errors
@@ -110,13 +110,13 @@ def test_save_row(db_conn):
     RETURNING *;
   """
   params = {
-      'id': uuid.uuid4(),
-      'created': datetime.utcnow(),
-      'modified': datetime.utcnow(),
-      'name': 'Hi',
-      'email': 'hi@example.com',
-      'password': '$2a$abcd1234',
-      'settings': psycopg2.extras.Json({}),
+    'id': uuid.uuid4(),
+    'created': datetime.utcnow(),
+    'modified': datetime.utcnow(),
+    'name': 'Hi',
+    'email': 'hi@example.com',
+    'password': '$2a$abcd1234',
+    'settings': psycopg2.extras.Json({}),
   }
   result, errors = save_row(db_conn, query, params)
   assert not errors
@@ -134,13 +134,13 @@ def test_save_row_error(db_conn):
     RETURNING *;
   """
   params = {
-      'id': uuid.uuid4(),
-      'created': datetime.utcnow(),
-      'modified': datetime.utcnow(),
-      'name': 'Hi',
-      'email': 'hi@example.com',
-      'password': '',
-      'settings': psycopg2.extras.Json({}),
+    'id': uuid.uuid4(),
+    'created': datetime.utcnow(),
+    'modified': datetime.utcnow(),
+    'name': 'Hi',
+    'email': 'hi@example.com',
+    'password': '',
+    'settings': psycopg2.extras.Json({}),
   }
   result, errors = save_row(db_conn, query, params)
   assert errors
@@ -155,7 +155,7 @@ def test_get_row(db_conn, session):
     LIMIT 1;
   """
   params = {
-      'id': convert_slug_to_uuid(user_id),
+    'id': convert_slug_to_uuid(user_id),
   }
   result = get_row(db_conn, query, params)
   assert result['id'] == convert_slug_to_uuid(user_id)
@@ -189,7 +189,7 @@ def test_list_rows_error(db_conn):
 
 def test_delete_row(db_conn, session):
   params = {
-      'id': convert_slug_to_uuid(user_id),
+    'id': convert_slug_to_uuid(user_id),
   }
 
   def get():
@@ -231,48 +231,48 @@ def default_brown():
 
 
 vases_schema = extend({}, default, {
-    'tablename': 'vases',
-    'fields': {
-        'name': {
-            'validate': (is_required, is_string,),
-            'bundle': lowercase_and_strip,
-            'unique': True,
-        },
-        'shape': {
-            'validate': ((is_one_of, 'round', 'square', 'triangle'),),
-            'default': 'round'
-        },
-        'plants': {
-            'validate': (is_required, (has_min_length, 1,),),
-            'default': [],
-            'embed_many': {
-                'species': {
-                    'bundle': lowercase_and_strip,
-                },
-                'quantity': {
-                    'default': 1,
-                    'access': ('private',)
-                }
-            },
-        },
-        'soil': {
-            'validate': (is_required,),
-            'default': {},
-            'access': ('private',),
-            'embed': {
-                'color': {
-                    'default': default_brown,
-                    'bundle': lowercase_and_strip,
-                    'validate': (is_required, (is_one_of,
-                                               'brown',
-                                               'black',
-                                               'gray',
-                                               'clay',
-                                               ))
-                }
-            },
-        }
+  'tablename': 'vases',
+  'fields': {
+    'name': {
+      'validate': (is_required, is_string,),
+      'bundle': lowercase_and_strip,
+      'unique': True,
     },
+    'shape': {
+      'validate': ((is_one_of, 'round', 'square', 'triangle'),),
+      'default': 'round'
+    },
+    'plants': {
+      'validate': (is_required, (has_min_length, 1,),),
+      'default': [],
+      'embed_many': {
+        'species': {
+          'bundle': lowercase_and_strip,
+        },
+        'quantity': {
+          'default': 1,
+          'access': ('private',)
+        }
+      },
+    },
+    'soil': {
+      'validate': (is_required,),
+      'default': {},
+      'access': ('private',),
+      'embed': {
+        'color': {
+          'default': default_brown,
+          'bundle': lowercase_and_strip,
+          'validate': (is_required, (is_one_of,
+                                     'brown',
+                                     'black',
+                                     'gray',
+                                     'clay',
+                                    ))
+          }
+        },
+    }
+  },
 })
 
 
@@ -282,29 +282,29 @@ def create_test_data_set(db_conn):
   """
 
   data = [{
-      'name': 'celestial',
-      'shape': 'round',
-      'plants': [
-          {'species': 'zzplant', 'quantity': 2},
-          {'species': 'rubbertree', 'quantity': 1},
-      ],
-      'soil': {'color': 'black'}
+    'name': 'celestial',
+    'shape': 'round',
+    'plants': [
+      {'species': 'zzplant', 'quantity': 2},
+      {'species': 'rubbertree', 'quantity': 1},
+    ],
+    'soil': {'color': 'black'}
   }, {
-      'name': 'kitch',
-      'shape': 'round',
-      'plants': [
-          {'species': 'sunflower', 'quantity': 1},
-          {'species': 'geranium', 'quantity': 3},
-      ],
-      'soil': {'color': 'brown'}
+    'name': 'kitch',
+    'shape': 'round',
+    'plants': [
+      {'species': 'sunflower', 'quantity': 1},
+      {'species': 'geranium', 'quantity': 3},
+    ],
+    'soil': {'color': 'brown'}
   }, {
-      'name': 'modern',
-      'shape': 'square',
-      'plants': [
-          {'species': 'fiddle-leaf-fig', 'quantity': 1},
-          {'species': 'rubbertree', 'quantity': 3},
-      ],
-      'soil': {'color': 'black'}
+    'name': 'modern',
+    'shape': 'square',
+    'plants': [
+      {'species': 'fiddle-leaf-fig', 'quantity': 1},
+      {'species': 'rubbertree', 'quantity': 3},
+    ],
+    'soil': {'color': 'black'}
   }]
   return data
 
@@ -317,28 +317,28 @@ def test_recurse_embeds():
 
   schema = vases_schema
   data = {
-      'name': 'celestial',
-      'shape': 'round',
-      'plants': [
-          {'species': 'zzplant'},
-          {'species': 'rubbertree'},
-      ],
-      'soil': {'color': 'black'}
+    'name': 'celestial',
+    'shape': 'round',
+    'plants': [
+      {'species': 'zzplant'},
+      {'species': 'rubbertree'},
+    ],
+    'soil': {'color': 'black'}
   }
   util.recurse_embeds(_, data, schema['fields'])
   assert o == {
-      'created': None,
-      'id': None,
-      'modified': None,
-      'name': 'celestial',
-      'plants': [{'species': 'zzplant'}, {'species': 'rubbertree'}],
-      'plants.0.species': 'zzplant',
-      'plants.0.quantity': None,
-      'plants.1.species': 'rubbertree',
-      'plants.1.quantity': None,
-      'shape': 'round',
-      'soil': {'color': 'black'},
-      'soil.color': 'black'
+    'created': None,
+    'id': None,
+    'modified': None,
+    'name': 'celestial',
+    'plants': [{'species': 'zzplant'}, {'species': 'rubbertree'}],
+    'plants.0.species': 'zzplant',
+    'plants.0.quantity': None,
+    'plants.1.species': 'rubbertree',
+    'plants.1.quantity': None,
+    'shape': 'round',
+    'soil': {'color': 'black'},
+    'soil.color': 'black'
   }
 
 
@@ -346,14 +346,14 @@ def test_prepare_row(db_conn):
   schema = vases_schema
   create_test_data_set(db_conn)
   data = {
-      'id': uuid.uuid4(),
-      'name': ' celestial ',
-      'shape': 'round',
-      'plants': [
-          {'species': 'zzplant', 'quantity': 2},
-          {'species': 'rubbertree', 'quantity': 1},
-      ],
-      'soil': {'color': 'black'}
+    'id': uuid.uuid4(),
+    'name': ' celestial ',
+    'shape': 'round',
+    'plants': [
+      {'species': 'zzplant', 'quantity': 2},
+      {'species': 'rubbertree', 'quantity': 1},
+    ],
+    'soil': {'color': 'black'}
   }
   result, errors = util.prepare_row(db_conn, schema, data)
   assert not errors
@@ -364,24 +364,24 @@ def test_prepare_row(db_conn):
 def test_tidy_fields():
   schema = vases_schema
   data = {
-      'shiny': True,
-      'name': 'celestial',
-      'shape': 'round',
-      'plants': [
-          {'species': 'zzplant', 'quantity': 2},
-          {'species': 'rubbertree', 'leaves': 90},
-      ],
-      'soil': {'color': 'black', 'texture': 'gritty'}
+    'shiny': True,
+    'name': 'celestial',
+    'shape': 'round',
+    'plants': [
+      {'species': 'zzplant', 'quantity': 2},
+      {'species': 'rubbertree', 'leaves': 90},
+    ],
+    'soil': {'color': 'black', 'texture': 'gritty'}
   }
   data2 = util.tidy_fields(schema, data)
   assert data2 == {
-      'name': 'celestial',
-      'shape': 'round',
-      'plants': [
-          {'species': 'zzplant', 'quantity': 2},
-          {'species': 'rubbertree'},
-      ],
-      'soil': {'color': 'black'}
+    'name': 'celestial',
+    'shape': 'round',
+    'plants': [
+      {'species': 'zzplant', 'quantity': 2},
+      {'species': 'rubbertree'},
+    ],
+    'soil': {'color': 'black'}
   }
 
 
@@ -391,19 +391,19 @@ def test_add_default_fields():
   data2 = util.add_default_fields(schema, data)
   data2 = omit(data2, ('id', 'created', 'modified',))
   assert data2 == {
-      'plants': [],
-      'shape': 'round',
-      'soil': {'color': 'brown'},
+    'plants': [],
+    'shape': 'round',
+    'soil': {'color': 'brown'},
   }
 
 
 def test_validate_fields():
   schema = vases_schema
   data = {
-      'name': 43,
-      'shape': 'turkey',
-      'plants': [],
-      'soil': {'color': 'green'}
+    'name': 43,
+    'shape': 'turkey',
+    'plants': [],
+    'soil': {'color': 'green'}
   }
   errors = util.validate_fields(schema, data)
   assert len(errors) == 4
@@ -424,57 +424,57 @@ def test_validate_fields():
 def test_bundle_fields():
   schema = vases_schema
   data = {
-      'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
-      'name': ' cElEstial ',
-      'shape': 'round',
-      'plants': [
-          {'species': '  zzplant', 'quantity': 2},
-          {'species': 'rubbertree', 'quantity': 1},
-      ],
-      'soil': {'color': '  BLACK  '}
+    'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
+    'name': ' cElEstial ',
+    'shape': 'round',
+    'plants': [
+      {'species': '  zzplant', 'quantity': 2},
+      {'species': 'rubbertree', 'quantity': 1},
+    ],
+    'soil': {'color': '  BLACK  '}
   }
   bundle = util.bundle_fields(schema, data)
   assert bundle == {
-      'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
-      'name': 'celestial',
-      'shape': 'round',
-      'plants': [
-          {'species': 'zzplant', 'quantity': 2},
-          {'species': 'rubbertree', 'quantity': 1},
-      ],
-      'soil': {'color': 'black'}
+    'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
+    'name': 'celestial',
+    'shape': 'round',
+    'plants': [
+      {'species': 'zzplant', 'quantity': 2},
+      {'species': 'rubbertree', 'quantity': 1},
+    ],
+    'soil': {'color': 'black'}
   }
 
 
 def test_deliver_fields():
   schema = vases_schema
   data = {
-      'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
-      'name': ' cElEstial ',
-      'shape': 'round',
-      'plants': [
-          {'species': '  zzplant', 'quantity': 2},
-          {'species': 'rubbertree', 'quantity': 1},
-      ],
-      'soil': {'color': '  BLACK  '}
+    'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
+    'name': ' cElEstial ',
+    'shape': 'round',
+    'plants': [
+      {'species': '  zzplant', 'quantity': 2},
+      {'species': 'rubbertree', 'quantity': 1},
+    ],
+    'soil': {'color': '  BLACK  '}
   }
   assert util.deliver_fields(schema, data, 'private') == {
-      'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
-      'name': ' cElEstial ',
-      'shape': 'round',
-      'plants': [
-          {'species': '  zzplant', 'quantity': 2},
-          {'species': 'rubbertree', 'quantity': 1},
-      ],
-      'soil': {'color': '  BLACK  '}
+    'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
+    'name': ' cElEstial ',
+    'shape': 'round',
+    'plants': [
+      {'species': '  zzplant', 'quantity': 2},
+      {'species': 'rubbertree', 'quantity': 1},
+    ],
+    'soil': {'color': '  BLACK  '}
   }
   assert util.deliver_fields(schema, data) == {
-      'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
-      'name': ' cElEstial ',
-      'shape': 'round',
-      'plants': [
-          {'species': '  zzplant'},
-          {'species': 'rubbertree'},
-      ],
-      'soil': {}
+    'id': 'ZdhhJQ9U9YJaanmfMEpm05qc',
+    'name': ' cElEstial ',
+    'shape': 'round',
+    'plants': [
+      {'species': '  zzplant'},
+      {'species': 'rubbertree'},
+    ],
+    'soil': {}
   }

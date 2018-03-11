@@ -37,8 +37,8 @@ def test_user_log_in(db_conn):
 
   create_user_in_db(db_conn)
   request = {
-      'params': {'name': 'test', 'password': 'abcd1234'},
-      'db_conn': db_conn
+    'params': {'name': 'test', 'password': 'abcd1234'},
+    'db_conn': db_conn
   }
   code, response = routes.user.log_in_route(request)
   assert response['user']['email'] == 'test@example.com'
@@ -50,8 +50,8 @@ def test_user_log_in_none(db_conn):
   """
 
   request = {
-      'params': {'name': 'test', 'password': 'abcd1234'},
-      'db_conn': db_conn
+    'params': {'name': 'test', 'password': 'abcd1234'},
+    'db_conn': db_conn
   }
   code, response = routes.user.log_in_route(request)
   assert 'errors' in response
@@ -64,8 +64,8 @@ def test_user_log_in_password_fail(db_conn):
 
   create_user_in_db(db_conn)
   request = {
-      'params': {'name': 'test', 'password': '1234abcd'},
-      'db_conn': db_conn
+    'params': {'name': 'test', 'password': '1234abcd'},
+    'db_conn': db_conn
   }
   code, response = routes.user.log_in_route(request)
   assert 'errors' in response
@@ -78,8 +78,8 @@ def test_user_log_out(db_conn):
 
   create_user_in_db(db_conn)
   request = {
-      'params': {'name': 'test', 'password': 'abcd1234'},
-      'db_conn': db_conn
+    'params': {'name': 'test', 'password': 'abcd1234'},
+    'db_conn': db_conn
   }
   code, response = routes.user.log_in_route(request)
   assert code == 200
@@ -111,10 +111,10 @@ def test_user_get_current_failed(db_conn):
 
 def test_list_users_route(db_conn, session):
   code, response = routes.user.list_users_route({
-      'params': {
-          'user_ids': convert_uuid_to_slug(user_id),
-      },
-      'db_conn': db_conn,
+    'params': {
+      'user_ids': convert_uuid_to_slug(user_id),
+    },
+    'db_conn': db_conn,
   })
   assert code == 200
   assert len(response['users']) == 1
@@ -126,12 +126,12 @@ def test_user_create(db_conn):
   """
 
   request = {
-      'params': {
-          'name': 'test',
-          'email': 'test@example.com',
-          'password': 'abcd1234',
-      },
-      'db_conn': db_conn
+    'params': {
+      'name': 'test',
+      'email': 'test@example.com',
+      'password': 'abcd1234',
+    },
+    'db_conn': db_conn
   }
   code, response = routes.user.create_user_route(request)
   assert code == 200
@@ -144,8 +144,8 @@ def test_user_create_failed(db_conn):
   """
 
   request = {
-      'params': {},
-      'db_conn': db_conn
+    'params': {},
+    'db_conn': db_conn
   }
   code, response = routes.user.create_user_route(request)
   assert 'errors' in response
@@ -157,13 +157,13 @@ def test_user_update(db_conn, session):
   """
 
   request = {
-      'params': {
-          'email': 'other@example.com'
-      },
-      'cookies': {
-          'session_id': session,
-      },
-      'db_conn': db_conn
+    'params': {
+      'email': 'other@example.com'
+    },
+    'cookies': {
+      'session_id': session,
+    },
+    'db_conn': db_conn
   }
   code, response = routes.user.update_user_route(request, user_id)
   assert code == 200
@@ -176,13 +176,13 @@ def test_user_update_none(db_conn):
   """
 
   request = {
-      'params': {
-          'email': 'other@example.com'
-      },
-      'cookies': {
-          'session_id': 'fjsknl',
-      },
-      'db_conn': db_conn
+    'params': {
+      'email': 'other@example.com'
+    },
+    'cookies': {
+      'session_id': 'fjsknl',
+    },
+    'db_conn': db_conn
   }
   code, response = routes.user.update_user_route(request, user_id)
   assert 'errors' in response
@@ -194,19 +194,19 @@ def test_user_update_self_only(db_conn, session):
   """
 
   raw_insert_users(db_conn, [{
-      'name': 'other',
-      'email': 'other@example.com',
-      # NOTE do not use rounds this low in production
-      'password': bcrypt.encrypt('1234abcd', rounds=4),
+    'name': 'other',
+    'email': 'other@example.com',
+    # NOTE do not use rounds this low in production
+    'password': bcrypt.encrypt('1234abcd', rounds=4),
   }])
   request = {
-      'params': {
-          'email': 'other@example.com'
-      },
-      'cookies': {
-          'session_id': session,
-      },
-      'db_conn': db_conn
+    'params': {
+      'email': 'other@example.com'
+    },
+    'cookies': {
+      'session_id': session,
+    },
+    'db_conn': db_conn
   }
   code, response = routes.user.update_user_route(request, user_id)
   assert 'errors' in response
@@ -218,13 +218,13 @@ def test_user_update_invalid(db_conn, session):
   """
 
   request = {
-      'params': {
-          'email': 'other'
-      },
-      'cookies': {
-          'session_id': session,
-      },
-      'db_conn': db_conn
+    'params': {
+      'email': 'other'
+    },
+    'cookies': {
+      'session_id': session,
+    },
+    'db_conn': db_conn
   }
   code, response = routes.user.update_user_route(request, user_id)
   assert 'errors' in response
@@ -263,11 +263,11 @@ def test_user_create_password_fail(db_conn):
   get_email_token(user)
 
   request = {
-      'params': {
-          'token': 'qza',
-          'password': 'qwer1234'
-      },
-      'db_conn': db_conn
+    'params': {
+      'token': 'qza',
+      'password': 'qwer1234'
+    },
+    'db_conn': db_conn
   }
   code, response = routes.user.create_password_route(request, user_id)
   assert code == 403
@@ -286,11 +286,11 @@ def test_user_create_password_ok(db_conn):
   token = get_email_token(user)
 
   request = {
-      'params': {
-          'token': token,
-          'password': 'qwer1234'
-      },
-      'db_conn': db_conn
+    'params': {
+      'token': token,
+      'password': 'qwer1234'
+    },
+    'db_conn': db_conn
   }
   code, response = routes.user.create_password_route(request, user_id)
   assert code == 200

@@ -1,8 +1,6 @@
 [MASTER]
 
-disable=fixme,import-error,no-name-in-module,unused-argument,missing-docstring,empty-docstring,pointless-string-statement,bare-except,no-member,broad-except,invalid-name,unused-import,bad-continuation,too-many-locals,superfluous-parens,unused-variable,redefined-outer-name,anomalous-backslash-in-string,unexpected-keyword-arg
-
-# remove bad-continuation
+disable=anomalous-backslash-in-string,bare-except,broad-except,empty-docstring,fixme,import-error,invalid-name,missing-docstring,no-member,no-name-in-module,pointless-string-statement,redefined-outer-name,superfluous-parens,too-many-locals,unexpected-keyword-arg,unused-argument,unused-import,unused-variable
 
 [REPORTS]
 

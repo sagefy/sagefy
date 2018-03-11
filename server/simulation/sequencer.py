@@ -39,19 +39,19 @@ def main(num_learners=1000, num_cards=50):
   precision = 20
 
   my_cards = [{
-      'name': card['name'],
-      'guess_distribution': init_pmf({
-          h: 1 - (init_guess - h) ** 2
-          for h in [h / precision for h in range(1, precision)]}),
-      'slip_distribution': init_pmf({
-          h: 1 - (init_slip - h) ** 2
-          for h in [h / precision for h in range(1, precision)]}),
-      'transit': init_transit,
+    'name': card['name'],
+    'guess_distribution': init_pmf({
+      h: 1 - (init_guess - h) ** 2
+      for h in [h / precision for h in range(1, precision)]}),
+    'slip_distribution': init_pmf({
+      h: 1 - (init_slip - h) ** 2
+      for h in [h / precision for h in range(1, precision)]}),
+    'transit': init_transit,
   } for card in cards]
 
   my_learners = [{
-      'name': learner['name'],
-      'learned': init_learned,
+    'name': learner['name'],
+    'learned': init_learned,
   } for learner in learners]
 
   latest_response_per_learner = {}
@@ -63,8 +63,8 @@ def main(num_learners=1000, num_cards=50):
       prev_response = latest_response_per_learner[response['learner']]
     else:
       prev_response = {
-          'time': response['time'],
-          'prev_learned': init_learned,
+        'time': response['time'],
+        'prev_learned': init_learned,
       }
 
     my_learner = get_learner(response['learner'], my_learners)

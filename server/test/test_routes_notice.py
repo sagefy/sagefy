@@ -11,19 +11,19 @@ def test_list(db_conn, session):
   Expect to get a list of 10 notices by user ID.
   """
   raw_insert_notices(db_conn, [{
-      'user_id': user_id,
-      'kind': 'create_proposal',
-      'data': {
-          'user_name': '',
-          'proposal_name': '',
-          'entity_kind': '',
-          'entity_name': '',
-      }
+    'user_id': user_id,
+    'kind': 'create_proposal',
+    'data': {
+      'user_name': '',
+      'proposal_name': '',
+      'entity_kind': '',
+      'entity_name': '',
+    }
   } for i in range(0, 10)])
   request = {
-      'cookies': {'session_id': session},
-      'params': {},
-      'db_conn': db_conn,
+    'cookies': {'session_id': session},
+    'params': {},
+    'db_conn': db_conn,
   }
   code, response = routes.notice.list_notices_route(request)
   assert code == 200
@@ -37,8 +37,8 @@ def test_list_no_user(db_conn):
   """
 
   request = {
-      'params': {},
-      'db_conn': db_conn
+    'params': {},
+    'db_conn': db_conn
   }
   code, response = routes.notice.list_notices_route(request)
   assert code == 401
@@ -50,20 +50,20 @@ def test_list_paginate(db_conn, session):
   """
 
   raw_insert_notices(db_conn, [{
-      'user_id': user_id,
-      'kind': 'create_proposal',
-      'data': {
-          'user_name': '',
-          'proposal_name': '',
-          'entity_kind': '',
-          'entity_name': '',
-      }
+    'user_id': user_id,
+    'kind': 'create_proposal',
+    'data': {
+      'user_name': '',
+      'proposal_name': '',
+      'entity_kind': '',
+      'entity_name': '',
+    }
   } for i in range(0, 25)])
 
   request = {
-      'cookies': {'session_id': session},
-      'params': {},
-      'db_conn': db_conn,
+    'cookies': {'session_id': session},
+    'params': {},
+    'db_conn': db_conn,
   }
   code, response = routes.notice.list_notices_route(request)
   assert len(response['notices']) == 10
@@ -80,21 +80,21 @@ def test_mark(db_conn, session):
   Expect to mark a notice as read.
   """
   notice, errors = insert_notice(db_conn, {
-      'user_id': user_id,
-      'kind': 'create_proposal',
-      'data': {
-          'user_name': '',
-          'proposal_name': '',
-          'entity_kind': '',
-          'entity_name': '',
-      }
+    'user_id': user_id,
+    'kind': 'create_proposal',
+    'data': {
+      'user_name': '',
+      'proposal_name': '',
+      'entity_kind': '',
+      'entity_name': '',
+    }
   })
   nid = notice['id']
 
   request = {
-      'cookies': {'session_id': session},
-      'params': {'read': True},
-      'db_conn': db_conn
+    'cookies': {'session_id': session},
+    'params': {'read': True},
+    'db_conn': db_conn
   }
   code, response = routes.notice.mark_notice_route(request, nid)
   assert code == 200
@@ -108,20 +108,20 @@ def test_mark_no_user(db_conn, session):
   Expect to error on not logged in when marking as read.
   """
   notice, errors = insert_notice(db_conn, {
-      'user_id': user_id,
-      'kind': 'create_proposal',
-      'data': {
-          'user_name': '',
-          'proposal_name': '',
-          'entity_kind': '',
-          'entity_name': '',
-      }
+    'user_id': user_id,
+    'kind': 'create_proposal',
+    'data': {
+      'user_name': '',
+      'proposal_name': '',
+      'entity_kind': '',
+      'entity_name': '',
+    }
   })
   nid = notice['id']
 
   request = {
-      'params': {'read': True},
-      'db_conn': db_conn
+    'params': {'read': True},
+    'db_conn': db_conn
   }
   code, response = routes.notice.mark_notice_route(request, nid)
   assert code == 401
@@ -135,9 +135,9 @@ def test_mark_no_notice(db_conn, session):
   """
 
   request = {
-      'cookies': {'session_id': session},
-      'params': {'read': True},
-      'db_conn': db_conn,
+    'cookies': {'session_id': session},
+    'params': {'read': True},
+    'db_conn': db_conn,
   }
   code, response = (routes.notice
                     .mark_notice_route(request, user_id))
@@ -150,27 +150,27 @@ def test_mark_not_owned(db_conn, session):
   """
   user_b_uuid = uuid.uuid4()
   raw_insert_users(db_conn, [{
-      'id': user_b_uuid,
-      'name': 'other',
-      'email': 'other@example.com',
-      'password': 'abcd1234',
+    'id': user_b_uuid,
+    'name': 'other',
+    'email': 'other@example.com',
+    'password': 'abcd1234',
   }])
   notice, errors = insert_notice(db_conn, {
-      'user_id': user_b_uuid,
-      'kind': 'create_proposal',
-      'data': {
-          'user_name': '',
-          'proposal_name': '',
-          'entity_kind': '',
-          'entity_name': '',
-      }
+    'user_id': user_b_uuid,
+    'kind': 'create_proposal',
+    'data': {
+      'user_name': '',
+      'proposal_name': '',
+      'entity_kind': '',
+      'entity_name': '',
+    }
   })
   nid = notice['id']
 
   request = {
-      'cookies': {'session_id': session},
-      'params': {'read': True},
-      'db_conn': db_conn,
+    'cookies': {'session_id': session},
+    'params': {'read': True},
+    'db_conn': db_conn,
   }
   code, response = routes.notice.mark_notice_route(request, nid)
   assert code == 403

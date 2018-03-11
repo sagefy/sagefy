@@ -37,7 +37,8 @@ if not config['debug']:
 psycopg2.extras.register_uuid()
 db_conn = make_db_connection()
 
-for tablename in reversed((
+
+tablenames = (
   'users',
   'units_entity_id',
   'units',
@@ -52,7 +53,9 @@ for tablename in reversed((
   'notices',
   'users_subjects',
   'responses',
-)):
+)
+
+for tablename in reversed(tablenames):
   cur = db_conn.cursor()
   with cur:
     cur.execute("DELETE FROM {tablename};".format(tablename=tablename))

@@ -40,7 +40,7 @@ def test_seq_next_default(db_conn, session):
     'next': {
       'method': 'GET',
       'path': '/s/users/{user_id}/subjects'.format(
-          user_id=convert_uuid_to_slug(user_id)
+        user_id=convert_uuid_to_slug(user_id)
       ),
     }
   }

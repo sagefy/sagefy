@@ -12,9 +12,9 @@ def test_serve():
     pass
 
   response = serve({
-      'REQUEST_METHOD': 'GET',
-      'SCRIPT_NAME': '/foo',
-      'PATH_INFO': '',
+    'REQUEST_METHOD': 'GET',
+    'SCRIPT_NAME': '/foo',
+    'PATH_INFO': '',
   }, start_response)
 
   assert isinstance(response, list)
@@ -27,8 +27,8 @@ def test_call_handler():
   """
 
   code, response = call_handler({
-      'method': 'GET',
-      'path': '/foo',
+    'method': 'GET',
+    'path': '/foo',
   })
 
   assert code == 404
@@ -41,8 +41,8 @@ def test_call_handler_other():
   """
 
   code, response = call_handler({
-      'method': 'WAFFLE',
-      'path': '/foo',
+    'method': 'WAFFLE',
+    'path': '/foo',
   })
 
   assert code == 405
@@ -57,8 +57,8 @@ def test_call_handler_real():
   import routes.public  # noqa
 
   code, response = call_handler({
-      'method': 'GET',
-      'path': '/s/',
+    'method': 'GET',
+    'path': '/s/',
   })
 
   assert code == 200
@@ -70,9 +70,9 @@ def test_construct_request():
   """
 
   request = construct_request({}, {
-      'REQUEST_METHOD': 'WAFFLE',
-      'PATH_INFO': '/waffle',
-      'SCRIPT_NAME': '',
+    'REQUEST_METHOD': 'WAFFLE',
+    'PATH_INFO': '/waffle',
+    'SCRIPT_NAME': '',
   })
   assert isinstance(request, dict)
 
@@ -83,11 +83,11 @@ def test_pull_query_string():
   """
 
   assert pull_query_string({
-      'QUERY_STRING': 'foo=1&bar=baz&maa'
+    'QUERY_STRING': 'foo=1&bar=baz&maa'
   }) == {
-      'foo': 1,
-      'bar': 'baz',
-      'maa': '',
+    'foo': 1,
+    'bar': 'baz',
+    'maa': '',
   }
 
 
@@ -115,10 +115,10 @@ def test_pull_body():
       return b'{"foo":1}'
 
   assert pull_body({
-      'CONTENT_LENGTH': 9,
-      'wsgi.input': Input()
+    'CONTENT_LENGTH': 9,
+    'wsgi.input': Input()
   }) == {
-      'foo': 1,
+    'foo': 1,
   }
 
 
@@ -132,8 +132,8 @@ def test_pull_body_fail():
       return None
 
   assert pull_body({
-      'CONTENT_LENGTH': 9,
-      'wsgi.input': Input()
+    'CONTENT_LENGTH': 9,
+    'wsgi.input': Input()
   }) == {}
 
 
@@ -143,9 +143,9 @@ def test_pull_cookies():
   """
 
   assert pull_cookies({
-      'HTTP_COOKIE': 'theme=light',
+    'HTTP_COOKIE': 'theme=light',
   }) == {
-      'theme': 'light',
+    'theme': 'light',
   }
 
 

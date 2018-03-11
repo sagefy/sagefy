@@ -17,17 +17,17 @@ unit_b_uuid = uuid.uuid4()
 
 def create_route_unit_test_data(db_conn):
   units = [{
-      'version_id': unit_version_a_uuid,
-      'user_id': user_id,
-      'entity_id': unit_a_uuid,
-      'name': 'test unit add',
-      'body': 'adding numbers is fun'
+    'version_id': unit_version_a_uuid,
+    'user_id': user_id,
+    'entity_id': unit_a_uuid,
+    'name': 'test unit add',
+    'body': 'adding numbers is fun'
   }, {
-      'user_id': user_id,
-      'entity_id': unit_b_uuid,
-      'name': 'test unit subtract',
-      'body': 'subtracting numbers is fun',
-      'require_ids': [unit_a_uuid],
+    'user_id': user_id,
+    'entity_id': unit_b_uuid,
+    'name': 'test unit subtract',
+    'body': 'subtracting numbers is fun',
+    'require_ids': [unit_a_uuid],
   }]
   raw_insert_units(db_conn, units)
 
@@ -35,7 +35,7 @@ def create_route_unit_test_data(db_conn):
 def test_get_unit_route(db_conn, session):
   create_route_unit_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
+    'db_conn': db_conn,
   }
   code, response = get_unit_route(request, unit_id=unit_a_uuid)
   assert not response.get('errors')
@@ -49,10 +49,10 @@ def test_get_unit_route(db_conn, session):
 def test_list_units_route(db_conn, session):
   create_route_unit_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'params': {
-          'entity_ids': convert_uuid_to_slug(unit_a_uuid)
-      }
+    'db_conn': db_conn,
+    'params': {
+      'entity_ids': convert_uuid_to_slug(unit_a_uuid)
+    }
   }
   code, response = list_units_route(request)
   assert not response.get('errors')
@@ -63,7 +63,7 @@ def test_list_units_route(db_conn, session):
 def test_get_unit_versions_route(db_conn, session):
   create_route_unit_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
+    'db_conn': db_conn,
   }
   code, response = get_unit_versions_route(request, unit_id=unit_a_uuid)
   assert not response.get('errors')
@@ -74,11 +74,11 @@ def test_get_unit_versions_route(db_conn, session):
 def test_get_unit_version_route(db_conn, session):
   create_route_unit_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
+    'db_conn': db_conn,
   }
   code, response = get_unit_version_route(
-      request,
-      version_id=unit_version_a_uuid
+    request,
+    version_id=unit_version_a_uuid
   )
   assert not response.get('errors')
   assert code == 200
@@ -88,10 +88,10 @@ def test_get_unit_version_route(db_conn, session):
 def test_get_my_recently_created_units_route(db_conn, session):
   create_route_unit_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
   }
   code, response = get_my_recently_created_units_route(request)
   assert not response.get('errors')
@@ -102,14 +102,14 @@ def test_get_my_recently_created_units_route(db_conn, session):
 def test_create_new_unit_version_route(db_conn, session):
   create_route_unit_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {
-          'name': 'test unit multiply',
-          'body': 'multiplying numbers is fun'
-      }
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {
+      'name': 'test unit multiply',
+      'body': 'multiplying numbers is fun'
+    }
   }
   code, response = create_new_unit_version_route(request)
   assert not response.get('errors')
@@ -120,18 +120,18 @@ def test_create_new_unit_version_route(db_conn, session):
 def test_create_existing_unit_version_route(db_conn, session):
   create_route_unit_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {
-          'name': 'test unit divide',
-          'body': 'dividing numbers is fun'
-      }
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {
+      'name': 'test unit divide',
+      'body': 'dividing numbers is fun'
+    }
   }
   code, response = create_existing_unit_version_route(
-      request,
-      unit_id=unit_a_uuid
+    request,
+    unit_id=unit_a_uuid
   )
   assert not response.get('errors')
   assert code == 200

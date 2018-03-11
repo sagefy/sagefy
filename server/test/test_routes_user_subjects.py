@@ -14,49 +14,49 @@ unit_a_uuid = uuid.uuid4()
 
 def prep(db_conn):
   raw_insert_subjects(db_conn, [{
-      'entity_id': subject_a_uuid,
-      'name': 'A',
-      'body': 'Apple',
-      'status': 'accepted',
+    'entity_id': subject_a_uuid,
+    'name': 'A',
+    'body': 'Apple',
+    'status': 'accepted',
   }, {
-      'entity_id': subject_b_uuid,
-      'name': 'B',
-      'body': 'Banana',
-      'status': 'accepted',
+    'entity_id': subject_b_uuid,
+    'name': 'B',
+    'body': 'Banana',
+    'status': 'accepted',
   }, {
-      'entity_id': subject_c_uuid,
-      'name': 'C',
-      'body': 'Coconut',
-      'status': 'accepted',
+    'entity_id': subject_c_uuid,
+    'name': 'C',
+    'body': 'Coconut',
+    'status': 'accepted',
   }, {
-      'entity_id': subject_d_uuid,
-      'name': 'D',
-      'body': 'Date',
-      'status': 'accepted',
+    'entity_id': subject_d_uuid,
+    'name': 'D',
+    'body': 'Date',
+    'status': 'accepted',
   }])
   raw_insert_user_subjects(db_conn, [{
-      'user_id': user_id,
-      'subject_id': subject_a_uuid,
+    'user_id': user_id,
+    'subject_id': subject_a_uuid,
   }, {
-      'user_id': user_id,
-      'subject_id': subject_c_uuid,
+    'user_id': user_id,
+    'subject_id': subject_c_uuid,
   }])
 
 
 def create_one_subject(db_conn):
   raw_insert_units(db_conn, [{
-      'entity_id': unit_a_uuid,
-      'name': 'Unit',
-      'body': 'doesnt matter',
+    'entity_id': unit_a_uuid,
+    'name': 'Unit',
+    'body': 'doesnt matter',
   }])
   raw_insert_subjects(db_conn, [{
-      'entity_id': subject_a_uuid,
-      'name': 'A',
-      'body': 'Apple',
-      'members': [{
-          'kind': 'unit',
-          'id': convert_uuid_to_slug(unit_a_uuid),
-      }]
+    'entity_id': subject_a_uuid,
+    'name': 'A',
+    'body': 'Apple',
+    'members': [{
+      'kind': 'unit',
+      'id': convert_uuid_to_slug(unit_a_uuid),
+    }]
   }])
 
 
@@ -68,12 +68,12 @@ def test_list_user_subjects_route(db_conn, session):
 
   prep(db_conn)
   request = {
-      'cookies': {'session_id': session},
-      'params': {},
-      'db_conn': db_conn,
+    'cookies': {'session_id': session},
+    'params': {},
+    'db_conn': db_conn,
   }
   code, response = routes.user_subjects.list_user_subjects_route(
-      request, user_id)
+    request, user_id)
   assert code == 200
   assert len(response['subjects']) == 2
   assert response['subjects'][0]['body'] in ('Apple', 'Coconut')
@@ -81,7 +81,7 @@ def test_list_user_subjects_route(db_conn, session):
 
 def test_list_user_subjects_route_other_404(db_conn, session):
   code, response = routes.user_subjects.list_user_subjects_route({
-      'db_conn': db_conn,
+    'db_conn': db_conn,
   }, uuid.uuid4())
   assert code == 404
 
@@ -90,22 +90,22 @@ def test_list_user_subjects_route_other_403(db_conn):
   this_user_id = uuid.uuid4()
   from raw_insert import raw_insert_users
   raw_insert_users(db_conn, [{
-      'id': this_user_id,
-      'name': 'test',
-      'email': 'test@example.com',
-      'password': 'abcd1234',
-      'settings': {
-          'email_frequency': 'daily',
-          'view_subjects': 'private',
-          'view_follows': 'private',
-      },
+    'id': this_user_id,
+    'name': 'test',
+    'email': 'test@example.com',
+    'password': 'abcd1234',
+    'settings': {
+      'email_frequency': 'daily',
+      'view_subjects': 'private',
+      'view_follows': 'private',
+    },
   }])
   request = {
-      'params': {},
-      'db_conn': db_conn,
+    'params': {},
+    'db_conn': db_conn,
   }
   code, response = routes.user_subjects.list_user_subjects_route(
-      request, this_user_id)
+    request, this_user_id)
   assert code == 403
 
 
@@ -116,11 +116,11 @@ def test_add_subject(db_conn, session):
 
   create_one_subject(db_conn)
   request = {
-      'cookies': {'session_id': session},
-      'db_conn': db_conn
+    'cookies': {'session_id': session},
+    'db_conn': db_conn
   }
   code, response = routes.user_subjects.add_subject_route(
-      request, user_id, subject_a_uuid)
+    request, user_id, subject_a_uuid)
   assert code == 200
   assert response['user_subject']['subject_id'] == subject_a_uuid
 
@@ -131,7 +131,7 @@ def test_add_subject_401(db_conn):
   """
 
   code, response = routes.user_subjects.add_subject_route({
-      'db_conn': db_conn
+    'db_conn': db_conn
   }, user_id, subject_a_uuid)
   assert code == 401
 
@@ -142,11 +142,11 @@ def test_add_subject_403(db_conn, session):
   """
 
   request = {
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
   }
   code, response = routes.user_subjects.add_subject_route(
-      request, uuid.uuid4(), '2')
+    request, uuid.uuid4(), '2')
   assert code == 403
 
 
@@ -156,11 +156,11 @@ def test_add_subject_404(db_conn, session):
   """
 
   request = {
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
   }
   code, response = routes.user_subjects.add_subject_route(
-      request, user_id, uuid.uuid4())
+    request, user_id, uuid.uuid4())
   assert code == 404
 
 
@@ -171,14 +171,14 @@ def test_add_subject_already_added(db_conn, session):
 
   create_one_subject(db_conn)
   request = {
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
   }
   code, response = routes.user_subjects.add_subject_route(
-      request, user_id, subject_a_uuid)
+    request, user_id, subject_a_uuid)
   assert code == 200
   code, response = routes.user_subjects.add_subject_route(
-      request, user_id, subject_a_uuid)
+    request, user_id, subject_a_uuid)
   assert code == 400
 
 
@@ -189,11 +189,11 @@ def test_select_subject_route(db_conn, session):
 
   create_one_subject(db_conn)
   request = {
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
   }
   code, response = routes.user_subjects.select_subject_route(
-      request, user_id, subject_a_uuid)
+    request, user_id, subject_a_uuid)
   assert code == 200
   assert (response['next']['path'] ==
           '/s/subjects/{subject_a_uuid}/units'
@@ -207,15 +207,15 @@ def test_remove_subject(db_conn, session):
 
   create_one_subject(db_conn)
   raw_insert_user_subjects(db_conn, [{
-      'user_id': user_id,
-      'subject_id': subject_a_uuid,
+    'user_id': user_id,
+    'subject_id': subject_a_uuid,
   }])
   request = {
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
   }
   code, response = routes.user_subjects.remove_subject_route(
-      request, user_id, subject_a_uuid)
+    request, user_id, subject_a_uuid)
   assert code == 200
 
 
@@ -225,10 +225,10 @@ def test_remove_subject_401(db_conn):
   """
 
   request = {
-      'db_conn': db_conn,
+    'db_conn': db_conn,
   }
   code, response = routes.user_subjects.remove_subject_route(
-      request, user_id, subject_a_uuid)
+    request, user_id, subject_a_uuid)
   assert code == 401
 
 
@@ -238,11 +238,11 @@ def test_remove_subject_403(db_conn, session):
   """
 
   request = {
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
   }
   code, response = routes.user_subjects.remove_subject_route(
-      request, uuid.uuid4(), '2')
+    request, uuid.uuid4(), '2')
   assert code == 403
 
 
@@ -252,9 +252,9 @@ def test_remove_subject_404(db_conn, session):
   """
 
   request = {
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
   }
   code, response = routes.user_subjects.remove_subject_route(
-      request, user_id, subject_a_uuid)
+    request, user_id, subject_a_uuid)
   assert code == 404

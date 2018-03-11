@@ -111,14 +111,14 @@ def test_topic_update(db_conn, session):
 
   create_topic_in_db(db_conn)
   request = {
-      'cookies': {
-          'session_id': session
-      },
-      'params': {
-          'name': 'Another entity',
-          'topic_id': topic_uuid,
-      },
-      'db_conn': db_conn
+    'cookies': {
+      'session_id': session
+    },
+    'params': {
+      'name': 'Another entity',
+      'topic_id': topic_uuid,
+    },
+    'db_conn': db_conn
   }
   code, response = update_topic_route(request, topic_uuid)
   assert code == 200
@@ -132,14 +132,14 @@ def test_update_topic_author(db_conn, session):
 
   create_topic_in_db(db_conn, user_id=user_b_uuid)
   request = {
-      'cookies': {
-          'session_id': session
-      },
-      'params': {
-          'name': 'Another entity',
-          'topic_id': topic_uuid,
-      },
-      'db_conn': db_conn
+    'cookies': {
+      'session_id': session
+    },
+    'params': {
+      'name': 'Another entity',
+      'topic_id': topic_uuid,
+    },
+    'db_conn': db_conn
   }
   code, response = update_topic_route(request, topic_uuid)
   assert code == 403
@@ -153,14 +153,14 @@ def test_update_topic_fields(db_conn, session):
 
   create_topic_in_db(db_conn)
   request = {
-      'cookies': {
-          'session_id': session
-      },
-      'params': {
-          'name': '',
-          'topic_id': topic_uuid,
-      },
-      'db_conn': db_conn
+    'cookies': {
+      'session_id': session
+    },
+    'params': {
+      'name': '',
+      'topic_id': topic_uuid,
+    },
+    'db_conn': db_conn
   }
   code, response = update_topic_route(request, topic_uuid)
   assert code == 400

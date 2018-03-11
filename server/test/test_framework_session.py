@@ -13,8 +13,8 @@ def test_get_current_user(db_conn):
   create_user_in_db(db_conn)
   token = log_in()
   user = get_current_user({
-      'cookies': {'session_id': token},
-      'db_conn': db_conn,
+    'cookies': {'session_id': token},
+    'db_conn': db_conn,
   })
   assert user
   assert user['id'] == convert_slug_to_uuid(user_id)
@@ -42,7 +42,7 @@ def test_log_out_user(db_conn):
   token = log_in_user(user)
   assert red.get(token).decode() == convert_uuid_to_slug(user_id)
   log_out_user({
-      'cookies': {'session_id': token},
-      'db_conn': db_conn,
+    'cookies': {'session_id': token},
+    'db_conn': db_conn,
   })
   assert red.get(token) is None

@@ -35,79 +35,79 @@ def add_test_subject(db_conn):
   """
 
   raw_insert_units(db_conn, [{
-      'entity_id': unit_add_uuid,
-      'user_id': user_id,
-      'name': 'Add',
-      'body': 'Add',
+    'entity_id': unit_add_uuid,
+    'user_id': user_id,
+    'name': 'Add',
+    'body': 'Add',
   }, {
-      'entity_id': unit_subtract_uuid,
-      'require_ids': [unit_add_uuid],
-      'user_id': user_id,
-      'name': 'Subtract',
-      'body': 'Subtract',
+    'entity_id': unit_subtract_uuid,
+    'require_ids': [unit_add_uuid],
+    'user_id': user_id,
+    'name': 'Subtract',
+    'body': 'Subtract',
   }, {
-      'entity_id': unit_multiply_uuid,
-      'require_ids': [unit_add_uuid],
-      'user_id': user_id,
-      'name': 'Multiply',
-      'body': 'Multiply',
+    'entity_id': unit_multiply_uuid,
+    'require_ids': [unit_add_uuid],
+    'user_id': user_id,
+    'name': 'Multiply',
+    'body': 'Multiply',
   }, {
-      'entity_id': unit_divide_uuid,
-      'require_ids': [unit_multiply_uuid, unit_subtract_uuid],
-      'user_id': user_id,
-      'name': 'Divide',
-      'body': 'Divide',
+    'entity_id': unit_divide_uuid,
+    'require_ids': [unit_multiply_uuid, unit_subtract_uuid],
+    'user_id': user_id,
+    'name': 'Divide',
+    'body': 'Divide',
   }])
 
   raw_insert_cards(db_conn, [{
-      'entity_id': card_a_uuid,
-      'unit_id': unit_add_uuid,
-      'user_id': user_id,
-      'status': 'accepted',
-      'kind': 'video',
-      'name': 'Meaning of Life Video',
-      'data': {
-          'site': 'youtube',
-          'video_id': convert_uuid_to_slug(uuid.uuid4()),
-      },
+    'entity_id': card_a_uuid,
+    'unit_id': unit_add_uuid,
+    'user_id': user_id,
+    'status': 'accepted',
+    'kind': 'video',
+    'name': 'Meaning of Life Video',
+    'data': {
+      'site': 'youtube',
+      'video_id': convert_uuid_to_slug(uuid.uuid4()),
+    },
   }])
 
   raw_insert_responses(db_conn, [{
-      'user_id': user_id,
-      'unit_id': unit_add_uuid,
-      'learned': 0.99,
-      'card_id': card_a_uuid,
-      'response': convert_uuid_to_slug(uuid.uuid4()),
-      'score': 1,
+    'user_id': user_id,
+    'unit_id': unit_add_uuid,
+    'learned': 0.99,
+    'card_id': card_a_uuid,
+    'response': convert_uuid_to_slug(uuid.uuid4()),
+    'score': 1,
   }, {
-      'user_id': user_id,
-      'unit_id': unit_multiply_uuid,
-      'learned': 0.0,
-      'card_id': card_a_uuid,
-      'response': convert_uuid_to_slug(uuid.uuid4()),
-      'score': 1,
+    'user_id': user_id,
+    'unit_id': unit_multiply_uuid,
+    'learned': 0.0,
+    'card_id': card_a_uuid,
+    'response': convert_uuid_to_slug(uuid.uuid4()),
+    'score': 1,
   }, {
-      'user_id': user_id,
-      'unit_id': unit_subtract_uuid,
-      'learned': 0.99,
-      'card_id': card_a_uuid,
-      'response': convert_uuid_to_slug(uuid.uuid4()),
-      'score': 1,
-      'created': datetime(2004, 11, 3, tzinfo=timezone.utc)
+    'user_id': user_id,
+    'unit_id': unit_subtract_uuid,
+    'learned': 0.99,
+    'card_id': card_a_uuid,
+    'response': convert_uuid_to_slug(uuid.uuid4()),
+    'score': 1,
+    'created': datetime(2004, 11, 3, tzinfo=timezone.utc)
   }])
 
   raw_insert_subjects(db_conn, [{
-      'user_id': user_id,
-      'entity_id': subject_uuid,
-      'created': datetime(2004, 11, 1, tzinfo=timezone.utc),
-      'name': 'Math',
-      'body': 'Math',
-      'members': [
-          {'id': convert_uuid_to_slug(unit_add_uuid), 'kind': 'unit'},
-          {'id': convert_uuid_to_slug(unit_subtract_uuid), 'kind': 'unit'},
-          {'id': convert_uuid_to_slug(unit_multiply_uuid), 'kind': 'unit'},
-          {'id': convert_uuid_to_slug(unit_divide_uuid), 'kind': 'unit'},
-      ],
+    'user_id': user_id,
+    'entity_id': subject_uuid,
+    'created': datetime(2004, 11, 1, tzinfo=timezone.utc),
+    'name': 'Math',
+    'body': 'Math',
+    'members': [
+      {'id': convert_uuid_to_slug(unit_add_uuid), 'kind': 'unit'},
+      {'id': convert_uuid_to_slug(unit_subtract_uuid), 'kind': 'unit'},
+      {'id': convert_uuid_to_slug(unit_multiply_uuid), 'kind': 'unit'},
+      {'id': convert_uuid_to_slug(unit_divide_uuid), 'kind': 'unit'},
+    ],
   }])
 
 
@@ -123,12 +123,12 @@ def test_traverse(db_conn, session):
   user = get_user(db_conn, {'id': user_id})
   buckets = traverse(db_conn, user, subject)
   assert buckets['learn'][0]['entity_id'] in (
-      unit_subtract_uuid,
-      unit_multiply_uuid,
+    unit_subtract_uuid,
+    unit_multiply_uuid,
   )
   assert buckets['learn'][1]['entity_id'] in (
-      unit_subtract_uuid,
-      unit_multiply_uuid,
+    unit_subtract_uuid,
+    unit_multiply_uuid,
   )
   assert buckets['blocked'][0]['entity_id'] == unit_divide_uuid
 
@@ -197,10 +197,10 @@ def test_match_unit_dependents(db_conn, session):
 
   add_test_subject(db_conn)
   units = list_latest_accepted_units(db_conn, [
-      unit_add_uuid,
-      unit_subtract_uuid,
-      unit_multiply_uuid,
-      unit_divide_uuid,
+    unit_add_uuid,
+    unit_subtract_uuid,
+    unit_multiply_uuid,
+    unit_divide_uuid,
   ])
   deps = match_unit_dependents(units)
   assert len(deps[unit_add_uuid]) == 3
@@ -216,10 +216,10 @@ def test_order(db_conn, session):
 
   add_test_subject(db_conn)
   units = list_latest_accepted_units(db_conn, [
-      unit_add_uuid,
-      unit_subtract_uuid,
-      unit_multiply_uuid,
-      unit_divide_uuid,
+    unit_add_uuid,
+    unit_subtract_uuid,
+    unit_multiply_uuid,
+    unit_divide_uuid,
   ])
   units = order_units_by_need(units)
   entity_ids = [unit['entity_id'] for unit in units]

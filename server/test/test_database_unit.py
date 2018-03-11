@@ -31,43 +31,43 @@ test_subject_uuid = uuid.uuid4()
 
 def create_unit_test_data(db_conn):
   users = [{
-      'id': user_a_uuid,
-      'name': 'test',
-      'email': 'test@example.com',
-      'password': 'abcd1234',
+    'id': user_a_uuid,
+    'name': 'test',
+    'email': 'test@example.com',
+    'password': 'abcd1234',
   }, {
-      'id': user_b_uuid,
-      'name': 'other',
-      'email': 'other@example.com',
-      'password': 'abcd1234',
+    'id': user_b_uuid,
+    'name': 'other',
+    'email': 'other@example.com',
+    'password': 'abcd1234',
   }]
   raw_insert_users(db_conn, users)
   units = [{
-      'version_id': unit_version_a_uuid,
-      'user_id': user_a_uuid,
-      'entity_id': unit_a_uuid,
-      'name': 'test unit add',
-      'body': 'adding numbers is fun'
+    'version_id': unit_version_a_uuid,
+    'user_id': user_a_uuid,
+    'entity_id': unit_a_uuid,
+    'name': 'test unit add',
+    'body': 'adding numbers is fun'
   }, {
-      'user_id': user_a_uuid,
-      'entity_id': unit_b_uuid,
-      'name': 'test unit subtract',
-      'body': 'subtracting numbers is fun',
-      'require_ids': [unit_a_uuid],
+    'user_id': user_a_uuid,
+    'entity_id': unit_b_uuid,
+    'name': 'test unit subtract',
+    'body': 'subtracting numbers is fun',
+    'require_ids': [unit_a_uuid],
   }]
   raw_insert_units(db_conn, units)
   subjects = [{
-      'entity_id': test_subject_uuid,
-      'name': 'Math',
-      'user_id': user_b_uuid,
-      'body': 'Math is fun.',
-      'members': [{
-          'kind': 'unit',
-          'id': convert_uuid_to_slug(unit_a_uuid),
-      }, {
-          'kind': 'unit',
-          'id': convert_uuid_to_slug(unit_b_uuid),
-      }],
+    'entity_id': test_subject_uuid,
+    'name': 'Math',
+    'user_id': user_b_uuid,
+    'body': 'Math is fun.',
+    'members': [{
+      'kind': 'unit',
+      'id': convert_uuid_to_slug(unit_a_uuid),
+    }, {
+      'kind': 'unit',
+      'id': convert_uuid_to_slug(unit_b_uuid),
+    }],
   }]
   raw_insert_subjects(db_conn, subjects)
 
@@ -75,12 +75,12 @@ def create_unit_test_data(db_conn):
 def test_ensure_requires(db_conn):
   create_unit_test_data(db_conn)
   data = {
-      'require_ids': [unit_a_uuid, uuid.uuid4()],
+    'require_ids': [unit_a_uuid, uuid.uuid4()],
   }
   errors = ensure_requires(db_conn, data)
   assert errors
   data = {
-      'require_ids': [unit_a_uuid, unit_b_uuid],
+    'require_ids': [unit_a_uuid, unit_b_uuid],
   }
   errors = ensure_requires(db_conn, data)
   assert not errors
@@ -100,20 +100,20 @@ def test_ensure_no_cycles(db_conn):
 def test_insert_unit(db_conn):
   create_unit_test_data(db_conn)
   data = {
-      'user_id': user_a_uuid,
-      'entity_id': uuid.uuid4(),
-      'name': 'test unit add',
-      'body': 'multiplying numbers is fun',
-      'require_ids': [uuid.uuid4()],
+    'user_id': user_a_uuid,
+    'entity_id': uuid.uuid4(),
+    'name': 'test unit add',
+    'body': 'multiplying numbers is fun',
+    'require_ids': [uuid.uuid4()],
   }
   unit, errors = insert_unit(db_conn, data)
   assert errors
   assert not unit
   data = {
-      'user_id': user_a_uuid,
-      'entity_id': uuid.uuid4(),
-      'name': 'test unit add',
-      'body': 'multiplying numbers is fun'
+    'user_id': user_a_uuid,
+    'entity_id': uuid.uuid4(),
+    'name': 'test unit add',
+    'body': 'multiplying numbers is fun'
   }
   unit, errors = insert_unit(db_conn, data)
   assert not errors
@@ -124,19 +124,19 @@ def test_insert_unit_version(db_conn):
   create_unit_test_data(db_conn)
   current_data = get_unit_version(db_conn, unit_version_a_uuid)
   next_data = {
-      'user_id': user_a_uuid,
-      'name': 'test unit add',
-      'body': 'multiplying numbers is fun',
-      'require_ids': [uuid.uuid4()]
+    'user_id': user_a_uuid,
+    'name': 'test unit add',
+    'body': 'multiplying numbers is fun',
+    'require_ids': [uuid.uuid4()]
   }
   version, errors = insert_unit_version(db_conn, current_data, next_data)
   assert errors
   assert not version
   current_data['entity_id'] = uuid.uuid4()
   next_data = {
-      'user_id': user_a_uuid,
-      'name': 'test unit add',
-      'body': 'multiplying numbers is fun'
+    'user_id': user_a_uuid,
+    'name': 'test unit add',
+    'body': 'multiplying numbers is fun'
   }
   version, errors = insert_unit_version(db_conn, current_data, next_data)
   assert errors
@@ -152,9 +152,9 @@ def test_update_unit(db_conn):
   current_data = get_unit_version(db_conn, unit_version_a_uuid)
   assert current_data['status'] == 'accepted'
   unit, errors = update_unit(
-      db_conn,
-      version_id=unit_version_a_uuid,
-      status='pending'
+    db_conn,
+    version_id=unit_version_a_uuid,
+    status='pending'
   )
   assert not errors
   assert unit['status'] == 'pending'
@@ -183,8 +183,8 @@ def test_get_latest_accepted_unit(db_conn):
 def test_list_latest_accepted_units(db_conn):
   create_unit_test_data(db_conn)
   units = list_latest_accepted_units(db_conn, entity_ids=[
-      unit_a_uuid,
-      unit_b_uuid,
+    unit_a_uuid,
+    unit_b_uuid,
   ])
   assert units
   assert len(units) == 2
@@ -197,7 +197,7 @@ def test_list_latest_accepted_units(db_conn):
 def test_list_many_unit_versions(db_conn):
   create_unit_test_data(db_conn)
   versions = list_many_unit_versions(db_conn, version_ids=[
-      unit_version_a_uuid,
+    unit_version_a_uuid,
   ])
   assert versions
   assert len(versions) == 1

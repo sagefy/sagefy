@@ -33,48 +33,48 @@ subject_version_a_uuid = uuid.uuid4()
 
 def create_route_subject_test_data(db_conn):
   units = [{
-      'version_id': unit_version_a_uuid,
-      'user_id': user_id,
-      'entity_id': unit_a_uuid,
-      'name': 'test unit add',
-      'body': 'adding numbers is fun'
+    'version_id': unit_version_a_uuid,
+    'user_id': user_id,
+    'entity_id': unit_a_uuid,
+    'name': 'test unit add',
+    'body': 'adding numbers is fun'
   }, {
-      'user_id': user_id,
-      'entity_id': unit_b_uuid,
-      'name': 'test unit subtract',
-      'body': 'subtracting numbers is fun',
-      'require_ids': [unit_a_uuid],
+    'user_id': user_id,
+    'entity_id': unit_b_uuid,
+    'name': 'test unit subtract',
+    'body': 'subtracting numbers is fun',
+    'require_ids': [unit_a_uuid],
   }]
   raw_insert_units(db_conn, units)
   cards = [{
-      'entity_id': card_a_uuid,
-      'unit_id': unit_a_uuid,
-      'kind': 'video',
-      'name': 'Video Z',
+    'entity_id': card_a_uuid,
+    'unit_id': unit_a_uuid,
+    'kind': 'video',
+    'name': 'Video Z',
   }]
   raw_insert_cards(db_conn, cards)
   subjects = [{
-      'version_id': subject_version_a_uuid,
-      'entity_id': subject_a_uuid,
-      'name': 'Math',
-      'user_id': user_id,
-      'body': 'Math is fun.',
-      'members': [{
-          'kind': 'unit',
-          'id': convert_uuid_to_slug(unit_a_uuid),
-      }, {
-          'kind': 'unit',
-          'id': convert_uuid_to_slug(unit_b_uuid),
-      }],
+    'version_id': subject_version_a_uuid,
+    'entity_id': subject_a_uuid,
+    'name': 'Math',
+    'user_id': user_id,
+    'body': 'Math is fun.',
+    'members': [{
+      'kind': 'unit',
+      'id': convert_uuid_to_slug(unit_a_uuid),
+    }, {
+      'kind': 'unit',
+      'id': convert_uuid_to_slug(unit_b_uuid),
+    }],
   }, {
-      'entity_id': subject_b_uuid,
-      'name': 'An Introduction to Electronic Music',
-      'user_id': user_id,
-      'body': 'Art is fun.',
-      'members': [{
-          'kind': 'subject',
-          'id': convert_uuid_to_slug(subject_a_uuid),
-      }],
+    'entity_id': subject_b_uuid,
+    'name': 'An Introduction to Electronic Music',
+    'user_id': user_id,
+    'body': 'Art is fun.',
+    'members': [{
+      'kind': 'subject',
+      'id': convert_uuid_to_slug(subject_a_uuid),
+    }],
   }]
   raw_insert_subjects(db_conn, subjects)
 
@@ -82,11 +82,11 @@ def create_route_subject_test_data(db_conn):
 def test_get_recommended_subjects_route(db_conn, session):
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = get_recommended_subjects_route(request)
   assert not response.get('errors')
@@ -101,11 +101,11 @@ def test_get_subject(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = get_subject_route(request, subject_id=subject_a_uuid)
   assert not response.get('errors')
@@ -120,11 +120,11 @@ def test_get_subject_404(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = get_subject_route(request, subject_id=uuid.uuid4())
   assert response.get('errors')
@@ -134,16 +134,16 @@ def test_get_subject_404(db_conn, session):
 def test_list_subjects_route(db_conn, session):
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {
-          'entity_ids': ','.join([
-              convert_uuid_to_slug(subject_a_uuid),
-              convert_uuid_to_slug(subject_b_uuid),
-          ])
-      }
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {
+      'entity_ids': ','.join([
+        convert_uuid_to_slug(subject_a_uuid),
+        convert_uuid_to_slug(subject_b_uuid),
+      ])
+    }
   }
   code, response = list_subjects_route(request)
   assert not response.get('errors')
@@ -154,15 +154,15 @@ def test_list_subjects_route(db_conn, session):
 def test_get_subject_versions_route(db_conn, session):
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = get_subject_versions_route(
-      request,
-      subject_id=subject_a_uuid
+    request,
+    subject_id=subject_a_uuid
   )
   assert not response.get('errors')
   assert code == 200
@@ -172,15 +172,15 @@ def test_get_subject_versions_route(db_conn, session):
 def test_get_subject_version_route(db_conn, session):
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = get_subject_version_route(
-      request,
-      version_id=subject_version_a_uuid
+    request,
+    version_id=subject_version_a_uuid
   )
   assert not response.get('errors')
   assert code == 200
@@ -194,11 +194,11 @@ def test_subject_tree(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = get_subject_tree_route(request, subject_id=subject_a_uuid)
   assert not response.get('errors')
@@ -215,8 +215,8 @@ def test_subject_tree_logged_out(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'params': {}
+    'db_conn': db_conn,
+    'params': {}
   }
   code, response = get_subject_tree_route(request, subject_id=subject_a_uuid)
   assert code == 200
@@ -232,11 +232,11 @@ def test_subject_tree_404(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = get_subject_tree_route(request, subject_id=uuid.uuid4())
   assert code == 404
@@ -250,15 +250,15 @@ def test_subject_units(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = get_subject_units_route(
-      request,
-      subject_id=subject_a_uuid
+    request,
+    subject_id=subject_a_uuid
   )
   assert not response.get('errors')
   assert code == 200
@@ -274,12 +274,12 @@ def test_subject_units_401(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'params': {}
+    'db_conn': db_conn,
+    'params': {}
   }
   code, response = get_subject_units_route(
-      request,
-      subject_id=subject_a_uuid
+    request,
+    subject_id=subject_a_uuid
   )
   assert code == 401
   assert response.get('errors')
@@ -292,11 +292,11 @@ def test_subject_units_404(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = get_subject_units_route(request, subject_id=uuid.uuid4())
   assert code == 404
@@ -311,20 +311,20 @@ def test_choose_unit(db_conn, session):
   create_route_subject_test_data(db_conn)
   current_user = get_user_by_id(db_conn, {'id': user_id})
   set_learning_context(
-      user=current_user,
-      subject={'entity_id': convert_uuid_to_slug(subject_a_uuid)}
+    user=current_user,
+    subject={'entity_id': convert_uuid_to_slug(subject_a_uuid)}
   )
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = choose_unit_route(
-      request,
-      subject_id=subject_a_uuid,
-      unit_id=unit_a_uuid
+    request,
+    subject_id=subject_a_uuid,
+    unit_id=unit_a_uuid
   )
   assert not response.get('errors')
   assert code == 200
@@ -339,16 +339,16 @@ def test_choose_unit_401(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = choose_unit_route(
-      request,
-      subject_id=subject_a_uuid,
-      unit_id=unit_a_uuid
+    request,
+    subject_id=subject_a_uuid,
+    unit_id=unit_a_uuid
   )
   assert not response.get('errors')
   assert code == 200
@@ -363,16 +363,16 @@ def test_choose_unit_404(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = choose_unit_route(
-      request,
-      subject_id=subject_a_uuid,
-      unit_id=unit_a_uuid
+    request,
+    subject_id=subject_a_uuid,
+    unit_id=unit_a_uuid
   )
   assert not response.get('errors')
   assert code == 200
@@ -387,16 +387,16 @@ def test_choose_unit_400(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = choose_unit_route(
-      request,
-      subject_id=subject_a_uuid,
-      unit_id=unit_a_uuid
+    request,
+    subject_id=subject_a_uuid,
+    unit_id=unit_a_uuid
   )
   assert not response.get('errors')
   assert code == 200
@@ -411,16 +411,16 @@ def test_choose_unit_extra(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = choose_unit_route(
-      request,
-      subject_id=subject_a_uuid,
-      unit_id=unit_a_uuid
+    request,
+    subject_id=subject_a_uuid,
+    unit_id=unit_a_uuid
   )
   assert not response.get('errors')
   assert code == 200
@@ -435,16 +435,16 @@ def test_choose_unit_avail(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = choose_unit_route(
-      request,
-      subject_id=subject_a_uuid,
-      unit_id=unit_a_uuid
+    request,
+    subject_id=subject_a_uuid,
+    unit_id=unit_a_uuid
   )
   assert not response.get('errors')
   assert code == 200
@@ -459,16 +459,16 @@ def test_choose_unit_ordering(db_conn, session):
 
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = choose_unit_route(
-      request,
-      subject_id=subject_a_uuid,
-      unit_id=unit_a_uuid
+    request,
+    subject_id=subject_a_uuid,
+    unit_id=unit_a_uuid
   )
   assert not response.get('errors')
   assert code == 200
@@ -478,11 +478,11 @@ def test_choose_unit_ordering(db_conn, session):
 def test_get_my_recently_created_subjects_route(db_conn, session):
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {}
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {}
   }
   code, response = get_my_recently_created_subjects_route(request)
   assert not response.get('errors')
@@ -493,18 +493,18 @@ def test_get_my_recently_created_subjects_route(db_conn, session):
 def test_create_new_subject_version_route(db_conn, session):
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {
-          'name': 'History',
-          'body': 'History is fun.',
-          'members': [{
-              'kind': 'subject',
-              'id': convert_uuid_to_slug(subject_a_uuid),
-          }],
-      }
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {
+      'name': 'History',
+      'body': 'History is fun.',
+      'members': [{
+        'kind': 'subject',
+        'id': convert_uuid_to_slug(subject_a_uuid),
+      }],
+    }
   }
   code, response = create_new_subject_version_route(request)
   assert not response.get('errors')
@@ -515,17 +515,17 @@ def test_create_new_subject_version_route(db_conn, session):
 def test_create_existing_subject_version_route(db_conn, session):
   create_route_subject_test_data(db_conn)
   request = {
-      'db_conn': db_conn,
-      'cookies': {
-          'session_id': session,
-      },
-      'params': {
-          'name': 'Historyz',
-      }
+    'db_conn': db_conn,
+    'cookies': {
+      'session_id': session,
+    },
+    'params': {
+      'name': 'Historyz',
+    }
   }
   code, response = create_existing_subject_version_route(
-      request,
-      subject_id=subject_b_uuid
+    request,
+    subject_id=subject_b_uuid
   )
   assert not response.get('errors')
   assert code == 200

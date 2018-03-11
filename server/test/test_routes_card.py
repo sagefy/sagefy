@@ -19,86 +19,86 @@ card_version_id = uuid.uuid4()
 
 def create_test_cards(db_conn):
   units = [{
-      'entity_id': unit_id,
-      'status': 'accepted',
-      'name': 'Wildwood',
-      'body': 'Wildwood',
+    'entity_id': unit_id,
+    'status': 'accepted',
+    'name': 'Wildwood',
+    'body': 'Wildwood',
   }]
   raw_insert_units(db_conn, units)
 
   cards = [{
-      'entity_id': entity_id,
-      'unit_id': unit_id,
-      'status': 'accepted',
-      'kind': 'video',
-      'name': 'Video A',
-      'require_ids': [entity_id_r],
+    'entity_id': entity_id,
+    'unit_id': unit_id,
+    'status': 'accepted',
+    'kind': 'video',
+    'name': 'Video A',
+    'require_ids': [entity_id_r],
   }, {
-      'entity_id': entity_id,
-      'unit_id': unit_id,
-      'created': datetime(1986, 11, 3, tzinfo=timezone.utc),
-      'modified': datetime(1986, 11, 3, tzinfo=timezone.utc),
-      'status': 'accepted',
-      'kind': 'video',
-      'name': 'Video A',
+    'entity_id': entity_id,
+    'unit_id': unit_id,
+    'created': datetime(1986, 11, 3, tzinfo=timezone.utc),
+    'modified': datetime(1986, 11, 3, tzinfo=timezone.utc),
+    'status': 'accepted',
+    'kind': 'video',
+    'name': 'Video A',
   }, {
-      'entity_id': entity_id_r,
-      'unit_id': unit_id,
-      'status': 'accepted',
-      'kind': 'video',
-      'name': 'Video Z',
+    'entity_id': entity_id_r,
+    'unit_id': unit_id,
+    'status': 'accepted',
+    'kind': 'video',
+    'name': 'Video Z',
   }, {
-      'entity_id': entity_id_b,
-      'unit_id': unit_id,
-      'status': 'accepted',
-      'kind': 'choice',
-      'require_ids': [entity_id],
-      'name': 'Video X',
+    'entity_id': entity_id_b,
+    'unit_id': unit_id,
+    'status': 'accepted',
+    'kind': 'choice',
+    'require_ids': [entity_id],
+    'name': 'Video X',
   }, {
-      'version_id': card_version_id,
-      'entity_id': card_id,
-      'unit_id': unit_id,
-      'status': 'accepted',
-      'kind': 'choice',
-      'name': 'Meaning of Life',
-      'data': {
-          'body': 'What is the meaning of life?',
-          'options': [{
-              'id': convert_uuid_to_slug(good_response_id),
-              'value': '42',
-              'correct': True,
-              'feedback': 'Yay!',
-          }, {
-              'id': convert_uuid_to_slug(uuid.uuid4()),
-              'value': 'love',
-              'correct': False,
-              'feedback': 'Boo!',
-          }],
-          'order': 'set',
-          'max_options_to_show': 4,
-      },
+    'version_id': card_version_id,
+    'entity_id': card_id,
+    'unit_id': unit_id,
+    'status': 'accepted',
+    'kind': 'choice',
+    'name': 'Meaning of Life',
+    'data': {
+      'body': 'What is the meaning of life?',
+      'options': [{
+        'id': convert_uuid_to_slug(good_response_id),
+        'value': '42',
+        'correct': True,
+        'feedback': 'Yay!',
+      }, {
+        'id': convert_uuid_to_slug(uuid.uuid4()),
+        'value': 'love',
+        'correct': False,
+        'feedback': 'Boo!',
+      }],
+      'order': 'set',
+      'max_options_to_show': 4,
+    },
   }, {
-      'entity_id': uuid.uuid4(),
-      'unit_id': unit_id,
-      'status': 'accepted',
-      'kind': 'choice',
-      'name': 'Meaning of Love',
-      'data': {
-          'body': 'What is the meaning of love?',
-          'options': [{
-              'id': convert_uuid_to_slug(uuid.uuid4()),
-              'value': 'Flava Flav',
-              'correct': True,
-              'feedback': 'Yay!',
-          }, {
-              'id': convert_uuid_to_slug(uuid.uuid4()),
-              'value': 'life',
-              'correct': False,
-              'feedback': 'Boo!',
-          }],
-          'order': 'set',
-          'max_options_to_show': 4,
-      },
+    'entity_id': uuid.uuid4(),
+    'unit_id': unit_id,
+    'status': 'accepted',
+    'kind': 'choice',
+    'name': 'Meaning of Love',
+    'data': {
+      'body': 'What is the meaning of love?',
+      'options': [{
+        'id': convert_uuid_to_slug(uuid.uuid4()),
+        'value': 'Flava Flav',
+        'correct': True,
+        'feedback': 'Yay!',
+      }, {
+        'id': convert_uuid_to_slug(uuid.uuid4()),
+        'value': 'life',
+        'correct': False,
+        'feedback': 'Boo!',
+      }],
+      'order': 'set',
+      'max_options_to_show': 4,
+    },
   }]
   raw_insert_cards(db_conn, cards)
 
@@ -110,7 +110,7 @@ def test_get_card(db_conn, session):
 
   create_test_cards(db_conn)
   code, response = routes.card.get_card_route({
-      'db_conn': db_conn
+    'db_conn': db_conn
   }, convert_uuid_to_slug(entity_id))
   assert code == 200
   # Model
@@ -133,7 +133,7 @@ def test_get_card_404(db_conn):
   """
 
   code, response = routes.card.get_card_route({
-      'db_conn': db_conn
+    'db_conn': db_conn
   }, convert_uuid_to_slug(uuid.uuid4()))
   assert code == 404
 
@@ -141,10 +141,10 @@ def test_get_card_404(db_conn):
 def test_list_cards_route(db_conn, session):
   create_test_cards(db_conn)
   request = {
-      'db_conn': db_conn,
-      'params': {
-          'entity_ids': convert_uuid_to_slug(entity_id),
-      },
+    'db_conn': db_conn,
+    'params': {
+      'entity_ids': convert_uuid_to_slug(entity_id),
+    },
   }
   code, response = routes.card.list_cards_route(request)
   assert code == 200
@@ -157,18 +157,18 @@ def test_learn_card(db_conn, session):
 
   create_test_cards(db_conn)
   redis_key = 'learning_context_{user_id}'.format(
-      user_id=convert_uuid_to_slug(user_id)
+    user_id=convert_uuid_to_slug(user_id)
   )
   red.set(
-      redis_key,
-      json.dumps({
-          'unit': {'entity_id': convert_uuid_to_slug(unit_id)},
-      })
+    redis_key,
+    json.dumps({
+      'unit': {'entity_id': convert_uuid_to_slug(unit_id)},
+    })
   )
   request = {'cookies': {'session_id': session}, 'db_conn': db_conn}
   code, response = routes.card.learn_card_route(
-      request,
-      convert_uuid_to_slug(card_id)
+    request,
+    convert_uuid_to_slug(card_id)
   )
   red.delete(redis_key)
   assert not response.get('errors')
@@ -186,7 +186,7 @@ def test_learn_card_401(db_conn):
   """
 
   code, response = routes.card.learn_card_route({
-      'db_conn': db_conn
+    'db_conn': db_conn
   }, convert_uuid_to_slug(uuid.uuid4()))
   assert code == 401
 
@@ -198,8 +198,8 @@ def test_learn_card_404(db_conn, session):
 
   request = {'cookies': {'session_id': session}, 'db_conn': db_conn}
   code, response = routes.card.learn_card_route(
-      request,
-      convert_uuid_to_slug(uuid.uuid4())
+    request,
+    convert_uuid_to_slug(uuid.uuid4())
   )
   assert code == 404
 
@@ -212,18 +212,18 @@ def test_learn_card_400(db_conn, session):
 
   create_test_cards(db_conn)
   redis_key = 'learning_context_{user_id}'.format(
-      user_id=convert_uuid_to_slug(user_id)
+    user_id=convert_uuid_to_slug(user_id)
   )
   red.set(
-      redis_key,
-      json.dumps({
-          'unit': {'entity_id': convert_uuid_to_slug(uuid.uuid4())},
-      })
+    redis_key,
+    json.dumps({
+      'unit': {'entity_id': convert_uuid_to_slug(uuid.uuid4())},
+    })
   )
   request = {'cookies': {'session_id': session}, 'db_conn': db_conn}
   code, response = routes.card.learn_card_route(
-      request,
-      convert_uuid_to_slug(card_id)
+    request,
+    convert_uuid_to_slug(card_id)
   )
   red.delete(redis_key)
   assert code == 400
@@ -232,7 +232,7 @@ def test_learn_card_400(db_conn, session):
 def test_get_card_versions_route(db_conn, session):
   create_test_cards(db_conn)
   request = {
-      'db_conn': db_conn
+    'db_conn': db_conn
   }
   code, response = routes.card.get_card_versions_route(request, card_id)
   assert not response.get('errors')
@@ -243,7 +243,7 @@ def test_get_card_versions_route(db_conn, session):
 def test_get_card_version_route(db_conn, session):
   create_test_cards(db_conn)
   request = {
-      'db_conn': db_conn
+    'db_conn': db_conn
   }
   version_id = card_version_id
   code, response = routes.card.get_card_version_route(request, version_id)
@@ -259,19 +259,19 @@ def test_respond_card(db_conn, session):
 
   create_test_cards(db_conn)
   redis_key = 'learning_context_{user_id}'.format(
-      user_id=convert_uuid_to_slug(user_id)
+    user_id=convert_uuid_to_slug(user_id)
   )
   red.set(
-      redis_key,
-      json.dumps({
-          'card': {'entity_id': convert_uuid_to_slug(card_id)},
-          'unit': {'entity_id': convert_uuid_to_slug(unit_id)},
-      })
+    redis_key,
+    json.dumps({
+      'card': {'entity_id': convert_uuid_to_slug(card_id)},
+      'unit': {'entity_id': convert_uuid_to_slug(unit_id)},
+    })
   )
   request = {
-      'params': {'response': convert_uuid_to_slug(good_response_id)},
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
+    'params': {'response': convert_uuid_to_slug(good_response_id)},
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
   }
   code, response = routes.card.respond_to_card_route(request, card_id)
   red.delete(redis_key)
@@ -287,7 +287,7 @@ def test_respond_card_401(db_conn):
   """
 
   code, response = routes.card.respond_to_card_route({
-      'db_conn': db_conn
+    'db_conn': db_conn
   }, convert_uuid_to_slug(uuid.uuid4()))
   assert code == 401
 
@@ -298,9 +298,9 @@ def test_respond_card_404(db_conn, session):
   """
 
   code, response = routes.card.respond_to_card_route({
-      'params': {'response': convert_uuid_to_slug(uuid.uuid4())},
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
+    'params': {'response': convert_uuid_to_slug(uuid.uuid4())},
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
   }, convert_uuid_to_slug(uuid.uuid4()))
   assert code == 404
 
@@ -313,19 +313,19 @@ def test_respond_card_400a(db_conn, session):
 
   create_test_cards(db_conn)
   redis_key = 'learning_context_{user_id}'.format(
-      user_id=convert_uuid_to_slug(user_id)
+    user_id=convert_uuid_to_slug(user_id)
   )
   red.set(
-      redis_key,
-      json.dumps({
-          'card': {'entity_id': convert_uuid_to_slug(uuid.uuid4())},
-          'unit': {'entity_id': convert_uuid_to_slug(unit_id)},
-      })
+    redis_key,
+    json.dumps({
+      'card': {'entity_id': convert_uuid_to_slug(uuid.uuid4())},
+      'unit': {'entity_id': convert_uuid_to_slug(unit_id)},
+    })
   )
   request = {
-      'params': {'response': convert_uuid_to_slug(good_response_id)},
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
+    'params': {'response': convert_uuid_to_slug(good_response_id)},
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
   }
   code, response = routes.card.respond_to_card_route(request, card_id)
   red.delete(redis_key)
@@ -340,19 +340,19 @@ def test_respond_card_400b(db_conn, session):
 
   create_test_cards(db_conn)
   redis_key = 'learning_context_{user_id}'.format(
-      user_id=convert_uuid_to_slug(user_id)
+    user_id=convert_uuid_to_slug(user_id)
   )
   red.set(
-      redis_key,
-      json.dumps({
-          'card': {'entity_id': convert_uuid_to_slug(card_id)},
-          'unit': {'entity_id': convert_uuid_to_slug(unit_id)},
-      })
+    redis_key,
+    json.dumps({
+      'card': {'entity_id': convert_uuid_to_slug(card_id)},
+      'unit': {'entity_id': convert_uuid_to_slug(unit_id)},
+    })
   )
   request = {
-      'params': {'response': convert_uuid_to_slug(uuid.uuid4())},
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
+    'params': {'response': convert_uuid_to_slug(uuid.uuid4())},
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
   }
   code, response = routes.card.respond_to_card_route(request, card_id)
   red.delete(redis_key)
@@ -363,17 +363,17 @@ def test_respond_card_400b(db_conn, session):
 def test_create_new_card_version_route(db_conn, session):
   create_test_cards(db_conn)
   request = {
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
-      'params': {
-          'unit_id': unit_id,
-          'kind': 'video',
-          'name': 'Video Z',
-          'data': {
-              'site': 'youtube',
-              'video_id': 'whatever',
-          },
-      }
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
+    'params': {
+      'unit_id': unit_id,
+      'kind': 'video',
+      'name': 'Video Z',
+      'data': {
+        'site': 'youtube',
+        'video_id': 'whatever',
+      },
+    }
   }
   code, response = routes.card.create_new_card_version_route(request)
   assert not response.get('errors')
@@ -384,18 +384,18 @@ def test_create_new_card_version_route(db_conn, session):
 def test_create_existing_card_version_route(db_conn, session):
   create_test_cards(db_conn)
   request = {
-      'params': {
-          'data': {
-              'site': 'youtube',
-              'video_id': 'whatever',
-          },
+    'params': {
+      'data': {
+        'site': 'youtube',
+        'video_id': 'whatever',
       },
-      'cookies': {'session_id': session},
-      'db_conn': db_conn,
+    },
+    'cookies': {'session_id': session},
+    'db_conn': db_conn,
   }
   code, response = routes.card.create_existing_card_version_route(
-      request,
-      entity_id_r
+    request,
+    entity_id_r
   )
   assert not response.get('errors')
   assert code == 200

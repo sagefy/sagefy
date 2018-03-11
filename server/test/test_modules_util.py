@@ -38,8 +38,8 @@ def test_omit():
   d = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
 
   assert util.omit(d, ('a', 'c')) == {
-      'b': 2,
-      'd': 4,
+    'b': 2,
+    'd': 4,
   }
 
 
@@ -85,12 +85,12 @@ def test_json_prep():
   """
 
   assert isinstance(util.json_prep({
-      'a': datetime.now()
+    'a': datetime.now()
   })['a'], str)
   assert isinstance(util.json_prep({
-      'a': {
-          'a': datetime.now()
-      },
+    'a': {
+      'a': datetime.now()
+    },
   })['a']['a'], str)
 
 
@@ -100,32 +100,32 @@ def test_extend():
   """
 
   a = {
-      'a': 0,
-      'q': 1,
+    'a': 0,
+    'q': 1,
   }
   b = {
-      'a': 1,
-      'b': 2,
-      'c': {
-          'c1': True,
-          'c2': False,
-      }
+    'a': 1,
+    'b': 2,
+    'c': {
+      'c1': True,
+      'c2': False,
+    }
   }
   c = {
-      'b': 3,
-      'c': {
-          'c2': True,
-      }
+    'b': 3,
+    'c': {
+      'c2': True,
+    }
   }
 
   assert util.extend(a, b, c) == {
-      'a': 1,
-      'b': 3,
-      'c': {
-          'c1': True,
-          'c2': True,
-      },
-      'q': 1
+    'a': 1,
+    'b': 3,
+    'c': {
+      'c1': True,
+      'c2': True,
+    },
+    'q': 1
   }
 
 
@@ -135,42 +135,42 @@ def test_object_diff():
   """
 
   prev = {
-      'a': 1,
-      'b': 2,
-      'c': {
-          'c1': 1,
-          'c2': 2,
-          'c3': {
-              'd1': 1,
-          }
-      },
-      # 'e': [
-      #   1,
-      #   2,
-      #   3
-      # ]
+    'a': 1,
+    'b': 2,
+    'c': {
+      'c1': 1,
+      'c2': 2,
+      'c3': {
+        'd1': 1,
+      }
+    },
+    # 'e': [
+    #   1,
+    #   2,
+    #   3
+    # ]
   }
 
   next_ = {
-      'a': 1,
-      'b': 3,
-      'c': {
-          'c1': 1,
-          'c2': 3,
-          'c3': {
-              'd1': 2,
-          }
-      },
-      # 'e': [
-      #   1,
-      #   2,
-      #   5
-      # ]
+    'a': 1,
+    'b': 3,
+    'c': {
+      'c1': 1,
+      'c2': 3,
+      'c3': {
+        'd1': 2,
+      }
+    },
+    # 'e': [
+    #   1,
+    #   2,
+    #   5
+    # ]
   }
 
   assert util.object_diff(prev, next_) == set([
-      'b',
-      'c.c2',
-      'c.c3.d1'
-      # 'e.2'
+    'b',
+    'c.c2',
+    'c.c3.d1'
+    # 'e.2'
   ])

@@ -27,24 +27,24 @@ user_b_uuid = uuid.uuid4()
 
 def create_test_users(db_conn):
   users = [{
-      'id': user_a_uuid,
-      'name': 'test',
-      'email': 'test@example.com',
-      'password': 'abcd1234',
+    'id': user_a_uuid,
+    'name': 'test',
+    'email': 'test@example.com',
+    'password': 'abcd1234',
   }, {
-      'id': user_b_uuid,
-      'name': 'other',
-      'email': 'other@example.com',
-      'password': 'abcd1234',
+    'id': user_b_uuid,
+    'name': 'other',
+    'email': 'other@example.com',
+    'password': 'abcd1234',
   }]
   raw_insert_users(db_conn, users)
 
 
 def test_insert_user(db_conn):
   data = {
-      'name': 'test',
-      'email': 'test@example.com',
-      'password': 'abcd',
+    'name': 'test',
+    'email': 'test@example.com',
+    'password': 'abcd',
   }
   user, errors = insert_user(db_conn, data)
   assert errors
