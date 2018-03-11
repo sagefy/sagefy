@@ -1,6 +1,24 @@
 [MASTER]
 
-disable=anomalous-backslash-in-string,bare-except,broad-except,empty-docstring,fixme,import-error,invalid-name,missing-docstring,no-member,no-name-in-module,pointless-string-statement,redefined-outer-name,superfluous-parens,too-many-locals,unexpected-keyword-arg,unused-argument,unused-import,unused-variable
+disable=anomalous-backslash-in-string,bare-except,broad-except,empty-docstring,fixme,import-error,invalid-name,missing-docstring,no-member,no-name-in-module,pointless-string-statement,redefined-outer-name,superfluous-parens,too-many-locals,unused-argument,unused-import,unused-variable
+
+# anomalous-backslash-in-string -- Rare, not too worried about this one.
+# bare-except -- Fine with just handling it in general.
+# broad-except -- Fine with just handling it in general.
+# empty-docstring -- FIX
+# fixme -- Would take a long time to address all of those.
+# import-error -- Doesn't work when its not a module. Fix?
+# invalid-name -- Would be useful if it didn't enforce constant rule. Fix?
+# missing-docstring -- FIX
+# no-member -- Seems related to import issues. Fix?
+# no-name-in-module -- Seems related to import issues. Fix?
+# pointless-string-statement -- FIX
+# redefined-outer-name -- FIX
+# superfluous-parens -- Only happens with `print`. Fix?
+# too-many-locals -- FIX
+# unused-argument -- FIX
+# unused-import -- Seems related to import issues. Fix?
+# unused-variable -- FIX
 
 [REPORTS]
 
