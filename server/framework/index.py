@@ -1,13 +1,13 @@
 # Standard lib imports
 import json
 import re
-from urllib.parse import unquote_plus  # pylint: disable=E0611
+from urllib.parse import unquote_plus
 from http.cookies import SimpleCookie
 from datetime import datetime, timedelta
 from traceback import format_exc
 
 # Own imports
-import config
+from config import config
 from framework.status_codes import status_codes
 from framework.database import make_db_connection, close_db_connection
 from framework.routes import find_path, abort
@@ -79,7 +79,7 @@ def call_handler(request):
   try:
     return handler(request=request, **parameters)
   except Exception:
-    if config['debug']:  # pylint: disable=unsubscriptable-object
+    if config['debug']:
       return 500, format_exc()
     return abort(500)
 
