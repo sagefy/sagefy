@@ -1,7 +1,7 @@
 import psycopg2
 import psycopg2.extras
 from framework.database import make_db_connection, close_db_connection
-from framework.elasticsearch import es
+from framework.elasticsearch_conn import es
 from modules.util import json_prep, pick, convert_uuid_to_slug
 from database.user import get_avatar
 

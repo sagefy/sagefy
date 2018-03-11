@@ -1,4 +1,4 @@
-from framework.elasticsearch import es
+from framework.elasticsearch_conn import es
 from modules.util import json_prep, pick
 from modules.util import convert_slug_to_uuid, convert_uuid_to_slug
 from schemas.post import schema as post_schema

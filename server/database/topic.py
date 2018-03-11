@@ -1,4 +1,4 @@
-from framework.elasticsearch import es
+from framework.elasticsearch_conn import es
 from schemas.topic import schema as topic_schema
 from database.util import deliver_fields
 from database.util import insert_row, update_row, get_row, list_rows

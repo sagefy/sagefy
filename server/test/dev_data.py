@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 from config import config
 from framework.database import make_db_connection, \
     close_db_connection
-from framework.elasticsearch import es
+from framework.elasticsearch_conn import es
 from framework.redis_conn import red
 from test.raw_insert import raw_insert_users, raw_insert_cards, \
     raw_insert_units, raw_insert_subjects, raw_insert_topics, \

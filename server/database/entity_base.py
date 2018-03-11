@@ -1,4 +1,4 @@
-from framework.elasticsearch import es
+from framework.elasticsearch_conn import es
 from modules.util import json_prep, convert_uuid_to_slug
 
 

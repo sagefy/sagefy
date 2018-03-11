@@ -3,7 +3,7 @@ import hashlib
 import json
 import uuid
 
-from framework.elasticsearch import es
+from framework.elasticsearch_conn import es
 from framework.redis_conn import red
 from framework.mail import send_mail
 from schemas.user import schema as user_schema

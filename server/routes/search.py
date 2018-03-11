@@ -1,5 +1,5 @@
 from framework.routes import get
-from framework.elasticsearch import es
+from framework.elasticsearch_conn import es
 
 
 @get('/s/search')
