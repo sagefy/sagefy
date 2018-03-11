@@ -1,7 +1,7 @@
 # pylint: disable=all
 import json
 import routes.card  # TODO-2 switch to direct imports
-from framework.redis import red
+from framework.redis_conn import red
 from datetime import datetime, timezone
 import uuid
 from conftest import user_id

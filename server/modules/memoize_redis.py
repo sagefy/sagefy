@@ -1,5 +1,5 @@
 import json
-from framework.redis import red
+from framework.redis_conn import red
 from modules.util import json_serial
 
 

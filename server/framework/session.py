@@ -1,5 +1,5 @@
 import uuid
-from framework.redis import red
+from framework.redis_conn import red
 from database.user import get_user  # pylint: disable=E0611
 from modules.util import convert_uuid_to_slug
 

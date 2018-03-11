@@ -17,7 +17,7 @@ from config import config
 from framework.database import make_db_connection, \
     close_db_connection
 from framework.elasticsearch import es
-from framework.redis import red
+from framework.redis_conn import red
 from test.raw_insert import raw_insert_users, raw_insert_cards, \
     raw_insert_units, raw_insert_subjects, raw_insert_topics, \
     raw_insert_posts, raw_insert_follows, raw_insert_notices

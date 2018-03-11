@@ -1,5 +1,5 @@
 # pylint: disable=all
-from framework.redis import red
+from framework.redis_conn import red
 from modules.memoize_redis import memoize_redis
 
 
