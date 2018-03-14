@@ -1,47 +1,51 @@
 {
   "name": "Sagefy",
   "version": "0.0.0",
+  "description": "Adaptive, collaborative, and open learning platform.",
+  "license": "Apache-2.0",
+  "author": "Sagefy",
   "main": "scripts/index.js",
   "directories": {
     "test": "test"
   },
-  "description": "Adaptive, collaborative, and open learning platform.",
   "repository": {
     "type": "git",
     "url": "https://github.com/heiskr/sagefy.git"
   },
   "scripts": {
+    "build-scripts":
+      "yarn run prep-scripts && webpack ./app/index.js ../nginx/statics/index.js",
+    "build-styleguide": "node ./tasks/build_styleguide.js",
+    "build-styles":
+      "stylus --include-css --use ./tasks/stylus_huslp.js --include ./app/ ./app/index.styl -o ../nginx/statics/index.css",
+    "precommit": "pretty-quick --staged",
+    "compile-content":
+      "yaml2json \"../content/\" --recursive --save && mkdir -p ./app/content && mv ../content/*.json ./app/content/",
+    "compress-scripts":
+      "yarn run build-scripts && uglifyjs --compress --mangle --output ../nginx/statics/index.js -- ../nginx/statics/index.js",
+    "compress-styles":
+      "yarn run build-styles && cleancss ../nginx/statics/index.css -o ../nginx/statics/index.css",
+    "deploy":
+      "concurrently -p \"[{name}]\" --names compress-styles,compress-scripts \"yarn run compress-styles\" \"yarn run compress-scripts\"",
+    "lint-scripts": "eslint \"app/**/*.js\" \"tasks/**/*.js\"",
+    "prep-scripts":
+      "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"yarn run build-styleguide\" \"yarn run compile-content\"",
+    "run-server": "node ./app/index.server.js",
+    "run-tests": "jest",
     "start":
       "concurrently -p \"[{name}]\" --names watch-styles,watch-scripts \"yarn run watch-styles\" \"yarn run watch-scripts\"",
     "test":
       "yarn run prep-scripts && concurrently -p \"[{name}]\" --names lint-scripts,run-tests \"yarn run lint-scripts\" \"yarn run run-tests\"",
-    "deploy":
-      "concurrently -p \"[{name}]\" --names compress-styles,compress-scripts \"yarn run compress-styles\" \"yarn run compress-scripts\"",
-    "build-styles":
-      "stylus --include-css --use ./tasks/stylus_huslp.js --include ./app/ ./app/index.styl -o ../nginx/statics/index.css",
-    "build-styleguide": "node ./tasks/build_styleguide.js",
-    "compress-styles":
-      "yarn run build-styles && cleancss ../nginx/statics/index.css -o ../nginx/statics/index.css",
-    "watch-styles":
-      "stylus --include-css --use ./tasks/stylus_huslp.js --include ./app/ -w ./app/index.styl -o ../nginx/statics/index.css",
-    "compile-content":
-      "yaml2json \"../content/\" --recursive --save && mkdir -p ./app/content && mv ../content/*.json ./app/content/",
-    "build-scripts":
-      "yarn run prep-scripts && webpack ./app/index.js ../nginx/statics/index.js",
+    "translate-md": "node ./tasks/translate_md.js",
     "watch-scripts":
       "yarn run prep-scripts && webpack --watch ./app/index.js ../nginx/statics/index.js -v",
-    "compress-scripts":
-      "yarn run build-scripts && uglifyjs --compress --mangle --output ../nginx/statics/index.js -- ../nginx/statics/index.js",
-    "prep-scripts":
-      "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"yarn run build-styleguide\" \"yarn run compile-content\"",
-    "lint-scripts": "eslint \"app/**/*.js\" \"tasks/**/*.js\"",
-    "run-tests": "jest",
-    "translate-md": "node ./tasks/translate_md.js",
-    "run-server": "node ./app/index.server.js",
-    "precommit": "pretty-quick --staged"
+    "watch-styles":
+      "stylus --include-css --use ./tasks/stylus_huslp.js --include ./app/ -w ./app/index.styl -o ../nginx/statics/index.css"
   },
-  "author": "Sagefy",
-  "license": "Apache-2.0",
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": ["app/**/*.js"]
+  },
   "dependencies": {
     "cookie-parser": "1.4.3",
     "express": "4.14.0",
@@ -74,9 +78,5 @@
     "uglify-js": "2.7.4",
     "webpack": "1.13.3",
     "yamljs": "0.2.8"
-  },
-  "jest": {
-    "collectCoverageFrom": ["app/**/*.js"],
-    "collectCoverage": true
   }
 }

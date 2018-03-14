@@ -2,16 +2,18 @@
   "name": "sagefy-watcher",
   "version": "0.0.0",
   "description": "",
+  "license": "Apache-2.0",
+  "author": "Sagefy",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently -p \"[{name}]\" --names watch-server,watch-client-node,watch-client-static \"yarn run watch-server\" \"yarn run watch-client-node\" \"yarn run watch-client-static\"",
-    "watch-server": "onchange 'server/**/*.py' -- docker-compose restart server",
-    "watch-client-node": "onchange 'client/**/*.{js,styl}' -- docker-compose restart client",
+    "start":
+      "concurrently -p \"[{name}]\" --names watch-server,watch-client-node,watch-client-static \"yarn run watch-server\" \"yarn run watch-client-node\" \"yarn run watch-client-static\"",
+    "test": "exit 0",
+    "watch-client-node":
+      "onchange 'client/**/*.{js,styl}' -- docker-compose restart client",
     "watch-client-static": "cd client && yarn install && yarn start",
-    "test": "exit 0"
+    "watch-server": "onchange 'server/**/*.py' -- docker-compose restart server"
   },
-  "author": "Sagefy",
-  "license": "Apache-2.0",
   "dependencies": {
     "concurrently": "3.5.0",
     "onchange": "3.2.1"
