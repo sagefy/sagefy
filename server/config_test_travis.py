@@ -6,6 +6,7 @@ config = {
   'mail_username': 'SMTP_Injection',
   'mail_server': 'smtp.sparkpostmail.com',
   'mail_port': 587,
+  'mail_alert': 'support@sagefy.org',
   # postgres
   'pg_host': 'localhost',
   'pg_dbname': 'postgres',

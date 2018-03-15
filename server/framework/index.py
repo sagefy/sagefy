@@ -11,6 +11,7 @@ from config import config
 from framework.status_codes import status_codes
 from framework.database import make_db_connection, close_db_connection
 from framework.routes import find_path, abort
+from framework.mail import send_mail
 from modules.util import json_serial
 
 
@@ -79,8 +80,13 @@ def call_handler(request):
   try:
     return handler(request=request, **parameters)
   except Exception:
+    exc = format_exc()
     if config['debug']:
-      return 500, format_exc()
+      return 500, exc
+    try:
+      send_mail('500 Response', config['mail_alert'], exc)
+    except:
+      pass
     return abort(500)
 
 
