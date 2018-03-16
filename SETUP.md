@@ -45,6 +45,10 @@ Access Postgres REPL:
 
     docker exec -it sagefy_postgres_1 psql -U sagefy
 
+Access Redis CLI:
+
+    docker exec -it www_redis_1 redis-cli
+
 Run server tests:
 
     cd server
