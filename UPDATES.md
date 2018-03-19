@@ -4,6 +4,24 @@ This is a reverse chronological listing of updates on Sagefy's progress. I will 
 
 You can sign up for email updates at http://newsletter.sagefy.org/up
 
+## UPDATE -- 2018 Mar 19
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2018 Mar 5 - 2018 Mar 18
+
+- Built example for ["Spectrum and Color"](http://em.sagefy.org/examples/spectrum-and-color)
+- Fixed issue where users could not log in or out intermittently. Redis was trying to write to disk; we use Redis only to track sessions and cache. Now we log 500s to help faster debugging.
+- Continuing on Medium article on the 8 "big ideas"
+
+### Upcoming Two Weeks: 2018 Mar 19 - 2018 Apr 1
+
+- Build remaining 2 interactive examples for the Intro to Electronic Music: Sound Parameters unit.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+
 ## UPDATE -- 2018 Mar 5
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
