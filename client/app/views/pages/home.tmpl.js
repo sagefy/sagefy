@@ -219,7 +219,7 @@ module.exports = data => {
         li('© Copyright 2018 Sagefy.'),
         li(a({ href: 'https://docs.sagefy.org/' }, 'Docs')),
         li(a({ href: 'https://stories.sagefy.org/' }, 'Stories (Blog)')),
-        li(a({ href: 'http://newsletter.sagefy.org/up' }, 'Updates')),
+        li(a({ href: 'https://sgef.cc/devupdates' }, 'Updates')),
         li(
           a(
             {

@@ -21,7 +21,7 @@ For more information, watch this 3 minute [YouTube video].
 [site]: https://sagefy.org
 [docs]: https://docs.sagefy.org
 [twitter]: https://twitter.com/sagefyorg
-[updates]: http://newsletter.sagefy.org/up
+[updates]: https://sgef.cc/devupdates
 [gitter]: https://gitter.im/heiskr/sagefy
 [setup]: https://github.com/heiskr/sagefy/blob/master/SETUP.md
 
