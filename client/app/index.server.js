@@ -22,9 +22,9 @@ const html = `
 <title>{title} – Sagefy</title>
 <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i" rel="stylesheet">
 <link rel="stylesheet" href="/index.css?___">
-<script src="/index.js?___"></script>
 <body>{body}
 <script>window.preload={state}</script>
+<script src="/index.js?___"></script>
 </body>
 `
   .replace(/\n/g, '')
