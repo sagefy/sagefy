@@ -2,11 +2,7 @@
 Auxiliaries are utlity functions that are specific to Sagefy.
 */
 
-const cookie = require('./cookie')
 const { extend, copy, isString, isArray } = require('./utilities')
-
-// Determine if the user is logged in
-const isLoggedIn = () => cookie.get('logged_in') === '1'
 
 // Capitalizes the first letter of a string
 const ucfirst = (str = '') => str.charAt(0).toUpperCase() + str.slice(1)
@@ -318,8 +314,13 @@ const prefixObjectKeys = (prefix, obj) => {
   return next
 }
 
+function goLogin() {
+  if (typeof window !== 'undefined') {
+    window.location = '/log_in'
+  }
+}
+
 module.exports = {
-  isLoggedIn,
   ucfirst,
   titleize,
   underscored,
@@ -341,4 +342,5 @@ module.exports = {
 
   prefixObjectKeys,
   compact,
+  goLogin,
 }

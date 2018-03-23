@@ -3,12 +3,7 @@ const express = require('express')
 const toHTML = require('snabbdom-to-html')
 const template = require('./views/index.tmpl')
 const { route } = require('./modules/route_actions')
-const {
-  dispatch,
-  getState,
-  setReducer,
-  resetState,
-} = require('./modules/store')
+const { getState, setReducer, resetState } = require('./modules/store')
 const reducer = require('./reducers/index')
 const cookieParser = require('cookie-parser')
 
@@ -47,12 +42,6 @@ app.get(/.*/, (request, response) => {
   const path = request.originalUrl
   console.log(path)
   resetState() // make sure it doesn't use a pre-existing state
-  if (request.cookies) {
-    dispatch({
-      type: 'SET_CURRENT_USER_ID',
-      currentUserID: request.cookies.currentUserID,
-    })
-  }
   global.requestCookie = `session_id=${request.cookies.session_id}`
   const promise = route(path)
   if (promise) {

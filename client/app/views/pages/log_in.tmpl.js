@@ -7,6 +7,8 @@ const {
   createFieldsData,
   findGlobalErrors,
 } = require('../../modules/auxiliaries')
+const { getIsLoggedIn } = require('../../selectors/base')
+const spinner = require('../components/spinner.tmpl')
 
 const fields = [
   {
@@ -32,6 +34,10 @@ fields.forEach((field, index) => {
 })
 
 module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
   if (data.currentUserID) {
     div('Logged in already.')
   }

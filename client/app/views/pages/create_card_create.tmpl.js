@@ -12,6 +12,9 @@ const {
   findGlobalErrors,
 } = require('../../modules/auxiliaries')
 const icon = require('../components/icon.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const spinner = require('../components/spinner.tmpl')
+const { goLogin } = require('../../modules/auxiliaries')
 
 const allKindsFields = [
   {
@@ -149,6 +152,14 @@ choiceFields.forEach((field, index) => {
 })
 
 module.exports = function createCardCreate(data) {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
+
   const proposedCard = (data.create && data.create.proposedCard) || {}
   const cardKind = proposedCard.kind
   const fields =

@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
-const { dispatch, bind, setReducer } = require('./store')
+const { bind, setReducer } = require('./store')
 const reducer = require('../reducers/index')
 const init = require('./init')
-const cookie = require('./cookie')
 const { route } = require('./route_actions')
 const { startGoogleAnalytics, trackEvent } = require('./analytics')
 const indexView = require('../views/index.tmpl')
@@ -71,10 +70,6 @@ function go() {
   trackAllActions()
   updateTitle()
   setReducer(reducer)
-  dispatch({
-    type: 'SET_CURRENT_USER_ID',
-    currentUserID: cookie.get('currentUserID'),
-  })
   route(window.location.pathname + window.location.search)
   init({
     view: indexView,

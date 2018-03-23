@@ -14,8 +14,18 @@ const {
 const { unitWizard } = require('./create_shared.fn')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const icon = require('../components/icon.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const spinner = require('../components/spinner.tmpl')
+const { goLogin } = require('../../modules/auxiliaries')
 
 module.exports = function createUnitFind(data) {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
   const { searchResults } = data
   const { myRecentSubjects } = data.create
 

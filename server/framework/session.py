@@ -4,7 +4,7 @@ from database.user import get_user
 from modules.util import convert_uuid_to_slug
 
 
-def get_current_user(request):
+def get_current_user_id(request):
   """
   Get the current user if available, else None.
   """
@@ -12,9 +12,18 @@ def get_current_user(request):
   cookies = request.get('cookies', {})
   session_id = cookies.get('session_id')
   user_id = red.get(session_id)
-  db_conn = request['db_conn']
   if user_id:
-    user_id = user_id.decode()
+    return user_id.decode()
+
+
+def get_current_user(request):
+  """
+  Get the current user if available, else None.
+  """
+
+  user_id = get_current_user_id(request)
+  if user_id:
+    db_conn = request['db_conn']
     return get_user(db_conn, {'id': user_id})
 
 

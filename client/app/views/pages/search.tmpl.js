@@ -22,6 +22,7 @@ const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
 const { ucfirst } = require('../../modules/auxiliaries')
+const { getIsLoggedIn } = require('../../selectors/base')
 
 // TODO-2 when receiving ?kind={kind}, then search using that as well.
 
@@ -151,6 +152,10 @@ r.subjectResult = (result, asLearner = false) => [
 ]
 
 module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
   const loading = data.searchQuery && !data.searchResults
   const asLearner = data.route.indexOf('as_learner') > -1
 

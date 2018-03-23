@@ -8,6 +8,9 @@ const {
   findGlobalErrors,
 } = require('../../modules/auxiliaries')
 const icon = require('../components/icon.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const spinner = require('../components/spinner.tmpl')
+const { goLogin } = require('../../modules/auxiliaries')
 
 const fields = [
   {
@@ -49,6 +52,14 @@ fields.forEach((field, index) => {
 })
 
 module.exports = function createUnitCreate(data) {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
+
   const proposedUnit = (data.create && data.create.proposedUnit) || {}
 
   const instanceFields = createFieldsData({

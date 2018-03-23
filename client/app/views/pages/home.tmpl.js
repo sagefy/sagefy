@@ -21,11 +21,17 @@ const {
   section,
 } = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
+const spinner = require('../components/spinner.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
 
 // TODO-1 Include unique CTAs throughout
 
 module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
   const cta = a(
     { href: '/sign_up', className: 'home__cta-button' },
     icon('sign-up'),
@@ -43,21 +49,18 @@ module.exports = data => {
         h3('Learn anything, customized for you.'),
         h6('...and always free.')
       ),
-      data.currentUserID
+      getIsLoggedIn(data)
         ? p(
             'Logged in. ',
             a({ href: '/my_subjects' }, 'My Subjects ', icon('next'))
           )
-        : null,
-      data.currentUserID
-        ? null
         : p(
             a({ href: '/log_in' }, icon('log-in'), ' Log In'),
             ' or ',
             a({ href: '/sign_up' }, icon('sign-up'), ' Sign Up')
           )
     ),
-    data.currentUserID
+    getIsLoggedIn(data)
       ? null
       : div(
           section(

@@ -2,8 +2,18 @@ const { div, h1, p, a } = require('../../modules/tags')
 const notices = require('../components/notices.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const { goLogin } = require('../../modules/auxiliaries')
 
 module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
+
   // TODO-2 update this to use a status field
   if (!data.notices) {
     return spinner()

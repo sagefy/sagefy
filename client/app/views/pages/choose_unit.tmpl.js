@@ -3,8 +3,17 @@ const { div, h1, ul, li, a, h3, span, hgroup } = require('../../modules/tags')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const { goLogin } = require('../../modules/auxiliaries')
 
 module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
   if (!Object.keys(data.chooseUnit).length) {
     return spinner()
   }

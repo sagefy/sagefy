@@ -1,9 +1,20 @@
 const { div, h1, p, a, ul, li, small } = require('../../modules/tags')
 const info = require('../components/entity_info.tmpl')
 const icon = require('../components/icon.tmpl')
+const spinner = require('../components/spinner.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const { goLogin } = require('../../modules/auxiliaries')
 
-module.exports = () =>
-  div(
+module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
+
+  return div(
     { id: 'create', className: 'page' },
     h1('Create Cards, Units, and Subjects'),
     ul(
@@ -47,3 +58,4 @@ module.exports = () =>
       '.'
     )
   )
+}

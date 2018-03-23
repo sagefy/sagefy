@@ -13,8 +13,19 @@ const {
 const { unitWizard } = require('./create_shared.fn')
 const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const spinner = require('../components/spinner.tmpl')
+const { goLogin } = require('../../modules/auxiliaries')
 
 module.exports = function createUnitAdd(data) {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
+
   const { searchResults } = data
   const inputOpts = {
     type: 'text',

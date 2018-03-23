@@ -100,6 +100,9 @@ module.exports = tasks.add({
       })
       .catch(errors => {
         dispatch({
+          type: 'RESET_CURRENT_USER_ID',
+        })
+        dispatch({
           type: 'SET_ERRORS',
           message: 'get current user failure',
           errors,
@@ -215,6 +218,40 @@ module.exports = tasks.add({
         dispatch({
           type: 'SET_ERRORS',
           message: 'log in user failure',
+          errors,
+        })
+        dispatch({
+          type: 'SET_SENDING_OFF',
+        })
+      })
+  },
+
+  checkSession() {
+    dispatch({
+      type: 'SET_SENDING_ON',
+    })
+    dispatch({ type: 'CHECK_SESSION' })
+    return request({
+      method: 'GET',
+      url: '/s/sessions',
+    })
+      .then(response => {
+        dispatch({
+          type: 'SET_CURRENT_USER_ID',
+          currentUserID: response.current_user_id,
+          message: 'check session success',
+        })
+        dispatch({
+          type: 'SET_SENDING_OFF',
+        })
+      })
+      .catch(errors => {
+        dispatch({
+          type: 'RESET_CURRENT_USER_ID',
+        })
+        dispatch({
+          type: 'SET_ERRORS',
+          message: 'check session user failure',
           errors,
         })
         dispatch({

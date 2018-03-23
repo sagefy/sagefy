@@ -2,8 +2,19 @@ const { div, h1, h3, a, p, hr, ul, li } = require('../../modules/tags')
 const { unitWizard } = require('./create_shared.fn')
 const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const spinner = require('../components/spinner.tmpl')
+const { goLogin } = require('../../modules/auxiliaries')
 
 module.exports = function createUnitList(data) {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
+
   const { units } = data.create
   const selectedSubject = data.create.selectedSubject || {}
   const subjectName = selectedSubject.name || '???'

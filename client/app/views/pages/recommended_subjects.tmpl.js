@@ -2,6 +2,8 @@ const { div, h1, p, ul, li, a, hr } = require('../../modules/tags')
 const icon = require('../components/icon.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const { goLogin } = require('../../modules/auxiliaries')
 
 const subjectResult = subject => [
   a(
@@ -29,6 +31,13 @@ const subjectResult = subject => [
 ]
 
 module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
   if (!data.recommendedSubjects.length) {
     return spinner()
   }

@@ -4,6 +4,8 @@ const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 const info = require('../components/entity_info.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const { goLogin } = require('../../modules/auxiliaries')
 
 const userSubject = data =>
   li(
@@ -23,6 +25,14 @@ const userSubject = data =>
   )
 
 module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
+
   if (!data.userSubjects) {
     return spinner()
   }

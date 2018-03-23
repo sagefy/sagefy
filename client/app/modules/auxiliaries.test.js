@@ -1,21 +1,11 @@
 const {
-  isLoggedIn,
   ucfirst,
   underscored,
   mergeArraysByKey,
   parseFormValues,
 } = require('../../app/modules/auxiliaries')
-const cookie = require('../../app/modules/cookie')
 
 describe('Auxiliaries', () => {
-  it('should detect log in', () => {
-    cookie.set('logged_in', '1')
-    expect(isLoggedIn()).toBe(true)
-    cookie.set('logged_in', '0')
-    expect(isLoggedIn()).toBe(false)
-    cookie.unset('logged_in')
-  })
-
   it('should capitalize the first letter of a string', () => {
     expect(ucfirst('unicorn')).toEqual('Unicorn')
   })

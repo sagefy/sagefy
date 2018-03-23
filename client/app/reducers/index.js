@@ -17,6 +17,7 @@ module.exports = combineReducers({
   cardResponse: require('./cardResponse'),
   cardVersions: require('./cardVersions'),
   cards: require('./cards'),
+  checkedSession: require('./checkedSession'),
   chooseUnit: require('./chooseUnit'),
   currentTreeUnit: require('./currentTreeUnit'),
   currentUserID: require('./currentUserID'),

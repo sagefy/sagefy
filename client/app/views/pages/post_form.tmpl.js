@@ -9,6 +9,8 @@ const {
   findGlobalErrors,
 } = require('../../modules/auxiliaries')
 const { getFields, getSchema } = require('./post_form.fn')
+const { getIsLoggedIn } = require('../../selectors/base')
+const { goLogin } = require('../../modules/auxiliaries')
 
 // TODO-1 Currently there is no way to update an existing entity from the UI,
 //    you can only propose a new entity.
@@ -28,6 +30,14 @@ const classes = formData => {
 }
 
 module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
+
   const [topicID, postID] = data.routeArgs
   const post = get(data, `topicPosts[${topicID}]`, []).find(
     xpost => xpost.id === postID

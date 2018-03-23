@@ -1,5 +1,6 @@
 from framework.routes import get, post, put, delete, abort
-from framework.session import get_current_user, log_in_user, log_out_user
+from framework.session import get_current_user_id, get_current_user, \
+  log_in_user, log_out_user
 from modules.content import get as c
 from modules.util import convert_uuid_to_slug
 from database.user import get_user, insert_user, deliver_user, get_avatar, \
@@ -128,6 +129,23 @@ def log_in_route(request):
       }],
     }
   return _log_in(user)
+
+
+@get('/s/sessions')
+def get_session_route(request):
+  """
+  Check if the user is logged in.
+  """
+
+  current_user_id = get_current_user_id(request)
+  if not current_user_id:
+    return 200, {
+      'current_user_id': '',
+      'cookies': {
+        'session_id': None
+      }
+    }
+  return 200, {'current_user_id': current_user_id}
 
 
 @delete('/s/sessions')

@@ -2,8 +2,18 @@ const { div, h1, h3, a, p, hr, ul, li } = require('../../modules/tags')
 const { cardWizard } = require('./create_shared.fn')
 const icon = require('../components/icon.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const spinner = require('../components/spinner.tmpl')
+const { goLogin } = require('../../modules/auxiliaries')
 
 module.exports = function createCardList(data) {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
   const { cards } = data.create
   const selectedUnit = data.create.selectedUnit || {}
   const unitName = selectedUnit.name || '???'

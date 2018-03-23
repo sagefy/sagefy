@@ -12,6 +12,8 @@ const {
 const { extend } = require('../../modules/utilities')
 const topicSchema = require('../../schemas/topic')
 const spinner = require('../components/spinner.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const { goLogin } = require('../../modules/auxiliaries')
 
 const classes = formData => {
   const topicID = formData['topic.id']
@@ -91,6 +93,14 @@ const getEntitySummary = data => {
 }
 
 module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
+
   const topicID = getTopicID(data)
   const topic = get(data, `topics[${topicID}]`, null)
 

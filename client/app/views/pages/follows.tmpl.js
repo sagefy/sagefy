@@ -6,6 +6,9 @@ const { copy } = require('../../modules/utilities')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
+const spinner = require('../components/spinner.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const { goLogin } = require('../../modules/auxiliaries')
 
 const follow = data => {
   const kind = data.entity_kind
@@ -42,11 +45,18 @@ const follows = data => {
   return p('No follows. ', a({ href: '/search' }, icon('search'), ' Search'))
 }
 
-module.exports = data =>
+module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
   // TODO-2 update this to look for some status field
   // if(!data.follows) { return spinner() }
 
-  div(
+  return div(
     { id: 'follows', className: 'page' },
     h1('Follows'),
     a({ href: '/notices' }, icon('back'), ' Back to notices.'),
@@ -60,3 +70,4 @@ module.exports = data =>
       })
     )
   )
+}

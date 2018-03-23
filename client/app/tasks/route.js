@@ -27,17 +27,23 @@ const routes = [
 
 module.exports = tasks.add({
   onRoute(path) {
+    function finish() {
+      const route = routes.find(xroute => matchesRoute(path, xroute.path))
+      if (route) {
+        const args = matchesRoute(path, route.path)
+        if (args) {
+          return tasks[route.task].apply(null, args)
+        }
+      }
+      return null
+    }
     dispatch({ type: 'RESET_FORM_DATA' })
     dispatch({ type: 'RESET_ERRORS' })
     dispatch({ type: 'RESET_SEARCH' })
-    const route = routes.find(xroute => matchesRoute(path, xroute.path))
-    if (route) {
-      const args = matchesRoute(path, route.path)
-      if (args) {
-        return tasks[route.task].apply(null, args)
-      }
+    if (!getState().checkedSession) {
+      return tasks.checkSession().then(finish)
     }
-    return null
+    return finish()
   },
 
   openSettingsRoute() {

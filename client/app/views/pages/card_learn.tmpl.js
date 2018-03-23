@@ -4,6 +4,8 @@ const { isNumber } = require('../../modules/utilities')
 const spinner = require('../components/spinner.tmpl')
 // const c = require('../../modules/content').get
 const icon = require('../components/icon.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
+const { goLogin } = require('../../modules/auxiliaries')
 
 const kindTmpl = {}
 kindTmpl.video = require('./card_learn_video.tmpl')
@@ -20,6 +22,12 @@ const kind = (card, mode) => {
 }
 
 module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
   const id = data.routeArgs[0]
   const card = get(data, `learnCards[${id}]`)
   if (!card) {

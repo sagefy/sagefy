@@ -6,6 +6,9 @@ const {
   createFieldsData,
   findGlobalErrors,
 } = require('../../modules/auxiliaries')
+const { getIsLoggedIn } = require('../../selectors/base')
+const spinner = require('../components/spinner.tmpl')
+const { goLogin } = require('../../modules/auxiliaries')
 
 const fields = [
   {
@@ -46,6 +49,14 @@ fields.forEach((field, index) => {
 })
 
 module.exports = function createSubjectCreate(data) {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
+  if (!getIsLoggedIn(data)) {
+    return goLogin()
+  }
+
   const instanceFields = createFieldsData({
     schema: subjectSchema,
     fields,

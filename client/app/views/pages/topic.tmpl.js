@@ -5,6 +5,7 @@ const followButton = require('../components/follow_button.tmpl')
 const { ucfirst } = require('../../modules/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
+const { getIsLoggedIn } = require('../../selectors/base')
 
 // TODO-2 User doesn't show right after creating a new post in the topic view
 
@@ -22,6 +23,10 @@ const entity = (topic, data) => {
 }
 
 module.exports = data => {
+  if (getIsLoggedIn(data) === null) {
+    return spinner()
+  }
+
   const id = data.routeArgs[0]
   const posts = data.topicPosts && data.topicPosts[id]
   const topic = data.topics && data.topics[id]
