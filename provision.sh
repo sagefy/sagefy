@@ -95,6 +95,27 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-c
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
+# from https://svenv.nl/unixandlinux/dockerufw/
+sudo nano /etc/default/ufw
+# change DEFAULT_FORWARD_POLICY="ACCEPT"
+sudo ufw allow 2375/tcp
+sudo ufw reload
+sudo nano /etc/default/docker
+# enable and add: DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4 --iptables=false"
+sudo service docker restart
+sudo nano /etc/ufw/before.rules
+# Add these lines JUST BEFORE “*filter”.
+*nat
+:POSTROUTING ACCEPT [0:0]
+-A POSTROUTING ! -o docker0 -s 172.17.0.0/16 -j MASQUERADE
+COMMIT
+sudo reboot now
+sudo touch /etc/docker/daemon.json
+sudo nano /etc/docker/daemon.json
+# contents: {"iptables": false}
+sudo service docker stop
+sudo service docker start
+
 # Now `logout` and ssh back into the server.
 
 # Update server config.py

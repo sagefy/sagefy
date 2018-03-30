@@ -27,6 +27,8 @@ services:
     build: ./redis
     ports:
      - "6379:6379"
+    volumes:
+     - ./redis:/www
   elasticsearch:
     # https://hub.docker.com/_/elasticsearch/
     image: 'elasticsearch:5.5-alpine'

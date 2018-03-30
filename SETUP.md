@@ -88,6 +88,7 @@ Run:
     cd /var/www/dbbu
     today=`date '+%Y_%m_%d__%H_%M_%S'`
     docker exec -it www_postgres_1 pg_dump -U sagefy -a sagefy > "sagefy-$today.sql"
+    ls
     b2 authorize_account xxx xxxxxxxx  # see dashlane
     b2 sync /var/www/dbbu b2:sagefy-dbbu
 
