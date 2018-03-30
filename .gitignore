@@ -51,3 +51,4 @@ postgres-test-data
 nginx/statics/index.css
 nginx/statics/index.js
 dbbu
+yarn-error.log
