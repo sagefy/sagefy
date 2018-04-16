@@ -4,6 +4,24 @@ This is a reverse chronological listing of updates on Sagefy's progress. I will 
 
 You can sign up for email updates at https://sgef.cc/devupdates
 
+## UPDATE -- 2018 Apr 16
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2018 Apr 2 - 2018 Apr 15
+
+- Worked on outreach and getting links to Sagefy on external sites
+- Created a "Beta" landing page
+- Continuing on Medium article on the 8 "big ideas"
+
+### Upcoming Two Weeks: 2018 Apr 16 - 2018 Apr 29
+
+- Build "Phase" interactive example for the Intro to Electronic Music: Sound Parameters unit.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+
 ## UPDATE -- 2018 Apr 2
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
