@@ -10,7 +10,7 @@ _Sagefy is an open-content adaptive learning platform._
 
 For more information, watch this 3 minute [YouTube video].
 
-* [Site], [Docs], [Twitter], [Updates], [Gitter], [Setup]
+* [Site], [Docs], [Twitter], [Updates], Chat: [Gitter], Forum: [Spectrum], [Setup]
 
 [youtube video]: https://youtu.be/gFn4Q9tx7Qs
 [site]: https://sagefy.org
@@ -18,6 +18,7 @@ For more information, watch this 3 minute [YouTube video].
 [twitter]: https://twitter.com/sagefyorg
 [updates]: https://sgef.cc/devupdates
 [gitter]: https://gitter.im/heiskr/sagefy
+[spectrum]: https://spectrum.chat/sagefy
 [setup]: https://github.com/heiskr/sagefy/blob/master/SETUP.md
 
 [![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy)
