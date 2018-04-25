@@ -17,7 +17,7 @@
       "yarn run prep-scripts && webpack ./app/index.js ../nginx/statics/index.js",
     "build-styleguide": "node ./tasks/build_styleguide.js",
     "build-styles":
-      "stylus --include-css --use ./tasks/stylus_huslp.js --include ./app/ ./app/index.styl -o ../nginx/statics/index.css",
+      "stylus --include-css --use hsluv-stylus --include ./app/ ./app/index.styl -o ../nginx/statics/index.css",
     "precommit": "pretty-quick --staged",
     "compile-content":
       "yaml2json \"../content/\" --recursive --save && mkdir -p ./app/content && mv ../content/*.json ./app/content/",
@@ -40,7 +40,7 @@
     "watch-scripts":
       "yarn run prep-scripts && webpack --watch ./app/index.js ../nginx/statics/index.js -v",
     "watch-styles":
-      "stylus --include-css --use ./tasks/stylus_huslp.js --include ./app/ -w ./app/index.styl -o ../nginx/statics/index.css"
+      "stylus --include-css --use hsluv-stylus --include ./app/ -w ./app/index.styl -o ../nginx/statics/index.css"
   },
   "jest": {
     "collectCoverage": true,
@@ -67,8 +67,8 @@
     "eslint-config-prettier": "2.9.0",
     "eslint-plugin-import": "2.8.0",
     "glob": "5.0.15",
+    "hsluv-stylus": "0.0.1",
     "husky": "0.14.3",
-    "husl": "6.0.1",
     "jest": "22.1.4",
     "json-loader": "0.5.4",
     "prettier": "1.10.2",

@@ -2,7 +2,7 @@
 ---
 title: Colors
 description: |
-  Four primary hues are used by Sagefy. All are generated via [huslp](http://www.boronine.com/husl/).
+  Four primary hues are used by Sagefy. All are generated via [hpluv](http://www.hsluv.org).
 
   - **Base**. 80&deg;, 50% saturation. Serves as the base hue. Also indicates warning.
   - **Accent**. 240&deg;, 100% saturation. Indicates a clickable element or navigation element. Also an accent color when no other is applicable.
@@ -13,13 +13,13 @@ description: |
 */
 
 $base-color(light)
-  huslp(80, 20, light)
+  hpluv(240, 20, light)
 
 $accent-color(light)
-  huslp(240, 100, light)
+  hpluv(240, 100, light)
 
 $good-color(light)
-  huslp(120, 100, light)
+  hpluv(120, 100, light)
 
 $bad-color(light)
-  huslp(0, 100, light)
+  hpluv(0, 100, light)
