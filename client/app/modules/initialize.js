@@ -3,11 +3,8 @@ const { bind, setReducer } = require('./store')
 const reducer = require('../reducers/index')
 const init = require('./init')
 const { route } = require('./route_actions')
-const { startGoogleAnalytics, trackEvent } = require('./analytics')
 const indexView = require('../views/index.tmpl')
 const { setTitle } = require('../modules/auxiliaries')
-
-startGoogleAnalytics()
 
 // Require all tasks
 require('../tasks/index')
@@ -43,16 +40,10 @@ require('../views/pages/tree.vnt')
 require('../views/pages/unit.vnt')
 require('../views/pages/create.vnt')
 
-// Log all recorder events to the console and analytics
+// Log all recorder events to the console
 function logAllActions() {
   bind((state, action) => {
     console.log(action.type, action, state)
-  })
-}
-
-function trackAllActions() {
-  bind((state, action) => {
-    trackEvent(action)
   })
 }
 
@@ -67,7 +58,6 @@ function updateTitle() {
 // Start up the application
 function go() {
   logAllActions()
-  trackAllActions()
   updateTitle()
   setReducer(reducer)
   route(window.location.pathname + window.location.search)
@@ -77,4 +67,4 @@ function go() {
   })
 }
 
-module.exports = { go, logAllActions, trackAllActions }
+module.exports = { go, logAllActions }

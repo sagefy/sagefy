@@ -36,7 +36,7 @@ module.exports = [
   ),
   p('Sagefy uses third-party services to provide service.'),
   p(
-    'Sagefy may send personally identifying information to trusted third-parties, such as Google Analytics and UserVoice.'
+    'Sagefy may send personally identifying information to trusted third-parties, such as UserVoice.'
   ),
   p(
     'Sagefy does not sell or rent personally identifying information to third-parties.'

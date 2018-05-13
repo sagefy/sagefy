@@ -45,7 +45,7 @@ Sagefy may collect personally identifying information to provide services.
 Sagefy uses third-party services to provide service.
 
 Sagefy may send personally identifying information to trusted
-third-parties, such as Google Analytics and UserVoice.
+third-parties, such as UserVoice.
 
 Sagefy does not sell or rent personally identifying information
 to third-parties.

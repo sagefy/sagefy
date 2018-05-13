@@ -228,18 +228,6 @@ stylesheet = """
 </style>
 """
 
-analytics = """
-<script>
-  var _gaq = [['_setAccount', 'UA-40497674-1'], ['_trackPageview']];
-  (function(d, t) {
-    var g = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    g.src = '//www.google-analytics.com/ga.js';
-    s.parentNode.insertBefore(g, s);
-  }(document, 'script'));
-</script>
-"""
-
 
 def serve(environ, start_response):
   """
@@ -345,11 +333,9 @@ def get_homepage_route(conn, environ, start_response):
     <p><small>&copy; Copyright 2018 Sagefy.
       All rights reserved.</small></p>
   </main>
-  {analytics}
   """.format(
     stylesheet=stylesheet,
     suggests_html=suggests_html,
-    analytics=analytics
   )
   return [html.encode()]
 
@@ -389,8 +375,7 @@ def get_add_form_route(conn, environ, start_response):
       </button>
     </form>
   </main>
-  {analytics}
-  """.format(stylesheet=stylesheet, analytics=analytics)
+  """.format(stylesheet=stylesheet)
   return [html.encode()]
 
 
@@ -453,8 +438,7 @@ def get_upvote_form(conn, environ, start_response):
       </button>
     </form>
   </main>
-  {analytics}
-  """.format(stylesheet=stylesheet, id=id_, analytics=analytics)
+  """.format(stylesheet=stylesheet, id=id_)
   return [html.encode()]
 
 
