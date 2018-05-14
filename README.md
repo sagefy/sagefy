@@ -9,7 +9,7 @@ Sagefy is an _open-content, adaptive learning_ platform.
 * **Adaptive Learning.** Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent. 
 * **Open-Content.** Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
 
-[Visit our demo course, Intro to Electronic Music!](http://sgef.cc/emus)
+[Try our demo course, Intro to Electronic Music!](http://sgef.cc/emus)
 
 For more information, watch this 3 minute [YouTube video].
 
