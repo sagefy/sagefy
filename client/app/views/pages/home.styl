@@ -42,9 +42,6 @@
     float left
 
   li
-    width 33%
-    min-width ($unit * 16)
-    float left
     padding $unit
 
   li i
@@ -54,6 +51,11 @@
   li span:last-child
     margin-left ($unit * 4)
     display block
+
+  @media only screen and (min-width: 675px)
+    li
+      width 33%
+      float left
 
 .home__ul--how
   @extend $ul--unstyled
