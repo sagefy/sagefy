@@ -79,19 +79,6 @@ module.exports = data => {
             cta
           ),
           section(
-            h2('Why learn with Sagefy?'),
-            ul(
-              { className: 'home__ul--why' },
-              li(w(icon('learn')), span(' Learn any subject.')),
-              li(w(icon('create')), span(' Create and edit any content.')),
-              li(w(icon('fast')), span(' Skip what you already know.')),
-              li(w(icon('grow')), span(' Build up to where you need to be.')),
-              li(w(icon('search')), span(' Choose your own path.')),
-              li(w(icon('topic')), span(' Discussion built in.'))
-            ),
-            cta
-          ),
-          section(
             h2('How do I learn with Sagefy?'),
             ol(
               { className: 'home__ul--how' },
@@ -109,6 +96,38 @@ module.exports = data => {
               ),
               li(img({ src: 'https://i.imgur.com/yjeVPiq.png' }), 'Learn.')
             ),
+            cta
+          ),
+          section(
+            h2('Popular Subjects'),
+            ul(
+              { className: 'home__ul--popular-subjects' },
+              li(
+                previewSubjectHead({
+                  url: '/subjects/UIe3mx3UTQKHDG2zLyHI5w/landing',
+                  name: 'An Introduction to Electronic Music',
+                  body:
+                    'A small taste of the basics of electronic music. Learn the concepts behind creating and modifying sounds in an electronic music system. Learn the ideas behind the tools and systems we use to create electronic music.',
+                })
+              )
+            ),
+            cta
+          ),
+          section(
+            h2('Why learn with Sagefy?'),
+            ul(
+              { className: 'home__ul--why' },
+              li(w(icon('learn')), span(' Learn any subject.')),
+              li(w(icon('create')), span(' Create and edit any content.')),
+              li(w(icon('fast')), span(' Skip what you already know.')),
+              li(w(icon('grow')), span(' Build up to where you need to be.')),
+              li(w(icon('search')), span(' Choose your own path.')),
+              li(w(icon('topic')), span(' Discussion built in.'))
+            ),
+            cta
+          ),
+          section(
+            h2('What does Sagefy provide?'),
             iframe({
               width: '560',
               height: '315',
@@ -126,21 +145,6 @@ module.exports = data => {
                 'article on Medium'
               ),
               '.'
-            ),
-            cta
-          ),
-          section(
-            h2('Popular Subjects'),
-            ul(
-              { className: 'home__ul--popular-subjects' },
-              li(
-                previewSubjectHead({
-                  url: '/subjects/UIe3mx3UTQKHDG2zLyHI5w/landing',
-                  name: 'An Introduction to Electronic Music',
-                  body:
-                    'A small taste of the basics of electronic music. Learn the concepts behind creating and modifying sounds in an electronic music system. Learn the ideas behind the tools and systems we use to create electronic music.',
-                })
-              )
             ),
             cta
           ),
