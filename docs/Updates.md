@@ -1,4 +1,7 @@
-# Sagefy Development Updates
+---
+layout: docs
+title: Sagefy Development Updates
+---
 
 This is a reverse chronological listing of updates on Sagefy's progress. I will try to do these biweekly.
 
