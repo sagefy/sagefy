@@ -117,12 +117,53 @@ module.exports = data => {
             h2('Why learn with Sagefy?'),
             ul(
               { className: 'home__ul--why' },
-              li(w(icon('learn')), span(' Learn any subject.')),
-              li(w(icon('create')), span(' Create and edit any content.')),
-              li(w(icon('fast')), span(' Skip what you already know.')),
-              li(w(icon('grow')), span(' Build up to where you need to be.')),
-              li(w(icon('search')), span(' Choose your own path.')),
-              li(w(icon('topic')), span(' Discussion built in.'))
+              li(w(icon('learn')), span(strong('Learn'), ' any subject.')),
+              li(
+                w(icon('fast')),
+                span(strong('Skip'), ' what you already know.')
+              ),
+              li(
+                w(icon('grow')),
+                span(strong('Build up'), ' to where you need to be.')
+              ),
+              li(
+                w(icon('search')),
+                span(
+                  strong('Choose'),
+                  ' your own path. Sagefy recommends, but never requires.'
+                )
+              ),
+              li(
+                w(icon('learn')),
+                span(
+                  'Learn ',
+                  strong('deeply'),
+                  ', instead of skimming the top.'
+                )
+              ),
+              li(
+                w(icon('follow')),
+                span(
+                  'Stay ',
+                  strong('motiviated'),
+                  ' with different types of cards.'
+                )
+              ),
+              li(
+                w(icon('good')),
+                span(
+                  'Focus on what you want to learn with ',
+                  strong('no distractions.')
+                )
+              ),
+              li(
+                w(icon('create')),
+                span('Create and edit ', strong('any'), ' content.')
+              ),
+              li(
+                w(icon('topic')),
+                span(strong('Discuss'), ' anything as you learn.')
+              )
             ),
             cta
           ),
@@ -149,51 +190,7 @@ module.exports = data => {
             cta
           ),
           // TODO-1 third party validation
-          section(
-            h2('Features'),
-            ul(
-              { className: 'home__ul--features' },
-              li(
-                w(icon('unit')),
-                strong('Simple'),
-                ' organization. The only kinds of things are: ',
-                ul(
-                  li('Subjects -- or courses,'),
-                  li('Units -- or learning goals, and'),
-                  li('Cards -- small learning experiences.')
-                )
-              ),
-              li(
-                w(icon('search')),
-                strong('Choose'),
-                ' your path along the way. Sagefy recommends, but never requires.'
-              ),
-              li(
-                w(icon('reply')),
-                'Keep up to speed with ',
-                strong('review'),
-                ' reminders.'
-              ),
-              li(
-                w(icon('follow')),
-                strong('Variety'),
-                ' of types of cards, so you can stay motivated.'
-              ),
-              li(
-                w(icon('good')),
-                'Focus on what you want to learn with ',
-                strong('no distractions.')
-              ),
-              li(w(icon('fast')), strong('Skip'), ' content you already know.'),
-              li(
-                w(icon('learn')),
-                'Learn ',
-                strong('deeply'),
-                ', instead of skimming the top.'
-              )
-            ),
-            cta
-          ),
+
           section(
             h2('Comparison'),
             ul(
