@@ -35,7 +35,7 @@ module.exports = data => {
   const cta = a(
     { href: '/sign_up', className: 'home__cta-button' },
     icon('sign-up'),
-    ' Sign Up'
+    " Let's Learn!"
   )
 
   const w = n => span({ className: 'home__icon-wrap' }, n)
