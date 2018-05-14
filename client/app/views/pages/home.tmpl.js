@@ -126,13 +126,7 @@ module.exports = data => {
                 w(icon('grow')),
                 span(strong('Build up'), ' to where you need to be.')
               ),
-              li(
-                w(icon('search')),
-                span(
-                  strong('Choose'),
-                  ' your own path. Sagefy recommends, but never requires.'
-                )
-              ),
+              li(w(icon('search')), span(strong('Choose'), ' your own path.')),
               li(
                 w(icon('learn')),
                 span(
