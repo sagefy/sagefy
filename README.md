@@ -2,17 +2,17 @@
 
 **Learn anything, customized for you.** _And always free._
 
+[<img src="https://docs.google.com/drawings/d/e/2PACX-1vR3ARFXI6Y-DNZGSBn8Ngbe6yV4asc1CEZR-2b2mnbLnK6FZOND2uT8wyHNKu8qyIBfscjC3dsrWIMk/pub?w=1790&amp;h=800" width="890">](https://sagefy.org)
+
 _Sagefy is an open-content adaptive learning platform._
 
 **Adaptive Learning.** Get the most out of your time and effort spent. Sagefy optimizes based on what you already know and what your goal is.
 
 **Open-Content.** Anyone can view, share, create, and edit content. Open-content means that Sagefy reaches a range of learning subjects.
 
-For more information, watch this 3 minute [YouTube video].
-
 [Visit our demo course, Intro to Electronic Music!](http://sgef.cc/emus)
 
-[<img src="https://docs.google.com/drawings/d/e/2PACX-1vR3ARFXI6Y-DNZGSBn8Ngbe6yV4asc1CEZR-2b2mnbLnK6FZOND2uT8wyHNKu8qyIBfscjC3dsrWIMk/pub?w=1790&amp;h=800" width="890">](https://sagefy.org)
+For more information, watch this 3 minute [YouTube video].
 
 [Site], [Docs], [Setup], [Updates], [Forum], [Twitter]
 
