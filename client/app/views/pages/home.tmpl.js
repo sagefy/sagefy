@@ -96,18 +96,18 @@ module.exports = data => {
             ol(
               { className: 'home__ul--how' },
               li(
-                img({ src: 'https://i.imgur.com/6Ay09ws.png' }),
+                img({ src: 'https://i.imgur.com/2QSMPNs.png' }),
                 'Create an account.'
               ),
               li(
-                img({ src: 'https://i.imgur.com/T03jwF6.png' }),
+                img({ src: 'https://i.imgur.com/xKRaoff.png' }),
                 'Find and add a subject.'
               ),
               li(
-                img({ src: 'https://i.imgur.com/FNuekHE.png' }),
+                img({ src: 'https://i.imgur.com/MYTGawz.png' }),
                 'Choose your unit.'
               ),
-              li(img({ src: 'https://i.imgur.com/bT1FOpe.png' }), 'Learn.')
+              li(img({ src: 'https://i.imgur.com/yjeVPiq.png' }), 'Learn.')
             ),
             iframe({
               width: '560',

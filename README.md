@@ -10,15 +10,19 @@ _Sagefy is an open-content adaptive learning platform._
 
 For more information, watch this 3 minute [YouTube video].
 
-* [Site], [Docs], [Twitter], [Updates], [Forum], [Setup]
+[Visit our demo course, Intro to Electronic Music!](http://sgef.cc/emus)
+
+[<img src="https://docs.google.com/drawings/d/e/2PACX-1vR3ARFXI6Y-DNZGSBn8Ngbe6yV4asc1CEZR-2b2mnbLnK6FZOND2uT8wyHNKu8qyIBfscjC3dsrWIMk/pub?w=1790&amp;h=800" width="890">](https://sagefy.org)
+
+[Site], [Docs], [Setup], [Updates], [Forum], [Twitter]
 
 [youtube video]: https://youtu.be/gFn4Q9tx7Qs
 [site]: https://sagefy.org
 [docs]: https://docs.sagefy.org
-[twitter]: https://twitter.com/sagefyorg
+[setup]: https://docs.sagefy.org/Setup
 [updates]: https://sgef.cc/devupdates
 [forum]: https://spectrum.chat/sagefy
-[setup]: https://github.com/heiskr/sagefy/blob/master/SETUP.md
+[twitter]: https://twitter.com/sagefyorg
 
 [![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy)
 [<img src="https://i.imgur.com/M5xPVWm.png" height="20">](https://www.browserstack.com)

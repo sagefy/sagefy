@@ -4,7 +4,7 @@
 # Based on http://do.co/1FmILwq and http://do.co/1GkXg4m
 
 # >>> Make sure to backup current Postgres data first!
-# Run the backup process  (See SETUP.md)
+# Run the backup process  (See docs/setup.md)
 # Stop prod server
 # download from B2 site
 

@@ -23,7 +23,7 @@ For more information, watch this 3 minute [YouTube video].
 [twitter]: https://twitter.com/sagefyorg
 [updates]: https://sgef.cc/devupdates
 [gitter]: https://gitter.im/heiskr/sagefy
-[setup]: https://github.com/heiskr/sagefy/blob/master/SETUP.md
+[setup]: https://docs.sagefy.org/Setup
 
 All contents in this project are licensed under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 

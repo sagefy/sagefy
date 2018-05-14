@@ -1,4 +1,7 @@
-# Setup
+---
+layout: docs
+title: Setup
+---
 
 ## Local Development
 

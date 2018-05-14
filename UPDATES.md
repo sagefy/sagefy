@@ -4,17 +4,36 @@ This is a reverse chronological listing of updates on Sagefy's progress. I will 
 
 You can sign up for email updates at https://sgef.cc/devupdates
 
+## UPDATE -- 2018 May 13
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2018 Apr 30 - 2018 May 13
+
+* Built ["Phase" interactive example](http://em.sagefy.org/examples/phase-and-space) for the Intro to Electronic Music: Sound Parameters unit.
+* Removed Google Analytics tracking from all pages.
+
+### Upcoming Two Weeks: 2018 May 14 - 2018 May 27
+
+* Get all five examples for Sound Parametrs on the site and in the test data.
+* Make progress on 8 Ideas article.
+* Start a list for prospective contributors.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+
 ## UPDATE -- 2018 Apr 30
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
 
 ### 2018 Apr 16 - 2018 Apr 29
 
-- Shifted base website color from goldenrod to blue.
+* Shifted base website color from goldenrod to blue.
 
 ### Upcoming Two Weeks: 2018 Apr 30 - 2018 May 13
 
-- Build "Phase" interactive example for the Intro to Electronic Music: Sound Parameters unit.
+* Build "Phase" interactive example for the Intro to Electronic Music: Sound Parameters unit.
 
 ### Feedback
 
@@ -26,13 +45,13 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### 2018 Apr 2 - 2018 Apr 15
 
-- Worked on outreach and getting links to Sagefy on external sites
-- Created a "Beta" landing page
-- Continuing on Medium article on the 8 "big ideas"
+* Worked on outreach and getting links to Sagefy on external sites
+* Created a "Beta" landing page
+* Continuing on Medium article on the 8 "big ideas"
 
 ### Upcoming Two Weeks: 2018 Apr 16 - 2018 Apr 29
 
-- Build "Phase" interactive example for the Intro to Electronic Music: Sound Parameters unit.
+* Build "Phase" interactive example for the Intro to Electronic Music: Sound Parameters unit.
 
 ### Feedback
 
@@ -44,17 +63,17 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### 2018 Mar 19 - 2018 Apr 1
 
-- Built example for ["Duration and Rhythm"](http://em.sagefy.org/examples/duration-and-rhythm)
-- Launched a test page to collect emails for ["Make Your Own Learning Plan"](https://sgef.cc/learnplan)
-- Moved over [dev newsletter sign up](https://sgef.cc/devupdates) page to own server
-- Updated code to check login status, so it logs you out if your session is invalid.
-- Fixed double loading state issue.
-- Addressed a security concern with Redis.
-- Continuing on Medium article on the 8 "big ideas"
+* Built example for ["Duration and Rhythm"](http://em.sagefy.org/examples/duration-and-rhythm)
+* Launched a test page to collect emails for ["Make Your Own Learning Plan"](https://sgef.cc/learnplan)
+* Moved over [dev newsletter sign up](https://sgef.cc/devupdates) page to own server
+* Updated code to check login status, so it logs you out if your session is invalid.
+* Fixed double loading state issue.
+* Addressed a security concern with Redis.
+* Continuing on Medium article on the 8 "big ideas"
 
 ### Upcoming Two Weeks: 2018 Apr 2 - 2018 Apr 15
 
-- Build remaining interactive example for the Intro to Electronic Music: Sound Parameters unit.
+* Build remaining interactive example for the Intro to Electronic Music: Sound Parameters unit.
 
 ### Feedback
 
