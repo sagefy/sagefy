@@ -5,7 +5,7 @@ title: Data Structure
 
 This document covers the overall architecture of Sagefy's data structure. This data structure allows Sagefy to be open-content, flexible, and practical.
 
-![Data Structure Example: Statistics](https://docs.google.com/drawings/d/1idC1i8udNsD5C1yj1K7qKp6cwSkyhwjLXzG-xsXG6gE/pub?w=735&amp;h=280)
+![Data Structure Example: Statistics](https://docs.google.com/drawings/d/1idC1i8udNsD5C1yj1K7qKp6cwSkyhwjLXzG-xsXG6gE/pub?w=735&h=280)
 
 There are three types of entities in Sagefy: cards, units, and subjects.
 
@@ -18,3 +18,7 @@ There are three types of entities in Sagefy: cards, units, and subjects.
 Also see [Data Structure: Requirements and Guidelines](Data-Structure-Requirements-and-Guidelines).
 
 Also see [YouTube Video](https://youtu.be/gFn4Q9tx7Qs).
+
+---
+
+What next? [Continue to "Want to Help?"](/Want-to-Help).

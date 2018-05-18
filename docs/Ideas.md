@@ -174,3 +174,7 @@ We are more effective as team or as a community. Often, but not always.
 * Providing basic analytics to everyone means we can have more honest conversations.
 * Everything is up for discussion and can be flagged.
 * Sagefy is open source and is built on open source software.
+
+---
+
+What next? [Continue to "Data Structure"](/Data-Structure).
