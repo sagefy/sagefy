@@ -2,8 +2,6 @@
 
 [<img src="https://docs.google.com/drawings/d/e/2PACX-1vR3ARFXI6Y-DNZGSBn8Ngbe6yV4asc1CEZR-2b2mnbLnK6FZOND2uT8wyHNKu8qyIBfscjC3dsrWIMk/pub?w=1790&amp;h=800" width="890">](https://sagefy.org)
 
-[Visit the site](https://sagefy.org)
-
 **Learn anything, customized for you.** _And always free._
 
 Sagefy is an _open-content, adaptive learning_ platform.
@@ -13,8 +11,9 @@ Sagefy is an _open-content, adaptive learning_ platform.
 
 What next?
 
-* Try our demo course, [Intro to Electronic Music!](http://sgef.cc/emus)
-* For more information, watch this 3 minute [YouTube video](https://youtu.be/gFn4Q9tx7Qs) or [read the docs](https://docs.sagefy.org).
+* [Visit the site.](https://sagefy.org)
+* Try our demo course, [Intro to Electronic Music](http://sgef.cc/emus).
+* For more information, [watch this 3 minute YouTube video](https://youtu.be/gFn4Q9tx7Qs) or [read the docs](https://docs.sagefy.org).
 * Want to help? [Check out our contributors' list.](https://docs.sagefy.org/Want-to-Help)
 * Sign up for [development updates](https://sgef.cc/devupdates).
 * Share us on [Twitter](https://twitter.com/sagefyorg).
