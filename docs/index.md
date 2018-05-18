@@ -16,18 +16,13 @@ Sagefy is an _open-content, adaptive learning_ platform.
 
 For more information, watch this 3 minute [YouTube video].
 
-[Site], [Docs], [Setup], [Updates], [Forum], [Twitter]
+[Site], [Updates], [Forum], [Twitter]
 
 [youtube video]: https://youtu.be/gFn4Q9tx7Qs
 [site]: https://sagefy.org
-[docs]: https://docs.sagefy.org
-[setup]: https://docs.sagefy.org/Setup
 [updates]: https://sgef.cc/devupdates
 [forum]: https://spectrum.chat/sagefy
 [twitter]: https://twitter.com/sagefyorg
-
-[![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy)
-[<img src="https://i.imgur.com/M5xPVWm.png" height="20">](https://www.browserstack.com)
 
 All contents in this project are licensed under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
