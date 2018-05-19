@@ -263,8 +263,16 @@ cards:
     - unit: unitOscS
       video_id: iB2N585gEKg
   unscored_embed:
-    - unit: unitIntro
-      url: https://example.com
+    - unit: unitParams
+      url: http://em.sagefy.org/examples/amplitude-and-volume
+    - unit: unitParams
+      url: http://em.sagefy.org/examples/frequency-and-pitch
+    - unit: unitParams
+      url: http://em.sagefy.org/examples/duration-and-rhythm
+    - unit: unitParams
+      url: http://em.sagefy.org/examples/phase-and-space
+    - unit: unitParams
+      url: http://em.sagefy.org/examples/spectrum-and-color
   page:
     - unit: unitIntro
       name: Electronic Music
