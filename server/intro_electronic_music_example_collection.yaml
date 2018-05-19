@@ -264,15 +264,15 @@ cards:
       video_id: iB2N585gEKg
   unscored_embed:
     - unit: unitParams
-      url: http://em.sagefy.org/examples/amplitude-and-volume
+      url: https://em.sagefy.org/examples/amplitude-and-volume
     - unit: unitParams
-      url: http://em.sagefy.org/examples/frequency-and-pitch
+      url: https://em.sagefy.org/examples/frequency-and-pitch
     - unit: unitParams
-      url: http://em.sagefy.org/examples/duration-and-rhythm
+      url: https://em.sagefy.org/examples/duration-and-rhythm
     - unit: unitParams
-      url: http://em.sagefy.org/examples/phase-and-space
+      url: https://em.sagefy.org/examples/phase-and-space
     - unit: unitParams
-      url: http://em.sagefy.org/examples/spectrum-and-color
+      url: https://em.sagefy.org/examples/spectrum-and-color
   page:
     - unit: unitIntro
       name: Electronic Music
