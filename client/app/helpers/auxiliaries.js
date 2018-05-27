@@ -24,16 +24,6 @@ function setTitle(title = 'FIX ME') {
   }
 }
 
-// Wait for function to stop being called for `delay`
-// milliseconds, and then finally call the real function.
-function debounce(fn, delay) {
-  let timer = null
-  return function debounceInternal(...args) {
-    clearTimeout(timer)
-    timer = setTimeout(() => fn.apply(this, args), delay)
-  }
-}
-
 // Determine if a given path matches this router.
 // Returns either false or array, where array is matches parameters.
 function matchesRoute(docPath, viewPath) {
@@ -289,7 +279,6 @@ function goLogin() {
 module.exports = {
   titleize,
   setTitle,
-  debounce,
   matchesRoute,
   truncate,
   mergeArraysByKey,
