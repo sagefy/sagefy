@@ -1,5 +1,5 @@
 const { div, h1, p, img, h3, header, ul, li } = require('../../helpers/tags')
-const { timeAgo } = require('../../helpers/auxiliaries')
+const timeago = require('../components/timeago.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
@@ -67,7 +67,7 @@ module.exports = data => {
       { className: 'profile__header' },
       img({ src: user.avatar, className: 'profile__avatar' }),
       h1(user.name),
-      p(`Joined ${timeAgo(user.created)}`)
+      p('Joined ', timeago(user.created))
     ),
     user.subjects ? showSubjects(user, user.subjects) : null,
     user.follows ? showFollows(user, user.follows) : null

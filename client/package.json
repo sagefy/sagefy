@@ -66,7 +66,8 @@
     "lodash.snakecase": "4.1.1",
     "normalize.css": "7.0.0",
     "snabbdom": "0.7.1",
-    "snabbdom-to-html": "5.1.0"
+    "snabbdom-to-html": "5.1.0",
+    "timeago.js": "3.0.2"
   },
   "devDependencies": {
     "babel": "6.5.2",

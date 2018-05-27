@@ -9,44 +9,15 @@ const cloneDeep = require('lodash.clonedeep')
 const snakeCase = require('lodash.snakecase')
 
 // Turns underscore or camel into title case
-const titleize = (str = '') =>
-  snakeCase(str)
+function titleize(str = '') {
+  return snakeCase(str)
     .split('_')
     .map(w => w.charAt(0).toUpperCase() + w.substr(1))
     .join(' ')
-
-// From Handlebars
-const escape = str => {
-  const chars = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#x27;',
-    '`': '&#x60;',
-  }
-
-  return str.toString().replace(/[&<>"'`]/g, char => chars[char])
-}
-
-// From http://ejohn.org/files/pretty.js
-// TODO-3 move copy to content directory
-const timeAgo = str => {
-  const diff = new Date().getTime() - new Date(str).getTime()
-  const days = Math.floor(diff / (24 * 60 * 60 * 1000))
-  const hours = Math.floor(diff / (60 * 60 * 1000))
-  const minutes = Math.floor(diff / (60 * 1000))
-  if (days > 1) return `${days} days ago`
-  if (days === 1) return 'Yesterday'
-  if (hours > 1) return `${hours} hours ago`
-  if (hours === 1) return '1 hour ago'
-  if (minutes > 1) return `${minutes} minutes ago`
-  if (minutes === 1) return '1 minute ago'
-  return 'Just now'
 }
 
 // Set the page title.
-const setTitle = (title = 'FIX ME') => {
+function setTitle(title = 'FIX ME') {
   title = `${title} – Sagefy`
   if (typeof document !== 'undefined' && document.title !== title) {
     document.title = title
@@ -55,7 +26,7 @@ const setTitle = (title = 'FIX ME') => {
 
 // Wait for function to stop being called for `delay`
 // milliseconds, and then finally call the real function.
-const debounce = function debounce(fn, delay) {
+function debounce(fn, delay) {
   let timer = null
   return function debounceInternal(...args) {
     clearTimeout(timer)
@@ -65,7 +36,7 @@ const debounce = function debounce(fn, delay) {
 
 // Determine if a given path matches this router.
 // Returns either false or array, where array is matches parameters.
-const matchesRoute = (docPath, viewPath) => {
+function matchesRoute(docPath, viewPath) {
   if (!docPath) {
     return false
   }
@@ -79,7 +50,7 @@ const matchesRoute = (docPath, viewPath) => {
   return match ? match.slice(1) : false
 }
 
-const valuefy = value => {
+function valuefy(value) {
   if (typeof value === 'undefined') return undefined
   if (value === 'true') return true
   if (value === 'false') return false
@@ -89,7 +60,7 @@ const valuefy = value => {
   return decodeURIComponent(value)
 }
 
-const truncate = (str, len) => {
+function truncate(str, len) {
   if (str.length <= len) return str
   return `${str.slice(0, len)}...`
 }
@@ -317,8 +288,6 @@ function goLogin() {
 
 module.exports = {
   titleize,
-  escape,
-  timeAgo,
   setTitle,
   debounce,
   matchesRoute,

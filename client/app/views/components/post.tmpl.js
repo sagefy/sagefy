@@ -1,5 +1,5 @@
 const { li, div, img, a, span, h3, hr } = require('../../helpers/tags')
-const { timeAgo } = require('../../helpers/auxiliaries')
+const timeago = require('./timeago.tmpl')
 const icon = require('./icon.tmpl')
 const previewCard = require('./preview_card.tmpl')
 const previewUnit = require('./preview_unit.tmpl')
@@ -81,7 +81,7 @@ module.exports = (data, currentUserID) => {
     ),
     div(
       { className: 'post__content' },
-      div({ className: 'post__when' }, timeAgo(data.created)),
+      div({ className: 'post__when' }, timeago(data.created)),
       a(
         {
           className: 'post__name',
