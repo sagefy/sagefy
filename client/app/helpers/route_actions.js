@@ -1,6 +1,6 @@
 const { dispatch } = require('./store')
 const tasks = require('./tasks')
-const qs = require('./query_string')
+const { readQueryString } = require('./url')
 const pageTitles = require('../helpers/page_titles')
 const matchesRoute = require('../helpers/matches_route')
 
@@ -12,7 +12,7 @@ function getQueryParams(path) {
   if (path.indexOf('?') === -1) {
     return {}
   }
-  return qs.read(path.split('?')[1])
+  return readQueryString(path.split('?')[1])
 }
 
 function findTitle(path) {

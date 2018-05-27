@@ -1,7 +1,7 @@
 const broker = require('../../helpers/broker')
 const tasks = require('../../helpers/tasks')
 const { getFormValues, parseFormValues } = require('../../helpers/forms')
-const qs = require('../../helpers/query_string')
+const { readQueryString } = require('../../helpers/url')
 const userSchema = require('../../schemas/user')
 
 module.exports = broker.add({
@@ -23,7 +23,7 @@ module.exports = broker.add({
     if (e) {
       e.preventDefault()
     }
-    const { token, id } = qs.read()
+    const { token, id } = readQueryString()
     let values = getFormValues(el)
     values.token = token
     values.id = id

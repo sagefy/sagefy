@@ -1,11 +1,10 @@
 const http = require('http')
-const isString = require('lodash.isstring')
-const { write } = require('./query_string')
+const { writeGetUrl, parseJSON, parseAjaxErrors } = require('./url')
 
 module.exports = function httpRequest({ method, url, data }) {
   method = method.toUpperCase()
   if (method === 'GET') {
-    url = write(url, data)
+    url = writeGetUrl(url, data)
   }
   let done
   let fail
@@ -32,19 +31,11 @@ module.exports = function httpRequest({ method, url, data }) {
         body += d
       })
       response.on('end', () => {
-        let responseData = ''
-        try {
-          responseData = JSON.parse(body)
-        } catch (e) {
-          responseData = body
-        }
         const { statusCode } = response
         if (statusCode < 400 && statusCode >= 200) {
-          done(responseData)
-        } else if (isString(responseData)) {
-          fail(responseData)
+          done(parseJSON(body))
         } else {
-          fail(responseData.errors)
+          fail(parseAjaxErrors(body))
         }
       })
     }
