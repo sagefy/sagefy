@@ -1,5 +1,7 @@
 const mapValues = require('lodash.mapvalues')
 
+const ALL = '*'
+
 module.exports = function createStore(defaultState) {
   const listeners = {}
   let state = (typeof window !== 'undefined' && window.preload) || defaultState
@@ -20,20 +22,20 @@ module.exports = function createStore(defaultState) {
   }
 
   function addListeners(obj) {
-    mapValues(obj, (fn, type) => addListener(type, fn))
-    return obj
+    return mapValues(obj, (fn, type) => addListener(type, fn))
+  }
+
+  function callListeners(type, value) {
+    if (type in listeners) {
+      listeners[type].map(listener => listener({ type, value }))
+    }
   }
 
   function dispatch(type, fn, value) {
     const update = fn(state, value)
     Object.assign(state, update)
-    ;[type, '*'].forEach(
-      xtype =>
-        xtype in listeners &&
-        listeners[xtype].forEach(listener =>
-          listener({ type, value, getState })
-        )
-    )
+    callListeners(type, value)
+    callListeners(ALL, value)
     return update
   }
 
@@ -42,7 +44,7 @@ module.exports = function createStore(defaultState) {
   }
 
   function bindActions(actions) {
-    mapValues(actions, (fn, type) => bindAction(type, fn))
+    return mapValues(actions, (fn, type) => bindAction(type, fn))
   }
 
   return {
@@ -50,7 +52,6 @@ module.exports = function createStore(defaultState) {
     resetState,
     addListener,
     addListeners,
-    dispatch,
     bindAction,
     bindActions,
   }
