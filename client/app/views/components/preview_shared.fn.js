@@ -1,5 +1,5 @@
+const capitalize = require('lodash.capitalize')
 const { a, h3, span, ul, li, em, h4 } = require('../../helpers/tags')
-const { ucfirst } = require('../../helpers/auxiliaries')
 const icon = require('./icon.tmpl')
 const timeago = require('./timeago.tmpl')
 const c = require('../../helpers/content').get
@@ -16,13 +16,13 @@ const shared = {
             { className: 'preview__kind-label' },
             icon(kind),
             ' ',
-            `${ucfirst(cardKindLabel)} ${ucfirst(kind)}`
+            `${capitalize(cardKindLabel)} ${capitalize(kind)}`
           )
         : span(
             { className: 'preview__kind-label' },
             icon(kind),
             ' ',
-            ucfirst(kind)
+            capitalize(kind)
           )
       : icon(kind)
     return url ? h3(label, ' ', a({ href: url }, name)) : h3(label, ' ', name)
@@ -44,7 +44,7 @@ const shared = {
                 : status === 'declined' ? 'bad' : 'progress'
           ),
           ' ',
-          ucfirst(status)
+          capitalize(status)
         )
       : null
   },

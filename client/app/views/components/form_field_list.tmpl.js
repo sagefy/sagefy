@@ -1,3 +1,4 @@
+const capitalize = require('lodash.capitalize')
 const {
   table,
   thead,
@@ -8,7 +9,6 @@ const {
   td,
   a,
 } = require('../../helpers/tags')
-const { ucfirst } = require('../../helpers/auxiliaries')
 const formFieldInput = require('./form_field_input.tmpl')
 const formFieldSelect = require('./form_field_select.tmpl')
 const icon = require('./icon.tmpl')
@@ -60,7 +60,7 @@ module.exports = data => {
     thead(
       tr(
         columns.map(col =>
-          th({ attributes: { 'data-col': col.name } }, ucfirst(col.name))
+          th({ attributes: { 'data-col': col.name } }, capitalize(col.name))
         ),
         // TODO-2 th()  // For reordering
         th() // For deleting

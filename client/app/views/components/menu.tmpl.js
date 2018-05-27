@@ -1,8 +1,9 @@
 // TODO-3 move copy to content directory
+const capitalize = require('lodash.capitalize')
 const merge = require('lodash.merge')
 const { nav, div, a, ul } = require('../../helpers/tags')
 const menuItem = require('./menu_item.tmpl')
-const { ucfirst, underscored } = require('../../helpers/auxiliaries')
+const { underscored } = require('../../helpers/auxiliaries')
 const icon = require('./icon.tmpl')
 
 // TODO-2 add unread count to notices icon
@@ -43,7 +44,7 @@ Object.keys(items).forEach(name => {
   items[name] = merge(
     {
       name,
-      title: ucfirst(name),
+      title: capitalize(name),
       url: `/${underscored(name)}`,
       icon: name,
     },

@@ -1,6 +1,7 @@
+const capitalize = require('lodash.capitalize')
 const { dispatch, getState } = require('../helpers/store')
 const tasks = require('../helpers/tasks')
-const { matchesRoute, ucfirst } = require('../helpers/auxiliaries')
+const { matchesRoute } = require('../helpers/auxiliaries')
 
 const routes = [
   { path: '/settings', task: 'openSettingsRoute' },
@@ -89,12 +90,12 @@ module.exports = tasks.add({
   },
 
   openVersionsRoute(kind, id) {
-    return tasks[`list${ucfirst(kind)}Versions`](id)
+    return tasks[`list${capitalize(kind)}Versions`](id)
   },
 
   openCreateTopic() {
     const { kind, id } = getState().routeQuery
-    return tasks[`get${ucfirst(kind)}`](id)
+    return tasks[`get${capitalize(kind)}`](id)
   },
 
   openUpdateTopic(id) {

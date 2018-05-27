@@ -1,8 +1,8 @@
+const capitalize = require('lodash.capitalize')
 const { header, h3, hgroup, div, h1, ul, a } = require('../../helpers/tags')
 // const c = require('../../helpers/content').get
 const post = require('../components/post.tmpl')
 const followButton = require('../components/follow_button.tmpl')
-const { ucfirst } = require('../../helpers/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
@@ -19,7 +19,7 @@ const entity = (topic, data) => {
         ? data.units[entityID]
         : entityKind === 'subject' ? data.subjects[entityID] : {}
   const entityName = (entityObj && entityObj.name) || ''
-  return h3(`${ucfirst(entityKind)}: ${entityName}`)
+  return h3(`${capitalize(entityKind)}: ${entityName}`)
 }
 
 module.exports = data => {

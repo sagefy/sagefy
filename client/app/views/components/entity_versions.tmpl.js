@@ -1,5 +1,5 @@
+const capitalize = require('lodash.capitalize')
 const { h2, ul, li, span, a } = require('../../helpers/tags')
-const { ucfirst } = require('../../helpers/auxiliaries')
 const timeago = require('./timeago.tmpl')
 const icon = require('./icon.tmpl')
 
@@ -15,7 +15,7 @@ module.exports = (kind, entityID, versions) => [
             {
               className: `entity-versions__status--${version.status}`,
             },
-            ucfirst(version.status)
+            capitalize(version.status)
           ),
           ' ',
           version.name

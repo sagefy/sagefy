@@ -1,5 +1,6 @@
 const get = require('lodash.get')
 const merge = require('lodash.merge')
+const capitalize = require('lodash.capitalize')
 const { div, h1, p, strong } = require('../../helpers/tags')
 const form = require('../components/form.tmpl')
 const getPostFields = require('./post_form.fn').getFields
@@ -7,7 +8,6 @@ const getPostSchema = require('./post_form.fn').getSchema
 const {
   createFieldsData,
   prefixObjectKeys,
-  ucfirst,
   findGlobalErrors,
 } = require('../../helpers/auxiliaries')
 const topicSchema = require('../../schemas/topic')
@@ -151,7 +151,10 @@ module.exports = data => {
       className: classes(formData),
     },
     h1(topicID ? 'Update Topic' : 'Create Topic'),
-    p(strong(ucfirst(get(entity, 'kind', ''))), `: ${get(entity, 'name', '')}`),
+    p(
+      strong(capitalize(get(entity, 'kind', ''))),
+      `: ${get(entity, 'name', '')}`
+    ),
     form({
       fields: instanceFields,
       errors: globalErrors,

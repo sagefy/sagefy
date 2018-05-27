@@ -1,7 +1,7 @@
+const capitalize = require('lodash.capitalize')
 const { div, ul, li, a, h4, span } = require('../../helpers/tags')
 const { previewCommon, previewTags } = require('./preview_shared.fn')
 const icon = require('./icon.tmpl')
-const { ucfirst } = require('../../helpers/auxiliaries')
 
 // TODO-2 show diff option
 
@@ -45,7 +45,7 @@ module.exports = function previewSubjectContent({
                           className: 'preview--subject__content__members__kind',
                         },
                         icon(member.kind),
-                        ` ${ucfirst(member.kind)}`
+                        ` ${capitalize(member.kind)}`
                       ),
                       ' ',
                     ]

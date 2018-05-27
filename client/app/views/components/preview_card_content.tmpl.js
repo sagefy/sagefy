@@ -1,4 +1,5 @@
 /* eslint-disable camelcase, complexity */
+const capitalize = require('lodash.capitalize')
 const {
   div,
   a,
@@ -11,7 +12,6 @@ const {
   em,
   h4,
 } = require('../../helpers/tags')
-const { ucfirst } = require('../../helpers/auxiliaries')
 const {
   previewCommon,
   previewRequires,
@@ -85,7 +85,7 @@ module.exports = function previewCardContent({
           )
         )
       : null,
-    order ? span('Order: ', em(ucfirst(order))) : null,
+    order ? span('Order: ', em(capitalize(order))) : null,
     maxOptionsToShow
       ? span('Max Options To Show: ', em(maxOptionsToShow))
       : null,

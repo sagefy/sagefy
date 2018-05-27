@@ -1,15 +1,10 @@
 const {
-  ucfirst,
   underscored,
   mergeArraysByKey,
   parseFormValues,
 } = require('../../app/helpers/auxiliaries')
 
 describe('Auxiliaries', () => {
-  it('should capitalize the first letter of a string', () => {
-    expect(ucfirst('unicorn')).toEqual('Unicorn')
-  })
-
   it('should underscore a name', () => {
     expect(underscored('hip-po potu Mus')).toEqual('hip_po_potu_mus')
   })

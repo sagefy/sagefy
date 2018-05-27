@@ -1,12 +1,6 @@
 const glob = require('glob')
 const fs = require('fs')
 const yaml = require('js-yaml')
-// const markdown = require('marked')
-
-// Given a string, capitalize the first letter
-/* const ucFirst = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1)
-} */
 
 const build = (g, fn) => {
   const data = {}
@@ -18,7 +12,6 @@ const build = (g, fn) => {
         .map(el => el.replace(/---/g, ''))
         .forEach(y => {
           y = yaml.load(y)
-          // y.description = markdown(y.description)
           data[y.title] = y
         })
     })

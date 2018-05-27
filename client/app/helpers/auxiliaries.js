@@ -7,9 +7,6 @@ const isString = require('lodash.isstring')
 const isArray = require('lodash.isarray')
 const cloneDeep = require('lodash.clonedeep')
 
-// Capitalizes the first letter of a string
-const ucfirst = (str = '') => str.charAt(0).toUpperCase() + str.slice(1)
-
 // Replaces dashes and spaces with underscores, ready to be used in an URL
 const underscored = str => str.replace(/[-\s]+/g, '_').toLowerCase()
 
@@ -324,7 +321,6 @@ function goLogin() {
 }
 
 module.exports = {
-  ucfirst,
   titleize,
   underscored,
   escape,

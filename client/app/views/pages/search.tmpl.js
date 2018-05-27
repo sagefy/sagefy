@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const get = require('lodash.get')
+const capitalize = require('lodash.capitalize')
 const {
   div,
   h1,
@@ -21,7 +22,6 @@ const icon = require('../components/icon.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
-const { ucfirst } = require('../../helpers/auxiliaries')
 const { getIsLoggedIn } = require('../../selectors/base')
 
 // TODO-2 when receiving ?kind={kind}, then search using that as well.
@@ -76,7 +76,7 @@ r.postResult = result => {
         { className: 'search__label' },
         icon('post'),
         ' ',
-        ucfirst(get(result, '_source.kind'))
+        capitalize(get(result, '_source.kind'))
       ),
       ' by ',
       a(
