@@ -3,7 +3,7 @@
 // TODO-3 Tags (all)
 
 const merge = require('lodash.merge')
-const { prefixObjectKeys } = require('../../helpers/auxiliaries')
+const { prefixObjectKeys } = require('../../helpers/forms')
 
 const postSchema = require('../../schemas/post')
 const voteSchema = require('../../schemas/vote')

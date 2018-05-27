@@ -2,10 +2,7 @@ const merge = require('lodash.merge')
 const { div, h1, p } = require('../../helpers/tags')
 const form = require('../components/form.tmpl')
 const userSchema = require('../../schemas/user')
-const {
-  createFieldsData,
-  findGlobalErrors,
-} = require('../../helpers/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../helpers/forms')
 const wizard = require('../components/wizard.tmpl')
 
 const emailFields = [

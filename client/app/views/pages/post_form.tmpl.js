@@ -4,10 +4,7 @@ const { div, h1 } = require('../../helpers/tags')
 // const c = require('../../helpers/content').get
 const form = require('../components/form.tmpl')
 const spinner = require('../components/spinner.tmpl')
-const {
-  createFieldsData,
-  findGlobalErrors,
-} = require('../../helpers/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../helpers/forms')
 const { getFields, getSchema } = require('./post_form.fn')
 const { getIsLoggedIn } = require('../../selectors/base')
 const { goLogin } = require('../../helpers/auxiliaries')

@@ -3,10 +3,7 @@ const { div, h1, p, a } = require('../../helpers/tags')
 const { unitWizard } = require('./create_shared.fn')
 const unitSchema = require('../../schemas/unit')
 const form = require('../components/form.tmpl')
-const {
-  createFieldsData,
-  findGlobalErrors,
-} = require('../../helpers/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../helpers/forms')
 const icon = require('../components/icon.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')

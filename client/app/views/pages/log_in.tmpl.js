@@ -3,10 +3,7 @@ const { div, h1, p, br, a } = require('../../helpers/tags')
 const form = require('../components/form.tmpl')
 const icon = require('../components/icon.tmpl')
 const userSchema = require('../../schemas/user')
-const {
-  createFieldsData,
-  findGlobalErrors,
-} = require('../../helpers/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../helpers/forms')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
 

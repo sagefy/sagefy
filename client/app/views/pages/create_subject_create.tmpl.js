@@ -2,10 +2,7 @@ const merge = require('lodash.merge')
 const { div, h1 } = require('../../helpers/tags')
 const subjectSchema = require('../../schemas/subject')
 const form = require('../components/form.tmpl')
-const {
-  createFieldsData,
-  findGlobalErrors,
-} = require('../../helpers/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../helpers/forms')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
 const { goLogin } = require('../../helpers/auxiliaries')

@@ -1,7 +1,7 @@
 const broker = require('../../helpers/broker')
 const tasks = require('../../helpers/tasks')
 const { closest } = require('../../helpers/utilities')
-const { getFormValues, parseFormValues } = require('../../helpers/auxiliaries')
+const { getFormValues, parseFormValues } = require('../../helpers/forms')
 
 module.exports = broker.add({
   'submit #topic-form.create form'(e, el) {

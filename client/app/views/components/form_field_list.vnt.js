@@ -1,7 +1,7 @@
 const broker = require('../../helpers/broker')
 const tasks = require('../../helpers/tasks')
 const { closest } = require('../../helpers/utilities')
-const { getFormValues } = require('../../helpers/auxiliaries')
+const { getFormValues } = require('../../helpers/forms')
 
 module.exports = broker.add({
   'click .form-field--list__remove-row'(e, el) {

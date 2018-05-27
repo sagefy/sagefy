@@ -7,10 +7,7 @@ const pageCardSchema = require('../../schemas/cards/page_card')
 const unscoredEmbedCardSchema = require('../../schemas/cards/unscored_embed_card')
 const choiceCardSchema = require('../../schemas/cards/choice_card')
 const form = require('../components/form.tmpl')
-const {
-  createFieldsData,
-  findGlobalErrors,
-} = require('../../helpers/auxiliaries')
+const { createFieldsData, findGlobalErrors } = require('../../helpers/forms')
 const icon = require('../components/icon.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')

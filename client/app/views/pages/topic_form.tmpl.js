@@ -9,7 +9,7 @@ const {
   createFieldsData,
   prefixObjectKeys,
   findGlobalErrors,
-} = require('../../helpers/auxiliaries')
+} = require('../../helpers/forms')
 const topicSchema = require('../../schemas/topic')
 const spinner = require('../components/spinner.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')

@@ -1,6 +1,6 @@
 const broker = require('../../helpers/broker')
 const tasks = require('../../helpers/tasks')
-const { getFormValues, parseFormValues } = require('../../helpers/auxiliaries')
+const { getFormValues, parseFormValues } = require('../../helpers/forms')
 const qs = require('../../helpers/query_string')
 const userSchema = require('../../schemas/user')
 
