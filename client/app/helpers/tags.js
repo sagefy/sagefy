@@ -1,7 +1,7 @@
 const h = require('snabbdom/h').default
 const isPlainObject = require('lodash.isplainobject')
 const flattenDeep = require('lodash.flattendeep')
-const { omit } = require('./utilities')
+const omit = require('lodash.omit')
 
 const names = [
   // Super elements
