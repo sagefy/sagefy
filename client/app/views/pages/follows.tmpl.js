@@ -8,7 +8,7 @@ const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../helpers/auxiliaries')
+const goLogin = require('../../helpers/go_login')
 
 const follow = data => {
   const kind = data.entity_kind

@@ -7,7 +7,7 @@ const spinner = require('../components/spinner.tmpl')
 const { createFieldsData, findGlobalErrors } = require('../../helpers/forms')
 const { getFields, getSchema } = require('./post_form.fn')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../helpers/auxiliaries')
+const goLogin = require('../../helpers/go_login')
 
 // TODO-1 Currently there is no way to update an existing entity from the UI,
 //    you can only propose a new entity.

@@ -1,6 +1,6 @@
 const { dispatch } = require('../helpers/store')
 const tasks = require('../helpers/tasks')
-const { matchesRoute } = require('../helpers/auxiliaries')
+const matchesRoute = require('../helpers/matches_route')
 const request = require('../helpers/request')
 
 module.exports = tasks.add({

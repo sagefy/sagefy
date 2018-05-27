@@ -1,4 +1,4 @@
-const { mergeArraysByKey } = require('../helpers/auxiliaries')
+const mergeArraysByKey = require('../helpers/merge_arrays_by_key')
 const clone = require('lodash.clone')
 
 module.exports = function subjectVersions(state = {}, action = { type: '' }) {

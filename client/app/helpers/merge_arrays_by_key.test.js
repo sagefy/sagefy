@@ -1,6 +1,6 @@
-const { mergeArraysByKey } = require('../../app/helpers/auxiliaries')
+const mergeArraysByKey = require('./merge_arrays_by_key')
 
-describe('Auxiliaries', () => {
+describe('#mergeArraysByKey', () => {
   it('should merge two arrays by a key', () => {
     const A = [{ k: 0, v: 1 }, { k: 1, v: 1 }, { k: 3, v: 1 }, { k: 7, v: 1 }]
     const B = [{ k: 1, v: 2 }, { k: 2, v: 2 }, { k: 7, v: 2 }, { k: 8, v: 2 }]

@@ -1,5 +1,5 @@
 const { header, span, h1 } = require('../../helpers/tags')
-const { titleize } = require('../../helpers/auxiliaries')
+const titleize = require('../../helpers/titleize')
 const icon = require('./icon.tmpl')
 
 module.exports = (kind, entity) => {

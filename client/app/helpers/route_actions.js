@@ -2,29 +2,31 @@ const { dispatch } = require('./store')
 const tasks = require('./tasks')
 const qs = require('./query_string')
 const pageTitles = require('../helpers/page_titles')
-const { matchesRoute } = require('../helpers/auxiliaries')
+const matchesRoute = require('../helpers/matches_route')
 
-const request = () => window.location.pathname + window.location.search
+function request() {
+  return window.location.pathname + window.location.search
+}
 
-const getQueryParams = path => {
+function getQueryParams(path) {
   if (path.indexOf('?') === -1) {
     return {}
   }
   return qs.read(path.split('?')[1])
 }
 
-const findTitle = path => {
+function findTitle(path) {
   for (let i = 0; i < pageTitles.length; i += 1) {
-    const route = pageTitles[i]
-    const args = matchesRoute(path, route.path)
+    const xroute = pageTitles[i]
+    const args = matchesRoute(path, xroute.path)
     if (args) {
-      return route.title
+      return xroute.title
     }
   }
   return ''
 }
 
-const route = path => {
+function route(path) {
   dispatch({
     type: 'SET_ROUTE',
     route: path,

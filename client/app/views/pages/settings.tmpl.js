@@ -6,7 +6,7 @@ const form = require('../components/form.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../helpers/auxiliaries')
+const goLogin = require('../../helpers/go_login')
 
 const fields = [
   {

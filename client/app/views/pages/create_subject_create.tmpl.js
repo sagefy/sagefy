@@ -5,7 +5,7 @@ const form = require('../components/form.tmpl')
 const { createFieldsData, findGlobalErrors } = require('../../helpers/forms')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
-const { goLogin } = require('../../helpers/auxiliaries')
+const goLogin = require('../../helpers/go_login')
 
 const fields = [
   {

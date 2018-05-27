@@ -16,7 +16,7 @@ const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const icon = require('../components/icon.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
-const { goLogin } = require('../../helpers/auxiliaries')
+const goLogin = require('../../helpers/go_login')
 
 module.exports = function createUnitFind(data) {
   if (getIsLoggedIn(data) === null) {

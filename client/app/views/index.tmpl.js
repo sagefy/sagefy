@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 const cloneDeep = require('lodash.clonedeep')
-const { matchesRoute } = require('../helpers/auxiliaries')
+const matchesRoute = require('../helpers/matches_route')
 const { div, main } = require('../helpers/tags')
 
 /*

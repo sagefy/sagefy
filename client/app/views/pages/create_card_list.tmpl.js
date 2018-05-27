@@ -4,7 +4,7 @@ const icon = require('../components/icon.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
-const { goLogin } = require('../../helpers/auxiliaries')
+const goLogin = require('../../helpers/go_login')
 
 module.exports = function createCardList(data) {
   if (getIsLoggedIn(data) === null) {

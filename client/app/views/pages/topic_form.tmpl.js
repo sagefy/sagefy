@@ -13,7 +13,7 @@ const {
 const topicSchema = require('../../schemas/topic')
 const spinner = require('../components/spinner.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../helpers/auxiliaries')
+const goLogin = require('../../helpers/go_login')
 
 const classes = formData => {
   const topicID = formData['topic.id']

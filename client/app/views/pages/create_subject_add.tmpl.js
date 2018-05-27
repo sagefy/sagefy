@@ -16,7 +16,7 @@ const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
-const { goLogin } = require('../../helpers/auxiliaries')
+const goLogin = require('../../helpers/go_login')
 
 module.exports = function createSubjectAdd(data) {
   if (getIsLoggedIn(data) === null) {

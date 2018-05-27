@@ -1,5 +1,5 @@
 const clone = require('lodash.clone')
-const { mergeArraysByKey } = require('../helpers/auxiliaries')
+const mergeArraysByKey = require('../helpers/merge_arrays_by_key')
 
 module.exports = function topicPosts(state = {}, action = { type: '' }) {
   if (action.type === 'ADD_TOPIC_POSTS') {

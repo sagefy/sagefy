@@ -1,4 +1,4 @@
-const { mergeArraysByKey } = require('../helpers/auxiliaries')
+const mergeArraysByKey = require('../helpers/merge_arrays_by_key')
 
 module.exports = function searchResults(state = [], action = { type: '' }) {
   if (action.type === 'RESET_SEARCH') {

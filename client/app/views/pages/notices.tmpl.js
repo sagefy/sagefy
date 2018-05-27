@@ -3,7 +3,7 @@ const notices = require('../components/notices.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../helpers/auxiliaries')
+const goLogin = require('../../helpers/go_login')
 
 module.exports = data => {
   if (getIsLoggedIn(data) === null) {

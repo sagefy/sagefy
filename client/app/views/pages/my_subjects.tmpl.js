@@ -5,7 +5,7 @@ const icon = require('../components/icon.tmpl')
 const info = require('../components/entity_info.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../helpers/auxiliaries')
+const goLogin = require('../../helpers/go_login')
 
 const userSubject = data =>
   li(

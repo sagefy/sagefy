@@ -1,7 +1,7 @@
 const capitalize = require('lodash.capitalize')
 const { dispatch, getState } = require('../helpers/store')
 const tasks = require('../helpers/tasks')
-const { matchesRoute } = require('../helpers/auxiliaries')
+const matchesRoute = require('../helpers/matches_route')
 
 const routes = [
   { path: '/settings', task: 'openSettingsRoute' },

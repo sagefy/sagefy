@@ -5,7 +5,7 @@ const spinner = require('../components/spinner.tmpl')
 // const c = require('../../helpers/content').get
 const icon = require('../components/icon.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../helpers/auxiliaries')
+const goLogin = require('../../helpers/go_login')
 
 const kindTmpl = {}
 kindTmpl.video = require('./card_learn_video.tmpl')
