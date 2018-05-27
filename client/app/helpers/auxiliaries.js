@@ -7,6 +7,7 @@ const isString = require('lodash.isstring')
 const isArray = require('lodash.isarray')
 const cloneDeep = require('lodash.clonedeep')
 const snakeCase = require('lodash.snakecase')
+const compact = require('lodash.compact')
 
 // Turns underscore or camel into title case
 function titleize(str = '') {
@@ -49,13 +50,6 @@ function valuefy(value) {
   if (value.match(/^\d+$/)) return parseInt(value, 10)
   return decodeURIComponent(value)
 }
-
-function truncate(str, len) {
-  if (str.length <= len) return str
-  return `${str.slice(0, len)}...`
-}
-
-const compact = arr => arr.filter(n => typeof n !== 'undefined' && n != null)
 
 /* eslint-disable max-statements */
 const mergeArraysByKey = (A, B, key = 'id') => {
@@ -280,7 +274,6 @@ module.exports = {
   titleize,
   setTitle,
   matchesRoute,
-  truncate,
   mergeArraysByKey,
   valuefy,
 
@@ -289,8 +282,6 @@ module.exports = {
   validateFormData,
   createFieldsData,
   findGlobalErrors,
-
   prefixObjectKeys,
-  compact,
   goLogin,
 }

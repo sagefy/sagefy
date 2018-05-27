@@ -53,6 +53,7 @@
     "lodash.capitalize": "4.2.1",
     "lodash.clone": "4.5.0",
     "lodash.clonedeep": "4.5.0",
+    "lodash.compact": "3.0.1",
     "lodash.flattendeep": "4.4.0",
     "lodash.get": "4.4.2",
     "lodash.isarray": "4.0.0",

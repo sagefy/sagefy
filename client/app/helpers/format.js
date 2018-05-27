@@ -24,8 +24,8 @@ Later:
 - [ ] Inline: Super/sub? Small? Quotes? Date/times?
 - [ ] Inline: Image description?
 */
+const compact = require('lodash.compact')
 const { h1, h2, p, img, em, strong } = require('./tags')
-const { compact } = require('./auxiliaries')
 
 const headings = [h1, h2]
 
