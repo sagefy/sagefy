@@ -1,5 +1,3 @@
-require('./matches_polyfill')
-
 const eventRegExp = /^(\S+) (.*)$/
 
 module.exports = {

@@ -24,6 +24,7 @@ const html = `
 <link rel="stylesheet" href="/index.css?___">
 <body>{body}
 <script>window.preload={state}</script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 <script src="/index.js?___"></script>
 </body>
 `

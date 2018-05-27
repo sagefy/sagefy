@@ -5,8 +5,6 @@ const merge = require('lodash.merge')
 const cloneDeep = require('lodash.clonedeep')
 
 // Find the closest element matching the given selector.
-require('./matches_polyfill')
-
 function closest(element, selector, top = document.body) {
   while (!element.matches(selector)) {
     element = element.parentNode
@@ -41,6 +39,5 @@ function convertDataToGet(url, data) {
 
 module.exports = {
   closest,
-  parameterize,
   convertDataToGet,
 }

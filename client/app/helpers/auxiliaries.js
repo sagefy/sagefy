@@ -39,7 +39,7 @@ function matchesRoute(docPath, viewPath) {
 }
 
 /* eslint-disable max-statements */
-const mergeArraysByKey = (A, B, key = 'id') => {
+function mergeArraysByKey(A, B, key = 'id') {
   let a = 0
   let b = 0
   const C = []
