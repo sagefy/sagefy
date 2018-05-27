@@ -75,9 +75,7 @@ module.exports = data => {
     div({
       key: '0Xe4fksADWwm9qWOMuTl7thD',
       className: 'card-learn__progress',
-      style: {
-        width: `${(pLearned || 0) * 100}%`,
-      },
+      style: `width:${(pLearned || 0) * 100}%`,
     }),
   ]
 }

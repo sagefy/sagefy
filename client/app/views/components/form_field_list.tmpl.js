@@ -56,12 +56,10 @@ module.exports = data => {
   const columns = data.columns || []
 
   return table(
-    { attributes: { 'data-name': data.name } },
+    { 'data-name': data.name },
     thead(
       tr(
-        columns.map(col =>
-          th({ attributes: { 'data-col': col.name } }, capitalize(col.name))
-        ),
+        columns.map(col => th({ 'data-col': col.name }, capitalize(col.name))),
         // TODO-2 th()  // For reordering
         th() // For deleting
       )
@@ -104,9 +102,7 @@ module.exports = data => {
                 title: 'Remove',
                 href: '#',
                 className: 'form-field--list__remove-row',
-                attributes: {
-                  'data-index': index,
-                },
+                'data-index': index,
               },
               icon('remove')
             )

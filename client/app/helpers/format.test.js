@@ -1,5 +1,5 @@
+const { render } = require('ultradom')
 const format = require('./format')
-const toHTML = require('snabbdom-to-html')
 const { div } = require('./tags')
 
 const singleLineExample = 'This is some really great text.'
@@ -27,29 +27,32 @@ const imageExample = 'I love ![An Image](https://example.com/.img) images.'
 const imageHtml =
   '<div>I love <img src="https://example.com/.img" title="An Image"> images.</div>'
 
+expect.extend({
+  toMatchDOM(node, html) {
+    render(node, document.body)
+    expect(document.body.innerHTML).toBe(html.replace(/\s{2,}/g, ''))
+    return { pass: true }
+  },
+})
+
 describe('format', () => {
   it('should not paragraph a single line of text', () => {
-    const result = format(singleLineExample)
-    expect(result).toEqual(singleLineExample)
+    expect(format(singleLineExample)).toMatchDOM(singleLineExample)
   })
 
   it('should format paragraphs', () => {
-    const html = toHTML(div(format(paragraphExample)))
-    expect(html).toEqual(paragraphHtml)
+    expect(div(format(paragraphExample))).toMatchDOM(paragraphHtml)
   })
 
   it('should format a heading', () => {
-    const html = toHTML(div(format(headingExample)))
-    expect(html).toEqual(headingHtml)
+    expect(div(format(headingExample))).toMatchDOM(headingHtml)
   })
 
   it('should format inliners', () => {
-    const html = toHTML(div(format(inlineExample)))
-    expect(html).toEqual(inlineHtml)
+    expect(div(format(inlineExample))).toMatchDOM(inlineHtml)
   })
 
   it('should format inline images', () => {
-    const html = toHTML(div(format(imageExample)))
-    expect(html).toEqual(imageHtml)
+    expect(div(format(imageExample))).toMatchDOM(imageHtml)
   })
 })

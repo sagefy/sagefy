@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const express = require('express')
-const toHTML = require('snabbdom-to-html')
+const { render } = require('ultradom')
+const { JSDOM } = require('jsdom')
 const template = require('./views/index.tmpl')
 const { route } = require('./helpers/route_actions')
 const { getState, setReducer, resetState } = require('./helpers/store')
@@ -31,7 +32,15 @@ const html = `
   .replace(/\n/g, '')
   .replace(/___/g, Date.now())
 
-function render() {
+function toHTML(node) {
+  const dom = new JSDOM('<body></body>')
+  const { document } = dom.window
+  global.document = document
+  render(node, document.body)
+  return document.body.innerHTML
+}
+
+function renderHtml() {
   const state = getState()
   return html
     .replace('{title}', state.routeTitle)
@@ -48,13 +57,13 @@ app.get(/.*/, (request, response) => {
   if (promise) {
     promise
       .then(() => {
-        response.status(200).send(render())
+        response.status(200).send(renderHtml())
       })
       .catch(error => {
         console.error(error)
       })
   } else {
-    response.status(200).send(render())
+    response.status(200).send(renderHtml())
   }
 })
 
