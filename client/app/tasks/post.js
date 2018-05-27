@@ -1,14 +1,14 @@
 /* eslint-disable camelcase */
+const flattenDeep = require('lodash.flattendeep')
 const { dispatch } = require('../helpers/store')
 const tasks = require('../helpers/tasks')
 const request = require('../helpers/request')
-const { flatten } = require('../helpers/utilities')
 
 module.exports = tasks.add({
   listPostsForTopic(id) {
     return tasks.listPosts(id).then(response => {
       const userIds = response.posts.map(post => post.user_id)
-      const entityVersions = flatten(
+      const entityVersions = flattenDeep(
         response.posts
           .filter(post => post.kind === 'proposal')
           .map(post => post.entity_versions)

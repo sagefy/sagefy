@@ -1,6 +1,7 @@
 const h = require('snabbdom/h').default
 const isPlainObject = require('lodash.isplainobject')
-const { flatten, omit } = require('./utilities')
+const flattenDeep = require('lodash.flattendeep')
+const { omit } = require('./utilities')
 
 const names = [
   // Super elements
@@ -116,7 +117,7 @@ names.forEach(name => {
     }
     const args0 = args[0]
     if (!args0 || !isPlainObject(args0) || args0.sel) {
-      return h(name, {}, flatten(args))
+      return h(name, {}, flattenDeep(args))
     }
     return h(
       name,
@@ -125,7 +126,7 @@ names.forEach(name => {
         style: args0.style || {},
         dataset: args0.dataset || {},
       },
-      flatten(args.slice(1))
+      flattenDeep(args.slice(1))
     )
   }
 })

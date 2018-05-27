@@ -51,13 +51,6 @@ util.convertDataToGet = (url, data) => {
   return url
 }
 
-util.flatten = function flatten(arr) {
-  return arr.reduce(
-    (acc, val) => acc.concat(isArray(val) ? flatten(val) : val),
-    []
-  )
-}
-
 util.omit = function omit(o, keys) {
   return Object.keys(o).reduce((sum, key) => {
     if (keys.indexOf(key) === -1) {
