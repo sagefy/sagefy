@@ -1,8 +1,8 @@
+const merge = require('lodash.merge')
 const post = require('./post')
-const { extend } = require('../helpers/utilities')
 const { required } = require('../helpers/validations')
 
-module.exports = extend({}, post, {
+module.exports = merge({}, post, {
   'entity_version.id': {
     type: 'hidden',
     validations: [],

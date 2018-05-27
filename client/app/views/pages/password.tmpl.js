@@ -1,7 +1,7 @@
+const merge = require('lodash.merge')
 const { div, h1, p } = require('../../helpers/tags')
 const form = require('../components/form.tmpl')
 const userSchema = require('../../schemas/user')
-const { extend } = require('../../helpers/utilities')
 const {
   createFieldsData,
   findGlobalErrors,
@@ -24,7 +24,7 @@ const emailFields = [
 ]
 
 emailFields.forEach((field, index) => {
-  emailFields[index] = extend({}, userSchema[field.name] || {}, field)
+  emailFields[index] = merge({}, userSchema[field.name] || {}, field)
 })
 
 const passwordFields = [
@@ -41,7 +41,7 @@ const passwordFields = [
 ]
 
 passwordFields.forEach((field, index) => {
-  passwordFields[index] = extend({}, userSchema[field.name] || {}, field)
+  passwordFields[index] = merge({}, userSchema[field.name] || {}, field)
 })
 
 const getNodesForState = (state, data) => {

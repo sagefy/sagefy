@@ -2,7 +2,7 @@
 // TODO-2 on update: how to decline a proposal?
 // TODO-3 Tags (all)
 
-const { extend } = require('../../helpers/utilities')
+const merge = require('lodash.merge')
 const { prefixObjectKeys } = require('../../helpers/auxiliaries')
 
 const postSchema = require('../../schemas/post')
@@ -74,11 +74,11 @@ const getSchema = formData => {
   const schema = {}
 
   if (formData['post.kind'] === 'proposal') {
-    extend(schema, prefixObjectKeys('post.', schemas.proposal))
+    merge(schema, prefixObjectKeys('post.', schemas.proposal))
   } else if (formData['post.kind'] === 'vote') {
-    extend(schema, prefixObjectKeys('post.', schemas.vote))
+    merge(schema, prefixObjectKeys('post.', schemas.vote))
   } else {
-    extend(schema, prefixObjectKeys('post.', schemas.post))
+    merge(schema, prefixObjectKeys('post.', schemas.post))
   }
 
   return schema

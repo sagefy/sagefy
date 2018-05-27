@@ -51,6 +51,7 @@
     "express": "4.14.0",
     "font-awesome": "4.5.0",
     "lodash.get": "4.4.2",
+    "lodash.merge": "4.6.1",
     "normalize.css": "7.0.0",
     "snabbdom": "0.7.1",
     "snabbdom-to-html": "5.1.0"

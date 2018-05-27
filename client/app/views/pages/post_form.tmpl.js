@@ -1,9 +1,9 @@
 const get = require('lodash.get')
+const merge = require('lodash.merge')
 const { div, h1 } = require('../../helpers/tags')
 // const c = require('../../helpers/content').get
 const form = require('../components/form.tmpl')
 const spinner = require('../components/spinner.tmpl')
-const { extend } = require('../../helpers/utilities')
 const {
   createFieldsData,
   findGlobalErrors,
@@ -47,7 +47,7 @@ module.exports = data => {
     return spinner()
   }
 
-  const formData = extend({}, data.formData, {
+  const formData = merge({}, data.formData, {
     'post.id': postID,
     'post.topic_id': topicID,
     'post.replies_to_id': get(

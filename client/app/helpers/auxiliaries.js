@@ -2,7 +2,8 @@
 Auxiliaries are utlity functions that are specific to Sagefy.
 */
 
-const { extend, copy, isString, isArray } = require('./utilities')
+const merge = require('lodash.merge')
+const { copy, isString, isArray } = require('./utilities')
 
 // Capitalizes the first letter of a string
 const ucfirst = (str = '') => str.charAt(0).toUpperCase() + str.slice(1)
@@ -243,7 +244,7 @@ function createFieldsData({
   fields = copy(fields)
 
   fields.forEach((field, i) => {
-    fields[i] = extend({}, schema[field.name] || {}, field)
+    fields[i] = merge({}, schema[field.name] || {}, field)
   })
 
   if (errors) {

@@ -1,6 +1,8 @@
 /*
 Utilities are one-off functions that are used throughout the framework.
 */
+const merge = require('lodash.merge')
+
 const util = {}
 
 // Test for types.
@@ -19,42 +21,13 @@ util.isUndefined = a => typeof a === 'undefined'
 // http://stackoverflow.com/a/9716488
 util.isNumber = n => !Number.isNaN(parseFloat(n)) && Number.isFinite(n)
 
-// Add the properties of the injects into the target.
-util.extend = (target, ...injects) => {
-  injects.forEach(inject => {
-    Object.keys(inject).forEach(prop => {
-      const val = inject[prop]
-      if (util.isUndefined(val)) {
-        return
-      }
-      if (util.isDate(val)) {
-        target[prop] = new Date(val)
-      } else if (util.isArray(val)) {
-        if (!util.isArray(target[prop])) {
-          target[prop] = []
-        }
-        target[prop] = util.extend([], target[prop], val)
-      } else if (util.isObject(val) && util.isPlainObject(val)) {
-        if (!util.isObject(target[prop])) {
-          target[prop] = {}
-        }
-        target[prop] = util.extend({}, target[prop], val)
-      } else {
-        target[prop] = val
-        // number, boolean, string, regexp, null, function
-      }
-    })
-  })
-  return target
-}
-
 // Makes a copy of the array or object.
 util.copy = obj => {
   if (util.isObject(obj)) {
-    return util.extend({}, obj)
+    return merge({}, obj)
   }
   if (util.isArray(obj)) {
-    return util.extend([], obj)
+    return merge([], obj)
   }
   if (util.isDate(obj)) {
     return new Date(obj)
@@ -104,7 +77,7 @@ util.parameterize = obj => {
 util.convertDataToGet = (url, data) => {
   url += url.indexOf('?') > -1 ? '&' : '?'
   url += util.parameterize(
-    util.extend(
+    merge(
       data || {},
       { _: +new Date() } // Cachebreaker
     )

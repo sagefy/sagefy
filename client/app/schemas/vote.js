@@ -1,10 +1,10 @@
+const merge = require('lodash.merge')
 const post = require('./post')
-const { extend } = require('../helpers/utilities')
 const { required } = require('../helpers/validations')
 
 const noop = () => {}
 
-module.exports = extend({}, post, {
+module.exports = merge({}, post, {
   body: {
     type: 'textarea',
     validations: [noop],

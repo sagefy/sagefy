@@ -1,6 +1,6 @@
+const merge = require('lodash.merge')
 const { div, h1, p, a } = require('../../helpers/tags')
 const { unitWizard } = require('./create_shared.fn')
-const { extend } = require('../../helpers/utilities')
 const unitSchema = require('../../schemas/unit')
 const form = require('../components/form.tmpl')
 const {
@@ -48,7 +48,7 @@ const fields = [
 ]
 
 fields.forEach((field, index) => {
-  fields[index] = extend({}, unitSchema[field.name] || {}, field)
+  fields[index] = merge({}, unitSchema[field.name] || {}, field)
 })
 
 module.exports = function createUnitCreate(data) {

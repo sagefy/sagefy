@@ -2,7 +2,7 @@ const { div, h1, p, a, br } = require('../../helpers/tags')
 const form = require('../components/form.tmpl')
 const icon = require('../components/icon.tmpl')
 const userSchema = require('../../schemas/user')
-const { extend } = require('../../helpers/utilities')
+const merge = require('../../helpers/utilities')
 const {
   createFieldsData,
   findGlobalErrors,
@@ -36,7 +36,7 @@ const fields = [
 ]
 
 fields.forEach((field, index) => {
-  fields[index] = extend({}, userSchema[field.name] || {}, field)
+  fields[index] = merge({}, userSchema[field.name] || {}, field)
 })
 
 module.exports = data => {

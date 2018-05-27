@@ -1,5 +1,5 @@
+const merge = require('lodash.merge')
 const { div, h1 } = require('../../helpers/tags')
-const { extend } = require('../../helpers/utilities')
 const subjectSchema = require('../../schemas/subject')
 const form = require('../components/form.tmpl')
 const {
@@ -45,7 +45,7 @@ const fields = [
 ]
 
 fields.forEach((field, index) => {
-  fields[index] = extend({}, subjectSchema[field.name] || {}, field)
+  fields[index] = merge({}, subjectSchema[field.name] || {}, field)
 })
 
 module.exports = function createSubjectCreate(data) {

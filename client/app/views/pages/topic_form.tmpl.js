@@ -1,4 +1,5 @@
 const get = require('lodash.get')
+const merge = require('lodash.merge')
 const { div, h1, p, strong } = require('../../helpers/tags')
 const form = require('../components/form.tmpl')
 const getPostFields = require('./post_form.fn').getFields
@@ -9,7 +10,6 @@ const {
   ucfirst,
   findGlobalErrors,
 } = require('../../helpers/auxiliaries')
-const { extend } = require('../../helpers/utilities')
 const topicSchema = require('../../schemas/topic')
 const spinner = require('../components/spinner.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
@@ -108,7 +108,7 @@ module.exports = data => {
     return spinner()
   }
 
-  const formData = extend({}, data.formData, {
+  const formData = merge({}, data.formData, {
     'topic.id': get(topic, 'id'),
     'topic.name': get(topic, 'name'),
     'topic.entity_kind': get(topic, 'entity_kind', data.routeQuery.kind),
@@ -121,7 +121,7 @@ module.exports = data => {
 
   if (!formData['topic.id']) {
     fields = fields.concat(getPostFields(formData))
-    extend(schema, getPostSchema(formData))
+    merge(schema, getPostSchema(formData))
   }
   fields.push({
     type: 'submit',

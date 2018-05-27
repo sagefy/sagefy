@@ -1,9 +1,9 @@
 /* eslint-disable global-require */
 const snabbdom = require('snabbdom')
 const patch = snabbdom.init([
-  require('snabbdom/helpers/props').default,
-  require('snabbdom/helpers/style').default,
-  require('snabbdom/helpers/dataset').default,
+  require('snabbdom/modules/props').default,
+  require('snabbdom/modules/style').default,
+  require('snabbdom/modules/dataset').default,
 ])
 const toVNode = require('snabbdom/tovnode').default
 

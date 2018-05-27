@@ -1,6 +1,6 @@
+const merge = require('lodash.merge')
 const { div, h1, a, p } = require('../../helpers/tags')
 const { cardWizard } = require('./create_shared.fn')
-const { extend } = require('../../helpers/utilities')
 const cardSchema = require('../../schemas/card')
 const videoCardSchema = require('../../schemas/cards/video_card')
 const pageCardSchema = require('../../schemas/cards/page_card')
@@ -128,19 +128,19 @@ const choiceFields = allKindsFields.concat([
 ])
 
 allKindsFields.forEach((field, index) => {
-  allKindsFields[index] = extend({}, allKindsFields[field.name] || {}, field)
+  allKindsFields[index] = merge({}, allKindsFields[field.name] || {}, field)
 })
 
 videoFields.forEach((field, index) => {
-  videoFields[index] = extend({}, videoFields[field.name] || {}, field)
+  videoFields[index] = merge({}, videoFields[field.name] || {}, field)
 })
 
 pageFields.forEach((field, index) => {
-  pageFields[index] = extend({}, pageFields[field.name] || {}, field)
+  pageFields[index] = merge({}, pageFields[field.name] || {}, field)
 })
 
 unscoredEmbedFields.forEach((field, index) => {
-  unscoredEmbedFields[index] = extend(
+  unscoredEmbedFields[index] = merge(
     {},
     unscoredEmbedFields[field.name] || {},
     field
@@ -148,7 +148,7 @@ unscoredEmbedFields.forEach((field, index) => {
 })
 
 choiceFields.forEach((field, index) => {
-  choiceFields[index] = extend({}, choiceFields[field.name] || {}, field)
+  choiceFields[index] = merge({}, choiceFields[field.name] || {}, field)
 })
 
 module.exports = function createCardCreate(data) {

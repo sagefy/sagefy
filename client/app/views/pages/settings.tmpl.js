@@ -1,6 +1,6 @@
+const merge = require('lodash.merge')
 const { div, h1, p, a, hr } = require('../../helpers/tags')
 const userSchema = require('../../schemas/user')
-const { extend } = require('../../helpers/utilities')
 const {
   createFieldsData,
   findGlobalErrors,
@@ -54,7 +54,7 @@ const fields = [
 ]
 
 fields.forEach((field, index) => {
-  fields[index] = extend({}, userSchema[field.name] || {}, field)
+  fields[index] = merge({}, userSchema[field.name] || {}, field)
 })
 
 module.exports = data => {
@@ -75,7 +75,7 @@ module.exports = data => {
     schema: userSchema,
     fields,
     errors: data.errors,
-    formData: extend(
+    formData: merge(
       {},
       {
         id: user.id,

@@ -1,7 +1,7 @@
 // TODO-3 move copy to content directory
+const merge = require('lodash.merge')
 const { nav, div, a, ul } = require('../../helpers/tags')
 const menuItem = require('./menu_item.tmpl')
-const { extend } = require('../../helpers/utilities')
 const { ucfirst, underscored } = require('../../helpers/auxiliaries')
 const icon = require('./icon.tmpl')
 
@@ -40,7 +40,7 @@ const items = {
 // Use the name to populate title and url automatically
 // And set the default icon to be painfully obviously wrong
 Object.keys(items).forEach(name => {
-  items[name] = extend(
+  items[name] = merge(
     {
       name,
       title: ucfirst(name),
@@ -70,21 +70,21 @@ const addContextItems = (menuItems, { card, unit, subject }) => {
   menuItems = menuItems.slice()
 
   if (card) {
-    const discuss = extend(items.discuss_card)
+    const discuss = merge({}, items.discuss_card)
     discuss.url = discuss.url.replace('{id}', card)
     menuItems.push(discuss)
     return menuItems
   }
 
   if (unit) {
-    const discuss = extend(items.discuss_unit)
+    const discuss = merge({}, items.discuss_unit)
     discuss.url = discuss.url.replace('{id}', unit)
     menuItems.push(discuss)
     return menuItems
   }
 
   if (subject) {
-    const discuss = extend(items.discuss_subject)
+    const discuss = merge({}, items.discuss_subject)
     discuss.url = discuss.url.replace('{id}', subject)
     menuItems.push(discuss)
     return menuItems
