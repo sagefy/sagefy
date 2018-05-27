@@ -1,6 +1,6 @@
 const broker = require('../../helpers/broker')
 const tasks = require('../../helpers/tasks')
-const { closest } = require('../../helpers/utilities')
+const closest = require('../../helpers/closest')
 
 module.exports = broker.add({
   'click .choose-unit__engage'(e, el) {

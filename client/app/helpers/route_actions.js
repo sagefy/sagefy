@@ -10,7 +10,7 @@ const getQueryParams = path => {
   if (path.indexOf('?') === -1) {
     return {}
   }
-  return qs.get(path.split('?')[1])
+  return qs.read(path.split('?')[1])
 }
 
 const findTitle = path => {

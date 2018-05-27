@@ -1,6 +1,6 @@
 const broker = require('../../helpers/broker')
 const tasks = require('../../helpers/tasks')
-const { closest } = require('../../helpers/utilities')
+const closest = require('../../helpers/closest')
 const { getFormValues, parseFormValues } = require('../../helpers/forms')
 
 module.exports = broker.add({

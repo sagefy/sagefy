@@ -1,11 +1,11 @@
 const http = require('http')
 const isString = require('lodash.isstring')
-const { convertDataToGet } = require('./utilities')
+const { write } = require('./query_string')
 
 module.exports = function httpRequest({ method, url, data }) {
   method = method.toUpperCase()
   if (method === 'GET') {
-    url = convertDataToGet(url, data)
+    url = write(url, data)
   }
   let done
   let fail

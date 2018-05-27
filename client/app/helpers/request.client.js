@@ -1,5 +1,5 @@
 const isString = require('lodash.isstring')
-const { convertDataToGet } = require('./utilities')
+const { write } = require('./query_string')
 
 // Try to parse a string as JSON, otherwise just return the string.
 function parseJSON(str) {
@@ -25,7 +25,7 @@ function parseAjaxErrors(response) {
 module.exports = function ajax({ method, url, data }) {
   method = method.toUpperCase()
   if (method === 'GET') {
-    url = convertDataToGet(url, data)
+    url = write(url, data)
   }
   const request = new XMLHttpRequest()
   request.open(method, url, true)

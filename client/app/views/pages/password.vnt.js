@@ -23,7 +23,7 @@ module.exports = broker.add({
     if (e) {
       e.preventDefault()
     }
-    const { token, id } = qs.get()
+    const { token, id } = qs.read()
     let values = getFormValues(el)
     values.token = token
     values.id = id

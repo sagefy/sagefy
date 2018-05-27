@@ -4,7 +4,7 @@ const { getFormValues, parseFormValues } = require('../../helpers/forms')
 const subjectSchema = require('../../schemas/subject')
 const unitSchema = require('../../schemas/unit')
 const cardSchema = require('../../schemas/card')
-const { closest } = require('../../helpers/utilities')
+const closest = require('../../helpers/closest')
 
 module.exports = broker.add({
   'click .create__route'(e, el) {
