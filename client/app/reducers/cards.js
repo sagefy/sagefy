@@ -1,8 +1,8 @@
-const { shallowCopy } = require('../helpers/utilities')
+const clone = require('lodash.clone')
 
 module.exports = function cards(state = {}, action = { type: '' }) {
   if (action.type === 'ADD_CARD') {
-    state = shallowCopy(state)
+    state = clone(state)
     state[action.card.entity_id] = action.card
     return state
   }

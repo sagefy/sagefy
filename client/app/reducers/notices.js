@@ -1,9 +1,9 @@
 const { mergeArraysByKey } = require('../helpers/auxiliaries')
-const { copy } = require('../helpers/utilities')
+const cloneDeep = require('lodash.clonedeep')
 
 module.exports = function notices(state = [], action = { type: '' }) {
   if (action.type === 'LIST_NOTICES_SUCCESS') {
-    const xnotices = copy(state)
+    const xnotices = cloneDeep(state)
     const newNotices = mergeArraysByKey(xnotices, action.notices, 'id')
     return newNotices
   }

@@ -5,7 +5,7 @@ Auxiliaries are utlity functions that are specific to Sagefy.
 const merge = require('lodash.merge')
 const isString = require('lodash.isstring')
 const isArray = require('lodash.isarray')
-const { copy } = require('./utilities')
+const cloneDeep = require('lodash.clonedeep')
 
 // Capitalizes the first letter of a string
 const ucfirst = (str = '') => str.charAt(0).toUpperCase() + str.slice(1)
@@ -243,7 +243,7 @@ function createFieldsData({
   formData = {},
   sending = false,
 }) {
-  fields = copy(fields)
+  fields = cloneDeep(fields)
 
   fields.forEach((field, i) => {
     fields[i] = merge({}, schema[field.name] || {}, field)

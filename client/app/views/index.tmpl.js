@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
+const cloneDeep = require('lodash.clonedeep')
 const { matchesRoute } = require('../helpers/auxiliaries')
 const { div, main } = require('../helpers/tags')
-const { copy } = require('../helpers/utilities')
 
 /*
 TODO-3 distribute routing, something like...
@@ -182,10 +182,10 @@ const findRouteTmpl = data => {
 }
 
 module.exports = data => {
-  const menuData = copy(data.menu)
+  const menuData = cloneDeep(data.menu)
   menuData.kind = data.currentUserID ? 'loggedIn' : 'loggedOut'
   const [route, args] = findRouteTmpl(data)
-  data = copy(data)
+  data = cloneDeep(data)
   data.routeArgs = args
   return div(
     { className: 'vdom' },

@@ -1,8 +1,8 @@
-const { shallowCopy } = require('../helpers/utilities')
+const clone = require('lodash.clone')
 
 module.exports = function unitLearned(state = {}, action = { type: '' }) {
   if (action.type === 'ADD_UNIT_LEARNED') {
-    state = shallowCopy(state)
+    state = clone(state)
     state[action.unit_id] = action.learned
     return state
   }

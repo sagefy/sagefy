@@ -1,8 +1,8 @@
+const cloneDeep = require('lodash.clonedeep')
 const { div, h1, p, a, ul, li } = require('../../helpers/tags')
 // const c = require('../../helpers/content').get
 // const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
-const { copy } = require('../../helpers/utilities')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
@@ -64,7 +64,7 @@ module.exports = data => {
       data.follows.map(dfollow => {
         const ofKinds = data[`${dfollow.entity_kind}s`] || {}
         const entity = ofKinds[dfollow.entity_id]
-        dfollow = copy(dfollow)
+        dfollow = cloneDeep(dfollow)
         dfollow.entityFull = entity || {}
         return dfollow
       })

@@ -1,5 +1,5 @@
 const { mergeArraysByKey } = require('../helpers/auxiliaries')
-const { shallowCopy } = require('../helpers/utilities')
+const clone = require('lodash.clone')
 
 module.exports = function unitVersions(state = {}, action = { type: '' }) {
   if (action.type === 'ADD_UNIT_VERSIONS') {
@@ -9,7 +9,7 @@ module.exports = function unitVersions(state = {}, action = { type: '' }) {
       action.versions,
       'id' // id is the version id
     )
-    state = shallowCopy(state)
+    state = clone(state)
     state[action.entity_id] = versions
     return state
   }

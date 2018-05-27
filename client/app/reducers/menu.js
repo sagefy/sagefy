@@ -1,14 +1,14 @@
 const defaultState = { open: false, context: {} }
-const { copy } = require('../helpers/utilities')
+const cloneDeep = require('lodash.clonedeep')
 
 module.exports = function menu(state = defaultState, action = { type: '' }) {
   if (action.type === 'TOGGLE_MENU') {
-    const newState = copy(state)
+    const newState = cloneDeep(state)
     newState.open = !state.open
     return newState
   }
   if (action.type === 'UPDATE_MENU_CONTEXT') {
-    const newState = copy(state)
+    const newState = cloneDeep(state)
     if (action.card) {
       newState.context.card = action.card
     }

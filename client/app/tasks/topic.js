@@ -1,7 +1,7 @@
+const clone = require('lodash.clone')
 const { dispatch } = require('../helpers/store')
 const tasks = require('../helpers/tasks')
 const request = require('../helpers/request')
-const { shallowCopy } = require('../helpers/utilities')
 
 module.exports = tasks.add({
   getTopic(id) {
@@ -57,7 +57,7 @@ module.exports = tasks.add({
 
   createTopicWithPost(data) {
     return tasks.createTopic(data).then(response => {
-      const post = shallowCopy(data.post)
+      const post = clone(data.post)
       post.topic_id = response.topic.id
       return tasks.createPost({ post })
     })

@@ -2,31 +2,10 @@
 Utilities are one-off functions that are used throughout the framework.
 */
 const merge = require('lodash.merge')
-const isObject = require('lodash.isobject')
 const isArray = require('lodash.isarray')
-const isDate = require('lodash.isdate')
+const cloneDeep = require('lodash.clonedeep')
 
 const util = {}
-
-// Makes a copy of the array or object.
-util.copy = obj => {
-  if (isObject(obj)) {
-    return merge({}, obj)
-  }
-  if (isArray(obj)) {
-    return merge([], obj)
-  }
-  if (isDate(obj)) {
-    return new Date(obj)
-  }
-  return obj
-}
-
-util.shallowCopy = obj =>
-  Object.keys(obj).reduce((next, key) => {
-    next[key] = obj[key]
-    return next
-  }, {})
 
 // Try to parse a string as JSON, otherwise just return the string.
 util.parseJSON = str => {
@@ -52,7 +31,7 @@ util.closest = (element, selector, top = document.body) => {
 
 // Convert an object to a query string for GET requests.
 util.parameterize = obj => {
-  obj = util.copy(obj)
+  obj = cloneDeep(obj)
   const pairs = []
   Object.keys(obj).forEach(key => {
     const value = obj[key]

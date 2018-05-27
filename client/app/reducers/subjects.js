@@ -1,8 +1,8 @@
-const { shallowCopy } = require('../helpers/utilities')
+const clone = require('lodash.clone')
 
 module.exports = function subjects(state = {}, action = { type: '' }) {
   if (action.type === 'ADD_SUBJECT') {
-    state = shallowCopy(state)
+    state = clone(state)
     state[action.subject.entity_id] = action.subject
     return state
   }

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase, no-alert */
+const cloneDeep = require('lodash.clonedeep')
 const { dispatch, getState } = require('../helpers/store')
 const tasks = require('../helpers/tasks')
-const { copy } = require('../helpers/utilities')
 
 module.exports = tasks.add({
   resetCreate() {
@@ -138,7 +138,7 @@ module.exports = tasks.add({
         return tasks.createNewSubjectVersion(data.subject)
       })
       .then(subjectResponse => {
-        const post = copy(data.post)
+        const post = cloneDeep(data.post)
         post.topic_id = topicId
         post.entity_versions = [
           {
