@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
-const broker = require('../../modules/broker')
-const tasks = require('../../modules/tasks')
+const broker = require('../../helpers/broker')
+const tasks = require('../../helpers/tasks')
 
 module.exports = broker.add({
   'click .follows__unfollow-button'(e, el) {

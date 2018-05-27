@@ -1,5 +1,5 @@
-const broker = require('../../modules/broker')
-// const tasks = require('../../modules/tasks')
-// const {getFormValues} = require('../../modules/auxiliaries')
+const broker = require('../../helpers/broker')
+// const tasks = require('../../helpers/tasks')
+// const {getFormValues} = require('../../helpers/auxiliaries')
 
 module.exports = broker.add({})

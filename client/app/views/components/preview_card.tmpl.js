@@ -1,4 +1,4 @@
-const { div } = require('../../modules/tags')
+const { div } = require('../../helpers/tags')
 const previewCardHead = require('./preview_card_head.tmpl')
 const previewCardContent = require('./preview_card_content.tmpl')
 

@@ -1,5 +1,5 @@
-const { h2, ul, li, span, a } = require('../../modules/tags')
-const { ucfirst } = require('../../modules/auxiliaries')
+const { h2, ul, li, span, a } = require('../../helpers/tags')
+const { ucfirst } = require('../../helpers/auxiliaries')
 const timeago = require('./timeago.tmpl')
 const icon = require('./icon.tmpl')
 

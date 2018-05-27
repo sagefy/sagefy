@@ -1,4 +1,4 @@
-const _ = require('../../app/modules/utilities')
+const _ = require('../../app/helpers/utilities')
 
 const { extend } = _
 

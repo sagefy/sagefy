@@ -1,5 +1,5 @@
-const { div, h1, a, p } = require('../../modules/tags')
-const { svg, circle, line, text } = require('../../modules/tags')
+const { div, h1, a, p } = require('../../helpers/tags')
+const { svg, circle, line, text } = require('../../helpers/tags')
 const {
   putUnitsInLayers,
   orderLayers,

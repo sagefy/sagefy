@@ -1,7 +1,7 @@
-const { div, ul, li, a, h4, span } = require('../../modules/tags')
+const { div, ul, li, a, h4, span } = require('../../helpers/tags')
 const { previewCommon, previewTags } = require('./preview_shared.fn')
 const icon = require('./icon.tmpl')
-const { ucfirst } = require('../../modules/auxiliaries')
+const { ucfirst } = require('../../helpers/auxiliaries')
 
 // TODO-2 show diff option
 

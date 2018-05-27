@@ -1,7 +1,7 @@
-const broker = require('../../modules/broker')
-const tasks = require('../../modules/tasks')
-const { getFormValues, parseFormValues } = require('../../modules/auxiliaries')
-const qs = require('../../modules/query_string')
+const broker = require('../../helpers/broker')
+const tasks = require('../../helpers/tasks')
+const { getFormValues, parseFormValues } = require('../../helpers/auxiliaries')
+const qs = require('../../helpers/query_string')
 const userSchema = require('../../schemas/user')
 
 module.exports = broker.add({

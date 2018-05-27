@@ -1,4 +1,4 @@
-const { textarea } = require('../../modules/tags')
+const { textarea } = require('../../helpers/tags')
 
 module.exports = data =>
   textarea(

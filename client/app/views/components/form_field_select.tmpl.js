@@ -11,8 +11,8 @@
   either options or url are required .. [{value: '', label: ''}]
 */
 
-const c = require('../../modules/content').get
-const { ul } = require('../../modules/tags')
+const c = require('../../helpers/content').get
+const { ul } = require('../../helpers/tags')
 const optionTemplate = require('./form_field_select_option.tmpl')
 
 module.exports = data => {

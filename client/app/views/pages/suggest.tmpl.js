@@ -1,4 +1,4 @@
-const { div, h1, a, p } = require('../../modules/tags')
+const { div, h1, a, p } = require('../../helpers/tags')
 
 module.exports = () =>
   div(

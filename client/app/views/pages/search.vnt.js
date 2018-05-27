@@ -1,6 +1,6 @@
-const broker = require('../../modules/broker')
-const tasks = require('../../modules/tasks')
-const { closest } = require('../../modules/utilities')
+const broker = require('../../helpers/broker')
+const tasks = require('../../helpers/tasks')
+const { closest } = require('../../helpers/utilities')
 
 module.exports = broker.add({
   'click #search [type="submit"]'(e, el) {

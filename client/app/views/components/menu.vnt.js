@@ -1,5 +1,5 @@
-const broker = require('../../modules/broker')
-const tasks = require('../../modules/tasks')
+const broker = require('../../helpers/broker')
+const tasks = require('../../helpers/tasks')
 
 module.exports = broker.add({
   'click .menu__overlay, .menu__trigger, .menu__item a'(e) {

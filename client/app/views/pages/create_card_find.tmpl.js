@@ -10,13 +10,13 @@ const {
   form,
   input,
   button,
-} = require('../../modules/tags')
+} = require('../../helpers/tags')
 const { cardWizard } = require('./create_shared.fn')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const icon = require('../components/icon.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 module.exports = function createCardFind(data) {
   if (getIsLoggedIn(data) === null) {

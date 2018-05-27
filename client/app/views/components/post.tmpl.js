@@ -1,5 +1,5 @@
-const { li, div, img, a, span, h3, hr } = require('../../modules/tags')
-const { timeAgo } = require('../../modules/auxiliaries')
+const { li, div, img, a, span, h3, hr } = require('../../helpers/tags')
+const { timeAgo } = require('../../helpers/auxiliaries')
 const icon = require('./icon.tmpl')
 const previewCard = require('./preview_card.tmpl')
 const previewUnit = require('./preview_unit.tmpl')

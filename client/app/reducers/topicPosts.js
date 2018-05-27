@@ -1,5 +1,5 @@
-const { shallowCopy } = require('../modules/utilities')
-const { mergeArraysByKey } = require('../modules/auxiliaries')
+const { shallowCopy } = require('../helpers/utilities')
+const { mergeArraysByKey } = require('../helpers/auxiliaries')
 
 module.exports = function topicPosts(state = {}, action = { type: '' }) {
   if (action.type === 'ADD_TOPIC_POSTS') {

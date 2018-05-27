@@ -1,4 +1,4 @@
-const { div, p } = require('../../modules/tags')
+const { div, p } = require('../../helpers/tags')
 const { previewName } = require('./preview_shared.fn')
 
 module.exports = function previewSubjectHead({

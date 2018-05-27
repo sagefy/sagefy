@@ -1,16 +1,16 @@
 const get = require('lodash.get')
-const { div, h1 } = require('../../modules/tags')
-// const c = require('../../modules/content').get
+const { div, h1 } = require('../../helpers/tags')
+// const c = require('../../helpers/content').get
 const form = require('../components/form.tmpl')
 const spinner = require('../components/spinner.tmpl')
-const { extend } = require('../../modules/utilities')
+const { extend } = require('../../helpers/utilities')
 const {
   createFieldsData,
   findGlobalErrors,
-} = require('../../modules/auxiliaries')
+} = require('../../helpers/auxiliaries')
 const { getFields, getSchema } = require('./post_form.fn')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 // TODO-1 Currently there is no way to update an existing entity from the UI,
 //    you can only propose a new entity.

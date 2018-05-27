@@ -2,8 +2,8 @@
 const express = require('express')
 const toHTML = require('snabbdom-to-html')
 const template = require('./views/index.tmpl')
-const { route } = require('./modules/route_actions')
-const { getState, setReducer, resetState } = require('./modules/store')
+const { route } = require('./helpers/route_actions')
+const { getState, setReducer, resetState } = require('./helpers/store')
 const reducer = require('./reducers/index')
 const cookieParser = require('cookie-parser')
 

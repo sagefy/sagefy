@@ -1,4 +1,4 @@
-const { div } = require('../../modules/tags')
+const { div } = require('../../helpers/tags')
 const { previewName } = require('./preview_shared.fn')
 
 module.exports = function previewCardHead({

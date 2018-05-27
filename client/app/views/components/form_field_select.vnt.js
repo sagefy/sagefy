@@ -1,6 +1,6 @@
-const broker = require('../../modules/broker')
-// const tasks = require('../../modules/tasks')
-// const {debounce} = require('../../modules/auxiliaries')
+const broker = require('../../helpers/broker')
+// const tasks = require('../../helpers/tasks')
+// const {debounce} = require('../../helpers/auxiliaries')
 
 module.exports = broker.add({
   'click .select .clear'(e) {

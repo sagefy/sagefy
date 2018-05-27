@@ -1,4 +1,4 @@
-const { h2, ul, li, a } = require('../../modules/tags')
+const { h2, ul, li, a } = require('../../helpers/tags')
 
 const verbage = {
   requires: 'Requires',

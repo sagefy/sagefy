@@ -1,4 +1,4 @@
-const queryString = require('../../app/modules/query_string')
+const queryString = require('../../app/helpers/query_string')
 
 describe('Query String', () =>
   it('should parse the query string', () => {

@@ -1,6 +1,6 @@
 const post = require('./post')
-const { extend } = require('../modules/utilities')
-const { required } = require('../modules/validations')
+const { extend } = require('../helpers/utilities')
+const { required } = require('../helpers/validations')
 
 const noop = () => {}
 

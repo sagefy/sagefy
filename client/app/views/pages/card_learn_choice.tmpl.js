@@ -1,5 +1,5 @@
-const { div, ul, li, input, label } = require('../../modules/tags')
-const format = require('../../modules/format')
+const { div, ul, li, input, label } = require('../../helpers/tags')
+const format = require('../../helpers/format')
 
 module.exports = (data, mode) => {
   const { body, options } = data.data

@@ -1,4 +1,4 @@
-const { required } = require('../modules/validations')
+const { required } = require('../helpers/validations')
 
 module.exports = {
   language: {

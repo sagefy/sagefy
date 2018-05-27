@@ -1,8 +1,8 @@
-const { header, h3, hgroup, div, h1, ul, a } = require('../../modules/tags')
-// const c = require('../../modules/content').get
+const { header, h3, hgroup, div, h1, ul, a } = require('../../helpers/tags')
+// const c = require('../../helpers/content').get
 const post = require('../components/post.tmpl')
 const followButton = require('../components/follow_button.tmpl')
-const { ucfirst } = require('../../modules/auxiliaries')
+const { ucfirst } = require('../../helpers/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')

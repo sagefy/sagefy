@@ -1,6 +1,6 @@
-const { h1, div } = require('../../modules/tags')
-// const c = require('../../modules/content').get
-const format = require('../../modules/format')
+const { h1, div } = require('../../helpers/tags')
+// const c = require('../../helpers/content').get
+const format = require('../../helpers/format')
 
 module.exports = data => {
   const { name } = data

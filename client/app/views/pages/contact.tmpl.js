@@ -1,6 +1,6 @@
 // TODO-3 move copy to content directory
 
-const { div, h1, ul, li, a, strong, br } = require('../../modules/tags')
+const { div, h1, ul, li, a, strong, br } = require('../../helpers/tags')
 
 const uvUrl = 'https://sagefy.uservoice.com/forums/233394-general'
 

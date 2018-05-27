@@ -1,4 +1,4 @@
-const { ul, p } = require('../../modules/tags')
+const { ul, p } = require('../../helpers/tags')
 const notice = require('./notice.tmpl')
 
 module.exports = data => {

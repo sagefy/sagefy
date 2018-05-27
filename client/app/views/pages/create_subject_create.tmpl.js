@@ -1,14 +1,14 @@
-const { div, h1 } = require('../../modules/tags')
-const { extend } = require('../../modules/utilities')
+const { div, h1 } = require('../../helpers/tags')
+const { extend } = require('../../helpers/utilities')
 const subjectSchema = require('../../schemas/subject')
 const form = require('../components/form.tmpl')
 const {
   createFieldsData,
   findGlobalErrors,
-} = require('../../modules/auxiliaries')
+} = require('../../helpers/auxiliaries')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 const fields = [
   {

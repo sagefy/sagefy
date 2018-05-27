@@ -1,5 +1,5 @@
 // Note: we won't translate this copy as its dev specific
-const { div, h1, h2, p } = require('../../modules/tags')
+const { div, h1, h2, p } = require('../../helpers/tags')
 const data = require('./styleguide.data.json')
 
 const writeStyleguide = () => {

@@ -1,5 +1,5 @@
-const { mergeArraysByKey } = require('../modules/auxiliaries')
-const { shallowCopy } = require('../modules/utilities')
+const { mergeArraysByKey } = require('../helpers/auxiliaries')
+const { shallowCopy } = require('../helpers/utilities')
 
 module.exports = function unitVersions(state = {}, action = { type: '' }) {
   if (action.type === 'ADD_UNIT_VERSIONS') {

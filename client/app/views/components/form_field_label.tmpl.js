@@ -1,6 +1,6 @@
-const c = require('../../modules/content').get
-const { required } = require('../../modules/validations')
-const { label, span } = require('../../modules/tags')
+const c = require('../../helpers/content').get
+const { required } = require('../../helpers/validations')
+const { label, span } = require('../../helpers/tags')
 
 module.exports = data => {
   const isRequired = data.validations

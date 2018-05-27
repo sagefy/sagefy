@@ -1,4 +1,4 @@
 document.addEventListener(
   'DOMContentLoaded',
-  require('./modules/initialize').go
+  require('./helpers/initialize').go
 )

@@ -1,6 +1,6 @@
-const tasks = require('../modules/tasks')
-const request = require('../modules/request')
-const { getState, dispatch } = require('../modules/store')
+const tasks = require('../helpers/tasks')
+const request = require('../helpers/request')
+const { getState, dispatch } = require('../helpers/store')
 
 module.exports = tasks.add({
   search({ q, kind, skip = 0, limit = 10, order }) {

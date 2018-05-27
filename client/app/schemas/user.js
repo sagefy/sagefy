@@ -3,7 +3,7 @@ const {
   email,
   minlength,
   isOneOf,
-} = require('../modules/validations')
+} = require('../helpers/validations')
 
 module.exports = {
   name: {
@@ -35,9 +35,6 @@ module.exports = {
         value: 'never',
       },
     ],
-    validations: [
-      required,
-      [isOneOf, 'immediate', 'daily', 'weekly', 'never'],
-    ],
+    validations: [required, [isOneOf, 'immediate', 'daily', 'weekly', 'never']],
   },
 }

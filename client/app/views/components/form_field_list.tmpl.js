@@ -7,8 +7,8 @@ const {
   th,
   td,
   a,
-} = require('../../modules/tags')
-const { ucfirst } = require('../../modules/auxiliaries')
+} = require('../../helpers/tags')
+const { ucfirst } = require('../../helpers/auxiliaries')
 const formFieldInput = require('./form_field_input.tmpl')
 const formFieldSelect = require('./form_field_select.tmpl')
 const icon = require('./icon.tmpl')

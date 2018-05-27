@@ -1,4 +1,4 @@
-const { input } = require('../../modules/tags')
+const { input } = require('../../helpers/tags')
 
 module.exports = data =>
   input({

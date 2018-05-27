@@ -1,8 +1,8 @@
 const { dispatch } = require('./store')
 const tasks = require('./tasks')
 const qs = require('./query_string')
-const pageTitles = require('../modules/page_titles')
-const { matchesRoute } = require('../modules/auxiliaries')
+const pageTitles = require('../helpers/page_titles')
+const { matchesRoute } = require('../helpers/auxiliaries')
 
 const request = () => window.location.pathname + window.location.search
 

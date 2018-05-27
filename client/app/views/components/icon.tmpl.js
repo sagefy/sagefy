@@ -1,3 +1,3 @@
-const { i } = require('../../modules/tags')
+const { i } = require('../../helpers/tags')
 
 module.exports = name => i({ className: `icon icon-${name}` })

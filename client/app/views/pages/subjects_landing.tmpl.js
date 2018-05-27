@@ -12,7 +12,7 @@ const {
   strong,
   small,
   span,
-} = require('../../modules/tags')
+} = require('../../helpers/tags')
 const icon = require('../components/icon.tmpl')
 
 module.exports = data => {

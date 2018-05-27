@@ -1,4 +1,4 @@
-const { div } = require('../../modules/tags')
+const { div } = require('../../helpers/tags')
 const {
   previewCommon,
   previewRequires,

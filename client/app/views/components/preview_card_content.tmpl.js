@@ -10,15 +10,15 @@ const {
   span,
   em,
   h4,
-} = require('../../modules/tags')
-const { ucfirst } = require('../../modules/auxiliaries')
+} = require('../../helpers/tags')
+const { ucfirst } = require('../../helpers/auxiliaries')
 const {
   previewCommon,
   previewRequires,
   previewTags,
 } = require('./preview_shared.fn')
 const icon = require('./icon.tmpl')
-const format = require('../../modules/format')
+const format = require('../../helpers/format')
 // TODO-2 show diff option
 
 module.exports = function previewCardContent({

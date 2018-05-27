@@ -1,16 +1,16 @@
-const { div, h1, p, a } = require('../../modules/tags')
+const { div, h1, p, a } = require('../../helpers/tags')
 const { unitWizard } = require('./create_shared.fn')
-const { extend } = require('../../modules/utilities')
+const { extend } = require('../../helpers/utilities')
 const unitSchema = require('../../schemas/unit')
 const form = require('../components/form.tmpl')
 const {
   createFieldsData,
   findGlobalErrors,
-} = require('../../modules/auxiliaries')
+} = require('../../helpers/auxiliaries')
 const icon = require('../components/icon.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 const fields = [
   {

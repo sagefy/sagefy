@@ -1,12 +1,12 @@
-const { div, h1, p, a, br } = require('../../modules/tags')
+const { div, h1, p, a, br } = require('../../helpers/tags')
 const form = require('../components/form.tmpl')
 const icon = require('../components/icon.tmpl')
 const userSchema = require('../../schemas/user')
-const { extend } = require('../../modules/utilities')
+const { extend } = require('../../helpers/utilities')
 const {
   createFieldsData,
   findGlobalErrors,
-} = require('../../modules/auxiliaries')
+} = require('../../helpers/auxiliaries')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
 

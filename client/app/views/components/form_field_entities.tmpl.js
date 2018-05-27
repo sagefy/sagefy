@@ -1,4 +1,4 @@
-const { div, ul, li, a, input } = require('../../modules/tags')
+const { div, ul, li, a, input } = require('../../helpers/tags')
 const icon = require('./icon.tmpl')
 const previewCardHead = require('./preview_card_head.tmpl')
 const previewUnitHead = require('./preview_unit_head.tmpl')

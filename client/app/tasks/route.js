@@ -1,6 +1,6 @@
-const { dispatch, getState } = require('../modules/store')
-const tasks = require('../modules/tasks')
-const { matchesRoute, ucfirst } = require('../modules/auxiliaries')
+const { dispatch, getState } = require('../helpers/store')
+const tasks = require('../helpers/tasks')
+const { matchesRoute, ucfirst } = require('../helpers/auxiliaries')
 
 const routes = [
   { path: '/settings', task: 'openSettingsRoute' },

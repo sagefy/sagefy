@@ -4,7 +4,7 @@ const reducer = require('../reducers/index')
 const init = require('./init')
 const { route } = require('./route_actions')
 const indexView = require('../views/index.tmpl')
-const { setTitle } = require('../modules/auxiliaries')
+const { setTitle } = require('../helpers/auxiliaries')
 
 // Require all tasks
 require('../tasks/index')

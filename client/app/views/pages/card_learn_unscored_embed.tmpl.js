@@ -1,4 +1,4 @@
-const { iframe } = require('../../modules/tags')
+const { iframe } = require('../../helpers/tags')
 
 module.exports = data =>
   iframe({

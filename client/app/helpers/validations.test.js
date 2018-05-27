@@ -1,4 +1,4 @@
-const validations = require('../../app/modules/validations')
+const validations = require('../../app/helpers/validations')
 
 describe('Validations', () => {
   it('should require a field', () => {

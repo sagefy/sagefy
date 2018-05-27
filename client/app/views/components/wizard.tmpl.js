@@ -1,4 +1,4 @@
-const { ol, li } = require('../../modules/tags')
+const { ol, li } = require('../../helpers/tags')
 
 module.exports = ({ options, state }) =>
   ol(

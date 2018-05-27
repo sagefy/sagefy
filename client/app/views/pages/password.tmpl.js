@@ -1,11 +1,11 @@
-const { div, h1, p } = require('../../modules/tags')
+const { div, h1, p } = require('../../helpers/tags')
 const form = require('../components/form.tmpl')
 const userSchema = require('../../schemas/user')
-const { extend } = require('../../modules/utilities')
+const { extend } = require('../../helpers/utilities')
 const {
   createFieldsData,
   findGlobalErrors,
-} = require('../../modules/auxiliaries')
+} = require('../../helpers/auxiliaries')
 const wizard = require('../components/wizard.tmpl')
 
 const emailFields = [

@@ -1,6 +1,6 @@
-const tasks = require('../modules/tasks')
-const request = require('../modules/request')
-const { dispatch, getState } = require('../modules/store')
+const tasks = require('../helpers/tasks')
+const request = require('../helpers/request')
+const { dispatch, getState } = require('../helpers/store')
 
 module.exports = tasks.add({
   listUserSubjects(userId, limit = 50, skip = 0) {

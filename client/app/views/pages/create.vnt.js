@@ -1,10 +1,10 @@
-const broker = require('../../modules/broker')
-const tasks = require('../../modules/tasks')
-const { getFormValues, parseFormValues } = require('../../modules/auxiliaries')
+const broker = require('../../helpers/broker')
+const tasks = require('../../helpers/tasks')
+const { getFormValues, parseFormValues } = require('../../helpers/auxiliaries')
 const subjectSchema = require('../../schemas/subject')
 const unitSchema = require('../../schemas/unit')
 const cardSchema = require('../../schemas/card')
-const { closest } = require('../../modules/utilities')
+const { closest } = require('../../helpers/utilities')
 
 module.exports = broker.add({
   'click .create__route'(e, el) {

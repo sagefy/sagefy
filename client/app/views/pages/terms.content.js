@@ -1,4 +1,4 @@
-const { h2, p } = require('../../modules/tags')
+const { h2, p } = require('../../helpers/tags')
 
 module.exports = [
   h2('General Terms'),

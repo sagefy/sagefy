@@ -1,4 +1,4 @@
-const { mergeArraysByKey } = require('../modules/auxiliaries')
+const { mergeArraysByKey } = require('../helpers/auxiliaries')
 
 module.exports = function followsReducer(state = [], action = { type: '' }) {
   if (action.type === 'LIST_FOLLOWS_SUCCESS') {

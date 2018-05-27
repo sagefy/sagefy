@@ -8,7 +8,7 @@ const {
   small,
   p,
   a,
-} = require('../../modules/tags')
+} = require('../../helpers/tags')
 const icon = require('./icon.tmpl')
 
 module.exports = () =>

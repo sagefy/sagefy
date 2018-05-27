@@ -1,9 +1,9 @@
-const { div, h1, p, ul, li, a, hr } = require('../../modules/tags')
+const { div, h1, p, ul, li, a, hr } = require('../../helpers/tags')
 const icon = require('../components/icon.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 const subjectResult = subject => [
   a(

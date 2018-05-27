@@ -1,11 +1,11 @@
 const get = require('lodash.get')
-const { div, a, p } = require('../../modules/tags')
-const { isNumber } = require('../../modules/utilities')
+const { div, a, p } = require('../../helpers/tags')
+const { isNumber } = require('../../helpers/utilities')
 const spinner = require('../components/spinner.tmpl')
-// const c = require('../../modules/content').get
+// const c = require('../../helpers/content').get
 const icon = require('../components/icon.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 const kindTmpl = {}
 kindTmpl.video = require('./card_learn_video.tmpl')

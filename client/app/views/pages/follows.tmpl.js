@@ -1,14 +1,14 @@
-const { div, h1, p, a, ul, li } = require('../../modules/tags')
-// const c = require('../../modules/content').get
+const { div, h1, p, a, ul, li } = require('../../helpers/tags')
+// const c = require('../../helpers/content').get
 // const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
-const { copy } = require('../../modules/utilities')
+const { copy } = require('../../helpers/utilities')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 const follow = data => {
   const kind = data.entity_kind

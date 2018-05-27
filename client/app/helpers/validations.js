@@ -3,8 +3,8 @@ Validations are functions which return string if there's an issue
 or a nothing if okay.
 */
 
-const util = require('../modules/utilities')
-const c = require('../modules/content').get
+const util = require('../helpers/utilities')
+const c = require('../helpers/content').get
 
 const isBlank = val =>
   val === null || val === undefined || (util.isString(val) && val === '')

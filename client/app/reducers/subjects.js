@@ -1,4 +1,4 @@
-const { shallowCopy } = require('../modules/utilities')
+const { shallowCopy } = require('../helpers/utilities')
 
 module.exports = function subjects(state = {}, action = { type: '' }) {
   if (action.type === 'ADD_SUBJECT') {

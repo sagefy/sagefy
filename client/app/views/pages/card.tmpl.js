@@ -1,4 +1,4 @@
-const { div, h2, ul, li } = require('../../modules/tags')
+const { div, h2, ul, li } = require('../../helpers/tags')
 const spinner = require('../components/spinner.tmpl')
 const followButton = require('../components/follow_button.tmpl')
 const entityHeader = require('../components/entity_header.tmpl')

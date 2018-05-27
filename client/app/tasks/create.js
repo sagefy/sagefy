@@ -1,7 +1,7 @@
 /* eslint-disable camelcase, no-alert */
-const { dispatch, getState } = require('../modules/store')
-const tasks = require('../modules/tasks')
-const { copy } = require('../modules/utilities')
+const { dispatch, getState } = require('../helpers/store')
+const tasks = require('../helpers/tasks')
+const { copy } = require('../helpers/utilities')
 
 module.exports = tasks.add({
   resetCreate() {

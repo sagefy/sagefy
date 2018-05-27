@@ -1,4 +1,4 @@
-const cookie = require('../../app/modules/cookie')
+const cookie = require('../../app/helpers/cookie')
 
 describe('Cookie', () => {
   it('should parse a cookie value', () =>

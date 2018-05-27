@@ -1,4 +1,4 @@
-const { mergeArraysByKey } = require('../modules/auxiliaries')
+const { mergeArraysByKey } = require('../helpers/auxiliaries')
 
 module.exports = function userSubjects(state = [], action = { type: '' }) {
   if (action.type === 'ADD_USER_SUBJECTS') {

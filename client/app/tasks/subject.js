@@ -1,7 +1,7 @@
-const { dispatch } = require('../modules/store')
-const tasks = require('../modules/tasks')
-const { matchesRoute } = require('../modules/auxiliaries')
-const request = require('../modules/request')
+const { dispatch } = require('../helpers/store')
+const tasks = require('../helpers/tasks')
+const { matchesRoute } = require('../helpers/auxiliaries')
+const request = require('../helpers/request')
 
 module.exports = tasks.add({
   getSubject(id) {

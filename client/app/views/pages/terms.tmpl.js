@@ -1,5 +1,5 @@
 // TODO-3 move copy to content directory
-const { div, h1 } = require('../../modules/tags')
+const { div, h1 } = require('../../helpers/tags')
 const terms = require('./terms.content')
 
 module.exports = () =>

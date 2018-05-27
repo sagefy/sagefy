@@ -1,10 +1,10 @@
-const { div, h1, ul, li, a, h3, span, hgroup } = require('../../modules/tags')
-// const c = require('../../modules/content').get
+const { div, h1, ul, li, a, h3, span, hgroup } = require('../../helpers/tags')
+// const c = require('../../helpers/content').get
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 module.exports = data => {
   if (getIsLoggedIn(data) === null) {

@@ -1,4 +1,4 @@
-const { div } = require('../../modules/tags')
+const { div } = require('../../helpers/tags')
 const previewUnitHead = require('./preview_unit_head.tmpl')
 const previewUnitContent = require('./preview_unit_content.tmpl')
 

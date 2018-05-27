@@ -1,5 +1,5 @@
 const defaultState = { open: false, context: {} }
-const { copy } = require('../modules/utilities')
+const { copy } = require('../helpers/utilities')
 
 module.exports = function menu(state = defaultState, action = { type: '' }) {
   if (action.type === 'TOGGLE_MENU') {

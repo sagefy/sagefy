@@ -1,4 +1,4 @@
-const { li, a, div } = require('../../modules/tags')
+const { li, a, div } = require('../../helpers/tags')
 const icon = require('./icon.tmpl')
 
 module.exports = data =>

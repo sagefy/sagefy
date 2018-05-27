@@ -14,7 +14,7 @@ fs.readFile('./app/views/pages/terms.txt', 'utf8', (err, terms) => {
   content = `  ${content}`
   fs.writeFile(
     './app/views/pages/terms.content.js',
-    `${"const {h2, p} = require('../../modules/tags')\n\n" +
+    `${"const {h2, p} = require('../../helpers/tags')\n\n" +
       'module.exports = [\n'}${content}\n]\n`
   )
 })

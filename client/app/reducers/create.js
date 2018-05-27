@@ -33,7 +33,7 @@
 /create/card/create 2
 -> topic/proposal
 */
-const { shallowCopy, copy } = require('../modules/utilities')
+const { shallowCopy, copy } = require('../helpers/utilities')
 
 function translateListOfRows(values, name) {
   values = copy(values)

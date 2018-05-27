@@ -1,9 +1,9 @@
-const { div, h1, p, a, ul, li, small } = require('../../modules/tags')
+const { div, h1, p, a, ul, li, small } = require('../../helpers/tags')
 const info = require('../components/entity_info.tmpl')
 const icon = require('../components/icon.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 module.exports = data => {
   if (getIsLoggedIn(data) === null) {

@@ -1,11 +1,11 @@
-const { div, h1, ul, li, p, button, a, br } = require('../../modules/tags')
-// const c = require('../../modules/content').get
+const { div, h1, ul, li, p, button, a, br } = require('../../helpers/tags')
+// const c = require('../../helpers/content').get
 const spinner = require('../components/spinner.tmpl')
 const icon = require('../components/icon.tmpl')
 const info = require('../components/entity_info.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 const userSubject = data =>
   li(

@@ -1,4 +1,4 @@
-const content = require('../../app/modules/content')
+const content = require('../../app/helpers/content')
 
 describe('Content', () => {
   it('should get content', () => {

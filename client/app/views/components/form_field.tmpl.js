@@ -1,4 +1,4 @@
-const { div, p, span } = require('../../modules/tags')
+const { div, p, span } = require('../../helpers/tags')
 const icon = require('./icon.tmpl')
 
 const kindTmpl = {}

@@ -1,5 +1,5 @@
-const { dispatch } = require('../modules/store')
-const tasks = require('../modules/tasks')
+const { dispatch } = require('../helpers/store')
+const tasks = require('../helpers/tasks')
 
 module.exports = tasks.add({
   toggleMenu() {

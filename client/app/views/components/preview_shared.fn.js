@@ -1,8 +1,8 @@
-const { a, h3, span, ul, li, em, h4 } = require('../../modules/tags')
-const { ucfirst } = require('../../modules/auxiliaries')
+const { a, h3, span, ul, li, em, h4 } = require('../../helpers/tags')
+const { ucfirst } = require('../../helpers/auxiliaries')
 const icon = require('./icon.tmpl')
 const timeago = require('./timeago.tmpl')
-const c = require('../../modules/content').get
+const c = require('../../helpers/content').get
 
 function hasValue(val) {
   return typeof val !== 'undefined' && val !== null

@@ -1,10 +1,10 @@
-const { div, h1, h3, a, p, hr, ul, li } = require('../../modules/tags')
+const { div, h1, h3, a, p, hr, ul, li } = require('../../helpers/tags')
 const { cardWizard } = require('./create_shared.fn')
 const icon = require('../components/icon.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 module.exports = function createCardList(data) {
   if (getIsLoggedIn(data) === null) {

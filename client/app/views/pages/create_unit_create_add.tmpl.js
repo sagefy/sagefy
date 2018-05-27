@@ -10,12 +10,12 @@ const {
   ul,
   li,
   p,
-} = require('../../modules/tags')
+} = require('../../helpers/tags')
 const icon = require('../components/icon.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 module.exports = function createSubjectAdd(data) {
   if (getIsLoggedIn(data) === null) {

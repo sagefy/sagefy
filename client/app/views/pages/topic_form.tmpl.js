@@ -1,5 +1,5 @@
 const get = require('lodash.get')
-const { div, h1, p, strong } = require('../../modules/tags')
+const { div, h1, p, strong } = require('../../helpers/tags')
 const form = require('../components/form.tmpl')
 const getPostFields = require('./post_form.fn').getFields
 const getPostSchema = require('./post_form.fn').getSchema
@@ -8,12 +8,12 @@ const {
   prefixObjectKeys,
   ucfirst,
   findGlobalErrors,
-} = require('../../modules/auxiliaries')
-const { extend } = require('../../modules/utilities')
+} = require('../../helpers/auxiliaries')
+const { extend } = require('../../helpers/utilities')
 const topicSchema = require('../../schemas/topic')
 const spinner = require('../components/spinner.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 const classes = formData => {
   const topicID = formData['topic.id']

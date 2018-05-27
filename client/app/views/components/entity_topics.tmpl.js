@@ -1,4 +1,4 @@
-const { div, a, h2, ul, li, p } = require('../../modules/tags')
+const { div, a, h2, ul, li, p } = require('../../helpers/tags')
 const timeago = require('./timeago.tmpl')
 const icon = require('./icon.tmpl')
 

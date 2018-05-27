@@ -1,4 +1,4 @@
-const broker = require('../../modules/broker')
+const broker = require('../../helpers/broker')
 
 module.exports = broker.add({
   'click .post .expand'(e) {

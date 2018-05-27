@@ -2,8 +2,8 @@
 // TODO-2 on update: how to decline a proposal?
 // TODO-3 Tags (all)
 
-const { extend } = require('../../modules/utilities')
-const { prefixObjectKeys } = require('../../modules/auxiliaries')
+const { extend } = require('../../helpers/utilities')
+const { prefixObjectKeys } = require('../../helpers/auxiliaries')
 
 const postSchema = require('../../schemas/post')
 const voteSchema = require('../../schemas/vote')

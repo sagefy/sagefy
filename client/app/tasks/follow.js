@@ -1,6 +1,6 @@
-const { dispatch } = require('../modules/store')
-const tasks = require('../modules/tasks')
-const request = require('../modules/request')
+const { dispatch } = require('../helpers/store')
+const tasks = require('../helpers/tasks')
+const request = require('../helpers/request')
 
 module.exports = tasks.add({
   listFollows(userId, skip = 0, limit = 50) {

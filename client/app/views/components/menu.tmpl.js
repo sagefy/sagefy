@@ -1,8 +1,8 @@
 // TODO-3 move copy to content directory
-const { nav, div, a, ul } = require('../../modules/tags')
+const { nav, div, a, ul } = require('../../helpers/tags')
 const menuItem = require('./menu_item.tmpl')
-const { extend } = require('../../modules/utilities')
-const { ucfirst, underscored } = require('../../modules/auxiliaries')
+const { extend } = require('../../helpers/utilities')
+const { ucfirst, underscored } = require('../../helpers/auxiliaries')
 const icon = require('./icon.tmpl')
 
 // TODO-2 add unread count to notices icon

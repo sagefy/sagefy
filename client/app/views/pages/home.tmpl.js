@@ -19,7 +19,7 @@ const {
   footer,
   span,
   section,
-} = require('../../modules/tags')
+} = require('../../helpers/tags')
 const icon = require('../components/icon.tmpl')
 const spinner = require('../components/spinner.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')

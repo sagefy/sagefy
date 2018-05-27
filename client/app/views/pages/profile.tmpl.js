@@ -1,5 +1,5 @@
-const { div, h1, p, img, h3, header, ul, li } = require('../../modules/tags')
-const { timeAgo } = require('../../modules/auxiliaries')
+const { div, h1, p, img, h3, header, ul, li } = require('../../helpers/tags')
+const { timeAgo } = require('../../helpers/auxiliaries')
 const spinner = require('../components/spinner.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')

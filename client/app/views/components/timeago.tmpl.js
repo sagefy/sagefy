@@ -1,5 +1,5 @@
-const { span } = require('../../modules/tags')
-const { timeAgo } = require('../../modules/auxiliaries')
+const { span } = require('../../helpers/tags')
+const { timeAgo } = require('../../helpers/auxiliaries')
 
 module.exports = (time, { right } = {}) =>
   span(

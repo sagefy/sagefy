@@ -1,6 +1,6 @@
-const { div, h1, a, p } = require('../../modules/tags')
+const { div, h1, a, p } = require('../../helpers/tags')
 const { cardWizard } = require('./create_shared.fn')
-const { extend } = require('../../modules/utilities')
+const { extend } = require('../../helpers/utilities')
 const cardSchema = require('../../schemas/card')
 const videoCardSchema = require('../../schemas/cards/video_card')
 const pageCardSchema = require('../../schemas/cards/page_card')
@@ -10,11 +10,11 @@ const form = require('../components/form.tmpl')
 const {
   createFieldsData,
   findGlobalErrors,
-} = require('../../modules/auxiliaries')
+} = require('../../helpers/auxiliaries')
 const icon = require('../components/icon.tmpl')
 const { getIsLoggedIn } = require('../../selectors/base')
 const spinner = require('../components/spinner.tmpl')
-const { goLogin } = require('../../modules/auxiliaries')
+const { goLogin } = require('../../helpers/auxiliaries')
 
 const allKindsFields = [
   {

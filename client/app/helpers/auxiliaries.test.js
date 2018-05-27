@@ -3,7 +3,7 @@ const {
   underscored,
   mergeArraysByKey,
   parseFormValues,
-} = require('../../app/modules/auxiliaries')
+} = require('../../app/helpers/auxiliaries')
 
 describe('Auxiliaries', () => {
   it('should capitalize the first letter of a string', () => {

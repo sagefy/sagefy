@@ -1,4 +1,4 @@
-const { shallowCopy } = require('../modules/utilities')
+const { shallowCopy } = require('../helpers/utilities')
 
 module.exports = function topicPostVersions(
   state = {

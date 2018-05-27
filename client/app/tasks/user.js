@@ -1,6 +1,6 @@
-const { dispatch, getState } = require('../modules/store')
-const tasks = require('../modules/tasks')
-const request = require('../modules/request')
+const { dispatch, getState } = require('../helpers/store')
+const tasks = require('../helpers/tasks')
+const request = require('../helpers/request')
 
 module.exports = tasks.add({
   createUser(data) {

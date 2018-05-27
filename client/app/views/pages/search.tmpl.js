@@ -14,14 +14,14 @@ const {
   h3,
   span,
   br,
-} = require('../../modules/tags')
+} = require('../../helpers/tags')
 const spinner = require('../components/spinner.tmpl')
 const timeago = require('../components/timeago.tmpl')
 const icon = require('../components/icon.tmpl')
 const previewSubjectHead = require('../components/preview_subject_head.tmpl')
 const previewUnitHead = require('../components/preview_unit_head.tmpl')
 const previewCardHead = require('../components/preview_card_head.tmpl')
-const { ucfirst } = require('../../modules/auxiliaries')
+const { ucfirst } = require('../../helpers/auxiliaries')
 const { getIsLoggedIn } = require('../../selectors/base')
 
 // TODO-2 when receiving ?kind={kind}, then search using that as well.

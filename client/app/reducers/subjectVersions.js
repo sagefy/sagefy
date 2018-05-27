@@ -1,5 +1,5 @@
-const { mergeArraysByKey } = require('../modules/auxiliaries')
-const { shallowCopy } = require('../modules/utilities')
+const { mergeArraysByKey } = require('../helpers/auxiliaries')
+const { shallowCopy } = require('../helpers/utilities')
 
 module.exports = function subjectVersions(state = {}, action = { type: '' }) {
   if (action.type === 'ADD_SUBJECT_VERSIONS') {

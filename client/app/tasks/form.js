@@ -1,6 +1,6 @@
-const { dispatch } = require('../modules/store')
-const tasks = require('../modules/tasks')
-const { validateFormData } = require('../modules/auxiliaries')
+const { dispatch } = require('../helpers/store')
+const tasks = require('../helpers/tasks')
+const { validateFormData } = require('../helpers/auxiliaries')
 
 module.exports = tasks.add({
   updateFormData(data) {

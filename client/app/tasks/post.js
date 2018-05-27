@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
-const { dispatch } = require('../modules/store')
-const tasks = require('../modules/tasks')
-const request = require('../modules/request')
-const { flatten } = require('../modules/utilities')
+const { dispatch } = require('../helpers/store')
+const tasks = require('../helpers/tasks')
+const request = require('../helpers/request')
+const { flatten } = require('../helpers/utilities')
 
 module.exports = tasks.add({
   listPostsForTopic(id) {
