@@ -1,14 +1,9 @@
 const {
-  underscored,
   mergeArraysByKey,
   parseFormValues,
 } = require('../../app/helpers/auxiliaries')
 
 describe('Auxiliaries', () => {
-  it('should underscore a name', () => {
-    expect(underscored('hip-po potu Mus')).toEqual('hip_po_potu_mus')
-  })
-
   it('should merge two arrays by a key', () => {
     const A = [{ k: 0, v: 1 }, { k: 1, v: 1 }, { k: 3, v: 1 }, { k: 7, v: 1 }]
     const B = [{ k: 1, v: 2 }, { k: 2, v: 2 }, { k: 7, v: 2 }, { k: 8, v: 2 }]

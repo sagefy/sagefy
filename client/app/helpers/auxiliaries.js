@@ -6,13 +6,11 @@ const merge = require('lodash.merge')
 const isString = require('lodash.isstring')
 const isArray = require('lodash.isarray')
 const cloneDeep = require('lodash.clonedeep')
-
-// Replaces dashes and spaces with underscores, ready to be used in an URL
-const underscored = str => str.replace(/[-\s]+/g, '_').toLowerCase()
+const snakeCase = require('lodash.snakecase')
 
 // Turns underscore or camel into title case
 const titleize = (str = '') =>
-  underscored(str)
+  snakeCase(str)
     .split('_')
     .map(w => w.charAt(0).toUpperCase() + w.substr(1))
     .join(' ')
@@ -46,9 +44,6 @@ const timeAgo = str => {
   if (minutes === 1) return '1 minute ago'
   return 'Just now'
 }
-
-// Return a variable friendly name of the title.
-const slugify = s => s.toLowerCase().replace(/[-\s]+/g, '_')
 
 // Set the page title.
 const setTitle = (title = 'FIX ME') => {
@@ -322,10 +317,8 @@ function goLogin() {
 
 module.exports = {
   titleize,
-  underscored,
   escape,
   timeAgo,
-  slugify,
   setTitle,
   debounce,
   matchesRoute,
