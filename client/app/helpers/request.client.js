@@ -1,4 +1,5 @@
-const { parseJSON, isString, convertDataToGet } = require('./utilities')
+const isString = require('lodash.isstring')
+const { parseJSON, convertDataToGet } = require('./utilities')
 
 // Try to parse the errors array or just return the error text.
 function parseAjaxErrors(response) {

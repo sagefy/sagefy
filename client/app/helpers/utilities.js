@@ -2,34 +2,21 @@
 Utilities are one-off functions that are used throughout the framework.
 */
 const merge = require('lodash.merge')
+const isObject = require('lodash.isobject')
+const isArray = require('lodash.isarray')
+const isDate = require('lodash.isdate')
 
 const util = {}
 
-// Test for types.
-;['Object', 'Array', 'Function', 'Date', 'String', 'RegExp'].forEach(type => {
-  util[`is${type}`] = a =>
-    Object.prototype.toString.call(a) === `[object ${type}]`
-})
-
-const objectConstructor = {}.constructor
-util.isPlainObject = function isPlainObject(val) {
-  return val.constructor === objectConstructor
-}
-
-util.isUndefined = a => typeof a === 'undefined'
-
-// http://stackoverflow.com/a/9716488
-util.isNumber = n => !Number.isNaN(parseFloat(n)) && Number.isFinite(n)
-
 // Makes a copy of the array or object.
 util.copy = obj => {
-  if (util.isObject(obj)) {
+  if (isObject(obj)) {
     return merge({}, obj)
   }
-  if (util.isArray(obj)) {
+  if (isArray(obj)) {
     return merge([], obj)
   }
-  if (util.isDate(obj)) {
+  if (isDate(obj)) {
     return new Date(obj)
   }
   return obj
@@ -87,7 +74,7 @@ util.convertDataToGet = (url, data) => {
 
 util.flatten = function flatten(arr) {
   return arr.reduce(
-    (acc, val) => acc.concat(Array.isArray(val) ? flatten(val) : val),
+    (acc, val) => acc.concat(isArray(val) ? flatten(val) : val),
     []
   )
 }

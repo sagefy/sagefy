@@ -1,5 +1,6 @@
 const http = require('http')
-const { convertDataToGet, isString } = require('./utilities')
+const isString = require('lodash.isstring')
+const { convertDataToGet } = require('./utilities')
 
 module.exports = function httpRequest({ method, url, data }) {
   method = method.toUpperCase()

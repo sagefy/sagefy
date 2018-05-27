@@ -3,7 +3,9 @@ Auxiliaries are utlity functions that are specific to Sagefy.
 */
 
 const merge = require('lodash.merge')
-const { copy, isString, isArray } = require('./utilities')
+const isString = require('lodash.isstring')
+const isArray = require('lodash.isarray')
+const { copy } = require('./utilities')
 
 // Capitalizes the first letter of a string
 const ucfirst = (str = '') => str.charAt(0).toUpperCase() + str.slice(1)

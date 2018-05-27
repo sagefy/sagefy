@@ -1,6 +1,6 @@
 const get = require('lodash.get')
+const isNumber = require('lodash.isnumber')
 const { div, a, p } = require('../../helpers/tags')
-const { isNumber } = require('../../helpers/utilities')
 const spinner = require('../components/spinner.tmpl')
 // const c = require('../../helpers/content').get
 const icon = require('../components/icon.tmpl')
