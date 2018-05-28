@@ -18,7 +18,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 * Added examples to Sound Parameters unit
 * Started work on client code updates to support upcoming features
 
-### Upcoming Two Weeks: 
+### Upcoming Two Weeks: 2018 May 28 - 2018 Jun 10
 
 * Continue work on client code updates to support upcoming features
 * Continue research and writing for "8 ideas of learning" article. If you're interested in research or review help let me know!
