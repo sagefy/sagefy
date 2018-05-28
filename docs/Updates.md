@@ -7,6 +7,26 @@ This is a reverse chronological listing of updates on Sagefy's progress. I will 
 
 You can sign up for email updates at https://sgef.cc/devupdates
 
+## UPDATE -- 2018 May 28
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2018 May 14 - 2018 May 27
+
+* Created ["Want to Help?" page](https://docs.sagefy.org/Want-to-Help) for prospective contributors... if you're interested in helping building Sagefy, even something small, check out the link!
+* Updated [README.md](https://github.com/heiskr/sagefy/blob/master/README.md) and [homepage](https://sagefy.org/) copy
+* Added examples to Sound Parameters unit
+* Started work on client code updates to support upcoming features
+
+### Upcoming Two Weeks: 
+
+* Continue work on client code updates to support upcoming features
+* Continue research and writing for "8 ideas of learning" article. If you're interested in research or review help let me know!
+
+### Feedback
+
+Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+
 ## UPDATE -- 2018 May 13
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
