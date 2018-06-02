@@ -29,6 +29,7 @@ const imageHtml =
 
 expect.extend({
   toMatchDOM(node, html) {
+    document.body.innerHTML = ''
     render(node, document.body)
     expect(document.body.innerHTML).toBe(html.replace(/\s{2,}/g, ''))
     return { pass: true }
