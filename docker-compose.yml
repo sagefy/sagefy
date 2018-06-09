@@ -49,6 +49,19 @@ services:
      - postgres-test
      - redis
      - elasticsearch
+  server2:
+    # https://hub.docker.com/_/python/
+    build: ./server2
+    ports:
+     - "8654:8654"
+    volumes:
+     - ./server2:/server
+     - ./content:/content
+    links:
+     - postgres
+     - postgres-test
+     - redis
+     - elasticsearch
   client:
     # https://hub.docker.com/_/node/
     build: ./client
@@ -56,6 +69,16 @@ services:
      - "5984:5984"
     volumes:
      - ./client:/www
+     - ./content:/content
+    links:
+     - server
+  client2:
+    # https://hub.docker.com/_/node/
+    build: ./client2
+    ports:
+     - "5985:5985"
+    volumes:
+     - ./client2:/client
      - ./content:/content
     links:
      - server
@@ -69,4 +92,6 @@ services:
      - "80:80"
     links:
      - server
+     - server2
      - client
+     - client2
