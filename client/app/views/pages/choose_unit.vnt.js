@@ -1,13 +1,14 @@
-const broker = require('../../helpers/broker')
-const tasks = require('../../helpers/tasks')
 const closest = require('../../helpers/closest')
 
-module.exports = broker.add({
-  'click .choose-unit__engage'(e, el) {
-    if (e) {
-      e.preventDefault()
-    }
-    const ul = closest(el, 'ul')
-    tasks.chooseUnit(ul.id, el.id)
-  },
-})
+module.exports = (store, broker) => {
+  const { getTasks } = store
+  broker.add({
+    'click .choose-unit__engage'(e, el) {
+      if (e) {
+        e.preventDefault()
+      }
+      const ul = closest(el, 'ul')
+      getTasks().chooseUnit(ul.id, el.id)
+    },
+  })
+}

@@ -1,11 +1,11 @@
-const broker = require('../../helpers/broker')
+module.exports = (store, broker) => {
+  broker.add({
+    'click .select .clear'(e) {
+      e.preventDefault()
+      // TODO-3 clear options
+    },
 
-module.exports = broker.add({
-  'click .select .clear'(e) {
-    e.preventDefault()
-    // TODO-3 clear options
-  },
-
-  // 'change input[type="radio"], input[type="checkbox"]': (e, el) =>
-  // TODO-3 update .select__selected to show list of selected names
-})
+    // 'change input[type="radio"], input[type="checkbox"]': (e, el) =>
+    // TODO-3 update .select__selected to show list of selected names
+  })
+}

@@ -1,5 +1,3 @@
-const { dispatch } = require('./store')
-const tasks = require('./tasks')
 const { readQueryString } = require('./url')
 const pageTitles = require('../helpers/page_titles')
 const matchesRoute = require('../helpers/matches_route')
@@ -26,32 +24,25 @@ function findTitle(path) {
   return ''
 }
 
-function route(path) {
-  dispatch({
+function route(store, path) {
+  store.dispatch({
     type: 'SET_ROUTE',
     route: path,
     routeQuery: getQueryParams(path),
     title: findTitle(path),
   })
-  if (tasks.onRoute) {
-    return tasks.onRoute(path)
+  if (store.getTasks().onRoute) {
+    return store.getTasks().onRoute(path)
   }
   return null
 }
 
-if (typeof window !== 'undefined') {
-  window.onpopstate = () => {
-    route(request())
+function initRouting(store) {
+  if (typeof window !== 'undefined') {
+    window.onpopstate = () => {
+      route(store, request())
+    }
   }
 }
 
-tasks.add({
-  route: path => {
-    if (path !== request()) {
-      window.history.pushState({}, '', path)
-      route(path)
-    }
-  },
-})
-
-module.exports = { route }
+module.exports = { initRouting, request, route }

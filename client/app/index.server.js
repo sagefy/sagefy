@@ -4,17 +4,13 @@ const { render } = require('ultradom')
 const { JSDOM } = require('jsdom')
 const template = require('./views/index.tmpl')
 const { route } = require('./helpers/route_actions')
-const { getState, setReducer, resetState } = require('./helpers/store')
+const createStore = require('./helpers/store')
 const reducer = require('./reducers/index')
 const cookieParser = require('cookie-parser')
-
-// Require all tasks
-require('./tasks/index')
+const addAllTasks = require('./tasks/index')
 
 const app = express()
 app.use(cookieParser())
-
-setReducer(reducer)
 
 const html = `
 <!doctype html>
@@ -40,8 +36,8 @@ function toHTML(node) {
   return document.body.innerHTML
 }
 
-function renderHtml() {
-  const state = getState()
+function renderHtml(store) {
+  const state = store.getState()
   return html
     .replace('{title}', state.routeTitle)
     .replace('{body}', toHTML(template(state)))
@@ -51,19 +47,22 @@ function renderHtml() {
 app.get(/.*/, (request, response) => {
   const path = request.originalUrl
   console.log(path)
-  resetState() // make sure it doesn't use a pre-existing state
-  global.requestCookie = `session_id=${request.cookies.session_id}`
-  const promise = route(path)
+  // !!! make sure the store doesn't use a pre-existing state !!!
+  const store = createStore()
+  store.setReducer(reducer)
+  store.requestCookie = `session_id=${request.cookies.session_id}`
+  addAllTasks(store)
+  const promise = route(store, path)
   if (promise) {
     promise
       .then(() => {
-        response.status(200).send(renderHtml())
+        response.status(200).send(renderHtml(store))
       })
       .catch(error => {
         console.error(error)
       })
   } else {
-    response.status(200).send(renderHtml())
+    response.status(200).send(renderHtml(store))
   }
 })
 

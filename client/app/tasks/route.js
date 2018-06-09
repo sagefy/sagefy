@@ -1,7 +1,6 @@
 const capitalize = require('lodash.capitalize')
-const { dispatch, getState } = require('../helpers/store')
-const tasks = require('../helpers/tasks')
 const matchesRoute = require('../helpers/matches_route')
+const { request, route } = require('../helpers/route_actions')
 
 const routes = [
   { path: '/settings', task: 'openSettingsRoute' },
@@ -26,115 +25,130 @@ const routes = [
   { path: '/create/card/find', task: 'openFindUnitForCards' },
 ]
 
-module.exports = tasks.add({
-  onRoute(path) {
-    function finish() {
-      const route = routes.find(xroute => matchesRoute(path, xroute.path))
-      if (route) {
-        const args = matchesRoute(path, route.path)
-        if (args) {
-          return tasks[route.task].apply(null, args)
+module.exports = store => {
+  const { getState, dispatch, getTasks } = store
+  store.addTasks({
+    route(path) {
+      if (path !== request()) {
+        window.history.pushState({}, '', path)
+        route(path)
+      }
+    },
+
+    onRoute(path) {
+      function finish() {
+        const zroute = routes.find(xroute => matchesRoute(path, xroute.path))
+        if (zroute) {
+          const args = matchesRoute(path, zroute.path)
+          if (args) {
+            return getTasks()[zroute.task].apply(null, args)
+          }
         }
+        return null
+      }
+      dispatch({ type: 'RESET_FORM_DATA' })
+      dispatch({ type: 'RESET_ERRORS' })
+      dispatch({ type: 'RESET_SEARCH' })
+      if (!getState().checkedSession) {
+        return getTasks()
+          .checkSession()
+          .then(finish)
+      }
+      return finish()
+    },
+
+    openSettingsRoute() {
+      if (
+        !getState().currentUserID ||
+        !getState().users ||
+        !getState().users[getState().currentUserID]
+      ) {
+        return getTasks().getCurrentUser()
       }
       return null
-    }
-    dispatch({ type: 'RESET_FORM_DATA' })
-    dispatch({ type: 'RESET_ERRORS' })
-    dispatch({ type: 'RESET_SEARCH' })
-    if (!getState().checkedSession) {
-      return tasks.checkSession().then(finish)
-    }
-    return finish()
-  },
+    },
 
-  openSettingsRoute() {
-    if (
-      !getState().currentUserID ||
-      !getState().users ||
-      !getState().users[getState().currentUserID]
-    ) {
-      return tasks.getCurrentUser()
-    }
-    return null
-  },
+    openProfileRoute(id) {
+      return getTasks().getUserForProfile(id, { avatar: 12 * 10 })
+    },
 
-  openProfileRoute(id) {
-    return tasks.getUserForProfile(id, { avatar: 12 * 10 })
-  },
+    openUnitRoute(id) {
+      return Promise.all([
+        getTasks().getUnit(id),
+        getTasks().listUnitVersions(id),
+        getTasks().listTopics({ entity_id: id }),
+        getTasks().askFollow(id),
+      ])
+    },
 
-  openUnitRoute(id) {
-    return Promise.all([
-      tasks.getUnit(id),
-      tasks.listUnitVersions(id),
-      tasks.listTopics({ entity_id: id }),
-      tasks.askFollow(id),
-    ])
-  },
+    openSubjectRoute(id) {
+      return Promise.all([
+        getTasks().getSubject(id),
+        getTasks().listSubjectVersions(id),
+        getTasks().listTopics({ entity_id: id }),
+        getTasks().askFollow(id),
+      ])
+    },
 
-  openSubjectRoute(id) {
-    return Promise.all([
-      tasks.getSubject(id),
-      tasks.listSubjectVersions(id),
-      tasks.listTopics({ entity_id: id }),
-      tasks.askFollow(id),
-    ])
-  },
+    openCardRoute(id) {
+      return Promise.all([
+        getTasks().getCard(id),
+        getTasks().listCardVersions(id),
+        getTasks().listTopics({ entity_id: id }),
+        getTasks().askFollow(id),
+      ])
+    },
 
-  openCardRoute(id) {
-    return Promise.all([
-      tasks.getCard(id),
-      tasks.listCardVersions(id),
-      tasks.listTopics({ entity_id: id }),
-      tasks.askFollow(id),
-    ])
-  },
+    openVersionsRoute(kind, id) {
+      return getTasks()[`list${capitalize(kind)}Versions`](id)
+    },
 
-  openVersionsRoute(kind, id) {
-    return tasks[`list${capitalize(kind)}Versions`](id)
-  },
+    openCreateTopic() {
+      const { kind, id } = getState().routeQuery
+      return getTasks()[`get${capitalize(kind)}`](id)
+    },
 
-  openCreateTopic() {
-    const { kind, id } = getState().routeQuery
-    return tasks[`get${capitalize(kind)}`](id)
-  },
+    openUpdateTopic(id) {
+      return getTasks().listPostsForTopic(id)
+    },
 
-  openUpdateTopic(id) {
-    return tasks.listPostsForTopic(id)
-  },
+    openTopicRoute(id) {
+      return Promise.all([
+        getTasks().listPostsForTopic(id),
+        getTasks().askFollow(id),
+      ])
+    },
 
-  openTopicRoute(id) {
-    return Promise.all([tasks.listPostsForTopic(id), tasks.askFollow(id)])
-  },
+    openTreeRoute(id) {
+      return getTasks().getSubjectTree(id)
+    },
 
-  openTreeRoute(id) {
-    return tasks.getSubjectTree(id)
-  },
+    openChooseUnit(subjectId) {
+      return getTasks().getSubjectUnits(subjectId)
+    },
 
-  openChooseUnit(subjectId) {
-    return tasks.getSubjectUnits(subjectId)
-  },
+    openLearnCard(id) {
+      return getTasks().getCardForLearn(id)
+    },
 
-  openLearnCard(id) {
-    return tasks.getCardForLearn(id)
-  },
+    openUpdatePost(topicID /* , postID */) {
+      return getTasks().listPostsForTopic(topicID)
+    },
 
-  openUpdatePost(topicID /* , postID */) {
-    return tasks.listPostsForTopic(topicID)
-  },
+    openSearch() {
+      const { q } = getState().routeQuery
+      if (q) {
+        return getTasks().search({ q })
+      }
+      return null
+    },
 
-  openSearch() {
-    const { q } = getState().routeQuery
-    if (q) {
-      return tasks.search({ q })
-    }
-    return null
-  },
+    openFindSubjectForUnits() {
+      return getTasks().getMyRecentSubjects()
+    },
 
-  openFindSubjectForUnits() {
-    return tasks.getMyRecentSubjects()
-  },
-
-  openFindUnitForCards() {
-    return tasks.getMyRecentUnits()
-  },
-})
+    openFindUnitForCards() {
+      return getTasks().getMyRecentUnits()
+    },
+  })
+}

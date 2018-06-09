@@ -1,18 +1,18 @@
-const broker = require('../../helpers/broker')
-const tasks = require('../../helpers/tasks')
+module.exports = (store, broker) => {
+  const { getTasks } = store
+  broker.add({
+    'click .tree circle'(e, el) {
+      if (e) e.preventDefault()
+      if (el.classList.contains('selected')) {
+        getTasks().selectTreeUnit()
+      } else {
+        getTasks().selectTreeUnit(el.id)
+      }
+    },
 
-module.exports = broker.add({
-  'click .tree circle'(e, el) {
-    if (e) e.preventDefault()
-    if (el.classList.contains('selected')) {
-      tasks.selectTreeUnit()
-    } else {
-      tasks.selectTreeUnit(el.id)
-    }
-  },
-
-  'click .tree text'(e) {
-    if (e) e.preventDefault()
-    tasks.selectTreeUnit()
-  },
-})
+    'click .tree text'(e) {
+      if (e) e.preventDefault()
+      getTasks().selectTreeUnit()
+    },
+  })
+}
