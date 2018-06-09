@@ -31,7 +31,7 @@ module.exports = store => {
     route(path) {
       if (path !== request()) {
         window.history.pushState({}, '', path)
-        route(path)
+        route(store, path)
       }
     },
 
