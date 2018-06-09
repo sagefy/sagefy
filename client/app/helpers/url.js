@@ -16,6 +16,7 @@ function parse(string) {
 
 function stringify(obj) {
   return toPairs(obj)
+    .filter(([, v]) => v)
     .map(([k, v]) => [encodeURIComponent(k), encodeURIComponent(v)])
     .map(([k, v]) => `${k}=${v}`)
     .join('&')
