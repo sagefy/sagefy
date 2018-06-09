@@ -56,6 +56,7 @@
     "lodash.clonedeep": "4.5.0",
     "lodash.compact": "3.0.1",
     "lodash.flattendeep": "4.4.0",
+    "lodash.frompairs": "4.0.1",
     "lodash.get": "4.4.2",
     "lodash.isarray": "4.0.0",
     "lodash.isnumber": "3.0.3",
@@ -65,6 +66,7 @@
     "lodash.merge": "4.6.1",
     "lodash.omit": "4.5.0",
     "lodash.snakecase": "4.1.1",
+    "lodash.topairs": "4.3.0",
     "lodash.transform": "4.6.0",
     "normalize.css": "7.0.0",
     "query-string": "6.1.0",
@@ -91,7 +93,7 @@
     "pretty-quick": "1.2.2",
     "raw-loader": "0.5.1",
     "stylus": "0.52.4",
-    "uglify-js": "2.7.4",
+    "uglify-js": "3.4.0",
     "webpack": "1.13.3",
     "yamljs": "0.2.8"
   }

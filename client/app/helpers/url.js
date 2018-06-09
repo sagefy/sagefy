@@ -1,7 +1,25 @@
 const get = require('lodash.get')
 const mapValues = require('lodash.mapvalues')
-const { parse, stringify } = require('query-string')
+const fromPairs = require('lodash.frompairs')
+const toPairs = require('lodash.topairs')
 const valuefy = require('./valuefy')
+
+function parse(string) {
+  if (string[0] === '?') string = string.substr(1)
+  return fromPairs(
+    string
+      .split('&')
+      .map(kv => kv.split('='))
+      .map(([k, v]) => [decodeURIComponent(k), decodeURIComponent(v)])
+  )
+}
+
+function stringify(obj) {
+  return toPairs(obj)
+    .map(([k, v]) => [encodeURIComponent(k), encodeURIComponent(v)])
+    .map(([k, v]) => `${k}=${v}`)
+    .join('&')
+}
 
 function readQueryString(string) {
   string = string || (typeof window !== 'undefined' && window.location.search)
