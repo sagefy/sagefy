@@ -40,6 +40,7 @@ tmp
 distribution
 npm-debug.log
 client/app/content
+client2/content
 *.data.json
 var
 sagefy_rsa.pub

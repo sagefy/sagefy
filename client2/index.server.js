@@ -1,0 +1,33 @@
+/* eslint-disable no-console */
+const express = require('express')
+const cookieParser = require('cookie-parser')
+
+const app = express()
+app.use(cookieParser())
+
+const html = `
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title} – Sagefy</title>
+<link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i" rel="stylesheet">
+<link rel="stylesheet" href="/index.css?___">
+<body>Hi {body}
+<script>window.preload={state}</script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+<script src="/index.js?___"></script>
+</body>
+`
+  .replace(/\n/g, '')
+  .replace(/___/g, Date.now())
+
+app.get(/.*/, (request, response) => {
+  const path = request.originalUrl
+  console.log(path)
+  // !!! make sure the store doesn't use a pre-existing state !!!
+  response.status(200).send(html)
+})
+
+app.listen(5985, () => {
+  console.log('serving app realness')
+})
