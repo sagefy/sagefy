@@ -20,7 +20,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 * Wrote state schema and directory scaffolding for upcoming client-code update
 * Fixed a major server-side rendering (client) bug
 
-### Upcoming Two Weeks: 
+### Upcoming Two Weeks: 2018 Jun 11 - 2018 Jun 24
 
 * Continue work on code architectural updates to support upcoming features
 * Complete and publish "8 ideas of learning" article. If you're interested in review help let me know!
