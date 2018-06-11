@@ -7,6 +7,32 @@ This is a reverse chronological listing of updates on Sagefy's progress. I will 
 
 You can sign up for email updates at https://sgef.cc/devupdates
 
+
+
+
+## UPDATE -- 2018 Jun 11
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2018 May 28 - 2018 Jun 10
+
+* Putting together research sources for "8 ideas" article
+* Wrote state schema and directory scaffolding for upcoming client-code update
+* Fixed a major server-side rendering (client) bug
+
+### Upcoming Two Weeks: 
+
+* Continue work on code architectural updates to support upcoming features
+* Complete and publish "8 ideas of learning" article. If you're interested in review help let me know!
+
+### Feedback
+
+Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+
+
+
+
+
 ## UPDATE -- 2018 May 28
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
