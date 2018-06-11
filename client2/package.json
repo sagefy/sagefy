@@ -8,24 +8,32 @@
   "main": "index.js",
   "repository": "https://github.com/heiskr/sagefy.git",
   "scripts": {
-    "build-scripts": "yarn run compile-content && webpack ./index.client.js ../nginx/statics/index.js",
-    "build-styles": "stylus --include-css --use hsluv-stylus --include . ./index.styl -o ../nginx/statics/index.css",
+    "build-scripts":
+      "yarn run compile-content && webpack ./index.client.js ../nginx/statics/index.js",
+    "build-styles":
+      "stylus --include-css --use hsluv-stylus --include . ./index.styl -o ../nginx/statics/index.css",
     "precommit": "pretty-quick --staged",
-    "compile-content": "yaml2json \"../content/\" --recursive --save && mkdir -p ./content && mv ../content/*.json ./content/",
-    "compress-scripts": "yarn run build-scripts && uglifyjs --compress --mangle --output ../nginx/statics/index.js -- ../nginx/statics/index.js",
-    "compress-styles": "yarn run build-styles && cleancss ../nginx/statics/index.css -o ../nginx/statics/index.css",
-    "deploy": "concurrently -p \"[{name}]\" --names compress-styles,compress-scripts \"yarn run compress-styles\" \"yarn run compress-scripts\"",
+    "compile-content":
+      "yaml2json \"../content/\" --recursive --save && mkdir -p ./content && mv ../content/*.json ./content/",
+    "compress-scripts":
+      "yarn run build-scripts && uglifyjs --compress --mangle --output ../nginx/statics/index.js -- ../nginx/statics/index.js",
+    "compress-styles":
+      "yarn run build-styles && cleancss ../nginx/statics/index.css -o ../nginx/statics/index.css",
+    "deploy":
+      "concurrently -p \"[{name}]\" --names compress-styles,compress-scripts \"yarn run compress-styles\" \"yarn run compress-scripts\"",
     "lint": "eslint \"**/*.js\"",
-    "start": "concurrently -p \"[{name}]\" --names watch-styles,watch-scripts \"yarn run watch-styles\" \"yarn run watch-scripts\"",
-    "test": "yarn run compile-content && concurrently -p \"[{name}]\" --names lint,jest \"yarn run lint\" \"yarn run jest\"",
-    "watch-scripts": "yarn run compile-content && webpack --watch ./index.client.js ../nginx/statics/index.js",
-    "watch-styles": "stylus --include-css --use hsluv-stylus --include . -w ./index.styl -o ../nginx/statics/index.css"
+    "start":
+      "concurrently -p \"[{name}]\" --names watch-styles,watch-scripts \"yarn run watch-styles\" \"yarn run watch-scripts\"",
+    "test":
+      "yarn run compile-content && concurrently -p \"[{name}]\" --names lint,jest \"yarn run lint\" \"yarn run jest\"",
+    "watch-scripts":
+      "yarn run compile-content && webpack --watch ./index.client.js ../nginx/statics/index.js",
+    "watch-styles":
+      "stylus --include-css --use hsluv-stylus --include . -w ./index.styl -o ../nginx/statics/index.css"
   },
   "jest": {
     "collectCoverage": true,
-    "collectCoverageFrom": [
-      "**/*.js"
-    ]
+    "collectCoverageFrom": ["**/*.js"]
   },
   "dependencies": {
     "cookie-parser": "1.4.3",
@@ -52,6 +60,7 @@
     "redux": "4.0.0",
     "redux-listen": "6.0.1",
     "redux-schemad": "0.2.1",
+    "regexparam": "1.0.1",
     "reselect": "3.0.1",
     "timeago.js": "3.0.2",
     "ultradom": "3.3.0"
