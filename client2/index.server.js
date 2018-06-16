@@ -11,13 +11,17 @@ const html = `
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} – Sagefy</title>
 <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i" rel="stylesheet">
-<link rel="stylesheet" href="/index.css?___">
-<body>Hi {body}
+<link rel="stylesheet" href="/index2.css?___">
+<body>
+<div class="vdom"></div>
 <script>window.preload={state}</script>
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-<script src="/index.js?___"></script>
+<script src="/index2.js?___"></script>
 </body>
 `
+  .replace('{title}', '')
+  .replace('{body}', '')
+  .replace('{state}', 'null')
   .replace(/\n/g, '')
   .replace(/___/g, Date.now())
 

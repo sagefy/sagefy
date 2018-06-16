@@ -10,18 +10,18 @@
       "concurrently -p \"[{name}]\" --names watch-server,watch-server2,watch-client-node,watch-client-static,watch-client2-node,watch-client2-static  \"yarn run watch-server\" \"yarn run watch-server2\" \"yarn run watch-client-node\" \"yarn run watch-client-static\" \"yarn run watch-client2-node\" \"yarn run watch-client2-static\"",
     "test": "exit 0",
     "watch-client-node":
-      "onchange 'client/**/*.{js,styl}' -- docker-compose restart client",
+      "chokidar 'client/**/*.{js,styl}' -c 'docker-compose restart client'",
     "watch-client-static": "cd client && yarn install && yarn start",
     "watch-client2-node":
-      "onchange 'client2/**/*.{js,styl}' -- docker-compose restart client2",
+      "chokidar 'client2/**/*.{js,styl}' -c 'docker-compose restart client2'",
     "watch-client2-static": "cd client2 && yarn install && yarn start",
     "watch-server":
-      "onchange 'server/**/*.py' -- docker-compose restart server",
+      "chokidar 'server/**/*.py' -c 'docker-compose restart server'",
     "watch-server2":
-      "onchange 'server2/**/*.go' -- docker-compose restart server2"
+      "chokidar 'server2/**/*.go' -c 'docker-compose restart server2'"
   },
   "dependencies": {
     "concurrently": "3.5.0",
-    "onchange": "3.2.1"
+    "chokidar-cli": "1.2.0"
   }
 }

@@ -51,5 +51,8 @@ postgres-data
 postgres-test-data
 nginx/statics/index.css
 nginx/statics/index.js
+nginx/statics/index2.css
+nginx/statics/index2.js
+nginx/statics/index2.js.map
 dbbu
 yarn-error.log

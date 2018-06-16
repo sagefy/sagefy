@@ -1,3 +1,9 @@
+const {
+  field,
+  collection,
+  // isRequired,
+} = require('redux-schemad')
+
 /*
 const card = 'card'
 const unit = 'unit'
@@ -23,8 +29,9 @@ const page = 'page'
 const unscoredEmbed = 'unscored_embed'
 const choice = 'choice'
 const cardKinds = [video, page, unscoredEmbed, choice]
+*/
 
-const schema = {
+const stateSchema = {
   haveCheckedSession: field(),
   isMenuOpen: field(),
   currentUserId: field(),
@@ -169,16 +176,16 @@ const schema = {
     name: field(),
     data: field(),
   }),
-  ///
+  //
   create$kind: field(), // the kind of things we'll create
   create$step: field(),
   create$recentSubjects: field(), // array of ids
   create$recentUnits: field(), // array of ids
-  create$selectedId: field(),  // what we've selected to add to
+  create$selectedId: field(), // what we've selected to add to
   create$selectedKind: field(),
   create$subjects: collection(),
   create$units: collection(),
   create$cards: collection(),
 }
 
-*/
+module.exports = { stateSchema }

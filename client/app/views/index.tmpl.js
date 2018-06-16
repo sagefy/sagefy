@@ -22,10 +22,6 @@ const routes = [
     tmpl: require('./pages/password.tmpl'),
   },
   {
-    path: '/styleguide',
-    tmpl: require('./pages/styleguide.tmpl'),
-  },
-  {
     path: '/terms',
     tmpl: require('./pages/terms.tmpl'),
   },

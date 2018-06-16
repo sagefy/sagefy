@@ -15,7 +15,6 @@
   "scripts": {
     "build-scripts":
       "yarn run prep-scripts && webpack ./app/index.js ../nginx/statics/index.js",
-    "build-styleguide": "node ./tasks/build_styleguide.js",
     "build-styles":
       "stylus --include-css --use hsluv-stylus --include ./app/ ./app/index.styl -o ../nginx/statics/index.css",
     "precommit": "pretty-quick --staged",
@@ -29,7 +28,7 @@
       "concurrently -p \"[{name}]\" --names compress-styles,compress-scripts \"yarn run compress-styles\" \"yarn run compress-scripts\"",
     "lint-scripts": "eslint \"app/**/*.js\" \"tasks/**/*.js\"",
     "prep-scripts":
-      "concurrently -p \"[{name}]\" --names build-styleguide,compile-content \"yarn run build-styleguide\" \"yarn run compile-content\"",
+      "concurrently -p \"[{name}]\" --names compile-content \"yarn run compile-content\"",
     "run-server": "node ./app/index.server.js",
     "run-tests": "jest",
     "start":

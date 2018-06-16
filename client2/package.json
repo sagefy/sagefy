@@ -9,16 +9,16 @@
   "repository": "https://github.com/heiskr/sagefy.git",
   "scripts": {
     "build-scripts":
-      "yarn run compile-content && webpack ./index.client.js ../nginx/statics/index.js",
+      "yarn run compile-content && webpack ./index.client.js -o ../nginx/statics/index2.js",
     "build-styles":
-      "stylus --include-css --use hsluv-stylus --include . ./index.styl -o ../nginx/statics/index.css",
+      "stylus --include-css --use hsluv-stylus --include . ./index.styl -o ../nginx/statics/index2.css",
     "precommit": "pretty-quick --staged",
     "compile-content":
       "yaml2json \"../content/\" --recursive --save && mkdir -p ./content && mv ../content/*.json ./content/",
     "compress-scripts":
-      "yarn run build-scripts && uglifyjs --compress --mangle --output ../nginx/statics/index.js -- ../nginx/statics/index.js",
+      "yarn run build-scripts && uglifyjs --compress --mangle --output ../nginx/statics/index2.js -- ../nginx/statics/index2.js",
     "compress-styles":
-      "yarn run build-styles && cleancss ../nginx/statics/index.css -o ../nginx/statics/index.css",
+      "yarn run build-styles && cleancss ../nginx/statics/index2.css -o ../nginx/statics/index2.css",
     "deploy":
       "concurrently -p \"[{name}]\" --names compress-styles,compress-scripts \"yarn run compress-styles\" \"yarn run compress-scripts\"",
     "lint": "eslint \"**/*.js\"",
@@ -27,9 +27,9 @@
     "test":
       "yarn run compile-content && concurrently -p \"[{name}]\" --names lint,jest \"yarn run lint\" \"yarn run jest\"",
     "watch-scripts":
-      "yarn run compile-content && webpack --watch ./index.client.js ../nginx/statics/index.js",
+      "yarn run compile-content && webpack --watch ./index.client.js -o ../nginx/statics/index2.js",
     "watch-styles":
-      "stylus --include-css --use hsluv-stylus --include . -w ./index.styl -o ../nginx/statics/index.css"
+      "stylus --include-css --use hsluv-stylus --include . -w ./index.styl -o ../nginx/statics/index2.css"
   },
   "jest": {
     "collectCoverage": true,
@@ -87,6 +87,7 @@
     "stylus": "0.54.5",
     "uglify-js": "3.4.0",
     "webpack": "4.12.0",
+    "webpack-cli": "3.0.8",
     "yamljs": "0.3.0"
   }
 }

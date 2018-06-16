@@ -1,0 +1,46 @@
+/*
+---
+title: Tables
+description: |
+  Tables are zebra-striped, and common elements such as header and footer rows are available. Rows classes are available for each hue; as they only change hue, another indicator needs to be used to differentiate row types. Supplimental tags, such as `tbody` are recommended.
+---
+*/
+
+th
+  font-weight normal
+
+th, td
+  padding 0 ($unit / 2)
+
+table caption
+  font-style italic
+
+thead
+  background $base-color(90)
+  border-bottom 1px solid $base-color(78)
+  text-align left
+
+tbody tr
+  &:nth-child(2n+2)
+    background $base-color(97)
+
+$row--good
+  background $good-color(95)
+  color $good-color(20)
+
+  &:nth-child(2n+2)
+    background $good-color(90)
+
+$row--accent
+  background $accent-color(95)
+  color $accent-color(20)
+
+  &:nth-child(2n+2)
+    background $accent-color(90)
+
+$row--bad
+  background $bad-color(95)
+  color $bad-color(20)
+
+  &:nth-child(2n+2)
+    background $bad-color(90)

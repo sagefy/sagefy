@@ -1,0 +1,25 @@
+/*
+---
+title: Grid
+description: |
+  Any element may be set to a specific number of columns, using the placeholder `col-n`. Any element with set columns larger than the available screen will be reduced to the maximum width.
+---
+*/
+
+cols(n)
+  n * $column + (n - 1) * $gutter
+
+for i in (1..$max-columns)
+  $col-{i}
+    max-width cols(i)
+    padding $unit
+    margin 0 auto
+
+$row
+  margin -1 * $unit
+
+$container
+  @extend $row
+
+$page
+  @extend $col-10

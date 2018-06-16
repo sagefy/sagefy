@@ -1,0 +1,16 @@
+/*
+---
+title: Links
+description: Links are simply blue in color, and like other states, _lighten_ on hover and focus, and _darken_ on active (clicked) or selected. Icons can be optionally included in links. Links stay underlined to support the color. Visited links receive no extraordinary treatment.
+---
+*/
+
+a
+  color $accent-color(50)
+  transition color 0.2s
+
+  &:hover, &:focus
+    color $accent-color(70)
+
+  &:active
+    color $accent-color(30)

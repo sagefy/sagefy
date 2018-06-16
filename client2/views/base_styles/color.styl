@@ -1,0 +1,25 @@
+/*
+---
+title: Colors
+description: |
+  Four primary hues are used by Sagefy. All are generated via [hpluv](http://www.hsluv.org).
+
+  - **Base**. 80&deg;, 50% saturation. Serves as the base hue. Also indicates warning.
+  - **Accent**. 240&deg;, 100% saturation. Indicates a clickable element or navigation element. Also an accent color when no other is applicable.
+  - **Good**. 120&deg;, 100% saturation. Useful for success and acceptance states.
+  - **Bad**. 0&deg;, 100% saturation. Reserved for errors, danger, major issues, or to provide warmth.
+
+  **Lightness**. Any lightness values may be used. Sagefy recommends against values darker than 20%.
+*/
+
+$base-color(light)
+  hpluv(240, 20, light)
+
+$accent-color(light)
+  hpluv(240, 100, light)
+
+$good-color(light)
+  hpluv(120, 100, light)
+
+$bad-color(light)
+  hpluv(0, 100, light)
