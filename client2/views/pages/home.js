@@ -1,5 +1,5 @@
-const { div } = require('../../helpers/tags')
+import React from 'react'
 
-module.exports = function homePage() {
-  return div('Welcome Home')
+export default function HomePage() {
+  return <div>Welcome home!</div>
 }

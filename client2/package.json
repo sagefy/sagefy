@@ -8,32 +8,25 @@
   "main": "index.js",
   "repository": "https://github.com/heiskr/sagefy.git",
   "scripts": {
-    "build-scripts":
-      "yarn run compile-content && webpack ./index.client.js -o ../nginx/statics/index2.js",
-    "build-styles":
-      "stylus --include-css --use hsluv-stylus --include . ./index.styl -o ../nginx/statics/index2.css",
+    "build-client": "yarn run compile-content && webpack ./index.client.js -o ../nginx/statics/index2.js",
+    "build-server": "babel . --out-dir server_dist --ignore node_modules,server_dist",
+    "build-styles": "stylus --include-css --use hsluv-stylus --include . ./index.styl -o ../nginx/statics/index2.css",
     "precommit": "pretty-quick --staged",
-    "compile-content":
-      "yaml2json \"../content/\" --recursive --save && mkdir -p ./content && mv ../content/*.json ./content/",
-    "compress-scripts":
-      "yarn run build-scripts && uglifyjs --compress --mangle --output ../nginx/statics/index2.js -- ../nginx/statics/index2.js",
-    "compress-styles":
-      "yarn run build-styles && cleancss ../nginx/statics/index2.css -o ../nginx/statics/index2.css",
-    "deploy":
-      "concurrently -p \"[{name}]\" --names compress-styles,compress-scripts \"yarn run compress-styles\" \"yarn run compress-scripts\"",
+    "compile-content": "yaml2json \"../content/\" --recursive --save && mkdir -p ./content && mv ../content/*.json ./content/",
+    "compress-scripts": "yarn run build-client && uglifyjs --compress --mangle --output ../nginx/statics/index2.js -- ../nginx/statics/index2.js",
+    "compress-styles": "yarn run build-styles && cleancss ../nginx/statics/index2.css -o ../nginx/statics/index2.css",
+    "deploy": "concurrently -p \"[{name}]\" --names compress-styles,compress-scripts,build-server \"yarn run compress-styles\" \"yarn run compress-scripts\" \"yarn run build-server\"",
     "lint": "eslint \"**/*.js\"",
-    "start":
-      "concurrently -p \"[{name}]\" --names watch-styles,watch-scripts \"yarn run watch-styles\" \"yarn run watch-scripts\"",
-    "test":
-      "yarn run compile-content && concurrently -p \"[{name}]\" --names lint,jest \"yarn run lint\" \"yarn run jest\"",
-    "watch-scripts":
-      "yarn run compile-content && webpack --watch ./index.client.js -o ../nginx/statics/index2.js",
-    "watch-styles":
-      "stylus --include-css --use hsluv-stylus --include . -w ./index.styl -o ../nginx/statics/index2.css"
+    "start": "yarn run compile-content && concurrently -p \"[{name}]\" --names watch-styles,watch-client \"yarn run watch-styles\" \"yarn run watch-client\"",
+    "test": "yarn run compile-content && concurrently -p \"[{name}]\" --names lint,jest \"yarn run lint\" \"yarn run jest\"",
+    "watch-client": "webpack --watch ./index.client.js -o ../nginx/statics/index2.js",
+    "watch-styles": "stylus --include-css --use hsluv-stylus --include . -w ./index.styl -o ../nginx/statics/index2.css"
   },
   "jest": {
     "collectCoverage": true,
-    "collectCoverageFrom": ["**/*.js"]
+    "collectCoverageFrom": [
+      "**/*.js"
+    ]
   },
   "dependencies": {
     "cookie-parser": "1.4.3",
@@ -57,25 +50,31 @@
     "lodash.topairs": "4.3.0",
     "lodash.transform": "4.6.0",
     "normalize.css": "8.0.0",
+    "react": "16.4.1",
+    "react-dom": "16.4.1",
+    "react-redux": "5.0.7",
+    "react-router-dom": "4.3.1",
     "redux": "4.0.0",
     "redux-listen": "6.0.1",
     "redux-schemad": "0.2.1",
-    "regexparam": "1.0.1",
     "reselect": "3.0.1",
-    "timeago.js": "3.0.2",
-    "ultradom": "3.3.0"
+    "timeago.js": "3.0.2"
   },
   "devDependencies": {
     "babel": "6.23.0",
+    "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",
+    "babel-plugin-transform-react-jsx": "6.24.1",
     "babel-preset-es2015": "6.24.1",
     "clean-css": "4.1.11",
     "concurrently": "3.5.1",
     "eslint": "4.19.1",
-    "eslint-config-airbnb-base": "12.1.0",
+    "eslint-config-airbnb": "17.0.0",
     "eslint-config-prettier": "2.9.0",
     "eslint-plugin-import": "2.12.0",
+    "eslint-plugin-jsx-a11y": "6.1.1",
+    "eslint-plugin-react": "7.10.0",
     "glob": "7.1.2",
     "hsluv-stylus": "0.0.1",
     "husky": "0.14.3",

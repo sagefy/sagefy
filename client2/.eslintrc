@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb-base", "prettier"],
+  "extends": ["airbnb", "prettier", "prettier/react"],
   "env": {
     "node": true,
     "browser": true,
@@ -12,7 +12,7 @@
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": false
+      "jsx": true
     }
   },
   "rules": {
@@ -23,6 +23,7 @@
     "no-negated-condition": "error",
     "complexity": ["error", 10],
     "no-useless-call": "error",
-    "object-shorthand": ["error", "always"]
+    "object-shorthand": ["error", "always"],
+    "react/jsx-filename-extension": "off"
   }
 }

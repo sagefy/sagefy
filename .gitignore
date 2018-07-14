@@ -56,3 +56,4 @@ nginx/statics/index2.js
 nginx/statics/index2.js.map
 dbbu
 yarn-error.log
+server_dist

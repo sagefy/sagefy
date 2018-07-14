@@ -81,7 +81,7 @@ services:
      - ./client2:/client
      - ./content:/content
     links:
-     - server
+     - server2
   nginx:
     # https://hub.docker.com/_/nginx/
     image: 'nginx:1.13-alpine'

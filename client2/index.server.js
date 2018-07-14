@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
-const express = require('express')
-const cookieParser = require('cookie-parser')
+import express from 'express'
+import cookieParser from 'cookie-parser'
+import ReactDOMServer from 'react-dom/server'
 
 const app = express()
 app.use(cookieParser())
@@ -28,6 +29,7 @@ const html = `
 app.get(/.*/, (request, response) => {
   const path = request.originalUrl
   console.log(path)
+  // ReactDOMServer.renderToString(element)
   // !!! make sure the store doesn't use a pre-existing state !!!
   response.status(200).send(html)
 })
