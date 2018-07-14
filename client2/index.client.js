@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import Index from './views/Index'
 
@@ -11,7 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.vdom')
   ReactDOM.render(
     <Provider store={store}>
-      <Index />
+      <Router>
+        <Index />
+      </Router>
     </Provider>,
     container
   )

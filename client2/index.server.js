@@ -1,7 +1,14 @@
 /* eslint-disable no-console */
 import express from 'express'
 import cookieParser from 'cookie-parser'
+
+import React from 'react'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 import ReactDOMServer from 'react-dom/server'
+import { StaticRouter as Router } from 'react-router-dom'
+
+import Index from './views/Index'
 
 const app = express()
 app.use(cookieParser())
@@ -14,7 +21,7 @@ const html = `
 <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i" rel="stylesheet">
 <link rel="stylesheet" href="/index2.css?___">
 <body>
-<div class="vdom"></div>
+<div class="vdom">{innerHtml}</div>
 <script>window.preload={state}</script>
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 <script src="/index2.js?___"></script>
@@ -29,9 +36,16 @@ const html = `
 app.get(/.*/, (request, response) => {
   const path = request.originalUrl
   console.log(path)
-  // ReactDOMServer.renderToString(element)
+  const store = createStore((a = {}) => a)
+  const innerHtml = ReactDOMServer.renderToString(
+    <Provider store={store}>
+      <Router location={request.url}>
+        <Index />
+      </Router>
+    </Provider>
+  )
   // !!! make sure the store doesn't use a pre-existing state !!!
-  response.status(200).send(html)
+  response.status(200).send(html.replace('{innerHtml}', innerHtml))
 })
 
 app.listen(5985, () => {
