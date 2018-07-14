@@ -3,12 +3,12 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 
 import React from 'react'
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import ReactDOMServer from 'react-dom/server'
 import { StaticRouter as Router } from 'react-router-dom'
 
 import Index from './views/Index'
+import createSagefyStore from './helpers/createStore'
 
 const app = express()
 app.use(cookieParser())
@@ -35,17 +35,22 @@ const html = `
 
 app.get(/.*/, (request, response) => {
   const path = request.originalUrl
-  console.log(path)
-  const store = createStore((a = {}) => a)
+  console.log('Serving HTML realness on: ', path)
+  // !!! make sure the store doesn't use a pre-existing state !!!
+  const myContext = {}
+  const store = createSagefyStore()
   const innerHtml = ReactDOMServer.renderToString(
     <Provider store={store}>
-      <Router location={request.url}>
+      <Router location={request.url} context={myContext}>
         <Index />
       </Router>
     </Provider>
   )
-  // !!! make sure the store doesn't use a pre-existing state !!!
-  response.status(200).send(html.replace('{innerHtml}', innerHtml))
+  if (myContext.url) {
+    response.redirect(myContext.url)
+  } else {
+    response.status(200).send(html.replace('{innerHtml}', innerHtml))
+  }
 })
 
 app.listen(5985, () => {

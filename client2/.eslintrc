@@ -24,6 +24,7 @@
     "complexity": ["error", 10],
     "no-useless-call": "error",
     "object-shorthand": ["error", "always"],
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "react/prop-types": "off"
   }
 }

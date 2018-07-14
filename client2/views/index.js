@@ -5,7 +5,9 @@ import HomePage from './pages/Home'
 export default function IndexView() {
   return (
     <Route path="/c">
-      <Route path="/" component={HomePage} />
+      <main>
+        <Route path="/" component={HomePage} />
+      </main>
     </Route>
   )
 }
