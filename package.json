@@ -13,7 +13,7 @@
     "watch-client2-node": "chokidar 'client2/**/*.{js,styl}' --ignore 'client2/server_dist/**/*.*' -c 'cd client2; yarn run build-server; cd ..; docker-compose restart client2'",
     "watch-client2-static": "cd client2 && yarn install && yarn start",
     "watch-server": "chokidar 'server/**/*.py' -c 'docker-compose restart server'",
-    "watch-server2": "chokidar 'server2/**/*.py' -c 'docker-compose restart server2'"
+    "watch-server2": "chokidar 'server2/**/*.js' -c 'docker-compose restart server2'"
   },
   "dependencies": {
     "concurrently": "3.5.0",

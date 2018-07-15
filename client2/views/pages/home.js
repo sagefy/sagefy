@@ -120,9 +120,7 @@ export function HomePageInfo() {
         <h2>Why learn with Sagefy?</h2>
         <ul className="home__ul--why">
           <li>
-            <span className="home__icon-wrap">
-              <i className="icon icon-learn" />
-            </span>
+            <WrappedIcon name="learn" />
             <span>
               <strong>Learn</strong> any subject.
             </span>

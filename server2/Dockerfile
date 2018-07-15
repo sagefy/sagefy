@@ -1,8 +1,8 @@
-FROM python:3.6-alpine
+FROM node:8.11.2-alpine
 ADD . /server
 WORKDIR /server
-RUN apk update
-RUN apk add gcc python3-dev musl-dev build-base linux-headers pcre-dev
-RUN apk add postgresql-dev
-RUN pip install -r requirements.txt
-CMD ["python", "index.py"]
+RUN echo -e 'http://dl-cdn.alpinelinux.org/alpine/edge/main\nhttp://dl-cdn.alpinelinux.org/alpine/edge/community\nhttp://dl-cdn.alpinelinux.org/alpine/edge/testing' > /etc/apk/repositories && \
+  apk add --no-cache yarn
+RUN yarn global add pm2
+RUN yarn install
+CMD ["pm2", "start", "./index.js", "--no-daemon"]

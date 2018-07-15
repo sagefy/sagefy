@@ -1,0 +1,37 @@
+{
+  "name": "sagefy-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "node ./index.js",
+    "test": "concurrently -p \"[{name}]\" --names lint,jest \"yarn run lint\" \"yarn run jest\"",
+    "lint": "eslint \"**/*.js\"",
+    "precommit": "pretty-quick --staged"
+  },
+  "dependencies": {
+    "cookie-parser": "1.4.3",
+    "express": "4.16.3",
+    "lodash.get": "4.4.2",
+    "morgan": "1.9.0"
+  },
+  "devDependencies": {
+    "concurrently": "3.6.0",
+    "eslint": "5.1.0",
+    "eslint-config-airbnb-base": "13.0.0",
+    "eslint-config-prettier": "2.9.0",
+    "eslint-plugin-import": "2.13.0",
+    "husky": "0.14.3",
+    "jest": "23.4.1",
+    "prettier": "1.13.7",
+    "pretty-quick": "1.6.0",
+    "supertest": "3.1.0"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/coverage/**"
+    ]
+  }
+}

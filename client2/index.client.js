@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.vdom')
   ReactDOM.render(
     <Provider store={store}>
-      <Router>
+      <Router basename="/c">
         <Index />
       </Router>
     </Provider>,

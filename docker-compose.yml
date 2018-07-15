@@ -50,7 +50,7 @@ services:
      - redis
      - elasticsearch
   server2:
-    # https://hub.docker.com/_/python/
+    # https://hub.docker.com/_/node/
     build: ./server2
     ports:
      - "8654:8654"

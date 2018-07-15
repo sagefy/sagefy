@@ -41,7 +41,7 @@ app.get(/.*/, (request, response) => {
   const store = createSagefyStore()
   const innerHtml = ReactDOMServer.renderToString(
     <Provider store={store}>
-      <Router location={request.url} context={myContext}>
+      <Router location={request.url} context={myContext} basename="/c">
         <Index />
       </Router>
     </Provider>
