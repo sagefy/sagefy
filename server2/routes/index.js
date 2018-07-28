@@ -1,7 +1,13 @@
-module.exports = function indexRoutes(app) {
-  app.get('/x', (req, res) =>
-    res.json({ message: 'Welcome to the Sagefy service!' })
-  )
+const express = require('express')
 
-  return app
-}
+const router = express.Router()
+
+router.get('/', (req, res) =>
+  res.json({ message: 'Welcome to the Sagefy service!' })
+)
+
+router.get('/sitemap', (req, res) => res.json({}))
+
+router.get('/search', (req, res) => res.json({}))
+
+module.exports = router
