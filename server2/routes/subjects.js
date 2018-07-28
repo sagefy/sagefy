@@ -4,7 +4,7 @@ const router = express.Router()
 
 router.get('/', (req, res) => res.json({}))
 
-router.get('/~recommended', (req, res) => res.json({}))
+router.get('/--recommended', (req, res) => res.json({}))
 
 router.get('/:subjectId', (req, res) => res.json({}))
 

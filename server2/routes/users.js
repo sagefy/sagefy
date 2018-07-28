@@ -6,11 +6,11 @@ router.get('/', (req, res) => res.json({}))
 
 router.get('/:userId', (req, res) => res.json({}))
 
-router.get('/:userId/units~created', (req, res) => res.json({}))
+router.get('/:userId/units--created', (req, res) => res.json({}))
 
-router.get('/:userId/cards~created', (req, res) => res.json({}))
+router.get('/:userId/cards--created', (req, res) => res.json({}))
 
-router.get('/:userId/subjects~created', (req, res) => res.json({}))
+router.get('/:userId/subjects--created', (req, res) => res.json({}))
 
 router.post('/', (req, res) => res.json({}))
 
