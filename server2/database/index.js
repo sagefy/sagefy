@@ -1,18 +1,3 @@
-/*
-Ordering functions for this directory:
-
-get
-list
-insert
-update
-delete
-
-simple -> complex
-high -> low
-general -> specific
-
-*/
-
 const { Pool } = require('pg')
 
 const pool = new Pool()

@@ -1,64 +1,38 @@
+const Joi = require('joi')
+
 const db = require('./index')
 
-/*
-users (
-  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  name text NOT NULL UNIQUE,
-  email text NOT NULL UNIQUE CONSTRAINT email_check CHECK (email ~* '^\S+@\S+\.\S+$'),
-  password varchar(60) NOT NULL CONSTRAINT pass_check CHECK (password ~* '^\$2a\$.*$'),
-  settings jsonb NOT NULL --- jsonb?: add new settings without alter table
-)
-
-
-schema = extend({}, default, {
-  'tablename': 'users',
-  'fields': {
-    'modified': {
-      'access': ('private',),
-    },
-    'name': {
-      'validate': (is_required, is_string, (has_min_length, 1),),
-    },
-    'email': {
-      'validate': (is_required, is_string, (has_min_length, 1), is_email,),
-      'access': ('private',),
-    },
-    'password': {
-      'validate': (is_required, is_string, (has_min_length, 8),),
-      'access': ('PaSsWoRd',),
-      'bundle': encrypt_password,
-    },
-    'settings': {
-      'validate': (is_required, is_dict),
-      'default': {},
-      'embed': {
-        'email_frequency': {
-          'validate': (is_required, is_string, (
-            is_one_of, 'immediate', 'daily', 'weekly', 'never',
-          )),
-          'access': ('private',),
-          'default': 'daily',
-        },
-        'view_subjects': {
-          'validate': (is_required, is_string, (
-            is_one_of, 'public', 'private'
-          )),
-          'default': 'private',
-        },
-        'view_follows': {
-          'validate': (is_required, is_string, (
-            is_one_of, 'public', 'private'
-          )),
-          'default': 'private',
-        },
-      }
-    }
-  },
+const userSchema = Joi.object().keys({
+  id: Joi.string()
+    .guid()
+    .required(),
+  created: Joi.date().required(),
+  modified: Joi.date().required(),
+  name: Joi.string()
+    .min(1)
+    .required(),
+  email: Joi.string()
+    .min(1)
+    .email()
+    .required(),
+  password: Joi.string()
+    .min(8)
+    .regex(/^\$2a\$.*$/)
+    .required(),
+  settings: Joi.object()
+    .keys({
+      email_frequency: Joi.string()
+        .valid('immediate', 'daily', 'weekly', 'never')
+        .required(),
+      view_subjects: Joi.string()
+        .valid('public', 'private')
+        .required(),
+      view_follows: Joi.string()
+        .valid('public', 'private')
+        .required(),
+    })
+    .required(),
 })
-
-*/
 
 async function getUser(params) {}
 

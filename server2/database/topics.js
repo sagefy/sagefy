@@ -1,42 +1,24 @@
+const Joi = require('joi')
+
 const db = require('./index')
 
-/*
-CREATE TABLE topics (
-  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  user_id uuid NOT NULL REFERENCES users (id),
-  name text NOT NULL,
-  entity_id uuid NOT NULL,  --- ISSUE cant ref across tables
-  entity_kind entity_kind NOT NULL );
-
-CREATE TYPE entity_kind AS ENUM(
-  'card',
-  'unit',
-  'subject'
-);
-
-
-
-schema = extend({}, default, {
-  'tablename': 'topics',
-  'fields': {
-    'user_id': {
-      'validate': (is_required, is_uuid,),
-    },
-    'name': {
-      'validate': (is_required, is_string),
-    },
-    'entity_id': {
-      'validate': (is_required, is_uuid,),
-    },
-    'entity_kind': {
-      'validate': (is_required, is_string, (is_one_of, 'card', 'unit', 'subject')),
-    },
-  }
+const topicSchema = Joi.object().keys({
+  id: Joi.string()
+    .guid()
+    .required(),
+  created: Joi.date().required(),
+  modified: Joi.date().required(),
+  user_id: Joi.string()
+    .guid()
+    .required(),
+  name: Joi.string().required(),
+  entity_id: Joi.string()
+    .guid()
+    .required(),
+  entity_kind: Joi.string()
+    .valid('card', 'unit', 'subject')
+    .required(),
 })
-
-*/
 
 async function getTopic(topicId) {}
 

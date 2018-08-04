@@ -1,83 +1,54 @@
+const Joi = require('joi')
 const db = require('./index')
 
-/*
-CREATE TABLE posts (
-  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  user_id uuid NOT NULL REFERENCES users (id),
-  topic_id uuid NOT NULL REFERENCES topics (id),
-  kind post_kind NOT NULL DEFAULT 'post',
-  body text NULL CHECK (kind = 'vote' OR body IS NOT NULL),
-  replies_to_id uuid NULL REFERENCES posts (id)
-    CHECK (kind <> 'vote' OR replies_to_id IS NOT NULL),
-  entity_versions jsonb NULL CHECK (kind <> 'proposal' or entity_versions IS NOT NULL),
-    --- jsonb?: ISSUE cant ref, cant enum composite
-  response boolean NULL CHECK (kind <> 'vote' OR response IS NOT NULL)
-);
-
-CREATE UNIQUE INDEX posts_vote_unique_idx ON posts (user_id, replies_to_id) WHERE kind = 'vote';
-
-CREATE TYPE post_kind as ENUM(
-  'post',
-  'proposal',
-  'vote'
-);
-
-schema = extend({}, default, {
-  'tablename': 'posts',
-  'fields': {
-    'user_id': {
-      'validate': (is_required, is_uuid,),
-    },
-    'topic_id': {
-      'validate': (is_required, is_uuid,),
-    },
-    'body': {
-      'validate': (is_required, is_string,),
-    },
-    'kind': {
-      'validate': (is_required, is_string,
-                   (is_one_of, 'post', 'proposal', 'vote')),
-      'default': 'post',
-    },
-    'replies_to_id': {
-      'validate': (is_uuid,),
-    },
-  },
+const postSchema = Joi.object().keys({
+  id: Joi.string()
+    .guid()
+    .required(),
+  created: Joi.date().required(),
+  modified: Joi.date().required(),
+  user_id: Joi.string()
+    .guid()
+    .required(),
+  topic_id: Joi.string()
+    .guid()
+    .required(),
+  kind: Joi.string()
+    .valid('post')
+    .required(),
+  body: Joi.string().required(),
+  replies_to_id: Joi.string().guid(),
 })
 
-schema = extend({}, post_schema, {
-  'fields': {
-    'entity_versions': {
-      'validate': (is_required, is_list, (has_min_length, 1)),
-      'embed_many': {
-        'id': {
-          'validate': (is_required, is_string,),
-        },
-        'kind': {
-          'validate': (is_required, is_string, (
-            is_one_of, 'card', 'unit', 'subject',
-          )),
-        },
-      },
-    },
-  },
+const proposalSchema = postSchema.keys({
+  kind: Joi.string()
+    .valid('proposal')
+    .required(),
+  entity_versions: Joi.array()
+    .items(
+      Joi.object().keys({
+        id: Joi.string()
+          .guid()
+          .required(),
+        kind: Joi.string()
+          .valid('card', 'unit', 'subject')
+          .required(),
+      })
+    )
+    .min(1)
+    .required(),
 })
 
-schema = extend({}, post_schema, {
-  'fields': {
-    'response': {
-      'validate': (is_required, is_boolean,),
-    }
-  },
+const voteSchema = postSchema.keys({
+  kind: Joi.string()
+    .valid('vote')
+    .required(),
+  response: Joi.boolean().required(),
+  body: Joi.string(),
+  replies_to_id: Joi.string()
+    .guid()
+    .required(),
 })
-
-schema['fields']['body']['validate'] = (is_string,)
-schema['fields']['replies_to_id']['validate'] = (is_required, is_uuid,)
-
-
-*/
 
 async function getPost(postId) {}
 

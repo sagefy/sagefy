@@ -1,50 +1,23 @@
+const Joi = require('joi')
+
 const db = require('./index')
 
-/*
-CREATE TYPE follow_kind AS ENUM(
-  'card',
-  'unit',
-  'subject',
-  'topic'
-);
-
-CREATE TABLE follows (
-  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  user_id uuid NOT NULL REFERENCES users (id),
-  entity_id uuid NOT NULL, --- ISSUE cant ref across tables
-  entity_kind follow_kind NOT NULL,
-  UNIQUE (user_id, entity_id)
-);
-
-
-schema = extend({}, default, {
-  'tablename': 'follows',
-  'fields': {
-    'user_id': {
-      'validate': (is_required, is_uuid,),
-    },
-    'entity_id': {
-      'validate': (is_required, is_uuid,),
-    },
-    'entity_kind': {
-      'validate': (
-        is_required,
-        is_string,
-        (
-          is_one_of,
-          'card',
-          'unit',
-          'subject',
-          'topic'
-        ),
-      ),
-    },
-  },
+const followSchema = Joi.object().keys({
+  id: Joi.string()
+    .guid()
+    .required(),
+  created: Joi.date().required(),
+  modified: Joi.date().required(),
+  user_id: Joi.string()
+    .guid()
+    .required(),
+  entity_id: Joi.string()
+    .guid()
+    .required(),
+  entity_kind: Joi.string()
+    .valid('card', 'unit', 'subject', 'topic')
+    .required(),
 })
-
-*/
 
 async function getFollow(userId, entityId) {}
 
