@@ -1,5 +1,12 @@
 const express = require('express')
+const helmet = require('helmet')
 const morgan = require('morgan')
+const session = require('express-session')
+const RedisStore = require('connect-redis')(session)
+
+const config = require('./config')
+
+const errorMiddleware = require('./middleware/errorMiddleware')
 
 const indexRouter = require('./routes/index')
 const sessionsRouter = require('./routes/sessions')
@@ -15,8 +22,23 @@ const cardsRouter = require('./routes/cards')
 
 require('express-async-errors')
 
+const TWO_WEEKS_IN_MS = 1000 * 60 * 60 * 24 * 7 * 2
+
 const app = express()
 app.use(morgan('tiny'))
+app.use(helmet())
+app.use(errorMiddleware)
+app.use(
+  session({
+    secret: config.session.secret,
+    store: new RedisStore(config.redis),
+    cookie: {
+      maxAge: TWO_WEEKS_IN_MS,
+    },
+    resave: false,
+    saveUninitialized: false,
+  })
+)
 
 app.use('/x', indexRouter)
 app.use('/x/sessions', sessionsRouter)
@@ -30,16 +52,6 @@ app.use('/x/topics/:topicId/posts', postsRouter)
 app.use('/x/units', unitsRouter)
 app.use('/x/subjects', subjectsRouter)
 app.use('/x/cards', cardsRouter)
-
-/* eslint-disable max-params */
-app.use((err, req, res, next) => {
-  if (err.message === 'access denied') {
-    res.status(403)
-    res.json({ error: err.message })
-  }
-  next(err)
-})
-/* eslint-enable */
 
 /* eslint-disable no-console */
 app.listen(8654, () => console.log('Listening on port 8654.'))
