@@ -2,6 +2,7 @@ const express = require('express')
 const helmet = require('helmet')
 const morgan = require('morgan')
 const session = require('express-session')
+const bodyParser = require('body-parser')
 const RedisStore = require('connect-redis')(session)
 
 const config = require('./config')
@@ -27,6 +28,7 @@ const TWO_WEEKS_IN_MS = 1000 * 60 * 60 * 24 * 7 * 2
 const app = express()
 app.use(morgan('tiny'))
 app.use(helmet())
+app.use(bodyParser.json())
 app.use(errorMiddleware)
 app.use(
   session({

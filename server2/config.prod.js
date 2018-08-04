@@ -19,7 +19,7 @@ module.exports = {
   },
   pg: {
     host: 'postgres',
-    dbname: 'sagefy',
+    database: 'sagefy',
     user: 'sagefy',
     port: 5432,
   },

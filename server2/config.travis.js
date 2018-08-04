@@ -19,7 +19,7 @@ module.exports = {
   },
   pg: {
     host: 'localhost',
-    dbname: 'postgres',
+    database: 'postgres',
     user: 'postgres',
     port: 5432,
   },
