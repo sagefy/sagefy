@@ -4,7 +4,7 @@ const Joi = require('joi')
 const guidSchema = Joi.string().guid()
 const slugSchema = Joi.string()
   .length(22)
-  .base64()
+  .regex(/^[0-9a-zA-Z\-_]+$/)
 const isUuid = id => Joi.validate(id, guidSchema)
 const isSlug = id => Joi.validate(id, slugSchema)
 

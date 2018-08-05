@@ -12,6 +12,48 @@ const topicSchema = Joi.object().keys({
   entity_kind: Joi.string().valid('card', 'unit', 'subject'),
 })
 
+/*
+insert_topic
+  query = """
+    INSERT INTO topics
+    (  user_id  ,   entity_id  ,   entity_kind  ,   name  )
+    VALUES
+    (%(user_id)s, %(entity_id)s, %(entity_kind)s, %(name)s)
+    RETURNING *;
+  """
+
+update_topic
+  query = """
+    UPDATE topics
+    SET name = %(name)s
+    WHERE id = %(id)s
+    RETURNING *;
+  """
+
+get_topic
+  query = """
+    SELECT *
+    FROM topics
+    WHERE id = %(id)s
+    LIMIT 1;
+  """
+
+list_topics
+  query = """
+    SELECT *
+    FROM topics
+    ORDER BY created DESC;
+  """
+
+list_topics_by_entity_id
+  query = """
+    SELECT *
+    FROM topics
+    WHERE entity_id = %(entity_id)s
+    ORDER BY created DESC;
+  """
+*/
+
 async function getTopic(topicId) {}
 
 async function listTopics(params) {}

@@ -18,6 +18,28 @@ const responseSchema = Joi.object().keys({
     .max(1),
 })
 
+/*
+insert_response
+  query = """
+    INSERT INTO responses
+    (  user_id  ,   card_id  ,   unit_id  ,
+       response  ,   score  ,   learned  )
+    VALUES
+    (%(user_id)s, %(card_id)s, %(unit_id)s,
+     %(response)s, %(score)s, %(learned)s)
+    RETURNING *;
+  """
+
+get_latest_response
+  query = """
+    SELECT *
+    FROM responses
+    WHERE user_id = %(user_id)s AND unit_id = %(unit_id)s
+    ORDER BY created DESC
+    LIMIT 1;
+  """
+*/
+
 async function getLatestResponse(userId, unitId) {}
 
 async function insertResponse(data) {}
