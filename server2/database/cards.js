@@ -182,6 +182,27 @@ list_required_by_cards
     WHERE %(entity_id)s = ANY(require_ids)
     ORDER BY created DESC;
   """
+
+list_random_cards_in_unit
+  query = """
+    WITH temp as (
+      SELECT DISTINCT ON (entity_id) *
+      FROM cards
+      WHERE status = 'accepted'
+      ORDER BY entity_id, created DESC
+    )
+    SELECT *
+    FROM temp
+    WHERE unit_id = %(unit_id)s
+    ORDER BY random()
+    LIMIT %(limit)s;
+  """
+
+list_all_card_entity_ids
+  query = """
+    SELECT entity_id
+    FROM cards;
+  """
 */
 
 async function getCardVersion(versionId) {}
