@@ -10,42 +10,17 @@ const {
   generateSlug,
 } = require('../helpers/uuidSlug')
 const config = require('../config')
-const sendMail = require('../helpers/mail')
 const es = require('../helpers/es')
 
 const SALT_ROUNDS = config.test ? 3 : 12
-const WELCOME_TEXT = `
-Welcome to Sagefy!
-
-If you did not create this account, please reply immediately.
-
-If you are interested in biweekly updates on Sagefy's progress,
-sign up at https://sgef.cc/devupdates
-
-Thank you!
-`
-const TOKEN_TEXT = `
-To change your password, please visit {url}
-
-If you did not request a password change, please reply immediately.
-`
-const PASSWORD_TEXT = `
-You updated your Sagefy password.
-
-If you did not change your password, please reply immediately.
-`
 
 const userSchema = Joi.object().keys({
   id: Joi.string().guid(),
   created: Joi.date(),
   modified: Joi.date(),
   name: Joi.string().min(1),
-  email: Joi.string()
-    .min(1)
-    .email(),
-  password: Joi.string()
-    .min(8)
-    .regex(/^\$2a\$.*$/),
+  email: Joi.string().email(),
+  password: Joi.string().regex(/^\$2a\$.*$/),
   settings: Joi.object().keys({
     email_frequency: Joi.string().valid(
       'immediate',
@@ -58,15 +33,18 @@ const userSchema = Joi.object().keys({
   }),
 })
 
+const plainPasswordSchema = Joi.string()
+  .min(8)
+  .required()
+
 async function sendUserToEs(user) {
   return es.index({
     index: 'entity',
     type: 'user',
     body: {
       ...pick(user, ['id', 'created', 'name']),
-
       avatar: gravatar.url(user.email, { d: 'mm', s: '48' }),
-    }, // TODO add avatar
+    },
     id: convertToSlug(user.id),
   })
 }
@@ -132,6 +110,20 @@ async function listUsersByUserIds(userIds) {
 }
 
 async function insertUser({ name, email, password: plainPassword }) {
+  /* eslint-disable no-param-reassign */
+  name = name.toLowerCase().trim()
+  email = email.toLowerCase().trim()
+  Joi.assert(plainPassword, plainPasswordSchema)
+  const password = await bcrypt.hash(plainPassword, SALT_ROUNDS)
+  const settings = {
+    email_frequency: 'daily',
+    view_subjects: 'private',
+    view_follows: 'private',
+  }
+  Joi.assert(
+    { name, email, password },
+    userSchema.requiredKeys('name', 'email', 'password')
+  )
   const query = `
     INSERT INTO users
     (name, email, password, settings)
@@ -139,69 +131,47 @@ async function insertUser({ name, email, password: plainPassword }) {
     ($1,   $2,    $3,       $4)
     RETURNING *;
   `
-  const password = await bcrypt.hash(plainPassword, SALT_ROUNDS)
-  Joi.assert(
-    { name, email, password },
-    userSchema.requiredKeys('name', 'email', 'password')
-  )
-  const params = [
-    name.toLowerCase().trim(),
-    email.toLowerCase().trim(),
-    password,
-    {
-      email_frequency: 'daily',
-      view_subjects: 'private',
-      view_follows: 'private',
-    },
-  ]
+  const params = [name, email, password, settings]
   const user = await db.getOne(query, params)
   await sendUserToEs(user)
-  await sendMail({
-    to: email,
-    subject: 'Welcome to Sagefy',
-    body: WELCOME_TEXT,
-  })
   return user
 }
 
 async function updateUser({ id, name, email, settings }) {
+  /* eslint-disable no-param-reassign */
+  id = convertToUuid(id)
+  name = name.toLowerCase().trim()
+  email = email.toLowerCase().trim()
+  Joi.assert(
+    { id, name, email, settings },
+    userSchema.requiredKeys('id', 'name', 'email', 'password')
+  )
   const query = `
     UPDATE users
     SET name = $2, email = $3, settings = $4
     WHERE id = $1
     RETURNING *;
   `
-  Joi.assert(
-    { id, name, email, settings },
-    userSchema.requiredKeys('id', 'name', 'email', 'password')
-  )
-  const params = [
-    convertToUuid(id),
-    name.toLowerCase().trim(),
-    email.toLowerCase().trim(),
-    settings,
-  ]
+  const params = [id, name, email, settings]
   const user = await db.getOne(query, params)
   await sendUserToEs(user)
   return user
 }
 
 async function updateUserPassword({ id, password: plainPassword }) {
+  /* eslint-disable no-param-reassign */
+  id = convertToUuid(id)
+  Joi.assert(plainPassword, plainPasswordSchema)
+  const password = await bcrypt.hash(plainPassword, SALT_ROUNDS)
+  Joi.assert({ id, password }, userSchema.requiredKeys('id', 'password'))
   const query = `
     UPDATE users
     SET password = $2
     WHERE id = $1
     RETURNING *;
   `
-  const password = await bcrypt.hash(plainPassword, SALT_ROUNDS)
-  Joi.assert({ id, password }, userSchema.requiredKeys('id', 'password'))
-  const params = [convertToUuid(id), password]
+  const params = [id, password]
   const user = await db.getOne(query, params)
-  await sendMail({
-    to: user.email,
-    subject: 'Welcome to Sagefy',
-    body: PASSWORD_TEXT,
-  })
   return user
 }
 

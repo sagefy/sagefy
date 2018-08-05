@@ -22,8 +22,10 @@ router.post('/', async (req, res) => {
   if (!user) throw abort(404, 'yEcszBaVVEmfKEiCX7oJkQ')
   const match = await bcrypt.compare(req.body.password, user.password)
   if (!match) throw abort(401, 'Badi1ATnBUCVDkI8jGiiwA')
-  req.session.user = convertToSlug(user.id)
-  res.json(pick(req.session, VISIBILE_FIELDS))
+  req.session.regenerate(() => {
+    req.session.user = convertToSlug(user.id)
+    res.json(pick(req.session, VISIBILE_FIELDS))
+  })
 })
 
 // Choose a subject or unit

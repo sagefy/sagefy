@@ -20,6 +20,7 @@ const postsRouter = require('./routes/posts')
 const unitsRouter = require('./routes/units')
 const subjectsRouter = require('./routes/subjects')
 const cardsRouter = require('./routes/cards')
+const responsesRouter = require('./routes/responses')
 
 require('express-async-errors')
 
@@ -54,6 +55,7 @@ app.use('/x/topics/:topicId/posts', postsRouter)
 app.use('/x/units', unitsRouter)
 app.use('/x/subjects', subjectsRouter)
 app.use('/x/cards', cardsRouter)
+app.use('/x/response', responsesRouter)
 
 /* eslint-disable no-console */
 app.listen(8654, () => console.log('Listening on port 8654.'))
