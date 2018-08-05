@@ -2,7 +2,7 @@ module.exports = {
   debug: false,
   test: false,
   session: {
-    secret: '5e8a2787c3824fe788bebc685787c6e4',
+    secret: '___ UPDATE ME ___',
   },
   mail: {
     pool: true,
@@ -11,7 +11,7 @@ module.exports = {
     port: 587,
     auth: {
       user: 'SMTP_Injection',
-      pass: 'wW6Yd6jJHBVilJHX',
+      pass: '___ UPDATE ME ___',
     },
   },
   redis: {

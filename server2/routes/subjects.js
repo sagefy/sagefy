@@ -8,8 +8,7 @@ router.get('/versions/:versionId', (req, res) => res.json({}))
 
 router.get('/', (req, res) => res.json({}))
 // TODO option to get created by userId
-
-router.get('/--recommended', (req, res) => res.json({}))
+// TODO option to recommended subjects
 
 router.get('/:subjectId/units', (req, res) => res.json({}))
 
