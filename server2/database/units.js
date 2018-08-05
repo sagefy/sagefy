@@ -4,10 +4,8 @@ const db = require('./index')
 const entitySchema = require('../helpers/entitySchema')
 
 const unitSchema = entitySchema.keys({
-  body: Joi.string().required(),
-  require_ids: Joi.array()
-    .items(Joi.string().guid())
-    .required(),
+  body: Joi.string(),
+  require_ids: Joi.array().items(Joi.string().guid()),
 })
 
 async function doesUnitExist(entityId) {}

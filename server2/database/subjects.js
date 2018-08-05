@@ -4,19 +4,13 @@ const db = require('./index')
 const entitySchema = require('../helpers/entitySchema')
 
 const subjectSchema = entitySchema.keys({
-  body: Joi.string().required(),
-  members: Joi.array()
-    .items(
-      Joi.object.keys({
-        id: Joi.string()
-          .guid()
-          .required(),
-        kind: Joi.string()
-          .valid('unit', 'subject')
-          .required(),
-      })
-    )
-    .required(),
+  body: Joi.string(),
+  members: Joi.array().items(
+    Joi.object.keys({
+      id: Joi.string().guid(),
+      kind: Joi.string().valid('unit', 'subject'),
+    })
+  ),
 })
 
 async function doesSubjectExist(entityId) {}

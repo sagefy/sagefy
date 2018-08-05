@@ -29,12 +29,8 @@ router.post('/', async (req, res) => {
 // Choose a subject or unit
 router.put('/', auth, (req, res) => {
   const { subject, unit } = req.body
-  if (subject) {
-    req.session.subject = subject
-  }
-  if (unit) {
-    req.session.unit = unit
-  }
+  if (subject) req.session.subject = subject
+  if (unit) req.session.unit = unit
   res.json(pick(req.session, VISIBILE_FIELDS))
 })
 

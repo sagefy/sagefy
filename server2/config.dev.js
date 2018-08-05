@@ -5,12 +5,14 @@ module.exports = {
     secret: '5e8a2787c3824fe788bebc685787c6e4',
   },
   mail: {
-    sender: 'support@sagefy.org',
-    password: 'wW6Yd6jJHBVilJHX',
-    username: 'SMTP_Injection',
-    server: 'smtp.sparkpostmail.com',
+    pool: true,
+    secure: true,
+    host: 'smtp.sparkpostmail.com',
     port: 587,
-    alert: 'support@sagefy.org',
+    auth: {
+      user: 'SMTP_Injection',
+      pass: 'wW6Yd6jJHBVilJHX',
+    },
   },
   redis: {
     host: 'redis',

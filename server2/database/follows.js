@@ -3,20 +3,12 @@ const Joi = require('joi')
 const db = require('./index')
 
 const followSchema = Joi.object().keys({
-  id: Joi.string()
-    .guid()
-    .required(),
-  created: Joi.date().required(),
-  modified: Joi.date().required(),
-  user_id: Joi.string()
-    .guid()
-    .required(),
-  entity_id: Joi.string()
-    .guid()
-    .required(),
-  entity_kind: Joi.string()
-    .valid('card', 'unit', 'subject', 'topic')
-    .required(),
+  id: Joi.string().guid(),
+  created: Joi.date(),
+  modified: Joi.date(),
+  user_id: Joi.string().guid(),
+  entity_id: Joi.string().guid(),
+  entity_kind: Joi.string().valid('card', 'unit', 'subject', 'topic'),
 })
 
 async function getFollow(userId, entityId) {}

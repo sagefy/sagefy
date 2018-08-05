@@ -3,21 +3,13 @@ const Joi = require('joi')
 const db = require('./index')
 
 const topicSchema = Joi.object().keys({
-  id: Joi.string()
-    .guid()
-    .required(),
-  created: Joi.date().required(),
-  modified: Joi.date().required(),
-  user_id: Joi.string()
-    .guid()
-    .required(),
-  name: Joi.string().required(),
-  entity_id: Joi.string()
-    .guid()
-    .required(),
-  entity_kind: Joi.string()
-    .valid('card', 'unit', 'subject')
-    .required(),
+  id: Joi.string().guid(),
+  created: Joi.date(),
+  modified: Joi.date(),
+  user_id: Joi.string().guid(),
+  name: Joi.string(),
+  entity_id: Joi.string().guid(),
+  entity_kind: Joi.string().valid('card', 'unit', 'subject'),
 })
 
 async function getTopic(topicId) {}

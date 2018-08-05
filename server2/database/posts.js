@@ -2,52 +2,33 @@ const Joi = require('joi')
 const db = require('./index')
 
 const postSchema = Joi.object().keys({
-  id: Joi.string()
-    .guid()
-    .required(),
-  created: Joi.date().required(),
-  modified: Joi.date().required(),
-  user_id: Joi.string()
-    .guid()
-    .required(),
-  topic_id: Joi.string()
-    .guid()
-    .required(),
-  kind: Joi.string()
-    .valid('post')
-    .required(),
-  body: Joi.string().required(),
+  id: Joi.string().guid(),
+  created: Joi.date(),
+  modified: Joi.date(),
+  user_id: Joi.string().guid(),
+  topic_id: Joi.string().guid(),
+  kind: Joi.string().valid('post'),
+  body: Joi.string(),
   replies_to_id: Joi.string().guid(),
 })
 
 const proposalSchema = postSchema.keys({
-  kind: Joi.string()
-    .valid('proposal')
-    .required(),
+  kind: Joi.string().valid('proposal'),
   entity_versions: Joi.array()
     .items(
       Joi.object().keys({
-        id: Joi.string()
-          .guid()
-          .required(),
-        kind: Joi.string()
-          .valid('card', 'unit', 'subject')
-          .required(),
+        id: Joi.string().guid(),
+        kind: Joi.string().valid('card', 'unit', 'subject'),
       })
     )
-    .min(1)
-    .required(),
+    .min(1),
 })
 
 const voteSchema = postSchema.keys({
-  kind: Joi.string()
-    .valid('vote')
-    .required(),
-  response: Joi.boolean().required(),
+  kind: Joi.string().valid('vote'),
+  response: Joi.boolean(),
   body: Joi.string(),
-  replies_to_id: Joi.string()
-    .guid()
-    .required(),
+  replies_to_id: Joi.string().guid(),
 })
 
 async function getPost(postId) {}

@@ -3,17 +3,11 @@ const Joi = require('joi')
 const db = require('./index')
 
 const userSubjectSchema = Joi.object().keys({
-  id: Joi.string()
-    .guid()
-    .required(),
-  created: Joi.date().required(),
-  modified: Joi.date().required(),
-  userId: Joi.string()
-    .guid()
-    .required(),
-  subjectId: Joi.string()
-    .guid()
-    .required(),
+  id: Joi.string().guid(),
+  created: Joi.date(),
+  modified: Joi.date(),
+  userId: Joi.string().guid(),
+  subjectId: Joi.string().guid(),
 })
 
 async function listUserSubjects(userId) {}

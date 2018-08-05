@@ -4,107 +4,70 @@ const db = require('./index')
 const entitySchema = require('../helpers/entitySchema')
 
 const cardSchema = entitySchema.keys({
-  unit_id: Joi.string()
-    .guid()
-    .required(),
-  require_ids: Joi.array()
-    .items(Joi.string().guid())
-    .required(),
-  kind: Joi.string()
-    .valid('video', 'page', 'unscored_embed', 'choice')
-    .required(),
-  data: Joi.object().required(),
+  unit_id: Joi.string().guid(),
+  require_ids: Joi.array().items(Joi.string().guid()),
+  kind: Joi.string().valid('video', 'page', 'unscored_embed', 'choice'),
+  data: Joi.object(),
 })
 
 const choiceCardSchema = cardSchema.keys({
-  kind: Joi.string()
-    .valid('choice')
-    .required(),
-  data: Joi.object()
-    .keys({
-      body: Joi.string().required(),
-      options: Joi.array()
-        .min(1)
-        .items(
-          Joi.object().keys({
-            id: Joi.string()
-              .guid()
-              .required(),
-            value: Joi.string().required(),
-            correct: Joi.boolean().required(),
-            feedback: Joi.string().required(),
-          })
-        )
-        .required(),
-      order: Joi.string()
-        .valid('random', 'set')
-        .required(),
-      max_options_to_show: Joi.number()
-        .integer()
-        .required(),
-    })
-    .required(),
+  kind: Joi.string().valid('choice'),
+  data: Joi.object().keys({
+    body: Joi.string(),
+    options: Joi.array()
+      .min(1)
+      .items(
+        Joi.object().keys({
+          id: Joi.string().guid(),
+          value: Joi.string(),
+          correct: Joi.boolean(),
+          feedback: Joi.string(),
+        })
+      ),
+    order: Joi.string().valid('random', 'set'),
+    max_options_to_show: Joi.number().integer(),
+  }),
 })
 
 const pageCardSchema = cardSchema.keys({
-  kind: Joi.string()
-    .valid('page')
-    .required(),
+  kind: Joi.string().valid('page'),
   data: Joi.object().keys({
-    body: Joi.string().required(),
+    body: Joi.string(),
   }),
 })
 
 const videoCardSchema = cardSchema.keys({
-  kind: Joi.string()
-    .valid('video')
-    .required(),
+  kind: Joi.string().valid('video'),
   data: Joi.object().keys({
-    site: Joi.string()
-      .valid('youtube', 'vimeo')
-      .required(),
-    video_id: Joi.string().required(),
+    site: Joi.string().valid('youtube', 'vimeo'),
+    video_id: Joi.string(),
   }),
 })
 
 const unscoredEmbedCardSchema = cardSchema.keys({
-  kind: Joi.string()
-    .valid('unscored_embed')
-    .required(),
+  kind: Joi.string().valid('unscored_embed'),
   data: Joi.object().keys({
-    url: Joi.string()
-      .uri()
-      .required(),
+    url: Joi.string().uri(),
   }),
 })
 
 const cardParametersSchema = Joi.object().keys({
-  id: Joi.string()
-    .guid()
-    .required(),
-  created: Joi.date().required(),
-  modified: Joi.date().required(),
-  entity_id: Joi.string()
-    .guid()
-    .required(),
-  guess_distribution: Joi.object()
-    .pattern(
-      /^\d*\.?\d*$/,
-      Joi.number()
-        .min(0)
-        .max(1)
-        .required()
-    )
-    .required(),
-  slip_distribution: Joi.object()
-    .pattern(
-      /^\d*\.?\d*$/,
-      Joi.number()
-        .min(0)
-        .max(1)
-        .required()
-    )
-    .required(),
+  id: Joi.string().guid(),
+  created: Joi.date(),
+  modified: Joi.date(),
+  entity_id: Joi.string().guid(),
+  guess_distribution: Joi.object().pattern(
+    /^\d*\.?\d*$/,
+    Joi.number()
+      .min(0)
+      .max(1)
+  ),
+  slip_distribution: Joi.object().pattern(
+    /^\d*\.?\d*$/,
+    Joi.number()
+      .min(0)
+      .max(1)
+  ),
 })
 
 async function getCardVersion(versionId) {}

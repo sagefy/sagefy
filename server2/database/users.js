@@ -1,11 +1,39 @@
 const Joi = require('joi')
 const bcrypt = require('bcrypt')
+const pick = require('lodash.pick')
+const gravatar = require('gravatar')
 
 const db = require('./index')
-const { convertToUuid, generateSlug } = require('../helpers/uuidSlug')
+const {
+  convertToUuid,
+  convertToSlug,
+  generateSlug,
+} = require('../helpers/uuidSlug')
 const config = require('../config')
+const sendMail = require('../helpers/mail')
+const es = require('../helpers/es')
 
 const SALT_ROUNDS = config.test ? 3 : 12
+const WELCOME_TEXT = `
+Welcome to Sagefy!
+
+If you did not create this account, please reply immediately.
+
+If you are interested in biweekly updates on Sagefy's progress,
+sign up at https://sgef.cc/devupdates
+
+Thank you!
+`
+const TOKEN_TEXT = `
+To change your password, please visit {url}
+
+If you did not request a password change, please reply immediately.
+`
+const PASSWORD_TEXT = `
+You updated your Sagefy password.
+
+If you did not change your password, please reply immediately.
+`
 
 const userSchema = Joi.object().keys({
   id: Joi.string().guid(),
@@ -29,6 +57,19 @@ const userSchema = Joi.object().keys({
     view_follows: Joi.string().valid('public', 'private'),
   }),
 })
+
+async function sendUserToEs(user) {
+  return es.index({
+    index: 'entity',
+    type: 'user',
+    body: {
+      ...pick(user, ['id', 'created', 'name']),
+
+      avatar: gravatar.url(user.email, { d: 'mm', s: '48' }),
+    }, // TODO add avatar
+    id: convertToSlug(user.id),
+  })
+}
 
 async function getUserById(userId) {
   const query = `
@@ -64,15 +105,9 @@ async function getUserByName(name) {
 }
 
 async function getUser({ id, email, name } = {}) {
-  if (id) {
-    return getUserById(id)
-  }
-  if (email) {
-    return getUserByEmail(email)
-  }
-  if (name) {
-    return getUserByName(name)
-  }
+  if (id) return getUserById(id)
+  if (email) return getUserByEmail(email)
+  if (name) return getUserByName(name)
   return null
 }
 
@@ -119,10 +154,14 @@ async function insertUser({ name, email, password: plainPassword }) {
       view_follows: 'private',
     },
   ]
-  const result = await db.getOne(query, params)
-  // TODO update ES
-  // TODO email user
-  return result
+  const user = await db.getOne(query, params)
+  await sendUserToEs(user)
+  await sendMail({
+    to: email,
+    subject: 'Welcome to Sagefy',
+    body: WELCOME_TEXT,
+  })
+  return user
 }
 
 async function updateUser({ id, name, email, settings }) {
@@ -142,9 +181,9 @@ async function updateUser({ id, name, email, settings }) {
     email.toLowerCase().trim(),
     settings,
   ]
-  const result = await db.getOne(query, params)
-  // TODO update ES
-  return result
+  const user = await db.getOne(query, params)
+  await sendUserToEs(user)
+  return user
 }
 
 async function updateUserPassword({ id, password: plainPassword }) {
@@ -157,9 +196,13 @@ async function updateUserPassword({ id, password: plainPassword }) {
   const password = await bcrypt.hash(plainPassword, SALT_ROUNDS)
   Joi.assert({ id, password }, userSchema.requiredKeys('id', 'password'))
   const params = [convertToUuid(id), password]
-  const result = await db.getOne(query, params)
-  // TODO update ES
-  return result
+  const user = await db.getOne(query, params)
+  await sendMail({
+    to: user.email,
+    subject: 'Welcome to Sagefy',
+    body: PASSWORD_TEXT,
+  })
+  return user
 }
 
 async function anonymizeUser(id) {
@@ -173,9 +216,9 @@ async function anonymizeUser(id) {
   const email = `${generateSlug()}@example.com`
   const password = await bcrypt.hash(generateSlug(), SALT_ROUNDS)
   const params = [convertToUuid(id), name, email, password]
-  const result = await db.getOne(query, params)
-  // TODO update ES
-  return result
+  const user = await db.getOne(query, params)
+  await sendUserToEs(user)
+  return user
 }
 
 module.exports = {
