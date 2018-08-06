@@ -8,6 +8,28 @@ This is a reverse chronological listing of updates on Sagefy's progress. I will 
 You can sign up for email updates at https://sgef.cc/devupdates
 
 
+
+## UPDATE -- 2018 Aug 6
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2018 Jul 23 - 2018 Aug 5
+
+* Worked on updated service endpoints for public, user, and session routes.
+
+### Upcoming Two Weeks: 2018 Aug 6 - 2018 Aug 19
+
+* Continue work on code architectural updates to support upcoming features.
+* Begin planning for next Medium article.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+
+
+
+
+
 ## UPDATE -- 2018 Jul 23
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
@@ -23,6 +45,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### Feedback
 
 Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+
 
 
 
