@@ -11,66 +11,58 @@ const followSchema = Joi.object().keys({
   entity_kind: Joi.string().valid('card', 'unit', 'subject', 'topic'),
 })
 
-/*
-get_follow
-  query = """
+async function getFollow(userId, entityId) {
+  const query = `
     SELECT *
     FROM follows
-    WHERE user_id = %(user_id)s AND entity_id = %(entity_id)s
+    WHERE user_id = $user_id AND entity_id = $entity_id
     LIMIT 1;
-  """
+  `
+}
 
-get_follow_by_id
-  query = """
+async function getFollowById(followId) {
+  const query = `
     SELECT *
     FROM follows
-    WHERE id = %(id)s
+    WHERE id = $id
     LIMIT 1;
-  """
+  `
+}
 
-list_follows_by_user
-  query = """
+async function listFollowsByUser(userId) {
+  const query = `
     SELECT *
     FROM follows
-    WHERE user_id = %(user_id)s
+    WHERE user_id = $user_id
     ORDER BY created DESC;
-  """
+  `
+}
 
-list_follows_by_entity
-  query = """
+async function listFollowsByEntity({ entityId, entityKind }) {
+  const query = `
     SELECT *
     FROM follows
-    WHERE entity_id = %(entity_id)s AND entity_kind = %(entity_kind)s
+    WHERE entity_id = $entity_id AND entity_kind = $entity_kind
     ORDER BY created DESC;
-  """
+  `
+}
 
-insert_follow
-  query = """
+async function insertFollow(data) {
+  const query = `
     INSERT INTO follows
-    (  user_id  ,   entity_id  ,   entity_kind  )
+    ( user_id,  entity_id,  entity_kind)
     VALUES
-    (%(user_id)s, %(entity_id)s, %(entity_kind)s)
+    ($user_id, $entity_id, $entity_kind)
     RETURNING *;
-  """
+  `
+}
 
-delete_follow
-  query = """
+async function deleteFollow(followId) {
+  const query = `
     DELETE FROM follows
-    WHERE id = %(id)s;
-  """
-*/
-
-async function getFollow(userId, entityId) {}
-
-async function getFollowById(followId) {}
-
-async function listFollowsByUser(userId) {}
-
-async function listFollowsByEntity({ entityId, entityKind }) {}
-
-async function insertFollow(data) {}
-
-async function deleteFollow(followId) {}
+    WHERE id = $id;
+  `
+}
 
 module.eports = {
   getFollow,

@@ -1,5 +1,5 @@
 const express = require('express')
-const pick = require('lodash.pick')
+const { pick } = require('lodash')
 const bcrypt = require('bcrypt')
 
 const abort = require('../helpers/abort')

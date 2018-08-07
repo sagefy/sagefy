@@ -1,6 +1,5 @@
 const express = require('express')
-const pick = require('lodash.pick')
-const omit = require('lodash.omit')
+const { pick, omit } = require('lodash')
 const gravatar = require('gravatar')
 const bcrypt = require('bcrypt')
 

@@ -10,35 +10,30 @@ const userSubjectSchema = Joi.object().keys({
   subjectId: Joi.string().guid(),
 })
 
-/*
-insert_user_subject
-  query = """
-    INSERT INTO users_subjects
-    (  user_id  ,   subject_id  )
-    VALUES
-    (%(user_id)s, %(subject_id)s)
-    RETURNING *;
-  """
-
-list_user_subjects
-  query = """
+async function listUserSubjects(userId) {
+  const query = `
     SELECT *
     FROM users_subjects
-    WHERE user_id = %(user_id)s
+    WHERE user_id = $user_id
     ORDER BY created DESC;
-  """
+  `
+}
 
-remove_user_subject
-  query = """
+async function insertUserSubject(userId, subjectId) {
+  const query = `
+    INSERT INTO users_subjects
+    ( user_id,  subject_id)
+    VALUES
+    ($user_id, $subject_id)
+    RETURNING *;
+  `
+}
+
+async function deleteUserSubject(userId, subjectId) {
+  const query = `
     DELETE FROM users_subjects
-    WHERE user_id = %(user_id)s AND subject_id = %(subject_id)s;
-  """
-*/
-
-async function listUserSubjects(userId) {}
-
-async function insertUserSubject(userId, subjectId) {}
-
-async function deleteUserSubject(userId, subjectId) {}
+    WHERE user_id = $user_id AND subject_id = $subject_id;
+  `
+}
 
 module.exports = { listUserSubjects, insertUserSubject, deleteUserSubject }

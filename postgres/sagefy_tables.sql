@@ -106,6 +106,12 @@ CREATE TABLE follows (
 CREATE TABLE units_entity_id (
   entity_id uuid PRIMARY KEY DEFAULT uuid_generate_v4()
 );
+/* TODO: migrate these to shared entity_id table...
+CREATE TABLE entity_id (
+  entity_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  entity_kind x_kind NOT NULL
+);
+*/
 
 CREATE TABLE units (
   version_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),

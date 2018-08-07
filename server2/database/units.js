@@ -8,89 +8,64 @@ const unitSchema = entitySchema.keys({
   require_ids: Joi.array().items(Joi.string().guid()),
 })
 
-/*
-insert_unit
-  query = """
-    INSERT INTO units_entity_id (entity_id)
-    VALUES (%(entity_id)s);
-    INSERT INTO units
-    (  entity_id  ,   name  ,   user_id  ,
-       body  ,   require_ids  )
-    VALUES
-    (%(entity_id)s  , %(name)s, %(user_id)s,
-     %(body)s, %(require_ids)s)
-    RETURNING *;
-  """
-
-insert_unit_version
-  query = """
-    INSERT INTO units
-    (  entity_id  ,   previous_id  ,   name  ,   user_id  ,
-       body  ,   require_ids  )
-    VALUES
-    (%(entity_id)s, %(previous_id)s, %(name)s, %(user_id)s,
-     %(body)s, %(require_ids)s)
-    RETURNING *;
-  """
-
-update_unit
-  query = """
-    UPDATE units
-    SET status = %(status)s
-    WHERE version_id = %(version_id)s
-    RETURNING *;
-  """
-
-does_unit_exist
-  query = """
+async function doesUnitExist(entityId) {
+  const query = `
     SELECT entity_id
     FROM units_entity_id
-    WHERE entity_id = %(entity_id)s
+    WHERE entity_id = $entity_id
     LIMIT 1;
-  """
+  `
+}
 
-get_latest_accepted_unit
-  query = """
+async function getUnitVersion(versionId) {
+  const query = `
+    SELECT *
+    FROM units
+    WHERE version_id = $version_id
+    ORDER BY created DESC;
+  `
+}
+
+async function getLatestAcceptedUnit(entityId) {
+  const query = `
     SELECT DISTINCT ON (entity_id) *
     FROM units
-    WHERE status = 'accepted' AND entity_id = %(entity_id)s
+    WHERE status = 'accepted' AND entity_id = $entity_id
     ORDER BY entity_id, created DESC;
-  """
+  `
+}
 
-list_latest_accepted_units
-  query = """
+async function listLatestAcceptedUnits(entityIds) {
+  const query = `
     SELECT DISTINCT ON (entity_id) *
     FROM units
-    WHERE status = 'accepted' AND entity_id in %(entity_ids)s
+    WHERE status = 'accepted' AND entity_id in $entity_ids
     ORDER BY entity_id, created DESC;
-  """
+  `
+}
 
-list_many_unit_versions
-  query = """
+async function listOneUnitVersions(entityId) {
+  const query = `
     SELECT *
     FROM units
-    WHERE version_id in %(version_ids)s
+    WHERE entity_id = $entity_id
     ORDER BY created DESC;
-  """
+  `
+}
 
-get_unit_version
-  query = """
+async function listManyUnitVersions(versionIds) {
+  const query = `
     SELECT *
     FROM units
-    WHERE version_id = %(version_id)s
+    WHERE version_id in $version_ids
     ORDER BY created DESC;
-  """
+  `
+}
 
-list_one_unit_versions
-  query = """
-    SELECT *
-    FROM units
-    WHERE entity_id = %(entity_id)s
-    ORDER BY created DESC;
-  """
+async function listRequiredUnits(entityId) {}
 
-list_required_by_units
-  query = """
+async function listRequiredByUnits(entityId) {
+  const query = `
     WITH temp as (
       SELECT DISTINCT ON (entity_id) *
       FROM units
@@ -99,50 +74,63 @@ list_required_by_units
     )
     SELECT *
     FROM temp
-    WHERE %(entity_id)s = ANY(require_ids)
+    WHERE $entity_id = ANY(require_ids)
     ORDER BY created DESC;
-  """
-
-list_my_recently_created_units
-  query = """
-    SELECT DISTINCT ON (entity_id) *
-    FROM units
-    WHERE user_id = %(user_id)s
-    ORDER BY entity_id, created DESC;
-  """
-
-list_all_unit_entity_ids
-  query = """
-    SELECT entity_id
-    FROM units;
-  """
-*/
-
-async function doesUnitExist(entityId) {}
-
-async function getUnitVersion(versionId) {}
-
-async function getLatestAcceptedUnit(entityId) {}
-
-async function listLatestAcceptedUnits(entityIds) {}
-
-async function listManyUnitVersions(versionIds) {}
-
-async function listRequiredUnits(entityId) {}
-
-async function listRequiredByUnits(entityId) {}
+  `
+}
 
 async function listUnitsBySubjectFlat(subjectId) {}
 
-async function listMyRecentlyCreatedUnits(userId) {}
+async function listMyRecentlyCreatedUnits(userId) {
+  const query = `
+    SELECT DISTINCT ON (entity_id) *
+    FROM units
+    WHERE user_id = $user_id
+    ORDER BY entity_id, created DESC;
+  `
+}
 
-async function listAllUnitEntityIds() {}
+async function listAllUnitEntityIds() {
+  const query = `
+    SELECT entity_id
+    FROM units;
+  `
+}
 
-async function insertUnit(data) {}
+async function insertUnit(data) {
+  const query = `
+    INSERT INTO units_entity_id (entity_id)
+    VALUES ($entity_id);
+    INSERT INTO units
+    (  entity_id  ,   name  ,   user_id  ,
+       body  ,   require_ids  )
+    VALUES
+    ($entity_id  , $name, $user_id,
+     $body, $require_ids)
+    RETURNING *;
+  `
+}
 
-async function insertUnitVersion(prev, data) {}
+async function insertUnitVersion(prev, data) {
+  const query = `
+    INSERT INTO units
+    (  entity_id  ,   previous_id  ,   name  ,   user_id  ,
+       body  ,   require_ids  )
+    VALUES
+    ($entity_id, $previous_id, $name, $user_id,
+     $body, $require_ids)
+    RETURNING *;
+  `
+}
 
-async function updateUnit(versionId, status) {}
+async function updateUnit(versionId, status) {
+  const query = `
+    UPDATE units
+    SET status = $status
+    WHERE version_id = $version_id
+    RETURNING *;
+  `
+}
 
 module.exports = {
   doesUnitExist,

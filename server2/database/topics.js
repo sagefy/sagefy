@@ -12,57 +12,50 @@ const topicSchema = Joi.object().keys({
   entity_kind: Joi.string().valid('card', 'unit', 'subject'),
 })
 
-/*
-insert_topic
-  query = """
+async function getTopic(topicId) {
+  const query = `
+    SELECT *
+    FROM topics
+    WHERE id = $id
+    LIMIT 1;
+  `
+}
+
+async function listTopics(params) {
+  const query = `
+    SELECT *
+    FROM topics
+    ORDER BY created DESC;
+  `
+}
+
+async function listTopicsByEntityId(entityId) {
+  const query = `
+    SELECT *
+    FROM topics
+    WHERE entity_id = $entity_id
+    ORDER BY created DESC;
+  `
+}
+
+async function insertTopic(data) {
+  const query = `
     INSERT INTO topics
     (  user_id  ,   entity_id  ,   entity_kind  ,   name  )
     VALUES
-    (%(user_id)s, %(entity_id)s, %(entity_kind)s, %(name)s)
+    ($user_id, $entity_id, $entity_kind, $name)
     RETURNING *;
-  """
+  `
+}
 
-update_topic
-  query = """
+async function updateTopic(prev, data) {
+  const query = `
     UPDATE topics
-    SET name = %(name)s
-    WHERE id = %(id)s
+    SET name = $name
+    WHERE id = $id
     RETURNING *;
-  """
-
-get_topic
-  query = """
-    SELECT *
-    FROM topics
-    WHERE id = %(id)s
-    LIMIT 1;
-  """
-
-list_topics
-  query = """
-    SELECT *
-    FROM topics
-    ORDER BY created DESC;
-  """
-
-list_topics_by_entity_id
-  query = """
-    SELECT *
-    FROM topics
-    WHERE entity_id = %(entity_id)s
-    ORDER BY created DESC;
-  """
-*/
-
-async function getTopic(topicId) {}
-
-async function listTopics(params) {}
-
-async function listTopicsByEntityId(entityId) {}
-
-async function insertTopic(data) {}
-
-async function updateTopic(prev, data) {}
+  `
+}
 
 module.exports = {
   getTopic,

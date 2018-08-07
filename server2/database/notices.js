@@ -20,60 +20,53 @@ const noticeSchema = Joi.object().keys({
   tags: Joi.array().items(Joi.string().min(1)),
 })
 
-/*
-get_notice
-  query = """
+async function getNotice(noticeId) {
+  const query = `
     SELECT *
     FROM notices
-    WHERE id = %(id)s
+    WHERE id = $id
     LIMIT 1;
-  """
+  `
+}
 
-insert_notice
-  query = """
-    INSERT INTO notices
-    (  user_id  ,   kind  ,   data  )
-    VALUES
-    (%(user_id)s, %(kind)s, %(data)s)
-    RETURNING *;
-  """
-
-list_notices
-  query = """
+async function listNotices(userId, { limit = 10, offset = 0 }) {
+  const query = `
     SELECT *
     FROM notices
-    WHERE user_id = %(user_id)s
+    WHERE user_id = $user_id
     ORDER BY created DESC
-    LIMIT %(limit)s
-    OFFSET %(offset)s;
-  """
+    LIMIT $limit
+    OFFSET $offset;
+  `
+}
 
-mark_notice_as_read
-  query = """
+async function insertNotice(data) {
+  const query = `
+    INSERT INTO notices
+    ( user_id,  kind,  data)
+    VALUES
+    ($user_id, $kind, $data)
+    RETURNING *;
+  `
+}
+
+async function updateNoticeAsRead(noticeId) {
+  const query = `
     UPDATE notices
     SET read = TRUE
-    WHERE id = %(id)s
+    WHERE id = $id
     RETURNING *;
-  """
+  `
+}
 
-mark_notice_as_unread
-  query = """
+async function updateNoticeAsUnread(noticeId) {
+  const query = `
     UPDATE notices
     SET read = FALSE
-    WHERE id = %(id)s
+    WHERE id = $id
     RETURNING *;
-  """
-*/
-
-async function getNotice(noticeId) {}
-
-async function listNotices(userId, { limit = 10, offset = 0 }) {}
-
-async function insertNotice(data) {}
-
-async function updateNoticeAsRead(noticeId) {}
-
-async function updateNoticeAsUnread(noticeId) {}
+  `
+}
 
 module.exports = {
   getNotice,
