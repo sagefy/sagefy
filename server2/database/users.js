@@ -52,7 +52,7 @@ async function getUserById(userId) {
     WHERE id = $id
     LIMIT 1;
   `
-  return db.getOne(query, { userId })
+  return db.get(query, { userId })
 }
 
 async function getUserByEmail(email) {
@@ -62,7 +62,7 @@ async function getUserByEmail(email) {
     WHERE email = $email
     LIMIT 1;
   `
-  return db.getOne(query, { email })
+  return db.get(query, { email })
 }
 
 async function getUserByName(name) {
@@ -72,7 +72,7 @@ async function getUserByName(name) {
     WHERE name = $name
     LIMIT 1;
   `
-  return db.getOne(query, { name })
+  return db.get(query, { name })
 }
 
 async function getUser({ id, email, name } = {}) {
@@ -121,7 +121,7 @@ async function insertUser({ name, email, password: plainPassword }) {
     ($name, $email, $password, $settings)
     RETURNING *;
   `
-  const user = await db.getOne(query, params)
+  const user = await db.save(query, params)
   await sendUserToEs(user)
   return user
 }
@@ -140,7 +140,7 @@ async function updateUser({ id, name, email, settings }) {
     WHERE id = $id
     RETURNING *;
   `
-  const user = await db.getOne(query, params)
+  const user = await db.save(query, params)
   await sendUserToEs(user)
   return user
 }
@@ -158,7 +158,7 @@ async function updateUserPassword({ id, password: plainPassword }) {
     WHERE id = $id
     RETURNING *;
   `
-  const user = await db.getOne(query, params)
+  const user = await db.save(query, params)
   return user
 }
 
@@ -172,7 +172,7 @@ async function anonymizeUser(id) {
   const name = generateSlug()
   const email = `${generateSlug()}@example.com`
   const password = await bcrypt.hash(generateSlug(), SALT_ROUNDS)
-  const user = await db.getOne(query, { id, name, email, password })
+  const user = await db.save(query, { id, name, email, password })
   await sendUserToEs(user)
   return user
 }

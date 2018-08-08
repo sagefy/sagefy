@@ -40,22 +40,36 @@ function query(text, params) {
   return pool.query(convertText(text), convertParams(text, params))
 }
 
+async function saveList(text, params) {
+  const res = await query(text, params)
+  return res.rows.map(convertRow)
+}
+
+async function save(text, params) {
+  const res = await query(text, params)
+  return convertRow(get(res.rows, 0))
+}
+
 async function list(text, params) {
   try {
-    const res = await query(text, params)
-    return res.rows.map(convertRow)
+    return await saveList(text, params)
   } catch (e) {
     return null
   }
 }
 
 async function getOne(text, params) {
-  const rows = await list(text, params)
-  return get(rows, 0)
+  try {
+    return await save(text, params)
+  } catch (e) {
+    return null
+  }
 }
 
 module.exports = {
   query,
+  saveList,
+  save,
   list,
-  getOne,
+  get: getOne,
 }
