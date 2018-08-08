@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#abort err with json 1`] = `[Error: hello]`;
+
+exports[`#abort err with props 1`] = `[Error: hello]`;
