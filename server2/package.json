@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node ./index.js",
     "test": "concurrently -p \"[{name}]\" --names lint,jest \"yarn run lint\" \"yarn run jest\"",
+    "dtest": "docker-compose run server2 yarn test",
+    "djest": "docker-compose run server2 yarn jest",
     "lint": "eslint \"**/*.js\"",
     "precommit": "pretty-quick --staged"
   },
@@ -47,5 +49,13 @@
       "**/*.js",
       "!**/coverage/**"
     ]
+  },
+  "coverageThreshold": {
+    "global": {
+      "branches": 100,
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
+    }
   }
 }

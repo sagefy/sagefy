@@ -11,6 +11,7 @@ router.get('/', (req, res) => res.json({}))
 // TODO option to recommended subjects
 
 router.get('/:subjectId/units', (req, res) => res.json({}))
+// TODO is this a units route?
 
 router.get('/:subjectId/versions', (req, res) => res.json({}))
 

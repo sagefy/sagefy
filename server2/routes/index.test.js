@@ -13,4 +13,16 @@ describe('indexRoutes', () => {
         .expect('Content-Type', /json/)
         .expect(res => expect(res.text).toMatchSnapshot()))
   })
+
+  describe('GET /x/sitemap', () => {
+    test('should create a sitemap', () => {
+      expect(true).toBe(false)
+    })
+  })
+
+  describe('GET /x/search', () => {
+    test('should get search results', () => {
+      expect(true).toBe(false)
+    })
+  })
 })
