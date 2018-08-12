@@ -10,14 +10,14 @@ const isSlug = id => Joi.validate(id, slugSchema)
 
 module.exports = {
   convertToUuid(id) {
-    if (isSlug(id)) {
+    if (!isSlug(id).error) {
       return slugid.decode(id)
     }
     return id
   },
 
   convertToSlug(id) {
-    if (isUuid(id)) {
+    if (!isUuid(id).error) {
       return slugid.encode(id)
     }
     return id

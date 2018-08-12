@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`indexRoutes GET /x Should send a message 1`] = `"{\\"message\\":\\"Welcome to the Sagefy service!\\"}"`;

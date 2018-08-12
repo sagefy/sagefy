@@ -52,7 +52,7 @@ async function getUserById(userId) {
     WHERE id = $id
     LIMIT 1;
   `
-  return db.get(query, { userId })
+  return db.get(query, { id: userId })
 }
 
 async function getUserByEmail(email) {

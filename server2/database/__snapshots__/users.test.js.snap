@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`db: users #getUserByName should getUserByName 1`] = `undefined`;

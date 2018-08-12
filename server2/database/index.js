@@ -33,6 +33,7 @@ function convertParams(text, params) {
 }
 
 function convertRow(row) {
+  if (!row) return row
   return mapValues(row, (value, key) => convertValueToSlug(key, value))
 }
 
@@ -67,6 +68,11 @@ async function getOne(text, params) {
 }
 
 module.exports = {
+  convertValueToUuid,
+  convertValueToSlug,
+  convertText,
+  convertParams,
+  convertRow,
   query,
   saveList,
   save,
