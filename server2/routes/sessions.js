@@ -1,6 +1,6 @@
 const express = require('express')
 const { pick } = require('lodash')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 const abort = require('../helpers/abort')
 const auth = require('../middleware/authMiddleware')

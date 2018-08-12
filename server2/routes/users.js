@@ -1,7 +1,7 @@
 const express = require('express')
 const { pick, omit } = require('lodash')
 const gravatar = require('gravatar')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 const {
   getUserById,
@@ -105,7 +105,7 @@ router.put('/:userId', auth, async (req, res) => {
 })
 
 router.put('/:userId/password', async (req, res) => {
-  const validToken = await bcrypt.compare(req.session.token, req.body.token)
+  const validToken = await bcrypt.compare(req.body.token, req.session.token)
   if (!validToken) throw abort(401, 'RVAgSR2bo06fPKTGO2AcVg')
   const { userId: id } = req.params
   const { password } = req.body
@@ -119,7 +119,7 @@ router.put('/:userId/password', async (req, res) => {
 })
 
 router.delete('/:userId', async (req, res) => {
-  const validToken = await bcrypt.compare(req.session.token, req.body.token)
+  const validToken = await bcrypt.compare(req.body.token, req.session.token)
   if (!validToken) throw abort(401, 'm0BEbqfntUmuU4z3hkeO9A')
   const { userId: id } = req.params
   if (req.session.user !== id) throw abort(403, 'fmXJKKVWKUaB4rJSQVjkZw')

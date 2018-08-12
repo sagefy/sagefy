@@ -8,11 +8,12 @@
     "test": "concurrently -p \"[{name}]\" --names lint,jest \"yarn run lint\" \"yarn run jest\"",
     "dtest": "docker-compose run server2 yarn test",
     "djest": "docker-compose run server2 yarn jest",
+    "dinstall": "docker-compose run server2 yarn",
     "lint": "eslint \"**/*.js\"",
     "precommit": "pretty-quick --staged"
   },
   "dependencies": {
-    "bcrypt": "3.0.0",
+    "bcryptjs": "2.4.3",
     "body-parser": "1.18.3",
     "connect-redis": "3.3.3",
     "cookie-parser": "1.4.3",
@@ -47,7 +48,8 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "**/*.js",
-      "!**/coverage/**"
+      "!**/coverage/**",
+      "!/index.js"
     ]
   },
   "coverageThreshold": {

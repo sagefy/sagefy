@@ -1,9 +1,10 @@
 const request = require('supertest')
 const express = require('express')
-const indexRoutes = require('./index')
+const indexRouter = require('./index')
 
-describe('indexRoutes', () => {
-  const app = indexRoutes(express())
+describe('indexRouter', () => {
+  const app = express()
+  app.use('/x', indexRouter)
 
   describe('GET /x', () => {
     test('Should send a message', () =>
