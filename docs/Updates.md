@@ -9,6 +9,29 @@ You can sign up for email updates at https://sgef.cc/devupdates
 
 
 
+
+
+## UPDATE -- 2018 Aug 20
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2018 Aug 6 - 2018 Aug 19
+
+* Personal computer is with Apple repair, so not much progress to report :(
+
+### Upcoming Two Weeks: 2018 Aug 20 - 2018 Sept 2
+
+* Once I have my computer again... continue work on code architectural updates to support upcoming features.
+* Begin planning for next Medium article.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+
+
+
+
+
 ## UPDATE -- 2018 Aug 6
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
