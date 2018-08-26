@@ -24,8 +24,8 @@ const baseConfig = {
     logErrors: true,
   },
   es: {
-    host: 'elasticsearch',
-    port: 9200,
+    host: 'elasticsearch:9200',
+    log: 'trace',
   },
 }
 

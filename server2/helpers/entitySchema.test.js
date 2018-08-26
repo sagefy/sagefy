@@ -1,5 +1,7 @@
+const entitySchema = require('./entitySchema')
+
 describe('entitySchema', () => {
   test('should exist', () => {
-    expect(true).toBe(false)
+    expect(entitySchema.describe()).toMatchSnapshot()
   })
 })

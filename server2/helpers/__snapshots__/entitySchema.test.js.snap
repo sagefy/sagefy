@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`entitySchema should exist 1`] = `
+Object {
+  "children": Object {
+    "available": Object {
+      "falsy": Array [
+        false,
+      ],
+      "flags": Object {
+        "insensitive": true,
+        "presence": "required",
+      },
+      "truthy": Array [
+        true,
+      ],
+      "type": "boolean",
+    },
+    "created": Object {
+      "flags": Object {
+        "presence": "required",
+      },
+      "type": "date",
+    },
+    "entity_id": Object {
+      "flags": Object {
+        "presence": "required",
+      },
+      "invalids": Array [
+        "",
+      ],
+      "rules": Array [
+        Object {
+          "name": "guid",
+        },
+      ],
+      "type": "string",
+    },
+    "language": Object {
+      "flags": Object {
+        "presence": "required",
+      },
+      "invalids": Array [
+        "",
+      ],
+      "rules": Array [
+        Object {
+          "arg": Object {
+            "pattern": /\\^\\\\w\\{2\\}\\(-\\\\w\\{2\\}\\)\\?\\$/,
+          },
+          "name": "regex",
+        },
+      ],
+      "type": "string",
+    },
+    "modified": Object {
+      "flags": Object {
+        "presence": "required",
+      },
+      "type": "date",
+    },
+    "name": Object {
+      "flags": Object {
+        "presence": "required",
+      },
+      "invalids": Array [
+        "",
+      ],
+      "type": "string",
+    },
+    "previous_id": Object {
+      "invalids": Array [
+        "",
+      ],
+      "rules": Array [
+        Object {
+          "name": "guid",
+        },
+      ],
+      "type": "string",
+    },
+    "status": Object {
+      "flags": Object {
+        "allowOnly": true,
+        "presence": "required",
+      },
+      "invalids": Array [
+        "",
+      ],
+      "type": "string",
+      "valids": Array [
+        "pending",
+        "blocked",
+        "declined",
+        "accepted",
+      ],
+    },
+    "tags": Object {
+      "flags": Object {
+        "presence": "required",
+        "sparse": false,
+      },
+      "items": Array [
+        Object {
+          "invalids": Array [
+            "",
+          ],
+          "rules": Array [
+            Object {
+              "arg": 1,
+              "name": "min",
+            },
+          ],
+          "type": "string",
+        },
+      ],
+      "type": "array",
+    },
+    "user_id": Object {
+      "flags": Object {
+        "presence": "required",
+      },
+      "invalids": Array [
+        "",
+      ],
+      "rules": Array [
+        Object {
+          "name": "guid",
+        },
+      ],
+      "type": "string",
+    },
+    "version_id": Object {
+      "flags": Object {
+        "presence": "required",
+      },
+      "invalids": Array [
+        "",
+      ],
+      "rules": Array [
+        Object {
+          "name": "guid",
+        },
+      ],
+      "type": "string",
+    },
+  },
+  "type": "object",
+}
+`;

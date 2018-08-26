@@ -1,21 +1,19 @@
+const { get, set, setex, ttl, del } = require('./redis')
+
 describe('#redis', () => {
-  test('should connect to redis', () => {
-    expect(true).toBe(false)
+  test('should have get, set, and delete methods', async () => {
+    expect(await get('testkey')).toBe(null)
+    await set('testkey', 'hello')
+    expect(await get('testkey')).toBe('hello')
+    await del('testkey')
+    expect(await get('testkey')).toBe(null)
   })
 
-  test('should have get method', () => {
-    expect(true).toBe(false)
-  })
-
-  test('should have set method', () => {
-    expect(true).toBe(false)
-  })
-
-  test('should have setex method', () => {
-    expect(true).toBe(false)
-  })
-
-  test('should have delete method', () => {
-    expect(true).toBe(false)
+  test('should have setex and ttl method', async () => {
+    await setex('testkey', 1, 'hello')
+    expect(await get('testkey')).toBe('hello')
+    expect(await ttl('testkey')).toBe(1)
+    await del('testkey')
+    expect(await get('testkey')).toBe(null)
   })
 })

@@ -1,9 +1,26 @@
+const sendMail = require('./mail')
+const config = require('../config')
+
+jest.mock('nodemailer', () => ({
+  createTransport: () => ({
+    sendMail: () => Promise.resolve(true),
+  }),
+}))
+
 describe('#sendMail', () => {
-  test('should skip in test mode', () => {
-    expect(true).toBe(false)
+  const prevConfigTest = config.test
+
+  afterEach(() => {
+    config.test = prevConfigTest
   })
 
-  test('should send an email', () => {
-    expect(true).toBe(false)
+  test('should skip in test mode', async () => {
+    config.test = true
+    expect(await sendMail({})).toBe(undefined)
+  })
+
+  test('should send an email', async () => {
+    config.test = false
+    expect(await sendMail({})).toBe(true)
   })
 })

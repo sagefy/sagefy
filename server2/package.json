@@ -8,6 +8,7 @@
     "test": "concurrently -p \"[{name}]\" --names lint,jest \"yarn run lint\" \"yarn run jest\"",
     "dtest": "docker-compose run server2 yarn test",
     "djest": "docker-compose run server2 yarn jest",
+    "ddown": "docker-compose down",
     "dinstall": "docker-compose run server2 yarn",
     "lint": "eslint \"**/*.js\"",
     "precommit": "pretty-quick --staged"
