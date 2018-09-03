@@ -1,31 +1,26 @@
 const { convertToUuid, convertToSlug, generateSlug } = require('./uuidSlug')
 
+const UUID = '92755920-39e9-b644-a38d-64c1e1702b32'
+const SLUG = 'knVZIDnptkSjjWTB4XArMg'
+
 describe('uuidSlug', () => {
   describe('#convertToUuid', () => {
     test('convert a slug to uuid', () => {
-      expect(convertToUuid('knVZIDnptkSjjWTB4XArMg')).toBe(
-        '92755920-39e9-b644-a38d-64c1e1702b32'
-      )
+      expect(convertToUuid(SLUG)).toBe(UUID)
     })
 
     test('leave a uuid alone', () => {
-      expect(convertToUuid('669D02FA-5D77-4454-955A-C1C9531B96BA')).toBe(
-        '669D02FA-5D77-4454-955A-C1C9531B96BA'
-      )
+      expect(convertToUuid(UUID)).toBe(UUID)
     })
   })
 
   describe('#convertToSlug', () => {
     test('convert a uuid to a slug', () => {
-      expect(convertToSlug('669D02FA-5D77-4454-955A-C1C9531B96BA')).toBe(
-        'Zp0C-l13RFSVWsHJUxuWug'
-      )
+      expect(convertToSlug(UUID)).toBe(SLUG)
     })
 
     test('leave a slug alone', () => {
-      expect(convertToSlug('knVZIDnptkSjjWTB4XArMg')).toBe(
-        'knVZIDnptkSjjWTB4XArMg'
-      )
+      expect(convertToSlug(SLUG)).toBe(SLUG)
     })
   })
 

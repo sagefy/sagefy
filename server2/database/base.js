@@ -37,8 +37,12 @@ function convertRow(row) {
   return mapValues(row, (value, key) => convertValueToSlug(key, value))
 }
 
-function query(text, params) {
-  return pool.query(convertText(text), convertParams(text, params))
+async function query(text, params) {
+  const result = await pool.query(
+    convertText(text),
+    convertParams(text, params)
+  )
+  return result
 }
 
 async function saveList(text, params) {
@@ -68,6 +72,7 @@ async function getOne(text, params) {
 }
 
 module.exports = {
+  pool,
   convertValueToUuid,
   convertValueToSlug,
   convertText,
