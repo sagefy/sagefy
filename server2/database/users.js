@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const { pick } = require('lodash')
 const gravatar = require('gravatar')
 
-const db = require('./index')
+const db = require('./base')
 const { generateSlug } = require('../helpers/uuidSlug')
 const config = require('../config')
 const es = require('../helpers/es')

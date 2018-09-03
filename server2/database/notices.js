@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const db = require('./index')
+const db = require('./base')
 
 const noticeSchema = Joi.object().keys({
   id: Joi.string().guid(),

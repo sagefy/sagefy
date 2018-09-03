@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-const db = require('./index')
+const db = require('./base')
 
 const topicSchema = Joi.object().keys({
   id: Joi.string().guid(),

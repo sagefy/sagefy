@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-const db = require('./index')
+const db = require('./base')
 
 const responseSchema = Joi.object().keys({
   id: Joi.string().guid(),

@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-const db = require('./index')
+const db = require('./base')
 const entitySchema = require('../helpers/entitySchema')
 
 const cardSchema = entitySchema.keys({
