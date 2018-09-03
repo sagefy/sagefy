@@ -22,13 +22,13 @@ module.exports = data => {
     { id: 'choose-unit', className: 'page' },
     Object.keys(data.unitLearned).length
       ? hgroup(
-          h1('Choose a Unit'),
+          h1('What\'s next?'),
           h3(
             icon('good'),
             ' You just finished a unit! Pick the next one to learn:'
           )
         )
-      : h1('Choose a Unit'),
+      : h1('Where should we start?'),
     ul(
       { id: data.chooseUnit.subject.entity_id, className: 'units' },
       data.chooseUnit.units.slice(0, 5).map((unit, index) =>

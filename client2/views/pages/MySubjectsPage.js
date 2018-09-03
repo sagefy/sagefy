@@ -42,7 +42,7 @@ module.exports = data => {
 
   return div(
     { id: 'my-subjects', className: 'page' },
-    h1('My Subjects'),
+    h1('What do you want to learn today?'),
     p(
       { className: 'alert--accent' },
       icon('follow'),

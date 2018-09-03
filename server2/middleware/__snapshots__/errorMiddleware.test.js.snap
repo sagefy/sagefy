@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#errorMiddleware handle a 500 error 1`] = `
+Object {
+  "json": [Function],
+  "status": [Function],
+  "xcode": 500,
+  "xjson": Object {
+    "errors": Array [
+      Object {
+        "message": "Server error.",
+      },
+    ],
+    "ref": "UilnKcaD20CQRWAFc4s8Eg",
+  },
+}
+`;
+
+exports[`#errorMiddleware handle a 500 error 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      [Error],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`#errorMiddleware handle a joi validation error 1`] = `
+Object {
+  "json": [Function],
+  "status": [Function],
+  "xcode": 400,
+  "xjson": Object {
+    "errors": Array [
+      Object {
+        "message": "\\"name\\" is not allowed to be empty",
+        "name": "name",
+        "type": "any.empty",
+      },
+    ],
+    "ref": "2lEH29U46EukhyCL_KlgMQ",
+  },
+}
+`;
+
+exports[`#errorMiddleware handle a joi validation error 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "details": Object {
+          "message": "\\"name\\" is not allowed to be empty",
+          "path": Array [
+            "name",
+          ],
+          "type": "any.empty",
+        },
+        "isJoi": true,
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`#errorMiddleware handle a status code error 1`] = `
+Object {
+  "json": [Function],
+  "status": [Function],
+  "xcode": 401,
+  "xjson": Object {
+    "errors": Array [
+      Object {
+        "message": "Unauthorized",
+      },
+    ],
+    "ref": undefined,
+  },
+}
+`;
+
+exports[`#errorMiddleware handle a status code error 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      [Error],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`#errorMiddleware pass through 1`] = `
+Object {
+  "json": [Function],
+  "status": [Function],
+}
+`;
+
+exports[`#errorMiddleware pass through 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      null,
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
+}
+`;
