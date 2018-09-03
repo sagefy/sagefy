@@ -1,3 +1,216 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`db: users #getUserByName should getUserByName 1`] = `undefined`;
+exports[`db: users #anonymizeUser should anonymizeUser 1`] = `
+Object {
+  "email": "helen@example.com",
+  "name": "helen",
+  "settings": Object {
+    "email_frequency": "never",
+    "view_follows": "private",
+    "view_subjects": "private",
+  },
+}
+`;
+
+exports[`db: users #getUser should getUser 1`] = `
+Object {
+  "email": "helen@example.com",
+  "name": "helen",
+  "settings": Object {
+    "email_frequency": "daily",
+    "view_follows": "private",
+    "view_subjects": "private",
+  },
+}
+`;
+
+exports[`db: users #getUser should getUser 2`] = `
+Object {
+  "email": "helen@example.com",
+  "name": "helen",
+  "settings": Object {
+    "email_frequency": "daily",
+    "view_follows": "private",
+    "view_subjects": "private",
+  },
+}
+`;
+
+exports[`db: users #getUser should getUser 3`] = `
+Object {
+  "email": "helen@example.com",
+  "name": "helen",
+  "settings": Object {
+    "email_frequency": "daily",
+    "view_follows": "private",
+    "view_subjects": "private",
+  },
+}
+`;
+
+exports[`db: users #getUserByEmail should getUserByEmail 1`] = `
+Object {
+  "email": "helen@example.com",
+  "name": "helen",
+  "settings": Object {
+    "email_frequency": "daily",
+    "view_follows": "private",
+    "view_subjects": "private",
+  },
+}
+`;
+
+exports[`db: users #getUserById should getUserById 1`] = `
+Object {
+  "email": "helen@example.com",
+  "name": "helen",
+  "settings": Object {
+    "email_frequency": "daily",
+    "view_follows": "private",
+    "view_subjects": "private",
+  },
+}
+`;
+
+exports[`db: users #getUserByName should getUserByName 1`] = `
+Object {
+  "email": "helen@example.com",
+  "name": "helen",
+  "settings": Object {
+    "email_frequency": "daily",
+    "view_follows": "private",
+    "view_subjects": "private",
+  },
+}
+`;
+
+exports[`db: users #insertUser should fail field validation 1`] = `
+Array [
+  Object {
+    "context": Object {
+      "invalids": Array [
+        "",
+      ],
+      "key": "name",
+      "label": "name",
+      "value": "",
+    },
+    "message": "\\"name\\" is not allowed to be empty",
+    "path": Array [
+      "name",
+    ],
+    "type": "any.empty",
+  },
+]
+`;
+
+exports[`db: users #insertUser should fail password validation 1`] = `
+Array [
+  Object {
+    "context": Object {
+      "encoding": undefined,
+      "key": undefined,
+      "label": "value",
+      "limit": 8,
+      "value": "a",
+    },
+    "message": "\\"value\\" length must be at least 8 characters long",
+    "path": Array [],
+    "type": "string.min",
+  },
+]
+`;
+
+exports[`db: users #insertUser should insertUser 1`] = `
+Object {
+  "email": "helen@example.com",
+  "name": "helen",
+  "settings": Object {
+    "email_frequency": "daily",
+    "view_follows": "private",
+    "view_subjects": "private",
+  },
+}
+`;
+
+exports[`db: users #insertUser should insertUser 2`] = `
+Object {
+  "email": "iris@example.com",
+  "name": "iris",
+  "settings": Object {
+    "email_frequency": "daily",
+    "view_follows": "private",
+    "view_subjects": "private",
+  },
+}
+`;
+
+exports[`db: users #listUsers should listUsers 1`] = `
+Array [
+  Object {
+    "email": "iris@example.com",
+    "name": "iris",
+    "settings": Object {
+      "email_frequency": "daily",
+      "view_follows": "private",
+      "view_subjects": "private",
+    },
+  },
+  Object {
+    "email": "helen@example.com",
+    "name": "helen",
+    "settings": Object {
+      "email_frequency": "daily",
+      "view_follows": "private",
+      "view_subjects": "private",
+    },
+  },
+]
+`;
+
+exports[`db: users #listUsersByUserIds should listUsersByUserIds 1`] = `
+Array [
+  Object {
+    "email": "iris@example.com",
+    "name": "iris",
+    "settings": Object {
+      "email_frequency": "daily",
+      "view_follows": "private",
+      "view_subjects": "private",
+    },
+  },
+  Object {
+    "email": "helen@example.com",
+    "name": "helen",
+    "settings": Object {
+      "email_frequency": "daily",
+      "view_follows": "private",
+      "view_subjects": "private",
+    },
+  },
+]
+`;
+
+exports[`db: users #updateUser should updateUser 1`] = `
+Object {
+  "email": "helen@example.com",
+  "name": "helen",
+  "settings": Object {
+    "email_frequency": "daily",
+    "view_follows": "private",
+    "view_subjects": "private",
+  },
+}
+`;
+
+exports[`db: users #updateUser should updateUser 2`] = `
+Object {
+  "email": "helen@example.com",
+  "name": "helen",
+  "settings": Object {
+    "email_frequency": "never",
+    "view_follows": "private",
+    "view_subjects": "private",
+  },
+}
+`;

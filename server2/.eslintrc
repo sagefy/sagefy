@@ -4,9 +4,6 @@
     "node": true,
     "jest": true
   },
-  "globals": {
-    "expect": true,
-  },
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",

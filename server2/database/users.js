@@ -11,7 +11,7 @@ const es = require('../helpers/es')
 const SALT_ROUNDS = config.test ? 3 : 12
 
 const userSchema = Joi.object().keys({
-  id: Joi.string().guid(),
+  id: Joi.string().length(22),
   created: Joi.date(),
   modified: Joi.date(),
   name: Joi.string().min(1),
@@ -95,7 +95,7 @@ async function listUsersByUserIds(ids) {
   const query = `
     SELECT *
     FROM users
-    WHERE id in $ids
+    WHERE id = ANY ($ids)
     ORDER BY created DESC;
   `
   return db.list(query, { ids })

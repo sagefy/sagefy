@@ -25,7 +25,6 @@ const baseConfig = {
   },
   es: {
     host: 'elasticsearch:9200',
-    log: 'trace',
   },
 }
 

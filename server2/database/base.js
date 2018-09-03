@@ -9,13 +9,13 @@ const PARAMS_REGEX = /\$[\w_]+/g
 
 function convertValueToUuid(key, value) {
   if (key === 'id' || key.endsWith('_id')) return convertToUuid(value)
-  if (key.endsWith('_ids')) return value.map(convertToUuid)
+  if (key === 'ids' || key.endsWith('_ids')) return value.map(convertToUuid)
   return value
 }
 
 function convertValueToSlug(key, value) {
   if (key === 'id' || key.endsWith('_id')) return convertToSlug(value)
-  if (key.endsWith('_ids')) return value.map(convertToSlug)
+  if (key === 'ids' || key.endsWith('_ids')) return value.map(convertToSlug)
   return value
 }
 
@@ -28,8 +28,11 @@ function convertText(text) {
 }
 
 function convertParams(text, params) {
-  const keys = text.match(PARAMS_REGEX).map(n => n.substring(1))
-  return keys.map(key => convertValueToUuid(key, params[key]))
+  const keys = text.match(PARAMS_REGEX)
+  if (!keys) return []
+  return keys
+    .map(n => n.substring(1))
+    .map(key => convertValueToUuid(key, params[key]))
 }
 
 function convertRow(row) {
@@ -37,7 +40,7 @@ function convertRow(row) {
   return mapValues(row, (value, key) => convertValueToSlug(key, value))
 }
 
-async function query(text, params) {
+async function query(text, params = {}) {
   const result = await pool.query(
     convertText(text),
     convertParams(text, params)
