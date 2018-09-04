@@ -2,10 +2,10 @@ const Joi = require('joi')
 const db = require('./base')
 
 const noticeSchema = Joi.object().keys({
-  id: Joi.string().guid(),
+  id: Joi.string().length(22),
   created: Joi.date(),
   modified: Joi.date(),
-  user_id: Joi.string().guid(),
+  user_id: Joi.string().length(22),
   kind: Joi.string().valid(
     'create_topic',
     'create_proposal',
@@ -27,6 +27,7 @@ async function getNotice(noticeId) {
     WHERE id = $id
     LIMIT 1;
   `
+  return db.get(query, { id: noticeId })
 }
 
 async function listNotices(userId, { limit = 10, offset = 0 }) {
@@ -38,9 +39,11 @@ async function listNotices(userId, { limit = 10, offset = 0 }) {
     LIMIT $limit
     OFFSET $offset;
   `
+  return db.list(query, { user_id: userId, limit, offset })
 }
 
-async function insertNotice(data) {
+async function insertNotice(params) {
+  Joi.assert(params, noticeSchema.requiredKeys(Object.keys(params)))
   const query = `
     INSERT INTO notices
     ( user_id,  kind,  data)
@@ -48,24 +51,34 @@ async function insertNotice(data) {
     ($user_id, $kind, $data)
     RETURNING *;
   `
+  const data = await db.save(query, params)
+  return data
 }
 
 async function updateNoticeAsRead(noticeId) {
+  const params = { id: noticeId }
+  Joi.assert(params, noticeSchema.requiredKeys(Object.keys(params)))
   const query = `
     UPDATE notices
     SET read = TRUE
     WHERE id = $id
     RETURNING *;
   `
+  const data = await db.save(query, params)
+  return data
 }
 
 async function updateNoticeAsUnread(noticeId) {
+  const params = { id: noticeId }
+  Joi.assert(params, noticeSchema.requiredKeys(Object.keys(params)))
   const query = `
     UPDATE notices
     SET read = FALSE
     WHERE id = $id
     RETURNING *;
   `
+  const data = await db.save(query, params)
+  return data
 }
 
 module.exports = {

@@ -1,11 +1,14 @@
 const Joi = require('joi')
 
+// TODO add additional checks on insert
+
 const db = require('./base')
+const es = require('../helpers/es')
 const entitySchema = require('../helpers/entitySchema')
 
 const cardSchema = entitySchema.keys({
-  unit_id: Joi.string().guid(),
-  require_ids: Joi.array().items(Joi.string().guid()),
+  unit_id: Joi.string().length(22),
+  require_ids: Joi.array().items(Joi.string().length(22)),
   kind: Joi.string().valid('video', 'page', 'unscored_embed', 'choice'),
   data: Joi.object(),
 })
@@ -18,7 +21,7 @@ const choiceCardSchema = cardSchema.keys({
       .min(1)
       .items(
         Joi.object().keys({
-          id: Joi.string().guid(),
+          id: Joi.string().length(22),
           value: Joi.string(),
           correct: Joi.boolean(),
           feedback: Joi.string(),
@@ -51,11 +54,18 @@ const unscoredEmbedCardSchema = cardSchema.keys({
   }),
 })
 
+const typeToSchema = {
+  choice: choiceCardSchema,
+  page: pageCardSchema,
+  video: videoCardSchema,
+  unscored_embed: unscoredEmbedCardSchema,
+}
+
 const cardParametersSchema = Joi.object().keys({
-  id: Joi.string().guid(),
+  id: Joi.string().length(22),
   created: Joi.date(),
   modified: Joi.date(),
-  entity_id: Joi.string().guid(),
+  entity_id: Joi.string().length(22),
   guess_distribution: Joi.object().pattern(
     /^\d*\.?\d*$/,
     Joi.number()
@@ -70,6 +80,15 @@ const cardParametersSchema = Joi.object().keys({
   ),
 })
 
+async function sendCardToEs(card) {
+  return es.index({
+    index: 'entity',
+    type: 'card',
+    body: card,
+    id: card.entity_id,
+  })
+}
+
 async function getCardVersion(versionId) {
   const query = `
     SELECT *
@@ -77,6 +96,7 @@ async function getCardVersion(versionId) {
     WHERE version_id = $version_id
     ORDER BY created DESC;
   `
+  return db.get(query, { version_id: versionId })
 }
 
 async function getLatestAcceptedCard(entityId) {
@@ -86,6 +106,7 @@ async function getLatestAcceptedCard(entityId) {
     WHERE status = 'accepted' AND entity_id = $entity_id
     ORDER BY entity_id, created DESC;
   `
+  return db.get(query, { entity_id: entityId })
 }
 
 async function getCardParameters(entityId) {
@@ -95,24 +116,27 @@ async function getCardParameters(entityId) {
     WHERE entity_id = $entity_id
     LIMIT 1;
   `
+  return db.get(query, { entity_id: entityId })
 }
 
-async function listLatestAcceptedCards(entityId) {
+async function listLatestAcceptedCards(entityIds) {
   const query = `
     SELECT DISTINCT ON (entity_id) *
     FROM cards
-    WHERE status = 'accepted' AND entity_id in $entity_ids
+    WHERE status = 'accepted' AND entity_id = ANY ($entity_ids)
     ORDER BY entity_id, created DESC;
   `
+  return db.list(query, { entity_ids: entityIds })
 }
 
 async function listManyCardVersions(versionIds) {
   const query = `
     SELECT *
     FROM cards
-    WHERE version_id in $version_ids
+    WHERE version_id = ANY ($version_ids)
     ORDER BY created DESC;
   `
+  return db.list(query, { version_ids: versionIds })
 }
 
 async function listOneCardVersions(entityId) {
@@ -122,6 +146,7 @@ async function listOneCardVersions(entityId) {
     WHERE entity_id = $entity_id
     ORDER BY created DESC;
   `
+  return db.list(query, { entity_id: entityId })
 }
 
 async function listRequiredCards(entityId) {}
@@ -139,6 +164,7 @@ async function listRequiredByCards(entityId) {
     WHERE $entity_id = ANY(require_ids)
     ORDER BY created DESC;
   `
+  return db.list(query, { entity_id: entityId })
 }
 
 async function listRandomCardsInUnit(unitId, { limit = 10 }) {
@@ -155,6 +181,7 @@ async function listRandomCardsInUnit(unitId, { limit = 10 }) {
     ORDER BY random()
     LIMIT $limit;
   `
+  return db.list(query, { unit_id: unitId, limit })
 }
 
 async function listAllCardEntityIds() {
@@ -162,9 +189,14 @@ async function listAllCardEntityIds() {
     SELECT entity_id
     FROM cards;
   `
+  return db.list(query)
 }
 
-async function insertCard(data) {
+async function insertCard(params) {
+  Joi.assert(
+    params,
+    typeToSchema[params.kind].requiredKeys(Object.keys(params))
+  )
   const query = `
     INSERT INTO cards_entity_id (entity_id)
     VALUES ($entity_id);
@@ -176,9 +208,16 @@ async function insertCard(data) {
      $require_ids, $kind, $data)
     RETURNING *;
   `
+  const data = await db.save(query, params)
+  await sendCardToEs(data)
+  return data
 }
 
-async function insertCardVersion(prev, data) {
+async function insertCardVersion(params) {
+  Joi.assert(
+    params,
+    typeToSchema[params.kind].requiredKeys(Object.keys(params))
+  )
   const query = `
     INSERT INTO cards
     (  entity_id  ,   previous_id  ,   name  ,   user_id  ,   unit_id  ,
@@ -188,9 +227,13 @@ async function insertCardVersion(prev, data) {
      $require_ids, $kind, $data)
     RETURNING *;
   `
+  const data = await db.save(query, params)
+  await sendCardToEs(data)
+  return data
 }
 
-async function insertCardParameters(data) {
+async function insertCardParameters(params) {
+  Joi.assert(params, cardParametersSchema.requiredKeys(Object.keys(params)))
   const query = `
     INSERT INTO cards_parameters
     (  entity_id  ,   guess_distribution  ,   slip_distribution  )
@@ -198,18 +241,29 @@ async function insertCardParameters(data) {
     ($entity_id, $guess_distribution, $slip_distribution)
     RETURNING *;
   `
+  const data = await db.save(query, params)
+  return data
 }
 
 async function updateCard(versionId, status) {
+  const params = { version_id: versionId, status }
+  Joi.assert(
+    params,
+    typeToSchema[params.kind].requiredKeys(Object.keys(params))
+  )
   const query = `
     UPDATE cards
     SET status = $status
     WHERE version_id = $version_id
     RETURNING *;
   `
+  const data = await db.save(query, params)
+  await sendCardToEs(data)
+  return data
 }
 
-async function updateCardParameters(prev, data) {
+async function updateCardParameters(params) {
+  Joi.assert(params, cardParametersSchema.requiredKeys(Object.keys(params)))
   const query = `
     UPDATE cards_parameters
     SET guess_distribution = $guess_distribution,
@@ -217,6 +271,8 @@ async function updateCardParameters(prev, data) {
     WHERE entity_id = $entity_id
     RETURNING *;
   `
+  const data = await db.save(query, params)
+  return data
 }
 
 module.exports = {

@@ -1,12 +1,24 @@
 const Joi = require('joi')
 
+// TODO add additional checks on insert
+
 const db = require('./base')
+const es = require('../helpers/es')
 const entitySchema = require('../helpers/entitySchema')
 
 const unitSchema = entitySchema.keys({
   body: Joi.string(),
-  require_ids: Joi.array().items(Joi.string().guid()),
+  require_ids: Joi.array().items(Joi.string().length(22)),
 })
+
+async function sendUnitToEs(unit) {
+  return es.index({
+    index: 'entity',
+    type: 'unit',
+    body: unit,
+    id: unit.entity_id,
+  })
+}
 
 async function doesUnitExist(entityId) {
   const query = `
@@ -15,6 +27,7 @@ async function doesUnitExist(entityId) {
     WHERE entity_id = $entity_id
     LIMIT 1;
   `
+  return db.get(query, { entity_id: entityId })
 }
 
 async function getUnitVersion(versionId) {
@@ -24,6 +37,7 @@ async function getUnitVersion(versionId) {
     WHERE version_id = $version_id
     ORDER BY created DESC;
   `
+  return db.get(query, { version_id: versionId })
 }
 
 async function getLatestAcceptedUnit(entityId) {
@@ -33,15 +47,17 @@ async function getLatestAcceptedUnit(entityId) {
     WHERE status = 'accepted' AND entity_id = $entity_id
     ORDER BY entity_id, created DESC;
   `
+  return db.get(query, { entity_id: entityId })
 }
 
 async function listLatestAcceptedUnits(entityIds) {
   const query = `
     SELECT DISTINCT ON (entity_id) *
     FROM units
-    WHERE status = 'accepted' AND entity_id in $entity_ids
+    WHERE status = 'accepted' AND entity_id = ANY ($entity_ids)
     ORDER BY entity_id, created DESC;
   `
+  return db.list(query, { entity_ids: entityIds })
 }
 
 async function listOneUnitVersions(entityId) {
@@ -51,15 +67,17 @@ async function listOneUnitVersions(entityId) {
     WHERE entity_id = $entity_id
     ORDER BY created DESC;
   `
+  return db.list(query, { entity_id: entityId })
 }
 
 async function listManyUnitVersions(versionIds) {
   const query = `
     SELECT *
     FROM units
-    WHERE version_id in $version_ids
+    WHERE version_id = ANY ($version_ids)
     ORDER BY created DESC;
   `
+  return db.list(query, { version_ids: versionIds })
 }
 
 async function listRequiredUnits(entityId) {}
@@ -77,6 +95,7 @@ async function listRequiredByUnits(entityId) {
     WHERE $entity_id = ANY(require_ids)
     ORDER BY created DESC;
   `
+  return db.list(query, { entity_id: entityId })
 }
 
 async function listUnitsBySubjectFlat(subjectId) {}
@@ -88,6 +107,7 @@ async function listMyRecentlyCreatedUnits(userId) {
     WHERE user_id = $user_id
     ORDER BY entity_id, created DESC;
   `
+  return db.list(query, { user_id: userId })
 }
 
 async function listAllUnitEntityIds() {
@@ -95,9 +115,11 @@ async function listAllUnitEntityIds() {
     SELECT entity_id
     FROM units;
   `
+  return db.list(query)
 }
 
-async function insertUnit(data) {
+async function insertUnit(params) {
+  Joi.assert(params, unitSchema.requiredKeys(Object.keys(params)))
   const query = `
     INSERT INTO units_entity_id (entity_id)
     VALUES ($entity_id);
@@ -109,9 +131,13 @@ async function insertUnit(data) {
      $body, $require_ids)
     RETURNING *;
   `
+  const data = await db.save(query, params)
+  await sendUnitToEs(data)
+  return data
 }
 
-async function insertUnitVersion(prev, data) {
+async function insertUnitVersion(params) {
+  Joi.assert(params, unitSchema.requiredKeys(Object.keys(params)))
   const query = `
     INSERT INTO units
     (  entity_id  ,   previous_id  ,   name  ,   user_id  ,
@@ -121,15 +147,23 @@ async function insertUnitVersion(prev, data) {
      $body, $require_ids)
     RETURNING *;
   `
+  const data = await db.save(query, params)
+  await sendUnitToEs(data)
+  return data
 }
 
 async function updateUnit(versionId, status) {
+  const params = { version_id: versionId, status }
+  Joi.assert(params, unitSchema.requiredKeys(Object.keys(params)))
   const query = `
     UPDATE units
     SET status = $status
     WHERE version_id = $version_id
     RETURNING *;
   `
+  const data = await db.save(query, params)
+  await sendUnitToEs(data)
+  return data
 }
 
 module.exports = {
@@ -137,6 +171,7 @@ module.exports = {
   getUnitVersion,
   getLatestAcceptedUnit,
   listLatestAcceptedUnits,
+  listOneUnitVersions,
   listManyUnitVersions,
   listRequiredUnits,
   listRequiredByUnits,
