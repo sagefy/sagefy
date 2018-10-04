@@ -9,6 +9,25 @@ You can sign up for email updates at https://sgef.cc/devupdates
 
 
 
+## UPDATE -- 2018 Sep 17
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2018 Sept 3 - 2018 Sep 16
+
+* Worked on unit testing for updated architecture.
+
+### Upcoming Two Weeks: 2018 Sep 17 - 2018 Sep 30
+
+* Continuing progress on updated architecture, particularly unit testing effort and getting foundation settled.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+
+
+
+
 ## UPDATE -- 2018 Sep 2
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
