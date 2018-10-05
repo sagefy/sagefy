@@ -18,7 +18,7 @@ What's next?
 * Sign up for [development updates](https://sgef.cc/devupdates).
 * Share us on [Twitter](https://twitter.com/sagefyorg).
 
-[![Build Status](https://img.shields.io/travis/heiskr/sagefy.svg?style=flat)](https://travis-ci.org/heiskr/sagefy)
+[![Build Status](https://img.shields.io/travis/sagefy/sagefy.svg?style=flat)](https://travis-ci.org/sagefy/sagefy)
 [<img src="https://i.imgur.com/M5xPVWm.png" height="20">](https://www.browserstack.com)
 
 All contents in this project are licensed under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0).
