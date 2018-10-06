@@ -4,9 +4,9 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import Index from './views/index'
-import createSagefyStore from './helpers/createStore'
+import createStore from './state/store'
 
-const store = createSagefyStore()
+const { store } = createStore()
 
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.vdom')

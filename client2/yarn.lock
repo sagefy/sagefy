@@ -2,6 +2,16 @@
 # yarn lockfile v1
 
 
+"@acemarke/redux-starter-kit@0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@acemarke/redux-starter-kit/-/redux-starter-kit-0.0.7.tgz#bd5b0e62ebf7f6304ff78819d1f246602e8bc17e"
+  dependencies:
+    immer "^1.1.3"
+    redux "^4.0.0"
+    redux-devtools-extension "^2.13.3"
+    redux-thunk "^2.2.0"
+    selectorator "^3.3.0"
+
 "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-rc.1.tgz#5c2154415d6c09959a71845ef519d11157e95d10"
@@ -1541,6 +1551,10 @@ cssstyle@^1.0.0:
   dependencies:
     cssom "0.3.x"
 
+curriable@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/curriable/-/curriable-1.1.0.tgz#51817788748032244e73d24b98128a7b6d9c799d"
+
 cyclist@~0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
@@ -2196,6 +2210,10 @@ fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
 
+fast-equals@^1.2.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/fast-equals/-/fast-equals-1.6.1.tgz#66cc5a0922ea747599f41aedf44a76ec2908adc0"
+
 fast-json-stable-stringify@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/fast-json-stable-stringify/-/fast-json-stable-stringify-2.0.0.tgz#d5142c0caee6b1189f87d3a76111064f86c8bbf2"
@@ -2704,6 +2722,12 @@ iconv-lite@^0.4.17, iconv-lite@^0.4.22, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
+identitate@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/identitate/-/identitate-1.0.0.tgz#b524bad1c865bd8509abecc749466feb1fab3dd9"
+  dependencies:
+    pathington "^1.0.1"
+
 ieee754@^1.1.11, ieee754@^1.1.4:
   version "1.1.12"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.12.tgz#50bf24e5b9c8bb98af4964c941cdb0918da7b60b"
@@ -2725,6 +2749,10 @@ ignore@^3.3.7:
 ignore@^4.0.2:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.5.tgz#333535a20325ba4852c4ddb135d47392aa035e6d"
+
+immer@^1.1.3:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-1.7.2.tgz#a51e9723c50b27e132f6566facbec1c85fc69547"
 
 import-local@^1.0.0:
   version "1.0.0"
@@ -4417,6 +4445,10 @@ path-type@^3.0.0:
   dependencies:
     pify "^3.0.0"
 
+pathington@^1.0.1, pathington@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/pathington/-/pathington-1.1.5.tgz#9c0110287e769d1ee26f6758c7339d920a6cf5c7"
+
 pbkdf2@^3.0.3:
   version "3.0.16"
   resolved "https://registry.yarnpkg.com/pbkdf2/-/pbkdf2-3.0.16.tgz#7404208ec6b01b62d85bf83853a8064f8d9c2a5c"
@@ -4778,15 +4810,23 @@ realpath-native@^1.0.0:
   dependencies:
     util.promisify "^1.0.0"
 
+redux-devtools-extension@^2.13.3:
+  version "2.13.5"
+  resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.5.tgz#3ff34f7227acfeef3964194f5f7fc2765e5c5a39"
+
 redux-listen@6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/redux-listen/-/redux-listen-6.0.2.tgz#e9b7198462cd74c1f1a337685058dbd05161c23d"
 
-redux-schemad@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/redux-schemad/-/redux-schemad-0.2.1.tgz#82153bcc2d7ad5c467c619bf6b2dfa1dd86b1573"
+redux-schemad@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/redux-schemad/-/redux-schemad-1.0.0.tgz#6357da75b0650f0cbcbd868deb5f4e007abe2dce"
 
-redux@4.0.0:
+redux-thunk@^2.2.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
+
+redux@4.0.0, redux@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.0.tgz#aa698a92b729315d22b34a0553d7e6533555cc03"
   dependencies:
@@ -4926,7 +4966,7 @@ require-uncached@^1.0.3:
     caller-path "^0.1.0"
     resolve-from "^1.0.0"
 
-reselect@3.0.1:
+reselect@3.0.1, reselect@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/reselect/-/reselect-3.0.1.tgz#efdaa98ea7451324d092b2b2163a6a1d7a9a2147"
 
@@ -5071,6 +5111,15 @@ schema-utils@^0.4.4, schema-utils@^0.4.5:
   dependencies:
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
+
+selectorator@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/selectorator/-/selectorator-3.3.0.tgz#e16836c8566c0c927d70e31a2ed23e8b074e0496"
+  dependencies:
+    fast-equals "^1.2.1"
+    identitate "^1.0.0"
+    reselect "^3.0.1"
+    unchanged "^1.0.7"
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1, semver@^5.5.0:
   version "5.5.0"
@@ -5694,6 +5743,13 @@ uglifyjs-webpack-plugin@^1.2.4:
     uglify-es "^3.3.4"
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
+
+unchanged@^1.0.7:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/unchanged/-/unchanged-1.5.0.tgz#e78475eb4050c5e13f12646104294ed523107e26"
+  dependencies:
+    curriable "^1.0.0"
+    pathington "^1.1.5"
 
 union-value@^1.0.0:
   version "1.0.0"

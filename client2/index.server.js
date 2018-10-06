@@ -8,7 +8,7 @@ import ReactDOMServer from 'react-dom/server'
 import { StaticRouter as Router } from 'react-router-dom'
 
 import Index from './views/index'
-import createSagefyStore from './helpers/createStore'
+import createStore from './state/store'
 
 const app = express()
 app.use(cookieParser())
@@ -38,7 +38,7 @@ app.get(/.*/, (request, response) => {
   console.log('Serving HTML realness on: ', path)
   // !!! make sure the store doesn't use a pre-existing state !!!
   const myContext = {}
-  const store = createSagefyStore()
+  const { store } = createStore()
   const innerHtml = ReactDOMServer.renderToString(
     <Provider store={store}>
       <Router location={request.url} context={myContext} basename="/c">
