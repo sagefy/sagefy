@@ -110,6 +110,8 @@ This document is a list of organized, curated links to support the development o
 * [Mindspark](https://mindspark.in/)
 * [Geekie](https://translate.google.com/translate?hl=en&sl=pt&u=http://www.geekie.com.br/&prev=search)
 * [Kwyk](https://www.kwyk.fr/)
+* [Synapse](https://brainstation.io/synapse-learning-platform)
+* [Expii](https://www.expii.com/)
 
 ### Flash card based
 
