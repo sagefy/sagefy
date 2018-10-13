@@ -12,7 +12,7 @@ Sagefy is an _open-content, adaptive learning_ platform.
 
 [<img src="https://docs.google.com/drawings/d/e/2PACX-1vR3ARFXI6Y-DNZGSBn8Ngbe6yV4asc1CEZR-2b2mnbLnK6FZOND2uT8wyHNKu8qyIBfscjC3dsrWIMk/pub?w=1790&amp;h=800" width="100%">](https://sagefy.org)
 
-What's next?
+### What's next?
 
 * Continue to [The Ideas](http://docs.sagefy.org/Ideas) or [Data Structure](http://docs.sagefy.org/Data-Structure).
 * [Visit the site](https://sagefy.org).

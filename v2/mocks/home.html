@@ -4,11 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://heiskr.com/drab.css/css/drab.css">
+    <link rel="stylesheet" href="utils.css">
     <title>Sagefy – Home</title>
     <style>
-      .text-align-center { text-align: center; }
-      .text-align-right { text-align: right; }
-      .margin-0 { margin: 0; }
+
     </style>
   </head>
   <body>
@@ -16,15 +15,18 @@
 
 
 <section class="text-align-center">
-  <h1>What do you want to learn?</h1>
-  <p>
-    <input type="search" size="28" />
-  </p>
-  <p>
-    <button type="submit">🕵️‍♀️ Search</button>
-  </p>
+  <h1>What do you want to learn? 🔭</h1>
+  <form action="/home-searched">
+    <p>
+      <input type="search" size="28" />
+    </p>
+    <p>
+      <button type="submit">🕵️‍♀️ Search</button>
+    </p>
+  </form>
 </section>
 
+<!-- Change to link to go to Choose Subject page -->
 <section class="text-align-right">
   <p>
     <small>
@@ -37,9 +39,10 @@
 
 <section>
   <h2>...or try something popular ✨</h2>
-  <ul>
+  <ul class="list-style-none">
     <li>
-      <h3><a href="/subjects/UIe3mx3UTQKHDG2zLyHI5w/landing">🎧 An Introduction to Electronic Music</a></h3>
+      <h3><a href="#">🎧 An Introduction to Electronic Music</a></h3>
+      <!-- This should immediately launch the learning experience! -->
       <p>A small taste of the basics of electronic music. Learn the concepts behind creating and modifying sounds in an electronic music system. Learn the ideas behind the tools and systems we use to create electronic music.</p>
     </li>
   </ul>
@@ -48,8 +51,8 @@
 <section>
   <table>
     <tr>
-      <td><img src="https://sagefy.org/astrolabe.svg" height="120"></td>
-      <td><h2 class="margin-0">Sagefy</h2><p class="margin-0"><em>Learn anything, adapted to you. Free.</em></p></td>
+      <td class="vertical-align-middle"><img src="https://sagefy.org/astrolabe.svg" height="120"></td>
+      <td class="vertical-align-middle"><h2 class="margin-0">Sagefy</h2><p class="margin-0"><em>Learn anything, adapted to you. Free.</em></p></td>
     </tr>
   </table>
   <ul>
@@ -61,12 +64,12 @@
 
 <footer>
   <hr />
-  <ul>
-    <li><a href="https://docs.sagefy.org/">📃 Docs</a></li>
-    <li><a href="https://stories.sagefy.org/">🖋 Stories</a></li>
-    <li><a href="https://sgef.cc/devupdates">💌 Updates</a></li>
-    <li><a href="https://sgef.cc/feedback">❓Support</a></li>
-    <li><a href="/terms">👮 Privacy &amp; Terms</a></li>
+  <ul class="list-style-inline">
+    <li><a href="https://docs.sagefy.org/" target="_blank">📜 Docs</a></li>
+    <li><a href="https://stories.sagefy.org/" target="_blank">🖋 Stories</a></li>
+    <li><a href="https://sgef.cc/devupdates" target="_blank">💌 Updates</a></li>
+    <li><a href="https://sgef.cc/feedback" target="_blank">👩🏼‍💻 Support</a></li>
+    <li><a href="/terms">⚖️ Privacy &amp; Terms</a></li>
   </ul>
   © Copyright 2018 Sagefy.
 </footer>

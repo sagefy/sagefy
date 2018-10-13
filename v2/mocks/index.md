@@ -6,6 +6,9 @@
   - Kill the menu
   - Brutalist design
   - Do more with less
+  - Conversational tone
+  - Lots of emoji
+  - One column is god
 
 TODOs
 
