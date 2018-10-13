@@ -14,7 +14,7 @@ TODOs
 
 ## Root Pages
 
-- [ ] Home Page
+- [x] Home Page
   - Results
   - No results -- Suggest or Create
 - [ ] Contact
