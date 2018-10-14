@@ -11,16 +11,16 @@ title: V2 Mocks
 
 ### Root Pages
 
-- [Home](/mocks/home)
-- [Search Subjects](/mocks/search-subjects)
-- [Contact](/mocks/contact)
-- [Terms](/mocks/terms)
-- [Error](/mocks/error)
+- [Home 🏡](/mocks/home)
+- [Search Subjects 🕵🏻‍♀️📚](/mocks/search-subjects)
+- [Contact 💁🏽‍♀️](/mocks/contact)
+- [Terms ⚖️](/mocks/terms)
+- [Error 🚫](/mocks/error)
 - Search / Recommended
-- [Log In](/mocks/log-in)
-- [Sign Up](/mocks/sign-up)
+- [Log In ➡️](/mocks/log-in)
+- [Sign Up 👩🏾‍💻](/mocks/sign-up)
 - Settings Page
-- [Password Page](/mocks/password)
+- [Password Page 🔑](/mocks/password)
 
 ### Data Pages
 
