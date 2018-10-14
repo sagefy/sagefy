@@ -13,14 +13,14 @@ title: V2 Mocks
 
 - [Home](/mocks/home)
 - [Search Subjects](/mocks/search-subjects)
-- Contact
-- Terms
-- Error
+- [Contact](/mocks/contact)
+- [Terms](/mocks/terms)
+- [Error](/mocks/error)
 - Search / Recommended
-- Log In
-- Sign Up
+- [Log In](/mocks/log-in)
+- [Sign Up](/mocks/sign-up)
 - Settings Page
-- Password Page
+- [Password Page](/mocks/password)
 
 ### Data Pages
 
