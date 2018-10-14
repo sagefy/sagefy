@@ -1,8 +1,17 @@
+input, textarea {
+  padding: calc(0.5rem - 1px) calc(1rem - 1px);
+}
+
+button, [type="submit"], [type="button"], [type="reset"] {
+  padding: 0.5rem 1.5rem;
+  border-radius: 1.5rem;
+}
+
+label { display: block; }
+
 .text-align-left { text-align: left; }
 .text-align-center { text-align: center; }
 .text-align-right { text-align: right; }
-
-.width-100p { width: 100%; }
 
 .margin-0 { margin: 0; }
 
@@ -10,7 +19,3 @@
 
 .list-style-none, .list-style-inline { list-style: none; padding-left: 0; }
 .list-style-inline li { display: inline-block; margin-right: 2rem; }
-
-.margin-left-2rem { margin-left: 2rem; }
-
-label { display:block; }

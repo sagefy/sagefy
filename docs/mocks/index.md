@@ -46,6 +46,7 @@ title: V2 Mocks
 - Talk Page
 - Notices Page
 - Follows Page
+- Create Page
 
 ## Goals:
 
