@@ -3,7 +3,7 @@ layout: docs
 title: What is Sagefy?
 ---
 
-**Learn anything, customized for you.** _And always free._
+**Learn anything, adapted to you.** _Free._
 
 Sagefy is an _open-content, adaptive learning_ platform.
 
@@ -14,7 +14,7 @@ Sagefy is an _open-content, adaptive learning_ platform.
 
 ### What's next?
 
-* Continue to [The Ideas](http://docs.sagefy.org/Ideas) or [Data Structure](http://docs.sagefy.org/Data-Structure).
+* Continue to [8 Big Ideas](http://docs.sagefy.org/Ideas) or [Cards, Units, & Subjects](http://docs.sagefy.org/Cards-Units-Subjects).
 * [Visit the site](https://sagefy.org).
 * Try our demo course, [Intro to Electronic Music](http://sgef.cc/emus).
 * For more information, [watch this 3 minute YouTube video](https://youtu.be/gFn4Q9tx7Qs).
