@@ -14,7 +14,7 @@ Also see [Planning: Sequencer Background](Planning-Sequencer-Background) and [Pl
 Terms
 -----
 
-Also see [Data Structure](Data-Structure) for definitions of **card**, **unit**, and **subject**.
+Also see [Cards, Units, & Subjects](Cards-Units-Subjects) for definitions of **card**, **unit**, and **subject**.
 
 **Sequencer** - Determines the optimal ordering of cards, units, or other activity to present to the learner.
 

@@ -7,7 +7,7 @@ Thank you for your interest and support of Sagefy!
 
 I'll try to walk through the process of making a course in Sagefy on this page. Sagefy is still a bit rough, so just keep that in mind if you're going through this process. Feel free to email me at any time at <support@sagefy.org> if you run into problems or need any clarification. I'll be updating this page as I get feedback and experience. We're in this journey together. :smile:
 
-For this page, I'm going to talk about the "Introduction to Electronic Music" course I've been building. If you haven't already, check out the [Data Structure](Data-Structure) before you get started. You can think of a 'subject' as being a class, a 'unit' as a learning objective, and a card as an individual type of learning activity. Right now Sagefy only supports video cards and multiple choice cards, but more types are planned. If you have a need for a specific type of card, let me know and I'll try to see if I can get that live.
+For this page, I'm going to talk about the "Introduction to Electronic Music" course I've been building. If you haven't already, check out the [Cards, Units, & Subjects](Cards-Units-Subjects) before you get started. You can think of a 'subject' as being a class, a 'unit' as a learning objective, and a card as an individual type of learning activity. Right now Sagefy only supports video cards and multiple choice cards, but more types are planned. If you have a need for a specific type of card, let me know and I'll try to see if I can get that live.
 
 -----
 
