@@ -33,8 +33,8 @@ title: V2 Mocks
 
 ### Learning Experience
 
-- Choose Subject
-- Choose Unit
+- [Choose Subject 🧐📚](/mocks/choose-subject)
+- [Choose Unit 🧐📖](/mocks/choose-unit)
 - Learn Card
   - Video
   - Choice
@@ -55,7 +55,7 @@ title: V2 Mocks
 - Cut friction to creating content
 - Hide less behind clicks
 - Kill the menu
-- Brutalist design
+- Friendly brutalist design
 - Do more with less
 - Conversational tone
 - Lots of emoji
