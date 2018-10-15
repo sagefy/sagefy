@@ -78,3 +78,13 @@ Option 4. Global Maintainers or Overwhelming consensus
 ### Updating learning model
 
 ### Choosing cards
+
+
+## Notes
+
+- how do i get to site wide search?
+- notices?
+- settings?
+- create?
+- log out?
+- return to choose subject?
