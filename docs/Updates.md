@@ -9,6 +9,30 @@ You can sign up for email updates at https://sgef.cc/devupdates
 
 
 
+## UPDATE -- 2018 Oct 15
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2018 Sep 17 - 2018 Oct 14
+
+* I made some progress on the updated architecture, yet...
+* I've conducted some more usability testing and review of analytics data.
+
+### Upcoming Two Weeks: 2018 Oct 15 - 2018 Oct 28
+
+* Bigger picture (beyond the scope of two weeks), I'm shifting my efforts to address some major barriers to Sagefy's growth:
+  * Remove needing to sign up to start learning or create content.
+  * Make creating and updating content easier. (Even after last year's big update, is too difficult today.) 
+  * Provide more capabilities with significantly less code, making it easier to adapt to learner and creator feedback.
+* These next two weeks I'm working on some plain HTML mocks to try to address some of these larger, experience-level issues. I'm hoping the next update email is a request for feedback on the mocks :)
+
+### Feedback
+
+Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+
+
+
+
 ## UPDATE -- 2018 Sep 17
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
