@@ -9,6 +9,16 @@ button, [type="submit"], [type="button"], [type="reset"] {
 
 label { display: block; }
 
+.meter {
+  width: 100%;
+  background: #eef1f5; /* hsluv(240, 30, 95) */
+}
+
+.meter > div {
+  background: #93ccff; /* hsluv(240, 100, 80) */
+  height: 0.5rem;
+}
+
 .text-align-left { text-align: left; }
 .text-align-center { text-align: center; }
 .text-align-right { text-align: right; }

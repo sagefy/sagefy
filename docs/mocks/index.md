@@ -2,7 +2,7 @@
 layout: mocks
 title: V2 Mocks
 ---
-
+  
 <style>body { background: #e5f8ff; }</style>
 
 # V2 Mocks
@@ -36,10 +36,10 @@ title: V2 Mocks
 - [Choose Subject 🧐📚](/mocks/choose-subject)
 - [Choose Unit 🧐📖](/mocks/choose-unit)
 - Learn Card
-  - Video
-  - Choice
-  - Page
-  - Unscored Embed
+  - [Video](/mocks/learn-video)
+  - [Choice](/mocks/learn-choice)
+  - [Page](/mocks/learn-page)
+  - [Unscored Embed](/mocks/learn-unscored-embed)
 
 ### Contributing Experience
 
