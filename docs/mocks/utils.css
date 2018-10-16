@@ -19,6 +19,10 @@ label { display: block; }
   height: 0.5rem;
 }
 
+.meter, .meter > div {
+  border-radius: 0.25rem;
+}
+
 .text-align-left { text-align: left; }
 .text-align-center { text-align: center; }
 .text-align-right { text-align: right; }
