@@ -34,7 +34,7 @@ module.exports = function createUnitList(data) {
             li(
               a(
                 {
-                  dataset: { index },
+                  'data-index': index,
                   href: '#',
                   className: 'create--unit-list__remove',
                 },

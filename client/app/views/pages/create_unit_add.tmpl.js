@@ -58,13 +58,11 @@ module.exports = function createUnitAdd(data) {
                 {
                   href: '/create/unit/list',
                   className: 'create--unit-add__add',
-                  dataset: {
-                    kind: result._type,
-                    id: result._id,
-                    version: result._source.id,
-                    name: result._source.name,
-                    body: result._source.body,
-                  },
+                  'data-kind': result._type,
+                  'data-id': result._id,
+                  'data-version': result._source.id,
+                  'data-name': result._source.name,
+                  'data-body': result._source.body,
                 },
                 icon('create'),
                 ' Add to Subject'

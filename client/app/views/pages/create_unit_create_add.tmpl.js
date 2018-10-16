@@ -64,11 +64,9 @@ module.exports = function createSubjectAdd(data) {
                 {
                   href: '/create/unit/create',
                   className: 'create--unit-create-add__add',
-                  dataset: {
-                    id: result._id,
-                    name: result._source.name,
-                    body: result._source.body,
-                  },
+                  'data-id': result._id,
+                  'data-name': result._source.name,
+                  'data-body': result._source.body,
                 },
                 icon('create'),
                 ' Require this Unit'
