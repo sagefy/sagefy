@@ -58,7 +58,7 @@ module.exports = function createUnitAdd(data) {
                 {
                   href: '/create/unit/list',
                   className: 'create--unit-add__add',
-                  data: {
+                  dataset: {
                     kind: result._type,
                     id: result._id,
                     version: result._source.id,

@@ -53,7 +53,7 @@ module.exports = function createCardFind(data) {
                   {
                     href: `/create/card/list?${unit.entity_id}`,
                     className: 'create--card-find__choose',
-                    data: {
+                    dataset: {
                       id: unit.entity_id,
                       name: unit.name,
                     },
@@ -90,7 +90,7 @@ module.exports = function createCardFind(data) {
                 {
                   href: `/create/card/list?${result._id}`,
                   className: 'create--card-find__choose',
-                  data: {
+                  dataset: {
                     id: result._id,
                     name: result._source.name,
                   },

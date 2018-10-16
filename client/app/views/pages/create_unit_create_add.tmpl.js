@@ -64,7 +64,7 @@ module.exports = function createSubjectAdd(data) {
                 {
                   href: '/create/unit/create',
                   className: 'create--unit-create-add__add',
-                  data: {
+                  dataset: {
                     id: result._id,
                     name: result._source.name,
                     body: result._source.body,

@@ -33,7 +33,7 @@ module.exports = function createCardList(data) {
             li(
               a(
                 {
-                  data: { index },
+                  dataset: { index },
                   href: '#',
                   className: 'create--card-list__remove',
                 },
