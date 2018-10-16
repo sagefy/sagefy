@@ -52,7 +52,7 @@ module.exports = function createUnitFind(data) {
                   {
                     href: `/create/unit/list?${subject.entity_id}`,
                     className: 'create--unit-find__choose',
-                    dataset: {
+                    data: {
                       id: subject.entity_id,
                       name: subject.name,
                     },
@@ -89,7 +89,7 @@ module.exports = function createUnitFind(data) {
                 {
                   href: `/create/unit/list?${result._id}`,
                   className: 'create--unit-find__choose',
-                  dataset: {
+                  data: {
                     id: result._id,
                     name: result._source.name,
                   },
