@@ -1,13 +1,24 @@
-input, textarea {
+input,
+textarea {
   padding: calc(0.5rem - 1px) calc(1rem - 1px);
 }
 
-button, [type="submit"], [type="button"], [type="reset"] {
+button,
+[type="submit"],
+[type="button"],
+[type="reset"] {
   padding: 0.5rem 1.5rem;
   border-radius: 1.5rem;
 }
 
-label { display: block; }
+label {
+  display: block;
+}
+
+input,
+textarea {
+  max-width: 100%;
+}
 
 .meter {
   width: 100%;
@@ -19,17 +30,35 @@ label { display: block; }
   height: 0.5rem;
 }
 
-.meter, .meter > div {
+.meter,
+.meter > div {
   border-radius: 0.25rem;
 }
 
-.text-align-left { text-align: left; }
-.text-align-center { text-align: center; }
-.text-align-right { text-align: right; }
+.text-align-left {
+  text-align: left;
+}
+.text-align-center {
+  text-align: center;
+}
+.text-align-right {
+  text-align: right;
+}
 
-.margin-0 { margin: 0; }
+.margin-0 {
+  margin: 0;
+}
 
-.vertical-align-middle { vertical-align: middle; }
+.vertical-align-middle {
+  vertical-align: middle;
+}
 
-.list-style-none, .list-style-inline { list-style: none; padding-left: 0; }
-.list-style-inline li { display: inline-block; margin-right: 2rem; }
+.list-style-none,
+.list-style-inline {
+  list-style: none;
+  padding-left: 0;
+}
+.list-style-inline li {
+  display: inline-block;
+  margin-right: 2rem;
+}

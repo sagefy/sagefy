@@ -26,27 +26,28 @@ title: V2 Mocks
 * [Choose Subject 🧐📚](/mocks/choose-subject)
 * [Choose Unit 🧐📖](/mocks/choose-unit)
 * Learn Card
-  * [Video](/mocks/learn-video)
-  * [Choice](/mocks/learn-choice)
-  * [Page](/mocks/learn-page)
-  * [Unscored Embed](/mocks/learn-unscored-embed)
+  * [Video 📹](/mocks/learn-video)
+  * [Choice 🧐](/mocks/learn-choice)
+  * [Page 📜](/mocks/learn-page)
+  * [Unscored Embed 🎮](/mocks/learn-unscored-embed)
 
 ### Contributing Experience
 
-* Talk Page
-* Notices Page
-* Follows Page
 * Create Page
+  * [Create Subject 🌳📚](/mocks/create-subject)
+* Talk Page 💬
+* Notices Page 🔔
+* Follows Page 👀
 
 ### Data Pages
 
-* Search / Recommended
-* Subject Page (Landing + Data + Tree)
-* Unit Page
-* Card Page
-* Versions Page
-* User Page
-* Suggests Page
+* Search / Recommended 🕵🏻‍♀️
+* Subject Page (Landing + Data + Tree) 📚
+* Unit Page 📖
+* Card Page 🃏
+* Versions Page 🎢
+* User Page 👩🏾‍🎤
+* Suggests Page 💡
 
 ## Goals:
 
