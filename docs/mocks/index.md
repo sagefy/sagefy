@@ -35,6 +35,8 @@ title: V2 Mocks
 
 * Create Page
   * [Create Subject 🌳📚](/mocks/create-subject)
+  * [Add Units](/mocks/add-units)
+  * [Add Cards](/mocks/add-cards)
 * Talk Page 💬
 * Notices Page 🔔
 * Follows Page 👀
