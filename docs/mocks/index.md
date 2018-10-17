@@ -2,7 +2,7 @@
 layout: mocks
 title: V2 Mocks
 ---
-  
+
 <style>body { background: #e5f8ff; }</style>
 
 # V2 Mocks
@@ -11,55 +11,55 @@ title: V2 Mocks
 
 ### Root Pages
 
-- [Home 🏡](/mocks/home)
-- [Search Subjects 🕵🏻‍♀️📚](/mocks/search-subjects)
-- [Contact 💁🏽‍♀️](/mocks/contact)
-- [Terms ⚖️](/mocks/terms)
-- [Error 🚫](/mocks/error)
-- Search / Recommended
-- [Log In ➡️](/mocks/log-in)
-- [Sign Up 👩🏾‍💻](/mocks/sign-up)
-- Settings Page
-- [Password Page 🔑](/mocks/password)
-
-### Data Pages
-
-- Subject Page (Landing + Data + Tree)
-- Unit Page
-- Card Page
-- Versions Page
-- User Page
-- Suggests Page
+* [Home 🏡](/mocks/home)
+* [Search Subjects 🕵🏻‍♀️📚](/mocks/search-subjects)
+* [Contact 💁🏽‍♀️](/mocks/contact)
+* [Terms ⚖️](/mocks/terms)
+* [Error 🚫](/mocks/error)
+* [Log In ➡️](/mocks/log-in)
+* [Sign Up 👩🏾‍💻](/mocks/sign-up)
+* [Password Page 🔑](/mocks/password)
+* Settings Page
 
 ### Learning Experience
 
-- [Choose Subject 🧐📚](/mocks/choose-subject)
-- [Choose Unit 🧐📖](/mocks/choose-unit)
-- Learn Card
-  - [Video](/mocks/learn-video)
-  - [Choice](/mocks/learn-choice)
-  - [Page](/mocks/learn-page)
-  - [Unscored Embed](/mocks/learn-unscored-embed)
+* [Choose Subject 🧐📚](/mocks/choose-subject)
+* [Choose Unit 🧐📖](/mocks/choose-unit)
+* Learn Card
+  * [Video](/mocks/learn-video)
+  * [Choice](/mocks/learn-choice)
+  * [Page](/mocks/learn-page)
+  * [Unscored Embed](/mocks/learn-unscored-embed)
 
 ### Contributing Experience
 
-- Talk Page
-- Notices Page
-- Follows Page
-- Create Page
+* Talk Page
+* Notices Page
+* Follows Page
+* Create Page
+
+### Data Pages
+
+* Search / Recommended
+* Subject Page (Landing + Data + Tree)
+* Unit Page
+* Card Page
+* Versions Page
+* User Page
+* Suggests Page
 
 ## Goals:
 
-- No sign up required
-- Cut friction to learning
-- Cut friction to creating content
-- Hide less behind clicks
-- Kill the menu
-- Friendly brutalist design
-- Do more with less
-- Conversational tone
-- Lots of emoji
-- One column is god
+* No sign up required
+* Cut friction to learning
+* Cut friction to creating content
+* Hide less behind clicks
+* Kill the menu
+* Friendly brutalist design
+* Do more with less
+* Conversational tone
+* Lots of emoji
+* One column is god
 
 ## Decisions
 
@@ -79,12 +79,11 @@ Option 4. Global Maintainers or Overwhelming consensus
 
 ### Choosing cards
 
-
 ## Notes
 
-- how do i get to site wide search?
-- notices?
-- settings?
-- create?
-- log out?
-- return to choose subject?
+* how do i get to site wide search?
+* notices?
+* settings?
+* create?
+* log out?
+* return to choose subject?
