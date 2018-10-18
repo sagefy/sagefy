@@ -62,3 +62,6 @@ textarea {
   display: inline-block;
   margin-right: 2rem;
 }
+.list-style-inline li:last-child {
+  margin-right: 0;
+}

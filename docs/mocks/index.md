@@ -19,11 +19,11 @@ title: V2 Mocks
 * [Log In ➡️](/mocks/log-in)
 * [Sign Up 👩🏾‍💻](/mocks/sign-up)
 * [Password Page 🔑](/mocks/password)
-* Settings Page
+* [Settings Page 🛠](/mocks/settings)
 
 ### Learning Experience
 
-* [Choose Subject 🧐📚](/mocks/choose-subject)
+* [Dashboard (Choose Subject) 🧐📚](/mocks/dashboard)
 * [Choose Unit 🧐📖](/mocks/choose-unit)
 * Learn Card
   * [Video 📹](/mocks/learn-video)
@@ -39,7 +39,7 @@ title: V2 Mocks
   * [Add Cards](/mocks/add-cards)
 * Talk Page 💬
 * Notices Page 🔔
-* Follows Page 👀
+* Follows Page 👂🏿
 
 ### Data Pages
 
