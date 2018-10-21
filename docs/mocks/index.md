@@ -33,15 +33,14 @@ title: V2 Mocks
 
 ### Contributing Experience
 
-* Create Page
-  * [Create Subject 🌳📚](/mocks/create-subject)
-  * [Update Subject 🌳📚](/mocks/update-subject)
-  * [Add Subjects & Units](/mocks/add-units)
-  * Update Subjects & Units
-  * Update Unit
-  * [Add Cards](/mocks/add-cards)
-  * Update Cards
-  * Update Card
+* Create Pages
+
+  |      | Create Self | Create Children | Update Self | Update Children |
+  | ---- | ----------- | --------------- | ----------- | --------------- |
+  | Subject | [Create Subject 🌳📚](/mocks/create-subject) | [Add Subjects & Units](/mocks/add-units) | [Update Subject 🌳📚](/mocks/update-subject) | Update Subjects & Units |
+  | Unit | ^ | [Add Cards](/mocks/add-cards) | Update Unit | Update Cards |
+  | Card | ^ | ~~No children~~ | Update Card | ~~No children~~ |
+
 * Talk Page 💬
 * Notices Page 🔔
 * Follows Page 👂🏿
@@ -67,6 +66,8 @@ title: V2 Mocks
 * Do more with less
 * Conversational tone
 * Lots of emoji
+  * Links and buttons: emoji in front
+  * Text: emoji at end
 * One column is god
 
 ## Decisions
