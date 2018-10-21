@@ -49,8 +49,8 @@ title: V2 Mocks
 
 * [Search 🔍](/mocks/search)
 * [Subject Page 📚](/mocks/subject)
-* Unit Page 📖
-* Card Page 🃏
+* [Unit Page 📖](/mocks/unit)
+* [Card Page 🃏](/mocks/card)
 * History Page 🎢
 * User Page 👩🏾‍🎤
 * Suggests Page 💡
