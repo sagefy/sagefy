@@ -43,7 +43,7 @@ title: V2 Mocks
 
 ### Data Pages
 
-* Search / Recommended 🕵🏻‍♀️
+* [Search 🔍](/mocks/search)
 * Subject Page (Landing + Data + Tree) 📚
 * Unit Page 📖
 * Card Page 🃏

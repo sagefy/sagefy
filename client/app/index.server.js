@@ -17,7 +17,6 @@ const html = `
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} – Sagefy</title>
-<link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i" rel="stylesheet">
 <link rel="stylesheet" href="/index.css?___">
 <body>{body}
 <script>window.preload={state}</script>
