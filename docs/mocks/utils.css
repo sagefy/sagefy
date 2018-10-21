@@ -65,3 +65,11 @@ textarea {
 .list-style-inline li:last-child {
   margin-right: 0;
 }
+
+.collapse-margins > *:not(:first-child) {
+  margin-top: 0;
+}
+
+.collapse-margins > *:not(:last-child) {
+  margin-bottom: 0;
+}

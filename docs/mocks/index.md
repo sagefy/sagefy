@@ -35,8 +35,13 @@ title: V2 Mocks
 
 * Create Page
   * [Create Subject 🌳📚](/mocks/create-subject)
-  * [Add Units](/mocks/add-units)
+  * [Update Subject 🌳📚](/mocks/update-subject)
+  * [Add Subjects & Units](/mocks/add-units)
+  * Update Subjects & Units
+  * Update Unit
   * [Add Cards](/mocks/add-cards)
+  * Update Cards
+  * Update Card
 * Talk Page 💬
 * Notices Page 🔔
 * Follows Page 👂🏿
@@ -44,10 +49,10 @@ title: V2 Mocks
 ### Data Pages
 
 * [Search 🔍](/mocks/search)
-* Subject Page (Landing + Data + Tree) 📚
+* [Subject Page 📚](/mocks/subject)
 * Unit Page 📖
 * Card Page 🃏
-* Versions Page 🎢
+* History Page 🎢
 * User Page 👩🏾‍🎤
 * Suggests Page 💡
 
