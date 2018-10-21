@@ -15,11 +15,6 @@ label {
   display: block;
 }
 
-input,
-textarea {
-  max-width: 100%;
-}
-
 .meter {
   width: 100%;
   background: #eef1f5; /* hsluv(240, 30, 95) */
@@ -35,18 +30,12 @@ textarea {
   border-radius: 0.25rem;
 }
 
-.text-align-left {
-  text-align: left;
-}
 .text-align-center {
   text-align: center;
 }
+
 .text-align-right {
   text-align: right;
-}
-
-.margin-0 {
-  margin: 0;
 }
 
 .vertical-align-middle {
@@ -58,10 +47,12 @@ textarea {
   list-style: none;
   padding-left: 0;
 }
+
 .list-style-inline li {
   display: inline-block;
   margin-right: 2rem;
 }
+
 .list-style-inline li:last-child {
   margin-right: 0;
 }

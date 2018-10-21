@@ -57,7 +57,7 @@ title: V2 Mocks
 
 ## Goals:
 
-* No sign up required
+* No sign up required for most actions
 * Cut friction to learning
 * Cut friction to creating content
 * Hide less behind clicks
