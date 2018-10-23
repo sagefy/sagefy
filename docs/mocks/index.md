@@ -51,9 +51,9 @@ title: V2 Mocks
 * [Subject Page 📚](/mocks/subject)
 * [Unit Page 📖](/mocks/unit)
 * [Card Page 🃏](/mocks/card)
-* History Page 🎢
-* User Page 👩🏾‍🎤
-* Suggests Page 💡
+* [History Page 🎢](/mocks/history)
+* [User Page 👩🏾‍🎤](/mocks/user)
+* [Suggests Page 💡](/mocks/suggest)
 
 ## Goals:
 
