@@ -3,5 +3,67 @@ layout: mocks
 title: Add Cards
 ---
 
+<header>
+  <div class="collapse-margins">
+    <p><em>Those units looks great!</em></p>
+    <h1>Let's add some cards to "Complex Waves" 🃏🃏🃏</h1>
+  </div>
+  <p><strong>Name:</strong> Complex Waves</p>
+  <p><strong>Goal:</strong> Describe the composition of complex sounds.</p>
+  <details>
+    <summary>
+      🤷🏽‍♀️ What are cards, units, &amp; subjects? 🤷🏽‍♀️
+    </summary>
+  </details>
+  <hr />
+</header>
 
-Add cards
+<section>
+  <h2>Create a new card</h2>
+  <form action="/mocks/card">
+    <p>
+      <label for="name">What is the name of the card?</label>
+      <input type="text" placeholder="example: Video of mean, median, &amp; mode" size="40" id="name" name="name">
+    </p>
+
+    <div>
+      <label for="kind">What kind of card would you like to make?</label>
+      <ul class="list-style-inline" style="margin-top:0">
+        <li><label><input type="radio" value="x" name="x" checked> Video</label></li>
+        <li><label><input type="radio" value="x" name="x"> Choice</label></li>
+        <li><label><input type="radio" value="x" name="x"> Page</label></li>
+        <li><label><input type="radio" value="x" name="x"> Unscored Embed</label></li>
+      </ul>
+    </div>
+
+    <p>
+      <label for="data.videoSite">What the URL of the video?</label>
+      <input type="text" placeholder="example: https://www.youtube.com/watch?v=m_uQj1CP3Kg" size="40" id="name" name="name">
+    </p>
+
+    <p>
+      <button type="submit">🃏 Add Card</button>
+    </p>
+  </form>
+</section>
+
+<section>
+  <hr />
+  <style>table{width:100%}td{vertical-align:middle}</style>
+  <h2>You've added these cards so far ✨</h2>
+
+  <table>
+    <tr>
+      <td class="collapse-margins">
+        <h3><a href="/mocks/card">Video: Complex Waves</a></h3>
+      </td>
+      <td><button type="reset">🗑 Cut</button></td>
+    </tr>
+  </table>
+
+  <!-- Either go to the next unit to add cards, or return to units page -->
+  <form action="/mocks/unit" class="text-align-center">
+    <button type="submit">🌳🃏 Add cards</button>
+    <div><small>...then continue to the next unit</small></div>
+  </form>
+</section>

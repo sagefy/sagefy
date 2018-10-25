@@ -3,50 +3,83 @@ layout: mocks
 title: Add Units
 ---
 
-<section>
+<header>
   <div class="collapse-margins">
     <p><em>"Intro to Classical Guitar" looks great!</em></p>
     <h1>Now, let's add some units 📖 📖 📖</h1>
   </div>
   <p><strong>Name:</strong> Intro to Classical Guitar</p>
   <p><strong>Goal:</strong> An introduction to classical guitar. Let's learn some chords. And how to read guitar tablature.</p>
+  <details>
+    <summary>
+      🤷🏽‍♀️ What are cards, units, &amp; subjects? 🤷🏽‍♀️
+    </summary>
+  </details>
   <hr />
-</section>
-
-what are units?
+</header>
 
 <section>
   <div class="collapse-margins">
     <p><em>You can either...</em></p>
     <h2>Create a new unit</h2>
   </div>
-  <!--
-  <form action="/mocks/update-subject">
-
-    <h1>Let's make a new subject! 😍 🎉</h1>
-
+  <form action="/mocks/unit">
     <p>
-      <label for="name">What should we call this new subject?</label>
-      <input type="text" value="Music" placeholder="example: Introduction to Classical Guitar" size="40" id="name" name="name">
+      <label for="name">What is the name of the unit?</label>
+      <input type="text" placeholder="example: What is mean, median, and mode?" size="40" id="name" name="name">
     </p>
 
     <p>
-      <label for="body">What are the goals of this subject?</label>
-      <textarea placeholder="example: An introduction to classical guitar. Let's learn some chords. And how to read guitar tablature." cols="40" rows="4" id="body" name="body"></textarea>
+      <label for="body">What is the goal of this unit?</label>
+      <textarea placeholder="example: Describe, identify, and calculate means, medians, and modes." cols="40" rows="4" id="body" name="body"></textarea>
     </p>
 
     <p>
-      <button type="submit">📚 Create Subject</button>
+      <label for="requireIds">What units need to come before this unit? <small>optional</small></label>
+      <table>
+        <tr>
+          <td><input type="text" size="25" /></td>
+          <td><button>➕ Add</button></td>
+        </tr>
+      </table>
+    </p>
+
+    <p>
+      <button type="submit">📖 Add Unit</button>
     </p>
   </form>
-  -->
 </section>
 
 <section>
   <h2>...or add an existing unit</h2>
+  <form action="/mocks/unit">
+    <p>
+      <input type="search" size="40" placeholder="example: mean median mode" />
+    </p>
+    <p>
+      <button type="submit">🕵🏻‍♀️ Search</button>
+    </p>
+  </form>
 </section>
 
+<section>
+  <hr />
+  <style>table{width:100%}td{vertical-align:middle}</style>
+  <h2>You've added these units so far ✨</h2>
 
-<form action="/mocks/add-cards">
-  <button type="submit"> Add units</button>
-</form>
+  <table>
+    <tr>
+      <td class="collapse-margins">
+        <h3><a href="/mocks/learn-video">Complex Waves</a></h3>
+        <p>Describe the composition of complex sounds.</p>
+      </td>
+      <td><button type="reset">🗑 Cut</button></td>
+    </tr>
+  </table>
+
+  <!-- Add cards to first unit -->
+  <form action="/mocks/add-cards" class="text-align-center">
+    <button type="submit">🌳📖 Add units</button>
+    <div><small>...then continue to add cards</small></div>
+  </form>
+</section>

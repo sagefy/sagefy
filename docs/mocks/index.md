@@ -37,13 +37,13 @@ title: V2 Mocks
 
   |      | Create Self | Create Children | Update Self | Update Children |
   | ---- | ----------- | --------------- | ----------- | --------------- |
-  | Subject | [Create Subject 🌳📚](/mocks/create-subject) | [Add Subjects & Units](/mocks/add-units) | [Update Subject 🌳📚](/mocks/update-subject) | Update Subjects & Units |
-  | Unit | ^ | [Add Cards](/mocks/add-cards) | Update Unit | Update Cards |
-  | Card | ^ | ~~No children~~ | Update Card | ~~No children~~ |
+  | Subject | [Create Subject 🌳📚](/mocks/create-subject) | [Add Subjects & Units 🌳📖](/mocks/add-units) | [Update Subject 🌳📚](/mocks/update-subject) | [Update Subjects & Units 🌳📖](/mocks/update-units) |
+  | Unit | ⬆️ | [Add Cards 🌳🃏](/mocks/add-cards) | [Update Unit 🌳📖](/mocks/update-unit) | [Update Cards 🌳🃏](/mocks/update-cards) |
+  | Card | ⬆️ | ~~No children~~ | [Update Card 🌳🃏](/mocks/update-card) | ~~No children~~ |
 
-* Talk Page 💬
-* Notices Page 🔔
-* Follows Page 👂🏿
+* [Talk Page 💬](/mocks/talk)
+* [Notices Page 🔔](/mocks/notices)
+* [Follows Page 👂🏿](/mocks/follows)
 
 ### Data Pages
 
