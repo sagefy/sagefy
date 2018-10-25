@@ -22,7 +22,9 @@ title: Add Cards
 
 <section>
   <h2>Create a new card</h2>
-  <form action="/mocks/card">
+  <form action="/mocks/add-cards#queue">
+    <p><em>Advice: A few choice cards would help!</em></p>
+
     <p>
       <label for="name">What is the name of the card?</label>
       <input type="text" placeholder="example: Video of mean, median, &amp; mode" size="40" id="name" name="name">
@@ -44,12 +46,12 @@ title: Add Cards
     </p>
 
     <p>
-      <button type="submit">🃏 Add Card</button>
+      <button type="submit">🃏 Queue Card ⏬</button>
     </p>
   </form>
 </section>
 
-<section>
+<section id="queue">
   <hr />
   <h2>You've added these cards so far ✨</h2>
 
@@ -62,9 +64,10 @@ title: Add Cards
     </tr>
   </table>
 
-  <!-- Either go to the next unit to add cards, or return to units page -->
-  <form action="/mocks/unit" class="text-align-center">
-    <button type="submit">🌳🃏 Add cards</button>
+  <!-- Either go to the next unit to add cards, or return to subject page -->
+  <form action="/mocks/subject" class="text-align-center">
+    <p><em>Advice: You've added one more so far. We recommend at least 10.</em></p>
+    <button type="submit">🌳🃏 Finish cards</button>
     <div><small>...then continue to the next unit</small></div>
   </form>
 </section>

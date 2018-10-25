@@ -72,3 +72,7 @@ time {
 .collapse-margins > *:not(:last-child) {
   margin-bottom: 0;
 }
+
+.display-inline-block {
+  display: inline-block;
+}

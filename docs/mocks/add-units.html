@@ -21,50 +21,59 @@ title: Add Units
 </header>
 
 <section>
-  <div class="collapse-margins">
-    <p><em>You can either...</em></p>
-    <h2>Create a new unit</h2>
-  </div>
-  <form action="/mocks/unit">
-    <p>
-      <label for="name">What is the name of the unit?</label>
-      <input type="text" placeholder="example: What is mean, median, and mode?" size="40" id="name" name="name">
-    </p>
+  <p><em>You can either...</em></p>
+  <details>
+    <summary><h2 class="display-inline-block">Create a new unit 🌳</h2></summary>
+    <form action="/mocks/add-units#queue">
+      <p>
+        <em>Advice: Sweet, let's add your first unit!</em>
+      </p>
 
-    <p>
-      <label for="body">What is the goal of this unit?</label>
-      <textarea placeholder="example: Describe, identify, and calculate means, medians, and modes." cols="40" rows="4" id="body" name="body"></textarea>
-    </p>
+      <p>
+        <label for="name">What is the name of the unit?</label>
+        <input type="text" placeholder="example: What is mean, median, and mode?" size="40" id="name" name="name">
+      </p>
 
-    <p>
-      <label for="requireIds">What units need to come before this unit? <small>optional</small></label>
-      <table>
-        <tr>
-          <td><input type="text" size="25" /></td>
-          <td><button>➕ Add</button></td>
-        </tr>
-      </table>
-    </p>
+      <p>
+        <label for="body">What is the goal of this unit?</label>
+        <textarea placeholder="example: Describe, identify, and calculate means, medians, and modes." cols="40" rows="4" id="body" name="body"></textarea>
+      </p>
 
-    <p>
-      <button type="submit">📖 Add Unit</button>
-    </p>
-  </form>
+      <p>
+        <label for="requireIds">What units need to come before this unit? <small>optional</small></label>
+        <table>
+          <tr>
+            <td><input type="text" size="25" /></td>
+            <td><button>➕ Add</button></td>
+          </tr>
+        </table>
+      </p>
+
+      <p>
+        <button type="submit">📖 Queue Unit ⏬</button>
+      </p>
+    </form>
+  </details>
 </section>
 
 <section>
-  <h2>...or add an existing unit</h2>
-  <form action="/mocks/unit">
-    <p>
-      <input type="search" size="40" placeholder="example: mean median mode" />
-    </p>
-    <p>
-      <button type="submit">🕵🏻‍♀️ Search</button>
-    </p>
-  </form>
+  <details>
+    <summary><h2 class="display-inline-block">...or add an existing unit ➕</h2></summary>
+    <form action="/mocks/add-units#queue">
+      <p>
+        <em>Advice: What unit would you like to add?</em>
+      </p>
+      <p>
+        <input type="search" size="40" placeholder="example: mean median mode" />
+      </p>
+      <p>
+        <button type="submit">🕵🏻‍♀️ Search</button>
+      </p>
+    </form>
+  </details>
 </section>
 
-<section>
+<section id="queue">
   <hr />
   <h2>You've added these units so far ✨</h2>
 
@@ -80,7 +89,10 @@ title: Add Units
 
   <!-- Add cards to first unit -->
   <form action="/mocks/add-cards" class="text-align-center">
-    <button type="submit">🌳📖 Add units</button>
+    <p>
+      <em>Advice: You've added one unit so far. Maybe add a few more?</em>
+    </p>
+    <button type="submit">🌳📖 Finish units</button>
     <div><small>...then continue to add cards</small></div>
   </form>
 </section>
