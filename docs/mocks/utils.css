@@ -23,6 +23,10 @@ time {
   color: #616c77; /* hsluv(240, 20, 45) */
 }
 
+summary > *:first-child {
+  text-decoration: underline;
+}
+
 .meter {
   width: 100%;
   background: #eef1f5; /* hsluv(240, 30, 95) */
