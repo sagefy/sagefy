@@ -57,42 +57,19 @@ title: V2 Mocks
 
 ## Goals:
 
-* No sign up required for most actions
-* Cut friction to learning
-* Cut friction to creating content
-* Hide less behind clicks
-* Kill the menu
-* Friendly brutalist design
-* Do more with less
-* Conversational tone
-* Lots of emoji
-  * Links and buttons: emoji in front
-  * Text: emoji at end
-* One column is god
-
-## Decisions
-
-### Contributing
-
-Who can change a version to accept? How?
-
-Option 1. Anyone can edit anything
-
-Option 2. Consensus voting
-
-Option 3. Maintainers Per Entity
-
-Option 4. Global Maintainers or Overwhelming consensus
-
-### Updating learning model
-
-### Choosing cards
-
-## Notes
-
-* how do i get to site wide search?
-* notices?
-* settings?
-* create?
-* log out?
-* return to choose subject?
+* Cut friction
+  * No sign up required for most actions
+  * Cut friction to learning
+  * Cut friction to creating content
+  * Hide less behind clicks
+  * Kill the menu
+* Easier to contribute
+  * Cut friction to creating content
+  * Do more with less
+  * One column
+* Conversational
+  * Friendly brutalist design
+  * Conversational tone
+  * Emoji
+    * Links and buttons: emoji in front
+    * Text: emoji at end
