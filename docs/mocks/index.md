@@ -34,13 +34,21 @@ title: V2 Mocks
 ### Contributing Experience
 
 * Create Pages
-
-  |      | Create Self | Create Children | Update Self | Update Children |
-  | ---- | ----------- | --------------- | ----------- | --------------- |
-  | Subject | [Create Subject 🌳📚](/mocks/create-subject) | [Add Subjects & Units 🌳📖](/mocks/add-units) | [Update Subject 🌳📚](/mocks/update-subject) | [Update Subjects & Units 🌳📖](/mocks/update-units) |
-  | Unit | ⬆️ | [Add Cards 🌳🃏](/mocks/add-cards) | [Update Unit 🌳📖](/mocks/update-unit) | [Update Cards 🌳🃏](/mocks/update-cards) |
-  | Card | ⬆️ | ~~No children~~ | [Update Card 🌳🃏](/mocks/update-card) | ~~No children~~ |
-
+  * Subject
+    * Create Self: [Create Subject 🌳📚](/mocks/create-subject)
+    * Create Children: [Add Units 🌳📖](/mocks/add-units)
+    * Update Self: [Update Subject 🌳📚](/mocks/update-subject)
+    * Update Children: [Update Units 🌳📖](/mocks/update-units)
+  * Unit
+    * Create Self: ⬆️ Add units above
+    * Create Children: [Add Cards 🌳🃏](/mocks/add-cards)
+    * Update Self: [Update Unit 🌳📖](/mocks/update-unit)
+    * Update Children: [Update Cards 🌳🃏](/mocks/update-cards)
+  * Card
+    * Create Self: ⬆️ Add cards above
+    * Create Children: ~~No children~~
+    * Update Self: [Update Card 🌳🃏](/mocks/update-card)
+    * Update Children: ~~No children~~
 * [Talk Page 💬](/mocks/talk)
 * [Notices Page 🔔](/mocks/notices)
 * [Follows Page 👂🏿](/mocks/follows)
