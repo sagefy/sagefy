@@ -34,9 +34,9 @@ Also, if you're interested, [sign up for development updates](https://sgef.cc/de
 
 ## Platform (Technical)
 
-* [Feedback](https://sgef.cc/feedback) on the system so far: [demo](http://sgef.cc/emus)
-* Testing and [filing bugs](https://github.com/heiskr/sagefy/issues)
-* Contributing ideas to our [Feedback Forum](https://sgef.cc/feedback)
+* [Feedback](https://sgef.cc/issues) on the system so far: [demo](http://sgef.cc/emus)
+* Testing and [filing bugs](https://sgef.cc/issues)
+* Contributing ideas to our [board](https://sgef.cc/issues)
 * Learn how to [set up](http://docs.sagefy.org/Setup) a local development environment
 * Unit tests for the browser experience
 * Increasing API tests to 99% coverage

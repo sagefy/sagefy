@@ -2,7 +2,7 @@
 
 const { div, h1, ul, li, a, strong, br } = require('../../helpers/tags')
 
-const uvUrl = 'https://sagefy.uservoice.com/forums/233394-general'
+const uvUrl = 'https://sgef.cc/issues'
 
 module.exports = () =>
   div(

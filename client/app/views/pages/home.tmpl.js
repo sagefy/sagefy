@@ -221,7 +221,7 @@ module.exports = data => {
         li(
           a(
             {
-              href: 'https://sagefy.uservoice.com/forums/233394-general/',
+              href: 'https://sgef.cc/issues',
             },
             icon('contact'),
             ' Support'
