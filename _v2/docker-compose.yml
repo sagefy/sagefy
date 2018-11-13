@@ -1,0 +1,54 @@
+version: '3'
+services:
+  postgres:
+    # https://hub.docker.com/_/postgres/
+    image: 'postgres:11-alpine'
+    ports:
+     - '5432:5432'
+    environment:
+      POSTGRES_DB: sagefy
+      POSTGRES_USER: sagefy
+    volumes:
+     - ./postgres-data:/var/lib/postgresql/data
+     - ./postgres:/www
+  postgres-test:
+    # https://hub.docker.com/_/postgres/
+    image: 'postgres:11-alpine'
+    ports:
+     - '5433:5432'
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: test
+    volumes:
+     - ./postgres-test-data:/var/lib/postgresql/data
+     - ./postgres:/www
+  server:
+    # https://hub.docker.com/_/node/
+    build: ./server
+    ports:
+     - "8653:8653"
+    volumes:
+     - ./server:/server
+    links:
+     - postgres
+     - postgres-test
+  client:
+    # https://hub.docker.com/_/node/
+    build: ./client
+    ports:
+     - "5984:5984"
+    volumes:
+     - ./client:/client
+    links:
+     - server
+  nginx:
+    # https://hub.docker.com/_/nginx/
+    image: 'nginx:1.15-alpine'
+    volumes:
+     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+     - ./nginx/statics:/var/www
+    ports:
+     - "80:80"
+    links:
+     - server
+     - client
