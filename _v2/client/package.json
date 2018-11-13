@@ -1,0 +1,22 @@
+{
+  "name": "sagefy-client",
+  "version": "2.0.0",
+  "description": "Sagefy. Learn anything, adapted to you. Free.",
+  "main": "index.client.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sagefy/sagefy.git"
+  },
+  "author": "Kevin Heis and contributors",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/sagefy/sagefy/issues"
+  },
+  "homepage": "https://github.com/sagefy/sagefy#readme",
+  "dependencies": {
+    "lodash.get": "^4.4.2"
+  }
+}

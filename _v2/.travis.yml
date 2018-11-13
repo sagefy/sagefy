@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - 10
+addons:
+  postgresql: '11'
+before_script:
+  # run sql schema, create mock data
+notifications:
+  email: true
