@@ -2,7 +2,8 @@
 
 # ENSURE is UTF-8
 
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+create extension if not exists "uuid-ossp";
+create extension if not exists "pgcrypto";
 
 ### Types
 
@@ -10,7 +11,9 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 ### Validations
 
-### Permisssions
+### Sessions
+
+### Permissions
 
 ### Triggers
 
