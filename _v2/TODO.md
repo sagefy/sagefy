@@ -6,7 +6,7 @@
 - [ ] Create a script to send mail
 - [ ] Determine server/client error handling pattern
 - [ ] Create sitemap route in client: root pages, card unit subject topic user
-
+- [ ] Update provisioning script
 
 ```json
 

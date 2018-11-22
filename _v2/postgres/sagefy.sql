@@ -20,7 +20,7 @@ $$ language 'plpgsql';
 
 ### Users ######################################################################
 
-### Users > Types
+### Users > Types -- N/A
 
 ### Users > Tables
 
