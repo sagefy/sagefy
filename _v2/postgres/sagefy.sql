@@ -97,7 +97,7 @@ create table unit_version ( # TODO schema
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   entity_id uuid not null references entity (entity_id),  # TODO enforce kind
-  previous_id uuid null references unit (version_id),
+  previous_id uuid null references unit_version (version_id),
   language varchar(5) not null default 'en'
     constraint lang_check check (language ~* '^\w{2}(-\w{2})?$'),
   name text not null,
@@ -115,7 +115,7 @@ create table subject_version ( # TODO schema
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   entity_id uuid not null references entity (entity_id), # TODO enforce kind
-  previous_id uuid null references subject (version_id),
+  previous_id uuid null references subject_version (version_id),
   language varchar(5)    not null default 'en'
     constraint lang_check check (language ~* '^\w{2}(-\w{2})?$'),
   name text not null,
@@ -133,7 +133,7 @@ create table card_version ( # TODO schema
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   entity_id uuid not null references entity (entity_id), # TODO enforce kind
-  previous_id uuid null references card (version_id),
+  previous_id uuid null references card_version (version_id),
   language varchar(5) not null default 'en'
     constraint lang_check check (language ~* '^\w{2}(-\w{2})?$'),
   name text not null,
