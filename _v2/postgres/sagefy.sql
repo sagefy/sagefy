@@ -161,7 +161,7 @@ create table card_parameters ( # TODO schema
 
 ### Cards, Units, Subjects > Validations
 
-# TODO Validation: `data` field of cards by type
+# TODO Validation: `data` field of cards by type with JSON schema
 
 # TODO Validation: No require cycles for units
 
@@ -174,6 +174,8 @@ create table card_parameters ( # TODO schema
 ### Cards, Units, Subjects > Sessions
 
 ### Cards, Units, Subjects > Permissions
+
+# TODO only the status can change... when
 
 ### Cards, Units, Subjects > Triggers
 
