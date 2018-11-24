@@ -1,4 +1,4 @@
-- [ ] Create GraphQL query files
+- [x] Create GraphQL query files
 - [ ] Write GraphQL query files
 - [ ] Configure DB & mail for dev, test, ci, prod
 - [ ] Populate dev / text / CI dbs
