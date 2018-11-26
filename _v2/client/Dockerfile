@@ -1,6 +1,5 @@
-FROM node:10.13-alpine
+FROM keymetrics/pm2:10-alpine
 ADD . /client
 WORKDIR /client
-RUN npm install -g pm2
 RUN npm install
-CMD ["pm2", "start", "./index.server.js", "--no-daemon"]
+CMD ["pm2-runtime", "start", "pm2.json"]

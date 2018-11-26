@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/sagefy/sagefy#readme",
   "dependencies": {
-    "lodash.get": "^4.4.2"
+    "express": "^4.16.4",
+    "lodash.get": "^4.4.2",
+    "postgraphile": "^4.0.1"
   }
 }
