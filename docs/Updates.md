@@ -9,6 +9,27 @@ You can sign up for email updates at https://sgef.cc/devupdates
 
 
 
+
+## UPDATE -- 2018 Nov 26
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2018 Oct 29 - 2018 Nov 25
+
+* I'm still looking for more reviews of the [V2 Mocks](https://docs.sagefy.org/mocks/)! If you have some time, check out the mock pages for V2 Sagefy. Feel free to click around; everything is static demo content. Feedback is welcome, you can reply to this email :)
+* Started work on updated database schema for V2.
+
+### Upcoming Two Weeks: 2018 Nov 26 - 2018 Dec 9
+
+* Continue to work on updated database schema... I'm wanting to encode as much as possible at this layer, so the application code does very little work.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to https://sgef.cc/issues and add feedback or ideas there.
+
+
+
+
 ## UPDATE -- 2018 Oct 29
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
