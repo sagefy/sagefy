@@ -1,4 +1,6 @@
-<h1><img src="https://raw.githubusercontent.com/heiskr/sagefy/master/nginx/statics/astrolabe.png" height="50"> Sagefy</h1>
+<img src="https://raw.githubusercontent.com/heiskr/sagefy/master/nginx/statics/astrolabe.png" height="100">
+
+# Sagefy 
 
 **Learn anything, customized for you.** _And always free._
 
