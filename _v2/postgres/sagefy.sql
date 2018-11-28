@@ -13,10 +13,10 @@ create schema sg_private; -- Secrets
 -- todo comment
 
 create role sg_postgraphile login password 'xyz'; -- todo !!! fix password
-create role sg_anonymous;
-grant sg_anonymous to sg_postgraphile;
 create role sg_user;
+create role sg_anonymous;
 grant sg_user to sg_postgraphile;
+grant sg_anonymous to sg_postgraphile;
 -- todo comment on roles
 
 ---- Generic > Trigger Functions
@@ -52,8 +52,10 @@ create table sg_public.user (
 
 create table sg_private.user (
   user_id uuid primary key references sg_public.user (id) on delete cascade,
-  email text not null unique constraint email_check check (email ~* '^\S+@\S+\.\S+$'),
-  password varchar(60) not null constraint pass_check check (password ~* '^\$2\w\$.*$'),
+  email text not null unique
+    constraint email_check check (email ~* '^\S+@\S+\.\S+$'),
+  password varchar(60) not null
+    constraint pass_check check (password ~* '^\$2\w\$.*$'),
   email_frequency sg_public.email_frequency not null default 'immediate'
 );
 
@@ -78,7 +80,8 @@ begin
   return user;
 end;
 $$ language plpgsql strict security definer;
-comment on function sg_public.sign_up(text, text, text) is 'Signs up a single user.';
+comment on function sg_public.sign_up(text, text, text)
+  is 'Signs up a single user.';
 
 create type sg_public.jwt_token as (
   role text,
@@ -111,7 +114,9 @@ comment on function sg_public.log_in(text, text) is 'Logs in a single user.';
 
 ------ Users > Triggers (TODO) -------------------------------------------------
 
-create trigger update_user_modified before update on sg_public.user for each row execute procedure sg_private.update_modified_column();
+create trigger update_user_modified
+  before update on sg_public.user
+  for each row execute procedure sg_private.update_modified_column();
 -- TODO comment
 
 -- TODO Trigger: Create user -> send sign up email
@@ -121,7 +126,7 @@ create trigger update_user_modified before update on sg_public.user for each row
 ------ Users > Capabilities (TODO) ---------------------------------------------
 
 -- Session management
-create function sg_public.get_current_user() 
+create function sg_public.get_current_user()
 returns sg_public.user as $$
   select *
   from sg_public.user
@@ -268,13 +273,21 @@ create table sg_public.card_parameters (
 
 ------ Cards, Units, Subjects > Triggers
 
-create trigger update_unit_modified before update on sg_public.unit_version for each row execute procedure sg_private.update_modified_column(); -- TODO comment
+create trigger update_unit_modified
+  before update on sg_public.unit_version
+  for each row execute procedure sg_private.update_modified_column(); -- TODO comment
 
-create trigger update_subject_modified before update on sg_public.subject_version for each row execute procedure sg_private.update_modified_column();  -- TODO comment
+create trigger update_subject_modified
+  before update on sg_public.subject_version
+  for each row execute procedure sg_private.update_modified_column();  -- TODO comment
 
-create trigger update_card_modified before update on sg_public.card_version for each row execute procedure sg_private.update_modified_column();  -- TODO comment
+create trigger update_card_modified
+  before update on sg_public.card_version
+  for each row execute procedure sg_private.update_modified_column();  -- TODO comment
 
-create trigger update_card_parameters_modified before update on sg_public.card_parameters for each row execute procedure sg_private.update_modified_column();  -- TODO comment
+create trigger update_card_parameters_modified
+  before update on sg_public.card_parameters
+  for each row execute procedure sg_private.update_modified_column();  -- TODO comment
 
 ------ Cards, Units, Subjects > Capabilities (TODO)
 
@@ -316,7 +329,7 @@ create type sg_public.notice_kind as enum(
 
 ------ Topics, Posts, Notices, Follows > Tables
 
-create table sg_public.topic ( 
+create table sg_public.topic (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
@@ -331,14 +344,17 @@ create table sg_public.post (
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
-  topic_id uuid not null references sg_public.topic (id),  
+  topic_id uuid not null references sg_public.topic (id),
   kind sg_public.post_kind not null default 'post',
-  body text null check (kind = 'vote' or body is not null),
+  body text null
+    check (kind = 'vote' or body is not null),
   replies_to_id uuid null references sg_public.post (id)
     check (kind <> 'vote' or replies_to_id is not null),
-  entity_versions jsonb null check (kind <> 'proposal' or entity_versions is not null),
+  entity_versions jsonb null
+    check (kind <> 'proposal' or entity_versions is not null),
     /* jsonb?: issue cant ref, cant enum composite TODO split into join table */
-  response boolean null check (kind <> 'vote' or response is not null)
+  response boolean null
+    check (kind <> 'vote' or response is not null)
 );
 -- todo comment table/columns
 
@@ -369,7 +385,9 @@ create table sg_public.follow (
 ------ Topics, Posts, Notices, Follows > Validations todo
 
 -- Post validation: A user can only vote once on a given proposal.
-create unique index post_vote_unique_idx on sg_public.post (user_id, replies_to_id) where kind = 'vote';
+create unique index post_vote_unique_idx
+  on sg_public.post (user_id, replies_to_id)
+  where kind = 'vote';
 -- todo comment
 
 -- TODO Post validation: A reply must belong to the same topic.
@@ -400,13 +418,21 @@ create unique index post_vote_unique_idx on sg_public.post (user_id, replies_to_
 
 ------ Topics, Posts, Notices, Follows > Triggers (todo)
 
-create trigger update_topic_modified before update on sg_public.topic for each row execute procedure sg_private.update_modified_column(); -- todo comment
+create trigger update_topic_modified
+  before update on sg_public.topic
+  for each row execute procedure sg_private.update_modified_column(); -- todo comment
 
-create trigger update_post_modified before update on sg_public.post for each row execute procedure sg_private.update_modified_column(); -- todo comment
+create trigger update_post_modified
+  before update on sg_public.post
+  for each row execute procedure sg_private.update_modified_column(); -- todo comment
 
-create trigger update_notice_modified before update on sg_public.notice for each row execute procedure sg_private.update_modified_column(); -- todo comment
+create trigger update_notice_modified
+  before update on sg_public.notice
+  for each row execute procedure sg_private.update_modified_column(); -- todo comment
 
-create trigger update_follow_modified before update on sg_public.follow for each row execute procedure sg_private.update_modified_column(); -- todo comment
+create trigger update_follow_modified
+  before update on sg_public.follow
+  for each row execute procedure sg_private.update_modified_column(); -- todo comment
 
 -- TODO Trigger: when I create or update a vote post, we can update entity status
 
@@ -464,13 +490,17 @@ create table sg_public.response (
 
 ------ User Subjects, Responses > Triggers
 
-create trigger update_user_subject_modified before update on sg_public.user_subject for each row execute procedure sg_private.update_modified_column();
+create trigger update_user_subject_modified
+  before update on sg_public.user_subject
+  for each row execute procedure sg_private.update_modified_column();
 -- todo comment
 
-create trigger update_response_modified before update on sg_public.response for each row execute procedure sg_private.update_modified_column();
+create trigger update_response_modified
+  before update on sg_public.response
+  for each row execute procedure sg_private.update_modified_column();
 -- todo comment
 
-/* TODO 
+/* TODO
 - Trigger: Create response ->
   - Update p(learned)
   - Calculate updated guess value
@@ -511,7 +541,7 @@ create table sg_public.suggest (
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   name text not null,
-  body text null ); 
+  body text null );
 -- todo comment table/columns
 
 create table sg_public.suggest_follower (
@@ -533,10 +563,14 @@ create table sg_public.suggest_follower (
 
 ------ Suggests, Suggest Followers > Triggers (todo)
 
-create trigger update_suggest_modified before update on sg_public.suggest for each row execute procedure sg_private.update_modified_column();
+create trigger update_suggest_modified
+  before update on sg_public.suggest
+  for each row execute procedure sg_private.update_modified_column();
 -- todo comment
 
-create trigger update_suggest_follower_modified before update on sg_public.suggest_follower for each row execute procedure sg_private.update_modified_column();
+create trigger update_suggest_follower_modified
+  before update on sg_public.suggest_follower
+  for each row execute procedure sg_private.update_modified_column();
 -- todo comment
 
 ------ Suggests, Suggest Followers > Capabilities (todo)
