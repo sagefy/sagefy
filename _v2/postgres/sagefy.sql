@@ -1,11 +1,18 @@
 -- This file should be kept up-to-date as the latest, current version.
+-- We can use this file for local development, testing, reference, debugging, and evaluation.
+
 
 -- ENSURE UTF-8
 
 create extension if not exists "uuid-ossp";
 create extension if not exists "pgcrypto";
 
----- Generic > Schemas and Roles
+
+
+
+------ Generic -----------------------------------------------------------------
+
+------ Generic > Schemas and Roles ---------------------------------------------
 
 create schema sg_public; -- Exposed to GraphQL
 create schema sg_hidden; -- Not exposed to GraphQL
@@ -13,13 +20,21 @@ create schema sg_private; -- Secrets
 -- todo comment
 
 create role sg_postgraphile login password 'xyz'; -- todo !!! fix password
+create role sg_admin;
 create role sg_user;
 create role sg_anonymous;
+grant sg_admin to sg_postgraphile;
 grant sg_user to sg_postgraphile;
 grant sg_anonymous to sg_postgraphile;
 -- todo comment on roles
 
----- Generic > Trigger Functions
+-- Disable function execution permission by default.
+alter default privileges revoke execute on functions from public;
+
+-- Allow everyone to see the sg_public schema exists.
+grant usage on schema sg_public to sg_anonymous, sg_user, sg_admin;
+
+------ Generic > Trigger Functions ---------------------------------------------
 
 create or replace function sg_private.update_modified_column()
 returns trigger as $$
@@ -30,6 +45,11 @@ $$ language 'plpgsql';
 -- todo comment
 
 
+
+
+
+
+
 ------ Users -------------------------------------------------------------------
 
 ------ Users > Types -----------------------------------------------------------
@@ -37,6 +57,13 @@ $$ language 'plpgsql';
 create type sg_public.email_frequency as enum(
   'immediate', 'daily', 'weekly', 'never'
 );
+-- todo comment
+
+create type sg_public.jwt_token as (
+  role text,
+  user_id uuid
+);
+-- todo comment
 
 ------ Users > Tables ----------------------------------------------------------
 
@@ -63,7 +90,7 @@ create table sg_private.user (
 
 ------ Users > Validations (TODO) ----------------------------------------------
 
------- Users > Sessions (TODO) -------------------------------------------------
+------ Users > Sessions --------------------------------------------------------
 
 create function sg_public.sign_up(
   name text,
@@ -83,12 +110,6 @@ $$ language plpgsql strict security definer;
 comment on function sg_public.sign_up(text, text, text)
   is 'Signs up a single user.';
 
-create type sg_public.jwt_token as (
-  role text,
-  user_id uuid
-);
--- todo comment
-
 create function sg_public.log_in(
   name text,
   password text
@@ -101,7 +122,7 @@ begin
     where u.name = $1 or u.email = $1
     limit 1;
   if user.password = crypt(password, user.password) then
-    return ('sg_user', user.user_id)::sg_public.jwt_token;
+    return ('sg_user', user.user_id)::sg_public.jwt_token; -- todo handle if admin
   else
     return null;
   end if;
@@ -109,8 +130,6 @@ end;
 $$ language plpgsql strict security definer;
 comment on function sg_public.log_in(text, text) is 'Logs in a single user.';
 -- todo !!! jwt refresh tokens?
-
------- Users > Permissions (TODO) ----------------------------------------------
 
 ------ Users > Triggers (TODO) -------------------------------------------------
 
@@ -140,14 +159,57 @@ comment on function sg_public.get_current_user() is 'Get the current logged in u
 
 -- TODO Passwords encrypted in DB
 
--- TODO Send email token / validate token
+-- TODO Send email token / validate token / update email
+
+------ Users > Permissions -----------------------------------------------------
+
+-- No one other than Postgraphile has access to sg_private.
+
+-- Enable RLS.
+alter table sg_public.user enable row level security;
+
+-- Select user: any.
+grant select on table sg_public.user to sg_anonymous, sg_user, sg_admin;
+create policy select_user on sg_public.user
+  for select -- any user
+  using (true);
+
+-- Insert user: only anonymous, via function.
+grant execute on function sg_public.sign_up(text, text, text) to sg_anonymous;
+
+-- Update user: user self (name, settings), or admin.
+grant update on table sg_public.user to sg_user, sg_admin;
+create policy update_user on sg_public.user
+  for update (name, view_subjects) to sg_user
+  using (id = current_setting('jwt.claims.user_id')::uuid);
+create policy update_user_admin on sg_public.user
+  for update to sg_admin
+  using (true);
+
+-- Delete user: user self, or admin.
+grant delete on table sg_public.user to sg_user, sg_admin;
+create policy delete_user on sg_public.user
+  for delete to sg_user
+  using (id = current_setting('jwt.claims.user_id')::uuid);
+create policy delete_user_admin on sg_public.user
+  for delete to sg_admin
+  using (true);
+
+-- All users may log in or check the current user.
+grant execute on function sg_public.log_in(text, text) to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.get_current_user() to sg_anonymous, sg_user, sg_admin;
+-- todo other functions...
+
+
+
+
 
 
 
 
 ------ Cards, Units, Subjects --------------------------------------------------
 
------- Cards, Units, Subjects > Types
+------ Cards, Units, Subjects > Types ------------------------------------------
 
 create type sg_public.entity_kind as enum(
   'card',
@@ -172,7 +234,7 @@ create type sg_public.card_kind as enum(
 );
 -- TODO comment
 
------- Cards, Units, Subjects > Tables
+------ Cards, Units, Subjects > Tables -----------------------------------------
 
 create table sg_public.entity (
   entity_id uuid primary key default uuid_generate_v4(),
@@ -193,12 +255,18 @@ create table sg_public.unit_version (
   available boolean not null default true,
   tags text[] null default array[]::text[],
   user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
-  /* and the rest.... */
+  -- and the rest....
   body text not null,
-  require_ids uuid[] not null default array[]::uuid[] /* issue no element TODO break into join table */
+  require_ids uuid[] not null default array[]::uuid[] -- issue no element TODO break into join table
 );
-
 -- TODO comment table/columns/constraints
+
+create view sg_public.unit as
+  select distinct on (entity_id) *
+  from sg_public.unit_version
+  where status = 'accepted'
+  order by entity_id, created desc;
+-- todo comment
 
 create table sg_public.subject_version (
   version_id uuid primary key default uuid_generate_v4(),
@@ -206,18 +274,17 @@ create table sg_public.subject_version (
   modified timestamp not null default current_timestamp,
   entity_id uuid not null references sg_public.entity (entity_id), -- TODO enforce kind
   previous_id uuid null references sg_public.subject_version (version_id),
-  language varchar(5)    not null default 'en'
+  language varchar(5) not null default 'en'
     constraint lang_check check (language ~* '^\w{2}(-\w{2})?$'),
   name text not null,
   status sg_public.entity_status not null default 'pending',
   available boolean not null default true,
   tags text[] null default array[]::text[],
   user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
-  /* and the rest.... */
+  -- and the rest.... 
   body text not null,
-  members jsonb not null /* jsonb?: issue cant ref, cant enum composite TODO split into join table */
+  members jsonb not null -- jsonb?: issue cant ref, cant enum composite TODO split into join table
 );
-
 -- TODO comment table/columns/constraints
 
 create table sg_public.card_version (
@@ -233,13 +300,12 @@ create table sg_public.card_version (
   available boolean not null default true,
   tags text[] null default array[]::text[],
   user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
-  /* and the rest.... */
+  -- and the rest....
   unit_id uuid not null references sg_public.entity (entity_id),  -- TODO check kind
-  require_ids uuid[] not null default array[]::uuid[], /* issue no element  TODO split into join table */
+  require_ids uuid[] not null default array[]::uuid[], -- issue no element  TODO split into join table 
   kind sg_public.card_kind not null,
-  data jsonb not null /* jsonb?: varies per kind */
+  data jsonb not null -- jsonb?: varies per kind
 );
-
 -- TODO create entity `view`s
 -- TODO comment table/columns/constraints
 
@@ -249,11 +315,19 @@ create table sg_public.card_parameters (
   modified timestamp not null default current_timestamp,
   entity_id uuid not null unique references sg_public.entity (entity_id),  -- TODO check kind
   guess_distribution jsonb not null,
-    /* jsonb?: map */
+    -- jsonb?: map
   slip_distribution jsonb not null );
 -- TODO comment table/columns
 
------- Cards, Units, Subjects > Validations (TODO)
+create view sg_public.card as
+  select distinct on (entity_id) *
+  from sg_public.card_version
+  where status = 'accepted'
+  order by entity_id, created desc;
+-- todo comment
+-- todo join with parameters in view?
+
+------ Cards, Units, Subjects > Validations (TODO) -----------------------------
 
 -- TODO Validation: `data` field of cards by type with JSON schema
 
@@ -265,13 +339,7 @@ create table sg_public.card_parameters (
 
 -- TODO TODO Who can update entity statuses? How?
 
------- Cards, Units, Subjects > Sessions (TODO)
-
------- Cards, Units, Subjects > Permissions (TODO)
-
--- TODO only the status can change... when
-
------- Cards, Units, Subjects > Triggers
+------ Cards, Units, Subjects > Triggers ---------------------------------------
 
 create trigger update_unit_modified
   before update on sg_public.unit_version
@@ -303,11 +371,42 @@ create trigger update_card_parameters_modified
 
 -- TODO Capability: get entites I've created
 
+-- TODO insert new / new version of existing
+
+------ Cards, Units, Subjects > Permissions ------------------------------------
+
+
+-- Select card, unit, subject: any.
+grant select on table sg_public.unit_version to sg_anonymous, sg_user, sg_admin;
+grant select on table sg_public.subject_version to sg_anonymous, sg_user, sg_admin;
+grant select on table sg_public.card_version to sg_anonymous, sg_user, sg_admin;
+grant select on table sg_public.card_parameters to sg_anonymous, sg_user, sg_admin;
+
+-- Insert (or new version) card, unit, subject: any via function.
+grant execute on function sg_public.new_unit(???) to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.edit_unit(???) to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.new_subject(???) to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.edit_subject(???) to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.new_card(???) to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.edit_card(???) to sg_anonymous, sg_user, sg_admin;
+
+-- Update & delete card, unit, subject: admin.
+grant update, delete on table sg_public.unit_version to sg_admin;
+grant update, delete on table sg_public.subject_version to sg_admin;
+grant update, delete on table sg_public.card_version to sg_admin;
+grant update, delete on table sg_public.card_parameters to sg_admin;
+
+-- todo other functions...
+
+
+
+
+
 
 
 ------ Topics, Posts, Notices, Follows -----------------------------------------
 
------- Topics, Posts, Notices, Follows > Types
+------ Topics, Posts, Notices, Follows > Types ---------------------------------
 
 create type sg_public.post_kind as enum(
   'post',
@@ -327,7 +426,7 @@ create type sg_public.notice_kind as enum(
 );
 -- todo comment
 
------- Topics, Posts, Notices, Follows > Tables
+------ Topics, Posts, Notices, Follows > Tables --------------------------------
 
 create table sg_public.topic (
   id uuid primary key default uuid_generate_v4(),
@@ -335,7 +434,8 @@ create table sg_public.topic (
   modified timestamp not null default current_timestamp,
   user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
   name text not null,
-  entity_id uuid not null,  /* TODO issue cant ref across tables */
+  entity_id uuid not null, -- TODO issue cant ref across tables
+  -- todo verify id x kind
   entity_kind sg_public.entity_kind not null );
 -- todo comment table/columns
 
@@ -352,7 +452,7 @@ create table sg_public.post (
     check (kind <> 'vote' or replies_to_id is not null),
   entity_versions jsonb null
     check (kind <> 'proposal' or entity_versions is not null),
-    /* jsonb?: issue cant ref, cant enum composite TODO split into join table */
+    -- jsonb?: issue cant ref, cant enum composite TODO split into join table 
   response boolean null
     check (kind <> 'vote' or response is not null)
 );
@@ -365,7 +465,7 @@ create table sg_public.notice (
   user_id uuid not null references sg_public.user (id),
   kind sg_public.notice_kind not null,
   data jsonb not null,
-    /* jsonb?: varies per kind */
+    -- jsonb?: varies per kind 
   read boolean not null default false,
   tags text[] null default array[]::text[]
 );
@@ -376,13 +476,13 @@ create table sg_public.follow (
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   user_id uuid not null references sg_public.user (id),
-  entity_id uuid not null, /* issue cant ref across tables  TODO fix */
+  entity_id uuid not null, -- issue cant ref across tables  TODO fix
   entity_kind sg_public.entity_kind not null,
   unique (user_id, entity_id)
 );
 -- todo comment table/columns
 
------- Topics, Posts, Notices, Follows > Validations todo
+------ Topics, Posts, Notices, Follows > Validations todo ----------------------
 
 -- Post validation: A user can only vote once on a given proposal.
 create unique index post_vote_unique_idx
@@ -404,19 +504,7 @@ create unique index post_vote_unique_idx
 
 -- TODO Post validation: For proposals, the status can only be changed to declined, and only when the current status is pending or blocked.
 
------- Topics, Posts, Notices, Follows > Sessions (todo)
-
------- Topics, Posts, Notices, Follows > Permissions (todo)
-
--- TODO Topic permission: Only the author of a topic can edit the name.
-
--- TODO Post permission: A user can only update: Post: body; Proposal: body; Vote: body, response
-
--- TODO Permission: a user can only read their own notices and follows
-
--- TODO Permission: a user can only read/unread their own notices
-
------- Topics, Posts, Notices, Follows > Triggers (todo)
+------ Topics, Posts, Notices, Follows > Triggers (todo) -----------------------
 
 create trigger update_topic_modified
   before update on sg_public.topic
@@ -444,9 +532,114 @@ create trigger update_follow_modified
 
 -- TODO Trigger: when I create a post, I follow the entity
 
------- Topics, Posts, Notices, Follows > Capabilities (todo)
+------ Topics, Posts, Notices, Follows > Capabilities (todo) -------------------
 
 -- Notices > TODO Create notices for all users that follow an entity
+
+------ Topics, Posts, Notices, Follows > Permissions ---------------------------
+
+-- Enable RLS.
+alter table sg_public.topic enable row level security;
+alter table sg_public.post enable row level security;
+alter table sg_public.notice enable row level security;
+alter table sg_public.follow enable row level security;
+
+-- Select topic: any.
+grant select on table sg_public.topic to sg_anonymous, sg_user, sg_admin;
+create policy select_topic on sg_public.topic
+  for select -- any user
+  using (true);
+
+-- Insert topic: any via function.
+-- todo
+
+-- Update topic: user self (name), or admin.
+grant update on table sg_public.topic to sg_user, sg_admin;
+create policy update_topic on sg_public.topic
+  for update (name) to sg_user
+  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+create policy update_topic_admin on sg_public.topic
+  for update to sg_admin
+  using (true);
+
+-- Delete topic: admin.
+grant delete on table sg_public.topic to sg_admin;
+create policy delete_topic_admin on sg_public.topic
+  for delete to sg_admin
+  using (true);
+
+-- Select post: any.
+grant select on table sg_public.post to sg_anonymous, sg_user, sg_admin;
+create policy select_post on sg_public.post
+  for select -- any user
+  using (true);
+
+-- Insert post: any via function.
+-- todo
+
+-- Update post: user self (body, response), or admin.
+grant update on table sg_public.post to sg_user, sg_admin;
+create policy update_post on sg_public.post
+  for update (body, response) to sg_user
+  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+create policy update_post_admin on sg_public.post
+  for update to sg_admin
+  using (true);
+
+-- Delete post: admin.
+grant delete on table sg_public.post to sg_admin;
+create policy delete_post_admin on sg_public.post
+  for delete to sg_admin
+  using (true);
+
+-- Select follow: user or admin self.
+grant select on table sg_public.follow to sg_user, sg_admin;
+create policy select_follow on sg_public.follow
+  for select to sg_user, sg_admin
+  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+
+-- Insert follow: user or admin via function.
+-- TODO or does this need to be a function?
+
+-- Update follow: none.
+
+-- Delete follow: user or admin self.
+grant delete on table sg_public.follow to sg_user, sg_admin;
+create policy delete_follow on sg_public.follow
+  for select to sg_user, sg_admin
+  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+
+-- Select notice: user or admin self.
+grant select on table sg_public.notice to sg_user, sg_admin;
+create policy select_notice on sg_public.notice
+  for select to sg_user, sg_admin
+  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+
+-- Insert notice: none.
+
+-- Update notice: user or admin self (read).
+grant update on table sg_public.notice to sg_user, sg_admin;
+create policy update_notice on sg_public.notice
+  for update (read) to sg_user, sg_admin
+  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+
+-- Delete notice: user or admin self.
+grant delete on table sg_public.notice to sg_user, sg_admin;
+create policy delete_notice on sg_public.notice
+  for delete to sg_user, sg_admin
+  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+
+-- todo function permissions...
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -481,12 +674,6 @@ create table sg_public.response (
 -- todo comment table/columns
 
 ------ User Subjects, Responses > Validations (todo)
-
------- User Subjects, Responses > Sessions (todo)
-
------- User Subjects, Responses > Permissions (todo)
-
--- TODO  Permission: A user can only create/read/update their own usubjs
 
 ------ User Subjects, Responses > Triggers
 
@@ -528,6 +715,43 @@ create trigger update_response_modified
 
 -- TODO When p(L) > 0.99, return to choose a unit
 
+------ User Subjects, Responses > Permissions ----------------------------------
+
+-- Enable RLS.
+alter table sg_public.user_subject enable row level security;
+alter table sg_public.response enable row level security;
+
+-- Select usubj: user or admin self or with setting.
+-- TODO
+
+-- Insert usubj: user or admin via function.
+-- TODO or does it need to be a function?
+
+-- Update usubj: none.
+
+-- Delete usubj: user or admin self.
+grant delete on table sg_public.user_subject to sg_user, sg_admin;
+create policy delete_user_subject on sg_public.user_subject
+  for delete to sg_user, sg_admin
+  using (id = current_setting('jwt.claims.user_id')::uuid);
+
+-- Select response: any self.
+-- TODO
+
+-- Insert response: any via function.
+-- TODO
+
+-- Update & delete response: none.
+
+-- TODO other functions...
+
+
+
+
+
+
+
+
 
 
 ------ Suggests, Suggest Followers ---------------------------------------------
@@ -557,10 +781,6 @@ create table sg_public.suggest_follower (
 
 ------ Suggests, Suggest Followers > Validations (todo)
 
------- Suggests, Suggest Followers > Sessions (todo)
-
------- Suggests, Suggest Followers > Permissions (todo)
-
 ------ Suggests, Suggest Followers > Triggers (todo)
 
 create trigger update_suggest_modified
@@ -574,3 +794,38 @@ create trigger update_suggest_follower_modified
 -- todo comment
 
 ------ Suggests, Suggest Followers > Capabilities (todo)
+
+------ Suggests, Suggest Followers > Permissions -------------------------------
+
+-- Enable RLS.
+alter table sg_public.suggest_follower enable row level security;
+
+-- Select suggest: any.
+grant select on table sg_public.suggest to sg_anonymous, sg_user, sg_admin;
+
+-- Insert suggest: any via function.
+-- TODO
+
+-- Update suggest: admin.
+grant update on table sg_public.suggest to sg_admin;
+
+-- Delete suggest: admin.
+grant delete on table sg_public.suggest to sg_admin;
+
+-- Select suggest_follower: any.
+grant select on table sg_public.suggest_follower to sg_anonymous, sg_user, sg_admin;
+create policy select_suggest_follower on sg_public.suggest_follower
+  for select -- any user
+  using (true);
+
+-- Insert suggest_follower: any via function above.
+
+-- Update suggest_follow: none.
+
+-- Delete suggest_follow: user or admin self.
+grant delete on table sg_public.suggest_follower to sg_user, sg_admin;
+create policy delete_suggest_follower on sg_public.suggest_follower
+  for delete to sg_user, sg_admin
+  using (id = current_setting('jwt.claims.user_id')::uuid);
+
+-- TODO other functions...
