@@ -3,16 +3,19 @@ layout: mocks
 title: Search Subjects
 ---
 
-
 <section class="text-align-center">
   <h1>What do you want to learn? 🔭</h1>
   <form action="/mocks/search-subjects">
     <p>
-      <input type="search" size="40" value="Music" placeholder="example: Music" autofocus />
+      <input
+        type="search"
+        size="40"
+        value="Music"
+        placeholder="example: Music"
+        autofocus
+      />
     </p>
-    <p>
-      <button type="submit">🕵🏻‍♀️ Search</button>
-    </p>
+    <p><button type="submit">🕵🏻‍♀️ Search</button></p>
   </form>
 </section>
 
@@ -20,18 +23,31 @@ title: Search Subjects
 <section>
   <h2>Choose from one of these subjects 📚</h2>
   <ul class="list-style-none">
-    <li>
-      <h3><a href="/mocks/choose-unit">🎧 An Introduction to Electronic Music</a></h3>
+    <li class="collapse-margins">
+      <h3>
+        <a href="/mocks/choose-unit">🎧 An Introduction to Electronic Music</a>
+      </h3>
       <!-- This should immediately launch the learning experience! -->
-      <p>A small taste of the basics of electronic music. Learn the concepts behind creating and modifying sounds in an electronic music system. Learn the ideas behind the tools and systems we use to create electronic music.</p>
+      <p>
+        A small taste of the basics of electronic music. Learn the concepts
+        behind creating and modifying sounds in an electronic music system.
+        Learn the ideas behind the tools and systems we use to create
+        electronic music.
+      </p>
     </li>
-    <li>
+    <li class="collapse-margins">
       <h3><a href="/mocks/choose-unit">🎸 Let's Play Classical Guitar</a></h3>
-      <p>An introduction to classical guitar. Let's learn some chords. And how to read guitar tabulature.</p>
+      <p>
+        An introduction to classical guitar. Let's learn some chords. And how
+        to read guitar tabulature.
+      </p>
     </li>
-    <li>
+    <li class="collapse-margins">
       <h3><a href="/mocks/choose-unit">🎼 Welcome to Music Theory</a></h3>
-      <p>We'll cover the basics of how to read sheet music. Chords, progressions, and sequences. Harmony.</p>
+      <p>
+        We'll cover the basics of how to read sheet music. Chords,
+        progressions, and sequences. Harmony.
+      </p>
     </li>
   </ul>
 </section>
@@ -44,20 +60,20 @@ title: Search Subjects
   <ul class="list-style-none">
     <li><button disabled>✅</button> Violin Basics</li>
     <li><button>👍</button> Drop a beat</li>
-    <li><button>👍</button> <input type="text" value="Music"></li>
-    <!-- If the user isn't logged in, ask them to (optionally) sign up to get notified -->
+    <li><button>👍</button> <input type="text" value="Music" /></li>
+    <!--
+      If the user isn't logged in, ask them to (optionally) sign up to get notified
+    -->
   </ul>
-  <p>
-    <a href="/mocks/suggest">💡 View all suggestions!</a>
-  </p>
+  <p><a href="/mocks/suggest">💡 View all suggestions!</a></p>
 </section>
 
 <section>
   <h2>...or learn by creating your subject! 🏗</h2>
   <p>
-    <a href="/mocks/create-subject">🌱 <strong>Build your own "Music" subject</strong>.</a>
+    <a href="/mocks/create-subject"
+      >🌱 <strong>Build your own "Music" subject</strong>.</a
+    >
   </p>
-  <p>
-    <em>We'll show you how!</em> 👩🏼‍🏫 And we'll love you forever. 💕
-  </p>
+  <p><em>We'll show you how!</em> 👩🏼‍🏫 And we'll love you forever. 💕</p>
 </section>
