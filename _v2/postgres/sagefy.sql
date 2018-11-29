@@ -287,6 +287,13 @@ create table sg_public.subject_version (
 );
 -- TODO comment table/columns/constraints
 
+create view sg_public.subject as
+  select distinct on (entity_id) *
+  from sg_public.subject_version
+  where status = 'accepted'
+  order by entity_id, created desc;
+-- todo comment
+
 create table sg_public.card_version (
   version_id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
