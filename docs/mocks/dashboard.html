@@ -11,38 +11,51 @@ title: Dashboard
 <!-- If the user has no subjects, then list popular subjects here instead -->
 <section>
   <h2>Choose one of your subjects 🧐📚</h2>
-  <ul class="list-style-none">
-    <li class="collapse-margins">
-      <h3>
-        <mark
-          ><a href="/mocks/choose-unit"
-            >🎧 An Introduction to Electronic Music</a
-          ></mark
-        >
-        👈🏽 ❇️
-      </h3>
-      <p>
-        A small taste of the basics of electronic music. Learn the concepts
-        behind creating and modifying sounds in an electronic music system.
-        Learn the ideas behind the tools and systems we use to create
-        electronic music. <small>(2 of 17 units learned.)</small>
-      </p>
-    </li>
-    <li class="collapse-margins">
-      <h3><a href="/mocks/choose-unit">🎸 Let's Play Classical Guitar</a></h3>
-      <p>
-        An introduction to classical guitar. Let's learn some chords. And how
-        to read guitar tabulature. <small>(0 of 10 units learned.)</small>
-      </p>
-    </li>
-    <li class="collapse-margins">
-      <h3>...or how about something else? 🔭</h3>
-      <form action="/mocks/search-subjects">
-        <input type="search" size="40" placeholder="example: Music" />
-        <button type="submit">🕵🏻‍♀️ Search</button>
-      </form>
-    </li>
-  </ul>
+  <table>
+    <tr>
+      <td>
+        <p><button type="submit">👍</button></p>
+      </td>
+      <td class="collapse-margins">
+        <h3>
+          <mark
+            ><a href="/mocks/choose-unit"
+              >🎧 An Introduction to Electronic Music</a
+            ></mark
+          >
+        </h3>
+        <p>
+          A small taste of the basics of electronic music. Learn the concepts
+          behind creating and modifying sounds in an electronic music system.
+          Learn the ideas behind the tools and systems we use to create
+          electronic music. <small>(2 of 17 units learned.)</small>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p><button>👍</button></p>
+      </td>
+      <td class="collapse-margins">
+        <h3>
+          <a href="/mocks/choose-unit">🎸 Let's Play Classical Guitar</a>
+        </h3>
+        <p>
+          An introduction to classical guitar. Let's learn some chords. And how
+          to read guitar tabulature. <small>(0 of 10 units learned.)</small>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td class="collapse-margins" colspan="2">
+        <h3>...or how about something else? 🔭</h3>
+        <form action="/mocks/search-subjects">
+          <input type="search" size="40" placeholder="example: Music" />
+          <button type="submit">🕵🏻‍♀️ Search</button>
+        </form>
+      </td>
+    </tr>
+  </table>
 </section>
 
 <section>
