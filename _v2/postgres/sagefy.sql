@@ -281,7 +281,7 @@ create table sg_public.subject_version (
   available boolean not null default true,
   tags text[] null default array[]::text[],
   user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
-  -- and the rest.... 
+  -- and the rest....
   body text not null,
   members jsonb not null -- jsonb?: issue cant ref, cant enum composite TODO split into join table
 );
@@ -309,7 +309,7 @@ create table sg_public.card_version (
   user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
   -- and the rest....
   unit_id uuid not null references sg_public.entity (entity_id),  -- TODO check kind
-  require_ids uuid[] not null default array[]::uuid[], -- issue no element  TODO split into join table 
+  require_ids uuid[] not null default array[]::uuid[], -- issue no element  TODO split into join table
   kind sg_public.card_kind not null,
   data jsonb not null -- jsonb?: varies per kind
 );
@@ -364,7 +364,7 @@ create trigger update_card_parameters_modified
   before update on sg_public.card_parameters
   for each row execute procedure sg_private.update_modified_column();  -- TODO comment
 
------- Cards, Units, Subjects > Capabilities (TODO)
+------ Cards, Units, Subjects > Capabilities (TODO) ----------------------------
 
 -- TODO Search per entity type
 
@@ -459,7 +459,7 @@ create table sg_public.post (
     check (kind <> 'vote' or replies_to_id is not null),
   entity_versions jsonb null
     check (kind <> 'proposal' or entity_versions is not null),
-    -- jsonb?: issue cant ref, cant enum composite TODO split into join table 
+    -- jsonb?: issue cant ref, cant enum composite TODO split into join table
   response boolean null
     check (kind <> 'vote' or response is not null)
 );
@@ -472,7 +472,7 @@ create table sg_public.notice (
   user_id uuid not null references sg_public.user (id),
   kind sg_public.notice_kind not null,
   data jsonb not null,
-    -- jsonb?: varies per kind 
+    -- jsonb?: varies per kind
   read boolean not null default false,
   tags text[] null default array[]::text[]
 );
@@ -653,9 +653,9 @@ create policy delete_notice on sg_public.notice
 
 ------ User Subjects, Responses ------------------------------------------------
 
------- User Subjects, Responses > Types (TODO)
+------ User Subjects, Responses > Types (TODO) ---------------------------------
 
------- User Subjects, Responses > Tables
+------ User Subjects, Responses > Tables ---------------------------------------
 
 create table sg_public.user_subject (
   id uuid primary key default uuid_generate_v4(),
@@ -680,9 +680,9 @@ create table sg_public.response (
 );
 -- todo comment table/columns
 
------- User Subjects, Responses > Validations (todo)
+------ User Subjects, Responses > Validations (todo) ---------------------------
 
------- User Subjects, Responses > Triggers
+------ User Subjects, Responses > Triggers -------------------------------------
 
 create trigger update_user_subject_modified
   before update on sg_public.user_subject
@@ -702,7 +702,7 @@ create trigger update_response_modified
   - Calculate updated transit value
 */
 
------- User Subjects, Responses > Capabilities (todo)
+------ User Subjects, Responses > Capabilities (todo) --------------------------
 
 -- TODO Get and set learning context
 
@@ -763,16 +763,17 @@ create policy delete_user_subject on sg_public.user_subject
 
 ------ Suggests, Suggest Followers ---------------------------------------------
 
------- Suggests, Suggest Followers > Types - N/A
+------ Suggests, Suggest Followers > Types - N/A -------------------------------
 
------- Suggests, Suggest Followers > Tables
+------ Suggests, Suggest Followers > Tables ------------------------------------
 
 create table sg_public.suggest (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   name text not null,
-  body text null );
+  body text null
+);
 -- todo comment table/columns
 
 create table sg_public.suggest_follower (
@@ -786,9 +787,9 @@ create table sg_public.suggest_follower (
 );
 -- todo comment table/columns
 
------- Suggests, Suggest Followers > Validations (todo)
+------ Suggests, Suggest Followers > Validations (todo) ------------------------
 
------- Suggests, Suggest Followers > Triggers (todo)
+------ Suggests, Suggest Followers > Triggers (todo) ---------------------------
 
 create trigger update_suggest_modified
   before update on sg_public.suggest
@@ -800,7 +801,7 @@ create trigger update_suggest_follower_modified
   for each row execute procedure sg_private.update_modified_column();
 -- todo comment
 
------- Suggests, Suggest Followers > Capabilities (todo)
+------ Suggests, Suggest Followers > Capabilities (todo) -----------------------
 
 ------ Suggests, Suggest Followers > Permissions -------------------------------
 
