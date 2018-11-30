@@ -172,7 +172,7 @@ alter table sg_public.user enable row level security;
 grant select on table sg_public.user to sg_anonymous, sg_user, sg_admin;
 create policy select_user on sg_public.user
   for select -- any user
-  using (true);
+  using (true); -- TODO comment
 
 -- Insert user: only anonymous, via function.
 grant execute on function sg_public.sign_up(text, text, text) to sg_anonymous;
@@ -181,19 +181,19 @@ grant execute on function sg_public.sign_up(text, text, text) to sg_anonymous;
 grant update on table sg_public.user to sg_user, sg_admin;
 create policy update_user on sg_public.user
   for update (name, view_subjects) to sg_user
-  using (id = current_setting('jwt.claims.user_id')::uuid);
+  using (id = current_setting('jwt.claims.user_id')::uuid); -- TODO comment
 create policy update_user_admin on sg_public.user
   for update to sg_admin
-  using (true);
+  using (true); -- TODO comment
 
 -- Delete user: user self, or admin.
 grant delete on table sg_public.user to sg_user, sg_admin;
 create policy delete_user on sg_public.user
   for delete to sg_user
-  using (id = current_setting('jwt.claims.user_id')::uuid);
+  using (id = current_setting('jwt.claims.user_id')::uuid); -- TODO comment
 create policy delete_user_admin on sg_public.user
   for delete to sg_admin
-  using (true);
+  using (true); -- TODO comment
 
 -- All users may log in or check the current user.
 grant execute on function sg_public.log_in(text, text) to sg_anonymous, sg_user, sg_admin;
@@ -555,7 +555,7 @@ alter table sg_public.follow enable row level security;
 grant select on table sg_public.topic to sg_anonymous, sg_user, sg_admin;
 create policy select_topic on sg_public.topic
   for select -- any user
-  using (true);
+  using (true); -- TODO comment
 
 -- Insert topic: any via function.
 -- todo
@@ -564,22 +564,22 @@ create policy select_topic on sg_public.topic
 grant update on table sg_public.topic to sg_user, sg_admin;
 create policy update_topic on sg_public.topic
   for update (name) to sg_user
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = current_setting('jwt.claims.user_id')::uuid); -- TODO comment
 create policy update_topic_admin on sg_public.topic
   for update to sg_admin
-  using (true);
+  using (true); -- TODO comment
 
 -- Delete topic: admin.
 grant delete on table sg_public.topic to sg_admin;
 create policy delete_topic_admin on sg_public.topic
   for delete to sg_admin
-  using (true);
+  using (true); -- TODO comment
 
 -- Select post: any.
 grant select on table sg_public.post to sg_anonymous, sg_user, sg_admin;
 create policy select_post on sg_public.post
   for select -- any user
-  using (true);
+  using (true); -- TODO comment
 
 -- Insert post: any via function.
 -- todo
@@ -588,22 +588,22 @@ create policy select_post on sg_public.post
 grant update on table sg_public.post to sg_user, sg_admin;
 create policy update_post on sg_public.post
   for update (body, response) to sg_user
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = current_setting('jwt.claims.user_id')::uuid); -- TODO comment
 create policy update_post_admin on sg_public.post
   for update to sg_admin
-  using (true);
+  using (true); -- TODO comment
 
 -- Delete post: admin.
 grant delete on table sg_public.post to sg_admin;
 create policy delete_post_admin on sg_public.post
   for delete to sg_admin
-  using (true);
+  using (true); -- TODO comment
 
 -- Select follow: user or admin self.
 grant select on table sg_public.follow to sg_user, sg_admin;
 create policy select_follow on sg_public.follow
   for select to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = current_setting('jwt.claims.user_id')::uuid); -- TODO comment
 
 -- Insert follow: user or admin via function.
 -- TODO or does this need to be a function?
@@ -614,13 +614,13 @@ create policy select_follow on sg_public.follow
 grant delete on table sg_public.follow to sg_user, sg_admin;
 create policy delete_follow on sg_public.follow
   for select to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = current_setting('jwt.claims.user_id')::uuid); -- TODO comment
 
 -- Select notice: user or admin self.
 grant select on table sg_public.notice to sg_user, sg_admin;
 create policy select_notice on sg_public.notice
   for select to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = current_setting('jwt.claims.user_id')::uuid); -- TODO comment
 
 -- Insert notice: none.
 
@@ -628,13 +628,13 @@ create policy select_notice on sg_public.notice
 grant update on table sg_public.notice to sg_user, sg_admin;
 create policy update_notice on sg_public.notice
   for update (read) to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = current_setting('jwt.claims.user_id')::uuid); -- TODO comment
 
 -- Delete notice: user or admin self.
 grant delete on table sg_public.notice to sg_user, sg_admin;
 create policy delete_notice on sg_public.notice
   for delete to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = current_setting('jwt.claims.user_id')::uuid); -- TODO comment
 
 -- todo function permissions...
 
@@ -740,7 +740,7 @@ alter table sg_public.response enable row level security;
 grant delete on table sg_public.user_subject to sg_user, sg_admin;
 create policy delete_user_subject on sg_public.user_subject
   for delete to sg_user, sg_admin
-  using (id = current_setting('jwt.claims.user_id')::uuid);
+  using (id = current_setting('jwt.claims.user_id')::uuid); -- TODO comment
 
 -- Select response: any self.
 -- TODO
@@ -824,7 +824,7 @@ grant delete on table sg_public.suggest to sg_admin;
 grant select on table sg_public.suggest_follower to sg_anonymous, sg_user, sg_admin;
 create policy select_suggest_follower on sg_public.suggest_follower
   for select -- any user
-  using (true);
+  using (true); -- TODO comment
 
 -- Insert suggest_follower: any via function above.
 
@@ -834,6 +834,6 @@ create policy select_suggest_follower on sg_public.suggest_follower
 grant delete on table sg_public.suggest_follower to sg_user, sg_admin;
 create policy delete_suggest_follower on sg_public.suggest_follower
   for delete to sg_user, sg_admin
-  using (id = current_setting('jwt.claims.user_id')::uuid);
+  using (id = current_setting('jwt.claims.user_id')::uuid); -- TODO comment
 
 -- TODO other functions...
