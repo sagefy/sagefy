@@ -1,8 +1,9 @@
 -- This file should be kept up-to-date as the latest, current version.
--- We can use this file for local development, testing, reference, debugging, and evaluation.
+-- We can use this file for local development, testing, reference, 
+-- debugging, and evaluation.
 
 
--- ENSURE UTF-8
+-- ENSURE UTF-8, UTC Timezone
 
 create extension if not exists "uuid-ossp";
 create extension if not exists "pgcrypto";
@@ -14,10 +15,10 @@ create extension if not exists "pgcrypto";
 
 ------ Generic > Schemas and Roles ---------------------------------------------
 
-create schema sg_public; -- Exposed to GraphQL
-create schema sg_hidden; -- Not exposed to GraphQL
-create schema sg_private; -- Secrets
--- todo comment
+create schema sg_public;
+create schema sg_private;
+comment on schema sg_public is 'Schema exposed to GraphQL.';
+comment on schema sg_private is 'Schema hidden from GraphQL.'
 
 create role sg_postgraphile login password 'xyz'; -- todo !!! fix password
 create role sg_admin;
@@ -26,7 +27,10 @@ create role sg_anonymous;
 grant sg_admin to sg_postgraphile;
 grant sg_user to sg_postgraphile;
 grant sg_anonymous to sg_postgraphile;
--- todo comment on roles
+comment on role sg_postgraphile is 'Access role for Postgraphile';
+comment on role sg_admin is 'Admin role can change any public facing data.';
+comment on role sg_user is 'User role is a default logged in user.';
+comment on role sg_anonymous is 'Anonymous role is a default logged out user.';
 
 -- Disable function execution permission by default.
 alter default privileges revoke execute on functions from public;
@@ -42,7 +46,8 @@ begin new.modified = now();
   return new;
 end;
 $$ language 'plpgsql';
--- todo comment
+comment on function sg_private.update_modified_column()
+  is 'Whenever the row changes, update the modified column.';
 
 
 
@@ -55,15 +60,18 @@ $$ language 'plpgsql';
 ------ Users > Types -----------------------------------------------------------
 
 create type sg_public.email_frequency as enum(
-  'immediate', 'daily', 'weekly', 'never'
+  'immediate', 
+  'daily', 
+  'weekly', 
+  'never'
 );
--- todo comment
-
+comment on type sg_public.email_frequency 
+  is 'Email frequency options per user';
 create type sg_public.jwt_token as (
   role text,
   user_id uuid
 );
--- todo comment
+comment on type sg_public.jwt_token
 
 ------ Users > Tables ----------------------------------------------------------
 
@@ -74,8 +82,18 @@ create table sg_public.user (
   name text not null unique,
   view_subjects boolean not null default false
 );
-
--- TODO comment table and columns, constraints
+comment on table sg_public.user 
+  is 'The public user data table. Anyone can see this data.';
+comment on column sg_public.user.id
+  is 'The primary key of the user.';
+comment on column sg_public.user.created
+  is 'When the user signed up.';
+comment on column sg_public.user.modified
+  is 'When the public user data updated last.';
+comment on column sg_public.user.name
+  is 'The user\'s name or username';
+comment on column sg_public.user.view_subjects
+  is 'Public setting for if the user wants to display what they are learning.';
 
 create table sg_private.user (
   user_id uuid primary key references sg_public.user (id) on delete cascade,
@@ -85,10 +103,14 @@ create table sg_private.user (
     constraint pass_check check (password ~* '^\$2\w\$.*$'),
   email_frequency sg_public.email_frequency not null default 'immediate'
 );
-
--- TODO comment table and columns, constraints
-
------- Users > Validations (TODO) ----------------------------------------------
+comment on table sg_private.user
+  is 'Private user data -- this should be highly protected.';
+comment on column sg_private.user.email
+  is 'The user\'s private email address -- for notices and password resets.';
+comment on column sg_private.user.password
+  is 'The bcrypt hash of the user\'s password.'
+comment on column sg_private.user.email_frequency
+  is 'Setting of how often the user would like to receive notice emails.';
 
 ------ Users > Sessions --------------------------------------------------------
 
@@ -136,7 +158,8 @@ comment on function sg_public.log_in(text, text) is 'Logs in a single user.';
 create trigger update_user_modified
   before update on sg_public.user
   for each row execute procedure sg_private.update_modified_column();
--- TODO comment
+comment on trigger update_user_modified on sg_public.user
+  is 'Whenever the user changes, update the `modified` column.';
 
 -- TODO Trigger: Create user -> send sign up email
 
@@ -151,7 +174,8 @@ returns sg_public.user as $$
   from sg_public.user
   where id = current_setting('jwt.claims.user_id')::uuid
 $$ language sql stable;
-comment on function sg_public.get_current_user() is 'Get the current logged in user.';
+comment on function sg_public.get_current_user() 
+  is 'Get the current logged in user.';
 
 -- TODO Sign out
 
@@ -196,8 +220,10 @@ create policy delete_user_admin on sg_public.user
   using (true); -- TODO comment
 
 -- All users may log in or check the current user.
-grant execute on function sg_public.log_in(text, text) to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.get_current_user() to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.log_in(text, text) 
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.get_current_user() 
+  to sg_anonymous, sg_user, sg_admin;
 -- todo other functions...
 
 
@@ -316,6 +342,7 @@ create table sg_public.card_version (
 -- TODO create entity `view`s
 -- TODO comment table/columns/constraints
 
+/*
 create table sg_public.card_parameters (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
@@ -323,8 +350,10 @@ create table sg_public.card_parameters (
   entity_id uuid not null unique references sg_public.entity (entity_id),  -- TODO check kind
   guess_distribution jsonb not null,
     -- jsonb?: map
-  slip_distribution jsonb not null );
+  slip_distribution jsonb not null 
+);
 -- TODO comment table/columns
+*/
 
 create view sg_public.card as
   select distinct on (entity_id) *
@@ -348,21 +377,31 @@ create view sg_public.card as
 
 ------ Cards, Units, Subjects > Triggers ---------------------------------------
 
-create trigger update_unit_modified
+create trigger update_unit_version_modified
   before update on sg_public.unit_version
-  for each row execute procedure sg_private.update_modified_column(); -- TODO comment
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_unit_version_modified on sg_public.unit_version
+  is 'Whenever a unit version changes, update the `modified` column.';
 
-create trigger update_subject_modified
+create trigger update_subject_version_modified
   before update on sg_public.subject_version
-  for each row execute procedure sg_private.update_modified_column();  -- TODO comment
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_subject_version_modified on sg_public.subject_version
+  is 'Whenever a subject version changes, update the `modified` column.';
 
-create trigger update_card_modified
+create trigger update_card_version_modified
   before update on sg_public.card_version
-  for each row execute procedure sg_private.update_modified_column();  -- TODO comment
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_card_version_modified on sg_public.card_version
+  is 'Whenever a card version changes, update the `modified` column.';
 
+/*
 create trigger update_card_parameters_modified
   before update on sg_public.card_parameters
-  for each row execute procedure sg_private.update_modified_column();  -- TODO comment
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_card_parameters_modified on sg_public.card_parameters
+  is 'Whenever card parameters changes, update the `modified` column.';
+*/
 
 ------ Cards, Units, Subjects > Capabilities (TODO) ----------------------------
 
@@ -384,24 +423,33 @@ create trigger update_card_parameters_modified
 
 
 -- Select card, unit, subject: any.
-grant select on table sg_public.unit_version to sg_anonymous, sg_user, sg_admin;
-grant select on table sg_public.subject_version to sg_anonymous, sg_user, sg_admin;
-grant select on table sg_public.card_version to sg_anonymous, sg_user, sg_admin;
-grant select on table sg_public.card_parameters to sg_anonymous, sg_user, sg_admin;
+grant select on table sg_public.unit_version 
+  to sg_anonymous, sg_user, sg_admin;
+grant select on table sg_public.subject_version 
+  to sg_anonymous, sg_user, sg_admin;
+grant select on table sg_public.card_version 
+  to sg_anonymous, sg_user, sg_admin;
+-- grant select on table sg_public.card_parameters to sg_anonymous, sg_user, sg_admin;
 
 -- Insert (or new version) card, unit, subject: any via function.
-grant execute on function sg_public.new_unit(???) to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.edit_unit(???) to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.new_subject(???) to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.edit_subject(???) to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.new_card(???) to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.edit_card(???) to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.new_unit(???) 
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.edit_unit(???) 
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.new_subject(???) 
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.edit_subject(???) 
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.new_card(???) 
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.edit_card(???) 
+  to sg_anonymous, sg_user, sg_admin;
 
 -- Update & delete card, unit, subject: admin.
 grant update, delete on table sg_public.unit_version to sg_admin;
 grant update, delete on table sg_public.subject_version to sg_admin;
 grant update, delete on table sg_public.card_version to sg_admin;
-grant update, delete on table sg_public.card_parameters to sg_admin;
+-- grant update, delete on table sg_public.card_parameters to sg_admin;
 
 -- todo other functions...
 
@@ -515,19 +563,27 @@ create unique index post_vote_unique_idx
 
 create trigger update_topic_modified
   before update on sg_public.topic
-  for each row execute procedure sg_private.update_modified_column(); -- todo comment
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_topic_modified on sg_public.topic
+  is 'Whenever a topic changes, update the `modified` column.';
 
 create trigger update_post_modified
   before update on sg_public.post
-  for each row execute procedure sg_private.update_modified_column(); -- todo comment
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_post_modified on sg_public.post
+  is 'Whenever a post changes, update the `modified` column.';
 
 create trigger update_notice_modified
   before update on sg_public.notice
-  for each row execute procedure sg_private.update_modified_column(); -- todo comment
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_notice_modified on sg_public.notice
+  is 'Whenever a notice changes, update the `modified` column.';
 
 create trigger update_follow_modified
   before update on sg_public.follow
-  for each row execute procedure sg_private.update_modified_column(); -- todo comment
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_follow_modified on sg_public.follow
+  is 'Whenever a follow changes, update the `modified` column.';
 
 -- TODO Trigger: when I create or update a vote post, we can update entity status
 
@@ -687,12 +743,14 @@ create table sg_public.response (
 create trigger update_user_subject_modified
   before update on sg_public.user_subject
   for each row execute procedure sg_private.update_modified_column();
--- todo comment
+comment on trigger update_user_subject_modified on sg_public.user_subject
+  is 'Whenever a user subject changes, update the `modified` column.';
 
 create trigger update_response_modified
   before update on sg_public.response
   for each row execute procedure sg_private.update_modified_column();
--- todo comment
+comment on trigger update_response_modified on sg_public.response
+  is 'Whenever a response changes, update the `modified` column.';
 
 /* TODO
 - Trigger: Create response ->
@@ -794,12 +852,14 @@ create table sg_public.suggest_follower (
 create trigger update_suggest_modified
   before update on sg_public.suggest
   for each row execute procedure sg_private.update_modified_column();
--- todo comment
+comment on trigger update_suggest_modified on sg_public.suggest
+  is 'Whenever a suggest changes, update the `modified` column.';
 
 create trigger update_suggest_follower_modified
   before update on sg_public.suggest_follower
   for each row execute procedure sg_private.update_modified_column();
--- todo comment
+comment on trigger update_suggest_follower_modified on sg_public.suggest_follower
+  is 'Whenever a suggest follower changes, update the `modified` column.';
 
 ------ Suggests, Suggest Followers > Capabilities (todo) -----------------------
 
@@ -821,7 +881,8 @@ grant update on table sg_public.suggest to sg_admin;
 grant delete on table sg_public.suggest to sg_admin;
 
 -- Select suggest_follower: any.
-grant select on table sg_public.suggest_follower to sg_anonymous, sg_user, sg_admin;
+grant select on table sg_public.suggest_follower 
+  to sg_anonymous, sg_user, sg_admin;
 create policy select_suggest_follower on sg_public.suggest_follower
   for select -- any user
   using (true); -- TODO comment
