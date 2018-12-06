@@ -55,6 +55,10 @@ function choose(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
+function smoothed(init, sum, count, C = 30) {
+  return (C * init + sum) / (C + count)
+}
+
 //// Mock //////////////////////////////////////////////////////////////////////
 
 function createCards(numCards = 20) {
@@ -100,10 +104,6 @@ function updateCard(card, params) {
 
   function calcSlip({ score, guess, slip, learned }) {
     return (1 - score) * learned * learned
-  }
-
-  function smoothed(init, sum, count, C = 30) {
-    return (C * init + sum) / (C + params.count)
   }
 
   card.guess = smoothed(
