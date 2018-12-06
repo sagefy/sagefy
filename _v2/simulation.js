@@ -6,26 +6,26 @@ const INIT_GUESS = 0.3
 const INIT_SLIP = 0.1
 const INIT_LEARNED = 0.4
 const MAX_LEARNED = 0.99
-const INIT_TRANSIT = 0.05
+const INIT_TRANSIT = 0 // TODO update to estimate, 0.05?
 
 //// Formulas //////////////////////////////////////////////////////////////////
 
-function calculateCorrect(guess, slip, learned) {
+function calcCorrect(guess, slip, learned) {
   return learned * (1 - slip) + (1 - learned) * guess
 }
 
-function calculateIncorrect(guess, slip, learned) {
+function calcIncorrect(guess, slip, learned) {
   return learned * slip + (1 - learned) * (1 - guess)
 }
 
 function updateLearned({ score, learned, guess, slip, transit }) {
   const posterior =
     score 
-      * calculateCorrect(0, slip, learned) 
-      / calculateCorrect(guess, slip, learned)
+      * calcCorrect(0, slip, learned) 
+      / calcCorrect(guess, slip, learned)
     + (1 - score) 
-      * calculateIncorrect(0, slip, learned) 
-      / calculateIncorrect(guess, slip, learned)
+      * calcIncorrect(0, slip, learned) 
+      / calcIncorrect(guess, slip, learned)
   return posterior + (1 - posterior) * transit
 }
 
@@ -51,7 +51,7 @@ function choose(arr) {
 
 //// Mock //////////////////////////////////////////////////////////////////////
 
-function createCards(numCards = 50) {
+function createCards(numCards = 20) {
   return [...Array(numCards).keys()]
     .map(i => ({
       name: i,
@@ -59,13 +59,13 @@ function createCards(numCards = 50) {
       guess: INIT_GUESS,
       realSlip: around(INIT_SLIP),
       slip: INIT_SLIP,
-      realTransit: around(INIT_TRANSIT),
+      realTransit: INIT_TRANSIT, // TODO around(INIT_TRANSIT)
       transit: INIT_TRANSIT,
       responses: [],
     }))
 }
 
-function createLearners(numLearners = 10000) {
+function createLearners(numLearners = 1000) {
   return [...Array(numLearners).keys()]
     .map(i => ({ name: i, learned: INIT_LEARNED }))
 }
@@ -73,7 +73,7 @@ function createLearners(numLearners = 10000) {
 //// Simluate //////////////////////////////////////////////////////////////////
 
 function getScore(learner, card) {
-  const correct = calculateCorrect(
+  const correct = calcCorrect(
     card.realGuess, 
     card.realSlip, 
     learner.learned
@@ -85,25 +85,18 @@ function updateLearner(learner, params) {
   learner.learned = updateLearned(params)
 }
 
-function updateCard(card) {
+function updateCard(card, params) {
   // THIS IS WHERE THE EXPERIMENT OCCURS!!!
   // card.guess = ???
   // card.slip = ???
   // card.transit = ???
 
-  function calcGuess({ score, learned, guess, slip, transit }) {
-    if (score === 0) return 0
-    return 1 - learned
+  function calcGuess({ score, learned }) {
+    return (score * 0.5 + 0.5) * (1 - learned)
   }
 
-  function calcSlip({ score, learned, guess, slip, transit }) {
-    if (score === 1) return 0
-    return learned
-  }
-
-  function calcTransit({ score, learned, guess, slip, transit }) {
-    if (score === 1) return 0
-    return learned
+  function calcSlip({ score, learned }) {
+    return (1 - (score * 0.5 + 0.5)) * learned
   }
 
   card.guess = card.responses.length > 30
@@ -113,15 +106,11 @@ function updateCard(card) {
   card.slip = card.responses.length > 30
     ? mean(card.responses.map(calcSlip))
     : INIT_SLIP
-
-  card.transit = card.responses.length > 30
-    ? mean(card.responses.map(calcTransit))
-    : INIT_TRANSIT
 }
 
-function simulate(rounds = 10000000) {
-  const cards = createCards()
-  const learners = createLearners()
+function simulate(numCards, numLearners, rounds = 5000) {
+  const cards = createCards(numCards)
+  const learners = createLearners(numLearners)
 
   for (let i = 0; i < rounds; i++) {
     const card = choose(cards)
@@ -130,29 +119,26 @@ function simulate(rounds = 10000000) {
     if (learner.learned > MAX_LEARNED) continue
 
     const score = getScore(learner, card)
-
-    card.responses.push({
-      learned: learner.learned,
-      score,
-      guess: card.guess,
-      slip: card.slip,
-      transit: card.transit,
-    })
-
-    // Update learner
-    updateLearner(learner, { 
+    const params = { 
       score, 
       learned: learner.learned,
       guess: card.guess,
       slip: card.slip,
       transit: card.transit
-    })
+    }
+
+    card.responses.push(params)
+
+    // Update learner
+    updateLearner(learner, params)
 
     // Update card
-    updateCard(card)
+    updateCard(card, params)
 
     // console.log(i, learner, card)
   }
+
+  // console.log('mean responses per card', mean(cards.map(({responses}) => responses.length)))
 
   return { cards, learners }
 }
@@ -160,18 +146,132 @@ function simulate(rounds = 10000000) {
 //// Result ////////////////////////////////////////////////////////////////////
 
 if (require.main === module) {
-  const { cards, learners } = simulate()
   // The goal is to beat `1`.
-  console.log('guess', 
+
+  const { cards, learners } = simulate(20, 1000, 5000)
+
+  const guessPerf = 
     error(cards, 'guess', 'realGuess')
     / control(cards, 'realGuess', INIT_GUESS)
-  )
-  console.log('slip', 
+
+  const slipPerf =
     error(cards, 'slip', 'realSlip')
     / control(cards, 'realSlip', INIT_SLIP)
+
+  console.log(
+    'mean responses per card', 
+    mean(cards.map(({responses}) => responses.length))
   )
-  console.log('transit', 
-    error(cards, 'transit', 'realTransit')
-    / control(cards, 'realTransit', INIT_TRANSIT)
+
+  console.log(
+    (guessPerf + slipPerf) / 2,
+    mean(cards.map(({guess}) => guess)),
+    mean(cards.map(({slip}) => slip)),
   )
 }
+
+/*
+
+  () => INIT_GUESS,
+  () => INIT_SLIP,
+  () => INIT_TRANSIT,
+  () => 0,
+  () => 1,
+  ({ learned }) => learned,
+  ({ learned }) => 1 - learned,
+  ({ learned }) => 1 + learned,
+  ({ learned }) => 1 / learned,
+  ({ learned }) => 1 / (1 - learned),
+  ({ learned }) => 1 / (1 + learned),
+  ({ learned }) => learned / (1 - learned),
+  ({ learned }) => learned / (1 + learned),
+  ({ learned }) => (1 - learned) / learned,
+  ({ learned }) => (1 - learned) / (1 + learned),
+  ({ learned }) => (1 + learned) / learned,
+  ({ learned }) => (1 + learned) / (1 - learned),
+  ({ learned, guess, slip }) => calcCorrect(guess, slip, learned),
+  ({ learned, guess, slip }) => calcIncorrect(guess, slip, learned),
+  ({ learned, guess, slip }) => calcCorrect(0, slip, learned),
+  ({ learned, guess, slip }) => calcIncorrect(0, slip, learned),
+  ({ learned, guess, slip }) => calcCorrect(1, slip, learned),
+  ({ learned, guess, slip }) => calcIncorrect(1, slip, learned),
+  ({ learned, guess, slip }) => calcCorrect(guess, 0, learned),
+  ({ learned, guess, slip }) => calcIncorrect(guess, 0, learned),
+  ({ learned, guess, slip }) => calcCorrect(guess, 1, learned),
+  ({ learned, guess, slip }) => calcIncorrect(guess, 1, learned),
+  ({ learned, guess, slip }) => calcCorrect(guess, slip, 0),
+  ({ learned, guess, slip }) => calcIncorrect(guess, slip, 0),
+  ({ learned, guess, slip }) => calcCorrect(guess, slip, 1),
+  ({ learned, guess, slip }) => calcIncorrect(guess, slip, 1),
+  ({ learned, guess, slip }) => calcCorrect(0, 0, learned),
+  ({ learned, guess, slip }) => calcIncorrect(0, 0, learned),
+  ({ learned, guess, slip }) => calcCorrect(1, 1, learned),
+  ({ learned, guess, slip }) => calcIncorrect(1, 1, learned),
+  ({ learned, guess, slip }) => calcCorrect(0, 1, learned),
+  ({ learned, guess, slip }) => calcIncorrect(0, 1, learned),
+  ({ learned, guess, slip }) => calcCorrect(1, 0, learned),
+  ({ learned, guess, slip }) => calcIncorrect(1, 0, learned),
+  ({ learned, guess, slip }) => calcCorrect(0, slip, 0),
+  ({ learned, guess, slip }) => calcIncorrect(0, slip, 0),
+  ({ learned, guess, slip }) => calcCorrect(1, slip, 1),
+  ({ learned, guess, slip }) => calcIncorrect(1, slip, 1),
+  ({ learned, guess, slip }) => calcCorrect(0, slip, 1),
+  ({ learned, guess, slip }) => calcIncorrect(0, slip, 1),
+  ({ learned, guess, slip }) => calcCorrect(1, slip, 0),
+  ({ learned, guess, slip }) => calcIncorrect(1, slip, 0),
+  ({ learned, guess, slip }) => calcCorrect(guess, 0, 0),
+  ({ learned, guess, slip }) => calcIncorrect(guess, 0, 0),
+  ({ learned, guess, slip }) => calcCorrect(guess, 1, 1),
+  ({ learned, guess, slip }) => calcIncorrect(guess, 1, 1),
+  ({ learned, guess, slip }) => calcCorrect(guess, 1, 0),
+  ({ learned, guess, slip }) => calcIncorrect(guess, 1, 0),
+  ({ learned, guess, slip }) => calcCorrect(guess, 0, 1),
+  ({ learned, guess, slip }) => calcIncorrect(guess, 0, 1),
+
+
+
+
+
+  const totalOptions = values.length ** 6
+  let option = 0
+
+  const opt1 = []
+  const opt2 = []
+  const opt3 = []
+
+  for (let a = 0; a < values.length; a++) {
+    for (let b = 0; b < values.length; b++) {
+      for (let c = 0; c < values.length; c++) {
+        for (let d = 0; d < values.length; d++) {
+          for (let e = 0; e < values.length; e++) {
+            for (let f = 0; f < values.length; f++) {
+
+
+  const path = [f, e, d, c, b, a]
+  const { cards, learners } = simulate(20000, path)
+
+
+  const foundCount = (guessPerf < 0.99) + (slipPerf < 0.99) + (transitPerf < 0.99)
+  if (foundCount > 0) {
+    const data = { path, guessPerf, slipPerf, transitPerf }
+    if (foundCount === 1) opt1.push(data)
+    if (foundCount === 2) opt2.push(data)
+    if (foundCount === 3) opt3.push(data)
+  }
+
+  option++
+
+  process.stdout.clearLine()
+  process.stdout.cursorTo(0)
+  process.stdout.write(`${option} of ${totalOptions}, found ${opt1.length} ${opt2.length} ${opt3.length} ... ${path.map(p => (''+p).padStart(2)).join(' ')}`)
+
+
+
+            }
+          }
+        }
+      }
+    }
+  }
+
+*/
