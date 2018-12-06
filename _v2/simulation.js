@@ -4,7 +4,7 @@
 
 const INIT_GUESS = 0.3
 const INIT_SLIP = 0.1
-const INIT_LEARNED = 0.4
+const INIT_LEARNED = 0.5
 const MAX_LEARNED = 0.99
 const INIT_TRANSIT = 0 // TODO update to estimate, 0.05?
 
@@ -37,7 +37,7 @@ function mean(arr) {
 
 function error(arr1, arr2) {
   return mean(
-    [...Array(arr1.length).keys()].map(i => (arr1[i] - arr2[i]) ** 2)
+    [...Array(arr1.length).keys()].map(i => Math.abs(arr1[i] - arr2[i]))
   )
 }
 
@@ -95,15 +95,15 @@ function updateCard(card, params) {
   // card.transit = ???
 
   function calcGuess({ score, guess, slip, learned }) {
-    return (score * 0.5 + 0.5) * (1 - learned)
+    return (score * (1 - learned)) / learned
   }
 
   function calcSlip({ score, guess, slip, learned }) {
-    return (1 - (score * 0.5 + 0.5)) * learned
+    return (1 - score) * learned * learned
   }
 
   function smoothed(init, sum, count, C = 30) {
-    return (C * init + sum) / (C + params.count + 1)
+    return (C * init + sum) / (C + params.count)
   }
 
   card.guess = smoothed(
@@ -111,6 +111,7 @@ function updateCard(card, params) {
     sum(card.responses.map(calcGuess)),
     params.count
   )
+
   card.slip = smoothed(
     INIT_SLIP,
     sum(card.responses.map(calcSlip)),
@@ -123,9 +124,9 @@ function simulate(numCards, numLearners, rounds = 5000) {
   const learners = createLearners(numLearners)
 
   for (let i = 0; i < rounds; i++) {
-    const card = choose(cards)
     const learner = choose(learners)
     if (learner.learned > MAX_LEARNED) continue
+    const card = choose(cards)
     const score = getScore(learner, card)
     const params = {
       score,
@@ -194,7 +195,7 @@ function results(cards, learners) {
 
 if (require.main === module) {
   // The goal is to beat `1`.
-  const { cards, learners } = simulate(160, 8000, 40000)
+  const { cards, learners } = simulate(30, 4000, 40000)
   console.log(results(cards, learners))
 }
 
