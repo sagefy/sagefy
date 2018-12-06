@@ -20,29 +20,31 @@ function calcIncorrect(guess, slip, learned) {
 
 function updateLearned({ score, learned, guess, slip, transit }) {
   const posterior =
-    score 
-      * calcCorrect(0, slip, learned) 
-      / calcCorrect(guess, slip, learned)
-    + (1 - score) 
-      * calcIncorrect(0, slip, learned) 
-      / calcIncorrect(guess, slip, learned)
+    (score * calcCorrect(0, slip, learned)) /
+      calcCorrect(guess, slip, learned) +
+    ((1 - score) * calcIncorrect(0, slip, learned)) /
+      calcIncorrect(guess, slip, learned)
   return posterior + (1 - posterior) * transit
 }
 
-function sum (arr) {
+function sum(arr) {
   return arr.reduce((sum, val) => sum + val, 0)
 }
 
-function mean (arr) {
+function mean(arr) {
   return sum(arr) / arr.length
 }
 
-function error (cards, param, realParam) {
-  return mean(cards.map(card => (card[param] - card[realParam]) ** 2))
+function error(arr1, arr2) {
+  return mean(
+    [...Array(arr1.length).keys()].map(i => (arr1[i] - arr2[i]) ** 2)
+  )
 }
 
-function control (cards, realParam, init) {
-  return mean(cards.map(card => (init - card[realParam]) ** 2))
+function correlation(arr1, arr2) {
+  const sum1 = sum(arr1)
+  const sum2 = sum(arr2)
+  return error(arr1.map(a => a / sum1), arr2.map(a => a / sum2))
 }
 
 function around(value) {
@@ -56,32 +58,29 @@ function choose(arr) {
 //// Mock //////////////////////////////////////////////////////////////////////
 
 function createCards(numCards = 20) {
-  return [...Array(numCards).keys()]
-    .map(i => ({
-      name: i,
-      realGuess: around(INIT_GUESS),
-      guess: INIT_GUESS,
-      realSlip: around(INIT_SLIP),
-      slip: INIT_SLIP,
-      realTransit: INIT_TRANSIT, // TODO around(INIT_TRANSIT)
-      transit: INIT_TRANSIT,
-      responses: [],
-    }))
+  return [...Array(numCards).keys()].map(i => ({
+    name: i,
+    realGuess: around(INIT_GUESS),
+    guess: INIT_GUESS,
+    realSlip: around(INIT_SLIP),
+    slip: INIT_SLIP,
+    realTransit: INIT_TRANSIT, // TODO around(INIT_TRANSIT)
+    transit: INIT_TRANSIT,
+    responses: [],
+  }))
 }
 
 function createLearners(numLearners = 1000) {
-  return [...Array(numLearners).keys()]
-    .map(i => ({ name: i, learned: INIT_LEARNED }))
+  return [...Array(numLearners).keys()].map(i => ({
+    name: i,
+    learned: INIT_LEARNED,
+  }))
 }
 
 //// Simluate //////////////////////////////////////////////////////////////////
 
 function getScore(learner, card) {
-  const correct = calcCorrect(
-    card.realGuess, 
-    card.realSlip, 
-    learner.learned
-  )
+  const correct = calcCorrect(card.realGuess, card.realSlip, learner.learned)
   return +(correct > Math.random())
 }
 
@@ -95,20 +94,28 @@ function updateCard(card, params) {
   // card.slip = ???
   // card.transit = ???
 
-  function calcGuess({ score, learned }) {
+  function calcGuess({ score, guess, slip, learned }) {
     return (score * 0.5 + 0.5) * (1 - learned)
   }
 
-  function calcSlip({ score, learned }) {
+  function calcSlip({ score, guess, slip, learned }) {
     return (1 - (score * 0.5 + 0.5)) * learned
   }
 
-  function smoothed (init, sum, count, C = 30) {
-    return (C * init + sum) / (C + params.count)
+  function smoothed(init, sum, count, C = 30) {
+    return (C * init + sum) / (C + params.count + 1)
   }
 
-  card.guess = smoothed(INIT_GUESS, sum(card.responses.map(calcGuess)), params.count)
-  card.slip = smoothed(INIT_SLIP, sum(card.responses.map(calcSlip)), params.count)
+  card.guess = smoothed(
+    INIT_GUESS,
+    sum(card.responses.map(calcGuess)),
+    params.count
+  )
+  card.slip = smoothed(
+    INIT_SLIP,
+    sum(card.responses.map(calcSlip)),
+    params.count
+  )
 }
 
 function simulate(numCards, numLearners, rounds = 5000) {
@@ -118,64 +125,80 @@ function simulate(numCards, numLearners, rounds = 5000) {
   for (let i = 0; i < rounds; i++) {
     const card = choose(cards)
     const learner = choose(learners)
-
     if (learner.learned > MAX_LEARNED) continue
-
     const score = getScore(learner, card)
-    const params = { 
-      score, 
+    const params = {
+      score,
       learned: learner.learned,
       guess: card.guess,
       slip: card.slip,
       transit: card.transit,
       count: card.responses.length,
     }
-
     card.responses.push(params)
-
-    // Update learner
     updateLearner(learner, params)
-
-    // Update card
     updateCard(card, params)
-
-    // console.log(i, learner, card)
   }
-
-  // console.log('mean responses per card', mean(cards.map(({responses}) => responses.length)))
 
   return { cards, learners }
 }
 
 //// Result ////////////////////////////////////////////////////////////////////
 
+function results(cards, learners) {
+  const meanResponses = mean(cards.map(({ responses }) => responses.length))
+  const meanGuess = mean(cards.map(({ guess }) => guess))
+  const guessPerf =
+    error(
+      cards.map(({ guess }) => guess),
+      cards.map(({ realGuess }) => realGuess)
+    ) /
+    error(cards.map(({ realGuess }) => realGuess), cards.map(() => INIT_GUESS))
+  const guessCorr =
+    correlation(
+      cards.map(({ guess }) => guess),
+      cards.map(({ realGuess }) => realGuess)
+    ) /
+    correlation(
+      cards.map(({ realGuess }) => realGuess),
+      cards.map(() => INIT_GUESS)
+    )
+  const meanSlip = mean(cards.map(({ slip }) => slip))
+  const slipPerf =
+    error(
+      cards.map(({ slip }) => slip),
+      cards.map(({ realSlip }) => realSlip)
+    ) /
+    error(cards.map(({ realSlip }) => realSlip), cards.map(() => INIT_SLIP))
+  const slipCorr =
+    correlation(
+      cards.map(({ slip }) => slip),
+      cards.map(({ realSlip }) => realSlip)
+    ) /
+    correlation(
+      cards.map(({ realSlip }) => realSlip),
+      cards.map(() => INIT_SLIP)
+    )
+  return {
+    meanResponses,
+    meanGuess,
+    guessPerf,
+    guessCorr,
+    meanSlip,
+    slipPerf,
+    slipCorr,
+  }
+}
+
+//// Run ///////////////////////////////////////////////////////////////////////
+
 if (require.main === module) {
   // The goal is to beat `1`.
-
   const { cards, learners } = simulate(160, 8000, 40000)
-
-  const guessPerf = 
-    error(cards, 'guess', 'realGuess')
-    / control(cards, 'realGuess', INIT_GUESS)
-
-  const slipPerf =
-    error(cards, 'slip', 'realSlip')
-    / control(cards, 'realSlip', INIT_SLIP)
-
-  console.log(
-    'mean responses per card', 
-    mean(cards.map(({responses}) => responses.length))
-  )
-
-  console.log(
-    (guessPerf + slipPerf) / 2,
-    mean(cards.map(({guess}) => guess)),
-    mean(cards.map(({slip}) => slip)),
-  )
+  console.log(results(cards, learners))
 }
 
 /*
-
   () => INIT_GUESS,
   () => INIT_SLIP,
   () => INIT_TRANSIT,
