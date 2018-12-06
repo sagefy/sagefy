@@ -98,27 +98,36 @@ function updateCard(card, params) {
   // card.slip = ???
   // card.transit = ???
 
-  function calcGuess({ score, guess, slip, learned }) {
-    if (score === 0) return 0
-    if (score === 1) return (1 - learned) * 0.46
-  }
+  // guess ... 1 - learned
+  // slip ... learned
 
-  function calcSlip({ score, guess, slip, learned }) {
-    if (score === 0) return learned * 0.45
-    if (score === 1) return 0
-  }
+  // median response learned is ~ 0.67
+  // 0.5 ** 0.57 ~= 0.67
 
   card.guess = smoothed(
     INIT_GUESS,
-    sum(card.responses.map(calcGuess)),
-    sum(card.responses.map(({ learned }) => 1 - learned))
+    sum(
+      card.responses.map(
+        ({ score, learned }) => score * (1 - learned ** 0.57) * 0.46
+      )
+    ),
+    sum(card.responses.map(({ score, learned }) => 1 - learned ** 0.57))
   )
 
   card.slip = smoothed(
     INIT_SLIP,
-    sum(card.responses.map(calcSlip)),
-    sum(card.responses.map(({ learned }) => learned))
+    sum(
+      card.responses.map(
+        ({ score, learned }) => (1 - score) * learned ** 0.57 * 0.44
+      )
+    ),
+    sum(card.responses.map(({ score, learned }) => learned ** 0.57))
   )
+
+  if (card.guess + card.slip > 0.7) {
+    card.guess = INIT_GUESS
+    card.slip = INIT_SLIP
+  }
 }
 
 function simulate(numCards, numLearners, rounds = 5000) {
