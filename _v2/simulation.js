@@ -29,8 +29,12 @@ function updateLearned({ score, learned, guess, slip, transit }) {
   return posterior + (1 - posterior) * transit
 }
 
+function sum (arr) {
+  return arr.reduce((sum, val) => sum + val, 0)
+}
+
 function mean (arr) {
-  return arr.reduce((sum, val) => sum + val, 0) / arr.length
+  return sum(arr) / arr.length
 }
 
 function error (cards, param, realParam) {
@@ -99,13 +103,12 @@ function updateCard(card, params) {
     return (1 - (score * 0.5 + 0.5)) * learned
   }
 
-  card.guess = card.responses.length > 30
-    ? mean(card.responses.map(calcGuess))
-    : INIT_GUESS
-    
-  card.slip = card.responses.length > 30
-    ? mean(card.responses.map(calcSlip))
-    : INIT_SLIP
+  function smoothed (init, sum, count, C = 30) {
+    return (C * init + sum) / (C + params.count)
+  }
+
+  card.guess = smoothed(INIT_GUESS, sum(card.responses.map(calcGuess)), params.count)
+  card.slip = smoothed(INIT_SLIP, sum(card.responses.map(calcSlip)), params.count)
 }
 
 function simulate(numCards, numLearners, rounds = 5000) {
@@ -124,7 +127,8 @@ function simulate(numCards, numLearners, rounds = 5000) {
       learned: learner.learned,
       guess: card.guess,
       slip: card.slip,
-      transit: card.transit
+      transit: card.transit,
+      count: card.responses.length,
     }
 
     card.responses.push(params)
@@ -148,7 +152,7 @@ function simulate(numCards, numLearners, rounds = 5000) {
 if (require.main === module) {
   // The goal is to beat `1`.
 
-  const { cards, learners } = simulate(20, 1000, 5000)
+  const { cards, learners } = simulate(160, 8000, 40000)
 
   const guessPerf = 
     error(cards, 'guess', 'realGuess')
