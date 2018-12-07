@@ -19,6 +19,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "lodash.get": "^4.4.2",
+    "nodemailer": "^4.7.0",
     "postgraphile": "^4.0.1",
     "uuid": "^3.3.2"
   }

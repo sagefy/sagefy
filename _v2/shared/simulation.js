@@ -205,7 +205,7 @@ function results(cards, learners) {
 
 if (require.main === module) {
   // The goal is to beat `1`.
-  const { cards, learners } = simulate(30, 4000, 20000)
+  const { cards, learners } = simulate(100, 4000, 20000)
   console.log(results(cards, learners))
 }
 

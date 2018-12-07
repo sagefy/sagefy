@@ -161,15 +161,60 @@ comment on function sg_public.log_in(text, text) is 'Logs in a single user.';
 
 ------ Users > Triggers --------------------------------------------------------
 
+-- Whenever the public user data changes, update the modified column.
 create trigger update_user_modified
   before update on sg_public.user
   for each row execute procedure sg_private.update_modified_column();
 comment on trigger update_user_modified on sg_public.user
   is 'Whenever the user changes, update the `modified` column.';
 
--- TODO Trigger: Create user -> send sign up email
+-- Create user -> send sign up email
+create function sg_private.notify_create_user()
+returns trigger as $$
+begin
+  perform pg_notify('create_user', new.email);
+  return new;
+end;
+$$ language 'plpgsql' strict security definer;
+comment on function sg_private.notify_create_user()
+  is 'Whenever a new user signs up, email them.';
+create trigger create_user 
+  after insert on sg_private.user
+  for each row execute procedure sg_private.notify_create_user();
+comment on trigger create_user on sg_private.user
+  is 'Whenever a new user signs up, email them.';
 
--- TODO Trigger: Update password -> notify user email
+-- Update email -> notify user email
+create function sg_private.notify_update_email()
+returns trigger as $$
+begin
+  perform pg_notify('update_email', old.email);
+  return new;
+end;
+$$ language 'plpgsql' strict security definer;
+comment on function sg_private.notify_update_email()
+  is 'Whenever a user changes their email, email their old account.';
+create trigger update_email
+  after update (email) on sg_private.user
+  for each row execute procedure sg_private.notify_update_email();
+comment on trigger create_user on sg_private.user
+  is 'Whenever a user changes their email, email their old account.';
+
+-- Update password -> notify user email
+create function sg_private.notify_update_password()
+returns trigger as $$
+begin
+  perform pg_notify('update_password', old.email);
+  return new;
+end;
+$$ language 'plpgsql' strict security definer;
+comment on function sg_private.notify_update_password()
+  is 'Whenever a user changes their password, email them.';
+create trigger update_password 
+  after update (password) on sg_private.user
+  for each row execute procedure sg_private.notify_update_password();
+comment on trigger create_user on sg_private.user
+  is 'Whenever a user changes their password, email them.';
 
 ------ Users > Capabilities ----------------------------------------------------
 
@@ -187,7 +232,7 @@ comment on function sg_public.get_current_user()
 
 -- TODO Get user gravatar
 
--- TODO Passwords encrypted in DB
+-- TODO Send email token / validate token / update password
 
 -- TODO Send email token / validate token / update email
 
@@ -240,7 +285,6 @@ grant execute on function sg_public.log_in(text, text)
   to sg_anonymous, sg_user, sg_admin;
 grant execute on function sg_public.get_current_user() 
   to sg_anonymous, sg_user, sg_admin;
--- todo other functions...
 
 
 
@@ -283,7 +327,8 @@ comment on type sg_public.card_kind
 
 create table sg_public.entity (
   entity_id uuid primary key default uuid_generate_v4(),
-  entity_kind sg_public.entity_kind not null
+  entity_kind sg_public.entity_kind not null,
+  unique (entity_id, entity_kind)
 );
 comment on table sg_public.entity
   is 'A list of all entity IDs and their kinds.';
@@ -292,12 +337,20 @@ comment on column sg_public.entity.entity_id
 comment on column sg_public.entity.entity_kind
   is 'The kind of entity the ID represents.';
 
+create table sg_public.unit_entity (
+  entity_id uuid primary key references sg_public.entity (entity_id)
+);
+comment on table sg_public.unit_entity
+  is 'A list of all unit entity IDs.';
+comment on column sg_public.unit_entity.entity_id
+  is 'The ID of the entity.';
+
 create table sg_public.unit_version (
   -- all entity columns
   version_id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  entity_id uuid not null references sg_public.entity (entity_id),  -- TODO enforce kind
+  entity_id uuid not null references sg_public.unit_entity (entity_id),
   previous_id uuid null references sg_public.unit_version (version_id),
   language varchar(5) not null default 'en'
     constraint lang_check check (language ~* '^\w{2}(-\w{2})?$'),
@@ -305,7 +358,7 @@ create table sg_public.unit_version (
   status sg_public.entity_status not null default 'pending',
   available boolean not null default true,
   tags text[] null default array[]::text[],
-  user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
+  user_id uuid null references sg_public.user (id),
   -- and the rest....
   body text not null,
   require_ids uuid[] not null default array[]::uuid[] -- issue no element TODO break into join table
@@ -347,12 +400,20 @@ create view sg_public.unit as
 comment on view sg_public.unit
   is 'The latest accepted version of each unit.';
 
+create table sg_public.subject_entity (
+  entity_id uuid primary key references sg_public.entity (entity_id)
+);
+comment on table sg_public.subject_entity
+  is 'A list of all subject entity IDs.';
+comment on column sg_public.subject_entity.entity_id
+  is 'The ID of the entity.';
+
 create table sg_public.subject_version (
   -- all entity columns
   version_id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  entity_id uuid not null references sg_public.entity (entity_id), -- TODO enforce kind
+  entity_id uuid not null references sg_public.subject_entity (entity_id),
   previous_id uuid null references sg_public.subject_version (version_id),
   language varchar(5) not null default 'en'
     constraint lang_check check (language ~* '^\w{2}(-\w{2})?$'),
@@ -360,7 +421,7 @@ create table sg_public.subject_version (
   status sg_public.entity_status not null default 'pending',
   available boolean not null default true,
   tags text[] null default array[]::text[],
-  user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
+  user_id uuid null references sg_public.user (id),
   -- and the rest....
   body text not null,
   members jsonb not null -- jsonb?: issue cant ref, cant enum composite TODO split into join table
@@ -402,12 +463,20 @@ create view sg_public.subject as
 comment on view sg_public.subject
   is 'The latest accepted version of each subject.';
 
+create table sg_public.card_entity (
+  entity_id uuid primary key references sg_public.entity (entity_id)
+);
+comment on table sg_public.card_entity
+  is 'A list of all card entity IDs';
+comment on column sg_public.card_entity.entity_id
+  is 'The ID of the entity';
+
 create table sg_public.card_version (
   -- all entity columns
   version_id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  entity_id uuid not null references sg_public.entity (entity_id), -- TODO enforce kind
+  entity_id uuid not null references sg_public.card_entity (entity_id),
   previous_id uuid null references sg_public.card_version (version_id),
   language varchar(5) not null default 'en'
     constraint lang_check check (language ~* '^\w{2}(-\w{2})?$'),
@@ -415,9 +484,9 @@ create table sg_public.card_version (
   status sg_public.entity_status not null default 'pending',
   available boolean not null default true,
   tags text[] null default array[]::text[],
-  user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
+  user_id uuid null references sg_public.user (id),
   -- and the rest....
-  unit_id uuid not null references sg_public.entity (entity_id),  -- TODO check kind
+  unit_id uuid not null references sg_public.unit_entity (entity_id),
   require_ids uuid[] not null default array[]::uuid[], -- issue no element  TODO split into join table
   kind sg_public.card_kind not null,
   data jsonb not null -- jsonb?: varies per kind
@@ -455,19 +524,6 @@ comment on column sg_public.card_version.kind
 comment on column sg_public.card_version.data
   is 'The data of the card. The card kind changes the data shape.';
 
-/*
-create table sg_public.card_parameters (
-  id uuid primary key default uuid_generate_v4(),
-  created timestamp not null default current_timestamp,
-  modified timestamp not null default current_timestamp,
-  entity_id uuid not null unique references sg_public.entity (entity_id),  -- check kind
-  guess_distribution jsonb not null,
-    -- jsonb?: map
-  slip_distribution jsonb not null 
-);
--- comment table/columns
-*/
-
 create view sg_public.card as
   select distinct on (entity_id) *
   from sg_public.card_version
@@ -475,7 +531,6 @@ create view sg_public.card as
   order by entity_id, created desc;
 comment on view sg_public.card
   is 'The latest accepted version of each card.';
--- todo join with parameters in view?
 
 ------ Cards, Units, Subjects > Validations ------------------------------------
 
@@ -486,8 +541,6 @@ comment on view sg_public.card
 -- TODO Validation: No require cycles for cards
 
 -- TODO Validation: No cycles in subject members
-
--- TODO Who can update entity statuses? How?
 
 ------ Cards, Units, Subjects > Triggers ---------------------------------------
 
@@ -508,14 +561,6 @@ create trigger update_card_version_modified
   for each row execute procedure sg_private.update_modified_column();
 comment on trigger update_card_version_modified on sg_public.card_version
   is 'Whenever a card version changes, update the `modified` column.';
-
-/*
-create trigger update_card_parameters_modified
-  before update on sg_public.card_parameters
-  for each row execute procedure sg_private.update_modified_column();
-comment on trigger update_card_parameters_modified on sg_public.card_parameters
-  is 'Whenever card parameters changes, update the `modified` column.';
-*/
 
 ------ Cards, Units, Subjects > Capabilities -----------------------------------
 
@@ -542,7 +587,6 @@ grant select on table sg_public.subject_version
   to sg_anonymous, sg_user, sg_admin;
 grant select on table sg_public.card_version 
   to sg_anonymous, sg_user, sg_admin;
--- grant select on table sg_public.card_parameters to sg_anonymous, sg_user, sg_admin;
 
 -- Insert (or new version) card, unit, subject: any via function.
 grant execute on function sg_public.new_unit(???) 
@@ -562,9 +606,8 @@ grant execute on function sg_public.edit_card(???)
 grant update, delete on table sg_public.unit_version to sg_admin;
 grant update, delete on table sg_public.subject_version to sg_admin;
 grant update, delete on table sg_public.card_version to sg_admin;
--- grant update, delete on table sg_public.card_parameters to sg_admin;
 
--- todo other functions...
+-- TODO Who can update entity statuses? How?
 
 
 
@@ -594,11 +637,12 @@ create table sg_public.topic (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
+  user_id uuid null references sg_public.user (id),
   name text not null,
-  entity_id uuid not null, -- TODO issue cant ref across tables
-  -- todo verify id x kind
-  entity_kind sg_public.entity_kind not null 
+  entity_id uuid not null,
+  entity_kind sg_public.entity_kind not null,
+  foreign key (entity_id, entity_kind) 
+    references sg_public.entity (entity_id, entity_kind)
 );
 comment on table sg_public.topic
   is 'The topics on an entity\'s talk page.';
@@ -619,7 +663,7 @@ create table sg_public.post (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
+  user_id uuid null references sg_public.user (id),
   topic_id uuid not null references sg_public.topic (id),
   kind sg_public.post_kind not null default 'post',
   body text null
@@ -696,9 +740,7 @@ comment on trigger update_post_modified on sg_public.post
 
 -- TODO Trigger: when I create a post, I follow the entity
 
------- Topics & Posts > Capabilities -------------------------------------------
-
--- todo
+------ Topics & Posts > Capabilities -- N/A ------------------------------------
 
 ------ Topics & Posts > Permissions --------------------------------------------
 
@@ -770,7 +812,9 @@ create policy delete_post_admin on sg_public.post
 comment on policy delete_post_admin on sg_public.post
   is 'An admin can delete any post.';
 
--- todo function permissions...
+
+
+
 
 
 
@@ -803,7 +847,7 @@ create table sg_public.notice (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  user_id uuid not null references sg_public.user (id),
+  user_id uuid not null references sg_public.user (id) on delete cascade,
   kind sg_public.notice_kind not null,
   data jsonb not null,
     -- jsonb?: varies per kind
@@ -830,10 +874,12 @@ create table sg_public.follow (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  user_id uuid not null references sg_public.user (id),
-  entity_id uuid not null, -- issue cant ref across tables  TODO fix
+  user_id uuid not null references sg_public.user (id) on delete cascade,
+  entity_id uuid not null,
   entity_kind sg_public.entity_kind not null,
-  unique (user_id, entity_id)
+  unique (user_id, entity_id),
+  foreign key (entity_id, entity_kind)
+    references sg_public.entity (entity_id, entity_kind)
 );
 comment on table sg_public.follow
   is 'A follow is an association between a user and an entity. The user indicates they want notices for the entity.'
@@ -850,9 +896,7 @@ comment on column sg_public.follow.entity_id
 comment on column sg_public.follow.entity_kind
   is 'The kind of entity the follow belongs to.';
 
------- Notices & Follows > Validations -----------------------------------------
-
--- todo
+------ Notices & Follows > Validations -- N/A ----------------------------------
 
 ------ Notices & Follows > Triggers --------------------------------------------
 
@@ -929,7 +973,6 @@ create policy delete_notice on sg_public.notice
 comment on policy delete_notice on sg_public.notice
   is 'A user or admin can delete their own notices.';
 
--- todo function permissions...
 
 
 
@@ -952,8 +995,8 @@ create table sg_public.user_subject (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  user_id uuid not null references sg_public.user (id),
-  subject_id uuid not null references sg_public.entity (entity_id), --  TODO check kind
+  user_id uuid not null references sg_public.user (id) on delete cascade,
+  subject_id uuid not null references sg_public.subject_entity (entity_id),
   unique (user_id, subject_id)
 );
 comment on table sg_public.user_subject
@@ -973,12 +1016,14 @@ create table sg_public.response (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  user_id uuid not null references sg_public.user (id),  -- TODO allow anonymous
-  card_id uuid not null references sg_public.entity (entity_id),  -- TODO check kind
-  unit_id uuid not null references sg_public.entity (entity_id),  -- TODO check kind
+  user_id uuid null references sg_public.user (id),
+  session_id uuid null,
+  card_id uuid not null references sg_public.card_entity (entity_id),
+  unit_id uuid not null references sg_public.unit_entity (entity_id),
   response text not null,
   score double precision not null check (score >= 0 and score <= 1),
-  learned double precision not null check (score >= 0 and score <= 1)
+  learned double precision not null check (score >= 0 and score <= 1),
+  check (user_id is not null or session_id is not null)
 );
 comment on table sg_public.response
   is 'When a learner responds to a card, we record the result.';
@@ -1001,9 +1046,7 @@ comment on table sg_public.response.score
 comment on table sg_public.response.learned
   is 'The estimated probability the learner has learned the unit, after this response.';
 
------- User Subjects, Responses > Validations ----------------------------------
-
--- todo
+------ User Subjects, Responses > Validations -- N/A ---------------------------
 
 ------ User Subjects, Responses > Triggers -------------------------------------
 
@@ -1077,7 +1120,7 @@ comment on policy delete_user_subject on sg_public.user_subject
 
 -- Update & delete response: none.
 
--- TODO other functions...
+
 
 
 
@@ -1119,9 +1162,11 @@ create table sg_public.suggest_follower (
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   suggest_id uuid not null references sg_public.suggest (id),
-  email text null, -- todo this must be private, or delete it?
-  user_id uuid null references sg_public.user (id), -- todo store session_id
-  unique (suggest_id, user_id)
+  user_id uuid null references sg_public.user (id) on delete cascade,
+  session_id uuid null,
+  check (user_id is not null or session_id is not null),
+  unique (suggest_id, user_id),
+  unique (suggest_id, session_id)
 );
 comment on table sg_public.suggest_follower
   is 'A relationship between a suggest and a user.';
@@ -1138,9 +1183,7 @@ comment on column sg_public.suggest_follower.email
 comment on column sg_public.suggest_follower.user_id
   is 'The user who is following the suggest.';
 
------- Suggests, Suggest Followers > Validations -------------------------------
-
--- todo
+------ Suggests, Suggest Followers > Validations -- N/A ------------------------
 
 ------ Suggests, Suggest Followers > Triggers ----------------------------------
 
@@ -1156,9 +1199,7 @@ create trigger update_suggest_follower_modified
 comment on trigger update_suggest_follower_modified on sg_public.suggest_follower
   is 'Whenever a suggest follower changes, update the `modified` column.';
 
------- Suggests, Suggest Followers > Capabilities ------------------------------
-
--- todo
+------ Suggests, Suggest Followers > Capabilities -- N/A -----------------------
 
 ------ Suggests, Suggest Followers > Permissions -------------------------------
 
@@ -1197,5 +1238,3 @@ create policy delete_suggest_follower on sg_public.suggest_follower
   using (id = current_setting('jwt.claims.user_id')::uuid);
 comment on policy delete_suggest_follower on sg_public.suggest_follower
   is 'A user or admin can delete their own suggest follow.';
-
--- TODO other functions...
