@@ -130,6 +130,52 @@ function updateCard(card, params) {
   }
 }
 
+function updateCard2(card, params) {
+  // THIS IS WHERE THE EXPERIMENT OCCURS!!!
+  // card.guess = ???
+  // card.slip = ???
+  // card.transit = ???
+
+  // guess ... 1 - learned
+  // slip ... learned
+
+  // median response learned is ~ 0.67
+  // 0.5 ** 0.57 ~= 0.67
+
+  card.guess = smoothed(
+    INIT_GUESS,
+    sum(
+      card.responses.map(
+        ({ score, learned, slip }) =>
+          (1 - learned) *
+          (score === 1
+            ? (1 - learned * (1 - slip)) / (1 - learned)
+            : (-1 * (learned - learned * slip)) / (1 - learned))
+      )
+    ),
+    sum(card.responses.map(({ score, learned }) => 1 - learned))
+  )
+
+  card.slip = smoothed(
+    INIT_SLIP,
+    sum(
+      card.responses.map(
+        ({ score, learned, guess }) =>
+          learned *
+          (score === 1
+            ? (-1 * (1 - guess * (1 - learned) - learned)) / learned
+            : (learned - learned * guess + guess) / learned)
+      )
+    ),
+    sum(card.responses.map(({ score, learned }) => learned))
+  )
+
+  if (card.guess + card.slip > 0.7) {
+    card.guess = INIT_GUESS
+    card.slip = INIT_SLIP
+  }
+}
+
 function simulate(numCards, numLearners, rounds = 5000) {
   const cards = createCards(numCards)
   const learners = createLearners(numLearners)
@@ -148,7 +194,7 @@ function simulate(numCards, numLearners, rounds = 5000) {
     }
     card.responses.push(params)
     updateLearner(learner, params)
-    updateCard(card, params)
+    updateCard2(card, params)
   }
 
   return { cards, learners }
