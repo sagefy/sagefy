@@ -604,8 +604,6 @@ comment on view sg_public.card
 
 -- TODO Validation: No require cycles for units
 
--- TODO Validation: No require cycles for cards
-
 -- TODO Validation: No cycles in subject members
 
 ------ Cards, Units, Subjects > Triggers ---------------------------------------
@@ -650,11 +648,11 @@ comment on trigger update_card_version_modified on sg_public.card_version
 
 -- TODO List all subjects unit belongs to, recursively
 
--- TODO Get recommended subjects
+-- TODO Get most popular subjects
 
--- TODO Capability: get entites I've created
+-- TODO Capability: get entities I've created
 
--- TODO insert new / new version of existing
+-- TODO insert new AND new version of existing
 
 ------ Cards, Units, Subjects > Permissions ------------------------------------
 
@@ -1181,33 +1179,23 @@ create trigger update_response_modified
 comment on trigger update_response_modified on sg_public.response
   is 'Whenever a response changes, update the `modified` column.';
 
-/* TODO
-- Trigger: Create response ->
-  - Update p(learned)
-  - Calculate updated guess value
-  - Calculate updated slip value
-  - Calculate updated transit value
-*/
-
 ------ User Subjects, Responses > Capabilities ---------------------------------
-
--- TODO Get and set learning context
 
 -- TODO Get latest response user x unit
 
--- TODO? Calculate the mean value of a PMF
-
--- TODO Calculated learned x belief
-
--- TODO Validate & score card response
+-- TODO Get and set learning context
 
 -- TODO After I select a subject, traverse the units to give the learner some units to pick
 
--- TODO After I select a unit, or respond to a card, search for a suitable card
+-- TODO After I select a unit, search for a suitable card
 
--- TODO Respond to a card
-
--- TODO When p(L) > 0.99, return to choose a unit
+/* TODO
+- Trigger: Create response ->
+  - Validate & score card response
+  - Update p(learned)
+  - if p(L) > 0.99, return to choose a unit
+  - if p(L) < 0.99, search for a suitable card
+*/
 
 ------ User Subjects, Responses > Permissions ----------------------------------
 
