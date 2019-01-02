@@ -293,6 +293,10 @@ grant execute on function sg_public.get_current_user()
 
 
 
+
+
+
+
 ------ Cards, Units, Subjects --------------------------------------------------
 
 ------ Cards, Units, Subjects > Types ------------------------------------------
@@ -337,6 +341,18 @@ comment on column sg_public.entity.entity_id
 comment on column sg_public.entity.entity_kind
   is 'The kind of entity the ID represents.';
 
+create table sg_public.entity_version (
+  version_id uuid primary key default uuid_generate_v4(),
+  entity_kind sg_public.entity_kind not null,
+  unique (version_id, entity_kind)
+);
+comment on table sg_public.entity_version
+  is 'A list of all entity version IDs and their kinds.';
+comment on column sg_public.entity_version.version_id
+  is 'The ID of the version.';
+comment on column sg_public.entity_version.entity_kind
+  is 'The kind of entity the ID represents.';
+
 create table sg_public.unit_entity (
   entity_id uuid primary key references sg_public.entity (entity_id)
 );
@@ -347,7 +363,7 @@ comment on column sg_public.unit_entity.entity_id
 
 create table sg_public.unit_version (
   -- all entity columns
-  version_id uuid primary key default uuid_generate_v4(),
+  version_id uuid primary key references sg_public.entity_version (version_id),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   entity_id uuid not null references sg_public.unit_entity (entity_id),
@@ -360,9 +376,9 @@ create table sg_public.unit_version (
   tags text[] null default array[]::text[],
   user_id uuid null references sg_public.user (id),
   -- and the rest....
-  body text not null,
-  require_ids uuid[] not null default array[]::uuid[] -- issue no element TODO break into join table
+  body text not null
 );
+
 comment on table sg_public.unit_version
   is 'Every version of the units. A unit is a single learning goal. A unit has many cards and can belong to many subjects.';
 comment on column sg_public.unit_version.version_id
@@ -392,6 +408,28 @@ comment on column sg_public.unit_version.user_id
 comment on column sg_public.unit_version.body
   is 'The description of the goal of the unit.';
 
+create table sg_public.unit_version_require (
+  id uuid primary key default uuid_generate_v4(),
+  created timestamp not null default current_timestamp,
+  modified timestamp not null default current_timestamp,
+  version_id uuid not null references sg_public.unit_version (version_id),
+  require_id uuid not null references sg_public.unit_entity (entity_id),
+  unique (version_id, require_id)
+);
+
+comment on table sg_public.unit_version_require
+  is 'A join table between a unit version and the units it requires.';
+comment on column sg_public.unit_version_require.id
+  is 'The relationship ID.';
+comment on column sg_public.unit_version_require.created
+  is 'When a user created this version.';
+comment on column sg_public.unit_version_require.modified
+  is 'When a user last modified this version.';
+comment on column sg_public.unit_version_require.version_id
+  is 'The version ID.';
+comment on column sg_public.unit_version_require.require_id
+  is 'The entity ID of the required unit.';
+
 create view sg_public.unit as
   select distinct on (entity_id) *
   from sg_public.unit_version
@@ -410,7 +448,7 @@ comment on column sg_public.subject_entity.entity_id
 
 create table sg_public.subject_version (
   -- all entity columns
-  version_id uuid primary key default uuid_generate_v4(),
+  version_id uuid primary key references sg_public.entity_version (version_id),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   entity_id uuid not null references sg_public.subject_entity (entity_id),
@@ -423,9 +461,9 @@ create table sg_public.subject_version (
   tags text[] null default array[]::text[],
   user_id uuid null references sg_public.user (id),
   -- and the rest....
-  body text not null,
-  members jsonb not null -- jsonb?: issue cant ref, cant enum composite TODO split into join table
+  body text not null
 );
+
 comment on table sg_public.subject_version
   is 'Every version of the subjects. A subject is a collection of units and other subjects. A subject has many units and other subjects.';
 comment on column sg_public.subject_version.version_id
@@ -455,6 +493,34 @@ comment on column sg_public.subject_version.user_id
 comment on column sg_public.subject_version.body
   is 'The description of the goals of the subject.';
 
+create table sg_public.subject_version_member (
+  id uuid primary key default uuid_generate_v4(),
+  created timestamp not null default current_timestamp,
+  modified timestamp not null default current_timestamp,
+  version_id uuid not null references sg_public.subject_version (version_id),
+  entity_id uuid not null,
+  entity_kind sg_public.entity_kind not null,
+  foreign key (entity_id, entity_kind)
+    references sg_public.entity (entity_id, entity_kind),
+  unique (version_id, entity_id),
+  check (entity_kind = 'unit' or entity_kind = 'subject')
+);
+
+comment on table sg_public.subject_version_member
+  is 'A join table between a subject version and its member units and subjects.';
+comment on column sg_public.subject_version_member.id
+  is 'The relationship ID.';
+comment on column sg_public.subject_version_member.created
+  is 'When a user created this version.';
+comment on column sg_public.subject_version_member.modified
+  is 'When a user last modified this version.';
+comment on column sg_public.subject_version_member.version_id
+  is 'The subject version ID.';
+comment on column sg_public.subject_version_member.entity_id
+  is 'The entity ID of the member.';
+comment on column sg_public.subject_version_member.entity_kind
+  is 'The entity kind of the member.';
+
 create view sg_public.subject as
   select distinct on (entity_id) *
   from sg_public.subject_version
@@ -473,7 +539,7 @@ comment on column sg_public.card_entity.entity_id
 
 create table sg_public.card_version (
   -- all entity columns
-  version_id uuid primary key default uuid_generate_v4(),
+  version_id uuid primary key references sg_public.entity_version (version_id),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   entity_id uuid not null references sg_public.card_entity (entity_id),
@@ -487,10 +553,10 @@ create table sg_public.card_version (
   user_id uuid null references sg_public.user (id),
   -- and the rest....
   unit_id uuid not null references sg_public.unit_entity (entity_id),
-  require_ids uuid[] not null default array[]::uuid[], -- issue no element  TODO split into join table
   kind sg_public.card_kind not null,
   data jsonb not null -- jsonb?: varies per kind
 );
+
 comment on table sg_public.card_version
   is 'Every version of the cards. A card is a single learning activity. A card belongs to a single unit.';
 comment on column sg_public.card_version.version_id
@@ -550,11 +616,23 @@ create trigger update_unit_version_modified
 comment on trigger update_unit_version_modified on sg_public.unit_version
   is 'Whenever a unit version changes, update the `modified` column.';
 
+create trigger update_unit_version_require_modified
+  before update on sg_public.unit_version_require
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_unit_version_require_modified on sg_public.unit_version_require
+  is 'Whenever a unit version require changes, update the `modified` column.';
+
 create trigger update_subject_version_modified
   before update on sg_public.subject_version
   for each row execute procedure sg_private.update_modified_column();
 comment on trigger update_subject_version_modified on sg_public.subject_version
   is 'Whenever a subject version changes, update the `modified` column.';
+
+create trigger update_subject_version_member_modified
+  before update on sg_public.subject_version_member
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_subject_version_member_modified on sg_public.subject_version_member
+  is 'Whenever a subject version member changes, update the `modified` column.';
 
 create trigger update_card_version_modified
   before update on sg_public.card_version
@@ -583,7 +661,11 @@ comment on trigger update_card_version_modified on sg_public.card_version
 -- Select card, unit, subject: any.
 grant select on table sg_public.unit_version
   to sg_anonymous, sg_user, sg_admin;
+grant select on table sg_public.unit_version_require
+  to sg_anonymous, sg_user, sg_admin;
 grant select on table sg_public.subject_version
+  to sg_anonymous, sg_user, sg_admin;
+grant select on table sg_public.subject_version_member
   to sg_anonymous, sg_user, sg_admin;
 grant select on table sg_public.card_version
   to sg_anonymous, sg_user, sg_admin;
@@ -604,7 +686,9 @@ grant execute on function sg_public.edit_card(???)
 
 -- Update & delete card, unit, subject: admin.
 grant update, delete on table sg_public.unit_version to sg_admin;
+grant update, delete on table sg_public.unit_version_require to sg_admin;
 grant update, delete on table sg_public.subject_version to sg_admin;
+grant update, delete on table sg_public.subject_version_member to sg_admin;
 grant update, delete on table sg_public.card_version to sg_admin;
 
 -- TODO Who can update entity statuses? How?
@@ -670,9 +754,6 @@ create table sg_public.post (
     check (kind = 'vote' or body is not null),
   replies_to_id uuid null references sg_public.post (id)
     check (kind <> 'vote' or replies_to_id is not null),
-  entity_versions jsonb null
-    check (kind <> 'proposal' or entity_versions is not null),
-    -- jsonb?: issue cant ref, cant enum composite TODO split into join table
   response boolean null
     check (kind <> 'vote' or response is not null)
 );
@@ -696,6 +777,31 @@ comment on column sg_public.post.replies_to_id
   is 'If the post is a reply, which post it replies to.';
 comment on column sg_public.post.response
   is 'If the post is a vote, yes/no on approving.';
+
+create table sg_public.post_entity_version (
+  id uuid primary key default uuid_generate_v4(),
+  created timestamp not null default current_timestamp,
+  modified timestamp not null default current_timestamp,
+  post_id uuid not null references sg_public.post (id),
+  version_id uuid not null,
+  entity_kind sg_public.entity_kind not null,
+  foreign key (version_id, entity_kind)
+    references sg_public.entity_version (version_id, entity_kind)
+  unique (post_id, version_id)
+);
+
+comment on table sg_public.post_entity_version
+  is 'A join table between a proposal (post) and its entity versions.';
+comment on column sg_public.post_entity_version.id
+  is 'The relationship ID.';
+comment on column sg_public.post_entity_version.created
+  is 'When a user created this post.';
+comment on column sg_public.post_entity_version.modified
+  is 'When a user last modified this post.';
+comment on column sg_public.post_entity_version.post_id
+  is 'The post ID.';
+comment on column sg_public.post_entity_version.version_id
+  is 'The entity ID of the entity version.';
 
 ------ Topics & Posts > Validations --------------------------------------------
 
@@ -733,6 +839,12 @@ create trigger update_post_modified
   for each row execute procedure sg_private.update_modified_column();
 comment on trigger update_post_modified on sg_public.post
   is 'Whenever a post changes, update the `modified` column.';
+
+create trigger update_post_entity_version_modified
+  before update on sg_public.post_entity_version
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_post_entity_version_modified on sg_public.post_entity_version
+  is 'Whenever a post entity version changes, update the `modified` column.';
 
 -- TODO Trigger: when I create or update a vote post, we can update entity status
 
@@ -812,8 +924,15 @@ create policy delete_post_admin on sg_public.post
 comment on policy delete_post_admin on sg_public.post
   is 'An admin can delete any post.';
 
+-- Select post_entity_version: any.
+grant select on table sg_public.post_entity_version
+  to sg_anonymous, sg_user, sg_admin;
 
+-- Insert post_entity_version, see function above.
 
+-- Update or delete post_entity_version: admin.
+grant update, delete on table sg_public.post_entity_version
+  to sg_admin;
 
 
 
