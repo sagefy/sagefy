@@ -1,5 +1,5 @@
 -- This file should be kept up-to-date as the latest, current version.
--- We can use this file for local development, testing, reference, 
+-- We can use this file for local development, testing, reference,
 -- debugging, and evaluation.
 
 
@@ -62,12 +62,12 @@ comment on function sg_private.update_modified_column()
 ------ Users > Types -----------------------------------------------------------
 
 create type sg_public.email_frequency as enum(
-  'immediate', 
-  'daily', 
-  'weekly', 
+  'immediate',
+  'daily',
+  'weekly',
   'never'
 );
-comment on type sg_public.email_frequency 
+comment on type sg_public.email_frequency
   is 'Email frequency options per user';
 create type sg_public.jwt_token as (
   role text,
@@ -84,7 +84,7 @@ create table sg_public.user (
   name text not null unique,
   view_subjects boolean not null default false
 );
-comment on table sg_public.user 
+comment on table sg_public.user
   is 'The public user data table. Anyone can see this data.';
 comment on column sg_public.user.id
   is 'The primary key of the user.';
@@ -178,7 +178,7 @@ end;
 $$ language 'plpgsql' strict security definer;
 comment on function sg_private.notify_create_user()
   is 'Whenever a new user signs up, email them.';
-create trigger create_user 
+create trigger create_user
   after insert on sg_private.user
   for each row execute procedure sg_private.notify_create_user();
 comment on trigger create_user on sg_private.user
@@ -210,7 +210,7 @@ end;
 $$ language 'plpgsql' strict security definer;
 comment on function sg_private.notify_update_password()
   is 'Whenever a user changes their password, email them.';
-create trigger update_password 
+create trigger update_password
   after update (password) on sg_private.user
   for each row execute procedure sg_private.notify_update_password();
 comment on trigger create_user on sg_private.user
@@ -225,7 +225,7 @@ returns sg_public.user as $$
   from sg_public.user
   where id = current_setting('jwt.claims.user_id')::uuid
 $$ language sql stable;
-comment on function sg_public.get_current_user() 
+comment on function sg_public.get_current_user()
   is 'Get the current logged in user.';
 
 -- TODO Sign out
@@ -281,9 +281,9 @@ comment on policy delete_user_admin on sg_public.user
   is 'An admin can delete any public user data';
 
 -- All users may log in or check the current user.
-grant execute on function sg_public.log_in(text, text) 
+grant execute on function sg_public.log_in(text, text)
   to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.get_current_user() 
+grant execute on function sg_public.get_current_user()
   to sg_anonymous, sg_user, sg_admin;
 
 
@@ -581,25 +581,25 @@ comment on trigger update_card_version_modified on sg_public.card_version
 ------ Cards, Units, Subjects > Permissions ------------------------------------
 
 -- Select card, unit, subject: any.
-grant select on table sg_public.unit_version 
+grant select on table sg_public.unit_version
   to sg_anonymous, sg_user, sg_admin;
-grant select on table sg_public.subject_version 
+grant select on table sg_public.subject_version
   to sg_anonymous, sg_user, sg_admin;
-grant select on table sg_public.card_version 
+grant select on table sg_public.card_version
   to sg_anonymous, sg_user, sg_admin;
 
 -- Insert (or new version) card, unit, subject: any via function.
-grant execute on function sg_public.new_unit(???) 
+grant execute on function sg_public.new_unit(???)
   to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.edit_unit(???) 
+grant execute on function sg_public.edit_unit(???)
   to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.new_subject(???) 
+grant execute on function sg_public.new_subject(???)
   to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.edit_subject(???) 
+grant execute on function sg_public.edit_subject(???)
   to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.new_card(???) 
+grant execute on function sg_public.new_card(???)
   to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.edit_card(???) 
+grant execute on function sg_public.edit_card(???)
   to sg_anonymous, sg_user, sg_admin;
 
 -- Update & delete card, unit, subject: admin.
@@ -641,7 +641,7 @@ create table sg_public.topic (
   name text not null,
   entity_id uuid not null,
   entity_kind sg_public.entity_kind not null,
-  foreign key (entity_id, entity_kind) 
+  foreign key (entity_id, entity_kind)
     references sg_public.entity (entity_id, entity_kind)
 );
 comment on table sg_public.topic
@@ -930,7 +930,7 @@ alter table sg_public.follow enable row level security;
 grant select on table sg_public.follow to sg_user, sg_admin;
 create policy select_follow on sg_public.follow
   for select to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid); 
+  using (user_id = current_setting('jwt.claims.user_id')::uuid);
 comment on policy select_follow on sg_public.follow
   is 'A user or admin can select their own follows.';
 
@@ -961,7 +961,7 @@ comment on policy select_notice on sg_public.notice
 grant update on table sg_public.notice to sg_user, sg_admin;
 create policy update_notice on sg_public.notice
   for update (read) to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid); 
+  using (user_id = current_setting('jwt.claims.user_id')::uuid);
 comment on policy update_notice on sg_public.notice
   is 'A user or admin can mark a notice as read or unread.';
 
@@ -1144,7 +1144,7 @@ create table sg_public.suggest (
   name text not null,
   body text null
 );
-comment on table sg_public.suggest 
+comment on table sg_public.suggest
   is 'A suggestion for a new subject in Sagefy.';
 comment on column sg_public.suggest.id
   is 'The ID of the suggest.';
@@ -1219,7 +1219,7 @@ grant update on table sg_public.suggest to sg_admin;
 grant delete on table sg_public.suggest to sg_admin;
 
 -- Select suggest_follower: any.
-grant select on table sg_public.suggest_follower 
+grant select on table sg_public.suggest_follower
   to sg_anonymous, sg_user, sg_admin;
 create policy select_suggest_follower on sg_public.suggest_follower
   for select -- any user
