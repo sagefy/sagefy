@@ -867,7 +867,7 @@ comment on policy select_topic on sg_public.topic
   is 'Anyone can select topics.';
 
 -- Insert topic: any via function.
--- todo
+-- todo insert
 
 -- Update topic: user self (name), or admin.
 grant update on table sg_public.topic to sg_user, sg_admin;
@@ -899,7 +899,7 @@ comment on policy select_post on sg_public.post
   is 'Anyone can select posts.';
 
 -- Insert post: any via function.
--- todo
+-- todo insert
 
 -- Update post: user self (body, response), or admin.
 grant update on table sg_public.post to sg_user, sg_admin;
@@ -1052,7 +1052,7 @@ comment on policy select_follow on sg_public.follow
   is 'A user or admin can select their own follows.';
 
 -- Insert follow: user or admin via function.
--- TODO or does this need to be a function?
+-- TODO insert or does this need to be a function?
 
 -- Update follow: none.
 
@@ -1207,7 +1207,7 @@ alter table sg_public.response enable row level security;
 -- TODO
 
 -- Insert usubj: user or admin via function.
--- TODO or does it need to be a function?
+-- TODO insert or does it need to be a function?
 
 -- Update usubj: none.
 
@@ -1223,7 +1223,7 @@ comment on policy delete_user_subject on sg_public.user_subject
 -- TODO
 
 -- Insert response: any via function.
--- TODO
+-- TODO insert
 
 -- Update & delete response: none.
 
@@ -1317,7 +1317,7 @@ alter table sg_public.suggest_follower enable row level security;
 grant select on table sg_public.suggest to sg_anonymous, sg_user, sg_admin;
 
 -- Insert suggest: any via function.
--- TODO
+-- TODO insert
 
 -- Update suggest: admin.
 grant update on table sg_public.suggest to sg_admin;
