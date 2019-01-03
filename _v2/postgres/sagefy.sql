@@ -864,6 +864,18 @@ comment on index post_vote_unique_idx
 
 ------ Topics & Posts > Triggers -----------------------------------------------
 
+create trigger insert_topic_user_id
+  before insert on sg_public.topic
+  for each row execute procedure sg_private.insert_user_id_column();
+comment on trigger insert_topic_user_id on sg_public.topic
+  is 'Whenever I make a new topic, auto fill the `user_id` column';
+
+create trigger insert_post_user_id
+  before insert on sg_public.post
+  for each row execute procedure sg_private.insert_user_id_column();
+comment on trigger insert_post_user_id on sg_public.post
+  is 'Whenever I make a new post, auto fill the `user_id` column';
+
 create trigger update_topic_modified
   before update on sg_public.topic
   for each row execute procedure sg_private.update_modified_column();
@@ -906,8 +918,11 @@ create policy select_topic on sg_public.topic
 comment on policy select_topic on sg_public.topic
   is 'Anyone can select topics.';
 
--- Insert topic: any via function.
--- todo insert
+-- Insert topic: any.
+grant insert on table sg_public.topic to sg_anonymous, sg_user, sg_admin;
+create policy insert_topic on sg_public.topic
+  for insert (name, entity_id, entity_kind) -- any user
+  using (true);
 
 -- Update topic: user self (name), or admin.
 grant update on table sg_public.topic to sg_user, sg_admin;
@@ -938,8 +953,11 @@ create policy select_post on sg_public.post
 comment on policy select_post on sg_public.post
   is 'Anyone can select posts.';
 
--- Insert post: any via function.
--- todo insert
+-- Insert post: any.
+grant insert on table sg_public.post to sg_anonymous, sg_user, sg_admin;
+create policy insert_post on sg_public.post
+  for insert (topic_id, kind, body, replies_to_id, response) -- any user
+  using (true);
 
 -- Update post: user self (body, response), or admin.
 grant update on table sg_public.post to sg_user, sg_admin;
