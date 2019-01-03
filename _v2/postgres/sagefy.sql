@@ -230,7 +230,16 @@ comment on function sg_public.get_current_user()
 
 -- TODO Sign out
 
--- TODO Get user gravatar
+-- Get MD5 hash of email address for user gravatar
+create function sg_public.user_md5_email(user sg_public.user)
+returns text as $$
+  select md5(lower(trim(email)))
+  from sg_private.user
+  where user_id = user.id
+  limit 1;
+$$ language sql stable;
+comment on function sg_public.user_md5_email(sg_public.user)
+  is 'The user\'s email address as an MD5 hash, for Gravatars. See https://bit.ly/2F6cR0M';
 
 -- TODO Send email token / validate token / update password
 
@@ -284,6 +293,8 @@ comment on policy delete_user_admin on sg_public.user
 grant execute on function sg_public.log_in(text, text)
   to sg_anonymous, sg_user, sg_admin;
 grant execute on function sg_public.get_current_user()
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.user_md5_email(sg_public.user)
   to sg_anonymous, sg_user, sg_admin;
 
 
@@ -377,6 +388,7 @@ create table sg_public.unit_version (
   user_id uuid null references sg_public.user (id),
   -- and the rest....
   body text not null
+  -- also see join table: sg_public.unit_version_require
 );
 
 comment on table sg_public.unit_version
@@ -462,6 +474,7 @@ create table sg_public.subject_version (
   user_id uuid null references sg_public.user (id),
   -- and the rest....
   body text not null
+  -- also see join table: sg_public.subject_version_member
 );
 
 comment on table sg_public.subject_version
@@ -754,6 +767,8 @@ create table sg_public.post (
     check (kind <> 'vote' or replies_to_id is not null),
   response boolean null
     check (kind <> 'vote' or response is not null)
+  -- also see join table: sg_public.post_entity_version
+  -- specific to kind = 'proposal'
 );
 comment on table sg_public.post
   is 'The posts on an entity\'s talk page. Belongs to a topic.';
