@@ -1281,9 +1281,14 @@ alter table sg_public.user_subject enable row level security;
 alter table sg_public.response enable row level security;
 
 -- Select usubj: user or admin self or with setting.
--- TODO
+grant select on table sg_public.user_subject to sg_user, sg_admin;
+create policy select_user_subject on sg_public.user_subject
+  for select to sg_user, sg_admin
+  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+comment on policy select_user_subject on sg_public.user_subject
+  is 'A user or admin may select their own subject relationships.';
 
--- Insert usubj: user or admin via function.
+-- Insert usubj: user or admin.
 grant insert on table sg_public.user_subject to sg_user, sg_admin;
 create policy insert_user_subject on sg_public.user_subject
   for insert (subject_id) to sg_user, sg_admin
@@ -1297,12 +1302,20 @@ comment on policy insert_user_subject on sg_public.user_subject
 grant delete on table sg_public.user_subject to sg_user, sg_admin;
 create policy delete_user_subject on sg_public.user_subject
   for delete to sg_user, sg_admin
-  using (id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = current_setting('jwt.claims.user_id')::uuid);
 comment on policy delete_user_subject on sg_public.user_subject
   is 'A user or admin can delete their own user subject.';
 
 -- Select response: any self.
--- TODO
+grant select on table sg_public.response to sg_anonymous, sg_user, sg_admin;
+create policy select_response to sg_public.response
+  for select to sg_anonymous, sg_user, sg_admin
+  using (
+    user_id is null or -- ??? session_id match ???
+    user_id = current_setting('jwt.claims.user_id')::uuid
+  );
+comment on policy select_response to sg_public.response
+  is 'Anyone may select their own responses.';
 
 -- Insert response: any via function.
 -- TODO insert
@@ -1459,6 +1472,6 @@ create policy insert_suggest_follow on sg_public.suggest_follow
 grant delete on table sg_public.suggest_follow to sg_user, sg_admin;
 create policy delete_suggest_follow on sg_public.suggest_follow
   for delete to sg_user, sg_admin
-  using (id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = current_setting('jwt.claims.user_id')::uuid);
 comment on policy delete_suggest_follow on sg_public.suggest_follow
   is 'A user or admin can delete their own suggest follow.';
