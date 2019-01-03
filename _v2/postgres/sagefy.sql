@@ -1078,6 +1078,12 @@ comment on column sg_public.follow.entity_kind
 
 ------ Notices & Follows > Triggers --------------------------------------------
 
+create trigger insert_follow_user_id
+  before insert on sg_public.follow
+  for each row execute procedure sg_private.insert_user_id_column();
+comment on trigger insert_follow_user_id on sg_public.follow
+  is 'Whenever I make a new follow, auto fill the `user_id` column';
+
 create trigger update_notice_modified
   before update on sg_public.notice
   for each row execute procedure sg_private.update_modified_column();
@@ -1108,8 +1114,11 @@ create policy select_follow on sg_public.follow
 comment on policy select_follow on sg_public.follow
   is 'A user or admin can select their own follows.';
 
--- Insert follow: user or admin via function.
--- TODO insert or does this need to be a function?
+-- Insert follow: user or admin.
+grant insert on table sg_public.follow to sg_user, sg_admin;
+create policy insert_follow on sg_public.follow
+  for insert (entity_id, entity_kind) to sg_user, sg_admin
+  user (true);
 
 -- Update follow: none.
 
@@ -1229,6 +1238,12 @@ comment on table sg_public.response.learned
 
 ------ User Subjects, Responses > Triggers -------------------------------------
 
+create trigger insert_user_subject_user_id
+  before insert on sg_public.user_subject
+  for each row execute procedure sg_private.insert_user_id_column();
+comment on trigger insert_user_subject_user_id on sg_public.user_subject
+  is 'Whenever I make a new user subject, auto fill the `user_id` column';
+
 create trigger update_user_subject_modified
   before update on sg_public.user_subject
   for each row execute procedure sg_private.update_modified_column();
@@ -1269,7 +1284,12 @@ alter table sg_public.response enable row level security;
 -- TODO
 
 -- Insert usubj: user or admin via function.
--- TODO insert or does it need to be a function?
+grant insert on table sg_public.user_subject to sg_user, sg_admin;
+create policy insert_user_subject on sg_public.user_subject
+  for insert (subject_id) to sg_user, sg_admin
+  using (true);
+comment on policy insert_user_subject on sg_public.user_subject
+  is 'A user or admin may insert a user subject relationship.';
 
 -- Update usubj: none.
 
