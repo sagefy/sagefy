@@ -45,6 +45,7 @@ grant usage on schema sg_public to sg_anonymous, sg_user, sg_admin;
 
 ------ Generic > Trigger Functions ---------------------------------------------
 
+-- When updating a row, automatically update the modified column too.
 create or replace function sg_private.update_modified_column()
 returns trigger as $$
 begin new.modified = now();
@@ -52,10 +53,17 @@ begin new.modified = now();
 end;
 $$ language 'plpgsql';
 comment on function sg_private.update_modified_column()
-  is 'Whenever the row changes, update the modified column.';
+  is 'Whenever the row changes, update the `modified` column.';
 
-
-
+-- When inserting a row, automatically set the user_id field.
+create or replace function sg_private.insert_user_id_column()
+returns trigger as $$
+begin new.user_id = current_setting('jwt.claims.user_id')::uuid;
+  return new;
+end;
+$$ language 'plpgsql';
+comment on function sg_private.insert_user_id_column()
+  is 'When inserting a row, automatically set the `user_id` field.';
 
 
 
@@ -1337,6 +1345,29 @@ comment on column sg_public.suggest_follower.user_id
 
 ------ Suggests, Suggest Followers > Triggers ----------------------------------
 
+-- When I insert a suggest, add me as a suggest follower too.
+create function sg_private.follow_suggest()
+returns trigger as $$
+  insert into sg_public.suggest_follower
+  (suggest_id, user_id, session_id)
+  values
+  (new.id, current_setting('jwt.claims.user_id')::uuid, '???');
+$$ language 'plpgsql';
+comment on function sg_private.follow_suggest()
+  is 'Follow a given suggest';
+create trigger insert_suggest_then_follow
+  after insert on sg_public.suggest
+  for each row execute procedure sg_private.follow_suggest();
+comment on trigger insert_suggest_then_follow on sg_public.suggest
+  is 'Whenever I create a suggest, immediately follow the suggest';
+
+-- When I insert a suggest_follower, automatically set the user_id column.
+create trigger insert_suggest_follower_user_id
+  before insert on sg_public.suggest_follower
+  for each row execute procedure sg_private.insert_user_id_column();
+comment on trigger insert_suggest_follower_user_id on sg_public.suggest_follower
+  is 'Whenever I follow a suggest, autopopulate my `user_id`.';
+
 create trigger update_suggest_modified
   before update on sg_public.suggest
   for each row execute procedure sg_private.update_modified_column();
@@ -1360,7 +1391,7 @@ alter table sg_public.suggest_follower enable row level security;
 grant select on table sg_public.suggest to sg_anonymous, sg_user, sg_admin;
 
 -- Insert suggest: any via function.
--- TODO insert, when I insert a suggest, add a suggest_follower too
+grant insert (name, body) on table sg_public.suggest to sg_anonymous, sg_user, sg_admin;
 
 -- Update suggest: admin.
 grant update on table sg_public.suggest to sg_admin;
@@ -1377,7 +1408,12 @@ create policy select_suggest_follower on sg_public.suggest_follower
 comment on policy select_suggest_follower on sg_public.suggest_follower
   is 'Anyone can select a suggest follower.';
 
--- Insert suggest_follower: TODO insert.
+-- Insert suggest_follower: any.
+grant insert on table sg_public.suggest_follower
+  to sg_anonymous, sg_user, sg_admin;
+create policy insert_suggest_follower on sg_public.suggest_follower
+  for insert (suggest_id) -- any user
+  using (true);
 
 -- Update suggest_follow: none.
 
