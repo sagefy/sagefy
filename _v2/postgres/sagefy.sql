@@ -1289,11 +1289,11 @@ comment on policy delete_user_subject on sg_public.user_subject
 
 
 
------- Suggests, Suggest Followers ---------------------------------------------
+------ Suggests, Suggest Follows -----------------------------------------------
 
------- Suggests, Suggest Followers > Types - N/A -------------------------------
+------ Suggests, Suggest Follows > Types - N/A ---------------------------------
 
------- Suggests, Suggest Followers > Tables ------------------------------------
+------ Suggests, Suggest Follows > Tables --------------------------------------
 
 create table sg_public.suggest (
   id uuid primary key default uuid_generate_v4(),
@@ -1329,23 +1329,23 @@ create table sg_public.suggest_follow (
 comment on table sg_public.suggest_follow
   is 'A relationship between a suggest and a user.';
 comment on column sg_public.suggest_follow.id
-  is 'The ID of the suggest follower.';
+  is 'The ID of the suggest follow.';
 comment on column sg_public.suggest_follow.created
   is 'When the user followed the suggest.';
 comment on column sg_public.suggest_follow.modified
   is 'When the relationship last changed.';
 comment on column sg_public.suggest_follow.suggest_id
-  is 'The suggest the follower is following.';
+  is 'The suggest the user is following.';
 comment on column sg_public.suggest_follow.email
   is 'The email of the user.';
 comment on column sg_public.suggest_follow.user_id
   is 'The user who is following the suggest.';
 
------- Suggests, Suggest Followers > Validations -- N/A ------------------------
+------ Suggests, Suggest Follows > Validations -- N/A --------------------------
 
------- Suggests, Suggest Followers > Triggers ----------------------------------
+------ Suggests, Suggest Follows > Triggers ------------------------------------
 
--- When I insert a suggest, add me as a suggest follower too.
+-- When I insert a suggest, follow the suggest too.
 create function sg_private.follow_suggest()
 returns trigger as $$
   insert into sg_public.suggest_follow
@@ -1378,11 +1378,11 @@ create trigger update_suggest_follow_modified
   before update on sg_public.suggest_follow
   for each row execute procedure sg_private.update_modified_column();
 comment on trigger update_suggest_follow_modified on sg_public.suggest_follow
-  is 'Whenever a suggest follower changes, update the `modified` column.';
+  is 'Whenever a suggest follow changes, update the `modified` column.';
 
------- Suggests, Suggest Followers > Capabilities -- N/A -----------------------
+------ Suggests, Suggest Follows > Capabilities -- N/A -------------------------
 
------- Suggests, Suggest Followers > Permissions -------------------------------
+------ Suggests, Suggest Follows > Permissions ---------------------------------
 
 -- Enable RLS.
 alter table sg_public.suggest_follow enable row level security;
@@ -1406,7 +1406,7 @@ create policy select_suggest_follow on sg_public.suggest_follow
   for select -- any user
   using (true);
 comment on policy select_suggest_follow on sg_public.suggest_follow
-  is 'Anyone can select a suggest follower.';
+  is 'Anyone can select a suggest follow.';
 
 -- Insert suggest_follow: any.
 grant insert on table sg_public.suggest_follow
