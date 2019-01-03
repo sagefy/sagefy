@@ -682,7 +682,20 @@ comment on trigger update_card_version_modified on sg_public.card_version
 
 -- TODO List all subjects unit belongs to, recursively
 
--- TODO Get most popular subjects
+-- Select the most popular subjects
+create function sg_public.select_popular_subjects()
+returns setof sg_public.subject as $$
+  select *, (
+    select count(*)
+    from sg_public.user_subject
+    where subject_id = entity_id
+  ) as user_count
+  from sg_public.subject
+  order by user_count
+  limit 10;
+$$ language sql immutable;
+comment on function sg_public.select_popular_subjects()
+  is 'Select the 10 most popular subjects.';
 
 -- TODO Capability: get entities I've created
 
@@ -726,6 +739,9 @@ grant update, delete on table sg_public.card_version to sg_admin;
 -- TODO Who can update entity statuses? How?
 
 -- TODO A user may changed their own version to declined status, but only when the current status is pending or blocked.
+
+grant execute on function sg_public.select_popular_subjects()
+  to sg_anonymous, sg_user, sg_admin;
 
 
 
