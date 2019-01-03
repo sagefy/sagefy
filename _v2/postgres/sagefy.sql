@@ -11,6 +11,11 @@ create extension if not exists "pgcrypto";
 
 
 
+
+
+
+
+
 ------ Generic -----------------------------------------------------------------
 
 ------ Generic > Schemas and Roles ---------------------------------------------
@@ -48,6 +53,11 @@ end;
 $$ language 'plpgsql';
 comment on function sg_private.update_modified_column()
   is 'Whenever the row changes, update the modified column.';
+
+
+
+
+
 
 
 
@@ -296,6 +306,7 @@ grant execute on function sg_public.get_current_user()
   to sg_anonymous, sg_user, sg_admin;
 grant execute on function sg_public.user_md5_email(sg_public.user)
   to sg_anonymous, sg_user, sg_admin;
+
 
 
 
@@ -651,6 +662,8 @@ create trigger update_card_version_modified
 comment on trigger update_card_version_modified on sg_public.card_version
   is 'Whenever a card version changes, update the `modified` column.';
 
+-- TODO Trigger: create notices when an entity status updates
+
 ------ Cards, Units, Subjects > Capabilities -----------------------------------
 
 -- TODO Search per entity type
@@ -703,6 +716,10 @@ grant update, delete on table sg_public.subject_version_member to sg_admin;
 grant update, delete on table sg_public.card_version to sg_admin;
 
 -- TODO Who can update entity statuses? How?
+
+-- TODO A user may changed their own version to declined status, but only when the current status is pending or blocked.
+
+
 
 
 
@@ -837,8 +854,6 @@ comment on index post_vote_unique_idx
 
 -- TODO Post validation: A user cannot vote on their own proposal.
 
--- TODO Post validation: For proposals, the status can only be changed to declined, and only when the current status is pending or blocked.
-
 ------ Topics & Posts > Triggers -----------------------------------------------
 
 create trigger update_topic_modified
@@ -864,6 +879,8 @@ comment on trigger update_post_entity_version_modified on sg_public.post_entity_
 -- TODO Trigger: when I create a topic, I follow the entity
 
 -- TODO Trigger: when I create a post, I follow the entity
+
+-- TODO Trigger: create notices when a topic gets a new post
 
 ------ Topics & Posts > Capabilities -- N/A ------------------------------------
 
@@ -946,6 +963,9 @@ grant select on table sg_public.post_entity_version
 -- Update or delete post_entity_version: admin.
 grant update, delete on table sg_public.post_entity_version
   to sg_admin;
+
+
+
 
 
 
@@ -1044,10 +1064,6 @@ create trigger update_follow_modified
 comment on trigger update_follow_modified on sg_public.follow
   is 'Whenever a follow changes, update the `modified` column.';
 
--- TODO Trigger: create notices when an entity status updates
-
--- TODO Trigger: create notices when a topic gets a new post
-
 ------ Notices & Follows > Capabilities ----------------------------------------
 
 -- Notices > TODO Create notices for all users that follow an entity
@@ -1104,6 +1120,11 @@ create policy delete_notice on sg_public.notice
   using (user_id = current_setting('jwt.claims.user_id')::uuid);
 comment on policy delete_notice on sg_public.notice
   is 'A user or admin can delete their own notices.';
+
+
+
+
+
 
 
 
@@ -1196,7 +1217,7 @@ comment on trigger update_response_modified on sg_public.response
 
 ------ User Subjects, Responses > Capabilities ---------------------------------
 
--- TODO Get latest response user x unit
+-- TODO (hidden capability) Get latest response user x unit
 
 -- TODO Get and set learning context
 
@@ -1241,6 +1262,13 @@ comment on policy delete_user_subject on sg_public.user_subject
 -- TODO insert
 
 -- Update & delete response: none.
+
+
+
+
+
+
+
 
 
 
@@ -1332,7 +1360,7 @@ alter table sg_public.suggest_follower enable row level security;
 grant select on table sg_public.suggest to sg_anonymous, sg_user, sg_admin;
 
 -- Insert suggest: any via function.
--- TODO insert
+-- TODO insert, when I insert a suggest, add a suggest_follower too
 
 -- Update suggest: admin.
 grant update on table sg_public.suggest to sg_admin;
@@ -1349,7 +1377,7 @@ create policy select_suggest_follower on sg_public.suggest_follower
 comment on policy select_suggest_follower on sg_public.suggest_follower
   is 'Anyone can select a suggest follower.';
 
--- Insert suggest_follower: any via function above.
+-- Insert suggest_follower: TODO insert.
 
 -- Update suggest_follow: none.
 
