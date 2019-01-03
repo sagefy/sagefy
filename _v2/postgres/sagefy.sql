@@ -1315,7 +1315,7 @@ comment on column sg_public.suggest.name
 comment on column sg_public.suggest.body
   is 'The description and goals of the suggested subject.';
 
-create table sg_public.suggest_follower (
+create table sg_public.suggest_follow (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
@@ -1326,19 +1326,19 @@ create table sg_public.suggest_follower (
   unique (suggest_id, user_id),
   unique (suggest_id, session_id)
 );
-comment on table sg_public.suggest_follower
+comment on table sg_public.suggest_follow
   is 'A relationship between a suggest and a user.';
-comment on column sg_public.suggest_follower.id
+comment on column sg_public.suggest_follow.id
   is 'The ID of the suggest follower.';
-comment on column sg_public.suggest_follower.created
+comment on column sg_public.suggest_follow.created
   is 'When the user followed the suggest.';
-comment on column sg_public.suggest_follower.modified
+comment on column sg_public.suggest_follow.modified
   is 'When the relationship last changed.';
-comment on column sg_public.suggest_follower.suggest_id
+comment on column sg_public.suggest_follow.suggest_id
   is 'The suggest the follower is following.';
-comment on column sg_public.suggest_follower.email
+comment on column sg_public.suggest_follow.email
   is 'The email of the user.';
-comment on column sg_public.suggest_follower.user_id
+comment on column sg_public.suggest_follow.user_id
   is 'The user who is following the suggest.';
 
 ------ Suggests, Suggest Followers > Validations -- N/A ------------------------
@@ -1348,7 +1348,7 @@ comment on column sg_public.suggest_follower.user_id
 -- When I insert a suggest, add me as a suggest follower too.
 create function sg_private.follow_suggest()
 returns trigger as $$
-  insert into sg_public.suggest_follower
+  insert into sg_public.suggest_follow
   (suggest_id, user_id, session_id)
   values
   (new.id, current_setting('jwt.claims.user_id')::uuid, '???');
@@ -1361,11 +1361,11 @@ create trigger insert_suggest_then_follow
 comment on trigger insert_suggest_then_follow on sg_public.suggest
   is 'Whenever I create a suggest, immediately follow the suggest';
 
--- When I insert a suggest_follower, automatically set the user_id column.
-create trigger insert_suggest_follower_user_id
-  before insert on sg_public.suggest_follower
+-- When I insert a suggest_follow, automatically set the user_id column.
+create trigger insert_suggest_follow_user_id
+  before insert on sg_public.suggest_follow
   for each row execute procedure sg_private.insert_user_id_column();
-comment on trigger insert_suggest_follower_user_id on sg_public.suggest_follower
+comment on trigger insert_suggest_follow_user_id on sg_public.suggest_follow
   is 'Whenever I follow a suggest, autopopulate my `user_id`.';
 
 create trigger update_suggest_modified
@@ -1374,10 +1374,10 @@ create trigger update_suggest_modified
 comment on trigger update_suggest_modified on sg_public.suggest
   is 'Whenever a suggest changes, update the `modified` column.';
 
-create trigger update_suggest_follower_modified
-  before update on sg_public.suggest_follower
+create trigger update_suggest_follow_modified
+  before update on sg_public.suggest_follow
   for each row execute procedure sg_private.update_modified_column();
-comment on trigger update_suggest_follower_modified on sg_public.suggest_follower
+comment on trigger update_suggest_follow_modified on sg_public.suggest_follow
   is 'Whenever a suggest follower changes, update the `modified` column.';
 
 ------ Suggests, Suggest Followers > Capabilities -- N/A -----------------------
@@ -1385,7 +1385,7 @@ comment on trigger update_suggest_follower_modified on sg_public.suggest_followe
 ------ Suggests, Suggest Followers > Permissions -------------------------------
 
 -- Enable RLS.
-alter table sg_public.suggest_follower enable row level security;
+alter table sg_public.suggest_follow enable row level security;
 
 -- Select suggest: any.
 grant select on table sg_public.suggest to sg_anonymous, sg_user, sg_admin;
@@ -1399,28 +1399,28 @@ grant update on table sg_public.suggest to sg_admin;
 -- Delete suggest: admin.
 grant delete on table sg_public.suggest to sg_admin;
 
--- Select suggest_follower: any.
-grant select on table sg_public.suggest_follower
+-- Select suggest_follow: any.
+grant select on table sg_public.suggest_follow
   to sg_anonymous, sg_user, sg_admin;
-create policy select_suggest_follower on sg_public.suggest_follower
+create policy select_suggest_follow on sg_public.suggest_follow
   for select -- any user
   using (true);
-comment on policy select_suggest_follower on sg_public.suggest_follower
+comment on policy select_suggest_follow on sg_public.suggest_follow
   is 'Anyone can select a suggest follower.';
 
--- Insert suggest_follower: any.
-grant insert on table sg_public.suggest_follower
+-- Insert suggest_follow: any.
+grant insert on table sg_public.suggest_follow
   to sg_anonymous, sg_user, sg_admin;
-create policy insert_suggest_follower on sg_public.suggest_follower
+create policy insert_suggest_follow on sg_public.suggest_follow
   for insert (suggest_id) -- any user
   using (true);
 
 -- Update suggest_follow: none.
 
 -- Delete suggest_follow: user or admin self.
-grant delete on table sg_public.suggest_follower to sg_user, sg_admin;
-create policy delete_suggest_follower on sg_public.suggest_follower
+grant delete on table sg_public.suggest_follow to sg_user, sg_admin;
+create policy delete_suggest_follow on sg_public.suggest_follow
   for delete to sg_user, sg_admin
   using (id = current_setting('jwt.claims.user_id')::uuid);
-comment on policy delete_suggest_follower on sg_public.suggest_follower
+comment on policy delete_suggest_follow on sg_public.suggest_follow
   is 'A user or admin can delete their own suggest follow.';
