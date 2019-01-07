@@ -799,15 +799,16 @@ create table sg_public.post (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  user_id uuid null references sg_public.user (id),
+  user_id uuid null references sg_public.user (id)
+    check (kind = 'post' or kind = 'proposal' or user_id is not null),
   topic_id uuid not null references sg_public.topic (id),
   kind sg_public.post_kind not null default 'post',
   body text null
     check (kind = 'vote' or body is not null),
-  replies_to_id uuid null references sg_public.post (id)
-    check (kind <> 'vote' or replies_to_id is not null),
+  parent_id uuid null references sg_public.post (id)
+    check (kind = 'post' or kind = 'proposal' or parent_id is not null),
   response boolean null
-    check (kind <> 'vote' or response is not null)
+    check (kind = 'post' or kind = 'proposal' or response is not null)
   -- also see join table: sg_public.post_entity_version
   -- specific to kind = 'proposal'
 );
@@ -827,7 +828,7 @@ comment on column sg_public.post.kind
   is 'The kind of post (post, proposal, vote).';
 comment on column sg_public.post.body
   is 'The body or main content of the post.';
-comment on column sg_public.post.replies_to_id
+comment on column sg_public.post.parent_id
   is 'If the post is a reply, which post it replies to.';
 comment on column sg_public.post.response
   is 'If the post is a vote, yes/no on approving.';
@@ -861,22 +862,42 @@ comment on column sg_public.post_entity_version.version_id
 
 -- A user can only vote once on a given proposal.
 create unique index post_vote_unique_idx
-  on sg_public.post (user_id, replies_to_id)
+  on sg_public.post (user_id, parent_id)
   where kind = 'vote';
 comment on index post_vote_unique_idx
   is 'A user may only vote once on a proposal.';
 
--- TODO Post validation: A reply must belong to the same topic.
-
--- TODO Post validation: A post can reply to a post, proposal, or vote.
-
--- TODO Post validation: A proposal can reply to a post, proposal, or vote.
-
--- TODO Post validation: A vote may only reply to a proposal.
-
--- TODO Post validation: A vote cannot reply to a proposal that is accepted or declined.
-
--- TODO Post validation: A user cannot vote on their own proposal.
+-- A reply must belong to the same topic.
+-- A vote may only reply to a proposal.
+-- A user cannot vote on their own proposal.
+create function sg_private.verify_post()
+returns trigger as $$
+  declare
+    parent sg_public.post;
+  begin
+    if (new.parent_id) then
+      parent := (
+        select *
+        from sg_public.post
+        where id = new.parent_id
+      );
+      if (parent.topic_id != new.topic_id) then
+        raise exception 'A reply must belong to the same topic.'
+          using errcode = '76177573';
+      end if;
+      if (new.kind = 'vote' and parent.kind != 'proposal') then
+        raise exception 'A vote may only reply to a proposal.'
+          using errcode = '8DF72C56';
+      end if;
+      if (new.kind = 'vote' and parent.user_id = new.user_id) then
+        raise exception 'A user cannot vote on their own proposal.'
+          using errcode = 'E47E0411';
+      end if;
+    end if;
+  end;
+$$ language 'plpgsql';
+comment on function sg_private.verify_post()
+  is 'Verify valid data when creating or updating a post.';
 
 ------ Topics & Posts > Triggers -----------------------------------------------
 
@@ -892,6 +913,12 @@ create trigger insert_post_user_id
 comment on trigger insert_post_user_id on sg_public.post
   is 'Whenever I make a new post, auto fill the `user_id` column';
 
+create trigger insert_post_verify
+  before insert on sg_public.post
+  for each row execute procedure sg_private.verify_post();
+comment on trigger insert_post_verify on sg_public.post
+  is 'Whenever I make a new post, check that the post is valid.';
+
 create trigger update_topic_modified
   before update on sg_public.topic
   for each row execute procedure sg_private.update_modified_column();
@@ -903,6 +930,12 @@ create trigger update_post_modified
   for each row execute procedure sg_private.update_modified_column();
 comment on trigger update_post_modified on sg_public.post
   is 'Whenever a post changes, update the `modified` column.';
+
+create trigger update_post_verify
+  before update on sg_public.post
+  for each row execute procedure sg_private.verify_post();
+comment on trigger update_post_verify on sg_public.post
+  is 'Whenever I make a new post, check that the post is valid.';
 
 create trigger update_post_entity_version_modified
   before update on sg_public.post_entity_version
@@ -972,7 +1005,7 @@ comment on policy select_post on sg_public.post
 -- Insert post: any.
 grant insert on table sg_public.post to sg_anonymous, sg_user, sg_admin;
 create policy insert_post on sg_public.post
-  for insert (topic_id, kind, body, replies_to_id, response) -- any user
+  for insert (topic_id, kind, body, parent_id, response) -- any user
   using (true);
 
 -- Update post: user self (body, response), or admin.
