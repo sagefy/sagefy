@@ -1,7 +1,7 @@
 redis==2.10.3
 py-bcrypt==0.4
 passlib==1.6.2
-pyyaml==3.11
+pyyaml==4.2b1
 elasticsearch>=2.0.0,<3.0.0
 psycopg2==2.7.1
 
