@@ -945,9 +945,49 @@ comment on trigger update_post_entity_version_modified on sg_public.post_entity_
 
 -- TODO Trigger: when I create or update a vote post, we can update entity status
 
--- TODO Trigger: when I create a topic, I follow the entity
+-- Trigger: when I create a topic, I follow the entity
+create function sg_private.follow_own_topic()
+returns trigger as $$
+  insert into sg_public.follow
+  (entity_id, entity_kind)
+  values
+  (new.entity_id, new.entity_kind)
+  on conflict do nothing;
+$$ language 'plpgsql';
+comment on function sg_private.follow_own_topic()
+  is 'When I create a topic, I follow the entity.';
+create trigger follow_own_topic
+  after insert on sg_public.topic
+  for each row execute procedure sg_private.follow_own_topic();
+comment on trigger follow_own_topic on sg_public.topic
+  is 'When I create a topic, I follow the entity.';
 
--- TODO Trigger: when I create a post, I follow the entity
+-- Trigger: when I create a post, I follow the entity
+create function sg_private.follow_own_post()
+returns trigger as $$
+  declare
+    topic sg_public.topic;
+  begin
+    topic := (
+      select *
+      from sg_public.topic
+      where id = new.topic_id
+      limit 1;
+    );
+    insert into sg_public.follow
+    (entity_id, entity_kind)
+    values
+    (topic.entity_id, topic.entity_kind)
+    on conflict do nothing;
+    end;
+$$ language 'plpgsql';
+comment on function sg_private.follow_own_post()
+  is 'When I create a post, I follow the entity.';
+create trigger follow_own_post
+  after insert on sg_public.post
+  for each row execute procedure sg_private.follow_own_post();
+comment on trigger follow_own_post on sg_public.post
+  is 'When I create a post, I follow the entity.';
 
 -- TODO Trigger: create notices when a topic gets a new post
 
