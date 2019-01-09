@@ -697,7 +697,45 @@ $$ language sql immutable;
 comment on function sg_public.select_popular_subjects()
   is 'Select the 10 most popular subjects.';
 
--- TODO Capability: get entities I've created
+-- Capability: get entities I've created
+create function sg_public.select_my_cards()
+returns setof sg_public.card as $$
+  select *
+  from sg_public.card
+  where entity_id in (
+    select entity_id
+    from sg_public.card_version
+    where user_id = current_setting('jwt.claims.user_id')::uuid
+  );
+$$ language sql immutable;
+comment on function sg_public.select_my_cards()
+  is 'Select cards I created or worked on.';
+
+create function sg_public.select_my_units()
+returns setof sg_public.unit as $$
+  select *
+  from sg_public.unit
+  where entity_id in (
+    select entity_id
+    from sg_public.unit_version
+    where user_id = current_setting('jwt.claims.user_id')::uuid
+  );
+$$ language sql immutable;
+comment on function sg_public.select_my_units()
+  is 'Select units I created or worked on.';
+
+create function sg_public.select_my_subjects()
+returns setof sg_public.subject as $$
+  select *
+  from sg_public.subject
+  where entity_id in (
+    select entity_id
+    from sg_public.subject_version
+    where user_id = current_setting('jwt.claims.user_id')::uuid
+  );
+$$ language sql immutable;
+comment on function sg_public.select_my_subjects()
+  is 'Select subjects I created or worked on.';
 
 -- TODO insert new AND new version of existing
 
@@ -743,7 +781,12 @@ grant update, delete on table sg_public.card_version to sg_admin;
 grant execute on function sg_public.select_popular_subjects()
   to sg_anonymous, sg_user, sg_admin;
 
-
+grant execute on function sg_public.select_my_cards()
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.select_my_units()
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.select_my_subjects()
+  to sg_anonymous, sg_user, sg_admin;
 
 
 
