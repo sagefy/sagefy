@@ -41,7 +41,8 @@ ${FOOTER_TEXT}
 `
 const TOKEN_SUBJECT = 'Sagefy - Verification Request'
 const TOKEN_TEXT = `
-To verify and update your account, please visit {url}
+To verify and update your account, please visit:
+https://sagefy.org/private?token={token}
 
 If you did not request an email or password change, please reply immediately.
 
@@ -66,22 +67,29 @@ ${FOOTER_TEXT}
 
 export default function mailer(client) {
   client.on('notification', async msg => {
-    const type = msg.channel
-    if (channel === 'create_user') {
+    if (msg.channel === 'create_user') {
       await sendMail({
         to: msg.payload,
         subject: WELCOME_SUBJECT,
         body: WELCOME_TEXT,
       })
     }
-    if (channel === 'update_email') {
+    if (msg.channel === 'send_reset_token') {
+      const [to, token] = msg.payload.split(' ')
+      await sendMail({
+        to: msg.payload,
+        subject: TOKEN_SUBJECT,
+        body: TOKEN_TEXT.replace('{token}', token),
+      })
+    }
+    if (msg.channel === 'update_email') {
       await sendMail({
         to: msg.payload,
         subject: EMAIL_SUBJECT,
         body: EMAIL_TEXT,
       })
     }
-    if (channel === 'update_password') {
+    if (msg.channel === 'update_password') {
       await sendMail({
         to: msg.payload,
         subject: PASSWORD_SUBJECT,
