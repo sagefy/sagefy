@@ -7,6 +7,7 @@
 
 create extension if not exists "uuid-ossp";
 create extension if not exists "pgcrypto";
+create extension if not exists "postgres-json-schema";
 
 
 
@@ -134,7 +135,8 @@ comment on column sg_private.user.email_frequency
 comment on constraint email_check on sg_private.user
   is 'An email must match the email format `a@b.c`.';
 comment on constraint pass_check on sg_private.user
-  is 'A password must batch the bcrypt hash format `$2w$...`, where w is a, b, or y.';
+  is 'A password must batch the bcrypt hash format '
+     '`$2w$...`, where w is a, b, or y.';
 
 ------ Users > Sessions --------------------------------------------------------
 
@@ -168,7 +170,8 @@ begin
     where u.name = $1 or u.email = $1
     limit 1;
   if user.password = crypt(password, user.password) then
-    return ('sg_user', user.user_id)::sg_public.jwt_token; -- todo handle if admin
+    return ('sg_user', user.user_id)::sg_public.jwt_token;
+    -- todo handle if admin
   else
     return null;
   end if;
@@ -257,7 +260,8 @@ returns text as $$
   limit 1;
 $$ language sql stable;
 comment on function sg_public.user_md5_email(sg_public.user)
-  is 'The user\'s email address as an MD5 hash, for Gravatars. See https://bit.ly/2F6cR0M';
+  is 'The user\'s email address as an MD5 hash, for Gravatars. '
+     'See https://bit.ly/2F6cR0M';
 
 -- TODO Send email token / validate token / update password
 
@@ -411,7 +415,8 @@ create table sg_public.unit_version (
 );
 
 comment on table sg_public.unit_version
-  is 'Every version of the units. A unit is a single learning goal. A unit has many cards and can belong to many subjects.';
+  is 'Every version of the units. A unit is a single learning goal. '
+     'A unit has many cards and can belong to many subjects.';
 comment on column sg_public.unit_version.version_id
   is 'The version ID -- a single unit can have many versions.';
 comment on column sg_public.unit_version.created
@@ -497,7 +502,9 @@ create table sg_public.subject_version (
 );
 
 comment on table sg_public.subject_version
-  is 'Every version of the subjects. A subject is a collection of units and other subjects. A subject has many units and other subjects.';
+  is 'Every version of the subjects. '
+     'A subject is a collection of units and other subjects. '
+     'A subject has many units and other subjects.';
 comment on column sg_public.subject_version.version_id
   is 'The version ID -- a single subject can have many versions.';
 comment on column sg_public.subject_version.created
@@ -539,7 +546,8 @@ create table sg_public.subject_version_member (
 );
 
 comment on table sg_public.subject_version_member
-  is 'A join table between a subject version and its member units and subjects.';
+  is 'A join table between a subject version and '
+     'its member units and subjects.';
 comment on column sg_public.subject_version_member.id
   is 'The relationship ID.';
 comment on column sg_public.subject_version_member.created
@@ -586,11 +594,81 @@ create table sg_public.card_version (
   -- and the rest....
   unit_id uuid not null references sg_public.unit_entity (entity_id),
   kind sg_public.card_kind not null,
-  data jsonb not null -- jsonb?: varies per kind
+  data jsonb not null, -- jsonb?: varies per kind
+  constraint valid_video_card check (
+    kind <> 'video' or validate_json_schema($$ {
+      "type": "object",
+      "properties": {
+        "site": {
+          "type": "string",
+          "enum": ["youtube", "vimeo"]
+        },
+        "video_id": { "type": "string" }
+      },
+      "required": ["site", "video_id"]
+    } $$, data)
+  ),
+  constraint valid_page_card check (
+    kind <> 'page' or validate_json_schema($$ {
+      "type": "object",
+      "properties": {
+        "body": { "type": "string" }
+      },
+      "required": ["body"]
+    } $$, data)
+  ),
+  constraint valid_unscored_embed_card check (
+    kind <> 'unscored_embed' or validate_json_schema($$ {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": ["url"]
+    } $$, data)
+  ),
+  constraint valid_choice_card check (
+    kind <> 'choice' or validate_json_schema($$ {
+      "type": "object",
+      "properties": {
+        "body": {
+          "type": "string",
+        },
+        "options": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "value": { "type": "string" },
+              "correct": { "type": "boolean" },
+              "feedback": { "type": "string" }
+            },
+            "required": ["id", "value", "correct", "feedback"]
+          }
+        },
+        "order": {
+          "type": "string",
+          "enum": ["random", "set"]
+        },
+        "max_options_to_show": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 4
+        }
+      },
+      "required": ["body", "options", "order", "max_options_to_show"]
+    } $$, data)
+  ),
 );
 
 comment on table sg_public.card_version
-  is 'Every version of the cards. A card is a single learning activity. A card belongs to a single unit.';
+  is 'Every version of the cards. A card is a single learning activity. '
+     'A card belongs to a single unit.';
 comment on column sg_public.card_version.version_id
   is 'The version ID -- a single card can have many versions.';
 comment on column sg_public.card_version.created
@@ -632,8 +710,6 @@ comment on view sg_public.card
 
 ------ Cards, Units, Subjects > Validations ------------------------------------
 
--- TODO Validation: `data` field of cards by type with JSON schema
-
 -- TODO Validation: No require cycles for units
 
 -- TODO Validation: No cycles in subject members
@@ -649,7 +725,8 @@ comment on trigger update_unit_version_modified on sg_public.unit_version
 create trigger update_unit_version_require_modified
   before update on sg_public.unit_version_require
   for each row execute procedure sg_private.update_modified_column();
-comment on trigger update_unit_version_require_modified on sg_public.unit_version_require
+comment on trigger update_unit_version_require_modified
+  on sg_public.unit_version_require
   is 'Whenever a unit version require changes, update the `modified` column.';
 
 create trigger update_subject_version_modified
@@ -661,7 +738,8 @@ comment on trigger update_subject_version_modified on sg_public.subject_version
 create trigger update_subject_version_member_modified
   before update on sg_public.subject_version_member
   for each row execute procedure sg_private.update_modified_column();
-comment on trigger update_subject_version_member_modified on sg_public.subject_version_member
+comment on trigger update_subject_version_member_modified
+  on sg_public.subject_version_member
   is 'Whenever a subject version member changes, update the `modified` column.';
 
 create trigger update_card_version_modified
@@ -776,7 +854,8 @@ grant update, delete on table sg_public.card_version to sg_admin;
 
 -- TODO Who can update entity statuses? How?
 
--- TODO A user may changed their own version to declined status, but only when the current status is pending or blocked.
+-- TODO A user may changed their own version to declined status,
+--      but only when the current status is pending or blocked.
 
 grant execute on function sg_public.select_popular_subjects()
   to sg_anonymous, sg_user, sg_admin;
@@ -849,9 +928,9 @@ create table sg_public.post (
   body text null
     check (kind = 'vote' or body is not null),
   parent_id uuid null references sg_public.post (id)
-    check (kind = 'post' or kind = 'proposal' or parent_id is not null),
+    check (kind <> 'vote' or parent_id is not null),
   response boolean null
-    check (kind = 'post' or kind = 'proposal' or response is not null)
+    check (kind <> 'vote' or response is not null)
   -- also see join table: sg_public.post_entity_version
   -- specific to kind = 'proposal'
 );
@@ -924,11 +1003,11 @@ returns trigger as $$
         from sg_public.post
         where id = new.parent_id
       );
-      if (parent.topic_id != new.topic_id) then
+      if (parent.topic_id <> new.topic_id) then
         raise exception 'A reply must belong to the same topic.'
           using errcode = '76177573';
       end if;
-      if (new.kind = 'vote' and parent.kind != 'proposal') then
+      if (new.kind = 'vote' and parent.kind <> 'proposal') then
         raise exception 'A vote may only reply to a proposal.'
           using errcode = '8DF72C56';
       end if;
@@ -983,10 +1062,12 @@ comment on trigger update_post_verify on sg_public.post
 create trigger update_post_entity_version_modified
   before update on sg_public.post_entity_version
   for each row execute procedure sg_private.update_modified_column();
-comment on trigger update_post_entity_version_modified on sg_public.post_entity_version
+comment on trigger update_post_entity_version_modified
+  on sg_public.post_entity_version
   is 'Whenever a post entity version changes, update the `modified` column.';
 
--- TODO Trigger: when I create or update a vote post, we can update entity status
+-- TODO Trigger: when I create or update a vote post,
+--      we can update entity status
 
 -- Trigger: when I create a topic, I follow the entity
 create function sg_private.follow_own_topic()
@@ -1192,7 +1273,8 @@ create table sg_public.follow (
     references sg_public.entity (entity_id, entity_kind)
 );
 comment on table sg_public.follow
-  is 'A follow is an association between a user and an entity. The user indicates they want notices for the entity.'
+  is 'A follow is an association between a user and an entity. '
+     'The user indicates they want notices for the entity.'
 comment on column sg_public.follow.id
   is 'The ID of the follow.';
 comment on column sg_public.follow.created
@@ -1320,7 +1402,8 @@ create table sg_public.user_subject (
   unique (user_id, subject_id)
 );
 comment on table sg_public.user_subject
-  is 'The association between a user and a subject. This is a subject the learner is learning.';
+  is 'The association between a user and a subject. '
+     'This is a subject the learner is learning.';
 comment on column sg_public.user_subject.id
   is 'The ID of the user subject.';
 comment on column sg_public.user_subject.created
@@ -1358,13 +1441,15 @@ comment on table sg_public.response.user_id
 comment on table sg_public.response.card_id
   is 'The card (entity id) that the response belongs to.';
 comment on table sg_public.response.unit_id
-  is 'The unit (entity id) that the response belongs to... at the time of the response';
+  is 'The unit (entity id) that the response belongs to... '
+     'at the time of the response';
 comment on table sg_public.response.response
   is 'How the user responded.';
 comment on table sg_public.response.score
   is 'The score, 0->1, of the response.';
 comment on table sg_public.response.learned
-  is 'The estimated probability the learner has learned the unit, after this response.';
+  is 'The estimated probability the learner has learned the unit, '
+     'after this response.';
 
 ------ User Subjects, Responses > Validations -- N/A ---------------------------
 
@@ -1394,7 +1479,8 @@ comment on trigger update_response_modified on sg_public.response
 
 -- TODO Get and set learning context
 
--- TODO After I select a subject, traverse the units to give the learner some units to pick
+-- TODO After I select a subject,
+--     traverse the units to give the learner some units to pick
 
 -- TODO After I select a unit, search for a suitable card
 
@@ -1574,7 +1660,8 @@ alter table sg_public.suggest_follow enable row level security;
 grant select on table sg_public.suggest to sg_anonymous, sg_user, sg_admin;
 
 -- Insert suggest: any via function.
-grant insert (name, body) on table sg_public.suggest to sg_anonymous, sg_user, sg_admin;
+grant insert (name, body) on table sg_public.suggest
+  to sg_anonymous, sg_user, sg_admin;
 
 -- Update suggest: admin.
 grant update on table sg_public.suggest to sg_admin;
