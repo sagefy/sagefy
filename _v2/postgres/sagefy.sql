@@ -249,8 +249,6 @@ $$ language sql stable;
 comment on function sg_public.get_current_user()
   is 'Get the current logged in user.';
 
--- TODO Sign out
-
 -- Get MD5 hash of email address for user gravatar
 create function sg_public.user_md5_email(user sg_public.user)
 returns text as $$
