@@ -2,12 +2,23 @@
 -- We can use this file for local development, testing, reference,
 -- debugging, and evaluation.
 
+/*
+remaining:
+  config 2
+  recursive 4
+  search 2
+  status 3
+  learn 3
+  insert 1
+*/
+
 
 -- ENSURE UTF-8, UTC Timezone
 
 create extension if not exists "uuid-ossp";
 create extension if not exists "pgcrypto";
 create extension if not exists "postgres-json-schema";
+create extension if not exists "pgjwt";
 
 
 
@@ -24,9 +35,9 @@ create extension if not exists "postgres-json-schema";
 create schema sg_public;
 create schema sg_private;
 comment on schema sg_public is 'Schema exposed to GraphQL.';
-comment on schema sg_private is 'Schema hidden from GraphQL.'
+comment on schema sg_private is 'Schema hidden from GraphQL.';
 
-create role sg_postgraphile login password 'xyz'; -- todo !!! fix password
+create role sg_postgraphile login password 'xyz'; -- TODO config fix password
 create role sg_admin;
 create role sg_user;
 create role sg_anonymous;
@@ -88,11 +99,21 @@ create type sg_public.email_frequency as enum(
 );
 comment on type sg_public.email_frequency
   is 'Email frequency options per user';
+
 create type sg_public.jwt_token as (
   role text,
   user_id uuid
 );
 comment on type sg_public.jwt_token
+  is 'Create a JWT with role and user_id.';
+
+create type sg_public.user_role as enum(
+  'sg_anonymous',
+  'sg_user',
+  'sg_admin'
+);
+comment on type sg_public.user_role
+  is 'User role options.';
 
 ------ Users > Tables ----------------------------------------------------------
 
@@ -103,6 +124,7 @@ create table sg_public.user (
   name text not null unique,
   view_subjects boolean not null default false
 );
+
 comment on table sg_public.user
   is 'The public user data table. Anyone can see this data.';
 comment on column sg_public.user.id
@@ -122,14 +144,18 @@ create table sg_private.user (
     constraint email_check check (email ~* '^\S+@\S+\.\S+$'),
   password varchar(60) not null
     constraint pass_check check (password ~* '^\$2\w\$.*$'),
+  role sg_public.user_role not null default 'sg_user',
   email_frequency sg_public.email_frequency not null default 'immediate'
 );
+
 comment on table sg_private.user
   is 'Private user data -- this should be highly protected.';
 comment on column sg_private.user.email
   is 'The user\'s private email address -- for notices and password resets.';
 comment on column sg_private.user.password
-  is 'The bcrypt hash of the user\'s password.'
+  is 'The bcrypt hash of the user\'s password.';
+comment on column sg_private.user.role
+  is 'The role of the user, `sg_user` or `sg_admin`.';
 comment on column sg_private.user.email_frequency
   is 'Setting of how often the user would like to receive notice emails.';
 comment on constraint email_check on sg_private.user
@@ -146,7 +172,7 @@ create function sg_public.sign_up(
   password text,
 ) returns sg_public.user as $$
 declare
-  user sg_public.user
+  user sg_public.user;
 begin
   insert into sg_public.user (name) values (name)
     returning * as user;
@@ -163,22 +189,112 @@ create function sg_public.log_in(
   password text
 ) returns sg_public.jwt_token as $$
 declare
-  user sg_private.user
+  user sg_private.user;
 begin
   select u.* into user
     from sg_private.user as u
     where u.name = $1 or u.email = $1
     limit 1;
   if user.password = crypt(password, user.password) then
-    return ('sg_user', user.user_id)::sg_public.jwt_token;
-    -- todo handle if admin
+    return (user.role, user.user_id)::sg_public.jwt_token;
   else
     return null;
   end if;
 end;
 $$ language plpgsql strict security definer;
 comment on function sg_public.log_in(text, text) is 'Logs in a single user.';
--- todo !!! jwt refresh tokens?
+
+-- Send reset token
+create function sg_public.send_reset_token(
+  email text
+) returns void as $$
+  declare
+    user sg_private.user;
+  begin
+    user := (
+      select *
+      from sg_private.user
+      where email = sg_private.user.email
+      limit 1
+    );
+    if (not user) then
+      raise exception 'No user found.' using errcode = '3883C744';
+    end if;
+    perform pg_notify(
+      'send_reset_token',
+      email || ' ' || sign(format($$ {
+        "user_id": "%s",
+        "email": "%s",
+        "password": "%s"
+      } $$, user.user_id, email, user.password), 'jwt_secret2')
+      -- TODO config fix "jwt_secret2" here and below
+    );
+  end;
+$$ language plpgsql strict security definer;
+comment on function sg_public.send_password_token(text)
+  is 'Generate and email a token to update private user data.';
+
+-- Update email, but only with a valid reset token
+create function sg_public.update_email(
+  token text,
+  new_email text
+) returns void as $$
+  declare
+    user sg_private.user;
+    user_id uuid;
+    email text;
+    password text;
+  begin
+    select user_id, email, password from verify(token, 'jwt_secret2');
+    user := (
+      select *
+      from sg_private.user
+      where user_id = sg_private.user.user_id
+        and email = sg_private.user.email
+        and password = sg_private.user.password
+      limit 1
+    );
+    if (not user) then
+      raise exception 'No match found.' using errcode = '58483A61';
+    end if;
+    update sg_private.user
+    set sg_private.user.email = new_email
+    where sg_private.user.user_id = user_id;
+  end;
+$$ language plpgsql strict security definer;
+comment on function sg_public.update_email(text, text)
+  is 'Update the user\'s email address.';
+
+-- Update password, but only with valid reset token
+create function sg_public.update_password(
+  token text,
+  new_password text
+) returns void as $$
+  declare
+    user sg_private.user;
+    user_id uuid;
+    email text;
+    password text;
+  begin
+    select user_id, email, password from verify(token, 'jwt_secret2');
+    user := (
+      select *
+      from sg_private.user
+      where user_id = sg_private.user.user_id
+        and email = sg_private.user.email
+        and password = sg_private.user.password
+      limit 1
+    );
+    if (not user) then
+      raise exception 'No match found.' using errcode = 'EBC6E992';
+    end if;
+    update sg_private.user
+    set sg_private.user.password = crypt(new_password, gen_salt('bf', 8))
+    where sg_private.user.user_id = user_id;
+  end;
+$$ language plpgsql strict security definer;
+comment on function sg_public.update_password(text, text)
+  is 'Update the user\'s password.';
 
 ------ Users > Triggers --------------------------------------------------------
 
@@ -261,10 +377,6 @@ comment on function sg_public.user_md5_email(sg_public.user)
   is 'The user\'s email address as an MD5 hash, for Gravatars. '
      'See https://bit.ly/2F6cR0M';
 
--- TODO Send email token / validate token / update password
-
--- TODO Send email token / validate token / update email
-
 ------ Users > Permissions -----------------------------------------------------
 
 -- No one other than Postgraphile has access to sg_private.
@@ -284,7 +396,8 @@ comment on policy select_user on sg_public.user
 grant execute on function sg_public.sign_up(text, text, text) to sg_anonymous;
 
 -- Update user: user self (name, settings), or admin.
-grant update on table sg_public.user to sg_user, sg_admin;
+grant update (name, view_subjects) on table sg_public.user to sg_user;
+grant update on table sg_public.user to sg_admin;
 create policy update_user on sg_public.user
   for update (name, view_subjects) to sg_user
   using (id = current_setting('jwt.claims.user_id')::uuid);
@@ -311,6 +424,12 @@ comment on policy delete_user_admin on sg_public.user
 
 -- All users may log in or check the current user.
 grant execute on function sg_public.log_in(text, text)
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.send_reset_token(text)
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.update_email(text, text)
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.update_password(text, text)
   to sg_anonymous, sg_user, sg_admin;
 grant execute on function sg_public.get_current_user()
   to sg_anonymous, sg_user, sg_admin;
@@ -697,6 +816,14 @@ comment on column sg_public.card_version.kind
   is 'The subkind of the card, such as video or choice.';
 comment on column sg_public.card_version.data
   is 'The data of the card. The card kind changes the data shape.';
+comment on constraint valid_video_card on sg_public.card_version
+  is 'If the `kind` is `video`, ensure `data` matches the data shape.';
+comment on constraint valid_page_card on sg_public.card_version
+  is 'If the `kind` is `page`, ensure `data` matches the data shape.';
+comment on constraint valid_unscored_embed_card on sg_public.card_version
+  is 'If the `kind` is `unscored_embed`, ensure `data` matches the data shape.';
+comment on constraint valid_choice_card on sg_public.card_version
+  is 'If the `kind` is `choice`, ensure `data` matches the data shape.';
 
 create view sg_public.card as
   select distinct on (entity_id) *
@@ -708,17 +835,85 @@ comment on view sg_public.card
 
 ------ Cards, Units, Subjects > Validations ------------------------------------
 
--- TODO Validation: No require cycles for units
+-- TODO recursive: No require cycles for units
 
--- TODO Validation: No cycles in subject members
+-- TODO recursive: No cycles in subject members
 
 ------ Cards, Units, Subjects > Triggers ---------------------------------------
+
+create function sg_private.insert_version_notice()
+returns trigger as $$
+  insert into sg_public.notice
+  (user_id, kind, entity_kind, entity_id)
+  select (
+    unnest(
+      select distinct user_id
+      from sg_public.follow
+      where new.entity_id = sg_public.follow.entity_id
+    ),
+    'version_pending',
+    replace(tg_table_name, '_version', ''),
+    new.entity_id
+  );
+$$ language 'plpgsql';
+comment on function sg_private.insert_version_notice()
+  is 'After I insert a new version, notify followers.';
+
+create function sg_private.update_version_notice()
+returns trigger as $$
+  if (new.status <> old.status) then
+    insert into sg_public.notice
+    (user_id, kind, entity_kind, entity_id)
+    select (
+      unnest(
+        select distinct user_id
+        from sg_public.follow
+        where new.entity_id = sg_public.follow.entity_id
+      ),
+      'version_' || new.status,
+      replace(tg_table_name, '_version', ''),
+      new.entity_id
+    );
+  end if;
+$$ language 'plpgsql';
+comment on function sg_private.update_version_notice()
+  is 'After I update a version status, notify followers.';
+
+create trigger insert_unit_version_notice
+  after insert on sg_public.unit_version
+  for each row execute procedure sg_private.insert_unit_version_notice();
+comment on trigger insert_unit_version_notice on sg_public.unit_version
+  is 'After I insert a new unit version, notify followers.';
+
+create trigger insert_subject_version_notice
+  after insert on sg_public.subject_version
+  for each row execute procedure sg_private.insert_subject_version_notice();
+comment on trigger insert_subject_version_notice on sg_public.subject_version
+  is 'After I insert a new subject version, notify followers.';
+
+create trigger insert_card_version_notice
+  after insert on sg_public.card_version
+  for each row execute procedure sg_private.insert_card_version_notice();
+comment on trigger insert_card_version_notice on sg_public.card_version
+  is 'After I insert a new card version, notify followers.';
+
+create function sg_private.update_version_notice()
+returns trigger as $$
+$$ language 'plpgsql';
+comment on function sg_private.insert_version_notice()
+  is 'After I update a version status, notify followers.';
 
 create trigger update_unit_version_modified
   before update on sg_public.unit_version
   for each row execute procedure sg_private.update_modified_column();
 comment on trigger update_unit_version_modified on sg_public.unit_version
   is 'Whenever a unit version changes, update the `modified` column.';
+
+create trigger update_unit_version_notice
+  after update on sg_public.unit_version
+  for each row execute procedure sg_private.update_unit_version_notice();
+comment on trigger update_unit_version_notice on sg_public.unit_version
+  is 'After I update a unit version, notify followers.';
 
 create trigger update_unit_version_require_modified
   before update on sg_public.unit_version_require
@@ -733,6 +928,12 @@ create trigger update_subject_version_modified
 comment on trigger update_subject_version_modified on sg_public.subject_version
   is 'Whenever a subject version changes, update the `modified` column.';
 
+create trigger update_subject_version_notice
+  after update on sg_public.subject_version
+  for each row execute procedure sg_private.update_subject_version_notice();
+comment on trigger update_subject_version_notice on sg_public.subject_version
+  is 'After I update a subject version, notify followers.';
+
 create trigger update_subject_version_member_modified
   before update on sg_public.subject_version_member
   for each row execute procedure sg_private.update_modified_column();
@@ -746,7 +947,11 @@ create trigger update_card_version_modified
 comment on trigger update_card_version_modified on sg_public.card_version
   is 'Whenever a card version changes, update the `modified` column.';
 
--- TODO Trigger: create notices when an entity status updates
+create trigger update_card_version_notice
+  after update on sg_public.card_version
+  for each row execute procedure sg_private.update_card_version_notice();
+comment on trigger update_card_version_notice on sg_public.card_version
+  is 'After I update a card version, notify followers.';
 
 ------ Cards, Units, Subjects > Capabilities -----------------------------------
 
@@ -754,9 +959,9 @@ comment on trigger update_card_version_modified on sg_public.card_version
 
 -- TODO Search across entity types
 
--- TODO List all units of a subject, recursively
+-- TODO recursive List all units of a subject, recursively
 
--- TODO List all subjects unit belongs to, recursively
+-- TODO recursive List all subjects unit belongs to, recursively
 
 -- Select the most popular subjects
 create function sg_public.select_popular_subjects()
@@ -850,9 +1055,9 @@ grant update, delete on table sg_public.subject_version to sg_admin;
 grant update, delete on table sg_public.subject_version_member to sg_admin;
 grant update, delete on table sg_public.card_version to sg_admin;
 
--- TODO Who can update entity statuses? How?
+-- TODO status Who can update entity statuses? How?
 
--- TODO A user may changed their own version to declined status,
+-- TODO status A user may changed their own version to declined status,
 --      but only when the current status is pending or blocked.
 
 grant execute on function sg_public.select_popular_subjects()
@@ -900,6 +1105,7 @@ create table sg_public.topic (
   foreign key (entity_id, entity_kind)
     references sg_public.entity (entity_id, entity_kind)
 );
+
 comment on table sg_public.topic
   is 'The topics on an entity\'s talk page.';
 comment on column sg_public.id
@@ -932,6 +1138,7 @@ create table sg_public.post (
   -- also see join table: sg_public.post_entity_version
   -- specific to kind = 'proposal'
 );
+
 comment on table sg_public.post
   is 'The posts on an entity\'s talk page. Belongs to a topic.';
 comment on column sg_public.post.id
@@ -1027,6 +1234,30 @@ create trigger insert_topic_user_id
 comment on trigger insert_topic_user_id on sg_public.topic
   is 'Whenever I make a new topic, auto fill the `user_id` column';
 
+create function sg_private.insert_topic_notice()
+returns trigger as $$
+  insert into sg_public.notice
+  (user_id, kind, entity_kind, entity_id)
+  select (
+    unnest(
+      select distinct user_id
+      from sg_public.follow
+      where new.entity_id = sg_public.follow.entity_id
+    ),
+    'insert_topic',
+    new.entity_kind,
+    new.entity_id
+  );
+$$ language 'plpgsql';
+comment on function sg_private.insert_topic_notice()
+  is 'After I insert a new topic, notify followers.';
+
+create trigger insert_topic_notice
+  after insert on sg_public.topic
+  for each row execute procedure sg_private.insert_topic_notice();
+comment on trigger insert_topic_notice on sg_public.topic
+  is 'After I insert a new topic, notify followers.'
+
 create trigger insert_post_user_id
   before insert on sg_public.post
   for each row execute procedure sg_private.insert_user_id_column();
@@ -1038,6 +1269,40 @@ create trigger insert_post_verify
   for each row execute procedure sg_private.verify_post();
 comment on trigger insert_post_verify on sg_public.post
   is 'Whenever I make a new post, check that the post is valid.';
+
+create function sg_private.insert_post_notice()
+returns trigger as $$
+  declare
+    topic sg_public.topic;
+  begin
+    topic := (
+      select *
+      from sg_public.topic
+      where id = new.topic_id
+      limit 1;
+    );
+    insert into sg_public.notice
+    (user_id, kind, entity_kind, entity_id)
+    select (
+      unnest(
+        select distinct user_id
+        from sg_public.follow
+        where topic.entity_id = sg_public.follow.entity_id
+      ),
+      'insert_post',
+      topic.entity_kind,
+      topic.entity_id
+    );
+  end;
+$$ language 'plpgsql';
+comment on function sg_private.insert_post_notice()
+  is 'After I insert a new post, notify followers.';
+
+create trigger insert_post_notice
+  after insert on sg_public.post
+  for each row execute procedure sg_private.insert_post_notice();
+comment on trigger insert_post_notice on sg_public.post
+  is 'After I insert a new post, notify followers.';
 
 create trigger update_topic_modified
   before update on sg_public.topic
@@ -1064,7 +1329,7 @@ comment on trigger update_post_entity_version_modified
   on sg_public.post_entity_version
   is 'Whenever a post entity version changes, update the `modified` column.';
 
--- TODO Trigger: when I create or update a vote post,
+-- TODO status Trigger: when I create or update a vote post,
 --      we can update entity status
 
 -- Trigger: when I create a topic, I follow the entity
@@ -1111,8 +1376,6 @@ create trigger follow_own_post
 comment on trigger follow_own_post on sg_public.post
   is 'When I create a post, I follow the entity.';
 
--- TODO Trigger: create notices when a topic gets a new post
-
 ------ Topics & Posts > Capabilities -- N/A ------------------------------------
 
 ------ Topics & Posts > Permissions --------------------------------------------
@@ -1130,13 +1393,15 @@ comment on policy select_topic on sg_public.topic
   is 'Anyone can select topics.';
 
 -- Insert topic: any.
-grant insert on table sg_public.topic to sg_anonymous, sg_user, sg_admin;
+grant insert (name, entity_id, entity_kind) on table sg_public.topic
+  to sg_anonymous, sg_user, sg_admin;
 create policy insert_topic on sg_public.topic
   for insert (name, entity_id, entity_kind) -- any user
   using (true);
 
 -- Update topic: user self (name), or admin.
-grant update on table sg_public.topic to sg_user, sg_admin;
+grant update (name) on table sg_public.topic to sg_user;
+grant update on table sg_public.topic to sg_admin;
 create policy update_topic on sg_public.topic
   for update (name) to sg_user
   using (user_id = current_setting('jwt.claims.user_id')::uuid);
@@ -1165,13 +1430,15 @@ comment on policy select_post on sg_public.post
   is 'Anyone can select posts.';
 
 -- Insert post: any.
-grant insert on table sg_public.post to sg_anonymous, sg_user, sg_admin;
+grant insert (topic_id, kind, body, parent_id, response) on table sg_public.post
+  to sg_anonymous, sg_user, sg_admin;
 create policy insert_post on sg_public.post
   for insert (topic_id, kind, body, parent_id, response) -- any user
   using (true);
 
 -- Update post: user self (body, response), or admin.
-grant update on table sg_public.post to sg_user, sg_admin;
+grant update (body, response) on table sg_public.post to sg_user;
+grant update on table sg_public.post to sg_admin;
 create policy update_post on sg_public.post
   for update (body, response) to sg_user
   using (user_id = current_setting('jwt.claims.user_id')::uuid);
@@ -1219,13 +1486,12 @@ grant update, delete on table sg_public.post_entity_version
 ------ Notices & Follows > Types -----------------------------------------------
 
 create type sg_public.notice_kind as enum(
-  'create_topic',
-  'create_proposal',
-  'block_proposal',
-  'decline_proposal',
-  'accept_proposal',
-  'create_post',
-  'come_back'
+  'version_pending',
+  'version_blocked',
+  'version_declined',
+  'version_accepted',
+  'insert_topic',
+  'insert_post'
 );
 comment on type sg_public.notice_kind
   is 'The kinds of notices. Expanding.';
@@ -1237,10 +1503,12 @@ create table sg_public.notice (
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   user_id uuid not null references sg_public.user (id) on delete cascade,
+  read boolean not null default false,
   kind sg_public.notice_kind not null,
-  data jsonb not null,
-    -- jsonb?: varies per kind
-  read boolean not null default false
+  entity_id uuid not null,
+  entity_kind sg_public.entity_kind not null,
+  foreign key (entity_id, entity_kind)
+    references sg_public.entity (entity_id, entity_kind)
 );
 comment on table sg_public.notice
   is 'A notice is a message that an entity has recent activity.';
@@ -1254,8 +1522,10 @@ comment on column table sg_public.notice.user_id
   is 'Which user the notice belongs to.';
 comment on column table sg_public.notice.kind
   is 'The kind of notice.';
-comment on column table sg_public.notice.data
-  is 'The notice data, for filling in the notice template.';
+comment on column sg_public.notice.entity_id
+  is 'The entity the notice informs.';
+comment on column sg_public.notice.entity_kind
+  is 'The kind of entity notice informs.';
 comment on column table sg_public.notice.read
   is 'Whether or not the user has read the notice.';
 
@@ -1308,9 +1578,7 @@ create trigger update_follow_modified
 comment on trigger update_follow_modified on sg_public.follow
   is 'Whenever a follow changes, update the `modified` column.';
 
------- Notices & Follows > Capabilities ----------------------------------------
-
--- Notices > TODO Create notices for all users that follow an entity
+------ Notices & Follows > Capabilities -- N/A ---------------------------------
 
 ------ Notices & Follows > Permissions -----------------------------------------
 
@@ -1327,7 +1595,8 @@ comment on policy select_follow on sg_public.follow
   is 'A user or admin can select their own follows.';
 
 -- Insert follow: user or admin.
-grant insert on table sg_public.follow to sg_user, sg_admin;
+grant insert (entity_id, entity_kind) on table sg_public.follow
+  to sg_user, sg_admin;
 create policy insert_follow on sg_public.follow
   for insert (entity_id, entity_kind) to sg_user, sg_admin
   user (true);
@@ -1399,6 +1668,7 @@ create table sg_public.user_subject (
   subject_id uuid not null references sg_public.subject_entity (entity_id),
   unique (user_id, subject_id)
 );
+
 comment on table sg_public.user_subject
   is 'The association between a user and a subject. '
      'This is a subject the learner is learning.';
@@ -1426,6 +1696,7 @@ create table sg_public.response (
   learned double precision not null check (score >= 0 and score <= 1),
   check (user_id is not null or session_id is not null)
 );
+
 comment on table sg_public.response
   is 'When a learner responds to a card, we record the result.';
 comment on table sg_public.response.id
@@ -1473,16 +1744,12 @@ comment on trigger update_response_modified on sg_public.response
 
 ------ User Subjects, Responses > Capabilities ---------------------------------
 
--- TODO (hidden capability) Get latest response user x unit
-
--- TODO Get and set learning context
-
--- TODO After I select a subject,
+-- TODO learn After I select a subject,
 --     traverse the units to give the learner some units to pick
 
--- TODO After I select a unit, search for a suitable card
+-- TODO learn After I select a unit, search for a suitable card
 
-/* TODO
+/* TODO learn
 - Trigger: Create response ->
   - Validate & score card response
   - Update p(learned)
@@ -1505,7 +1772,7 @@ comment on policy select_user_subject on sg_public.user_subject
   is 'A user or admin may select their own subject relationships.';
 
 -- Insert usubj: user or admin.
-grant insert on table sg_public.user_subject to sg_user, sg_admin;
+grant insert (subject_id) on table sg_public.user_subject to sg_user, sg_admin;
 create policy insert_user_subject on sg_public.user_subject
   for insert (subject_id) to sg_user, sg_admin
   using (true);
@@ -1534,7 +1801,13 @@ comment on policy select_response to sg_public.response
   is 'Anyone may select their own responses.';
 
 -- Insert response: any via function.
--- TODO insert
+grant insert (card_id, response)
+  on table sg_public.response to sg_anonymous, sg_user, sg_admin;
+create policy insert_response to sg_public.response
+  for insert (card_id, response) to sg_anonymous, sg_user, sg_admin
+  user (true);
+comment on policy insert_response to sg_public.response
+  is 'Anyone may insert `card_id` and `response` into responses.'
 
 -- Update & delete response: none.
 
@@ -1569,6 +1842,7 @@ create table sg_public.suggest (
   name text not null,
   body text null
 );
+
 comment on table sg_public.suggest
   is 'A suggestion for a new subject in Sagefy.';
 comment on column sg_public.suggest.id
@@ -1593,6 +1867,7 @@ create table sg_public.suggest_follow (
   unique (suggest_id, user_id),
   unique (suggest_id, session_id)
 );
+
 comment on table sg_public.suggest_follow
   is 'A relationship between a suggest and a user.';
 comment on column sg_public.suggest_follow.id
@@ -1677,7 +1952,7 @@ comment on policy select_suggest_follow on sg_public.suggest_follow
   is 'Anyone can select a suggest follow.';
 
 -- Insert suggest_follow: any.
-grant insert on table sg_public.suggest_follow
+grant insert (suggest_id) on table sg_public.suggest_follow
   to sg_anonymous, sg_user, sg_admin;
 create policy insert_suggest_follow on sg_public.suggest_follow
   for insert (suggest_id) -- any user
