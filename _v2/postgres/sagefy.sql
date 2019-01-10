@@ -485,6 +485,7 @@ create table sg_public.entity (
   entity_kind sg_public.entity_kind not null,
   unique (entity_id, entity_kind)
 );
+
 comment on table sg_public.entity
   is 'A list of all entity IDs and their kinds.';
 comment on column sg_public.entity.entity_id
@@ -497,6 +498,7 @@ create table sg_public.entity_version (
   entity_kind sg_public.entity_kind not null,
   unique (version_id, entity_kind)
 );
+
 comment on table sg_public.entity_version
   is 'A list of all entity version IDs and their kinds.';
 comment on column sg_public.entity_version.version_id
@@ -507,6 +509,7 @@ comment on column sg_public.entity_version.entity_kind
 create table sg_public.unit_entity (
   entity_id uuid primary key references sg_public.entity (entity_id)
 );
+
 comment on table sg_public.unit_entity
   is 'A list of all unit entity IDs.';
 comment on column sg_public.unit_entity.entity_id
@@ -594,6 +597,7 @@ comment on view sg_public.unit
 create table sg_public.subject_entity (
   entity_id uuid primary key references sg_public.entity (entity_id)
 );
+
 comment on table sg_public.subject_entity
   is 'A list of all subject entity IDs.';
 comment on column sg_public.subject_entity.entity_id
@@ -689,6 +693,7 @@ comment on view sg_public.subject
 create table sg_public.card_entity (
   entity_id uuid primary key references sg_public.entity (entity_id)
 );
+
 comment on table sg_public.card_entity
   is 'A list of all card entity IDs';
 comment on column sg_public.card_entity.entity_id
