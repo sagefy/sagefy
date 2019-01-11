@@ -5,7 +5,7 @@
 /*
 remaining:
   config 2
-  recursive 4
+  recursive 2
   search 2
   status 1
   learn 3
@@ -1001,9 +1001,65 @@ comment on trigger update_card_version_notice on sg_public.card_version
 
 -- TODO Search across entity types
 
--- TODO recursive List all units of a subject, recursively
+-- List all units of a subject, recursively
+create function sg_public.select_units_by_subject(subject_id uuid)
+returns setof sg_public.unit as $$
+  with latest_subject_member as (
+    select s.entity_id as parent_id,
+      m.entity_id as child_id,
+      m.entity_kind as child_kind
+    from sg_public.subject s, sg_public.subject_version_member m
+    where m.version_id = s.version_id
+  ),
+  recursive child_subject (entity_id) as (
+    select child_id as entity_id
+    from latest_subject_member
+    where child_kind = 'subject' and parent_id = subject_id
+    union all
+    select l.child_id as entity_id
+    from latest_subject_member l, child_subject c
+    where l.child_kind = 'subject' and c.child_id = l.parent_id
+  ),
+  child_unit as (
+    select child_id as entity_id
+    from latest_subject_member
+    where child_kind = 'unit' and (
+      parent_id = subject_id
+      or parent_id in child_subject
+    )
+  )
+  select u.*
+  from sg_public.unit u
+  where u.entity_id in child_unit;
+$$ language sql immutable;
+comment on function sg_public.select_units_by_subject(uuid)
+  is 'Select recursively all child units of a subject.';
 
--- TODO recursive List all subjects unit belongs to, recursively
+-- List all subjects unit belongs to, recursively
+create function sg_public.select_subjects_by_unit(unit_id uuid)
+returns setof sg_public.subject as $$
+  with latest_subject_member as (
+    select s.entity_id as parent_id,
+      m.entity_id as child_id,
+      m.entity_kind as child_kind
+    from sg_public.subject s, sg_public.subject_version_member m
+    where m.version_id = s.version_id
+  ),
+  recursive parent_subject (entity_id) as (
+    select parent_id as entity_id
+    from latest_subject_member
+    where child_kind = 'unit' and child_id = unit_id
+    union all
+    select l.parent_id as entity_id
+    from latest_subject_member l, parent_subject p
+    where l.child_kind = 'subject' and p.parent_id = l.child_id
+  ),
+  select s.*
+  from sg_public.subject s, parent_subject m
+  where m.entity_id = s.entity_id;
+$$ language sql immutable;
+comment on function sg_public.select_subjects_by_unit(uuid)
+  is 'Select recursively all parent subjects of a unit.';
 
 -- Select the most popular subjects
 create function sg_public.select_popular_subjects()
@@ -1108,6 +1164,11 @@ grant execute on function sg_public.select_my_cards()
 grant execute on function sg_public.select_my_units()
   to sg_anonymous, sg_user, sg_admin;
 grant execute on function sg_public.select_my_subjects()
+  to sg_anonymous, sg_user, sg_admin;
+
+grant execute on function sg_public.select_units_by_subject(uuid)
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.select_subjects_by_unit(uuid)
   to sg_anonymous, sg_user, sg_admin;
 
 
