@@ -8,7 +8,7 @@ remaining:
   recursive 2
   search 2
   status 1
-  learn 3
+  learn 2
   insert 1
 */
 
@@ -1850,7 +1850,45 @@ comment on trigger update_response_modified on sg_public.response
 -- TODO learn After I select a subject,
 --     traverse the units to give the learner some units to pick
 
--- TODO learn After I select a unit, search for a suitable card
+-- After I select a unit, search for a suitable card
+create function sg_public.select_card_to_learn(unit_id uuid)
+returns sg_public.card as $$
+  -- What is p(learned) currently for the unit?
+  -- If no response yet, default to 0.4
+  with latest_response as (
+    select
+      case when count(*) > 0 then responses.learned else 0.4 end as learned,
+      responses.card_id as card_id
+    from responses
+    where responses.unit_id = unit_id and (
+      user_id = current_setting('jwt.claims.user_id')::uuid
+      or session_id = '???'
+    )
+    order by created desc
+    limit 1
+  ),
+  -- Decide on a scored or unscored type
+  kinds as (
+    select case when rand() > 0.5 + 0.5 * latest_response.learned then
+      ('choice') -- scored kinds
+    else
+      ('video', 'page', 'unscored_embed') -- unscored kinds
+    end
+  ),
+  -- Select cards of kind at random
+  -- Don't allow the previous card as the next card
+  select *
+  from sg_public.card
+  where sg_public.card.unit_id = unit_id
+    and kind in kinds
+    and entity_id <> latest_response.card_id
+  order by random()
+  limit 1;
+  -- Future version: When estimating parameters and the card kind is scored,
+  -- prefer 0.25 < correct < 0.75
+$$ language sql stable;
+comment on function sg_public.select_card_to_learn(uuid)
+  is 'After I select a unit, search for a suitable card.';
 
 /* TODO learn
 - Trigger: Create response ->
@@ -1914,8 +1952,8 @@ comment on policy insert_response to sg_public.response
 
 -- Update & delete response: none.
 
-
-
+grant execute on function sg_public.select_card_to_learn(uuid)
+  to sg_anonymous, sg_user, sg_admin;
 
 
 
