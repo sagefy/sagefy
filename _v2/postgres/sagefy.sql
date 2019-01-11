@@ -7,7 +7,7 @@ remaining:
   config 2
   recursive 4
   search 2
-  status 3
+  status 1
   learn 3
   insert 1
 */
@@ -864,6 +864,31 @@ $$ language 'plpgsql';
 comment on function sg_private.insert_version_notice()
   is 'After I insert a new version, notify followers.';
 
+create function sg_private.update_version_status()
+returns trigger as $$
+  declare
+    role text;
+  begin
+    role := current_setting('jwt.claims.role')::text;
+    if (role = 'sg_admin') return new;
+    if (old.user_id <> current_setting('jwt.claims.user_id') then
+      raise exception 'A user may only change their own version status.'
+        using errcode = '61C7AC84';
+    end if;
+    if (new.status <> 'declined') then
+      raise exception 'A user may only change the version status to declined.'
+        using errcode = '05F2D0E1';
+    end if;
+    if (old.status = 'accepted') then
+      raise exception 'A user cannot change an accepted version.'
+        using errcode = '62CF3D42';
+    end if;
+    return new;
+  end;
+$$ language 'plpgsql';
+comment on function sg_private.update_version_status()
+  is 'A user may only change their own version status to declined.';
+
 create function sg_private.update_version_notice()
 returns trigger as $$
   if (new.status <> old.status) then
@@ -886,27 +911,21 @@ comment on function sg_private.update_version_notice()
 
 create trigger insert_unit_version_notice
   after insert on sg_public.unit_version
-  for each row execute procedure sg_private.insert_unit_version_notice();
+  for each row execute procedure sg_private.insert_version_notice();
 comment on trigger insert_unit_version_notice on sg_public.unit_version
   is 'After I insert a new unit version, notify followers.';
 
 create trigger insert_subject_version_notice
   after insert on sg_public.subject_version
-  for each row execute procedure sg_private.insert_subject_version_notice();
+  for each row execute procedure sg_private.insert_version_notice();
 comment on trigger insert_subject_version_notice on sg_public.subject_version
   is 'After I insert a new subject version, notify followers.';
 
 create trigger insert_card_version_notice
   after insert on sg_public.card_version
-  for each row execute procedure sg_private.insert_card_version_notice();
+  for each row execute procedure sg_private.insert_version_notice();
 comment on trigger insert_card_version_notice on sg_public.card_version
   is 'After I insert a new card version, notify followers.';
-
-create function sg_private.update_version_notice()
-returns trigger as $$
-$$ language 'plpgsql';
-comment on function sg_private.insert_version_notice()
-  is 'After I update a version status, notify followers.';
 
 create trigger update_unit_version_modified
   before update on sg_public.unit_version
@@ -914,9 +933,15 @@ create trigger update_unit_version_modified
 comment on trigger update_unit_version_modified on sg_public.unit_version
   is 'Whenever a unit version changes, update the `modified` column.';
 
+create trigger update_unit_version_status
+  before update on sg_public.unit_version
+  for each row execute procedure sg_private.update_version_status()
+comment on trigger update_unit_version_status on sg_public.unit_version
+  is 'A user may only decline their own un-accepted unit version.';
+
 create trigger update_unit_version_notice
   after update on sg_public.unit_version
-  for each row execute procedure sg_private.update_unit_version_notice();
+  for each row execute procedure sg_private.update_version_notice();
 comment on trigger update_unit_version_notice on sg_public.unit_version
   is 'After I update a unit version, notify followers.';
 
@@ -933,9 +958,15 @@ create trigger update_subject_version_modified
 comment on trigger update_subject_version_modified on sg_public.subject_version
   is 'Whenever a subject version changes, update the `modified` column.';
 
+create trigger update_subject_version_status
+  before update on sg_public.subject_version
+  for each row execute procedure sg_private.update_version_status()
+comment on trigger update_subject_version_status on sg_public.subject_version
+  is 'A user may only decline their own un-accepted subject version.';
+
 create trigger update_subject_version_notice
   after update on sg_public.subject_version
-  for each row execute procedure sg_private.update_subject_version_notice();
+  for each row execute procedure sg_private.update_version_notice();
 comment on trigger update_subject_version_notice on sg_public.subject_version
   is 'After I update a subject version, notify followers.';
 
@@ -952,9 +983,15 @@ create trigger update_card_version_modified
 comment on trigger update_card_version_modified on sg_public.card_version
   is 'Whenever a card version changes, update the `modified` column.';
 
+create trigger update_card_version_status
+  before update on sg_public.card_version
+  for each row execute procedure sg_private.update_version_status()
+comment on trigger update_card_version_status on sg_public.card_version
+  is 'A user may only decline their own un-accepted card version.';
+
 create trigger update_card_version_notice
   after update on sg_public.card_version
-  for each row execute procedure sg_private.update_card_version_notice();
+  for each row execute procedure sg_private.update_version_notice();
 comment on trigger update_card_version_notice on sg_public.card_version
   is 'After I update a card version, notify followers.';
 
@@ -1055,15 +1092,13 @@ grant execute on function sg_public.edit_card(???)
 
 -- Update & delete card, unit, subject: admin.
 grant update, delete on table sg_public.unit_version to sg_admin;
+grant update (status) on table sg_public.unit_version to sg_user;
 grant update, delete on table sg_public.unit_version_require to sg_admin;
 grant update, delete on table sg_public.subject_version to sg_admin;
+grant update (status) on table sg_public.subject_version to sg_user;
 grant update, delete on table sg_public.subject_version_member to sg_admin;
 grant update, delete on table sg_public.card_version to sg_admin;
-
--- TODO status Who can update entity statuses? How?
-
--- TODO status A user may changed their own version to declined status,
---      but only when the current status is pending or blocked.
+grant update (status) on table sg_public.card_version to sg_user;
 
 grant execute on function sg_public.select_popular_subjects()
   to sg_anonymous, sg_user, sg_admin;
@@ -1515,6 +1550,7 @@ create table sg_public.notice (
   foreign key (entity_id, entity_kind)
     references sg_public.entity (entity_id, entity_kind)
 );
+
 comment on table sg_public.notice
   is 'A notice is a message that an entity has recent activity.';
 comment on column table sg_public.notice.id
@@ -1545,6 +1581,7 @@ create table sg_public.follow (
   foreign key (entity_id, entity_kind)
     references sg_public.entity (entity_id, entity_kind)
 );
+
 comment on table sg_public.follow
   is 'A follow is an association between a user and an entity. '
      'The user indicates they want notices for the entity.'
