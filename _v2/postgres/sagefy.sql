@@ -164,7 +164,9 @@ comment on constraint pass_check on sg_private.user
   is 'A password must batch the bcrypt hash format '
      '`$2w$...`, where w is a, b, or y.';
 
------- Users > Sessions --------------------------------------------------------
+------ Users > Indexes ---------------------------------------------------------
+
+------ Users > Functions -------------------------------------------------------
 
 create function sg_public.sign_up(
   name text,
@@ -296,15 +298,6 @@ $$ language plpgsql strict security definer;
 comment on function sg_public.update_password(text, text)
   is 'Update the user\'s password.';
 
------- Users > Triggers --------------------------------------------------------
-
--- Whenever the public user data changes, update the modified column.
-create trigger update_user_modified
-  before update on sg_public.user
-  for each row execute procedure sg_private.update_modified_column();
-comment on trigger update_user_modified on sg_public.user
-  is 'Whenever the user changes, update the `modified` column.';
-
 -- Create user -> send sign up email
 create function sg_private.notify_create_user()
 returns trigger as $$
@@ -314,11 +307,6 @@ begin
 end;
 $$ language 'plpgsql' strict security definer;
 comment on function sg_private.notify_create_user()
-  is 'Whenever a new user signs up, email them.';
-create trigger create_user
-  after insert on sg_private.user
-  for each row execute procedure sg_private.notify_create_user();
-comment on trigger create_user on sg_private.user
   is 'Whenever a new user signs up, email them.';
 
 -- Update email -> notify user email
@@ -331,11 +319,6 @@ end;
 $$ language 'plpgsql' strict security definer;
 comment on function sg_private.notify_update_email()
   is 'Whenever a user changes their email, email their old account.';
-create trigger update_email
-  after update (email) on sg_private.user
-  for each row execute procedure sg_private.notify_update_email();
-comment on trigger create_user on sg_private.user
-  is 'Whenever a user changes their email, email their old account.';
 
 -- Update password -> notify user email
 create function sg_private.notify_update_password()
@@ -347,13 +330,6 @@ end;
 $$ language 'plpgsql' strict security definer;
 comment on function sg_private.notify_update_password()
   is 'Whenever a user changes their password, email them.';
-create trigger update_password
-  after update (password) on sg_private.user
-  for each row execute procedure sg_private.notify_update_password();
-comment on trigger create_user on sg_private.user
-  is 'Whenever a user changes their password, email them.';
-
------- Users > Capabilities ----------------------------------------------------
 
 -- Session management
 create function sg_public.get_current_user()
@@ -376,6 +352,32 @@ $$ language sql stable;
 comment on function sg_public.user_md5_email(sg_public.user)
   is 'The user\'s email address as an MD5 hash, for Gravatars. '
      'See https://bit.ly/2F6cR0M';
+
+------ Users > Triggers --------------------------------------------------------
+
+create trigger create_user
+  after insert on sg_private.user
+  for each row execute procedure sg_private.notify_create_user();
+comment on trigger create_user on sg_private.user
+  is 'Whenever a new user signs up, email them.';
+
+create trigger update_user_modified
+  before update on sg_public.user
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_user_modified on sg_public.user
+  is 'Whenever the user changes, update the `modified` column.';
+
+create trigger update_email
+  after update (email) on sg_private.user
+  for each row execute procedure sg_private.notify_update_email();
+comment on trigger create_user on sg_private.user
+  is 'Whenever a user changes their email, email their old account.';
+
+create trigger update_password
+  after update (password) on sg_private.user
+  for each row execute procedure sg_private.notify_update_password();
+comment on trigger create_user on sg_private.user
+  is 'Whenever a user changes their password, email them.';
 
 ------ Users > Permissions -----------------------------------------------------
 
@@ -838,13 +840,13 @@ create view sg_public.card as
 comment on view sg_public.card
   is 'The latest accepted version of each card.';
 
------- Cards, Units, Subjects > Validations ------------------------------------
+------ Cards, Units, Subjects > Indexes ----------------------------------------
+
+------ Cards, Units, Subjects > Functions --------------------------------------
 
 -- TODO recursive: No require cycles for units
 
 -- TODO recursive: No cycles in subject members
-
------- Cards, Units, Subjects > Triggers ---------------------------------------
 
 create function sg_private.insert_version_notice()
 returns trigger as $$
@@ -908,94 +910,6 @@ returns trigger as $$
 $$ language 'plpgsql';
 comment on function sg_private.update_version_notice()
   is 'After I update a version status, notify followers.';
-
-create trigger insert_unit_version_notice
-  after insert on sg_public.unit_version
-  for each row execute procedure sg_private.insert_version_notice();
-comment on trigger insert_unit_version_notice on sg_public.unit_version
-  is 'After I insert a new unit version, notify followers.';
-
-create trigger insert_subject_version_notice
-  after insert on sg_public.subject_version
-  for each row execute procedure sg_private.insert_version_notice();
-comment on trigger insert_subject_version_notice on sg_public.subject_version
-  is 'After I insert a new subject version, notify followers.';
-
-create trigger insert_card_version_notice
-  after insert on sg_public.card_version
-  for each row execute procedure sg_private.insert_version_notice();
-comment on trigger insert_card_version_notice on sg_public.card_version
-  is 'After I insert a new card version, notify followers.';
-
-create trigger update_unit_version_modified
-  before update on sg_public.unit_version
-  for each row execute procedure sg_private.update_modified_column();
-comment on trigger update_unit_version_modified on sg_public.unit_version
-  is 'Whenever a unit version changes, update the `modified` column.';
-
-create trigger update_unit_version_status
-  before update on sg_public.unit_version
-  for each row execute procedure sg_private.update_version_status()
-comment on trigger update_unit_version_status on sg_public.unit_version
-  is 'A user may only decline their own un-accepted unit version.';
-
-create trigger update_unit_version_notice
-  after update on sg_public.unit_version
-  for each row execute procedure sg_private.update_version_notice();
-comment on trigger update_unit_version_notice on sg_public.unit_version
-  is 'After I update a unit version, notify followers.';
-
-create trigger update_unit_version_require_modified
-  before update on sg_public.unit_version_require
-  for each row execute procedure sg_private.update_modified_column();
-comment on trigger update_unit_version_require_modified
-  on sg_public.unit_version_require
-  is 'Whenever a unit version require changes, update the `modified` column.';
-
-create trigger update_subject_version_modified
-  before update on sg_public.subject_version
-  for each row execute procedure sg_private.update_modified_column();
-comment on trigger update_subject_version_modified on sg_public.subject_version
-  is 'Whenever a subject version changes, update the `modified` column.';
-
-create trigger update_subject_version_status
-  before update on sg_public.subject_version
-  for each row execute procedure sg_private.update_version_status()
-comment on trigger update_subject_version_status on sg_public.subject_version
-  is 'A user may only decline their own un-accepted subject version.';
-
-create trigger update_subject_version_notice
-  after update on sg_public.subject_version
-  for each row execute procedure sg_private.update_version_notice();
-comment on trigger update_subject_version_notice on sg_public.subject_version
-  is 'After I update a subject version, notify followers.';
-
-create trigger update_subject_version_member_modified
-  before update on sg_public.subject_version_member
-  for each row execute procedure sg_private.update_modified_column();
-comment on trigger update_subject_version_member_modified
-  on sg_public.subject_version_member
-  is 'Whenever a subject version member changes, update the `modified` column.';
-
-create trigger update_card_version_modified
-  before update on sg_public.card_version
-  for each row execute procedure sg_private.update_modified_column();
-comment on trigger update_card_version_modified on sg_public.card_version
-  is 'Whenever a card version changes, update the `modified` column.';
-
-create trigger update_card_version_status
-  before update on sg_public.card_version
-  for each row execute procedure sg_private.update_version_status()
-comment on trigger update_card_version_status on sg_public.card_version
-  is 'A user may only decline their own un-accepted card version.';
-
-create trigger update_card_version_notice
-  after update on sg_public.card_version
-  for each row execute procedure sg_private.update_version_notice();
-comment on trigger update_card_version_notice on sg_public.card_version
-  is 'After I update a card version, notify followers.';
-
------- Cards, Units, Subjects > Capabilities -----------------------------------
 
 -- TODO Search per entity type
 
@@ -1117,6 +1031,94 @@ comment on function sg_public.select_my_subjects()
   is 'Select subjects I created or worked on.';
 
 -- TODO insert new AND new version of existing
+
+------ Cards, Units, Subjects > Triggers ---------------------------------------
+
+create trigger insert_unit_version_notice
+  after insert on sg_public.unit_version
+  for each row execute procedure sg_private.insert_version_notice();
+comment on trigger insert_unit_version_notice on sg_public.unit_version
+  is 'After I insert a new unit version, notify followers.';
+
+create trigger insert_subject_version_notice
+  after insert on sg_public.subject_version
+  for each row execute procedure sg_private.insert_version_notice();
+comment on trigger insert_subject_version_notice on sg_public.subject_version
+  is 'After I insert a new subject version, notify followers.';
+
+create trigger insert_card_version_notice
+  after insert on sg_public.card_version
+  for each row execute procedure sg_private.insert_version_notice();
+comment on trigger insert_card_version_notice on sg_public.card_version
+  is 'After I insert a new card version, notify followers.';
+
+create trigger update_unit_version_modified
+  before update on sg_public.unit_version
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_unit_version_modified on sg_public.unit_version
+  is 'Whenever a unit version changes, update the `modified` column.';
+
+create trigger update_unit_version_status
+  before update on sg_public.unit_version
+  for each row execute procedure sg_private.update_version_status()
+comment on trigger update_unit_version_status on sg_public.unit_version
+  is 'A user may only decline their own un-accepted unit version.';
+
+create trigger update_unit_version_notice
+  after update on sg_public.unit_version
+  for each row execute procedure sg_private.update_version_notice();
+comment on trigger update_unit_version_notice on sg_public.unit_version
+  is 'After I update a unit version, notify followers.';
+
+create trigger update_unit_version_require_modified
+  before update on sg_public.unit_version_require
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_unit_version_require_modified
+  on sg_public.unit_version_require
+  is 'Whenever a unit version require changes, update the `modified` column.';
+
+create trigger update_subject_version_modified
+  before update on sg_public.subject_version
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_subject_version_modified on sg_public.subject_version
+  is 'Whenever a subject version changes, update the `modified` column.';
+
+create trigger update_subject_version_status
+  before update on sg_public.subject_version
+  for each row execute procedure sg_private.update_version_status()
+comment on trigger update_subject_version_status on sg_public.subject_version
+  is 'A user may only decline their own un-accepted subject version.';
+
+create trigger update_subject_version_notice
+  after update on sg_public.subject_version
+  for each row execute procedure sg_private.update_version_notice();
+comment on trigger update_subject_version_notice on sg_public.subject_version
+  is 'After I update a subject version, notify followers.';
+
+create trigger update_subject_version_member_modified
+  before update on sg_public.subject_version_member
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_subject_version_member_modified
+  on sg_public.subject_version_member
+  is 'Whenever a subject version member changes, update the `modified` column.';
+
+create trigger update_card_version_modified
+  before update on sg_public.card_version
+  for each row execute procedure sg_private.update_modified_column();
+comment on trigger update_card_version_modified on sg_public.card_version
+  is 'Whenever a card version changes, update the `modified` column.';
+
+create trigger update_card_version_status
+  before update on sg_public.card_version
+  for each row execute procedure sg_private.update_version_status()
+comment on trigger update_card_version_status on sg_public.card_version
+  is 'A user may only decline their own un-accepted card version.';
+
+create trigger update_card_version_notice
+  after update on sg_public.card_version
+  for each row execute procedure sg_private.update_version_notice();
+comment on trigger update_card_version_notice on sg_public.card_version
+  is 'After I update a card version, notify followers.';
 
 ------ Cards, Units, Subjects > Permissions ------------------------------------
 
@@ -1286,7 +1288,7 @@ comment on column sg_public.post_entity_version.post_id
 comment on column sg_public.post_entity_version.version_id
   is 'The entity ID of the entity version.';
 
------- Topics & Posts > Validations --------------------------------------------
+------ Topics & Posts > Indexes ------------------------------------------------
 
 -- A user can only vote once on a given proposal.
 create unique index post_vote_unique_idx
@@ -1294,6 +1296,8 @@ create unique index post_vote_unique_idx
   where kind = 'vote';
 comment on index post_vote_unique_idx
   is 'A user may only vote once on a proposal.';
+
+------ Topics & Posts > Functions ----------------------------------------------
 
 -- A reply must belong to the same topic.
 -- A vote may only reply to a proposal.
@@ -1327,14 +1331,6 @@ $$ language 'plpgsql';
 comment on function sg_private.verify_post()
   is 'Verify valid data when creating or updating a post.';
 
------- Topics & Posts > Triggers -----------------------------------------------
-
-create trigger insert_topic_user_id
-  before insert on sg_public.topic
-  for each row execute procedure sg_private.insert_user_id_column();
-comment on trigger insert_topic_user_id on sg_public.topic
-  is 'Whenever I make a new topic, auto fill the `user_id` column';
-
 create function sg_private.insert_topic_notice()
 returns trigger as $$
   insert into sg_public.notice
@@ -1352,24 +1348,6 @@ returns trigger as $$
 $$ language 'plpgsql';
 comment on function sg_private.insert_topic_notice()
   is 'After I insert a new topic, notify followers.';
-
-create trigger insert_topic_notice
-  after insert on sg_public.topic
-  for each row execute procedure sg_private.insert_topic_notice();
-comment on trigger insert_topic_notice on sg_public.topic
-  is 'After I insert a new topic, notify followers.'
-
-create trigger insert_post_user_id
-  before insert on sg_public.post
-  for each row execute procedure sg_private.insert_user_id_column();
-comment on trigger insert_post_user_id on sg_public.post
-  is 'Whenever I make a new post, auto fill the `user_id` column';
-
-create trigger insert_post_verify
-  before insert on sg_public.post
-  for each row execute procedure sg_private.verify_post();
-comment on trigger insert_post_verify on sg_public.post
-  is 'Whenever I make a new post, check that the post is valid.';
 
 create function sg_private.insert_post_notice()
 returns trigger as $$
@@ -1398,6 +1376,64 @@ returns trigger as $$
 $$ language 'plpgsql';
 comment on function sg_private.insert_post_notice()
   is 'After I insert a new post, notify followers.';
+
+create function sg_private.follow_own_topic()
+returns trigger as $$
+  insert into sg_public.follow
+  (entity_id, entity_kind)
+  values
+  (new.entity_id, new.entity_kind)
+  on conflict do nothing;
+$$ language 'plpgsql';
+comment on function sg_private.follow_own_topic()
+  is 'When I create a topic, I follow the entity.';
+
+create function sg_private.follow_own_post()
+returns trigger as $$
+  declare
+    topic sg_public.topic;
+  begin
+    topic := (
+      select *
+      from sg_public.topic
+      where id = new.topic_id
+      limit 1;
+    );
+    insert into sg_public.follow
+    (entity_id, entity_kind)
+    values
+    (topic.entity_id, topic.entity_kind)
+    on conflict do nothing;
+    end;
+$$ language 'plpgsql';
+comment on function sg_private.follow_own_post()
+  is 'When I create a post, I follow the entity.';
+
+------ Topics & Posts > Triggers -----------------------------------------------
+
+create trigger insert_topic_user_id
+  before insert on sg_public.topic
+  for each row execute procedure sg_private.insert_user_id_column();
+comment on trigger insert_topic_user_id on sg_public.topic
+  is 'Whenever I make a new topic, auto fill the `user_id` column';
+
+create trigger insert_topic_notice
+  after insert on sg_public.topic
+  for each row execute procedure sg_private.insert_topic_notice();
+comment on trigger insert_topic_notice on sg_public.topic
+  is 'After I insert a new topic, notify followers.'
+
+create trigger insert_post_user_id
+  before insert on sg_public.post
+  for each row execute procedure sg_private.insert_user_id_column();
+comment on trigger insert_post_user_id on sg_public.post
+  is 'Whenever I make a new post, auto fill the `user_id` column';
+
+create trigger insert_post_verify
+  before insert on sg_public.post
+  for each row execute procedure sg_private.verify_post();
+comment on trigger insert_post_verify on sg_public.post
+  is 'Whenever I make a new post, check that the post is valid.';
 
 create trigger insert_post_notice
   after insert on sg_public.post
@@ -1433,51 +1469,17 @@ comment on trigger update_post_entity_version_modified
 -- TODO status Trigger: when I create or update a vote post,
 --      we can update entity status
 
--- Trigger: when I create a topic, I follow the entity
-create function sg_private.follow_own_topic()
-returns trigger as $$
-  insert into sg_public.follow
-  (entity_id, entity_kind)
-  values
-  (new.entity_id, new.entity_kind)
-  on conflict do nothing;
-$$ language 'plpgsql';
-comment on function sg_private.follow_own_topic()
-  is 'When I create a topic, I follow the entity.';
 create trigger follow_own_topic
   after insert on sg_public.topic
   for each row execute procedure sg_private.follow_own_topic();
 comment on trigger follow_own_topic on sg_public.topic
   is 'When I create a topic, I follow the entity.';
 
--- Trigger: when I create a post, I follow the entity
-create function sg_private.follow_own_post()
-returns trigger as $$
-  declare
-    topic sg_public.topic;
-  begin
-    topic := (
-      select *
-      from sg_public.topic
-      where id = new.topic_id
-      limit 1;
-    );
-    insert into sg_public.follow
-    (entity_id, entity_kind)
-    values
-    (topic.entity_id, topic.entity_kind)
-    on conflict do nothing;
-    end;
-$$ language 'plpgsql';
-comment on function sg_private.follow_own_post()
-  is 'When I create a post, I follow the entity.';
 create trigger follow_own_post
   after insert on sg_public.post
   for each row execute procedure sg_private.follow_own_post();
 comment on trigger follow_own_post on sg_public.post
   is 'When I create a post, I follow the entity.';
-
------- Topics & Posts > Capabilities -- N/A ------------------------------------
 
 ------ Topics & Posts > Permissions --------------------------------------------
 
@@ -1659,7 +1661,9 @@ comment on column sg_public.follow.entity_id
 comment on column sg_public.follow.entity_kind
   is 'The kind of entity the follow belongs to.';
 
------- Notices & Follows > Validations -- N/A ----------------------------------
+------ Notices & Follows > Indexes ---------------------------------------------
+
+------ Notices & Follows > Functions -------------------------------------------
 
 ------ Notices & Follows > Triggers --------------------------------------------
 
@@ -1680,8 +1684,6 @@ create trigger update_follow_modified
   for each row execute procedure sg_private.update_modified_column();
 comment on trigger update_follow_modified on sg_public.follow
   is 'Whenever a follow changes, update the `modified` column.';
-
------- Notices & Follows > Capabilities -- N/A ---------------------------------
 
 ------ Notices & Follows > Permissions -----------------------------------------
 
@@ -1823,7 +1825,22 @@ comment on table sg_public.response.learned
   is 'The estimated probability the learner has learned the unit, '
      'after this response.';
 
------- User Subjects, Responses > Validations -- N/A ---------------------------
+------ User Subjects, Responses > Indexes --------------------------------------
+
+------ User Subjects, Responses > Functions ------------------------------------
+
+-- TODO learn After I select a subject,
+--     traverse the units to give the learner some units to pick
+
+-- TODO learn After I select a unit, search for a suitable card
+
+/* TODO learn
+- Trigger: Create response ->
+  - Validate & score card response
+  - Update p(learned)
+  - if p(L) > 0.99, return to choose a unit
+  - if p(L) < 0.99, search for a suitable card
+*/
 
 ------ User Subjects, Responses > Triggers -------------------------------------
 
@@ -1844,21 +1861,6 @@ create trigger update_response_modified
   for each row execute procedure sg_private.update_modified_column();
 comment on trigger update_response_modified on sg_public.response
   is 'Whenever a response changes, update the `modified` column.';
-
------- User Subjects, Responses > Capabilities ---------------------------------
-
--- TODO learn After I select a subject,
---     traverse the units to give the learner some units to pick
-
--- TODO learn After I select a unit, search for a suitable card
-
-/* TODO learn
-- Trigger: Create response ->
-  - Validate & score card response
-  - Update p(learned)
-  - if p(L) > 0.99, return to choose a unit
-  - if p(L) < 0.99, search for a suitable card
-*/
 
 ------ User Subjects, Responses > Permissions ----------------------------------
 
@@ -1986,7 +1988,9 @@ comment on column sg_public.suggest_follow.email
 comment on column sg_public.suggest_follow.user_id
   is 'The user who is following the suggest.';
 
------- Suggests, Suggest Follows > Validations -- N/A --------------------------
+------ Suggests, Suggest Follows > Indexes -------------------------------------
+
+------ Suggests, Suggest Follows > Functions -----------------------------------
 
 ------ Suggests, Suggest Follows > Triggers ------------------------------------
 
@@ -2024,8 +2028,6 @@ create trigger update_suggest_follow_modified
   for each row execute procedure sg_private.update_modified_column();
 comment on trigger update_suggest_follow_modified on sg_public.suggest_follow
   is 'Whenever a suggest follow changes, update the `modified` column.';
-
------- Suggests, Suggest Follows > Capabilities -- N/A -------------------------
 
 ------ Suggests, Suggest Follows > Permissions ---------------------------------
 
