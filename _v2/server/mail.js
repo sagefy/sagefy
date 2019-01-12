@@ -77,7 +77,7 @@ export default function mailer(client) {
     if (msg.channel === 'send_reset_token') {
       const [to, token] = msg.payload.split(' ')
       await sendMail({
-        to: msg.payload,
+        to,
         subject: TOKEN_SUBJECT,
         body: TOKEN_TEXT.replace('{token}', token),
       })
