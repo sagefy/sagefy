@@ -57,7 +57,6 @@ grant usage on schema sg_public to sg_anonymous, sg_user, sg_admin;
 
 ------ Generic > Trigger Functions ---------------------------------------------
 
--- When updating a row, automatically update the modified column too.
 create or replace function sg_private.update_modified_column()
 returns trigger as $$
 begin new.modified = now();
@@ -67,7 +66,6 @@ $$ language 'plpgsql';
 comment on function sg_private.update_modified_column()
   is 'Whenever the row changes, update the `modified` column.';
 
--- When inserting a row, automatically set the user_id field.
 create or replace function sg_private.insert_user_id_column()
 returns trigger as $$
 begin new.user_id = current_setting('jwt.claims.user_id')::uuid;
@@ -206,7 +204,6 @@ end;
 $$ language plpgsql strict security definer;
 comment on function sg_public.log_in(text, text) is 'Logs in a single user.';
 
--- Send reset token
 create function sg_public.send_reset_token(
   email text
 ) returns void as $$
@@ -236,7 +233,6 @@ $$ language plpgsql strict security definer;
 comment on function sg_public.send_password_token(text)
   is 'Generate and email a token to update private user data.';
 
--- Update email, but only with a valid reset token
 create function sg_public.update_email(
   token text,
   new_email text
@@ -267,7 +263,6 @@ $$ language plpgsql strict security definer;
 comment on function sg_public.update_email(text, text)
   is 'Update the user\'s email address.';
 
--- Update password, but only with valid reset token
 create function sg_public.update_password(
   token text,
   new_password text
@@ -298,7 +293,6 @@ $$ language plpgsql strict security definer;
 comment on function sg_public.update_password(text, text)
   is 'Update the user\'s password.';
 
--- Create user -> send sign up email
 create function sg_private.notify_create_user()
 returns trigger as $$
 begin
@@ -309,7 +303,6 @@ $$ language 'plpgsql' strict security definer;
 comment on function sg_private.notify_create_user()
   is 'Whenever a new user signs up, email them.';
 
--- Update email -> notify user email
 create function sg_private.notify_update_email()
 returns trigger as $$
 begin
@@ -320,7 +313,6 @@ $$ language 'plpgsql' strict security definer;
 comment on function sg_private.notify_update_email()
   is 'Whenever a user changes their email, email their old account.';
 
--- Update password -> notify user email
 create function sg_private.notify_update_password()
 returns trigger as $$
 begin
@@ -331,7 +323,6 @@ $$ language 'plpgsql' strict security definer;
 comment on function sg_private.notify_update_password()
   is 'Whenever a user changes their password, email them.';
 
--- Session management
 create function sg_public.get_current_user()
 returns sg_public.user as $$
   select *
@@ -341,7 +332,6 @@ $$ language sql stable;
 comment on function sg_public.get_current_user()
   is 'Get the current logged in user.';
 
--- Get MD5 hash of email address for user gravatar
 create function sg_public.user_md5_email(user sg_public.user)
 returns text as $$
   select md5(lower(trim(email)))
@@ -718,7 +708,7 @@ create table sg_public.card_version (
   -- and the rest....
   unit_id uuid not null references sg_public.unit_entity (entity_id),
   kind sg_public.card_kind not null,
-  data jsonb not null, -- jsonb?: varies per kind
+  data jsonb not null,
   constraint valid_video_card check (
     kind <> 'video' or validate_json_schema($$ {
       "type": "object",
@@ -915,7 +905,6 @@ comment on function sg_private.update_version_notice()
 
 -- TODO Search across entity types
 
--- List all units of a subject, recursively
 create function sg_public.select_units_by_subject(subject_id uuid)
 returns setof sg_public.unit as $$
   with latest_subject_member as (
@@ -949,7 +938,6 @@ $$ language sql immutable;
 comment on function sg_public.select_units_by_subject(uuid)
   is 'Select recursively all child units of a subject.';
 
--- List all subjects unit belongs to, recursively
 create function sg_public.select_subjects_by_unit(unit_id uuid)
 returns setof sg_public.subject as $$
   with latest_subject_member as (
@@ -975,7 +963,6 @@ $$ language sql immutable;
 comment on function sg_public.select_subjects_by_unit(uuid)
   is 'Select recursively all parent subjects of a unit.';
 
--- Select the most popular subjects
 create function sg_public.select_popular_subjects()
 returns setof sg_public.subject as $$
   select *, (
@@ -990,7 +977,6 @@ $$ language sql immutable;
 comment on function sg_public.select_popular_subjects()
   is 'Select the 10 most popular subjects.';
 
--- Capability: get entities I've created
 create function sg_public.select_my_cards()
 returns setof sg_public.card as $$
   select *
@@ -1183,6 +1169,12 @@ grant execute on function sg_public.select_subjects_by_unit(uuid)
 
 
 
+
+
+
+
+
+
 ------ Topics & Posts ----------------------------------------------------------
 
 ------ Topics & Posts > Types --------------------------------------------------
@@ -1290,7 +1282,6 @@ comment on column sg_public.post_entity_version.version_id
 
 ------ Topics & Posts > Indexes ------------------------------------------------
 
--- A user can only vote once on a given proposal.
 create unique index post_vote_unique_idx
   on sg_public.post (user_id, parent_id)
   where kind = 'vote';
@@ -1299,9 +1290,6 @@ comment on index post_vote_unique_idx
 
 ------ Topics & Posts > Functions ----------------------------------------------
 
--- A reply must belong to the same topic.
--- A vote may only reply to a proposal.
--- A user cannot vote on their own proposal.
 create function sg_private.verify_post()
 returns trigger as $$
   declare
@@ -1832,7 +1820,6 @@ comment on table sg_public.response.learned
 -- TODO learn After I select a subject,
 --     traverse the units to give the learner some units to pick
 
--- After I select a unit, search for a suitable card
 create function sg_public.select_card_to_learn(unit_id uuid)
 returns sg_public.card as $$
   -- What is p(learned) currently for the unit?
@@ -2030,9 +2017,6 @@ comment on column sg_public.suggest_follow.user_id
 
 ------ Suggests, Suggest Follows > Functions -----------------------------------
 
------- Suggests, Suggest Follows > Triggers ------------------------------------
-
--- When I insert a suggest, follow the suggest too.
 create function sg_private.follow_suggest()
 returns trigger as $$
   insert into sg_public.suggest_follow
@@ -2042,13 +2026,15 @@ returns trigger as $$
 $$ language 'plpgsql';
 comment on function sg_private.follow_suggest()
   is 'Follow a given suggest';
+
+------ Suggests, Suggest Follows > Triggers ------------------------------------
+
 create trigger insert_suggest_then_follow
   after insert on sg_public.suggest
   for each row execute procedure sg_private.follow_suggest();
 comment on trigger insert_suggest_then_follow on sg_public.suggest
   is 'Whenever I create a suggest, immediately follow the suggest';
 
--- When I insert a suggest_follow, automatically set the user_id column.
 create trigger insert_suggest_follow_user_id
   before insert on sg_public.suggest_follow
   for each row execute procedure sg_private.insert_user_id_column();
