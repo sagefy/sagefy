@@ -1095,7 +1095,8 @@ returns sg_public.subject_version as $$
   )
   insert into sg_public.subject_version_member
   (version_id, entity_id, entity_kind)
-  select (subject_version.version_id, json_array_elements(members) as (entity_id, entity_kind));
+  select (subject_version.version_id,
+    json_array_elements(members) as (entity_id, entity_kind));
 $$ language 'plpgsql' volatile;
 comment on function sg_public.new_subject(
   varchar,
@@ -1128,6 +1129,8 @@ returns sg_public.subject_version as $$
   insert into sg_public.subject_version_member
   (version_id, entity_id, entity_kind)
   select (subject_version.version_id, json_array_elements(members) as (entity_id, entity_kind));
+  select (subject_version.version_id,
+    json_array_elements(members) as (entity_id, entity_kind));
 $$ language 'plpgsql' volatile;
 comment on function sg_public.edit_subject(
   uuid
@@ -2042,7 +2045,7 @@ returns sg_public.card as $$
     from responses
     where responses.unit_id = unit_id and (
       user_id = current_setting('jwt.claims.user_id')::uuid
-      or session_id = '???'
+      or session_id = current_setting('jwt.claims.session_id')::uuid
     )
     order by created desc
     limit 1
@@ -2135,7 +2138,7 @@ grant select on table sg_public.response to sg_anonymous, sg_user, sg_admin;
 create policy select_response to sg_public.response
   for select to sg_anonymous, sg_user, sg_admin
   using (
-    user_id is null or -- ??? session_id match ???
+    session_id = current_setting('jwt.claims.session_id')::uuid or
     user_id = current_setting('jwt.claims.user_id')::uuid
   );
 comment on policy select_response to sg_public.response
@@ -2233,7 +2236,9 @@ returns trigger as $$
   insert into sg_public.suggest_follow
   (suggest_id, user_id, session_id)
   values
-  (new.id, current_setting('jwt.claims.user_id')::uuid, '???');
+  (new.id,
+    current_setting('jwt.claims.user_id')::uuid,
+    current_setting('jwt.claims.session_id')::uuid);
 $$ language 'plpgsql';
 comment on function sg_private.follow_suggest()
   is 'Follow a given suggest';
