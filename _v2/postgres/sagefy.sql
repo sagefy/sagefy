@@ -89,11 +89,10 @@ comment on type sg_public.email_frequency
 
 create type sg_public.jwt_token as (
   role text,
-  user_id uuid,
-  session_id uuid
+  user_id uuid
 );
 comment on type sg_public.jwt_token
-  is 'Create a JWT with role, user_id, and session_id.';
+  is 'Create a JWT with role and user_id.';
 
 create type sg_public.user_role as enum(
   'sg_anonymous',
@@ -125,10 +124,6 @@ comment on column sg_public.user.name
   is 'The user\'s name or username';
 comment on column sg_public.user.view_subjects
   is 'Public setting for if the user wants to display what they are learning.';
-
--- Create the anonymous user for references
-insert into sg_public.user
-(id, name) values ('00000000-0000-0000-0000-00000000', 'anonymous');
 
 create table sg_private.user (
   user_id uuid primary key references sg_public.user (id) on delete cascade,
@@ -190,23 +185,13 @@ begin
     where u.name = $1 or u.email = $1
     limit 1;
   if user.password = crypt(password, user.password) then
-    return (user.role, user.user_id, uuid_generate_v4())::sg_public.jwt_token;
+    return (user.role, user.user_id)::sg_public.jwt_token;
   else
     return null;
   end if;
 end;
 $$ language plpgsql strict security definer;
 comment on function sg_public.log_in(text, text) is 'Logs in a single user.';
-
-create function sg_public.get_anonymous_token()
-returns sg_public.jwt_token as $$
-  return (
-    'sg_anonymous',
-    '00000000-0000-0000-0000-000000000000',
-    uuid_generate_v4()
-  )::sg_public.jwt_token;
-$$ language plpgsql strict security definer;
-comment on function sg_public.get_anonymous_token() is 'Create anonymous user token.';
 
 create function sg_public.send_reset_token(
   email text
@@ -419,8 +404,6 @@ comment on policy delete_user_admin on sg_public.user
   is 'An admin can delete any public user data';
 
 -- All users may log in or check the current user.
-grant execute on function sg_public.get_anonymous_token()
-  to sg_anonymous;
 grant execute on function sg_public.log_in(text, text)
   to sg_anonymous, sg_user, sg_admin;
 grant execute on function sg_public.send_reset_token(text)
@@ -526,7 +509,7 @@ create table sg_public.unit_version (
   status sg_public.entity_status not null default 'pending',
   available boolean not null default true,
   tags text[] null default array[]::text[],
-  user_id uuid not null references sg_public.user (id),
+  user_id uuid null references sg_public.user (id),
   -- and the rest....
   body text not null
   -- also see join table: sg_public.unit_version_require
@@ -614,7 +597,7 @@ create table sg_public.subject_version (
   status sg_public.entity_status not null default 'pending',
   available boolean not null default true,
   tags text[] null default array[]::text[],
-  user_id uuid not null references sg_public.user (id),
+  user_id uuid null references sg_public.user (id),
   -- and the rest....
   body text not null
   -- also see join table: sg_public.subject_version_member
@@ -710,7 +693,7 @@ create table sg_public.card_version (
   status sg_public.entity_status not null default 'pending',
   available boolean not null default true,
   tags text[] null default array[]::text[],
-  user_id uuid not null references sg_public.user (id),
+  user_id uuid null references sg_public.user (id),
   -- and the rest....
   unit_id uuid not null references sg_public.unit_entity (entity_id),
   kind sg_public.card_kind not null,
@@ -1378,11 +1361,11 @@ grant execute on function sg_public.select_popular_subjects()
   to sg_anonymous, sg_user, sg_admin;
 
 grant execute on function sg_public.select_my_cards()
-  to sg_user, sg_admin;
+  to sg_anonymous, sg_user, sg_admin;
 grant execute on function sg_public.select_my_units()
-  to sg_user, sg_admin;
+  to sg_anonymous, sg_user, sg_admin;
 grant execute on function sg_public.select_my_subjects()
-  to sg_user, sg_admin;
+  to sg_anonymous, sg_user, sg_admin;
 
 grant execute on function sg_public.select_units_by_subject(uuid)
   to sg_anonymous, sg_user, sg_admin;
@@ -1423,7 +1406,7 @@ create table sg_public.topic (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  user_id uuid not null references sg_public.user (id),
+  user_id uuid null references sg_public.user (id),
   name text not null,
   entity_id uuid not null,
   entity_kind sg_public.entity_kind not null,
@@ -1450,8 +1433,8 @@ create table sg_public.post (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  user_id uuid not null references sg_public.user (id)
-    check (kind <> 'vote' or user_id <> '00000000-0000-0000-0000-00000000'),
+  user_id uuid null references sg_public.user (id)
+    check (kind = 'post' or kind = 'proposal' or user_id is not null),
   topic_id uuid not null references sg_public.topic (id),
   kind sg_public.post_kind not null default 'post',
   body text null
@@ -2021,13 +2004,14 @@ create table sg_public.response (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  user_id uuid not null references sg_public.user (id),
-  session_id uuid not null,
+  user_id uuid null references sg_public.user (id),
+  session_id uuid null,
   card_id uuid not null references sg_public.card_entity (entity_id),
   unit_id uuid not null references sg_public.unit_entity (entity_id),
   response text not null,
   score double precision not null check (score >= 0 and score <= 1),
-  learned double precision not null check (score >= 0 and score <= 1)
+  learned double precision not null check (score >= 0 and score <= 1),
+  check (user_id is not null or session_id is not null)
 );
 
 comment on table sg_public.response
@@ -2076,13 +2060,8 @@ returns sg_public.card as $$
       responses.card_id as card_id
     from responses
     where responses.unit_id = unit_id and (
-      (
-        current_setting('jwt.claims.role')::text <> 'sg_anonymous'
-        and user_id = current_setting('jwt.claims.user_id')::uuid
-      ) or (
-        current_setting('jwt.claims.role')::text = 'sg_anonymous'
-        and session_id = current_setting('jwt.claims.session_id')::uuid
-      )
+      user_id = current_setting('jwt.claims.user_id')::uuid
+      or session_id = current_setting('jwt.claims.session_id')::uuid
     )
     order by created desc
     limit 1
@@ -2172,13 +2151,10 @@ comment on policy delete_user_subject on sg_public.user_subject
 grant select on table sg_public.response to sg_anonymous, sg_user, sg_admin;
 create policy select_response to sg_public.response
   for select to sg_anonymous, sg_user, sg_admin
-  using ((
-    current_setting('jwt.claims.role')::text <> 'sg_anonymous'
-    and user_id = current_setting('jwt.claims.user_id')::uuid
-  ) or (
-    current_setting('jwt.claims.role')::text = 'sg_anonymous'
-    and session_id = current_setting('jwt.claims.session_id')::uuid
-  ));
+  using (
+    session_id = current_setting('jwt.claims.session_id')::uuid or
+    user_id = current_setting('jwt.claims.user_id')::uuid
+  );
 comment on policy select_response to sg_public.response
   is 'Anyone may select their own responses.';
 
@@ -2243,8 +2219,9 @@ create table sg_public.suggest_follow (
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   suggest_id uuid not null references sg_public.suggest (id),
-  user_id uuid not null references sg_public.user (id) on delete cascade,
-  session_id uuid not null,
+  user_id uuid null references sg_public.user (id) on delete cascade,
+  session_id uuid null,
+  check (user_id is not null or session_id is not null),
   unique (suggest_id, user_id),
   unique (suggest_id, session_id)
 );
