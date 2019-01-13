@@ -89,10 +89,11 @@ comment on type sg_public.email_frequency
 
 create type sg_public.jwt_token as (
   role text,
-  user_id uuid
+  user_id uuid,
+  session_id uuid
 );
 comment on type sg_public.jwt_token
-  is 'Create a JWT with role and user_id.';
+  is 'Create a JWT with role, user_id, and session_id.';
 
 create type sg_public.user_role as enum(
   'sg_anonymous',
@@ -185,13 +186,19 @@ begin
     where u.name = $1 or u.email = $1
     limit 1;
   if user.password = crypt(password, user.password) then
-    return (user.role, user.user_id)::sg_public.jwt_token;
+    return (user.role, user.user_id, null)::sg_public.jwt_token;
   else
     return null;
   end if;
 end;
 $$ language plpgsql strict security definer;
 comment on function sg_public.log_in(text, text) is 'Logs in a single user.';
+
+create function sg_public.get_anonymous_token()
+returns sg_public.jwt_token as $$
+  return ('sg_anonymous', null, uuid_generate_v4())::sg_public.jwt_token;
+$$ language plpgsql strict security definer;
+comment on function sg_public.get_anonymous_token() is 'Create anonymous user token.';
 
 create function sg_public.send_reset_token(
   email text
@@ -375,6 +382,7 @@ comment on policy select_user on sg_public.user
 
 -- Insert user: only anonymous, via function.
 grant execute on function sg_public.sign_up(text, text, text) to sg_anonymous;
+grant execute on function sg_public.get_anonymous_token() to sg_anonymous;
 
 -- Update user: user self (name, settings), or admin.
 grant update (name, view_subjects) on table sg_public.user to sg_user;
@@ -1361,11 +1369,11 @@ grant execute on function sg_public.select_popular_subjects()
   to sg_anonymous, sg_user, sg_admin;
 
 grant execute on function sg_public.select_my_cards()
-  to sg_anonymous, sg_user, sg_admin;
+  to sg_user, sg_admin;
 grant execute on function sg_public.select_my_units()
-  to sg_anonymous, sg_user, sg_admin;
+  to sg_user, sg_admin;
 grant execute on function sg_public.select_my_subjects()
-  to sg_anonymous, sg_user, sg_admin;
+  to sg_user, sg_admin;
 
 grant execute on function sg_public.select_units_by_subject(uuid)
   to sg_anonymous, sg_user, sg_admin;
@@ -1434,7 +1442,7 @@ create table sg_public.post (
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
   user_id uuid null references sg_public.user (id)
-    check (kind = 'post' or kind = 'proposal' or user_id is not null),
+    check (kind <> 'vote' or user_id is not null),
   topic_id uuid not null references sg_public.topic (id),
   kind sg_public.post_kind not null default 'post',
   body text null
@@ -2060,8 +2068,11 @@ returns sg_public.card as $$
       responses.card_id as card_id
     from responses
     where responses.unit_id = unit_id and (
-      user_id = current_setting('jwt.claims.user_id')::uuid
-      or session_id = current_setting('jwt.claims.session_id')::uuid
+      current_setting('jwt.claims.role')::text <> 'sg_anonymous'
+      and user_id = current_setting('jwt.claims.user_id')::uuid
+    ) or (
+      current_setting('jwt.claims.role')::text = 'sg_anonymous'
+      and session_id = current_setting('jwt.claims.session_id')::uuid
     )
     order by created desc
     limit 1
@@ -2151,10 +2162,13 @@ comment on policy delete_user_subject on sg_public.user_subject
 grant select on table sg_public.response to sg_anonymous, sg_user, sg_admin;
 create policy select_response to sg_public.response
   for select to sg_anonymous, sg_user, sg_admin
-  using (
-    session_id = current_setting('jwt.claims.session_id')::uuid or
-    user_id = current_setting('jwt.claims.user_id')::uuid
-  );
+  using ((
+    current_setting('jwt.claims.role')::text <> 'sg_anonymous'
+    and user_id = current_setting('jwt.claims.user_id')::uuid
+  ) or (
+    current_setting('jwt.claims.role')::text = 'sg_anonymous'
+    and session_id = current_setting('jwt.claims.session_id')::uuid
+  ));
 comment on policy select_response to sg_public.response
   is 'Anyone may select their own responses.';
 
