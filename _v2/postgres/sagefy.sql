@@ -2,17 +2,6 @@
 -- We can use this file for local development, testing, reference,
 -- debugging, and evaluation.
 
-/*
-remaining:
-  config 2
-  recursive 2
-  search 2
-  status 1
-  learn 2
-  insert 1
-*/
-
-
 -- ENSURE UTF-8, UTC Timezone
 
 create extension if not exists "uuid-ossp";
@@ -1016,7 +1005,197 @@ $$ language sql immutable;
 comment on function sg_public.select_my_subjects()
   is 'Select subjects I created or worked on.';
 
--- TODO insert new AND new version of existing
+create function sg_public.new_unit(
+  language varchar,
+  name text,
+  tags text[],
+  body text,
+  require_ids uuid[]
+)
+returns sg_public.unit_version as $$
+  with entity as (
+    insert into sg_public.entity
+    (entity_kind) values ('unit')
+  ),
+  unit_entity as (
+    insert into sg_public.unit_entity
+    (entity_id) values (entity.entity_id)
+  ),
+  unit_version as (
+    insert into sg_public.unit_version
+    (entity_id, language, name, tags, body, user_id)
+    values (entity.entity_id, language, tags, body,
+      current_setting('jwt.claims.user_id')::uuid)
+  )
+  insert into sg.unit_version_require
+  (version_id, require_id)
+  select (unit_version.version_id, unnest(require_ids));
+$$ language 'plpgsql' volatile;
+comment on function sg_public.new_unit(
+  varchar,
+  text,
+  text[],
+  text,
+  uuid[]
+) is 'Create a new card.';
+
+create function sg_public.edit_unit(
+  entity_id uuid,
+  name text,
+  tags text[],
+  body text,
+  require_ids uuid[]
+)
+returns sg_public.unit_version as $$
+  with previous as (
+    select *
+    from sg_public.unit
+    where sg_public.unit.entity_id = entity_id
+    limit 1
+  ),
+  with unit_version as (
+    insert into sg_public.unit_version
+    (entity_id, previous_id, name, tags, body, user_id)
+    values (entity_id, previous.version_id, name, tags, body,
+      current_setting('jwt.claims.user_id')::uuid)
+  )
+  insert into sg.unit_version_require
+  (version_id, require_id)
+  select (unit_version.version_id, unnest(require_ids));
+$$ language 'plpgsql' volatile;
+comment on function sg_public.edit_unit(
+  uuid,
+  text,
+  text[],
+  text,
+  uuid[]
+) is 'Edit an existing unit.';
+
+create function sg_public.new_subject(
+  language varchar,
+  name text,
+  tags text[],
+  body text,
+  members jsonb
+)
+returns sg_public.subject_version as $$
+  with entity as (
+    insert into sg_public.entity
+    (entity_kind) values ('subject')
+  ),
+  subject_entity as (
+    insert into sg_public.subject_entity
+    (entity_id) values (entity.entity_id)
+  ),
+  subject_version as (
+    insert into sg_public.subject_version
+    (entity_id, language, name, tags, body, user_id)
+    values (entity.entity_id, language, name, tags, body,
+      current_setting('jwt.claims.user_id')::uuid)
+  )
+  insert into sg_public.subject_version_member
+  (version_id, entity_id, entity_kind)
+  select (subject_version.version_id, json_array_elements(members) as (entity_id, entity_kind));
+$$ language 'plpgsql' volatile;
+comment on function sg_public.new_subject(
+  varchar,
+  text,
+  text[],
+  text,
+  jsonb
+) is 'Create a new subject.';
+
+create function sg_public.edit_subject(
+  entity_id uuid
+  name text,
+  tags text[],
+  body text,
+  members jsonb
+)
+returns sg_public.subject_version as $$
+  with previous as (
+    select *
+    from sg_public.subject
+    where sg_public.subject.entity_id = entity_id
+    limit 1
+  ),
+  subject_version as (
+    insert into sg_public.subject_version
+    (entity_id, previous_id, name, tags, body, user_id)
+    values (entity_id, previous.version_id, name, tags, body,
+      current_setting('jwt.claims.user_id')::uuid)
+  )
+  insert into sg_public.subject_version_member
+  (version_id, entity_id, entity_kind)
+  select (subject_version.version_id, json_array_elements(members) as (entity_id, entity_kind));
+$$ language 'plpgsql' volatile;
+comment on function sg_public.edit_subject(
+  uuid
+  text,
+  text[],
+  text,
+  jsonb
+) is 'Edit an existing subject.';
+
+create function sg_public.new_card(
+  language varchar,
+  name text,
+  tags text[],
+  unit_id uuid,
+  kind text,
+  data jsonb
+)
+returns sg_public.card_version as $$
+  with entity as (
+    insert into sg_public.entity
+    (entity_kind) values ('card')
+  ),
+  card_entity as (
+    insert into sg_public.card_entity
+    (entity_id) values (entity.entity_id)
+  ),
+  insert into sg_public.card_version
+  (entity_id, language, name, tags, unit_id, kind, data, user_id)
+  values (entity.entity_id, language, name, tags, unit_id,
+    kind, data, current_setting('jwt.claims.user_id')::uuid);
+$$ language 'plpgsql' volatile;
+comment on function sg_public.new_card(
+  varchar,
+  text,
+  text[],
+  uuid,
+  text,
+  jsonb
+) is 'Create a new card.';
+
+create function sg_public.edit_card(
+  entity_id uuid,
+  name text,
+  tags text[],
+  unit_id uuid,
+  kind text
+  data jsonb
+)
+returns sg_public.card_version as $$
+  with previous as (
+    select *
+    from sg_public.card
+    where sg_public.card.entity_id = entity_id
+    limit 1
+  )
+  insert into sg_public.card_version
+  (entity_id, previous_id, name, tags, unit_id, kind, data, user_id)
+  values (entity_id, previous.version_id, name, tags, unit_id, kind, data,
+    current_setting('jwt.claims.user_id')::uuid);
+$$ language 'plpgsql' volatile;
+comment on function sg_public.edit_card(
+  uuid,
+  text,
+  text[],
+  uuid,
+  text
+  jsonb
+) is 'Edit an existing card.';
 
 ------ Cards, Units, Subjects > Triggers ---------------------------------------
 
@@ -1121,18 +1300,50 @@ grant select on table sg_public.card_version
   to sg_anonymous, sg_user, sg_admin;
 
 -- Insert (or new version) card, unit, subject: any via function.
-grant execute on function sg_public.new_unit(???)
-  to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.edit_unit(???)
-  to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.new_subject(???)
-  to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.edit_subject(???)
-  to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.new_card(???)
-  to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.edit_card(???)
-  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.new_unit(
+  varchar,
+  text,
+  text[],
+  text,
+  uuid[]
+) to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.edit_unit(
+  uuid,
+  text,
+  text[],
+  text,
+  uuid[]
+) to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.new_subject(
+  varchar,
+  text,
+  text[],
+  text,
+  jsonb
+) to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.edit_subject(
+  uuid
+  text,
+  text[],
+  text,
+  jsonb
+) to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.new_card(
+  varchar,
+  text,
+  text[],
+  uuid,
+  text,
+  jsonb
+) to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.edit_card(
+  uuid,
+  text,
+  text[],
+  uuid,
+  text
+  jsonb
+) to sg_anonymous, sg_user, sg_admin;
 
 -- Update & delete card, unit, subject: admin.
 grant update, delete on table sg_public.unit_version to sg_admin;
