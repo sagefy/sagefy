@@ -1669,6 +1669,17 @@ comment on trigger update_post_entity_version_modified
 
 -- TODO status Trigger: when I create or update a vote post,
 --      we can update entity status
+-- if the status is accepted or declined, do nothing
+-- get all the users who voted on the proposal
+-- count the number of accepted versions total per user: points
+-- assign a score of 0->1 (non-linear) to each user: 1 - e ^ (-points / 40) (computed column?)
+-- determine the number of learners impacted (computed column?)
+-- -- for a subject, get all subjects upward + current, then sum the user_subject counts
+-- -- for a unit, get all the subjects upward, then sum the user_subject counts
+-- -- for a card, get the unit, then unit procedure
+-- if numLearners > 0 and sum(noVotes) > log100(numLearners), change the status to blocked
+-- if sum(yesVotes) > log5(numLearners), change the status to accepted
+-- else, change the status to pending
 
 create trigger follow_own_topic
   after insert on sg_public.topic
@@ -2032,6 +2043,12 @@ comment on table sg_public.response.learned
 
 -- TODO learn After I select a subject,
 --     traverse the units to give the learner some units to pick
+-- list the units in the subject
+-- select the latest responses per unit by the learner
+-- skip learned units
+-- get the depth of each unit in the require graph
+-- order the units by depth
+-- limit 5
 
 create function sg_public.select_card_to_learn(unit_id uuid)
 returns sg_public.card as $$
@@ -2072,13 +2089,11 @@ $$ language sql stable;
 comment on function sg_public.select_card_to_learn(uuid)
   is 'After I select a unit, search for a suitable card.';
 
-/* TODO learn
-- Trigger: Create response ->
-  - Validate & score card response
-  - Update p(learned)
-  - if p(L) > 0.99, return to choose a unit
-  - if p(L) < 0.99, search for a suitable card
-*/
+-- todo learn trigger on insert (card_id, response) response
+-- Validate if the response to the card is valid
+-- Score the response
+-- Calculate p(learned)
+-- Fill in (user_id, session_id, unit_id, score, learned)
 
 ------ User Subjects, Responses > Triggers -------------------------------------
 
