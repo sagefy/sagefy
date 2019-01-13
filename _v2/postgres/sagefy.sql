@@ -1128,7 +1128,6 @@ returns sg_public.subject_version as $$
   )
   insert into sg_public.subject_version_member
   (version_id, entity_id, entity_kind)
-  select (subject_version.version_id, json_array_elements(members) as (entity_id, entity_kind));
   select (subject_version.version_id,
     json_array_elements(members) as (entity_id, entity_kind));
 $$ language 'plpgsql' volatile;
