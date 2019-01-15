@@ -928,7 +928,7 @@ returns setof sg_public.unit as $$
   select u.*
   from sg_public.unit u
   where u.entity_id in child_unit;
-$$ language sql immutable;
+$$ language sql stable;
 comment on function sg_public.select_units_by_subject(uuid)
   is 'Select recursively all child units of a subject.';
 
@@ -953,9 +953,31 @@ returns setof sg_public.subject as $$
   select s.*
   from sg_public.subject s, parent_subject m
   where m.entity_id = s.entity_id;
-$$ language sql immutable;
+$$ language sql stable;
 comment on function sg_public.select_subjects_by_unit(uuid)
   is 'Select recursively all parent subjects of a unit.';
+
+create function sg_public.unit_depth(unit_id uuid, all_unit sg_public.unit)
+returns int as $$
+  with latest_require as (
+    select as r.require_id as left_id,
+       u.entity_id as right_id
+    from all_unit u, sg_public.unit_version_require r
+    where r.version_id = u.version_id
+  ),
+  recursive depth_calc as (
+    select *
+    from latest_require
+    where right_id = unit_id
+    union all
+    select *
+    from latest_require l, depth_calc d
+    where l.right_id = d.left_id
+  )
+  select count(depth_calc);
+$$ language sql stable;
+comment on sg_public.unit_depth(uuid, sg_public.unit)
+  is 'Calculate the depth of a unit in a require graph.';
 
 create function sg_public.select_popular_subjects()
 returns setof sg_public.subject as $$
@@ -967,7 +989,7 @@ returns setof sg_public.subject as $$
   from sg_public.subject
   order by user_count
   limit 10;
-$$ language sql immutable;
+$$ language sql stable;
 comment on function sg_public.select_popular_subjects()
   is 'Select the 10 most popular subjects.';
 
@@ -980,7 +1002,7 @@ returns setof sg_public.card as $$
     from sg_public.card_version
     where user_id = current_setting('jwt.claims.user_id')::uuid
   );
-$$ language sql immutable;
+$$ language sql stable;
 comment on function sg_public.select_my_cards()
   is 'Select cards I created or worked on.';
 
@@ -993,7 +1015,7 @@ returns setof sg_public.unit as $$
     from sg_public.unit_version
     where user_id = current_setting('jwt.claims.user_id')::uuid
   );
-$$ language sql immutable;
+$$ language sql stable;
 comment on function sg_public.select_my_units()
   is 'Select units I created or worked on.';
 
@@ -1006,7 +1028,7 @@ returns setof sg_public.subject as $$
     from sg_public.subject_version
     where user_id = current_setting('jwt.claims.user_id')::uuid
   );
-$$ language sql immutable;
+$$ language sql stable;
 comment on function sg_public.select_my_subjects()
   is 'Select subjects I created or worked on.';
 
@@ -2046,33 +2068,44 @@ comment on table sg_public.response.learned
 
 ------ User Subjects, Responses > Functions ------------------------------------
 
--- TODO learn After I select a subject,
---     traverse the units to give the learner some units to pick
--- list the units in the subject
--- select the latest responses per unit by the learner
--- skip learned units
--- get the depth of each unit in the require graph
--- order the units by depth
--- limit 5
+create function sg_public.select_latest_response(unit_id uuid)
+returns sg_public.response as $$
+  -- If no response yet, default to 0.4
+  select
+    sg_public.response.* as *,
+    case when count(*) > 0 then sg_public.response.learned else 0.4 end as learned
+  from sg_public.response
+  where sg_public.response.unit_id = unit_id and (
+    current_setting('jwt.claims.role')::text <> 'sg_anonymous'
+    and user_id = current_setting('jwt.claims.user_id')::uuid
+  ) or (
+    current_setting('jwt.claims.role')::text = 'sg_anonymous'
+    and session_id = current_setting('jwt.claims.session_id')::uuid
+  )
+  order by created desc
+  limit 1;
+$$ language sql stable;
+comment on function sg_public.select_latest_response(uuid)
+  is 'Get the latest response from the user on the given unit.';
+
+create function sg_public.select_unit_to_learn(subject_id uuid)
+returns setof sg_public.unit as $$
+  select all_unit.* as *,
+    sg_public.select_latest_response(all_unit.entity_id).learned as learned,
+    sg_public.unit_depth(all_unit.unit_id, all_unit) as depth
+  from sg_public.select_units_by_subject(subject_id) as all_unit
+  where learned < 0.99
+  order by depth desc
+  limit 5;
+$$ language sql stable;
+comment on function sg_public.select_unit_to_learn(uuid)
+  is 'After I select a subject, recommend up to 5 units to choose from.';
 
 create function sg_public.select_card_to_learn(unit_id uuid)
 returns sg_public.card as $$
   -- What is p(learned) currently for the unit?
-  -- If no response yet, default to 0.4
   with latest_response as (
-    select
-      case when count(*) > 0 then sg_public.response.learned else 0.4 end as learned,
-      sg_public.response.card_id as card_id
-    from sg_public.response
-    where sg_public.response.unit_id = unit_id and (
-      current_setting('jwt.claims.role')::text <> 'sg_anonymous'
-      and user_id = current_setting('jwt.claims.user_id')::uuid
-    ) or (
-      current_setting('jwt.claims.role')::text = 'sg_anonymous'
-      and session_id = current_setting('jwt.claims.session_id')::uuid
-    )
-    order by created desc
-    limit 1
+    select sg_public.select_latest_response(unit_id)
   ),
   -- Decide on a scored or unscored type
   kinds as (
@@ -2093,7 +2126,7 @@ returns sg_public.card as $$
   limit 1;
   -- Future version: When estimating parameters and the card kind is scored,
   -- prefer 0.25 < correct < 0.75
-$$ language sql stable;
+$$ language sql volatile;
 comment on function sg_public.select_card_to_learn(uuid)
   is 'After I select a unit, search for a suitable card.';
 
@@ -2105,7 +2138,6 @@ returns trigger as $$
     option jsonb;
     score real;
     learned real;
-    default_learned constant real := 0.4;
     slip constant real := 0.1;
     guess constant real := 0.3;
     transit constant real := 0.05;
@@ -2137,19 +2169,7 @@ returns trigger as $$
     -- Score the response
     new.score := case when option->'correct' then 1 else 0 end;
     -- Calculate p(learned)
-    prior := (
-      select learned or default_learned as learned
-      from sg_public.response
-      where sg_public.response.card_id = card_id and (
-        current_setting('jwt.claims.role')::text <> 'sg_anonymous'
-        and user_id = current_setting('jwt.claims.user_id')::uuid
-      ) or (
-        current_setting('jwt.claims.role')::text = 'sg_anonymous'
-        and session_id = current_setting('jwt.claims.session_id')::uuid
-      )
-      order by created desc
-      limit 1
-    );
+    prior := sg_public.select_latest_response(card.unit_id);
     learned := (
       new.score * (
         (prior.learned * (1 - slip)) /
@@ -2250,6 +2270,8 @@ comment on policy insert_response to sg_public.response
 
 -- Update & delete response: none.
 
+grant execute on function sg_public.select_unit_to_learn(uuid)
+  to sg_anonymous, sg_user, sg_admin;
 grant execute on function sg_public.select_card_to_learn(uuid)
   to sg_anonymous, sg_user, sg_admin;
 
