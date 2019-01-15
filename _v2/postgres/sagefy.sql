@@ -745,26 +745,23 @@ create table sg_public.card_version (
       "type": "object",
       "properties": {
         "body": {
-          "type": "string",
+          "type": "string"
         },
         "options": {
-          "type": "array",
-          "minItems": 1,
-          "uniqueItems": true,
-          "items": {
-            "type": "object",
-            "properties": {
-              "id": { "type": "string" },
-              "value": { "type": "string" },
-              "correct": { "type": "boolean" },
-              "feedback": { "type": "string" }
-            },
-            "required": ["id", "value", "correct", "feedback"]
-          }
-        },
-        "order": {
-          "type": "string",
-          "enum": ["random", "set"]
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9\-]+$": {
+              "type": "object",
+              "properties": {
+                "value": { "type": "string" },
+                "correct": { "type": "boolean" },
+                "feedback": { "type": "string" }
+              },
+              "required": ["value", "correct", "feedback"]
+            }
+          },
+          "additionalProperties": false,
+          "minProperties": 1
         },
         "max_options_to_show": {
           "type": "integer",
@@ -772,7 +769,7 @@ create table sg_public.card_version (
           "default": 4
         }
       },
-      "required": ["body", "options", "order", "max_options_to_show"]
+      "required": ["body", "options", "max_options_to_show"]
     } $$, data)
   ),
 );
@@ -2017,8 +2014,8 @@ create table sg_public.response (
   card_id uuid not null references sg_public.card_entity (entity_id),
   unit_id uuid not null references sg_public.unit_entity (entity_id),
   response text not null,
-  score double precision not null check (score >= 0 and score <= 1),
-  learned double precision not null check (score >= 0 and score <= 1),
+  score real not null check (score >= 0 and score <= 1),
+  learned real not null check (score >= 0 and score <= 1),
   check (user_id is not null or session_id is not null)
 );
 
@@ -2064,10 +2061,10 @@ returns sg_public.card as $$
   -- If no response yet, default to 0.4
   with latest_response as (
     select
-      case when count(*) > 0 then responses.learned else 0.4 end as learned,
-      responses.card_id as card_id
-    from responses
-    where responses.unit_id = unit_id and (
+      case when count(*) > 0 then sg_public.response.learned else 0.4 end as learned,
+      sg_public.response.card_id as card_id
+    from sg_public.response
+    where sg_public.response.unit_id = unit_id and (
       current_setting('jwt.claims.role')::text <> 'sg_anonymous'
       and user_id = current_setting('jwt.claims.user_id')::uuid
     ) or (
@@ -2100,11 +2097,75 @@ $$ language sql stable;
 comment on function sg_public.select_card_to_learn(uuid)
   is 'After I select a unit, search for a suitable card.';
 
--- todo learn trigger on insert (card_id, response) response
--- Validate if the response to the card is valid
--- Score the response
--- Calculate p(learned)
--- Fill in (user_id, session_id, unit_id, score, learned)
+create function sg_private.score_response()
+returns trigger as $$
+  declare
+    card sg_public.card;
+    prior sg_public.response;
+    option jsonb;
+    score real;
+    learned real;
+    default_learned constant real := 0.4;
+    slip constant real := 0.1;
+    guess constant real := 0.3;
+    transit constant real := 0.05;
+  begin
+    -- Overall: Fill in (user_id, session_id, unit_id, score, learned)
+    -- Validate if the response to the card is valid.
+    card := (
+      select *
+      from sg_public.card
+      where sg_public.card.entity_id = new.card_id
+      limit 1;
+    )
+    if (!card) then
+      raise exception 'No card found.' with errcode = 'EE05C989';
+    end if;
+    if (card.kind <> 'choice') then -- scored kinds only
+      raise exception 'You may only respond to a scored card.'
+        with errcode = '1306BF1C';
+    end if;
+    option := card.data->'options'->new.response;
+    if (!option) then
+      raise exception 'You must submit an available response `id`.'
+        with errcode = '681942FD';
+    end if;
+    -- Set default values
+    new.user_id := current_setting('jwt.claims.user_id')::uuid;
+    new.session_id := current_setting('jwt.claims.session_id')::uuid;
+    new.unit_id := card.unit_id;
+    -- Score the response
+    new.score := case when option->'correct' then 1 else 0 end;
+    -- Calculate p(learned)
+    prior := (
+      select learned or default_learned as learned
+      from sg_public.response
+      where sg_public.response.card_id = card_id and (
+        current_setting('jwt.claims.role')::text <> 'sg_anonymous'
+        and user_id = current_setting('jwt.claims.user_id')::uuid
+      ) or (
+        current_setting('jwt.claims.role')::text = 'sg_anonymous'
+        and session_id = current_setting('jwt.claims.session_id')::uuid
+      )
+      order by created desc
+      limit 1
+    );
+    learned := (
+      new.score * (
+        (prior.learned * (1 - slip)) /
+        (prior.learned * (1 - slip) + (1 - prior.learned) * guess)
+      ) +
+      (1 - new.score) * (
+        (prior.learned * slip) /
+        (prior.learned * slip + (1 - prior.learned) * (1 - guess))
+      )
+    );
+    new.learned := learned + (1 - learned) * transit;
+    return new;
+  end;
+$$ language 'plpgsql';
+comment on function sg_private.score_response()
+  is 'After I respond to a card, score the result and update model.';
 
 ------ User Subjects, Responses > Triggers -------------------------------------
 
@@ -2113,6 +2174,12 @@ create trigger insert_user_subject_user_id
   for each row execute procedure sg_private.insert_user_id_column();
 comment on trigger insert_user_subject_user_id on sg_public.user_subject
   is 'Whenever I make a new user subject, auto fill the `user_id` column';
+
+create trigger insert_response_score
+  before insert on sg_public.response
+  for each row execute procedure sg_private.score_response();
+comment on trigger insert_response_score on sg_public.response
+  is 'After I respond to a card, score the result and update model.';
 
 create trigger update_user_subject_modified
   before update on sg_public.user_subject
