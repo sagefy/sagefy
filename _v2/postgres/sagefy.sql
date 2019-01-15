@@ -197,7 +197,7 @@ comment on function sg_public.log_in(text, text) is 'Logs in a single user.';
 create function sg_public.get_anonymous_token()
 returns sg_public.jwt_token as $$
   return ('sg_anonymous', null, uuid_generate_v4())::sg_public.jwt_token;
-$$ language plpgsql strict security definer;
+$$ language plpgsql;
 comment on function sg_public.get_anonymous_token() is 'Create anonymous user token.';
 
 create function sg_public.send_reset_token(
@@ -295,7 +295,7 @@ begin
   perform pg_notify('create_user', new.email);
   return new;
 end;
-$$ language 'plpgsql' strict security definer;
+$$ language 'plpgsql';
 comment on function sg_private.notify_create_user()
   is 'Whenever a new user signs up, email them.';
 
@@ -305,7 +305,7 @@ begin
   perform pg_notify('update_email', old.email);
   return new;
 end;
-$$ language 'plpgsql' strict security definer;
+$$ language 'plpgsql';
 comment on function sg_private.notify_update_email()
   is 'Whenever a user changes their email, email their old account.';
 
@@ -315,7 +315,7 @@ begin
   perform pg_notify('update_password', old.email);
   return new;
 end;
-$$ language 'plpgsql' strict security definer;
+$$ language 'plpgsql';
 comment on function sg_private.notify_update_password()
   is 'Whenever a user changes their password, email them.';
 
