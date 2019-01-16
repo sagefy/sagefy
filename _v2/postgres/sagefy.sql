@@ -828,9 +828,64 @@ comment on view sg_public.card
 
 ------ Cards, Units, Subjects > Functions --------------------------------------
 
--- TODO recursive: No require cycles for units
+create function sg_private.insert_unit_version_cycle()
+returns trigger as $$
+  if exists(
+    with recursive graph (entity_id, path, cycle) as (
+      select uv.entity_id,
+        array(uv.entity_id, new.entity_id),
+        uv.entity_id = new.entity_id
+      from sg_public.unit_version uv
+      where new.version_id = uv.version_id
+      union all
+      select u.entity_id,
+        g.path || u.entity_id,
+        u.entity_id = any(g.path)
+      from graph g, sg_public.unit_version_require uvr, sg_public.unit u
+      where g.entity_id = uvr.entity_id
+        and uvr.version_id = u.version_id
+        and not g.cycle
+    )
+    select *
+  ) then
+    raise exception 'Unit requires cannot form a cycle.'
+      using errcode = '7876F332';
+  else
+    return new;
+  end if;
+$$ language 'plpgsql';
+comment on function sg_private.insert_unit_version_cycle()
+  is 'Ensure units do not form a cycle of requires.';
 
--- TODO recursive: No cycles in subject members
+create function sg_private.insert_subject_version_cycle()
+returns trigger as $$
+  if exists(
+    recursive graph (parent_id, path, cycle) as (
+      select sv.entity_id,
+        array(sv.entity_id, new.entity_id),
+        sv.entity_id = new.entity_id
+      from sg_public.subject_version sv
+      where new.version_id = sv.version_id and new.entity_kind = 'subject'
+      union all
+      select s.entity_id,
+        g.path || s.entity_id,
+        s.entity_id = any(g.path)
+      from graph g, sg_public.subject_version_member svm, sg_public.subject s
+      where g.entity_id = svm.entity_id
+        and svm.entity_kind = 'subject'
+        and svm.version_id = s.version_id
+        and not g.cycle
+    )
+    select *
+  ) then
+    raise exception 'Subject members cannot form a cycle.'
+      using errcode = '1318F849';
+  else
+    return new;
+  end if;
+$$ language 'plpgsql';
+comment on function sg_private.insert_unit_version_cycle()
+  is 'Ensure subjects do not form a cycle of members.';
 
 create function sg_private.insert_version_notice()
 returns trigger as $$
@@ -1227,6 +1282,19 @@ comment on function sg_public.edit_card(
 ) is 'Edit an existing card.';
 
 ------ Cards, Units, Subjects > Triggers ---------------------------------------
+
+create trigger insert_unit_version_cycle
+  before insert on sg_public.unit_version_require
+  for each row execute procedure sg_private.insert_unit_version_cycle();
+comment on trigger insert_unit_version_cycle on sg_public.unit_version_require
+  is 'Ensure units do not form a cycle of requires.';
+
+create trigger insert_subject_version_cycle
+  before insert on sg_public.subject_version_member
+  for each row execute procedure sg_private.insert_subject_version_cycle();
+comment on trigger insert_subject_version_cycle
+  on sg_public.subject_version_member
+  is 'Ensure subject do not form a cycle of members.';
 
 create trigger insert_unit_version_notice
   after insert on sg_public.unit_version
