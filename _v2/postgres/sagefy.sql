@@ -1705,6 +1705,57 @@ $$ language 'plpgsql';
 comment on function sg_private.follow_own_post()
   is 'When I create a post, I follow the entity.';
 
+create function sg_private.vote_to_status()
+returns trigger as $$
+  if new.kind <> 'proposal' and new.kind <> 'vote' then
+    return new;
+  end if;
+  if old and (old.status = 'accepted' or old.status = 'declined') then
+    return new;
+  end if;
+  if new.response = false then
+    return new;
+  end if;
+  -- For now, just accept
+  update sg_public.unit_version
+  set status = 'accepted'
+  where version_id in (
+    select version_id
+    from sg_public.post_entity_version
+    where post_id = new.id
+      and entity_kind = 'unit'
+  );
+  update sg_public.card_version
+  set status = 'accepted'
+  where version_id in (
+    select version_id
+    from sg_public.post_entity_version
+    where post_id = new.id
+      and entity_kind = 'card'
+  );
+  update sg_public.subject_version
+  set status = 'accepted'
+  where version_id in (
+    select version_id
+    from sg_public.post_entity_version
+    where post_id = new.id
+      and entity_kind = 'subject'
+  );
+  -- Later version:
+  -- get all the users who voted on the proposal
+  -- count the number of accepted versions total per user: points
+  -- assign a score of 0->1 (non-linear) to each user: 1 - e ^ (-points / 40) (computed column?)
+  -- determine the number of learners impacted (computed column?)
+  -- -- for a subject, get all subjects upward + current, then sum the user_subject counts
+  -- -- for a unit, get all the subjects upward, then sum the user_subject counts
+  -- -- for a card, get the unit, then unit procedure
+  -- if numLearners > 0 and sum(noVotes) > log100(numLearners), change the status to blocked
+  -- if sum(yesVotes) > log5(numLearners), change the status to accepted
+  -- else, change the status to pending
+$$ language 'plpgsql';
+comment on function sg_private.vote_to_status()
+  is 'When a new proposal or vote happens, change entity status if possible';
+
 ------ Topics & Posts > Triggers -----------------------------------------------
 
 create trigger insert_topic_user_id
@@ -1762,19 +1813,12 @@ comment on trigger update_post_entity_version_modified
   on sg_public.post_entity_version
   is 'Whenever a post entity version changes, update the `modified` column.';
 
--- TODO status Trigger: when I create or update a vote post,
---      we can update entity status
--- if the status is accepted or declined, do nothing
--- get all the users who voted on the proposal
--- count the number of accepted versions total per user: points
--- assign a score of 0->1 (non-linear) to each user: 1 - e ^ (-points / 40) (computed column?)
--- determine the number of learners impacted (computed column?)
--- -- for a subject, get all subjects upward + current, then sum the user_subject counts
--- -- for a unit, get all the subjects upward, then sum the user_subject counts
--- -- for a card, get the unit, then unit procedure
--- if numLearners > 0 and sum(noVotes) > log100(numLearners), change the status to blocked
--- if sum(yesVotes) > log5(numLearners), change the status to accepted
--- else, change the status to pending
+create trigger vote_to_status
+  after insert, update on sg_public.post
+  for each row execute sg_private.vote_to_status();
+comment on trigger vote_to_status
+  on sg_public.post
+  is 'When a new proposal or vote happens, change entity status if possible';
 
 create trigger follow_own_topic
   after insert on sg_public.topic
