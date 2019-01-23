@@ -1004,7 +1004,7 @@ returns setof (entity_id, name, body, kind) as $$
   select entity_id, name, body, 'unit' as kind
   from sg_public.search_units(query)
   union all
-  select entity_id, name, body, 'card' as kind
+  select entity_id, name, data as body, 'card' as kind
   from sg_public.search_cards(query)
   order by rank desc;
 $$ language sql;
