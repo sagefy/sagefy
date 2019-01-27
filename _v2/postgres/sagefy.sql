@@ -8,6 +8,7 @@ create extension if not exists "uuid-ossp";
 create extension if not exists "pgcrypto";
 create extension if not exists "postgres-json-schema";
 create extension if not exists "pgjwt";
+create extension if not exists "unaccent";
 
 
 
@@ -950,9 +951,65 @@ $$ language 'plpgsql';
 comment on function sg_private.update_version_notice()
   is 'After I update a version status, notify followers.';
 
--- TODO Search per entity type
+create function sg_public.search_units(query text)
+returns setof sg_public.unit as $$
+  select
+    *,
+    to_tsvector('english', unaccent(name)) ||
+    to_tsvector('english', unaccent(tags)) ||
+    to_tsvector('english', unaccent(body)) as document,
+    ts_rank(document, websearch_to_tsquery('english', unaccent(query))) as rank
+  from sg_public.unit
+  where document @@ websearch_to_tsquery('english', unaccent(query))
+  order by rank desc;
+$$ language sql;
+comment on function sg_public.search_units(text)
+  is 'Search units.';
 
--- TODO Search across entity types
+create function sg_public.search_subjects(query text)
+returns setof sg_public.subject as $$
+  select
+    *,
+    to_tsvector('english', unaccent(name)) ||
+    to_tsvector('english', unaccent(tags)) ||
+    to_tsvector('english', unaccent(body)) as document,
+    ts_rank(document, websearch_to_tsquery('english', unaccent(query))) as rank
+  from sg_public.subject
+  where document @@ websearch_to_tsquery('english', unaccent(query))
+  order by rank desc;
+$$ language sql;
+comment on function sg_public.search_subjects(text)
+  is 'Search subjects.';
+
+create function sg_public.search_cards(query text)
+returns setof sg_public.card as $$
+  select
+    *,
+    to_tsvector('english', unaccent(name)) ||
+    to_tsvector('english', unaccent(tags)) ||
+    to_tsvector('english', unaccent(data)) as document,
+    ts_rank(document, websearch_to_tsquery('english', unaccent(query))) as rank
+  from sg_public.card
+  where document @@ websearch_to_tsquery('english', unaccent(query))
+  order by rank desc;
+$$ language sql;
+comment on function sg_public.search_cards(text)
+  is 'Search cards.';
+
+create function sg_public.search_entities(query text)
+returns setof (entity_id, name, body, kind) as $$
+  select entity_id, name, body, 'subject' as kind
+  from sg_public.search_subjects(query)
+  union all
+  select entity_id, name, body, 'unit' as kind
+  from sg_public.search_units(query)
+  union all
+  select entity_id, name, data as body, 'card' as kind
+  from sg_public.search_cards(query)
+  order by rank desc;
+$$ language sql;
+comment on function sg_public.search_entities(text)
+  is 'Search subject, units, and cards.';
 
 create function sg_public.select_units_by_subject(subject_id uuid)
 returns setof sg_public.unit as $$
@@ -1467,6 +1524,14 @@ grant execute on function sg_public.select_units_by_subject(uuid)
 grant execute on function sg_public.select_subjects_by_unit(uuid)
   to sg_anonymous, sg_user, sg_admin;
 
+grant execute on function sg_public.search_unit(text)
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.search_subject(text)
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.search_cart(text)
+  to sg_anonymous, sg_user, sg_admin;
+grant execute on function sg_public.search_entity(text)
+  to sg_anonymous, sg_user, sg_admin;
 
 
 
