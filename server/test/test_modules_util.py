@@ -14,7 +14,6 @@ def test_convert_uuid_to_slug():
 def test_convert_slug_to_uuid():
   my_uuid = uuid.UUID('24014660-55a1-20b7-2c88-1cb21f63bd7e')
   assert convert_slug_to_uuid(my_uuid) == my_uuid
-  assert convert_slug_to_uuid('JAFGYFWhILcsiByyH2O9frcU') == my_uuid
   assert convert_slug_to_uuid('JAFGYFWhILcsiByyH2O9fg') == my_uuid
 
 
