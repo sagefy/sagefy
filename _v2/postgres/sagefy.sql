@@ -27,7 +27,7 @@ create schema sg_private;
 comment on schema sg_public is 'Schema exposed to GraphQL.';
 comment on schema sg_private is 'Schema hidden from GraphQL.';
 
-create role sg_postgraphile login password 'xyz'; -- TODO config fix password
+create role sg_postgraphile login password :'DB_PASSWORD';
 create role sg_admin;
 create role sg_user;
 create role sg_anonymous;
@@ -222,8 +222,7 @@ create function sg_public.send_reset_token(
         "user_id": "%s",
         "email": "%s",
         "password": "%s"
-      } $$, user.user_id, email, user.password), 'jwt_secret2')
-      -- TODO config fix "jwt_secret2" here and below
+      } $$, user.user_id, email, user.password), :'JWT_SECRET')
     );
   end;
 $$ language plpgsql strict security definer;
@@ -240,7 +239,7 @@ create function sg_public.update_email(
     email text;
     password text;
   begin
-    select user_id, email, password from verify(token, 'jwt_secret2');
+    select user_id, email, password from verify(token, :'JWT_SECRET');
     user := (
       select *
       from sg_private.user
@@ -270,7 +269,7 @@ create function sg_public.update_password(
     email text;
     password text;
   begin
-    select user_id, email, password from verify(token, 'jwt_secret2');
+    select user_id, email, password from verify(token, :'JWT_SECRET');
     user := (
       select *
       from sg_private.user

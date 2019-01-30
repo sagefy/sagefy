@@ -3,7 +3,8 @@
 const fs = require('fs').promises
 const yaml = require('js-yaml')
 const { Client } = require('pg')
-const { env } = require('../server/config')
+
+require('dotenv').config()
 
 const userData = [
   {

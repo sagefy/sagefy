@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/sagefy/sagefy#readme",
   "dependencies": {
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "lodash.get": "^4.4.2",
     "nodemailer": "^4.7.0",

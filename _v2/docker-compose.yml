@@ -2,7 +2,7 @@ version: '3'
 services:
   postgres:
     # https://hub.docker.com/_/postgres/
-    image: 'postgres:11-alpine'
+    build: ./postgres
     ports:
       - '5432:5432'
     environment:
@@ -11,9 +11,10 @@ services:
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
       - ./postgres:/www
+      - ./.env:/www/.env
   postgres-test:
     # https://hub.docker.com/_/postgres/
-    image: 'postgres:11-alpine'
+    build: ./postgres
     ports:
       - '5433:5432'
     environment:
@@ -22,6 +23,7 @@ services:
     volumes:
       - ./postgres-test-data:/var/lib/postgresql/data
       - ./postgres:/www
+      - ./.env:/www/.env
   server:
     # https://hub.docker.com/_/node/
     build: ./server
@@ -29,6 +31,7 @@ services:
       - '8653:8653'
     volumes:
       - ./server:/server
+      - ./.env:/www/.env
     links:
       - postgres
       - postgres-test
