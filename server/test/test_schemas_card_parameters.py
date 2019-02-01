@@ -1,1 +1,0 @@
-import schemas.card_parameters

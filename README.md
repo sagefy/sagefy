@@ -1,24 +1,24 @@
 <img src="https://raw.githubusercontent.com/heiskr/sagefy/master/nginx/statics/astrolabe.png" height="100">
 
-# Sagefy 
+# Sagefy
 
-**Learn anything, customized for you.** _And always free._
+**Learn anything, adapted for you.** _And always free._
 
 Sagefy is an _open-content, adaptive learning_ platform.
 
-* **Adaptive Learning.** Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
-* **Open-Content.** Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
+- **Adaptive Learning.** Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
+- **Open-Content.** Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
 
 [<img src="https://docs.google.com/drawings/d/e/2PACX-1vR3ARFXI6Y-DNZGSBn8Ngbe6yV4asc1CEZR-2b2mnbLnK6FZOND2uT8wyHNKu8qyIBfscjC3dsrWIMk/pub?w=1790&amp;h=800" width="890">](https://sagefy.org)
 
 What's next?
 
-* [Visit the site](https://sagefy.org).
-* Try our demo course, [Intro to Electronic Music](http://sgef.cc/emus).
-* For more information, [watch this 3 minute YouTube video](https://youtu.be/gFn4Q9tx7Qs) or [read the docs](https://docs.sagefy.org).
-* Want to help? [Check out our contributors' list.](https://docs.sagefy.org/Want-to-Help)
-* Sign up for [development updates](https://sgef.cc/devupdates).
-* Share us on [Twitter](https://twitter.com/sagefyorg).
+- [Visit the site](https://sagefy.org).
+- ~~Try our demo course, [Intro to Electronic Music](http://sgef.cc/emus).~~
+- For more information, [watch this 3 minute YouTube video](https://youtu.be/gFn4Q9tx7Qs) or [read the docs](https://docs.sagefy.org).
+- Want to help? [Check out our contributors' list.](https://docs.sagefy.org/Want-to-Help)
+- Sign up for [development updates](https://sgef.cc/devupdates).
+- Share us on [Twitter](https://twitter.com/sagefyorg).
 
 [![Build Status](https://img.shields.io/travis/sagefy/sagefy.svg?style=flat)](https://travis-ci.org/sagefy/sagefy)
 [<img src="https://i.imgur.com/M5xPVWm.png" height="20">](https://www.browserstack.com)

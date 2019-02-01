@@ -1,0 +1,91 @@
+input,
+textarea {
+  padding: calc(0.5rem - 1px) calc(1rem - 1px);
+}
+
+button,
+[type='submit'],
+[type='button'],
+[type='reset'] {
+  padding: 0.5rem 1.5rem;
+  border-radius: 1.5rem;
+}
+
+label {
+  display: block;
+}
+
+table {
+  width: 100%;
+}
+
+time {
+  color: #616c77; /* hsluv(240, 20, 45) */
+}
+
+summary > *:first-child {
+  text-decoration: underline;
+}
+
+.Icon {
+  bottom: -2px;
+  position: relative;
+}
+
+.meter {
+  width: 100%;
+  background: #eef1f5; /* hsluv(240, 30, 95) */
+}
+
+.meter > div {
+  background: #93ccff; /* hsluv(240, 100, 80) */
+  height: 0.5rem;
+}
+
+.meter,
+.meter > div {
+  border-radius: 0.25rem;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.vertical-align-middle {
+  vertical-align: middle;
+}
+
+.list-style-none,
+.list-style-inline {
+  list-style: none;
+  padding-left: 0;
+}
+
+.list-style-inline li {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.list-style-inline li:last-child {
+  margin-right: 0;
+}
+
+.collapse-margins > *:not(:first-child) {
+  margin-top: 0;
+}
+
+.collapse-margins > *:not(:last-child) {
+  margin-bottom: 0;
+}
+
+.display-inline-block {
+  display: inline-block;
+}
+
+.lift {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}

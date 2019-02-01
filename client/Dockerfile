@@ -1,8 +1,5 @@
-FROM node:6.11-alpine
-ADD . /www
-WORKDIR /www
-RUN echo -e 'http://dl-cdn.alpinelinux.org/alpine/edge/main\nhttp://dl-cdn.alpinelinux.org/alpine/edge/community\nhttp://dl-cdn.alpinelinux.org/alpine/edge/testing' > /etc/apk/repositories && \
-  apk add --no-cache yarn
-RUN yarn global add pm2
-RUN yarn install
-CMD ["pm2", "start", "./app/index.server.js", "--no-daemon"]
+FROM keymetrics/pm2:10-alpine
+ADD . /client
+WORKDIR /client
+RUN npm install
+CMD ["pm2-runtime", "start", "pm2.json"]
