@@ -703,6 +703,7 @@ summary > *:first-child {
 .Icon {
   bottom: -2px;
   position: relative;
+  opacity: 0.7;
 }
 
 .meter {
