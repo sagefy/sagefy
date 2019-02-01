@@ -1,6 +1,7 @@
 import React from 'react'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
+import ExternalLink from '../components/ExternalLink'
 
 export default function HomePage() {
   return (
@@ -56,20 +57,16 @@ export default function HomePage() {
       </section>  */}
 
       <section>
-        <table>
-          <tr>
-            <td className="text-align-right">
-              <img src="/astrolabe.svg" height="120" alt="astrolabe" />
-            </td>
-            <td className="collapse-margins vertical-align-middle">
-              <h2>Sagefy</h2>
-              <p>
-                <em>Learn anything, adapted to you. Free.</em>
-              </p>
-            </td>
-          </tr>
-        </table>
+        <div className="text-align-center collapse-margins">
+          <img src="/astrolabe.svg" height="120" alt="astrolabe" />
+          <h2>Sagefy</h2>
+          <p>
+            <em>Learn anything, adapted for you. Free.</em>
+          </p>
+        </div>
+      </section>
 
+      <section>
         <ul>
           <li>
             <Icon i="adapt" /> <strong>Adaptive Learning.</strong> Sagefy
@@ -83,13 +80,9 @@ export default function HomePage() {
           </li>
           <li>
             <Icon i="video" />{' '}
-            <a
-              href="https://youtu.be/gFn4Q9tx7Qs"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalLink href="https://youtu.be/gFn4Q9tx7Qs">
               Watch the overview video
-            </a>
+            </ExternalLink>
             .
           </li>
         </ul>

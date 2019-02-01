@@ -1,7 +1,7 @@
 {
   "name": "sagefy-client",
   "version": "2.0.0",
-  "description": "Sagefy. Learn anything, adapted to you. Free.",
+  "description": "Sagefy. Learn anything, adapted for you. Free.",
   "main": "index.js",
   "scripts": {
     "build-css": "cat node_modules/drab.css/css/drab.css partial.css > ../nginx/statics/sagefy.css",
