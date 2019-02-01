@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
+import Footer from '../components/Footer'
 
 export default function SearchSubjectsPage() {
   return (
@@ -107,6 +108,8 @@ export default function SearchSubjectsPage() {
         </p>
         <p><em>We'll show you how!</em> 👩🏼‍🏫 And we'll love you forever. 💕</p>
       </section> */}
+
+      <Footer />
     </div>
   )
 }
