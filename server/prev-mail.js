@@ -1,15 +1,26 @@
-const { createTransport } = require('nodemailer')
+/*
 
-const config = require('./config')
+const mailer = require('./mail')
+
+mailer(client)
+
+*/
+
+const { createTransport } = require('nodemailer')
 
 const SENDER = 'support@sagefy.org'
 
-const transport = createTransport(config.mail, {
-  from: SENDER,
-})
+const transport = createTransport(
+  {
+    // process.env.MAIL...
+  },
+  {
+    from: SENDER,
+  }
+)
 
 export async function sendMail({ to, subject, body }) {
-  if (config.test) return Promise.resolve()
+  if (process.env.ENV === 'TEST') return Promise.resolve()
   return transport.sendMail({
     to,
     subject,
