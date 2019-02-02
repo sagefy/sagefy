@@ -3,7 +3,7 @@ layout: docs
 title: What is Sagefy?
 ---
 
-**Learn anything, adapted to you.** _Free._
+**Learn anything, adapted for you.** _Free._
 
 Sagefy is an _open-content, adaptive learning_ platform.
 
