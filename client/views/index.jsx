@@ -18,7 +18,7 @@ export default function Index({ location }) {
           name="viewport"
           content="width=device-width, initial-scale=1.0"
         />
-        <link rel="stylesheet" href="/sagefy.css" />
+        <link rel="stylesheet" href="/sagefy.min.css" />
         <title>
           <StaticRouter context={{}} location={location}>
             <Switch>

@@ -1,3 +1,7 @@
+/*! Sagefy partial */
+
+/* Basic tag changes **********************************************************/
+
 input,
 textarea {
   padding: calc(0.5rem - 1px) calc(1rem - 1px);
@@ -20,33 +24,14 @@ table {
 }
 
 time {
-  color: #616c77; /* hsluv(240, 20, 45) */
+  color: #5c6c7d; /* hsluv(240, 30, 45) */
 }
 
 summary > *:first-child {
   text-decoration: underline;
 }
 
-.Icon {
-  bottom: -2px;
-  position: relative;
-  opacity: 0.7;
-}
-
-.meter {
-  width: 100%;
-  background: #eef1f5; /* hsluv(240, 30, 95) */
-}
-
-.meter > div {
-  background: #93ccff; /* hsluv(240, 100, 80) */
-  height: 0.5rem;
-}
-
-.meter,
-.meter > div {
-  border-radius: 0.25rem;
-}
+/* Utility classes ************************************************************/
 
 .text-align-center {
   text-align: center;
@@ -89,4 +74,27 @@ summary > *:first-child {
 
 .lift {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Elements *******************************************************************/
+
+.Icon {
+  bottom: -2px;
+  position: relative;
+  opacity: 0.7;
+}
+
+.meter {
+  width: 100%;
+  background: #eef1f5; /* hsluv(240, 30, 95) */
+}
+
+.meter > div {
+  background: #93ccff; /* hsluv(240, 100, 80) */
+  height: 0.5rem;
+}
+
+.meter,
+.meter > div {
+  border-radius: 0.25rem;
 }

@@ -1,4 +1,4 @@
-/*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
    ========================================================================== */
@@ -22,6 +22,14 @@ html {
 
 body {
   margin: 0;
+}
+
+/**
+ * Render the `main` element consistently in IE.
+ */
+
+main {
+  display: block;
 }
 
 /**
@@ -341,7 +349,6 @@ template {
 [hidden] {
   display: none;
 }
-
 /*! drab.css v0 | Apache-2.0 License | github.com/heiskr/drab.css */
 
 /* 1. Apply `border-box` sizing to all elements. */
@@ -356,6 +363,7 @@ body,
 input,
 textarea,
 button {
+  /* https://css-tricks.com/snippets/css/system-font-stack */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
@@ -372,17 +380,30 @@ var,
 [type='week'],
 [type='datetime'],
 [type='datetime-local'] {
+  /* https://www.client9.com/css-system-font-stack-monospace-v2 */
   font-family: 'SFMono-Regular', Menlo, Consolas, Inconsolata,
     'Liberation Mono', Monaco, 'Andale Mono', monospace;
+  font-size: 90%;
 }
 
 /* 3. Apply more common `line-height` and use an `8px` vertical rhythm. */
+
+/*
+  1   : 16px
+  1.5 : 24px
+  2   : 32px
+  2.5 : 40px
+  3   : 48px
+  3.5 : 56px
+  4   : 64px
+*/
 
 body,
 input,
 textarea,
 button {
-  line-height: 1.5;
+  /* font-size 1, 16px */
+  line-height: 1.5; /* 24px */
 }
 
 input,
@@ -404,16 +425,17 @@ hr {
 }
 
 h1 {
-  font-size: 2rem;
-  line-height: 3rem;
+  font-size: 2rem; /* 32px */
+  line-height: 3rem; /* 48px */
 }
 
 h2 {
-  line-height: 2.5rem;
+  /* font-size 1.5, 24px */
+  line-height: 2.5rem; /* 40px */
 }
 
 h3 {
-  line-height: 2rem;
+  line-height: 2rem; /* 32px */
 }
 
 figure {
@@ -425,16 +447,13 @@ blockquote {
   margin-left: 0;
 }
 
-legend,
-input,
-textarea {
+legend {
   padding: 0.25rem 0.5rem;
 }
 
 input,
 textarea {
   padding: calc(0.25rem - 1px) calc(0.5rem - 1px);
-  max-width: 100%;
 }
 
 button,
@@ -444,7 +463,20 @@ button,
   padding: 0.25rem 1rem;
 }
 
-/* 4. Use consistent border sizes and styles. */
+/* 4. Constrain elements to width. */
+
+img,
+iframe,
+input,
+textarea,
+button,
+[type='submit'],
+[type='button'],
+[type='reset'] {
+  max-width: 100%;
+}
+
+/* 5. Use consistent border sizes and styles. */
 
 fieldset,
 input,
@@ -461,7 +493,7 @@ blockquote {
   border-left: 1px solid;
 }
 
-/* 5. Tighten left on list like elements. */
+/* 6. Tighten left on list like elements. */
 
 ul,
 ol {
@@ -472,7 +504,7 @@ dd {
   margin-left: 1.5rem;
 }
 
-/* 6. Apply more common spacing on `table`s. */
+/* 7. Apply more common spacing on `table`s. */
 
 table {
   border-spacing: 0;
@@ -492,14 +524,7 @@ td {
   vertical-align: top;
 }
 
-/* 7. Constrain images and iframes to size */
-
-img,
-iframe {
-  max-width: 100%;
-}
-
-/* 8. Add spacing to sectional elements */
+/* 8. Add spacing to sectional elements. */
 
 header,
 section,
@@ -507,66 +532,7 @@ footer {
   margin: 4rem 0;
 }
 
-/* 9. Use more common, consistent, and attractive colors */
-
-body,
-input,
-textarea,
-button {
-  color: #233240; /* hsluv(240, 50, 20) */
-}
-
-a {
-  color: #007cb3; /* hsluv(240, 100, 49) */
-}
-
-a:hover {
-  opacity: 0.9;
-}
-
-a:active {
-  opacity: 1;
-}
-
-code,
-samp,
-kbd,
-tr:nth-child(even) {
-  background: #f8f9fc; /* hsluv(240, 40, 98) */
-}
-
-thead,
-tfoot {
-  background: #eef1f5; /* hsluv(240, 30, 95) */
-}
-
-hr,
-blockquote,
-fieldset,
-input,
-textarea {
-  border-color: #bcc8d5; /* hsluv(240, 25, 80) */
-}
-
-input:hover,
-textarea:hover {
-  border-color: #9badc1; /* hsluv(240, 25, 70) */
-}
-
-::placeholder {
-  color: #6a7988; /* hsluv(240, 25, 50) */
-}
-
-mark {
-  background: #fff489; /* hsluv(80, 100, 95) */
-}
-
-:focus {
-  outline: 0;
-  box-shadow: 0 0 0 2px #93ccff; /*  hsluv(240, 100, 80) */
-}
-
-/* 10. Style and color buttons to look more like web buttons. */
+/* 9. Style buttons to look more like web buttons. */
 
 button,
 [type='submit'],
@@ -585,60 +551,28 @@ button,
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-button:hover,
-[type='submit']:hover,
-[type='button']:hover,
-[type='reset']:hover {
-  opacity: 0.9;
-}
-
-button:active,
-[type='submit']:active,
-[type='button']:active,
-[type='reset']:active {
-  opacity: 1;
-}
-
-[type='submit'] {
-  color: white;
-  background: #007cb3; /* hsluv(240, 100, 49) */
-}
-
-button,
-[type='button'] {
-  background: #93ccff; /* hsluv(240, 100, 80) */
-}
-
-button[type='reset'],
-[type='reset'] {
-  background: #eef1f5; /* hsluv(240, 30, 95) */
-  color: #d80005; /* hsluv(12, 100, 45) */
-}
-
 button:disabled,
 [type='submit']:disabled,
 [type='button']:disabled,
 [type='reset']:disabled {
-  color: #616c77; /* hsluv(240, 20, 45) */
-  background: #f7f9fc; /* hsluv(240, 50, 98) */
   box-shadow: none;
 }
 
-/* 11. Change the look of caption text. */
+/* 10. Change the look of caption text. */
 
 caption,
 figcaption {
   font-style: italic;
 }
 
-/* 12. Make strikethroughs more obvious. */
+/* 11. Make strikethroughs more obvious. */
 
 del,
 s {
-  color: #616c77; /* hsluv(240, 20, 45) */
+  opacity: 0.5;
 }
 
-/* 13. Soften the shape of big boxy elements. */
+/* 12. Soften the shape of big boxy elements. */
 
 code,
 samp,
@@ -656,6 +590,7 @@ button,
 [type='button'],
 [type='reset'],
 fieldset,
+pre,
 code,
 samp,
 kbd,
@@ -663,13 +598,115 @@ mark {
   border-radius: 0.25rem;
 }
 
+/* 13. Use more common, consistent, and attractive colors. */
+
+/*
+  hsluv(240,  30, l) - Static page elements
+  hsluv(240, 100, l) - Interactive elements
+  hsluv( 80, 100, l) - Highlight, warning
+  hsluv( 12, 100, l) - Bad, error, issue
+*/
+
+body,
+input,
+textarea,
+button {
+  color: #29313a; /* hsluv(240, 30, 20) */
+}
+
+pre,
+code,
+samp,
+kbd,
+tr:nth-child(even) {
+  background: #f8f9fb; /* hsluv(240, 30, 98) */
+}
+
+thead,
+tfoot {
+  background: #eef1f5; /* hsluv(240, 30, 95) */
+}
+
+hr,
+blockquote,
+fieldset,
+input,
+textarea {
+  border-color: #bac8d8; /* hsluv(240, 30, 80) */
+}
+
+::placeholder {
+  color: #67798b; /* hsluv(240, 30, 50) */
+}
+
+a {
+  color: #007cb3; /* hsluv(240, 100, 49) */
+}
+
+mark {
+  background: #fff489; /* hsluv(80, 100, 95) */
+}
+
+[type='submit'] {
+  color: white;
+  background: #007cb3; /* hsluv(240, 100, 49) */
+}
+
+button,
+[type='button'] {
+  background: #93ccff; /* hsluv(240, 100, 80) */
+}
+
+button[type='reset'],
+[type='reset'] {
+  color: #d80005; /* hsluv(12, 100, 45) */
+  background: #eef1f5; /* hsluv(240, 30, 95) */
+}
+
+button:disabled,
+[type='submit']:disabled,
+[type='button']:disabled,
+[type='reset']:disabled {
+  color: #5c6c7d; /* hsluv(240, 30, 45) */
+  background: #f8f9fb; /* hsluv(240, 30, 98) */
+}
+
+:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px #93ccff; /* hsluv(240, 100, 80) */
+}
+
+input:hover,
+textarea:hover {
+  border-color: #97aec6; /* hsluv(240, 30, 70) */
+}
+
+a:hover,
+button:hover,
+[type='submit']:hover,
+[type='button']:hover,
+[type='reset']:hover {
+  opacity: 0.9;
+}
+
+a:active,
+button:active,
+[type='submit']:active,
+[type='button']:active,
+[type='reset']:active {
+  opacity: 1;
+}
+
 /* 14. Finally, limit width on a high element so text is more readable. (The only class!) */
 
 .page {
   margin: 0 auto;
-  max-width: 40rem;
+  max-width: 40rem; /* 640px */
   padding: 1rem;
 }
+/*! Sagefy partial */
+
+/* Basic tag changes **********************************************************/
 
 input,
 textarea {
@@ -693,33 +730,14 @@ table {
 }
 
 time {
-  color: #616c77; /* hsluv(240, 20, 45) */
+  color: #5c6c7d; /* hsluv(240, 30, 45) */
 }
 
 summary > *:first-child {
   text-decoration: underline;
 }
 
-.Icon {
-  bottom: -2px;
-  position: relative;
-  opacity: 0.7;
-}
-
-.meter {
-  width: 100%;
-  background: #eef1f5; /* hsluv(240, 30, 95) */
-}
-
-.meter > div {
-  background: #93ccff; /* hsluv(240, 100, 80) */
-  height: 0.5rem;
-}
-
-.meter,
-.meter > div {
-  border-radius: 0.25rem;
-}
+/* Utility classes ************************************************************/
 
 .text-align-center {
   text-align: center;
@@ -762,4 +780,27 @@ summary > *:first-child {
 
 .lift {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Elements *******************************************************************/
+
+.Icon {
+  bottom: -2px;
+  position: relative;
+  opacity: 0.7;
+}
+
+.meter {
+  width: 100%;
+  background: #eef1f5; /* hsluv(240, 30, 95) */
+}
+
+.meter > div {
+  background: #93ccff; /* hsluv(240, 100, 80) */
+  height: 0.5rem;
+}
+
+.meter,
+.meter > div {
+  border-radius: 0.25rem;
 }
