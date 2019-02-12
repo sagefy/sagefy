@@ -17,6 +17,8 @@ import {
   ThumbsUp,
   ThumbsDown,
   CheckCircle,
+  Tag,
+  FileText,
 } from 'react-feather'
 import get from 'lodash.get'
 
@@ -37,6 +39,8 @@ const MAP = {
   up: ThumbsUp,
   down: ThumbsDown,
   check: CheckCircle,
+  subject: Tag,
+  card: FileText,
 }
 
 const SIZES = {
