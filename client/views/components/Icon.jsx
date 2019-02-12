@@ -3,7 +3,6 @@ import { string } from 'prop-types'
 import {
   Home,
   Paperclip,
-  Star,
   Search,
   Share2,
   Globe,
@@ -14,7 +13,6 @@ import {
   Mail,
   MessageCircle,
   GitHub,
-  Zap,
   Frown,
   ThumbsUp,
   ThumbsDown,
@@ -35,7 +33,6 @@ const MAP = {
   contact: Mail,
   talk: MessageCircle,
   github: GitHub,
-  suggest: Zap,
   error: Frown,
   up: ThumbsUp,
   down: ThumbsDown,

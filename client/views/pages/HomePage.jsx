@@ -38,23 +38,7 @@ export default function HomePage() {
         </p>
       </section>
 
-      {/* <section>
-        <h2>...or try something popular ✨</h2>
-        <ul className="list-style-none">
-          <li className="collapse-margins">
-            <h3>
-              <Link to="/choose-unit">🎧 An Introduction to Electronic Music</Link>
-            </h3>
-            {/*  This should immediately launch the learning experience!
-            <p>
-              A small taste of the basics of electronic music. Learn the concepts
-              behind creating and modifying sounds in an electronic music system.
-              Learn the ideas behind the tools and systems we use to create
-              electronic music.
-            </p>
-          </li>
-        </ul>
-      </section>  */}
+      {/* ...or try something popular ✨ */}
 
       <section>
         <div className="text-align-center collapse-margins">

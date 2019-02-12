@@ -7,7 +7,6 @@ import ContactPage from './pages/ContactPage'
 import TermsPage from './pages/TermsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import SearchSubjectsPage from './pages/SearchSubjectsPage'
-import SuggestPage from './pages/SuggestPage'
 
 export default function Index({ location }) {
   return (
@@ -26,11 +25,6 @@ export default function Index({ location }) {
                 path="/search-subjects"
                 render={() => 'Search Subjects'}
               />
-              <Route path="/suggest" render={() => 'Suggest'} />
-              <Route
-                path="/search-subjects"
-                render={() => 'Search Subjects'}
-              />
               <Route path="/contact" render={() => 'Contact'} />
               <Route path="/terms" render={() => 'Terms'} />
               <Route path="/" exact render={() => 'Home'} />
@@ -44,7 +38,6 @@ export default function Index({ location }) {
         <div id="top" className="page" role="document">
           <StaticRouter context={{}} location={location}>
             <Switch>
-              <Route path="/suggest" component={SuggestPage} />
               <Route path="/search-subjects" component={SearchSubjectsPage} />
               <Route path="/contact" component={ContactPage} />
               <Route path="/terms" component={TermsPage} />

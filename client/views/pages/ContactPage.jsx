@@ -22,8 +22,8 @@ export default function ContactPage() {
           <li>
             <strong>I have an idea for content.</strong>
             <br />
-            <Link to="/suggest">
-              <Icon i="suggest" /> Suggest
+            <Link to="/create-subject">
+              <Icon i="subject" /> Create a new subject
             </Link>
             .
           </li>
