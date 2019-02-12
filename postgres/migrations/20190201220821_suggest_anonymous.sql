@@ -75,11 +75,12 @@ create function sg_private.follow_suggest()
 returns trigger as $$
   begin
     insert into sg_public.suggest_follow
-    (suggest_id, user_id, session_id)
+    (suggest_id, session_id) -- user_id
     values
     (new.id,
-      current_setting('jwt.claims.user_id')::uuid,
       current_setting('jwt.claims.session_id')::uuid);
+    -- current_setting('jwt.claims.user_id')::uuid
+    return new;
   end;
 $$ language 'plpgsql';
 comment on function sg_private.follow_suggest()

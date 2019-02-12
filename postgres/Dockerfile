@@ -19,6 +19,8 @@ RUN git clone https://github.com/michelp/pgjwt.git && \
   cd pgjwt && \
   make install
 
+# RUN dbmate -d "./migrations" -s "./schema.sql" up
+
 CMD ["postgres"]
 
 # docker-compose run postgres dbmate -d "./migrations" new "hello"
