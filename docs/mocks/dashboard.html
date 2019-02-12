@@ -13,13 +13,14 @@ title: Dashboard
   <h2>Choose one of your subjects 🧐📚</h2>
   <table>
     <tr>
-      <td>
+      <td class="text-align-center collapse-margins">
         <p><button type="submit">👍</button></p>
+        <pre><small>15%</small></pre>
       </td>
       <td class="collapse-margins">
         <h3>
           <mark
-            ><a href="/mocks/choose-unit"
+            ><a href="/mocks/choose-next"
               >🎧 An Introduction to Electronic Music</a
             ></mark
           >
@@ -28,21 +29,22 @@ title: Dashboard
           A small taste of the basics of electronic music. Learn the concepts
           behind creating and modifying sounds in an electronic music system.
           Learn the ideas behind the tools and systems we use to create
-          electronic music. <small>(2 of 17 units learned.)</small>
+          electronic music.
         </p>
       </td>
     </tr>
     <tr>
-      <td>
+      <td class="text-align-center collapse-margins">
         <p><button>👍</button></p>
+        <pre><small>0%</small></pre>
       </td>
       <td class="collapse-margins">
         <h3>
-          <a href="/mocks/choose-unit">🎸 Let's Play Classical Guitar</a>
+          <a href="/mocks/choose-next">🎸 Let's Play Classical Guitar</a>
         </h3>
         <p>
           An introduction to classical guitar. Let's learn some chords. And how
-          to read guitar tabulature. <small>(0 of 10 units learned.)</small>
+          to read guitar tabulature.
         </p>
       </td>
     </tr>
@@ -57,6 +59,7 @@ title: Dashboard
     </tr>
   </table>
 </section>
+
 
 <section>
   <h2>You've got some new notices 🔔</h2>
@@ -76,40 +79,52 @@ title: Dashboard
   </ul>
 </section>
 
+
 <section>
   <h2>Help us build Sagefy 🌳</h2>
-  <ul class="list-style-none">
-    <!--
-      This is what a completed subject should look like.
-      If the user has a subject creation in progress... _really_ draw that out.
-    -->
-    <li class="collapse-margins">
-      <h3><a href="/mocks/subject">🎼 Welcome to Music Theory</a></h3>
+
+  <details>
+    <summary><h3 class="display-inline-block">Add some cards 🃏</h3></summary>
+    <ul>
+      <li><a href="/mocks/create-card">Add cards to 🎧 <em>An Introduction to Electronic Music</em></a> <small>(0 cards)</small></li>
+      <li><a href="/mocks/create-card">Add cards to 🎸 <em>Let's Play Classical Guitar</em></a> <small>(10 cards)</small></li>
+      <!-- prioritized queue, descend children of followed subjects -->
+    </ul>
+  </details>
+
+  <details>
+    <summary><h3 class="display-inline-block">You can make a new subject 💡</h3></summary>
+
+    <form action="/mocks/create-subject">
       <p>
-        We'll cover the basics of how to read sheet music. Chords,
-        progressions, and sequences. Harmony.
+        <label for="name">What should we call this new subject?</label>
+        <input type="text" value="Music" placeholder="example: Introduction to Classical Guitar" size="40" id="name" name="name" autofocus>
       </p>
-    </li>
-    <li class="collapse-margins">
-      <h3>...or find something else 🕵🏻‍♀️</h3>
-      <form action="/mocks/search">
-        <input type="search" size="40" placeholder="example: Music" />
-        <button type="submit">🕵🏻‍♀️ Search</button>
-      </form>
-    </li>
-    <li>
+
       <p>
-        Or,
-        <strong
-          ><a href="/mocks/create-subject">🌱📚 Create a new subject</a
-          >.</strong
-        >
+        <label for="body">What are the goals of this subject?</label>
+        <textarea placeholder="example: An introduction to classical guitar. Let's learn some chords. And how to read guitar tablature." cols="40" rows="4" id="body" name="body"></textarea>
       </p>
-    </li>
-  </ul>
+
+      <p>
+        <button type="submit">📚 Create Subject</button>
+      </p>
+    </form>
+  </details>
+
+  <details>
+    <summary><h3 class="display-inline-block">...or find something else 🕵🏻‍♀️</h3></summary>
+    <form action="/mocks/search">
+      <input type="search" size="40" placeholder="example: Music" />
+      <button type="submit">🕵🏻‍♀️ Search</button>
+    </form>
+  </details>
+</section>
+
+<section>
   <details>
     <summary>
-      <span>🤷🏽‍♀️ What are cards, units, &amp; subjects? 🤷🏽‍♀️</span>
+      <span>🤷🏽‍♀️ What are cards &amp; subjects? 🤷🏽‍♀️</span>
     </summary>
     <ul>
       <li>
@@ -119,20 +134,13 @@ title: Dashboard
         </blockquote>
       </li>
       <li>
-        <p>A <strong>unit</strong> is a single learning goal. 📖</p>
-        <blockquote>
-          <p>Example: “What is mean, median, and mode?”</p>
-        </blockquote>
-      </li>
-      <li>
         <p>
-          A <strong>subject</strong> is a collection of units and other
+          A <strong>subject</strong> is a collection of cards and other
           subjects. 📚
         </p>
         <blockquote>
           <p>
-            Like a course, but at any scale. Such as “Measures of Central
-            Tendency”, “Intro to Statistics”, or even a full degree program.
+            Like a course, but at any scale. Such as “Measures of Central Tendency”, “Intro to Statistics”, or even a complete statistics program.
           </p>
         </blockquote>
       </li>
@@ -140,7 +148,7 @@ title: Dashboard
   </details>
 </section>
 
-<section>
+<footer>
   <hr />
   <small>
     <ul class="list-style-inline text-align-right">
@@ -151,4 +159,4 @@ title: Dashboard
       <li><a href="/mocks/home">👋🏾 Log out</a></li>
     </ul>
   </small>
-</section>
+</footer>

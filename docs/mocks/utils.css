@@ -25,6 +25,7 @@ time {
 
 summary > *:first-child {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .meter {
