@@ -4,7 +4,7 @@ title: Create Subject
 ---
 
 <section>
-  <form action="/mocks/add-units">
+  <form action="/mocks/create-card">
     <h1>Let's make a new subject! 😍 🎉</h1>
 
     <p>
@@ -22,8 +22,26 @@ title: Create Subject
       so you can easily continue later!</em>
     </p>
 
+    <!-- relations: parents, children, before, after
+      <p>
+        <label for="requireIds">What units need to come before this unit? <small>optional</small></label>
+        <table>
+          <tr>
+            <td><a href="/mocks/unit">Sounds Parameters</a></td>
+            <td><button type="reset">✂️ Cut</button></td>
+          </tr>
+          <tr>
+            <td><input type="text" size="25" /></td>
+            <td><button>➕ Add</button></td>
+          </tr>
+        </table>
+      </p>
+    -->
+
     <p>
       <button type="submit">📚 Create Subject</button>
     </p>
+
+    <!-- After creating a subject, suggest making child subjects or cards for the subject -->
   </form>
 </section>
