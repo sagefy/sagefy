@@ -27,7 +27,7 @@ export default function SuggestPage() {
             <td className="text-align-center collapse-margins">
               <p>
                 <button type="button" disabled>
-                  <Icon i="confirmed" />
+                  <Icon i="check" />
                 </button>
               </p>
               <pre>

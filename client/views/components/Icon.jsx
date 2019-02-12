@@ -25,7 +25,6 @@ import get from 'lodash.get'
 const MAP = {
   home: Home,
   terms: Paperclip,
-  learn: Star,
   search: Search,
   adapt: Share2,
   open: Globe,
@@ -40,7 +39,7 @@ const MAP = {
   error: Frown,
   up: ThumbsUp,
   down: ThumbsDown,
-  confirmed: CheckCircle,
+  check: CheckCircle,
 }
 
 const SIZES = {

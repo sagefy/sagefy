@@ -8,7 +8,7 @@ export default function HomePage() {
     <div className="HomePage">
       <section className="text-align-center">
         <h1>
-          What do you want to learn? <Icon i="learn" s="xxl" />
+          What do you want to learn? <Icon i="search" s="xxl" />
         </h1>
         <form action="/search-subjects">
           <p>

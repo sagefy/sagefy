@@ -8,7 +8,7 @@ export default function SearchSubjectsPage() {
     <div className="SearchSubjectsPage">
       <section className="text-align-center">
         <h1>
-          What do you want to learn? <Icon i="learn" s="xxl" />
+          What do you want to learn? <Icon i="search" s="xxl" />
         </h1>
         <form action="/mocks/search-subjects">
           <p>
@@ -71,7 +71,7 @@ export default function SearchSubjectsPage() {
         <ul className="list-style-none">
           <li>
             <button type="button" disabled>
-              <Icon i="confirmed" />
+              <Icon i="check" />
             </button>{' '}
             Violin Basics
           </li>
