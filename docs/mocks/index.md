@@ -3,7 +3,7 @@ layout: mocks
 title: V2 Mocks
 ---
 
-<style>body { background: #e5f8ff; }</style>
+<style>body { background: #dce3eb; }</style>
 
 # V2.1 Mocks
 
