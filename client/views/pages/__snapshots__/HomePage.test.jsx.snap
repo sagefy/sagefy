@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomePage should render the home page 1`] = `
+<div
+  className="HomePage"
+>
+  <section>
+    <blockquote>
+      <h1>
+        Hey friends... 
+        <Icon
+          i="friends"
+          s="xxl"
+        />
+      </h1>
+      <p>
+        So I'm rebuilding Sagefy to let anyone
+      </p>
+      <ol>
+        <li>
+          <em>
+            learn
+          </em>
+           without an account,
+        </li>
+        <li>
+          <em>
+            make
+          </em>
+           content without an account,
+        </li>
+        <li>
+          and to drastically 
+          <em>
+            simplify
+          </em>
+           contributing.
+        </li>
+      </ol>
+      <p>
+        Sagefy is temporarily limited. But here's some things you can do now:
+      </p>
+      <ul>
+        <li>
+          <ExternalLink
+            href="https://docs.sagefy.org/mocks"
+          >
+            <Icon
+              i="view"
+              s="m"
+            />
+             
+            <strong>
+              View
+            </strong>
+             the prototype
+          </ExternalLink>
+           
+          of what's coming!
+        </li>
+        <li>
+          <ExternalLink
+            href="https://sgef.cc/devupdates"
+          >
+            <Icon
+              i="updates"
+              s="m"
+            />
+             
+            <strong>
+              Subscribe
+            </strong>
+             to biweekly email updates
+          </ExternalLink>
+          .
+        </li>
+      </ul>
+      <p>
+        <small>
+          Last updated 2019 Feb 13
+        </small>
+      </p>
+    </blockquote>
+  </section>
+  <section>
+    <div
+      className="text-align-center collapse-margins"
+    >
+      <img
+        alt="astrolabe"
+        height="120"
+        src="/astrolabe.svg"
+      />
+      <h2>
+        Sagefy
+      </h2>
+      <p>
+        <em>
+          Learn anything, adapted for you. Free.
+        </em>
+      </p>
+    </div>
+  </section>
+  <section>
+    <ul>
+      <li>
+        <Icon
+          i="adapt"
+          s="m"
+        />
+         
+        <strong>
+          Adaptive Learning.
+        </strong>
+         Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
+      </li>
+      <li>
+        <Icon
+          i="open"
+          s="m"
+        />
+         
+        <strong>
+          Open Content.
+        </strong>
+         Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
+      </li>
+      <li>
+        <Icon
+          i="video"
+          s="m"
+        />
+         
+        <ExternalLink
+          href="https://youtu.be/gFn4Q9tx7Qs"
+        >
+          Watch the overview video
+        </ExternalLink>
+        .
+      </li>
+    </ul>
+  </section>
+  <Footer />
+</div>
+`;

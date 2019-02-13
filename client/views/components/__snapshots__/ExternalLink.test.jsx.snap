@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExternalLink component should render an external link 1`] = `
+<a
+  href="https://example.com"
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  <span>
+    Hello!
+  </span>
+</a>
+`;

@@ -7,7 +7,7 @@
     "build-css": "cat node_modules/drab.css/css/drab.css partial.css > ../nginx/statics/sagefy.css",
     "min-css": "cleancss -o ../nginx/statics/sagefy.min.css ../nginx/statics/sagefy.css",
     "prepublish": "npm run build-css && npm run min-css",
-    "test": "npm test"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -32,7 +32,21 @@
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.1.0",
     "clean-css": "^4.2.1",
-    "clean-css-cli": "^4.2.1"
+    "clean-css-cli": "^4.2.1",
+    "jest": "^24.1.0",
+    "superagent": "^4.1.0",
+    "supertest": "^3.4.2"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/coverage/**"
+    ]
   }
 }

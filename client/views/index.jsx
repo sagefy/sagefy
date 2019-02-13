@@ -8,6 +8,13 @@ import TermsPage from './pages/TermsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import SearchSubjectsPage from './pages/SearchSubjectsPage'
 
+export const output = a => () => a
+const searchSubjects = output('Search Subjects')
+const contact = output('Contact')
+const terms = output('Terms')
+const home = output('Home')
+const notFound = output('Not Found')
+
 export default function Index({ location }) {
   return (
     <html lang="en">
@@ -21,14 +28,11 @@ export default function Index({ location }) {
         <title>
           <StaticRouter context={{}} location={location}>
             <Switch>
-              <Route
-                path="/search-subjects"
-                render={() => 'Search Subjects'}
-              />
-              <Route path="/contact" render={() => 'Contact'} />
-              <Route path="/terms" render={() => 'Terms'} />
-              <Route path="/" exact render={() => 'Home'} />
-              <Route render={() => 'Not Found'} />
+              <Route path="/search-subjects" render={searchSubjects} />
+              <Route path="/contact" render={contact} />
+              <Route path="/terms" render={terms} />
+              <Route path="/" exact render={home} />
+              <Route render={notFound} />
             </Switch>
           </StaticRouter>{' '}
           – Sagefy

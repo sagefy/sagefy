@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Index view should render a page 1`] = `
+<html
+  lang="en"
+>
+  <head>
+    <meta
+      charSet="utf-8"
+    />
+    <meta
+      content="width=device-width, initial-scale=1.0"
+      name="viewport"
+    />
+    <link
+      href="/sagefy.min.css"
+      rel="stylesheet"
+    />
+    <title>
+      <StaticRouter
+        basename=""
+        context={Object {}}
+        location="/"
+      >
+        <Switch>
+          <Route
+            path="/search-subjects"
+            render={[Function]}
+          />
+          <Route
+            path="/contact"
+            render={[Function]}
+          />
+          <Route
+            path="/terms"
+            render={[Function]}
+          />
+          <Route
+            exact={true}
+            path="/"
+            render={[Function]}
+          />
+          <Route
+            render={[Function]}
+          />
+        </Switch>
+      </StaticRouter>
+       
+      – Sagefy
+    </title>
+  </head>
+  <body>
+    <div
+      className="page"
+      id="top"
+      role="document"
+    >
+      <StaticRouter
+        basename=""
+        context={Object {}}
+        location="/"
+      >
+        <Switch>
+          <Route
+            component={[Function]}
+            path="/search-subjects"
+          />
+          <Route
+            component={[Function]}
+            path="/contact"
+          />
+          <Route
+            component={[Function]}
+            path="/terms"
+          />
+          <Route
+            component={[Function]}
+            exact={true}
+            path="/"
+          />
+          <Route
+            component={[Function]}
+          />
+        </Switch>
+      </StaticRouter>
+    </div>
+  </body>
+</html>
+`;

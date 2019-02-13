@@ -6,7 +6,7 @@
   "scripts": {
     "precommit": "pretty-quick --staged",
     "lint": "eslint \"**/*.js\"",
-    "test": "concurrently -p \"[{name}]\" --names lint \"npm run lint\""
+    "test": "concurrently -p \"[{name}]\" --names lint,client,server \"npm run lint\" \"(cd client && npm run test)\" \"(cd server && npm run test)\""
   },
   "repository": {
     "type": "git",

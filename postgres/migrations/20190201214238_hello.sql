@@ -13,7 +13,7 @@ create schema sg_private;
 comment on schema sg_private is 'Schema hidden from GraphQL.';
 
 drop role if exists sg_postgraphile;
-create role sg_postgraphile login password '064242DF1E7140E190BBC672912EE966';
+create role sg_postgraphile login password 'FIXME_064242DF1E7140E190BBC672912EE966';
 comment on role sg_postgraphile is 'Access role for Postgraphile';
 
 drop role if exists sg_anonymous;

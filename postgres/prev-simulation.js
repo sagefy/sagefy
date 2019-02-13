@@ -1,6 +1,9 @@
 // Looking at a single unit...
 
-//// Constants /////////////////////////////////////////////////////////////////
+/* eslint-disable */
+// TODO enable eslint
+
+// // Constants ////////////////////////////////////////////////////////////////
 
 const INIT_GUESS = 0.3
 const INIT_SLIP = 0.1
@@ -8,7 +11,7 @@ const INIT_LEARNED = 0.5
 const MAX_LEARNED = 0.99
 const INIT_TRANSIT = 0.05 // TODO update to estimate, 0.05?
 
-//// Formulas //////////////////////////////////////////////////////////////////
+// // Formulas /////////////////////////////////////////////////////////////////
 
 function calcCorrect(guess, slip, learned) {
   return learned * (1 - slip) + (1 - learned) * guess
@@ -59,7 +62,7 @@ function smoothed(init, sum, count, C = 30) {
   return (C * init + sum) / (C + count)
 }
 
-//// Mock //////////////////////////////////////////////////////////////////////
+// // Mock /////////////////////////////////////////////////////////////////////
 
 function createCards(numCards = 20) {
   return [...Array(numCards).keys()].map(i => ({
@@ -200,9 +203,9 @@ function simulate(numCards, numLearners, rounds = 5000) {
   return { cards, learners }
 }
 
-//// Result ////////////////////////////////////////////////////////////////////
+// // Result ///////////////////////////////////////////////////////////////////
 
-function results(cards, learners) {
+function results(cards) {
   const meanResponses = mean(cards.map(({ responses }) => responses.length))
   const meanGuess = mean(cards.map(({ guess }) => guess))
   const guessPerf =
@@ -247,7 +250,7 @@ function results(cards, learners) {
   }
 }
 
-//// Run ///////////////////////////////////////////////////////////////////////
+// // Run //////////////////////////////////////////////////////////////////////
 
 if (require.main === module) {
   // The goal is to beat `1`.
