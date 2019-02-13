@@ -19,6 +19,10 @@ import {
   CheckCircle,
   Tag,
   FileText,
+  // temporary home page
+  Users,
+  Eye,
+  UserPlus,
 } from 'react-feather'
 import get from 'lodash.get'
 
@@ -41,6 +45,10 @@ const MAP = {
   check: CheckCircle,
   subject: Tag,
   card: FileText,
+  // temporary home page
+  signUp: UserPlus,
+  view: Eye,
+  friends: Users,
 }
 
 const SIZES = {

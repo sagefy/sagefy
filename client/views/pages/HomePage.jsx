@@ -1,4 +1,5 @@
 import React from 'react'
+// import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ExternalLink from '../components/ExternalLink'
@@ -6,7 +7,7 @@ import ExternalLink from '../components/ExternalLink'
 export default function HomePage() {
   return (
     <div className="HomePage">
-      <section className="text-align-center">
+      {/* <section className="text-align-center">
         <h1>
           What do you want to learn? <Icon i="search" s="xxl" />
         </h1>
@@ -26,6 +27,50 @@ export default function HomePage() {
             </button>
           </p>
         </form>
+      </section> */}
+
+      <section>
+        <blockquote>
+          <h1>
+            Hey friends... <Icon i="friends" s="xxl" />
+          </h1>
+
+          <p>So I&apos;m rebuilding Sagefy to let anyone</p>
+          <ol>
+            <li>
+              <em>learn</em> without an account,
+            </li>
+            <li>
+              <em>make</em> content without an account,
+            </li>
+            <li>
+              and to drastically <em>simplify</em> contributing.
+            </li>
+          </ol>
+          <p>
+            Sagefy is temporarily limited. But here&apos;s some things you can
+            do now:
+          </p>
+          <ul>
+            <li>
+              <ExternalLink href="https://docs.sagefy.org/mocks">
+                <Icon i="view" /> <strong>View</strong> the prototype
+              </ExternalLink>{' '}
+              of what&apos;s coming!
+            </li>
+            {/* <li><Link to="/sign-up"><Icon i="signUp" /> <strong>Sign up</strong></Link>, and we&apos;ll let you know as we release new stuff.</li> */}
+            <li>
+              <ExternalLink href="https://sgef.cc/devupdates">
+                <Icon i="updates" /> <strong>Subscribe</strong> to biweekly
+                email updates
+              </ExternalLink>
+              .
+            </li>
+          </ul>
+          <p>
+            <small>Last updated 2019 Feb 13</small>
+          </p>
+        </blockquote>
       </section>
 
       {/* Change to link to go to Choose Subject page */}
@@ -58,7 +103,7 @@ export default function HomePage() {
             the most out of your time and effort spent.
           </li>
           <li>
-            <Icon i="open" /> <strong>Open-Content.</strong> Anyone can view,
+            <Icon i="open" /> <strong>Open Content.</strong> Anyone can view,
             share, create, and edit content. Because anyone can contribute, you
             can learn anything you want.
           </li>
