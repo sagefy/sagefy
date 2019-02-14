@@ -10,10 +10,10 @@ jobs:
           command: npm install
       - run:
           name: npm-install-client
-          command: (cd client && npm install)
+          command: '(cd client && npm install)'
       - run:
           name: npm-install-server
-          command: (cd server && npm install)
+          command: '(cd server && npm install)'
       - run:
           name: npm-test
           command: npm test
