@@ -3,7 +3,6 @@ import { string } from 'prop-types'
 import {
   Home,
   Paperclip,
-  Star,
   Search,
   Share2,
   Globe,
@@ -14,18 +13,22 @@ import {
   Mail,
   MessageCircle,
   GitHub,
-  Zap,
   Frown,
   ThumbsUp,
   ThumbsDown,
   CheckCircle,
+  Tag,
+  FileText,
+  // temporary home page
+  Users,
+  Eye,
+  UserPlus,
 } from 'react-feather'
 import get from 'lodash.get'
 
 const MAP = {
   home: Home,
   terms: Paperclip,
-  learn: Star,
   search: Search,
   adapt: Share2,
   open: Globe,
@@ -36,11 +39,16 @@ const MAP = {
   contact: Mail,
   talk: MessageCircle,
   github: GitHub,
-  suggest: Zap,
   error: Frown,
   up: ThumbsUp,
   down: ThumbsDown,
-  confirmed: CheckCircle,
+  check: CheckCircle,
+  subject: Tag,
+  card: FileText,
+  // temporary home page
+  signUp: UserPlus,
+  view: Eye,
+  friends: Users,
 }
 
 const SIZES = {

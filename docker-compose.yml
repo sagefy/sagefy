@@ -10,6 +10,7 @@ services:
       - '80:80'
     links:
       - client
+      - server
   client:
     # https://hub.docker.com/_/node/
     build: ./client
@@ -17,3 +18,25 @@ services:
       - '5984:5984'
     volumes:
       - ./client:/client
+    links:
+      - server
+  server:
+    # https://hub.docker.com/_/node/
+    build: ./server
+    ports:
+      - '8653:8653'
+    volumes:
+      - ./server:/server
+    links:
+      - postgres
+  postgres:
+    # https://hub.docker.com/_/postgres/
+    build: ./postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: sagefy
+      POSTGRES_USER: sagefy
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      - ./postgres:/www

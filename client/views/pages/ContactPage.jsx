@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
+import ExternalLink from '../components/ExternalLink'
 
 export default function ContactPage() {
   return (
@@ -13,13 +14,16 @@ export default function ContactPage() {
           <li>
             <strong>I have a problem with content.</strong>
             <br />
-            <Icon i="talk" /> Discuss it in the site.
+            <Link to="/search">
+              <Icon i="talk" /> Discuss it in the site
+            </Link>
+            .
           </li>
           <li>
             <strong>I have an idea for content.</strong>
             <br />
-            <Link to="/suggest">
-              <Icon i="suggest" /> Suggest
+            <Link to="/create-subject">
+              <Icon i="subject" /> Create a new subject
             </Link>
             .
           </li>
@@ -28,13 +32,9 @@ export default function ContactPage() {
             <br />
             <strong>I found a bug.</strong>
             <br />
-            <a
-              href="https://github.com/heiskr/sagefy/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalLink href="https://github.com/heiskr/sagefy/issues">
               <Icon i="github" /> Add to Github issues
-            </a>
+            </ExternalLink>
             .
           </li>
           <li>
@@ -51,7 +51,6 @@ export default function ContactPage() {
             </a>
           </li>
         </ul>
-
         <p>
           <Link to="/">
             Go back <Icon i="home" /> home

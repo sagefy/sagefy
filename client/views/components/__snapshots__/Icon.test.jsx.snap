@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon component should render an icon 1`] = `
+<i
+  className="Icon icon-home"
+>
+  <Home
+    color="currentColor"
+    size={32}
+  />
+</i>
+`;
+
+exports[`Icon component should render an icon with default size 1`] = `
+<i
+  className="Icon icon-home"
+>
+  <Home
+    color="currentColor"
+    size={16}
+  />
+</i>
+`;

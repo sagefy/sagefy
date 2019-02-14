@@ -1,12 +1,12 @@
 {
   "name": "sagefy",
   "version": "2.0.0",
-  "description": "Sagefy. Learn anything, adapted to you. Free.",
+  "description": "Sagefy. Learn anything, adapted for you. Free.",
   "main": "docker-compose.yml",
   "scripts": {
     "precommit": "pretty-quick --staged",
     "lint": "eslint \"**/*.js\"",
-    "test": "concurrently -p \"[{name}]\" --names lint \"npm run lint\""
+    "test": "concurrently -p \"[{name}]\" --names lint,client,server \"npm run lint\" \"(cd client && npm run test)\" \"(cd server && npm run test)\""
   },
   "repository": {
     "type": "git",

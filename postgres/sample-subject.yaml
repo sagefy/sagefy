@@ -1,280 +1,240 @@
 subjects:
-  subjectFoundation:
-    name: An Introduction to Electronic Music -- Foundation
-    body: A small taste of the basics of electronic music. These units serve as the basis for topics on creating and changing sound.
-    members:
-      - kind: unit
-        id: unitIntro
-      - kind: unit
-        id: unitParams
-      - kind: unit
-        id: unitHuman
-      - kind: unit
-        id: unitCurves
-      - kind: unit
-        id: unitDigital
-      - kind: unit
-        id: unitAdc
-      - kind: unit
-        id: unitComplex
-  subjectCreate:
-    name: An Introduction to Electronic Music -- Creating Sound
-    body: An overview of commons tools to create sound in an electronic music system.
-    members:
-      - id: unitOsc
-        kind: unit
-      - id: unitNoise
-        kind: unit
-      - id: unitAdd
-        kind: unit
-      - id: unitSub
-        kind: unit
-      - id: unitSample
-        kind: unit
-  subjectChange:
-    name: An Introduction to Electronic Music -- Changing Sound
-    body: An overview of commons tools to change sound in an electronic music system.
-    members:
-      - kind: unit
-        id: unitFilters
-      - kind: unit
-        id: unitModulation
-      - kind: unit
-        id: unitLfo
-      - kind: unit
-        id: unitModEffects
-      - kind: unit
-        id: unitAmpModifiers
-      - kind: unit
-        id: unitEnvelopes
-      - kind: unit
-        id: unitEqualization
-      - kind: unit
-        id: unitDistortion
-      - kind: unit
-        id: unitDelay
-      - kind: unit
-        id: unitReverberation
-  subjectSystems:
-    name: An Introduction to Electronic Music -- Systems
-    body: An introduction to some of the systems we use in electronic music.
-    members:
-      - kind: unit
-        id: unitFFT
-      - kind: unit
-        id: unitSpatialization
-      - kind: unit
-        id: unitSynthesizer
-      - kind: unit
-        id: unitMixers
-      - kind: unit
-        id: unitMonoPoly
-      - kind: unit
-        id: unitMidi
-      - kind: unit
-        id: unitOscS
-  subjectAll:
+  all:
     name: An Introduction to Electronic Music
     body: A small taste of the basics of electronic music. Learn the concepts behind creating and modifying sounds in an electronic music system. Learn the ideas behind the tools and systems we use to create electronic music.
-    members:
-      - kind: subject
-        id: subjectFoundation
-      - kind: subject
-        id: subjectCreate
-      - kind: subject
-        id: subjectChange
-      - kind: subject
-        id: subjectSystems
-units:
-  unitIntro:
+  foundation:
+    name: An Introduction to Electronic Music -- Foundation
+    body: A small taste of the basics of electronic music. These s serve as the basis for topics on creating and changing sound.
+    parent: all
+  create:
+    name: An Introduction to Electronic Music -- Creating Sound
+    body: An overview of commons tools to create sound in an electronic music system.
+    parent: all
+  change:
+    name: An Introduction to Electronic Music -- Changing Sound
+    body: An overview of commons tools to change sound in an electronic music system.
+    parent: all
+  systems:
+    name: An Introduction to Electronic Music -- Systems
+    body: An introduction to some of the systems we use in electronic music.
+    parent: all
+  intro:
     name: Electronic Music
     body: Define electronic music and the subjects electronic music covers.
-    require_ids: []
-  unitParams:
+    parent: foundation
+  params:
     name: Sound Parameters
     body: Describe the basic parameters of sound -- amplitude, frequency, duration, phase, and timbre.
-    require_ids: [unitIntro]
-  unitHuman:
+    parent: foundation
+    before: [intro]
+  human:
     name: Human Hearing
     body: Describe common properties of human hearing, as hearing pertains to electronic music.
-    require_ids: [unitParams]
-  unitCurves:
+    parent: foundation
+    before: [params]
+  curves:
     name: Hearing Curves
     body: Describe how hearing varies with frequency and amplitude.
-    require_ids: [unitHuman]
-  unitDigital:
+    parent: foundation
+    before: [human]
+  digital:
     name: Digital Representation
     body: Describe how we represent sound digitally, including bit depth and sample rate.
-    require_ids: [unitHuman]
-  unitAdc:
+    parent: foundation
+    before: [human]
+  adc:
     name: Analog to Digital
     body: Describe how we convert analog sound into digital sound.
-    require_ids: [unitDigital]
-  unitComplex:
+    parent: foundation
+    before: [digital]
+  complex:
     name: Complex Waves
     body: Describe the composition of complex sounds.
-    require_ids: [unitParams]
-  unitOsc:
+    parent: foundation
+    before: [params]
+  osc:
     name: Oscillators
     body: Describe the oscillators and basic wave forms -- sine, triangle, square, and sawtooth.
-    require_ids: [unitComplex]
-  unitNoise:
+    parent: create
+    before: [complex]
+  noise:
     name: Noise
     body: Describe the types of noise -- white, brown, and pink.
-    require_ids: [unitOsc]
-  unitAdd:
+    parent: create
+    before: [osc]
+  add:
     name: Additive Synthesis
     body: Describe how multiple waves produce a single sound.
-    require_ids: [unitOsc]
-  unitSub:
+    parent: create
+    before: [osc]
+  sub:
     name: Subtractive Synthesis
     body: Describe how we can subtract information to produce sound.
-    require_ids: [unitNoise]
-  unitSample:
+    parent: create
+    before: [noise]
+  sample:
     name: Samplers
     body: Describe samplers.
-    require_ids: [unitAdc]
-  unitFilters:
+    parent: create
+    before: [add]
+  filters:
     name: Filters
     body: Describe the basic types of filters low-pass, high-pass, band-reject, and band-pass.
-    require_ids: [unitSub]
-  unitModulation:
+    parent: change
+    before: [sub]
+  modulation:
     name: Modulation
     body: Describe modulation of sound signals.
-    require_ids: [unitParams]
-  unitLfo:
+    parent: change
+    before: [params]
+  lfo:
     name: Low Frequency Oscillators
     body: Describe low-frequency oscillators.
-    require_ids: [unitModulation, unitOsc]
-  unitModEffects:
+    parent: change
+    before: [modulation, osc]
+  modEffects:
     name: Modulation Effects
     body: Describe modulation effects of tremolo, chorus, flange, phase, vibrato.
-    require_ids: [unitLfo]
-  unitAmpModifiers:
+    parent: change
+    before: [lfo]
+  ampModifiers:
     name: Amplitude Modifiers
     body: Describe the basic characteristics of amplitude modifiers of gain, compressors, de-essers, expanders, multi-pressors.
-    require_ids: [unitCurves]
-  unitEnvelopes:
+    parent: change
+    before: [curves]
+  envelopes:
     name: Envelopes
     body: Describe how amplitude changes over time.
-    require_ids: [unitAmpModifiers]
-  unitEqualization:
+    parent: change
+    before: [ampModifiers]
+  equalization:
     name: Equalization
     body: Describe equalizers.
-    require_ids: [unitFilters]
-  unitDistortion:
+    parent: change
+    before: [filters]
+  distortion:
     name: Distortion
     body: Describe distortion and applying the effect to a signal.
-    require_ids: [unitNoise]
-  unitDelay:
+    parent: change
+    before: [noise]
+  delay:
     name: Delay
     body: Describe delay effects.
-    require_ids: [unitComplex]
-  unitReverberation:
+    parent: change
+    before: [complex]
+  reverberation:
     name: Reverberation
     body: Describe reverberation effects.
-    require_ids: [unitDelay]
-  unitFFT:
+    parent: change
+    before: [delay]
+  FFT:
     name: Fast Fourier Transform
     body: Describe the inputs, outputs, and applications of the Fast Fourier Transform.
-    require_ids: [unitComplex]
-  unitSpatialization:
+    parent: systems
+    before: [complex]
+  spatialization:
     name: Spatialization
     body: Describe acoustic panning and spatialization.
-    require_ids: [unitComplex]
-  unitSynthesizer:
+    parent: systems
+    before: [complex]
+  synthesizer:
     name: A Basic Synthesizer
     body: Describe a basic synthesizer configuration.
-    require_ids: [unitOsc, unitEnvelopes, unitFilters, unitSpatialization]
-  unitMixers:
+    parent: systems
+    before: [osc, envelopes, filters, spatialization]
+  mixers:
     name: Mixers
     body: Describe a mixer.
-    require_ids: [unitAmpModifiers]
-  unitMonoPoly:
+    parent: systems
+    before: [ampModifiers]
+  monoPoly:
     name: Monophony and Polyphony
     body: Describe polyphonic synthesis.
-    require_ids: [unitSynthesizer]
-  unitMidi:
+    parent: systems
+    before: [synthesizer]
+  midi:
     name: MIDI, Musical Instrument Digital Interface
     body: Describe the basics of the MIDI protocol.
-    require_ids: [unitMonoPoly]
-  unitOscS:
+    parent: systems
+    before: [monoPoly]
+  oscs:
     name: OSC, Open Sound Control
     body: Describe the basics of the OSC protocol.
-    require_ids: [unitMidi]
+    parent: systems
+    before: [midi]
 cards:
   video:
-    - unit: unitIntro
+    - subject: intro
       video_id: VSwjp7Zt1GY
-    - unit: unitParams
+    - subject: params
       video_id: 9nlWEA-DAGU
-    - unit: unitHuman
+    - subject: human
       video_id: 3K7fYHczldY
-    - unit: unitCurves
+    - subject: curves
       video_id: N8TDZWYr6xo
-    - unit: unitDigital
+    - subject: digital
       video_id: bhCRqfdI_dI
-    - unit: unitAdc
+    - subject: adc
       video_id: kVwK-u82n6g
-    - unit: unitComplex
+    - subject: complex
       video_id: qAojF80nwsM
-    - unit: unitOsc
+    - subject: osc
       video_id: XVSTrQktys8
-    - unit: unitNoise
+    - subject: noise
       video_id: 1Ru0I4epGA0
-    - unit: unitAdd
+    - subject: add
       video_id: 'TBt4YUP-UN0'
-    - unit: unitSub
+    - subject: sub
       video_id: lJaOJxP4hUg
-    - unit: unitSample
+    - subject: sample
       video_id: apT5oXr9sPg
-    - unit: unitFilters
+    - subject: filters
       video_id: icRtqXy7UQk
-    - unit: unitModulation
+    - subject: modulation
       video_id: Pfbvj8tzc8M
-    - unit: unitLfo
+    - subject: lfo
       video_id: SLmtt33huVo
-    - unit: unitModEffects
+    - subject: modEffects
       video_id: ExFlL97cwPY
-    - unit: unitAmpModifiers
+    - subject: ampModifiers
       video_id: EosXTzzVM7c
-    - unit: unitEnvelopes
+    - subject: envelopes
       video_id: WMZJmjfMAX4
-    - unit: unitEqualization
+    - subject: equalization
       video_id: LYv_oVJ4vnI
-    - unit: unitDistortion
+    - subject: distortion
       video_id: smylrBjP8s0
-    - unit: unitDelay
+    - subject: delay
       video_id: 3zM7GleGlKw
-    - unit: unitReverberation
+    - subject: reverberation
       video_id: wAgrMN5WtZ4
-    - unit: unitFFT
+    - subject: fFT
       video_id: K8XAKz68kH4
-    - unit: unitSpatialization
+    - subject: spatialization
       video_id: czrUV712htI
-    - unit: unitSynthesizer
+    - subject: synthesizer
       video_id: Uq-oyrjtGcs
-    - unit: unitMixers
+    - subject: mixers
       video_id: j1iweMiYegQ
-    - unit: unitMonoPoly
+    - subject: monoPoly
       video_id: ZFOnYaG3TGs
-    - unit: unitMidi
+    - subject: midi
       video_id: DnDjkPVUlos
-    - unit: unitOscS
+    - subject: oscS
       video_id: iB2N585gEKg
   unscored_embed:
-    - unit: unitParams
+    - subject: params
       url: https://em.sagefy.org/examples/amplitude-and-volume
-    - unit: unitParams
+    - subject: params
       url: https://em.sagefy.org/examples/frequency-and-pitch
-    - unit: unitParams
+    - subject: params
       url: https://em.sagefy.org/examples/duration-and-rhythm
-    - unit: unitParams
+    - subject: params
       url: https://em.sagefy.org/examples/phase-and-space
-    - unit: unitParams
+    - subject: params
       url: https://em.sagefy.org/examples/spectrum-and-color
   page:
-    - unit: unitIntro
+    - subject: intro
       name: Electronic Music
       body: |
         # What is Electronic Music?
@@ -323,8 +283,8 @@ cards:
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/01-what-is-electronic-music/01-what-is-electronic-music.012.jpeg)
 
-        We'll explore more about electronic music in the upcoming units.
-    - unit: unitParams
+        We'll explore more about electronic music in the upcoming s.
+    - subject: params
       name: Sound Parameters
       body: |
         There are five basic parameters of sound: amplitude, frequency, duration, phase, and spectrum. For each parameter, I will define the parameter, define how we measure the parameter, and how we perceive the parameter. Physical parameters and perceptual parameters are different.
@@ -361,8 +321,8 @@ cards:
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/02-sound-parameters/02-sound-parameters.006.jpeg)
 
-        There are five basic parameters of sound: amplitude, frequency, duration, phase, and spectrum. We perceive them as: volume, pitch, rhythm, space, and color. In upcoming units, we'll talk about how to create sound using and changing these parameters.
-    - unit: unitHuman
+        There are five basic parameters of sound: amplitude, frequency, duration, phase, and spectrum. We perceive them as: volume, pitch, rhythm, space, and color. In upcoming s, we'll talk about how to create sound using and changing these parameters.
+    - subject: human
       name: Human Hearing
       body: |
         In this unit, I'll discuss the physical capabilities of the human hearing system in regards to the five basic parameters of sound: amplitude, frequency, duration, phase, and spectrum.
@@ -392,7 +352,7 @@ cards:
         # Space
 
         We use many cues to determine the location of a sound. The overall volume of a sound helps us to determine how close or how far a sound is. Also, sounds further away have reduced high-frequency content. We use the comparative amplitude between our two ears to determine the direction of the sound. Also, a sound reaching one ear slightly faster than the other informs our sense of direction. If a sound moves towards us or away from us, our perception of the pitch of the sound changes over that movement, also known as the Doppler effect. While we are excellent at perceiving distance and side-to-side, we have some difficulty with forward-and-back, and the most difficult axis is above-and-below.
-    - unit: unitCurves
+    - subject: curves
       name: Hearing Curves
       body: |
         We do not perceive sounds evenly over the frequency range. At the same amplitude, we perceive some frequencies as louder than others. We call a graph that shows how our hearing varies over frequency and amplitude, a hearing curve. Often, these hearing curves are shown as equal-loudness contours. Meaning, how would you have to change a sound in order to have the sound appear 'neural' to our ears? Historically, we called these graphs Fletcher-Munson curves, but updated models are available.
@@ -408,7 +368,7 @@ cards:
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/04-hearing-curves/04-hearing-curves.004.jpeg)
 
         The second interesting parameter here is amplitude. At the loudest part of our range, 100 dbSpl and above, our sensitivity over frequency has less variation. At our regular hearing level, 60-70 dbSpl, there's a moderate amount of difference in perceived volume. As the sounds become softer, the difference in volume over frequency grows tremendously.
-    - unit: unitDigital
+    - subject: digital
       name: Digital Representation
       body: |
         We represent digital sound quite differently than analog sound. While computers are impressive at doing arithmetic at lightning speeds, the computer must represent sound as numbers instead of physical signals.
@@ -436,7 +396,7 @@ cards:
         The possible range of each number is the "bit depth". 16 bit numbers, or 0 to 65535, are the most common. 24 and 32 bit systems are becoming more regular. Computers often represent numbers in the range of 0 to 2 to the power of some value minus 1. 16 bits means 2 to the power of 16, and we subtract 1 at the top of the range to allow for 0.
 
         44.1k sample rate and 16 bit depth is way more than sufficient for human listening capabilities. Sometimes we use faster sample rates and larger bit depths so when we modify sounds to the extreme, we don't drop below the needed amounts for human listening.
-    - unit: unitAdc
+    - subject: adc
       name: Analog to Digital
       body: |
         How to we get physical sounds into a digital format?
@@ -477,7 +437,7 @@ cards:
         The speakers move their diaphragms to match the analog signal, which creates changes in pressure in the air to create sound.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/06-analog-to-digital/06-analog-to-digital.005.jpeg)
-    - unit: unitComplex
+    - subject: complex
       name: Complex Waves
       body: |
         The sine wave is the simplest sound in existence.
@@ -515,7 +475,7 @@ cards:
         We can directly change the individual sine waves within a complex wave. This technique is known as spectral editing.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/07-complex-waves/07-complex-waves.009.jpeg)
-    - unit: unitOsc
+    - subject: osc
       name: Oscillators
       body: |
         An oscillator creates sound. The sound an oscillator creates is in a simple, repeating cycle. Different types of oscillators produce different kinds of simple sound waves. The five most basic types of oscillators are sine, triangle, square, rectangle, and sawtooth.
@@ -551,7 +511,7 @@ cards:
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/08-oscillators/08-oscillators.006.jpeg)
 
         These fives types are not the only types of oscillators. There are an infinite number of different types of oscillators, each with different mathematical and sound color properties.
-    - unit: unitNoise
+    - subject: noise
       name: Noise
       body: |
         Noise is a generated random signal. Noise is a collection of signals with random amplitudes and frequencies within specific parameters over time. As our brain has almost nothing to make sense of, we perceive noise different than other sound source. Noise often sounds like percussive instruments. A noise generator is a sound module that creates a noise signal.
@@ -579,7 +539,7 @@ cards:
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/09-noise/09-noise.005.jpeg)
 
         There are many types of noise generators beyond the ones mentioned here. Artists use a variety of noise types to add interest to their work.
-    - unit: unitAdd
+    - subject: add
       name: Additive Synthesis
       body: |
         Sound synthesis is the process of combining two or more sounds. Additive synthesis is a sound generating process. Additive synthesis combines waves in a variety of amplitudes, frequencies, and phases. These waves may change in these properties over time. Often these waves are all sine waves. The purpose of additive synthesis is to replicate an existing color. Or, we can use additive synthesis to explore new sound colors.
@@ -595,7 +555,7 @@ cards:
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/10-additive-synthesis/10-additive-synthesis.004.jpeg)
 
         Additive synthesis is likely the most powerful technique to produce sounds. But, the process can be expensive for the computer to calculate.
-    - unit: unitSub
+    - subject: sub
       name: Subtractive Synthesis
       body: |
         Sound synthesis is the process of combining two or more sounds. Noise is a generated random signal. Noise is a collection of signals with random amplitudes and frequencies within specific parameters over time. A filter is a sound modifying module that reduces or eliminates the amplitude of frequency ranges.
@@ -611,7 +571,7 @@ cards:
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/11-subtractive-synthesis/11-subtractive-synthesis.004.jpeg)
 
         Like additive synthesis, the filtering properties -- frequency, amplitude, and phase -- can vary over time. The properties may also vary in space. Subtractive synthesis is often cheaper to calculate than additive synthesis.
-    - unit: unitSample
+    - subject: sample
       name: Samplers
       body: |
         A sample is a short piece of prerecorded sound that we have loaded into the computer's memory. A sampler is a sound generating module that can play back samples.
@@ -629,7 +589,7 @@ cards:
         Most early electronic music is in the category of "tape music". Tape music started as taking physical tapes of music and sounds, and cutting them up, and adhering the pieces back together to create a new piece. We can simulate this experience in modern computer software.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/12-samplers/12-samplers.005.jpeg)
-    - unit: unitFilters
+    - subject: filters
       name: Filters
       body: |
         Filtering is the process of reducing or eliminating the amplitude of selected frequencies in the spectrum of a sound signal. Filtering is one of the most important electronic music tools. We use filters to shape sounds, to bring out new colors, and to balance sounds together.
@@ -651,7 +611,7 @@ cards:
         # In a System
 
         Filters are often combined with other filters and sound effects. Remember that while you can make a filter with set properties, it is also possible to change these parameters over time. For example, a delay effect may apply filtering to the delayed copies of the sound source. Filtering is the most common sound changing technique we use in electronic music.
-    - unit: unitModulation
+    - subject: modulation
       name: Modulation
       body: |
         Modulation is the technique of varying parameters to sound generators and sound modifiers over time. Modulation is important, because without change over time music is boring. We can modulate just about any parameter, just as frequency, amplitude, phase, copies of the source, and so on.
@@ -659,7 +619,7 @@ cards:
         We can even modulate the entire signal, such as in the case of ring modulation. In ring modulation, a source signal is multiplied by another, simple signal such as a sine wave. This effect can produce dramatic results.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/14-modulation/14-modulation.002.jpeg)
-    - unit: unitLfo
+    - subject: lfo
       name: Low Frequency Oscillators
       body: |
         A low frequency oscillator is an oscillator with a frequency below the human range of hearing, below 30 Hz or so. We can't directly hear a low frequency oscillator. A low frequency oscillator can be any wave shape. Most common is the sine wave. We can use square, triangle, rectangle, sawtooth, and just about any other form as a low frequency oscillator. Like any other oscillator, low frequency oscillators have the parameters of shape, amplitude, and frequency.
@@ -669,7 +629,7 @@ cards:
         The purpose of a low frequency oscillator is to change a parameter, or many parameters, of either a sound generator or sound modifier. For example, we can put a low frequency oscillator as the source of a cutoff frequency to a filter. We will discuss common use cases of low frequency oscillators in the "modulation effects" unit. By changing parameters over time, we can add interest to our music. Change is good!
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/15-low-frequency-oscillators/15-low-frequency-oscillators.003.jpeg)
-    - unit: unitModEffects
+    - subject: modEffects
       name: Modulation Effects
       body: |
         Common effects that use low-frequency oscillators are vibrato, tremolo, phaser, flange, and chorus. These are bold effects that can add interest to the music. While each has a different sound, they are all based on the principle of modifying a parameter with a low-frequency oscillator.
@@ -697,7 +657,7 @@ cards:
         Chorus is one of the most common effects. Chorus makes the sound source appear to be a group of instruments playing the same part instead of a single instrument. An example would be the difference between a single flute playing a part versus several flutes playing the same part at the same time. Chorus works by making copies of the original sound source. The effect delays each copy in a variety of durations, usually 20-80ms. Also, each delayed copy is slightly changed in pitch as well. Chorus has similar parameters to the other effects listed here: wet/dry, delay, depth (usually less than 10%), and rate (usually less than 10 Hz).
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/16-modulation-effects/16-modulation-effects.006.jpeg)
-    - unit: unitAmpModifiers
+    - subject: ampModifiers
       name: Amplitude Modifiers
       body: |
         An amplitude modifier impacts the sound source's amplitude. There are many kinds of amplitude modifiers. The most basic is a gain effect. Compressors, expanders, de-essers, and multi-pressors are the most common. Yet, there are a larger range of amplitude changing effects. We use amplitude modifiers to control unwieldy sound sources and to create balance between sound sources.
@@ -731,7 +691,7 @@ cards:
         Finally, a multi-pressor is a collection of individual compressors for specific frequency ranges. So there would be one compressor for bass frequencies, one for low-mids, one for high-mids, and one for high frequencies, for example. We use multi-pressors commonly on the entire output for the music instead of on an individual instrument to help balance the mix.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/17-amplitude-modifiers/17-amplitude-modifiers.007.jpeg)
-    - unit: unitEnvelopes
+    - subject: envelopes
       name: Envelopes
       body: |
         An envelope is a special type of amplitude modifier that changes amplitude over time. The common purpose of an envelope is to give synthetic sounds natural shapes.
@@ -747,7 +707,7 @@ cards:
         Not all envelopes are ADSR envelopes. Some envelopes skip the decay and/or sustain phases. More complex models are also available.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/18-envelopes/18-envelopes.003.jpeg)
-    - unit: unitEqualization
+    - subject: equalization
       name: Equalization
       body: |
         An equalizer is a sound modifying module that helps to balance the frequencies of the incoming signal. The equalizer changes the spectral content of the sound. We build equalizers from a combination of filters and gain. We often use equalizers to make multiple sound sources combine together clearly by avoiding overlapping frequency ranges.
@@ -759,7 +719,7 @@ cards:
         An equalizer is essentially a collection of different types of filters. Each filter has the same properties as a normal filter: type, cutoff (or frequency), q (or slope, range), and gain.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/19-equalization/19-equalization.004.jpeg)
-    - unit: unitDistortion
+    - subject: distortion
       name: Distortion
       body: |
         Distortion is a sound effect that adds noise to a sound source. Distortion can sound warm, fuzzy, or dirty depending on the type of distortion we use. A classic use is on electric guitar. There are many types of distortion. Traditional distortion is clipping, or overexerting the system, forcing the sound system to add noise. Modern distortion effects often emulate physical modules such as guitar amplifiers.
@@ -769,7 +729,7 @@ cards:
         Distortion effects vary widely in their parameters, but almost all include a wet/dry mix. Dry is the original signal, wet is the effected signal. Amplitude and frequency are common parameters as well. Amplitude impacts the overall effect of the distortion. Frequency impacts the color of the distortion.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/20-distortion/20-distortion.003.jpeg)
-    - unit: unitDelay
+    - subject: delay
       name: Delay
       body: |
         Delay is a sound changing module that plays the sound source more than once at different times. The delay plays copies of the original sound source at later times. The classic delay effect sounds like an echo (echo, echo). We can use delay to create a sense of ambience, texture, and even rhythm. This simple effect is endless in variation.
@@ -787,7 +747,7 @@ cards:
         Delay has a relationship to flanger, phaser, and chorus. These modules play back copies of the original sound. The main difference is the duration of the delay. Flanger and phaser have delays of 1-20ms, chorus is usually 20-80ms, while the delay effect is longer than 80ms.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/21-delay/21-delay.005.jpeg)
-    - unit: unitReverberation
+    - subject: reverberation
       name: Reverberation
       body: |
         Reverberation is a natural phenomenon where a sound source reflects off of surfaces, creating a sense of space. Different environments have different types of reverberation. A cathedral is quite different from a small bathroom, for example. In electronic music, we simulate these environments using reverberation modules.
@@ -801,7 +761,7 @@ cards:
         Because there are so many types of reverberation engines out there, the parameters are different too. Almost all reverberation engines will allow you to set a wet/dry mix. Dry is the original signal, wet is the effected signal. Predelay is the amount of time between the original source and the start of reverberation. Early reflections are the initial, loudest reverberations. Ratio and depth will impact the number and intensity of the reflections. Decay time sets how long the reverberation will sound for. Room size, density, frequency, and panning all change the color of the reflections and inform the sense of space.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/22-reverberation/22-reverberation.004.jpeg)
-    - unit: unitFFT
+    - subject: fFT
       name: Fast Fourier Transform
       body: |
         Every sound breaks down into a collection of sine waves, each with its own frequency, amplitude, and phase. This is the Fourier theorem.
@@ -827,7 +787,7 @@ cards:
         We can also change the result of the FFT analysis. Then, we apply an Inverse FFT on the analysis to result in changes of the frequency content of the sound. For example, filters often use FFT. Think of autotune. Morphing of sounds. Compressing audio file size by eliminating unheard frequencies. The applications are truly endless.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/23-fast-fourier-transform/23.007.jpeg)
-    - unit: unitSpatialization
+    - subject: spatialization
       name: Spatialization
       body: |
         Panning is the technique of shifting the amplitudes of a sound source between sound channels. Stereo panning is the technique of shifting the amplitudes of a sound source between a left channel and a right channel.
@@ -881,7 +841,7 @@ cards:
         Another technology that enables spatialization is Ambisonics. In ambisonics, there are four channels of audio: X Y Z and W. We can route to any number of speakers in any arrangement around the observer. Many toolkits will allow the sound designer to set each sound source's distance, elevation, and azimuth. Then the software will automatically set each sound in space and create the four channels. Ambisonics uses mathematical models to route the four channels to the speakers. These models give each sound source a sense of space. With ambisonics, we can scale and spatialize a single recording for anything from 2 speakers to 512 speakers and beyond.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/24-spatialization/24.014.jpeg)
-    - unit: unitSynthesizer
+    - subject: synthesizer
       name: A Basic Synthesizer
       body: |
         Sound synthesis is the process of combining sounds to create new sounds. A synthesizer combines sound creating and modifying modules to create new sounds. Synthesizers come in a large range of styles and purposes. Some synthesizers have a specific purpose, like creating pad sounds or percussive instruments. Some synthesizers are more general purpose.
@@ -897,7 +857,7 @@ cards:
         Frequency informs our two oscillators. Detuning one of our oscillators slightly can add an interesting effect. Duration and amplitude will feed into our ADSR envelope. Those two things will combine to create shaped notes at the correct pitch. Then, a second set of gain nodes allows us to balance the sound between the two oscillators. A filter can change the color of sound by reducing unpleasant frequency content. Then, we can set the sound in space with panning. Finally, we end at a gain node, so we can mix this synthesizer with other instruments. Its easy to expand on this very basic synthesizer. Adding effects such as delay, reverb, distortion, and compression can add interest. Using low-frequency oscillators can add continuous change to our sound, adding depth.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/25-basic-synthesizer/25.005.jpeg)
-    - unit: unitMixers
+    - subject: mixers
       name: Mixers
       body: |
         A mixer is a module that combines many sound sources.
@@ -909,7 +869,7 @@ cards:
         A mixer can be any of analog hardware, digital hardware, or software device. Within a digital audio workstation, the mixer is usually software. Sometimes mixers are also known as mixing consoles.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/26-mixers/26.003.jpeg)
-    - unit: unitMonoPoly
+    - subject: monoPoly
       name: Monophony and Polyphony
       body: |
         Monophony is a capability of an instrument meaning: can create either zero or one sounds at a given time. Polyphony is a capability of an instrument meaning: the instrument can create multiple sounds at the same time. For example, a bassoon is a monophonic instrument because the player can only have one sound at a time. A piano is polyphonic because on a piano we can play multiple notes at the same time.
@@ -923,7 +883,7 @@ cards:
         Polyphony takes extra consideration when building a synthesizer or other sound module. Normally, polyphony means we need to clone several modules in our synthesizer each time we receive a note.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/27-polyphony/27.004.jpeg)
-    - unit: unitMidi
+    - subject: midi
       name: MIDI, Musical Instrument Digital Interface
       body: |
         MIDI, or Musical Instrument Digital Interface, is a protocol for communicating data between music and sound devices. The MIDI Manufacturers created the standard in 1983.
@@ -941,7 +901,7 @@ cards:
         All messages in MIDI are 8-bit. That means each message must be an integer between 0 and 127. Each connection in a MIDI system may carry sixteen channels. The MIDI channels index at 0. So the channels are 0 through 15. As you can imagine, these limitations were practical for 1983. But, for many of today's systems, MIDI's limits don't allow a great range of expression.
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/28-midi/28.005.jpeg)
-    - unit: unitOscS
+    - subject: oscS
       name: OSC, Open Sound Control
       body: |
         Open sound control is a protocol for communicating music and sound data between devices. Many consider OSC to be a successor or complement to MIDI. Open Sound Control expands on the capability of MIDI. With OSC we are almost unlimited in how we can communicate between devices.
@@ -954,7 +914,7 @@ cards:
 
         ![image](https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/29-osc/29.004.jpeg)
   choice:
-    - unit: unitIntro
+    - subject: intro
       body: What does "electronic" mean?
       options:
         - value: Operated by an electric current.
@@ -969,7 +929,7 @@ cards:
         - value: Art of combining and organizing sounds.
           correct: N
           feedback: This answer is the definition to a different term.
-    - unit: unitIntro
+    - subject: intro
       body: What does acoustic mean, in relation to electronic music?
       options:
         - value: Operated without use of electric current.
@@ -984,7 +944,7 @@ cards:
         - value: The process of combining two or more sounds.
           correct: N
           feedback: This is the definition to a different term.
-    - unit: unitIntro
+    - subject: intro
       body: What is music?
       options:
         - value: An art form of combining and organizing sounds.
@@ -999,7 +959,7 @@ cards:
         - value: A technique of taking an existing sound and changing the sound.
           correct: N
           feedback: This is the definition to a different term.
-    - unit: unitIntro
+    - subject: intro
       body: What do we mean when we say, "electronic music"?
       options:
         - value: Music that uses electronic devices as a primary source.
@@ -1014,7 +974,7 @@ cards:
         - value: A process of combining two or more sounds to create a new sound.
           correct: N
           feedback: This is the definition to a different term.
-    - unit: unitIntro
+    - subject: intro
       body: Which of the following is not electronic music?
       options:
         - value: Ambient music.
@@ -1029,7 +989,7 @@ cards:
         - value: String sonatas.
           correct: Y
           feedback: While you might hear the music on speakers, electronic devices are not a primary sound source.
-    - unit: unitIntro
+    - subject: intro
       body: Which of the following topics does electronic music not cover?
       options:
         - value: Sound synthesis.
@@ -1044,7 +1004,7 @@ cards:
         - value: Western music theory.
           correct: Y
           feedback: While important to many types of music, including electronic music, there's no requirement for using western music theory in electronic music.
-    - unit: unitIntro
+    - subject: intro
       body: What is sound synthesis?
       options:
         - value: A process of combining two or more sounds.
@@ -1059,7 +1019,7 @@ cards:
         - value: A standard way of communicating between components.
           correct: N
           feedback: This is the definition of protocol.
-    - unit: unitIntro
+    - subject: intro
       body: What is sound analysis?
       options:
         - value: A method of breaking down a sound to compare and make decisions.
@@ -1074,7 +1034,7 @@ cards:
         - value: A standard way of communicating between components.
           correct: N
           feedback: This is the definition of protocol.
-    - unit: unitIntro
+    - subject: intro
       body: What is sound modification?
       options:
         - value: A process of taking an existing sound and changing the sound.
@@ -1089,7 +1049,7 @@ cards:
         - value: A standard way of communicating between components.
           correct: N
           feedback: This is the definition of protocol.
-    - unit: unitIntro
+    - subject: intro
       body: What is sound reproduction?
       options:
         - value: A technique of taking an existing sound and outputting the sound in a new format.
@@ -1104,7 +1064,7 @@ cards:
         - value: A standard way of communicating between components.
           correct: N
           feedback: This is the definition of protocol.
-    - unit: unitIntro
+    - subject: intro
       body: What is a protocol?
       options:
         - value: A standard way of communicating between components.
@@ -1119,7 +1079,7 @@ cards:
         - value: A combination of components.
           correct: N
           feedback: This is a system.
-    - unit: unitIntro
+    - subject: intro
       body: What is a system?
       options:
         - value: A combination of components.
@@ -1134,7 +1094,7 @@ cards:
         - value: A standard way of communicating between components.
           correct: N
           feedback: This is the definition of protocol.
-    - unit: unitParams
+    - subject: params
       body: What is amplitude?
       options:
         - value: The intensity of a sound.
@@ -1149,7 +1109,7 @@ cards:
         - value: How loud or soft a sound is.
           correct: N
           feedback: This is volume, which is perceptual. Amplitude is physical.
-    - unit: unitParams
+    - subject: params
       body: How is amplitude measured?
       options:
         - value: Decibels
@@ -1164,7 +1124,7 @@ cards:
         - value: Radians
           correct: N
           feedback: Phase is measured in radians or degrees.
-    - unit: unitParams
+    - subject: params
       body: What is volume?
       options:
         - value: How loud or soft a sound is.
@@ -1179,7 +1139,7 @@ cards:
         - value: Where a sound is.
           correct: N
           feedback: This is space.
-    - unit: unitParams
+    - subject: params
       body: What is frequency?
       options:
         - value: The speed of a sound.
@@ -1194,7 +1154,7 @@ cards:
         - value: How amplitude is distributed over a set of frequencies, over time.
           correct: N
           feedback: This is spectrum.
-    - unit: unitParams
+    - subject: params
       body: How is frequency measured?
       options:
         - value: Hertz
@@ -1209,7 +1169,7 @@ cards:
         - value: Seconds
           correct: N
           feedback: Duration is measured in time.
-    - unit: unitParams
+    - subject: params
       body: What is pitch?
       options:
         - value: How high or low a sound is.
@@ -1224,7 +1184,7 @@ cards:
         - value: Where a sound is.
           correct: N
           feedback: This is space.
-    - unit: unitParams
+    - subject: params
       body: What is duration?
       options:
         - value: How long a sound is.
@@ -1239,7 +1199,7 @@ cards:
         - value: The intensity of a sound.
           correct: N
           feedback: This is amplitude.
-    - unit: unitParams
+    - subject: params
       body: How is duration measured?
       options:
         - value: Time (milliseconds, seconds)
@@ -1254,7 +1214,7 @@ cards:
         - value: Radians
           correct: N
           feedback: Phase is measured in radians.
-    - unit: unitParams
+    - subject: params
       body: What is rhythm?
       options:
         - value: The perceived pattern of duration over time.
@@ -1269,7 +1229,7 @@ cards:
         - value: How high or low a sound is.
           correct: N
           feedback: This is a pitch.
-    - unit: unitParams
+    - subject: params
       body: What is phase?
       options:
         - value: How much the sound is offset in cycle.
@@ -1284,7 +1244,7 @@ cards:
         - value: The speed of a sound.
           correct: N
           feedback: This is frequency.
-    - unit: unitParams
+    - subject: params
       body: How is phase measured?
       options:
         - value: Degrees or radians
@@ -1299,7 +1259,7 @@ cards:
         - value: Seconds
           correct: N
           feedback: Duration is measured in time.
-    - unit: unitParams
+    - subject: params
       body: What is the space of a sound?
       options:
         - value: Our sense of location and direction of a sound.
@@ -1314,7 +1274,7 @@ cards:
         - value: How loud or soft a sound is.
           correct: N
           feedback: This is volume.
-    - unit: unitParams
+    - subject: params
       body: What is the spectrum?
       options:
         - value: How amplitude is distributed over a set of frequencies, over time.
@@ -1329,7 +1289,7 @@ cards:
         - value: The speed of a sound.
           correct: N
           feedback: This is frequency.
-    - unit: unitParams
+    - subject: params
       body: What is the color of a sound?
       options:
         - value: What makes one sound source sound different from another.
@@ -1344,7 +1304,7 @@ cards:
         - value: How loud or soft a sound is.
           correct: N
           feedback: This is amplitude.
-    - unit: unitHuman
+    - subject: human
       body: We we age, our hearing ability...
       options:
         - value: Declines
@@ -1359,7 +1319,7 @@ cards:
         - value: None of the other answers
           correct: N
           feedback: It declines.
-    - unit: unitHuman
+    - subject: human
       body: Which of the following is not a way to protect hearing?
       options:
         - value: Listen at lower levels.
@@ -1374,7 +1334,7 @@ cards:
         - value: Surround yourself with noise.
           correct: Y
           feedback: This answer doesn't make sense.
-    - unit: unitHuman
+    - subject: human
       body: What is the range of perceive-able amplitude?
       options:
         - value: 0 dB SPL to 140 dB SPL.
@@ -1389,7 +1349,7 @@ cards:
         - value: 10 dB SPL to 140 dB SPL.
           correct: N
           feedback: We can hear all the way down to 0 dB SPL, though it is very faint in most environments.
-    - unit: unitHuman
+    - subject: human
       body: At what volume level causes pain?
       options:
         - value: Anything above 120 dB SPL.
@@ -1404,7 +1364,7 @@ cards:
         - value: Anything below 120 dB SPL.
           correct: N
           feedback: Most sounds we experience are less than 120.
-    - unit: unitHuman
+    - subject: human
       body: What is the recommended listening level for music?
       options:
         - value: Usually, 80 to 90 dB SPL.
@@ -1419,7 +1379,7 @@ cards:
         - value: Usually, 0 to 140 dB SPL.
           correct: N
           feedback: This is the range of our amplitude perception.
-    - unit: unitHuman
+    - subject: human
       body: What is the volume level of speech?
       options:
         - value: Usually, 80 to 90 dB SPL.
@@ -1434,7 +1394,7 @@ cards:
         - value: 100 dB SPL and above.
           correct: N
           feedback: Those would be very loud voices.
-    - unit: unitHuman
+    - subject: human
       body: What is the commonly cited frequency range of human hearing?
       options:
         - value: 20 Hz - 20,000 Hz.
@@ -1449,7 +1409,7 @@ cards:
         - value:
           correct:
           feedback:
-    - unit: unitHuman
+    - subject: human
       body: How does our perception of frequency increase over Hz?
       options:
         - value: Linearly.
@@ -1464,7 +1424,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: As frequency increases, our perception of frequency ranges decrease.
-    - unit: unitHuman
+    - subject: human
       body: What is the most sensitive frequency range of human hearing?
       options:
         - value: 20 Hz - 20,000 Hz.
@@ -1479,7 +1439,7 @@ cards:
         - value: All equal.
           correct: N
           feedback: We do not perceive all frequencies evenly.
-    - unit: unitHuman
+    - subject: human
       body: At what duration do we stop noticing sounds?
       options:
         - value: 35 milliseconds.
@@ -1490,11 +1450,11 @@ cards:
           feedback: There's a slightly larger range.
         - value: 35 seconds.
           correct: N
-          feedback: Check the units
+          feedback: Check the s
         - value: 15 milliseconds.
           correct: N
           feedback: There's a significantly larger range.
-    - unit: unitHuman
+    - subject: human
       body: Which of the following is not a use of rhythm?
       options:
         - value: Heart beat.
@@ -1509,7 +1469,7 @@ cards:
         - value: To decline our hearing.
           correct: Y
           feedback: This answer doesn't make sense.
-    - unit: unitHuman
+    - subject: human
       body: Which of the following is not a cue to the location of a sound?
       options:
         - value: Overall volume.
@@ -1524,7 +1484,7 @@ cards:
         - value: Duration
           correct: Y
           feedback: We do not use the direct duration of the sound to determine its location.
-    - unit: unitHuman
+    - subject: human
       body: What are the primary factors we use to determine the distance of a sound?
       options:
         - value: Volume, high-frequency content.
@@ -1539,7 +1499,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: There is a good answer available.
-    - unit: unitHuman
+    - subject: human
       body: What are the primary factors we use to determine the direction of a sound?
       options:
         - value: Comparative amplitude between ears, sound arriving faster at one ear.
@@ -1554,7 +1514,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: There is a good answer available.
-    - unit: unitHuman
+    - subject: human
       body: What is the Doppler effect?
       options:
         - value: The change in pitch over movement.
@@ -1569,7 +1529,7 @@ cards:
         - value: The change in color over movement.
           correct: N
           feedback: Color may change over movement, but we typically refer to...
-    - unit: unitHuman
+    - subject: human
       body: Which axis are we best at determining the location of a sound?
       options:
         - value: Side-to-side.
@@ -1584,7 +1544,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: There is a good answer available.
-    - unit: unitCurves
+    - subject: curves
       body: Do we hear different frequencies evenly?
       options:
         - value: Yes, we do.
@@ -1599,7 +1559,7 @@ cards:
         - value: Rarely
           correct: N
           feedback: The answer is constant.
-    - unit: unitCurves
+    - subject: curves
       body: What is the definition of an equal-loudness contour?
       options:
         - value: A graph that shows how our hearing varies over frequency and amplitude.
@@ -1614,7 +1574,7 @@ cards:
         - value: A graph that shows how our hearing varies over phase and amplitude.
           correct: N
           feedback: The graph does not involve phase.
-    - unit: unitCurves
+    - subject: curves
       body: Which of the following is why we do not perceive frequencies evenly?
       options:
         - value: Anatomy and survival.
@@ -1629,7 +1589,7 @@ cards:
         - value: Cochlea and hair cells.
           correct: N
           feedback: These two parts are involved with hearing, but are part of the how, not the why.
-    - unit: unitCurves
+    - subject: curves
       body: Which range of our hearing is the weakest?
       options:
         - value: Below 100 Hz and above 10,000 Hz.
@@ -1644,7 +1604,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: One of the answers is a good option.
-    - unit: unitCurves
+    - subject: curves
       body: Which range of our hearing is the strongest?
       options:
         - value: Below 100 Hz and above 10,000 Hz.
@@ -1659,7 +1619,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: One of the answers is a good option.
-    - unit: unitCurves
+    - subject: curves
       body: How does overall amplitude impact our sense of volume over frequency?
       options:
         - value: Less variation at higher amplitude, more variation at lower amplitude.
@@ -1674,7 +1634,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: One of the answers is a good option.
-    - unit: unitDigital
+    - subject: digital
       body: How does a computer represent a sound?
       options:
         - value: A long series of large numbers.
@@ -1689,7 +1649,7 @@ cards:
         - value: A long series of waveforms.
           correct: N
           feedback: The first part is right...
-    - unit: unitDigital
+    - subject: digital
       body: What is the album quality sample rate?
       options:
         - value: 44,100 samples per second
@@ -1704,7 +1664,7 @@ cards:
         - value: There is no consistent rate.
           correct: N
           feedback: There is a consistent album quality sample rate.
-    - unit: unitDigital
+    - subject: digital
       body: What is the album quality bit depth?
       options:
         - value: 16-bit depth. 0 to 65,535.
@@ -1719,7 +1679,7 @@ cards:
         - value: There is no consistent bit depth.
           correct: N
           feedback: Album quality audio has a standard bit depth.
-    - unit: unitDigital
+    - subject: digital
       body: What is a sample rate?
       options:
         - value: The amount of time each sample represents.
@@ -1734,7 +1694,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: There is a good answer available.
-    - unit: unitDigital
+    - subject: digital
       body: What is a bit depth?
       options:
         - value: The possible range of each number.
@@ -1749,7 +1709,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: There is a good answer available.
-    - unit: unitDigital
+    - subject: digital
       body: Which of the following is not a common bit depth?
       options:
         - value: 16-bit depth. 0 to 65,535.
@@ -1764,7 +1724,7 @@ cards:
         - value: 8-bit depth. 0 to 255.
           correct: Y
           feedback: 8-bit depth is almost never used.
-    - unit: unitDigital
+    - subject: digital
       body: Why do we use faster sample rates or larger bit depths?
       options:
         - value: When we modify sounds to the extreme.
@@ -1779,7 +1739,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: There is a good answer available.
-    - unit: unitAdc
+    - subject: adc
       body: What is ADC?
       options:
         - value: Analog-to-Digital Conversion
@@ -1794,7 +1754,7 @@ cards:
         - value: Quantification
           correct: N
           feedback: Quantification is a step of ADC, but not the full process.
-    - unit: unitAdc
+    - subject: adc
       body: What is a waveform?
       options:
         - value: A representation of a sound
@@ -1809,7 +1769,7 @@ cards:
         - value: The air molecules are dense.
           correct: N
           feedback: This is compression.
-    - unit: unitAdc
+    - subject: adc
       body: What does the diaphragm in the microphone do?
       options:
         - value: The diaphragm moves with changes in air pressure, and the energy represents the sound.
@@ -1824,7 +1784,7 @@ cards:
         - value: The diaphragm sends the array of integers representing the sound into the computer.
           correct: N
           feedback: This is the job of the converter.
-    - unit: unitAdc
+    - subject: adc
       body: What does a digital converter do?
       options:
         - value: Receives changes in amplitude from the diaphragm in the microphone, quantifies it, and converts it into a digital format.
@@ -1839,7 +1799,7 @@ cards:
         - value: Changes the array of integers back into an analog signal.
           correct: N
           feedback: Usually, the computer will handle this job with its sound card.
-    - unit: unitAdc
+    - subject: adc
       body: What is a microphone preamp?
       options:
         - value: A device that provides electric current to the microphone to operate.
@@ -1854,7 +1814,7 @@ cards:
         - value: A device where the air molecules are spaced apart.
           correct: N
           feedback: This is rarefaction.
-    - unit: unitAdc
+    - subject: adc
       body: What is sound quantification?
       options:
         - value: The process of measuring the continuous analog signal at regular intervals and converting the samples to integers representing the amplitude.
@@ -1869,7 +1829,7 @@ cards:
         - value: The process of creating changes in pressure in the air to create sound.
           correct: N
           feedback: This is the speaker's job.
-    - unit: unitAdc
+    - subject: adc
       body: What does the Nyquist-Shannon theorem mean to digital audio sampling rates?
       options:
         - value: The sampling rate needs to be twice the highest audible frequency.
@@ -1884,7 +1844,7 @@ cards:
         - value: The sampling rate needs to be half the highest audible frequency.
           correct: N
           feedback: Other direction.
-    - unit: unitAdc
+    - subject: adc
       body: What is DAC?
       options:
         - value: Digital-to-Analog Conversion, the process of returning to an analog signal.
@@ -1899,7 +1859,7 @@ cards:
         - value: We can reasonably expect no human can hear frequencies above 22,050 Hz.
           correct: N
           feedback: This doesn't answer the question.
-    - unit: unitAdc
+    - subject: adc
       body: What does the diaphragm in the speaker do?
       options:
         - value: The diaphragm moves to match the analog signal, which creates changes in pressure in the air to create sound.
@@ -1914,7 +1874,7 @@ cards:
         - value: The air molecules are dense.
           correct: N
           feedback: This is compression.
-    - unit: unitComplex
+    - subject: complex
       body: What is a sine wave?
       options:
         - value: The simplest sound in the universe, defined as a periodic oscillation that follows a trigonometric function.
@@ -1929,7 +1889,7 @@ cards:
         - value: Not an integer multiple of the fundamental frequency.
           correct: N
           feedback: This is inharmonic.
-    - unit: unitComplex
+    - subject: complex
       body: What are all sounds made up of?
       options:
         - value: Sine waves.
@@ -1944,7 +1904,7 @@ cards:
         - value: All of the frequencies are harmonic.
           correct: N
           feedback: This is certainly not true.
-    - unit: unitComplex
+    - subject: complex
       body: The idea that sounds are made up of sine waves stems from what theory?
       options:
         - value: Fourier theorem.
@@ -1959,7 +1919,7 @@ cards:
         - value: Laplace theorem.
           correct: N
           feedback: While related...
-    - unit: unitComplex
+    - subject: complex
       body: What is the fundamental frequency?
       options:
         - value: The most prominent or focal sine wave, the pitch we perceive the sound at.
@@ -1974,7 +1934,7 @@ cards:
         - value: Changes the individual sine waves within a complex wave.
           correct: N
           feedback: This is spectral editing.
-    - unit: unitComplex
+    - subject: complex
       body: What gives a sound color?
       options:
         - value: The combination of many sine waves with different frequencies, amplitudes, and phases, all of which change over time.
@@ -1989,7 +1949,7 @@ cards:
         - value: The surrounding of many inharmonic waves around a single area.
           correct: N
           feedback: Formants do give the sound some color, but some sounds don't have formants.
-    - unit: unitComplex
+    - subject: complex
       body: What is the difference between harmonic and inharmonic waves?
       options:
         - value: Harmonics are integer multiples, inharmonics are not.
@@ -2004,7 +1964,7 @@ cards:
         - value: Neither harmonics nor inharmonics are integer multiples of the fundamental.
           correct: N
           feedback: One is an integer multiple.
-    - unit: unitComplex
+    - subject: complex
       body: What is a formant?
       options:
         - value: The surrounding of many inharmonic waves around a single area.
@@ -2019,7 +1979,7 @@ cards:
         - value: When we directly change the individual sine waves within a complex wave.
           correct: N
           feedback: This is spectral editing.
-    - unit: unitComplex
+    - subject: complex
       body: What is spectral editing?
       options:
         - value: The technique of directly changing the individual sine waves within a complex wave.
@@ -2034,7 +1994,7 @@ cards:
         - value: All other sound is simply a combination of multiple sine waves.
           correct: N
           feedback: While a true statement, this doesn't answer the question.
-    - unit: unitOsc
+    - subject: osc
       body: Which of the following is NOT a type of basic oscillators?
       options:
         - value: Star
@@ -2049,7 +2009,7 @@ cards:
         - value: Square
           correct: N
           feedback: Square is a basic type of oscillator.
-    - unit: unitOsc
+    - subject: osc
       body: You can create any other oscillator by combining _____ oscillators.
       options:
         - value: Sine
@@ -2064,7 +2024,7 @@ cards:
         - value: Rectangle
           correct: N
           feedback: Rectangle waves have more than one frequency.
-    - unit: unitOsc
+    - subject: osc
       body: Which of the following are common inputs to basic oscillators?
       options:
         - value: Amplitude, frequency, and phase.
@@ -2079,7 +2039,7 @@ cards:
         - value: Frequency, color, and space.
           correct: N
           feedback: We change physical characteristics, not perceptual characteristics.
-    - unit: unitOsc
+    - subject: osc
       body: We make ____ oscillators from only odd-numbered harmonics, and ____ from all harmonics.
       options:
         - value: Triangle, square, and rectangle; Sawtooth
@@ -2094,7 +2054,7 @@ cards:
         - value: Triangle and sawtooth; Square and rectangle
           correct: N
           feedback: Square waves only use odd-numbered harmonics.
-    - unit: unitOsc
+    - subject: osc
       body: Why do we call the basic oscillators by "circle, triangle, square, rectangle, sawtooth"?
       options:
         - value: The oscillators visually look like these shapes.
@@ -2109,7 +2069,7 @@ cards:
         - value: There is no correlation, these are just names.
           correct: N
           feedback: There is a common reason for the naming.
-    - unit: unitOsc
+    - subject: osc
       body: The ______ oscillators use (1 / h), while the _____ oscillators use (1 / h^2).
       options:
         - value: Square, rectangle, and sawtooth; Triangle
@@ -2124,7 +2084,7 @@ cards:
         - value: Triangle and sawtooth; Square and rectangle
           correct: N
           feedback: Triangle waves have a gentle sound.
-    - unit: unitOsc
+    - subject: osc
       body: Which of the following are in order from the harshest sound to the most gentle sound?
       options:
         - value: Sawtooth, Rectangle, Square, Triangle, Sine
@@ -2139,7 +2099,7 @@ cards:
         - value: Sine, Rectangle, Square, Triangle, Sawtooth
           correct: N
           feedback: This sequence is completely out of order.
-    - unit: unitOsc
+    - subject: osc
       body: What is the role of the duty cycle?
       options:
         - value: The duty cycle determines which harmonics to output.
@@ -2154,7 +2114,7 @@ cards:
         - value: The duty cycle is how often the oscillator reports.
           correct: N
           feedback: I'm not sure what this would mean...
-    - unit: unitNoise
+    - subject: noise
       body: What is noise?
       options:
         - value: Noise is a collection of signals with random amplitudes and frequencies within specific parameters over time.
@@ -2169,7 +2129,7 @@ cards:
         - value: Noise is the lack of musical context.
           correct: N
           feedback: Noise can mean different things to different people, but for this unit, noise has a specific meaning.
-    - unit: unitNoise
+    - subject: noise
       body: What is a noise generator?
       options:
         - value: A noise generator is a sound module that creates a noise signal.
@@ -2184,7 +2144,7 @@ cards:
         - value: A noise generator creates unpleasant sounds.
           correct: N
           feedback: Unpleasant it may be, but there's a clearer definition here.
-    - unit: unitNoise
+    - subject: noise
       body: How is the amplitude of white noise distributed?
       options:
         - value: Equal amplitude over linear space.
@@ -2199,7 +2159,7 @@ cards:
         - value: Equal amplitude over random space.
           correct: N
           feedback: That sounds like a fun module to play with.
-    - unit: unitNoise
+    - subject: noise
       body: How is the amplitude of pink noise distributed?
       options:
         - value: Equal amplitude over logarithmic space.
@@ -2214,7 +2174,7 @@ cards:
         - value: Equal amplitude over random space.
           correct: N
           feedback: That sounds like a fun module to play with.
-    - unit: unitNoise
+    - subject: noise
       body: How is the amplitude of brown noise distributed?
       options:
         - value: Equal amplitude over (1 / frequency^2).
@@ -2229,7 +2189,7 @@ cards:
         - value: Equal amplitude over random space.
           correct: N
           feedback: That sounds like a fun module to play with.
-    - unit: unitNoise
+    - subject: noise
       body: From harshest to most gentle, which is the correct order?
       options:
         - value: White, pink, brown
@@ -2244,7 +2204,7 @@ cards:
         - value: Pink, white, brown.
           correct: N
           feedback: White is harsher than pink.
-    - unit: unitAdd
+    - subject: add
       body: What is additive synthesis?
       options:
         - value: Additive synthesis is a sound generating module that combines waves in a variety of amplitudes, frequencies, and phases.
@@ -2259,7 +2219,7 @@ cards:
         - value: Additive synthesis is a sound generating module that reduces rich sound waves in a variety of amplitudes.
           correct: N
           feedback: This answer doesn't make sense.
-    - unit: unitAdd
+    - subject: add
       body: What is one of the most expressive features of additive synthesis?
       options:
         - value: These waves may change in amplitude, frequency, and phase over time.
@@ -2274,7 +2234,7 @@ cards:
         - value: Additive synthesis is not expressive.
           correct: N
           feedback: This is a reductive answer.
-    - unit: unitAdd
+    - subject: add
       body: A disadvantage of additive synthesis is...
       options:
         - value: Additive synthesis can be expensive for the computer to calculate.
@@ -2289,7 +2249,7 @@ cards:
         - value: Additive synthesis can be expensive for the human to execute.
           correct: N
           feedback: Interface design is irrelevant to this unit.
-    - unit: unitSub
+    - subject: sub
       body: What is subtractive synthesis?
       options:
         - value: Subtractive synthesis is a sound generating technique that combines a rich sound sound and one or more filters to create a new color.
@@ -2304,7 +2264,7 @@ cards:
         - value: Subtractive synthesis is a sound generating module that reduces rich sound waves in a variety of amplitudes.
           correct: N
           feedback: This doesn't make sense.
-    - unit: unitSub
+    - subject: sub
       body: How is the human voice like subtractive synthesis?
       options:
         - value: We use our mouth, teeth, tongue, and throat to filter the sound from our vocal chords.
@@ -2319,7 +2279,7 @@ cards:
         - value: We use our mouth, teeth, tongue, and throat to combine the sound from our vocal chords.
           correct: N
           feedback: We only have one set of vocal chords.
-    - unit: unitSub
+    - subject: sub
       body: An expressive feature of subtractive synthesis is...
       options:
         - value: the filtering properties -- frequency, amplitude, and phase -- can vary over time.
@@ -2334,7 +2294,7 @@ cards:
         - value: the subtractive properties -- frequency, amplitude, and phase -- can vary over time.
           correct: N
           feedback: There is no such thing as 'subtractive properties'.
-    - unit: unitSub
+    - subject: sub
       body: What is a performance feature of subtractive synthesis?
       options:
         - value: Subtractive synthesis is often cheaper than additive synthesis for a computer to calculate.
@@ -2349,7 +2309,7 @@ cards:
         - value: Subtractive synthesis requires no calculation.
           correct: N
           feedback: This just isn't true of anything on a computer.
-    - unit: unitSample
+    - subject: sample
       body: What is a sample?
       options:
         - value: A sample is a short piece of prerecorded sound that we have loaded into the computer's memory.
@@ -2364,7 +2324,7 @@ cards:
         - value: A sample is a short piece of precorded memory that we have loaded into the computer's sound.
           correct: N
           feedback: This is a little wacky.
-    - unit: unitSample
+    - subject: sample
       body: What is a sampler?
       options:
         - value: A sampler is a sound generating module that can play back samples.
@@ -2379,7 +2339,7 @@ cards:
         - value: A sampler is a sound generating module that reduces rich sound waves in a variety of amplitudes.
           correct: N
           feedback: This doesn't make sense
-    - unit: unitSample
+    - subject: sample
       body: Which of the following is NOT a common capability of a sampler?
       options:
         - value: Convolving
@@ -2394,7 +2354,7 @@ cards:
         - value: Looping
           correct: N
           feedback: Looping is one of the most heavily used sampling techniques.
-    - unit: unitSample
+    - subject: sample
       body: A unique feature of drum machines is...
       options:
         - value: The drum machine can play back the samples in preset or live modified patterns.
@@ -2409,7 +2369,7 @@ cards:
         - value: The drum machine can play back the samples in loops.
           correct: N
           feedback: Many drum machines can, but this isn't a marked feature of the drum machine.
-    - unit: unitSample
+    - subject: sample
       body: What is tape music?
       options:
         - value: Tape music is a music genre created by using physical tapes of music and sounds, and cutting them up, and adhering the pieces back together; or simulating that experience using a computer.
@@ -2418,7 +2378,7 @@ cards:
         - value: Tape music is a music genre that simulates using physical tapes of music and sounds, and cutting them up, and adhering the pieces back together.
           correct: N
           feedback: Close, but tape music can include both the simulation and physical.
-    - unit: unitFilters
+    - subject: filters
       body: What is filtering?
       options:
         - value: The process of reducing or eliminating the amplitude of selected frequencies in the spectrum of a sound signal.
@@ -2433,7 +2393,7 @@ cards:
         - value: Filtering reduces the proportion of the amplitude over a threshold amplitude.
           correct: N
           feedback: This is filtering.
-    - unit: unitFilters
+    - subject: filters
       body: Which of the following is NOT why we use filters?
       options:
         - value: To add spectral content.
@@ -2448,7 +2408,7 @@ cards:
         - value: To balance sounds together.
           correct: N
           feedback: We often use filtering to balance sounds together.
-    - unit: unitFilters
+    - subject: filters
       body: What does a low-pass filter do?
       options:
         - value: It reduces or eliminates high-frequency content.
@@ -2463,7 +2423,7 @@ cards:
         - value: It reduces or eliminates content within a specific frequency range.
           correct: N
           feedback: That's a band-reject filter.
-    - unit: unitFilters
+    - subject: filters
       body: What does a high-pass filter do?
       options:
         - value: It reduces or eliminates low-frequency content.
@@ -2478,7 +2438,7 @@ cards:
         - value: It reduces or eliminates content within a specific frequency range.
           correct: N
           feedback: That's a band-reject filter.
-    - unit: unitFilters
+    - subject: filters
       body: What does a band-pass filter do?
       options:
         - value: It reduces or eliminates content outside of a specific frequency range.
@@ -2493,7 +2453,7 @@ cards:
         - value: It reduces or eliminates content within a specific frequency range.
           correct: N
           feedback: That's a band-reject filter.
-    - unit: unitFilters
+    - subject: filters
       body: What does a band-reject filter do?
       options:
         - value: It reduces or eliminates content within a specific frequency range.
@@ -2508,7 +2468,7 @@ cards:
         - value: It reduces or eliminates content outside of a specific frequency range.
           correct: N
           feedback: That's a band-pass filter.
-    - unit: unitFilters
+    - subject: filters
       body: What does the cutoff parameter do?
       options:
         - value: Cutoff is the frequency or frequencies where the filtering will begin to occur.
@@ -2523,7 +2483,7 @@ cards:
         - value: Cutoff is not a filtering parameter.
           correct: N
           feedback: Not correct.
-    - unit: unitFilters
+    - subject: filters
       body: What does the gain parameter do?
       options:
         - value: The gain is the amount of amplitude that we will impact.
@@ -2538,7 +2498,7 @@ cards:
         - value: Gain is not a filtering parameter.
           correct: N
           feedback: Not correct.
-    - unit: unitFilters
+    - subject: filters
       body: What does the "Q" parameter do?
       options:
         - value: Q determines how smooth the transition is from unfiltered to filtered content.
@@ -2553,7 +2513,7 @@ cards:
         - value: Q is not a filtering parameter.
           correct: N
           feedback: Not correct.
-    - unit: unitModulation
+    - subject: modulation
       body: What is modulation?
       options:
         - value: Modulation is the technique of varying parameters to sound generators and sound modifiers over time.
@@ -2568,7 +2528,7 @@ cards:
         - value: Modulation reduces the proportion of the amplitude over a threshold amplitude.
           correct: N
           feedback: That is a compressor.
-    - unit: unitModulation
+    - subject: modulation
       body: Which of the following can we modulate?
       options:
         - value: Nothing.
@@ -2583,7 +2543,7 @@ cards:
         - value: Phase.
           correct: N
           feedback: We can module phase.
-    - unit: unitModulation
+    - subject: modulation
       body: What is ring modulation?
       options:
         - value: A source signal is multiplied by another, simple signal such as a sine wave.
@@ -2598,7 +2558,7 @@ cards:
         - value: A source signal is multiplied by a complex signal.
           correct: N
           feedback: Typically we use simple signals for ring modulation.
-    - unit: unitLfo
+    - subject: lfo
       body: What is a low frequency oscillator?
       options:
         - value: A low frequency oscillator is an oscillator with a frequency below the human range of hearing.
@@ -2613,7 +2573,7 @@ cards:
         - value: A low frequency oscillator is the effect of modulating the amplitude of a sound source.
           correct: N
           feedback: That is tremolo.
-    - unit: unitLfo
+    - subject: lfo
       body: What are the common parameters of a low frequency oscillator?
       options:
         - value: Shape, amplitude, and frequency.
@@ -2628,7 +2588,7 @@ cards:
         - value: Amplitude and volume.
           correct: N
           feedback: Those two things essentially identical... physical and perceptual.
-    - unit: unitLfo
+    - subject: lfo
       body: Why do we use low frequency oscillators?
       options:
         - value: The purpose is to change a parameter over time.
@@ -2643,7 +2603,7 @@ cards:
         - value: There is no purpose.
           correct: N
           feedback: Nihilism isn't cute.
-    - unit: unitModEffects
+    - subject: modEffects
       body: What is vibrato?
       options:
         - value: Vibrato is the effect of modulating the frequency of a sound source.
@@ -2658,7 +2618,7 @@ cards:
         - value: Vibrato makes the sound source appear to be a group of instruments playing the same part instead of a single instrument.
           correct: N
           feedback: That is chorus.
-    - unit: unitModEffects
+    - subject: modEffects
       body: What are the common parameters of vibrato?
       options:
         - value: Wet/dry mix, delay time, depth, & rate.
@@ -2673,7 +2633,7 @@ cards:
         - value: Wet/dry mix, delay time, and rate.
           correct: N
           feedback: There's one more...
-    - unit: unitModEffects
+    - subject: modEffects
       body: What is tremolo?
       options:
         - value: Tremolo is the effect of modulating the amplitude of a sound source.
@@ -2688,7 +2648,7 @@ cards:
         - value: Tremolo makes the sound source appear to be a group of instruments playing the same part instead of a single instrument.
           correct: N
           feedback: That is chorus.
-    - unit: unitModEffects
+    - subject: modEffects
       body: What are the common parameters of tremolo?
       options:
         - value: Rate and depth.
@@ -2703,7 +2663,7 @@ cards:
         - value: Phase and spectrum.
           correct: N
           feedback: This is not correct.
-    - unit: unitModEffects
+    - subject: modEffects
       body: What are phasers and flangers?
       options:
         - value: Phasers and flangers modify the spectrum of the sound source over time.
@@ -2718,7 +2678,7 @@ cards:
         - value: Phasers and flangers modulate the measurements of a sound source.
           correct: N
           feedback: Read more carefully.
-    - unit: unitModEffects
+    - subject: modEffects
       body: What is the difference between phaser and flanger?
       options:
         - value: Flangers cause harmonic frequencies, but phasers cause inharmonic frequencies.
@@ -2733,7 +2693,7 @@ cards:
         - value: Flangers and phasers both primarily cause inharmonic frequencies.
           correct: N
           feedback: There is a difference.
-    - unit: unitModEffects
+    - subject: modEffects
       body: What are the common parameters of phasers and flangers?
       options:
         - value: Wet/dry mix, delay, depth, and rate.
@@ -2748,7 +2708,7 @@ cards:
         - value: Amplitude and frequency.
           correct: N
           feedback: Phasers and flangers are a bit more complex than this...
-    - unit: unitModEffects
+    - subject: modEffects
       body: What is chorus?
       options:
         - value: Chorus makes the sound source appear to be a group of instruments playing the same part instead of a single instrument.
@@ -2763,7 +2723,7 @@ cards:
         - value: Chorus makes the sound source appear to be modulating amplitude.
           correct: N
           feedback: That is closer to tremolo.
-    - unit: unitModEffects
+    - subject: modEffects
       body: What are the common parameters of chorus?
       options:
         - value: Wet/dry mix, delay, depth, and rate.
@@ -2778,7 +2738,7 @@ cards:
         - value: Amplitude and frequency.
           correct: N
           feedback: Chorus is a bit more complex than this...
-    - unit: unitAmpModifiers
+    - subject: ampModifiers
       body: What is an amplitude modifier?
       options:
         - value: It impacts the sound source's amplitude.
@@ -2793,7 +2753,7 @@ cards:
         - value: It does not impact the sound source.
           correct: N
           feedback: Nope.
-    - unit: unitAmpModifiers
+    - subject: ampModifiers
       body: What is gain?
       options:
         - value: Gain changes the overall amplitude of the signal.
@@ -2808,7 +2768,7 @@ cards:
         - value: Gain targets a specific band of frequencies and reduces the amplitude on specific ranges.
           correct: N
           feedback: That is a de-esser.
-    - unit: unitAmpModifiers
+    - subject: ampModifiers
       body: What is a compressor?
       options:
         - value: Compressors reduce the proportion of the amplitude over a threshold amplitude.
@@ -2823,7 +2783,7 @@ cards:
         - value: Gain targets a specific band of frequencies and reduces the amplitude on specific ranges.
           correct: N
           feedback: That is a de-esser.
-    - unit: unitAmpModifiers
+    - subject: ampModifiers
       body: What does the threshold of a compressor do?
       options:
         - value: We will reduce any amplitude over the threshold.
@@ -2838,7 +2798,7 @@ cards:
         - value: A threshold is a collection of individual compressors for specific frequency ranges.
           correct: N
           feedback: That is a multi-pressor.
-    - unit: unitAmpModifiers
+    - subject: ampModifiers
       body: What does the ratio of a compressor do?
       options:
         - value: The ratio determines how much we will reduce the amplitudes over the threshold.
@@ -2853,7 +2813,7 @@ cards:
         - value: A ratio is a collection of individual compressors for specific frequency ranges.
           correct: N
           feedback: That is a multipressor.
-    - unit: unitAmpModifiers
+    - subject: ampModifiers
       body: What is the the attack and release of a compressor do?
       options:
         - value: These parameters impact how quickly the compressor will respond to changes in amplitude.
@@ -2868,7 +2828,7 @@ cards:
         - value: Attack and release are a collection of individual compressors for specific frequency ranges.
           correct: N
           feedback: That is a multipressor.
-    - unit: unitAmpModifiers
+    - subject: ampModifiers
       body: What does an expander do?
       options:
         - value: An expander increases the amplitude over a threshold.
@@ -2883,7 +2843,7 @@ cards:
         - value: An expander is a collection of individual compressors for specific frequency ranges.
           correct: N
           feedback: That is a multipressor.
-    - unit: unitAmpModifiers
+    - subject: ampModifiers
       body: What does a de-esser do?
       options:
         - value: A de-esser targets a specific band of frequencies and reduces the amplitude on specific ranges.
@@ -2898,7 +2858,7 @@ cards:
         - value: A de-esser is a collection of individual compressors for specific frequency ranges.
           correct: N
           feedback: That is a multi-pressor.
-    - unit: unitAmpModifiers
+    - subject: ampModifiers
       body: What does a multi-pressor do?
       options:
         - value: A multi-pressor is a collection of individual compressors for specific frequency ranges.
@@ -2913,7 +2873,7 @@ cards:
         - value: A multi-pressor reduces the amplitude over a threshold.
           correct: N
           feedback: That is a compressor.
-    - unit: unitEnvelopes
+    - subject: envelopes
       body: What is an envelope?
       options:
         - value: An envelope is a special type of amplitude modifier that changes amplitude over time to give sounds a natural shape.
@@ -2928,7 +2888,7 @@ cards:
         - value: An envelopes ramps sound back down to a somewhat lower amplitude level
           correct: N
           feedback: That is the decay phase.
-    - unit: unitEnvelopes
+    - subject: envelopes
       body: What is the attack phase? How do we measure it?
       options:
         - value: The sound ramps up from zero amplitude to its highest amplitude. Time.
@@ -2943,7 +2903,7 @@ cards:
         - value: The sound ramps back down to a somewhat lower amplitude level. Relative amplitude.
           correct: N
           feedback: Decay; wrong measure.
-    - unit: unitEnvelopes
+    - subject: envelopes
       body: What is the decay phase? How do we measure it?
       options:
         - value: The sound ramps back down to a somewhat lower amplitude level. Time.
@@ -2958,7 +2918,7 @@ cards:
         - value: The sound returns the amplitude back down to zero. Time.
           correct: N
           feedback: That is release.
-    - unit: unitEnvelopes
+    - subject: envelopes
       body: What is the sustain phase? How do we measure it?
       options:
         - value: The sound holds that amplitude until release. Relative amplitude.
@@ -2973,7 +2933,7 @@ cards:
         - value: The sound increases that amplitude until release. Time.
           correct: N
           feedback: Holds, not increases; wrong measure.
-    - unit: unitEnvelopes
+    - subject: envelopes
       body: What is the release phase? How do we measure it?
       options:
         - value: The sound returns the amplitude back down to zero. Time.
@@ -2988,7 +2948,7 @@ cards:
         - value: The sound ramps back down to a somewhat lower amplitude level. Time.
           correct: N
           feedback: That is decay.
-    - unit: unitEnvelopes
+    - subject: envelopes
       body: How many types of envelopes are there?
       options:
         - value: Infinite.
@@ -3003,7 +2963,7 @@ cards:
         - value: Many.
           correct: N
           feedback: There's a better answer...
-    - unit: unitEqualization
+    - subject: equalization
       body: What is an equalizer?
       options:
         - value: An equalizer is a sound modifying module that helps to balance the frequencies of the incoming signal.
@@ -3018,7 +2978,7 @@ cards:
         - value: An equalizer is a sound modifying module that helps to balance the duration of the incoming signal.
           correct: N
           feedback: Nope.
-    - unit: unitEqualization
+    - subject: equalization
       body: What are the parts of an equalizer?
       options:
         - value: Filters and gain.
@@ -3033,7 +2993,7 @@ cards:
         - value: Delay and phaser.
           correct: N
           feedback: That would be fun, but no.
-    - unit: unitEqualization
+    - subject: equalization
       body: Why do we use equalizers?
       options:
         - value: To make multiple sound sources combine together clearly by avoiding overlapping frequency ranges.
@@ -3048,7 +3008,7 @@ cards:
         - value: To have the instruments hold a fair democratic election.
           correct: N
           feedback: Nope.
-    - unit: unitEqualization
+    - subject: equalization
       body: What are the 'typical ranges' described in the video?
       options:
         - value: Low bass, mid bass, upper bass, low mids, high mids, and highs.
@@ -3063,7 +3023,7 @@ cards:
         - value: Bass, low mids, high mids, low highs, and high highs.
           correct: N
           feedback: I've never heard of high highs.
-    - unit: unitEqualization
+    - subject: equalization
       body: What are the common parameters for an equalizer?
       options:
         - value: Each filter has its own filter parameters of type, cutoff, q, gain.
@@ -3078,7 +3038,7 @@ cards:
         - value: The equalizer has color, amplitude, gain.
           correct: N
           feedback: Each filter has its own set.
-    - unit: unitDistortion
+    - subject: distortion
       body: What is distortion?
       options:
         - value: Distortion is a sound effect that adds noise to a sound source.
@@ -3093,7 +3053,7 @@ cards:
         - value: Distortion is a sound effect that removes phasing from a sound source.
           correct: N
           feedback: Nope.
-    - unit: unitDistortion
+    - subject: distortion
       body: What is the wet dry mix?
       options:
         - value: Dry is the original signal, wet is the effected signal.
@@ -3108,7 +3068,7 @@ cards:
         - value: Dry is the copied signal, wet is the source signal.
           correct: N
           feedback: Distortion typically doesn't copy.
-    - unit: unitDistortion
+    - subject: distortion
       body: What does amplitude do in distortion?
       options:
         - value: Amplitude impacts the intensity of the distortion.
@@ -3123,7 +3083,7 @@ cards:
         - value: There is no amplitude in distortion.
           correct: N
           feedback: Nope.
-    - unit: unitDistortion
+    - subject: distortion
       body: What does frequency do in distortion?
       options:
         - value: Frequency impacts the color of the distortion.
@@ -3138,7 +3098,7 @@ cards:
         - value: Frequency impacts the phase of the distortion.
           correct: N
           feedback: Nope.
-    - unit: unitDelay
+    - subject: delay
       body: What is delay?
       options:
         - value: Delay is a sound changing module that plays the sound source more than once at different times.
@@ -3153,7 +3113,7 @@ cards:
         - value: Delay is a sound generating module that plays the sound source more than once at different times.
           correct: N
           feedback: Changing, not generating per say.
-    - unit: unitDelay
+    - subject: delay
       body: Why do we use delay?
       options:
         - value: Ambience, texture, and rhythm.
@@ -3168,7 +3128,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: There is a decent answer here.
-    - unit: unitDelay
+    - subject: delay
       body: What is unique about a feedback delay?
       options:
         - value: A feedback delay plays the combination of the original sound source and the previous copies as well.
@@ -3183,7 +3143,7 @@ cards:
         - value: A feedback delay isn't unique.
           correct: N
           feedback: They are common, but not all delays use feedback.
-    - unit: unitDelay
+    - subject: delay
       body: What are common parameters for each copy of a delay?
       options:
         - value: Number of copies, tempo sync, gain, duration, filtering.
@@ -3198,7 +3158,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: There's a decent answer.
-    - unit: unitDelay
+    - subject: delay
       body: What is tempo sync?
       options:
         - value: It lines up the delayed playback to the rhythm of the music.
@@ -3213,7 +3173,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: Nope.
-    - unit: unitDelay
+    - subject: delay
       body: What are the time ranges associated with flanger/phaser, chorus, and delay?
       options:
         - value: 1-20ms, 20-80ms, 80ms+
@@ -3228,7 +3188,7 @@ cards:
         - value: 20-80ms, 1-20ms, 80ms+
           correct: N
           feedback: Out of order.
-    - unit: unitReverberation
+    - subject: reverberation
       body: What is reverberation?
       options:
         - value: Reverberation is a natural phenomenon where a sound source reflects off of surfaces, creating a sense of space.
@@ -3243,7 +3203,7 @@ cards:
         - value: Reverberation is a sound modifying module that helps to balance the frequencies of the incoming signal.
           correct: N
           feedback: That would be an equalizer.
-    - unit: unitReverberation
+    - subject: reverberation
       body: What is a spring reverb?
       options:
         - value: A spring reverb is a simple effect caused by passing the sound through a spring.
@@ -3258,7 +3218,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: There's a good answer.
-    - unit: unitReverberation
+    - subject: reverberation
       body: What is a plate reverb?
       options:
         - value: A plate reverb is an effect created by passing the sound through a metal plate.
@@ -3273,7 +3233,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: There's a good answer.
-    - unit: unitReverberation
+    - subject: reverberation
       body: What is convolution reverb?
       options:
         - value: We combine room information with the source signal to make the sound appear to be in a different environment.
@@ -3288,7 +3248,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: There's a good answer.
-    - unit: unitReverberation
+    - subject: reverberation
       body: What is the wet dry mix?
       options:
         - value: Dry is the original signal, wet is the effected signal.
@@ -3303,7 +3263,7 @@ cards:
         - value: Dry is the copied signal, wet is the source signal.
           correct: N
           feedback: Reverb typically doesn't copy straight up.
-    - unit: unitReverberation
+    - subject: reverberation
       body: What is predelay?
       options:
         - value: Predelay is the amount of time between the original source and the start of reverberation.
@@ -3318,7 +3278,7 @@ cards:
         - value: Predelay sets how long the reverberation will sound for.
           correct: N
           feedback: That is decay time.
-    - unit: unitReverberation
+    - subject: reverberation
       body: What are early reflections?
       options:
         - value: Early reflections are the initial, loudest reverberations.
@@ -3333,7 +3293,7 @@ cards:
         - value: Early reflections sets how long the reverberation will sound for.
           correct: N
           feedback: That is decay time.
-    - unit: unitReverberation
+    - subject: reverberation
       body: What are ratio and depth in reverb?
       options:
         - value: Ratio and depth will impact the number and intensity of the reflections.
@@ -3348,7 +3308,7 @@ cards:
         - value: Ratio and depth sets how long the reverberation will sound for.
           correct: N
           feedback: That is decay time.
-    - unit: unitReverberation
+    - subject: reverberation
       body: What is decay time in reverb?
       options:
         - value: Decay time sets how long the reverberation will sound for.
@@ -3363,7 +3323,7 @@ cards:
         - value: Decay time will impact the number and intensity of the reflections.
           correct: N
           feedback: That is ratio and depth.
-    - unit: unitReverberation
+    - subject: reverberation
       body: What DOES NOT change the color of a reverb?
       options:
         - value: Predelay
@@ -3378,7 +3338,7 @@ cards:
         - value: Panning
           correct: N
           feedback: Nope.
-    - unit: unitFFT
+    - subject: fFT
       body: How do we normally represent audio?
       options:
         - value: Amplitude over time.
@@ -3393,7 +3353,7 @@ cards:
         - value: Time over frequency.
           correct: N
           feedback: It's Y over X, not X over Y.
-    - unit: unitFFT
+    - subject: fFT
       body: After FFT, in a single window, how do we represent audio?
       options:
         - value: Amplitude over frequency.
@@ -3408,7 +3368,7 @@ cards:
         - value: Time over frequency.
           correct: N
           feedback: It's Y over X, not X over Y.
-    - unit: unitFFT
+    - subject: fFT
       body: How do we represent time after FFT?
       options:
         - value: A series of windows.
@@ -3423,7 +3383,7 @@ cards:
         - value: A series of peaks.
           correct: N
           feedback: This doesn't make sense.
-    - unit: unitFFT
+    - subject: fFT
       body: How long is a normal window duration?
       options:
         - value: 0 to 20 ms.
@@ -3438,7 +3398,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: One of the answers is correct.
-    - unit: unitFFT
+    - subject: fFT
       body: A short window gives us good ___ information, while a long window gives us good ___ information.
       options:
         - value: Duration, frequency.
@@ -3453,7 +3413,7 @@ cards:
         - value: Phase, Amplitude.
           correct: N
           feedback: What does an FFT result in?
-    - unit: unitFFT
+    - subject: fFT
       body: What does an Inverse FFT do?
       options:
         - value: Returns from analysis to sound.
@@ -3468,7 +3428,7 @@ cards:
         - value: Changes the analysis from frequency over amplitude to amplitude over frequency.
           correct: N
           feedback: That doesn't make sense.
-    - unit: unitFFT
+    - subject: fFT
       body: Which of the following can we NOT use an FFT for?
       options:
         - value: Envelopes
@@ -3483,7 +3443,7 @@ cards:
         - value: Morphing
           correct: N
           feedback: Morphing is a classic FFT technique.
-    - unit: unitSpatialization
+    - subject: spatialization
       body: What is panning?
       options:
         - value: Panning is the technique of shifting the amplitudes of a sound source between sound channels.
@@ -3498,7 +3458,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: The answer is available.
-    - unit: unitSpatialization
+    - subject: spatialization
       body: What is spatialization?
       options:
         - value: Spatialization is the technique of setting a sound in three-dimensional space.
@@ -3513,7 +3473,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: The answer is available.
-    - unit: unitSpatialization
+    - subject: spatialization
       body: Which of the following is NOT a spatialization cue?
       options:
         - value: Duration
@@ -3528,7 +3488,7 @@ cards:
         - value: High-Frequency Content
           correct: N
           feedback: High-frequency content is a spatialization cue.
-    - unit: unitSpatialization
+    - subject: spatialization
       body: A close sound is ___, a further away sound is ___.
       options:
         - value: Louder, softer.
@@ -3543,7 +3503,7 @@ cards:
         - value: Lower, higher.
           correct: N
           feedback: This doesn't make sense. There is no mention of movement.
-    - unit: unitSpatialization
+    - subject: spatialization
       body: If a sound arrives at the left ear faster than the right ear, we perceive the sound as coming from the ___.
       options:
         - value: Left.
@@ -3558,7 +3518,7 @@ cards:
         - value: Behind.
           correct: N
           feedback: There's nothing here indicating forward/back.
-    - unit: unitSpatialization
+    - subject: spatialization
       body: What is the Interaural Time Delay?
       options:
         - value: The delay between ears which informs our sense of space of the sound.
@@ -3573,7 +3533,7 @@ cards:
         - value: A sound moving towards us has a higher pitch, a sound moving away has a lower pitch.
           correct: N
           feedback: That is the Doppler effect.
-    - unit: unitSpatialization
+    - subject: spatialization
       body: A sound ___ has its full spectrum, while a sound ___ loses some of its high frequency content.
       options:
         - value: Close, further away.
@@ -3588,7 +3548,7 @@ cards:
         - value: To the right, to the left.
           correct: N
           feedback: Azimuth doesn't impact high-frequency content directly.
-    - unit: unitSpatialization
+    - subject: spatialization
       body: What is the Doppler Effect?
       options:
         - value: A sound moving towards us has a higher pitch, a sound moving away has a lower pitch.
@@ -3603,7 +3563,7 @@ cards:
         - value: The technique of shifting the amplitudes of a sound source between sound channels.
           correct: N
           feedback: That is panning.
-    - unit: unitSpatialization
+    - subject: spatialization
       body: Which of the following is NOT a dimension for sound?
       options:
         - value: Tilt
@@ -3618,7 +3578,7 @@ cards:
         - value: Azimuth
           correct: N
           feedback: Azimuth is a dimension.
-    - unit: unitSpatialization
+    - subject: spatialization
       body: What is binaural audio?
       options:
         - value: Binaural audio simulates three-dimensional sound using headphones, which is two channels of audio.
@@ -3633,7 +3593,7 @@ cards:
         - value: The technique of shifting the amplitudes of a sound source between sound channels.
           correct: N
           feedback: That is panning.
-    - unit: unitSpatialization
+    - subject: spatialization
       body: What is Ambisonics?
       options:
         - value: Ambisonics is a technique of encoding sound into XYZW channels and then routing those channels to any number of speakers in any arrangement.
@@ -3648,7 +3608,7 @@ cards:
         - value: The technique of shifting the amplitudes of a sound source between sound channels.
           correct: N
           feedback: That is panning.
-    - unit: unitSynthesizer
+    - subject: synthesizer
       body: What is sound synthesis?
       options:
         - value: A process of combining sounds to create new sounds.
@@ -3663,7 +3623,7 @@ cards:
         - value: A process of taking an existing sound and changing the sound.
           correct: N
           feedback: That is sound modification
-    - unit: unitSynthesizer
+    - subject: synthesizer
       body: What is a synthesizer?
       options:
         - value: A synthesizer combines sound creating and modifying modules to create new sounds.
@@ -3678,7 +3638,7 @@ cards:
         - value: A synthesizer is a combination of sound creating modules.
           correct: N
           feedback: Normally sound changing module are part of that.
-    - unit: unitSynthesizer
+    - subject: synthesizer
       body: What are the common inputs to a synthesizer?
       options:
         - value: Frequency, amplitude, duration.
@@ -3693,7 +3653,7 @@ cards:
         - value: Amplitude, phase, duration.
           correct: N
           feedback: Yes amplitude and duration; no on phase.
-    - unit: unitSynthesizer
+    - subject: synthesizer
       body: Where does our initial input go into?
       options:
         - value: Oscillators and ADSR.
@@ -3708,7 +3668,7 @@ cards:
         - value: Output gain.
           correct: N
           feedback: That's skipping quite a few steps.
-    - unit: unitSynthesizer
+    - subject: synthesizer
       body: When do we use a filter?
       options:
         - value: After sound generation, before panning.
@@ -3723,7 +3683,7 @@ cards:
         - value: At the beginning of the process.
           correct: N
           feedback: We need something to filter.
-    - unit: unitSynthesizer
+    - subject: synthesizer
       body: When do we use panning?
       options:
         - value: Towards the end of the process.
@@ -3738,7 +3698,7 @@ cards:
         - value: Modulating using low-frequency oscillators.
           correct: N
           feedback: This doesn't make sense.
-    - unit: unitSynthesizer
+    - subject: synthesizer
       body: What can add interest over time to our synthesizer?
       options:
         - value: Modulating using low-frequency oscillators.
@@ -3753,7 +3713,7 @@ cards:
         - value: Panning.
           correct: N
           feedback: Panning doesn't inheritantly change things over time, unless...
-    - unit: unitMixers
+    - subject: mixers
       body: What is a mixer?
       options:
         - value: A mixer is a module that combines many sound sources.
@@ -3768,7 +3728,7 @@ cards:
         - value: A technique of combining two or more sounds to create new sounds.
           correct: N
           feedback: That is synthesis, not mixing.
-    - unit: unitMixers
+    - subject: mixers
       body: What does each track in a mixer have?
       options:
         - value: An input, a gain, and a meter.
@@ -3783,7 +3743,7 @@ cards:
         - value: An input, routing, and gain.
           correct: N
           feedback: Routing is common, but not always...
-    - unit: unitMixers
+    - subject: mixers
       body: Which of the following does a track NOT have?
       options:
         - value: Direct output
@@ -3798,7 +3758,7 @@ cards:
         - value: Routing
           correct: N
           feedback: Tracks may have routing.
-    - unit: unitMonoPoly
+    - subject: monoPoly
       body: What is monophony?
       options:
         - value: Monophony is a capability of an instrument meaning... can create either zero or one sounds at a given time.
@@ -3813,7 +3773,7 @@ cards:
         - value: Monophony is a capability of an instrument meaning... the instrument can create multiple pitches at the same time.
           correct: N
           feedback: Pitches?
-    - unit: unitMonoPoly
+    - subject: monoPoly
       body: What is polyphony?
       options:
         - value: Polyphony is a capability of an instrument meaning... the instrument can create multiple sounds at the same time.
@@ -3828,7 +3788,7 @@ cards:
         - value: Polyphony is a capability of an instrument meaning... the instrument can create zero or one pitches at the same time.
           correct: N
           feedback: Pitches?
-    - unit: unitMonoPoly
+    - subject: monoPoly
       body: What does the number of voices do?
       options:
         - value: The number of voices determines how many sounds the instrument can create at the same time.
@@ -3843,7 +3803,7 @@ cards:
         - value: The number of voices determines how many pitches the instrument can modify at the same time.
           correct: N
           feedback: Usually refers to create.
-    - unit: unitMonoPoly
+    - subject: monoPoly
       body: If we signal a note past the maximum...
       options:
         - value: Then either the new note won't play or the oldest note cuts out.
@@ -3858,7 +3818,7 @@ cards:
         - value: None of the other options.
           correct: N
           feedback: There is a good option...
-    - unit: unitMidi
+    - subject: midi
       body: What is MIDI?
       options:
         - value: MIDI, or Musical Instrument Digital Interface, is a protocol for communicating data between music and sound devices.
@@ -3873,7 +3833,7 @@ cards:
         - value: None of the other answers.
           correct: N
           feedback: One of the answers is correct.
-    - unit: unitMidi
+    - subject: midi
       body: What is a MIDI channel?
       options:
         - value: Each channel contains events.
@@ -3888,7 +3848,7 @@ cards:
         - value: None of the other options.
           correct: N
           feedback: There's a decent option.
-    - unit: unitMidi
+    - subject: midi
       body: What is a MIDI event?
       options:
         - value: Data within in a channel that specifies note-on and off, pitch, and volume, as well as control messages.
@@ -3903,7 +3863,7 @@ cards:
         - value: A MIDI event is a protocol for communicating data between music and sound devices.
           correct: N
           feedback: That is MIDI, not a MIDI event.
-    - unit: unitMidi
+    - subject: midi
       body: What is daisy chaining?
       options:
         - value: Daisy chaining means that we can pass data through, creating a flow through multiple devices.
@@ -3918,7 +3878,7 @@ cards:
         - value: None of the other options.
           correct: N
           feedback: There's a good answer...
-    - unit: unitMidi
+    - subject: midi
       body: What is the range of allowed values?
       options:
         - value: 0-127
@@ -3933,7 +3893,7 @@ cards:
         - value: 0-63
           correct: N
           feedback: Too small
-    - unit: unitMidi
+    - subject: midi
       body: How many MIDI channels are there per connection?
       options:
         - value: Sixteen
@@ -3948,7 +3908,7 @@ cards:
         - value: One
           correct: N
           feedback: That's OSC
-    - unit: unitOscS
+    - subject: oscS
       body: What is OSC?
       options:
         - value: Open sound control is a protocol for communicating music and sound data between devices.
@@ -3963,7 +3923,7 @@ cards:
         - value: Open sound control is only available on Apple hardware.
           correct: N
           feedback: It's an open protocol!
-    - unit: unitOscS
+    - subject: oscS
       body: What are the properties of an OSC event?
       options:
         - value: The time, an address, a type, and a value.
@@ -3978,7 +3938,7 @@ cards:
         - value: The time, an channel, and a value.
           correct: N
           feedback: There's only one channel! And missing type.
-    - unit: unitOscS
+    - subject: oscS
       body: What does the address of an OSC event do?
       options:
         - value: Addresses allow us to route events to the matching device.
@@ -3993,7 +3953,7 @@ cards:
         - value: Address is the time of the event.
           correct: N
           feedback: That is time.
-    - unit: unitOscS
+    - subject: oscS
       body: What does the type of an OSC event do?
       options:
         - value: The type tells us the parameter involved.
@@ -4008,7 +3968,7 @@ cards:
         - value: Type is the time of the event.
           correct: N
           feedback: That is time.
-    - unit: unitOscS
+    - subject: oscS
       body: What kind of values does OSC support?
       options:
         - value: Integer, float, string, arbitrary data.

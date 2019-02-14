@@ -1,7 +1,6 @@
 const express = require('express')
 const { postgraphile } = require('postgraphile')
 const uuidv4 = require('uuid/v4')
-const mailer = require('./mail')
 
 require('dotenv').config()
 
@@ -10,6 +9,7 @@ const app = express()
 app.get('/', (req, res) =>
   res.json({ message: 'Welcome to the Sagefy service!' })
 )
+
 app.get('/x', (req, res) =>
   res.json({ message: 'Welcome to the Sagefy service!' })
 )
@@ -31,11 +31,9 @@ app.use(
       // JWT Authentication
       jwtSecret: process.env.JWT_SECRET || uuidv4(),
       defaultRole: process.env.JWT_ROLE || 'sg_anonymous',
-      token: process.env.JWT_TOKEN || 'sg_public.jwt_token',
+      jwtPgTypeIdentifier: process.env.JWT_TOKEN || 'sg_public.jwt_token',
     }
   )
 )
-
-mailer(client)
 
 app.listen(process.env.SERVER_PORT || 8653)

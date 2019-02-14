@@ -1,0 +1,5 @@
+node_modules/
+circleci/
+/home/circleci/
+home/circleci/
+postgres/sample.js

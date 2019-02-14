@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchSubjectsPage should render the search subjects page 1`] = `
+<div
+  className="SearchSubjectsPage"
+>
+  <section
+    className="text-align-center"
+  >
+    <h1>
+      What do you want to learn? 
+      <Icon
+        i="search"
+        s="xxl"
+      />
+    </h1>
+    <form
+      action="/search-subjects"
+    >
+      <p>
+        <input
+          autoFocus={true}
+          placeholder="example: Music"
+          size="40"
+          type="search"
+          value="Music"
+        />
+      </p>
+      <p>
+        <button
+          type="submit"
+        >
+          <Icon
+            i="search"
+            s="m"
+          />
+           Search
+        </button>
+      </p>
+    </form>
+  </section>
+  <Footer />
+</div>
+`;

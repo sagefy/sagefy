@@ -1,0 +1,15 @@
+{
+  "name": "sagefy-postgres",
+  "version": "2.0.0",
+  "description": "",
+  "main": "exit 0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "js-yaml": "^3.12.1",
+    "pg": "^7.8.0"
+  }
+}

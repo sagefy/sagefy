@@ -1,0 +1,11 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.15.1
+    steps:
+      - checkout
+      - run: npm install
+      - run: '(cd client && npm install)'
+      - run: '(cd server && npm install)'
+      - run: npm test
