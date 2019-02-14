@@ -21,4 +21,4 @@ app.get('*', (req, res) => res.render('Index', { location: req.url }))
 
 app.listen(process.env.PORT || 5984)
 
-export default app
+module.exports = app
