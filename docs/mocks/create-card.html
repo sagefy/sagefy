@@ -1,0 +1,60 @@
+---
+layout: mocks
+title: Create Card
+---
+
+<style>td{vertical-align:middle}</style>
+
+<section>
+  <div class="collapse-margins">
+    <p><em>That subject looks great!</em></p>
+    <h1>Let's add a card to "Complex Waves" 🃏</h1>
+  </div>
+
+  <form action="/mocks/create-card">
+    <p><em>Advice: A few choice cards would help!</em></p>
+    <!-- Advice: You've added one more so far. We recommend at least 10. -->
+
+    <details>
+      <summary><strong>Subject:</strong> Complex Waves</summary>
+      <blockquote>
+        <p>Describe the composition of complex sounds.</p>
+      </blockquote>
+    </details>
+    <!-- Alternative: let the user pick a subject -->
+
+    <p>
+      <label for="name">What is the name of the card?</label>
+      <input type="text" placeholder="example: Video of mean, median, &amp; mode" size="40" id="name" name="name" autofocus>
+    </p>
+
+    <div>
+      <label for="kind">What kind of card would you like to make?</label>
+      <ul class="list-style-inline" style="margin-top:0">
+        <li><label><input type="radio" value="x" name="x" checked> Video</label></li>
+        <li><label><input type="radio" value="x" name="x"> Choice</label></li>
+        <li><label><input type="radio" value="x" name="x"> Page</label></li>
+        <li><label><input type="radio" value="x" name="x"> Unscored Embed</label></li>
+      </ul>
+    </div>
+
+    <p>
+      <label for="data.videoSite">What the URL of the video?</label>
+      <input type="text" placeholder="example: https://www.youtube.com/watch?v=m_uQj1CP3Kg" size="40" id="name" name="name">
+    </p>
+
+    <p>
+      <button type="submit">🃏 Create Card</button>
+      <!-- Either add another card, or return to subject page -->
+    </p>
+  </form>
+</section>
+
+<footer>
+  <hr />
+  <details>
+    <summary>
+      <span>🤷🏽‍♀️ What are cards &amp; subjects? 🤷🏽‍♀️</span>
+    </summary>
+  </details>
+</footer>
