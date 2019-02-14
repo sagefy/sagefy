@@ -8,7 +8,7 @@
 # Stop prod server
 # download from B2 site
 
-# Create a Droplet in Digital Ocean. Ubuntu 16/64, $5, SFO, all default options.
+# Create a Droplet in Digital Ocean. Ubuntu 18.04/64, $5, SFO, all default options.
 # Then log in with `ssh root@IPADDRESS`. Look in your email for the root password.
 # It will make you change the root password on log in. Write this down temporarily.
 
@@ -49,8 +49,8 @@ sudo ufw enable
 sudo timedatectl set-timezone America/Los_Angeles
 
 # Configure NTP
-sudo apt-get update
-sudo apt-get install ntp
+sudo apt-get -y update
+sudo apt-get -y install ntp
 
 # Create a swap file
 sudo fallocate -l 4G /swapfile
@@ -68,29 +68,30 @@ sudo mkdir /var/www
 cd /var
 sudo chown -R annina www
 sudo chmod -R 775 www
-git clone https://github.com/heiskr/sagefy.git www
+git clone https://github.com/sagefy/sagefy.git www
 cd www
 
 # Install docker-compose
 sudo apt-get update
 sudo apt-get install \
-  apt-transport-https \
-  ca-certificates \
-  curl \
-  software-properties-common
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
    $(lsb_release -cs) \
    stable"
 sudo apt-get update
-sudo apt-get install docker-ce=17.09.0~ce-0~ubuntu
+sudo apt-get install docker-ce docker-ce-cli containerd.io
 sudo gpasswd -a ${USER} docker
 sudo usermod -aG docker $USER
 sudo service docker restart
 docker --version
 
-sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 # Takes about 2 minutes...
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
@@ -110,6 +111,7 @@ sudo nano /etc/ufw/before.rules
 -A POSTROUTING ! -o docker0 -s 172.17.0.0/16 -j MASQUERADE
 COMMIT
 sudo reboot now
+# ssh back in:  ssh annina@IPADDRESS
 sudo touch /etc/docker/daemon.json
 sudo nano /etc/docker/daemon.json
 # contents: {"iptables": false}
@@ -130,9 +132,11 @@ sudo apt-get -y install software-properties-common
 sudo apt-get -y install python-software-properties python g++ make
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 sudo apt-get install -y nodejs
-cd /var/www/client
+
 npm install
-npm run deploy
+(cd /var/www/server && npm install)
+(cd /var/www/client && npm install)
+(cd /var/www/client && npm run build)
 
 # Spin it all up
 docker-compose up -d
@@ -157,6 +161,9 @@ sudo apt-get install python-pip
 sudo pip install --upgrade --ignore-installed b2
 cd /var/www
 mkdir dbbu
+
+# Set up Digital Ocean monitoring
+curl -sSL https://agent.digitalocean.com/install.sh | sh
 
 # >>> Verify it works using the IP Address
 # Sign up for an account, log in to existing account, go through learning process.
