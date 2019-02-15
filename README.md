@@ -2,7 +2,7 @@
 
 # Sagefy
 
-**Learn anything, adapted for you.** _And always free._
+**Learn anything, adapted for you.** _Free._
 
 Sagefy is an _open-content, adaptive learning_ platform.
 
