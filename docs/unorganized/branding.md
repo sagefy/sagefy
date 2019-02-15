@@ -1,4 +1,3 @@
-
 What we stand for:
 
 What our beliefs are:

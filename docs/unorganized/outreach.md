@@ -1,11 +1,9 @@
+Acquisition: (visit)
 
+Activation: (create account/conversion)
 
-Acquisition:  (visit)
+Referral: (invite)
 
-Activation:   (create account/conversion)
-
-Referral:  (invite)
-
-Revenue:  
+Revenue:
 
 Retention:

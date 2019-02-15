@@ -19,9 +19,11 @@ _No_ inline HTML. Auto escape inline characters.
 
 Only three **heading** levels. In some cases, the `h1` tag is already used, so these headings will be all be down 1 level.
 
-  # Heading 1
-  ## Heading 2
-  ### Heading 3
+# Heading 1
+
+## Heading 2
+
+### Heading 3
 
 **Unordered lists** use `-`, **ordered lists** use `1.`. Hanging indent or wrap are both allowed. Supports nesting.
 
@@ -40,6 +42,7 @@ Only three **heading** levels. In some cases, the `h1` tag is already used, so t
 **Tables**: Use `|` to split columns, and `-` to split header row.
 
 Later on...
+
 - Syntax highlighting?
 - Emoji supported, use `:emoji:` format?
 - Inline TeX ?

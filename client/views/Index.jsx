@@ -20,10 +20,7 @@ export default function Index({ location }) {
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="/sagefy.min.css" />
         <title>
           <StaticRouter context={{}} location={location}>

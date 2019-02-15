@@ -5,8 +5,7 @@ title: Planning> Learners MVP
 
 See [Sequencer](Planning-Sequencer), [Sequencer Background](Planning-Sequencer-Background) and [Machine Learning Requirements](Planning-Machine-Learning-Requirements).
 
-Learner Models
---------------
+## Learner Models
 
 **users_subjects**
 
@@ -27,8 +26,7 @@ Learner Models
 - user -> current unit
 - caching
 
-Learner Endpoints
------------------
+## Learner Endpoints
 
 - GET `/s/users/{id}/subjects/`
 - POST `/s/users/{id}/subjects/` <- Add to my subjects
@@ -43,8 +41,7 @@ Learner Endpoints
 - GET `/s/cards/{id}/learn` <- Render card
 - POST `/s/cards/{id}/responses` <- Respond to card
 
-Learner Screen Requirements and Wireframes
-------------------------------------------
+## Learner Screen Requirements and Wireframes
 
 ### My Subjects
 

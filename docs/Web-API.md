@@ -25,11 +25,11 @@ Errors will appear in the following format, along with the appropriate status co
 
 Welcomes the developer to the Sagefy service.
 
-+ Response 200 (application/json)
+- Response 200 (application/json)
 
-    {
-      "message": "Welcome to Sagefy."
-    }
+  {
+  "message": "Welcome to Sagefy."
+  }
 
 ## Users [/s/users]
 
@@ -39,23 +39,23 @@ Create a new user account.
 
 Returns a 400 if there are errors, such as email already used or password too short.
 
-+ Request (application/json)
+- Request (application/json)
 
-    {
-      "name": "test",
-      "email": "test@example.com",
-      "password": "abcd1234"
-    }
+  {
+  "name": "test",
+  "email": "test@example.com",
+  "password": "abcd1234"
+  }
 
-+ Response 200 (application/json)
+- Response 200 (application/json)
 
-    {
-      "user": {
-        "name": "test",
-        "email": "test@example.com",
-        "email_frequency": "immediate"
-      }
-    }
+  {
+  "user": {
+  "name": "test",
+  "email": "test@example.com",
+  "email_frequency": "immediate"
+  }
+  }
 
 ## User [/s/users/{id}]
 
@@ -69,15 +69,15 @@ Returns a 404 if user is not found.
 
 `current` may be substituted for `id`. In that case, returns a 401 if a user is not logged in.
 
-+ Response 200 (application/json)
+- Response 200 (application/json)
 
-    {
-      "user": {
-        "name": "test",
-        "email": "test@example.com",
-        "email_frequency": "immediate"
-      }
-    }
+  {
+  "user": {
+  "name": "test",
+  "email": "test@example.com",
+  "email_frequency": "immediate"
+  }
+  }
 
 ### Update a user [PUT]
 
@@ -85,23 +85,23 @@ Update the user. Must be the current user.
 
 Return a 404 if no user matching that ID. Return 401 if not the current user. Return 400 for parameter issues.
 
-+ Request (application/json)
+- Request (application/json)
 
-    {
-      "name": "test",
-      "email": "test@example.com",
-      "password": "abcd1234"
-    }
+  {
+  "name": "test",
+  "email": "test@example.com",
+  "password": "abcd1234"
+  }
 
-+ Response 200 (application/json)
+- Response 200 (application/json)
 
-    {
-      "user": {
-        "name": "test",
-        "email": "test@example.com",
-        "email_frequency": "immediate"
-      }
-    }
+  {
+  "user": {
+  "name": "test",
+  "email": "test@example.com",
+  "email_frequency": "immediate"
+  }
+  }
 
 ## Log in or out user [/s/sessions]
 
@@ -111,28 +111,28 @@ Log in as an existing user.
 
 Returns 404 if the user by name is not found. Returns a 400 if the password is not valid.
 
-+ Request (application/json)
+- Request (application/json)
 
-    {
-      "name": "test",
-      "password": "abcd1234"
-    }
+  {
+  "name": "test",
+  "password": "abcd1234"
+  }
 
-+ Response 200 (application/json)
+- Response 200 (application/json)
 
-    {
-      "user": {
-        "name": "test",
-        "email": "test@example.com",
-        "email_frequency": "immediate"
-      }
-    }
+  {
+  "user": {
+  "name": "test",
+  "email": "test@example.com",
+  "email_frequency": "immediate"
+  }
+  }
 
 ### Log out as user [DELETE]
 
 Log out of the current user.
 
-+ Response 204
+- Response 204
 
 ## Password Token [/s/password_tokens]
 
@@ -142,13 +142,13 @@ Email a token to be able to reset the password.
 
 Return a 404 if it cannot find the user's email.
 
-+ Request (application/json)
+- Request (application/json)
 
-    {
-      "email": "test@example.com"
-    }
+  {
+  "email": "test@example.com"
+  }
 
-+ Response 204 (application/json)
+- Response 204 (application/json)
 
 ## Create Password [/s/users/{user_id}/password]
 
@@ -158,23 +158,23 @@ Update the user's password. Must have a matching and timely token.
 
 200 also logs in user. 404 if not a valid user ID. 403 if the token doesn't match.
 
-+ Request (application/json)
+- Request (application/json)
 
-    {
-      "id": "ABCD1234",
-      "token": "JFDN32JL29af",
-      "password": "abcd1234"
-    }
+  {
+  "id": "ABCD1234",
+  "token": "JFDN32JL29af",
+  "password": "abcd1234"
+  }
 
-+ Response 200 (application/json)
+- Response 200 (application/json)
 
-    {
-      "user": {
-        "name": "test",
-        "email": "test@example.com",
-        "email_frequency": "immediate"
-      }
-    }
+  {
+  "user": {
+  "name": "test",
+  "email": "test@example.com",
+  "email_frequency": "immediate"
+  }
+  }
 
 ## User Subjects [/s/users/{id}/subjects]
 
@@ -184,12 +184,12 @@ Get the list of learner's subjects.
 
 401 if not logged in. 403 if not current user.
 
-+ Response 200 (application/json)
+- Response 200 (application/json)
 
-    {
-      "user_id": "fnsLJIoel",
-      "subject_ids": ["fjkOTJRLEf"]
-    }
+  {
+  "user_id": "fnsLJIoel",
+  "subject_ids": ["fjkOTJRLEf"]
+  }
 
 ## User Subject [/s/users/{id}/subjects/{id}]
 
@@ -199,12 +199,12 @@ Add a subject to the learner's list.
 
 401 if not logged in. 403 if not current user. 404 if subject not found. 409 if already added.
 
-+ Response 200 (application/json)
+- Response 200 (application/json)
 
-    {
-      "user_id": "fnsLJIoel",
-      "subject_ids": ["fjkOTJRLEf"]
-    }
+  {
+  "user_id": "fnsLJIoel",
+  "subject_ids": ["fjkOTJRLEf"]
+  }
 
 ### Remove a user subject [DELETE]
 
@@ -212,18 +212,18 @@ Remove a subject from the learner's list.
 
 401 if not logged in. 403 if not current user. 404 if subject not found.
 
-+ Response 200 (application/json)
+- Response 200 (application/json)
 
-    {
-      "user_id": "fnsLJIoel",
-      "subject_ids": ["fjkOTJRLEf"]
-    }
+  {
+  "user_id": "fnsLJIoel",
+  "subject_ids": ["fjkOTJRLEf"]
+  }
 
 ### Select a user subject [PUT]
 
 Selects a subject for the user to engage.
 
-+ Response 200
+- Response 200
 
 ## Card [/s/cards/{id}]
 
@@ -236,18 +236,18 @@ not used for the learning interface.
 
 Always returns the latest accepted version. 404 if card not found.
 
-+ Response 200 (application/json)
+- Response 200 (application/json)
 
-    {
-      "card": {
-        "name": "Lorem ipsum.",
-        "body": "Lorem ipsum.",
-        "options": [{
-          "body": "Details...",
-          "correct": false
-        }]
-      }
-    }
+  {
+  "card": {
+  "name": "Lorem ipsum.",
+  "body": "Lorem ipsum.",
+  "options": [{
+  "body": "Details...",
+  "correct": false
+  }]
+  }
+  }
 
 ## Card for Learning [/s/cards/{id}/learn]
 
@@ -257,17 +257,17 @@ Some data is filtered out, such as feedback and which answer is correct.
 
 Render the card's data, ready for learning.
 
-+ Response 200 (application/json)
+- Response 200 (application/json)
 
-    {
-      "card": {
-        "name": "Lorem ipsum.",
-        "body": "Lorem ipsum.",
-        "options": [{
-          "body": "Details..."
-        }]
-      }
-    }
+  {
+  "card": {
+  "name": "Lorem ipsum.",
+  "body": "Lorem ipsum.",
+  "options": [{
+  "body": "Details..."
+  }]
+  }
+  }
 
 ## Card Responses [/s/cards/{id}/responses]
 
@@ -275,29 +275,29 @@ Render the card's data, ready for learning.
 
 Record and process a learner's response to a card.
 
-+ Request
+- Request
 
-    {
-      "card_id": "zFK2201",
-      "response": 3
-    }
+  {
+  "card_id": "zFK2201",
+  "response": 3
+  }
 
-+ Response 200
+- Response 200
 
-    {
-      "response": {
-        "user_id": "Fj2Fo3L",
-        "card_id": "zFK2201",
-        "unit_id": "Y2o081l",
-        "score": 1
-      }
-    }
+  {
+  "response": {
+  "user_id": "Fj2Fo3L",
+  "card_id": "zFK2201",
+  "unit_id": "Y2o081l",
+  "score": 1
+  }
+  }
 
 ## Card Versions [/s/cards/{card_id}/versions]
 
 ### Get card versions [GET]
 
-+ Response 200
+- Response 200
 
 ## Unit [/s/units/{id}]
 
@@ -309,23 +309,23 @@ Get a specific unit given an ID.
 
 Always returns the latest accepted version. 404 if card not found.
 
-+ Response 200
+- Response 200
 
-    {
-      "unit": {
-        "language": "en",
-        "name": "Lorem ipsum.",
-        "body": "Lorem ipsum.",
-        "tags": ["analyze"],
-        "require_ids": ["a5kJ3kj"]
-      }
-    }
+  {
+  "unit": {
+  "language": "en",
+  "name": "Lorem ipsum.",
+  "body": "Lorem ipsum.",
+  "tags": ["analyze"],
+  "require_ids": ["a5kJ3kj"]
+  }
+  }
 
 ## Unit Versions [/s/units/{unit_id}/versions]
 
 ### Get unit versions [GET]
 
-+ Response 200
+- Response 200
 
 ## Subject [/s/subjects/{id}]
 
@@ -335,26 +335,26 @@ A subject is a collection of units and other subjects.
 
 Get a specific subject given an ID.
 
-+ Response 200
+- Response 200
 
-    {
-      "subject": {
-        "language": "en",
-        "name": "Lorem ipsum.",
-        "body": "Lorem ipsum.",
-        "tags": ["Y950fnNo"],
-        "members": [{
-          "id": "9JmFKI04",
-          "kind": "unit"
-        }]
-      }
-    }
+  {
+  "subject": {
+  "language": "en",
+  "name": "Lorem ipsum.",
+  "body": "Lorem ipsum.",
+  "tags": ["Y950fnNo"],
+  "members": [{
+  "id": "9JmFKI04",
+  "kind": "unit"
+  }]
+  }
+  }
 
 ## Subject Versions [/s/subjects/{subject_id}/versions]
 
 ### Get subject versions [GET]
 
-+ Response 200
+- Response 200
 
 ## Subject Tree [/s/subjects/{id}/tree]
 
@@ -364,13 +364,13 @@ Render the tree of units that exists within a subject.
 
 404 if subject not found.
 
-+ Response 200
+- Response 200
 
-    {
-      "units": {
-        "fRjglO0": ["59JkflsoT", "Jn34NFKo0"]
-      }
-    }
+  {
+  "units": {
+  "fRjglO0": ["59JkflsoT", "Jn34NFKo0"]
+  }
+  }
 
 ## Subject' Units [/s/subjects/{id}/units]
 
@@ -382,17 +382,17 @@ Specifically, present a small number of units the learner can choose from.
 
 401 if not logged in. 404 if subject not found. 400 if it doesn't make sense.
 
-+ Response 200
+- Response 200
 
-    {
-      "units": [{
-        "language": "en",
-        "name": "Lorem ipsum.",
-        "body": "Lorem ipsum.",
-        "tags": ["analyze"],
-        "require_ids": ["a5kJ3kj"]
-      }]
-    }
+  {
+  "units": [{
+  "language": "en",
+  "name": "Lorem ipsum.",
+  "body": "Lorem ipsum.",
+  "tags": ["analyze"],
+  "require_ids": ["a5kJ3kj"]
+  }]
+  }
 
 ## Subject' Unit [/s/subjects/{id}/units/{id}]
 
@@ -402,7 +402,7 @@ Updates the learner's information based on the unit they have chosen.
 
 401 if not logged in. 404 if subject or unit not found. 400 if it doesn't make sense.
 
-+ Response 204
+- Response 204
 
 ## Next [/s/next]
 
@@ -414,12 +414,12 @@ Tell the learner where to go next.
 
 Can lead to a card, tree, or choose unit screen.
 
-+ Response 200
+- Response 200
 
-    {
-      "kind": "card",
-      "card_id": "aFN03O2m"
-    }
+  {
+  "kind": "card",
+  "card_id": "aFN03O2m"
+  }
 
 ## Search [/s/search]
 
@@ -429,23 +429,24 @@ Site-wide search for cards, units, subjects, users, topics, and posts.
 
 Search for entities.
 
-+ Parameters
-  + q (optional) - Text index based search query.
-  + skip (optional) - Offset results by count.
-  + limit (optional) - Maximum number of results to return.
-  + order
-  + kind (optional) - the kind of entity to search for (e.g. subject, card, unit)
-  + as_learner (optional)
+- Parameters
 
-+ Response 200
+  - q (optional) - Text index based search query.
+  - skip (optional) - Offset results by count.
+  - limit (optional) - Maximum number of results to return.
+  - order
+  - kind (optional) - the kind of entity to search for (e.g. subject, card, unit)
+  - as_learner (optional)
 
-    {
-      "results": [{
-        {
-          "table": "card",
-        }
-      }]
-    }
+- Response 200
+
+  {
+  "results": [{
+  {
+  "table": "card",
+  }
+  }]
+  }
 
 ## Topics [/s/topics]
 
@@ -460,42 +461,42 @@ When creating a topic, you must also submit information for a valid post. There 
 
 Returns 400 if missing or invalid topic or post information. Return 401 if not logged in as a user.
 
-+ Request
+- Request
 
-    {
-      "topic": {
-        "name": "Lorem ipsum.",
-        "entity": {
-          "kind": "card",
-          "id": "fj204lasZ"
-        }
-      },
-      "post": {
-        "body": "Lorem ipsum.",
-        "kind": "post",
-        "replies_to_id": "a42lf9"
-      }
-    }
+  {
+  "topic": {
+  "name": "Lorem ipsum.",
+  "entity": {
+  "kind": "card",
+  "id": "fj204lasZ"
+  }
+  },
+  "post": {
+  "body": "Lorem ipsum.",
+  "kind": "post",
+  "replies_to_id": "a42lf9"
+  }
+  }
 
-+ Response 200
+- Response 200
 
-    {
-      "topic": {
-        "id": "fjkls234",
-        "name": "Lorem ipsum.",
-        "entity": {
-          "kind": "card",
-          "id": "fj204lasZ"
-        }
-      },
-      "post": {
-        "user_id": "ajfkl234",
-        "body": "Lorem ipsum.",
-        "kind": "post",
-        "replies_to_id": "a42lf9",
-        "topic_id": "fjkls234"
-      }
-    }
+  {
+  "topic": {
+  "id": "fjkls234",
+  "name": "Lorem ipsum.",
+  "entity": {
+  "kind": "card",
+  "id": "fj204lasZ"
+  }
+  },
+  "post": {
+  "user_id": "ajfkl234",
+  "body": "Lorem ipsum.",
+  "kind": "post",
+  "replies_to_id": "a42lf9",
+  "topic_id": "fjkls234"
+  }
+  }
 
 ## Topic [/s/topics/{id}]
 
@@ -505,24 +506,24 @@ Update the topic. Only the name can be changed. Only by original author.
 
 401 if not logged in. 404 if topic by ID not found. 403 if not user's own topic. 400 if there's issues with the name field.
 
-+ Request
+- Request
 
-    {
-      "name": "Neo name."
-    }
+  {
+  "name": "Neo name."
+  }
 
-+ Response 200
+- Response 200
 
-    {
-      "topic": {
-        "id": "fjkls234",
-        "name": "Neo name.",
-        "entity": {
-          "kind": "card",
-          "id": "fj204lasZ"
-        }
-      }
-    }
+  {
+  "topic": {
+  "id": "fjkls234",
+  "name": "Neo name.",
+  "entity": {
+  "kind": "card",
+  "id": "fj204lasZ"
+  }
+  }
+  }
 
 ## Posts [/s/topics/{id}/posts]
 
@@ -534,21 +535,22 @@ Paginates.
 
 Returns 404 if topic not found. Posts can be one of post, proposal, vote, or flag. The kind changes the field available.
 
-+ Parameters
-  + skip - Maximum number of posts to return.
-  + limit - Offset the return by count.
+- Parameters
 
-+ Response 200
+  - skip - Maximum number of posts to return.
+  - limit - Offset the return by count.
 
-    {
-      "posts": [{
-        "user_id": "ajfkl234",
-        "body": "Lorem ipsum.",
-        "kind": "post",
-        "replies_to_id": "a42lf9",
-        "topic_id": "fjkls234"
-      }]
-    }
+- Response 200
+
+  {
+  "posts": [{
+  "user_id": "ajfkl234",
+  "body": "Lorem ipsum.",
+  "kind": "post",
+  "replies_to_id": "a42lf9",
+  "topic_id": "fjkls234"
+  }]
+  }
 
 ### Create post [POST]
 
@@ -559,23 +561,23 @@ Vote: must refer to a proposal.
 
 401 if not logged in. 404 if topic not found. 400 if issue presented with content.
 
-+ Request
+- Request
 
-    {
-      "body": "Lorem ipsum.",
-      "kind": "post",
-      "replies_to_id": "a42lf9"
-    }
+  {
+  "body": "Lorem ipsum.",
+  "kind": "post",
+  "replies_to_id": "a42lf9"
+  }
 
-+ Response 200
+- Response 200
 
-    {
-      "user_id": "ajfkl234",
-      "body": "Lorem ipsum.",
-      "kind": "post",
-      "replies_to_id": "a42lf9",
-      "topic_id": "fjkls234"
-    }
+  {
+  "user_id": "ajfkl234",
+  "body": "Lorem ipsum.",
+  "kind": "post",
+  "replies_to_id": "a42lf9",
+  "topic_id": "fjkls234"
+  }
 
 ## Post [/s/topics/{id}/post/{id}]
 
@@ -589,21 +591,21 @@ the current status is pending or blocked.
 
 401 if not logged in. 403 if not own post. 400 if issues with content.
 
-+ Request
+- Request
 
-    {
-      "body": "Neo body."
-    }
+  {
+  "body": "Neo body."
+  }
 
-+ Response 200
+- Response 200
 
-    {
-      "user_id": "ajfkl234",
-      "body": "Neo body.",
-      "kind": "post",
-      "replies_to_id": "a42lf9",
-      "topic_id": "fjkls234"
-    }
+  {
+  "user_id": "ajfkl234",
+  "body": "Neo body.",
+  "kind": "post",
+  "replies_to_id": "a42lf9",
+  "topic_id": "fjkls234"
+  }
 
 ## Follows [/s/follows]
 
@@ -611,7 +613,7 @@ Follows allow users to subscribe to updates on cards, units, and subjects.
 
 ### List follows [GET]
 
-+ Response 200
+- Response 200
 
 ### Follow [POST]
 
@@ -619,25 +621,24 @@ Current user follows an entity, topic, or proposal.
 
 Return 401 if not logged in. Return 400 if content issues.
 
+- Request
 
-+ Request
+  {
+  "entity": {
+  "kind": "card",
+  "id": "fjk20tnJF"
+  }
+  }
 
-    {
-      "entity": {
-        "kind": "card",
-        "id": "fjk20tnJF"
-      }
-    }
+- Response 200
 
-+ Response 200
-
-    {
-      "user_id": "abcd1234",
-      "entity": {
-        "kind": "card",
-        "id": "fjk20tnJF"
-      }
-    }
+  {
+  "user_id": "abcd1234",
+  "entity": {
+  "kind": "card",
+  "id": "fjk20tnJF"
+  }
+  }
 
 ## Follow [/s/follows/{id}]
 
@@ -647,7 +648,7 @@ Remove a follow. Must be current user's own follow.
 
 Return 404 if it doesn't find that follow. Return 401 if not logged in. Return 403 if not own follow. Return 400 if other errors.
 
-+ Response 204
+- Response 204
 
 ## Notices [/s/notices]
 
@@ -659,23 +660,24 @@ List notices for current user.
 
 Returns a 401 if there's no user currently logged in.
 
-+ Parameters
-  + limit - Maximum number of notices to return.
-  + skip - Offset in returned subject.
-  + tag - Filter by a specific tag.
-  + read - Filter by read or unread notices.
+- Parameters
 
-+ Response 200
+  - limit - Maximum number of notices to return.
+  - skip - Offset in returned subject.
+  - tag - Filter by a specific tag.
+  - read - Filter by read or unread notices.
 
-    {
-      "notices": [{
-        "id": "abcd1234",
-        "user_id": "fjskl234",
-        "kind": "create_proposal",
-        "read": false,
-        "tags": ["analyze"]
-      }]
-    }
+- Response 200
+
+  {
+  "notices": [{
+  "id": "abcd1234",
+  "user_id": "fjskl234",
+  "kind": "create_proposal",
+  "read": false,
+  "tags": ["analyze"]
+  }]
+  }
 
 ## Notice [/s/notices/{id}]
 
@@ -687,14 +689,14 @@ Return notice.
 
 Returns 401 if not logged in. Returns 404 if notice not found. Returns 403 if not user's own notice. Returns 400 if issues saving to the database.
 
-+ Response 200
+- Response 200
 
-    {
-      "notice": {
-        "id": "abcd1234",
-        "user_id": "fjskl234",
-        "kind": "create_proposal",
-        "read": false,
-        "tags": ["analyze"]
-      }
-    }
+  {
+  "notice": {
+  "id": "abcd1234",
+  "user_id": "fjskl234",
+  "kind": "create_proposal",
+  "read": false,
+  "tags": ["analyze"]
+  }
+  }

@@ -11,8 +11,7 @@ This document covers the terms, parameters, flow, and formula for the primary le
 
 Also see [Planning: Sequencer Background](Planning-Sequencer-Background) and [Planning: Sequencer Guess Slip](Planning-Sequencer-Guess-Slip).
 
-Terms
------
+## Terms
 
 Also see [Cards, Units, & Subjects](Cards-Units-Subjects) for definitions of **card**, **unit**, and **subject**.
 
@@ -26,33 +25,32 @@ Also see [Cards, Units, & Subjects](Cards-Units-Subjects) for definitions of **c
 
 **Scored Cards** - Cards which have an response element, such as choosing an answer or typing in an answer.
 
-Requirements
-------------
+## Requirements
 
 I write these requirements with the assumption of using Bayesian Knowledge Tracing. In BKT, the following formulas are assumed:
 
-  correct = learned * (1 - slip) + (1 - learned) * guess
-  incorrect = learned * slip + (1 - learned) * (1 - guess)
+correct = learned _ (1 - slip) + (1 - learned) _ guess
+incorrect = learned _ slip + (1 - learned) _ (1 - guess)
 
-  learned0 = (
-    score
-    * learned
-    * calc_correct(1, guess, slip)
-    / calc_correct(learned, guess, slip)
-    + (1 - score)
-    * learned
-    * calc_incorrect(1, guess, slip)
-    / calc_incorrect(learned, guess, slip)
+learned0 = (
+score
+_ learned
+_ calc\*correct(1, guess, slip)
+/ calc_correct(learned, guess, slip) + (1 - score)
+
+- learned
+  \_ calc_incorrect(1, guess, slip)
+  / calc_incorrect(learned, guess, slip)
   )
-  learned = learned0 + (1 - learned0) * transit
+  learned = learned0 + (1 - learned0) \* transit
 
-- correct: the probability of the learner getting the answer correct
-- incorrect: the probability of the learner getting the answer incorrect
-- learned: the probability that the learner knows the skill
-- guess: the probability the learner will answer correctly given learned == 0
-- slip: the probability the learner will answer incorrectly given learned == 1
-- learned0: learned before accounting for transit (Hidden Markov Model)
-- transit: the probability the learner has learned the skill by seeing the card
+* correct: the probability of the learner getting the answer correct
+* incorrect: the probability of the learner getting the answer incorrect
+* learned: the probability that the learner knows the skill
+* guess: the probability the learner will answer correctly given learned == 0
+* slip: the probability the learner will answer incorrectly given learned == 1
+* learned0: learned before accounting for transit (Hidden Markov Model)
+* transit: the probability the learner has learned the skill by seeing the card
 
 Requirements:
 
@@ -69,8 +67,7 @@ Requirements:
   1. Searching for new subjects
   2. Estimating time to complete units and subjects
 
-Parameters
-----------
+## Parameters
 
 The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) and _weighted mean_ (`transit`) strategy. Other strategies may include _static parameters_ and _Bayesian updates_.
 
@@ -87,8 +84,8 @@ The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) an
 - _When_ - Diagnostic assessment. When to change units. When unit is complete. When to review. Forming completion tree.
 - _Factors_ - Prior, response, learner-card ability, card difficulty, guess, slip. (Retention: should degrade learner-unit ability's confidence over time.)
 - _Formula_ -
-  - 1) `learned = learned * (slip || 1 - slip) / (p(correct) || p(incorrect))`
-  - 2) `learned = learned + (1 - learned) * transit`
+  - 1. `learned = learned * (slip || 1 - slip) / (p(correct) || p(incorrect))`
+  - 2. `learned = learned + (1 - learned) * transit`
 
 **Learner-Subject Ability**
 
@@ -145,8 +142,7 @@ The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) an
 - _Factors_ - Unit difficulty.
 - _Formula_ - `sum(unit difficulty per unit)`
 
-Flow
-----
+## Flow
 
 ![Flowchart](https://docs.google.com/drawings/d/1fmdT0vqWPsq-oUG0IPRprckGw8wn9_QmO9tCe63yS80/pub?w=850&h=699)
 
@@ -190,8 +186,7 @@ The subject is complete when all cards have proficient ability with confidence. 
 
 The system will monitor the last time I interacted with the units in the subject. Using spaced repetition, it reminds me when I should review the units. The more time since the last review, the greater it will impact my ability score. The more time since the last review, the confidence will decrease.
 
-Graph Traversal
----------------
+## Graph Traversal
 
 We collect the subject of units that the learner will be participating in. We will need to diagnose any units which have either never been seen by the learner. We will also need to diagnose any units that have been viewed, but we are no longer confident in the ability score due to time.
 
@@ -213,7 +208,7 @@ We know more about "E" than "D", so we continue to "E". We find "E" is a low abi
 
 We already know "G", so it is appended to Learned.
 
-We diagnose "H", and find it is low ability. Append to Ready, 3 dependents: "A", "B", and "E". If "F" had not been learned, unit "H" would have 4 dependencies instead of 3.  The algorithm considers how many nodes _depend_ on the given node, rather than how deep in the graph the node is.
+We diagnose "H", and find it is low ability. Append to Ready, 3 dependents: "A", "B", and "E". If "F" had not been learned, unit "H" would have 4 dependencies instead of 3. The algorithm considers how many nodes _depend_ on the given node, rather than how deep in the graph the node is.
 
 Finally, we diagnose node "D" with low ability. Append to Ready, and there are 2 dependents: "A" and "B".
 
@@ -221,9 +216,9 @@ Finally, we diagnose node "D" with low ability. Append to Ready, and there are 2
 
 We also have the following lists:
 
-  Diagnose: []
-  Ready: [A, C, B, E, H, D]
-  Learned: [F, G]
+Diagnose: []
+Ready: [A, C, B, E, H, D]
+Learned: [F, G]
 
 We are now ready to starting the learning process.
 

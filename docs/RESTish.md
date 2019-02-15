@@ -57,8 +57,7 @@ General REST ideas, but made more practical.
   - Cache everything.
   - Document each point.
 
-RESTish References
-------------------
+## RESTish References
 
 - http://info.apigee.com/Portals/62317/web%20api.pdf
 - [Best Practices for Designing a Pragmatic RESTful API](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)

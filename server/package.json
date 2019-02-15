@@ -37,5 +37,18 @@
       "**/*.{js,jsx}",
       "!**/coverage/**"
     ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": true
+          }
+        }
+      ],
+      "@babel/preset-react"
+    ]
   }
 }

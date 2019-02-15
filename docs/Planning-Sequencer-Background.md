@@ -7,8 +7,7 @@ title: Planning> Sequencer Background
 src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
-Existing Systems
-----------------
+## Existing Systems
 
 ### Forgetting Curve
 
@@ -134,8 +133,7 @@ $$i_n=i_{n-1}e$$
 
 The latest is version [11/15](http://www.supermemo.com/english/algsm11.htm).
 
-Distribution Types
-------------------
+## Distribution Types
 
 For each distribution, I am most interested in $$\mu$$, or the mean of the distribution, and $$\sigma^2$$, or the variance, which can determine how confident we can be in our assertion.
 

@@ -381,8 +381,8 @@ var,
 [type='datetime'],
 [type='datetime-local'] {
   /* https://www.client9.com/css-system-font-stack-monospace-v2 */
-  font-family: 'SFMono-Regular', Menlo, Consolas, Inconsolata,
-    'Liberation Mono', Monaco, 'Andale Mono', monospace;
+  font-family: 'SFMono-Regular', Menlo, Consolas, Inconsolata, 'Liberation Mono',
+    Monaco, 'Andale Mono', monospace;
   font-size: 90%;
 }
 

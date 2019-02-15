@@ -85,32 +85,54 @@ title: Search Subjects
   <!-- alternative: We couldn't find anything (if couldn't find anything) -->
 
   <details>
-    <summary><h2 class="display-inline-block">You can make a new subject 💡</h2></summary>
+    <summary
+      ><h2 class="display-inline-block">
+        You can make a new subject 💡
+      </h2></summary
+    >
 
     <form action="/mocks/create-subject">
       <p>
         <label for="name">What should we call this new subject?</label>
-        <input type="text" value="Music" placeholder="example: Introduction to Classical Guitar" size="40" id="name" name="name" autofocus>
+        <input
+          type="text"
+          value="Music"
+          placeholder="example: Introduction to Classical Guitar"
+          size="40"
+          id="name"
+          name="name"
+          autofocus
+        />
       </p>
 
       <p>
         <label for="body">What are the goals of this subject?</label>
-        <textarea placeholder="example: An introduction to classical guitar. Let's learn some chords. And how to read guitar tablature." cols="40" rows="4" id="body" name="body"></textarea>
+        <textarea
+          placeholder="example: An introduction to classical guitar. Let's learn some chords. And how to read guitar tablature."
+          cols="40"
+          rows="4"
+          id="body"
+          name="body"
+        ></textarea>
       </p>
 
       <!--
         If the user isn't logged in, ask them to (optionally) sign up to get notified
       -->
       <p>
-        <em>Advice: We recommend <a href="/mocks/sign-up?return=/mocks/create-subject">joining</a></em> 👩🏾‍💻<em> before you create content,<br>
-        so you can easily continue later!</em>
+        <em
+          >Advice: We recommend
+          <a href="/mocks/sign-up?return=/mocks/create-subject">joining</a></em
+        >
+        👩🏾‍💻<em>
+          before you create content,<br />
+          so you can easily continue later!</em
+        >
       </p>
 
       <p>
         <button type="submit">📚 Create Subject</button>
       </p>
     </form>
-
   </details>
-
 </section>

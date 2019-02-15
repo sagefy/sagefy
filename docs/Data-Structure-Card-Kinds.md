@@ -7,8 +7,7 @@ _This documents kinds of cards that may appear in the Sagefy system._
 
 Anywhere that lists "Markdown" as available may embed images, math, video, audio, interactive...
 
-Unscored Card Kinds
--------------------------
+## Unscored Card Kinds
 
 Unscored cards do not have require a learner response.
 
@@ -45,8 +44,7 @@ An embedded unscored learning object.
 
 - url
 
-Scored Card Kinds
----------------------------------
+## Scored Card Kinds
 
 Scored cards require a response from the learner and are graded immediately and automatically.
 
@@ -105,8 +103,7 @@ The learner responds with text, and it is checked against text or pattern. This 
 
 TODO
 
-Peer-Scored Card Kinds
-----------------------------------
+## Peer-Scored Card Kinds
 
 Peer-scored cards require a response from the learner, but are graded by other learners according to the rubric. Learners are notified of their score after receiving sufficient reviews.
 
@@ -141,8 +138,7 @@ An upload card prompts the learner to upload something to be peer reviewed.
 
 TODO
 
-Card Tags
----------
+## Card Tags
 
 - Individual or collaborative.
 - Project tags:

@@ -3,7 +3,11 @@ layout: mocks
 title: Create Card
 ---
 
-<style>td{vertical-align:middle}</style>
+<style>
+  td {
+    vertical-align: middle;
+  }
+</style>
 
 <section>
   <div class="collapse-margins">
@@ -25,22 +29,45 @@ title: Create Card
 
     <p>
       <label for="name">What is the name of the card?</label>
-      <input type="text" placeholder="example: Video of mean, median, &amp; mode" size="40" id="name" name="name" autofocus>
+      <input
+        type="text"
+        placeholder="example: Video of mean, median, &amp; mode"
+        size="40"
+        id="name"
+        name="name"
+        autofocus
+      />
     </p>
 
     <div>
       <label for="kind">What kind of card would you like to make?</label>
       <ul class="list-style-inline" style="margin-top:0">
-        <li><label><input type="radio" value="x" name="x" checked> Video</label></li>
-        <li><label><input type="radio" value="x" name="x"> Choice</label></li>
-        <li><label><input type="radio" value="x" name="x"> Page</label></li>
-        <li><label><input type="radio" value="x" name="x"> Unscored Embed</label></li>
+        <li>
+          <label><input type="radio" value="x" name="x" checked /> Video</label>
+        </li>
+        <li>
+          <label><input type="radio" value="x" name="x" /> Choice</label>
+        </li>
+        <li>
+          <label><input type="radio" value="x" name="x" /> Page</label>
+        </li>
+        <li>
+          <label
+            ><input type="radio" value="x" name="x" /> Unscored Embed</label
+          >
+        </li>
       </ul>
     </div>
 
     <p>
       <label for="data.videoSite">What the URL of the video?</label>
-      <input type="text" placeholder="example: https://www.youtube.com/watch?v=m_uQj1CP3Kg" size="40" id="name" name="name">
+      <input
+        type="text"
+        placeholder="example: https://www.youtube.com/watch?v=m_uQj1CP3Kg"
+        size="40"
+        id="name"
+        name="name"
+      />
     </p>
 
     <p>

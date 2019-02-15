@@ -228,8 +228,7 @@ function results(cards) {
     error(
       cards.map(({ slip }) => slip),
       cards.map(({ realSlip }) => realSlip)
-    ) /
-    error(cards.map(({ realSlip }) => realSlip), cards.map(() => INIT_SLIP))
+    ) / error(cards.map(({ realSlip }) => realSlip), cards.map(() => INIT_SLIP))
   const slipCorr =
     correlation(
       cards.map(({ slip }) => slip),

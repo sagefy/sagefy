@@ -5,8 +5,7 @@ title: Planning> Contributors MVP
 
 At first, there will only be video information with multiple choice questions with textual questions, answers, and feedback. Later stages will add more formats.
 
-Contributor Models
-------------------
+## Contributor Models
 
 ### Card
 
@@ -91,8 +90,7 @@ Contributor Models
 - Proposal plus...
 - reason (offensive, irrelevant, incorrect, unpublished, duplicate, inaccessible)
 
-Contributor Endpoints
----------------------
+## Contributor Endpoints
 
 ### Card, Unit, Subject API
 
@@ -117,8 +115,7 @@ Contributor Endpoints
 
 - GET `/search/`
 
-Contributor Screen Requirements & Wireframes
---------------------------------------------
+## Contributor Screen Requirements & Wireframes
 
 ### Discussion
 

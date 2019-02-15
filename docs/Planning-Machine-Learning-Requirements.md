@@ -3,8 +3,7 @@ layout: docs
 title: Planning> Machine Learning Requirements
 ---
 
-Non-Sequencer Applications
-------------------
+## Non-Sequencer Applications
 
 - Recommend new subjects to the learner.
 - Filter spam and low quality content.

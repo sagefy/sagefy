@@ -3,8 +3,7 @@ layout: docs
 title: Data Structure> Requirements and Guidelines
 ---
 
-Requirements
-------------
+## Requirements
 
 - All entities must have a name.
 - All entities are language specific.
@@ -32,8 +31,7 @@ Requirements
 - Subjects may only contain units and subjects of the same language.
 - Subjects, unlike cards and units, cannot have requires. Instead, subjects have members. Membership cannot form a cycle.
 
-Guidelines
-----------
+## Guidelines
 
 ### Card
 

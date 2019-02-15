@@ -23,8 +23,8 @@ export default function TermsPage() {
       <p>This document is effective as of January 25, 2016.</p>
       <p>Sagefy may change this document at any time without notice.</p>
       <p>
-        If any part of this document is invalid, that part is separable from
-        the rest of the document and the rest of this document remains valid.
+        If any part of this document is invalid, that part is separable from the
+        rest of the document and the rest of this document remains valid.
       </p>
       <p>
         If Sagefy does not enforce any part of this document, Sagefy does not
@@ -100,8 +100,8 @@ export default function TermsPage() {
       </p>
       <h2>Community</h2>
       <p>
-        You cannot use Sagefy to spam, defame, harass, abuse, threaten,
-        defraud, or impersonate any person or entity.
+        You cannot use Sagefy to spam, defame, harass, abuse, threaten, defraud,
+        or impersonate any person or entity.
       </p>
       <p>
         You cannot use Sagefy to collect information about other users without
@@ -122,8 +122,8 @@ export default function TermsPage() {
         By providing content to Sagefy, you agree Sagefy may use this content.
       </p>
       <p>
-        By providing content to Sagefy, you confirm that the content is
-        licensed under a Creative Commons license or similar license.
+        By providing content to Sagefy, you confirm that the content is licensed
+        under a Creative Commons license or similar license.
       </p>
       <p>
         <a href="http://creativecommons.org/">http://creativecommons.org/</a>
@@ -154,8 +154,8 @@ export default function TermsPage() {
       <h2>Security</h2>
       <p>You cannot interfere with security features of Sagefy.</p>
       <p>
-        You cannot use any sort of automated means, such as bots or scrapers,
-        to access Sagefy.
+        You cannot use any sort of automated means, such as bots or scrapers, to
+        access Sagefy.
       </p>
       <p>You cannot bypass measures to restrict access to Sagefy.</p>
       <p>You cannot disrupt the services with excessive requests.</p>
