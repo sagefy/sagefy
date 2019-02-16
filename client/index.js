@@ -2,11 +2,25 @@ const path = require('path')
 const express = require('express')
 const request = require('./request')
 
+require('express-async-errors')
+
 const app = express()
 
+// See https://github.com/reactjs/express-react-views#add-it-to-your-app
 app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
+
+// See express-async-errors
+app.use((err, req, res, next) => {
+  // eslint-disable-line max-params
+  if (err) {
+    console.error(err)
+    res.status(500)
+    res.json({ error: err.message })
+  }
+  next(err)
+})
 
 app.get('/sitemap.txt', (req, res) =>
   res.send(`
@@ -29,12 +43,8 @@ app.post('/sign-up', async (req, res) => {
       }
     }
   }`
-  try {
-    const xRes = await request(body)
-    return res.send(xRes)
-  } catch (e) {
-    return res.status(500).send(e)
-  }
+  const xRes = await request(body)
+  return res.send(xRes)
 
   // If worked... return res.redirect('/dashboard')
   // If failed... return res.redirect('back')

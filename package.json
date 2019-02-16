@@ -109,5 +109,6 @@
     "/home/circleci/",
     "home/circleci/",
     "postgres/sample.js"
-  ]
+  ],
+  "dependencies": {}
 }
