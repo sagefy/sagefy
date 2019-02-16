@@ -24,6 +24,10 @@ exports[`Index view should render a page 1`] = `
       >
         <Switch>
           <Route
+            path="/sign-up"
+            render={[Function]}
+          />
+          <Route
             path="/search-subjects"
             render={[Function]}
           />
@@ -61,6 +65,10 @@ exports[`Index view should render a page 1`] = `
         location="/"
       >
         <Switch>
+          <Route
+            component={[Function]}
+            path="/sign-up"
+          />
           <Route
             component={[Function]}
             path="/search-subjects"

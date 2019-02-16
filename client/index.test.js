@@ -10,4 +10,10 @@ describe('index', () => {
     const response = await request(app).get('/')
     expect(response.statusCode).toBe(200)
   })
+
+  it.skip('POST /sign-up', async () => {
+    const response = await request(app).post('/')
+    expect(response.statusCode).toBe(200)
+    expect(response.text).toMatchSnapshot()
+  })
 })

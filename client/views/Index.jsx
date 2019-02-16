@@ -7,6 +7,7 @@ import ContactPage from './pages/ContactPage'
 import TermsPage from './pages/TermsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import SearchSubjectsPage from './pages/SearchSubjectsPage'
+import SignUpPage from './pages/SignUpPage'
 
 export const output = a => () => a
 const searchSubjects = output('Search Subjects')
@@ -14,6 +15,7 @@ const contact = output('Contact')
 const terms = output('Terms')
 const home = output('Home')
 const notFound = output('Not Found')
+const signUp = output('Sign Up')
 
 export default function Index({ location }) {
   return (
@@ -25,6 +27,7 @@ export default function Index({ location }) {
         <title>
           <StaticRouter context={{}} location={location}>
             <Switch>
+              <Route path="/sign-up" render={signUp} />
               <Route path="/search-subjects" render={searchSubjects} />
               <Route path="/contact" render={contact} />
               <Route path="/terms" render={terms} />
@@ -39,6 +42,7 @@ export default function Index({ location }) {
         <div id="top" className="page" role="document">
           <StaticRouter context={{}} location={location}>
             <Switch>
+              <Route path="/sign-up" component={SignUpPage} />
               <Route path="/search-subjects" component={SearchSubjectsPage} />
               <Route path="/contact" component={ContactPage} />
               <Route path="/terms" component={TermsPage} />
