@@ -13,7 +13,7 @@ exports[`Index view should render a page 1`] = `
       name="viewport"
     />
     <link
-      href="/sagefy.min.css"
+      href="/sagefy.min.css?_"
       rel="stylesheet"
     />
     <title>

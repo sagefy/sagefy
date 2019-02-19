@@ -13,7 +13,8 @@ exports[`SignUpPage should render the sign up page 1`] = `
       />
     </h1>
     <p>
-      Already have an account? 
+      Already have an account?
+       
       <Link
         replace={false}
         to="/log-in"
