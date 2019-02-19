@@ -20,7 +20,7 @@ const transport = createTransport(
 )
 
 export async function sendMail({ to, subject, body }) {
-  if (process.env.ENV === 'TEST') return Promise.resolve()
+  if (process.env.NODE_ENV === 'test') return Promise.resolve()
   return transport.sendMail({
     to,
     subject,

@@ -17,13 +17,13 @@ const home = output('Home')
 const notFound = output('Not Found')
 const signUp = output('Sign Up')
 
-export default function Index({ location }) {
+export default function Index({ location, cacheHash }) {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/sagefy.min.css" />
+        <link rel="stylesheet" href={`/sagefy.min.css?${cacheHash}`} />
         <title>
           <StaticRouter context={{}} location={location}>
             <Switch>
@@ -58,4 +58,5 @@ export default function Index({ location }) {
 
 Index.propTypes = {
   location: string.isRequired,
+  cacheHash: string.isRequired,
 }

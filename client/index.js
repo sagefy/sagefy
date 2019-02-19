@@ -1,8 +1,12 @@
+/* eslint-disable max-params, no-console */
 const path = require('path')
 const express = require('express')
 const request = require('./request')
 
 require('express-async-errors')
+
+const cacheHash =
+  process.env.NODE_ENV === 'test' ? '_' : Date.now().toString(36)
 
 const app = express()
 
@@ -13,13 +17,10 @@ app.engine('jsx', require('express-react-views').createEngine())
 
 // See express-async-errors
 app.use((err, req, res, next) => {
-  // eslint-disable-line max-params
-  if (err) {
-    console.error(err)
-    res.status(500)
-    res.json({ error: err.message })
-  }
-  next(err)
+  if (!err) next(err)
+  console.error(err)
+  res.status(500)
+  res.send(err.message)
 })
 
 app.get('/sitemap.txt', (req, res) =>
@@ -51,7 +52,9 @@ app.post('/sign-up', async (req, res) => {
 })
 
 // For pages that don't have specific data requirements
-app.get('*', (req, res) => res.render('Index', { location: req.url }))
+app.get('*', (req, res) =>
+  res.render('Index', { location: req.url, cacheHash })
+)
 
 app.listen(process.env.PORT || 5984)
 
