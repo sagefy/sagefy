@@ -5,7 +5,7 @@ services:
     image: 'nginx:1.15-alpine'
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/statics:/var/www
+      - ./nginx/statics:/nginx
     ports:
       - '80:80'
     links:
@@ -39,4 +39,4 @@ services:
       POSTGRES_USER: sagefy
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
-      - ./postgres:/www
+      - ./postgres:/postgres

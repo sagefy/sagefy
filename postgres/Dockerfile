@@ -1,7 +1,7 @@
 FROM postgres:11-alpine
 
-ADD . /www
-WORKDIR /www
+ADD . /postgres
+WORKDIR /postgres
 
 RUN apk add postgresql-contrib
 
@@ -26,3 +26,4 @@ CMD ["postgres"]
 # docker-compose run postgres dbmate -d "./migrations" new "hello"
 # docker-compose run postgres dbmate -d "./migrations" -s "./schema.sql" up
 # docker-compose run postgres dbmate drop
+# docker exec -it sagefy_postgres_1 psql -U sagefy
