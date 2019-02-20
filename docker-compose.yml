@@ -27,6 +27,7 @@ services:
       - '8653:8653'
     volumes:
       - ./server:/server
+      - ./.env:/server/.env
     links:
       - postgres
   postgres:
@@ -40,3 +41,4 @@ services:
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
       - ./postgres:/postgres
+      - ./.env:/postgres/.env
