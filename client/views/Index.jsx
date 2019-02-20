@@ -1,6 +1,6 @@
 import React from 'react'
 import { StaticRouter, Route, Switch } from 'react-router-dom'
-import { string } from 'prop-types'
+import { string, arrayOf } from 'prop-types'
 
 import HomePage from './pages/HomePage'
 import ContactPage from './pages/ContactPage'
@@ -8,6 +8,7 @@ import TermsPage from './pages/TermsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import SearchSubjectsPage from './pages/SearchSubjectsPage'
 import SignUpPage from './pages/SignUpPage'
+import DashboardPage from './pages/DashboardPage'
 
 export const output = a => () => a
 const searchSubjects = output('Search Subjects')
@@ -16,8 +17,9 @@ const terms = output('Terms')
 const home = output('Home')
 const notFound = output('Not Found')
 const signUp = output('Sign Up')
+const dashboard = output('Dashboard')
 
-export default function Index({ location, cacheHash }) {
+export default function Index({ location, cacheHash, formErrors }) {
   return (
     <html lang="en">
       <head>
@@ -27,6 +29,7 @@ export default function Index({ location, cacheHash }) {
         <title>
           <StaticRouter context={{}} location={location}>
             <Switch>
+              <Route path="/dashboard" render={dashboard} />
               <Route path="/sign-up" render={signUp} />
               <Route path="/search-subjects" render={searchSubjects} />
               <Route path="/contact" render={contact} />
@@ -42,7 +45,11 @@ export default function Index({ location, cacheHash }) {
         <div id="top" className="page" role="document">
           <StaticRouter context={{}} location={location}>
             <Switch>
-              <Route path="/sign-up" component={SignUpPage} />
+              <Route path="/dashboard" component={DashboardPage} />
+              <Route
+                path="/sign-up"
+                render={() => <SignUpPage formErrors={formErrors} />}
+              />
               <Route path="/search-subjects" component={SearchSubjectsPage} />
               <Route path="/contact" component={ContactPage} />
               <Route path="/terms" component={TermsPage} />
@@ -59,4 +66,9 @@ export default function Index({ location, cacheHash }) {
 Index.propTypes = {
   location: string.isRequired,
   cacheHash: string.isRequired,
+  formErrors: arrayOf(string),
+}
+
+Index.defaultProps = {
+  formErrors: null,
 }

@@ -1,11 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { string, arrayOf } from 'prop-types'
 import Icon from '../components/Icon'
 
-export default function SignUpPage() {
-  // TODO if I'm already logged in, redirect instead.
+export default function SignUpPage({ formErrors }) {
   return (
     <div className="SignUpPage">
+      {formErrors && (
+        <div className="FormErrors">
+          <p>
+            <mark>
+              <Icon i="error" /> I couldn&apos;t do that because...
+            </mark>
+          </p>
+          <ul>
+            {formErrors.map(f => (
+              <li>{f}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <section>
         <h1>
           Join Sagefy <Icon i="signUp" s="xxl" />
@@ -72,4 +87,12 @@ export default function SignUpPage() {
       </section>
     </div>
   )
+}
+
+SignUpPage.propTypes = {
+  formErrors: arrayOf(string),
+}
+
+SignUpPage.defaultProps = {
+  formErrors: null,
 }

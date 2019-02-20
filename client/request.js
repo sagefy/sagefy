@@ -10,7 +10,8 @@ module.exports = function httpRequest(body) {
         path: '/graphql',
         method: 'POST',
         headers: {
-          'Content-Type': 'application/graphql; charset=UTF-8',
+          'Content-Type': 'application/json; charset=UTF-8',
+          Accept: 'application/json',
           'X-Requested-With': 'Node.js',
         },
       },

@@ -1,5 +1,5 @@
 import React from 'react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ExternalLink from '../components/ExternalLink'
@@ -58,7 +58,12 @@ export default function HomePage() {
               </ExternalLink>{' '}
               of what&apos;s coming!
             </li>
-            {/* <li><Link to="/sign-up"><Icon i="signUp" /> <strong>Sign up</strong></Link>, and we&apos;ll let you know as we release new stuff.</li> */}
+            <li>
+              <Link to="/sign-up">
+                <Icon i="signUp" /> <strong>Sign up</strong>
+              </Link>
+              , and we&apos;ll let you know as we release new stuff.
+            </li>
             <li>
               <ExternalLink href="https://sgef.cc/devupdates">
                 <Icon i="updates" /> <strong>Subscribe</strong> to biweekly
