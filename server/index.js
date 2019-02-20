@@ -1,8 +1,9 @@
 const express = require('express')
 const { postgraphile } = require('postgraphile')
 const uuidv4 = require('uuid/v4')
-
 require('dotenv').config()
+
+require('./mail')()
 
 const app = express()
 
