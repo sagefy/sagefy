@@ -1,6 +1,6 @@
 import React from 'react'
 import { StaticRouter, Route, Switch } from 'react-router-dom'
-import { string, arrayOf } from 'prop-types'
+import { string, arrayOf, shape } from 'prop-types'
 
 import HomePage from './pages/HomePage'
 import ContactPage from './pages/ContactPage'
@@ -19,7 +19,8 @@ const notFound = output('Not Found')
 const signUp = output('Sign Up')
 const dashboard = output('Dashboard')
 
-export default function Index({ location, cacheHash, formErrors }) {
+export default function Index(props) {
+  const { location, cacheHash } = props
   return (
     <html lang="en">
       <head>
@@ -46,10 +47,7 @@ export default function Index({ location, cacheHash, formErrors }) {
           <StaticRouter context={{}} location={location}>
             <Switch>
               <Route path="/dashboard" component={DashboardPage} />
-              <Route
-                path="/sign-up"
-                render={() => <SignUpPage formErrors={formErrors} />}
-              />
+              <Route path="/sign-up" render={() => <SignUpPage {...props} />} />
               <Route path="/search-subjects" component={SearchSubjectsPage} />
               <Route path="/contact" component={ContactPage} />
               <Route path="/terms" component={TermsPage} />
@@ -66,9 +64,11 @@ export default function Index({ location, cacheHash, formErrors }) {
 Index.propTypes = {
   location: string.isRequired,
   cacheHash: string.isRequired,
-  formErrors: arrayOf(string),
+  formErrors: shape({}),
+  prevValues: shape({}),
 }
 
 Index.defaultProps = {
-  formErrors: null,
+  formErrors: {},
+  prevValues: {},
 }
