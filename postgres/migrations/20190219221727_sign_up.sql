@@ -1,5 +1,7 @@
 -- migrate:up
 
+create extension if not exists "citext";
+
 create type sg_public.email_frequency as enum(
   'immediate',
   'daily',
@@ -21,7 +23,7 @@ create table sg_public.user (
   id uuid primary key default uuid_generate_v4(),
   created timestamp not null default current_timestamp,
   modified timestamp not null default current_timestamp,
-  name text not null unique,
+  name citext not null unique,
   view_subjects boolean not null default false
 );
 
@@ -40,7 +42,7 @@ comment on column sg_public.user.view_subjects
 
 create table sg_private.user (
   user_id uuid primary key references sg_public.user (id) on delete cascade,
-  email text not null unique
+  email citext not null unique
     constraint email_check check (email ~* '^\S+@\S+\.\S+$'),
   password varchar(60) not null
     constraint pass_check check (password ~* '^\$2\w\$.*$'),
