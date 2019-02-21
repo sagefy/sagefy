@@ -105,6 +105,38 @@ create trigger create_user
 comment on trigger create_user on sg_private.user
   is 'Whenever a new user signs up, email them.';
 
+create function sg_private.trim_user_name()
+returns trigger as $$
+begin
+  new.name = trim(new.name);
+  return new;
+end;
+$$ language plpgsql strict security definer;
+comment on function sg_private.trim_user_name()
+  is 'Trim the user''s name.';
+
+create trigger trim_user_name
+  before insert on sg_public.user
+  for each row execute procedure sg_private.trim_user_name();
+comment on trigger trim_user_name on sg_public.user
+  is 'Trim the user''s name.';
+
+create function sg_private.trim_user_email()
+returns trigger as $$
+begin
+  new.email = trim(new.email);
+  return new;
+end;
+$$ language plpgsql strict security definer;
+comment on function sg_private.trim_user_email()
+  is 'Trim the user''s email.';
+
+create trigger trim_user_email
+  before insert on sg_private.user
+  for each row execute procedure sg_private.trim_user_email();
+comment on trigger trim_user_email on sg_private.user
+  is 'Trim the user''s email.';
+
 -- Enable RLS.
 alter table sg_public.user enable row level security;
 
