@@ -37,6 +37,20 @@ COMMENT ON SCHEMA sg_public IS 'Schema exposed to GraphQL.';
 
 
 --
+-- Name: citext; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
+
+
+--
 -- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -183,6 +197,48 @@ COMMENT ON FUNCTION sg_private.notify_create_user() IS 'Whenever a new user sign
 
 
 --
+-- Name: trim_user_email(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.trim_user_email() RETURNS trigger
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+begin
+  new.email = trim(new.email);
+  return new;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION trim_user_email(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.trim_user_email() IS 'Trim the user''s email.';
+
+
+--
+-- Name: trim_user_name(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.trim_user_name() RETURNS trigger
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+begin
+  new.name = trim(new.name);
+  return new;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION trim_user_name(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.trim_user_name() IS 'Trim the user''s name.';
+
+
+--
 -- Name: update_modified_column(); Type: FUNCTION; Schema: sg_private; Owner: -
 --
 
@@ -232,7 +288,7 @@ CREATE TABLE sg_public."user" (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    name text NOT NULL,
+    name public.citext NOT NULL,
     view_subjects boolean DEFAULT false NOT NULL
 );
 
@@ -289,6 +345,10 @@ CREATE FUNCTION sg_public.sign_up(name text, email text, password text) RETURNS 
 declare
   xuser sg_public.user;
 begin
+  if (char_length(password) < 8) then
+    raise exception 'I need at least 8 characters for passwords.'
+      using errcode = '355CAC69';
+  end if;
   insert into sg_public.user ("name")
     values (name)
     returning * into xuser;
@@ -321,11 +381,11 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE sg_private."user" (
     user_id uuid NOT NULL,
-    email text NOT NULL,
+    email public.citext NOT NULL,
     password character varying(60) NOT NULL,
     role sg_public.user_role DEFAULT 'sg_user'::sg_public.user_role NOT NULL,
     email_frequency sg_public.email_frequency DEFAULT 'immediate'::sg_public.email_frequency NOT NULL,
-    CONSTRAINT email_check CHECK ((email ~* '^\S+@\S+\.\S+$'::text)),
+    CONSTRAINT email_check CHECK ((email OPERATOR(public.~*) '^\S+@\S+\.\S+$'::public.citext)),
     CONSTRAINT pass_check CHECK (((password)::text ~* '^\$2\w\$.*$'::text))
 );
 
@@ -431,6 +491,34 @@ CREATE TRIGGER create_user AFTER INSERT ON sg_private."user" FOR EACH ROW EXECUT
 --
 
 COMMENT ON TRIGGER create_user ON sg_private."user" IS 'Whenever a new user signs up, email them.';
+
+
+--
+-- Name: user trim_user_email; Type: TRIGGER; Schema: sg_private; Owner: -
+--
+
+CREATE TRIGGER trim_user_email BEFORE INSERT ON sg_private."user" FOR EACH ROW EXECUTE PROCEDURE sg_private.trim_user_email();
+
+
+--
+-- Name: TRIGGER trim_user_email ON "user"; Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON TRIGGER trim_user_email ON sg_private."user" IS 'Trim the user''s email.';
+
+
+--
+-- Name: user trim_user_name; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER trim_user_name BEFORE INSERT ON sg_public."user" FOR EACH ROW EXECUTE PROCEDURE sg_private.trim_user_name();
+
+
+--
+-- Name: TRIGGER trim_user_name ON "user"; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER trim_user_name ON sg_public."user" IS 'Trim the user''s name.';
 
 
 --

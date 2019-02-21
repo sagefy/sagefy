@@ -1,6 +1,6 @@
 import React from 'react'
 import { StaticRouter, Route, Switch } from 'react-router-dom'
-import { string, arrayOf, shape } from 'prop-types'
+import { string, shape } from 'prop-types'
 
 import HomePage from './pages/HomePage'
 import ContactPage from './pages/ContactPage'

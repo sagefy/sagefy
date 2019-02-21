@@ -37,6 +37,11 @@ const KNOWN_ERRORS = [
     message: 'I am unable to send you an email to create your account.',
   },
   { key: 'user_user_id_fkey', message: 'I saw an unfamiliar error.' },
+  {
+    key: '355CAC69',
+    field: 'password',
+    message: 'I need at least 8 characters for passwords.',
+  },
 ]
 
 const app = express()

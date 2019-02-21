@@ -74,6 +74,10 @@ create function sg_public.sign_up(
 declare
   xuser sg_public.user;
 begin
+  if (char_length(password) < 8) then
+    raise exception 'I need at least 8 characters for passwords.'
+      using errcode = '355CAC69';
+  end if;
   insert into sg_public.user ("name")
     values (name)
     returning * into xuser;
