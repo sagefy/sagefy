@@ -1,6 +1,14 @@
 /* istanbul ignore file */
 const http = require('http')
 
+function parseJSON(data) {
+  try {
+    return JSON.parse(data)
+  } catch (e) {
+    return data
+  }
+}
+
 module.exports = function httpRequest(body) {
   return new Promise((resolve, reject) => {
     const request = http.request(
@@ -24,9 +32,9 @@ module.exports = function httpRequest(body) {
         response.on('end', () => {
           const { statusCode } = response
           if (statusCode < 400 && statusCode >= 200) {
-            resolve(JSON.parse(xbody))
+            resolve(parseJSON(xbody))
           } else {
-            reject(JSON.parse(xbody))
+            reject(parseJSON(xbody))
           }
         })
       }
