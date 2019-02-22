@@ -73,7 +73,7 @@ export default function HomePage() {
             </li>
           </ul>
           <p>
-            <small>Last updated 2019 Feb 13</small>
+            <small>Last updated 2019 Feb 24</small>
           </p>
         </blockquote>
       </section>
@@ -113,9 +113,8 @@ export default function HomePage() {
             can learn anything you want.
           </li>
           <li>
-            <Icon i="video" />{' '}
             <ExternalLink href="https://youtu.be/gFn4Q9tx7Qs">
-              Watch the overview video
+              <Icon i="video" /> Watch the overview video
             </ExternalLink>
             .
           </li>
