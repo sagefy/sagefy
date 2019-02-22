@@ -9,6 +9,7 @@ import NotFoundPage from './pages/NotFoundPage'
 import SearchSubjectsPage from './pages/SearchSubjectsPage'
 import SignUpPage from './pages/SignUpPage'
 import DashboardPage from './pages/DashboardPage'
+import ServerErrorPage from './pages/ServerErrorPage'
 
 export const output = a => () => a
 const searchSubjects = output('Search Subjects')
@@ -18,6 +19,7 @@ const home = output('Home')
 const notFound = output('Not Found')
 const signUp = output('Sign Up')
 const dashboard = output('Dashboard')
+const serverError = output('Server Error')
 
 export default function Index(props) {
   const { location, cacheHash } = props
@@ -35,6 +37,7 @@ export default function Index(props) {
               <Route path="/search-subjects" render={searchSubjects} />
               <Route path="/contact" render={contact} />
               <Route path="/terms" render={terms} />
+              <Route path="/server-error" render={serverError} />
               <Route path="/" exact render={home} />
               <Route render={notFound} />
             </Switch>
@@ -51,6 +54,7 @@ export default function Index(props) {
               <Route path="/search-subjects" component={SearchSubjectsPage} />
               <Route path="/contact" component={ContactPage} />
               <Route path="/terms" component={TermsPage} />
+              <Route path="/server-error" render={ServerErrorPage} />
               <Route path="/" exact component={HomePage} />
               <Route component={NotFoundPage} />
             </Switch>
