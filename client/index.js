@@ -2,9 +2,13 @@
 const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
-const get = require('lodash.get')
+const fs = require('fs')
 const request = require('./request')
 const getFormErrors = require('./selectors/form-errors')
+
+const gql = {
+  rootNewUser: fs.readFileSync('./graphql/root-new-user.graphql', 'utf8'),
+}
 
 require('express-async-errors')
 
@@ -31,16 +35,9 @@ https://sagefy.org/sign-up
 
 // Form submission handlers
 app.post('/sign-up', async (req, res) => {
-  const query = `mutation ($name: String!, $email: String!, $password: String!) {
-  signUp(input: {name: $name, email: $email, password: $password}) {
-    user {
-      id
-    }
-  }
-}`
   const xRes = await request(
     JSON.stringify({
-      query,
+      query: gql.rootNewUser,
       variables: req.body,
     })
   )

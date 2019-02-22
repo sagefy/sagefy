@@ -18,6 +18,7 @@ services:
       - '5984:5984'
     volumes:
       - ./client:/client
+      - ./shared/graphql:/client/graphql
     links:
       - server
   server:
