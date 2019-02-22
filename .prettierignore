@@ -1,3 +1,3 @@
-*.graphql
+shared/prev-queries/*.graphql
 *.min.css
 *.min.js
