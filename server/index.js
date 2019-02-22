@@ -1,38 +1,29 @@
 const express = require('express')
 const { postgraphile } = require('postgraphile')
-const uuidv4 = require('uuid/v4')
 require('dotenv').config()
 
 require('./mail')()
 
 const app = express()
 
-app.get('/', (req, res) =>
-  res.json({ message: 'Welcome to the Sagefy service!' })
-)
-
-app.get('/x', (req, res) =>
-  res.json({ message: 'Welcome to the Sagefy service!' })
-)
-
 app.use(
   postgraphile(
     {
-      user: process.env.DB_USER || 'sg_postgraphile',
-      host: process.env.DB_HOST || 'postgres',
-      database: process.env.DB_DATABASE || 'sagefy',
+      user: process.env.DB_USER,
+      host: process.env.DB_HOST,
+      database: process.env.DB_DATABASE,
       password: process.env.DB_PASSWORD,
-      port: process.env.DB_PORT || 5432,
+      port: process.env.DB_PORT,
     },
-    process.env.DB_SCHEMA || 'sg_public',
+    process.env.DB_SCHEMA,
     {
       // Dev, debug, test
       graphiql: true,
 
       // JWT Authentication
-      jwtSecret: process.env.JWT_SECRET || uuidv4(),
-      defaultRole: process.env.JWT_ROLE || 'sg_anonymous',
-      jwtPgTypeIdentifier: process.env.JWT_TOKEN || 'sg_public.jwt_token',
+      jwtSecret: process.env.JWT_SECRET,
+      defaultRole: process.env.JWT_ROLE,
+      jwtPgTypeIdentifier: process.env.JWT_TOKEN,
     }
   )
 )
