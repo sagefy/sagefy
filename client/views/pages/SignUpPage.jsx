@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { shape } from 'prop-types'
 import Icon from '../components/Icon'
+import FormErrorsTop from '../components/FormErrorsTop'
+import FormErrorsField from '../components/FormErrorsField'
 
 export default function SignUpPage({
   formErrors,
@@ -9,24 +11,8 @@ export default function SignUpPage({
 }) {
   return (
     <div className="SignUpPage">
-      {Object.keys(formErrors).length > 0 && (
-        <div className="FormErrors">
-          <p>
-            <mark>
-              <Icon i="error" /> I couldn&apos;t do that...
-            </mark>
-          </p>
-          {formErrors.all && (
-            <ul>
-              {formErrors.all.map(message => (
-                <li>
-                  <mark>{message}</mark>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
+      <FormErrorsTop formErrors={formErrors} />
+      <FormErrorsField formErrors={formErrors} field="all" />
 
       <section>
         <h1>
@@ -39,7 +25,7 @@ export default function SignUpPage({
             <Icon i="logIn" /> Log In
           </Link>
           .<br />
-          By signing up, you agree to our
+          By signing up, you agree to our{' '}
           <Link to="/terms">
             <Icon i="terms" /> Terms of Service
           </Link>
@@ -59,16 +45,8 @@ export default function SignUpPage({
               autoFocus
               required
             />
-            {formErrors.name && (
-              <ul>
-                {formErrors.name.map(message => (
-                  <li>
-                    <mark>{message}</mark>
-                  </li>
-                ))}
-              </ul>
-            )}
           </p>
+          <FormErrorsField formErrors={formErrors} field="name" />
           <p>
             <label htmlFor="email">Email</label>
             <input
@@ -84,16 +62,8 @@ export default function SignUpPage({
             <small>
               We need your email to send notices and to reset your password.
             </small>
-            {formErrors.email && (
-              <ul>
-                {formErrors.email.map(message => (
-                  <li>
-                    <mark>{message}</mark>
-                  </li>
-                ))}
-              </ul>
-            )}
           </p>
+          <FormErrorsField formErrors={formErrors} field="email" />
           <p>
             <label htmlFor="password">Password</label>
             <input
@@ -104,16 +74,8 @@ export default function SignUpPage({
               required
               pattern=".{8,}"
             />
-            {formErrors.password && (
-              <ul>
-                {formErrors.password.map(message => (
-                  <li>
-                    <mark>{message}</mark>
-                  </li>
-                ))}
-              </ul>
-            )}
           </p>
+          <FormErrorsField formErrors={formErrors} field="password" />
           <p>
             <button type="submit">
               <Icon i="signUp" /> Sign Up
@@ -131,6 +93,6 @@ SignUpPage.propTypes = {
 }
 
 SignUpPage.defaultProps = {
-  formErrors: null,
-  prevValues: null,
+  formErrors: {},
+  prevValues: {},
 }
