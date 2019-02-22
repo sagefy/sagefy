@@ -63,9 +63,8 @@ app.get('*', (req, res) =>
 
 // See express-async-errors
 app.use((err, req, res, next) => {
-  if (err && err.message) {
-    res.status(403)
-    res.json({ error: err.message })
+  if (err) {
+    res.redirect('/server-error')
   }
   next(err)
 })
