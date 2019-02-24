@@ -30,6 +30,7 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.1.0",
+    "csvtojson": "^2.0.8",
     "jest": "^24.1.0"
   },
   "jest": {
