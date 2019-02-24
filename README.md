@@ -9,7 +9,7 @@ Sagefy is an _open-content, adaptive learning_ platform.
 - **Adaptive Learning.** Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
 - **Open-Content.** Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
 
-[<img src="https://docs.google.com/drawings/d/e/2PACX-1vR3ARFXI6Y-DNZGSBn8Ngbe6yV4asc1CEZR-2b2mnbLnK6FZOND2uT8wyHNKu8qyIBfscjC3dsrWIMk/pub?w=1790&amp;h=800" width="890">](https://sagefy.org)
+[<img src="https://docs.google.com/drawings/d/e/2PACX-1vR3ARFXI6Y-DNZGSBn8Ngbe6yV4asc1CEZR-2b2mnbLnK6FZOND2uT8wyHNKu8qyIBfscjC3dsrWIMk/pub?w=1790&amp;h=800" width="890" height="350">](https://sagefy.org)
 
 What's next?
 
