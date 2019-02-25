@@ -21,6 +21,7 @@
     "express": "^4.16.4",
     "lodash.get": "^4.4.2",
     "nodemailer": "^4.7.0",
+    "nodemailer-sparkpost-transport": "^2.2.0",
     "pg": "^7.8.1",
     "postgraphile": "^4.0.1",
     "uuid": "^3.3.2"
