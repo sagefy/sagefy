@@ -31,6 +31,9 @@ services:
       - ./.env:/server/.env
     links:
       - postgres
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
   postgres:
     # https://hub.docker.com/_/postgres/
     build: ./postgres
@@ -43,6 +46,3 @@ services:
       - ./postgres-data:/var/lib/postgresql/data
       - ./postgres:/postgres
       - ./.env:/postgres/.env
-dns:
-  - 8.8.8.8
-  - 8.8.4.4
