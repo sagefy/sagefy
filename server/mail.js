@@ -1,26 +1,25 @@
-/*
-
-const mailer = require('./mail')
-
-mailer(client)
-
-*/
-
 const { createTransport } = require('nodemailer')
+const { Client } = require('pg')
 
 const SENDER = 'support@sagefy.org'
 
 const transport = createTransport(
   {
-    // process.env.MAIL...
+    host: 'smtp.sparkpostmail.com',
+    port: 587,
+    // secure: true,
+    auth: {
+      user: 'SMTP_Injection',
+      pass: process.env.MAIL_PASS,
+    },
   },
   {
     from: SENDER,
   }
 )
 
-export async function sendMail({ to, subject, body }) {
-  if (process.env.ENV === 'TEST') return Promise.resolve()
+async function sendMail({ to, subject, body }) {
+  if (process.env.NODE_ENV === 'test') return Promise.resolve()
   return transport.sendMail({
     to,
     subject,
@@ -76,7 +75,24 @@ If you did not change your password, please reply immediately.
 ${FOOTER_TEXT}
 `
 
-export default function mailer(client) {
+module.exports = async function mailer() {
+  // Why not use a shared pool with postgraphile?
+  // https://github.com/brianc/node-pg-pool/issues/40
+  const client = new Client({
+    user: process.env.DB_USER || 'sg_postgraphile',
+    host: process.env.DB_HOST || 'postgres',
+    database: process.env.DB_DATABASE || 'sagefy',
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT || 5432,
+  })
+
+  await client.connect()
+
+  await client.query('LISTEN create_user')
+  await client.query('LISTEN send_reset_token')
+  await client.query('LISTEN update_email')
+  await client.query('LISTEN update_password')
+
   client.on('notification', async msg => {
     if (msg.channel === 'create_user') {
       await sendMail({

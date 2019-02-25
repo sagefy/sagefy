@@ -2,7 +2,7 @@ import React from 'react'
 import { string } from 'prop-types'
 import {
   Home,
-  Paperclip,
+  Briefcase,
   Search,
   Share2,
   Globe,
@@ -19,36 +19,46 @@ import {
   CheckCircle,
   Tag,
   FileText,
+  UserPlus,
+  LogIn,
+  ArrowLeft,
   // temporary home page
   Users,
   Eye,
-  UserPlus,
 } from 'react-feather'
 import get from 'lodash.get'
 
 const MAP = {
+  // pages
   home: Home,
-  terms: Paperclip,
+  terms: Briefcase,
   search: Search,
-  adapt: Share2,
-  open: Globe,
-  video: Youtube,
   docs: BookOpen,
   stories: Gift,
   updates: Inbox,
   contact: Mail,
+  signUp: UserPlus,
+  logIn: LogIn,
+
+  // models
   talk: MessageCircle,
-  github: GitHub,
   error: Frown,
+  subject: Tag,
+  card: FileText,
+
+  // actions
   up: ThumbsUp,
   down: ThumbsDown,
   check: CheckCircle,
-  subject: Tag,
-  card: FileText,
-  // temporary home page
-  signUp: UserPlus,
-  view: Eye,
-  friends: Users,
+  left: ArrowLeft,
+
+  // page specific
+  adapt: Share2, // home
+  open: Globe, // home
+  video: Youtube, // home
+  view: Eye, // home
+  friends: Users, // home
+  github: GitHub, // contact
 }
 
 const SIZES = {

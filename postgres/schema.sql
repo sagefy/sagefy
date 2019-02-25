@@ -37,6 +37,20 @@ COMMENT ON SCHEMA sg_public IS 'Schema exposed to GraphQL.';
 
 
 --
+-- Name: citext; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
+
+
+--
 -- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -107,6 +121,25 @@ COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UU
 
 
 --
+-- Name: email_frequency; Type: TYPE; Schema: sg_public; Owner: -
+--
+
+CREATE TYPE sg_public.email_frequency AS ENUM (
+    'immediate',
+    'daily',
+    'weekly',
+    'never'
+);
+
+
+--
+-- Name: TYPE email_frequency; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TYPE sg_public.email_frequency IS 'Email frequency options per user';
+
+
+--
 -- Name: jwt_token; Type: TYPE; Schema: sg_public; Owner: -
 --
 
@@ -125,29 +158,84 @@ COMMENT ON TYPE sg_public.jwt_token IS 'Create a JWT with role, user_id, and ses
 
 
 --
--- Name: follow_suggest(); Type: FUNCTION; Schema: sg_private; Owner: -
+-- Name: user_role; Type: TYPE; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_private.follow_suggest() RETURNS trigger
-    LANGUAGE plpgsql
+CREATE TYPE sg_public.user_role AS ENUM (
+    'sg_anonymous',
+    'sg_user',
+    'sg_admin'
+);
+
+
+--
+-- Name: TYPE user_role; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TYPE sg_public.user_role IS 'User role options.';
+
+
+--
+-- Name: notify_create_user(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.notify_create_user() RETURNS trigger
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
     AS $$
-  begin
-    insert into sg_public.suggest_follow
-    (suggest_id, session_id) -- user_id
-    values
-    (new.id,
-      current_setting('jwt.claims.session_id')::uuid);
-    -- current_setting('jwt.claims.user_id')::uuid
-    return new;
-  end;
+begin
+  perform pg_notify('create_user', new.email);
+  return new;
+end;
 $$;
 
 
 --
--- Name: FUNCTION follow_suggest(); Type: COMMENT; Schema: sg_private; Owner: -
+-- Name: FUNCTION notify_create_user(); Type: COMMENT; Schema: sg_private; Owner: -
 --
 
-COMMENT ON FUNCTION sg_private.follow_suggest() IS 'Follow a given suggest';
+COMMENT ON FUNCTION sg_private.notify_create_user() IS 'Whenever a new user signs up, email them.';
+
+
+--
+-- Name: trim_user_email(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.trim_user_email() RETURNS trigger
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+begin
+  new.email = trim(new.email);
+  return new;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION trim_user_email(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.trim_user_email() IS 'Trim the user''s email.';
+
+
+--
+-- Name: trim_user_name(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.trim_user_name() RETURNS trigger
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+begin
+  new.name = trim(new.name);
+  return new;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION trim_user_name(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.trim_user_name() IS 'Trim the user''s name.';
 
 
 --
@@ -193,6 +281,92 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: user; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public."user" (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    name public.citext NOT NULL,
+    view_subjects boolean DEFAULT false NOT NULL
+);
+
+
+--
+-- Name: TABLE "user"; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public."user" IS 'The public user data table. Anyone can see this data.';
+
+
+--
+-- Name: COLUMN "user".id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public."user".id IS 'The primary key of the user.';
+
+
+--
+-- Name: COLUMN "user".created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public."user".created IS 'When the user signed up.';
+
+
+--
+-- Name: COLUMN "user".modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public."user".modified IS 'When the public user data updated last.';
+
+
+--
+-- Name: COLUMN "user".name; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public."user".name IS 'The user''s name or username';
+
+
+--
+-- Name: COLUMN "user".view_subjects; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public."user".view_subjects IS 'Public setting for if the user wants to display what they are learning.';
+
+
+--
+-- Name: sign_up(text, text, text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.sign_up(name text, email text, password text) RETURNS sg_public."user"
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+declare
+  xuser sg_public.user;
+begin
+  if (char_length(password) < 8) then
+    raise exception 'I need at least 8 characters for passwords.'
+      using errcode = '355CAC69';
+  end if;
+  insert into sg_public.user ("name")
+    values (name)
+    returning * into xuser;
+  insert into sg_private.user ("user_id", "email", "password")
+    values (xuser.id, email, crypt(password, gen_salt('bf', 8)));
+  return xuser;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION sign_up(name text, email text, password text); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.sign_up(name text, email text, password text) IS 'Signs up a single user.';
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -202,113 +376,67 @@ CREATE TABLE public.schema_migrations (
 
 
 --
--- Name: suggest; Type: TABLE; Schema: sg_public; Owner: -
+-- Name: user; Type: TABLE; Schema: sg_private; Owner: -
 --
 
-CREATE TABLE sg_public.suggest (
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    name text NOT NULL,
-    body text NOT NULL
+CREATE TABLE sg_private."user" (
+    user_id uuid NOT NULL,
+    email public.citext NOT NULL,
+    password character varying(60) NOT NULL,
+    role sg_public.user_role DEFAULT 'sg_user'::sg_public.user_role NOT NULL,
+    email_frequency sg_public.email_frequency DEFAULT 'immediate'::sg_public.email_frequency NOT NULL,
+    CONSTRAINT email_check CHECK ((email OPERATOR(public.~*) '^\S+@\S+\.\S+$'::public.citext)),
+    CONSTRAINT pass_check CHECK (((password)::text ~* '^\$2\w\$.*$'::text))
 );
 
 
 --
--- Name: TABLE suggest; Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: TABLE "user"; Type: COMMENT; Schema: sg_private; Owner: -
 --
 
-COMMENT ON TABLE sg_public.suggest IS 'A suggestion for a new subject in Sagefy.';
-
-
---
--- Name: COLUMN suggest.id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.suggest.id IS 'The ID of the suggest.';
+COMMENT ON TABLE sg_private."user" IS 'Private user data -- this should be highly protected.';
 
 
 --
--- Name: COLUMN suggest.created; Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: COLUMN "user".email; Type: COMMENT; Schema: sg_private; Owner: -
 --
 
-COMMENT ON COLUMN sg_public.suggest.created IS 'When the user created the suggest.';
-
-
---
--- Name: COLUMN suggest.modified; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.suggest.modified IS 'When someone last changed the suggest.';
+COMMENT ON COLUMN sg_private."user".email IS 'The user''s private email address -- for notices and password resets.';
 
 
 --
--- Name: COLUMN suggest.name; Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: COLUMN "user".password; Type: COMMENT; Schema: sg_private; Owner: -
 --
 
-COMMENT ON COLUMN sg_public.suggest.name IS 'The name of the suggested subject.';
-
-
---
--- Name: COLUMN suggest.body; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.suggest.body IS 'The description and goals of the suggested subject.';
+COMMENT ON COLUMN sg_private."user".password IS 'The bcrypt hash of the user''s password.';
 
 
 --
--- Name: suggest_follow; Type: TABLE; Schema: sg_public; Owner: -
+-- Name: COLUMN "user".role; Type: COMMENT; Schema: sg_private; Owner: -
 --
 
-CREATE TABLE sg_public.suggest_follow (
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    suggest_id uuid NOT NULL,
-    session_id uuid NOT NULL
-);
+COMMENT ON COLUMN sg_private."user".role IS 'The role of the user, `sg_user` or `sg_admin`.';
 
 
 --
--- Name: TABLE suggest_follow; Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: COLUMN "user".email_frequency; Type: COMMENT; Schema: sg_private; Owner: -
 --
 
-COMMENT ON TABLE sg_public.suggest_follow IS 'A relationship between a suggest and a user.';
-
-
---
--- Name: COLUMN suggest_follow.id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.suggest_follow.id IS 'The ID of the suggest follow.';
+COMMENT ON COLUMN sg_private."user".email_frequency IS 'Setting of how often the user would like to receive notice emails.';
 
 
 --
--- Name: COLUMN suggest_follow.created; Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: CONSTRAINT email_check ON "user"; Type: COMMENT; Schema: sg_private; Owner: -
 --
 
-COMMENT ON COLUMN sg_public.suggest_follow.created IS 'When the user followed the suggest.';
-
-
---
--- Name: COLUMN suggest_follow.modified; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.suggest_follow.modified IS 'When the relationship last changed.';
+COMMENT ON CONSTRAINT email_check ON sg_private."user" IS 'An email must match the email format `a@b.c`.';
 
 
 --
--- Name: COLUMN suggest_follow.suggest_id; Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: CONSTRAINT pass_check ON "user"; Type: COMMENT; Schema: sg_private; Owner: -
 --
 
-COMMENT ON COLUMN sg_public.suggest_follow.suggest_id IS 'The suggest the user is following.';
-
-
---
--- Name: COLUMN suggest_follow.session_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.suggest_follow.session_id IS 'The session ID of the user.';
+COMMENT ON CONSTRAINT pass_check ON sg_private."user" IS 'A password must batch the bcrypt hash format `$2w$...`, where w is a, b, or y.';
 
 
 --
@@ -320,78 +448,92 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
--- Name: suggest_follow suggest_follow_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+-- Name: user user_email_key; Type: CONSTRAINT; Schema: sg_private; Owner: -
 --
 
-ALTER TABLE ONLY sg_public.suggest_follow
-    ADD CONSTRAINT suggest_follow_pkey PRIMARY KEY (id);
-
-
---
--- Name: suggest_follow suggest_follow_suggest_id_session_id_key; Type: CONSTRAINT; Schema: sg_public; Owner: -
---
-
-ALTER TABLE ONLY sg_public.suggest_follow
-    ADD CONSTRAINT suggest_follow_suggest_id_session_id_key UNIQUE (suggest_id, session_id);
+ALTER TABLE ONLY sg_private."user"
+    ADD CONSTRAINT user_email_key UNIQUE (email);
 
 
 --
--- Name: suggest suggest_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+-- Name: user user_pkey; Type: CONSTRAINT; Schema: sg_private; Owner: -
 --
 
-ALTER TABLE ONLY sg_public.suggest
-    ADD CONSTRAINT suggest_pkey PRIMARY KEY (id);
-
-
---
--- Name: suggest insert_suggest_then_follow; Type: TRIGGER; Schema: sg_public; Owner: -
---
-
-CREATE TRIGGER insert_suggest_then_follow AFTER INSERT ON sg_public.suggest FOR EACH ROW EXECUTE PROCEDURE sg_private.follow_suggest();
+ALTER TABLE ONLY sg_private."user"
+    ADD CONSTRAINT user_pkey PRIMARY KEY (user_id);
 
 
 --
--- Name: TRIGGER insert_suggest_then_follow ON suggest; Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: user user_name_key; Type: CONSTRAINT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON TRIGGER insert_suggest_then_follow ON sg_public.suggest IS 'Whenever I create a suggest, immediately follow the suggest';
-
-
---
--- Name: suggest_follow update_suggest_follow_modified; Type: TRIGGER; Schema: sg_public; Owner: -
---
-
-CREATE TRIGGER update_suggest_follow_modified BEFORE UPDATE ON sg_public.suggest_follow FOR EACH ROW EXECUTE PROCEDURE sg_private.update_modified_column();
+ALTER TABLE ONLY sg_public."user"
+    ADD CONSTRAINT user_name_key UNIQUE (name);
 
 
 --
--- Name: TRIGGER update_suggest_follow_modified ON suggest_follow; Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: user user_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON TRIGGER update_suggest_follow_modified ON sg_public.suggest_follow IS 'Whenever a suggest follow changes, update the `modified` column.';
-
-
---
--- Name: suggest update_suggest_modified; Type: TRIGGER; Schema: sg_public; Owner: -
---
-
-CREATE TRIGGER update_suggest_modified BEFORE UPDATE ON sg_public.suggest FOR EACH ROW EXECUTE PROCEDURE sg_private.update_modified_column();
+ALTER TABLE ONLY sg_public."user"
+    ADD CONSTRAINT user_pkey PRIMARY KEY (id);
 
 
 --
--- Name: TRIGGER update_suggest_modified ON suggest; Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: user create_user; Type: TRIGGER; Schema: sg_private; Owner: -
 --
 
-COMMENT ON TRIGGER update_suggest_modified ON sg_public.suggest IS 'Whenever a suggest changes, update the `modified` column.';
+CREATE TRIGGER create_user AFTER INSERT ON sg_private."user" FOR EACH ROW EXECUTE PROCEDURE sg_private.notify_create_user();
 
 
 --
--- Name: suggest_follow suggest_follow_suggest_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+-- Name: TRIGGER create_user ON "user"; Type: COMMENT; Schema: sg_private; Owner: -
 --
 
-ALTER TABLE ONLY sg_public.suggest_follow
-    ADD CONSTRAINT suggest_follow_suggest_id_fkey FOREIGN KEY (suggest_id) REFERENCES sg_public.suggest(id);
+COMMENT ON TRIGGER create_user ON sg_private."user" IS 'Whenever a new user signs up, email them.';
 
+
+--
+-- Name: user trim_user_email; Type: TRIGGER; Schema: sg_private; Owner: -
+--
+
+CREATE TRIGGER trim_user_email BEFORE INSERT ON sg_private."user" FOR EACH ROW EXECUTE PROCEDURE sg_private.trim_user_email();
+
+
+--
+-- Name: TRIGGER trim_user_email ON "user"; Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON TRIGGER trim_user_email ON sg_private."user" IS 'Trim the user''s email.';
+
+
+--
+-- Name: user trim_user_name; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER trim_user_name BEFORE INSERT ON sg_public."user" FOR EACH ROW EXECUTE PROCEDURE sg_private.trim_user_name();
+
+
+--
+-- Name: TRIGGER trim_user_name ON "user"; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER trim_user_name ON sg_public."user" IS 'Trim the user''s name.';
+
+
+--
+-- Name: user user_user_id_fkey; Type: FK CONSTRAINT; Schema: sg_private; Owner: -
+--
+
+ALTER TABLE ONLY sg_private."user"
+    ADD CONSTRAINT user_user_id_fkey FOREIGN KEY (user_id) REFERENCES sg_public."user"(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user; Type: ROW SECURITY; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE sg_public."user" ENABLE ROW LEVEL SECURITY;
 
 --
 -- PostgreSQL database dump complete
@@ -404,4 +546,5 @@ ALTER TABLE ONLY sg_public.suggest_follow
 
 INSERT INTO public.schema_migrations (version) VALUES
     ('20190201214238'),
-    ('20190201220821');
+    ('20190201220821'),
+    ('20190219221727');

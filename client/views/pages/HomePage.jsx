@@ -1,5 +1,5 @@
 import React from 'react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ExternalLink from '../components/ExternalLink'
@@ -58,7 +58,12 @@ export default function HomePage() {
               </ExternalLink>{' '}
               of what&apos;s coming!
             </li>
-            {/* <li><Link to="/sign-up"><Icon i="signUp" /> <strong>Sign up</strong></Link>, and we&apos;ll let you know as we release new stuff.</li> */}
+            <li>
+              <Link to="/sign-up">
+                <Icon i="signUp" /> <strong>Sign up</strong>
+              </Link>
+              , and we&apos;ll let you know as we release new stuff.
+            </li>
             <li>
               <ExternalLink href="https://sgef.cc/devupdates">
                 <Icon i="updates" /> <strong>Subscribe</strong> to biweekly
@@ -68,7 +73,7 @@ export default function HomePage() {
             </li>
           </ul>
           <p>
-            <small>Last updated 2019 Feb 13</small>
+            <small>Last updated 2019 Feb 24</small>
           </p>
         </blockquote>
       </section>
@@ -108,9 +113,8 @@ export default function HomePage() {
             can learn anything you want.
           </li>
           <li>
-            <Icon i="video" />{' '}
             <ExternalLink href="https://youtu.be/gFn4Q9tx7Qs">
-              Watch the overview video
+              <Icon i="video" /> Watch the overview video
             </ExternalLink>
             .
           </li>

@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUpPage should render the sign up page 1`] = `
+<div
+  className="SignUpPage"
+>
+  <section>
+    <h1>
+      Join Sagefy 
+      <Icon
+        i="signUp"
+        s="xxl"
+      />
+    </h1>
+    <p>
+      Already have an account?
+       
+      <Link
+        replace={false}
+        to="/log-in"
+      >
+        <Icon
+          i="logIn"
+          s="m"
+        />
+         Log In
+      </Link>
+      .
+      <br />
+      By signing up, you agree to our
+      <Link
+        replace={false}
+        to="/terms"
+      >
+        <Icon
+          i="terms"
+          s="m"
+        />
+         Terms of Service
+      </Link>
+      .
+    </p>
+    <form
+      action=""
+      method="POST"
+    >
+      <p>
+        <label
+          htmlFor="name"
+        >
+          Name
+        </label>
+        <input
+          autoFocus={true}
+          id="name"
+          name="name"
+          placeholder="example: Unicorn"
+          required={true}
+          size="40"
+          type="text"
+        />
+      </p>
+      <p>
+        <label
+          htmlFor="email"
+        >
+          Email
+        </label>
+        <input
+          id="email"
+          name="email"
+          placeholder="example: unicorn@example.com"
+          required={true}
+          size="40"
+          type="email"
+        />
+        <br />
+        <small>
+          We need your email to send notices and to reset your password.
+        </small>
+      </p>
+      <p>
+        <label
+          htmlFor="password"
+        >
+          Password
+        </label>
+        <input
+          id="password"
+          name="password"
+          pattern=".{8,}"
+          required={true}
+          size="40"
+          type="password"
+        />
+      </p>
+      <p>
+        <button
+          type="submit"
+        >
+          <Icon
+            i="signUp"
+            s="m"
+          />
+           Sign Up
+        </button>
+      </p>
+    </form>
+  </section>
+</div>
+`;

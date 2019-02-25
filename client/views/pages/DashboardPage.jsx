@@ -1,16 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
+// import ExternalLink from '../components/ExternalLink'
 
-export default function NotFoundPage() {
+export default function ContactPage() {
   return (
-    <div className="NotFoundPage">
+    <div className="DashboardPage">
       <section>
         <h1>
-          I couldn&apos;t find that page <Icon i="error" s="xxl" />
+          Welcome to Sagefy <Icon i="signUp" s="xxl" />
         </h1>
         <p>
-          <Icon i="error" /> 404 Not Found <Icon i="error" />{' '}
+          I&apos;ve reserved your user name and password! That said, there
+          isn&apos;t much to do right now.
         </p>
         <p>
           <Link to="/">
