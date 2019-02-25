@@ -41,7 +41,7 @@ su - annina
 sudo ufw allow 22  # SSH
 sudo ufw allow 80/tcp  # HTTP
 sudo ufw allow 443/tcp  # HTTPS
-sudo ufw allow 25/tcp  # SMTP
+sudo ufw allow 587  # SMTPS
 sudo ufw enable
 
 # Configure timezone
