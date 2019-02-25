@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { createTransport } = require('nodemailer')
 const { Client } = require('pg')
 
@@ -20,11 +21,16 @@ const transport = createTransport(
 
 async function sendMail({ to, subject, body }) {
   if (process.env.NODE_ENV === 'test') return Promise.resolve()
-  return transport.sendMail({
-    to,
-    subject,
-    text: body,
-  })
+  try {
+    return await transport.sendMail({
+      to,
+      subject,
+      text: body,
+    })
+  } catch (e) {
+    console.log('Did not send mail.', e)
+    return Promise.resolve()
+  }
 }
 
 const FOOTER_TEXT = `
