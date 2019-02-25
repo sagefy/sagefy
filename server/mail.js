@@ -1,14 +1,22 @@
 /* eslint-disable no-console */
 const { createTransport } = require('nodemailer')
-const sparkPostTransport = require('nodemailer-sparkpost-transport')
 const { Client } = require('pg')
 
-const FROM = 'support@sagefy.org'
+const SENDER = 'support@sagefy.org'
 
 const transport = createTransport(
-  sparkPostTransport({
-    sparkPostApiKey: process.env.MAIL_PASS,
-  })
+  {
+    host: 'smtp.sparkpostmail.com',
+    port: 587,
+    // secure: true,
+    auth: {
+      user: 'SMTP_Injection',
+      pass: process.env.MAIL_PASS,
+    },
+  },
+  {
+    from: SENDER,
+  }
 )
 
 async function sendMail({ to, subject, body }) {
@@ -95,7 +103,6 @@ module.exports = async function mailer() {
     if (msg.channel === 'create_user') {
       await sendMail({
         to: msg.payload,
-        from: FROM,
         subject: WELCOME_SUBJECT,
         body: WELCOME_TEXT,
       })
@@ -104,7 +111,6 @@ module.exports = async function mailer() {
       const [to, token] = msg.payload.split(' ')
       await sendMail({
         to,
-        from: FROM,
         subject: TOKEN_SUBJECT,
         body: TOKEN_TEXT.replace('{token}', token),
       })
@@ -112,7 +118,6 @@ module.exports = async function mailer() {
     if (msg.channel === 'update_email') {
       await sendMail({
         to: msg.payload,
-        from: FROM,
         subject: EMAIL_SUBJECT,
         body: EMAIL_TEXT,
       })
@@ -120,7 +125,6 @@ module.exports = async function mailer() {
     if (msg.channel === 'update_password') {
       await sendMail({
         to: msg.payload,
-        from: FROM,
         subject: PASSWORD_SUBJECT,
         body: PASSWORD_TEXT,
       })
