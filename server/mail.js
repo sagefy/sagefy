@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const { createTransport } = require('nodemailer')
 const { Client } = require('pg')
+const jwt = require('jsonwebtoken')
 
 const SENDER = 'support@sagefy.org'
 
@@ -108,7 +109,12 @@ module.exports = async function mailer() {
       })
     }
     if (msg.channel === 'send_reset_token') {
-      const [to, token] = msg.payload.split(' ')
+      const [to, userId, uniq] = msg.payload.split(' ')
+      const token = jwt.sign(
+        { user_id: userId, uniq },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      )
       await sendMail({
         to,
         subject: TOKEN_SUBJECT,

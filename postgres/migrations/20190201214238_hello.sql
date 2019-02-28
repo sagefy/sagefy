@@ -3,7 +3,7 @@
 create extension if not exists "uuid-ossp";
 create extension if not exists "pgcrypto";
 create extension if not exists "postgres-json-schema";
-create extension if not exists "pgjwt";
+-- create extension if not exists "pgjwt";
 create extension if not exists "unaccent";
 
 create schema sg_public;

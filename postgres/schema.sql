@@ -65,20 +65,6 @@ COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
 
 
 --
--- Name: pgjwt; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS pgjwt WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pgjwt; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION pgjwt IS 'JSON Web Token API for Postgresql';
-
-
---
 -- Name: postgres-json-schema; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -146,7 +132,8 @@ COMMENT ON TYPE sg_public.email_frequency IS 'Email frequency options per user';
 CREATE TYPE sg_public.jwt_token AS (
 	role text,
 	user_id uuid,
-	session_id uuid
+	session_id uuid,
+	uniq text
 );
 
 
@@ -154,7 +141,7 @@ CREATE TYPE sg_public.jwt_token AS (
 -- Name: TYPE jwt_token; Type: COMMENT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON TYPE sg_public.jwt_token IS 'Create a JWT with role, user_id, and session_id.';
+COMMENT ON TYPE sg_public.jwt_token IS 'Create a JWT with role, user_id, session_id, and uniq.';
 
 
 --
@@ -194,6 +181,48 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_private.notify_create_user() IS 'Whenever a new user signs up, email them.';
+
+
+--
+-- Name: notify_update_email(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.notify_update_email() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+begin
+  perform pg_notify('update_email', old.email);
+  return new;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION notify_update_email(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.notify_update_email() IS 'Whenever a user changes their email, email their old account.';
+
+
+--
+-- Name: notify_update_password(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.notify_update_password() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+begin
+  perform pg_notify('update_password', old.email);
+  return new;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION notify_update_password(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.notify_update_password() IS 'Whenever a user changes their password, email them.';
 
 
 --
@@ -265,7 +294,7 @@ COMMENT ON FUNCTION sg_private.update_modified_column() IS 'Whenever the row cha
 CREATE FUNCTION sg_public.get_anonymous_token() RETURNS sg_public.jwt_token
     LANGUAGE sql
     AS $$
-  select ('sg_anonymous', null, uuid_generate_v4())::sg_public.jwt_token;
+  select ('sg_anonymous', null, uuid_generate_v4(), null)::sg_public.jwt_token;
 $$;
 
 
@@ -336,14 +365,99 @@ COMMENT ON COLUMN sg_public."user".view_subjects IS 'Public setting for if the u
 
 
 --
--- Name: sign_up(text, text, text); Type: FUNCTION; Schema: sg_public; Owner: -
+-- Name: get_current_user(); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_public.sign_up(name text, email text, password text) RETURNS sg_public."user"
+CREATE FUNCTION sg_public.get_current_user() RETURNS sg_public."user"
+    LANGUAGE sql STABLE
+    AS $$
+  select *
+  from sg_public.user
+  where id = current_setting('jwt.claims.user_id')::uuid
+$$;
+
+
+--
+-- Name: FUNCTION get_current_user(); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.get_current_user() IS 'Get the current logged in user.';
+
+
+--
+-- Name: log_in(text, text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.log_in(name text, password text) RETURNS sg_public.jwt_token
     LANGUAGE plpgsql STRICT SECURITY DEFINER
     AS $$
 declare
-  xuser sg_public.user;
+  xu sg_private.user;
+begin
+  select u.* into xu
+    from sg_private.user as u
+    where u.name = name or u.email = name
+    limit 1;
+  if (xu.password = crypt(password, xu.password)) then
+    return (xu.role, xu.user_id, null, null)::sg_public.jwt_token;
+  else
+    return null;
+  end if;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION log_in(name text, password text); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.log_in(name text, password text) IS 'Logs in a single user.';
+
+
+--
+-- Name: send_reset_token(text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.send_reset_token(email text) RETURNS void
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+  declare
+    xu sg_private.user;
+  begin
+    xu := (
+      select *
+      from sg_private.user
+      where email = sg_private.user.email
+      limit 1
+    );
+    if (not xu) then
+      raise exception 'No user found.' using errcode = '3883C744';
+    end if;
+    perform pg_notify(
+      'send_reset_token',
+      concat(email, ' ', xu.user_id::text, ' ', email, ',', xu.password)
+    );
+  end;
+$$;
+
+
+--
+-- Name: FUNCTION send_reset_token(email text); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.send_reset_token(email text) IS 'Generate and email a token to update private user data.';
+
+
+--
+-- Name: sign_up(text, text, text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.sign_up(name text, email text, password text) RETURNS sg_public.jwt_token
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+declare
+  public_user sg_public.user;
+  private_user sg_private.user;
 begin
   if (char_length(password) < 8) then
     raise exception 'I need at least 8 characters for passwords.'
@@ -351,19 +465,95 @@ begin
   end if;
   insert into sg_public.user ("name")
     values (name)
-    returning * into xuser;
+    returning * into public_user;
   insert into sg_private.user ("user_id", "email", "password")
-    values (xuser.id, email, crypt(password, gen_salt('bf', 8)));
-  return xuser;
+    values (public_user.id, email, crypt(password, gen_salt('bf', 8)))
+    returning * into private_user;
+  return (private_user.role, public_user.id, null, null)::sg_public.jwt_token;
 end;
 $$;
 
 
 --
--- Name: FUNCTION sign_up(name text, email text, password text); Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: update_email(text); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-COMMENT ON FUNCTION sg_public.sign_up(name text, email text, password text) IS 'Signs up a single user.';
+CREATE FUNCTION sg_public.update_email(new_email text) RETURNS void
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+  declare
+    xu sg_private.user;
+    user_id uuid;
+    email text;
+    password text;
+  begin
+    user_id := current_setting('jwt.claims.user_id')::uuid;
+    email := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
+    password := split_part(current_setting('jwt.claims.uniq')::text, ',', 2);
+    xu := (
+      select *
+      from sg_private.user
+      where user_id = sg_private.user.user_id
+        and email = sg_private.user.email
+        and password = sg_private.user.password
+      limit 1
+    );
+    if (not xu) then
+      raise exception 'No match found.' using errcode = '58483A61';
+    end if;
+    update sg_private.user
+    set sg_private.user.email = new_email
+    where sg_private.user.user_id = user_id;
+  end;
+$$;
+
+
+--
+-- Name: FUNCTION update_email(new_email text); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.update_email(new_email text) IS 'Update the user''s email address.';
+
+
+--
+-- Name: update_password(text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.update_password(new_password text) RETURNS void
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+  declare
+    xu sg_private.user;
+    user_id uuid;
+    email text;
+    password text;
+  begin
+    user_id := current_setting('jwt.claims.user_id')::uuid;
+    email := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
+    password := split_part(current_setting('jwt.claims.uniq')::text, ',', 2);
+    xu := (
+      select *
+      from sg_private.user
+      where user_id = sg_private.user.user_id
+        and email = sg_private.user.email
+        and password = sg_private.user.password
+      limit 1
+    );
+    if (not xu) then
+      raise exception 'No match found.' using errcode = 'EBC6E992';
+    end if;
+    update sg_private.user
+    set sg_private.user.password = crypt(new_password, gen_salt('bf', 8))
+    where sg_private.user.user_id = user_id;
+  end;
+$$;
+
+
+--
+-- Name: FUNCTION update_password(new_password text); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.update_password(new_password text) IS 'Update the user''s password.';
 
 
 --
@@ -490,7 +680,7 @@ CREATE TRIGGER create_user AFTER INSERT ON sg_private."user" FOR EACH ROW EXECUT
 -- Name: TRIGGER create_user ON "user"; Type: COMMENT; Schema: sg_private; Owner: -
 --
 
-COMMENT ON TRIGGER create_user ON sg_private."user" IS 'Whenever a new user signs up, email them.';
+COMMENT ON TRIGGER create_user ON sg_private."user" IS 'Whenever a user changes their password, email them.';
 
 
 --
@@ -508,6 +698,20 @@ COMMENT ON TRIGGER trim_user_email ON sg_private."user" IS 'Trim the user''s ema
 
 
 --
+-- Name: user update_email; Type: TRIGGER; Schema: sg_private; Owner: -
+--
+
+CREATE TRIGGER update_email AFTER UPDATE OF email ON sg_private."user" FOR EACH ROW EXECUTE PROCEDURE sg_private.notify_update_email();
+
+
+--
+-- Name: user update_password; Type: TRIGGER; Schema: sg_private; Owner: -
+--
+
+CREATE TRIGGER update_password AFTER UPDATE OF password ON sg_private."user" FOR EACH ROW EXECUTE PROCEDURE sg_private.notify_update_password();
+
+
+--
 -- Name: user trim_user_name; Type: TRIGGER; Schema: sg_public; Owner: -
 --
 
@@ -522,11 +726,60 @@ COMMENT ON TRIGGER trim_user_name ON sg_public."user" IS 'Trim the user''s name.
 
 
 --
+-- Name: user update_user_modified; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER update_user_modified BEFORE UPDATE ON sg_public."user" FOR EACH ROW EXECUTE PROCEDURE sg_private.update_modified_column();
+
+
+--
+-- Name: TRIGGER update_user_modified ON "user"; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER update_user_modified ON sg_public."user" IS 'Whenever the user changes, update the `modified` column.';
+
+
+--
 -- Name: user user_user_id_fkey; Type: FK CONSTRAINT; Schema: sg_private; Owner: -
 --
 
 ALTER TABLE ONLY sg_private."user"
     ADD CONSTRAINT user_user_id_fkey FOREIGN KEY (user_id) REFERENCES sg_public."user"(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user delete_user; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY delete_user ON sg_public."user" FOR DELETE TO sg_user USING ((id = (current_setting('jwt.claims.user_id'::text))::uuid));
+
+
+--
+-- Name: user delete_user_admin; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY delete_user_admin ON sg_public."user" FOR DELETE TO sg_admin USING (true);
+
+
+--
+-- Name: user select_user; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY select_user ON sg_public."user" FOR SELECT USING (true);
+
+
+--
+-- Name: user update_user; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY update_user ON sg_public."user" FOR UPDATE TO sg_user USING ((id = (current_setting('jwt.claims.user_id'::text))::uuid));
+
+
+--
+-- Name: user update_user_admin; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY update_user_admin ON sg_public."user" FOR UPDATE TO sg_admin USING (true);
 
 
 --
@@ -547,4 +800,5 @@ ALTER TABLE sg_public."user" ENABLE ROW LEVEL SECURITY;
 INSERT INTO public.schema_migrations (version) VALUES
     ('20190201214238'),
     ('20190201220821'),
-    ('20190219221727');
+    ('20190219221727'),
+    ('20190227220630');

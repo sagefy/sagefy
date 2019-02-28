@@ -4,6 +4,7 @@ create or replace function sg_private.insert_user_id_column()
 returns trigger as $$
 begin new.user_id = current_setting('jwt.claims.user_id')::uuid;
   return new;
+  -- TODO update to store either user_id or session_id
 end;
 $$ language 'plpgsql';
 comment on function sg_private.insert_user_id_column()
@@ -14,144 +15,9 @@ comment on function sg_private.insert_user_id_column()
 
 
 
+
+
 ------ Users > Functions -------------------------------------------------------
-
-create function sg_public.log_in(
-  name text,
-  password text
-) returns sg_public.jwt_token as $$
-declare
-  user sg_private.user;
-begin
-  select u.* into user
-    from sg_private.user as u
-    where u.name = $1 or u.email = $1
-    limit 1;
-  if user.password = crypt(password, user.password) then
-    return (user.role, user.user_id, null)::sg_public.jwt_token;
-  else
-    return null;
-  end if;
-end;
-$$ language plpgsql strict security definer;
-comment on function sg_public.log_in(text, text) is 'Logs in a single user.';
-
-create function sg_public.send_reset_token(
-  email text
-) returns void as $$
-  declare
-    user sg_private.user;
-  begin
-    user := (
-      select *
-      from sg_private.user
-      where email = sg_private.user.email
-      limit 1
-    );
-    if (not user) then
-      raise exception 'No user found.' using errcode = '3883C744';
-    end if;
-    perform pg_notify(
-      'send_reset_token',
-      email || ' ' || sign(format($$ {
-        "user_id": "%s",
-        "email": "%s",
-        "password": "%s"
-      } $$, user.user_id, email, user.password), :'JWT_SECRET')
-    );
-  end;
-$$ language plpgsql strict security definer;
-comment on function sg_public.send_password_token(text)
-  is 'Generate and email a token to update private user data.';
-
-create function sg_public.update_email(
-  token text,
-  new_email text
-) returns void as $$
-  declare
-    user sg_private.user;
-    user_id uuid;
-    email text;
-    password text;
-  begin
-    select user_id, email, password from verify(token, :'JWT_SECRET');
-    user := (
-      select *
-      from sg_private.user
-      where user_id = sg_private.user.user_id
-        and email = sg_private.user.email
-        and password = sg_private.user.password
-      limit 1
-    );
-    if (not user) then
-      raise exception 'No match found.' using errcode = '58483A61';
-    end if;
-    update sg_private.user
-    set sg_private.user.email = new_email
-    where sg_private.user.user_id = user_id;
-  end;
-$$ language plpgsql strict security definer;
-comment on function sg_public.update_email(text, text)
-  is 'Update the user\'s email address.';
-
-create function sg_public.update_password(
-  token text,
-  new_password text
-) returns void as $$
-  declare
-    user sg_private.user;
-    user_id uuid;
-    email text;
-    password text;
-  begin
-    select user_id, email, password from verify(token, :'JWT_SECRET');
-    user := (
-      select *
-      from sg_private.user
-      where user_id = sg_private.user.user_id
-        and email = sg_private.user.email
-        and password = sg_private.user.password
-      limit 1
-    );
-    if (not user) then
-      raise exception 'No match found.' using errcode = 'EBC6E992';
-    end if;
-    update sg_private.user
-    set sg_private.user.password = crypt(new_password, gen_salt('bf', 8))
-    where sg_private.user.user_id = user_id;
-  end;
-$$ language plpgsql strict security definer;
-comment on function sg_public.update_password(text, text)
-  is 'Update the user\'s password.';
-
-create function sg_private.notify_update_email()
-returns trigger as $$
-begin
-  perform pg_notify('update_email', old.email);
-  return new;
-end;
-$$ language 'plpgsql';
-comment on function sg_private.notify_update_email()
-  is 'Whenever a user changes their email, email their old account.';
-
-create function sg_private.notify_update_password()
-returns trigger as $$
-begin
-  perform pg_notify('update_password', old.email);
-  return new;
-end;
-$$ language 'plpgsql';
-comment on function sg_private.notify_update_password()
-  is 'Whenever a user changes their password, email them.';
-
-create function sg_public.get_current_user()
-returns sg_public.user as $$
-  select *
-  from sg_public.user
-  where id = current_setting('jwt.claims.user_id')::uuid
-$$ language sql stable;
-comment on function sg_public.get_current_user()
-  is 'Get the current logged in user.';
 
 create function sg_public.user_md5_email(user sg_public.user)
 returns text as $$
@@ -161,77 +27,8 @@ returns text as $$
   limit 1;
 $$ language sql stable;
 comment on function sg_public.user_md5_email(sg_public.user)
-  is 'The user\'s email address as an MD5 hash, for Gravatars. '
+  is 'The user''s email address as an MD5 hash, for Gravatars. '
      'See https://bit.ly/2F6cR0M';
-
------- Users > Triggers --------------------------------------------------------
-
-create trigger update_user_modified
-  before update on sg_public.user
-  for each row execute procedure sg_private.update_modified_column();
-comment on trigger update_user_modified on sg_public.user
-  is 'Whenever the user changes, update the `modified` column.';
-
-create trigger update_email
-  after update (email) on sg_private.user
-  for each row execute procedure sg_private.notify_update_email();
-comment on trigger create_user on sg_private.user
-  is 'Whenever a user changes their email, email their old account.';
-
-create trigger update_password
-  after update (password) on sg_private.user
-  for each row execute procedure sg_private.notify_update_password();
-comment on trigger create_user on sg_private.user
-  is 'Whenever a user changes their password, email them.';
-
------- Users > Permissions -----------------------------------------------------
-
--- Select user: any.
-grant select on table sg_public.user to sg_anonymous, sg_user, sg_admin;
-create policy select_user on sg_public.user
-  for select -- any user
-  using (true);
-comment on policy select_user on sg_public.user
-  is 'Anyone can select public user data.';
-
--- Update user: user self (name, settings), or admin.
-grant update (name, view_subjects) on table sg_public.user to sg_user;
-grant update on table sg_public.user to sg_admin;
-create policy update_user on sg_public.user
-  for update (name, view_subjects) to sg_user
-  using (id = current_setting('jwt.claims.user_id')::uuid);
-comment on policy update_user on sg_public.user
-  is 'A user can update their own public user data name and settings.';
-create policy update_user_admin on sg_public.user
-  for update to sg_admin
-  using (true);
-comment on policy update_user_admin on sg_public.user
-  is 'An admin can update any public user data.';
-
--- Delete user: user self, or admin.
-grant delete on table sg_public.user to sg_user, sg_admin;
-create policy delete_user on sg_public.user
-  for delete to sg_user
-  using (id = current_setting('jwt.claims.user_id')::uuid);
-comment on policy delete_user on sg_public.user
-  is 'A user can delete their own public user data.';
-create policy delete_user_admin on sg_public.user
-  for delete to sg_admin
-  using (true);
-comment on policy delete_user_admin on sg_public.user
-  is 'An admin can delete any public user data';
-
--- All users may log in or check the current user.
-grant execute on function sg_public.log_in(text, text)
-  to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.send_reset_token(text)
-  to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.update_email(text, text)
-  to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.update_password(text, text)
-  to sg_anonymous, sg_user, sg_admin;
-grant execute on function sg_public.get_current_user()
-  to sg_anonymous, sg_user, sg_admin;
 grant execute on function sg_public.user_md5_email(sg_public.user)
   to sg_anonymous, sg_user, sg_admin;
 
@@ -1384,7 +1181,7 @@ create table sg_public.topic (
 );
 
 comment on table sg_public.topic
-  is 'The topics on an entity\'s talk page.';
+  is 'The topics on an entity''s talk page.';
 comment on column sg_public.id
   is 'The public ID of the topic.';
 comment on column sg_public.created
@@ -1417,7 +1214,7 @@ create table sg_public.post (
 );
 
 comment on table sg_public.post
-  is 'The posts on an entity\'s talk page. Belongs to a topic.';
+  is 'The posts on an entity''s talk page. Belongs to a topic.';
 comment on column sg_public.post.id
   is 'The ID of the post.';
 comment on column sg_public.post.created
