@@ -22,9 +22,14 @@ import {
   UserPlus,
   LogIn,
   ArrowLeft,
+  Settings,
+  LogOut,
+  Key,
   // temporary home page
   Users,
   Eye,
+  // default so I see somethings off
+  Target,
 } from 'react-feather'
 import get from 'lodash.get'
 
@@ -39,6 +44,10 @@ const MAP = {
   contact: Mail,
   signUp: UserPlus,
   logIn: LogIn,
+  settings: Settings,
+  logOut: LogOut,
+  password: Key,
+  email: Mail,
 
   // models
   talk: MessageCircle,
@@ -59,6 +68,7 @@ const MAP = {
   view: Eye, // home
   friends: Users, // home
   github: GitHub, // contact
+  inbox: Inbox, // password, email
 }
 
 const SIZES = {
@@ -72,7 +82,7 @@ const SIZES = {
 export default function Icon({ i, s = 'm' }) {
   return (
     <i className={`Icon icon-${i}`}>
-      {React.createElement(get(MAP, i, 'span'), { size: get(SIZES, s) })}
+      {React.createElement(get(MAP, i, Target), { size: get(SIZES, s) })}
     </i>
   )
 }

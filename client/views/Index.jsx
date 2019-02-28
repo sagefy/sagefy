@@ -10,6 +10,10 @@ import SearchSubjectsPage from './pages/SearchSubjectsPage'
 import SignUpPage from './pages/SignUpPage'
 import DashboardPage from './pages/DashboardPage'
 import ServerErrorPage from './pages/ServerErrorPage'
+import LogInPage from './pages/LogInPage'
+import PasswordPage from './pages/PasswordPage'
+import EmailPage from './pages/EmailPage'
+import SettingsPage from './pages/SettingsPage'
 
 export const output = a => () => a
 const searchSubjects = output('Search Subjects')
@@ -20,6 +24,10 @@ const notFound = output('Not Found')
 const signUp = output('Sign Up')
 const dashboard = output('Dashboard')
 const serverError = output('Server Error')
+const logIn = output('Log In')
+const password = output('Password')
+const email = output('Email')
+const settings = output('Settings')
 
 export default function Index(props) {
   const { location, cacheHash } = props
@@ -32,6 +40,10 @@ export default function Index(props) {
         <title>
           <StaticRouter context={{}} location={location}>
             <Switch>
+              <Route path="/log-in" render={logIn} />
+              <Route path="/password" render={password} />
+              <Route path="/email" render={email} />
+              <Route path="/settings" render={settings} />
               <Route path="/dashboard" render={dashboard} />
               <Route path="/sign-up" render={signUp} />
               <Route path="/search-subjects" render={searchSubjects} />
@@ -49,6 +61,16 @@ export default function Index(props) {
         <div id="top" className="page" role="document">
           <StaticRouter context={{}} location={location}>
             <Switch>
+              <Route path="/log-in" render={() => <LogInPage {...props} />} />
+              <Route
+                path="/password"
+                render={() => <PasswordPage {...props} />}
+              />
+              <Route path="/email" render={() => <EmailPage {...props} />} />
+              <Route
+                path="/settings"
+                render={() => <SettingsPage {...props} />}
+              />
               <Route path="/dashboard" component={DashboardPage} />
               <Route path="/sign-up" render={() => <SignUpPage {...props} />} />
               <Route path="/search-subjects" component={SearchSubjectsPage} />

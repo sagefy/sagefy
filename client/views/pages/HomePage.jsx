@@ -73,22 +73,27 @@ export default function HomePage() {
             </li>
           </ul>
           <p>
-            <small>Last updated 2019 Feb 24</small>
+            <small>Last updated 2019 Mar 3</small>
           </p>
         </blockquote>
       </section>
 
-      {/* Change to link to go to Choose Subject page */}
-      {/* <section className="text-align-right">
+      <section className="text-align-right">
         <p>
           <small>
-            <Link to="/log-in">➡️ Log In</Link> or
-            <Link to="/sign-up">👩🏾‍💻 Sign Up</Link>
+            {/* Change to link to go to Choose Subject page when logged in */}
+            <Link to="/log-in">
+              <Icon i="logIn" /> Log In
+            </Link>{' '}
+            or
+            <Link to="/sign-up">
+              <Icon i="signUp" /> Sign Up
+            </Link>
           </small>
         </p>
       </section>
 
-      {/* ...or try something popular ✨ */}
+      {/* ...or try something popular ✨ section here */}
 
       <section>
         <div className="text-align-center collapse-margins">

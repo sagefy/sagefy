@@ -17,6 +17,14 @@ export default function ContactPage() {
         <p>
           <Link to="/">
             Go back <Icon i="home" /> home
+          </Link>{' '}
+          &bull;{' '}
+          <Link to="/settings">
+            Change your <Icon i="settings" /> settings
+          </Link>{' '}
+          &bull;{' '}
+          <Link to="/log-out">
+            <Icon i="logOut" /> Log Out
           </Link>
         </p>
       </section>

@@ -9,7 +9,7 @@ function parseJSON(data) {
   }
 }
 
-module.exports = function httpRequest(body) {
+module.exports = function gqlRequest({ query, variables }) {
   return new Promise((resolve, reject) => {
     const request = http.request(
       {
@@ -39,7 +39,7 @@ module.exports = function httpRequest(body) {
         })
       }
     )
-    request.write(body)
+    request.write(JSON.stringify({ query, variables }))
     request.end()
   })
 }
