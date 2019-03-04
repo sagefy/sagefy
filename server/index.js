@@ -19,6 +19,7 @@ app.use(
     {
       // Dev, debug, test
       graphiql: process.env.NODE_ENV !== 'production',
+      enhanceGraphiql: process.env.NODE_ENV !== 'production',
 
       // JWT Authentication
       jwtSecret: process.env.JWT_SECRET,
