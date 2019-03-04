@@ -9,7 +9,7 @@ function parseJSON(data) {
   }
 }
 
-module.exports = function gqlRequest({ query, variables }) {
+module.exports = function gqlRequest({ query, variables, jwtToken }) {
   return new Promise((resolve, reject) => {
     const request = http.request(
       {
@@ -21,6 +21,7 @@ module.exports = function gqlRequest({ query, variables }) {
           'Content-Type': 'application/json; charset=UTF-8',
           Accept: 'application/json',
           'X-Requested-With': 'Node.js',
+          Authorization: jwtToken ? `Bearer ${jwtToken}` : null,
         },
       },
       response => {
