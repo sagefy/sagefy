@@ -16,11 +16,15 @@ RUN git clone https://github.com/gavinwahl/postgres-json-schema.git && \
   cd postgres-json-schema && \
   make install
 
-# RUN dbmate -d "./migrations" -s "./schema.sql" up
+# TODO run dbmate up
 
 CMD ["postgres"]
 
-# docker-compose run postgres dbmate -d "./migrations" new "hello"
-# docker-compose run postgres dbmate -d "./migrations" -s "./schema.sql" up
-# docker-compose run postgres dbmate drop
+# docker-compose run postgres dbmate \
+# -e "postgres://sagefy@172.17.0.1:5432/sagefy?sslmode=disable" \
+# -d "./migrations" \
+# -s "./schema.sql" \
+# up | new "hello" | drop
+#
 # docker exec -it sagefy_postgres_1 psql -U sagefy
+
