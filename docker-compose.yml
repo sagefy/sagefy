@@ -18,7 +18,6 @@ services:
       - '5984:5984'
     volumes:
       - ./client:/client
-      - ./shared/graphql:/client/graphql
     links:
       - server
   server:
@@ -29,6 +28,7 @@ services:
     volumes:
       - ./server:/server
       - ./.env:/server/.env
+      - ./client/graphql:/server/graphql
     links:
       - postgres
   postgres:

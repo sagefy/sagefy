@@ -1,0 +1,5 @@
+mutation rootLogInUser($name: String!, $password: String!) {
+  logIn(input: { name: $name, password: $password }) {
+    jwtToken
+  }
+}

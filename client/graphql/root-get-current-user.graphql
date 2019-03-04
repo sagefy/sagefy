@@ -1,0 +1,6 @@
+query rootGetCurrentUser {
+  getCurrentUser {
+    id
+    name
+  }
+}
