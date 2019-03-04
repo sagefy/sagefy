@@ -11,7 +11,7 @@ comment on type sg_public.jwt_token
 create or replace function sg_public.get_anonymous_token()
 returns sg_public.jwt_token as $$
   select ('sg_anonymous', null, uuid_generate_v4(), null)::sg_public.jwt_token;
-$$ language sql;
+$$ language sql volatile;
 -- no need to update comment
 -- no need to update access
 
@@ -39,20 +39,24 @@ begin
 end;
 $$ language plpgsql strict security definer;
 -- no need to update comment
--- no need to update access
+grant execute on function sg_public.sign_up(text, text, text) to sg_anonymous;
 
 -- ABLE TO LOG IN
 
-create function sg_public.log_in(
+create or replace function sg_public.log_in(
   name text,
   password text
 ) returns sg_public.jwt_token as $$
 declare
   xu sg_private.user;
 begin
-  select u.* into xu
-    from sg_private.user as u
-    where u.name = name or u.email = name
+  select prvu.* into xu
+    from sg_private.user prvu, sg_public.user pubu
+    where
+      prvu.user_id = pubu.id and (
+        pubu.name = $1 or -- $1 == name
+        prvu.email = $1
+      )
     limit 1;
   if (xu.password = crypt(password, xu.password)) then
     return (xu.role, xu.user_id, null, null)::sg_public.jwt_token;
@@ -122,24 +126,22 @@ comment on policy delete_user_admin on sg_public.user
 
 -- ENABLE RESET PASSWORD & EMAIL
 
-create function sg_public.send_reset_token(
+create or replace function sg_public.send_reset_token(
   email text
 ) returns void as $$
   declare
     xu sg_private.user;
   begin
-    xu := (
-      select *
-      from sg_private.user
-      where email = sg_private.user.email
-      limit 1
-    );
-    if (not xu) then
+    select * into xu
+    from sg_private.user
+    where sg_private.user.email = $1
+    limit 1;
+    if (xu is null) then
       raise exception 'No user found.' using errcode = '3883C744';
     end if;
     perform pg_notify(
       'send_reset_token',
-      concat(email, ' ', xu.user_id::text, ' ', email, ',', xu.password)
+      concat($1, ' ', xu.user_id::text, ' ', $1, ',', xu.password)
     );
   end;
 $$ language plpgsql strict security definer;
@@ -153,27 +155,25 @@ create function sg_public.update_email(
 ) returns void as $$
   declare
     xu sg_private.user;
-    user_id uuid;
-    email text;
-    password text;
+    xuser_id uuid;
+    xemail text;
+    xpassword text;
   begin
-    user_id := current_setting('jwt.claims.user_id')::uuid;
-    email := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
-    password := split_part(current_setting('jwt.claims.uniq')::text, ',', 2);
-    xu := (
-      select *
-      from sg_private.user
-      where user_id = sg_private.user.user_id
-        and email = sg_private.user.email
-        and password = sg_private.user.password
-      limit 1
-    );
-    if (not xu) then
+    xuser_id := current_setting('jwt.claims.user_id')::uuid;
+    xemail := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
+    xpassword := split_part(current_setting('jwt.claims.uniq')::text, ',', 2);
+    select * into xu
+    from sg_private.user
+    where sg_private.user.user_id = xuser_id
+      and sg_private.user.email = xemail
+      and sg_private.user.password = xpassword;
+    limit 1;
+    if (xu is null) then
       raise exception 'No match found.' using errcode = '58483A61';
     end if;
     update sg_private.user
     set sg_private.user.email = new_email
-    where sg_private.user.user_id = user_id;
+    where sg_private.user.user_id = xuser_id;
   end;
 $$ language plpgsql strict security definer;
 comment on function sg_public.update_email(text)
@@ -186,27 +186,25 @@ create function sg_public.update_password(
 ) returns void as $$
   declare
     xu sg_private.user;
-    user_id uuid;
-    email text;
-    password text;
+    xuser_id uuid;
+    xemail text;
+    xpassword text;
   begin
-    user_id := current_setting('jwt.claims.user_id')::uuid;
-    email := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
-    password := split_part(current_setting('jwt.claims.uniq')::text, ',', 2);
-    xu := (
-      select *
-      from sg_private.user
-      where user_id = sg_private.user.user_id
-        and email = sg_private.user.email
-        and password = sg_private.user.password
-      limit 1
-    );
-    if (not xu) then
+    xuser_id := current_setting('jwt.claims.user_id')::uuid;
+    xemail := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
+    xpassword := split_part(current_setting('jwt.claims.uniq')::text, ',', 2);
+    select * into xu
+    from sg_private.user
+    where sg_private.user.user_id = xuser_id
+      and sg_private.user.email = xemail
+      and sg_private.user.password = xpassword
+    limit 1;
+    if (xu is null) then
       raise exception 'No match found.' using errcode = 'EBC6E992';
     end if;
     update sg_private.user
     set sg_private.user.password = crypt(new_password, gen_salt('bf', 8))
-    where sg_private.user.user_id = user_id;
+    where sg_private.user.user_id = xuser_id;
   end;
 $$ language plpgsql strict security definer;
 comment on function sg_public.update_password(text)
