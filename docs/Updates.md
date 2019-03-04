@@ -9,6 +9,27 @@ You can sign up for email updates at https://sgef.cc/devupdates
 
 
 
+## UPDATE -- 2019 Mar 4
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2019 Feb 19 - 2019 Mar 3
+
+- Re-added the ability to sign up for an account.
+- Progress towards log in / password reset / log out / settings.
+
+### Upcoming Two Weeks: 
+
+- Complete log in / password reset / log out / settings.
+- Start adding back in the learning experience.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to https://sgef.cc/issues and add feedback or ideas there.
+
+
+
+
 ## UPDATE -- 2019 Feb 19
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
