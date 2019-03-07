@@ -25,7 +25,7 @@ declare
   public_user sg_public.user;
   private_user sg_private.user;
 begin
-  if (char_length(password) < 8) then
+  if (char_length(trim(password)) < 8) then
     raise exception 'I need at least 8 characters for passwords.'
       using errcode = '355CAC69';
   end if;
@@ -33,7 +33,7 @@ begin
     values (name)
     returning * into public_user;
   insert into sg_private.user ("user_id", "email", "password")
-    values (public_user.id, email, crypt(password, gen_salt('bf', 8)))
+    values (public_user.id, email, crypt(trim(password), gen_salt('bf', 8)))
     returning * into private_user;
   return (private_user.role, public_user.id, null, null)::sg_public.jwt_token;
 end;
@@ -61,7 +61,7 @@ begin
   if (xu is null) then
     raise exception 'No user found.' using errcode = '4F811CFE';
   end if;
-  if (xu.password = crypt(password, xu.password)) then
+  if (xu.password = crypt(trim(password), xu.password)) then
     return (xu.role, xu.user_id, null, null)::sg_public.jwt_token;
   else
     raise exception 'Your password didn''t match.'
@@ -227,7 +227,7 @@ create function sg_public.update_password(
       raise exception 'No match found.' using errcode = 'EBC6E992';
     end if;
     update sg_private.user
-    set password = crypt(new_password, gen_salt('bf', 8))
+    set password = crypt(trim(new_password), gen_salt('bf', 8))
     where user_id = xuser_id;
   end;
 $$ language plpgsql strict security definer;
