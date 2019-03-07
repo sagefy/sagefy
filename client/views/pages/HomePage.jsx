@@ -85,7 +85,7 @@ export default function HomePage() {
             <Link to="/log-in">
               <Icon i="logIn" /> Log In
             </Link>{' '}
-            or
+            or{' '}
             <Link to="/sign-up">
               <Icon i="signUp" /> Sign Up
             </Link>

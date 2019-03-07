@@ -56,12 +56,21 @@ Thank you!
 
 ${FOOTER_TEXT}
 `
-const TOKEN_SUBJECT = 'Sagefy - Verification Request'
-const TOKEN_TEXT = `
+const PASSWORD_TOKEN_SUBJECT = 'Sagefy - Verification Request'
+const PASSWORD_TOKEN_TEXT = `
 To verify and update your account, please visit:
-https://sagefy.org/private?token={token}
+https://sagefy.org/password?state=2&token={token}
 
-If you did not request an email or password change, please reply immediately.
+If you did not request a password change, please reply immediately.
+
+${FOOTER_TEXT}
+`
+const EMAIL_TOKEN_SUBJECT = 'Sagefy - Verification Request'
+const EMAIL_TOKEN_TEXT = `
+To verify and update your account, please visit:
+https://sagefy.org/email?state=2&token={token}
+
+If you did not request an email change, please reply immediately.
 
 ${FOOTER_TEXT}
 `
@@ -96,7 +105,8 @@ module.exports = async function mailer() {
   await client.connect()
 
   await client.query('LISTEN create_user')
-  await client.query('LISTEN send_reset_token')
+  await client.query('LISTEN send_email_token')
+  await client.query('LISTEN send_password_token')
   await client.query('LISTEN update_email')
   await client.query('LISTEN update_password')
 
@@ -108,17 +118,30 @@ module.exports = async function mailer() {
         body: WELCOME_TEXT,
       })
     }
-    if (msg.channel === 'send_reset_token') {
+    if (msg.channel === 'send_password_token') {
       const [to, userId, uniq] = msg.payload.split(' ')
       const token = jwt.sign(
         { user_id: userId, uniq },
         process.env.JWT_SECRET,
-        { expiresIn: '1h' }
+        { expiresIn: '1h', audience: 'postgraphile' }
       )
       await sendMail({
         to,
-        subject: TOKEN_SUBJECT,
-        body: TOKEN_TEXT.replace('{token}', token),
+        subject: PASSWORD_TOKEN_SUBJECT,
+        body: PASSWORD_TOKEN_TEXT.replace('{token}', token),
+      })
+    }
+    if (msg.channel === 'send_email_token') {
+      const [to, userId, uniq] = msg.payload.split(' ')
+      const token = jwt.sign(
+        { user_id: userId, uniq },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h', audience: 'postgraphile' }
+      )
+      await sendMail({
+        to,
+        subject: EMAIL_TOKEN_SUBJECT,
+        body: EMAIL_TOKEN_TEXT.replace('{token}', token),
       })
     }
     if (msg.channel === 'update_email') {

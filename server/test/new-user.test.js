@@ -1,5 +1,5 @@
 const fs = require('fs')
-const request = require('../request')
+const request = require('../gql-request')
 
 const gql = {
   rootNewUser: fs.readFileSync(

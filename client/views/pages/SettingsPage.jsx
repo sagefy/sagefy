@@ -5,11 +5,11 @@ import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
-export default function SettingsPage({ formErrors, prevValues: { name } }) {
+export default function SettingsPage({ gqlErrors, prevValues: { id, name } }) {
   return (
     <div className="EmailPage">
-      <FormErrorsTop formErrors={formErrors} />
-      <FormErrorsField formErrors={formErrors} field="all" />
+      <FormErrorsTop formErrors={gqlErrors} />
+      <FormErrorsField formErrors={gqlErrors} field="all" />
 
       <section>
         <h1>
@@ -17,14 +17,18 @@ export default function SettingsPage({ formErrors, prevValues: { name } }) {
         </h1>
         <p>
           <Link to="/password">
-            <Icon i="password" /> Change my password.
-          </Link>{' '}
+            <Icon i="password" /> Change my password
+          </Link>
+          .
+          <br />
           or{' '}
           <Link to="/email">
-            <Icon i="email" /> Change my email.
+            <Icon i="email" /> Change my email
           </Link>
+          .
         </p>
         <form action="" method="POST">
+          <input type="hidden" name="id" value={id} />
           <p>
             <label htmlFor="name">Name</label>
             <input
@@ -37,7 +41,7 @@ export default function SettingsPage({ formErrors, prevValues: { name } }) {
               required
             />
           </p>
-          <FormErrorsField formErrors={formErrors} field="name" />
+          <FormErrorsField formErrors={gqlErrors} field="name" />
           {/* <p>
       <label for="email">Email</label>
       <input id="email" name="email" placeholder="ex: unicorn@example.com" type="email" size="40" value="doris@example.com">
@@ -63,11 +67,11 @@ export default function SettingsPage({ formErrors, prevValues: { name } }) {
 }
 
 SettingsPage.propTypes = {
-  formErrors: shape({}),
+  gqlErrors: shape({}),
   prevValues: shape({}),
 }
 
 SettingsPage.defaultProps = {
-  formErrors: {},
+  gqlErrors: {},
   prevValues: {},
 }

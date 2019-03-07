@@ -3,13 +3,16 @@ const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-const fs = require('fs')
 const jwt = require('jsonwebtoken')
-const gqlRequest = require('./gql-request')
-const getFormErrors = require('./selectors/form-errors')
+const get = require('lodash.get')
+const GQL = require('./gql-queries')
+const getGqlErrors = require('./gql-errors')
 
-const gql = {
-  rootNewUser: fs.readFileSync('./graphql/root-new-user.graphql', 'utf8'),
+const JWT_COOKIE_NAME = 'jwt'
+const JWT_COOKIE_PARAMS = {
+  maxAge: 1000 * 60 * 60 * 24, // 1 day in milliseconds
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
 }
 
 const cacheHash =
@@ -27,6 +30,54 @@ app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
 
+async function ensureJwt(req, res, next) {
+  if (!get(req.cookies, JWT_COOKIE_NAME)) {
+    res.cookie(
+      JWT_COOKIE_NAME,
+      get(await GQL.rootGetAnonToken(req), 'data.getAnonymousToken.jwtToken'),
+      JWT_COOKIE_PARAMS
+    )
+  }
+  next()
+}
+
+function handleError(err, req, res, next) {
+  // See express-async-errors
+  if (err) res.redirect('/server-error')
+  next(err)
+}
+
+function getJwt(req) {
+  return jwt.decode(get(req.cookies, JWT_COOKIE_NAME))
+}
+
+function getRole(req) {
+  return get(getJwt(req), 'role')
+}
+
+function isUser(req, res, next) {
+  if (!['sg_user', 'sg_admin'].includes(getRole(req))) {
+    return res.redirect('/log-in')
+  }
+  return next()
+}
+
+function isAnonymous(req, res, next) {
+  if (getRole(req) !== 'sg_anonymous') {
+    return res.redirect('/dashboard')
+  }
+  return next()
+}
+
+function handleRegular(req, res) {
+  return res.render('Index', { location: req.url, cacheHash })
+}
+
+app.use(ensureJwt)
+app.use(handleError)
+
+// /////////////////////////////////////////////////////////////////////////////
+
 app.get('/sitemap.txt', (req, res) =>
   res.send(`
 https://sagefy.org
@@ -37,133 +88,166 @@ https://sagefy.org/log-in
 https://sagefy.org/email
 https://sagefy.org/password
 `)
-) // Add more routes as they are available
-
-function ensureJwt(req, res, next) {
-  // if (!req.cookies.jwt) res.cookies(...) expires, httpOnly, secure...
-  next()
-}
-
-app.use(ensureJwt)
-
-function isUser(req, res, next) {
-  // const { role } = jwt.decode(req.cookies.jwt).payload
-  // if (!['sg_user', 'sg_admin'].includes(role)) return res.redirect('/log-in')
-  return next()
-}
-
-function isAnonymous(req, res, next) {
-  // const { role } = jwt.decode(req.cookies.kwt).payload
-  // if (role !== 'sg_anonymous') return res.redirect('/dashboard')
-  return next()
-}
-
-function handleRegular(req, res) {
-  return res.render('Index', { location: req.url, cacheHash })
-}
+) // Add more public routes as they are available
 
 app.get('/sign-up', isAnonymous, handleRegular)
 
 app.post('/sign-up', isAnonymous, async (req, res) => {
-  const query = gql.rootNewUser
-  const variables = req.body
-  const xRes = await gqlRequest({ query, variables })
-  const formErrors = getFormErrors(xRes)
-  if (Object.keys(formErrors).length) {
+  const gqlRes = await GQL.rootNewUser(req)
+  const gqlErrors = getGqlErrors(gqlRes)
+  if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
       location: req.url,
       cacheHash,
-      formErrors,
+      gqlErrors,
       prevValues: req.body,
     })
   }
-  return res.redirect('/dashboard') // todo set jwt
+  return res
+    .cookie(
+      JWT_COOKIE_NAME,
+      get(gqlRes, 'data.signUp.jwtToken'),
+      JWT_COOKIE_PARAMS
+    )
+    .redirect('/dashboard')
 })
 
 app.get('/log-in', isAnonymous, handleRegular)
 
 app.post('/log-in', isAnonymous, async (req, res) => {
-  const query = 'TODO'
-  const variables = req.body
-  const xRes = await gqlRequest({ query, variables })
-  const formErrors = getFormErrors(xRes)
-  if (Object.keys(formErrors).length) {
+  const gqlRes = await GQL.rootLogInUser(req)
+  const gqlErrors = getGqlErrors(gqlRes)
+  if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
       location: req.url,
       cacheHash,
-      formErrors,
+      gqlErrors,
       prevValues: req.body,
     })
   }
-  return res.redirect('/dashboard') // todo set jwt
+  return res
+    .cookie(
+      JWT_COOKIE_NAME,
+      get(gqlRes, 'data.logIn.jwtToken'),
+      JWT_COOKIE_PARAMS
+    )
+    .redirect('/dashboard')
+})
+
+function getQueryState(req) {
+  return parseInt(req.query.state, 10) || 0
+}
+
+app.get('/email', async (req, res) => {
+  const state = getQueryState(req)
+  return res.render('Index', { location: req.url, cacheHash, state })
 })
 
 app.post('/email', async (req, res) => {
-  const query = 'TODO'
-  const variables = req.body
-  const xRes = await gqlRequest({ query, variables })
-  const formErrors = getFormErrors(xRes)
-  if (Object.keys(formErrors).length) {
+  if (getQueryState(req) === 2) {
+    const gqlRes = await GQL.rootEditEmail({
+      body: req.body,
+      cookies: { [JWT_COOKIE_NAME]: req.query.token },
+    })
+    const gqlErrors = getGqlErrors(gqlRes)
+    if (Object.keys(gqlErrors).length) {
+      return res.render('Index', {
+        location: req.url,
+        cacheHash,
+        gqlErrors,
+        state: 2,
+      })
+    }
+    return res.redirect('/log-in')
+  }
+  const gqlRes = await GQL.rootNewEmailToken(req)
+  const gqlErrors = getGqlErrors(gqlRes)
+  if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
       location: req.url,
       cacheHash,
-      formErrors,
-      prevValues: req.body,
+      gqlErrors,
+      state: 0,
     })
   }
-  return res.redirect('TODO') // then is conditional
+  return res.redirect('/email?state=1')
+})
+
+app.get('/password', async (req, res) => {
+  const state = getQueryState(req)
+  return res.render('Index', { location: req.url, cacheHash, state })
 })
 
 app.post('/password', async (req, res) => {
-  const query = 'TODO'
-  const variables = req.body
-  const xRes = await gqlRequest({ query, variables })
-  const formErrors = getFormErrors(xRes)
-  if (Object.keys(formErrors).length) {
+  if (getQueryState(req) === 2) {
+    const gqlRes = await GQL.rootEditPassword({
+      body: req.body,
+      cookies: { [JWT_COOKIE_NAME]: req.query.token },
+    })
+    const gqlErrors = getGqlErrors(gqlRes)
+    if (Object.keys(gqlErrors).length) {
+      return res.render('Index', {
+        location: req.url,
+        cacheHash,
+        gqlErrors,
+        state: 2,
+      })
+    }
+    return res.redirect('/log-in')
+  }
+  const gqlRes = await GQL.rootNewPasswordToken(req)
+  const gqlErrors = getGqlErrors(gqlRes)
+  if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
       location: req.url,
       cacheHash,
-      formErrors,
-      prevValues: req.body,
+      gqlErrors,
+      state: 0,
     })
   }
-  return res.redirect('TODO') // then is conditional
+  return res.redirect('/password?state=1')
 })
 
-app.get('/settings', isUser, handleRegular)
+app.get('/settings', isUser, async (req, res) => {
+  const gqlRes = await GQL.rootGetCurrentUser(req)
+  return res.render('Index', {
+    location: req.url,
+    cacheHash,
+    prevValues: get(gqlRes, 'data.getCurrentUser'),
+  })
+})
 
 app.post('/settings', isUser, async (req, res) => {
-  const query = 'TODO'
-  const variables = req.body
-  const xRes = await gqlRequest({ query, variables })
-  const formErrors = getFormErrors(xRes)
-  if (Object.keys(formErrors).length) {
-    return res.render('Index', {
-      location: req.url,
-      cacheHash,
-      formErrors,
-      prevValues: req.body,
-    })
-  }
-  return res.redirect('/dashboard')
+  const gqlRes = await GQL.rootEditUser(req)
+  const gqlErrors = getGqlErrors(gqlRes)
+  return res.render('Index', {
+    location: req.url,
+    cacheHash,
+    gqlErrors,
+    prevValues: req.body,
+  })
 })
 
-app.get('/log-out', isUser, (req, res) => res.clearCookie('jwt').redirect('/'))
+app.get('/log-out', isUser, (req, res) =>
+  res.clearCookie(JWT_COOKIE_NAME).redirect('/')
+)
 
 app.get('/dashboard', isUser, handleRegular)
 
 // For pages that don't have specific data requirements
-// and don't require being logged in or logged out
-// Contact, Email, Home, NotFound, Password, Search Subjects,
-// Server Error, Terms
+// and don't require being logged in or logged out:
+// GET /search-subjects
+// GET /server-error
+// GET /terms
+// GET /contact
+// GET /
+// GET * (NotFound)
 app.get('*', handleRegular)
 
-// See express-async-errors
-app.use((err, req, res, next) => {
-  if (err) res.redirect('/server-error')
-  next(err)
-})
+// /////////////////////////////////////////////////////////////////////////////
 
-app.listen(process.env.PORT || 5984)
+if (require.main === module) {
+  app.listen(process.env.PORT || 5984)
+}
 
 module.exports = app

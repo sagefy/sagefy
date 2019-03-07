@@ -90,11 +90,11 @@ export default function Index(props) {
 Index.propTypes = {
   location: string.isRequired,
   cacheHash: string.isRequired,
-  formErrors: shape({}),
+  gqlErrors: shape({}),
   prevValues: shape({}),
 }
 
 Index.defaultProps = {
-  formErrors: {},
+  gqlErrors: {},
   prevValues: {},
 }

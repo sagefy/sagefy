@@ -4,11 +4,11 @@ import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
-export default function EmailPage({ formErrors, state }) {
+export default function EmailPage({ gqlErrors, state }) {
   return (
     <div className="EmailPage">
-      <FormErrorsTop formErrors={formErrors} />
-      <FormErrorsField formErrors={formErrors} field="all" />
+      <FormErrorsTop formErrors={gqlErrors} />
+      <FormErrorsField formErrors={gqlErrors} field="all" />
 
       <section>
         <h1>
@@ -52,7 +52,7 @@ export default function EmailPage({ formErrors, state }) {
               <br />
               <small>We need your current email to send the token.</small>
             </p>
-            <FormErrorsField formErrors={formErrors} field="email" />
+            <FormErrorsField formErrors={gqlErrors} field="email" />
             <p>
               <button type="submit">
                 <Icon i="email" /> Send Token
@@ -67,10 +67,10 @@ export default function EmailPage({ formErrors, state }) {
           <form action="" method="POST">
             <input type="hidden" name="state" value="2" />
             <p>
-              <label htmlFor="email">New Email</label>
+              <label htmlFor="newEmail">New Email</label>
               <input
-                id="email"
-                name="email"
+                id="newEmail"
+                name="newEmail"
                 placeholder="example: unicorn@example.com"
                 type="email"
                 size="40"
@@ -78,7 +78,7 @@ export default function EmailPage({ formErrors, state }) {
                 autoFocus
               />
             </p>
-            <FormErrorsField formErrors={formErrors} field="email" />
+            <FormErrorsField formErrors={gqlErrors} field="newEmail" />
             <p>
               <button type="submit">
                 <Icon i="email" /> Update Email
@@ -92,13 +92,11 @@ export default function EmailPage({ formErrors, state }) {
 }
 
 EmailPage.propTypes = {
-  formErrors: shape({}),
-  prevValues: shape({}),
+  gqlErrors: shape({}),
   state: number,
 }
 
 EmailPage.defaultProps = {
-  formErrors: {},
-  prevValues: {},
+  gqlErrors: {},
   state: 0,
 }

@@ -5,11 +5,11 @@ import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
-export default function LogInPage({ formErrors, prevValues: { name } }) {
+export default function LogInPage({ gqlErrors, prevValues: { name } }) {
   return (
     <div className="LogInPage">
-      <FormErrorsTop formErrors={formErrors} />
-      <FormErrorsField formErrors={formErrors} field="all" />
+      <FormErrorsTop formErrors={gqlErrors} />
+      <FormErrorsField formErrors={gqlErrors} field="all" />
 
       <section>
         <h1>
@@ -42,7 +42,7 @@ export default function LogInPage({ formErrors, prevValues: { name } }) {
               value={name}
             />
           </p>
-          <FormErrorsField formErrors={formErrors} field="name" />
+          <FormErrorsField formErrors={gqlErrors} field="name" />
           <p>
             <label htmlFor="password">Password</label>
             <input
@@ -54,7 +54,7 @@ export default function LogInPage({ formErrors, prevValues: { name } }) {
               pattern=".{8,}"
             />
           </p>
-          <FormErrorsField formErrors={formErrors} field="password" />
+          <FormErrorsField formErrors={gqlErrors} field="password" />
           <p>
             <button type="submit">
               <Icon i="logIn" /> Log In
@@ -67,11 +67,11 @@ export default function LogInPage({ formErrors, prevValues: { name } }) {
 }
 
 LogInPage.propTypes = {
-  formErrors: shape({}),
+  gqlErrors: shape({}),
   prevValues: shape({}),
 }
 
 LogInPage.defaultProps = {
-  formErrors: {},
+  gqlErrors: {},
   prevValues: {},
 }

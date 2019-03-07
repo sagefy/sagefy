@@ -58,10 +58,14 @@ begin
         prvu.email = $1
       )
     limit 1;
+  if (xu is null) then
+    raise exception 'No user found.' using errcode = '4F811CFE';
+  end if;
   if (xu.password = crypt(password, xu.password)) then
     return (xu.role, xu.user_id, null, null)::sg_public.jwt_token;
   else
-    return null;
+    raise exception 'Your password didn''t match.'
+      using errcode = '51EA51A9';
   end if;
 end;
 $$ language plpgsql strict security definer;
@@ -126,7 +130,7 @@ comment on policy delete_user_admin on sg_public.user
 
 -- ENABLE RESET PASSWORD & EMAIL
 
-create or replace function sg_public.send_reset_token(
+create or replace function sg_public.send_password_token(
   email text
 ) returns void as $$
   declare
@@ -140,14 +144,38 @@ create or replace function sg_public.send_reset_token(
       raise exception 'No user found.' using errcode = '3883C744';
     end if;
     perform pg_notify(
-      'send_reset_token',
-      concat($1, ' ', xu.user_id::text, ' ', $1, ',', xu.password)
+      'send_password_token',
+      concat(xu.email, ' ', xu.user_id::text, ' ', xu.password)
     );
   end;
 $$ language plpgsql strict security definer;
-comment on function sg_public.send_reset_token(text)
-  is 'Generate and email a token to update private user data.';
-grant execute on function sg_public.send_reset_token(text)
+comment on function sg_public.send_password_token(text)
+  is 'Generate and email a token to update password.';
+grant execute on function sg_public.send_password_token(text)
+  to sg_anonymous, sg_user, sg_admin;
+
+create or replace function sg_public.send_email_token(
+  email text
+) returns void as $$
+  declare
+    xu sg_private.user;
+  begin
+    select * into xu
+    from sg_private.user
+    where sg_private.user.email = $1
+    limit 1;
+    if (xu is null) then
+      raise exception 'No user found.' using errcode = '47C88D24';
+    end if;
+    perform pg_notify(
+      'send_email_token',
+      concat(xu.email, ' ', xu.user_id::text, ' ', xu.email)
+    );
+  end;
+$$ language plpgsql strict security definer;
+comment on function sg_public.send_email_token(text)
+  is 'Generate and email a token to update email.';
+grant execute on function sg_public.send_email_token(text)
   to sg_anonymous, sg_user, sg_admin;
 
 create function sg_public.update_email(
@@ -161,19 +189,17 @@ create function sg_public.update_email(
   begin
     xuser_id := current_setting('jwt.claims.user_id')::uuid;
     xemail := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
-    xpassword := split_part(current_setting('jwt.claims.uniq')::text, ',', 2);
     select * into xu
     from sg_private.user
     where sg_private.user.user_id = xuser_id
       and sg_private.user.email = xemail
-      and sg_private.user.password = xpassword;
     limit 1;
     if (xu is null) then
       raise exception 'No match found.' using errcode = '58483A61';
     end if;
     update sg_private.user
-    set sg_private.user.email = new_email
-    where sg_private.user.user_id = xuser_id;
+    set email = new_email
+    where user_id = xuser_id;
   end;
 $$ language plpgsql strict security definer;
 comment on function sg_public.update_email(text)
@@ -191,20 +217,18 @@ create function sg_public.update_password(
     xpassword text;
   begin
     xuser_id := current_setting('jwt.claims.user_id')::uuid;
-    xemail := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
-    xpassword := split_part(current_setting('jwt.claims.uniq')::text, ',', 2);
+    xpassword := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
     select * into xu
     from sg_private.user
     where sg_private.user.user_id = xuser_id
-      and sg_private.user.email = xemail
       and sg_private.user.password = xpassword
     limit 1;
     if (xu is null) then
       raise exception 'No match found.' using errcode = 'EBC6E992';
     end if;
     update sg_private.user
-    set sg_private.user.password = crypt(new_password, gen_salt('bf', 8))
-    where sg_private.user.user_id = xuser_id;
+    set password = crypt(new_password, gen_salt('bf', 8))
+    where user_id = xuser_id;
   end;
 $$ language plpgsql strict security definer;
 comment on function sg_public.update_password(text)

@@ -5,14 +5,11 @@ import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
-export default function SignUpPage({
-  formErrors,
-  prevValues: { name, email },
-}) {
+export default function SignUpPage({ gqlErrors, prevValues: { name, email } }) {
   return (
     <div className="SignUpPage">
-      <FormErrorsTop formErrors={formErrors} />
-      <FormErrorsField formErrors={formErrors} field="all" />
+      <FormErrorsTop formErrors={gqlErrors} />
+      <FormErrorsField formErrors={gqlErrors} field="all" />
 
       <section>
         <h1>
@@ -46,7 +43,7 @@ export default function SignUpPage({
               required
             />
           </p>
-          <FormErrorsField formErrors={formErrors} field="name" />
+          <FormErrorsField formErrors={gqlErrors} field="name" />
           <p>
             <label htmlFor="email">Email</label>
             <input
@@ -63,7 +60,7 @@ export default function SignUpPage({
               We need your email to send notices and to reset your password.
             </small>
           </p>
-          <FormErrorsField formErrors={formErrors} field="email" />
+          <FormErrorsField formErrors={gqlErrors} field="email" />
           <p>
             <label htmlFor="password">Password</label>
             <input
@@ -75,7 +72,7 @@ export default function SignUpPage({
               pattern=".{8,}"
             />
           </p>
-          <FormErrorsField formErrors={formErrors} field="password" />
+          <FormErrorsField formErrors={gqlErrors} field="password" />
           <p>
             <button type="submit">
               <Icon i="signUp" /> Sign Up
@@ -88,11 +85,11 @@ export default function SignUpPage({
 }
 
 SignUpPage.propTypes = {
-  formErrors: shape({}),
+  gqlErrors: shape({}),
   prevValues: shape({}),
 }
 
 SignUpPage.defaultProps = {
-  formErrors: {},
+  gqlErrors: {},
   prevValues: {},
 }

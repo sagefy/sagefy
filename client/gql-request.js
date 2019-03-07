@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 const http = require('http')
 
 function parseJSON(data) {
@@ -11,18 +10,19 @@ function parseJSON(data) {
 
 module.exports = function gqlRequest({ query, variables, jwtToken }) {
   return new Promise((resolve, reject) => {
+    const headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      Accept: 'application/json',
+      'X-Requested-With': 'Node.js',
+    }
+    if (jwtToken) headers.Authorization = `Bearer ${jwtToken}`
     const request = http.request(
       {
         hostname: 'server',
         port: 8653,
         path: '/graphql',
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          Accept: 'application/json',
-          'X-Requested-With': 'Node.js',
-          Authorization: jwtToken ? `Bearer ${jwtToken}` : null,
-        },
+        headers,
       },
       response => {
         let xbody = ''

@@ -4,11 +4,11 @@ import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
-export default function PasswordPage({ formErrors, state }) {
+export default function PasswordPage({ gqlErrors, state }) {
   return (
     <div className="PasswordPage">
-      <FormErrorsTop formErrors={formErrors} />
-      <FormErrorsField formErrors={formErrors} field="all" />
+      <FormErrorsTop formErrors={gqlErrors} />
+      <FormErrorsField formErrors={gqlErrors} field="all" />
 
       <section>
         <h1>
@@ -52,7 +52,7 @@ export default function PasswordPage({ formErrors, state }) {
               <br />
               <small>We need your email to send the token.</small>
             </p>
-            <FormErrorsField formErrors={formErrors} field="email" />
+            <FormErrorsField formErrors={gqlErrors} field="email" />
             <p>
               <button type="submit">
                 <Icon i="password" /> Send Token
@@ -67,10 +67,10 @@ export default function PasswordPage({ formErrors, state }) {
           <form action="" method="POST">
             <input type="hidden" name="state" value="2" />
             <p>
-              <label htmlFor="password">Password</label>
+              <label htmlFor="newPassword">Password</label>
               <input
-                id="password"
-                name="password"
+                id="newPassword"
+                name="newPassword"
                 type="password"
                 size="40"
                 required
@@ -78,7 +78,7 @@ export default function PasswordPage({ formErrors, state }) {
                 pattern=".{8,}"
               />
             </p>
-            <FormErrorsField formErrors={formErrors} field="password" />
+            <FormErrorsField formErrors={gqlErrors} field="newPassword" />
             <p>
               <button type="submit">
                 <Icon i="password" /> Update Password
@@ -92,13 +92,11 @@ export default function PasswordPage({ formErrors, state }) {
 }
 
 PasswordPage.propTypes = {
-  formErrors: shape({}),
-  prevValues: shape({}),
+  gqlErrors: shape({}),
   state: number,
 }
 
 PasswordPage.defaultProps = {
-  formErrors: {},
-  prevValues: {},
+  gqlErrors: {},
   state: 0,
 }

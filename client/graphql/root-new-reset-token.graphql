@@ -1,5 +1,0 @@
-mutation rootSendResetToken($email: String!) {
-  sendResetToken(input: { email: $email }) {
-    clientMutationId
-  }
-}

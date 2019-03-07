@@ -32,11 +32,34 @@ const KNOWN_ERRORS = [
     field: 'password',
     message: 'I need at least 8 characters for passwords.',
   },
+  {
+    key: '51EA51A9',
+    field: 'password',
+    message: "Your password didn't match.",
+  },
+  {
+    key: '3883C744',
+    field: 'email',
+    message: "I didn't find an account with that email.",
+  },
+  {
+    key: '4F811CFE',
+    field: 'name',
+    message: "I couldn't find a matching account.",
+  },
+  {
+    key: '58483A61',
+    message: "I couldn't update your email.",
+  },
+  {
+    key: 'EBC6E992',
+    message: "I couldn't update your password.",
+  },
 ]
 
 const DEFAULT_FIELD = 'all'
 
-module.exports = function getFormErrors(xRes) {
+module.exports = function getGqlErrors(xRes) {
   return get(xRes, 'errors', [])
     .map(({ message }) => {
       const found = KNOWN_ERRORS.find(({ key }) => message.indexOf(key) > -1)
@@ -48,7 +71,7 @@ module.exports = function getFormErrors(xRes) {
     .reduce((sum, { message, field }) => {
       const xfield = field || DEFAULT_FIELD
       sum[xfield] = sum[xfield] || [] // eslint-disable-line
-      sum[xfield].push(message)
+      sum[xfield].push(message) // eslint-disable-line
       return sum
     }, {})
 }

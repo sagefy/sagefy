@@ -390,21 +390,29 @@ COMMENT ON FUNCTION sg_public.get_current_user() IS 'Get the current logged in u
 
 CREATE FUNCTION sg_public.log_in(name text, password text) RETURNS sg_public.jwt_token
     LANGUAGE plpgsql STRICT SECURITY DEFINER
-    AS $$
+    AS $_$
 declare
   xu sg_private.user;
 begin
-  select u.* into xu
-    from sg_private.user as u
-    where u.name = name or u.email = name
+  select prvu.* into xu
+    from sg_private.user prvu, sg_public.user pubu
+    where
+      prvu.user_id = pubu.id and (
+        pubu.name = $1 or -- $1 == name
+        prvu.email = $1
+      )
     limit 1;
+  if (xu is null) then
+    raise exception 'No user found.' using errcode = '4F811CFE';
+  end if;
   if (xu.password = crypt(password, xu.password)) then
     return (xu.role, xu.user_id, null, null)::sg_public.jwt_token;
   else
-    return null;
+    raise exception 'Your password didn''t match.'
+      using errcode = '51EA51A9';
   end if;
 end;
-$$;
+$_$;
 
 
 --
@@ -415,37 +423,67 @@ COMMENT ON FUNCTION sg_public.log_in(name text, password text) IS 'Logs in a sin
 
 
 --
--- Name: send_reset_token(text); Type: FUNCTION; Schema: sg_public; Owner: -
+-- Name: send_email_token(text); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_public.send_reset_token(email text) RETURNS void
+CREATE FUNCTION sg_public.send_email_token(email text) RETURNS void
     LANGUAGE plpgsql STRICT SECURITY DEFINER
-    AS $$
+    AS $_$
   declare
     xu sg_private.user;
   begin
-    xu := (
-      select *
-      from sg_private.user
-      where email = sg_private.user.email
-      limit 1
+    select * into xu
+    from sg_private.user
+    where sg_private.user.email = $1
+    limit 1;
+    if (xu is null) then
+      raise exception 'No user found.' using errcode = '47C88D24';
+    end if;
+    perform pg_notify(
+      'send_email_token',
+      concat(xu.email, ' ', xu.user_id::text, ' ', xu.email)
     );
-    if (not xu) then
+  end;
+$_$;
+
+
+--
+-- Name: FUNCTION send_email_token(email text); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.send_email_token(email text) IS 'Generate and email a token to update email.';
+
+
+--
+-- Name: send_password_token(text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.send_password_token(email text) RETURNS void
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $_$
+  declare
+    xu sg_private.user;
+  begin
+    select * into xu
+    from sg_private.user
+    where sg_private.user.email = $1
+    limit 1;
+    if (xu is null) then
       raise exception 'No user found.' using errcode = '3883C744';
     end if;
     perform pg_notify(
-      'send_reset_token',
-      concat(email, ' ', xu.user_id::text, ' ', email, ',', xu.password)
+      'send_password_token',
+      concat(xu.email, ' ', xu.user_id::text, ' ', xu.password)
     );
   end;
-$$;
+$_$;
 
 
 --
--- Name: FUNCTION send_reset_token(email text); Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: FUNCTION send_password_token(email text); Type: COMMENT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON FUNCTION sg_public.send_reset_token(email text) IS 'Generate and email a token to update private user data.';
+COMMENT ON FUNCTION sg_public.send_password_token(email text) IS 'Generate and email a token to update password.';
 
 
 --
@@ -483,27 +521,23 @@ CREATE FUNCTION sg_public.update_email(new_email text) RETURNS void
     AS $$
   declare
     xu sg_private.user;
-    user_id uuid;
-    email text;
-    password text;
+    xuser_id uuid;
+    xemail text;
+    xpassword text;
   begin
-    user_id := current_setting('jwt.claims.user_id')::uuid;
-    email := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
-    password := split_part(current_setting('jwt.claims.uniq')::text, ',', 2);
-    xu := (
-      select *
-      from sg_private.user
-      where user_id = sg_private.user.user_id
-        and email = sg_private.user.email
-        and password = sg_private.user.password
-      limit 1
-    );
-    if (not xu) then
+    xuser_id := current_setting('jwt.claims.user_id')::uuid;
+    xemail := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
+    select * into xu
+    from sg_private.user
+    where sg_private.user.user_id = xuser_id
+      and sg_private.user.email = xemail
+    limit 1;
+    if (xu is null) then
       raise exception 'No match found.' using errcode = '58483A61';
     end if;
     update sg_private.user
-    set sg_private.user.email = new_email
-    where sg_private.user.user_id = user_id;
+    set email = new_email
+    where user_id = xuser_id;
   end;
 $$;
 
@@ -524,27 +558,23 @@ CREATE FUNCTION sg_public.update_password(new_password text) RETURNS void
     AS $$
   declare
     xu sg_private.user;
-    user_id uuid;
-    email text;
-    password text;
+    xuser_id uuid;
+    xemail text;
+    xpassword text;
   begin
-    user_id := current_setting('jwt.claims.user_id')::uuid;
-    email := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
-    password := split_part(current_setting('jwt.claims.uniq')::text, ',', 2);
-    xu := (
-      select *
-      from sg_private.user
-      where user_id = sg_private.user.user_id
-        and email = sg_private.user.email
-        and password = sg_private.user.password
-      limit 1
-    );
-    if (not xu) then
+    xuser_id := current_setting('jwt.claims.user_id')::uuid;
+    xpassword := split_part(current_setting('jwt.claims.uniq')::text, ',', 1);
+    select * into xu
+    from sg_private.user
+    where sg_private.user.user_id = xuser_id
+      and sg_private.user.password = xpassword
+    limit 1;
+    if (xu is null) then
       raise exception 'No match found.' using errcode = 'EBC6E992';
     end if;
     update sg_private.user
-    set sg_private.user.password = crypt(new_password, gen_salt('bf', 8))
-    where sg_private.user.user_id = user_id;
+    set password = crypt(new_password, gen_salt('bf', 8))
+    where user_id = xuser_id;
   end;
 $$;
 
