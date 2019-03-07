@@ -70,7 +70,11 @@ function isAnonymous(req, res, next) {
 }
 
 function handleRegular(req, res) {
-  return res.render('Index', { location: req.url, cacheHash })
+  return res.render('Index', {
+    location: req.url,
+    cacheHash,
+    role: getRole(req),
+  })
 }
 
 app.use(ensureJwt)

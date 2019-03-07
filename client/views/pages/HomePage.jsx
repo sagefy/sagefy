@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { string } from 'prop-types'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ExternalLink from '../components/ExternalLink'
 
-export default function HomePage() {
+export default function HomePage({ role }) {
   return (
     <div className="HomePage">
       {/* <section className="text-align-center">
@@ -78,20 +79,31 @@ export default function HomePage() {
         </blockquote>
       </section>
 
-      <section className="text-align-right">
-        <p>
-          <small>
-            {/* Change to link to go to Choose Subject page when logged in */}
-            <Link to="/log-in">
-              <Icon i="logIn" /> Log In
-            </Link>{' '}
-            or{' '}
-            <Link to="/sign-up">
-              <Icon i="signUp" /> Sign Up
-            </Link>
-          </small>
-        </p>
-      </section>
+      {role === 'sg_anonymous' ? (
+        <section className="text-align-right">
+          <p>
+            <small>
+              <Link to="/log-in">
+                <Icon i="logIn" /> Log In
+              </Link>{' '}
+              or{' '}
+              <Link to="/sign-up">
+                <Icon i="signUp" /> Sign Up
+              </Link>
+            </small>
+          </p>
+        </section>
+      ) : (
+        <section className="text-align-right">
+          <p>
+            <small>
+              <Link to="/dashboard">
+                <Icon i="dashboard" /> Dashboard
+              </Link>
+            </small>
+          </p>
+        </section>
+      )}
 
       {/* ...or try something popular ✨ section here */}
 
@@ -129,4 +141,12 @@ export default function HomePage() {
       <Footer />
     </div>
   )
+}
+
+HomePage.propTypes = {
+  role: string,
+}
+
+HomePage.defaultProps = {
+  role: 'sg_anonymous',
 }

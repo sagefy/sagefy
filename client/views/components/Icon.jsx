@@ -25,6 +25,7 @@ import {
   Settings,
   LogOut,
   Key,
+  Map,
   // temporary home page
   Users,
   Eye,
@@ -48,6 +49,7 @@ const MAP = {
   logOut: LogOut,
   password: Key,
   email: Mail,
+  dashboard: Map,
 
   // models
   talk: MessageCircle,

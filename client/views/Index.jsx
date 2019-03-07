@@ -1,6 +1,6 @@
 import React from 'react'
 import { StaticRouter, Route, Switch } from 'react-router-dom'
-import { string, shape } from 'prop-types'
+import { string, shape, number } from 'prop-types'
 
 import HomePage from './pages/HomePage'
 import ContactPage from './pages/ContactPage'
@@ -92,9 +92,13 @@ Index.propTypes = {
   cacheHash: string.isRequired,
   gqlErrors: shape({}),
   prevValues: shape({}),
+  state: number,
+  role: string,
 }
 
 Index.defaultProps = {
   gqlErrors: {},
   prevValues: {},
+  state: 0,
+  role: 'sg_anonymous',
 }
