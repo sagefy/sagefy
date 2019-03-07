@@ -1,13 +1,1 @@
-<svg width="270" height="365" xmlns="http://www.w3.org/2000/svg">
-  <path d="M127.5 95l1-35q-1 35-50 48M142.5 95l-1-35q1 35 50 48" fill="#4b535c" stroke="#4b535c"/>
-  <path stroke="#4b535c" stroke-width="15" d="M135 55v50"/>
-  <circle cx="135" cy="30" r="25" fill="none" stroke="#4b535c" stroke-width="10"/>
-  <circle cx="135" cy="230" r="125" fill="#dee3e8"/>
-  <path d="M20 220l50 1q-50-1-35-51H20M20 240l50-1q-50 1-35 51H20M145 115l-1 50q1-50 51-35v-15M125 115l1 50q-1-50-51-35v-15M250 240l-50-1q50 1 35 51h15M250 220l-50 1q50-1 35-51h15M125 345l1-50q-1 50-51 35v15M145 345l-1-50q1 50 51 35v15" fill="#bfc7d2" stroke="#bfc7d2"/>
-  <path stroke="#bec7d2" stroke-width="20" d="M10 230h250M135 105v250"/>
-  <circle cx="135" cy="230" r="125" fill="none" stroke="#4b535c" stroke-width="20"/>
-  <g fill="#4b535c">
-    <path stroke="#4b535c" d="M87.859 228.35l69.282-40 25 43.3-69.282 40z"/>
-    <path d="M169.641 210l73.612-42.5q-49.306-.4-86.112 20.85M100.359 250l-73.612 42.5q49.306.4 86.112-20.85"/>
-  </g>
-</svg>
+<svg height="365" width="270" xmlns="http://www.w3.org/2000/svg"><g stroke="#4b535c"><path d="m127.5 95 1-35q-1 35-50 48m64-13-1-35q1 35 50 48" fill="#4b535c"/><path d="m135 55v50" stroke-width="15"/><circle cx="135" cy="30" fill="none" r="25" stroke-width="10"/></g><circle cx="135" cy="230" fill="#dee3e8" r="125"/><path d="m20 220 50 1q-50-1-35-51h-15m0 70 50-1q-50 1-35 51h-15m125-175-1 50q1-50 51-35v-15m-70 0 1 50q-1-50-51-35v-15m175 125-50-1q50 1 35 51h15m0-70-50 1q50-1 35-51h15m-125 175 1-50q-1 50-51 35v15m70 0-1-50q1 50 51 35v15" fill="#bfc7d2" stroke="#bfc7d2"/><path d="m10 230h250m-125-125v250" stroke="#bec7d2" stroke-width="20"/><circle cx="135" cy="230" fill="none" r="125" stroke="#4b535c" stroke-width="20"/><g fill="#4b535c"><path d="m87.859 228.35 69.282-40 25 43.3-69.282 40z" stroke="#4b535c"/><path d="m169.641 210 73.612-42.5q-49.306-.4-86.112 20.85m-56.782 61.65-73.612 42.5q49.306.4 86.112-20.85"/></g></svg>
