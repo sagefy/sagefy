@@ -5,35 +5,6 @@ const jwt = require('jsonwebtoken')
 
 const SENDER = 'support@sagefy.org'
 
-const transport = createTransport(
-  {
-    host: 'smtp.sparkpostmail.com',
-    port: 587,
-    // secure: true,
-    auth: {
-      user: 'SMTP_Injection',
-      pass: process.env.MAIL_PASS,
-    },
-  },
-  {
-    from: SENDER,
-  }
-)
-
-async function sendMail({ to, subject, body }) {
-  if (process.env.NODE_ENV === 'test') return Promise.resolve()
-  try {
-    return await transport.sendMail({
-      to,
-      subject,
-      text: body,
-    })
-  } catch (e) {
-    console.log('Did not send mail.', e)
-    return Promise.resolve()
-  }
-}
-
 const FOOTER_TEXT = `
 This is a transactional email from Sagefy.
 We are required to notify you of sign ups, password changes,
@@ -90,6 +61,35 @@ If you did not change your password, please reply immediately.
 
 ${FOOTER_TEXT}
 `
+
+const transport = createTransport(
+  {
+    host: 'smtp.sparkpostmail.com',
+    port: 587,
+    // secure: true,
+    auth: {
+      user: 'SMTP_Injection',
+      pass: process.env.MAIL_PASS,
+    },
+  },
+  {
+    from: SENDER,
+  }
+)
+
+async function sendMail({ to, subject, body }) {
+  if (process.env.NODE_ENV === 'test') return Promise.resolve()
+  try {
+    return await transport.sendMail({
+      to,
+      subject,
+      text: body,
+    })
+  } catch (e) {
+    console.log('Did not send mail.', e)
+    return Promise.resolve()
+  }
+}
 
 module.exports = async function mailer() {
   // Why not use a shared pool with postgraphile?
