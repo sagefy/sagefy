@@ -21,7 +21,7 @@ export default function EmailPage({ gqlErrors, state }) {
             { name: 'Check Inbox', icon: 'inbox' },
             { name: 'Change Email', icon: 'email' },
           ].map(({ name, icon }, index) => (
-            <li>
+            <li key={`EmailPage-steps-${name}`}>
               {index === state ? (
                 <strong>
                   {name} <Icon i={icon} />

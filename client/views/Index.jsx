@@ -1,6 +1,6 @@
 import React from 'react'
 import { StaticRouter, Route, Switch } from 'react-router-dom'
-import { string, shape, number } from 'prop-types'
+import { string } from 'prop-types'
 
 import HomePage from './pages/HomePage'
 import ContactPage from './pages/ContactPage'
@@ -31,6 +31,7 @@ const settings = output('Settings')
 
 export default function Index(props) {
   const { location, cacheHash } = props
+  const withProps = component => () => React.createElement(component, props)
   return (
     <html lang="en">
       <head>
@@ -61,23 +62,17 @@ export default function Index(props) {
         <div id="top" className="page" role="document">
           <StaticRouter context={{}} location={location}>
             <Switch>
-              <Route path="/log-in" render={() => <LogInPage {...props} />} />
-              <Route
-                path="/password"
-                render={() => <PasswordPage {...props} />}
-              />
-              <Route path="/email" render={() => <EmailPage {...props} />} />
-              <Route
-                path="/settings"
-                render={() => <SettingsPage {...props} />}
-              />
+              <Route path="/log-in" render={withProps(LogInPage)} />
+              <Route path="/password" render={withProps(PasswordPage)} />
+              <Route path="/email" render={withProps(EmailPage)} />
+              <Route path="/settings" render={withProps(SettingsPage)} />
               <Route path="/dashboard" component={DashboardPage} />
-              <Route path="/sign-up" render={() => <SignUpPage {...props} />} />
+              <Route path="/sign-up" render={withProps(SignUpPage)} />
               <Route path="/search-subjects" component={SearchSubjectsPage} />
               <Route path="/contact" component={ContactPage} />
               <Route path="/terms" component={TermsPage} />
               <Route path="/server-error" render={ServerErrorPage} />
-              <Route path="/" exact component={HomePage} />
+              <Route path="/" exact component={withProps(HomePage)} />
               <Route component={NotFoundPage} />
             </Switch>
           </StaticRouter>
@@ -90,15 +85,15 @@ export default function Index(props) {
 Index.propTypes = {
   location: string.isRequired,
   cacheHash: string.isRequired,
-  gqlErrors: shape({}),
-  prevValues: shape({}),
-  state: number,
-  role: string,
+  // gqlErrors: shape({}),
+  // prevValues: shape({}),
+  // state: number,
+  // role: string,
 }
 
 Index.defaultProps = {
-  gqlErrors: {},
-  prevValues: {},
-  state: 0,
-  role: 'sg_anonymous',
+  // gqlErrors: {},
+  // prevValues: {},
+  // state: 0,
+  // role: 'sg_anonymous',
 }

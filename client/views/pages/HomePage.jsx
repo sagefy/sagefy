@@ -98,7 +98,7 @@ export default function HomePage({ role }) {
           <p>
             <small>
               <Link to="/dashboard">
-                <Icon i="dashboard" /> Dashboard
+                Go to <Icon i="dashboard" /> Dashboard
               </Link>
             </small>
           </p>

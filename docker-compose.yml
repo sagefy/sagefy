@@ -27,7 +27,6 @@ services:
       - '8653:8653'
     volumes:
       - ./server:/server
-      - ./client/graphql:/server/graphql
     links:
       - postgres
   postgres:

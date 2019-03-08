@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SignUpPage should render the sign up page 1`] = `
+exports[`LogInPage should render the LogInPage 1`] = `
 <div
-  className="SignUpPage"
+  className="LogInPage"
 >
   <FormErrorsTop
     formErrors={Object {}}
@@ -13,38 +13,38 @@ exports[`SignUpPage should render the sign up page 1`] = `
   />
   <section>
     <h1>
-      Join Sagefy 
+      Log in to Sagefy 
       <Icon
-        i="signUp"
+        i="logIn"
         s="xxl"
       />
     </h1>
     <p>
-      Already have an account?
+      Don't have an account?
        
       <Link
         replace={false}
-        to="/log-in"
+        to="/sign-up"
       >
         <Icon
-          i="logIn"
+          i="signUp"
           s="m"
         />
-         Log In
+         Sign Up
       </Link>
       .
       <br />
-      By signing up, you agree to our
+      Forgot your password?
        
       <Link
         replace={false}
-        to="/terms"
+        to="/password"
       >
         <Icon
-          i="terms"
+          i="password"
           s="m"
         />
-         Terms of Service
+         Reset
       </Link>
       .
     </p>
@@ -56,43 +56,19 @@ exports[`SignUpPage should render the sign up page 1`] = `
         <label
           htmlFor="name"
         >
-          Name
+          Name or Email
         </label>
         <input
           autoFocus={true}
           id="name"
           name="name"
           placeholder="example: Unicorn"
-          required={true}
           size="40"
           type="text"
         />
       </p>
       <FormErrorsField
         field="name"
-        formErrors={Object {}}
-      />
-      <p>
-        <label
-          htmlFor="email"
-        >
-          Email
-        </label>
-        <input
-          id="email"
-          name="email"
-          placeholder="example: unicorn@example.com"
-          required={true}
-          size="40"
-          type="email"
-        />
-        <br />
-        <small>
-          We need your email to send notices and to reset your password.
-        </small>
-      </p>
-      <FormErrorsField
-        field="email"
         formErrors={Object {}}
       />
       <p>
@@ -119,10 +95,10 @@ exports[`SignUpPage should render the sign up page 1`] = `
           type="submit"
         >
           <Icon
-            i="signUp"
+            i="logIn"
             s="m"
           />
-           Sign Up
+           Log In
         </button>
       </p>
     </form>

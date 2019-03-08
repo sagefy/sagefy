@@ -8,7 +8,7 @@ export default function FormErrorsField({ formErrors, field }) {
   return (
     <ul className="FormErrors list-style-none">
       {get(formErrors, field).map(message => (
-        <li>
+        <li key={`FormErrorsField-${field}-${message}`}>
           <mark>
             <Icon i="error" /> {message}
           </mark>

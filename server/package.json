@@ -20,26 +20,31 @@
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.0",
+    "lodash.frompairs": "^4.0.1",
     "lodash.get": "^4.4.2",
     "nodemailer": "^5.1.1",
     "pg": "^7.8.1",
-    "postgraphile": "^4.3.3",
-    "uuid": "^3.3.2"
+    "postgraphile": "^4.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.1.0",
-    "csvtojson": "^2.0.8",
-    "jest": "^24.1.0"
+    "jest": "^24.1.0",
+    "joi": "^14.3.1",
+    "supertest": "^3.4.2"
   },
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
       "**/*.{js,jsx}",
-      "!**/coverage/**"
-    ]
+      "!**/coverage/**",
+      "!prev-simulation.js",
+      "!test/_util.js"
+    ],
+    "globalSetup": "./test/_setup.js",
+    "globalTeardown": "./test/_teardown.js"
   },
   "babel": {
     "presets": [

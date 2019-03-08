@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NotFoundPage should render the not found page 1`] = `
+exports[`ServerErrorPage should render the ServerErrorPage 1`] = `
 <div
-  className="NotFoundPage"
+  className="ServerErrorPage"
 >
   <section>
     <h1>
-      I couldn't find that page 
+      I couldn't make that happen 
       <Icon
         i="error"
         s="xxl"
@@ -17,7 +17,7 @@ exports[`NotFoundPage should render the not found page 1`] = `
         i="error"
         s="m"
       />
-       404 Not Found 
+       500 Server Error 
       <Icon
         i="error"
         s="m"
@@ -36,6 +36,20 @@ exports[`NotFoundPage should render the not found page 1`] = `
         />
          home
       </Link>
+       
+      • You can also
+       
+      <a
+        href="javascript:history.back()"
+      >
+        <Icon
+          i="left"
+          s="m"
+        />
+         go back
+      </a>
+       
+      and retry.
     </p>
   </section>
 </div>

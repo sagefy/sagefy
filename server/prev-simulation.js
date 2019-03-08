@@ -1,7 +1,6 @@
 // Looking at a single unit...
 
 /* eslint-disable */
-// TODO enable eslint
 
 // // Constants ////////////////////////////////////////////////////////////////
 
