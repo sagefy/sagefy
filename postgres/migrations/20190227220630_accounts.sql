@@ -54,8 +54,8 @@ begin
     from sg_private.user prvu, sg_public.user pubu
     where
       prvu.user_id = pubu.id and (
-        pubu.name = $1 or -- $1 == name
-        prvu.email = $1
+        pubu.name = trim($1) or -- $1 == name
+        prvu.email = trim($1)
       )
     limit 1;
   if (xu is null) then
@@ -138,7 +138,7 @@ create or replace function sg_public.send_password_token(
   begin
     select * into xu
     from sg_private.user
-    where sg_private.user.email = $1
+    where sg_private.user.email = trim($1)
     limit 1;
     if (xu is null) then
       raise exception 'No user found.' using errcode = '3883C744';
@@ -162,7 +162,7 @@ create or replace function sg_public.send_email_token(
   begin
     select * into xu
     from sg_private.user
-    where sg_private.user.email = $1
+    where sg_private.user.email = trim($1)
     limit 1;
     if (xu is null) then
       raise exception 'No user found.' using errcode = '47C88D24';
