@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ServerErrorPage should render the ServerErrorPage 1`] = `
+<div
+  className="ServerErrorPage"
+>
+  <section>
+    <h1>
+      I couldn't make that happen 
+      <Icon
+        i="error"
+        s="xxl"
+      />
+    </h1>
+    <p>
+      <Icon
+        i="error"
+        s="m"
+      />
+       500 Server Error 
+      <Icon
+        i="error"
+        s="m"
+      />
+       
+    </p>
+    <p>
+      <Link
+        replace={false}
+        to="/"
+      >
+        Go back 
+        <Icon
+          i="home"
+          s="m"
+        />
+         home
+      </Link>
+       
+      • You can also
+       
+      <a
+        href="javascript:history.back()"
+      >
+        <Icon
+          i="left"
+          s="m"
+        />
+         go back
+      </a>
+       
+      and retry.
+    </p>
+  </section>
+</div>
+`;

@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormErrorsTop component should render a FormErrorsTop data 1`] = `
+<div
+  className="FormErrorsTop"
+>
+  <p>
+    <mark>
+      <Icon
+        i="error"
+        s="m"
+      />
+       I couldn't do that...
+    </mark>
+  </p>
+</div>
+`;
+
+exports[`FormErrorsTop component should render a FormErrorsTop null 1`] = `null`;

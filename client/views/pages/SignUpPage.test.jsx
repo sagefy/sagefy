@@ -2,6 +2,6 @@ import SignUpPage from './SignUpPage'
 
 describe('SignUpPage', () => {
   it('should render the sign up page', () => {
-    expect(SignUpPage()).toMatchSnapshot()
+    expect(SignUpPage({ gqlErrors: {}, prevValues: {} })).toMatchSnapshot()
   })
 })

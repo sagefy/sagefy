@@ -5,8 +5,8 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 const get = require('lodash.get')
-const GQL = require('./gql-queries')
-const getGqlErrors = require('./gql-errors')
+const GQL = require('./util/gql-queries')
+const getGqlErrors = require('./util/gql-errors')
 
 const JWT_COOKIE_NAME = 'jwt'
 const JWT_COOKIE_PARAMS = {

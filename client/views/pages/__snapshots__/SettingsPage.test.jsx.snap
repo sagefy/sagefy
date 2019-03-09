@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsPage should render the SettingsPage 1`] = `
+<div
+  className="EmailPage"
+>
+  <FormErrorsTop
+    formErrors={Object {}}
+  />
+  <FormErrorsField
+    field="all"
+    formErrors={Object {}}
+  />
+  <section>
+    <h1>
+      Update my settings 
+      <Icon
+        i="settings"
+        s="xxl"
+      />
+    </h1>
+    <p>
+      <Link
+        replace={false}
+        to="/password"
+      >
+        <Icon
+          i="password"
+          s="m"
+        />
+         Change my password
+      </Link>
+      .
+      <br />
+      or
+       
+      <Link
+        replace={false}
+        to="/email"
+      >
+        <Icon
+          i="email"
+          s="m"
+        />
+         Change my email
+      </Link>
+      .
+    </p>
+    <form
+      action=""
+      method="POST"
+    >
+      <input
+        name="id"
+        type="hidden"
+      />
+      <p>
+        <label
+          htmlFor="name"
+        >
+          Name
+        </label>
+        <input
+          id="name"
+          name="name"
+          placeholder="ex: Unicorn"
+          required={true}
+          size="40"
+          type="text"
+        />
+      </p>
+      <FormErrorsField
+        field="name"
+        formErrors={Object {}}
+      />
+      <p>
+        <button
+          type="submit"
+        >
+          <Icon
+            i="settings"
+            s="m"
+          />
+           Update settings
+        </button>
+      </p>
+    </form>
+  </section>
+</div>
+`;

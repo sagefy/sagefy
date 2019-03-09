@@ -1,0 +1,255 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmailPage should render the EmailPage 0 1`] = `
+<div
+  className="EmailPage"
+>
+  <FormErrorsTop
+    formErrors={Object {}}
+  />
+  <FormErrorsField
+    field="all"
+    formErrors={Object {}}
+  />
+  <section>
+    <h1>
+      Change your email 
+      <Icon
+        i="email"
+        s="xxl"
+      />
+    </h1>
+    <ol>
+      <li>
+        <strong>
+          Enter Current Email
+           
+          <Icon
+            i="email"
+            s="m"
+          />
+        </strong>
+      </li>
+      <li>
+        <span>
+          Check Inbox
+           
+          <Icon
+            i="inbox"
+            s="m"
+          />
+        </span>
+      </li>
+      <li>
+        <span>
+          Change Email
+           
+          <Icon
+            i="email"
+            s="m"
+          />
+        </span>
+      </li>
+    </ol>
+    <form
+      action=""
+      method="POST"
+    >
+      <input
+        name="state"
+        type="hidden"
+        value="0"
+      />
+      <p>
+        <label
+          htmlFor="email"
+        >
+          Current Email
+        </label>
+        <input
+          autoFocus={true}
+          id="email"
+          name="email"
+          placeholder="example: unicorn@example.com"
+          required={true}
+          size="40"
+          type="email"
+        />
+        <br />
+        <small>
+          We need your current email to send the token.
+        </small>
+      </p>
+      <FormErrorsField
+        field="email"
+        formErrors={Object {}}
+      />
+      <p>
+        <button
+          type="submit"
+        >
+          <Icon
+            i="email"
+            s="m"
+          />
+           Send Token
+        </button>
+      </p>
+    </form>
+  </section>
+</div>
+`;
+
+exports[`EmailPage should render the EmailPage 1 1`] = `
+<div
+  className="EmailPage"
+>
+  <FormErrorsTop
+    formErrors={Object {}}
+  />
+  <FormErrorsField
+    field="all"
+    formErrors={Object {}}
+  />
+  <section>
+    <h1>
+      Change your email 
+      <Icon
+        i="email"
+        s="xxl"
+      />
+    </h1>
+    <ol>
+      <li>
+        <span>
+          Enter Current Email
+           
+          <Icon
+            i="email"
+            s="m"
+          />
+        </span>
+      </li>
+      <li>
+        <strong>
+          Check Inbox
+           
+          <Icon
+            i="inbox"
+            s="m"
+          />
+        </strong>
+      </li>
+      <li>
+        <span>
+          Change Email
+           
+          <Icon
+            i="email"
+            s="m"
+          />
+        </span>
+      </li>
+    </ol>
+    <p>
+      Please check your email inbox.
+    </p>
+  </section>
+</div>
+`;
+
+exports[`EmailPage should render the EmailPage 2 1`] = `
+<div
+  className="EmailPage"
+>
+  <FormErrorsTop
+    formErrors={Object {}}
+  />
+  <FormErrorsField
+    field="all"
+    formErrors={Object {}}
+  />
+  <section>
+    <h1>
+      Change your email 
+      <Icon
+        i="email"
+        s="xxl"
+      />
+    </h1>
+    <ol>
+      <li>
+        <span>
+          Enter Current Email
+           
+          <Icon
+            i="email"
+            s="m"
+          />
+        </span>
+      </li>
+      <li>
+        <span>
+          Check Inbox
+           
+          <Icon
+            i="inbox"
+            s="m"
+          />
+        </span>
+      </li>
+      <li>
+        <strong>
+          Change Email
+           
+          <Icon
+            i="email"
+            s="m"
+          />
+        </strong>
+      </li>
+    </ol>
+    <form
+      action=""
+      method="POST"
+    >
+      <input
+        name="state"
+        type="hidden"
+        value="2"
+      />
+      <p>
+        <label
+          htmlFor="newEmail"
+        >
+          New Email
+        </label>
+        <input
+          autoFocus={true}
+          id="newEmail"
+          name="newEmail"
+          placeholder="example: unicorn@example.com"
+          required={true}
+          size="40"
+          type="email"
+        />
+      </p>
+      <FormErrorsField
+        field="newEmail"
+        formErrors={Object {}}
+      />
+      <p>
+        <button
+          type="submit"
+        >
+          <Icon
+            i="email"
+            s="m"
+          />
+           Update Email
+        </button>
+      </p>
+    </form>
+  </section>
+</div>
+`;

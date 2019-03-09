@@ -4,6 +4,13 @@ exports[`SignUpPage should render the sign up page 1`] = `
 <div
   className="SignUpPage"
 >
+  <FormErrorsTop
+    formErrors={Object {}}
+  />
+  <FormErrorsField
+    field="all"
+    formErrors={Object {}}
+  />
   <section>
     <h1>
       Join Sagefy 
@@ -28,6 +35,7 @@ exports[`SignUpPage should render the sign up page 1`] = `
       .
       <br />
       By signing up, you agree to our
+       
       <Link
         replace={false}
         to="/terms"
@@ -60,6 +68,10 @@ exports[`SignUpPage should render the sign up page 1`] = `
           type="text"
         />
       </p>
+      <FormErrorsField
+        field="name"
+        formErrors={Object {}}
+      />
       <p>
         <label
           htmlFor="email"
@@ -79,6 +91,10 @@ exports[`SignUpPage should render the sign up page 1`] = `
           We need your email to send notices and to reset your password.
         </small>
       </p>
+      <FormErrorsField
+        field="email"
+        formErrors={Object {}}
+      />
       <p>
         <label
           htmlFor="password"
@@ -94,6 +110,10 @@ exports[`SignUpPage should render the sign up page 1`] = `
           type="password"
         />
       </p>
+      <FormErrorsField
+        field="password"
+        formErrors={Object {}}
+      />
       <p>
         <button
           type="submit"

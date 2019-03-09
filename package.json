@@ -5,8 +5,10 @@
   "main": "docker-compose.yml",
   "scripts": {
     "precommit": "pretty-quick --staged",
+    "postinstall": "(cd ./server && npm install) && (cd ./client && npm install)",
     "lint": "eslint \"**/*.js\"",
-    "test": "concurrently -p \"[{name}]\" --names lint,client,server \"npm run lint\" \"(cd client && npm run test)\" \"(cd server && npm run test)\""
+    "test": "npm run lint",
+    "posttest": "(cd server && npm run test) && (cd client && npm run test)"
   },
   "repository": {
     "type": "git",
@@ -19,7 +21,6 @@
   },
   "homepage": "https://github.com/sagefy/sagefy#readme",
   "devDependencies": {
-    "concurrently": "^4.0.1",
     "eslint": "^5.9.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.3.0",
@@ -107,8 +108,7 @@
     "node_modules/",
     "circleci/",
     "/home/circleci/",
-    "home/circleci/",
-    "postgres/sample.js"
+    "home/circleci/"
   ],
   "dependencies": {}
 }

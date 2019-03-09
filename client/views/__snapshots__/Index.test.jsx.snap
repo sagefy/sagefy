@@ -24,6 +24,26 @@ exports[`Index view should render a page 1`] = `
       >
         <Switch>
           <Route
+            path="/log-in"
+            render={[Function]}
+          />
+          <Route
+            path="/password"
+            render={[Function]}
+          />
+          <Route
+            path="/email"
+            render={[Function]}
+          />
+          <Route
+            path="/settings"
+            render={[Function]}
+          />
+          <Route
+            path="/dashboard"
+            render={[Function]}
+          />
+          <Route
             path="/sign-up"
             render={[Function]}
           />
@@ -37,6 +57,10 @@ exports[`Index view should render a page 1`] = `
           />
           <Route
             path="/terms"
+            render={[Function]}
+          />
+          <Route
+            path="/server-error"
             render={[Function]}
           />
           <Route
@@ -66,8 +90,28 @@ exports[`Index view should render a page 1`] = `
       >
         <Switch>
           <Route
+            path="/log-in"
+            render={[Function]}
+          />
+          <Route
+            path="/password"
+            render={[Function]}
+          />
+          <Route
+            path="/email"
+            render={[Function]}
+          />
+          <Route
+            path="/settings"
+            render={[Function]}
+          />
+          <Route
             component={[Function]}
+            path="/dashboard"
+          />
+          <Route
             path="/sign-up"
+            render={[Function]}
           />
           <Route
             component={[Function]}
@@ -80,6 +124,10 @@ exports[`Index view should render a page 1`] = `
           <Route
             component={[Function]}
             path="/terms"
+          />
+          <Route
+            path="/server-error"
+            render={[Function]}
           />
           <Route
             component={[Function]}

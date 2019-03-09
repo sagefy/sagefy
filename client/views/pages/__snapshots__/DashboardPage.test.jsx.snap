@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DashboardPage should render the dashboard page 1`] = `
+<div
+  className="DashboardPage"
+>
+  <section>
+    <h1>
+      Welcome to Sagefy 
+      <Icon
+        i="dashboard"
+        s="xxl"
+      />
+    </h1>
+    <p>
+      I've reserved your user name and password! That said, there isn't much to do right now.
+    </p>
+    <p>
+      <Link
+        replace={false}
+        to="/"
+      >
+        Go back 
+        <Icon
+          i="home"
+          s="m"
+        />
+         home
+      </Link>
+       
+      •
+       
+      <Link
+        replace={false}
+        to="/settings"
+      >
+        Change your 
+        <Icon
+          i="settings"
+          s="m"
+        />
+         settings
+      </Link>
+       
+      •
+       
+      <Link
+        replace={false}
+        to="/log-out"
+      >
+        <Icon
+          i="logOut"
+          s="m"
+        />
+         Log Out
+      </Link>
+    </p>
+  </section>
+</div>
+`;

@@ -8,7 +8,7 @@ export default function ContactPage() {
     <div className="DashboardPage">
       <section>
         <h1>
-          Welcome to Sagefy <Icon i="signUp" s="xxl" />
+          Welcome to Sagefy <Icon i="dashboard" s="xxl" />
         </h1>
         <p>
           I&apos;ve reserved your user name and password! That said, there

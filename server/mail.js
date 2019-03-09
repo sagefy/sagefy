@@ -95,11 +95,11 @@ module.exports = async function mailer() {
   // Why not use a shared pool with postgraphile?
   // https://github.com/brianc/node-pg-pool/issues/40
   const client = new Client({
-    user: process.env.DB_USER || 'sg_postgraphile',
-    host: process.env.DB_HOST || 'postgres',
-    database: process.env.DB_DATABASE || 'sagefy',
+    user: process.env.DB_USER,
+    host: process.env.NODE_ENV === 'test' ? 'localhost' : process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
     password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT || 5432,
+    port: process.env.DB_PORT,
   })
 
   await client.connect()

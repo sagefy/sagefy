@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LogInPage should render the LogInPage 1`] = `
+<div
+  className="LogInPage"
+>
+  <FormErrorsTop
+    formErrors={Object {}}
+  />
+  <FormErrorsField
+    field="all"
+    formErrors={Object {}}
+  />
+  <section>
+    <h1>
+      Log in to Sagefy 
+      <Icon
+        i="logIn"
+        s="xxl"
+      />
+    </h1>
+    <p>
+      Don't have an account?
+       
+      <Link
+        replace={false}
+        to="/sign-up"
+      >
+        <Icon
+          i="signUp"
+          s="m"
+        />
+         Sign Up
+      </Link>
+      .
+      <br />
+      Forgot your password?
+       
+      <Link
+        replace={false}
+        to="/password"
+      >
+        <Icon
+          i="password"
+          s="m"
+        />
+         Reset
+      </Link>
+      .
+    </p>
+    <form
+      action=""
+      method="POST"
+    >
+      <p>
+        <label
+          htmlFor="name"
+        >
+          Name or Email
+        </label>
+        <input
+          autoFocus={true}
+          id="name"
+          name="name"
+          placeholder="example: Unicorn"
+          size="40"
+          type="text"
+        />
+      </p>
+      <FormErrorsField
+        field="name"
+        formErrors={Object {}}
+      />
+      <p>
+        <label
+          htmlFor="password"
+        >
+          Password
+        </label>
+        <input
+          id="password"
+          name="password"
+          pattern=".{8,}"
+          required={true}
+          size="40"
+          type="password"
+        />
+      </p>
+      <FormErrorsField
+        field="password"
+        formErrors={Object {}}
+      />
+      <p>
+        <button
+          type="submit"
+        >
+          <Icon
+            i="logIn"
+            s="m"
+          />
+           Log In
+        </button>
+      </p>
+    </form>
+  </section>
+</div>
+`;
