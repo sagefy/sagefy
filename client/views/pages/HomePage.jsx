@@ -74,7 +74,7 @@ export default function HomePage({ role }) {
             </li>
           </ul>
           <p>
-            <small>Last updated 2019 Mar 3</small>
+            <small>Last updated 2019 Mar 8</small>
           </p>
         </blockquote>
       </section>
