@@ -88,12 +88,12 @@ How to deploy the latest master:
 Run:
 
     ++ ssh into the server ++
-    cd /var/www/dbbu
+    cd /var/sagefy/dbbu
     today=`date '+%Y_%m_%d__%H_%M_%S'`
-    docker exec -it www_postgres_1 pg_dump -U sagefy -a sagefy > "sagefy-$today.sql"
+    docker exec -it sagefy_postgres_1 pg_dump -U sagefy -a sagefy > "sagefy-$today.sql"
     ls -al
     b2 authorize_account xxx xxxxxxxx  # see password manager
-    b2 sync /var/www/dbbu b2:sagefy-dbbu
+    b2 sync /var/sagefy/dbbu b2:sagefy-dbbu
 
 ## Things to fix:
 
