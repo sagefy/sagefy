@@ -7,6 +7,23 @@ This is a reverse chronological listing of updates on Sagefy's progress. I will 
 
 You can sign up for email updates at https://sgef.cc/devupdates
 
+## UPDATE -- 2019 Mar 18
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2019 Mar 4 - 2019 Mar 17
+
+- Ability log in / password reset / log out / settings.
+- Start on learning experience -- both anonymous and logged in.
+
+### Upcoming Two Weeks: 2019 Mar 18 - 2019 Apr 1
+
+- Continue on learning experience -- potenitally ship?
+
+### Feedback
+
+Feel free to reply to this address! You can also go to https://sgef.cc/issues and add feedback or ideas there.
+
 ## UPDATE -- 2019 Mar 4
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
@@ -16,7 +33,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 - Re-added the ability to sign up for an account.
 - Progress towards log in / password reset / log out / settings.
 
-### Upcoming Two Weeks:
+### Upcoming Two Weeks: 2019 Mar 4 - 2019 Mar 17
 
 - Complete log in / password reset / log out / settings.
 - Start adding back in the learning experience.
