@@ -78,7 +78,7 @@ const transport = createTransport(
 )
 
 async function sendMail({ to, subject, body }) {
-  if (process.env.NODE_ENV === 'test') return Promise.resolve()
+  if (process.env.NODE_ENV === 'test') return Promise.resolve(subject)
   try {
     return await transport.sendMail({
       to,
@@ -89,6 +89,55 @@ async function sendMail({ to, subject, body }) {
     console.log('Did not send mail.', e)
     return Promise.resolve()
   }
+}
+
+async function listenToNotification(msg) {
+  if (msg.channel === 'create_user') {
+    return sendMail({
+      to: msg.payload,
+      subject: WELCOME_SUBJECT,
+      body: WELCOME_TEXT,
+    })
+  }
+  if (msg.channel === 'send_password_token') {
+    const [to, userId, uniq] = msg.payload.split(' ')
+    const token = jwt.sign({ user_id: userId, uniq }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+      audience: 'postgraphile',
+    })
+    return sendMail({
+      to,
+      subject: PASSWORD_TOKEN_SUBJECT,
+      body: PASSWORD_TOKEN_TEXT.replace('{token}', token),
+    })
+  }
+  if (msg.channel === 'send_email_token') {
+    const [to, userId, uniq] = msg.payload.split(' ')
+    const token = jwt.sign({ user_id: userId, uniq }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+      audience: 'postgraphile',
+    })
+    return sendMail({
+      to,
+      subject: EMAIL_TOKEN_SUBJECT,
+      body: EMAIL_TOKEN_TEXT.replace('{token}', token),
+    })
+  }
+  if (msg.channel === 'update_email') {
+    return sendMail({
+      to: msg.payload,
+      subject: EMAIL_SUBJECT,
+      body: EMAIL_TEXT,
+    })
+  }
+  if (msg.channel === 'update_password') {
+    return sendMail({
+      to: msg.payload,
+      subject: PASSWORD_SUBJECT,
+      body: PASSWORD_TEXT,
+    })
+  }
+  return null
 }
 
 module.exports = async function mailer() {
@@ -110,53 +159,5 @@ module.exports = async function mailer() {
   await client.query('LISTEN update_email')
   await client.query('LISTEN update_password')
 
-  client.on('notification', async msg => {
-    if (msg.channel === 'create_user') {
-      await sendMail({
-        to: msg.payload,
-        subject: WELCOME_SUBJECT,
-        body: WELCOME_TEXT,
-      })
-    }
-    if (msg.channel === 'send_password_token') {
-      const [to, userId, uniq] = msg.payload.split(' ')
-      const token = jwt.sign(
-        { user_id: userId, uniq },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h', audience: 'postgraphile' }
-      )
-      await sendMail({
-        to,
-        subject: PASSWORD_TOKEN_SUBJECT,
-        body: PASSWORD_TOKEN_TEXT.replace('{token}', token),
-      })
-    }
-    if (msg.channel === 'send_email_token') {
-      const [to, userId, uniq] = msg.payload.split(' ')
-      const token = jwt.sign(
-        { user_id: userId, uniq },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h', audience: 'postgraphile' }
-      )
-      await sendMail({
-        to,
-        subject: EMAIL_TOKEN_SUBJECT,
-        body: EMAIL_TOKEN_TEXT.replace('{token}', token),
-      })
-    }
-    if (msg.channel === 'update_email') {
-      await sendMail({
-        to: msg.payload,
-        subject: EMAIL_SUBJECT,
-        body: EMAIL_TEXT,
-      })
-    }
-    if (msg.channel === 'update_password') {
-      await sendMail({
-        to: msg.payload,
-        subject: PASSWORD_SUBJECT,
-        body: PASSWORD_TEXT,
-      })
-    }
-  })
+  client.on('notification', listenToNotification)
 }
