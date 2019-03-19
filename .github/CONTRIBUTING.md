@@ -4,7 +4,7 @@ Thank you for contributing to Sagefy! This document covers basic guidelines for 
 
 ## Content
 
-Create and edit content through the discussion section within the Sagefy interface. You will want to get familiar with the [Data Structure](https://docs.sagefy.org/Cards-Units-Subjects).
+Create and edit content through the discussion section within the Sagefy interface. You will want to get familiar with the [Data Structure](https://docs.sagefy.org/Cards-Subjects).
 
 ## Pull Request Checklist
 
