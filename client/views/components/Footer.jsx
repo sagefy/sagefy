@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { string } from 'prop-types'
 import Icon from './Icon'
 import ExternalLink from './ExternalLink'
 
-export default function Footer() {
+export default function Footer({ role }) {
   return (
     <footer>
       <hr />
@@ -11,6 +12,26 @@ export default function Footer() {
         <img src="/astrolabe.svg" height="48" alt="astrolabe" />
       </Link>
       <small>
+        {role !== 'sg_anonymous' && (
+          <ul className="list-style-inline">
+            <li>
+              <Link to="/dashboard">
+                <Icon i="dashboard" s="s" /> Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link to="/settings">
+                <Icon i="settings" s="s" /> Settings
+              </Link>
+            </li>
+            <li>
+              <Link to="/log-out">
+                <Icon i="logOut" s="s" /> Log Out
+              </Link>
+            </li>
+            {/* TODO add notices/follows */}
+          </ul>
+        )}
         <ul className="list-style-inline">
           <li>
             <ExternalLink href="https://docs.sagefy.org/">
@@ -38,8 +59,16 @@ export default function Footer() {
             </Link>
           </li>
         </ul>
-        © Copyright 2019 Sagefy.
+        © Copyright {new Date().getFullYear()} Sagefy.
       </small>
     </footer>
   )
+}
+
+Footer.propTypes = {
+  role: string,
+}
+
+Footer.defaultProps = {
+  role: 'sg_anonymous',
 }
