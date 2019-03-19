@@ -224,14 +224,19 @@ cards:
       video_id: iB2N585gEKg
   unscored_embed:
     - subject: params
+      name: Amplitude and Volume
       url: https://em.sagefy.org/examples/amplitude-and-volume
     - subject: params
+      name: Frequency and Pitch
       url: https://em.sagefy.org/examples/frequency-and-pitch
     - subject: params
+      name: Duration and Rhythm
       url: https://em.sagefy.org/examples/duration-and-rhythm
     - subject: params
+      name: Phase and Space
       url: https://em.sagefy.org/examples/phase-and-space
     - subject: params
+      name: Spectrum and Color
       url: https://em.sagefy.org/examples/spectrum-and-color
   page:
     - subject: intro
