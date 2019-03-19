@@ -107,6 +107,25 @@ COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UU
 
 
 --
+-- Name: card_kind; Type: TYPE; Schema: sg_public; Owner: -
+--
+
+CREATE TYPE sg_public.card_kind AS ENUM (
+    'video',
+    'page',
+    'unscored_embed',
+    'choice'
+);
+
+
+--
+-- Name: TYPE card_kind; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TYPE sg_public.card_kind IS 'The kinds of cards available to learn. Expanding.';
+
+
+--
 -- Name: email_frequency; Type: TYPE; Schema: sg_public; Owner: -
 --
 
@@ -123,6 +142,42 @@ CREATE TYPE sg_public.email_frequency AS ENUM (
 --
 
 COMMENT ON TYPE sg_public.email_frequency IS 'Email frequency options per user';
+
+
+--
+-- Name: entity_kind; Type: TYPE; Schema: sg_public; Owner: -
+--
+
+CREATE TYPE sg_public.entity_kind AS ENUM (
+    'card',
+    'subject'
+);
+
+
+--
+-- Name: TYPE entity_kind; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TYPE sg_public.entity_kind IS 'The types of learning entities.';
+
+
+--
+-- Name: entity_status; Type: TYPE; Schema: sg_public; Owner: -
+--
+
+CREATE TYPE sg_public.entity_status AS ENUM (
+    'pending',
+    'blocked',
+    'declined',
+    'accepted'
+);
+
+
+--
+-- Name: TYPE entity_status; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TYPE sg_public.entity_status IS 'The four statuses of entity versions.';
 
 
 --
@@ -160,6 +215,32 @@ CREATE TYPE sg_public.user_role AS ENUM (
 --
 
 COMMENT ON TYPE sg_public.user_role IS 'User role options.';
+
+
+--
+-- Name: insert_user_or_session(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.insert_user_or_session() RETURNS trigger
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+begin
+  if (current_setting('jwt.claims.user_id')) then
+    new.user_id = current_setting('jwt.claims.user_id')::uuid;
+  end if;
+  if (current_setting('jwt.claims.session_id')) then
+    new.session_id = current_setting('jwt.claims.session_id')::uuid;
+  end if;
+  return new;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION insert_user_or_session(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.insert_user_or_session() IS 'When inserting a row, automatically set the `user_id` or `session_id` field.';
 
 
 --
@@ -398,8 +479,8 @@ begin
     from sg_private.user prvu, sg_public.user pubu
     where
       prvu.user_id = pubu.id and (
-        pubu.name = $1 or -- $1 == name
-        prvu.email = $1
+        pubu.name = trim($1) or -- $1 == name
+        prvu.email = trim($1)
       )
     limit 1;
   if (xu is null) then
@@ -423,6 +504,394 @@ COMMENT ON FUNCTION sg_public.log_in(name text, password text) IS 'Logs in a sin
 
 
 --
+-- Name: card_version; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.card_version (
+    version_id uuid NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    entity_id uuid NOT NULL,
+    previous_id uuid,
+    language character varying(5) DEFAULT 'en'::character varying NOT NULL,
+    name text NOT NULL,
+    status sg_public.entity_status DEFAULT 'pending'::sg_public.entity_status NOT NULL,
+    available boolean DEFAULT true NOT NULL,
+    tags text[] DEFAULT ARRAY[]::text[],
+    user_id uuid,
+    session_id uuid,
+    subject_id uuid NOT NULL,
+    kind sg_public.card_kind NOT NULL,
+    data jsonb NOT NULL,
+    CONSTRAINT lang_check CHECK (((language)::text ~* '^\w{2}(-\w{2})?$'::text)),
+    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL))),
+    CONSTRAINT valid_choice_card CHECK (((kind <> 'choice'::sg_public.card_kind) OR public.validate_json_schema('{"type": "object", "required": ["body", "options", "max_options_to_show"], "properties": {"body": {"type": "string"}, "options": {"type": "object", "minProperties": 1, "patternProperties": {"^[a-zA-Z0-9-]+$": {"type": "object", "required": ["value", "correct", "feedback"], "properties": {"value": {"type": "string"}, "correct": {"type": "boolean"}, "feedback": {"type": "string"}}}}, "additionalProperties": false}, "max_options_to_show": {"type": "integer", "default": 4, "minimum": 0}}}'::jsonb, data))),
+    CONSTRAINT valid_page_card CHECK (((kind <> 'page'::sg_public.card_kind) OR public.validate_json_schema('{"type": "object", "required": ["body"], "properties": {"body": {"type": "string"}}}'::jsonb, data))),
+    CONSTRAINT valid_unscored_embed_card CHECK (((kind <> 'unscored_embed'::sg_public.card_kind) OR public.validate_json_schema('{"type": "object", "required": ["url"], "properties": {"url": {"type": "string", "format": "uri"}}}'::jsonb, data))),
+    CONSTRAINT valid_video_card CHECK (((kind <> 'video'::sg_public.card_kind) OR public.validate_json_schema('{"type": "object", "required": ["site", "video_id"], "properties": {"site": {"enum": ["youtube", "vimeo"], "type": "string"}, "video_id": {"type": "string"}}}'::jsonb, data)))
+);
+
+
+--
+-- Name: TABLE card_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.card_version IS 'Every version of the cards. A card is a single learning activity. A card belongs to a single subject.';
+
+
+--
+-- Name: COLUMN card_version.version_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.version_id IS 'The version ID -- a single card can have many versions.';
+
+
+--
+-- Name: COLUMN card_version.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.created IS 'When a user created this version.';
+
+
+--
+-- Name: COLUMN card_version.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.modified IS 'When a user last modified this version.';
+
+
+--
+-- Name: COLUMN card_version.entity_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.entity_id IS 'The overall entity ID.';
+
+
+--
+-- Name: COLUMN card_version.previous_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.previous_id IS 'The previous version this version is based on.';
+
+
+--
+-- Name: COLUMN card_version.language; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.language IS 'Which human language this card contains.';
+
+
+--
+-- Name: COLUMN card_version.name; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.name IS 'The name of the card.';
+
+
+--
+-- Name: COLUMN card_version.status; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.status IS 'The status of the card. The latest accepted version is current.';
+
+
+--
+-- Name: COLUMN card_version.available; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.available IS 'Whether the card is available to learners.';
+
+
+--
+-- Name: COLUMN card_version.tags; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.tags IS 'A list of tags. Think Bloom taxonomy.';
+
+
+--
+-- Name: COLUMN card_version.user_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.user_id IS 'Which user created this version.';
+
+
+--
+-- Name: COLUMN card_version.session_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.session_id IS 'If no user, which session created this version.';
+
+
+--
+-- Name: COLUMN card_version.subject_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.subject_id IS 'The subject the card belongs to.';
+
+
+--
+-- Name: COLUMN card_version.kind; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.kind IS 'The subkind of the card, such as video or choice.';
+
+
+--
+-- Name: COLUMN card_version.data; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_version.data IS 'The data of the card. The card kind changes the data shape.';
+
+
+--
+-- Name: CONSTRAINT lang_check ON card_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT lang_check ON sg_public.card_version IS 'Languages must be BCP47 compliant.';
+
+
+--
+-- Name: CONSTRAINT user_or_session ON card_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT user_or_session ON sg_public.card_version IS 'Ensure only the user or session has data.';
+
+
+--
+-- Name: CONSTRAINT valid_choice_card ON card_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT valid_choice_card ON sg_public.card_version IS 'If the `kind` is `choice`, ensure `data` matches the data shape.';
+
+
+--
+-- Name: CONSTRAINT valid_page_card ON card_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT valid_page_card ON sg_public.card_version IS 'If the `kind` is `page`, ensure `data` matches the data shape.';
+
+
+--
+-- Name: CONSTRAINT valid_unscored_embed_card ON card_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT valid_unscored_embed_card ON sg_public.card_version IS 'If the `kind` is `unscored_embed`, ensure `data` matches the data shape.';
+
+
+--
+-- Name: CONSTRAINT valid_video_card ON card_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT valid_video_card ON sg_public.card_version IS 'If the `kind` is `video`, ensure `data` matches the data shape.';
+
+
+--
+-- Name: new_card(character varying, text, text[], uuid, text, jsonb); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.new_card(language character varying, name text, tags text[], subject_id uuid, kind text, data jsonb) RETURNS sg_public.card_version
+    LANGUAGE plpgsql
+    AS $$
+  begin
+    with entity as (
+      insert into sg_public.entity
+      (entity_kind) values ('card')
+    ),
+    card_entity as (
+      insert into sg_public.card_entity
+      (entity_id) values (entity.entity_id)
+    )
+    insert into sg_public.card_version
+    (entity_id, language, name, tags, subject_id, kind, data)
+    values (entity.entity_id, language, name, tags, subject_id, kind, data);
+  end;
+$$;
+
+
+--
+-- Name: FUNCTION new_card(language character varying, name text, tags text[], subject_id uuid, kind text, data jsonb); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.new_card(language character varying, name text, tags text[], subject_id uuid, kind text, data jsonb) IS 'Create a new card.';
+
+
+--
+-- Name: subject_version; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.subject_version (
+    version_id uuid NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    entity_id uuid NOT NULL,
+    previous_version_id uuid,
+    language character varying(5) DEFAULT 'en'::character varying NOT NULL,
+    name text NOT NULL,
+    status sg_public.entity_status DEFAULT 'pending'::sg_public.entity_status NOT NULL,
+    available boolean DEFAULT true NOT NULL,
+    tags text[] DEFAULT ARRAY[]::text[],
+    user_id uuid,
+    session_id uuid,
+    body text NOT NULL,
+    CONSTRAINT lang_check CHECK (((language)::text ~* '^\w{2}(-\w{2})?$'::text)),
+    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
+);
+
+
+--
+-- Name: TABLE subject_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.subject_version IS 'Every version of the subjects. A subject is a collection of cards and other subjects. A subject has many cards and other subjects.';
+
+
+--
+-- Name: COLUMN subject_version.version_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.version_id IS 'The version ID -- a single subject can have many versions.';
+
+
+--
+-- Name: COLUMN subject_version.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.created IS 'When a user created this version.';
+
+
+--
+-- Name: COLUMN subject_version.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.modified IS 'When a user last modified this version.';
+
+
+--
+-- Name: COLUMN subject_version.entity_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.entity_id IS 'The overall entity ID.';
+
+
+--
+-- Name: COLUMN subject_version.previous_version_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.previous_version_id IS 'The previous version this version is based on.';
+
+
+--
+-- Name: COLUMN subject_version.language; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.language IS 'Which human language this subject contains.';
+
+
+--
+-- Name: COLUMN subject_version.name; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.name IS 'The name of the subject.';
+
+
+--
+-- Name: COLUMN subject_version.status; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.status IS 'The status of the subject. The latest accepted version is current.';
+
+
+--
+-- Name: COLUMN subject_version.available; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.available IS 'Whether the subject is available to learners.';
+
+
+--
+-- Name: COLUMN subject_version.tags; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.tags IS 'A list of tags. Think Bloom taxonomy.';
+
+
+--
+-- Name: COLUMN subject_version.user_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.user_id IS 'Which user created this version.';
+
+
+--
+-- Name: COLUMN subject_version.session_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.session_id IS 'If no user, which session created this version.';
+
+
+--
+-- Name: COLUMN subject_version.body; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.body IS 'The description of the goals of the subject.';
+
+
+--
+-- Name: CONSTRAINT lang_check ON subject_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT lang_check ON sg_public.subject_version IS 'Languages must be BCP47 compliant.';
+
+
+--
+-- Name: CONSTRAINT user_or_session ON subject_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT user_or_session ON sg_public.subject_version IS 'Ensure only the user or session has data.';
+
+
+--
+-- Name: new_subject(character varying, text, text[], text, uuid[], uuid[]); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.new_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]) RETURNS sg_public.subject_version
+    LANGUAGE plpgsql
+    AS $$
+  begin
+    with entity as (
+      insert into sg_public.entity
+      (entity_kind) values ('subject')
+    ),
+    subject_entity as (
+      insert into sg_public.subject_entity
+      (entity_id) values (entity.entity_id)
+    ),
+    subject_version as (
+      insert into sg_public.subject_version
+      (entity_id, language, name, tags, body)
+      values (entity.entity_id, language, name, tags, body)
+    ),
+    subject_parent as (
+      insert into sg_public.subject_version_parent_child
+      (child_version_id, parent_entity_id)
+      values (subject_version.version_id, unnest(parent))
+    )
+    insert into sg_public.subject_version_before_after
+    (after_version_id, before_entity_id)
+    values (subject_version.version_id, unnest(before));
+  end;
+$$;
+
+
+--
+-- Name: FUNCTION new_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.new_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]) IS 'Create a new subject.';
+
+
+--
 -- Name: send_email_token(text); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
@@ -434,7 +903,7 @@ CREATE FUNCTION sg_public.send_email_token(email text) RETURNS void
   begin
     select * into xu
     from sg_private.user
-    where sg_private.user.email = $1
+    where sg_private.user.email = trim($1)
     limit 1;
     if (xu is null) then
       raise exception 'No user found.' using errcode = '47C88D24';
@@ -466,7 +935,7 @@ CREATE FUNCTION sg_public.send_password_token(email text) RETURNS void
   begin
     select * into xu
     from sg_private.user
-    where sg_private.user.email = $1
+    where sg_private.user.email = trim($1)
     limit 1;
     if (xu is null) then
       raise exception 'No user found.' using errcode = '3883C744';
@@ -660,6 +1129,224 @@ COMMENT ON CONSTRAINT pass_check ON sg_private."user" IS 'A password must batch 
 
 
 --
+-- Name: card_entity; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.card_entity (
+    entity_id uuid NOT NULL
+);
+
+
+--
+-- Name: TABLE card_entity; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.card_entity IS 'A list of all card entity IDs';
+
+
+--
+-- Name: COLUMN card_entity.entity_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.card_entity.entity_id IS 'The ID of the entity';
+
+
+--
+-- Name: entity; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.entity (
+    entity_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    entity_kind sg_public.entity_kind NOT NULL
+);
+
+
+--
+-- Name: TABLE entity; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.entity IS 'A list of all entity IDs and their kinds.';
+
+
+--
+-- Name: COLUMN entity.entity_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.entity.entity_id IS 'The overall ID of the entity.';
+
+
+--
+-- Name: COLUMN entity.entity_kind; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.entity.entity_kind IS 'The kind of entity the ID represents.';
+
+
+--
+-- Name: entity_version; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.entity_version (
+    version_id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    entity_kind sg_public.entity_kind NOT NULL
+);
+
+
+--
+-- Name: TABLE entity_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.entity_version IS 'A list of all entity version IDs and their kinds.';
+
+
+--
+-- Name: COLUMN entity_version.version_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.entity_version.version_id IS 'The ID of the version.';
+
+
+--
+-- Name: COLUMN entity_version.entity_kind; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.entity_version.entity_kind IS 'The kind of entity the ID represents.';
+
+
+--
+-- Name: subject_entity; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.subject_entity (
+    entity_id uuid NOT NULL
+);
+
+
+--
+-- Name: TABLE subject_entity; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.subject_entity IS 'A list of all subject entity IDs.';
+
+
+--
+-- Name: COLUMN subject_entity.entity_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_entity.entity_id IS 'The ID of the entity.';
+
+
+--
+-- Name: subject_version_before_after; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.subject_version_before_after (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    after_version_id uuid NOT NULL,
+    before_entity_id uuid NOT NULL
+);
+
+
+--
+-- Name: TABLE subject_version_before_after; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.subject_version_before_after IS 'A join table between a subject version and the subjects before.';
+
+
+--
+-- Name: COLUMN subject_version_before_after.id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version_before_after.id IS 'The relationship ID.';
+
+
+--
+-- Name: COLUMN subject_version_before_after.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version_before_after.created IS 'When a user created this version.';
+
+
+--
+-- Name: COLUMN subject_version_before_after.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version_before_after.modified IS 'When a user last modified this version.';
+
+
+--
+-- Name: COLUMN subject_version_before_after.after_version_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version_before_after.after_version_id IS 'The version ID of the after subject.';
+
+
+--
+-- Name: COLUMN subject_version_before_after.before_entity_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version_before_after.before_entity_id IS 'The entity ID of the before subject.';
+
+
+--
+-- Name: subject_version_parent_child; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.subject_version_parent_child (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    child_version_id uuid NOT NULL,
+    parent_entity_id uuid NOT NULL
+);
+
+
+--
+-- Name: TABLE subject_version_parent_child; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.subject_version_parent_child IS 'A join table between a subject version and the parents.';
+
+
+--
+-- Name: COLUMN subject_version_parent_child.id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version_parent_child.id IS 'The relationship ID.';
+
+
+--
+-- Name: COLUMN subject_version_parent_child.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version_parent_child.created IS 'When a user created this version.';
+
+
+--
+-- Name: COLUMN subject_version_parent_child.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version_parent_child.modified IS 'When a user last modified this version.';
+
+
+--
+-- Name: COLUMN subject_version_parent_child.child_version_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version_parent_child.child_version_id IS 'The version ID of the child subject.';
+
+
+--
+-- Name: COLUMN subject_version_parent_child.parent_entity_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version_parent_child.parent_entity_id IS 'The entity ID of the parent subject.';
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -681,6 +1368,102 @@ ALTER TABLE ONLY sg_private."user"
 
 ALTER TABLE ONLY sg_private."user"
     ADD CONSTRAINT user_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: card_entity card_entity_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.card_entity
+    ADD CONSTRAINT card_entity_pkey PRIMARY KEY (entity_id);
+
+
+--
+-- Name: card_version card_version_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.card_version
+    ADD CONSTRAINT card_version_pkey PRIMARY KEY (version_id);
+
+
+--
+-- Name: entity entity_entity_id_entity_kind_key; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.entity
+    ADD CONSTRAINT entity_entity_id_entity_kind_key UNIQUE (entity_id, entity_kind);
+
+
+--
+-- Name: entity entity_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.entity
+    ADD CONSTRAINT entity_pkey PRIMARY KEY (entity_id);
+
+
+--
+-- Name: entity_version entity_version_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.entity_version
+    ADD CONSTRAINT entity_version_pkey PRIMARY KEY (version_id);
+
+
+--
+-- Name: entity_version entity_version_version_id_entity_kind_key; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.entity_version
+    ADD CONSTRAINT entity_version_version_id_entity_kind_key UNIQUE (version_id, entity_kind);
+
+
+--
+-- Name: subject_entity subject_entity_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_entity
+    ADD CONSTRAINT subject_entity_pkey PRIMARY KEY (entity_id);
+
+
+--
+-- Name: subject_version_before_after subject_version_before_after_after_version_id_before_entity_key; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version_before_after
+    ADD CONSTRAINT subject_version_before_after_after_version_id_before_entity_key UNIQUE (after_version_id, before_entity_id);
+
+
+--
+-- Name: subject_version_before_after subject_version_before_after_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version_before_after
+    ADD CONSTRAINT subject_version_before_after_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: subject_version_parent_child subject_version_parent_child_child_version_id_parent_entity_key; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version_parent_child
+    ADD CONSTRAINT subject_version_parent_child_child_version_id_parent_entity_key UNIQUE (child_version_id, parent_entity_id);
+
+
+--
+-- Name: subject_version_parent_child subject_version_parent_child_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version_parent_child
+    ADD CONSTRAINT subject_version_parent_child_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: subject_version subject_version_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version
+    ADD CONSTRAINT subject_version_pkey PRIMARY KEY (version_id);
 
 
 --
@@ -742,6 +1525,34 @@ CREATE TRIGGER update_password AFTER UPDATE OF password ON sg_private."user" FOR
 
 
 --
+-- Name: card_version insert_card_version_user_or_session; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER insert_card_version_user_or_session BEFORE INSERT ON sg_public.card_version FOR EACH ROW EXECUTE PROCEDURE sg_private.insert_user_or_session();
+
+
+--
+-- Name: TRIGGER insert_card_version_user_or_session ON card_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER insert_card_version_user_or_session ON sg_public.card_version IS 'Automatically add the user_id or session_id.';
+
+
+--
+-- Name: subject_version insert_subject_version_user_or_session; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER insert_subject_version_user_or_session BEFORE INSERT ON sg_public.subject_version FOR EACH ROW EXECUTE PROCEDURE sg_private.insert_user_or_session();
+
+
+--
+-- Name: TRIGGER insert_subject_version_user_or_session ON subject_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER insert_subject_version_user_or_session ON sg_public.subject_version IS 'Automatically add the user_id or session_id.';
+
+
+--
 -- Name: user trim_user_name; Type: TRIGGER; Schema: sg_public; Owner: -
 --
 
@@ -753,6 +1564,62 @@ CREATE TRIGGER trim_user_name BEFORE INSERT ON sg_public."user" FOR EACH ROW EXE
 --
 
 COMMENT ON TRIGGER trim_user_name ON sg_public."user" IS 'Trim the user''s name.';
+
+
+--
+-- Name: card_version update_card_version_modified; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER update_card_version_modified BEFORE UPDATE ON sg_public.card_version FOR EACH ROW EXECUTE PROCEDURE sg_private.update_modified_column();
+
+
+--
+-- Name: TRIGGER update_card_version_modified ON card_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER update_card_version_modified ON sg_public.card_version IS 'Whenever a card version changes, update the `modified` column.';
+
+
+--
+-- Name: subject_version_before_after update_subject_version_before_after_modified; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER update_subject_version_before_after_modified BEFORE UPDATE ON sg_public.subject_version_before_after FOR EACH ROW EXECUTE PROCEDURE sg_private.update_modified_column();
+
+
+--
+-- Name: TRIGGER update_subject_version_before_after_modified ON subject_version_before_after; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER update_subject_version_before_after_modified ON sg_public.subject_version_before_after IS 'Whenever a subject version changes, update the `modified` column.';
+
+
+--
+-- Name: subject_version update_subject_version_modified; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER update_subject_version_modified BEFORE UPDATE ON sg_public.subject_version FOR EACH ROW EXECUTE PROCEDURE sg_private.update_modified_column();
+
+
+--
+-- Name: TRIGGER update_subject_version_modified ON subject_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER update_subject_version_modified ON sg_public.subject_version IS 'Whenever a subject version changes, update the `modified` column.';
+
+
+--
+-- Name: subject_version_parent_child update_subject_version_parent_child_modified; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER update_subject_version_parent_child_modified BEFORE UPDATE ON sg_public.subject_version_parent_child FOR EACH ROW EXECUTE PROCEDURE sg_private.update_modified_column();
+
+
+--
+-- Name: TRIGGER update_subject_version_parent_child_modified ON subject_version_parent_child; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER update_subject_version_parent_child_modified ON sg_public.subject_version_parent_child IS 'Whenever a subject version changes, update the `modified` column.';
 
 
 --
@@ -775,6 +1642,126 @@ COMMENT ON TRIGGER update_user_modified ON sg_public."user" IS 'Whenever the use
 
 ALTER TABLE ONLY sg_private."user"
     ADD CONSTRAINT user_user_id_fkey FOREIGN KEY (user_id) REFERENCES sg_public."user"(id) ON DELETE CASCADE;
+
+
+--
+-- Name: card_entity card_entity_entity_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.card_entity
+    ADD CONSTRAINT card_entity_entity_id_fkey FOREIGN KEY (entity_id) REFERENCES sg_public.entity(entity_id);
+
+
+--
+-- Name: card_version card_version_entity_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.card_version
+    ADD CONSTRAINT card_version_entity_id_fkey FOREIGN KEY (entity_id) REFERENCES sg_public.card_entity(entity_id);
+
+
+--
+-- Name: card_version card_version_previous_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.card_version
+    ADD CONSTRAINT card_version_previous_id_fkey FOREIGN KEY (previous_id) REFERENCES sg_public.card_version(version_id);
+
+
+--
+-- Name: card_version card_version_subject_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.card_version
+    ADD CONSTRAINT card_version_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES sg_public.subject_entity(entity_id);
+
+
+--
+-- Name: card_version card_version_user_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.card_version
+    ADD CONSTRAINT card_version_user_id_fkey FOREIGN KEY (user_id) REFERENCES sg_public."user"(id);
+
+
+--
+-- Name: card_version card_version_version_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.card_version
+    ADD CONSTRAINT card_version_version_id_fkey FOREIGN KEY (version_id) REFERENCES sg_public.entity_version(version_id);
+
+
+--
+-- Name: subject_entity subject_entity_entity_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_entity
+    ADD CONSTRAINT subject_entity_entity_id_fkey FOREIGN KEY (entity_id) REFERENCES sg_public.entity(entity_id);
+
+
+--
+-- Name: subject_version_before_after subject_version_before_after_after_version_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version_before_after
+    ADD CONSTRAINT subject_version_before_after_after_version_id_fkey FOREIGN KEY (after_version_id) REFERENCES sg_public.subject_version(version_id);
+
+
+--
+-- Name: subject_version_before_after subject_version_before_after_before_entity_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version_before_after
+    ADD CONSTRAINT subject_version_before_after_before_entity_id_fkey FOREIGN KEY (before_entity_id) REFERENCES sg_public.subject_entity(entity_id);
+
+
+--
+-- Name: subject_version subject_version_entity_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version
+    ADD CONSTRAINT subject_version_entity_id_fkey FOREIGN KEY (entity_id) REFERENCES sg_public.subject_entity(entity_id);
+
+
+--
+-- Name: subject_version_parent_child subject_version_parent_child_child_version_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version_parent_child
+    ADD CONSTRAINT subject_version_parent_child_child_version_id_fkey FOREIGN KEY (child_version_id) REFERENCES sg_public.subject_version(version_id);
+
+
+--
+-- Name: subject_version_parent_child subject_version_parent_child_parent_entity_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version_parent_child
+    ADD CONSTRAINT subject_version_parent_child_parent_entity_id_fkey FOREIGN KEY (parent_entity_id) REFERENCES sg_public.subject_entity(entity_id);
+
+
+--
+-- Name: subject_version subject_version_previous_version_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version
+    ADD CONSTRAINT subject_version_previous_version_id_fkey FOREIGN KEY (previous_version_id) REFERENCES sg_public.subject_version(version_id);
+
+
+--
+-- Name: subject_version subject_version_user_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version
+    ADD CONSTRAINT subject_version_user_id_fkey FOREIGN KEY (user_id) REFERENCES sg_public."user"(id);
+
+
+--
+-- Name: subject_version subject_version_version_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.subject_version
+    ADD CONSTRAINT subject_version_version_id_fkey FOREIGN KEY (version_id) REFERENCES sg_public.entity_version(version_id);
 
 
 --
@@ -831,4 +1818,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190201214238'),
     ('20190201220821'),
     ('20190219221727'),
-    ('20190227220630');
+    ('20190227220630'),
+    ('20190319234401');
