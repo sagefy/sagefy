@@ -4,19 +4,25 @@
 <title>{{ page.title }} – Sagefy</title>
 <link rel="stylesheet" href="https://heiskr.com/drab.css/css/drab.css" />
 <style>
-  .docs-nav {
+  .list-style-inline {
+    list-style: none;
     padding-left: 0;
   }
-  .docs-nav li {
+
+  .list-style-inline li {
     display: inline-block;
-    margin-right: 24px;
+    margin-right: 2rem;
+  }
+
+  .list-style-inline li:last-child {
+    margin-right: 0;
   }
 </style>
 <body>
   <main>
     <div class="page">
       <header>
-        <ul class="docs-nav">
+        <ul class="list-style-inline">
           <li>
             <h3>
               Sagefy Docs
@@ -24,29 +30,23 @@
           </li>
           <li><a href="/">What is Sagefy?</a></li>
           <li><a href="/Ideas">8 Big Ideas</a></li>
-          <li><a href="/Cards-Subjects">Cards & Subjects</a></li>
+          <li><a href="/Cards-Subjects">Cards &amp; Subjects</a></li>
         </ul>
       </header>
       <h1>{{ page.title }}</h1>
       {{ content }}
       <footer>
         <hr />
-        <img
-          src="https://raw.githubusercontent.com/heiskr/sagefy/master/nginx/statics/astrolabe.png"
-          height="48"
-        />
+        <img src="https://sagefy.org/astrolabe.svg" height="48" />
         <small>
-          <ul class="docs-nav">
+          <ul class="list-style-inline">
             <li><a href="https://sagefy.org">Sagefy Home</a></li>
             <li><a href="/Want-to-Help">Want to Help?</a></li>
             <li><a href="/Updates">Updates</a></li>
-            <!--li><a href="/Setup">Setup</a></li-->
-            <!--li><a href="/Technology-Stack">Technology Stack</a></li-->
+            <li><a href="/Setup">Setup</a></li>
+            <li><a href="/Technology-Stack">Technology Stack</a></li>
             <li>
-              <a
-                href="https://github.com/heiskr/sagefy/blob/master/CONTRIBUTING.md"
-                >Contributing</a
-              >
+              <a href="https://bit.ly/2Tbj3ag">Contributing</a>
             </li>
             <!--li><a href="/User-Stories">User Stories</a></li-->
             <!--li>
@@ -57,7 +57,8 @@
             <li><a href="/Reference">Reference</a></li>
           </ul>
           <p>
-            &copy; Copyright Sagefy 2019. All contents are licensed under
+            &copy; Copyright Sagefy {{ site.time | date: '%Y' }}. All contents
+            are licensed under
             <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>
           </p>
         </small>

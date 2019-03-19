@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Cards, Units, & Subjects
+title: Cards & Subjects
 ---
 
 _There are two types of entities in Sagefy: cards and subjects._
