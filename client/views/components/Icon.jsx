@@ -71,13 +71,14 @@ const MAP = {
   friends: Users, // home
   github: GitHub, // contact
   inbox: Inbox, // password, email
+  popular: Users, // home
 }
 
 const SIZES = {
   s: 14,
   m: 16,
   l: 16,
-  xl: 16,
+  xl: 24,
   xxl: 32,
 }
 
