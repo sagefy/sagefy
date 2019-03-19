@@ -105,7 +105,37 @@ export default function HomePage({ role }) {
         </section>
       )}
 
-      {/* ...or try something popular ✨ section here */}
+      {/* TODO make functional
+      <section>
+        <h2>
+          ...or try something popular <Icon i="popular" s="xl" />
+        </h2>
+        <table>
+          <tr>
+            <td className="text-align-center collapse-margins">
+              <p>
+                <button type="button">
+                  <Icon i="up" />
+                </button>
+              </p>
+              <code>12</code>
+            </td>
+            <td className="collapse-margins">
+              <h3>
+                <Link to="/choose-next">
+                  An Introduction to Electronic Music
+                </Link>
+              </h3>
+              <p>
+                A small taste of the basics of electronic music. Learn the
+                concepts behind creating and modifying sounds in an electronic
+                music system. Learn the ideas behind the tools and systems we
+                use to create electronic music.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </section> */}
 
       <section>
         <div className="text-align-center collapse-margins">
@@ -138,7 +168,7 @@ export default function HomePage({ role }) {
         </ul>
       </section>
 
-      <Footer />
+      <Footer role={role} />
     </div>
   )
 }
