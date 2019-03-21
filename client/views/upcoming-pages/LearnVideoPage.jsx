@@ -1,13 +1,12 @@
 import React from 'react'
 import Icon from '../components/Icon'
+import Meter from '../components/Meter'
 
 export default function LearnVideoPage() {
   return (
     <div className="LearnVideoPage">
       <section>
-        <div className="meter">
-          <div style={{ width: '60%' }} />
-        </div>
+        <Meter width={0.7} />
       </section>
 
       <section>
