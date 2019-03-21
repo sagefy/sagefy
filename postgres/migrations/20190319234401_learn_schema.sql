@@ -3,10 +3,11 @@
 create or replace function sg_private.insert_user_or_session()
 returns trigger as $$
 begin
-  if (current_setting('jwt.claims.user_id')) then
+  if (current_setting('jwt.claims.user_id') is not null
+      and current_setting('jwt.claims.user_id') <> '') then
     new.user_id = current_setting('jwt.claims.user_id')::uuid;
-  end if;
-  if (current_setting('jwt.claims.session_id')) then
+  elsif (current_setting('jwt.claims.session_id') is not null
+      and current_setting('jwt.claims.session_id') <> '') then
     new.session_id = current_setting('jwt.claims.session_id')::uuid;
   end if;
   return new;
@@ -265,7 +266,7 @@ create table sg_public.card_version (
         },
         "max_options_to_show": {
           "type": "integer",
-          "minimum": 0,
+          "minimum": 2,
           "default": 4
         }
       },
@@ -360,7 +361,7 @@ comment on trigger insert_card_version_user_or_session
   on sg_public.card_version
   is 'Automatically add the user_id or session_id.';
 
-create function sg_public.new_subject(
+create or replace function sg_public.new_subject(
   language varchar,
   name text,
   tags text[],
@@ -369,30 +370,32 @@ create function sg_public.new_subject(
   before uuid[]
 )
 returns sg_public.subject_version as $$
+  declare
+    xentity_id uuid;
+    xversion_id uuid;
+    xsubject_version sg_public.subject_version;
   begin
-    with entity as (
-      insert into sg_public.entity
-      (entity_kind) values ('subject')
-    ),
-    subject_entity as (
-      insert into sg_public.subject_entity
-      (entity_id) values (entity.entity_id)
-    ),
-    subject_version as (
-      insert into sg_public.subject_version
-      (entity_id, language, name, tags, body)
-      values (entity.entity_id, language, name, tags, body)
-    ),
-    subject_parent as (
-      insert into sg_public.subject_version_parent_child
-      (child_version_id, parent_entity_id)
-      values (subject_version.version_id, unnest(parent))
-    )
+    xentity_id := uuid_generate_v4();
+    xversion_id := uuid_generate_v4();
+    insert into sg_public.entity
+    (entity_id, entity_kind) values (xentity_id, 'subject');
+    insert into sg_public.subject_entity
+    (entity_id) values (xentity_id);
+    insert into sg_public.entity_version
+    (version_id, entity_kind) values (xversion_id, 'subject');
+    insert into sg_public.subject_version
+    (version_id, entity_id, language, name, tags, body)
+    values (xversion_id, xentity_id, language, name, tags, body)
+    returning * into xsubject_version;
+    insert into sg_public.subject_version_parent_child
+    (child_version_id, parent_entity_id)
+    select xversion_id, unnest(parent);
     insert into sg_public.subject_version_before_after
     (after_version_id, before_entity_id)
-    values (subject_version.version_id, unnest(before));
+    select xversion_id, unnest(before);
+    return xsubject_version;
   end;
-$$ language plpgsql;
+$$ language plpgsql strict security definer;
 comment on function sg_public.new_subject(
   varchar,
   text,
@@ -410,35 +413,41 @@ grant execute on function sg_public.new_subject(
   uuid[]
 ) to sg_anonymous, sg_user, sg_admin;
 
-create function sg_public.new_card(
+create or replace function sg_public.new_card(
   language varchar,
   name text,
   tags text[],
   subject_id uuid,
-  kind text,
+  kind sg_public.card_kind,
   data jsonb
 )
 returns sg_public.card_version as $$
+  declare
+    xentity_id uuid;
+    xversion_id uuid;
+    xcard_version sg_public.card_version;
   begin
-    with entity as (
-      insert into sg_public.entity
-      (entity_kind) values ('card')
-    ),
-    card_entity as (
-      insert into sg_public.card_entity
-      (entity_id) values (entity.entity_id)
-    )
+    xentity_id := uuid_generate_v4();
+    xversion_id := uuid_generate_v4();
+    insert into sg_public.entity
+    (entity_id, entity_kind) values (xentity_id, 'card');
+    insert into sg_public.card_entity
+    (entity_id) values (xentity_id);
+    insert into sg_public.entity_version
+    (version_id, entity_kind) values (xversion_id, 'card');
     insert into sg_public.card_version
-    (entity_id, language, name, tags, subject_id, kind, data)
-    values (entity.entity_id, language, name, tags, subject_id, kind, data);
+    (version_id, entity_id, language, name, tags, subject_id, kind, data)
+    values (xversion_id, xentity_id, language, name, tags, subject_id, kind, data)
+    returning * into xcard_version;
+    return xcard_version;
   end;
-$$ language plpgsql;
+$$ language plpgsql strict security definer;
 comment on function sg_public.new_card(
   varchar,
   text,
   text[],
   uuid,
-  text,
+  sg_public.card_kind,
   jsonb
 ) is 'Create a new card.';
 grant execute on function sg_public.new_card(
@@ -446,7 +455,7 @@ grant execute on function sg_public.new_card(
   text,
   text[],
   uuid,
-  text,
+  sg_public.card_kind,
   jsonb
 ) to sg_anonymous, sg_user, sg_admin;
 
