@@ -20,6 +20,8 @@ services:
       - ./client:/client
     links:
       - server
+    env_file:
+      - .env
   server:
     # https://hub.docker.com/_/node/
     build: ./server
@@ -29,6 +31,8 @@ services:
       - ./server:/server
     links:
       - postgres
+    env_file:
+      - .env
   postgres:
     # https://hub.docker.com/_/postgres/
     build: ./postgres
@@ -40,3 +44,5 @@ services:
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
       - ./postgres:/postgres
+    env_file:
+      - .env

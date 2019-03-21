@@ -2,8 +2,6 @@ const express = require('express')
 const { postgraphile } = require('postgraphile')
 const { Pool } = require('pg')
 
-require('dotenv').config()
-
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.NODE_ENV === 'test' ? 'localhost' : process.env.DB_HOST,

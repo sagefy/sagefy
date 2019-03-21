@@ -17,14 +17,14 @@
   },
   "homepage": "https://github.com/sagefy/sagefy#readme",
   "dependencies": {
-    "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.0",
     "lodash.frompairs": "^4.0.1",
     "lodash.get": "^4.4.2",
     "nodemailer": "^5.1.1",
     "pg": "^7.8.1",
-    "postgraphile": "^4.3.3"
+    "postgraphile": "^4.3.3",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
