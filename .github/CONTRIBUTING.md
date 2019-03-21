@@ -50,7 +50,6 @@ For each pull request:
 
 ## Styles
 
-- Use the [BEM](http://bem.info/method/) naming convention where appropriate.
 - Mobile is the first and default styling. Use `@media (min-width...)` and never use `@media (max-width...)`.
 - General guidelines:
   - Lowercase selectors.
