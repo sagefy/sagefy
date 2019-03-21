@@ -1,13 +1,12 @@
 import React from 'react'
 import Icon from '../components/Icon'
+import Meter from '../components/Meter'
 
 export default function LearnChoicePage() {
   return (
     <div className="LearnChoicePage">
       <section>
-        <div className="meter">
-          <div style={{ width: '70%' }} />
-        </div>
+        <Meter width={0.7} />
       </section>
 
       <section>

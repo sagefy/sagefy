@@ -1,13 +1,12 @@
 import React from 'react'
 import Icon from '../components/Icon'
+import Meter from '../components/Meter'
 
 export default function LearnUnscoredEmbedPage() {
   return (
     <div className="LearnUnscoredEmbedPage">
       <section>
-        <div className="meter">
-          <div style={{ width: '95%' }} />
-        </div>
+        <Meter width={0.7} />
       </section>
 
       <section>
