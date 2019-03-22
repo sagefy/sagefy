@@ -66,7 +66,7 @@ export default function Index(props) {
               <Route path="/password" render={withProps(PasswordPage)} />
               <Route path="/email" render={withProps(EmailPage)} />
               <Route path="/settings" render={withProps(SettingsPage)} />
-              <Route path="/dashboard" component={DashboardPage} />
+              <Route path="/dashboard" render={withProps(DashboardPage)} />
               <Route path="/sign-up" render={withProps(SignUpPage)} />
               <Route path="/search-subjects" component={SearchSubjectsPage} />
               <Route path="/contact" component={ContactPage} />
