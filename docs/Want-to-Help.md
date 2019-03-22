@@ -19,7 +19,7 @@ Also, if you're interested, [sign up for development updates](https://sgfy.xyz/d
   - Researching different options available.
   - Working with sources on copyright issues and technical porting.
 - Supporting the existing electronic music content with:
-  - Feedback on the [current content](http://sgfy.xyz/emus).
+  - Feedback on the current content.
   - Additional interactive examples in JavaScript
   - Additional content on the artistic study of electronic music, history, tools, and projects.
 
@@ -34,7 +34,7 @@ Also, if you're interested, [sign up for development updates](https://sgfy.xyz/d
 
 ## Platform (Technical)
 
-- [Feedback](https://sgfy.xyz/issues) on the system so far: [demo](http://sgfy.xyz/emus)
+- [Feedback](https://sgfy.xyz/issues) on the system so far
 - Testing and [filing bugs](https://sgfy.xyz/issues)
 - Contributing ideas to our [board](https://sgfy.xyz/issues)
 - Learn how to [set up](http://docs.sagefy.org/Setup) a local development environment
