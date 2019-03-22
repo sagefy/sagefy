@@ -74,6 +74,16 @@ async function letsJwtIn(client, { role, user_id, session_id, uniq }) {
   `)
 }
 
+async function letsJwtOut(client) {
+  return client.query(`
+    reset role;
+    reset jwt.claims.role;
+    reset jwt.claims.user_id;
+    reset jwt.claims.session_id;
+    reset jwt.claims.uniq;
+  `)
+}
+
 async function makeSubjects(client, { users }) {
   await letsJwtIn(client, users.doris)
 
@@ -316,6 +326,7 @@ async function generateDevData() {
   Object.assign(cards, await makeCards(client, data))
   // Object.assign(userSubjects, await makeUserSubjects(client, data))
   // Object.assign(responses, await makeResponses(client, data))
+  await letsJwtOut(client)
 
   return data
 }
