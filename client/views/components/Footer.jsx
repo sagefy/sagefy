@@ -44,7 +44,7 @@ export default function Footer({ role }) {
             </ExternalLink>
           </li>
           <li>
-            <ExternalLink href="https://sgef.cc/devupdates">
+            <ExternalLink href="https://sgfy.xyz/devupdates">
               <Icon i="updates" s="s" /> Updates
             </ExternalLink>
           </li>

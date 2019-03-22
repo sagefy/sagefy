@@ -5,7 +5,7 @@ title: Sagefy Development Updates
 
 This is a reverse chronological listing of updates on Sagefy's progress. I will try to do these biweekly.
 
-You can sign up for email updates at https://sgef.cc/devupdates
+You can sign up for email updates at https://sgfy.xyz/devupdates
 
 ## UPDATE -- 2019 Mar 18
 
@@ -22,7 +22,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to https://sgef.cc/issues and add feedback or ideas there.
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
 
 ## UPDATE -- 2019 Mar 4
 
@@ -40,7 +40,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to https://sgef.cc/issues and add feedback or ideas there.
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
 
 ## UPDATE -- 2019 Feb 19
 
@@ -58,7 +58,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to https://sgef.cc/issues and add feedback or ideas there.
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
 
 ## UPDATE -- 2019 Jan 7
 
@@ -75,7 +75,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to https://sgef.cc/issues and add feedback or ideas there.
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
 
 ## UPDATE -- 2018 Nov 26
 
@@ -92,7 +92,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to https://sgef.cc/issues and add feedback or ideas there.
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
 
 ## UPDATE -- 2018 Oct 29
 
@@ -110,7 +110,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to https://sgef.cc/issues and add feedback or ideas there.
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
 
 ## UPDATE -- 2018 Oct 15
 
@@ -131,7 +131,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Sep 17
 
@@ -147,7 +147,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Sep 2
 
@@ -165,7 +165,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Aug 20
 
@@ -182,7 +182,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Aug 6
 
@@ -199,7 +199,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Jul 23
 
@@ -215,7 +215,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Jul 9
 
@@ -223,7 +223,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### 2018 Jun 25 - 2018 Jul 8
 
-- Published ["8 ideas" article](https://sgef.cc/ideas)! (Finally!)
+- Published ["8 ideas" article](https://sgfy.xyz/ideas)! (Finally!)
 
 ### Upcoming Two Weeks: 2018 Jul 9 - 2018 Jul 22
 
@@ -231,7 +231,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Jun 25
 
@@ -250,7 +250,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Jun 11
 
@@ -269,7 +269,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 May 28
 
@@ -289,7 +289,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 May 13
 
@@ -308,7 +308,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Apr 30
 
@@ -324,7 +324,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Apr 16
 
@@ -342,7 +342,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Apr 2
 
@@ -351,8 +351,8 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### 2018 Mar 19 - 2018 Apr 1
 
 - Built example for ["Duration and Rhythm"](http://em.sagefy.org/examples/duration-and-rhythm)
-- Launched a test page to collect emails for ["Make Your Own Learning Plan"](https://sgef.cc/learnplan)
-- Moved over [dev newsletter sign up](https://sgef.cc/devupdates) page to own server
+- Launched a test page to collect emails for ["Make Your Own Learning Plan"](https://sgfy.xyz/learnplan)
+- Moved over [dev newsletter sign up](https://sgfy.xyz/devupdates) page to own server
 - Updated code to check login status, so it logs you out if your session is invalid.
 - Fixed double loading state issue.
 - Addressed a security concern with Redis.
@@ -364,7 +364,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Mar 19
 
@@ -382,7 +382,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Mar 5
 
@@ -400,7 +400,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to http://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to http://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Feb 19
 
@@ -417,7 +417,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### Feedback
 
-Feel free to reply to this address! You can also go to https://sgef.cc/feedback and add feedback or ideas there.
+Feel free to reply to this address! You can also go to https://sgfy.xyz/feedback and add feedback or ideas there.
 
 ## UPDATE -- 2018 Feb 5
 
@@ -439,7 +439,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sgef.cc/feedback
+https://sgfy.xyz/feedback
 and add feedback or ideas there.
 
 ## UPDATE -- 2018 Jan 22
@@ -458,7 +458,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sgef.cc/feedback
+https://sgfy.xyz/feedback
 and add feedback or ideas there.
 
 ## UPDATE -- 2017 Jan 8
@@ -477,7 +477,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sgef.cc/feedback
+https://sgfy.xyz/feedback
 and add feedback or ideas there.
 
 ## UPDATE -- 2017 Dec 11
@@ -496,7 +496,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sgef.cc/feedback
+https://sgfy.xyz/feedback
 and add feedback or ideas there.
 
 ## UPDATE -- 2017 Nov 27
@@ -515,7 +515,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sgef.cc/feedback
+https://sgfy.xyz/feedback
 and add feedback or ideas there.
 
 ## UPDATE -- 2017 Nov 13
@@ -538,7 +538,7 @@ Didn't complete as much as hoped.
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sgef.cc/feedback
+https://sgfy.xyz/feedback
 and add feedback or ideas there.
 
 ## UPDATE -- 2017 Oct 30
@@ -584,5 +584,5 @@ This will also be a new card kind, though I haven't picked a name yet.
 ### Feedback
 
 Feel free to reply to this address! You can also go to
-https://sgef.cc/feedback
+https://sgfy.xyz/feedback
 and add feedback or ideas there.

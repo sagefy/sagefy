@@ -21,7 +21,7 @@ Welcome to Sagefy!
 If you did not create this account, please reply immediately.
 
 If you are interested in biweekly updates on Sagefy's progress,
-sign up at https://sgef.cc/devupdates
+sign up at https://sgfy.xyz/devupdates
 
 Thank you!
 

@@ -16,8 +16,8 @@ Sagefy is an _open-content, adaptive learning_ platform.
 
 - Continue to [8 Big Ideas](http://docs.sagefy.org/Ideas) or [Cards & Subjects](http://docs.sagefy.org/Cards-Subjects).
 - [Visit the site](https://sagefy.org).
-- ~~Try our demo course, [Intro to Electronic Music](http://sgef.cc/emus).~~
+- ~~Try our demo course, [Intro to Electronic Music](http://sgfy.xyz/emus).~~
 - For more information, [watch this 3 minute YouTube video](https://youtu.be/gFn4Q9tx7Qs).
 - Want to help? [Check out our contributors' list.](https://docs.sagefy.org/Want-to-Help)
-- Sign up for [development updates](https://sgef.cc/devupdates).
+- Sign up for [development updates](https://sgfy.xyz/devupdates).
 - Share us on [Twitter](https://twitter.com/sagefyorg).

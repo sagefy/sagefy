@@ -7,7 +7,7 @@ Interested in contributing to Sagefy? Here's some areas we could use some help. 
 
 If you'd like to reach out, feel free to hit us up on [Twitter](https://twitter.com/sagefyorg) or [send an email](mailto:support@sagefy.org).
 
-Also, if you're interested, [sign up for development updates](https://sgef.cc/devupdates).
+Also, if you're interested, [sign up for development updates](https://sgfy.xyz/devupdates).
 
 ## Content
 
@@ -19,7 +19,7 @@ Also, if you're interested, [sign up for development updates](https://sgef.cc/de
   - Researching different options available.
   - Working with sources on copyright issues and technical porting.
 - Supporting the existing electronic music content with:
-  - Feedback on the [current content](http://sgef.cc/emus).
+  - Feedback on the [current content](http://sgfy.xyz/emus).
   - Additional interactive examples in JavaScript
   - Additional content on the artistic study of electronic music, history, tools, and projects.
 
@@ -34,9 +34,9 @@ Also, if you're interested, [sign up for development updates](https://sgef.cc/de
 
 ## Platform (Technical)
 
-- [Feedback](https://sgef.cc/issues) on the system so far: [demo](http://sgef.cc/emus)
-- Testing and [filing bugs](https://sgef.cc/issues)
-- Contributing ideas to our [board](https://sgef.cc/issues)
+- [Feedback](https://sgfy.xyz/issues) on the system so far: [demo](http://sgfy.xyz/emus)
+- Testing and [filing bugs](https://sgfy.xyz/issues)
+- Contributing ideas to our [board](https://sgfy.xyz/issues)
 - Learn how to [set up](http://docs.sagefy.org/Setup) a local development environment
 - Unit tests for the browser experience
 - Increasing API tests to 99% coverage

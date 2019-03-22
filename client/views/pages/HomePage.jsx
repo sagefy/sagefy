@@ -66,7 +66,7 @@ export default function HomePage({ role }) {
               , and we&apos;ll let you know as we release new stuff.
             </li>
             <li>
-              <ExternalLink href="https://sgef.cc/devupdates">
+              <ExternalLink href="https://sgfy.xyz/devupdates">
                 <Icon i="updates" /> <strong>Subscribe</strong> to biweekly
                 email updates
               </ExternalLink>

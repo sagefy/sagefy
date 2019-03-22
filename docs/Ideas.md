@@ -14,6 +14,6 @@ The ideas are research-backed principles to improve learning results.
 7. **Make It Real**
 8. **Learn Together**
 
-Read the full [8 Big Ideas of Learning](https://sgef.cc/ideas) article or the [TL;DR version](https://sgef.cc/tldrideas).
+Read the full [8 Big Ideas of Learning](https://sgfy.xyz/ideas) article or the [TL;DR version](https://sgfy.xyz/tldrideas).
 
 What's next? [Continue to "Cards & Subjects"](/Cards-Subjects).

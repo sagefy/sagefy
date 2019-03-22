@@ -7,7 +7,7 @@ exports[`HomePage should render the home page 1`] = `
   <section>
     <blockquote>
       <h1>
-        Hey friends... 
+        Hey friends...
         <Icon
           i="friends"
           s="xxl"
@@ -30,7 +30,7 @@ exports[`HomePage should render the home page 1`] = `
            content without an account,
         </li>
         <li>
-          and to drastically 
+          and to drastically
           <em>
             simplify
           </em>
@@ -49,13 +49,13 @@ exports[`HomePage should render the home page 1`] = `
               i="view"
               s="m"
             />
-             
+
             <strong>
               View
             </strong>
              the prototype
           </ExternalLink>
-           
+
           of what's coming!
         </li>
         <li>
@@ -67,7 +67,7 @@ exports[`HomePage should render the home page 1`] = `
               i="signUp"
               s="m"
             />
-             
+
             <strong>
               Sign up
             </strong>
@@ -76,13 +76,13 @@ exports[`HomePage should render the home page 1`] = `
         </li>
         <li>
           <ExternalLink
-            href="https://sgef.cc/devupdates"
+            href="https://sgfy.xyz/devupdates"
           >
             <Icon
               i="updates"
               s="m"
             />
-             
+
             <strong>
               Subscribe
             </strong>
@@ -113,9 +113,9 @@ exports[`HomePage should render the home page 1`] = `
           />
            Log In
         </Link>
-         
+
         or
-         
+
         <Link
           replace={false}
           to="/sign-up"
@@ -155,7 +155,7 @@ exports[`HomePage should render the home page 1`] = `
           i="adapt"
           s="m"
         />
-         
+
         <strong>
           Adaptive Learning.
         </strong>
@@ -166,7 +166,7 @@ exports[`HomePage should render the home page 1`] = `
           i="open"
           s="m"
         />
-         
+
         <strong>
           Open Content.
         </strong>
@@ -197,7 +197,7 @@ exports[`HomePage should render the logged in home page 1`] = `
   <section>
     <blockquote>
       <h1>
-        Hey friends... 
+        Hey friends...
         <Icon
           i="friends"
           s="xxl"
@@ -220,7 +220,7 @@ exports[`HomePage should render the logged in home page 1`] = `
            content without an account,
         </li>
         <li>
-          and to drastically 
+          and to drastically
           <em>
             simplify
           </em>
@@ -239,13 +239,13 @@ exports[`HomePage should render the logged in home page 1`] = `
               i="view"
               s="m"
             />
-             
+
             <strong>
               View
             </strong>
              the prototype
           </ExternalLink>
-           
+
           of what's coming!
         </li>
         <li>
@@ -257,7 +257,7 @@ exports[`HomePage should render the logged in home page 1`] = `
               i="signUp"
               s="m"
             />
-             
+
             <strong>
               Sign up
             </strong>
@@ -266,13 +266,13 @@ exports[`HomePage should render the logged in home page 1`] = `
         </li>
         <li>
           <ExternalLink
-            href="https://sgef.cc/devupdates"
+            href="https://sgfy.xyz/devupdates"
           >
             <Icon
               i="updates"
               s="m"
             />
-             
+
             <strong>
               Subscribe
             </strong>
@@ -297,7 +297,7 @@ exports[`HomePage should render the logged in home page 1`] = `
           replace={false}
           to="/dashboard"
         >
-          Go to 
+          Go to
           <Icon
             i="dashboard"
             s="m"
@@ -333,7 +333,7 @@ exports[`HomePage should render the logged in home page 1`] = `
           i="adapt"
           s="m"
         />
-         
+
         <strong>
           Adaptive Learning.
         </strong>
@@ -344,7 +344,7 @@ exports[`HomePage should render the logged in home page 1`] = `
           i="open"
           s="m"
         />
-         
+
         <strong>
           Open Content.
         </strong>
