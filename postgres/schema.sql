@@ -225,10 +225,11 @@ CREATE FUNCTION sg_private.insert_user_or_session() RETURNS trigger
     LANGUAGE plpgsql STRICT SECURITY DEFINER
     AS $$
 begin
-  if (current_setting('jwt.claims.user_id')) then
+  if (current_setting('jwt.claims.user_id') is not null
+      and current_setting('jwt.claims.user_id') <> '') then
     new.user_id = current_setting('jwt.claims.user_id')::uuid;
-  end if;
-  if (current_setting('jwt.claims.session_id')) then
+  elsif (current_setting('jwt.claims.session_id') is not null
+      and current_setting('jwt.claims.session_id') <> '') then
     new.session_id = current_setting('jwt.claims.session_id')::uuid;
   end if;
   return new;
@@ -525,7 +526,7 @@ CREATE TABLE sg_public.card_version (
     data jsonb NOT NULL,
     CONSTRAINT lang_check CHECK (((language)::text ~* '^\w{2}(-\w{2})?$'::text)),
     CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL))),
-    CONSTRAINT valid_choice_card CHECK (((kind <> 'choice'::sg_public.card_kind) OR public.validate_json_schema('{"type": "object", "required": ["body", "options", "max_options_to_show"], "properties": {"body": {"type": "string"}, "options": {"type": "object", "minProperties": 1, "patternProperties": {"^[a-zA-Z0-9-]+$": {"type": "object", "required": ["value", "correct", "feedback"], "properties": {"value": {"type": "string"}, "correct": {"type": "boolean"}, "feedback": {"type": "string"}}}}, "additionalProperties": false}, "max_options_to_show": {"type": "integer", "default": 4, "minimum": 0}}}'::jsonb, data))),
+    CONSTRAINT valid_choice_card CHECK (((kind <> 'choice'::sg_public.card_kind) OR public.validate_json_schema('{"type": "object", "required": ["body", "options", "max_options_to_show"], "properties": {"body": {"type": "string"}, "options": {"type": "object", "minProperties": 1, "patternProperties": {"^[a-zA-Z0-9-]+$": {"type": "object", "required": ["value", "correct", "feedback"], "properties": {"value": {"type": "string"}, "correct": {"type": "boolean"}, "feedback": {"type": "string"}}}}, "additionalProperties": false}, "max_options_to_show": {"type": "integer", "default": 4, "minimum": 2}}}'::jsonb, data))),
     CONSTRAINT valid_page_card CHECK (((kind <> 'page'::sg_public.card_kind) OR public.validate_json_schema('{"type": "object", "required": ["body"], "properties": {"body": {"type": "string"}}}'::jsonb, data))),
     CONSTRAINT valid_unscored_embed_card CHECK (((kind <> 'unscored_embed'::sg_public.card_kind) OR public.validate_json_schema('{"type": "object", "required": ["url"], "properties": {"url": {"type": "string", "format": "uri"}}}'::jsonb, data))),
     CONSTRAINT valid_video_card CHECK (((kind <> 'video'::sg_public.card_kind) OR public.validate_json_schema('{"type": "object", "required": ["site", "video_id"], "properties": {"site": {"enum": ["youtube", "vimeo"], "type": "string"}, "video_id": {"type": "string"}}}'::jsonb, data)))
@@ -687,33 +688,39 @@ COMMENT ON CONSTRAINT valid_video_card ON sg_public.card_version IS 'If the `kin
 
 
 --
--- Name: new_card(character varying, text, text[], uuid, text, jsonb); Type: FUNCTION; Schema: sg_public; Owner: -
+-- Name: new_card(character varying, text, text[], uuid, sg_public.card_kind, jsonb); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_public.new_card(language character varying, name text, tags text[], subject_id uuid, kind text, data jsonb) RETURNS sg_public.card_version
-    LANGUAGE plpgsql
+CREATE FUNCTION sg_public.new_card(language character varying, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb) RETURNS sg_public.card_version
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
     AS $$
+  declare
+    xentity_id uuid;
+    xversion_id uuid;
+    xcard_version sg_public.card_version;
   begin
-    with entity as (
-      insert into sg_public.entity
-      (entity_kind) values ('card')
-    ),
-    card_entity as (
-      insert into sg_public.card_entity
-      (entity_id) values (entity.entity_id)
-    )
+    xentity_id := uuid_generate_v4();
+    xversion_id := uuid_generate_v4();
+    insert into sg_public.entity
+    (entity_id, entity_kind) values (xentity_id, 'card');
+    insert into sg_public.card_entity
+    (entity_id) values (xentity_id);
+    insert into sg_public.entity_version
+    (version_id, entity_kind) values (xversion_id, 'card');
     insert into sg_public.card_version
-    (entity_id, language, name, tags, subject_id, kind, data)
-    values (entity.entity_id, language, name, tags, subject_id, kind, data);
+    (version_id, entity_id, language, name, tags, subject_id, kind, data)
+    values (xversion_id, xentity_id, language, name, tags, subject_id, kind, data)
+    returning * into xcard_version;
+    return xcard_version;
   end;
 $$;
 
 
 --
--- Name: FUNCTION new_card(language character varying, name text, tags text[], subject_id uuid, kind text, data jsonb); Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: FUNCTION new_card(language character varying, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb); Type: COMMENT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON FUNCTION sg_public.new_card(language character varying, name text, tags text[], subject_id uuid, kind text, data jsonb) IS 'Create a new card.';
+COMMENT ON FUNCTION sg_public.new_card(language character varying, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb) IS 'Create a new card.';
 
 
 --
@@ -856,30 +863,32 @@ COMMENT ON CONSTRAINT user_or_session ON sg_public.subject_version IS 'Ensure on
 --
 
 CREATE FUNCTION sg_public.new_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]) RETURNS sg_public.subject_version
-    LANGUAGE plpgsql
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
     AS $$
+  declare
+    xentity_id uuid;
+    xversion_id uuid;
+    xsubject_version sg_public.subject_version;
   begin
-    with entity as (
-      insert into sg_public.entity
-      (entity_kind) values ('subject')
-    ),
-    subject_entity as (
-      insert into sg_public.subject_entity
-      (entity_id) values (entity.entity_id)
-    ),
-    subject_version as (
-      insert into sg_public.subject_version
-      (entity_id, language, name, tags, body)
-      values (entity.entity_id, language, name, tags, body)
-    ),
-    subject_parent as (
-      insert into sg_public.subject_version_parent_child
-      (child_version_id, parent_entity_id)
-      values (subject_version.version_id, unnest(parent))
-    )
+    xentity_id := uuid_generate_v4();
+    xversion_id := uuid_generate_v4();
+    insert into sg_public.entity
+    (entity_id, entity_kind) values (xentity_id, 'subject');
+    insert into sg_public.subject_entity
+    (entity_id) values (xentity_id);
+    insert into sg_public.entity_version
+    (version_id, entity_kind) values (xversion_id, 'subject');
+    insert into sg_public.subject_version
+    (version_id, entity_id, language, name, tags, body)
+    values (xversion_id, xentity_id, language, name, tags, body)
+    returning * into xsubject_version;
+    insert into sg_public.subject_version_parent_child
+    (child_version_id, parent_entity_id)
+    select xversion_id, unnest(parent);
     insert into sg_public.subject_version_before_after
     (after_version_id, before_entity_id)
-    values (subject_version.version_id, unnest(before));
+    select xversion_id, unnest(before);
+    return xsubject_version;
   end;
 $$;
 
