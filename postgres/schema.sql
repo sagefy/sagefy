@@ -224,13 +224,16 @@ COMMENT ON TYPE sg_public.user_role IS 'User role options.';
 CREATE FUNCTION sg_private.insert_user_or_session() RETURNS trigger
     LANGUAGE plpgsql STRICT SECURITY DEFINER
     AS $$
+declare
+  xuser_id uuid;
+  xsession_id uuid;
 begin
-  if (current_setting('jwt.claims.user_id') is not null
-      and current_setting('jwt.claims.user_id') <> '') then
-    new.user_id = current_setting('jwt.claims.user_id')::uuid;
-  elsif (current_setting('jwt.claims.session_id') is not null
-      and current_setting('jwt.claims.session_id') <> '') then
-    new.session_id = current_setting('jwt.claims.session_id')::uuid;
+  xuser_id := nullif(current_setting('jwt.claims.user_id', true), '')::uuid;
+  xsession_id := nullif(current_setting('jwt.claims.session_id', true), '')::uuid;
+  if (xuser_id is not null) then
+    new.user_id = xuser_id;
+  elsif (xsession_id is not null) then
+    new.session_id = xsession_id;
   end if;
   return new;
 end;
@@ -2029,14 +2032,14 @@ CREATE POLICY delete_user_admin ON sg_public."user" FOR DELETE TO sg_admin USING
 -- Name: user_subject delete_user_subject; Type: POLICY; Schema: sg_public; Owner: -
 --
 
-CREATE POLICY delete_user_subject ON sg_public.user_subject FOR DELETE TO sg_user, sg_admin USING ((user_id = (current_setting('jwt.claims.user_id'::text))::uuid));
+CREATE POLICY delete_user_subject ON sg_public.user_subject FOR DELETE TO sg_anonymous, sg_user, sg_admin USING (((user_id = (current_setting('jwt.claims.user_id'::text, true))::uuid) OR (session_id = (current_setting('jwt.claims.session_id'::text, true))::uuid)));
 
 
 --
 -- Name: user_subject insert_user_subject; Type: POLICY; Schema: sg_public; Owner: -
 --
 
-CREATE POLICY insert_user_subject ON sg_public.user_subject FOR INSERT TO sg_user, sg_admin;
+CREATE POLICY insert_user_subject ON sg_public.user_subject FOR INSERT TO sg_anonymous, sg_user, sg_admin;
 
 
 --
@@ -2050,7 +2053,7 @@ CREATE POLICY select_user ON sg_public."user" FOR SELECT USING (true);
 -- Name: user_subject select_user_subject; Type: POLICY; Schema: sg_public; Owner: -
 --
 
-CREATE POLICY select_user_subject ON sg_public.user_subject FOR SELECT TO sg_user, sg_admin USING ((user_id = (current_setting('jwt.claims.user_id'::text))::uuid));
+CREATE POLICY select_user_subject ON sg_public.user_subject FOR SELECT TO sg_anonymous, sg_user, sg_admin USING (((user_id = (current_setting('jwt.claims.user_id'::text, true))::uuid) OR (session_id = (current_setting('jwt.claims.session_id'::text, true))::uuid)));
 
 
 --

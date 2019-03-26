@@ -1,0 +1,5 @@
+mutation learnDeleteUsubj($id: UUID!) {
+  deleteUserSubjectById(input: { id: $id }) {
+    clientMutationId
+  }
+}

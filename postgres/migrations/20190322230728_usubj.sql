@@ -1,5 +1,24 @@
 -- migrate:up
 
+create or replace function sg_private.insert_user_or_session()
+returns trigger as $$
+declare
+  xuser_id uuid;
+  xsession_id uuid;
+begin
+  xuser_id := nullif(current_setting('jwt.claims.user_id', true), '')::uuid;
+  xsession_id := nullif(current_setting('jwt.claims.session_id', true), '')::uuid;
+  if (xuser_id is not null) then
+    new.user_id = xuser_id;
+  elsif (xsession_id is not null) then
+    new.session_id = xsession_id;
+  end if;
+  return new;
+end;
+$$ language plpgsql strict security definer;
+comment on function sg_private.insert_user_or_session()
+  is 'When inserting a row, automatically set the `user_id` or `session_id` field.';
+
 grant select on table sg_public.subject_version
   to sg_anonymous, sg_user, sg_admin;
 
@@ -33,6 +52,18 @@ comment on column sg_public.user_subject.subject_id
 comment on constraint user_or_session on sg_public.user_subject
   is 'Ensure only the user or session has data.';
 
+create or replace function sg_public.user_subject_subject(user_subject sg_public.user_subject)
+returns sg_public.subject as $$
+  select s.*
+  from sg_public.subject as s
+  where s.entity_id = user_subject.subject_id
+  limit 1;
+$$ language sql stable;
+comment on function sg_public.user_subject_subject(sg_public.user_subject)
+  is 'Gets the subject related to the user subject relation.';
+grant execute on function sg_public.user_subject_subject(sg_public.user_subject)
+  to sg_anonymous, sg_user, sg_admin;
+
 create trigger insert_user_subject_user_or_session
   before insert on sg_public.user_subject
   for each row execute procedure sg_private.insert_user_or_session();
@@ -49,29 +80,37 @@ comment on trigger update_user_subject_modified on sg_public.user_subject
 alter table sg_public.user_subject enable row level security;
 
 -- Select usubj: user or admin self or with setting.
-grant select on table sg_public.user_subject to sg_user, sg_admin;
+grant select on table sg_public.user_subject to sg_anonymous, sg_user, sg_admin;
 create policy select_user_subject on sg_public.user_subject
-  for select to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  for select to sg_anonymous, sg_user, sg_admin
+  using (
+    user_id = current_setting('jwt.claims.user_id', true)::uuid
+    or session_id = current_setting('jwt.claims.session_id', true)::uuid
+  );
 comment on policy select_user_subject on sg_public.user_subject
-  is 'A user or admin may select their own subject relationships.';
+  is 'A user may select their own subject relationships.';
 
 -- Insert usubj: user or admin.
-grant insert (subject_id) on table sg_public.user_subject to sg_user, sg_admin;
+grant insert (subject_id) on table sg_public.user_subject
+  to sg_anonymous, sg_user, sg_admin;
 create policy insert_user_subject on sg_public.user_subject
-  for insert to sg_user, sg_admin;
+  for insert to sg_anonymous, sg_user, sg_admin
+  with check (true);
 comment on policy insert_user_subject on sg_public.user_subject
-  is 'A user or admin may insert a user subject relationship.';
+  is 'A user may insert a user subject relationship.';
 
 -- Update usubj: none.
 
 -- Delete usubj: user or admin self.
-grant delete on table sg_public.user_subject to sg_user, sg_admin;
+grant delete on table sg_public.user_subject to sg_anonymous, sg_user, sg_admin;
 create policy delete_user_subject on sg_public.user_subject
-  for delete to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  for delete to sg_anonymous, sg_user, sg_admin
+  using (
+    user_id = current_setting('jwt.claims.user_id', true)::uuid
+    or session_id = current_setting('jwt.claims.session_id', true)::uuid
+  );
 comment on policy delete_user_subject on sg_public.user_subject
-  is 'A user or admin can delete their own user subject.';
+  is 'A user can delete their own user subject.';
 
 create view sg_public.subject as
   select distinct on (entity_id) *
@@ -80,6 +119,7 @@ create view sg_public.subject as
   order by entity_id, created desc;
 comment on view sg_public.subject
   is 'The latest accepted version of each subject.';
+grant select on sg_public.subject to sg_anonymous, sg_user, sg_admin;
 
 create function sg_public.select_popular_subjects()
 returns setof sg_public.subject as $$

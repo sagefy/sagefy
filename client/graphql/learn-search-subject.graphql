@@ -1,0 +1,9 @@
+query learnSearchSubject($query: String!) {
+  searchSubjects(query: $query) {
+    nodes {
+      entityId
+      name
+      body
+    }
+  }
+}

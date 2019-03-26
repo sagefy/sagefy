@@ -1,0 +1,9 @@
+mutation learnNewUsubj($subjectId: UUID!) {
+  createUserSubject(input: { userSubject: { subjectId: $subjectId } }) {
+    userSubject {
+      userId
+      sessionId
+      subjectId
+    }
+  }
+}

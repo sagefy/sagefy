@@ -65,13 +65,14 @@ async function letsJwtIn(client, { role, user_id, session_id, uniq }) {
   // Note that this does not use `local`,
   // so it sticks until called again.
   // TODO use node-pg transactions instead?
-  return client.query(`
+  const query = `
     set role ${role};
-    set jwt.claims.role to '${role}';
-    set jwt.claims.user_id to '${user_id}';
-    set jwt.claims.session_id to '${session_id}';
-    set jwt.claims.uniq to '${uniq}';
-  `)
+    ${role ? `set jwt.claims.role to '${role}';` : ''}
+    ${user_id ? `set jwt.claims.user_id to '${user_id}';` : ''}
+    ${session_id ? `set jwt.claims.session_id to '${session_id}';` : ''}
+    ${uniq ? `set jwt.claims.uniq to '${uniq}';` : ''}
+  `
+  return client.query(query)
 }
 
 async function letsJwtOut(client) {
@@ -133,6 +134,10 @@ async function makeSubjects(client, { users }) {
       ['en', name, [], body, [], []]
     )).rows[0]
   }
+
+  await client.query(
+    `update sg_public.subject_version set status = 'accepted';`
+  )
 
   return subjects
 }
