@@ -901,6 +901,105 @@ COMMENT ON FUNCTION sg_public.new_subject(language character varying, name text,
 
 
 --
+-- Name: subject; Type: VIEW; Schema: sg_public; Owner: -
+--
+
+CREATE VIEW sg_public.subject AS
+ SELECT DISTINCT ON (subject_version.entity_id) subject_version.version_id,
+    subject_version.created,
+    subject_version.modified,
+    subject_version.entity_id,
+    subject_version.previous_version_id,
+    subject_version.language,
+    subject_version.name,
+    subject_version.status,
+    subject_version.available,
+    subject_version.tags,
+    subject_version.user_id,
+    subject_version.session_id,
+    subject_version.body
+   FROM sg_public.subject_version
+  WHERE (subject_version.status = 'accepted'::sg_public.entity_status)
+  ORDER BY subject_version.entity_id, subject_version.created DESC;
+
+
+--
+-- Name: VIEW subject; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON VIEW sg_public.subject IS 'The latest accepted version of each subject.';
+
+
+--
+-- Name: search_subjects(text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.search_subjects(query text) RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE
+    AS $$
+  with documents as (
+    select
+      entity_id,
+      to_tsvector('english', unaccent(name)) ||
+      to_tsvector('english', unaccent(array_to_string(tags, ' '))) ||
+      to_tsvector('english', unaccent(body)) as document
+    from sg_public.subject
+  ),
+  ranking as (
+    select
+      s.entity_id as entity_id,
+      ts_rank(d.document, websearch_to_tsquery('english', unaccent(query))) as rank
+    from
+      sg_public.subject s,
+      documents d
+    where
+      d.document @@ websearch_to_tsquery('english', unaccent(query))
+      and s.entity_id = d.entity_id
+    order by rank desc
+  )
+  select s.*
+  from
+    ranking r,
+    sg_public.subject s
+  where
+    s.entity_id = r.entity_id
+  order by r.rank desc;
+$$;
+
+
+--
+-- Name: FUNCTION search_subjects(query text); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.search_subjects(query text) IS 'Search subjects.';
+
+
+--
+-- Name: select_popular_subjects(); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.select_popular_subjects() RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE
+    AS $$
+  select *
+  from sg_public.subject
+  order by (
+    select count(*)
+    from sg_public.user_subject
+    where subject_id = entity_id
+  )
+  limit 5;
+$$;
+
+
+--
+-- Name: FUNCTION select_popular_subjects(); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.select_popular_subjects() IS 'Select the 5 most popular subjects.';
+
+
+--
 -- Name: send_email_token(text); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
@@ -1356,6 +1455,77 @@ COMMENT ON COLUMN sg_public.subject_version_parent_child.parent_entity_id IS 'Th
 
 
 --
+-- Name: user_subject; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.user_subject (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    user_id uuid,
+    session_id uuid,
+    subject_id uuid NOT NULL,
+    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
+);
+
+
+--
+-- Name: TABLE user_subject; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.user_subject IS 'The association between a user and a subject. This is a subject the learner is learning.';
+
+
+--
+-- Name: COLUMN user_subject.id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.user_subject.id IS 'The ID of the user subject.';
+
+
+--
+-- Name: COLUMN user_subject.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.user_subject.created IS 'When the user created the association.';
+
+
+--
+-- Name: COLUMN user_subject.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.user_subject.modified IS 'When the association last changed.';
+
+
+--
+-- Name: COLUMN user_subject.user_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.user_subject.user_id IS 'Which user the association belongs to.';
+
+
+--
+-- Name: COLUMN user_subject.session_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.user_subject.session_id IS 'If not user, the session the association belongs to.';
+
+
+--
+-- Name: COLUMN user_subject.subject_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.user_subject.subject_id IS 'Which subject the association belongs to.';
+
+
+--
+-- Name: CONSTRAINT user_or_session ON user_subject; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT user_or_session ON sg_public.user_subject IS 'Ensure only the user or session has data.';
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1492,6 +1662,30 @@ ALTER TABLE ONLY sg_public."user"
 
 
 --
+-- Name: user_subject user_subject_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.user_subject
+    ADD CONSTRAINT user_subject_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_subject user_subject_session_id_subject_id_key; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.user_subject
+    ADD CONSTRAINT user_subject_session_id_subject_id_key UNIQUE (session_id, subject_id);
+
+
+--
+-- Name: user_subject user_subject_user_id_subject_id_key; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.user_subject
+    ADD CONSTRAINT user_subject_user_id_subject_id_key UNIQUE (user_id, subject_id);
+
+
+--
 -- Name: user create_user; Type: TRIGGER; Schema: sg_private; Owner: -
 --
 
@@ -1559,6 +1753,20 @@ CREATE TRIGGER insert_subject_version_user_or_session BEFORE INSERT ON sg_public
 --
 
 COMMENT ON TRIGGER insert_subject_version_user_or_session ON sg_public.subject_version IS 'Automatically add the user_id or session_id.';
+
+
+--
+-- Name: user_subject insert_user_subject_user_or_session; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER insert_user_subject_user_or_session BEFORE INSERT ON sg_public.user_subject FOR EACH ROW EXECUTE PROCEDURE sg_private.insert_user_or_session();
+
+
+--
+-- Name: TRIGGER insert_user_subject_user_or_session ON user_subject; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER insert_user_subject_user_or_session ON sg_public.user_subject IS 'Whenever I make a new user subject, auto fill the `user_id` column';
 
 
 --
@@ -1643,6 +1851,20 @@ CREATE TRIGGER update_user_modified BEFORE UPDATE ON sg_public."user" FOR EACH R
 --
 
 COMMENT ON TRIGGER update_user_modified ON sg_public."user" IS 'Whenever the user changes, update the `modified` column.';
+
+
+--
+-- Name: user_subject update_user_subject_modified; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER update_user_subject_modified BEFORE UPDATE ON sg_public.user_subject FOR EACH ROW EXECUTE PROCEDURE sg_private.update_modified_column();
+
+
+--
+-- Name: TRIGGER update_user_subject_modified ON user_subject; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER update_user_subject_modified ON sg_public.user_subject IS 'Whenever a user subject changes, update the `modified` column.';
 
 
 --
@@ -1774,6 +1996,22 @@ ALTER TABLE ONLY sg_public.subject_version
 
 
 --
+-- Name: user_subject user_subject_subject_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.user_subject
+    ADD CONSTRAINT user_subject_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES sg_public.subject_entity(entity_id);
+
+
+--
+-- Name: user_subject user_subject_user_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.user_subject
+    ADD CONSTRAINT user_subject_user_id_fkey FOREIGN KEY (user_id) REFERENCES sg_public."user"(id) ON DELETE CASCADE;
+
+
+--
 -- Name: user delete_user; Type: POLICY; Schema: sg_public; Owner: -
 --
 
@@ -1788,10 +2026,31 @@ CREATE POLICY delete_user_admin ON sg_public."user" FOR DELETE TO sg_admin USING
 
 
 --
+-- Name: user_subject delete_user_subject; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY delete_user_subject ON sg_public.user_subject FOR DELETE TO sg_user, sg_admin USING ((user_id = (current_setting('jwt.claims.user_id'::text))::uuid));
+
+
+--
+-- Name: user_subject insert_user_subject; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY insert_user_subject ON sg_public.user_subject FOR INSERT TO sg_user, sg_admin;
+
+
+--
 -- Name: user select_user; Type: POLICY; Schema: sg_public; Owner: -
 --
 
 CREATE POLICY select_user ON sg_public."user" FOR SELECT USING (true);
+
+
+--
+-- Name: user_subject select_user_subject; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY select_user_subject ON sg_public.user_subject FOR SELECT TO sg_user, sg_admin USING ((user_id = (current_setting('jwt.claims.user_id'::text))::uuid));
 
 
 --
@@ -1815,6 +2074,12 @@ CREATE POLICY update_user_admin ON sg_public."user" FOR UPDATE TO sg_admin USING
 ALTER TABLE sg_public."user" ENABLE ROW LEVEL SECURITY;
 
 --
+-- Name: user_subject; Type: ROW SECURITY; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE sg_public.user_subject ENABLE ROW LEVEL SECURITY;
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -1828,4 +2093,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190201220821'),
     ('20190219221727'),
     ('20190227220630'),
-    ('20190319234401');
+    ('20190319234401'),
+    ('20190322230728');
