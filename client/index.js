@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 const get = require('lodash.get')
+const { convertUuid58ToUuid: toU } = require('uuid58')
 const GQL = require('./util/gql-queries')
 const getGqlErrors = require('./util/gql-errors')
 
@@ -72,6 +73,7 @@ function isAnonymous(req, res, next) {
 function handleRegular(req, res) {
   return res.render('Index', {
     location: req.url,
+    query: req.query,
     cacheHash,
     role: getRole(req),
   })
@@ -113,7 +115,10 @@ app.post('/sign-up', isAnonymous, async (req, res) => {
       get(gqlRes, 'data.signUp.jwtToken'),
       JWT_COOKIE_PARAMS
     )
-    .redirect('/dashboard')
+    .redirect(
+      (req.query.redirect && decodeURIComponent(req.query.redirect)) ||
+        '/dashboard'
+    )
 })
 
 app.get('/log-in', isAnonymous, handleRegular)
@@ -135,7 +140,10 @@ app.post('/log-in', isAnonymous, async (req, res) => {
       get(gqlRes, 'data.logIn.jwtToken'),
       JWT_COOKIE_PARAMS
     )
-    .redirect('/dashboard')
+    .redirect(
+      (req.query.redirect && decodeURIComponent(req.query.redirect)) ||
+        '/dashboard'
+    )
 })
 
 function getQueryState(req) {
@@ -236,11 +244,64 @@ app.get('/log-out', isUser, (req, res) =>
   res.clearCookie(JWT_COOKIE_NAME).redirect('/')
 )
 
-app.get('/dashboard', isUser, handleRegular)
+app.get('/dashboard', isUser, async (req, res) => {
+  const gqlRes = await GQL.learnListUsubj(req)
+  console.log(gqlRes)
+  return res.render('Index', {
+    location: req.url,
+    cacheHash,
+    role: getRole(req),
+    allUserSubjects: {
+      nodes: get(gqlRes, 'data.allUserSubjects.nodes', []).map(
+        ({ id, subject: { entityId, name, body } }) => ({
+          id,
+          entityId,
+          name,
+          body,
+        })
+      ),
+    },
+    name: get(gqlRes, 'data.getCurrentUser.name'),
+  })
+})
+
+app.get('/search-subjects', async (req, res) => {
+  const gqlRes = await GQL.learnSearchSubject(req)
+  return res.render('Index', {
+    location: req.url,
+    query: req.query,
+    cacheHash,
+    role: getRole(req),
+    searchSubjects: get(gqlRes, 'data.searchSubjects'),
+  })
+})
+
+app.get('/next', async (req, res) => {
+  const role = getRole(req)
+  if (role === 'sg_anonymous') {
+    return res.redirect(
+      `/sign-up?redirect=/next?subjectId=${req.query.subjectId}`
+    )
+  }
+  req.query.subjectId = toU(req.query.subjectId)
+  await GQL.learnNewUsubj(req)
+  // TODO If a subject doesn't have enough cards,
+  // suggest creating cards or just following instead.
+  return res.redirect('/dashboard')
+})
+
+app.get('/', async (req, res) => {
+  const gqlRes = await GQL.learnHome(req)
+  return res.render('Index', {
+    location: req.url,
+    cacheHash,
+    role: getRole(req),
+    selectPopularSubjects: get(gqlRes, 'data.selectPopularSubjects'),
+  })
+})
 
 // For pages that don't have specific data requirements
 // and don't require being logged in or logged out:
-// GET /search-subjects
 // GET /server-error
 // GET /terms
 // GET /contact
