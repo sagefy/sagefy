@@ -5,7 +5,11 @@ import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
-export default function LogInPage({ gqlErrors, prevValues: { name } }) {
+export default function LogInPage({
+  gqlErrors,
+  prevValues: { name },
+  query: { redirect },
+}) {
   return (
     <div className="LogInPage">
       <FormErrorsTop formErrors={gqlErrors} />
@@ -18,7 +22,7 @@ export default function LogInPage({ gqlErrors, prevValues: { name } }) {
 
         <p>
           Don&apos;t have an account?{' '}
-          <Link to="/sign-up">
+          <Link to={`/sign-up?redirect=${redirect}`}>
             <Icon i="signUp" /> Sign Up
           </Link>
           .<br />
@@ -69,6 +73,7 @@ export default function LogInPage({ gqlErrors, prevValues: { name } }) {
 LogInPage.propTypes = {
   gqlErrors: shape({}),
   prevValues: shape({}),
+  query: shape({}).isRequired,
 }
 
 LogInPage.defaultProps = {

@@ -68,10 +68,13 @@ export default function Index(props) {
               <Route path="/settings" render={withProps(SettingsPage)} />
               <Route path="/dashboard" render={withProps(DashboardPage)} />
               <Route path="/sign-up" render={withProps(SignUpPage)} />
-              <Route path="/search-subjects" component={SearchSubjectsPage} />
+              <Route
+                path="/search-subjects"
+                render={withProps(SearchSubjectsPage)}
+              />
               <Route path="/contact" component={ContactPage} />
               <Route path="/terms" component={TermsPage} />
-              <Route path="/server-error" render={ServerErrorPage} />
+              <Route path="/server-error" component={ServerErrorPage} />
               <Route path="/" exact component={withProps(HomePage)} />
               <Route component={NotFoundPage} />
             </Switch>

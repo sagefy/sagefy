@@ -1,14 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { string } from 'prop-types'
+import { string, arrayOf, shape } from 'prop-types'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ExternalLink from '../components/ExternalLink'
+import ChooseSubject from '../components/ChooseSubject'
 
-export default function HomePage({ role }) {
+export default function HomePage({ role, selectPopularSubjects }) {
   return (
     <div className="HomePage">
-      {/* <section className="text-align-center">
+      <section className="text-align-center">
         <h1>
           What do you want to learn? <Icon i="search" s="xxl" />
         </h1>
@@ -28,55 +29,6 @@ export default function HomePage({ role }) {
             </button>
           </p>
         </form>
-      </section> */}
-
-      <section>
-        <blockquote>
-          <h1>
-            Hey friends... <Icon i="friends" s="xxl" />
-          </h1>
-
-          <p>So I&apos;m rebuilding Sagefy to let anyone</p>
-          <ol>
-            <li>
-              <em>learn</em> without an account,
-            </li>
-            <li>
-              <em>make</em> content without an account,
-            </li>
-            <li>
-              and to drastically <em>simplify</em> contributing.
-            </li>
-          </ol>
-          <p>
-            Sagefy is temporarily limited. But here&apos;s some things you can
-            do now:
-          </p>
-          <ul>
-            <li>
-              <ExternalLink href="https://docs.sagefy.org/mocks">
-                <Icon i="view" /> <strong>View</strong> the prototype
-              </ExternalLink>{' '}
-              of what&apos;s coming!
-            </li>
-            <li>
-              <Link to="/sign-up">
-                <Icon i="signUp" /> <strong>Sign up</strong>
-              </Link>
-              , and we&apos;ll let you know as we release new stuff.
-            </li>
-            <li>
-              <ExternalLink href="https://sgfy.xyz/devupdates">
-                <Icon i="updates" /> <strong>Subscribe</strong> to biweekly
-                email updates
-              </ExternalLink>
-              .
-            </li>
-          </ul>
-          <p>
-            <small>Last updated 2019 Mar 8</small>
-          </p>
-        </blockquote>
       </section>
 
       {role === 'sg_anonymous' ? (
@@ -105,37 +57,51 @@ export default function HomePage({ role }) {
         </section>
       )}
 
-      {/* TODO make functional
+      {(selectPopularSubjects.nodes.length && (
+        <section>
+          <h2>
+            ...or try something popular <Icon i="popular" s="xl" />
+          </h2>
+          <ChooseSubject subjects={selectPopularSubjects.nodes} />
+        </section>
+      )) ||
+        null}
+
       <section>
-        <h2>
-          ...or try something popular <Icon i="popular" s="xl" />
-        </h2>
-        <table>
-          <tr>
-            <td className="text-align-center collapse-margins">
-              <p>
-                <button type="button">
-                  <Icon i="up" />
-                </button>
-              </p>
-              <code>12</code>
-            </td>
-            <td className="collapse-margins">
-              <h3>
-                <Link to="/choose-next">
-                  An Introduction to Electronic Music
-                </Link>
-              </h3>
-              <p>
-                A small taste of the basics of electronic music. Learn the
-                concepts behind creating and modifying sounds in an electronic
-                music system. Learn the ideas behind the tools and systems we
-                use to create electronic music.
-              </p>
-            </td>
-          </tr>
-        </table>
-      </section> */}
+        <blockquote>
+          <h1>
+            Hey friends... <Icon i="friends" s="xxl" />
+          </h1>
+          <p>
+            So I&apos;m rebuilding Sagefy to (1) let anyone <em>learn</em>{' '}
+            without an account, (2) <em>make</em> content without an account,
+            and to (3) drastically <em>simplify</em> contributing. Sagefy is
+            temporarily limited. For now:
+          </p>
+          <ul>
+            <li>
+              <Icon i="subject" /> <strong>Follow</strong> some subjects! Search
+              above or add below!
+            </li>
+            <li>
+              <ExternalLink href="https://docs.sagefy.org/mocks">
+                <Icon i="view" /> <strong>View</strong> the prototype
+              </ExternalLink>{' '}
+              of what&apos;s coming!
+            </li>
+            <li>
+              <ExternalLink href="https://sgfy.xyz/devupdates">
+                <Icon i="updates" /> <strong>Subscribe</strong> to biweekly
+                email updates
+              </ExternalLink>
+              .
+            </li>
+          </ul>
+          <p>
+            <small>Last updated 2019 Mar 27</small>
+          </p>
+        </blockquote>
+      </section>
 
       <section>
         <div className="text-align-center collapse-margins">
@@ -175,8 +141,10 @@ export default function HomePage({ role }) {
 
 HomePage.propTypes = {
   role: string,
+  selectPopularSubjects: arrayOf(shape({})),
 }
 
 HomePage.defaultProps = {
   role: 'sg_anonymous',
+  selectPopularSubjects: { nodes: [] },
 }

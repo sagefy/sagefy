@@ -17,9 +17,9 @@ export default function PasswordPage({ gqlErrors, state }) {
 
         <ol>
           {[
-            { name: 'Enter Email', icon: 'email' },
-            { name: 'Check Inbox', icon: 'inbox' },
-            { name: 'Change Password', icon: 'password' },
+            { name: 'Enter your email', icon: 'email' },
+            { name: 'Check your inbox', icon: 'inbox' },
+            { name: 'Change your password', icon: 'password' },
           ].map(({ name, icon }, index) => (
             <li key={`PasswordPage-steps-${name}`}>
               {index === state ? (

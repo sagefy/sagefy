@@ -1,10 +1,14 @@
 import React from 'react'
-import { string } from 'prop-types'
-// import { Link } from 'react-router-dom'
+import { string, arrayOf, shape } from 'prop-types'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
+import ChooseSubject from '../components/ChooseSubject'
 
-export default function SearchSubjectsPage({ role, q }) {
+export default function SearchSubjectsPage({
+  role,
+  query: { q },
+  searchSubjects,
+}) {
   return (
     <div className="SearchSubjectsPage">
       <section className="text-align-center">
@@ -18,7 +22,8 @@ export default function SearchSubjectsPage({ role, q }) {
               size="40"
               value={q}
               placeholder="example: Music"
-              autoFocus
+              autoFocus={!!q}
+              name="q"
             />
           </p>
           <p>
@@ -29,91 +34,40 @@ export default function SearchSubjectsPage({ role, q }) {
         </form>
       </section>
 
-      {/* Search results, if there are none ... whats the empty state? *}
-      {/* TODO make real *}
-      <section>
-        <h2>
-          Choose from one of these subjects <Icon i="subject" s="xl" />
-        </h2>
+      {(searchSubjects && searchSubjects.nodes.length && (
+        <section>
+          <h2>
+            Choose from one of these subjects <Icon i="subject" s="xl" />
+          </h2>
+          <ChooseSubject subjects={searchSubjects.nodes} />
+        </section>
+      )) ||
+        null}
 
-        <table>
-          <tr>
-            <td className="text-align-center collapse-margins">
-              <p>
-                <button type="submit">
-                  <Icon i="up" />
-                </button>
-              </p>
-              <code>12</code>
-            </td>
-            <td className="collapse-margins">
-              <h3>
-                <mark>
-                  <Link to="/choose-next">
-                    An Introduction to Electronic Music
-                  </Link>
-                </mark>
-              </h3>
-              {/* If a subject doesn't have enough cards, suggest creating cards or just following instead. *}
-              <p>
-                A small taste of the basics of electronic music. Learn the
-                concepts behind creating and modifying sounds in an electronic
-                music system. Learn the ideas behind the tools and systems we
-                use to create electronic music.
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td className="text-align-center collapse-margins">
-              <p>
-                <button type="button">
-                  <Icon i="up" />
-                </button>
-              </p>
-              <code>12</code>
-            </td>
-            <td className="collapse-margins">
-              <h3>
-                <a href="/choose-next">Lets Play Classical Guitar</a>
-              </h3>
-              <p>
-                An introduction to classical guitar. Lets learn some chords. And
-                how to read guitar tabulature.
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td className="text-align-center collapse-margins">
-              <p>
-                <button type="button">
-                  <Icon i="up" />
-                </button>
-              </p>
-              <code>12</code>
-            </td>
-            <td className="collapse-margins">
-              <h3>
-                <a href="/choose-next">Welcome to Music Theory</a>
-              </h3>
-              <p>
-                Well cover the basics of how to read sheet music. Chords,
-                progressions, and sequences. Harmony.
-              </p>
-            </td>
-          </tr>
-        </table>
-      </section>
+      {q && (
+        <section>
+          <h2>
+            Not seeing what you want? <Icon i="error" s="xl" />
+          </h2>
+          <p>
+            Right now Sagefy is temporarily limited. Soon you&apos;ll be able to
+            suggest a new subject right here! Stay tuned.
+          </p>
+        </section>
+      )}
 
+      {/* TODO when !q, show popular subjects here */}
 
+      {/*
         TODO once you can create a subject...
       <section>
         <p><mark>🤷🏽‍♀️ Not seeing what you want? 🤷🏽‍♀️</mark></p>
 
         {/* alternative: Looking for something else? (if no search) *
-        {/* alternative: We couldn't find anything (if couldn't find anything) *
+        {/* alternative:  (if couldn't find anything) *
 
         <details>
-          <summary><h2 class="display-inline-block">You can make a new subject 💡</h2></summary>
+          <summary><h2 class="display-inline-block">You can suggest a new subject 💡</h2></summary>
 
           <form action="/create-subject">
             <p>
@@ -151,10 +105,11 @@ export default function SearchSubjectsPage({ role, q }) {
 
 SearchSubjectsPage.propTypes = {
   role: string,
-  q: string,
+  query: shape({}).isRequired,
+  searchSubjects: arrayOf(shape({})),
 }
 
 SearchSubjectsPage.defaultProps = {
   role: 'sg_anonymous',
-  q: '',
+  searchSubjects: null,
 }

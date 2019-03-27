@@ -1,21 +1,83 @@
 import React from 'react'
+import { string, arrayOf, shape } from 'prop-types'
 // import { Link } from 'react-router-dom'
-import { string } from 'prop-types'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
+import ChooseSubject from '../components/ChooseSubject'
+import CardSubjectInfo from '../components/CardSubjectInfo'
 
-export default function DashboardPage({ role }) {
+export default function DashboardPage({ role, allUserSubjects, name }) {
   return (
     <div className="DashboardPage">
-      <section>
-        <h1>
-          Welcome to Sagefy <Icon i="dashboard" s="xxl" />
-        </h1>
+      <section className="collapse-margins">
         <p>
-          I&apos;ve reserved your user name and password! That said, there
-          isn&apos;t much to do right now.
+          <em>
+            Hi {name}, welcome back!{' '}
+            <img src="/astrolabe.svg" height="24" alt="astrolabe" />
+          </em>
         </p>
+        {/* TODO copy should change based on state */}
+        <h1>
+          What do you want to learn? <Icon i="dashboard" s="xxl" />
+        </h1>
       </section>
+
+      {(allUserSubjects && allUserSubjects.nodes.length && (
+        <section>
+          <h2>
+            Choose one of your subjects <Icon i="subject" s="xl" />
+          </h2>
+          <p>
+            <em>Sorry, for now its just a list... stay tuned!</em>
+          </p>
+          <ChooseSubject subjects={allUserSubjects.nodes} active={false} />
+          <table>
+            <tr>
+              <td className="collapse-margins" colSpan="2">
+                <h3>
+                  ...or how about something else? <Icon i="search" s="l" />
+                </h3>
+                <form action="/search-subjects">
+                  <input
+                    type="search"
+                    size="40"
+                    placeholder="example: Music"
+                    name="q"
+                  />
+                  <button type="submit">
+                    <Icon i="search" /> Search
+                  </button>
+                </form>
+              </td>
+            </tr>
+          </table>
+        </section>
+      )) || (
+        <section className="text-align-center">
+          <h2>
+            Let&apos;s get you some subjects! <Icon i="search" s="xl" />
+          </h2>
+          {/* TODO If the user has no subjects, then also list popular subjects here */}
+          <form action="/search-subjects">
+            <p>
+              <input
+                type="search"
+                size="40"
+                placeholder="example: Music"
+                autoFocus
+                name="q"
+              />
+            </p>
+            <p>
+              <button type="submit">
+                <Icon i="search" /> Search
+              </button>
+            </p>
+          </form>
+        </section>
+      )}
+
+      <CardSubjectInfo />
 
       <Footer role={role} />
     </div>
@@ -24,91 +86,17 @@ export default function DashboardPage({ role }) {
 
 DashboardPage.propTypes = {
   role: string,
+  name: string,
+  allUserSubjects: arrayOf(shape({})),
 }
 
 DashboardPage.defaultProps = {
   role: 'sg_anonymous',
+  name: 'friend',
+  allUserSubjects: { nodes: [] },
 }
 
 /*
-      <section className="collapse-margins">
-        <p>
-          <em>Hi Doris, welcome back!</em>
-        </p>{' '}
-        {/* TODO copy should change based on state *}
-        <h1>
-          What do you want to learn?{' '}
-          <img src="/astrolabe.svg" height="32" alt="astrolabe" />
-        </h1>
-      </section>
-
-      TODO If the user has no subjects, then list popular subjects here instead
-      TODO implement
-      <section>
-        <h2>
-          Choose one of your subjects <Icon i="subject" s="xl" />
-        </h2>
-        <table>
-          <tr>
-            <td className="text-align-center collapse-margins">
-              <p>
-                <button type="submit">
-                  <Icon i="up" />
-                </button>
-              </p>
-              <code>15%</code>
-            </td>
-            <td className="collapse-margins">
-              <h3>
-                <mark>
-                  <Link to="/choose-next">
-                    An Introduction to Electronic Music
-                  </Link>
-                </mark>
-              </h3>
-              <p>
-                A small taste of the basics of electronic music. Learn the
-                concepts behind creating and modifying sounds in an electronic
-                music system. Learn the ideas behind the tools and systems we
-                use to create electronic music.
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td className="text-align-center collapse-margins">
-              <p>
-                <button type="button">
-                  <Icon i="up" />
-                </button>
-              </p>
-              <code>0%</code>
-            </td>
-            <td className="collapse-margins">
-              <h3>
-                <Link to="/choose-next">Lets Play Classical Guitar</Link>
-              </h3>
-              <p>
-                An introduction to classical guitar. Lets learn some chords. And
-                how to read guitar tabulature.
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td className="collapse-margins" colSpan="2">
-              <h3>
-                ...or how about something else? <Icon i="search" s="l" />
-              </h3>
-              <form action="/search-subjects">
-                <input type="search" size="40" placeholder="example: Music" />
-                <button type="submit">
-                  <Icon i="search" /> Search
-                </button>
-              </form>
-            </td>
-          </tr>
-        </table>
-      </section>
-
 
 <section>
   <h2>You've got some new notices 🔔</h2>
@@ -127,6 +115,9 @@ DashboardPage.defaultProps = {
     </li>
   </ul>
 </section>
+
+*/
+/*
 
 <section>
   <h2>Help us build Sagefy 🌳</h2>
@@ -201,32 +192,4 @@ DashboardPage.defaultProps = {
   </details>
 </section>
 
-<section>
-  <details>
-    <summary>
-      <span>🤷🏽‍♀️ What are cards &amp; subjects? 🤷🏽‍♀️</span>
-    </summary>
-    <ul>
-      <li>
-        <p>A <strong>card</strong> is a single learning activity. 🃏</p>
-        <blockquote>
-          <p>Examples: a 3-minute video or a multiple choice question.</p>
-        </blockquote>
-      </li>
-      <li>
-        <p>
-          A <strong>subject</strong> is a collection of cards and other
-          subjects. 📚
-        </p>
-        <blockquote>
-          <p>
-            Like a course, but at any scale. Such as “Measures of Central
-            Tendency”, “Intro to Statistics”, or even a complete statistics
-            program.
-          </p>
-        </blockquote>
-      </li>
-    </ul>
-  </details>
-</section>
 */

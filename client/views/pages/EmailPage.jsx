@@ -17,9 +17,9 @@ export default function EmailPage({ gqlErrors, state }) {
 
         <ol>
           {[
-            { name: 'Enter Current Email', icon: 'email' },
-            { name: 'Check Inbox', icon: 'inbox' },
-            { name: 'Change Email', icon: 'email' },
+            { name: 'Enter your current email', icon: 'email' },
+            { name: 'Check your inbox', icon: 'inbox' },
+            { name: 'Change your email', icon: 'email' },
           ].map(({ name, icon }, index) => (
             <li key={`EmailPage-steps-${name}`}>
               {index === state ? (

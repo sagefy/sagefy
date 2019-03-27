@@ -13,7 +13,7 @@ export default function SettingsPage({ gqlErrors, prevValues: { id, name } }) {
 
       <section>
         <h1>
-          Update my settings <Icon i="settings" s="xxl" />
+          Update your settings <Icon i="settings" s="xxl" />
         </h1>
         <p>
           <Link to="/password">
