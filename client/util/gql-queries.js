@@ -11,15 +11,18 @@ function convertDashToCamel(str) {
 }
 
 module.exports = fromPairs(
-  fs.readdirSync('./graphql').map(filename => [
-    convertDashToCamel(
-      filename.replace('./graphql/', '').replace('.graphql', '')
-    ),
-    req =>
-      gqlRequest({
-        query: fs.readFileSync(`./graphql/${filename}`, 'utf8'),
-        variables: req.body,
-        jwtToken: get(req.cookies, JWT_COOKIE_NAME),
-      }),
-  ])
+  fs.readdirSync('./graphql').map(filename => {
+    const query = fs.readFileSync(`./graphql/${filename}`, 'utf8')
+    return [
+      convertDashToCamel(
+        filename.replace('./graphql/', '').replace('.graphql', '')
+      ),
+      req =>
+        gqlRequest({
+          query,
+          variables: { ...req.body, ...req.query },
+          jwtToken: get(req.cookies, JWT_COOKIE_NAME),
+        }),
+    ]
+  })
 )
