@@ -135,6 +135,8 @@ async function makeSubjects(client, { users }) {
     )).rows[0]
   }
 
+  await letsJwtOut(client)
+
   await client.query(
     `update sg_public.subject_version set status = 'accepted';`
   )
