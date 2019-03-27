@@ -1,11 +1,17 @@
 ---
 layout: docs
-title: Sagefy Development Updates
+title: Sagefy Updates
+---
+
+<script type="text/javascript" src="https://static.mailerlite.com/data/webforms/804986/r4n2l2.js?v7"></script>
+
+- One email per two weeks.
+- Only development news. No spam.
+- Unsubscribe at any time.
+
 ---
 
 This is a reverse chronological listing of updates on Sagefy's progress. I will try to do these biweekly.
-
-You can sign up for email updates at https://sgfy.xyz/devupdates
 
 ## UPDATE -- 2019 Mar 18
 
