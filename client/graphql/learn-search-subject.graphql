@@ -1,5 +1,5 @@
-query learnSearchSubject($query: String!) {
-  searchSubjects(query: $query) {
+query learnSearchSubject($q: String!) {
+  searchSubjects(query: $q) {
     nodes {
       entityId
       name
