@@ -17,7 +17,8 @@ begin
 end;
 $$ language plpgsql strict security definer;
 comment on function sg_private.insert_user_or_session()
-  is 'When inserting a row, automatically set the `user_id` or `session_id` field.';
+  is 'When inserting a row, '
+     'automatically set the `user_id` or `session_id` field.';
 
 grant select on table sg_public.subject_version
   to sg_anonymous, sg_user, sg_admin;
@@ -52,11 +53,20 @@ comment on column sg_public.user_subject.subject_id
 comment on constraint user_or_session on sg_public.user_subject
   is 'Ensure only the user or session has data.';
 
-create or replace function sg_public.user_subject_subject(user_subject sg_public.user_subject)
+create view sg_public.subject as
+  select distinct on (entity_id) *
+  from sg_public.subject_version
+  where status = 'accepted'
+  order by entity_id, created desc;
+comment on view sg_public.subject
+  is 'The latest accepted version of each subject.';
+grant select on sg_public.subject to sg_anonymous, sg_user, sg_admin;
+
+create or replace function sg_public.user_subject_subject(us sg_public.user_subject)
 returns sg_public.subject as $$
   select s.*
   from sg_public.subject as s
-  where s.entity_id = user_subject.subject_id
+  where s.entity_id = us.subject_id
   limit 1;
 $$ language sql stable;
 comment on function sg_public.user_subject_subject(sg_public.user_subject)
@@ -69,7 +79,8 @@ create trigger insert_user_subject_user_or_session
   for each row execute procedure sg_private.insert_user_or_session();
 comment on trigger insert_user_subject_user_or_session
   on sg_public.user_subject
-  is 'Whenever I make a new user subject, auto fill the `user_id` column';
+  is 'Whenever I make a new user subject, '
+     'auto fill the `user_id` or `session_id` field.';
 
 create trigger update_user_subject_modified
   before update on sg_public.user_subject
@@ -84,8 +95,8 @@ grant select on table sg_public.user_subject to sg_anonymous, sg_user, sg_admin;
 create policy select_user_subject on sg_public.user_subject
   for select to sg_anonymous, sg_user, sg_admin
   using (
-    user_id = current_setting('jwt.claims.user_id', true)::uuid
-    or session_id = current_setting('jwt.claims.session_id', true)::uuid
+    user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
+    or session_id = nullif(current_setting('jwt.claims.session_id', true), '')::uuid
   );
 comment on policy select_user_subject on sg_public.user_subject
   is 'A user may select their own subject relationships.';
@@ -106,22 +117,13 @@ grant delete on table sg_public.user_subject to sg_anonymous, sg_user, sg_admin;
 create policy delete_user_subject on sg_public.user_subject
   for delete to sg_anonymous, sg_user, sg_admin
   using (
-    user_id = current_setting('jwt.claims.user_id', true)::uuid
-    or session_id = current_setting('jwt.claims.session_id', true)::uuid
+    user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
+    or session_id = nullif(current_setting('jwt.claims.session_id', true), '')::uuid
   );
 comment on policy delete_user_subject on sg_public.user_subject
   is 'A user can delete their own user subject.';
 
-create view sg_public.subject as
-  select distinct on (entity_id) *
-  from sg_public.subject_version
-  where status = 'accepted'
-  order by entity_id, created desc;
-comment on view sg_public.subject
-  is 'The latest accepted version of each subject.';
-grant select on sg_public.subject to sg_anonymous, sg_user, sg_admin;
-
-create function sg_public.select_popular_subjects()
+create or replace function sg_public.select_popular_subjects()
 returns setof sg_public.subject as $$
   select *
   from sg_public.subject
@@ -129,9 +131,10 @@ returns setof sg_public.subject as $$
     select count(*)
     from sg_public.user_subject
     where subject_id = entity_id
-  )
+  ) desc
   limit 5;
-$$ language sql stable;
+$$ language sql stable strict security definer;
+-- This function should count all usubjs, not just the current users.
 comment on function sg_public.select_popular_subjects()
   is 'Select the 5 most popular subjects.';
 grant execute on function sg_public.select_popular_subjects()

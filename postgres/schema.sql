@@ -982,7 +982,7 @@ COMMENT ON FUNCTION sg_public.search_subjects(query text) IS 'Search subjects.';
 --
 
 CREATE FUNCTION sg_public.select_popular_subjects() RETURNS SETOF sg_public.subject
-    LANGUAGE sql STABLE
+    LANGUAGE sql STABLE STRICT SECURITY DEFINER
     AS $$
   select *
   from sg_public.subject
@@ -990,7 +990,7 @@ CREATE FUNCTION sg_public.select_popular_subjects() RETURNS SETOF sg_public.subj
     select count(*)
     from sg_public.user_subject
     where subject_id = entity_id
-  )
+  ) desc
   limit 5;
 $$;
 
@@ -1164,6 +1164,98 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_public.update_password(new_password text) IS 'Update the user''s password.';
+
+
+--
+-- Name: user_subject; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.user_subject (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    user_id uuid,
+    session_id uuid,
+    subject_id uuid NOT NULL,
+    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
+);
+
+
+--
+-- Name: TABLE user_subject; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.user_subject IS 'The association between a user and a subject. This is a subject the learner is learning.';
+
+
+--
+-- Name: COLUMN user_subject.id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.user_subject.id IS 'The ID of the user subject.';
+
+
+--
+-- Name: COLUMN user_subject.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.user_subject.created IS 'When the user created the association.';
+
+
+--
+-- Name: COLUMN user_subject.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.user_subject.modified IS 'When the association last changed.';
+
+
+--
+-- Name: COLUMN user_subject.user_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.user_subject.user_id IS 'Which user the association belongs to.';
+
+
+--
+-- Name: COLUMN user_subject.session_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.user_subject.session_id IS 'If not user, the session the association belongs to.';
+
+
+--
+-- Name: COLUMN user_subject.subject_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.user_subject.subject_id IS 'Which subject the association belongs to.';
+
+
+--
+-- Name: CONSTRAINT user_or_session ON user_subject; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT user_or_session ON sg_public.user_subject IS 'Ensure only the user or session has data.';
+
+
+--
+-- Name: user_subject_subject(sg_public.user_subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.user_subject_subject(us sg_public.user_subject) RETURNS sg_public.subject
+    LANGUAGE sql STABLE
+    AS $$
+  select s.*
+  from sg_public.subject as s
+  where s.entity_id = us.subject_id
+  limit 1;
+$$;
+
+
+--
+-- Name: FUNCTION user_subject_subject(us sg_public.user_subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.user_subject_subject(us sg_public.user_subject) IS 'Gets the subject related to the user subject relation.';
 
 
 --
@@ -1458,77 +1550,6 @@ COMMENT ON COLUMN sg_public.subject_version_parent_child.parent_entity_id IS 'Th
 
 
 --
--- Name: user_subject; Type: TABLE; Schema: sg_public; Owner: -
---
-
-CREATE TABLE sg_public.user_subject (
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    user_id uuid,
-    session_id uuid,
-    subject_id uuid NOT NULL,
-    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
-);
-
-
---
--- Name: TABLE user_subject; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON TABLE sg_public.user_subject IS 'The association between a user and a subject. This is a subject the learner is learning.';
-
-
---
--- Name: COLUMN user_subject.id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.user_subject.id IS 'The ID of the user subject.';
-
-
---
--- Name: COLUMN user_subject.created; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.user_subject.created IS 'When the user created the association.';
-
-
---
--- Name: COLUMN user_subject.modified; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.user_subject.modified IS 'When the association last changed.';
-
-
---
--- Name: COLUMN user_subject.user_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.user_subject.user_id IS 'Which user the association belongs to.';
-
-
---
--- Name: COLUMN user_subject.session_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.user_subject.session_id IS 'If not user, the session the association belongs to.';
-
-
---
--- Name: COLUMN user_subject.subject_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.user_subject.subject_id IS 'Which subject the association belongs to.';
-
-
---
--- Name: CONSTRAINT user_or_session ON user_subject; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON CONSTRAINT user_or_session ON sg_public.user_subject IS 'Ensure only the user or session has data.';
-
-
---
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1769,7 +1790,7 @@ CREATE TRIGGER insert_user_subject_user_or_session BEFORE INSERT ON sg_public.us
 -- Name: TRIGGER insert_user_subject_user_or_session ON user_subject; Type: COMMENT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON TRIGGER insert_user_subject_user_or_session ON sg_public.user_subject IS 'Whenever I make a new user subject, auto fill the `user_id` column';
+COMMENT ON TRIGGER insert_user_subject_user_or_session ON sg_public.user_subject IS 'Whenever I make a new user subject, auto fill the `user_id` or `session_id` field.';
 
 
 --
@@ -2032,14 +2053,14 @@ CREATE POLICY delete_user_admin ON sg_public."user" FOR DELETE TO sg_admin USING
 -- Name: user_subject delete_user_subject; Type: POLICY; Schema: sg_public; Owner: -
 --
 
-CREATE POLICY delete_user_subject ON sg_public.user_subject FOR DELETE TO sg_anonymous, sg_user, sg_admin USING (((user_id = (current_setting('jwt.claims.user_id'::text, true))::uuid) OR (session_id = (current_setting('jwt.claims.session_id'::text, true))::uuid)));
+CREATE POLICY delete_user_subject ON sg_public.user_subject FOR DELETE TO sg_anonymous, sg_user, sg_admin USING (((user_id = (NULLIF(current_setting('jwt.claims.user_id'::text, true), ''::text))::uuid) OR (session_id = (NULLIF(current_setting('jwt.claims.session_id'::text, true), ''::text))::uuid)));
 
 
 --
 -- Name: user_subject insert_user_subject; Type: POLICY; Schema: sg_public; Owner: -
 --
 
-CREATE POLICY insert_user_subject ON sg_public.user_subject FOR INSERT TO sg_anonymous, sg_user, sg_admin;
+CREATE POLICY insert_user_subject ON sg_public.user_subject FOR INSERT TO sg_anonymous, sg_user, sg_admin WITH CHECK (true);
 
 
 --
@@ -2053,7 +2074,7 @@ CREATE POLICY select_user ON sg_public."user" FOR SELECT USING (true);
 -- Name: user_subject select_user_subject; Type: POLICY; Schema: sg_public; Owner: -
 --
 
-CREATE POLICY select_user_subject ON sg_public.user_subject FOR SELECT TO sg_anonymous, sg_user, sg_admin USING (((user_id = (current_setting('jwt.claims.user_id'::text, true))::uuid) OR (session_id = (current_setting('jwt.claims.session_id'::text, true))::uuid)));
+CREATE POLICY select_user_subject ON sg_public.user_subject FOR SELECT TO sg_anonymous, sg_user, sg_admin USING (((user_id = (NULLIF(current_setting('jwt.claims.user_id'::text, true), ''::text))::uuid) OR (session_id = (NULLIF(current_setting('jwt.claims.session_id'::text, true), ''::text))::uuid)));
 
 
 --
