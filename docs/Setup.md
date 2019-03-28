@@ -62,9 +62,9 @@ How to deploy the latest master:
     cd /var/sagefy
     git pull origin master
     npm install
-    docker-compose restart
     # if db migrations...
-    dbmate -d "./migrations" -s "./schema.sql" up
+    cd postgres && dbmate -d "./migrations" -s "./schema.sql" up
+    docker-compose restart
 
 ## Back up database
 
