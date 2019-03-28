@@ -7,11 +7,15 @@ describe('learn-new-usubj', () => {
     expect(true).toBe(false)
   })
 
-  it.skip('require subject_id user_or_session', () => {
+  it.skip('require subject_id and user or session', () => {
     expect(true).toBe(false)
   })
 
   it.skip('Unique user/session to subject relation (no duplicates)', () => {
+    expect(true).toBe(false)
+  })
+
+  it.skip('If updated, update modified field', () => {
     expect(true).toBe(false)
   })
 })
