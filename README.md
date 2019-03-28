@@ -15,8 +15,8 @@ What's next?
 
 - [Visit the site](https://sagefy.org).
 - For more information, [watch this 3 minute YouTube video](https://youtu.be/gFn4Q9tx7Qs) or [read the docs](https://docs.sagefy.org).
-- Want to help? [Check out our contributors' list.](https://docs.sagefy.org/Want-to-Help)
-- Sign up for [development updates](https://sgfy.xyz/devupdates).
+- Want to help? [Check out our contributors' list.](https://docs.sagefy.org/want-to-help)
+- Sign up for [updates](https://sgfy.xyz/updates).
 - Share us on [Twitter](https://twitter.com/sagefyorg).
 
 [![CircleCI](https://circleci.com/gh/sagefy/sagefy/tree/master.svg?style=svg)](https://circleci.com/gh/sagefy/sagefy/tree/master)

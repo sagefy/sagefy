@@ -16,4 +16,4 @@ The ideas are research-backed principles to improve learning results.
 
 Read the full [8 Big Ideas of Learning](https://sgfy.xyz/ideas) article or the [TL;DR version](https://sgfy.xyz/tldrideas).
 
-What's next? [Continue to "Cards & Subjects"](/Cards-Subjects).
+What's next? [Continue to "Cards & Subjects"](/cards-subjects).

@@ -41,7 +41,7 @@ exports[`Footer component should render a footer 1`] = `
       </li>
       <li>
         <ExternalLink
-          href="https://sgfy.xyz/devupdates"
+          href="https://sgfy.xyz/updates"
         >
           <Icon
             i="updates"

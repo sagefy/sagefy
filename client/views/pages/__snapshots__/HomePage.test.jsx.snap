@@ -76,7 +76,7 @@ exports[`HomePage should render the home page 1`] = `
         </li>
         <li>
           <ExternalLink
-            href="https://sgfy.xyz/devupdates"
+            href="https://sgfy.xyz/updates"
           >
             <Icon
               i="updates"
@@ -266,7 +266,7 @@ exports[`HomePage should render the logged in home page 1`] = `
         </li>
         <li>
           <ExternalLink
-            href="https://sgfy.xyz/devupdates"
+            href="https://sgfy.xyz/updates"
           >
             <Icon
               i="updates"

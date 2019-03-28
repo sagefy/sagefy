@@ -283,7 +283,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 ### 2018 May 14 - 2018 May 27
 
-- Created ["Want to Help?" page](https://docs.sagefy.org/Want-to-Help) for prospective contributors... if you're interested in helping building Sagefy, even something small, check out the link!
+- Created ["Want to Help?" page](https://docs.sagefy.org/want-to-help) for prospective contributors... if you're interested in helping building Sagefy, even something small, check out the link!
 - Updated [README.md](https://github.com/heiskr/sagefy/blob/master/README.md) and [homepage](https://sagefy.org/) copy
 - Added examples to Sound Parameters unit
 - Started work on client code updates to support upcoming features
@@ -358,7 +358,7 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 
 - Built example for ["Duration and Rhythm"](http://em.sagefy.org/examples/duration-and-rhythm)
 - Launched a test page to collect emails for ["Make Your Own Learning Plan"](https://sgfy.xyz/learnplan)
-- Moved over [dev newsletter sign up](https://sgfy.xyz/devupdates) page to own server
+- Moved over [dev newsletter sign up](https://sgfy.xyz/updates) page to own server
 - Updated code to check login status, so it logs you out if your session is invalid.
 - Fixed double loading state issue.
 - Addressed a security concern with Redis.
