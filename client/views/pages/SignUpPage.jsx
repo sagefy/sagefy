@@ -22,7 +22,7 @@ export default function SignUpPage({
 
         <p>
           Already have an account?{' '}
-          <Link to={`/log-in?redirect=${redirect}`}>
+          <Link to={redirect ? `/log-in?redirect=${redirect}` : '/log-in'}>
             <Icon i="logIn" /> Log In
           </Link>
           .<br />
