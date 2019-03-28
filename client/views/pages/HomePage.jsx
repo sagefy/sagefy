@@ -90,7 +90,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
               of what&apos;s coming!
             </li>
             <li>
-              <ExternalLink href="https://sgfy.xyz/devupdates">
+              <ExternalLink href="https://sgfy.xyz/updates">
                 <Icon i="updates" /> <strong>Subscribe</strong> to biweekly
                 email updates
               </ExternalLink>

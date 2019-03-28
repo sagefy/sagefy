@@ -14,9 +14,9 @@ Sagefy is an _open-content, adaptive learning_ platform.
 
 ### What's next?
 
-- Continue to [8 Big Ideas](http://docs.sagefy.org/Ideas) or [Cards & Subjects](http://docs.sagefy.org/Cards-Subjects).
+- Continue to [8 Big Ideas](http://docs.sagefy.org/ideas) or [Cards & Subjects](http://docs.sagefy.org/cards-subjects).
 - [Visit the site](https://sagefy.org).
 - For more information, [watch this 3 minute YouTube video](https://youtu.be/gFn4Q9tx7Qs).
-- Want to help? [Check out our contributors' list.](https://docs.sagefy.org/Want-to-Help)
-- Sign up for [development updates](https://sgfy.xyz/devupdates).
+- Want to help? [Check out our contributors' list.](https://docs.sagefy.org/want-to-help)
+- Sign up for [updates](/updates).
 - Share us on [Twitter](https://twitter.com/sagefyorg).

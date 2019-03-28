@@ -25,7 +25,7 @@ For more details and examples, [check out this 3-minute overview video](https://
 - A card must belong to a single subject of the same language.
 - ~~A card can have before and after cards (prerequisites). These cannot form a cycle.~~
 - Each card kind has its own requirements.
-- For more card kinds, see [Card Kinds](Card-Kinds).
+- For more card kinds, see [Card Kinds](/card-kinds).
 
 ## Subject Requirements
 
@@ -37,4 +37,4 @@ For more details and examples, [check out this 3-minute overview video](https://
 - A subject may have many children
 - A subject can have before and after subjects (prerequisites). These cannot form a cycle.
 
-What's next? [Continue to "Want to Help?"](/Want-to-Help).
+What's next? [Continue to "Want to Help?"](/want-to-help).

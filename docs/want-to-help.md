@@ -7,13 +7,13 @@ Interested in contributing to Sagefy? Here's some areas we could use some help. 
 
 If you'd like to reach out, feel free to hit us up on [Twitter](https://twitter.com/sagefyorg) or [send an email](mailto:support@sagefy.org).
 
-Also, if you're interested, [sign up for development updates](https://sgfy.xyz/devupdates).
+Also, if you're interested, [sign up for updates](https://sgfy.xyz/updates).
 
 ## Content
 
 - Building any content of your choosing.
   - This is by far the most important item on the list!
-  - [Read this doc](http://docs.sagefy.org/How-to-Build-a-Course-in-Sagefy) and reach out! More than happy to help organize and get content into the system.
+  - [Read this doc](http://docs.sagefy.org/how-to-build-a-course-in-sagefy) and reach out! More than happy to help organize and get content into the system.
   - We've very interested in topics outside of mathematics, computer science, and foreign languages (though those are good too)! Arts, history, natural sciences, social sciences, and more are all welcome!
 - Helping us to mass pull content from a high-quality content source.
   - Researching different options available.
@@ -37,7 +37,7 @@ Also, if you're interested, [sign up for development updates](https://sgfy.xyz/d
 - [Feedback](https://sgfy.xyz/issues) on the system so far
 - Testing and [filing bugs](https://sgfy.xyz/issues)
 - Contributing ideas to our [board](https://sgfy.xyz/issues)
-- Learn how to [set up](http://docs.sagefy.org/Setup) a local development environment
+- Learn how to [set up](http://docs.sagefy.org/setup) a local development environment
 - Unit tests for the browser experience
 - Increasing API tests to 99% coverage
 - Building new features and fixing bugs, such as:
