@@ -67,7 +67,7 @@ returns setof sg_public.card as $$
   where entity_id in (
     select entity_id
     from sg_public.card_version
-    where user_id = current_setting('jwt.claims.user_id')::uuid
+    where user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
   );
 $$ language sql stable;
 comment on function sg_public.select_my_cards()
@@ -82,7 +82,7 @@ returns setof sg_public.subject as $$
   where entity_id in (
     select entity_id
     from sg_public.subject_version
-    where user_id = current_setting('jwt.claims.user_id')::uuid
+    where user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
   );
 $$ language sql stable;
 comment on function sg_public.select_my_subjects()
@@ -476,7 +476,7 @@ grant update (name) on table sg_public.topic to sg_user;
 grant update on table sg_public.topic to sg_admin;
 create policy update_topic on sg_public.topic
   for update (name) to sg_user
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid);
 comment on policy update_topic on sg_public.topic
   is 'A user can update the name of their own topic.';
 create policy update_topic_admin on sg_public.topic
@@ -513,7 +513,7 @@ grant update (body, response) on table sg_public.post to sg_user;
 grant update on table sg_public.post to sg_admin;
 create policy update_post on sg_public.post
   for update (body, response) to sg_user
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid);
 comment on policy update_post on sg_public.post
   is 'A user can update the body or response of their own post.';
 create policy update_post_admin on sg_public.post
@@ -669,7 +669,7 @@ alter table sg_public.follow enable row level security;
 grant select on table sg_public.follow to sg_user, sg_admin;
 create policy select_follow on sg_public.follow
   for select to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid);
 comment on policy select_follow on sg_public.follow
   is 'A user or admin can select their own follows.';
 
@@ -686,7 +686,7 @@ create policy insert_follow on sg_public.follow
 grant delete on table sg_public.follow to sg_user, sg_admin;
 create policy delete_follow on sg_public.follow
   for select to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid);
 comment on policy delete_follow on sg_public.follow
   is 'A user or admin can delete their own follows.';
 
@@ -694,7 +694,7 @@ comment on policy delete_follow on sg_public.follow
 grant select on table sg_public.notice to sg_user, sg_admin;
 create policy select_notice on sg_public.notice
   for select to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid);
 comment on policy select_notice on sg_public.notice
   is 'A user or admin can select their own notices.';
 
@@ -704,7 +704,7 @@ comment on policy select_notice on sg_public.notice
 grant update on table sg_public.notice to sg_user, sg_admin;
 create policy update_notice on sg_public.notice
   for update (read) to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (nullif(current_setting('jwt.claims.user_id', true), '')::uuid);
 comment on policy update_notice on sg_public.notice
   is 'A user or admin can mark a notice as read or unread.';
 
@@ -712,7 +712,7 @@ comment on policy update_notice on sg_public.notice
 grant delete on table sg_public.notice to sg_user, sg_admin;
 create policy delete_notice on sg_public.notice
   for delete to sg_user, sg_admin
-  using (user_id = current_setting('jwt.claims.user_id')::uuid);
+  using (nullif(current_setting('jwt.claims.user_id', true), '')::uuid);
 comment on policy delete_notice on sg_public.notice
   is 'A user or admin can delete their own notices.';
 

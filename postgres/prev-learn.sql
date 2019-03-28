@@ -200,8 +200,8 @@ returns sg_public.response as $$
   select *
   from sg_public.response
   where sg_public.response.subject_id = subject_id and (
-    user_id = current_setting('jwt.claims.user_id')::uuid
-    or session_id = current_setting('jwt.claims.session_id')::uuid
+    user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
+    or session_id = nullif(current_setting('jwt.claims.session_id', true), '')::uuid
   )
   order by created desc
   limit 1;
@@ -283,8 +283,8 @@ grant select on table sg_public.response to sg_anonymous, sg_user, sg_admin;
 create policy select_response on sg_public.response
   for select to sg_anonymous, sg_user, sg_admin
   using (
-    user_id = current_setting('jwt.claims.user_id')::uuid
-    or session_id = current_setting('jwt.claims.session_id')::uuid
+    user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
+    or session_id = nullif(current_setting('jwt.claims.session_id', true), '')::uuid
   );
 comment on policy select_response on sg_public.response
   is 'Anyone may select their own responses.';
