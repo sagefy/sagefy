@@ -24,7 +24,7 @@ export default function ChooseSubject({ subjects, active }) {
           <td className="text-align-center collapse-margins">
             <p>
               <Link to={`/next?subjectId=${to58(entityId)}`} className="button">
-                <Icon i="up" />
+                <Icon i="select" />
               </Link>
             </p>
           </td>

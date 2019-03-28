@@ -58,8 +58,7 @@ const MAP = {
   card: FileText,
 
   // actions
-  up: ThumbsUp,
-  down: ThumbsDown,
+  select: ThumbsUp,
   check: CheckCircle,
   left: ArrowLeft,
 

@@ -27,7 +27,7 @@ export default function ChooseNextPage() {
             <td>
               <p>
                 <button type="submit">
-                  <Icon i="up" />
+                  <Icon i="select" />
                 </button>
               </p>
             </td>
@@ -44,7 +44,7 @@ export default function ChooseNextPage() {
             <td>
               <p>
                 <button type="button">
-                  <Icon i="up" />
+                  <Icon i="select" />
                 </button>
               </p>
             </td>
@@ -59,7 +59,7 @@ export default function ChooseNextPage() {
             <td>
               <p>
                 <button type="button">
-                  <Icon i="up" />
+                  <Icon i="select" />
                 </button>
               </p>
             </td>
