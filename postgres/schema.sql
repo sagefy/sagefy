@@ -458,7 +458,7 @@ CREATE FUNCTION sg_public.get_current_user() RETURNS sg_public."user"
     AS $$
   select *
   from sg_public.user
-  where id = current_setting('jwt.claims.user_id')::uuid
+  where id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
 $$;
 
 
@@ -2118,4 +2118,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190219221727'),
     ('20190227220630'),
     ('20190319234401'),
-    ('20190322230728');
+    ('20190322230728'),
+    ('20190328211620');
