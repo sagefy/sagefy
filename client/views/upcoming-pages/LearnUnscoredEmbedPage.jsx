@@ -1,12 +1,11 @@
 import React from 'react'
 import Icon from '../components/Icon'
-import Meter from '../components/Meter'
 
 export default function LearnUnscoredEmbedPage() {
   return (
     <div className="LearnUnscoredEmbedPage">
       <section>
-        <Meter width={0.7} />
+        <progress value={0.7} />
       </section>
 
       <section>
@@ -14,8 +13,6 @@ export default function LearnUnscoredEmbedPage() {
           src="https://em.sagefy.org/examples/duration-and-rhythm"
           width="600"
           height="400"
-          frameBorder="0"
-          className="lift"
           title="Name of the embed card"
         />
       </section>

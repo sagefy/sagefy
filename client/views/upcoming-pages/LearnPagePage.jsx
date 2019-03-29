@@ -1,12 +1,11 @@
 import React from 'react'
 import Icon from '../components/Icon'
-import Meter from '../components/Meter'
 
 export default function LearnPagePage() {
   return (
     <div className="LearnPagePage">
       <section>
-        <Meter width={0.7} />
+        <progress value={0.7} />
       </section>
 
       <section>
@@ -23,7 +22,6 @@ export default function LearnPagePage() {
             <img
               src="https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/25-basic-synthesizer/25.002.jpeg"
               title="image"
-              className="lift"
               alt="markdown"
             />
           </p>
@@ -44,7 +42,6 @@ export default function LearnPagePage() {
             <img
               src="https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/25-basic-synthesizer/25.004.jpeg"
               title="image"
-              className="lift"
               alt="markdown"
             />
           </p>
@@ -66,7 +63,6 @@ export default function LearnPagePage() {
             <img
               src="https://raw.githubusercontent.com/heiskr/sagefy-electronic-music/master/images/25-basic-synthesizer/25.005.jpeg"
               title="image"
-              className="lift"
               alt="markdown"
             />
           </p>

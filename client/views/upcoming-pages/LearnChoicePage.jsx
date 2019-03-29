@@ -1,12 +1,11 @@
 import React from 'react'
 import Icon from '../components/Icon'
-import Meter from '../components/Meter'
 
 export default function LearnChoicePage() {
   return (
     <div className="LearnChoicePage">
       <section>
-        <Meter width={0.7} />
+        <progress value={0.7} />
       </section>
 
       <section>
