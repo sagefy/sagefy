@@ -24,7 +24,7 @@ export default function ChooseSubject({ subjects, active }) {
   return (
     <table className="ChooseSubject">
       {subjects.map(({ entityId, name, body }, i) => (
-        <tr key={`choose-subject-${entityId}`} className="collapse-margins">
+        <tr key={`choose-subject-${entityId}`}>
           <td className="vertical-align-middle text-align-center">
             <Link to={`/next?subjectId=${to58(entityId)}`}>
               <Icon i="select" s="xl" />
