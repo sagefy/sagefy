@@ -84,7 +84,15 @@ const SIZES = {
 export default function Icon({ i, s = 'm' }) {
   return (
     <i className={`Icon icon-${i}`}>
-      {React.createElement(get(MAP, i, Target), { size: get(SIZES, s) })}
+      {React.createElement(get(MAP, i, Target), {
+        size: get(SIZES, s),
+        /* Set in CSS instead */
+        fill: undefined,
+        stroke: undefined,
+        strokeWidth: undefined,
+        strokeLinecap: undefined,
+        strokeLinejoin: undefined,
+      })}
     </i>
   )
 }

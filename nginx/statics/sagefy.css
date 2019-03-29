@@ -795,6 +795,14 @@ summary > *:first-child {
   opacity: 0.7;
 }
 
+.Icon svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .meter {
   width: 100%;
   background: #eef1f5; /* hsluv(240, 30, 95) */
