@@ -92,6 +92,8 @@ export default function Icon({ i, s = 'm' }) {
         strokeWidth: undefined,
         strokeLinecap: undefined,
         strokeLinejoin: undefined,
+        /* Not required for inline SVG https://stackoverflow.com/a/34249810 */
+        xmlns: undefined,
       })}
     </i>
   )
