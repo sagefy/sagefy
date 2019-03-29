@@ -31,26 +31,22 @@ export default function DashboardPage({ role, allUserSubjects, name }) {
             <em>Sorry, for now its just a list... stay tuned!</em>
           </p>
           <ChooseSubject subjects={allUserSubjects.nodes} active={false} />
-          <table>
-            <tr>
-              <td className="collapse-margins" colSpan="2">
-                <h3>
-                  ...or how about something else? <Icon i="search" s="l" />
-                </h3>
-                <form action="/search-subjects">
-                  <input
-                    type="search"
-                    size="40"
-                    placeholder="example: Music"
-                    name="q"
-                  />
-                  <button type="submit">
-                    <Icon i="search" /> Search
-                  </button>
-                </form>
-              </td>
-            </tr>
-          </table>
+          <div className="collapse-margins">
+            <h3>
+              ...or how about something else? <Icon i="search" s="l" />
+            </h3>
+            <form action="/search-subjects">
+              <input
+                type="search"
+                size="40"
+                placeholder="example: Music"
+                name="q"
+              />
+              <button type="submit">
+                <Icon i="search" /> Search
+              </button>
+            </form>
+          </div>
         </section>
       )) || (
         <section className="text-align-center">
