@@ -22,7 +22,7 @@ export default function ChooseSubject({ subjects, active }) {
     )
   }
   return (
-    <table className="ChooseSubject list-style-none">
+    <table className="ChooseSubject">
       {subjects.map(({ entityId, name, body }, i) => (
         <tr key={`choose-subject-${entityId}`} className="collapse-margins">
           <td className="vertical-align-middle text-align-center">
