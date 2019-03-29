@@ -2,6 +2,7 @@
 
 /* Basic tag changes **********************************************************/
 
+/* A little more dramatic form inputs and buttons */
 input,
 textarea {
   padding: calc(0.5rem - 1px) calc(1rem - 1px);
@@ -15,21 +16,26 @@ button,
   border-radius: 1.5rem;
 }
 
+/* Pretty much every form is vertical so... */
 label {
   display: block;
 }
 
-table {
+/* Tables are layout and data here,
+   progress should be the full page */
+table,
+progress {
   width: 100%;
 }
 
-time {
-  color: #5c6c7d; /* hsluv(240, 30, 45) */
-}
-
+/* Make important summary elements stand out a little more */
 summary > *:first-child {
   text-decoration: underline;
-  cursor: pointer;
+}
+
+/* Just for pretty */
+iframe {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Utility classes ************************************************************/
@@ -79,53 +85,19 @@ summary > *:first-child {
 
 /* Elements *******************************************************************/
 
-.lift {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
+/* The icons look "too high up",
+   and icons should be lighter to not outweigh text */
 .Icon {
   bottom: -2px;
   position: relative;
   opacity: 0.7;
 }
 
+/* This cuts down on the HTML length considerably */
 .Icon svg {
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-}
-
-.meter {
-  width: 100%;
-  background: #eef1f5; /* hsluv(240, 30, 95) */
-}
-
-.meter > div {
-  background: #93ccff; /* hsluv(240, 100, 80) */
-  height: 0.5rem;
-}
-
-.meter,
-.meter > div {
-  border-radius: 0.25rem;
-}
-
-.button {
-  display: inline-block;
-  padding: 0.5rem 1.5rem;
-  border-radius: 1.5rem;
-  max-width: 100%;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  color: #29313a; /* hsluv(240, 30, 20) */
-  background: #93ccff; /* hsluv(240, 100, 80) */
-}
-
-.button:hover {
-  opacity: 0.9;
-}
-
-.button:active {
-  opacity: 1;
 }
