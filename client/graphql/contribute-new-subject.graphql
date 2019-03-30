@@ -1,0 +1,19 @@
+mutation contributeNewSubject($name: String!, $body: String!) {
+  newSubject(
+    input: {
+      language: "en"
+      name: $name
+      body: $body
+      before: []
+      parent: []
+      tags: []
+    }
+  ) {
+    subjectVersion {
+      versionId
+      entityId
+      name
+      body
+    }
+  }
+}
