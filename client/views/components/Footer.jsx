@@ -11,9 +11,9 @@ export default function Footer({ role }) {
       <Link to="/">
         <img src="/astrolabe.svg" height="48" alt="astrolabe" />
       </Link>
-      <small className="collapse-margins">
+      <small className="m-yc">
         {(role === 'sg_anonymous' && (
-          <ul className="list-style-inline">
+          <ul className="ls-i">
             <li>
               <Link to="/log-in">
                 <Icon i="logIn" s="s" /> Log In
@@ -26,7 +26,7 @@ export default function Footer({ role }) {
             </li>
           </ul>
         )) || (
-          <ul className="list-style-inline">
+          <ul className="ls-i">
             <li>
               <Link to="/dashboard">
                 <Icon i="dashboard" s="s" /> Dashboard
@@ -45,7 +45,7 @@ export default function Footer({ role }) {
             {/* TODO add notices/follows */}
           </ul>
         )}
-        <ul className="list-style-inline">
+        <ul className="ls-i">
           <li>
             <ExternalLink href="https://docs.sagefy.org/">
               <Icon i="docs" s="s" /> Docs

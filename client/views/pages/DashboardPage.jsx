@@ -9,7 +9,7 @@ import CardSubjectInfo from '../components/CardSubjectInfo'
 export default function DashboardPage({ role, allUserSubjects, name }) {
   return (
     <div className="DashboardPage">
-      <section className="collapse-margins">
+      <section className="m-yc">
         <p>
           <em>
             Hi {name}, welcome back!{' '}
@@ -31,7 +31,7 @@ export default function DashboardPage({ role, allUserSubjects, name }) {
             <em>Sorry, for now its just a list... stay tuned!</em>
           </p>
           <ChooseSubject subjects={allUserSubjects.nodes} active={false} />
-          <div className="collapse-margins">
+          <div className="m-yc">
             <h3>
               ...or how about something else? <Icon i="search" s="l" />
             </h3>
@@ -49,7 +49,7 @@ export default function DashboardPage({ role, allUserSubjects, name }) {
           </div>
         </section>
       )) || (
-        <section className="text-align-center">
+        <section className="ta-c">
           <h2>
             Let&apos;s get you some subjects! <Icon i="search" s="xl" />
           </h2>
@@ -96,7 +96,7 @@ DashboardPage.defaultProps = {
 
 <section>
   <h2>You've got some new notices 🔔</h2>
-  <ul className="list-style-none">
+  <ul className="ls-n">
     <li>
       <p>
         Eileen voted ✅ yes on your proposal on
@@ -119,7 +119,7 @@ DashboardPage.defaultProps = {
   <h2>Help us build Sagefy 🌳</h2>
 
   <details>
-    <summary><h3 className="display-inline-block">Add some cards 🃏</h3></summary>
+    <summary><h3 className="d-ib">Add some cards 🃏</h3></summary>
     <ul>
       <li>
         <a href="/create-card"
@@ -139,7 +139,7 @@ DashboardPage.defaultProps = {
 
   <details>
     <summary
-      ><h3 className="display-inline-block">
+      ><h3 className="d-ib">
         You can make a new subject 💡
       </h3></summary
     >
@@ -177,7 +177,7 @@ DashboardPage.defaultProps = {
 
   <details>
     <summary
-      ><h3 className="display-inline-block">
+      ><h3 className="d-ib">
         ...or find something else 🕵🏻‍♀️
       </h3></summary
     >

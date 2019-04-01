@@ -2,7 +2,7 @@
 
 exports[`FormErrorsField component should render a FormErrorsField data 1`] = `
 <ul
-  className="FormErrors list-style-none"
+  className="FormErrors ls-n"
 >
   <li>
     <mark>
@@ -10,7 +10,7 @@ exports[`FormErrorsField component should render a FormErrorsField data 1`] = `
         i="error"
         s="m"
       />
-       
+
       Object {
         "message": "Hello",
       }

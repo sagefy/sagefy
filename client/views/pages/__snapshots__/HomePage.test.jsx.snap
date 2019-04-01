@@ -99,7 +99,7 @@ exports[`HomePage should render the home page 1`] = `
     </blockquote>
   </section>
   <section
-    className="text-align-right"
+    className="ta-r"
   >
     <p>
       <small>
@@ -131,7 +131,7 @@ exports[`HomePage should render the home page 1`] = `
   </section>
   <section>
     <div
-      className="text-align-center collapse-margins"
+      className="ta-c m-yc"
     >
       <img
         alt="astrolabe"
@@ -289,7 +289,7 @@ exports[`HomePage should render the logged in home page 1`] = `
     </blockquote>
   </section>
   <section
-    className="text-align-right"
+    className="ta-r"
   >
     <p>
       <small>
@@ -309,7 +309,7 @@ exports[`HomePage should render the logged in home page 1`] = `
   </section>
   <section>
     <div
-      className="text-align-center collapse-margins"
+      className="ta-c m-yc"
     >
       <img
         alt="astrolabe"

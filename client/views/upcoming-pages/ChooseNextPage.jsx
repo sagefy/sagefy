@@ -5,7 +5,7 @@ import Icon from '../components/Icon'
 export default function ChooseNextPage() {
   return (
     <div className="ChooseNextPage">
-      <section className="collapse-margins">
+      <section className="m-yc">
         <p>
           <em>
             Right, so <strong>An Introduction to Electronic Music</strong>...
@@ -31,7 +31,7 @@ export default function ChooseNextPage() {
                 </button>
               </p>
             </td>
-            <td className="collapse-margins">
+            <td className="m-yc">
               <h3>
                 <mark>
                   <Link to="/learn-video/2">Complex Waves</Link>
@@ -48,7 +48,7 @@ export default function ChooseNextPage() {
                 </button>
               </p>
             </td>
-            <td className="collapse-margins">
+            <td className="m-yc">
               <h3>
                 <Link to="/learn-video/1">Modulation</Link>
               </h3>
@@ -63,7 +63,7 @@ export default function ChooseNextPage() {
                 </button>
               </p>
             </td>
-            <td className="collapse-margins">
+            <td className="m-yc">
               <h3>
                 <Link to="/learn-video/3">Human Hearing</Link>
               </h3>
@@ -75,13 +75,13 @@ export default function ChooseNextPage() {
           </tr>
         </table>
 
-        <p className="text-align-right">
+        <p className="ta-r">
           <small>(15% learned)</small>
         </p>
       </section>
 
       <section>
-        <p className="text-align-right">
+        <p className="ta-r">
           <small>
             <em>Or...</em> on second thought, let&apos;s go to the{' '}
             <Link to="/dashboard">

@@ -9,7 +9,7 @@ import ChooseSubject from '../components/ChooseSubject'
 export default function HomePage({ role, selectPopularSubjects }) {
   return (
     <div className="HomePage">
-      <section className="text-align-center">
+      <section className="ta-c">
         <h1>
           What do you want to learn? <Icon i="search" s="xxl" />
         </h1>
@@ -32,7 +32,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
       </section>
 
       {role === 'sg_anonymous' ? (
-        <section className="text-align-right">
+        <section className="ta-r">
           <p>
             <small>
               <Link to="/log-in">
@@ -46,7 +46,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
           </p>
         </section>
       ) : (
-        <section className="text-align-right">
+        <section className="ta-r">
           <p>
             <small>
               <Link to="/dashboard">
@@ -103,7 +103,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
       </section>
 
       <section>
-        <div className="text-align-center collapse-margins">
+        <div className="ta-c m-yc">
           <img src="/astrolabe.svg" height="120" alt="astrolabe" />
           <h2>Sagefy</h2>
           <p>
@@ -140,7 +140,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
 
 HomePage.propTypes = {
   role: string,
-  selectPopularSubjects: arrayOf(shape({})),
+  selectPopularSubjects: shape({}),
 }
 
 HomePage.defaultProps = {

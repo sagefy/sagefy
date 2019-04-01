@@ -12,7 +12,7 @@ export default function LearnChoicePage() {
         <div>
           <p>What is the difference between harmonic and inharmonic waves?</p>
         </div>
-        <ul className="list-style-none">
+        <ul className="ls-n">
           <li>
             <input
               type="radio"
@@ -21,7 +21,7 @@ export default function LearnChoicePage() {
               id="F0-61DPpSxqURHvryZy84Q"
               disabled
             />{' '}
-            <label htmlFor="F0-61DPpSxqURHvryZy84Q" className="display-inline">
+            <label htmlFor="F0-61DPpSxqURHvryZy84Q" className="d-i">
               Both harmonics and inharmonics are integer multiples of the
               fundamental.
             </label>
@@ -34,7 +34,7 @@ export default function LearnChoicePage() {
               id="TT8B9zrBRkq5maek13ASJg"
               disabled
             />{' '}
-            <label htmlFor="TT8B9zrBRkq5maek13ASJg" className="display-inline">
+            <label htmlFor="TT8B9zrBRkq5maek13ASJg" className="d-i">
               Inharmonics are integer multiples, harmonics are not.
             </label>
           </li>
@@ -50,7 +50,7 @@ export default function LearnChoicePage() {
             <mark>
               <Icon i="check" /> Good job!
             </mark>{' '}
-            <label htmlFor="R8eK8S_xQG2D6iJku1JS9Q" className="display-inline">
+            <label htmlFor="R8eK8S_xQG2D6iJku1JS9Q" className="d-i">
               Harmonics are integer multiples, inharmonics are not.
             </label>
           </li>
@@ -62,7 +62,7 @@ export default function LearnChoicePage() {
               id="lXQx9AQSQjKfSfIYy2OqWw"
               disabled
             />{' '}
-            <label htmlFor="lXQx9AQSQjKfSfIYy2OqWw" className="display-inline">
+            <label htmlFor="lXQx9AQSQjKfSfIYy2OqWw" className="d-i">
               Neither harmonics nor inharmonics are integer multiples of the
               fundamental.
             </label>

@@ -383,6 +383,7 @@ var,
   /* https://www.client9.com/css-system-font-stack-monospace-v2 */
   font-family: 'SFMono-Regular', Menlo, Consolas, Inconsolata, 'Liberation Mono',
     Monaco, 'Andale Mono', monospace;
+  font-size: 90%;
 }
 
 /* 3. Apply more common `line-height` and use an `8px` vertical rhythm. */
@@ -462,23 +463,6 @@ button,
   padding: 0.25rem 1rem;
 }
 
-small,
-pre,
-code,
-samp,
-kbd,
-var,
-[type='tel'],
-[type='number'],
-[type='date'],
-[type='month'],
-[type='week'],
-[type='datetime'],
-[type='datetime-local'] {
-  font-size: 0.875rem; /* 14px */
-  line-height: 1.71428571429; /* 24px */
-}
-
 /* 4. Constrain elements to width. */
 
 img,
@@ -509,10 +493,6 @@ blockquote {
   border-left: 1px solid;
 }
 
-iframe {
-  border: none;
-}
-
 /* 6. Tighten left on list like elements. */
 
 ul,
@@ -530,20 +510,9 @@ table {
   border-spacing: 0;
 }
 
-td,
-th {
-  padding: 0 0.5rem;
-}
-
-/* This way, the sides and space between cells is the same. */
-td:first-child,
-th:first-child {
-  padding-left: 1rem;
-}
-
-td:last-child,
-td:first-child {
-  padding-right: 1rem;
+th,
+td {
+  padding: 0 1rem;
 }
 
 th {
@@ -589,34 +558,21 @@ button:disabled,
   box-shadow: none;
 }
 
-/* 10. Tweak style of progress elements. */
-
-progress {
-  height: 0.5rem;
-  border: none;
-}
-
-/* 11. Change the look of caption text. */
+/* 10. Change the look of caption text. */
 
 caption,
 figcaption {
   font-style: italic;
 }
 
-/* 12. Make strikethroughs more obvious. */
+/* 11. Make strikethroughs more obvious. */
 
 del,
 s {
   opacity: 0.5;
 }
 
-/* 13. More clickable summary. */
-
-summary {
-  cursor: pointer;
-}
-
-/* 14. Soften the shape of big boxy elements. */
+/* 12. Soften the shape of big boxy elements. */
 
 code,
 samp,
@@ -638,19 +594,11 @@ pre,
 code,
 samp,
 kbd,
-mark,
-progress,
-progress::-webkit-progress-bar,
-progress::-webkit-progress-value {
+mark {
   border-radius: 0.25rem;
 }
 
-/* Separate, otherwise breaks Safari and Chrome */
-progress::-moz-progress-bar {
-  border-radius: 0.25rem;
-}
-
-/* 15. Use more common, consistent, and attractive colors. */
+/* 13. Use more common, consistent, and attractive colors. */
 
 /*
   hsluv(240,  30, l) - Static page elements
@@ -749,25 +697,7 @@ button:active,
   opacity: 1;
 }
 
-progress,
-progress::-webkit-progress-bar {
-  background: #eef1f5; /* hsluv(240, 30, 95) */
-}
-
-progress::-webkit-progress-value {
-  background: #93ccff; /* hsluv(240, 100, 80) */
-}
-
-/* Separate, otherwise breaks Safari/Chrome */
-progress::-moz-progress-bar {
-  background: #93ccff; /* hsluv(240, 100, 80) */
-}
-
-time {
-  opacity: 0.7;
-}
-
-/* 16. Finally, limit width on a high element so text is more readable. (The only class!) */
+/* 14. Finally, limit width on a high element so text is more readable. (The only class!) */
 
 .page {
   margin: 0 auto;
@@ -798,7 +728,7 @@ label {
 }
 
 /* Tables are layout and data here,
-   progress should be the full page here */
+   progress should be the full page */
 table,
 progress {
   width: 100%;
@@ -806,7 +736,7 @@ progress {
 
 /* Make important summary elements stand out a little more */
 summary > *:first-child {
-  text-decoration: underline;
+  text-decoration: underline dotted;
 }
 
 /* Just for pretty */
@@ -816,46 +746,46 @@ iframe {
 
 /* Utility classes ************************************************************/
 
-.text-align-center {
+.ta-c {
   text-align: center;
 }
 
-.text-align-right {
+.ta-r {
   text-align: right;
 }
 
-.vertical-align-middle {
+.va-m {
   vertical-align: middle;
 }
 
-.list-style-none,
-.list-style-inline {
+.ls-n,
+.ls-i {
   list-style: none;
   padding-left: 0;
 }
 
-.list-style-inline li {
+.ls-i li {
   display: inline-block;
   margin-right: 2rem;
 }
 
-.list-style-inline li:last-child {
+.ls-i li:last-child {
   margin-right: 0;
 }
 
-.collapse-margins > *:not(:first-child) {
+.m-yc > *:not(:first-child) {
   margin-top: 0;
 }
 
-.collapse-margins > *:not(:last-child) {
+.m-yc > *:not(:last-child) {
   margin-bottom: 0;
 }
 
-.display-inline-block {
+.d-ib {
   display: inline-block;
 }
 
-.display-inline {
+.d-i {
   display: inline;
 }
 

@@ -11,9 +11,9 @@ function Wark({ children, when }) {
 export default function ChooseSubject({ subjects, active }) {
   if (!active) {
     return (
-      <ul className="ChooseSubject list-style-none">
+      <ul className="ChooseSubject ls-n">
         {subjects.map(({ entityId, name, body }) => (
-          <li className="collapse-margins" key={`choose-subject-${entityId}`}>
+          <li className="m-yc" key={`choose-subject-${entityId}`}>
             <h3>{name}</h3>
             <p>{body}</p>
           </li>
@@ -25,12 +25,12 @@ export default function ChooseSubject({ subjects, active }) {
     <table className="ChooseSubject">
       {subjects.map(({ entityId, name, body }, i) => (
         <tr key={`choose-subject-${entityId}`}>
-          <td className="vertical-align-middle text-align-center">
+          <td className="va-m ta-c">
             <Link to={`/next?subjectId=${to58(entityId)}`}>
               <Icon i="select" s="xl" />
             </Link>
           </td>
-          <td className="collapse-margins">
+          <td className="m-yc">
             <h3>
               <Wark when={i === 0 && subjects.length > 1}>
                 <Link to={`/next?subjectId=${to58(entityId)}`}>{name}</Link>

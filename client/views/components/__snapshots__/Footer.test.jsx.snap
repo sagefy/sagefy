@@ -15,7 +15,7 @@ exports[`Footer component should render a footer 1`] = `
   </Link>
   <small>
     <ul
-      className="list-style-inline"
+      className="ls-i"
     >
       <li>
         <ExternalLink

@@ -5,10 +5,10 @@ exports[`SearchSubjectsPage should render the search subjects page 1`] = `
   className="SearchSubjectsPage"
 >
   <section
-    className="text-align-center"
+    className="ta-c"
   >
     <h1>
-      What do you want to learn? 
+      What do you want to learn?
       <Icon
         i="search"
         s="xxl"

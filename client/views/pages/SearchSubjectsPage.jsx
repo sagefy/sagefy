@@ -12,7 +12,7 @@ export default function SearchSubjectsPage({
 }) {
   return (
     <div className="SearchSubjectsPage">
-      <section className="text-align-center">
+      <section className="ta-c">
         <h1>
           What do you want to learn? <Icon i="search" s="xxl" />
         </h1>
@@ -54,7 +54,7 @@ export default function SearchSubjectsPage({
           </p>
           <details open={!searchSubjects || !searchSubjects.nodes.length}>
             <summary>
-              <h2 className="display-inline">
+              <h2 className="d-i">
                 You can suggest a new subject <Icon i="subject" s="xl" />
               </h2>
             </summary>
