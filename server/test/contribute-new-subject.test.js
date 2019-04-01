@@ -12,6 +12,7 @@ describe('contribute-new-subject DOESNT HAVE A QUERY YET', () => {
   })
 
   it.skip('create in pending status', async () => {
+    // TODO for now, this should start in accepted status
     expect(true).toBe(false)
   })
 

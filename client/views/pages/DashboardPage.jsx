@@ -1,5 +1,5 @@
 import React from 'react'
-import { string, arrayOf, shape } from 'prop-types'
+import { string, shape } from 'prop-types'
 // import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
@@ -83,7 +83,7 @@ export default function DashboardPage({ role, allUserSubjects, name }) {
 DashboardPage.propTypes = {
   role: string,
   name: string,
-  allUserSubjects: arrayOf(shape({})),
+  allUserSubjects: shape({}),
 }
 
 DashboardPage.defaultProps = {
