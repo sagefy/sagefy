@@ -14,6 +14,7 @@ import LogInPage from './pages/LogInPage'
 import PasswordPage from './pages/PasswordPage'
 import EmailPage from './pages/EmailPage'
 import SettingsPage from './pages/SettingsPage'
+import CreateSubjectPage from './pages/CreateSubjectPage'
 
 export const output = a => () => a
 const searchSubjects = output('Search Subjects')
@@ -28,6 +29,7 @@ const logIn = output('Log In')
 const password = output('Password')
 const email = output('Email')
 const settings = output('Settings')
+const createSubject = output('Create Subject')
 
 export default function Index(props) {
   const { location, cacheHash } = props
@@ -48,6 +50,7 @@ export default function Index(props) {
               <Route path="/dashboard" render={dashboard} />
               <Route path="/sign-up" render={signUp} />
               <Route path="/search-subjects" render={searchSubjects} />
+              <Route path="/create-subject" render={createSubject} />
               <Route path="/contact" render={contact} />
               <Route path="/terms" render={terms} />
               <Route path="/server-error" render={serverError} />
@@ -71,6 +74,10 @@ export default function Index(props) {
               <Route
                 path="/search-subjects"
                 render={withProps(SearchSubjectsPage)}
+              />
+              <Route
+                path="/create-subject"
+                render={withProps(CreateSubjectPage)}
               />
               <Route path="/contact" component={ContactPage} />
               <Route path="/terms" component={TermsPage} />
