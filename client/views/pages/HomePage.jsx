@@ -80,8 +80,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
           </p>
           <ul>
             <li>
-              <Icon i="subject" /> <strong>Follow</strong> some subjects! Search
-              above or add below!
+              <Icon i="subject" /> <strong>Follow</strong> and create subjects!
             </li>
             <li>
               <ExternalLink href="https://docs.sagefy.org/mocks">
@@ -98,7 +97,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
             </li>
           </ul>
           <p>
-            <small>Last updated 2019 Mar 27</small>
+            <small>Last updated 2019 Apr 1</small>
           </p>
         </blockquote>
       </section>
