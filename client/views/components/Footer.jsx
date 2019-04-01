@@ -11,8 +11,21 @@ export default function Footer({ role }) {
       <Link to="/">
         <img src="/astrolabe.svg" height="48" alt="astrolabe" />
       </Link>
-      <small>
-        {role !== 'sg_anonymous' && (
+      <small className="collapse-margins">
+        {(role === 'sg_anonymous' && (
+          <ul className="list-style-inline">
+            <li>
+              <Link to="/log-in">
+                <Icon i="logIn" s="s" /> Log In
+              </Link>
+            </li>
+            <li>
+              <Link to="/sign-up">
+                <Icon i="signUp" s="s" /> Sign Up
+              </Link>
+            </li>
+          </ul>
+        )) || (
           <ul className="list-style-inline">
             <li>
               <Link to="/dashboard">
@@ -59,7 +72,7 @@ export default function Footer({ role }) {
             </Link>
           </li>
         </ul>
-        © Copyright {new Date().getFullYear()} Sagefy.
+        &copy; Copyright {new Date().getFullYear()} Sagefy.
       </small>
     </footer>
   )
