@@ -218,6 +218,27 @@ COMMENT ON TYPE sg_public.user_role IS 'User role options.';
 
 
 --
+-- Name: insert_subject_version_status(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.insert_subject_version_status() RETURNS trigger
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+begin
+  new.status = 'accepted'::sg_public.entity_status;
+  return new;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION insert_subject_version_status(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.insert_subject_version_status() IS 'When inserting a new subject, automatically set the status to accepted.';
+
+
+--
 -- Name: insert_user_or_session(); Type: FUNCTION; Schema: sg_private; Owner: -
 --
 
@@ -1766,6 +1787,20 @@ COMMENT ON TRIGGER insert_card_version_user_or_session ON sg_public.card_version
 
 
 --
+-- Name: subject_version insert_subject_version_status; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER insert_subject_version_status BEFORE INSERT ON sg_public.subject_version FOR EACH ROW EXECUTE PROCEDURE sg_private.insert_subject_version_status();
+
+
+--
+-- Name: TRIGGER insert_subject_version_status ON subject_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER insert_subject_version_status ON sg_public.subject_version IS 'When inserting a new subject, automatically set the status to accepted.';
+
+
+--
 -- Name: subject_version insert_subject_version_user_or_session; Type: TRIGGER; Schema: sg_public; Owner: -
 --
 
@@ -2119,4 +2154,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190227220630'),
     ('20190319234401'),
     ('20190322230728'),
-    ('20190328211620');
+    ('20190328211620'),
+    ('20190401185105');
