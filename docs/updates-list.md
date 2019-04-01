@@ -13,6 +13,28 @@ title: Sagefy Updates
 
 This is a reverse chronological listing of updates on Sagefy's progress. I will try to do these biweekly.
 
+
+## UPDATE -- 2019 Apr 1
+
+Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
+
+### 2019 Mar 18 - 2019 Apr 1
+
+- There are now subjects on the site, and you can add them to your list of subjects.
+- Switched to a new domain for shortening: https://sgfy.xyz
+
+### Upcoming Two Weeks: 2019 Apr 1 - 2019 Apr 14
+
+- I'm close to being able to create a new subject.
+- Then getting to implementing the learning experience :) Hoping to have this complete in this period.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
+
+
+
+
 ## UPDATE -- 2019 Mar 18
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
