@@ -246,7 +246,6 @@ app.get('/log-out', isUser, (req, res) =>
 
 app.get('/dashboard', isUser, async (req, res) => {
   const gqlRes = await GQL.learnListUsubj(req)
-  console.log(gqlRes)
   return res.render('Index', {
     location: req.url,
     cacheHash,
@@ -276,6 +275,27 @@ app.get('/search-subjects', async (req, res) => {
   })
 })
 
+app.post('/create-subject', async (req, res) => {
+  const gqlRes = await GQL.contributeNewSubject(req)
+  const gqlErrors = getGqlErrors(gqlRes)
+  if (Object.keys(gqlErrors).length) {
+    return res.render('Index', {
+      location: req.url,
+      cacheHash,
+      gqlErrors,
+      prevValues: req.body,
+    })
+  }
+  const role = getRole(req)
+  const { entityId, name } = get(gqlRes, 'data.newSubject.subjectVersion', {})
+  if (role === 'sg_anonymous') {
+    return res.redirect(`/search-subjects?q=${name}`)
+  }
+  req.query.subjectId = entityId
+  await GQL.learnNewUsubj(req)
+  return res.redirect('/dashboard')
+})
+
 app.get('/next', async (req, res) => {
   const role = getRole(req)
   if (role === 'sg_anonymous') {
@@ -302,6 +322,7 @@ app.get('/', async (req, res) => {
 
 // For pages that don't have specific data requirements
 // and don't require being logged in or logged out:
+// GET /create-subject
 // GET /server-error
 // GET /terms
 // GET /contact
