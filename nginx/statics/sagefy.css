@@ -652,85 +652,24 @@ progress::-moz-progress-bar {
 
 /* 15. Use more common, consistent, and attractive colors. */
 
+/* See themes: light, dark... */
+
+/* 16. Finally, limit width on a high element so text is more readable. (The only class!) */
+
+.page {
+  margin: 0 auto;
+  max-width: 40rem; /* 640px */
+  padding: 1rem;
+}
 /*
-  hsluv(240,  30, l) - Static page elements
-  hsluv(240, 100, l) - Interactive elements
+  hsluv(250,  30, l) - Static page elements
+  hsluv(250, 100, l) - Interactive elements
   hsluv( 80, 100, l) - Highlight, warning
   hsluv( 12, 100, l) - Bad, error, issue
 */
 
-body,
-input,
-textarea,
-button {
-  color: #29313a; /* hsluv(240, 30, 20) */
-}
-
-pre,
-code,
-samp,
-kbd,
-tr:nth-child(even) {
-  background: #f8f9fb; /* hsluv(240, 30, 98) */
-}
-
-thead,
-tfoot {
-  background: #eef1f5; /* hsluv(240, 30, 95) */
-}
-
-hr,
-blockquote,
-fieldset,
-input,
-textarea {
-  border-color: #bac8d8; /* hsluv(240, 30, 80) */
-}
-
-::placeholder {
-  color: #67798b; /* hsluv(240, 30, 50) */
-}
-
-a {
-  color: #007cb3; /* hsluv(240, 100, 49) */
-}
-
-mark {
-  background: #fff489; /* hsluv(80, 100, 95) */
-}
-
-[type='submit'] {
-  color: white;
-  background: #007cb3; /* hsluv(240, 100, 49) */
-}
-
-button,
-[type='button'] {
-  background: #93ccff; /* hsluv(240, 100, 80) */
-}
-
-button[type='reset'],
-[type='reset'] {
-  color: #d80005; /* hsluv(12, 100, 45) */
-  background: #eef1f5; /* hsluv(240, 30, 95) */
-}
-
-button:disabled,
-[type='submit']:disabled,
-[type='button']:disabled,
-[type='reset']:disabled {
-  color: #5c6c7d; /* hsluv(240, 30, 45) */
-  background: #f8f9fb; /* hsluv(240, 30, 98) */
-}
-
-:focus {
-  outline: 0;
-  box-shadow: 0 0 0 2px #93ccff; /* hsluv(240, 100, 80) */
-}
-
-input:hover,
-textarea:hover {
-  border-color: #97aec6; /* hsluv(240, 30, 70) */
+time {
+  opacity: 0.7;
 }
 
 a:hover,
@@ -749,30 +688,92 @@ button:active,
   opacity: 1;
 }
 
+body,
+input,
+textarea,
+button {
+  color: #2a313d; /* 250-30-20 */
+}
+
+pre,
+code,
+samp,
+kbd,
+tr:nth-child(even) {
+  background: #f8f9fb; /* 250-30-98 */
+}
+
+thead,
+tfoot {
+  background: #eff1f5; /* 250-30-95 */
+}
+
+hr,
+blockquote,
+fieldset,
+input,
+textarea {
+  border-color: #bec7d8; /* 250-30-80 */
+}
+
+::placeholder {
+  color: #697893; /* 250-30-50 */
+}
+
+a {
+  color: #007ad1; /* 250-100-50 */
+}
+
+mark {
+  background: #fff489; /* 80-100-95 */
+}
+
+[type='submit'] {
+  color: white;
+  background: #007ad1; /* 250-100-50 */
+}
+
+button,
+[type='button'] {
+  background: #a8c8ff; /* 250-100-80 */
+}
+
+button[type='reset'],
+[type='reset'] {
+  color: #d80005; /* 12-100-45 */
+  background: #eff1f5; /* 250-30-95 */
+}
+
+button:disabled,
+[type='submit']:disabled,
+[type='button']:disabled,
+[type='reset']:disabled {
+  color: #5d6b84; /* 250-30-45 */
+  background: #f8f9fb; /* 250-30-98 */
+}
+
+:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px #a8c8ff; /* 250-100-80 */
+}
+
+input:hover,
+textarea:hover {
+  border-color: #9facc6; /* 250-30-70 */
+}
+
 progress,
 progress::-webkit-progress-bar {
-  background: #eef1f5; /* hsluv(240, 30, 95) */
+  background: #eff1f5; /* 250-30-95 */
 }
 
 progress::-webkit-progress-value {
-  background: #93ccff; /* hsluv(240, 100, 80) */
+  background: #a8c8ff; /* 250-100-80 */
 }
 
 /* Separate, otherwise breaks Safari/Chrome */
 progress::-moz-progress-bar {
-  background: #93ccff; /* hsluv(240, 100, 80) */
-}
-
-time {
-  opacity: 0.7;
-}
-
-/* 16. Finally, limit width on a high element so text is more readable. (The only class!) */
-
-.page {
-  margin: 0 auto;
-  max-width: 40rem; /* 640px */
-  padding: 1rem;
+  background: #a8c8ff; /* 250-100-80 */
 }
 /*! Sagefy partial */
 
