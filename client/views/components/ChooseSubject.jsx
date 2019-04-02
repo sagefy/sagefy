@@ -2,6 +2,7 @@ import React from 'react'
 import { arrayOf, shape, bool } from 'prop-types'
 import { Link } from 'react-router-dom'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
+import ReactMarkdown from 'react-markdown'
 import Icon from './Icon'
 
 function Wark({ children, when }) {
@@ -15,7 +16,7 @@ export default function ChooseSubject({ subjects, active }) {
         {subjects.map(({ entityId, name, body }) => (
           <li className="m-yc" key={`choose-subject-${entityId}`}>
             <h3>{name}</h3>
-            <p>{body}</p>
+            <ReactMarkdown source={body} disallowedTypes={['heading']} />
           </li>
         ))}
       </ul>
@@ -36,7 +37,7 @@ export default function ChooseSubject({ subjects, active }) {
                 <Link to={`/next?subjectId=${to58(entityId)}`}>{name}</Link>
               </Wark>
             </h3>
-            <p>{body}</p>
+            <ReactMarkdown source={body} disallowedTypes={['heading']} />
           </td>
         </tr>
       ))}
