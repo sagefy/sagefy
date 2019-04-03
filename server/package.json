@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev-data": "env $(grep -v '^#' ../.env | xargs) node ./test/_dev-data.js",
-    "test": "env $(grep -v '^#' ../.env.test | xargs) jest --detectOpenHandles --forceExit"
+    "test": "env $(grep -v '^#' ../.env.test | xargs) jest --detectOpenHandles --forceExit --runInBand"
   },
   "repository": {
     "type": "git",
