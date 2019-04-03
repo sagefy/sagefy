@@ -626,9 +626,9 @@ mark {
 }
 
 img,
+iframe,
 input,
 textarea,
-button,
 button,
 [type='submit'],
 [type='button'],
@@ -816,11 +816,6 @@ iframe,
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-/* until next drab upgrade... */
-iframe {
-  border-radius: 0.25rem;
-}
-
 /* Utility classes ************************************************************/
 
 .ta-c {
@@ -885,6 +880,7 @@ iframe {
   stroke-linejoin: round;
 }
 
+/* Users probably won't expect yellow for a correct answer */
 mark.good {
   background: #c6ffc6; /* 128-100-95 */
 }
