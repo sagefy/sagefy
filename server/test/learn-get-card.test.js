@@ -1,5 +1,52 @@
+const Joi = require('joi')
+const request = require('supertest')
+const { app } = require('../index')
+const {
+  GQL: { learnGetCard },
+  getData,
+} = require('./_util')
+
+const success = Joi.object({
+  data: Joi.object({
+    cardByEntityId: Joi.object({
+      entityId: Joi.string()
+        .guid()
+        .required(),
+      name: Joi.string().required(),
+      kind: Joi.string().required(),
+      data: Joi.object(),
+    }),
+  }),
+})
+
+const fail = Joi.object({
+  data: Joi.object({
+    cardByEntityId: Joi.valid(null).required(),
+  }),
+})
+
 describe('learn-get-card', () => {
-  it.skip('should allow anyone to read the data', () => {
-    expect(true).toBe(false)
+  it('should allow anyone to read the data', async () => {
+    const data = await getData()
+    return request(app)
+      .post('/graphql')
+      .send({
+        query: learnGetCard,
+        variables: {
+          cardId: data.cards.video.params.entity_id,
+        },
+      })
+      .expect(({ body }) => Joi.assert(body, success))
   })
+
+  it('should allow anyone to read the data', () =>
+    request(app)
+      .post('/graphql')
+      .send({
+        query: learnGetCard,
+        variables: {
+          cardId: '29c8ef2c-ef6b-4690-af24-e0fdf9bd30f4',
+        },
+      })
+      .expect(({ body }) => Joi.assert(body, fail)))
 })

@@ -15,6 +15,10 @@ import PasswordPage from './pages/PasswordPage'
 import EmailPage from './pages/EmailPage'
 import SettingsPage from './pages/SettingsPage'
 import CreateSubjectPage from './pages/CreateSubjectPage'
+import LearnChoicePage from './pages/LearnChoicePage'
+import LearnPagePage from './pages/LearnPagePage'
+import LearnUnscoredEmbedPage from './pages/LearnUnscoredEmbedPage'
+import LearnVideoPage from './pages/LearnVideoPage'
 
 export const output = a => () => a
 const searchSubjects = output('Search Subjects')
@@ -30,6 +34,7 @@ const password = output('Password')
 const email = output('Email')
 const settings = output('Settings')
 const createSubject = output('Create Subject')
+const learn = output('Learn')
 
 export default function Index(props) {
   const { location, cacheHash } = props
@@ -43,6 +48,7 @@ export default function Index(props) {
         <title>
           <StaticRouter context={{}} location={location}>
             <Switch>
+              <Route path="/learn-:type/:cardId" render={learn} />
               <Route path="/log-in" render={logIn} />
               <Route path="/password" render={password} />
               <Route path="/email" render={email} />
@@ -65,6 +71,22 @@ export default function Index(props) {
         <div id="top" className="page" role="document">
           <StaticRouter context={{}} location={location}>
             <Switch>
+              <Route
+                path="/learn-video/:cardId"
+                render={withProps(LearnVideoPage)}
+              />
+              <Route
+                path="/learn-page/:cardId"
+                render={withProps(LearnPagePage)}
+              />
+              <Route
+                path="/learn-unscored-embed/:cardId"
+                render={withProps(LearnUnscoredEmbedPage)}
+              />
+              <Route
+                path="/learn-choice/:cardId"
+                render={withProps(LearnChoicePage)}
+              />
               <Route path="/log-in" render={withProps(LogInPage)} />
               <Route path="/password" render={withProps(PasswordPage)} />
               <Route path="/email" render={withProps(EmailPage)} />

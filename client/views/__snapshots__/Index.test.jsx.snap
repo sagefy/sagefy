@@ -24,6 +24,10 @@ exports[`Index view should render a page 1`] = `
       >
         <Switch>
           <Route
+            path="/learn-:type/:cardId"
+            render={[Function]}
+          />
+          <Route
             path="/log-in"
             render={[Function]}
           />
@@ -93,6 +97,22 @@ exports[`Index view should render a page 1`] = `
         location="/"
       >
         <Switch>
+          <Route
+            path="/learn-video/:cardId"
+            render={[Function]}
+          />
+          <Route
+            path="/learn-page/:cardId"
+            render={[Function]}
+          />
+          <Route
+            path="/learn-unscored-embed/:cardId"
+            render={[Function]}
+          />
+          <Route
+            path="/learn-choice/:cardId"
+            render={[Function]}
+          />
           <Route
             path="/log-in"
             render={[Function]}

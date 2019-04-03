@@ -15,6 +15,18 @@ comment on view sg_public.card
   is 'The latest accepted version of each card.';
 grant select on sg_public.card to sg_anonymous, sg_user, sg_admin;
 
+create or replace function sg_public.card_by_entity_id(entity_id uuid)
+returns sg_public.card as $$
+  select c.*
+  from sg_public.card c
+  where c.entity_id = $1
+  limit 1;
+$$ language sql stable;
+comment on function sg_public.card_by_entity_id(uuid)
+  is 'Get the latest version of the card.';
+grant execute on function sg_public.card_by_entity_id(uuid)
+  to sg_anonymous, sg_user, sg_admin;
+
 grant select on table sg_public.subject_version_before_after
   to sg_anonymous, sg_user, sg_admin;
 grant select on table sg_public.subject_version_parent_child

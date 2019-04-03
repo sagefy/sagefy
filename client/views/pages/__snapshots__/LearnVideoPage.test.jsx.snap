@@ -5,22 +5,16 @@ exports[`LearnVideoPage should render LearnVideoPage 1`] = `
   className="LearnVideoPage"
 >
   <section>
-    <progress
-      value={0.7}
-    />
-  </section>
-  <section>
     <iframe
       allowFullScreen="true"
       height="400"
-      src="https://www.youtube.com/embed/qAojF80nwsM?autoplay=1&modestbranding=1&rel=0"
-      title="Learn Video"
+      src="https://www.youtube.com/embed/undefined?autoplay=1&amp;modestbranding=1&amp;rel=0"
       width="600"
     />
   </section>
   <section>
     <form
-      action="/learn-choice/1"
+      action="/next"
     >
       <button
         type="submit"

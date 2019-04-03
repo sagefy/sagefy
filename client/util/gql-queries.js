@@ -20,7 +20,7 @@ module.exports = fromPairs(
       req =>
         gqlRequest({
           query,
-          variables: { ...req.body, ...req.query },
+          variables: { ...req.params, ...req.body, ...req.query },
           jwtToken: get(req.cookies, JWT_COOKIE_NAME),
         }),
     ]

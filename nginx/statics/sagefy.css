@@ -811,8 +811,14 @@ summary > *:first-child {
 }
 
 /* Just for pretty */
+iframe,
+.LearnPagePage img {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* until next drab upgrade... */
 iframe {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 0.25rem;
 }
 
 /* Utility classes ************************************************************/
@@ -877,4 +883,8 @@ iframe {
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+mark.good {
+  background: #c6ffc6; /* 128-100-95 */
 }

@@ -96,6 +96,41 @@ https://sagefy.org/password
 `)
 ) // Add more public routes as they are available
 
+app.get('/learn-:kind/:cardId', async (req, res) => {
+  req.params.cardId = toU(req.params.cardId)
+  const gqlRes = await GQL.learnGetCard(req)
+  const card = get(gqlRes, 'data.cardByEntityId')
+  if (!card || card.kind.toLowerCase().replace(/_/g, '-') !== req.params.kind) {
+    return res.redirect('/server-error')
+  }
+  return res.render('Index', {
+    location: req.url,
+    query: req.query,
+    cacheHash,
+    role: getRole(req),
+    ...card,
+    // TODO add progress
+  })
+})
+
+app.post('/learn-choice/:cardId', async (req, res) => {
+  req.params.cardId = toU(req.params.cardId)
+  const gqlRes = await GQL.learnGetCard(req)
+  const card = get(gqlRes, 'data.cardByEntityId')
+  if (!card || card.kind.toLowerCase() !== 'choice') {
+    return res.redirect('/server-error')
+  }
+  return res.render('Index', {
+    location: req.url,
+    query: req.query,
+    cacheHash,
+    role: getRole(req),
+    ...req.body,
+    ...card,
+    // TODO add progress
+  })
+})
+
 app.get('/sign-up', isAnonymous, handleRegular)
 
 app.post('/sign-up', isAnonymous, async (req, res) => {

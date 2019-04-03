@@ -463,140 +463,9 @@ $$;
 COMMENT ON FUNCTION sg_private.update_modified_column() IS 'Whenever the row changes, update the `modified` column.';
 
 
---
--- Name: get_anonymous_token(); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.get_anonymous_token() RETURNS sg_public.jwt_token
-    LANGUAGE sql
-    AS $$
-  select ('sg_anonymous', null, uuid_generate_v4(), null)::sg_public.jwt_token;
-$$;
-
-
---
--- Name: FUNCTION get_anonymous_token(); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.get_anonymous_token() IS 'Create anonymous user token.';
-
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
-
---
--- Name: user; Type: TABLE; Schema: sg_public; Owner: -
---
-
-CREATE TABLE sg_public."user" (
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    name public.citext NOT NULL,
-    view_subjects boolean DEFAULT false NOT NULL
-);
-
-
---
--- Name: TABLE "user"; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON TABLE sg_public."user" IS 'The public user data table. Anyone can see this data.';
-
-
---
--- Name: COLUMN "user".id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public."user".id IS 'The primary key of the user.';
-
-
---
--- Name: COLUMN "user".created; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public."user".created IS 'When the user signed up.';
-
-
---
--- Name: COLUMN "user".modified; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public."user".modified IS 'When the public user data updated last.';
-
-
---
--- Name: COLUMN "user".name; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public."user".name IS 'The user''s name or username';
-
-
---
--- Name: COLUMN "user".view_subjects; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public."user".view_subjects IS 'Public setting for if the user wants to display what they are learning.';
-
-
---
--- Name: get_current_user(); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.get_current_user() RETURNS sg_public."user"
-    LANGUAGE sql STABLE
-    AS $$
-  select *
-  from sg_public.user
-  where id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
-$$;
-
-
---
--- Name: FUNCTION get_current_user(); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.get_current_user() IS 'Get the current logged in user.';
-
-
---
--- Name: log_in(text, text); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.log_in(name text, password text) RETURNS sg_public.jwt_token
-    LANGUAGE plpgsql STRICT SECURITY DEFINER
-    AS $_$
-declare
-  xu sg_private.user;
-begin
-  select prvu.* into xu
-    from sg_private.user prvu, sg_public.user pubu
-    where
-      prvu.user_id = pubu.id and (
-        pubu.name = trim($1) or -- $1 == name
-        prvu.email = trim($1)
-      )
-    limit 1;
-  if (xu is null) then
-    raise exception 'No user found.' using errcode = '4F811CFE';
-  end if;
-  if (xu.password = crypt(trim(password), xu.password)) then
-    return (xu.role, xu.user_id, null, null)::sg_public.jwt_token;
-  else
-    raise exception 'Your password didn''t match.'
-      using errcode = '51EA51A9';
-  end if;
-end;
-$_$;
-
-
---
--- Name: FUNCTION log_in(name text, password text); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.log_in(name text, password text) IS 'Logs in a single user.';
-
 
 --
 -- Name: card_version; Type: TABLE; Schema: sg_public; Owner: -
@@ -779,6 +648,190 @@ COMMENT ON CONSTRAINT valid_unscored_embed_card ON sg_public.card_version IS 'If
 --
 
 COMMENT ON CONSTRAINT valid_video_card ON sg_public.card_version IS 'If the `kind` is `video`, ensure `data` matches the data shape.';
+
+
+--
+-- Name: card; Type: VIEW; Schema: sg_public; Owner: -
+--
+
+CREATE VIEW sg_public.card AS
+ SELECT DISTINCT ON (card_version.entity_id) card_version.version_id,
+    card_version.created,
+    card_version.modified,
+    card_version.entity_id,
+    card_version.previous_id,
+    card_version.language,
+    card_version.name,
+    card_version.status,
+    card_version.available,
+    card_version.tags,
+    card_version.user_id,
+    card_version.session_id,
+    card_version.subject_id,
+    card_version.kind,
+    card_version.data
+   FROM sg_public.card_version
+  WHERE (card_version.status = 'accepted'::sg_public.entity_status)
+  ORDER BY card_version.entity_id, card_version.created DESC;
+
+
+--
+-- Name: VIEW card; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON VIEW sg_public.card IS 'The latest accepted version of each card.';
+
+
+--
+-- Name: card_by_entity_id(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.card_by_entity_id(entity_id uuid) RETURNS sg_public.card
+    LANGUAGE sql STABLE
+    AS $$
+  select *
+  from sg_public.card
+  where sg_public.card.entity_id = entity_id
+  limit 1;
+$$;
+
+
+--
+-- Name: FUNCTION card_by_entity_id(entity_id uuid); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.card_by_entity_id(entity_id uuid) IS 'Get the latest version of the card.';
+
+
+--
+-- Name: get_anonymous_token(); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.get_anonymous_token() RETURNS sg_public.jwt_token
+    LANGUAGE sql
+    AS $$
+  select ('sg_anonymous', null, uuid_generate_v4(), null)::sg_public.jwt_token;
+$$;
+
+
+--
+-- Name: FUNCTION get_anonymous_token(); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.get_anonymous_token() IS 'Create anonymous user token.';
+
+
+--
+-- Name: user; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public."user" (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    name public.citext NOT NULL,
+    view_subjects boolean DEFAULT false NOT NULL
+);
+
+
+--
+-- Name: TABLE "user"; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public."user" IS 'The public user data table. Anyone can see this data.';
+
+
+--
+-- Name: COLUMN "user".id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public."user".id IS 'The primary key of the user.';
+
+
+--
+-- Name: COLUMN "user".created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public."user".created IS 'When the user signed up.';
+
+
+--
+-- Name: COLUMN "user".modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public."user".modified IS 'When the public user data updated last.';
+
+
+--
+-- Name: COLUMN "user".name; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public."user".name IS 'The user''s name or username';
+
+
+--
+-- Name: COLUMN "user".view_subjects; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public."user".view_subjects IS 'Public setting for if the user wants to display what they are learning.';
+
+
+--
+-- Name: get_current_user(); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.get_current_user() RETURNS sg_public."user"
+    LANGUAGE sql STABLE
+    AS $$
+  select *
+  from sg_public.user
+  where id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
+$$;
+
+
+--
+-- Name: FUNCTION get_current_user(); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.get_current_user() IS 'Get the current logged in user.';
+
+
+--
+-- Name: log_in(text, text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.log_in(name text, password text) RETURNS sg_public.jwt_token
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $_$
+declare
+  xu sg_private.user;
+begin
+  select prvu.* into xu
+    from sg_private.user prvu, sg_public.user pubu
+    where
+      prvu.user_id = pubu.id and (
+        pubu.name = trim($1) or -- $1 == name
+        prvu.email = trim($1)
+      )
+    limit 1;
+  if (xu is null) then
+    raise exception 'No user found.' using errcode = '4F811CFE';
+  end if;
+  if (xu.password = crypt(trim(password), xu.password)) then
+    return (xu.role, xu.user_id, null, null)::sg_public.jwt_token;
+  else
+    raise exception 'Your password didn''t match.'
+      using errcode = '51EA51A9';
+  end if;
+end;
+$_$;
+
+
+--
+-- Name: FUNCTION log_in(name text, password text); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.log_in(name text, password text) IS 'Logs in a single user.';
 
 
 --
@@ -1066,38 +1119,6 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_public.search_subjects(query text) IS 'Search subjects.';
-
-
---
--- Name: card; Type: VIEW; Schema: sg_public; Owner: -
---
-
-CREATE VIEW sg_public.card AS
- SELECT DISTINCT ON (card_version.entity_id) card_version.version_id,
-    card_version.created,
-    card_version.modified,
-    card_version.entity_id,
-    card_version.previous_id,
-    card_version.language,
-    card_version.name,
-    card_version.status,
-    card_version.available,
-    card_version.tags,
-    card_version.user_id,
-    card_version.session_id,
-    card_version.subject_id,
-    card_version.kind,
-    card_version.data
-   FROM sg_public.card_version
-  WHERE (card_version.status = 'accepted'::sg_public.entity_status)
-  ORDER BY card_version.entity_id, card_version.created DESC;
-
-
---
--- Name: VIEW card; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON VIEW sg_public.card IS 'The latest accepted version of each card.';
 
 
 --
