@@ -54,18 +54,6 @@ Run tests:
     docker rm -f $(docker ps -a -q)
     docker rmi -f $(docker images -q)
 
-## Deploy
-
-How to deploy the latest master:
-
-    # ssh into the server
-    # back up the database
-    cd /var/sagefy
-    git pull origin master
-    npm install
-    npm run dbmate up
-    docker-compose restart
-
 ## Back up database
 
 Run:
@@ -77,3 +65,17 @@ Run:
     ls -al
     b2 authorize_account xxx xxxxxxxx  # see password manager
     b2 sync /var/sagefy/dbbu b2:sagefy-dbbu
+
+## Deploy
+
+How to deploy the latest master:
+
+    # ssh into the server
+    # back up the database
+    cd /var/sagefy
+    git pull origin master
+    npm install
+    npm run dbmate up
+    # Was there any changes to .env?
+    # Any Dockerfile changes? Rebuild
+    docker-compose restart
