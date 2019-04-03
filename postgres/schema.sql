@@ -332,6 +332,76 @@ COMMENT ON FUNCTION sg_private.notify_update_password() IS 'Whenever a user chan
 
 
 --
+-- Name: score_response(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.score_response() RETURNS trigger
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+  declare
+    card sg_public.card;
+    prior sg_public.response;
+    prior_learned real := 0.4;
+    option jsonb;
+    score real;
+    learned real;
+    slip constant real := 0.1;
+    guess constant real := 0.3;
+    transit constant real := 0.05;
+  begin
+    -- Overall: Fill in (subject_id, score, learned)
+    -- Validate if the response to the card is valid.
+    card := (
+      select *
+      from sg_public.card
+      where sg_public.card.entity_id = new.card_id
+      limit 1
+    );
+    if (!card) then
+      raise exception 'No card found.' using errcode = 'EE05C989';
+    end if;
+    if (card.kind <> 'choice') then -- scored kinds only
+      raise exception 'You may only respond to a scored card.'
+        using errcode = '1306BF1C';
+    end if;
+    option := card.data->'options'->new.response;
+    if (!option) then
+      raise exception 'You must submit an available response `id`.'
+        using errcode = '681942FD';
+    end if;
+    -- Set default values
+    new.subject_id := card.subject_id;
+    -- Score the response
+    new.score := case when option->'correct' then 1 else 0 end;
+    -- Calculate p(learned)
+    prior := sg_public.select_latest_response(card.subject_id);
+    if (prior) then
+      prior_learned := prior.learned;
+    end if;
+    learned := (
+      new.score * (
+        (prior_learned * (1 - slip)) /
+        (prior_learned * (1 - slip) + (1 - prior_learned) * guess)
+      ) +
+      (1 - new.score) * (
+        (prior_learned * slip) /
+        (prior_learned * slip + (1 - prior_learned) * (1 - guess))
+      )
+    );
+    new.learned := learned + (1 - learned) * transit;
+    return new;
+  end;
+$$;
+
+
+--
+-- Name: FUNCTION score_response(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.score_response() IS 'After I respond to a card, score the result and update model.';
+
+
+--
 -- Name: trim_user_email(); Type: FUNCTION; Schema: sg_private; Owner: -
 --
 
@@ -999,6 +1069,214 @@ COMMENT ON FUNCTION sg_public.search_subjects(query text) IS 'Search subjects.';
 
 
 --
+-- Name: card; Type: VIEW; Schema: sg_public; Owner: -
+--
+
+CREATE VIEW sg_public.card AS
+ SELECT DISTINCT ON (card_version.entity_id) card_version.version_id,
+    card_version.created,
+    card_version.modified,
+    card_version.entity_id,
+    card_version.previous_id,
+    card_version.language,
+    card_version.name,
+    card_version.status,
+    card_version.available,
+    card_version.tags,
+    card_version.user_id,
+    card_version.session_id,
+    card_version.subject_id,
+    card_version.kind,
+    card_version.data
+   FROM sg_public.card_version
+  WHERE (card_version.status = 'accepted'::sg_public.entity_status)
+  ORDER BY card_version.entity_id, card_version.created DESC;
+
+
+--
+-- Name: VIEW card; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON VIEW sg_public.card IS 'The latest accepted version of each card.';
+
+
+--
+-- Name: select_card_to_learn(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.select_card_to_learn(subject_id uuid) RETURNS sg_public.card
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+  declare
+    latest_response sg_public.response;
+    kinds text[];
+  begin
+    -- What is p(learned) currently for the subject?
+    latest_response := (select sg_public.select_latest_response(subject_id));
+    -- Decide on a scored or unscored type
+    kinds := (
+      select case when random() > (
+        0.5 + 0.5 * (latest_response.learned or 0.4)
+      ) then
+        array['choice'] -- scored kinds
+      else
+        array['video', 'page', 'unscored_embed'] -- unscored kinds
+      end
+    );
+    select *
+    from sg_public.card
+    where sg_public.card.subject_id = subject_id
+      and sg_public.card.kind = any(kinds)
+      -- Don't allow the previous card as the next card
+      and sg_public.card.entity_id <> latest_response.card_id
+    -- Select cards of kind at random
+    order by random()
+    limit 1;
+  end;
+  -- Future version: When estimating parameters and the card kind is scored,
+  -- prefer 0.25 < correct < 0.75
+$$;
+
+
+--
+-- Name: FUNCTION select_card_to_learn(subject_id uuid); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.select_card_to_learn(subject_id uuid) IS 'After I select a subject, search for a suitable card.';
+
+
+--
+-- Name: response; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.response (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    user_id uuid,
+    session_id uuid,
+    card_id uuid NOT NULL,
+    subject_id uuid NOT NULL,
+    response text NOT NULL,
+    score real NOT NULL,
+    learned real NOT NULL,
+    CONSTRAINT response_score_check CHECK (((score >= (0)::double precision) AND (score <= (1)::double precision))),
+    CONSTRAINT response_score_check1 CHECK (((score >= (0)::double precision) AND (score <= (1)::double precision))),
+    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
+);
+
+
+--
+-- Name: TABLE response; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.response IS 'When a learner responds to a card, we record the result.';
+
+
+--
+-- Name: COLUMN response.id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.id IS 'The ID of the response.';
+
+
+--
+-- Name: COLUMN response.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.created IS 'When the user created the response.';
+
+
+--
+-- Name: COLUMN response.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.modified IS 'When the system last modified the response.';
+
+
+--
+-- Name: COLUMN response.user_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.user_id IS 'The user the response belongs to.';
+
+
+--
+-- Name: COLUMN response.session_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.session_id IS 'If not user, the session_id the response belongs to.';
+
+
+--
+-- Name: COLUMN response.card_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.card_id IS 'The card (entity id) that the response belongs to.';
+
+
+--
+-- Name: COLUMN response.subject_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.subject_id IS 'The subject (entity id) that the response belongs to... at the time of the response';
+
+
+--
+-- Name: COLUMN response.response; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.response IS 'How the user responded.';
+
+
+--
+-- Name: COLUMN response.score; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.score IS 'The score, 0->1, of the response.';
+
+
+--
+-- Name: COLUMN response.learned; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.learned IS 'The estimated probability the learner has learned the subject, after this response.';
+
+
+--
+-- Name: CONSTRAINT user_or_session ON response; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT user_or_session ON sg_public.response IS 'Ensure only the user or session has data.';
+
+
+--
+-- Name: select_latest_response(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.select_latest_response(subject_id uuid) RETURNS sg_public.response
+    LANGUAGE sql STABLE
+    AS $$
+  -- If no response yet, default to 0.4
+  select *
+  from sg_public.response
+  where sg_public.response.subject_id = subject_id and (
+    user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
+    or session_id = nullif(current_setting('jwt.claims.session_id', true), '')::uuid
+  )
+  order by created desc
+  limit 1;
+$$;
+
+
+--
+-- Name: FUNCTION select_latest_response(subject_id uuid); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.select_latest_response(subject_id uuid) IS 'Get the latest response from the user on the given subject.';
+
+
+--
 -- Name: select_popular_subjects(); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
@@ -1021,6 +1299,99 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_public.select_popular_subjects() IS 'Select the 5 most popular subjects.';
+
+
+--
+-- Name: select_subject_to_learn(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.select_subject_to_learn(subject_id uuid) RETURNS sg_public.subject
+    LANGUAGE sql STABLE
+    AS $$
+  -- determine all child subjects graph
+  with recursive children_graph (version_id, entity_id, path) as (
+    select
+      s.version_id,
+      s.entity_id,
+      array[s.entity_id]
+    from
+      sg_public.subject s
+    where
+      s.entity_id = subject_id
+    union all
+    select
+      s.version_id,
+      s.entity_id,
+      cg.path || s.entity_id
+    from
+      children_graph cg,
+      sg_public.subject s,
+      sg_public.subject_version_parent_child svpc
+    where
+      cg.version_id = svpc.child_version_id
+      and svpc.parent_entity_id = s.entity_id
+  ),
+  -- only keep those with direct cards
+  filtered as (
+    select cg.*, (
+      select count(*)
+      from sg_public.card c
+      where c.subject_id = cg.entity_id
+    ) as card_count
+    from children_graph cg
+    -- where card_count > 0
+  ),
+  -- count the depth -- how many subjects after this one
+  before_graph (version_id, entity_id, path) as (
+    select
+      s.version_id,
+      s.entity_id,
+      array[s.entity_id]
+    from filtered s
+    union all
+    select
+      s.version_id,
+      s.entity_id,
+      bg.path || s.entity_id
+    from
+      before_graph bg,
+      sg_public.subject_version_before_after svba,
+      sg_public.subject s
+    where
+      bg.version_id = svba.after_version_id
+      and svba.before_entity_id = s.entity_id
+  ),
+  -- cut inaccessibile subjects -- haven't learned a before > 0.99
+  allowed as (
+    select *
+    from
+      before_graph bg
+    where (
+      select count((
+        select r.learned
+        from sg_public.select_latest_response(entity_id) r
+      ) > 0.99)
+      from unnest(bg.path) as entity_id
+    ) = array_length(bg.path, 1)
+  )
+  -- limit 5
+  select s.*
+  from
+    allowed a,
+    sg_public.subject s
+  where
+    a.version_id = s.version_id
+  order by
+    array_length(a.path, 1) desc
+  limit 5;
+$$;
+
+
+--
+-- Name: FUNCTION select_subject_to_learn(subject_id uuid); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.select_subject_to_learn(subject_id uuid) IS 'After I select a main subject, search for suitable child subjects.';
 
 
 --
@@ -1643,6 +2014,14 @@ ALTER TABLE ONLY sg_public.entity_version
 
 
 --
+-- Name: response response_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.response
+    ADD CONSTRAINT response_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: subject_entity subject_entity_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
 --
 
@@ -1759,6 +2138,27 @@ CREATE INDEX card_version_user_id_idx ON sg_public.card_version USING btree (use
 
 
 --
+-- Name: response_card_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX response_card_id_idx ON sg_public.response USING btree (card_id);
+
+
+--
+-- Name: response_subject_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX response_subject_id_idx ON sg_public.response USING btree (subject_id);
+
+
+--
+-- Name: response_user_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX response_user_id_idx ON sg_public.response USING btree (user_id);
+
+
+--
 -- Name: subject_version_before_after_before_entity_id_idx; Type: INDEX; Schema: sg_public; Owner: -
 --
 
@@ -1857,6 +2257,34 @@ COMMENT ON TRIGGER insert_card_version_user_or_session ON sg_public.card_version
 
 
 --
+-- Name: response insert_response_score; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER insert_response_score BEFORE INSERT ON sg_public.response FOR EACH ROW EXECUTE PROCEDURE sg_private.score_response();
+
+
+--
+-- Name: TRIGGER insert_response_score ON response; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER insert_response_score ON sg_public.response IS 'After I respond to a card, score the result and update model.';
+
+
+--
+-- Name: response insert_response_user_or_session; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER insert_response_user_or_session BEFORE INSERT ON sg_public.response FOR EACH ROW EXECUTE PROCEDURE sg_private.insert_user_or_session();
+
+
+--
+-- Name: TRIGGER insert_response_user_or_session ON response; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER insert_response_user_or_session ON sg_public.response IS 'Whenever I make a new response, auto fill the `user_id` column';
+
+
+--
 -- Name: subject_version insert_subject_version_status; Type: TRIGGER; Schema: sg_public; Owner: -
 --
 
@@ -1924,6 +2352,20 @@ CREATE TRIGGER update_card_version_modified BEFORE UPDATE ON sg_public.card_vers
 --
 
 COMMENT ON TRIGGER update_card_version_modified ON sg_public.card_version IS 'Whenever a card version changes, update the `modified` column.';
+
+
+--
+-- Name: response update_response_modified; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER update_response_modified BEFORE UPDATE ON sg_public.response FOR EACH ROW EXECUTE PROCEDURE sg_private.update_modified_column();
+
+
+--
+-- Name: TRIGGER update_response_modified ON response; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER update_response_modified ON sg_public.response IS 'Whenever a response changes, update the `modified` column.';
 
 
 --
@@ -2053,6 +2495,30 @@ ALTER TABLE ONLY sg_public.card_version
 
 
 --
+-- Name: response response_card_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.response
+    ADD CONSTRAINT response_card_id_fkey FOREIGN KEY (card_id) REFERENCES sg_public.card_entity(entity_id);
+
+
+--
+-- Name: response response_subject_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.response
+    ADD CONSTRAINT response_subject_id_fkey FOREIGN KEY (subject_id) REFERENCES sg_public.subject_entity(entity_id);
+
+
+--
+-- Name: response response_user_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.response
+    ADD CONSTRAINT response_user_id_fkey FOREIGN KEY (user_id) REFERENCES sg_public."user"(id);
+
+
+--
 -- Name: subject_entity subject_entity_entity_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
 --
 
@@ -2162,10 +2628,30 @@ CREATE POLICY delete_user_subject ON sg_public.user_subject FOR DELETE TO sg_ano
 
 
 --
+-- Name: response insert_response; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY insert_response ON sg_public.response FOR INSERT TO sg_anonymous, sg_user, sg_admin;
+
+
+--
 -- Name: user_subject insert_user_subject; Type: POLICY; Schema: sg_public; Owner: -
 --
 
 CREATE POLICY insert_user_subject ON sg_public.user_subject FOR INSERT TO sg_anonymous, sg_user, sg_admin WITH CHECK (true);
+
+
+--
+-- Name: response; Type: ROW SECURITY; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE sg_public.response ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: response select_response; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY select_response ON sg_public.response FOR SELECT TO sg_anonymous, sg_user, sg_admin USING (((user_id = (NULLIF(current_setting('jwt.claims.user_id'::text, true), ''::text))::uuid) OR (session_id = (NULLIF(current_setting('jwt.claims.session_id'::text, true), ''::text))::uuid)));
 
 
 --
@@ -2226,4 +2712,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190322230728'),
     ('20190328211620'),
     ('20190401185105'),
-    ('20190403175843');
+    ('20190403175843'),
+    ('20190403183651');
