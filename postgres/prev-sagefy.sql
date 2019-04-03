@@ -29,6 +29,131 @@ grant execute on function sg_public.user_md5_email(sg_public.user)
 
 -- TODO given a subject, calculate its parents and children
 
+-- Allow end users to make subjects:
+
+create function sg_private.update_version_status()
+returns trigger as $$
+  declare
+    role text;
+  begin
+    role := current_setting('jwt.claims.role')::text;
+    if (role = 'sg_admin') then
+      return new;
+    end if;
+    if (old.user_id <> current_setting('jwt.claims.user_id')) then
+      raise exception 'A user may only change their own version status.'
+        using errcode = '61C7AC84';
+    end if;
+    if (new.status <> 'declined') then
+      raise exception 'A user may only change the version status to declined.'
+        using errcode = '05F2D0E1';
+    end if;
+    if (old.status = 'accepted') then
+      raise exception 'A user cannot change an accepted version.'
+        using errcode = '62CF3D42';
+    end if;
+    return new;
+  end;
+$$ language plpgsql strict security definer;
+comment on function sg_private.update_version_status()
+  is 'A user may only change their own version status to declined.';
+create trigger update_subject_version_status
+  before update on sg_public.subject_version
+  for each row execute procedure sg_private.update_version_status();
+comment on trigger update_subject_version_status on sg_public.subject_version
+  is 'A user may only decline their own un-accepted subject version.';
+create trigger update_card_version_status
+  before update on sg_public.card_version
+  for each row execute procedure sg_private.update_version_status();
+comment on trigger update_card_version_status on sg_public.card_version
+  is 'A user may only decline their own un-accepted card version.';
+
+create function sg_private.insert_subject_version_parent_child_cycle()
+returns trigger as $$
+  begin
+    if exists(
+      with recursive graph (entity_id, path, cycle) as (
+        select
+          sv.entity_id,
+          array[sv.entity_id, new.entity_id],
+          sv.entity_id = new.entity_id
+        from sg_public.subject_version sv
+        where new.version_id = sv.version_id
+        union all
+        select
+          s.entity_id,
+          g.path || s.entity_id,
+          s.entity = any(g.path)
+        from
+          graph g,
+          sg_public.subject_version_parent_child svpc,
+          sg_public.subject s
+        where
+          g.entity_id = svpc.before_entity_id
+          and svpc.version_id = s.version_id
+          and not g.cycle
+      )
+      select *
+    ) then
+      raise exception 'Subject parent/child cannot form a cycle.'
+        using errcode = '7876F332';
+    else
+      return new;
+    end if;
+  end;
+$$ language plpgsql strict security definer;
+create trigger insert_subject_version_parent_child_cycle
+  before insert on sg_public.subject_version
+  for each row execute procedure sg_private.insert_subject_version_parent_child_cycle();
+comment on function sg_private.insert_subject_version_parent_child_cycle()
+  is 'Ensure subject parent/child relations don''t form a cycle.';
+comment on trigger insert_subject_version_parent_child_cycle
+  on sg_public.subject_version
+  is 'Ensure subject parent/child relations don''t form a cycle.';
+
+create function sg_private.insert_subject_version_before_after_cycle()
+returns trigger as $$
+  begin
+    if exists(
+      with recursive graph (entity_id, path, cycle) as (
+        select
+          sv.entity_id,
+          array[sv.entity_id, new.entity_id],
+          sv.entity_id = new.entity_id
+        from sg_public.subject_version sv
+        where new.version_id = sv.version_id
+        union all
+        select
+          s.entity_id,
+          g.path || s.entity_id,
+          s.entity = any(g.path)
+        from
+          graph g,
+          sg_public.subject_version_before_after svba,
+          sg_public.subject s
+        where
+          g.entity_id = svba.before_entity_id
+          and svba.version_id = s.version_id
+          and not g.cycle
+      )
+      select *
+    ) then
+      raise exception 'Subject before/after cannot form a cycle.'
+        using errcode = 'D8182DC8';
+    else
+      return new;
+    end if;
+  end;
+$$ language plpgsql strict security definer;
+create trigger insert_subject_version_before_after_cycle
+  before insert on sg_public.subject_version
+  for each row execute procedure sg_private.insert_subject_version_before_after_cycle();
+comment on function sg_private.insert_subject_version_before_after_cycle()
+  is 'Ensure subject before/after relations don''t form a cycle.';
+comment on trigger insert_subject_version_before_after_cycle
+  on sg_public.subject_version
+  is 'Ensure subject before/after relations don''t form a cycle.';
+
 create function sg_public.search_cards(query text)
 returns setof sg_public.card as $$
   select
