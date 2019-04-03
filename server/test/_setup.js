@@ -1,9 +1,19 @@
-require('../index')
-const generateDevData = require('./_dev-data')
+/* eslint-disable no-console, global-require */
 
-module.exports = async () => {
-  await generateDevData()
-  // Postgraphile needs some time to generate the schemas,
-  // otherwise the whole thing fails at the end.
-  return new Promise(resolve => setTimeout(resolve, 2000))
+const fs = require('fs').promises
+
+async function setup() {
+  console.log('Running setup...')
+  // This require brings in Postgraphile...
+  // So give it some time to run.
+  const { pool } = require('../index')
+  pool.on('error', console.error)
+  // We'll generate our dev/test data first...
+  const data = await require('./_dev-data')()
+  // As bizarre as this is, this is the only way to
+  // pass along data from the setup phase to the test phase.
+  await fs.writeFile('test-data.json', JSON.stringify(data), 'utf8')
+  console.log('Finished setup.')
 }
+
+module.exports = setup

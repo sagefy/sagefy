@@ -1,5 +1,5 @@
 import React from 'react'
-import { string, arrayOf, shape } from 'prop-types'
+import { string, shape } from 'prop-types'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ChooseSubject from '../components/ChooseSubject'
@@ -74,7 +74,7 @@ export default function SearchSubjectsPage({
 SearchSubjectsPage.propTypes = {
   role: string,
   query: shape({}).isRequired,
-  searchSubjects: arrayOf(shape({})),
+  searchSubjects: shape({}),
 }
 
 SearchSubjectsPage.defaultProps = {

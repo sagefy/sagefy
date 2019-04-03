@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LearnUnscoredEmbedPage should render LearnUnscoredEmbedPage 1`] = `
+<div
+  className="LearnUnscoredEmbedPage"
+>
+  <section>
+    <progress
+      value={0.7}
+    />
+  </section>
+  <section>
+    <iframe
+      height="400"
+      src="https://em.sagefy.org/examples/duration-and-rhythm"
+      title="Name of the embed card"
+      width="600"
+    />
+  </section>
+  <section>
+    <form
+      action="/choose-next"
+    >
+      <button
+        type="submit"
+      >
+        <Icon
+          i="card"
+          s="m"
+        />
+         Next Card
+      </button>
+    </form>
+  </section>
+</div>
+`;

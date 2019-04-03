@@ -1,0 +1,152 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChooseNextPage should render ChooseNextPage 1`] = `
+<div
+  className="ChooseNextPage"
+>
+  <section
+    className="m-yc"
+  >
+    <p>
+      <em>
+        Right, so 
+        <strong>
+          An Introduction to Electronic Music
+        </strong>
+        ...
+      </em>
+    </p>
+    <h1>
+      Where should we start? 
+      <Icon
+        i="subject"
+        s="xxl"
+      />
+    </h1>
+  </section>
+  <section>
+    <table>
+      <tr>
+        <td>
+          <p>
+            <button
+              type="submit"
+            >
+              <Icon
+                i="select"
+                s="m"
+              />
+            </button>
+          </p>
+        </td>
+        <td
+          className="m-yc"
+        >
+          <h3>
+            <mark>
+              <Link
+                replace={false}
+                to="/learn-video/2"
+              >
+                Complex Waves
+              </Link>
+            </mark>
+          </h3>
+          <p>
+            Describe the composition of complex sounds.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>
+            <button
+              type="button"
+            >
+              <Icon
+                i="select"
+                s="m"
+              />
+            </button>
+          </p>
+        </td>
+        <td
+          className="m-yc"
+        >
+          <h3>
+            <Link
+              replace={false}
+              to="/learn-video/1"
+            >
+              Modulation
+            </Link>
+          </h3>
+          <p>
+            Describe modulation of sound signals.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>
+            <button
+              type="button"
+            >
+              <Icon
+                i="select"
+                s="m"
+              />
+            </button>
+          </p>
+        </td>
+        <td
+          className="m-yc"
+        >
+          <h3>
+            <Link
+              replace={false}
+              to="/learn-video/3"
+            >
+              Human Hearing
+            </Link>
+          </h3>
+          <p>
+            Describe common properties of human hearing, as hearing pertains to electronic music.
+          </p>
+        </td>
+      </tr>
+    </table>
+    <p
+      className="ta-r"
+    >
+      <small>
+        (15% learned)
+      </small>
+    </p>
+  </section>
+  <section>
+    <p
+      className="ta-r"
+    >
+      <small>
+        <em>
+          Or...
+        </em>
+         on second thought, let's go to the
+         
+        <Link
+          replace={false}
+          to="/dashboard"
+        >
+          <Icon
+            i="dashboard"
+            s="m"
+          />
+           Dashboard
+        </Link>
+        .
+      </small>
+    </p>
+  </section>
+</div>
+`;

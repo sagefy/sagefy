@@ -1,13 +1,56 @@
+const Joi = require('joi')
+const request = require('supertest')
+const { app } = require('../index')
+const {
+  GQL: { rootNewPasswordToken },
+} = require('./_util')
+
+const success = Joi.object({
+  data: Joi.object({
+    sendPasswordToken: Joi.object({
+      clientMutationId: Joi.valid(null).required(),
+    }),
+  }),
+})
+
+const fail = Joi.object({
+  errors: Joi.array().min(1),
+  data: Joi.object({
+    sendPasswordToken: Joi.valid(null).required(),
+  }),
+})
+
 describe('root-new-password-token', () => {
-  it.skip('should error if no user with that email', async () => {
-    expect(true).toBe(false)
-  })
+  it('should error if no user with that email', () =>
+    request(app)
+      .post('/graphql')
+      .send({
+        query: rootNewPasswordToken,
+        variables: {
+          email: 'henry@example.com',
+        },
+      })
+      .expect(({ body }) => Joi.assert(body, fail)))
 
-  it.skip(':) should send an email with the token', async () => {
-    expect(true).toBe(false)
-  })
+  it('should send an email with the token', () =>
+    request(app)
+      .post('/graphql')
+      .send({
+        query: rootNewPasswordToken,
+        variables: {
+          email: 'doris@example.com',
+        },
+      })
+      .expect(({ body }) => Joi.assert(body, success))) // TODO how do I know the email sent?
 
-  it.skip('should trim the input email', async () => {
-    expect(true).toBe(false)
-  })
+  it('should trim the input email', () =>
+    request(app)
+      .post('/graphql')
+      .send({
+        query: rootNewPasswordToken,
+        variables: {
+          email: '  doris@example.com  ',
+        },
+      })
+      .expect(({ body }) => Joi.assert(body, success)))
 })

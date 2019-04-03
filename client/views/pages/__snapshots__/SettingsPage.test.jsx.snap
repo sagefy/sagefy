@@ -13,7 +13,7 @@ exports[`SettingsPage should render the SettingsPage 1`] = `
   />
   <section>
     <h1>
-      Update my settings 
+      Update your settings 
       <Icon
         i="settings"
         s="xxl"

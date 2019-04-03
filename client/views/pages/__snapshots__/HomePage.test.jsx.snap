@@ -4,99 +4,40 @@ exports[`HomePage should render the home page 1`] = `
 <div
   className="HomePage"
 >
-  <section>
-    <blockquote>
-      <h1>
-        Hey friends...
-        <Icon
-          i="friends"
-          s="xxl"
+  <section
+    className="ta-c"
+  >
+    <h1>
+      What do you want to learn? 
+      <Icon
+        i="search"
+        s="xxl"
+      />
+    </h1>
+    <form
+      action="/search-subjects"
+    >
+      <p>
+        <input
+          autoFocus={true}
+          name="q"
+          placeholder="example: Music"
+          size="40"
+          type="search"
         />
-      </h1>
-      <p>
-        So I'm rebuilding Sagefy to let anyone
       </p>
-      <ol>
-        <li>
-          <em>
-            learn
-          </em>
-           without an account,
-        </li>
-        <li>
-          <em>
-            make
-          </em>
-           content without an account,
-        </li>
-        <li>
-          and to drastically
-          <em>
-            simplify
-          </em>
-           contributing.
-        </li>
-      </ol>
       <p>
-        Sagefy is temporarily limited. But here's some things you can do now:
+        <button
+          type="submit"
+        >
+          <Icon
+            i="search"
+            s="m"
+          />
+           Search
+        </button>
       </p>
-      <ul>
-        <li>
-          <ExternalLink
-            href="https://docs.sagefy.org/mocks"
-          >
-            <Icon
-              i="view"
-              s="m"
-            />
-
-            <strong>
-              View
-            </strong>
-             the prototype
-          </ExternalLink>
-
-          of what's coming!
-        </li>
-        <li>
-          <Link
-            replace={false}
-            to="/sign-up"
-          >
-            <Icon
-              i="signUp"
-              s="m"
-            />
-
-            <strong>
-              Sign up
-            </strong>
-          </Link>
-          , and we'll let you know as we release new stuff.
-        </li>
-        <li>
-          <ExternalLink
-            href="https://sgfy.xyz/updates"
-          >
-            <Icon
-              i="updates"
-              s="m"
-            />
-
-            <strong>
-              Subscribe
-            </strong>
-             to biweekly email updates
-          </ExternalLink>
-          .
-        </li>
-      </ul>
-      <p>
-        <small>
-          Last updated 2019 Mar 3
-        </small>
-      </p>
-    </blockquote>
+    </form>
   </section>
   <section
     className="ta-r"
@@ -113,9 +54,9 @@ exports[`HomePage should render the home page 1`] = `
           />
            Log In
         </Link>
-
+         
         or
-
+         
         <Link
           replace={false}
           to="/sign-up"
@@ -130,107 +71,42 @@ exports[`HomePage should render the home page 1`] = `
     </p>
   </section>
   <section>
-    <div
-      className="ta-c m-yc"
-    >
-      <img
-        alt="astrolabe"
-        height="120"
-        src="/astrolabe.svg"
-      />
-      <h2>
-        Sagefy
-      </h2>
-      <p>
-        <em>
-          Learn anything, adapted for you. Free.
-        </em>
-      </p>
-    </div>
-  </section>
-  <section>
-    <ul>
-      <li>
-        <Icon
-          i="adapt"
-          s="m"
-        />
-
-        <strong>
-          Adaptive Learning.
-        </strong>
-         Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
-      </li>
-      <li>
-        <Icon
-          i="open"
-          s="m"
-        />
-
-        <strong>
-          Open Content.
-        </strong>
-         Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
-      </li>
-      <li>
-        <ExternalLink
-          href="https://youtu.be/gFn4Q9tx7Qs"
-        >
-          <Icon
-            i="video"
-            s="m"
-          />
-           Watch the overview video
-        </ExternalLink>
-        .
-      </li>
-    </ul>
-  </section>
-  <Footer />
-</div>
-`;
-
-exports[`HomePage should render the logged in home page 1`] = `
-<div
-  className="HomePage"
->
-  <section>
     <blockquote>
       <h1>
-        Hey friends...
+        Hey friends... 
         <Icon
           i="friends"
           s="xxl"
         />
       </h1>
       <p>
-        So I'm rebuilding Sagefy to let anyone
-      </p>
-      <ol>
-        <li>
-          <em>
-            learn
-          </em>
-           without an account,
-        </li>
-        <li>
-          <em>
-            make
-          </em>
-           content without an account,
-        </li>
-        <li>
-          and to drastically
-          <em>
-            simplify
-          </em>
-           contributing.
-        </li>
-      </ol>
-      <p>
-        Sagefy is temporarily limited. But here's some things you can do now:
+        So I'm rebuilding Sagefy to (1) let anyone 
+        <em>
+          learn
+        </em>
+         
+        without an account, (2) 
+        <em>
+          make
+        </em>
+         content without an account, and to (3) drastically 
+        <em>
+          simplify
+        </em>
+         contributing. Sagefy is temporarily limited. For now:
       </p>
       <ul>
+        <li>
+          <Icon
+            i="subject"
+            s="m"
+          />
+           
+          <strong>
+            Follow
+          </strong>
+           and create subjects!
+        </li>
         <li>
           <ExternalLink
             href="https://docs.sagefy.org/mocks"
@@ -239,30 +115,14 @@ exports[`HomePage should render the logged in home page 1`] = `
               i="view"
               s="m"
             />
-
+             
             <strong>
               View
             </strong>
              the prototype
           </ExternalLink>
-
+           
           of what's coming!
-        </li>
-        <li>
-          <Link
-            replace={false}
-            to="/sign-up"
-          >
-            <Icon
-              i="signUp"
-              s="m"
-            />
-
-            <strong>
-              Sign up
-            </strong>
-          </Link>
-          , and we'll let you know as we release new stuff.
         </li>
         <li>
           <ExternalLink
@@ -272,7 +132,7 @@ exports[`HomePage should render the logged in home page 1`] = `
               i="updates"
               s="m"
             />
-
+             
             <strong>
               Subscribe
             </strong>
@@ -283,29 +143,10 @@ exports[`HomePage should render the logged in home page 1`] = `
       </ul>
       <p>
         <small>
-          Last updated 2019 Mar 3
+          Last updated 2019 Apr 1
         </small>
       </p>
     </blockquote>
-  </section>
-  <section
-    className="ta-r"
-  >
-    <p>
-      <small>
-        <Link
-          replace={false}
-          to="/dashboard"
-        >
-          Go to
-          <Icon
-            i="dashboard"
-            s="m"
-          />
-           Dashboard
-        </Link>
-      </small>
-    </p>
   </section>
   <section>
     <div
@@ -333,7 +174,7 @@ exports[`HomePage should render the logged in home page 1`] = `
           i="adapt"
           s="m"
         />
-
+         
         <strong>
           Adaptive Learning.
         </strong>
@@ -344,7 +185,7 @@ exports[`HomePage should render the logged in home page 1`] = `
           i="open"
           s="m"
         />
-
+         
         <strong>
           Open Content.
         </strong>
@@ -364,6 +205,207 @@ exports[`HomePage should render the logged in home page 1`] = `
       </li>
     </ul>
   </section>
-  <Footer />
+  <Footer
+    role="sg_anonymous"
+  />
+</div>
+`;
+
+exports[`HomePage should render the logged in home page 1`] = `
+<div
+  className="HomePage"
+>
+  <section
+    className="ta-c"
+  >
+    <h1>
+      What do you want to learn? 
+      <Icon
+        i="search"
+        s="xxl"
+      />
+    </h1>
+    <form
+      action="/search-subjects"
+    >
+      <p>
+        <input
+          autoFocus={true}
+          name="q"
+          placeholder="example: Music"
+          size="40"
+          type="search"
+        />
+      </p>
+      <p>
+        <button
+          type="submit"
+        >
+          <Icon
+            i="search"
+            s="m"
+          />
+           Search
+        </button>
+      </p>
+    </form>
+  </section>
+  <section
+    className="ta-r"
+  >
+    <p>
+      <small>
+        <Link
+          replace={false}
+          to="/dashboard"
+        >
+          Go to 
+          <Icon
+            i="dashboard"
+            s="m"
+          />
+           Dashboard
+        </Link>
+      </small>
+    </p>
+  </section>
+  <section>
+    <blockquote>
+      <h1>
+        Hey friends... 
+        <Icon
+          i="friends"
+          s="xxl"
+        />
+      </h1>
+      <p>
+        So I'm rebuilding Sagefy to (1) let anyone 
+        <em>
+          learn
+        </em>
+         
+        without an account, (2) 
+        <em>
+          make
+        </em>
+         content without an account, and to (3) drastically 
+        <em>
+          simplify
+        </em>
+         contributing. Sagefy is temporarily limited. For now:
+      </p>
+      <ul>
+        <li>
+          <Icon
+            i="subject"
+            s="m"
+          />
+           
+          <strong>
+            Follow
+          </strong>
+           and create subjects!
+        </li>
+        <li>
+          <ExternalLink
+            href="https://docs.sagefy.org/mocks"
+          >
+            <Icon
+              i="view"
+              s="m"
+            />
+             
+            <strong>
+              View
+            </strong>
+             the prototype
+          </ExternalLink>
+           
+          of what's coming!
+        </li>
+        <li>
+          <ExternalLink
+            href="https://sgfy.xyz/updates"
+          >
+            <Icon
+              i="updates"
+              s="m"
+            />
+             
+            <strong>
+              Subscribe
+            </strong>
+             to biweekly email updates
+          </ExternalLink>
+          .
+        </li>
+      </ul>
+      <p>
+        <small>
+          Last updated 2019 Apr 1
+        </small>
+      </p>
+    </blockquote>
+  </section>
+  <section>
+    <div
+      className="ta-c m-yc"
+    >
+      <img
+        alt="astrolabe"
+        height="120"
+        src="/astrolabe.svg"
+      />
+      <h2>
+        Sagefy
+      </h2>
+      <p>
+        <em>
+          Learn anything, adapted for you. Free.
+        </em>
+      </p>
+    </div>
+  </section>
+  <section>
+    <ul>
+      <li>
+        <Icon
+          i="adapt"
+          s="m"
+        />
+         
+        <strong>
+          Adaptive Learning.
+        </strong>
+         Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
+      </li>
+      <li>
+        <Icon
+          i="open"
+          s="m"
+        />
+         
+        <strong>
+          Open Content.
+        </strong>
+         Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
+      </li>
+      <li>
+        <ExternalLink
+          href="https://youtu.be/gFn4Q9tx7Qs"
+        >
+          <Icon
+            i="video"
+            s="m"
+          />
+           Watch the overview video
+        </ExternalLink>
+        .
+      </li>
+    </ul>
+  </section>
+  <Footer
+    role="sg_user"
+  />
 </div>
 `;

@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LearnChoicePage should render LearnChoicePage 1`] = `
+<div
+  className="LearnChoicePage"
+>
+  <section>
+    <progress
+      value={0.7}
+    />
+  </section>
+  <section>
+    <div>
+      <p>
+        What is the difference between harmonic and inharmonic waves?
+      </p>
+    </div>
+    <ul
+      className="ls-n"
+    >
+      <li>
+        <input
+          disabled={true}
+          id="F0-61DPpSxqURHvryZy84Q"
+          name="choice"
+          type="radio"
+          value="F0-61DPpSxqURHvryZy84Q"
+        />
+         
+        <label
+          className="d-i"
+          htmlFor="F0-61DPpSxqURHvryZy84Q"
+        >
+          Both harmonics and inharmonics are integer multiples of the fundamental.
+        </label>
+      </li>
+      <li>
+        <input
+          disabled={true}
+          id="TT8B9zrBRkq5maek13ASJg"
+          name="choice"
+          type="radio"
+          value="TT8B9zrBRkq5maek13ASJg"
+        />
+         
+        <label
+          className="d-i"
+          htmlFor="TT8B9zrBRkq5maek13ASJg"
+        >
+          Inharmonics are integer multiples, harmonics are not.
+        </label>
+      </li>
+      <li>
+        <input
+          checked={true}
+          disabled={true}
+          id="R8eK8S_xQG2D6iJku1JS9Q"
+          name="choice"
+          type="radio"
+          value="R8eK8S_xQG2D6iJku1JS9Q"
+        />
+         
+        <mark>
+          <Icon
+            i="check"
+            s="m"
+          />
+           Good job!
+        </mark>
+         
+        <label
+          className="d-i"
+          htmlFor="R8eK8S_xQG2D6iJku1JS9Q"
+        >
+          Harmonics are integer multiples, inharmonics are not.
+        </label>
+      </li>
+      <li>
+        <input
+          disabled={true}
+          id="lXQx9AQSQjKfSfIYy2OqWw"
+          name="choice"
+          type="radio"
+          value="lXQx9AQSQjKfSfIYy2OqWw"
+        />
+         
+        <label
+          className="d-i"
+          htmlFor="lXQx9AQSQjKfSfIYy2OqWw"
+        >
+          Neither harmonics nor inharmonics are integer multiples of the fundamental.
+        </label>
+      </li>
+    </ul>
+  </section>
+  <section>
+    <form
+      action="/learn-page/1"
+    >
+      <button
+        type="submit"
+      >
+        <Icon
+          i="card"
+          s="m"
+        />
+         Next Card
+      </button>
+    </form>
+  </section>
+</div>
+`;

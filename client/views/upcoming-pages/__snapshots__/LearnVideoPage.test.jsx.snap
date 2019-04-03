@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LearnVideoPage should render LearnVideoPage 1`] = `
+<div
+  className="LearnVideoPage"
+>
+  <section>
+    <progress
+      value={0.7}
+    />
+  </section>
+  <section>
+    <iframe
+      allowFullScreen="true"
+      height="400"
+      src="https://www.youtube.com/embed/qAojF80nwsM?autoplay=1&modestbranding=1&rel=0"
+      title="Learn Video"
+      width="600"
+    />
+  </section>
+  <section>
+    <form
+      action="/learn-choice/1"
+    >
+      <button
+        type="submit"
+      >
+        <Icon
+          i="card"
+          s="m"
+        />
+         Next Card
+      </button>
+    </form>
+  </section>
+</div>
+`;

@@ -52,6 +52,10 @@ exports[`Index view should render a page 1`] = `
             render={[Function]}
           />
           <Route
+            path="/create-subject"
+            render={[Function]}
+          />
+          <Route
             path="/contact"
             render={[Function]}
           />
@@ -106,16 +110,20 @@ exports[`Index view should render a page 1`] = `
             render={[Function]}
           />
           <Route
-            component={[Function]}
             path="/dashboard"
+            render={[Function]}
           />
           <Route
             path="/sign-up"
             render={[Function]}
           />
           <Route
-            component={[Function]}
             path="/search-subjects"
+            render={[Function]}
+          />
+          <Route
+            path="/create-subject"
+            render={[Function]}
           />
           <Route
             component={[Function]}
@@ -126,8 +134,8 @@ exports[`Index view should render a page 1`] = `
             path="/terms"
           />
           <Route
+            component={[Function]}
             path="/server-error"
-            render={[Function]}
           />
           <Route
             component={[Function]}

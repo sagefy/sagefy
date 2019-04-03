@@ -22,7 +22,7 @@ exports[`EmailPage should render the EmailPage 0 1`] = `
     <ol>
       <li>
         <strong>
-          Enter Current Email
+          Enter your current email
            
           <Icon
             i="email"
@@ -32,7 +32,7 @@ exports[`EmailPage should render the EmailPage 0 1`] = `
       </li>
       <li>
         <span>
-          Check Inbox
+          Check your inbox
            
           <Icon
             i="inbox"
@@ -42,7 +42,7 @@ exports[`EmailPage should render the EmailPage 0 1`] = `
       </li>
       <li>
         <span>
-          Change Email
+          Change your email
            
           <Icon
             i="email"
@@ -122,7 +122,7 @@ exports[`EmailPage should render the EmailPage 1 1`] = `
     <ol>
       <li>
         <span>
-          Enter Current Email
+          Enter your current email
            
           <Icon
             i="email"
@@ -132,7 +132,7 @@ exports[`EmailPage should render the EmailPage 1 1`] = `
       </li>
       <li>
         <strong>
-          Check Inbox
+          Check your inbox
            
           <Icon
             i="inbox"
@@ -142,7 +142,7 @@ exports[`EmailPage should render the EmailPage 1 1`] = `
       </li>
       <li>
         <span>
-          Change Email
+          Change your email
            
           <Icon
             i="email"
@@ -180,7 +180,7 @@ exports[`EmailPage should render the EmailPage 2 1`] = `
     <ol>
       <li>
         <span>
-          Enter Current Email
+          Enter your current email
            
           <Icon
             i="email"
@@ -190,7 +190,7 @@ exports[`EmailPage should render the EmailPage 2 1`] = `
       </li>
       <li>
         <span>
-          Check Inbox
+          Check your inbox
            
           <Icon
             i="inbox"
@@ -200,7 +200,7 @@ exports[`EmailPage should render the EmailPage 2 1`] = `
       </li>
       <li>
         <strong>
-          Change Email
+          Change your email
            
           <Icon
             i="email"

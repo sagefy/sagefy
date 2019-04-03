@@ -13,7 +13,49 @@ exports[`Footer component should render a footer 1`] = `
       src="/astrolabe.svg"
     />
   </Link>
-  <small>
+  <small
+    className="m-yc"
+  >
+    <ul
+      className="ls-i"
+    >
+      <li>
+        <Link
+          replace={false}
+          to="/dashboard"
+        >
+          <Icon
+            i="dashboard"
+            s="s"
+          />
+           Dashboard
+        </Link>
+      </li>
+      <li>
+        <Link
+          replace={false}
+          to="/settings"
+        >
+          <Icon
+            i="settings"
+            s="s"
+          />
+           Settings
+        </Link>
+      </li>
+      <li>
+        <Link
+          replace={false}
+          to="/log-out"
+        >
+          <Icon
+            i="logOut"
+            s="s"
+          />
+           Log Out
+        </Link>
+      </li>
+    </ul>
     <ul
       className="ls-i"
     >
@@ -75,7 +117,9 @@ exports[`Footer component should render a footer 1`] = `
         </Link>
       </li>
     </ul>
-    © Copyright 2019 Sagefy.
+    © Copyright 
+    2019
+     Sagefy.
   </small>
 </footer>
 `;

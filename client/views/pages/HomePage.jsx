@@ -57,7 +57,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
         </section>
       )}
 
-      {(selectPopularSubjects.nodes.length && (
+      {(selectPopularSubjects && selectPopularSubjects.nodes.length && (
         <section>
           <h2>
             ...or try something popular <Icon i="popular" s="xl" />

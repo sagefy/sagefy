@@ -8,7 +8,10 @@
     "postinstall": "(cd ./server && npm install) && (cd ./client && npm install)",
     "lint": "eslint \"**/*.js\"",
     "test": "npm run lint",
-    "posttest": "(cd server && npm run test) && (cd client && npm run test)"
+    "posttest": "(cd server && npm run test) && (cd client && npm run test)",
+    "dev-data": "(cd server && npm run dev-data)",
+    "dbmate": "dbmate -d \"./postgres/migrations\" -s \"./postgres/schema.sql\"",
+    "db-repl": "docker exec -it sagefy_postgres_1 psql -U sagefy"
   },
   "repository": {
     "type": "git",

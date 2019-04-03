@@ -8,7 +8,7 @@ exports[`SearchSubjectsPage should render the search subjects page 1`] = `
     className="ta-c"
   >
     <h1>
-      What do you want to learn?
+      What do you want to learn? 
       <Icon
         i="search"
         s="xxl"
@@ -19,11 +19,11 @@ exports[`SearchSubjectsPage should render the search subjects page 1`] = `
     >
       <p>
         <input
-          autoFocus={true}
+          autoFocus={false}
+          name="q"
           placeholder="example: Music"
           size="40"
           type="search"
-          value="Music"
         />
       </p>
       <p>
@@ -39,6 +39,8 @@ exports[`SearchSubjectsPage should render the search subjects page 1`] = `
       </p>
     </form>
   </section>
-  <Footer />
+  <Footer
+    role="sg_anonymous"
+  />
 </div>
 `;

@@ -1,4 +1,4 @@
-const { assert, object, string } = require('joi')
+const Joi = require('joi')
 const request = require('supertest')
 const { app } = require('../index')
 const {
@@ -14,12 +14,12 @@ describe('root-get-anon-token', () => {
         variables: {},
       })
       .expect(({ body }) =>
-        assert(
+        Joi.assert(
           body,
-          object({
-            data: object({
-              getAnonymousToken: object({
-                jwtToken: string().required(),
+          Joi.object({
+            data: Joi.object({
+              getAnonymousToken: Joi.object({
+                jwtToken: Joi.string().required(),
               }),
             }),
           })

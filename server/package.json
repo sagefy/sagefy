@@ -4,7 +4,8 @@
   "description": "Sagefy. Learn anything, adapted for you. Free.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "dev-data": "env $(grep -v '^#' ../.env | xargs) node ./test/_dev-data.js",
+    "test": "env $(grep -v '^#' ../.env.test | xargs) jest --detectOpenHandles --forceExit"
   },
   "repository": {
     "type": "git",
@@ -18,34 +19,28 @@
   "homepage": "https://github.com/sagefy/sagefy#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "jsonwebtoken": "^8.5.0",
+    "jsonwebtoken": "^8.5.1",
     "lodash.frompairs": "^4.0.1",
     "lodash.get": "^4.4.2",
-    "nodemailer": "^5.1.1",
-    "pg": "^7.8.1",
+    "nodemailer": "^6.0.0",
+    "pg": "^7.9.0",
     "postgraphile": "^4.3.3",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.3.1",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.1.0",
-    "jest": "^24.1.0",
+    "jest": "^24.6.0",
     "joi": "^14.3.1",
-    "js-yaml": "^3.12.2",
-    "supertest": "^3.4.2"
+    "js-yaml": "^3.13.0",
+    "supertest": "^4.0.2"
   },
   "jest": {
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!**/coverage/**",
-      "!prev-simulation.js",
-      "!test/_util.js"
-    ],
     "globalSetup": "./test/_setup.js",
-    "globalTeardown": "./test/_teardown.js"
+    "globalTeardown": "./test/_teardown.js",
+    "testEnvironment": "node"
   },
   "babel": {
     "presets": [

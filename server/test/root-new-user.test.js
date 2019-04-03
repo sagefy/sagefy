@@ -1,66 +1,116 @@
 const Joi = require('joi')
 const request = require('supertest')
 const { app } = require('../index')
-const { GQL } = require('./_util')
+const {
+  GQL: { rootNewUser },
+  getLoginToken,
+} = require('./_util')
+
+const success = Joi.object({
+  data: Joi.object({
+    signUp: Joi.object({
+      jwtToken: Joi.string().required(),
+    }),
+  }),
+})
+
+const fail = Joi.object({
+  errors: Joi.array().min(1),
+  data: Joi.object({
+    signUp: Joi.valid(null).required(),
+  }),
+})
 
 describe('root-new-user', () => {
-  it.skip(':) should sign up a new users', () =>
+  it('should sign up a new users', () =>
     request(app)
       .post('/graphql')
       .send({
-        query: GQL.rootNewUser,
+        query: rootNewUser,
         variables: {
           name: 'gretchen',
           email: 'gretchen@example.com',
           password: 'example1',
         },
       })
-      .expect(({ body }) =>
-        Joi.assert(
-          body,
-          Joi.object({
-            data: Joi.object({
-              signUp: Joi.object({
-                jwtToken: Joi.string().required(),
-              }),
-            }),
-          })
-        )
-      ))
+      .expect(({ body }) => Joi.assert(body, success)))
 
-  it.skip('should error if name not unique', () => {
+  it('should error if name not unique', () =>
+    request(app)
+      .post('/graphql')
+      .send({
+        query: rootNewUser,
+        variables: {
+          name: 'Doris',
+          email: 'harper@example.com',
+          password: 'example1',
+        },
+      })
+      .expect(({ body }) => Joi.assert(body, fail)))
+
+  it('should error if email not unique', () =>
+    request(app)
+      .post('/graphql')
+      .send({
+        query: rootNewUser,
+        variables: {
+          name: 'Harper',
+          email: 'doris@example.com',
+          password: 'example1',
+        },
+      })
+      .expect(({ body }) => Joi.assert(body, fail)))
+
+  it('should trim name, email, password', async () => {
+    await request(app)
+      .post('/graphql')
+      .send({
+        query: rootNewUser,
+        variables: {
+          name: '  sofia  ',
+          email: '  sofia@example.com  ',
+          password: '  example1  ',
+        },
+      })
+      .expect(({ body }) => Joi.assert(body, success))
+    expect(typeof (await getLoginToken('sofia'))).toBe('string')
+    expect(typeof (await getLoginToken('sofia@example.com'))).toBe('string')
+  })
+
+  it('should require passwords >8 char', () =>
+    request(app)
+      .post('/graphql')
+      .send({
+        query: rootNewUser,
+        variables: {
+          name: 'Penelope',
+          email: 'penelope@example.com',
+          password: 'short',
+        },
+      })
+      .expect(({ body }) => Joi.assert(body, fail)))
+
+  it.skip('should encrypt the password', async () => {
     expect(true).toBe(false)
   })
 
-  it.skip('should trim name', () => {
+  it.skip('should notify the email address', async () => {
     expect(true).toBe(false)
   })
 
-  it.skip('should error if email not unique', () => {
-    expect(true).toBe(false)
-  })
-
-  it.skip('should trim email', () => {
-    expect(true).toBe(false)
-  })
-
-  it.skip('should trim the password', () => {
-    expect(true).toBe(false)
-  })
-
-  it.skip('should require passwords >8 char', () => {
-    expect(true).toBe(false)
-  })
-
-  it.skip('should encrypt the password', () => {
-    expect(true).toBe(false)
-  })
-
-  it.skip('should notify the email address', () => {
-    expect(true).toBe(false)
-  })
-
-  it.skip('should only be available to anonymous users', () => {
-    expect(true).toBe(false)
+  it('should only be available to anonymous users', async () => {
+    const token = await getLoginToken('Doris')
+    return request(app)
+      .post('/graphql')
+      .send({
+        query: rootNewUser,
+        variables: {
+          name: 'charlotte',
+          email: 'charlotte@example.com',
+          password: 'example1',
+        },
+      })
+      .set('Authorization', `Bearer ${token}`)
+      .expect(({ body }) => Joi.assert(body, fail))
   })
 })

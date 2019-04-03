@@ -1,5 +1,5 @@
 describe('index', () => {
-  it('should have a test', () => {
-    expect(true).toBe(true)
+  it.skip('should have a test', () => {
+    expect(true).toBe(false)
   })
 })

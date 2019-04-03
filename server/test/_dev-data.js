@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-syntax, no-await-in-loop, import/no-extraneous-dependencies, security/detect-object-injection, camelcase, prefer-destructuring, no-param-reassign */
+/* eslint-disable no-restricted-syntax, no-await-in-loop, import/no-extraneous-dependencies, security/detect-object-injection, camelcase, prefer-destructuring, no-param-reassign, no-console */
 const { Client } = require('pg')
 const fs = require('fs').promises
 const yaml = require('js-yaml')
@@ -21,17 +21,20 @@ const TABLES = [
 ]
 
 async function makeClient() {
+  console.log('Connecting to database...')
   const client = new Client({ connectionString: process.env.DATABASE_URL })
   await client.connect()
   return client
 }
 
 async function cleanDatabase(client) {
+  console.log('Truncating tables...')
   await client.query(`truncate ${TABLES.reverse().join(', ')} cascade;`)
   return client
 }
 
 async function makeUsers(client) {
+  console.log('Making users...')
   // Ivy: anonymous
   // Jasmine: new/learner
   // Doris: established/contributor
@@ -86,6 +89,7 @@ async function letsJwtOut(client) {
 }
 
 async function makeSubjects(client, { users }) {
+  console.log('Creating subjects...')
   await letsJwtIn(client, users.doris)
 
   const subjects = {}
@@ -123,7 +127,7 @@ async function makeSubjects(client, { users }) {
   for (const { name, body } of sugYaml) {
     subjects[name] = (await client.query(
       `
-      select sg_public.new_subject(
+      select * from sg_public.new_subject(
         $1, -- language
         $2, -- name
         $3, -- tags
@@ -145,6 +149,7 @@ async function makeSubjects(client, { users }) {
 }
 
 async function makeCards(client, { users, subjects }) {
+  console.log('Making cards...')
   const emusYaml = yaml.safeLoad(
     await fs.readFile('./sample-subject.yaml', 'utf8')
   )
@@ -272,6 +277,7 @@ async function makeCards(client, { users, subjects }) {
 
 /*
 async function makeUserSubjects(client, { users, subjects }) {
+  console.log
   const userSubjects = {}
 
   await letsJwtIn(client, users.doris)
@@ -290,6 +296,7 @@ async function makeUserSubjects(client, { users, subjects }) {
 }
 
 async function makeResponses(client, { users, cards }) {
+  console.log
   await letsJwtIn(client, users.doris)
 
   const responses = {}
@@ -315,6 +322,7 @@ async function makeResponses(client, { users, cards }) {
 */
 
 async function generateDevData() {
+  console.log('Generating development data...')
   const users = {}
   const subjects = {}
   const cards = {}
@@ -335,6 +343,7 @@ async function generateDevData() {
   // Object.assign(responses, await makeResponses(client, data))
   await letsJwtOut(client)
 
+  console.log('Finished generating development data.')
   return data
 }
 
