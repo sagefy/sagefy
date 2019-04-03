@@ -1731,6 +1731,76 @@ ALTER TABLE ONLY sg_public.user_subject
 
 
 --
+-- Name: card_version_entity_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX card_version_entity_id_idx ON sg_public.card_version USING btree (entity_id);
+
+
+--
+-- Name: card_version_previous_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX card_version_previous_id_idx ON sg_public.card_version USING btree (previous_id);
+
+
+--
+-- Name: card_version_subject_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX card_version_subject_id_idx ON sg_public.card_version USING btree (subject_id);
+
+
+--
+-- Name: card_version_user_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX card_version_user_id_idx ON sg_public.card_version USING btree (user_id);
+
+
+--
+-- Name: subject_version_before_after_before_entity_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX subject_version_before_after_before_entity_id_idx ON sg_public.subject_version_before_after USING btree (before_entity_id);
+
+
+--
+-- Name: subject_version_entity_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX subject_version_entity_id_idx ON sg_public.subject_version USING btree (entity_id);
+
+
+--
+-- Name: subject_version_parent_child_parent_entity_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX subject_version_parent_child_parent_entity_id_idx ON sg_public.subject_version_parent_child USING btree (parent_entity_id);
+
+
+--
+-- Name: subject_version_previous_version_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX subject_version_previous_version_id_idx ON sg_public.subject_version USING btree (previous_version_id);
+
+
+--
+-- Name: subject_version_user_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX subject_version_user_id_idx ON sg_public.subject_version USING btree (user_id);
+
+
+--
+-- Name: user_subject_subject_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX user_subject_subject_id_idx ON sg_public.user_subject USING btree (subject_id);
+
+
+--
 -- Name: user create_user; Type: TRIGGER; Schema: sg_private; Owner: -
 --
 
@@ -2155,4 +2225,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190319234401'),
     ('20190322230728'),
     ('20190328211620'),
-    ('20190401185105');
+    ('20190401185105'),
+    ('20190403175843');
