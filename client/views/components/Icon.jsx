@@ -14,8 +14,7 @@ import {
   MessageCircle,
   GitHub,
   Frown,
-  ThumbsUp,
-  ThumbsDown,
+  ArrowRightCircle,
   CheckCircle,
   Tag,
   FileText,
@@ -58,7 +57,7 @@ const MAP = {
   card: FileText,
 
   // actions
-  select: ThumbsUp,
+  select: ArrowRightCircle,
   check: CheckCircle,
   left: ArrowLeft,
 

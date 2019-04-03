@@ -272,6 +272,10 @@ async function makeCards(client, { users, subjects }) {
     )
   }
 
+  await letsJwtOut(client)
+
+  await client.query(`update sg_public.card_version set status = 'accepted';`)
+
   return cards
 }
 
