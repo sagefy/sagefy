@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { string, arrayOf, shape } from 'prop-types'
+import { string, shape } from 'prop-types'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ExternalLink from '../components/ExternalLink'
@@ -21,6 +21,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
               placeholder="example: Music"
               autoFocus
               name="q"
+              aria-label="Search"
             />
           </p>
           <p>

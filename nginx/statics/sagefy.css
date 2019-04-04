@@ -363,9 +363,7 @@ body,
 input,
 textarea,
 button {
-  /* https://css-tricks.com/snippets/css/system-font-stack */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 pre,
@@ -380,9 +378,8 @@ var,
 [type='week'],
 [type='datetime'],
 [type='datetime-local'] {
-  /* https://www.client9.com/css-system-font-stack-monospace-v2 */
   font-family: 'SFMono-Regular', Menlo, Consolas, Inconsolata, 'Liberation Mono',
-    Monaco, 'Andale Mono', monospace;
+    monospace;
 }
 
 /* 3. Apply more common `line-height` and use an `8px` vertical rhythm. */
@@ -717,11 +714,11 @@ textarea {
 }
 
 ::placeholder {
-  color: #697893; /* 250-30-50 */
+  color: #5d6b84; /* 250-30-45 */
 }
 
 a {
-  color: #007ad1; /* 250-100-50 */
+  color: #006dbc; /* 250-100-45 */
 }
 
 mark {
@@ -730,7 +727,7 @@ mark {
 
 [type='submit'] {
   color: white;
-  background: #007ad1; /* 250-100-50 */
+  background: #006dbc; /* 250-100-45 */
 }
 
 button,
