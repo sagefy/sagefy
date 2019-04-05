@@ -22,7 +22,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
-    "drab.css": "^1.5.0",
+    "drab.css": "^1.5.2",
     "express": "^4.16.4",
     "express-async-errors": "^3.1.1",
     "express-react-views": "^0.11.0",

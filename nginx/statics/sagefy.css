@@ -363,9 +363,7 @@ body,
 input,
 textarea,
 button {
-  /* https://css-tricks.com/snippets/css/system-font-stack */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 pre,
@@ -380,9 +378,8 @@ var,
 [type='week'],
 [type='datetime'],
 [type='datetime-local'] {
-  /* https://www.client9.com/css-system-font-stack-monospace-v2 */
   font-family: 'SFMono-Regular', Menlo, Consolas, Inconsolata, 'Liberation Mono',
-    Monaco, 'Andale Mono', monospace;
+    monospace;
 }
 
 /* 3. Apply more common `line-height` and use an `8px` vertical rhythm. */
@@ -626,9 +623,9 @@ mark {
 }
 
 img,
+iframe,
 input,
 textarea,
-button,
 button,
 [type='submit'],
 [type='button'],
@@ -717,11 +714,11 @@ textarea {
 }
 
 ::placeholder {
-  color: #697893; /* 250-30-50 */
+  color: #5d6b84; /* 250-30-45 */
 }
 
 a {
-  color: #007ad1; /* 250-100-50 */
+  color: #006dbc; /* 250-100-45 */
 }
 
 mark {
@@ -730,7 +727,7 @@ mark {
 
 [type='submit'] {
   color: white;
-  background: #007ad1; /* 250-100-50 */
+  background: #006dbc; /* 250-100-45 */
 }
 
 button,
@@ -810,25 +807,25 @@ summary > *:first-child {
   text-decoration: underline dotted;
 }
 
-/* Just for pretty */
-iframe {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
 /* Utility classes ************************************************************/
 
+/* text-align--center */
 .ta-c {
   text-align: center;
 }
 
+/* text-align--right */
 .ta-r {
   text-align: right;
 }
 
+/* vertical-align--middle */
 .va-m {
   vertical-align: middle;
 }
 
+/* list-style--none */
+/* list-style--inline */
 .ls-n,
 .ls-i {
   list-style: none;
@@ -844,6 +841,7 @@ iframe {
   margin-right: 0;
 }
 
+/* margin--y-collapse */
 .m-yc > *:not(:first-child) {
   margin-top: 0;
 }
@@ -852,10 +850,12 @@ iframe {
   margin-bottom: 0;
 }
 
+/* display--inline-block */
 .d-ib {
   display: inline-block;
 }
 
+/* display--inline */
 .d-i {
   display: inline;
 }
@@ -877,4 +877,15 @@ iframe {
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+/* Users probably won't expect yellow for a correct answer */
+mark.good {
+  background: #c6ffc6; /* 128-100-95 */
+}
+
+/* Just for pretty */
+iframe,
+.LearnPagePage img {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
