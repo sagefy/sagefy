@@ -1,0 +1,10 @@
+mutation learnRespondCard($cardId: UUID!, $response: String!) {
+  createResponse(
+    input: { response: { cardId: $cardId, response: $response } }
+  ) {
+    response {
+      score
+      learned
+    }
+  }
+}

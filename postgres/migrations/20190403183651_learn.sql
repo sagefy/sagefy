@@ -92,27 +92,38 @@ create trigger update_response_modified
 comment on trigger update_response_modified on sg_public.response
   is 'Whenever a response changes, update the `modified` column.';
 
-create function sg_public.select_latest_response(subject_id uuid)
+create or replace function sg_public.select_latest_response(subject_id uuid)
 returns sg_public.response as $$
-  -- If no response yet, default to 0.4
-  select *
-  from sg_public.response
-  where sg_public.response.subject_id = subject_id and (
+  select r.*
+  from sg_public.response r
+  where r.subject_id = $1 and (
     user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
     or session_id = nullif(current_setting('jwt.claims.session_id', true), '')::uuid
   )
-  order by created desc
+  order by r.created desc
   limit 1;
 $$ language sql stable;
 comment on function sg_public.select_latest_response(uuid)
   is 'Get the latest response from the user on the given subject.';
+grant execute on function sg_public.select_latest_response(uuid)
+  to sg_anonymous, sg_user, sg_admin;
+
+create or replace function sg_public.select_subject_learned(subject_id uuid)
+returns real as $$
+  select case when learned is not null then learned else 0.4 end
+  from sg_public.select_latest_response($1);
+$$ language sql stable;
+comment on function sg_public.select_subject_learned(uuid)
+  is 'Get the latest learned value for the user on the given subject.';
+grant execute on function sg_public.select_subject_learned(uuid)
+  to sg_anonymous, sg_user, sg_admin;
 
 create or replace function sg_private.score_response()
 returns trigger as $$
   declare
     card sg_public.card;
     prior sg_public.response;
-    prior_learned real := 0.4;
+    prior_learned real;
     option jsonb;
     score real;
     learned real;
@@ -122,13 +133,11 @@ returns trigger as $$
   begin
     -- Overall: Fill in (subject_id, score, learned)
     -- Validate if the response to the card is valid.
-    card := (
-      select *
-      from sg_public.card
-      where sg_public.card.entity_id = new.card_id
-      limit 1
-    );
-    if (!card) then
+    select c.* into card
+    from sg_public.card c
+    where c.entity_id = new.card_id
+    limit 1;
+    if (card.kind is null) then
       raise exception 'No card found.' using errcode = 'EE05C989';
     end if;
     if (card.kind <> 'choice') then -- scored kinds only
@@ -136,19 +145,16 @@ returns trigger as $$
         using errcode = '1306BF1C';
     end if;
     option := card.data->'options'->new.response;
-    if (!option) then
+    if (option is null) then
       raise exception 'You must submit an available response `id`.'
         using errcode = '681942FD';
     end if;
     -- Set default values
     new.subject_id := card.subject_id;
     -- Score the response
-    new.score := case when option->'correct' then 1 else 0 end;
+    new.score := (option->>'correct')::boolean::int::real;
     -- Calculate p(learned)
-    prior := sg_public.select_latest_response(card.subject_id);
-    if (prior) then
-      prior_learned := prior.learned;
-    end if;
+    prior_learned := (select sg_public.select_subject_learned(card.subject_id));
     learned := (
       new.score * (
         (prior_learned * (1 - slip)) /
@@ -187,47 +193,43 @@ create policy select_response on sg_public.response
 comment on policy select_response on sg_public.response
   is 'Anyone may select their own responses.';
 
--- Insert response: any via function.
+-- Insert response: any.
 grant insert (card_id, response)
   on table sg_public.response to sg_anonymous, sg_user, sg_admin;
 create policy insert_response on sg_public.response
-  for insert to sg_anonymous, sg_user, sg_admin;
+  for insert to sg_anonymous, sg_user, sg_admin
+  with check (true);
 comment on policy insert_response on sg_public.response
   is 'Anyone may insert `card_id` and `response` into responses.';
 
 -- Update & delete response: none.
 
-create function sg_public.select_card_to_learn(subject_id uuid)
+create or replace function sg_public.select_card_to_learn(subject_id uuid)
 returns sg_public.card as $$
-  declare
-    latest_response sg_public.response;
-    kinds text[];
-  begin
-    -- What is p(learned) currently for the subject?
-    latest_response := (select sg_public.select_latest_response(subject_id));
-    -- Decide on a scored or unscored type
-    kinds := (
-      select case when random() > (
-        0.5 + 0.5 * (latest_response.learned or 0.4)
-      ) then
-        array['choice'] -- scored kinds
-      else
-        array['video', 'page', 'unscored_embed'] -- unscored kinds
-      end
-    );
-    select *
-    from sg_public.card
-    where sg_public.card.subject_id = subject_id
-      and sg_public.card.kind = any(kinds)
-      -- Don't allow the previous card as the next card
-      and sg_public.card.entity_id <> latest_response.card_id
-    -- Select cards of kind at random
-    order by random()
-    limit 1;
-  end;
+  with prior as (select * from sg_public.select_latest_response($1)),
+  k (kinds) as (
+    select case
+      when random() < (0.5 + 0.5 * sg_public.select_subject_learned($1))
+      then array[
+        'choice'
+      ]::sg_public.card_kind[]
+      else array[
+        'video',
+        'page',
+        'unscored_embed'
+      ]::sg_public.card_kind[]
+    end
+  )
+  select c.*
+  from sg_public.card c, prior, k
+  where c.subject_id = $1
+    and c.kind = any(k.kinds)
+    and (prior.card_id is null or c.entity_id <> prior.card_id)
+  order by random()
+  limit 1;
   -- Future version: When estimating parameters and the card kind is scored,
   -- prefer 0.25 < correct < 0.75
-$$ language plpgsql strict security definer;
+$$ language sql volatile;
 comment on function sg_public.select_card_to_learn(uuid)
   is 'After I select a subject, search for a suitable card.';
 grant execute on function sg_public.select_card_to_learn(uuid)
@@ -294,10 +296,9 @@ returns sg_public.subject as $$
     from
       before_graph bg
     where (
-      select count((
-        select r.learned
-        from sg_public.select_latest_response(entity_id) r
-      ) > 0.99)
+      select count(
+        select sg_public.select_subject_learned(entity_id) > 0.99
+      )
       from unnest(bg.path) as entity_id
     ) = array_length(bg.path, 1)
   )

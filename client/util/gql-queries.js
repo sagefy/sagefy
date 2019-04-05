@@ -17,11 +17,11 @@ module.exports = fromPairs(
       convertDashToCamel(
         filename.replace('./graphql/', '').replace('.graphql', '')
       ),
-      req =>
+      (req, variables) =>
         gqlRequest({
           query,
-          variables: { ...req.params, ...req.body, ...req.query },
           jwtToken: get(req.cookies, JWT_COOKIE_NAME),
+          variables,
         }),
     ]
   })

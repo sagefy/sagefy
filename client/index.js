@@ -1,11 +1,14 @@
-/* eslint-disable max-params, no-console */
+/* eslint-disable max-params, no-console, max-lines */
 const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 const get = require('lodash.get')
-const { convertUuid58ToUuid: toU } = require('uuid58')
+const {
+  convertUuid58ToUuid: toU,
+  convertUuidToUuid58: to58,
+} = require('uuid58')
 const GQL = require('./util/gql-queries')
 const getGqlErrors = require('./util/gql-errors')
 
@@ -14,6 +17,10 @@ const JWT_COOKIE_PARAMS = {
   maxAge: 1000 * 60 * 60 * 24, // 1 day in milliseconds
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
+}
+const LEARN_COOKIE_PARAMS = {
+  ...JWT_COOKIE_PARAMS,
+  maxAge: 1000 * 60 * 60, // 1 hour in milliseconds
 }
 
 const cacheHash =
@@ -79,6 +86,10 @@ function handleRegular(req, res) {
   })
 }
 
+function clientizeKind(s) {
+  return s.toLowerCase().replace(/_/g, '-')
+}
+
 app.use(ensureJwt)
 app.use(handleError)
 
@@ -97,44 +108,52 @@ https://sagefy.org/password
 ) // Add more public routes as they are available
 
 app.get('/learn-:kind/:cardId', async (req, res) => {
-  req.params.cardId = toU(req.params.cardId)
-  const gqlRes = await GQL.learnGetCard(req)
+  const gqlRes = await GQL.learnGetCard(req, {
+    cardId: toU(req.params.cardId),
+    subjectId: '???',
+  })
   const card = get(gqlRes, 'data.cardByEntityId')
-  if (!card || card.kind.toLowerCase().replace(/_/g, '-') !== req.params.kind) {
+  if (!card || clientizeKind(card.kind) !== req.params.kind) {
     return res.redirect('/server-error')
   }
   return res.render('Index', {
+    ...card,
     location: req.url,
     query: req.query,
     cacheHash,
     role: getRole(req),
-    ...card,
-    // TODO add progress
+    progress: get(gqlRes, 'data.selectSubjectLearned'),
   })
 })
 
 app.post('/learn-choice/:cardId', async (req, res) => {
-  req.params.cardId = toU(req.params.cardId)
-  const gqlRes = await GQL.learnGetCard(req)
+  const gqlRes = await GQL.learnGetCard(req, {
+    cardId: toU(req.params.cardId),
+    subjectId: '???',
+  })
   const card = get(gqlRes, 'data.cardByEntityId')
-  if (!card || card.kind.toLowerCase() !== 'choice') {
+  if (!card || clientizeKind(card.kind) !== 'choice') {
     return res.redirect('/server-error')
   }
+  const gqlRes2 = await GQL.learnRespondCard(req, {
+    cardId: toU(req.params.cardId),
+    response: req.body.choice,
+  })
   return res.render('Index', {
+    ...req.body,
+    ...card,
     location: req.url,
     query: req.query,
     cacheHash,
     role: getRole(req),
-    ...req.body,
-    ...card,
-    // TODO add progress
+    progress: get(gqlRes2, 'data.createResponse.response.learned'),
   })
 })
 
 app.get('/sign-up', isAnonymous, handleRegular)
 
 app.post('/sign-up', isAnonymous, async (req, res) => {
-  const gqlRes = await GQL.rootNewUser(req)
+  const gqlRes = await GQL.rootNewUser(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
@@ -159,7 +178,7 @@ app.post('/sign-up', isAnonymous, async (req, res) => {
 app.get('/log-in', isAnonymous, handleRegular)
 
 app.post('/log-in', isAnonymous, async (req, res) => {
-  const gqlRes = await GQL.rootLogInUser(req)
+  const gqlRes = await GQL.rootLogInUser(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
@@ -192,10 +211,12 @@ app.get('/email', async (req, res) => {
 
 app.post('/email', async (req, res) => {
   if (getQueryState(req) === 2) {
-    const gqlRes = await GQL.rootEditEmail({
-      body: req.body,
-      cookies: { [JWT_COOKIE_NAME]: req.query.token },
-    })
+    const gqlRes = await GQL.rootEditEmail(
+      {
+        cookies: { [JWT_COOKIE_NAME]: req.query.token },
+      },
+      req.body
+    )
     const gqlErrors = getGqlErrors(gqlRes)
     if (Object.keys(gqlErrors).length) {
       return res.render('Index', {
@@ -207,7 +228,7 @@ app.post('/email', async (req, res) => {
     }
     return res.redirect('/log-in')
   }
-  const gqlRes = await GQL.rootNewEmailToken(req)
+  const gqlRes = await GQL.rootNewEmailToken(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
@@ -227,10 +248,12 @@ app.get('/password', async (req, res) => {
 
 app.post('/password', async (req, res) => {
   if (getQueryState(req) === 2) {
-    const gqlRes = await GQL.rootEditPassword({
-      body: req.body,
-      cookies: { [JWT_COOKIE_NAME]: req.query.token },
-    })
+    const gqlRes = await GQL.rootEditPassword(
+      {
+        cookies: { [JWT_COOKIE_NAME]: req.query.token },
+      },
+      req.body
+    )
     const gqlErrors = getGqlErrors(gqlRes)
     if (Object.keys(gqlErrors).length) {
       return res.render('Index', {
@@ -242,7 +265,7 @@ app.post('/password', async (req, res) => {
     }
     return res.redirect('/log-in')
   }
-  const gqlRes = await GQL.rootNewPasswordToken(req)
+  const gqlRes = await GQL.rootNewPasswordToken(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
@@ -265,7 +288,7 @@ app.get('/settings', isUser, async (req, res) => {
 })
 
 app.post('/settings', isUser, async (req, res) => {
-  const gqlRes = await GQL.rootEditUser(req)
+  const gqlRes = await GQL.rootEditUser(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   return res.render('Index', {
     location: req.url,
@@ -300,7 +323,7 @@ app.get('/dashboard', isUser, async (req, res) => {
 })
 
 app.get('/search-subjects', async (req, res) => {
-  const gqlRes = await GQL.learnSearchSubject(req)
+  const gqlRes = await GQL.learnSearchSubject(req, req.body)
   return res.render('Index', {
     location: req.url,
     query: req.query,
@@ -311,7 +334,7 @@ app.get('/search-subjects', async (req, res) => {
 })
 
 app.post('/create-subject', async (req, res) => {
-  const gqlRes = await GQL.contributeNewSubject(req)
+  const gqlRes = await GQL.contributeNewSubject(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
@@ -326,23 +349,63 @@ app.post('/create-subject', async (req, res) => {
   if (role === 'sg_anonymous') {
     return res.redirect(`/search-subjects?q=${name}`)
   }
-  req.query.subjectId = entityId
-  await GQL.learnNewUsubj(req)
+  await GQL.learnNewUsubj(req, { subjectId: entityId })
   return res.redirect('/dashboard')
 })
 
-app.get('/next', async (req, res) => {
+app.get('/choose-step', async (req, res) => {
   const role = getRole(req)
-  if (role === 'sg_anonymous') {
+  const { goal } = req.cookies
+  if (!goal)
     return res.redirect(
-      `/sign-up?redirect=/next?subjectId=${req.query.subjectId}`
+      role === 'sg_anonymous' ? '/search-subjects' : '/dashboard'
+    )
+  const subjects = get(
+    await GQL.learnChooseSubject(req, { subjectId: toU(goal) }),
+    'data.selectSubjectToLearn.nodes'
+  )
+  if (!subjects || !subjects.length) {
+    return res.redirect(
+      role === 'sg_anonymous' ? '/search-subjects' : '/dashboard'
     )
   }
-  req.query.subjectId = toU(req.query.subjectId)
-  await GQL.learnNewUsubj(req)
-  // TODO If a subject doesn't have enough cards,
-  // suggest creating cards or just following instead.
-  return res.redirect('/dashboard')
+  if (subjects.length === 1) {
+    return res.redirect(`/next?step=${to58(subjects[0].entityId)}`)
+  }
+  return res.render('Index', {
+    location: req.url,
+    query: req.query,
+    cacheHash,
+    role,
+    subjects,
+  })
+})
+
+app.get('/next', async (req, res) => {
+  let { goal, step } = req.cookies
+  if (req.query.goal) {
+    ;({ goal } = req.query)
+    res.cookie('goal', goal, LEARN_COOKIE_PARAMS)
+    await GQL.learnNewUsubj(req, { subjectId: toU(goal) })
+  }
+  if (req.query.step) {
+    ;({ step } = req.query)
+    res.cookie('step', step, LEARN_COOKIE_PARAMS)
+  }
+  if (step) {
+    // TODO if learned > 0.99, clear the step
+    const { kind, entityId } = get(
+      await GQL.learnChooseCard(req, { subjectId: toU(step) }),
+      'data.selectCardToLearn',
+      {}
+    )
+    if (!entityId) return res.redirect(`/create-card?subjectId=${to58(step)}`)
+    return res.redirect(`/learn-${clientizeKind(kind)}/${to58(entityId)}`)
+  }
+  if (goal) return res.redirect('/choose-step')
+  return res.redirect(
+    getRole(req) === 'sg_anonymous' ? '/search-subjects' : '/dashboard'
+  )
 })
 
 app.get('/', async (req, res) => {

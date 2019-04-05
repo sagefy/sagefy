@@ -25,6 +25,7 @@ import {
   LogOut,
   Key,
   Map,
+  ThumbsUp,
   // temporary home page
   Users,
   Eye,
@@ -60,6 +61,7 @@ const MAP = {
   select: ArrowRightCircle,
   check: CheckCircle,
   left: ArrowLeft,
+  cheer: ThumbsUp,
 
   // page specific
   adapt: Share2, // home

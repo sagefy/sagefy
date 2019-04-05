@@ -1,0 +1,8 @@
+mutation learnChooseCard($subjectId: UUID!) {
+  selectCardToLearn(input: { subjectId: $subjectId }) {
+    card {
+      entityId
+      kind
+    }
+  }
+}

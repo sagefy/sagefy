@@ -1,8 +1,10 @@
-query learnGetCard($cardId: UUID!) {
+query learnGetCard($cardId: UUID!, $subjectId: UUID!) {
   cardByEntityId(entityId: $cardId) {
     entityId
     name
     kind
     data
   }
+
+  selectSubjectLearned(subjectId: $subjectId)
 }

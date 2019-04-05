@@ -40,7 +40,7 @@ export default function SearchSubjectsPage({
           <h2>
             Choose from one of these subjects <Icon i="subject" s="xl" />
           </h2>
-          <ChooseSubject subjects={searchSubjects.nodes} />
+          <ChooseSubject subjects={searchSubjects.nodes} level="goal" />
         </section>
       )) ||
         null}

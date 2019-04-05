@@ -594,7 +594,7 @@ grant insert (name, entity_id, entity_kind) on table sg_public.topic
   to sg_anonymous, sg_user, sg_admin;
 create policy insert_topic on sg_public.topic
   for insert (name, entity_id, entity_kind) -- any user
-  using (true);
+  with check (true);
 
 -- Update topic: user self (name), or admin.
 grant update (name) on table sg_public.topic to sg_user;
@@ -631,7 +631,7 @@ grant insert (topic_id, kind, body, parent_id, response) on table sg_public.post
   to sg_anonymous, sg_user, sg_admin;
 create policy insert_post on sg_public.post
   for insert (topic_id, kind, body, parent_id, response) -- any user
-  using (true);
+  with check (true);
 
 -- Update post: user self (body, response), or admin.
 grant update (body, response) on table sg_public.post to sg_user;
@@ -803,7 +803,7 @@ grant insert (entity_id, entity_kind) on table sg_public.follow
   to sg_user, sg_admin;
 create policy insert_follow on sg_public.follow
   for insert (entity_id, entity_kind) to sg_user, sg_admin
-  user (true);
+  with check (true);
 
 -- Update follow: none.
 

@@ -27,13 +27,10 @@ export default function DashboardPage({ role, allUserSubjects, name }) {
           <h2>
             Choose one of your subjects <Icon i="subject" s="xl" />
           </h2>
-          <p>
-            <em>Sorry, for now its just a list... stay tuned!</em>
-          </p>
-          <ChooseSubject subjects={allUserSubjects.nodes} active={false} />
+          <ChooseSubject subjects={allUserSubjects.nodes} level="goal" />
           <div className="m-yc">
             <h3>
-              ...or how about something else? <Icon i="search" s="l" />
+              &hellip;or how about something else? <Icon i="search" s="l" />
             </h3>
             <form action="/search-subjects">
               <input
@@ -178,7 +175,7 @@ DashboardPage.defaultProps = {
   <details>
     <summary
       ><h3 className="d-ib">
-        ...or find something else 🕵🏻‍♀️
+        &hellip;or find something else 🕵🏻‍♀️
       </h3></summary
     >
     <form action="/mocks/search">

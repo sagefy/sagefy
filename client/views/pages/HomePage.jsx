@@ -60,9 +60,9 @@ export default function HomePage({ role, selectPopularSubjects }) {
       {(selectPopularSubjects && selectPopularSubjects.nodes.length && (
         <section>
           <h2>
-            ...or try something popular <Icon i="popular" s="xl" />
+            &hellip;or try something popular <Icon i="popular" s="xl" />
           </h2>
-          <ChooseSubject subjects={selectPopularSubjects.nodes} />
+          <ChooseSubject subjects={selectPopularSubjects.nodes} level="goal" />
         </section>
       )) ||
         null}
@@ -70,7 +70,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
       <section>
         <blockquote>
           <h1>
-            Hey friends... <Icon i="friends" s="xxl" />
+            Hey friends&hellip; <Icon i="friends" s="xxl" />
           </h1>
           <p>
             So I&apos;m rebuilding Sagefy to (1) let anyone <em>learn</em>{' '}
