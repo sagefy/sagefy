@@ -99,7 +99,7 @@ https://sagefy.org/password
 app.get('/sign-up', isAnonymous, handleRegular)
 
 app.post('/sign-up', isAnonymous, async (req, res) => {
-  const gqlRes = await GQL.rootNewUser(req)
+  const gqlRes = await GQL.rootNewUser(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
@@ -124,7 +124,7 @@ app.post('/sign-up', isAnonymous, async (req, res) => {
 app.get('/log-in', isAnonymous, handleRegular)
 
 app.post('/log-in', isAnonymous, async (req, res) => {
-  const gqlRes = await GQL.rootLogInUser(req)
+  const gqlRes = await GQL.rootLogInUser(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
@@ -157,10 +157,12 @@ app.get('/email', async (req, res) => {
 
 app.post('/email', async (req, res) => {
   if (getQueryState(req) === 2) {
-    const gqlRes = await GQL.rootEditEmail({
-      body: req.body,
-      cookies: { [JWT_COOKIE_NAME]: req.query.token },
-    })
+    const gqlRes = await GQL.rootEditEmail(
+      {
+        cookies: { [JWT_COOKIE_NAME]: req.query.token },
+      },
+      req.body
+    )
     const gqlErrors = getGqlErrors(gqlRes)
     if (Object.keys(gqlErrors).length) {
       return res.render('Index', {
@@ -172,7 +174,7 @@ app.post('/email', async (req, res) => {
     }
     return res.redirect('/log-in')
   }
-  const gqlRes = await GQL.rootNewEmailToken(req)
+  const gqlRes = await GQL.rootNewEmailToken(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
@@ -192,10 +194,12 @@ app.get('/password', async (req, res) => {
 
 app.post('/password', async (req, res) => {
   if (getQueryState(req) === 2) {
-    const gqlRes = await GQL.rootEditPassword({
-      body: req.body,
-      cookies: { [JWT_COOKIE_NAME]: req.query.token },
-    })
+    const gqlRes = await GQL.rootEditPassword(
+      {
+        cookies: { [JWT_COOKIE_NAME]: req.query.token },
+      },
+      req.body
+    )
     const gqlErrors = getGqlErrors(gqlRes)
     if (Object.keys(gqlErrors).length) {
       return res.render('Index', {
@@ -207,7 +211,7 @@ app.post('/password', async (req, res) => {
     }
     return res.redirect('/log-in')
   }
-  const gqlRes = await GQL.rootNewPasswordToken(req)
+  const gqlRes = await GQL.rootNewPasswordToken(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
@@ -230,7 +234,7 @@ app.get('/settings', isUser, async (req, res) => {
 })
 
 app.post('/settings', isUser, async (req, res) => {
-  const gqlRes = await GQL.rootEditUser(req)
+  const gqlRes = await GQL.rootEditUser(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   return res.render('Index', {
     location: req.url,
@@ -265,7 +269,7 @@ app.get('/dashboard', isUser, async (req, res) => {
 })
 
 app.get('/search-subjects', async (req, res) => {
-  const gqlRes = await GQL.learnSearchSubject(req)
+  const gqlRes = await GQL.learnSearchSubject(req, req.body)
   return res.render('Index', {
     location: req.url,
     query: req.query,
@@ -276,7 +280,7 @@ app.get('/search-subjects', async (req, res) => {
 })
 
 app.post('/create-subject', async (req, res) => {
-  const gqlRes = await GQL.contributeNewSubject(req)
+  const gqlRes = await GQL.contributeNewSubject(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
     return res.render('Index', {
@@ -291,8 +295,7 @@ app.post('/create-subject', async (req, res) => {
   if (role === 'sg_anonymous') {
     return res.redirect(`/search-subjects?q=${name}`)
   }
-  req.query.subjectId = entityId
-  await GQL.learnNewUsubj(req)
+  await GQL.learnNewUsubj(req, { subjectId: entityId })
   return res.redirect('/dashboard')
 })
 
