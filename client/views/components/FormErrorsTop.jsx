@@ -8,7 +8,7 @@ export default function FormErrorsTop({ formErrors }) {
     <div className="FormErrorsTop">
       <p>
         <mark>
-          <Icon i="error" /> I couldn&apos;t do that...
+          <Icon i="error" /> I couldn&apos;t do that&hellip;
         </mark>
       </p>
     </div>

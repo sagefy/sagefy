@@ -28,7 +28,7 @@ export default function ChooseSubject({ subjects, active }) {
         <tr key={`choose-subject-${entityId}`}>
           <td className="va-m ta-c">
             <Link to={`/next?subjectId=${to58(entityId)}`}>
-              <Icon i="select" s="xl" />
+              <Icon i="select" s="xl" title={name} />
             </Link>
           </td>
           <td className="m-yc">

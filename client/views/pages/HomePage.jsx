@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { string, arrayOf, shape } from 'prop-types'
+import { string, shape } from 'prop-types'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ExternalLink from '../components/ExternalLink'
@@ -21,6 +21,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
               placeholder="example: Music"
               autoFocus
               name="q"
+              aria-label="Search"
             />
           </p>
           <p>
@@ -60,7 +61,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
       {(selectPopularSubjects && selectPopularSubjects.nodes.length && (
         <section>
           <h2>
-            ...or try something popular <Icon i="popular" s="xl" />
+            &hellip;or try something popular <Icon i="popular" s="xl" />
           </h2>
           <ChooseSubject subjects={selectPopularSubjects.nodes} />
         </section>
@@ -70,7 +71,7 @@ export default function HomePage({ role, selectPopularSubjects }) {
       <section>
         <blockquote>
           <h1>
-            Hey friends... <Icon i="friends" s="xxl" />
+            Hey friends&hellip; <Icon i="friends" s="xxl" />
           </h1>
           <p>
             So I&apos;m rebuilding Sagefy to (1) let anyone <em>learn</em>{' '}
