@@ -19,6 +19,7 @@ exports[`HomePage should render the home page 1`] = `
     >
       <p>
         <input
+          aria-label="Search"
           autoFocus={true}
           name="q"
           placeholder="example: Music"
@@ -73,7 +74,7 @@ exports[`HomePage should render the home page 1`] = `
   <section>
     <blockquote>
       <h1>
-        Hey friends... 
+        Hey friends… 
         <Icon
           i="friends"
           s="xxl"
@@ -230,6 +231,7 @@ exports[`HomePage should render the logged in home page 1`] = `
     >
       <p>
         <input
+          aria-label="Search"
           autoFocus={true}
           name="q"
           placeholder="example: Music"
@@ -272,7 +274,7 @@ exports[`HomePage should render the logged in home page 1`] = `
   <section>
     <blockquote>
       <h1>
-        Hey friends... 
+        Hey friends… 
         <Icon
           i="friends"
           s="xxl"
