@@ -161,6 +161,7 @@ app.post('/sign-up', isAnonymous, async (req, res) => {
       cacheHash,
       gqlErrors,
       prevValues: req.body,
+      query: req.query,
     })
   }
   return res
@@ -186,6 +187,7 @@ app.post('/log-in', isAnonymous, async (req, res) => {
       cacheHash,
       gqlErrors,
       prevValues: req.body,
+      query: req.query,
     })
   }
   return res
@@ -323,7 +325,7 @@ app.get('/dashboard', isUser, async (req, res) => {
 })
 
 app.get('/search-subjects', async (req, res) => {
-  const gqlRes = await GQL.learnSearchSubject(req, req.body)
+  const gqlRes = await GQL.learnSearchSubject(req, req.query)
   return res.render('Index', {
     location: req.url,
     query: req.query,

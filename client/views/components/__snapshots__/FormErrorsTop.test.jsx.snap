@@ -10,7 +10,7 @@ exports[`FormErrorsTop component should render a FormErrorsTop data 1`] = `
         i="error"
         s="m"
       />
-       I couldn't do that...
+       I couldn't do that…
     </mark>
   </p>
 </div>
