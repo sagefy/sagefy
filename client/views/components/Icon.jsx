@@ -82,9 +82,9 @@ const SIZES = {
   xxl: 32,
 }
 
-export default function Icon({ i, s = 'm' }) {
+export default function Icon({ i, s = 'm', ...props }) {
   return (
-    <i className={`Icon icon-${i}`}>
+    <i className={`Icon icon-${i}`} {...props}>
       {React.createElement(get(MAP, i, Target), {
         size: get(SIZES, s),
         /* Set in CSS instead */
