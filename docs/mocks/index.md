@@ -11,42 +11,42 @@ title: V2 Mocks
 
 ### Root Pages
 
-- [Home 🏡](/mocks/home)
-- [Search Subjects 🕵🏻‍♀️📚](/mocks/search-subjects)
-- [Contact 💁🏽‍♀️](/mocks/contact)
-- [Terms ⚖️](/mocks/terms)
-- [Error 🚫](/mocks/error)
-- [Log In ➡️](/mocks/log-in)
-- [Sign Up 👩🏾‍💻](/mocks/sign-up)
-- [Password Page 🔑](/mocks/password)
-- [Settings Page 🛠](/mocks/settings)
+- [Home 🏡](/mocks/home) — Built
+- [Search Subjects 🕵🏻‍♀️📚](/mocks/search-subjects) — Built
+- [Contact 💁🏽‍♀️](/mocks/contact) — Built
+- [Terms ⚖️](/mocks/terms) — Built
+- [Error 🚫](/mocks/error) — Built
+- [Log In ➡️](/mocks/log-in) — Built
+- [Sign Up 👩🏾‍💻](/mocks/sign-up) — Built
+- [Password Page 🔑](/mocks/password) — Built
+- [Settings Page 🛠](/mocks/settings) — Built
 
 ### Learning Pages
 
-- [Dashboard 🧐📚](/mocks/dashboard)
-- [Choose Next 🧐📖](/mocks/choose-next)
-- [Video 📹](/mocks/learn-video)
-- [Choice 🧐](/mocks/learn-choice)
-- [Page 📜](/mocks/learn-page)
-- [Unscored Embed 🎮](/mocks/learn-unscored-embed)
+- [Dashboard 🧐📚](/mocks/dashboard) — In Progress
+- [Choose Next 🧐📖](/mocks/choose-next) — Available
+- [Video 📹](/mocks/learn-video) — Built
+- [Choice 🧐](/mocks/learn-choice) — Built
+- [Page 📜](/mocks/learn-page) — Built
+- [Unscored Embed 🎮](/mocks/learn-unscored-embed) — Built
 
 ### Data Pages
 
-- [Search 🔍](/mocks/search)
-- [Subject Page 📚](/mocks/subject)
-- [Card Page 🃏](/mocks/card)
-- [History Page 🎢](/mocks/history)
-- [User Page 👩🏾‍🎤](/mocks/user)
-- [Talk Page 💬](/mocks/talk)
-- [Notices Page 🔔](/mocks/notices)
-- [Follows Page 👂🏿](/mocks/follows)
+- [Search 🔍](/mocks/search) — Available
+- [Subject Page 📚](/mocks/subject) — Available
+- [Card Page 🃏](/mocks/card) — Available
+- [History Page 🎢](/mocks/history) — Available
+- [User Page 👩🏾‍🎤](/mocks/user) — Available
+- [Talk Page 💬](/mocks/talk) — Available
+- [Notices Page 🔔](/mocks/notices) — Available
+- [Follows Page 👂🏿](/mocks/follows) — Available
 
 ### Contributing Pages
 
-- [Create Subject 📚](/mocks/create-subject)
-- [Update Subject 📚](/mocks/update-subject)
-- [Create Card 🃏](/mocks/create-card)
-- [Update Card 🃏](/mocks/update-card)
+- [Create Subject 📚](/mocks/create-subject) — Built
+- [Update Subject 📚](/mocks/update-subject) — Available
+- [Create Card 🃏](/mocks/create-card) — Available
+- [Update Card 🃏](/mocks/update-card) — Available
 
 ## Goals:
 
