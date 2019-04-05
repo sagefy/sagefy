@@ -279,28 +279,37 @@ async function makeCards(client, { users, subjects }) {
   return cards
 }
 
-/*
 async function makeUserSubjects(client, { users, subjects }) {
-  console.log
+  console.log('Making user-subjects...')
   const userSubjects = {}
 
   await letsJwtIn(client, users.doris)
-  userSubjects.doris = (await client.query(`
+  userSubjects.doris = (await client.query(
+    `
     insert into sg_public.user_subject
-    (subject_id) values ('${subjects.all.entity_id}')
-  `)).rows[0]
+    (subject_id) values ($1)
+    returning *;
+  `,
+    [subjects.all.entity_id]
+  )).rows[0]
 
   await letsJwtIn(client, users.esther)
-  userSubjects.esther = (await client.query(`
+  userSubjects.esther = (await client.query(
+    `
     insert into sg_public.user_subject
-    (subject_id) values ('${subjects.foundation.entity_id}')
-  `)).rows[0]
+    (subject_id) values ($1)
+    returning *;
+  `,
+    [subjects.foundation.entity_id]
+  )).rows[0]
 
-  return {}
+  await letsJwtOut(client)
+
+  return userSubjects
 }
 
 async function makeResponses(client, { users, cards }) {
-  console.log
+  console.log('Making responses...')
   await letsJwtIn(client, users.doris)
 
   const responses = {}
@@ -321,9 +330,14 @@ async function makeResponses(client, { users, cards }) {
     `)).rows[0]
   }
 
+  await letsJwtOut(client)
+
+  await client.query(`
+    update sg_public.response set learned = 0.999;
+  `)
+
   return responses
 }
-*/
 
 async function generateDevData() {
   console.log('Generating development data...')
@@ -343,8 +357,8 @@ async function generateDevData() {
   Object.assign(users, await makeUsers(client, data))
   Object.assign(subjects, await makeSubjects(client, data))
   Object.assign(cards, await makeCards(client, data))
-  // Object.assign(userSubjects, await makeUserSubjects(client, data))
-  // Object.assign(responses, await makeResponses(client, data))
+  Object.assign(userSubjects, await makeUserSubjects(client, data))
+  Object.assign(responses, await makeResponses(client, data))
   await letsJwtOut(client)
 
   console.log('Finished generating development data.')
