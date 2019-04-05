@@ -107,6 +107,7 @@ app.post('/sign-up', isAnonymous, async (req, res) => {
       cacheHash,
       gqlErrors,
       prevValues: req.body,
+      query: req.query,
     })
   }
   return res
@@ -132,6 +133,7 @@ app.post('/log-in', isAnonymous, async (req, res) => {
       cacheHash,
       gqlErrors,
       prevValues: req.body,
+      query: req.query,
     })
   }
   return res
@@ -269,7 +271,7 @@ app.get('/dashboard', isUser, async (req, res) => {
 })
 
 app.get('/search-subjects', async (req, res) => {
-  const gqlRes = await GQL.learnSearchSubject(req, req.body)
+  const gqlRes = await GQL.learnSearchSubject(req, req.query)
   return res.render('Index', {
     location: req.url,
     query: req.query,
@@ -306,8 +308,7 @@ app.get('/next', async (req, res) => {
       `/sign-up?redirect=/next?subjectId=${req.query.subjectId}`
     )
   }
-  req.query.subjectId = toU(req.query.subjectId)
-  await GQL.learnNewUsubj(req)
+  await GQL.learnNewUsubj(req, { subjectId: toU(req.query.subjectId) })
   // TODO If a subject doesn't have enough cards,
   // suggest creating cards or just following instead.
   return res.redirect('/dashboard')
