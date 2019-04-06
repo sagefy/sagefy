@@ -476,6 +476,10 @@ var,
   line-height: 1.71428571429; /* 24px */
 }
 
+progress {
+  height: 0.5rem;
+}
+
 /* 4. Constrain elements to width. */
 
 img,
@@ -506,7 +510,12 @@ blockquote {
   border-left: 1px solid;
 }
 
-iframe {
+iframe,
+button,
+[type='button'],
+[type='submit'],
+[type='reset'],
+progress {
   border: none;
 }
 
@@ -564,13 +573,6 @@ footer {
 
 button,
 [type='submit'],
-[type='button'],
-[type='reset'] {
-  border: 0;
-}
-
-button,
-[type='submit'],
 [type='button'] {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
@@ -579,41 +581,28 @@ button,
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-button:disabled,
-[type='submit']:disabled,
-[type='button']:disabled,
-[type='reset']:disabled {
-  box-shadow: none;
-}
-
-/* 10. Tweak style of progress elements. */
-
-progress {
-  height: 0.5rem;
-  border: none;
-}
-
-/* 11. Change the look of caption text. */
+/* 10. Change the look of caption text. */
 
 caption,
 figcaption {
   font-style: italic;
 }
 
-/* 12. Make strikethroughs more obvious. */
+/* 11. Make strikethroughs more obvious. */
 
 del,
-s {
-  opacity: 0.5;
+s,
+time {
+  opacity: 0.7;
 }
 
-/* 13. More clickable summary. */
+/* 12. More clickable summary. */
 
 summary {
   cursor: pointer;
 }
 
-/* 14. Soften the shape of big boxy elements. */
+/* 13. Soften the shape of big boxy elements. */
 
 code,
 samp,
@@ -647,49 +636,34 @@ progress::-moz-progress-bar {
   border-radius: 0.25rem;
 }
 
-/* 15. Use more common, consistent, and attractive colors. */
+/* 14. Lighten inactive elements. */
 
-/* See themes: light, dark... */
-
-/* 16. Finally, limit width on a high element so text is more readable. (The only class!) */
-
-.page {
-  margin: 0 auto;
-  max-width: 40rem; /* 640px */
-  padding: 1rem;
-}
-/*
-  hsluv(250,  30, l) - Static page elements
-  hsluv(250, 100, l) - Interactive elements
-  hsluv( 80, 100, l) - Highlight, warning
-  hsluv( 12, 100, l) - Bad, error, issue
-*/
-
-time {
-  opacity: 0.7;
+:disabled,
+::placeholder {
+  opacity: 0.5;
 }
 
-a:hover,
-button:hover,
-[type='submit']:hover,
-[type='button']:hover,
-[type='reset']:hover {
-  opacity: 0.9;
+:disabled {
+  box-shadow: none;
 }
 
-a:active,
-button:active,
-[type='submit']:active,
-[type='button']:active,
-[type='reset']:active {
-  opacity: 1;
+/* 15. Remove shadow on iOS. */
+
+input[type='text'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
+
+/* 16. Use more common, consistent, and attractive colors. */
 
 body,
 input,
 textarea,
-button {
-  color: #2a313d; /* 250-30-20 */
+button,
+mark {
+  color: var(--s0);
+  background: var(--s4);
 }
 
 pre,
@@ -697,12 +671,14 @@ code,
 samp,
 kbd,
 tr:nth-child(even) {
-  background: #f8f9fb; /* 250-30-98 */
+  background: var(--s3);
 }
 
 thead,
-tfoot {
-  background: #eff1f5; /* 250-30-95 */
+tfoot,
+progress,
+progress::-webkit-progress-bar {
+  background: var(--s2);
 }
 
 hr,
@@ -710,67 +686,80 @@ blockquote,
 fieldset,
 input,
 textarea {
-  border-color: #bec7d8; /* 250-30-80 */
-}
-
-::placeholder {
-  color: #5d6b84; /* 250-30-45 */
+  border-color: var(--s1);
 }
 
 a {
-  color: #006dbc; /* 250-100-45 */
-}
-
-mark {
-  background: #fff489; /* 80-100-95 */
-}
-
-[type='submit'] {
-  color: white;
-  background: #006dbc; /* 250-100-45 */
-}
-
-button,
-[type='button'] {
-  background: #a8c8ff; /* 250-100-80 */
-}
-
-button[type='reset'],
-[type='reset'] {
-  color: #d80005; /* 12-100-45 */
-  background: #eff1f5; /* 250-30-95 */
-}
-
-button:disabled,
-[type='submit']:disabled,
-[type='button']:disabled,
-[type='reset']:disabled {
-  color: #5d6b84; /* 250-30-45 */
-  background: #f8f9fb; /* 250-30-98 */
+  color: var(--i0);
 }
 
 :focus {
   outline: 0;
-  box-shadow: 0 0 0 2px #a8c8ff; /* 250-100-80 */
+  box-shadow: 0 0 0 2px var(--i1);
 }
 
-input:hover,
-textarea:hover {
-  border-color: #9facc6; /* 250-30-70 */
+button,
+[type='button'] {
+  background: var(--i1);
 }
 
-progress,
-progress::-webkit-progress-bar {
-  background: #eff1f5; /* 250-30-95 */
+[type='submit'] {
+  color: var(--s4);
+  background: var(--i0);
+}
+
+[type='reset'] {
+  color: var(--b0);
+  background: var(--s2);
 }
 
 progress::-webkit-progress-value {
-  background: #a8c8ff; /* 250-100-80 */
+  background: var(--i1);
 }
 
 /* Separate, otherwise breaks Safari/Chrome */
 progress::-moz-progress-bar {
-  background: #a8c8ff; /* 250-100-80 */
+  background: var(--i1);
+}
+
+mark {
+  background: var(--h0);
+}
+
+/* Colors from http://www.hsluv.org/ */
+
+:root {
+  --s4: #ffffff; /* 250- 30-100 */
+  --s3: #f8f9fb; /* 250- 30- 98 */
+  --s2: #eff1f5; /* 250- 30- 95 */
+  --s1: #bec7d8; /* 250- 30- 80 */
+  --s0: #2a313d; /* 250- 30- 20 */
+  --i1: #a8c8ff; /* 250-100- 80 */
+  --i0: #006dbc; /* 250-100- 45 */
+  --b0: #d80005; /*  12-100- 45 */
+  --h0: #fff489; /*  80-100- 95 */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --s4: #171c24; /* 250- 30- 10 */
+    --s3: #202631; /* 250- 30- 15 */
+    --s2: #2a313d; /* 250- 30- 20 */
+    --s1: #52606f; /* 250- 30- 40 */
+    --s0: #eff1f5; /* 250- 30- 95 */
+    --i1: #0060a7; /* 250-100- 40 */
+    --i0: #0094fc; /* 250-100- 60 */
+    --b0: #ff5354; /*  12-100- 60 */
+    --h0: #4d4800; /*  80-100- 30 */
+  }
+}
+
+/* 17. Finally, limit width on a high element so text is more readable. (The only class!) */
+
+.page {
+  margin: 0 auto;
+  max-width: 40rem; /* 640px */
+  padding: 1rem;
 }
 /*! Sagefy partial */
 
