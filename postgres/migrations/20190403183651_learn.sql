@@ -384,6 +384,8 @@ returns setof sg_public.subject as $$
     sg_public.subject_child_count(s) = 0
     and sg_public.select_subject_learned(s.entity_id) < 0.99
     and not sg_public.subject_has_needed_before(s, e.all_subjects)
+    -- TODO support "rewind"... going into out of goals befores
+    -- when performance is low.
   order by
     sg_public.subject_all_after_count(s) desc,
     sg_public.subject_card_count(s) desc
@@ -393,6 +395,10 @@ comment on function sg_public.select_subject_to_learn(uuid)
   is 'After I select a main subject, search for suitable child subjects.';
 grant execute on function sg_public.select_subject_to_learn(uuid)
   to sg_anonymous, sg_user, sg_admin;
+
+-- TODO try this to speed up query:
+-- create index on "sg_public"."subject_version_parent_child"("child_version_id");
+-- create index on "sg_public"."subject_version_before_after"("after_version_id");
 
 -- migrate:down
 
