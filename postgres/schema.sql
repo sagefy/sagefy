@@ -341,7 +341,7 @@ CREATE FUNCTION sg_private.score_response() RETURNS trigger
   declare
     card sg_public.card;
     prior sg_public.response;
-    prior_learned real := 0.4;
+    prior_learned real;
     option jsonb;
     score real;
     learned real;
@@ -351,13 +351,11 @@ CREATE FUNCTION sg_private.score_response() RETURNS trigger
   begin
     -- Overall: Fill in (subject_id, score, learned)
     -- Validate if the response to the card is valid.
-    card := (
-      select *
-      from sg_public.card
-      where sg_public.card.entity_id = new.card_id
-      limit 1
-    );
-    if (!card) then
+    select c.* into card
+    from sg_public.card c
+    where c.entity_id = new.card_id
+    limit 1;
+    if (card.kind is null) then
       raise exception 'No card found.' using errcode = 'EE05C989';
     end if;
     if (card.kind <> 'choice') then -- scored kinds only
@@ -365,19 +363,16 @@ CREATE FUNCTION sg_private.score_response() RETURNS trigger
         using errcode = '1306BF1C';
     end if;
     option := card.data->'options'->new.response;
-    if (!option) then
+    if (option is null) then
       raise exception 'You must submit an available response `id`.'
         using errcode = '681942FD';
     end if;
     -- Set default values
     new.subject_id := card.subject_id;
     -- Score the response
-    new.score := case when option->'correct' then 1 else 0 end;
+    new.score := (option->>'correct')::boolean::int::real;
     -- Calculate p(learned)
-    prior := sg_public.select_latest_response(card.subject_id);
-    if (prior) then
-      prior_learned := prior.learned;
-    end if;
+    prior_learned := (select sg_public.select_subject_learned(card.subject_id));
     learned := (
       new.score * (
         (prior_learned * (1 - slip)) /
@@ -688,12 +683,12 @@ COMMENT ON VIEW sg_public.card IS 'The latest accepted version of each card.';
 
 CREATE FUNCTION sg_public.card_by_entity_id(entity_id uuid) RETURNS sg_public.card
     LANGUAGE sql STABLE
-    AS $$
-  select *
-  from sg_public.card
-  where sg_public.card.entity_id = entity_id
+    AS $_$
+  select c.*
+  from sg_public.card c
+  where c.entity_id = $1
   limit 1;
-$$;
+$_$;
 
 
 --
@@ -1126,37 +1121,32 @@ COMMENT ON FUNCTION sg_public.search_subjects(query text) IS 'Search subjects.';
 --
 
 CREATE FUNCTION sg_public.select_card_to_learn(subject_id uuid) RETURNS sg_public.card
-    LANGUAGE plpgsql STRICT SECURITY DEFINER
-    AS $$
-  declare
-    latest_response sg_public.response;
-    kinds text[];
-  begin
-    -- What is p(learned) currently for the subject?
-    latest_response := (select sg_public.select_latest_response(subject_id));
-    -- Decide on a scored or unscored type
-    kinds := (
-      select case when random() > (
-        0.5 + 0.5 * (latest_response.learned or 0.4)
-      ) then
-        array['choice'] -- scored kinds
-      else
-        array['video', 'page', 'unscored_embed'] -- unscored kinds
-      end
-    );
-    select *
-    from sg_public.card
-    where sg_public.card.subject_id = subject_id
-      and sg_public.card.kind = any(kinds)
-      -- Don't allow the previous card as the next card
-      and sg_public.card.entity_id <> latest_response.card_id
-    -- Select cards of kind at random
-    order by random()
-    limit 1;
-  end;
+    LANGUAGE sql
+    AS $_$
+  with prior as (select * from sg_public.select_latest_response($1)),
+  k (kinds) as (
+    select case
+      when random() < (0.5 + 0.5 * sg_public.select_subject_learned($1))
+      then array[
+        'choice'
+      ]::sg_public.card_kind[]
+      else array[
+        'video',
+        'page',
+        'unscored_embed'
+      ]::sg_public.card_kind[]
+    end
+  )
+  select c.*
+  from sg_public.card c, prior, k
+  where c.subject_id = $1
+    and c.kind = any(k.kinds)
+    and (prior.card_id is null or c.entity_id <> prior.card_id)
+  order by random()
+  limit 1;
   -- Future version: When estimating parameters and the card kind is scored,
   -- prefer 0.25 < correct < 0.75
-$$;
+$_$;
 
 
 --
@@ -1277,17 +1267,16 @@ COMMENT ON CONSTRAINT user_or_session ON sg_public.response IS 'Ensure only the 
 
 CREATE FUNCTION sg_public.select_latest_response(subject_id uuid) RETURNS sg_public.response
     LANGUAGE sql STABLE
-    AS $$
-  -- If no response yet, default to 0.4
-  select *
-  from sg_public.response
-  where sg_public.response.subject_id = subject_id and (
+    AS $_$
+  select r.*
+  from sg_public.response r
+  where r.subject_id = $1 and (
     user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
     or session_id = nullif(current_setting('jwt.claims.session_id', true), '')::uuid
   )
-  order by created desc
+  order by r.created desc
   limit 1;
-$$;
+$_$;
 
 
 --
@@ -1323,89 +1312,55 @@ COMMENT ON FUNCTION sg_public.select_popular_subjects() IS 'Select the 5 most po
 
 
 --
+-- Name: select_subject_learned(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.select_subject_learned(subject_id uuid) RETURNS real
+    LANGUAGE sql STABLE
+    AS $_$
+  select case when learned is not null then learned else 0.4 end
+  from sg_public.select_latest_response($1);
+$_$;
+
+
+--
+-- Name: FUNCTION select_subject_learned(subject_id uuid); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.select_subject_learned(subject_id uuid) IS 'Get the latest learned value for the user on the given subject.';
+
+
+--
 -- Name: select_subject_to_learn(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_public.select_subject_to_learn(subject_id uuid) RETURNS sg_public.subject
+CREATE FUNCTION sg_public.select_subject_to_learn(subject_id uuid) RETURNS SETOF sg_public.subject
     LANGUAGE sql STABLE
-    AS $$
-  -- determine all child subjects graph
-  with recursive children_graph (version_id, entity_id, path) as (
-    select
-      s.version_id,
-      s.entity_id,
-      array[s.entity_id]
-    from
-      sg_public.subject s
-    where
-      s.entity_id = subject_id
-    union all
-    select
-      s.version_id,
-      s.entity_id,
-      cg.path || s.entity_id
-    from
-      children_graph cg,
-      sg_public.subject s,
-      sg_public.subject_version_parent_child svpc
-    where
-      cg.version_id = svpc.child_version_id
-      and svpc.parent_entity_id = s.entity_id
-  ),
-  -- only keep those with direct cards
-  filtered as (
-    select cg.*, (
-      select count(*)
-      from sg_public.card c
-      where c.subject_id = cg.entity_id
-    ) as card_count
-    from children_graph cg
-    -- where card_count > 0
-  ),
-  -- count the depth -- how many subjects after this one
-  before_graph (version_id, entity_id, path) as (
-    select
-      s.version_id,
-      s.entity_id,
-      array[s.entity_id]
-    from filtered s
-    union all
-    select
-      s.version_id,
-      s.entity_id,
-      bg.path || s.entity_id
-    from
-      before_graph bg,
-      sg_public.subject_version_before_after svba,
-      sg_public.subject s
-    where
-      bg.version_id = svba.after_version_id
-      and svba.before_entity_id = s.entity_id
-  ),
-  -- cut inaccessibile subjects -- haven't learned a before > 0.99
-  allowed as (
+    AS $_$
+  with subject as (
     select *
-    from
-      before_graph bg
-    where (
-      select count((
-        select r.learned
-        from sg_public.select_latest_response(entity_id) r
-      ) > 0.99)
-      from unnest(bg.path) as entity_id
-    ) = array_length(bg.path, 1)
-  )
-  -- limit 5
+    from sg_public.subject
+    where entity_id = $1
+    limit 1
+  ),
+  all_subjects as (
+    select a.*
+    from subject, sg_public.subject_all_child_subjects(subject) a
+    union
+    select * from subject
+  ),
+  e (all_subjects) as (select array(select entity_id from all_subjects))
   select s.*
-  from
-    allowed a,
-    sg_public.subject s
+  from all_subjects s, e
   where
-    a.version_id = s.version_id
+    sg_public.subject_child_count(s) = 0
+    and sg_public.select_subject_learned(s.entity_id) < 0.99
+    and not sg_public.subject_has_needed_before(s, e.all_subjects)
   order by
-    array_length(a.path, 1) desc
+    sg_public.subject_all_after_count(s) desc,
+    sg_public.subject_card_count(s) desc
   limit 5;
-$$;
+$_$;
 
 
 --
@@ -1503,6 +1458,215 @@ begin
   return (private_user.role, public_user.id, null, null)::sg_public.jwt_token;
 end;
 $$;
+
+
+--
+-- Name: subject_after_subjects(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_after_subjects(subject sg_public.subject) RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE
+    AS $_$
+  select s.*
+  from
+    sg_public.subject s,
+    sg_public.subject_version_before_after svba
+  where
+    svba.before_entity_id = $1.entity_id
+    and s.version_id = svba.after_version_id;
+$_$;
+
+
+--
+-- Name: FUNCTION subject_after_subjects(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_after_subjects(subject sg_public.subject) IS 'Get all the direct afters for a subject.';
+
+
+--
+-- Name: subject_all_after_count(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_all_after_count(subject sg_public.subject) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $_$
+  select count(*)
+  from sg_public.subject_all_after_subjects($1);
+$_$;
+
+
+--
+-- Name: FUNCTION subject_all_after_count(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_all_after_count(subject sg_public.subject) IS 'Count the number of subjects after the subject.';
+
+
+--
+-- Name: subject_all_after_subjects(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_all_after_subjects(subject sg_public.subject) RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE
+    AS $$
+  with recursive all_afters as (
+    select scs.*
+    from sg_public.subject_after_subjects(subject) scs
+    union all
+    select scs.*
+    from
+      all_afters,
+      lateral sg_public.subject_after_subjects(all_afters) scs
+  )
+  select *
+  from all_afters;
+$$;
+
+
+--
+-- Name: FUNCTION subject_all_after_subjects(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_all_after_subjects(subject sg_public.subject) IS 'Collects all the afters of the before subject.';
+
+
+--
+-- Name: subject_all_child_subjects(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_all_child_subjects(subject sg_public.subject) RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE
+    AS $$
+  with recursive all_children as (
+    select scs.*
+    from sg_public.subject_child_subjects(subject) scs
+    union all
+    select scs.*
+    from
+      all_children,
+      lateral sg_public.subject_child_subjects(all_children) scs
+  )
+  select *
+  from all_children;
+$$;
+
+
+--
+-- Name: FUNCTION subject_all_child_subjects(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_all_child_subjects(subject sg_public.subject) IS 'Collects all the children of the parent subject.';
+
+
+--
+-- Name: subject_before_subjects(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_before_subjects(subject sg_public.subject) RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE
+    AS $_$
+  select s.*
+  from
+    sg_public.subject s,
+    sg_public.subject_version_before_after svba
+  where
+    svba.after_version_id = $1.version_id
+    and s.entity_id = svba.before_entity_id;
+$_$;
+
+
+--
+-- Name: FUNCTION subject_before_subjects(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_before_subjects(subject sg_public.subject) IS 'Get all the direct befores for a subject.';
+
+
+--
+-- Name: subject_card_count(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_card_count(subject sg_public.subject) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $_$
+  select count(c.*)
+  from sg_public.card c
+  where c.subject_id = $1.entity_id;
+$_$;
+
+
+--
+-- Name: FUNCTION subject_card_count(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_card_count(subject sg_public.subject) IS 'Count the number of cards directly on the subject.';
+
+
+--
+-- Name: subject_child_count(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_child_count(subject sg_public.subject) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $$
+  select count(*)
+  from sg_public.subject_child_subjects(subject);
+$$;
+
+
+--
+-- Name: FUNCTION subject_child_count(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_child_count(subject sg_public.subject) IS 'Count the number of children directly on the subject.';
+
+
+--
+-- Name: subject_child_subjects(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_child_subjects(subject sg_public.subject) RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE
+    AS $_$
+  select s.*
+  from
+    sg_public.subject s,
+    sg_public.subject_version_parent_child svpc
+  where
+    svpc.parent_entity_id = $1.entity_id
+    and s.version_id = svpc.child_version_id;
+$_$;
+
+
+--
+-- Name: FUNCTION subject_child_subjects(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_child_subjects(subject sg_public.subject) IS 'Collects the direct children of the parent subject.';
+
+
+--
+-- Name: subject_has_needed_before(sg_public.subject, uuid[]); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_has_needed_before(sg_public.subject, uuid[]) RETURNS boolean
+    LANGUAGE sql STABLE
+    AS $_$
+  select exists(
+    select x.entity_id
+    from sg_public.subject_before_subjects($1) x
+    where sg_public.select_subject_learned(x.entity_id) < 0.99
+    and x.entity_id = any($2)
+  );
+$_$;
+
+
+--
+-- Name: FUNCTION subject_has_needed_before(sg_public.subject, uuid[]); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_has_needed_before(sg_public.subject, uuid[]) IS 'Does the learner/subject have a needed before?';
 
 
 --
@@ -2652,7 +2816,7 @@ CREATE POLICY delete_user_subject ON sg_public.user_subject FOR DELETE TO sg_ano
 -- Name: response insert_response; Type: POLICY; Schema: sg_public; Owner: -
 --
 
-CREATE POLICY insert_response ON sg_public.response FOR INSERT TO sg_anonymous, sg_user, sg_admin;
+CREATE POLICY insert_response ON sg_public.response FOR INSERT TO sg_anonymous, sg_user, sg_admin WITH CHECK (true);
 
 
 --
