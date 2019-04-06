@@ -235,82 +235,158 @@ comment on function sg_public.select_card_to_learn(uuid)
 grant execute on function sg_public.select_card_to_learn(uuid)
   to sg_anonymous, sg_user, sg_admin;
 
-create or replace function sg_public.select_subject_to_learn(subject_id uuid)
-returns sg_public.subject as $$
-  -- determine all child subjects graph
-  with recursive children_graph (version_id, entity_id, path) as (
-    select
-      s.version_id,
-      s.entity_id,
-      array[s.entity_id]
-    from
-      sg_public.subject s
-    where
-      s.entity_id = subject_id
-    union all
-    select
-      s.version_id,
-      s.entity_id,
-      cg.path || s.entity_id
-    from
-      children_graph cg,
-      sg_public.subject s,
-      sg_public.subject_version_parent_child svpc
-    where
-      cg.version_id = svpc.child_version_id
-      and svpc.parent_entity_id = s.entity_id
-  ),
-  -- only keep those with direct cards
-  filtered as (
-    select cg.*, (
-      select count(*)
-      from sg_public.card c
-      where c.subject_id = cg.entity_id
-    ) as card_count
-    from children_graph cg
-    -- where card_count > 0
-  ),
-  -- count the depth -- how many subjects after this one
-  before_graph (version_id, entity_id, path) as (
-    select
-      s.version_id,
-      s.entity_id,
-      array[s.entity_id]
-    from filtered s
-    union all
-    select
-      s.version_id,
-      s.entity_id,
-      bg.path || s.entity_id
-    from
-      before_graph bg,
-      sg_public.subject_version_before_after svba,
-      sg_public.subject s
-    where
-      bg.version_id = svba.after_version_id
-      and svba.before_entity_id = s.entity_id
-  ),
-  -- cut inaccessibile subjects -- haven't learned a before > 0.99
-  allowed as (
-    select *
-    from
-      before_graph bg
-    where (
-      select count(
-        select sg_public.select_subject_learned(entity_id) > 0.99
-      )
-      from unnest(bg.path) as entity_id
-    ) = array_length(bg.path, 1)
-  )
-  -- limit 5
+create or replace function sg_public.subject_child_subjects(subject sg_public.subject)
+returns setof sg_public.subject as $$
   select s.*
   from
-    allowed a,
-    sg_public.subject s
+    sg_public.subject s,
+    sg_public.subject_version_parent_child svpc
   where
-    a.version_id = s.version_id
+    svpc.parent_entity_id = $1.entity_id
+    and s.version_id = svpc.child_version_id;
+$$ language sql stable;
+comment on function sg_public.subject_child_subjects(sg_public.subject)
+  is 'Collects the direct children of the parent subject.';
+grant execute on function sg_public.subject_child_subjects(sg_public.subject)
+  to sg_anonymous, sg_user, sg_admin;
+
+create or replace function sg_public.subject_all_child_subjects(subject sg_public.subject)
+returns setof sg_public.subject as $$
+  with recursive all_children as (
+    select scs.*
+    from sg_public.subject_child_subjects(subject) scs
+    union all
+    select scs.*
+    from
+      all_children,
+      lateral sg_public.subject_child_subjects(all_children) scs
+  )
+  select *
+  from all_children;
+$$ language sql stable;
+comment on function sg_public.subject_all_child_subjects(sg_public.subject)
+  is 'Collects all the children of the parent subject.';
+grant execute on function sg_public.subject_all_child_subjects(sg_public.subject)
+  to sg_anonymous, sg_user, sg_admin;
+
+create or replace function sg_public.subject_child_count(subject sg_public.subject)
+returns bigint as $$
+  select count(*)
+  from sg_public.subject_child_subjects(subject);
+$$ language sql stable;
+comment on function sg_public.subject_child_count(sg_public.subject)
+  is 'Count the number of children directly on the subject.';
+grant execute on function sg_public.subject_child_count(sg_public.subject)
+  to sg_anonymous, sg_user, sg_admin;
+
+create or replace function sg_public.subject_card_count(subject sg_public.subject)
+returns bigint as $$
+  select count(c.*)
+  from sg_public.card c
+  where c.subject_id = $1.entity_id;
+$$ language sql stable;
+comment on function sg_public.subject_card_count(sg_public.subject)
+  is 'Count the number of cards directly on the subject.';
+grant execute on function sg_public.subject_card_count(sg_public.subject)
+  to sg_anonymous, sg_user, sg_admin;
+
+create or replace function sg_public.subject_before_subjects(subject sg_public.subject)
+returns setof sg_public.subject as $$
+  select s.*
+  from
+    sg_public.subject s,
+    sg_public.subject_version_before_after svba
+  where
+    svba.after_version_id = $1.version_id
+    and s.entity_id = svba.before_entity_id;
+$$ language sql stable;
+comment on function sg_public.subject_before_subjects(sg_public.subject)
+  is 'Get all the direct befores for a subject.';
+grant execute on function sg_public.subject_before_subjects(sg_public.subject)
+  to sg_anonymous, sg_user, sg_admin;
+
+create or replace function sg_public.subject_has_needed_before(sg_public.subject, uuid[])
+returns boolean as $$
+  select exists(
+    select x.entity_id
+    from sg_public.subject_before_subjects($1) x
+    where sg_public.select_subject_learned(x.entity_id) < 0.99
+    and x.entity_id = any($2)
+  );
+$$ language sql stable;
+comment on function sg_public.subject_has_needed_before(sg_public.subject, uuid[])
+  is 'Does the learner/subject have a needed before?';
+grant execute on function sg_public.subject_has_needed_before(sg_public.subject, uuid[])
+  to sg_anonymous, sg_user, sg_admin;
+
+create or replace function sg_public.subject_after_subjects(subject sg_public.subject)
+returns setof sg_public.subject as $$
+  select s.*
+  from
+    sg_public.subject s,
+    sg_public.subject_version_before_after svba
+  where
+    svba.before_entity_id = $1.entity_id
+    and s.version_id = svba.after_version_id;
+$$ language sql stable;
+comment on function sg_public.subject_after_subjects(sg_public.subject)
+  is 'Get all the direct afters for a subject.';
+grant execute on function sg_public.subject_after_subjects(sg_public.subject)
+  to sg_anonymous, sg_user, sg_admin;
+
+create or replace function sg_public.subject_all_after_subjects(subject sg_public.subject)
+returns setof sg_public.subject as $$
+  with recursive all_afters as (
+    select scs.*
+    from sg_public.subject_after_subjects(subject) scs
+    union all
+    select scs.*
+    from
+      all_afters,
+      lateral sg_public.subject_after_subjects(all_afters) scs
+  )
+  select *
+  from all_afters;
+$$ language sql stable;
+comment on function sg_public.subject_all_after_subjects(sg_public.subject)
+  is 'Collects all the afters of the before subject.';
+grant execute on function sg_public.subject_all_after_subjects(sg_public.subject)
+  to sg_anonymous, sg_user, sg_admin;
+
+create or replace function sg_public.subject_all_after_count(subject sg_public.subject)
+returns bigint as $$
+  select count(*)
+  from sg_public.subject_all_after_subjects($1);
+$$ language sql stable;
+comment on function sg_public.subject_all_after_count(sg_public.subject)
+  is 'Count the number of subjects after the subject.';
+grant execute on function sg_public.subject_all_after_count(sg_public.subject)
+  to sg_anonymous, sg_user, sg_admin;
+
+create or replace function sg_public.select_subject_to_learn(subject_id uuid)
+returns setof sg_public.subject as $$
+  with subject as (
+    select *
+    from sg_public.subject
+    where entity_id = $1
+    limit 1
+  ),
+  all_subjects as (
+    select a.*
+    from subject, sg_public.subject_all_child_subjects(subject) a
+    union
+    select * from subject
+  ),
+  e (all_subjects) as (select array(select entity_id from all_subjects))
+  select s.*
+  from all_subjects s, e
+  where
+    sg_public.subject_child_count(s) = 0
+    and sg_public.select_subject_learned(s.entity_id) < 0.99
+    and not sg_public.subject_has_needed_before(s, e.all_subjects)
   order by
-    array_length(a.path, 1) desc
+    sg_public.subject_all_after_count(s) desc,
+    sg_public.subject_card_count(s) desc
   limit 5;
 $$ language sql stable;
 comment on function sg_public.select_subject_to_learn(uuid)
