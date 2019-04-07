@@ -351,13 +351,13 @@ template {
 }
 /*! drab.css v0 | Apache-2.0 License | github.com/heiskr/drab.css */
 
-/* 1. Apply `border-box` sizing to all elements. */
+/* 1. Apply `border-box` sizing to all elements. ******************************/
 
 * {
   box-sizing: border-box;
 }
 
-/* 2. Apply system fonts. */
+/* 2. Apply system fonts. *****************************************************/
 
 body,
 input,
@@ -382,7 +382,7 @@ var,
     monospace;
 }
 
-/* 3. Apply more common `line-height` and use an `8px` vertical rhythm. */
+/* 3. Apply more common `line-height` and use an `8px` vertical rhythm. *******/
 
 /*
   1   : 16px
@@ -473,14 +473,14 @@ var,
 [type='datetime'],
 [type='datetime-local'] {
   font-size: 0.875rem; /* 14px */
-  line-height: 1.71428571429; /* 24px */
+  line-height: 1.7142; /* 24px */
 }
 
 progress {
   height: 0.5rem;
 }
 
-/* 4. Constrain elements to width. */
+/* 4. Constrain elements to width. ********************************************/
 
 img,
 iframe,
@@ -493,7 +493,7 @@ button,
   max-width: 100%;
 }
 
-/* 5. Use consistent border sizes and styles. */
+/* 5. Use consistent border sizes and styles. *********************************/
 
 fieldset,
 input,
@@ -501,8 +501,17 @@ textarea {
   border: 1px solid;
 }
 
+iframe,
+button,
+[type='button'],
+[type='submit'],
+[type='reset'],
+progress,
 hr {
   border: 0;
+}
+
+hr {
   border-top: 1px solid;
 }
 
@@ -510,16 +519,7 @@ blockquote {
   border-left: 1px solid;
 }
 
-iframe,
-button,
-[type='button'],
-[type='submit'],
-[type='reset'],
-progress {
-  border: none;
-}
-
-/* 6. Tighten left on list like elements. */
+/* 6. Tighten left on list like elements. *************************************/
 
 ul,
 ol {
@@ -530,7 +530,7 @@ dd {
   margin-left: 1.5rem;
 }
 
-/* 7. Apply more common spacing on `table`s. */
+/* 7. Apply more common spacing on `table`s. **********************************/
 
 table {
   border-spacing: 0;
@@ -561,7 +561,7 @@ td {
   vertical-align: top;
 }
 
-/* 8. Add spacing to sectional elements. */
+/* 8. Add spacing to sectional elements. **************************************/
 
 header,
 section,
@@ -569,7 +569,7 @@ footer {
   margin: 4rem 0;
 }
 
-/* 9. Style buttons to look more like web buttons. */
+/* 9. Style buttons to look more like web buttons. ****************************/
 
 button,
 [type='submit'],
@@ -581,14 +581,14 @@ button,
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-/* 10. Change the look of caption text. */
+/* 10. Change the look of caption text. ***************************************/
 
 caption,
 figcaption {
   font-style: italic;
 }
 
-/* 11. Make strikethroughs more obvious. */
+/* 11. Make strikethroughs more obvious. **************************************/
 
 del,
 s,
@@ -596,13 +596,13 @@ time {
   opacity: 0.7;
 }
 
-/* 12. More clickable summary. */
+/* 12. More clickable summary. ************************************************/
 
 summary {
   cursor: pointer;
 }
 
-/* 13. Soften the shape of big boxy elements. */
+/* 13. Soften the shape of big boxy elements. *********************************/
 
 code,
 samp,
@@ -636,7 +636,7 @@ progress::-moz-progress-bar {
   border-radius: 0.25rem;
 }
 
-/* 14. Lighten inactive elements. */
+/* 14. Lighten inactive elements. *********************************************/
 
 :disabled,
 ::placeholder {
@@ -647,15 +647,14 @@ progress::-moz-progress-bar {
   box-shadow: none;
 }
 
-/* 15. Remove shadow on iOS. */
+/* 15. Remove shadow on iOS. **************************************************/
 
-input[type='text'] {
+input:not([type='checkbox']):not([type='radio']):not([type='range']),
+textarea {
   -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
 }
 
-/* 16. Use more common, consistent, and attractive colors. */
+/* 16. Use more common, consistent, and attractive colors. ********************/
 
 body,
 input,
@@ -754,7 +753,8 @@ mark {
   }
 }
 
-/* 17. Finally, limit width on a high element so text is more readable. (The only class!) */
+/* 17. Finally, limit width on a high element so text is more readable.
+  (The only class!) ***********************************************************/
 
 .page {
   margin: 0 auto;
