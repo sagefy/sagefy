@@ -28,7 +28,6 @@ import {
   ThumbsUp,
   // temporary home page
   Users,
-  Eye,
   // default so I see somethings off
   Target,
 } from 'react-feather'
@@ -67,7 +66,6 @@ const MAP = {
   adapt: Share2, // home
   open: Globe, // home
   video: Youtube, // home
-  view: Eye, // home
   friends: Users, // home
   github: GitHub, // contact
   inbox: Inbox, // password, email

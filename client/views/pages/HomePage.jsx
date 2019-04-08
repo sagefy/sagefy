@@ -74,31 +74,16 @@ export default function HomePage({ role, selectPopularSubjects }) {
             Hey friends&hellip; <Icon i="friends" s="xxl" />
           </h1>
           <p>
-            So I&apos;m rebuilding Sagefy to (1) let anyone <em>learn</em>{' '}
-            without an account, (2) <em>make</em> content without an account,
-            and to (3) drastically <em>simplify</em> contributing. Sagefy is
-            temporarily limited. For now:
+            I&apos;m rebuilding Sagefy, and the rebuild is in progress. Sagefy
+            is temporarily limited. While the core learning experience is now
+            available, some features are not.{' '}
+            <ExternalLink href="https://docs.sagefy.org/mocks">
+              <strong>View</strong> the prototype
+            </ExternalLink>{' '}
+            of what&apos;s coming!
           </p>
-          <ul>
-            <li>
-              <Icon i="subject" /> <strong>Follow</strong> and create subjects!
-            </li>
-            <li>
-              <ExternalLink href="https://docs.sagefy.org/mocks">
-                <Icon i="view" /> <strong>View</strong> the prototype
-              </ExternalLink>{' '}
-              of what&apos;s coming!
-            </li>
-            <li>
-              <ExternalLink href="https://sgfy.xyz/updates">
-                <Icon i="updates" /> <strong>Subscribe</strong> to biweekly
-                email updates
-              </ExternalLink>
-              .
-            </li>
-          </ul>
           <p>
-            <small>Last updated 2019 Apr 1</small>
+            <small>Last updated 2019 Apr 8</small>
           </p>
         </blockquote>
       </section>
