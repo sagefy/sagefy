@@ -3,8 +3,6 @@ layout: mocks
 title: V2 Mocks
 ---
 
-<style>body { background: #dce3eb; }</style>
-
 # V2.1 Mocks
 
 ## Links to Mock Pages
