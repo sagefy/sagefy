@@ -38,7 +38,7 @@ export default function ChooseNextPage({ subjects, role }) {
           <small>
             <em>Or&hellip;</em> on second thought, let&apos;s go{' '}
             {role === 'sg_anonymous' ? (
-              <Link to="/home">
+              <Link to="/">
                 <Icon i="home" /> Home
               </Link>
             ) : (

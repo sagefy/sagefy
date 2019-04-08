@@ -24,7 +24,7 @@ title: V2 Mocks
 ### Learning Pages
 
 - [Dashboard 🧐📚](/mocks/dashboard) — In Progress
-- [Choose Next 🧐📖](/mocks/choose-next) — Available
+- [Choose Next 🧐📖](/mocks/choose-next) — Built
 - [Video 📹](/mocks/learn-video) — Built
 - [Choice 🧐](/mocks/learn-choice) — Built
 - [Page 📜](/mocks/learn-page) — Built
@@ -45,7 +45,7 @@ title: V2 Mocks
 
 - [Create Subject 📚](/mocks/create-subject) — Built
 - [Update Subject 📚](/mocks/update-subject) — Available
-- [Create Card 🃏](/mocks/create-card) — Available
+- [Create Card 🃏](/mocks/create-card) — In Progress
 - [Update Card 🃏](/mocks/update-card) — Available
 
 ## Goals:

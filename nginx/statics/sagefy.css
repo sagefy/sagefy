@@ -874,6 +874,12 @@ mark.good {
   background: #c6ffc6; /* 128-100-95 */
 }
 
+@media (prefers-color-scheme: dark) {
+  mark.good {
+    background: #005302; /* 128-100-30 */
+  }
+}
+
 /* Just for pretty */
 iframe,
 .LearnPagePage img {

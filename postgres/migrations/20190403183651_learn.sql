@@ -396,9 +396,8 @@ comment on function sg_public.select_subject_to_learn(uuid)
 grant execute on function sg_public.select_subject_to_learn(uuid)
   to sg_anonymous, sg_user, sg_admin;
 
--- TODO try this to speed up query:
--- create index on "sg_public"."subject_version_parent_child"("child_version_id");
--- create index on "sg_public"."subject_version_before_after"("after_version_id");
+create index on "sg_public"."subject_version_parent_child"("child_version_id");
+create index on "sg_public"."subject_version_before_after"("after_version_id");
 
 -- migrate:down
 

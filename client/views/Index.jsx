@@ -15,10 +15,12 @@ import PasswordPage from './pages/PasswordPage'
 import EmailPage from './pages/EmailPage'
 import SettingsPage from './pages/SettingsPage'
 import CreateSubjectPage from './pages/CreateSubjectPage'
+import CreateCardPage from './pages/CreateCardPage'
 import LearnChoicePage from './pages/LearnChoicePage'
 import LearnPagePage from './pages/LearnPagePage'
 import LearnUnscoredEmbedPage from './pages/LearnUnscoredEmbedPage'
 import LearnVideoPage from './pages/LearnVideoPage'
+import ChooseStepPage from './pages/ChooseStepPage'
 
 export const output = a => () => a
 const searchSubjects = output('Search Subjects')
@@ -34,7 +36,9 @@ const password = output('Password')
 const email = output('Email')
 const settings = output('Settings')
 const createSubject = output('Create Subject')
+const createCard = output('Create Card')
 const learn = output('Learn')
+const chooseStep = output('Choose Step')
 
 export default function Index(props) {
   const { location, cacheHash } = props
@@ -48,6 +52,7 @@ export default function Index(props) {
         <title>
           <StaticRouter context={{}} location={location}>
             <Switch>
+              <Route path="/choose-step" render={chooseStep} />
               <Route path="/learn-:type/:cardId" render={learn} />
               <Route path="/log-in" render={logIn} />
               <Route path="/password" render={password} />
@@ -57,6 +62,7 @@ export default function Index(props) {
               <Route path="/sign-up" render={signUp} />
               <Route path="/search-subjects" render={searchSubjects} />
               <Route path="/create-subject" render={createSubject} />
+              <Route path="/create-card" render={createCard} />
               <Route path="/contact" render={contact} />
               <Route path="/terms" render={terms} />
               <Route path="/server-error" render={serverError} />
@@ -71,6 +77,7 @@ export default function Index(props) {
         <div id="top" className="page" role="document">
           <StaticRouter context={{}} location={location}>
             <Switch>
+              <Route path="/choose-step" render={withProps(ChooseStepPage)} />
               <Route
                 path="/learn-video/:cardId"
                 render={withProps(LearnVideoPage)}
@@ -101,6 +108,7 @@ export default function Index(props) {
                 path="/create-subject"
                 render={withProps(CreateSubjectPage)}
               />
+              <Route path="/create-card" render={withProps(CreateCardPage)} />
               <Route path="/contact" component={ContactPage} />
               <Route path="/terms" component={TermsPage} />
               <Route path="/server-error" component={ServerErrorPage} />

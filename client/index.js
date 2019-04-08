@@ -110,7 +110,7 @@ https://sagefy.org/password
 app.get('/learn-:kind/:cardId', async (req, res) => {
   const gqlRes = await GQL.learnGetCard(req, {
     cardId: toU(req.params.cardId),
-    subjectId: '???',
+    subjectId: toU(req.cookies.step),
   })
   const card = get(gqlRes, 'data.cardByEntityId')
   if (!card || clientizeKind(card.kind) !== req.params.kind) {
@@ -129,7 +129,7 @@ app.get('/learn-:kind/:cardId', async (req, res) => {
 app.post('/learn-choice/:cardId', async (req, res) => {
   const gqlRes = await GQL.learnGetCard(req, {
     cardId: toU(req.params.cardId),
-    subjectId: '???',
+    subjectId: toU(req.cookies.step),
   })
   const card = get(gqlRes, 'data.cardByEntityId')
   if (!card || clientizeKind(card.kind) !== 'choice') {
@@ -383,11 +383,13 @@ app.get('/choose-step', async (req, res) => {
   })
 })
 
+/* eslint-disable max-statements */
 app.get('/next', async (req, res) => {
   let { goal, step } = req.cookies
   if (req.query.goal) {
     ;({ goal } = req.query)
-    res.cookie('goal', goal, LEARN_COOKIE_PARAMS)
+    res.cookie('goal', goal, LEARN_COOKIE_PARAMS).clearCookie('step')
+    step = null
     await GQL.learnNewUsubj(req, { subjectId: toU(goal) })
   }
   if (req.query.step) {
@@ -395,20 +397,21 @@ app.get('/next', async (req, res) => {
     res.cookie('step', step, LEARN_COOKIE_PARAMS)
   }
   if (step) {
-    // TODO if learned > 0.99, clear the step
-    const { kind, entityId } = get(
-      await GQL.learnChooseCard(req, { subjectId: toU(step) }),
-      'data.selectCardToLearn',
-      {}
-    )
-    if (!entityId) return res.redirect(`/create-card?subjectId=${to58(step)}`)
+    const gqlRes = await GQL.learnGetLearned(req, { subjectId: toU(step) })
+    if (get(gqlRes, 'data.selectSubjectLearned') >= 0.99) {
+      return res.clearCookie('step').redirect('/choose-step')
+    }
+    const gqlRes2 = await GQL.learnChooseCard(req, { subjectId: toU(step) })
+    const card = get(gqlRes2, 'data.selectCardToLearn.card')
+    if (!card) return res.redirect(`/create-card?subjectId=${step}`)
+    const { kind, entityId } = card
     return res.redirect(`/learn-${clientizeKind(kind)}/${to58(entityId)}`)
   }
   if (goal) return res.redirect('/choose-step')
   return res.redirect(
     getRole(req) === 'sg_anonymous' ? '/search-subjects' : '/dashboard'
   )
-})
+}) /* eslint-enable */
 
 app.get('/', async (req, res) => {
   const gqlRes = await GQL.learnHome(req)
@@ -422,6 +425,7 @@ app.get('/', async (req, res) => {
 
 // For pages that don't have specific data requirements
 // and don't require being logged in or logged out:
+// GET /create-card
 // GET /create-subject
 // GET /server-error
 // GET /terms
