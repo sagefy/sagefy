@@ -14,7 +14,7 @@ jobs:
           command: |
             curl -fsSL -o dbmate https://github.com/amacneil/dbmate/releases/download/v1.4.1/dbmate-linux-amd64
             chmod +x dbmate
-            ./dbmate -d "./postgres/migrations" -s "./postgres/schema.sql" up
+            ./dbmate wait && ./dbmate -d "./postgres/migrations" -s "./postgres/schema.sql" up
           environment:
             DATABASE_URL: postgres://sagefy@localhost:5432/sagefy?sslmode=disable
       - run: npm install
