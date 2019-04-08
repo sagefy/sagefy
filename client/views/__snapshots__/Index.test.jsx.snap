@@ -24,6 +24,10 @@ exports[`Index view should render a page 1`] = `
       >
         <Switch>
           <Route
+            path="/choose-step"
+            render={[Function]}
+          />
+          <Route
             path="/learn-:type/:cardId"
             render={[Function]}
           />
@@ -57,6 +61,10 @@ exports[`Index view should render a page 1`] = `
           />
           <Route
             path="/create-subject"
+            render={[Function]}
+          />
+          <Route
+            path="/create-card"
             render={[Function]}
           />
           <Route
@@ -97,6 +105,10 @@ exports[`Index view should render a page 1`] = `
         location="/"
       >
         <Switch>
+          <Route
+            path="/choose-step"
+            render={[Function]}
+          />
           <Route
             path="/learn-video/:cardId"
             render={[Function]}
@@ -143,6 +155,10 @@ exports[`Index view should render a page 1`] = `
           />
           <Route
             path="/create-subject"
+            render={[Function]}
+          />
+          <Route
+            path="/create-card"
             render={[Function]}
           />
           <Route

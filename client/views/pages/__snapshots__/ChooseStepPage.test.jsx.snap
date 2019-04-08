@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChooseStepPage should render ChooseStepPage 1`] = `
+<div
+  className="ChooseNextPage"
+>
+  <header
+    className="m-yc"
+  >
+    <p>
+      <em>
+        Let's keep it up! 
+        <Icon
+          i="cheer"
+          s="m"
+        />
+      </em>
+    </p>
+    <h1>
+      What should we focus on? 
+      <Icon
+        i="subject"
+        s="xxl"
+      />
+    </h1>
+  </header>
+  <section>
+    <ChooseSubject
+      level="step"
+    />
+  </section>
+  <section>
+    <p
+      className="ta-r"
+    >
+      <small>
+        <em>
+          Or…
+        </em>
+         on second thought, let's go
+         
+        <Link
+          replace={false}
+          to="/dashboard"
+        >
+          to the 
+          <Icon
+            i="dashboard"
+            s="m"
+          />
+           Dashboard
+        </Link>
+        .
+      </small>
+    </p>
+  </section>
+</div>
+`;

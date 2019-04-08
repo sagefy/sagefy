@@ -25,17 +25,29 @@ describe('learn-choose-subject', () => {
       })
       .set('Authorization', `Bearer ${token}`)
       .expect(({ body }) => {
-        console.log(body)
         Joi.assert(
           body,
           Joi.object({
             data: Joi.object({
               selectSubjectToLearn: Joi.object({
-                jwtToken: Joi.string().required(),
+                nodes: Joi.array()
+                  .items(
+                    Joi.object({
+                      entityId: Joi.string()
+                        .guid()
+                        .required(),
+                      name: Joi.string().required(),
+                      body: Joi.string().required(),
+                    })
+                  )
+                  .required(),
               }),
             }),
           })
         )
+        expect(
+          body.data.selectSubjectToLearn.nodes.map(({ name }) => name)
+        ).toMatchSnapshot()
       })
   })
 

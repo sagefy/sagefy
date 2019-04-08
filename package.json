@@ -6,7 +6,7 @@
   "scripts": {
     "precommit": "pretty-quick --staged",
     "postinstall": "(cd ./server && npm install) && (cd ./client && npm install)",
-    "lint": "eslint \"**/*.js\"",
+    "lint": "eslint --ext .jsx,.js .",
     "test": "npm run lint",
     "posttest": "(cd server && npm run test) && (cd client && npm run test)",
     "dev-data": "(cd server && npm run dev-data)",
