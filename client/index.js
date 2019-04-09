@@ -96,15 +96,16 @@ app.use(handleError)
 // /////////////////////////////////////////////////////////////////////////////
 
 app.get('/sitemap.txt', (req, res) =>
-  res.send(`
-https://sagefy.org
+  res.set('Content-Type', 'text/plain').send(
+    `https://sagefy.org
 https://sagefy.org/terms
 https://sagefy.org/contact
 https://sagefy.org/sign-up
 https://sagefy.org/log-in
 https://sagefy.org/email
 https://sagefy.org/password
-`)
+`
+  )
 ) // Add more public routes as they are available
 
 app.get('/learn-:kind/:cardId', async (req, res) => {
