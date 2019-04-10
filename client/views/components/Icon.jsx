@@ -28,9 +28,7 @@ import {
   ThumbsUp,
   List,
   DownloadCloud,
-  // temporary home page
   Users,
-  // default so I see somethings off
   Target,
 } from 'react-feather'
 import get from 'lodash.get'
@@ -71,7 +69,6 @@ const MAP = {
   // page specific
   adapt: Share2, // home
   open: Globe, // home
-  friends: Users, // home
   github: GitHub, // contact
   inbox: Inbox, // password, email
   popular: Users, // home

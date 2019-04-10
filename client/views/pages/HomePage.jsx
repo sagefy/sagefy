@@ -68,26 +68,6 @@ export default function HomePage({ role, subjects }) {
       ) : null}
 
       <section>
-        <blockquote>
-          <h1>
-            Hey friends&hellip; <Icon i="friends" s="xxl" />
-          </h1>
-          <p>
-            I&apos;m rebuilding Sagefy, and the rebuild is in progress. Sagefy
-            is temporarily limited. While the core learning experience is now
-            available, some features are not.{' '}
-            <ExternalLink href="https://docs.sagefy.org/mocks">
-              <strong>View</strong> the prototype
-            </ExternalLink>{' '}
-            of what&apos;s coming!
-          </p>
-          <p>
-            <small>Last updated 2019 Apr 8</small>
-          </p>
-        </blockquote>
-      </section>
-
-      <section>
         <div className="ta-c m-yc">
           <img src="/astrolabe.svg" height="120" alt="astrolabe" />
           <h2>Sagefy</h2>
