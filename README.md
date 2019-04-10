@@ -10,8 +10,8 @@ Sagefy is an _open-content, adaptive learning_ platform.
 - **Open-Content.** Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
 
 | 1. Search for your subject | 2. Choose your subject | 3. Choose the next step | 4. Learn! |
-| --- | --- | --- | --- |
-| ![](https://user-images.githubusercontent.com/1221423/55904606-186bb280-5b85-11e9-8c67-0d8baefefd2c.png) | ![](https://user-images.githubusercontent.com/1221423/55904603-186bb280-5b85-11e9-95ff-cbcc3e924b17.png) | ![](https://user-images.githubusercontent.com/1221423/55904604-186bb280-5b85-11e9-9fee-12eb71f753dd.png) | ![](https://user-images.githubusercontent.com/1221423/55904605-186bb280-5b85-11e9-97b0-0cab850c3056.png) |
+| :-: | :-: | :-: | :-: |
+| <img width="190" src="https://user-images.githubusercontent.com/1221423/55904606-186bb280-5b85-11e9-8c67-0d8baefefd2c.png"> | <img width="190" src="https://user-images.githubusercontent.com/1221423/55904603-186bb280-5b85-11e9-95ff-cbcc3e924b17.png"> | <img width="190" src="https://user-images.githubusercontent.com/1221423/55904604-186bb280-5b85-11e9-9fee-12eb71f753dd.png"> | <img width="190" src="https://user-images.githubusercontent.com/1221423/55904605-186bb280-5b85-11e9-97b0-0cab850c3056.png"> |
 
 What's next?
 
