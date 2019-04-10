@@ -144,7 +144,7 @@ The formulas given below are based on the _Bayesian update_ (`guess`, `slip`) an
 
 ## Flow
 
-![Flowchart](https://docs.google.com/drawings/d/1fmdT0vqWPsq-oUG0IPRprckGw8wn9_QmO9tCe63yS80/pub?w=850&h=699)
+<!-- update to graphviz: ![Flowchart](https://docs.google.com/drawings/d/1fmdT0vqWPsq-oUG0IPRprckGw8wn9_QmO9tCe63yS80/pub?w=850&h=699) -->
 
 ![Endpoint Flowchart](/f_planning/sequencer_endpoints.png)
 
@@ -192,7 +192,7 @@ We collect the subject of units that the learner will be participating in. We wi
 
 The following is an example of this process, known as a graph traversal.
 
-<img src="https://docs.google.com/drawings/d/12mrz9ZmpfGYQLmELoaJVg3ft5fj0cNRzcVJ7E9hEFH0/pub?w=714&amp;h=745">
+<!-- update to graphviz: <img src="https://docs.google.com/drawings/d/12mrz9ZmpfGYQLmELoaJVg3ft5fj0cNRzcVJ7E9hEFH0/pub?w=714&amp;h=745"> -->
 
 The algorithm makes use of depth first search. We start near the end of the tree, and walk our way down as we diagnose. We record each node in one of three lists: Diagnose, Ready, and Learned.
 
@@ -212,7 +212,7 @@ We diagnose "H", and find it is low ability. Append to Ready, 3 dependents: "A",
 
 Finally, we diagnose node "D" with low ability. Append to Ready, and there are 2 dependents: "A" and "B".
 
-<img src="https://docs.google.com/drawings/d/1oN1fy2vK_LVBE4ZZY3-ycQD286-dj4reHW8NbtB5rVA/pub?w=714&amp;h=745">
+<!-- update to graphviz: <img src="https://docs.google.com/drawings/d/1oN1fy2vK_LVBE4ZZY3-ycQD286-dj4reHW8NbtB5rVA/pub?w=714&amp;h=745"> -->
 
 We also have the following lists:
 
