@@ -11,7 +11,7 @@ Sagefy is an _open-content, adaptive learning_ platform.
 
 | 1. Search for a subject | 2. Find your subject | 3. Choose the next step | 4. Learn! |
 | :-: | :-: | :-: | :-: |
-| <img width="190" src="https://user-images.githubusercontent.com/1221423/55904606-186bb280-5b85-11e9-8c67-0d8baefefd2c.png"> | <img width="190" src="https://user-images.githubusercontent.com/1221423/55904603-186bb280-5b85-11e9-95ff-cbcc3e924b17.png"> | <img width="190" src="https://user-images.githubusercontent.com/1221423/55904604-186bb280-5b85-11e9-9fee-12eb71f753dd.png"> | <img width="190" src="https://user-images.githubusercontent.com/1221423/55904605-186bb280-5b85-11e9-97b0-0cab850c3056.png"> |
+| <img width="190" src="https://user-images.githubusercontent.com/1221423/55904606-186bb280-5b85-11e9-8c67-0d8baefefd2c.png"> | <img width="190" src="https://user-images.githubusercontent.com/1221423/55904604-186bb280-5b85-11e9-9fee-12eb71f753dd.png"> | <img width="190" src="https://user-images.githubusercontent.com/1221423/55904603-186bb280-5b85-11e9-95ff-cbcc3e924b17.png"> |  <img width="190" src="https://user-images.githubusercontent.com/1221423/55904605-186bb280-5b85-11e9-97b0-0cab850c3056.png"> |
 
 What's next?
 
