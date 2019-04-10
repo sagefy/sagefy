@@ -10,7 +10,9 @@ Sagefy is an _open-content, adaptive learning_ platform.
 - **Adaptive Learning.** Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
 - **Open-Content.** Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
 
-[<img src="https://docs.google.com/drawings/d/e/2PACX-1vR3ARFXI6Y-DNZGSBn8Ngbe6yV4asc1CEZR-2b2mnbLnK6FZOND2uT8wyHNKu8qyIBfscjC3dsrWIMk/pub?w=1790&amp;h=800" width="100%">](https://sagefy.org)
+|                                             1. Search for a subject                                             |                                              2. Find your subject                                               |                                             3. Choose the next step                                             |                                                    4. Learn!                                                    |
+| :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
+| <img src="https://user-images.githubusercontent.com/1221423/55904606-186bb280-5b85-11e9-8c67-0d8baefefd2c.png"> | <img src="https://user-images.githubusercontent.com/1221423/55904603-186bb280-5b85-11e9-95ff-cbcc3e924b17.png"> | <img src="https://user-images.githubusercontent.com/1221423/55904604-186bb280-5b85-11e9-9fee-12eb71f753dd.png"> | <img src="https://user-images.githubusercontent.com/1221423/55904605-186bb280-5b85-11e9-97b0-0cab850c3056.png"> |
 
 ### What's next?
 
