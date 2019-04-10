@@ -1,14 +1,17 @@
-/* eslint-disable max-params, no-console, max-lines */
+/* eslint-disable max-lines */
 const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 const get = require('lodash.get')
+const set = require('lodash.set')
+const fromPairs = require('lodash.frompairs')
 const {
   convertUuid58ToUuid: toU,
   convertUuidToUuid58: to58,
 } = require('uuid58')
+const uuidv4 = require('uuid/v4')
 const GQL = require('./util/gql-queries')
 const getGqlErrors = require('./util/gql-errors')
 
@@ -49,11 +52,13 @@ async function ensureJwt(req, res, next) {
   next()
 }
 
+/* eslint-disable max-params */
 function handleError(err, req, res, next) {
   // See express-async-errors
   if (err) res.redirect('/server-error')
   next(err)
 }
+/* eslint-enable */
 
 function getJwt(req) {
   return jwt.decode(get(req.cookies, JWT_COOKIE_NAME))
@@ -77,17 +82,34 @@ function isAnonymous(req, res, next) {
   return next()
 }
 
-function handleRegular(req, res) {
-  return res.render('Index', {
-    location: req.url,
-    query: req.query,
+function formatData(req) {
+  return {
     cacheHash,
+    url: req.url,
+    query: req.query,
+    body: req.body,
     role: getRole(req),
-  })
+  }
+}
+
+function handleRegular(req, res) {
+  return res.render('Index', formatData(req))
 }
 
 function clientizeKind(s) {
   return s.toLowerCase().replace(/_/g, '-')
+}
+
+function getQueryState(req) {
+  return parseInt(req.query.state, 10) || 0
+}
+
+function convertBodyToVars(body) {
+  const values = {}
+  Object.keys(body)
+    .map(key => [key, key.replace(/\$/g, '.')])
+    .forEach(([key, xpath]) => set(values, xpath, get(body, key)))
+  return values
 }
 
 app.use(ensureJwt)
@@ -104,6 +126,7 @@ https://sagefy.org/sign-up
 https://sagefy.org/log-in
 https://sagefy.org/email
 https://sagefy.org/password
+https://sagefy.org/create-subject
 `
   )
 ) // Add more public routes as they are available
@@ -117,14 +140,8 @@ app.get('/learn-:kind/:cardId', async (req, res) => {
   if (!card || clientizeKind(card.kind) !== req.params.kind) {
     return res.redirect('/server-error')
   }
-  return res.render('Index', {
-    ...card,
-    location: req.url,
-    query: req.query,
-    cacheHash,
-    role: getRole(req),
-    progress: get(gqlRes, 'data.selectSubjectLearned'),
-  })
+  const progress = get(gqlRes, 'data.selectSubjectLearned')
+  return res.render('Index', { ...formatData(req), card, progress })
 })
 
 app.post('/learn-choice/:cardId', async (req, res) => {
@@ -140,15 +157,8 @@ app.post('/learn-choice/:cardId', async (req, res) => {
     cardId: toU(req.params.cardId),
     response: req.body.choice,
   })
-  return res.render('Index', {
-    ...req.body,
-    ...card,
-    location: req.url,
-    query: req.query,
-    cacheHash,
-    role: getRole(req),
-    progress: get(gqlRes2, 'data.createResponse.response.learned'),
-  })
+  const progress = get(gqlRes2, 'data.createResponse.response.learned')
+  return res.render('Index', { ...formatData(req), card, progress })
 })
 
 app.get('/sign-up', isAnonymous, handleRegular)
@@ -157,13 +167,7 @@ app.post('/sign-up', isAnonymous, async (req, res) => {
   const gqlRes = await GQL.rootNewUser(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('Index', {
-      location: req.url,
-      cacheHash,
-      gqlErrors,
-      prevValues: req.body,
-      query: req.query,
-    })
+    return res.render('Index', { ...formatData(req), gqlErrors })
   }
   return res
     .cookie(
@@ -183,13 +187,7 @@ app.post('/log-in', isAnonymous, async (req, res) => {
   const gqlRes = await GQL.rootLogInUser(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('Index', {
-      location: req.url,
-      cacheHash,
-      gqlErrors,
-      prevValues: req.body,
-      query: req.query,
-    })
+    return res.render('Index', { ...formatData(req), gqlErrors })
   }
   return res
     .cookie(
@@ -203,16 +201,13 @@ app.post('/log-in', isAnonymous, async (req, res) => {
     )
 })
 
-function getQueryState(req) {
-  return parseInt(req.query.state, 10) || 0
-}
-
 app.get('/email', async (req, res) => {
   const state = getQueryState(req)
-  return res.render('Index', { location: req.url, cacheHash, state })
+  return res.render('Index', { ...formatData(req), state })
 })
 
 app.post('/email', async (req, res) => {
+  // TODO split into two routes & pages
   if (getQueryState(req) === 2) {
     const gqlRes = await GQL.rootEditEmail(
       {
@@ -222,34 +217,25 @@ app.post('/email', async (req, res) => {
     )
     const gqlErrors = getGqlErrors(gqlRes)
     if (Object.keys(gqlErrors).length) {
-      return res.render('Index', {
-        location: req.url,
-        cacheHash,
-        gqlErrors,
-        state: 2,
-      })
+      return res.render('Index', { ...formatData(req), gqlErrors, state: 2 })
     }
     return res.redirect('/log-in')
   }
   const gqlRes = await GQL.rootNewEmailToken(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('Index', {
-      location: req.url,
-      cacheHash,
-      gqlErrors,
-      state: 0,
-    })
+    return res.render('Index', { ...formatData(req), gqlErrors, state: 0 })
   }
   return res.redirect('/email?state=1')
 })
 
 app.get('/password', async (req, res) => {
   const state = getQueryState(req)
-  return res.render('Index', { location: req.url, cacheHash, state })
+  return res.render('Index', { ...formatData(req), state })
 })
 
 app.post('/password', async (req, res) => {
+  // TODO split into to routes & pages
   if (getQueryState(req) === 2) {
     const gqlRes = await GQL.rootEditPassword(
       {
@@ -259,46 +245,28 @@ app.post('/password', async (req, res) => {
     )
     const gqlErrors = getGqlErrors(gqlRes)
     if (Object.keys(gqlErrors).length) {
-      return res.render('Index', {
-        location: req.url,
-        cacheHash,
-        gqlErrors,
-        state: 2,
-      })
+      return res.render('Index', { ...formatData(req), gqlErrors, state: 2 })
     }
     return res.redirect('/log-in')
   }
   const gqlRes = await GQL.rootNewPasswordToken(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('Index', {
-      location: req.url,
-      cacheHash,
-      gqlErrors,
-      state: 0,
-    })
+    return res.render('Index', { ...formatData(req), gqlErrors, state: 0 })
   }
   return res.redirect('/password?state=1')
 })
 
 app.get('/settings', isUser, async (req, res) => {
   const gqlRes = await GQL.rootGetCurrentUser(req)
-  return res.render('Index', {
-    location: req.url,
-    cacheHash,
-    prevValues: get(gqlRes, 'data.getCurrentUser'),
-  })
+  const body = get(gqlRes, 'data.getCurrentUser')
+  return res.render('Index', { ...formatData(req), body })
 })
 
 app.post('/settings', isUser, async (req, res) => {
   const gqlRes = await GQL.rootEditUser(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
-  return res.render('Index', {
-    location: req.url,
-    cacheHash,
-    gqlErrors,
-    prevValues: req.body,
-  })
+  return res.render('Index', { ...formatData(req), gqlErrors })
 })
 
 app.get('/log-out', isUser, (req, res) =>
@@ -307,45 +275,29 @@ app.get('/log-out', isUser, (req, res) =>
 
 app.get('/dashboard', isUser, async (req, res) => {
   const gqlRes = await GQL.learnListUsubj(req)
-  return res.render('Index', {
-    location: req.url,
-    cacheHash,
-    role: getRole(req),
-    allUserSubjects: {
-      nodes: get(gqlRes, 'data.allUserSubjects.nodes', []).map(
-        ({ id, subject: { entityId, name, body } }) => ({
-          id,
-          entityId,
-          name,
-          body,
-        })
-      ),
-    },
-    name: get(gqlRes, 'data.getCurrentUser.name'),
-  })
+  const subjects = get(gqlRes, 'data.allUserSubjects.nodes', []).map(
+    ({ id, subject: { entityId, name, body } }) => ({
+      id,
+      entityId,
+      name,
+      body,
+    })
+  )
+  const name = get(gqlRes, 'data.getCurrentUser.name')
+  return res.render('Index', { ...formatData(req), subjects, name })
 })
 
 app.get('/search-subjects', async (req, res) => {
   const gqlRes = await GQL.learnSearchSubject(req, req.query)
-  return res.render('Index', {
-    location: req.url,
-    query: req.query,
-    cacheHash,
-    role: getRole(req),
-    searchSubjects: get(gqlRes, 'data.searchSubjects'),
-  })
+  const subjects = get(gqlRes, 'data.searchSubjects.nodes')
+  return res.render('Index', { ...formatData(req), subjects })
 })
 
 app.post('/create-subject', async (req, res) => {
   const gqlRes = await GQL.contributeNewSubject(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('Index', {
-      location: req.url,
-      cacheHash,
-      gqlErrors,
-      prevValues: req.body,
-    })
+    return res.render('Index', { ...formatData(req), gqlErrors })
   }
   const role = getRole(req)
   const { entityId, name } = get(gqlRes, 'data.newSubject.subjectVersion', {})
@@ -354,6 +306,44 @@ app.post('/create-subject', async (req, res) => {
   }
   await GQL.learnNewUsubj(req, { subjectId: entityId })
   return res.redirect('/dashboard')
+})
+
+app.get('/create(-:kind)?-card', async (req, res) => {
+  const subjGqlRes = await GQL.contributeGetSubject(req, {
+    entityId: toU(req.query.subjectId),
+  })
+  const subject = get(subjGqlRes, 'data.subjectByEntityId')
+  if (!subject) res.redirect('/server-error')
+  return res.render('Index', { ...formatData(req), subject })
+})
+
+app.post('/create(-:kind)?-card', async (req, res) => {
+  const values = convertBodyToVars(req.body)
+  values.subjectId = toU(values.subjectId)
+  if (req.body.kind === 'CHOICE') {
+    values.data.body = values.name
+    values.data.max_options_to_show = parseInt(
+      values.data.max_options_to_show,
+      10
+    )
+    values.data.options = fromPairs(
+      [0, 1, 2, 3].map(i => [
+        uuidv4(),
+        {
+          ...get(values.data.options, i),
+          correct: values.data.correct === i.toString(),
+        },
+      ])
+    )
+    delete values.data.correct
+  }
+  const gqlRes = await GQL.contributeNewCard(req, values)
+  const gqlErrors = getGqlErrors(gqlRes)
+  if (Object.keys(gqlErrors).length) {
+    return res.render('Index', { ...formatData(req), gqlErrors })
+  }
+  // TODO redirect based on how we got to create-card
+  return res.redirect(`/next?step=${req.cookies.step}`)
 })
 
 app.get('/choose-step', async (req, res) => {
@@ -375,13 +365,7 @@ app.get('/choose-step', async (req, res) => {
   if (subjects.length === 1) {
     return res.redirect(`/next?step=${to58(subjects[0].entityId)}`)
   }
-  return res.render('Index', {
-    location: req.url,
-    query: req.query,
-    cacheHash,
-    role,
-    subjects,
-  })
+  return res.render('Index', { ...formatData(req), subjects })
 })
 
 /* eslint-disable max-statements */
@@ -416,17 +400,12 @@ app.get('/next', async (req, res) => {
 
 app.get('/', async (req, res) => {
   const gqlRes = await GQL.learnHome(req)
-  return res.render('Index', {
-    location: req.url,
-    cacheHash,
-    role: getRole(req),
-    selectPopularSubjects: get(gqlRes, 'data.selectPopularSubjects'),
-  })
+  const subjects = get(gqlRes, 'data.selectPopularSubjects.nodes')
+  return res.render('Index', { ...formatData(req), subjects })
 })
 
 // For pages that don't have specific data requirements
 // and don't require being logged in or logged out:
-// GET /create-card
 // GET /create-subject
 // GET /server-error
 // GET /terms
@@ -437,8 +416,12 @@ app.get('*', handleRegular)
 
 // /////////////////////////////////////////////////////////////////////////////
 
+/* eslint-disable no-console */
 if (require.main === module) {
-  app.listen(process.env.PORT || 5984)
+  const port = process.env.PORT || 2602
+  console.log('Client running on port', port)
+  app.listen(port)
 }
+/* eslint-enable */
 
 module.exports = app

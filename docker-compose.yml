@@ -15,7 +15,7 @@ services:
     # https://hub.docker.com/_/node/
     build: ./client
     ports:
-      - '5984:5984'
+      - '2602:2602'
     volumes:
       - ./client:/client
     links:
@@ -26,7 +26,7 @@ services:
     # https://hub.docker.com/_/node/
     build: ./server
     ports:
-      - '8653:8653'
+      - '2601:2601'
     volumes:
       - ./server:/server
     links:
@@ -37,10 +37,11 @@ services:
     # https://hub.docker.com/_/postgres/
     build: ./postgres
     ports:
-      - '5432:5432'
+      - '2600:2600'
     environment:
       POSTGRES_DB: sagefy
       POSTGRES_USER: sagefy
+    command: -p 2600
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
       - ./postgres:/postgres

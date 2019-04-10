@@ -29,6 +29,7 @@
     "jsonwebtoken": "^8.5.0",
     "lodash.frompairs": "^4.0.1",
     "lodash.get": "^4.4.2",
+    "lodash.set": "^4.3.2",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
@@ -37,6 +38,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "shuffle-seed": "^1.1.6",
+    "uuid": "^3.3.2",
     "uuid58": "^1.0.0"
   },
   "devDependencies": {

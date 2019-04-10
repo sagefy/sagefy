@@ -1,45 +1,106 @@
 import React from 'react'
+import { string, shape } from 'prop-types'
+import ReactMarkdown from 'react-markdown'
 import { Link } from 'react-router-dom'
-import { string } from 'prop-types'
 import Icon from '../components/Icon'
 
-export default function CreateCardPage({ role }) {
+export default function CreateCardPage({
+  role,
+  query: { subjectId },
+  subject: { name: subjectName, body: subjectBody },
+}) {
+  const kindLink = kind => `/create-${kind}-card?subjectId=${subjectId}`
   return (
     <div className="CreateCardPage">
-      <section>
-        <h1>
-          &hellip; <Icon i="card" s="xxl" />
-        </h1>
+      <header className="m-yc">
         <p>
-          Sorry, Sagefy is temporarily limited. There are no cards yet in that
-          subject. But soon you&apos;ll be able to make cards here!
+          <em>
+            Let&apos;s learn by teaching <Icon i="cheer" /> and&hellip;
+          </em>
         </p>
-      </section>
+        <h1 className="d-ib">
+          Make a new card <Icon i="card" s="xxl" />
+        </h1>{' '}
+        <p className="d-ib">
+          <em>for the subject&hellip;</em>
+        </p>
+        <blockquote className="m-yc">
+          <h3>{subjectName}</h3>
+          <ReactMarkdown source={subjectBody} disallowedTypes={['heading']} />
+        </blockquote>
+      </header>
       <section>
-        <p className="ta-r">
-          <small>
-            Let&apos;s go{' '}
-            {role === 'sg_anonymous' ? (
-              <Link to="/">
-                <Icon i="home" /> Home
-              </Link>
-            ) : (
-              <Link to="/dashboard">
-                to the <Icon i="dashboard" /> Dashboard
-              </Link>
-            )}
-            .
-          </small>
-        </p>
+        <h2>What kind of card would you like to make?</h2>
+        <ul className="ls-n">
+          <li>
+            <Link to={kindLink('choice')}>
+              <Icon i="choice" /> Choice
+            </Link>{' '}
+            &ndash; A multiple-choice question.{' '}
+            <em>
+              <small>(We need more of these!)</small>
+            </em>
+          </li>
+          <li>
+            <Link to={kindLink('page')}>
+              <Icon i="page" /> Page
+            </Link>{' '}
+            &ndash; A written document to read, in Markdown format.{' '}
+            <em>
+              <small>(This one&apos;s the easiest.)</small>
+            </em>
+          </li>
+          <li>
+            <Link to={kindLink('video')}>
+              <Icon i="video" /> Video
+            </Link>{' '}
+            &ndash; A YouTube video.
+          </li>
+          <li>
+            <Link to={kindLink('unscored-embed')}>
+              <Icon i="embed" /> Embed{' '}
+            </Link>{' '}
+            &ndash; An <code>iframe</code> from any site. Does not score learner
+            responses.
+          </li>
+        </ul>
       </section>
+
+      {role === 'sg_anonymous' && (
+        <section>
+          <p>
+            <em>
+              Advice: We recommend{' '}
+              <Link to={`/sign-up?return=/create-card?subjectId=${subjectId}`}>
+                joining
+              </Link>{' '}
+              before you create content,
+              <br />
+              so you can easily continue later!
+            </em>
+          </p>
+        </section>
+      )}
     </div>
   )
 }
 
 CreateCardPage.propTypes = {
   role: string,
+  query: shape({
+    subjectId: string,
+  }),
+  subject: shape({
+    name: string.isRequired,
+    body: string.isRequired,
+  }).isRequired,
 }
 
 CreateCardPage.defaultProps = {
   role: 'sg_anonymous',
+  query: {
+    subjectId: '',
+    kind: '',
+    name: '',
+  },
 }

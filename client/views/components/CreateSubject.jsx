@@ -1,15 +1,25 @@
 import React from 'react'
-import { string } from 'prop-types'
+import { string, shape } from 'prop-types'
 import Icon from './Icon'
+import FormErrorsTop from './FormErrorsTop'
+import FormErrorsField from './FormErrorsField'
 
-export default function CreateSubject({ name, body, role }) {
+export default function CreateSubject({
+  name: inputName,
+  body: { name, body },
+  role,
+  gqlErrors,
+}) {
   return (
     <form action="/create-subject" method="POST">
+      <FormErrorsTop formErrors={gqlErrors} />
+      <FormErrorsField formErrors={gqlErrors} field="all" />
+
       <p>
         <label htmlFor="name">What should we call this new subject?</label>
         <input
           type="text"
-          value={name}
+          value={name || inputName}
           placeholder="example: Introduction to Classical Guitar"
           size="40"
           id="name"
@@ -17,6 +27,7 @@ export default function CreateSubject({ name, body, role }) {
           autoFocus
         />
       </p>
+      <FormErrorsField formErrors={gqlErrors} field="name" />
 
       <p>
         <label htmlFor="body">What are the goals of this subject?</label>
@@ -28,6 +39,13 @@ export default function CreateSubject({ name, body, role }) {
           name="body"
           value={body}
         />
+      </p>
+      <FormErrorsField formErrors={gqlErrors} field="body" />
+
+      <p>
+        <button type="submit">
+          <Icon i="search" /> Create Subject
+        </button>
       </p>
 
       {role === 'sg_anonymous' && (
@@ -41,23 +59,25 @@ export default function CreateSubject({ name, body, role }) {
           </em>
         </p>
       )}
-
-      <p>
-        <button type="submit">
-          <Icon i="search" /> Create Subject
-        </button>
-      </p>
     </form>
   )
 }
 
 CreateSubject.propTypes = {
   name: string,
-  body: string,
+  body: shape({
+    name: string,
+    body: string,
+  }),
   role: string.isRequired,
+  gqlErrors: shape({}),
 }
 
 CreateSubject.defaultProps = {
   name: '',
-  body: '',
+  body: {
+    name: '',
+    body: '',
+  },
+  gqlErrors: {},
 }

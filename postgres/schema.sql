@@ -218,6 +218,27 @@ COMMENT ON TYPE sg_public.user_role IS 'User role options.';
 
 
 --
+-- Name: insert_card_version_status(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.insert_card_version_status() RETURNS trigger
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+begin
+  new.status = 'accepted'::sg_public.entity_status;
+  return new;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION insert_card_version_status(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.insert_card_version_status() IS 'When inserting a new card, automatically set the status to accepted.';
+
+
+--
 -- Name: insert_subject_version_status(); Type: FUNCTION; Schema: sg_private; Owner: -
 --
 
@@ -2344,6 +2365,13 @@ CREATE INDEX response_user_id_idx ON sg_public.response USING btree (user_id);
 
 
 --
+-- Name: subject_version_before_after_after_version_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX subject_version_before_after_after_version_id_idx ON sg_public.subject_version_before_after USING btree (after_version_id);
+
+
+--
 -- Name: subject_version_before_after_before_entity_id_idx; Type: INDEX; Schema: sg_public; Owner: -
 --
 
@@ -2355,6 +2383,13 @@ CREATE INDEX subject_version_before_after_before_entity_id_idx ON sg_public.subj
 --
 
 CREATE INDEX subject_version_entity_id_idx ON sg_public.subject_version USING btree (entity_id);
+
+
+--
+-- Name: subject_version_parent_child_child_version_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX subject_version_parent_child_child_version_id_idx ON sg_public.subject_version_parent_child USING btree (child_version_id);
 
 
 --
@@ -2425,6 +2460,20 @@ CREATE TRIGGER update_email AFTER UPDATE OF email ON sg_private."user" FOR EACH 
 --
 
 CREATE TRIGGER update_password AFTER UPDATE OF password ON sg_private."user" FOR EACH ROW EXECUTE PROCEDURE sg_private.notify_update_password();
+
+
+--
+-- Name: card_version insert_card_version_status; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER insert_card_version_status BEFORE INSERT ON sg_public.card_version FOR EACH ROW EXECUTE PROCEDURE sg_private.insert_card_version_status();
+
+
+--
+-- Name: TRIGGER insert_card_version_status ON card_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER insert_card_version_status ON sg_public.card_version IS 'When inserting a new card, automatically set the status to accepted.';
 
 
 --
@@ -2898,4 +2947,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190328211620'),
     ('20190401185105'),
     ('20190403175843'),
-    ('20190403183651');
+    ('20190403183651'),
+    ('20190409203511');

@@ -21,7 +21,7 @@ These instructions assume you are using Mac OS X. To set up a staging or product
     1.  Create database schemas: `npm run dbmate up`
     2.  Create dev data: `npm run dev-data`
 5.  Verify
-    1.  In your browser, visit `http://localhost:8653/graphiql`, there should be a Graphiql window.
+    1.  In your browser, visit `http://localhost:2601/graphiql`, there should be a Graphiql window.
     2.  In your browser, visit `http://localhost/`, the home page should be working.
     3.  Try to sign up for an account.
 6.  Watch and rebuild

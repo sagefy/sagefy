@@ -26,6 +26,8 @@ import {
   Key,
   Map,
   ThumbsUp,
+  List,
+  DownloadCloud,
   // temporary home page
   Users,
   // default so I see somethings off
@@ -55,6 +57,10 @@ const MAP = {
   error: Frown,
   subject: Tag,
   card: FileText,
+  choice: List,
+  page: FileText,
+  video: Youtube,
+  embed: DownloadCloud,
 
   // actions
   select: ArrowRightCircle,
@@ -65,7 +71,6 @@ const MAP = {
   // page specific
   adapt: Share2, // home
   open: Globe, // home
-  video: Youtube, // home
   friends: Users, // home
   github: GitHub, // contact
   inbox: Inbox, // password, email

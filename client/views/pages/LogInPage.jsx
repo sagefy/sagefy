@@ -7,7 +7,7 @@ import FormErrorsField from '../components/FormErrorsField'
 
 export default function LogInPage({
   gqlErrors,
-  prevValues: { name },
+  body: { name },
   query: { redirect },
 }) {
   return (
@@ -72,11 +72,11 @@ export default function LogInPage({
 
 LogInPage.propTypes = {
   gqlErrors: shape({}),
-  prevValues: shape({}),
+  body: shape({}),
   query: shape({}).isRequired,
 }
 
 LogInPage.defaultProps = {
   gqlErrors: {},
-  prevValues: {},
+  body: {},
 }

@@ -4,7 +4,13 @@ import React from 'react'
 import { string, shape, number } from 'prop-types'
 import Icon from '../components/Icon'
 
-export default function LearnVideoPage({ progress, name, data: { video_id } }) {
+export default function LearnVideoPage({
+  progress,
+  card: {
+    name,
+    data: { video_id },
+  },
+}) {
   return (
     <div className="LearnVideoPage">
       {progress && (
@@ -36,9 +42,11 @@ export default function LearnVideoPage({ progress, name, data: { video_id } }) {
 
 LearnVideoPage.propTypes = {
   progress: number,
-  name: string.isRequired,
-  data: shape({
-    video_id: string.isRequired,
+  card: shape({
+    name: string.isRequired,
+    data: shape({
+      video_id: string.isRequired,
+    }).isRequired,
   }).isRequired,
 }
 

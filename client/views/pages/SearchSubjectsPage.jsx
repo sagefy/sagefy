@@ -1,15 +1,11 @@
 import React from 'react'
-import { string, shape } from 'prop-types'
+import { string, shape, arrayOf } from 'prop-types'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ChooseSubject from '../components/ChooseSubject'
 import CreateSubject from '../components/CreateSubject'
 
-export default function SearchSubjectsPage({
-  role,
-  query: { q },
-  searchSubjects,
-}) {
+export default function SearchSubjectsPage({ role, query: { q }, subjects }) {
   return (
     <div className="SearchSubjectsPage">
       <section className="ta-c">
@@ -35,15 +31,14 @@ export default function SearchSubjectsPage({
         </form>
       </section>
 
-      {(searchSubjects && searchSubjects.nodes.length && (
+      {subjects && subjects.length ? (
         <section>
           <h2>
             Choose from one of these subjects <Icon i="subject" s="xl" />
           </h2>
-          <ChooseSubject subjects={searchSubjects.nodes} level="goal" />
+          <ChooseSubject subjects={subjects} level="goal" />
         </section>
-      )) ||
-        null}
+      ) : null}
 
       {q && (
         <section>
@@ -52,7 +47,7 @@ export default function SearchSubjectsPage({
               Not seeing what you want? <Icon i="error" />
             </em>
           </p>
-          <details open={!searchSubjects || !searchSubjects.nodes.length}>
+          <details open={!subjects || !subjects.length}>
             <summary>
               <h2 className="d-i">
                 You can suggest a new subject <Icon i="subject" s="xl" />
@@ -74,10 +69,16 @@ export default function SearchSubjectsPage({
 SearchSubjectsPage.propTypes = {
   role: string,
   query: shape({}).isRequired,
-  searchSubjects: shape({}),
+  subjects: arrayOf(
+    shape({
+      entityId: string.isRequired,
+      name: string.isRequired,
+      body: string.isRequired,
+    })
+  ),
 }
 
 SearchSubjectsPage.defaultProps = {
   role: 'sg_anonymous',
-  searchSubjects: null,
+  subjects: [],
 }

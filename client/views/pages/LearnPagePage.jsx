@@ -3,7 +3,13 @@ import ReactMarkdown from 'react-markdown'
 import { number, string, shape } from 'prop-types'
 import Icon from '../components/Icon'
 
-export default function LearnPagePage({ progress, name, data: { body } }) {
+export default function LearnPagePage({
+  progress,
+  card: {
+    name,
+    data: { body },
+  },
+}) {
   return (
     <div className="LearnPagePage">
       {progress && (
@@ -30,9 +36,11 @@ export default function LearnPagePage({ progress, name, data: { body } }) {
 
 LearnPagePage.propTypes = {
   progress: number,
-  name: string.isRequired,
-  data: shape({
-    body: string.isRequired,
+  card: shape({
+    name: string.isRequired,
+    data: shape({
+      body: string.isRequired,
+    }).isRequired,
   }).isRequired,
 }
 

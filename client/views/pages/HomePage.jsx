@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { string, shape } from 'prop-types'
+import { string, shape, arrayOf } from 'prop-types'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ExternalLink from '../components/ExternalLink'
 import ChooseSubject from '../components/ChooseSubject'
 
-export default function HomePage({ role, selectPopularSubjects }) {
+export default function HomePage({ role, subjects }) {
   return (
     <div className="HomePage">
       <section className="ta-c">
@@ -58,15 +58,14 @@ export default function HomePage({ role, selectPopularSubjects }) {
         </section>
       )}
 
-      {(selectPopularSubjects && selectPopularSubjects.nodes.length && (
+      {subjects && subjects.length ? (
         <section>
           <h2>
             &hellip;or try something popular <Icon i="popular" s="xl" />
           </h2>
-          <ChooseSubject subjects={selectPopularSubjects.nodes} level="goal" />
+          <ChooseSubject subjects={subjects} level="goal" />
         </section>
-      )) ||
-        null}
+      ) : null}
 
       <section>
         <blockquote>
@@ -126,10 +125,16 @@ export default function HomePage({ role, selectPopularSubjects }) {
 
 HomePage.propTypes = {
   role: string,
-  selectPopularSubjects: shape({}),
+  subjects: arrayOf(
+    shape({
+      entityId: string.isRequired,
+      name: string.isRequired,
+      body: string.isRequired,
+    })
+  ),
 }
 
 HomePage.defaultProps = {
   role: 'sg_anonymous',
-  selectPopularSubjects: { nodes: [] },
+  subjects: [],
 }

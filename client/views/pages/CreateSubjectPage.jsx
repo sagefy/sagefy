@@ -5,7 +5,8 @@ import CreateSubject from '../components/CreateSubject'
 
 export default function CreateSubjectPage({
   role,
-  prevValues: { name, body } = {},
+  body: { name, body } = {},
+  gqlErrors,
 }) {
   return (
     <div className="CreateSubjectPage">
@@ -13,7 +14,12 @@ export default function CreateSubjectPage({
         <h1>
           Let&apos;s make a new subject! <Icon i="subject" s="xxl" />
         </h1>
-        <CreateSubject role={role} name={name} body={body} />
+        <CreateSubject
+          role={role}
+          name={name}
+          body={body}
+          gqlErrors={gqlErrors}
+        />
       </section>
     </div>
   )
@@ -21,9 +27,11 @@ export default function CreateSubjectPage({
 
 CreateSubjectPage.propTypes = {
   role: string.isRequired,
-  prevValues: shape({}),
+  body: shape({}),
+  gqlErrors: shape({}),
 }
 
 CreateSubjectPage.defaultProps = {
-  prevValues: {},
+  body: {},
+  gqlErrors: {},
 }

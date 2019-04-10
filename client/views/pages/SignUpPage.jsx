@@ -7,7 +7,7 @@ import FormErrorsField from '../components/FormErrorsField'
 
 export default function SignUpPage({
   gqlErrors,
-  prevValues: { name, email },
+  body: { name, email },
   query: { redirect },
 }) {
   return (
@@ -90,11 +90,11 @@ export default function SignUpPage({
 
 SignUpPage.propTypes = {
   gqlErrors: shape({}),
-  prevValues: shape({}),
+  body: shape({}),
   query: shape({}).isRequired,
 }
 
 SignUpPage.defaultProps = {
   gqlErrors: {},
-  prevValues: {},
+  body: {},
 }

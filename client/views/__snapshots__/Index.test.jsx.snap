@@ -68,6 +68,10 @@ exports[`Index view should render a page 1`] = `
             render={[Function]}
           />
           <Route
+            path="/create-:type-card"
+            render={[Function]}
+          />
+          <Route
             path="/contact"
             render={[Function]}
           />
@@ -159,6 +163,22 @@ exports[`Index view should render a page 1`] = `
           />
           <Route
             path="/create-card"
+            render={[Function]}
+          />
+          <Route
+            path="/create-choice-card"
+            render={[Function]}
+          />
+          <Route
+            path="/create-page-card"
+            render={[Function]}
+          />
+          <Route
+            path="/create-video-card"
+            render={[Function]}
+          />
+          <Route
+            path="/create-unscored-embed-card"
             render={[Function]}
           />
           <Route

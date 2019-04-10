@@ -86,6 +86,11 @@ summary > *:first-child {
   display: inline;
 }
 
+/* width--100 */
+.w-100 {
+  width: 100%;
+}
+
 /* Elements *******************************************************************/
 
 /* The icons look "too high up",

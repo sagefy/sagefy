@@ -2,8 +2,6 @@ import LogInPage from './LogInPage'
 
 describe('LogInPage', () => {
   it('should render the LogInPage', () => {
-    expect(
-      LogInPage({ gqlErrors: {}, prevValues: {}, query: {} })
-    ).toMatchSnapshot()
+    expect(LogInPage({ gqlErrors: {}, body: {}, query: {} })).toMatchSnapshot()
   })
 })

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const express = require('express')
 const { postgraphile } = require('postgraphile')
 const { Pool } = require('pg')
@@ -50,10 +49,13 @@ const postgraphileInstance = postgraphile(pool, process.env.DB_SCHEMA, {
 
 app.use(postgraphileInstance)
 
+/* eslint-disable no-console */
 if (require.main === module) {
-  console.log('Running on port', process.env.SERVER_PORT || 8653)
+  const port = process.env.SERVER_PORT || 2601
+  console.log('Server running on port', port)
   require('./mail')() // eslint-disable-line
-  app.listen(process.env.SERVER_PORT || 8653)
+  app.listen(port)
 }
+/* eslint-enable */
 
 module.exports = { app, pool }

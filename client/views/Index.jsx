@@ -21,6 +21,10 @@ import LearnPagePage from './pages/LearnPagePage'
 import LearnUnscoredEmbedPage from './pages/LearnUnscoredEmbedPage'
 import LearnVideoPage from './pages/LearnVideoPage'
 import ChooseStepPage from './pages/ChooseStepPage'
+import CreateChoiceCardPage from './pages/CreateChoiceCardPage'
+import CreatePageCardPage from './pages/CreatePageCardPage'
+import CreateVideoCardPage from './pages/CreateVideoCardPage'
+import CreateUnscoredEmbedCardPage from './pages/CreateUnscoredEmbedCardPage'
 
 export const output = a => () => a
 const searchSubjects = output('Search Subjects')
@@ -41,7 +45,7 @@ const learn = output('Learn')
 const chooseStep = output('Choose Step')
 
 export default function Index(props) {
-  const { location, cacheHash } = props
+  const { url, cacheHash } = props
   const withProps = component => () => React.createElement(component, props)
   return (
     <html lang="en">
@@ -50,7 +54,7 @@ export default function Index(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href={`/sagefy.min.css?${cacheHash}`} />
         <title>
-          <StaticRouter context={{}} location={location}>
+          <StaticRouter context={{}} location={url}>
             <Switch>
               <Route path="/choose-step" render={chooseStep} />
               <Route path="/learn-:type/:cardId" render={learn} />
@@ -63,6 +67,7 @@ export default function Index(props) {
               <Route path="/search-subjects" render={searchSubjects} />
               <Route path="/create-subject" render={createSubject} />
               <Route path="/create-card" render={createCard} />
+              <Route path="/create-:type-card" render={createCard} />
               <Route path="/contact" render={contact} />
               <Route path="/terms" render={terms} />
               <Route path="/server-error" render={serverError} />
@@ -75,7 +80,7 @@ export default function Index(props) {
       </head>
       <body>
         <div id="top" className="page" role="document">
-          <StaticRouter context={{}} location={location}>
+          <StaticRouter context={{}} location={url}>
             <Switch>
               <Route path="/choose-step" render={withProps(ChooseStepPage)} />
               <Route
@@ -109,6 +114,22 @@ export default function Index(props) {
                 render={withProps(CreateSubjectPage)}
               />
               <Route path="/create-card" render={withProps(CreateCardPage)} />
+              <Route
+                path="/create-choice-card"
+                render={withProps(CreateChoiceCardPage)}
+              />
+              <Route
+                path="/create-page-card"
+                render={withProps(CreatePageCardPage)}
+              />
+              <Route
+                path="/create-video-card"
+                render={withProps(CreateVideoCardPage)}
+              />
+              <Route
+                path="/create-unscored-embed-card"
+                render={withProps(CreateUnscoredEmbedCardPage)}
+              />
               <Route path="/contact" component={ContactPage} />
               <Route path="/terms" component={TermsPage} />
               <Route path="/server-error" component={ServerErrorPage} />
@@ -123,17 +144,6 @@ export default function Index(props) {
 }
 
 Index.propTypes = {
-  location: string.isRequired,
+  url: string.isRequired,
   cacheHash: string.isRequired,
-  // gqlErrors: shape({}),
-  // prevValues: shape({}),
-  // state: number,
-  // role: string,
-}
-
-Index.defaultProps = {
-  // gqlErrors: {},
-  // prevValues: {},
-  // state: 0,
-  // role: 'sg_anonymous',
 }

@@ -5,7 +5,7 @@ import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
-export default function SettingsPage({ gqlErrors, prevValues: { id, name } }) {
+export default function SettingsPage({ gqlErrors, body: { id, name } }) {
   return (
     <div className="EmailPage">
       <FormErrorsTop formErrors={gqlErrors} />
@@ -68,10 +68,10 @@ export default function SettingsPage({ gqlErrors, prevValues: { id, name } }) {
 
 SettingsPage.propTypes = {
   gqlErrors: shape({}),
-  prevValues: shape({}),
+  body: shape({}),
 }
 
 SettingsPage.defaultProps = {
   gqlErrors: {},
-  prevValues: {},
+  body: {},
 }

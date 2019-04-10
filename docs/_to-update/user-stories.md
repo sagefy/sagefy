@@ -1,24 +1,4 @@
----
-layout: docs
-title: User Stories
----
-
-This document serves as a list of major use cases for Sagefy's functionality. It can be used for checking progress or for validation. These stories should remain high level and not get into edge cases, scenarios, or details.
-
-### 1) Accounts
-
-- As a user to use Sagefy I want to sign up.
-- As a user to use Sagefy I want to log in.
-- As a user to secure my account I want to log out.
-- As a user to secure my account I want to change my password.
-- As a user to better represent myself I want to change my name.
-- As a user to keep using my account I want to change my email address.
 - As a user to control my inbox I want to change my email frequency.
-- As a user to troubleshoot or provide feedback I want to get help.
-- As a user to understand the service agreement I want to view terms and privacy policy.
-- As a user in order to navigate Sagefy I want to use the menu.
-- As a user to perform relevant actions I want the menu to show items relevant to being logged out.
-- As a user to perform relevant actions I want the menu to show items relevant to being logged in.
 - As a user to protect my privacy I want to delete my account.
 
 ### 2) Discussion
@@ -59,21 +39,11 @@ This document serves as a list of major use cases for Sagefy's functionality. It
 - As a learner to evaluate subjects I might add I want to view units in the subject.
 - As a learner to stay motivated I want to see my progress in the subject.
 - As a learner to feel in control of my learning I want to choose which unit to work on next.
-- As a learner to learn I want to use an unscored card.
-- As a learner to learn I want to use a scored type card.
 - As a learner to stay motivated I want to remember which unit I'm currently working on.
-- As a learner to stay motivated I want to see my progress in the unit as I work on cards.
 - As a learner to review my past I would like to see my previous responses for a given unit.
 
 ### Test plan
 
-- [ ] View the terms and privacy policy
-- [ ] Sign up for an account
-- [ ] Log out of your account
-- [ ] Log into your account
-- [ ] Change your password
-- [ ] Change your user name
-- -
 - [ ] Find the subject on "Basic Math"
 - [ ] Find the unit on addition: "Adding two..."
 - [ ] View the change history of the unit
@@ -110,8 +80,6 @@ This document serves as a list of major use cases for Sagefy's functionality. It
 - [ ] View the
 - [ ] Play with some cards
 - -
-- [ ] Log out
-- [ ] Log in as user doris / example1
 - [ ] Engage "Basic Math"
 - [ ] Choose a unit
 - [ ] Play with some cards

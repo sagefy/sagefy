@@ -7,10 +7,14 @@ import Icon from '../components/Icon'
 
 export default function LearnChoicePage({
   progress,
-  name,
-  data: { body, max_options_to_show, options },
-  choice,
-  seed = process.env.NODE_ENV === 'test' ? '_' : Date.now().toString(36),
+  card: {
+    name,
+    data: { body, max_options_to_show, options },
+  },
+  body: {
+    choice,
+    seed = process.env.NODE_ENV === 'test' ? '_' : Date.now().toString(36),
+  } = {},
 }) {
   const xoptions = shuffle(Object.entries(options), seed).slice(
     0,
@@ -74,24 +78,30 @@ export default function LearnChoicePage({
 
 LearnChoicePage.propTypes = {
   progress: number,
-  name: string.isRequired,
-  data: shape({
-    body: string.isRequired,
-    max_options_to_show: number.isRequired,
-    options: objectOf(
-      shape({
-        value: string.isRequired,
-        correct: bool.isRequired,
-        feedback: string.isRequired,
-      })
-    ),
+  card: shape({
+    name: string.isRequired,
+    data: shape({
+      body: string.isRequired,
+      max_options_to_show: number.isRequired,
+      options: objectOf(
+        shape({
+          value: string.isRequired,
+          correct: bool.isRequired,
+          feedback: string.isRequired,
+        })
+      ),
+    }).isRequired,
   }).isRequired,
-  choice: string,
-  seed: string,
+  body: shape({
+    choice: string,
+    seed: string,
+  }),
 }
 
 LearnChoicePage.defaultProps = {
   progress: null,
-  choice: null,
-  seed: undefined,
+  body: {
+    choice: null,
+    seed: undefined,
+  },
 }

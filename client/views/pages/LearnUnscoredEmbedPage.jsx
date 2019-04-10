@@ -4,8 +4,10 @@ import Icon from '../components/Icon'
 
 export default function LearnUnscoredEmbedPage({
   progress,
-  name,
-  data: { url },
+  card: {
+    name,
+    data: { url },
+  },
 }) {
   return (
     <div className="LearnUnscoredEmbedPage">
@@ -32,9 +34,11 @@ export default function LearnUnscoredEmbedPage({
 
 LearnUnscoredEmbedPage.propTypes = {
   progress: number,
-  name: string.isRequired,
-  data: shape({
-    url: string.isRequired,
+  card: shape({
+    name: string.isRequired,
+    data: shape({
+      url: string.isRequired,
+    }).isRequired,
   }).isRequired,
 }
 

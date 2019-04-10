@@ -1,0 +1,24 @@
+mutation contributeNewCard(
+  $name: String!
+  $subjectId: UUID!
+  $kind: CardKind!
+  $data: JSON!
+) {
+  newCard(
+    input: {
+      language: "en"
+      name: $name
+      tags: []
+      subjectId: $subjectId
+      kind: $kind
+      data: $data
+    }
+  ) {
+    cardVersion {
+      versionId
+      entityId
+      name
+      data
+    }
+  }
+}

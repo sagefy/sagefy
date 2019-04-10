@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const { createTransport } = require('nodemailer')
 const { Client } = require('pg')
 const jwt = require('jsonwebtoken')
@@ -77,6 +76,7 @@ const transport = createTransport(
   }
 )
 
+/* eslint-disable no-console */
 async function sendMail({ to, subject, body }) {
   if (process.env.NODE_ENV === 'test') return Promise.resolve(subject)
   try {
@@ -90,6 +90,7 @@ async function sendMail({ to, subject, body }) {
     return Promise.resolve()
   }
 }
+/* eslint-enable */
 
 async function listenToNotification(msg) {
   if (msg.channel === 'create_user') {

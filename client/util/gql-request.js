@@ -19,7 +19,7 @@ module.exports = function gqlRequest({ query, variables, jwtToken }) {
     const request = http.request(
       {
         hostname: 'server',
-        port: 8653,
+        port: 2601,
         path: '/graphql',
         method: 'POST',
         headers,

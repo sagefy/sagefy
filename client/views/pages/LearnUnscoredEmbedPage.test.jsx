@@ -2,6 +2,6 @@ import LearnUnscoredEmbedPage from './LearnUnscoredEmbedPage'
 
 describe('LearnUnscoredEmbedPage', () => {
   it('should render LearnUnscoredEmbedPage', () => {
-    expect(LearnUnscoredEmbedPage({ data: {} })).toMatchSnapshot()
+    expect(LearnUnscoredEmbedPage({ card: { data: {} } })).toMatchSnapshot()
   })
 })

@@ -1,12 +1,12 @@
 import React from 'react'
-import { string, shape } from 'prop-types'
+import { string, shape, arrayOf } from 'prop-types'
 // import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ChooseSubject from '../components/ChooseSubject'
 import CardSubjectInfo from '../components/CardSubjectInfo'
 
-export default function DashboardPage({ role, allUserSubjects, name }) {
+export default function DashboardPage({ role, subjects, name }) {
   return (
     <div className="DashboardPage">
       <section className="m-yc">
@@ -22,12 +22,12 @@ export default function DashboardPage({ role, allUserSubjects, name }) {
         </h1>
       </section>
 
-      {(allUserSubjects && allUserSubjects.nodes.length && (
+      {subjects && subjects.length ? (
         <section>
           <h2>
             Choose one of your subjects <Icon i="subject" s="xl" />
           </h2>
-          <ChooseSubject subjects={allUserSubjects.nodes} level="goal" />
+          <ChooseSubject subjects={subjects} level="goal" />
           <div className="m-yc">
             <h3>
               &hellip;or how about something else? <Icon i="search" s="l" />
@@ -45,7 +45,7 @@ export default function DashboardPage({ role, allUserSubjects, name }) {
             </form>
           </div>
         </section>
-      )) || (
+      ) : (
         <section className="ta-c">
           <h2>
             Let&apos;s get you some subjects! <Icon i="search" s="xl" />
@@ -80,13 +80,19 @@ export default function DashboardPage({ role, allUserSubjects, name }) {
 DashboardPage.propTypes = {
   role: string,
   name: string,
-  allUserSubjects: shape({}),
+  subjects: arrayOf(
+    shape({
+      entityId: string.isRequired,
+      name: string.isRequired,
+      body: string.isRequired,
+    })
+  ),
 }
 
 DashboardPage.defaultProps = {
   role: 'sg_anonymous',
   name: 'friend',
-  allUserSubjects: { nodes: [] },
+  subjects: [],
 }
 
 /*

@@ -7,6 +7,7 @@ jobs:
         environment:
           POSTGRES_USER: sagefy
           POSTGRES_DB: sagefy
+        command: -p 2600
     steps:
       - checkout
       - run:
@@ -16,6 +17,6 @@ jobs:
             chmod +x dbmate
             ./dbmate wait && ./dbmate -d "./postgres/migrations" -s "./postgres/schema.sql" up
           environment:
-            DATABASE_URL: postgres://sagefy@localhost:5432/sagefy?sslmode=disable
+            DATABASE_URL: postgres://sagefy@localhost:2600/sagefy?sslmode=disable
       - run: npm install
       - run: npm test
