@@ -418,9 +418,8 @@ app.get('*', handleRegular)
 
 /* eslint-disable no-console */
 if (require.main === module) {
-  const port = process.env.PORT || 2602
-  console.log('Client running on port', port)
-  app.listen(port)
+  console.log('Client running on port', process.env.CLIENT_PORT)
+  app.listen(process.env.CLIENT_PORT)
 }
 /* eslint-enable */
 

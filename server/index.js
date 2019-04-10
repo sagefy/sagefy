@@ -51,10 +51,9 @@ app.use(postgraphileInstance)
 
 /* eslint-disable no-console */
 if (require.main === module) {
-  const port = process.env.SERVER_PORT || 2601
-  console.log('Server running on port', port)
+  console.log('Server running on port', process.env.SERVER_PORT)
   require('./mail')() // eslint-disable-line
-  app.listen(port)
+  app.listen(process.env.SERVER_PORT)
 }
 /* eslint-enable */
 
