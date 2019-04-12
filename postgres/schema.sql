@@ -1157,12 +1157,15 @@ CREATE FUNCTION sg_public.select_card_to_learn(subject_id uuid) RETURNS sg_publi
         'unscored_embed'
       ]::sg_public.card_kind[]
     end
-  )
+  ),
+  xsubject as (select * from sg_public.subject where entity_id = $1),
+  r (rand) as (select random())
   select c.*
-  from sg_public.card c, prior, k
+  from sg_public.card c, prior, k, xsubject, r
   where c.subject_id = $1
     and c.kind = any(k.kinds)
     and (prior.card_id is null or c.entity_id <> prior.card_id)
+    and r.rand < sg_public.subject_card_count(xsubject) / 10::real
   order by random()
   limit 1;
   -- Future version: When estimating parameters and the card kind is scored,
@@ -1602,6 +1605,27 @@ $_$;
 --
 
 COMMENT ON FUNCTION sg_public.subject_before_subjects(subject sg_public.subject) IS 'Get all the direct befores for a subject.';
+
+
+--
+-- Name: subject_by_entity_id(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_by_entity_id(entity_id uuid) RETURNS sg_public.subject
+    LANGUAGE sql STABLE
+    AS $_$
+  select s.*
+  from sg_public.subject s
+  where s.entity_id = $1
+  limit 1;
+$_$;
+
+
+--
+-- Name: FUNCTION subject_by_entity_id(entity_id uuid); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_by_entity_id(entity_id uuid) IS 'Get a subject by entity id.';
 
 
 --
@@ -2948,4 +2972,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190401185105'),
     ('20190403175843'),
     ('20190403183651'),
-    ('20190409203511');
+    ('20190409203511'),
+    ('20190411224126');
