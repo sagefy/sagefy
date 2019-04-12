@@ -904,6 +904,7 @@ CREATE TABLE sg_public.subject_version (
     user_id uuid,
     session_id uuid,
     body text NOT NULL,
+    details text,
     CONSTRAINT lang_check CHECK (((language)::text ~* '^\w{2}(-\w{2})?$'::text)),
     CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
 );
@@ -1008,6 +1009,13 @@ COMMENT ON COLUMN sg_public.subject_version.body IS 'The description of the goal
 
 
 --
+-- Name: COLUMN subject_version.details; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.details IS 'The details of the subject.';
+
+
+--
 -- Name: CONSTRAINT lang_check ON subject_version; Type: COMMENT; Schema: sg_public; Owner: -
 --
 
@@ -1080,7 +1088,8 @@ CREATE VIEW sg_public.subject AS
     subject_version.tags,
     subject_version.user_id,
     subject_version.session_id,
-    subject_version.body
+    subject_version.body,
+    subject_version.details
    FROM sg_public.subject_version
   WHERE (subject_version.status = 'accepted'::sg_public.entity_status)
   ORDER BY subject_version.entity_id, subject_version.created DESC;
@@ -1380,6 +1389,8 @@ CREATE FUNCTION sg_public.select_subject_to_learn(subject_id uuid) RETURNS SETOF
     sg_public.subject_child_count(s) = 0
     and sg_public.select_subject_learned(s.entity_id) < 0.99
     and not sg_public.subject_has_needed_before(s, e.all_subjects)
+    -- TODO support "rewind"... going into out of goals befores
+    -- when performance is low.
   order by
     sg_public.subject_all_after_count(s) desc,
     sg_public.subject_card_count(s) desc
@@ -1635,9 +1646,7 @@ COMMENT ON FUNCTION sg_public.subject_by_entity_id(entity_id uuid) IS 'Get a sub
 CREATE FUNCTION sg_public.subject_card_count(subject sg_public.subject) RETURNS bigint
     LANGUAGE sql STABLE
     AS $_$
-  select count(c.*)
-  from sg_public.card c
-  where c.subject_id = $1.entity_id;
+  select count(c.*) from sg_public.subject_cards($1) c;
 $_$;
 
 
@@ -1646,6 +1655,26 @@ $_$;
 --
 
 COMMENT ON FUNCTION sg_public.subject_card_count(subject sg_public.subject) IS 'Count the number of cards directly on the subject.';
+
+
+--
+-- Name: subject_cards(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_cards(subject sg_public.subject) RETURNS SETOF sg_public.card
+    LANGUAGE sql STABLE
+    AS $_$
+  select c.*
+  from sg_public.card c
+  where c.subject_id = $1.entity_id;
+$_$;
+
+
+--
+-- Name: FUNCTION subject_cards(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_cards(subject sg_public.subject) IS 'List the number of cards directly on the subject.';
 
 
 --
@@ -1712,6 +1741,30 @@ $_$;
 --
 
 COMMENT ON FUNCTION sg_public.subject_has_needed_before(sg_public.subject, uuid[]) IS 'Does the learner/subject have a needed before?';
+
+
+--
+-- Name: subject_parent_subjects(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_parent_subjects(subject sg_public.subject) RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE
+    AS $_$
+  select s.*
+  from
+    sg_public.subject s,
+    sg_public.subject_version_parent_child svpc
+  where
+    svpc.child_version_id = $1.version_id
+    and s.entity_id = svpc.parent_entity_id;
+$_$;
+
+
+--
+-- Name: FUNCTION subject_parent_subjects(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_parent_subjects(subject sg_public.subject) IS 'Collects the direct parents of the child subject.';
 
 
 --
@@ -2973,4 +3026,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190403175843'),
     ('20190403183651'),
     ('20190409203511'),
-    ('20190411224126');
+    ('20190411224126'),
+    ('20190412211807');

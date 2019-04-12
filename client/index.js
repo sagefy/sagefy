@@ -117,19 +117,34 @@ app.use(handleError)
 
 // /////////////////////////////////////////////////////////////////////////////
 
-app.get('/sitemap.txt', (req, res) =>
+const ROOT_PAGES = [
+  '', // home
+  '/terms',
+  '/contact',
+  '/sign-up',
+  '/log-in',
+  '/email',
+  '/password',
+  '/search-subjects',
+  '/create-subject',
+  '/create-card',
+  '/create-video-card',
+  '/create-choice-card',
+  '/create-page-card',
+  '/create-unscored-embed-card',
+]
+
+app.get('/sitemap.txt', async (req, res) => {
+  const gqlRes = await GQL.dataSitemap(req)
+  const subjects = get(gqlRes, 'data.allSubjects.nodes', [])
+    .map(({ entityId }) => entityId)
+    .map(id => `/subjects/${to58(id)}`)
   res.set('Content-Type', 'text/plain').send(
-    `https://sagefy.org
-https://sagefy.org/terms
-https://sagefy.org/contact
-https://sagefy.org/sign-up
-https://sagefy.org/log-in
-https://sagefy.org/email
-https://sagefy.org/password
-https://sagefy.org/create-subject
-`
+    ROOT_PAGES.concat(subjects)
+      .map(u => `https://sagefy.org${u}`)
+      .join('\n')
   )
-) // Add more public routes as they are available
+}) // Add more public routes as they are available
 
 app.get('/learn-:kind/:cardId', async (req, res) => {
   const gqlRes = await GQL.learnGetCard(req, {
@@ -309,6 +324,7 @@ app.post('/create-subject', async (req, res) => {
 })
 
 app.get('/create(-:kind)?-card', async (req, res) => {
+  if (!req.query.subjectId) res.redirect('/')
   const subjGqlRes = await GQL.contributeGetSubject(req, {
     entityId: toU(req.query.subjectId),
   })
@@ -397,6 +413,14 @@ app.get('/next', async (req, res) => {
     getRole(req) === 'sg_anonymous' ? '/search-subjects' : '/dashboard'
   )
 }) /* eslint-enable */
+
+app.get('/subjects/:subjectId', async (req, res) => {
+  const gqlRes = await GQL.dataGetSubject(req, {
+    entityId: toU(req.params.subjectId),
+  })
+  const subject = get(gqlRes, 'data.subjectByEntityId')
+  return res.render('Index', { ...formatData(req), subject })
+})
 
 app.get('/', async (req, res) => {
   const gqlRes = await GQL.learnHome(req)

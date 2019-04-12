@@ -30,6 +30,10 @@ import {
   DownloadCloud,
   Users,
   Target,
+  ChevronsDown,
+  ChevronsUp,
+  ChevronsLeft,
+  ChevronsRight,
 } from 'react-feather'
 import get from 'lodash.get'
 
@@ -59,6 +63,10 @@ const MAP = {
   page: FileText,
   video: Youtube,
   embed: DownloadCloud,
+  child: ChevronsDown,
+  parent: ChevronsUp,
+  before: ChevronsLeft,
+  after: ChevronsRight,
 
   // actions
   select: ArrowRightCircle,

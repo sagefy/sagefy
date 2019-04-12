@@ -25,6 +25,7 @@ import CreateChoiceCardPage from './pages/CreateChoiceCardPage'
 import CreatePageCardPage from './pages/CreatePageCardPage'
 import CreateVideoCardPage from './pages/CreateVideoCardPage'
 import CreateUnscoredEmbedCardPage from './pages/CreateUnscoredEmbedCardPage'
+import SubjectPage from './pages/SubjectPage'
 
 export const output = a => () => a
 const searchSubjects = output('Search Subjects')
@@ -43,6 +44,7 @@ const createSubject = output('Create Subject')
 const createCard = output('Create Card')
 const learn = output('Learn')
 const chooseStep = output('Choose Step')
+const subject = output('Subject')
 
 export default function Index(props) {
   const { url, cacheHash } = props
@@ -56,6 +58,7 @@ export default function Index(props) {
         <title>
           <StaticRouter context={{}} location={url}>
             <Switch>
+              <Route path="/subjects/:subjectId" render={subject} />
               <Route path="/choose-step" render={chooseStep} />
               <Route path="/learn-:type/:cardId" render={learn} />
               <Route path="/log-in" render={logIn} />
@@ -82,6 +85,10 @@ export default function Index(props) {
         <div id="top" className="page" role="document">
           <StaticRouter context={{}} location={url}>
             <Switch>
+              <Route
+                path="/subjects/:subjectId"
+                render={withProps(SubjectPage)}
+              />
               <Route path="/choose-step" render={withProps(ChooseStepPage)} />
               <Route
                 path="/learn-video/:cardId"
