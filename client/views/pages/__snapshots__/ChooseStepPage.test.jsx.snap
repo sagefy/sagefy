@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ChooseStepPage should render ChooseStepPage 1`] = `
-<Layout hash={hash}
+<Layout
   description="-"
   page="ChooseNextPage"
   title="Choose"
@@ -11,7 +11,7 @@ exports[`ChooseStepPage should render ChooseStepPage 1`] = `
   >
     <p>
       <em>
-        Let's keep it up!
+        Let's keep it up! 
         <Icon
           i="cheer"
           s="m"
@@ -19,7 +19,7 @@ exports[`ChooseStepPage should render ChooseStepPage 1`] = `
       </em>
     </p>
     <h1>
-      What should we focus on?
+      What should we focus on? 
       <Icon
         i="subject"
         s="xxl"
@@ -40,12 +40,12 @@ exports[`ChooseStepPage should render ChooseStepPage 1`] = `
           Or…
         </em>
          on second thought, let's go
-
+         
         <Link
           replace={false}
           to="/dashboard"
         >
-          to the
+          to the 
           <Icon
             i="dashboard"
             s="m"

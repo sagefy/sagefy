@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ContactPage should render the contact page 1`] = `
-<Layout hash={hash}
+<Layout
   description="Need help? Contact Sagefy support."
   page="ContactPage"
   title="Contact"
 >
   <section>
     <h1>
-      Need help?
+      Need help? 
       <Icon
         i="contact"
         s="xxl"
@@ -103,7 +103,7 @@ exports[`ContactPage should render the contact page 1`] = `
         replace={false}
         to="/"
       >
-        Go back
+        Go back 
         <Icon
           i="home"
           s="m"

@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ServerErrorPage should render the ServerErrorPage 1`] = `
-<Layout hash={hash}
+<Layout
   description="-"
   page="ServerErrorPage"
   title="Server error"
 >
   <section>
     <h1>
-      I couldn't make that happen
+      I couldn't make that happen 
       <Icon
         i="error"
         s="xxl"
@@ -19,28 +19,28 @@ exports[`ServerErrorPage should render the ServerErrorPage 1`] = `
         i="error"
         s="m"
       />
-       500 Server Error
+       500 Server Error 
       <Icon
         i="error"
         s="m"
       />
-
+       
     </p>
     <p>
       <Link
         replace={false}
         to="/"
       >
-        Go back
+        Go back 
         <Icon
           i="home"
           s="m"
         />
          home
       </Link>
-
+       
       • You can also
-
+       
       <a
         href="javascript:history.back()"
       >
@@ -50,7 +50,7 @@ exports[`ServerErrorPage should render the ServerErrorPage 1`] = `
         />
          go back
       </a>
-
+       
       and retry.
     </p>
   </section>
