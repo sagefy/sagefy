@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SettingsPage should render the SettingsPage 1`] = `
-<Layout
+<Layout hash={hash}
   description="-"
   page="SettingsPage"
   title="Settings"
@@ -15,7 +15,7 @@ exports[`SettingsPage should render the SettingsPage 1`] = `
   />
   <section>
     <h1>
-      Update your settings 
+      Update your settings
       <Icon
         i="settings"
         s="xxl"
@@ -35,7 +35,7 @@ exports[`SettingsPage should render the SettingsPage 1`] = `
       .
       <br />
       or
-       
+
       <Link
         replace={false}
         to="/email"

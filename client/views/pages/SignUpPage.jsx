@@ -1,18 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { shape } from 'prop-types'
+import { shape, string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
 export default function SignUpPage({
+  hash,
   gqlErrors,
   body: { name, email },
   query: { redirect },
 }) {
   return (
     <Layout
+      hash={hash}
       page="SignUpPage"
       title="Join Sagefy"
       description="Get access to the best learning content with your Sagefy account. Continue where you left off on your learning journey."
@@ -94,6 +96,7 @@ export default function SignUpPage({
 }
 
 SignUpPage.propTypes = {
+  hash: string.isRequired,
   gqlErrors: shape({}),
   body: shape({}),
   query: shape({}).isRequired,

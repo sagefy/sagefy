@@ -9,10 +9,12 @@ export default function CreateCardPage({
   role,
   query: { subjectId },
   subject: { name: subjectName, body: subjectBody },
+  hash,
 }) {
   const kindLink = kind => `/create-${kind}-card?subjectId=${subjectId}`
   return (
     <Layout
+      hash={hash}
       page="CreateCardPage"
       title={`Create Card for ${subjectName}`}
       description={`Help Sagefy grow by helping us make new cards for ${subjectName}`}
@@ -91,6 +93,7 @@ export default function CreateCardPage({
 }
 
 CreateCardPage.propTypes = {
+  hash: string.isRequired,
   role: string,
   query: shape({
     subjectId: string,

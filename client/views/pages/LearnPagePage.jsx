@@ -5,6 +5,7 @@ import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
 export default function LearnPagePage({
+  hash,
   progress,
   card: {
     name,
@@ -12,7 +13,7 @@ export default function LearnPagePage({
   },
 }) {
   return (
-    <Layout page="LearnPagePage" title="Learn" description="-">
+    <Layout hash={hash} page="LearnPagePage" title="Learn" description="-">
       {progress && (
         <section>
           <progress value={progress} />
@@ -36,6 +37,7 @@ export default function LearnPagePage({
 }
 
 LearnPagePage.propTypes = {
+  hash: string.isRequired,
   progress: number,
   card: shape({
     name: string.isRequired,

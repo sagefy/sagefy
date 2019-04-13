@@ -15,6 +15,8 @@ const uuidv4 = require('uuid/v4')
 const GQL = require('./util/gql-queries')
 const getGqlErrors = require('./util/gql-errors')
 
+const hash = Date.now().toString(36)
+
 const JWT_COOKIE_NAME = 'jwt'
 const JWT_COOKIE_PARAMS = {
   maxAge: 1000 * 60 * 60 * 24, // 1 day in milliseconds
@@ -81,6 +83,7 @@ function isAnonymous(req, res, next) {
 
 function formatData(req) {
   return {
+    hash,
     url: req.url,
     query: req.query,
     body: req.body,

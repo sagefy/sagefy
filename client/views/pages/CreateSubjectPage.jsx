@@ -5,12 +5,14 @@ import Icon from '../components/Icon'
 import CreateSubject from '../components/CreateSubject'
 
 export default function CreateSubjectPage({
+  hash,
   role,
   body: { name, body } = {},
   gqlErrors,
 }) {
   return (
     <Layout
+      hash={hash}
       page="CreateSubjectPage"
       title="Create subject"
       description="Help Sagefy grow by making a new subject! Anyone can make a new subject, no account required."
@@ -31,6 +33,7 @@ export default function CreateSubjectPage({
 }
 
 CreateSubjectPage.propTypes = {
+  hash: string.isRequired,
   role: string.isRequired,
   body: shape({}),
   gqlErrors: shape({}),

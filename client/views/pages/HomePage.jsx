@@ -7,9 +7,10 @@ import Footer from '../components/Footer'
 import ExternalLink from '../components/ExternalLink'
 import ChooseSubject from '../components/ChooseSubject'
 
-export default function HomePage({ role, subjects }) {
+export default function HomePage({ hash, role, subjects }) {
   return (
     <Layout
+      hash={hash}
       page="HomePage"
       title="Learn anything, adapted for you. Free."
       description="What do you want to learn? Learn for free, always. Any subject you want. And Sagefy saves you time and effort by adapting to what you know and where you want to go."
@@ -109,6 +110,7 @@ export default function HomePage({ role, subjects }) {
 }
 
 HomePage.propTypes = {
+  hash: string.isRequired,
   role: string,
   subjects: arrayOf(
     shape({

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TermsPage should render the terms page 1`] = `
-<Layout
+<Layout hash={hash}
   description="-"
   page="TermsPage"
   title="Terms and Privacy"
@@ -12,7 +12,7 @@ exports[`TermsPage should render the terms page 1`] = `
         replace={false}
         to="/"
       >
-        Go back 
+        Go back
         <Icon
           i="home"
           s="m"
@@ -21,7 +21,7 @@ exports[`TermsPage should render the terms page 1`] = `
       </Link>
     </p>
     <h1>
-      Terms & Privacy 
+      Terms & Privacy
       <Icon
         i="terms"
         s="xxl"
@@ -34,7 +34,7 @@ exports[`TermsPage should render the terms page 1`] = `
     </h2>
     <p>
       If you have questions about these terms, contact Sagefy at
-       
+
       <a
         href="mailto:support@sagefy.org"
       >
@@ -234,7 +234,7 @@ exports[`TermsPage should render the terms page 1`] = `
     </h2>
     <p>
       If your copyright, patent, or trademark has been violated, contact
-       
+
       <a
         href="mailto:support@sagefy.org"
       >

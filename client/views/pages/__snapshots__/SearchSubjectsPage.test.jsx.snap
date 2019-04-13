@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SearchSubjectsPage should render the search subjects page 1`] = `
-<Layout
+<Layout hash={hash}
   description="Find the learning subject you are looking for. Anything you want to learn, Sagefy can help you."
   page="SearchSubjectsPage"
   title="Search subjects"
@@ -10,7 +10,7 @@ exports[`SearchSubjectsPage should render the search subjects page 1`] = `
     className="ta-c"
   >
     <h1>
-      What do you want to learn? 
+      What do you want to learn?
       <Icon
         i="search"
         s="xxl"

@@ -2,12 +2,18 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
-export default function ServerErrorPage() {
+export default function ServerErrorPage({ hash }) {
   return (
-    <Layout page="ServerErrorPage" title="Server error" description="-">
+    <Layout
+      hash={hash}
+      page="ServerErrorPage"
+      title="Server error"
+      description="-"
+    >
       <section>
         <h1>
           I couldn&apos;t make that happen <Icon i="error" s="xxl" />
@@ -28,4 +34,8 @@ export default function ServerErrorPage() {
       </section>
     </Layout>
   )
+}
+
+ServerErrorPage.propTypes = {
+  hash: string.isRequired,
 }

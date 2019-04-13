@@ -6,9 +6,15 @@ import Footer from '../components/Footer'
 import ChooseSubject from '../components/ChooseSubject'
 import CreateSubject from '../components/CreateSubject'
 
-export default function SearchSubjectsPage({ role, query: { q }, subjects }) {
+export default function SearchSubjectsPage({
+  role,
+  query: { q },
+  subjects,
+  hash,
+}) {
   return (
     <Layout
+      hash={hash}
       page="SearchSubjectsPage"
       title="Search subjects"
       description="Find the learning subject you are looking for. Anything you want to learn, Sagefy can help you."
@@ -72,6 +78,7 @@ export default function SearchSubjectsPage({ role, query: { q }, subjects }) {
 }
 
 SearchSubjectsPage.propTypes = {
+  hash: string.isRequired,
   role: string,
   query: shape({}).isRequired,
   subjects: arrayOf(

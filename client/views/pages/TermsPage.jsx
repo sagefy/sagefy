@@ -1,11 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
-export default function TermsPage() {
+export default function TermsPage({ hash }) {
   return (
-    <Layout page="TermsPage" title="Terms and Privacy" description="-">
+    <Layout
+      hash={hash}
+      page="TermsPage"
+      title="Terms and Privacy"
+      description="-"
+    >
       <header>
         <p>
           <Link to="/">
@@ -190,4 +196,8 @@ export default function TermsPage() {
       </section>
     </Layout>
   )
+}
+
+TermsPage.propTypes = {
+  hash: string.isRequired,
 }

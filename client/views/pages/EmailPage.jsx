@@ -1,13 +1,14 @@
 import React from 'react'
-import { shape, number } from 'prop-types'
+import { shape, number, string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
-export default function EmailPage({ gqlErrors, state }) {
+export default function EmailPage({ gqlErrors, state, hash }) {
   return (
     <Layout
+      hash={hash}
       page="EmailPage"
       title="Change your email"
       description="Update your email address for your Sagefy account."
@@ -97,6 +98,7 @@ export default function EmailPage({ gqlErrors, state }) {
 }
 
 EmailPage.propTypes = {
+  hash: string.isRequired,
   gqlErrors: shape({}),
   state: number,
 }

@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { shape } from 'prop-types'
+import { shape, string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
-export default function SettingsPage({ gqlErrors, body: { id, name } }) {
+export default function SettingsPage({ hash, gqlErrors, body: { id, name } }) {
   return (
-    <Layout page="SettingsPage" title="Settings" description="-">
+    <Layout hash={hash} page="SettingsPage" title="Settings" description="-">
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
 
@@ -68,6 +68,7 @@ export default function SettingsPage({ gqlErrors, body: { id, name } }) {
 }
 
 SettingsPage.propTypes = {
+  hash: string.isRequired,
   gqlErrors: shape({}),
   body: shape({}),
 }

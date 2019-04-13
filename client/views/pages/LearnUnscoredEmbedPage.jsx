@@ -4,6 +4,7 @@ import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
 export default function LearnUnscoredEmbedPage({
+  hash,
   progress,
   card: {
     name,
@@ -11,7 +12,12 @@ export default function LearnUnscoredEmbedPage({
   },
 }) {
   return (
-    <Layout page="LearnUnscoredEmbedPage" title="Learn" description="-">
+    <Layout
+      hash={hash}
+      page="LearnUnscoredEmbedPage"
+      title="Learn"
+      description="-"
+    >
       {progress && (
         <section>
           <progress value={progress} />
@@ -34,6 +40,7 @@ export default function LearnUnscoredEmbedPage({
 }
 
 LearnUnscoredEmbedPage.propTypes = {
+  hash: string.isRequired,
   progress: number,
   card: shape({
     name: string.isRequired,

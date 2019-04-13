@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LogInPage should render the LogInPage 1`] = `
-<Layout
+<Layout hash={hash}
   description="Log in to Sagefy. Continue learning your subjects. And help us make new content to grow Sagefy."
   page="LogInPage"
   title="Log In"
@@ -15,7 +15,7 @@ exports[`LogInPage should render the LogInPage 1`] = `
   />
   <section>
     <h1>
-      Log in to Sagefy 
+      Log in to Sagefy
       <Icon
         i="logIn"
         s="xxl"
@@ -23,7 +23,7 @@ exports[`LogInPage should render the LogInPage 1`] = `
     </h1>
     <p>
       Don't have an account?
-       
+
       <Link
         replace={false}
         to="/sign-up"
@@ -37,7 +37,7 @@ exports[`LogInPage should render the LogInPage 1`] = `
       .
       <br />
       Forgot your password?
-       
+
       <Link
         replace={false}
         to="/password"

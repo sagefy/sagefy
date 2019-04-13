@@ -1,11 +1,10 @@
 import React from 'react'
 import { string, node } from 'prop-types'
 
-const hash = Date.now().toString(36)
-
-export default function Layout({ title, description, children, page }) {
-  if (process.env.NODE_ENV === 'test')
+export default function Layout({ page, title, description, hash, children }) {
+  if (process.env.NODE_ENV === 'test') {
     return <div className={page}>{children}</div>
+  }
   return (
     <html lang="en">
       <head>
@@ -29,4 +28,5 @@ Layout.propTypes = {
   description: string.isRequired,
   page: string.isRequired,
   children: node.isRequired,
+  hash: string.isRequired,
 }

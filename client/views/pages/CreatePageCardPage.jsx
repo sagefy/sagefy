@@ -9,6 +9,7 @@ import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
 export default function CreatePageCardPage({
+  hash,
   role,
   query: { subjectId },
   subject: { name: subjectName, body: subjectBody },
@@ -17,6 +18,7 @@ export default function CreatePageCardPage({
 }) {
   return (
     <Layout
+      hash={hash}
       page="CreatePageCardPage"
       title={`Create a choice page for ${subjectName}`}
       description={`Help us build Sagefy by making a written document page card for ${subjectName}.`}
@@ -109,6 +111,7 @@ export default function CreatePageCardPage({
 }
 
 CreatePageCardPage.propTypes = {
+  hash: string.isRequired,
   role: string,
   query: shape({
     subjectId: string,

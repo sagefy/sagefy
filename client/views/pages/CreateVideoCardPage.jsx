@@ -9,6 +9,7 @@ import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
 export default function CreateVideoCardPage({
+  hash,
   role,
   query: { subjectId },
   subject: { name: subjectName, body: subjectBody },
@@ -17,6 +18,7 @@ export default function CreateVideoCardPage({
 }) {
   return (
     <Layout
+      hash={hash}
       page="CreateVideoCardPage"
       title={`Create a video card for ${subjectName}`}
       description={`Help us build Sagefy by making a video card for ${subjectName}.`}
@@ -103,6 +105,7 @@ export default function CreateVideoCardPage({
 }
 
 CreateVideoCardPage.propTypes = {
+  hash: string.isRequired,
   role: string,
   query: shape({
     subjectId: string,

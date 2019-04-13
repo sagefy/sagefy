@@ -8,6 +8,7 @@ import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
 export default function CreateUnscoredEmbedCardPage({
+  hash,
   role,
   query: { subjectId },
   subject: { name: subjectName, body: subjectBody },
@@ -16,6 +17,7 @@ export default function CreateUnscoredEmbedCardPage({
 }) {
   return (
     <Layout
+      hash={hash}
       page="CreateUnscoredEmbedCardPage"
       title={`Create an embed card for ${subjectName}`}
       description={`Help us build Sagefy by making a embed card for ${subjectName}.`}
@@ -100,6 +102,7 @@ export default function CreateUnscoredEmbedCardPage({
 }
 
 CreateUnscoredEmbedCardPage.propTypes = {
+  hash: string.isRequired,
   role: string,
   query: shape({
     subjectId: string,

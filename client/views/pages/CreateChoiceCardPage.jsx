@@ -11,6 +11,7 @@ import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
 export default function CreateChoiceCardPage({
+  hash,
   role,
   query: { subjectId },
   subject: { name: subjectName, body: subjectBody },
@@ -19,6 +20,7 @@ export default function CreateChoiceCardPage({
 }) {
   return (
     <Layout
+      hash={hash}
       page="CreateChoiceCardPage"
       title={`Create a choice card for ${subjectName}`}
       description={`Help us build Sagefy by making a multiple choice card for ${subjectName}.`}
@@ -142,6 +144,7 @@ export default function CreateChoiceCardPage({
 }
 
 CreateChoiceCardPage.propTypes = {
+  hash: string.isRequired,
   role: string,
   query: shape({
     subjectId: string,

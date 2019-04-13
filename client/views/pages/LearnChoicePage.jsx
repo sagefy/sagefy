@@ -7,6 +7,7 @@ import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
 export default function LearnChoicePage({
+  hash,
   progress,
   card: {
     name,
@@ -22,7 +23,7 @@ export default function LearnChoicePage({
     max_options_to_show
   )
   return (
-    <Layout page="LearnChoicePage" title="Learn" description="-">
+    <Layout hash={hash} page="LearnChoicePage" title="Learn" description="-">
       {progress && (
         <section>
           <progress value={progress} />
@@ -78,6 +79,7 @@ export default function LearnChoicePage({
 }
 
 LearnChoicePage.propTypes = {
+  hash: string.isRequired,
   progress: number,
   card: shape({
     name: string.isRequired,

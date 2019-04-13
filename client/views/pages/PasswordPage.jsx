@@ -1,13 +1,14 @@
 import React from 'react'
-import { shape, number } from 'prop-types'
+import { shape, number, string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
-export default function PasswordPage({ gqlErrors, state }) {
+export default function PasswordPage({ gqlErrors, state, hash }) {
   return (
     <Layout
+      hash={hash}
       page="PasswordPage"
       title="Change your password"
       description="Update your Sagefy account password. Log back into your account and get learning again today."
@@ -97,6 +98,7 @@ export default function PasswordPage({ gqlErrors, state }) {
 }
 
 PasswordPage.propTypes = {
+  hash: string.isRequired,
   gqlErrors: shape({}),
   state: number,
 }

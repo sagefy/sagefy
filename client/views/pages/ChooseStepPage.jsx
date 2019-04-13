@@ -5,9 +5,9 @@ import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import ChooseSubject from '../components/ChooseSubject'
 
-export default function ChooseNextPage({ subjects, role }) {
+export default function ChooseNextPage({ hash, subjects, role }) {
   return (
-    <Layout page="ChooseNextPage" title="Choose" description="-">
+    <Layout hash={hash} page="ChooseNextPage" title="Choose" description="-">
       <header className="m-yc">
         <p>
           <em>
@@ -56,6 +56,7 @@ export default function ChooseNextPage({ subjects, role }) {
 }
 
 ChooseNextPage.propTypes = {
+  hash: string.isRequired,
   subjects: arrayOf(
     shape({
       entityId: string.isRequired,

@@ -7,9 +7,9 @@ import Footer from '../components/Footer'
 import ChooseSubject from '../components/ChooseSubject'
 import CardSubjectInfo from '../components/CardSubjectInfo'
 
-export default function DashboardPage({ role, subjects, name }) {
+export default function DashboardPage({ role, subjects, name, hash }) {
   return (
-    <Layout page="DashboardPage" title="Dashboard" description="-">
+    <Layout hash={hash} page="DashboardPage" title="Dashboard" description="-">
       <section className="m-yc">
         <p>
           <em>
@@ -79,6 +79,7 @@ export default function DashboardPage({ role, subjects, name }) {
 }
 
 DashboardPage.propTypes = {
+  hash: string.isRequired,
   role: string,
   name: string,
   subjects: arrayOf(

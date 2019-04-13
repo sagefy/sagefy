@@ -94,6 +94,7 @@ ListOfCards.defaultProps = {
 }
 
 export default function SubjectPage({
+  hash,
   role,
   subject: {
     entityId: subjectEntityId,
@@ -109,7 +110,12 @@ export default function SubjectPage({
   },
 }) {
   return (
-    <Layout page="SubjectPage" title={subjectName} description={subjectBody}>
+    <Layout
+      hash={hash}
+      page="SubjectPage"
+      title={subjectName}
+      description={subjectBody}
+    >
       <header>
         <div className="m-yc">
           <p>
@@ -188,6 +194,7 @@ export default function SubjectPage({
 }
 
 SubjectPage.propTypes = {
+  hash: string.isRequired,
   role: string,
   subject: shape({
     entityId: string.isRequired,

@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
-export default function NotFoundPage() {
+export default function NotFoundPage({ hash }) {
   return (
     <Layout
+      hash={hash}
       page="NotFoundPage"
       title="Not Found"
       description="Sagefy did not find that page."
@@ -26,3 +28,5 @@ export default function NotFoundPage() {
     </Layout>
   )
 }
+
+NotFoundPage.propTypes = { hash: string.isRequired }

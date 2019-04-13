@@ -1,12 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import ExternalLink from '../components/ExternalLink'
 
-export default function ContactPage() {
+export default function ContactPage({ hash }) {
   return (
     <Layout
+      hash={hash}
       page="ContactPage"
       title="Contact"
       description="Need help? Contact Sagefy support."
@@ -66,3 +68,5 @@ export default function ContactPage() {
     </Layout>
   )
 }
+
+ContactPage.propTypes = { hash: string.isRequired }

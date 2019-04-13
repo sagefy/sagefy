@@ -6,6 +6,7 @@ import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
 export default function LearnVideoPage({
+  hash,
   progress,
   card: {
     name,
@@ -13,7 +14,7 @@ export default function LearnVideoPage({
   },
 }) {
   return (
-    <Layout page="LearnVideoPage" title="Learn" description="-">
+    <Layout hash={hash} page="LearnVideoPage" title="Learn" description="-">
       {progress && (
         <section>
           <progress value={progress} />
@@ -42,6 +43,7 @@ export default function LearnVideoPage({
 }
 
 LearnVideoPage.propTypes = {
+  hash: string.isRequired,
   progress: number,
   card: shape({
     name: string.isRequired,
