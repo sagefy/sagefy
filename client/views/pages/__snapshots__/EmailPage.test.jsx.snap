@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`EmailPage should render the EmailPage 0 1`] = `
-<div
-  className="EmailPage"
+<Layout
+  description="Update your email address for your Sagefy account."
+  page="EmailPage"
+  title="Change your email"
 >
   <FormErrorsTop
     formErrors={Object {}}
@@ -97,12 +99,14 @@ exports[`EmailPage should render the EmailPage 0 1`] = `
       </p>
     </form>
   </section>
-</div>
+</Layout>
 `;
 
 exports[`EmailPage should render the EmailPage 1 1`] = `
-<div
-  className="EmailPage"
+<Layout
+  description="Update your email address for your Sagefy account."
+  page="EmailPage"
+  title="Change your email"
 >
   <FormErrorsTop
     formErrors={Object {}}
@@ -155,12 +159,14 @@ exports[`EmailPage should render the EmailPage 1 1`] = `
       Please check your email inbox.
     </p>
   </section>
-</div>
+</Layout>
 `;
 
 exports[`EmailPage should render the EmailPage 2 1`] = `
-<div
-  className="EmailPage"
+<Layout
+  description="Update your email address for your Sagefy account."
+  page="EmailPage"
+  title="Change your email"
 >
   <FormErrorsTop
     formErrors={Object {}}
@@ -251,5 +257,5 @@ exports[`EmailPage should render the EmailPage 2 1`] = `
       </p>
     </form>
   </section>
-</div>
+</Layout>
 `;

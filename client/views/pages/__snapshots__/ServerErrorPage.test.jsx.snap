@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ServerErrorPage should render the ServerErrorPage 1`] = `
-<div
-  className="ServerErrorPage"
+<Layout
+  description="-"
+  page="ServerErrorPage"
+  title="Server error"
 >
   <section>
     <h1>
@@ -52,5 +54,5 @@ exports[`ServerErrorPage should render the ServerErrorPage 1`] = `
       and retry.
     </p>
   </section>
-</div>
+</Layout>
 `;

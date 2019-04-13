@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HomePage should render the home page 1`] = `
-<div
-  className="HomePage"
+<Layout
+  description="What do you want to learn? Learn for free, always. Any subject you want. And Sagefy saves you time and effort by adapting to what you know and where you want to go."
+  page="HomePage"
+  title="Learn anything, adapted for you. Free."
 >
   <section
     className="ta-c"
@@ -131,12 +133,14 @@ exports[`HomePage should render the home page 1`] = `
   <Footer
     role="sg_anonymous"
   />
-</div>
+</Layout>
 `;
 
 exports[`HomePage should render the logged in home page 1`] = `
-<div
-  className="HomePage"
+<Layout
+  description="What do you want to learn? Learn for free, always. Any subject you want. And Sagefy saves you time and effort by adapting to what you know and where you want to go."
+  page="HomePage"
+  title="Learn anything, adapted for you. Free."
 >
   <section
     className="ta-c"
@@ -253,5 +257,5 @@ exports[`HomePage should render the logged in home page 1`] = `
   <Footer
     role="sg_user"
   />
-</div>
+</Layout>
 `;

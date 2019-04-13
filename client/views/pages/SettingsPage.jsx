@@ -1,13 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { shape } from 'prop-types'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
 export default function SettingsPage({ gqlErrors, body: { id, name } }) {
   return (
-    <div className="EmailPage">
+    <Layout page="SettingsPage" title="Settings" description="-">
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
 
@@ -62,7 +63,7 @@ export default function SettingsPage({ gqlErrors, body: { id, name } }) {
           </p>
         </form>
       </section>
-    </div>
+    </Layout>
   )
 }
 

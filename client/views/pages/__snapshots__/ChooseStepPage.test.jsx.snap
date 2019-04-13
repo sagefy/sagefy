@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ChooseStepPage should render ChooseStepPage 1`] = `
-<div
-  className="ChooseNextPage"
+<Layout
+  description="-"
+  page="ChooseNextPage"
+  title="Choose"
 >
   <header
     className="m-yc"
@@ -54,5 +56,5 @@ exports[`ChooseStepPage should render ChooseStepPage 1`] = `
       </small>
     </p>
   </section>
-</div>
+</Layout>
 `;

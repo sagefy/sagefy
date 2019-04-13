@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { shape } from 'prop-types'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
@@ -11,7 +12,11 @@ export default function SignUpPage({
   query: { redirect },
 }) {
   return (
-    <div className="SignUpPage">
+    <Layout
+      page="SignUpPage"
+      title="Join Sagefy"
+      description="Get access to the best learning content with your Sagefy account. Continue where you left off on your learning journey."
+    >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
 
@@ -84,7 +89,7 @@ export default function SignUpPage({
           </p>
         </form>
       </section>
-    </div>
+    </Layout>
   )
 }
 

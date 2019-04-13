@@ -1,10 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
 export default function NotFoundPage() {
   return (
-    <div className="NotFoundPage">
+    <Layout
+      page="NotFoundPage"
+      title="Not Found"
+      description="Sagefy did not find that page."
+    >
       <section>
         <h1>
           I couldn&apos;t find that page <Icon i="error" s="xxl" />
@@ -18,6 +23,6 @@ export default function NotFoundPage() {
           </Link>
         </p>
       </section>
-    </div>
+    </Layout>
   )
 }

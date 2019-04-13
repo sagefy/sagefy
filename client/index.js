@@ -26,9 +26,6 @@ const LEARN_COOKIE_PARAMS = {
   maxAge: 1000 * 60 * 60, // 1 hour in milliseconds
 }
 
-const cacheHash =
-  process.env.NODE_ENV === 'test' ? '_' : Date.now().toString(36)
-
 require('express-async-errors')
 
 const app = express()
@@ -84,7 +81,6 @@ function isAnonymous(req, res, next) {
 
 function formatData(req) {
   return {
-    cacheHash,
     url: req.url,
     query: req.query,
     body: req.body,

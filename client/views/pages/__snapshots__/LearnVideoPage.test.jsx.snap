@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LearnVideoPage should render LearnVideoPage 1`] = `
-<div
-  className="LearnVideoPage"
+<Layout
+  description="-"
+  page="LearnVideoPage"
+  title="Learn"
 >
   <section>
     <iframe
@@ -27,5 +29,5 @@ exports[`LearnVideoPage should render LearnVideoPage 1`] = `
       </button>
     </form>
   </section>
-</div>
+</Layout>
 `;

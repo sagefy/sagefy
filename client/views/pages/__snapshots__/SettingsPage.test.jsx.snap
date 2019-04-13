@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SettingsPage should render the SettingsPage 1`] = `
-<div
-  className="EmailPage"
+<Layout
+  description="-"
+  page="SettingsPage"
+  title="Settings"
 >
   <FormErrorsTop
     formErrors={Object {}}
@@ -86,5 +88,5 @@ exports[`SettingsPage should render the SettingsPage 1`] = `
       </p>
     </form>
   </section>
-</div>
+</Layout>
 `;

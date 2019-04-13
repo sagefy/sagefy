@@ -2,6 +2,7 @@ import React from 'react'
 import { string, shape } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import { Link } from 'react-router-dom'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
 export default function CreateCardPage({
@@ -11,7 +12,11 @@ export default function CreateCardPage({
 }) {
   const kindLink = kind => `/create-${kind}-card?subjectId=${subjectId}`
   return (
-    <div className="CreateCardPage">
+    <Layout
+      page="CreateCardPage"
+      title={`Create Card for ${subjectName}`}
+      description={`Help Sagefy grow by helping us make new cards for ${subjectName}`}
+    >
       <header className="m-yc">
         <p>
           <em>
@@ -81,7 +86,7 @@ export default function CreateCardPage({
           </p>
         </section>
       )}
-    </div>
+    </Layout>
   )
 }
 

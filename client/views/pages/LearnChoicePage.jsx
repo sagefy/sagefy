@@ -3,6 +3,7 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import { string, number, shape, objectOf, bool } from 'prop-types'
 import { shuffle } from 'shuffle-seed'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
 export default function LearnChoicePage({
@@ -21,7 +22,7 @@ export default function LearnChoicePage({
     max_options_to_show
   )
   return (
-    <div className="LearnChoicePage">
+    <Layout page="LearnChoicePage" title="Learn" description="-">
       {progress && (
         <section>
           <progress value={progress} />
@@ -72,7 +73,7 @@ export default function LearnChoicePage({
           )}
         </section>
       </form>
-    </div>
+    </Layout>
   )
 }
 

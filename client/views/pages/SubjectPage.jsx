@@ -4,6 +4,7 @@ import { string, shape, arrayOf, number } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import get from 'lodash.get'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 
@@ -108,7 +109,7 @@ export default function SubjectPage({
   },
 }) {
   return (
-    <div className="SubjectPage">
+    <Layout page="SubjectPage" title={subjectName} description={subjectBody}>
       <header>
         <div className="m-yc">
           <p>
@@ -182,7 +183,7 @@ export default function SubjectPage({
       )}
 
       <Footer role={role} />
-    </div>
+    </Layout>
   )
 }
 

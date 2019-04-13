@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DashboardPage should render the dashboard page 1`] = `
-<div
-  className="DashboardPage"
+<Layout
+  description="-"
+  page="DashboardPage"
+  title="Dashboard"
 >
   <section
     className="m-yc"
@@ -66,5 +68,5 @@ exports[`DashboardPage should render the dashboard page 1`] = `
   <Footer
     role="sg_anonymous"
   />
-</div>
+</Layout>
 `;

@@ -2,6 +2,7 @@ import React from 'react'
 import { string, shape } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import { Link } from 'react-router-dom'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import ExternalLink from '../components/ExternalLink'
 import FormErrorsTop from '../components/FormErrorsTop'
@@ -15,7 +16,11 @@ export default function CreatePageCardPage({
   gqlErrors,
 }) {
   return (
-    <div className="CreatePageCardPage">
+    <Layout
+      page="CreatePageCardPage"
+      title={`Create a choice page for ${subjectName}`}
+      description={`Help us build Sagefy by making a written document page card for ${subjectName}.`}
+    >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
       <header className="m-yc">
@@ -99,7 +104,7 @@ export default function CreatePageCardPage({
           </p>
         </section>
       )}
-    </div>
+    </Layout>
   )
 }
 

@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LearnChoicePage should render LearnChoicePage 1`] = `
-<div
-  className="LearnChoicePage"
+<Layout
+  description="-"
+  page="LearnChoicePage"
+  title="Learn"
 >
   <form
     action=""
@@ -43,5 +45,5 @@ exports[`LearnChoicePage should render LearnChoicePage 1`] = `
       </button>
     </section>
   </form>
-</div>
+</Layout>
 `;

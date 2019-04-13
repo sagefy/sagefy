@@ -1,5 +1,6 @@
 import React from 'react'
 import { number, string, shape } from 'prop-types'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
 export default function LearnUnscoredEmbedPage({
@@ -10,7 +11,7 @@ export default function LearnUnscoredEmbedPage({
   },
 }) {
   return (
-    <div className="LearnUnscoredEmbedPage">
+    <Layout page="LearnUnscoredEmbedPage" title="Learn" description="-">
       {progress && (
         <section>
           <progress value={progress} />
@@ -28,7 +29,7 @@ export default function LearnUnscoredEmbedPage({
           </button>
         </form>
       </section>
-    </div>
+    </Layout>
   )
 }
 

@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NotFoundPage should render the not found page 1`] = `
-<div
-  className="NotFoundPage"
+<Layout
+  description="Sagefy did not find that page."
+  page="NotFoundPage"
+  title="Not Found"
 >
   <section>
     <h1>
@@ -38,5 +40,5 @@ exports[`NotFoundPage should render the not found page 1`] = `
       </Link>
     </p>
   </section>
-</div>
+</Layout>
 `;

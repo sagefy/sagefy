@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { string, shape, arrayOf } from 'prop-types'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ExternalLink from '../components/ExternalLink'
@@ -8,7 +9,11 @@ import ChooseSubject from '../components/ChooseSubject'
 
 export default function HomePage({ role, subjects }) {
   return (
-    <div className="HomePage">
+    <Layout
+      page="HomePage"
+      title="Learn anything, adapted for you. Free."
+      description="What do you want to learn? Learn for free, always. Any subject you want. And Sagefy saves you time and effort by adapting to what you know and where you want to go."
+    >
       <section className="ta-c">
         <h1>
           What do you want to learn? <Icon i="search" s="xxl" />
@@ -99,7 +104,7 @@ export default function HomePage({ role, subjects }) {
       </section>
 
       <Footer role={role} />
-    </div>
+    </Layout>
   )
 }
 

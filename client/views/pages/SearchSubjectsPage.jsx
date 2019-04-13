@@ -1,5 +1,6 @@
 import React from 'react'
 import { string, shape, arrayOf } from 'prop-types'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ChooseSubject from '../components/ChooseSubject'
@@ -7,7 +8,11 @@ import CreateSubject from '../components/CreateSubject'
 
 export default function SearchSubjectsPage({ role, query: { q }, subjects }) {
   return (
-    <div className="SearchSubjectsPage">
+    <Layout
+      page="SearchSubjectsPage"
+      title="Search subjects"
+      description="Find the learning subject you are looking for. Anything you want to learn, Sagefy can help you."
+    >
       <section className="ta-c">
         <h1>
           What do you want to learn? <Icon i="search" s="xxl" />
@@ -62,7 +67,7 @@ export default function SearchSubjectsPage({ role, query: { q }, subjects }) {
       {/* TODO when !q, show popular subjects here */}
 
       <Footer role={role} />
-    </div>
+    </Layout>
   )
 }
 

@@ -4,6 +4,7 @@ import { string, shape } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import { Link } from 'react-router-dom'
 import get from 'lodash.get'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import ExternalLink from '../components/ExternalLink'
 import FormErrorsTop from '../components/FormErrorsTop'
@@ -17,7 +18,11 @@ export default function CreateChoiceCardPage({
   gqlErrors,
 }) {
   return (
-    <div className="CreateChoiceCardPage">
+    <Layout
+      page="CreateChoiceCardPage"
+      title={`Create a choice card for ${subjectName}`}
+      description={`Help us build Sagefy by making a multiple choice card for ${subjectName}.`}
+    >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
       <header className="m-yc">
@@ -132,7 +137,7 @@ export default function CreateChoiceCardPage({
           </p>
         </section>
       )}
-    </div>
+    </Layout>
   )
 }
 

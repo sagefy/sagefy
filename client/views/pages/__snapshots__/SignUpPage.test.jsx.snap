@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SignUpPage should render the sign up page 1`] = `
-<div
-  className="SignUpPage"
+<Layout
+  description="Get access to the best learning content with your Sagefy account. Continue where you left off on your learning journey."
+  page="SignUpPage"
+  title="Join Sagefy"
 >
   <FormErrorsTop
     formErrors={Object {}}
@@ -127,5 +129,5 @@ exports[`SignUpPage should render the sign up page 1`] = `
       </p>
     </form>
   </section>
-</div>
+</Layout>
 `;

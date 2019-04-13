@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ContactPage should render the contact page 1`] = `
-<div
-  className="ContactPage"
+<Layout
+  description="Need help? Contact Sagefy support."
+  page="ContactPage"
+  title="Contact"
 >
   <section>
     <h1>
@@ -93,6 +95,7 @@ exports[`ContactPage should render the contact page 1`] = `
           />
            Send us an email
         </a>
+        .
       </li>
     </ul>
     <p>
@@ -109,5 +112,5 @@ exports[`ContactPage should render the contact page 1`] = `
       </Link>
     </p>
   </section>
-</div>
+</Layout>
 `;

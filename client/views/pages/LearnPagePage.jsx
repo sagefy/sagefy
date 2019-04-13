@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import { number, string, shape } from 'prop-types'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
 export default function LearnPagePage({
@@ -11,7 +12,7 @@ export default function LearnPagePage({
   },
 }) {
   return (
-    <div className="LearnPagePage">
+    <Layout page="LearnPagePage" title="Learn" description="-">
       {progress && (
         <section>
           <progress value={progress} />
@@ -30,7 +31,7 @@ export default function LearnPagePage({
           </button>
         </form>
       </section>
-    </div>
+    </Layout>
   )
 }
 

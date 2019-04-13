@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LogInPage should render the LogInPage 1`] = `
-<div
-  className="LogInPage"
+<Layout
+  description="Log in to Sagefy. Continue learning your subjects. And help us make new content to grow Sagefy."
+  page="LogInPage"
+  title="Log In"
 >
   <FormErrorsTop
     formErrors={Object {}}
@@ -103,5 +105,5 @@ exports[`LogInPage should render the LogInPage 1`] = `
       </p>
     </form>
   </section>
-</div>
+</Layout>
 `;

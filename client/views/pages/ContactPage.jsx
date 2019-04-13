@@ -1,11 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import ExternalLink from '../components/ExternalLink'
 
 export default function ContactPage() {
   return (
-    <div className="ContactPage">
+    <Layout
+      page="ContactPage"
+      title="Contact"
+      description="Need help? Contact Sagefy support."
+    >
       <section>
         <h1>
           Need help? <Icon i="contact" s="xxl" />
@@ -49,6 +54,7 @@ export default function ContactPage() {
             <a href="mailto:support@sagefy.org">
               <Icon i="contact" /> Send us an email
             </a>
+            .
           </li>
         </ul>
         <p>
@@ -57,6 +63,6 @@ export default function ContactPage() {
           </Link>
         </p>
       </section>
-    </div>
+    </Layout>
   )
 }

@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SearchSubjectsPage should render the search subjects page 1`] = `
-<div
-  className="SearchSubjectsPage"
+<Layout
+  description="Find the learning subject you are looking for. Anything you want to learn, Sagefy can help you."
+  page="SearchSubjectsPage"
+  title="Search subjects"
 >
   <section
     className="ta-c"
@@ -42,5 +44,5 @@ exports[`SearchSubjectsPage should render the search subjects page 1`] = `
   <Footer
     role="sg_anonymous"
   />
-</div>
+</Layout>
 `;

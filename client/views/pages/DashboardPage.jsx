@@ -1,6 +1,7 @@
 import React from 'react'
 import { string, shape, arrayOf } from 'prop-types'
 // import { Link } from 'react-router-dom'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ChooseSubject from '../components/ChooseSubject'
@@ -8,7 +9,7 @@ import CardSubjectInfo from '../components/CardSubjectInfo'
 
 export default function DashboardPage({ role, subjects, name }) {
   return (
-    <div className="DashboardPage">
+    <Layout page="DashboardPage" title="Dashboard" description="-">
       <section className="m-yc">
         <p>
           <em>
@@ -73,7 +74,7 @@ export default function DashboardPage({ role, subjects, name }) {
       <CardSubjectInfo />
 
       <Footer role={role} />
-    </div>
+    </Layout>
   )
 }
 

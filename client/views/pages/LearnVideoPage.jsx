@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { string, shape, number } from 'prop-types'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
 export default function LearnVideoPage({
@@ -12,7 +13,7 @@ export default function LearnVideoPage({
   },
 }) {
   return (
-    <div className="LearnVideoPage">
+    <Layout page="LearnVideoPage" title="Learn" description="-">
       {progress && (
         <section>
           <progress value={progress} />
@@ -36,7 +37,7 @@ export default function LearnVideoPage({
           </button>
         </form>
       </section>
-    </div>
+    </Layout>
   )
 }
 

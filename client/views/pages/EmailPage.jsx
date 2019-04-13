@@ -1,12 +1,17 @@
 import React from 'react'
 import { shape, number } from 'prop-types'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
 export default function EmailPage({ gqlErrors, state }) {
   return (
-    <div className="EmailPage">
+    <Layout
+      page="EmailPage"
+      title="Change your email"
+      description="Update your email address for your Sagefy account."
+    >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
 
@@ -87,7 +92,7 @@ export default function EmailPage({ gqlErrors, state }) {
           </form>
         )}
       </section>
-    </div>
+    </Layout>
   )
 }
 

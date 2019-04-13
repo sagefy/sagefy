@@ -3,6 +3,7 @@ import React from 'react'
 import { string, shape } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import { Link } from 'react-router-dom'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
@@ -15,7 +16,11 @@ export default function CreateVideoCardPage({
   gqlErrors,
 }) {
   return (
-    <div className="CreateVideoCardPage">
+    <Layout
+      page="CreateVideoCardPage"
+      title={`Create a video card for ${subjectName}`}
+      description={`Help us build Sagefy by making a video card for ${subjectName}.`}
+    >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
       <header className="m-yc">
@@ -93,7 +98,7 @@ export default function CreateVideoCardPage({
           </p>
         </section>
       )}
-    </div>
+    </Layout>
   )
 }
 

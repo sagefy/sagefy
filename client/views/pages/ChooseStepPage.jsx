@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { arrayOf, shape, string } from 'prop-types'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import ChooseSubject from '../components/ChooseSubject'
 
 export default function ChooseNextPage({ subjects, role }) {
   return (
-    <div className="ChooseNextPage">
+    <Layout page="ChooseNextPage" title="Choose" description="-">
       <header className="m-yc">
         <p>
           <em>
@@ -50,7 +51,7 @@ export default function ChooseNextPage({ subjects, role }) {
           </small>
         </p>
       </section>
-    </div>
+    </Layout>
   )
 }
 

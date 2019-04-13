@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
 export default function TermsPage() {
   return (
-    <div className="TermsPage">
+    <Layout page="TermsPage" title="Terms and Privacy" description="-">
       <header>
         <p>
           <Link to="/">
@@ -187,6 +188,6 @@ export default function TermsPage() {
         </p>
         <p>Notices and counter-notices must meet statutory requirements</p>
       </section>
-    </div>
+    </Layout>
   )
 }

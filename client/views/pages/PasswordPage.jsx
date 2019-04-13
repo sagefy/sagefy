@@ -1,12 +1,17 @@
 import React from 'react'
 import { shape, number } from 'prop-types'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import FormErrorsTop from '../components/FormErrorsTop'
 import FormErrorsField from '../components/FormErrorsField'
 
 export default function PasswordPage({ gqlErrors, state }) {
   return (
-    <div className="PasswordPage">
+    <Layout
+      page="PasswordPage"
+      title="Change your password"
+      description="Update your Sagefy account password. Log back into your account and get learning again today."
+    >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
 
@@ -87,7 +92,7 @@ export default function PasswordPage({ gqlErrors, state }) {
           </form>
         )}
       </section>
-    </div>
+    </Layout>
   )
 }
 

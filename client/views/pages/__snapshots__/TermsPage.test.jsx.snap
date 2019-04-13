@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TermsPage should render the terms page 1`] = `
-<div
-  className="TermsPage"
+<Layout
+  description="-"
+  page="TermsPage"
+  title="Terms and Privacy"
 >
   <header>
     <p>
@@ -244,5 +246,5 @@ exports[`TermsPage should render the terms page 1`] = `
       Notices and counter-notices must meet statutory requirements
     </p>
   </section>
-</div>
+</Layout>
 `;

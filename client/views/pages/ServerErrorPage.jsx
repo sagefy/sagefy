@@ -2,11 +2,12 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
 export default function ServerErrorPage() {
   return (
-    <div className="ServerErrorPage">
+    <Layout page="ServerErrorPage" title="Server error" description="-">
       <section>
         <h1>
           I couldn&apos;t make that happen <Icon i="error" s="xxl" />
@@ -25,6 +26,6 @@ export default function ServerErrorPage() {
           and retry.
         </p>
       </section>
-    </div>
+    </Layout>
   )
 }
