@@ -41,7 +41,7 @@ title: Technology Stack
 
 ## Logging, Monitoring, Reporting, Alerting, Analytics
 
-- [Pingdom](https://www.pingdom.com/)
+- [Freshping](https://www.freshworks.com/website-monitoring/)
 
 ## Management
 
