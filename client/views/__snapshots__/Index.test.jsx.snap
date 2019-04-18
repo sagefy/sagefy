@@ -8,6 +8,26 @@ exports[`Index view should render a page 1`] = `
 >
   <Switch>
     <Route
+      path="/users/:userId"
+      render={[Function]}
+    />
+    <Route
+      path="/video-cards/:cardId"
+      render={[Function]}
+    />
+    <Route
+      path="/page-cards/:cardId"
+      render={[Function]}
+    />
+    <Route
+      path="/unscored-embed-cards/:cardId"
+      render={[Function]}
+    />
+    <Route
+      path="/choice-cards/:cardId"
+      render={[Function]}
+    />
+    <Route
       path="/subjects/:subjectId"
       render={[Function]}
     />
