@@ -87,9 +87,9 @@ const MAP = {
 const SIZES = {
   s: 14,
   m: 16,
-  l: 16,
-  xl: 24,
-  xxl: 32,
+  h3: 16,
+  h2: 24,
+  h1: 32,
 }
 
 export default function Icon({ i, s = 'm', ...props }) {

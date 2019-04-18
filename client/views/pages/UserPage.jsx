@@ -56,13 +56,17 @@ export default function UserPage({
         {/* TODO stats */}
       </header>
 
-      <section>
-        <hr />
-        <h2>
-          How I helped build Sagefy <Icon i="cheer" s="xl" />
-        </h2>
-        <hr />
-      </section>
+      {subjectVersionsByUserId.nodes.length ||
+      cardVersionsByUserId.nodes.length ? (
+        <section>
+          <hr />
+          <h2>
+            How I helped build Sagefy <Icon i="cheer" s="h2" />
+          </h2>
+          <hr />
+        </section>
+      ) : null}
+
       {subjectVersionsByUserId.nodes.length ? (
         <section>
           <ListOfSubjects
@@ -76,7 +80,7 @@ export default function UserPage({
       {cardVersionsByUserId.nodes.length ? (
         <section>
           <h2>
-            Card versions I made <Icon i="card" s="l" />
+            Card versions I made <Icon i="card" s="h2" />
           </h2>
           <ul>
             <ListOfCards cards={cardVersionsByUserId.nodes} kind="VIDEO" />

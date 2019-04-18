@@ -19,7 +19,7 @@ export default function TermsPage({ hash }) {
           </Link>
         </p>
         <h1>
-          Terms &amp; Privacy <Icon i="terms" s="xxl" />
+          Terms &amp; Privacy <Icon i="terms" s="h1" />
         </h1>
       </header>
       <section>

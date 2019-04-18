@@ -14,7 +14,7 @@ export default function SettingsPage({ hash, gqlErrors, body: { id, name } }) {
 
       <section>
         <h1>
-          Update your settings <Icon i="settings" s="xxl" />
+          Update your settings <Icon i="settings" s="h1" />
         </h1>
         <p>
           <Link to="/password">

@@ -25,7 +25,7 @@ exports[`DashboardPage should render the dashboard page 1`] = `
       What do you want to learn? 
       <Icon
         i="dashboard"
-        s="xxl"
+        s="h1"
       />
     </h1>
   </section>
@@ -36,7 +36,7 @@ exports[`DashboardPage should render the dashboard page 1`] = `
       Let's get you some subjects! 
       <Icon
         i="search"
-        s="xl"
+        s="h2"
       />
     </h2>
     <form

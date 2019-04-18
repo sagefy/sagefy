@@ -19,7 +19,7 @@ export default function CreateSubjectPage({
     >
       <section>
         <h1>
-          Let&apos;s make a new subject! <Icon i="subject" s="xxl" />
+          Let&apos;s make a new subject! <Icon i="subject" s="h1" />
         </h1>
         <CreateSubject
           role={role}

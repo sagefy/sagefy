@@ -24,7 +24,7 @@ export default function SignUpPage({
 
       <section>
         <h1>
-          Join Sagefy <Icon i="signUp" s="xxl" />
+          Join Sagefy <Icon i="signUp" s="h1" />
         </h1>
 
         <p>

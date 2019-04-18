@@ -78,7 +78,7 @@ export default function SubjectPage({
       {subjectDetails && (
         <section>
           <h2>
-            More about &quot;{subjectName}&quot; <Icon s="xl" i="cheer" />
+            More about &quot;{subjectName}&quot; <Icon s="h2" i="cheer" />
           </h2>
           <ReactMarkdown source={subjectDetails} />
         </section>
@@ -101,7 +101,7 @@ export default function SubjectPage({
       {cardCount > 0 && (
         <section>
           <h2>
-            {cardCount} cards <Icon i="card" s="xl" /> in &quot;{subjectName}
+            {cardCount} cards <Icon i="card" s="h2" /> in &quot;{subjectName}
             &quot;
           </h2>
           <ul>

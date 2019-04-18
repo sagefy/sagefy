@@ -16,7 +16,7 @@ export default function ServerErrorPage({ hash }) {
     >
       <section>
         <h1>
-          I couldn&apos;t make that happen <Icon i="error" s="xxl" />
+          I couldn&apos;t make that happen <Icon i="error" s="h1" />
         </h1>
         <p>
           <Icon i="error" /> 500 Server Error <Icon i="error" />{' '}

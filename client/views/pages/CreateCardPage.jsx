@@ -26,7 +26,7 @@ export default function CreateCardPage({
           </em>
         </p>
         <h1 className="d-ib">
-          Make a new card <Icon i="card" s="xxl" />
+          Make a new card <Icon i="card" s="h1" />
         </h1>{' '}
         <p className="d-ib">
           <em>for the subject&hellip;</em>

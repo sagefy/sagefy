@@ -19,19 +19,19 @@ export default function DashboardPage({ role, subjects, name, hash }) {
         </p>
         {/* TODO copy should change based on state */}
         <h1>
-          What do you want to learn? <Icon i="dashboard" s="xxl" />
+          What do you want to learn? <Icon i="dashboard" s="h1" />
         </h1>
       </section>
 
       {subjects && subjects.length ? (
         <section>
           <h2>
-            Choose one of your subjects <Icon i="subject" s="xl" />
+            Choose one of your subjects <Icon i="subject" s="h2" />
           </h2>
           <ChooseSubject subjects={subjects} level="goal" />
           <div className="m-yc">
             <h3>
-              &hellip;or how about something else? <Icon i="search" s="l" />
+              &hellip;or how about something else? <Icon i="search" s="h3" />
             </h3>
             <form action="/search-subjects">
               <input
@@ -49,7 +49,7 @@ export default function DashboardPage({ role, subjects, name, hash }) {
       ) : (
         <section className="ta-c">
           <h2>
-            Let&apos;s get you some subjects! <Icon i="search" s="xl" />
+            Let&apos;s get you some subjects! <Icon i="search" s="h2" />
           </h2>
           {/* TODO If the user has no subjects, then also list popular subjects here */}
           <form action="/search-subjects">

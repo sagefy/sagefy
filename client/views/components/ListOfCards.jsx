@@ -39,7 +39,8 @@ export default function ListOfCards({ cards, kind }) {
   return (
     <li>
       <h3>
-        {get(CARD_KIND_NAME, kind)} <Icon i={get(CARD_KIND_ICON, kind)} s="l" />
+        {get(CARD_KIND_NAME, kind)}{' '}
+        <Icon i={get(CARD_KIND_ICON, kind)} s="h3" />
       </h3>
       <ul>
         {kCards.map(({ name, entityId }) => (

@@ -13,7 +13,7 @@ exports[`HomePage should render the home page 1`] = `
       What do you want to learn? 
       <Icon
         i="search"
-        s="xxl"
+        s="h1"
       />
     </h1>
     <form
@@ -149,7 +149,7 @@ exports[`HomePage should render the logged in home page 1`] = `
       What do you want to learn? 
       <Icon
         i="search"
-        s="xxl"
+        s="h1"
       />
     </h1>
     <form

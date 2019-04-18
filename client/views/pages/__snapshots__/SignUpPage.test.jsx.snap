@@ -18,7 +18,7 @@ exports[`SignUpPage should render the sign up page 1`] = `
       Join Sagefy 
       <Icon
         i="signUp"
-        s="xxl"
+        s="h1"
       />
     </h1>
     <p>

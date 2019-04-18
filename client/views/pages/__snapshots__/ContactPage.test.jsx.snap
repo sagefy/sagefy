@@ -11,7 +11,7 @@ exports[`ContactPage should render the contact page 1`] = `
       Need help? 
       <Icon
         i="contact"
-        s="xxl"
+        s="h1"
       />
     </h1>
     <ul>

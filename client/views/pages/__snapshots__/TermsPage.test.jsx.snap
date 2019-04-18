@@ -24,7 +24,7 @@ exports[`TermsPage should render the terms page 1`] = `
       Terms & Privacy 
       <Icon
         i="terms"
-        s="xxl"
+        s="h1"
       />
     </h1>
   </header>

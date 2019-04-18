@@ -15,7 +15,7 @@ export default function ContactPage({ hash }) {
     >
       <section>
         <h1>
-          Need help? <Icon i="contact" s="xxl" />
+          Need help? <Icon i="contact" s="h1" />
         </h1>
         <ul>
           <li>

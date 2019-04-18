@@ -21,7 +21,7 @@ export default function SearchSubjectsPage({
     >
       <section className="ta-c">
         <h1>
-          What do you want to learn? <Icon i="search" s="xxl" />
+          What do you want to learn? <Icon i="search" s="h1" />
         </h1>
         <form action="/search-subjects">
           <p>
@@ -45,7 +45,7 @@ export default function SearchSubjectsPage({
       {subjects && subjects.length ? (
         <section>
           <h2>
-            Choose from one of these subjects <Icon i="subject" s="xl" />
+            Choose from one of these subjects <Icon i="subject" s="h2" />
           </h2>
           <ChooseSubject subjects={subjects} level="goal" />
         </section>
@@ -61,7 +61,7 @@ export default function SearchSubjectsPage({
           <details open={!subjects || !subjects.length}>
             <summary>
               <h2 className="d-i">
-                You can suggest a new subject <Icon i="subject" s="xl" />
+                You can suggest a new subject <Icon i="subject" s="h2" />
               </h2>
             </summary>
 

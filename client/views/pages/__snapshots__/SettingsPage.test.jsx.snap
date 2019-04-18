@@ -18,7 +18,7 @@ exports[`SettingsPage should render the SettingsPage 1`] = `
       Update your settings 
       <Icon
         i="settings"
-        s="xxl"
+        s="h1"
       />
     </h1>
     <p>

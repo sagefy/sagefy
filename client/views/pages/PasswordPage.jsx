@@ -18,7 +18,7 @@ export default function PasswordPage({ gqlErrors, state, hash }) {
 
       <section>
         <h1>
-          Change your password <Icon i="password" s="xxl" />
+          Change your password <Icon i="password" s="h1" />
         </h1>
 
         <ol>

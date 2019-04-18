@@ -6,7 +6,7 @@ exports[`Icon component should render an icon 1`] = `
 >
   <Home
     color="currentColor"
-    size={32}
+    size="24"
   />
 </i>
 `;

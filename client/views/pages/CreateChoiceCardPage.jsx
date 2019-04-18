@@ -34,7 +34,7 @@ export default function CreateChoiceCardPage({
           </em>
         </p>
         <h1 className="d-ib">
-          Make a new choice card <Icon i="card" s="xxl" />
+          Make a new choice card <Icon i="card" s="h1" />
         </h1>{' '}
         <p className="d-ib">
           <em>for the subject&hellip;</em>

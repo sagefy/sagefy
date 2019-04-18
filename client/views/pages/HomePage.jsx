@@ -17,7 +17,7 @@ export default function HomePage({ hash, role, subjects }) {
     >
       <section className="ta-c">
         <h1>
-          What do you want to learn? <Icon i="search" s="xxl" />
+          What do you want to learn? <Icon i="search" s="h1" />
         </h1>
         <form action="/search-subjects">
           <p>
@@ -67,7 +67,7 @@ export default function HomePage({ hash, role, subjects }) {
       {subjects && subjects.length ? (
         <section>
           <h2>
-            &hellip;or try something popular <Icon i="popular" s="xl" />
+            &hellip;or try something popular <Icon i="popular" s="h2" />
           </h2>
           <ChooseSubject subjects={subjects} level="goal" />
         </section>

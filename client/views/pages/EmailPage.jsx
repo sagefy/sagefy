@@ -18,7 +18,7 @@ export default function EmailPage({ gqlErrors, state, hash }) {
 
       <section>
         <h1>
-          Change your email <Icon i="email" s="xxl" />
+          Change your email <Icon i="email" s="h1" />
         </h1>
 
         <ol>

@@ -13,7 +13,7 @@ exports[`SearchSubjectsPage should render the search subjects page 1`] = `
       What do you want to learn? 
       <Icon
         i="search"
-        s="xxl"
+        s="h1"
       />
     </h1>
     <form

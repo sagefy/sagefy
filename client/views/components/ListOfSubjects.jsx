@@ -17,7 +17,7 @@ export default function ListOfSubjects({ subjects, title, icon }) {
   return (
     <section>
       <h2>
-        {title} <Icon i={icon} s="xl" />
+        {title} <Icon i={icon} s="h2" />
       </h2>
       <ul>
         {subjects.map(({ entityId, name, body }) => (

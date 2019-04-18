@@ -14,7 +14,7 @@ export default function NotFoundPage({ hash }) {
     >
       <section>
         <h1>
-          I couldn&apos;t find that page <Icon i="error" s="xxl" />
+          I couldn&apos;t find that page <Icon i="error" s="h1" />
         </h1>
         <p>
           <Icon i="error" /> 404 Not Found <Icon i="error" />{' '}

@@ -24,7 +24,7 @@ export default function LogInPage({
 
       <section>
         <h1>
-          Log in to Sagefy <Icon i="logIn" s="xxl" />
+          Log in to Sagefy <Icon i="logIn" s="h1" />
         </h1>
 
         <p>
