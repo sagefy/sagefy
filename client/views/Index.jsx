@@ -26,6 +26,11 @@ import CreatePageCardPage from './pages/CreatePageCardPage'
 import CreateVideoCardPage from './pages/CreateVideoCardPage'
 import CreateUnscoredEmbedCardPage from './pages/CreateUnscoredEmbedCardPage'
 import SubjectPage from './pages/SubjectPage'
+import VideoCardPage from './pages/VideoCardPage'
+import PageCardPage from './pages/PageCardPage'
+import UnscoredEmbedCardPage from './pages/UnscoredEmbedCardPage'
+import ChoiceCardPage from './pages/ChoiceCardPage'
+import UserPage from './pages/UserPage'
 
 export default function Index(props) {
   const { url } = props
@@ -33,6 +38,17 @@ export default function Index(props) {
   return (
     <StaticRouter context={{}} location={url}>
       <Switch>
+        <Route path="/users/:userId" render={withProps(UserPage)} />
+        <Route path="/video-cards/:cardId" render={withProps(VideoCardPage)} />
+        <Route path="/page-cards/:cardId" render={withProps(PageCardPage)} />
+        <Route
+          path="/unscored-embed-cards/:cardId"
+          render={withProps(UnscoredEmbedCardPage)}
+        />
+        <Route
+          path="/choice-cards/:cardId"
+          render={withProps(ChoiceCardPage)}
+        />
         <Route path="/subjects/:subjectId" render={withProps(SubjectPage)} />
         <Route path="/choose-step" render={withProps(ChooseStepPage)} />
         <Route path="/learn-video/:cardId" render={withProps(LearnVideoPage)} />

@@ -1,27 +1,3 @@
------- Users > Functions -------------------------------------------------------
-
-create function sg_public.user_md5_email(user sg_public.user)
-returns text as $$
-  select md5(lower(trim(email)))
-  from sg_private.user
-  where user_id = user.id
-  limit 1;
-$$ language sql stable;
-comment on function sg_public.user_md5_email(sg_public.user)
-  is 'The user''s email address as an MD5 hash, for Gravatars. '
-     'See https://bit.ly/2F6cR0M';
-grant execute on function sg_public.user_md5_email(sg_public.user)
-  to sg_anonymous, sg_user, sg_admin;
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -720,6 +720,200 @@ COMMENT ON FUNCTION sg_public.card_by_entity_id(entity_id uuid) IS 'Get the late
 
 
 --
+-- Name: subject_version; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.subject_version (
+    version_id uuid NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    entity_id uuid NOT NULL,
+    previous_version_id uuid,
+    language character varying(5) DEFAULT 'en'::character varying NOT NULL,
+    name text NOT NULL,
+    status sg_public.entity_status DEFAULT 'pending'::sg_public.entity_status NOT NULL,
+    available boolean DEFAULT true NOT NULL,
+    tags text[] DEFAULT ARRAY[]::text[],
+    user_id uuid,
+    session_id uuid,
+    body text NOT NULL,
+    details text,
+    CONSTRAINT lang_check CHECK (((language)::text ~* '^\w{2}(-\w{2})?$'::text)),
+    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
+);
+
+
+--
+-- Name: TABLE subject_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.subject_version IS 'Every version of the subjects. A subject is a collection of cards and other subjects. A subject has many cards and other subjects.';
+
+
+--
+-- Name: COLUMN subject_version.version_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.version_id IS 'The version ID -- a single subject can have many versions.';
+
+
+--
+-- Name: COLUMN subject_version.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.created IS 'When a user created this version.';
+
+
+--
+-- Name: COLUMN subject_version.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.modified IS 'When a user last modified this version.';
+
+
+--
+-- Name: COLUMN subject_version.entity_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.entity_id IS 'The overall entity ID.';
+
+
+--
+-- Name: COLUMN subject_version.previous_version_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.previous_version_id IS 'The previous version this version is based on.';
+
+
+--
+-- Name: COLUMN subject_version.language; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.language IS 'Which human language this subject contains.';
+
+
+--
+-- Name: COLUMN subject_version.name; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.name IS 'The name of the subject.';
+
+
+--
+-- Name: COLUMN subject_version.status; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.status IS 'The status of the subject. The latest accepted version is current.';
+
+
+--
+-- Name: COLUMN subject_version.available; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.available IS 'Whether the subject is available to learners.';
+
+
+--
+-- Name: COLUMN subject_version.tags; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.tags IS 'A list of tags. Think Bloom taxonomy.';
+
+
+--
+-- Name: COLUMN subject_version.user_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.user_id IS 'Which user created this version.';
+
+
+--
+-- Name: COLUMN subject_version.session_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.session_id IS 'If no user, which session created this version.';
+
+
+--
+-- Name: COLUMN subject_version.body; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.body IS 'The description of the goals of the subject.';
+
+
+--
+-- Name: COLUMN subject_version.details; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.subject_version.details IS 'The details of the subject.';
+
+
+--
+-- Name: CONSTRAINT lang_check ON subject_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT lang_check ON sg_public.subject_version IS 'Languages must be BCP47 compliant.';
+
+
+--
+-- Name: CONSTRAINT user_or_session ON subject_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT user_or_session ON sg_public.subject_version IS 'Ensure only the user or session has data.';
+
+
+--
+-- Name: subject; Type: VIEW; Schema: sg_public; Owner: -
+--
+
+CREATE VIEW sg_public.subject AS
+ SELECT DISTINCT ON (subject_version.entity_id) subject_version.version_id,
+    subject_version.created,
+    subject_version.modified,
+    subject_version.entity_id,
+    subject_version.previous_version_id,
+    subject_version.language,
+    subject_version.name,
+    subject_version.status,
+    subject_version.available,
+    subject_version.tags,
+    subject_version.user_id,
+    subject_version.session_id,
+    subject_version.body,
+    subject_version.details
+   FROM sg_public.subject_version
+  WHERE (subject_version.status = 'accepted'::sg_public.entity_status)
+  ORDER BY subject_version.entity_id, subject_version.created DESC;
+
+
+--
+-- Name: VIEW subject; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON VIEW sg_public.subject IS 'The latest accepted version of each subject.';
+
+
+--
+-- Name: card_subject(sg_public.card); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.card_subject(card sg_public.card) RETURNS sg_public.subject
+    LANGUAGE sql STABLE
+    AS $_$
+  select s.*
+  from sg_public.subject s
+  where s.entity_id = $1.subject_id;
+$_$;
+
+
+--
+-- Name: FUNCTION card_subject(card sg_public.card); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.card_subject(card sg_public.card) IS 'Get the card''s subject.';
+
+
+--
 -- Name: get_anonymous_token(); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
@@ -887,149 +1081,6 @@ COMMENT ON FUNCTION sg_public.new_card(language character varying, name text, ta
 
 
 --
--- Name: subject_version; Type: TABLE; Schema: sg_public; Owner: -
---
-
-CREATE TABLE sg_public.subject_version (
-    version_id uuid NOT NULL,
-    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    entity_id uuid NOT NULL,
-    previous_version_id uuid,
-    language character varying(5) DEFAULT 'en'::character varying NOT NULL,
-    name text NOT NULL,
-    status sg_public.entity_status DEFAULT 'pending'::sg_public.entity_status NOT NULL,
-    available boolean DEFAULT true NOT NULL,
-    tags text[] DEFAULT ARRAY[]::text[],
-    user_id uuid,
-    session_id uuid,
-    body text NOT NULL,
-    details text,
-    CONSTRAINT lang_check CHECK (((language)::text ~* '^\w{2}(-\w{2})?$'::text)),
-    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
-);
-
-
---
--- Name: TABLE subject_version; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON TABLE sg_public.subject_version IS 'Every version of the subjects. A subject is a collection of cards and other subjects. A subject has many cards and other subjects.';
-
-
---
--- Name: COLUMN subject_version.version_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.version_id IS 'The version ID -- a single subject can have many versions.';
-
-
---
--- Name: COLUMN subject_version.created; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.created IS 'When a user created this version.';
-
-
---
--- Name: COLUMN subject_version.modified; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.modified IS 'When a user last modified this version.';
-
-
---
--- Name: COLUMN subject_version.entity_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.entity_id IS 'The overall entity ID.';
-
-
---
--- Name: COLUMN subject_version.previous_version_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.previous_version_id IS 'The previous version this version is based on.';
-
-
---
--- Name: COLUMN subject_version.language; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.language IS 'Which human language this subject contains.';
-
-
---
--- Name: COLUMN subject_version.name; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.name IS 'The name of the subject.';
-
-
---
--- Name: COLUMN subject_version.status; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.status IS 'The status of the subject. The latest accepted version is current.';
-
-
---
--- Name: COLUMN subject_version.available; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.available IS 'Whether the subject is available to learners.';
-
-
---
--- Name: COLUMN subject_version.tags; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.tags IS 'A list of tags. Think Bloom taxonomy.';
-
-
---
--- Name: COLUMN subject_version.user_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.user_id IS 'Which user created this version.';
-
-
---
--- Name: COLUMN subject_version.session_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.session_id IS 'If no user, which session created this version.';
-
-
---
--- Name: COLUMN subject_version.body; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.body IS 'The description of the goals of the subject.';
-
-
---
--- Name: COLUMN subject_version.details; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.subject_version.details IS 'The details of the subject.';
-
-
---
--- Name: CONSTRAINT lang_check ON subject_version; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON CONSTRAINT lang_check ON sg_public.subject_version IS 'Languages must be BCP47 compliant.';
-
-
---
--- Name: CONSTRAINT user_or_session ON subject_version; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON CONSTRAINT user_or_session ON sg_public.subject_version IS 'Ensure only the user or session has data.';
-
-
---
 -- Name: new_subject(character varying, text, text[], text, uuid[], uuid[]); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
@@ -1069,37 +1120,6 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_public.new_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]) IS 'Create a new subject.';
-
-
---
--- Name: subject; Type: VIEW; Schema: sg_public; Owner: -
---
-
-CREATE VIEW sg_public.subject AS
- SELECT DISTINCT ON (subject_version.entity_id) subject_version.version_id,
-    subject_version.created,
-    subject_version.modified,
-    subject_version.entity_id,
-    subject_version.previous_version_id,
-    subject_version.language,
-    subject_version.name,
-    subject_version.status,
-    subject_version.available,
-    subject_version.tags,
-    subject_version.user_id,
-    subject_version.session_id,
-    subject_version.body,
-    subject_version.details
-   FROM sg_public.subject_version
-  WHERE (subject_version.status = 'accepted'::sg_public.entity_status)
-  ORDER BY subject_version.entity_id, subject_version.created DESC;
-
-
---
--- Name: VIEW subject; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON VIEW sg_public.subject IS 'The latest accepted version of each subject.';
 
 
 --
@@ -1839,6 +1859,27 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_public.update_password(new_password text) IS 'Update the user''s password.';
+
+
+--
+-- Name: user_md5_email(sg_public."user"); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.user_md5_email(sg_public."user") RETURNS text
+    LANGUAGE sql STABLE STRICT SECURITY DEFINER
+    AS $_$
+  select md5(lower(trim(email)))
+  from sg_private.user
+  where user_id = $1.id
+  limit 1;
+$_$;
+
+
+--
+-- Name: FUNCTION user_md5_email(sg_public."user"); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.user_md5_email(sg_public."user") IS 'The user''s email address as an MD5 hash, for Gravatars. See https://bit.ly/2F6cR0M';
 
 
 --
@@ -3027,4 +3068,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190403183651'),
     ('20190409203511'),
     ('20190411224126'),
-    ('20190412211807');
+    ('20190412211807'),
+    ('20190418165040');

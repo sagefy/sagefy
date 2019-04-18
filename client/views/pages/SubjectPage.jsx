@@ -3,24 +3,11 @@ import { Link } from 'react-router-dom'
 import { string, shape, arrayOf, number } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
-import get from 'lodash.get'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'
-
-const CARD_KIND_NAME = {
-  CHOICE: 'Choice',
-  VIDEO: 'Video',
-  PAGE: 'Page',
-  UNSCORED_EMBED: 'Embed',
-}
-
-const CARD_KIND_ICON = {
-  CHOICE: 'choice',
-  VIDEO: 'video',
-  PAGE: 'page',
-  UNSCORED_EMBED: 'embed',
-}
+import ListOfSubjects from '../components/ListOfSubjects'
+import ListOfCards from '../components/ListOfCards'
 
 const subjectsType = arrayOf(
   shape({
@@ -35,63 +22,6 @@ const cardsType = arrayOf(
     name: string.isRequired,
   })
 )
-
-function ListOfSubjects({ subjects, title, icon }) {
-  if (!subjects.length) return null
-  return (
-    <section>
-      <h2>
-        {title} <Icon i={icon} s="xl" />
-      </h2>
-      <ul>
-        {subjects.map(({ entityId, name, body }) => (
-          <li>
-            <strong>
-              <Link to={`/subjects/${to58(entityId)}`}>{name}</Link>
-            </strong>
-            : {body}
-          </li>
-        ))}
-      </ul>
-    </section>
-  )
-}
-
-ListOfSubjects.propTypes = {
-  subjects: subjectsType,
-  title: string.isRequired,
-  icon: string.isRequired,
-}
-
-ListOfSubjects.defaultProps = {
-  subjects: [],
-}
-
-function ListOfCards({ cards, kind }) {
-  const kCards = cards.filter(({ kind: xkind }) => xkind === kind)
-  if (!kCards.length) return null
-  return (
-    <li>
-      <h3>
-        {get(CARD_KIND_NAME, kind)} <Icon i={get(CARD_KIND_ICON, kind)} s="l" />
-      </h3>
-      <ul>
-        {kCards.map(({ name }) => (
-          <li>{name}</li>
-        ))}
-      </ul>
-    </li>
-  )
-}
-
-ListOfCards.propTypes = {
-  cards: cardsType,
-  kind: string.isRequired,
-}
-
-ListOfCards.defaultProps = {
-  cards: [],
-}
 
 export default function SubjectPage({
   hash,

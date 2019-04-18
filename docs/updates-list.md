@@ -13,7 +13,6 @@ title: Sagefy Updates
 
 This is a reverse chronological listing of updates on Sagefy's progress. I will try to do these biweekly.
 
-
 ## UPDATE -- 2019 Apr 15
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
@@ -33,19 +32,16 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 - I plan to create SEO pages for cards and users.
 - Continue improving the test suite.
 - Current roadmap (not timeline specific)...
-   - Site search
-   - Talk pages
-   - History pages
-   - Edit subjects and cards, subject relationships
-   - Contributor management pages 
-   - Notifications
+  - Site search
+  - Talk pages
+  - History pages
+  - Edit subjects and cards, subject relationships
+  - Contributor management pages
+  - Notifications
 
 ### Feedback
 
 Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
-
-
-
 
 ## UPDATE -- 2019 Apr 1
 
@@ -64,9 +60,6 @@ Thanks for signing up for the Sagefy development updates newsletter. I will be s
 ### Feedback
 
 Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
-
-
-
 
 ## UPDATE -- 2019 Mar 18
 

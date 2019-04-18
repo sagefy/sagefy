@@ -4,4 +4,17 @@ query dataSitemap {
       entityId
     }
   }
+
+  allCards {
+    nodes {
+      entityId
+      kind
+    }
+  }
+
+  allUsers {
+    nodes {
+      id
+    }
+  }
 }

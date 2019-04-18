@@ -34,6 +34,7 @@ import {
   ChevronsUp,
   ChevronsLeft,
   ChevronsRight,
+  User,
 } from 'react-feather'
 import get from 'lodash.get'
 
@@ -67,6 +68,7 @@ const MAP = {
   parent: ChevronsUp,
   before: ChevronsLeft,
   after: ChevronsRight,
+  user: User,
 
   // actions
   select: ArrowRightCircle,

@@ -133,13 +133,29 @@ const ROOT_PAGES = [
   '/create-unscored-embed-card',
 ]
 
+const CARD_KIND_URL = {
+  CHOICE: 'choice',
+  VIDEO: 'video',
+  PAGE: 'page',
+  UNSCORED_EMBED: 'unscored-embed',
+}
+
 app.get('/sitemap.txt', async (req, res) => {
   const gqlRes = await GQL.dataSitemap(req)
-  const subjects = get(gqlRes, 'data.allSubjects.nodes', [])
-    .map(({ entityId }) => entityId)
-    .map(id => `/subjects/${to58(id)}`)
+  const subjects = get(gqlRes, 'data.allSubjects.nodes', []).map(
+    ({ entityId }) => `/subjects/${to58(entityId)}`
+  )
+  const cards = get(gqlRes, 'data.allCards.nodes', []).map(
+    ({ entityId, kind }) =>
+      `/${get(CARD_KIND_URL, kind)}-cards/${to58(entityId)}`
+  )
+  const users = get(gqlRes, 'data.allUsers.nodes', []).map(
+    ({ id }) => `/users/${to58(id)}`
+  )
   res.set('Content-Type', 'text/plain').send(
     ROOT_PAGES.concat(subjects)
+      .concat(cards)
+      .concat(users)
       .map(u => `https://sagefy.org${u}`)
       .join('\n')
   )
@@ -419,6 +435,22 @@ app.get('/subjects/:subjectId', async (req, res) => {
   })
   const subject = get(gqlRes, 'data.subjectByEntityId')
   return res.render('Index', { ...formatData(req), subject })
+})
+
+app.get('/(:kind-)?cards/:cardId', async (req, res) => {
+  const gqlRes = await GQL.dataGetCard(req, {
+    cardId: toU(req.params.cardId),
+  })
+  const card = get(gqlRes, 'data.cardByEntityId')
+  return res.render('Index', { ...formatData(req), card })
+})
+
+app.get('/users/:userId', async (req, res) => {
+  const gqlRes = await GQL.dataGetUser(req, {
+    userId: toU(req.params.userId),
+  })
+  const user = get(gqlRes, 'data.userById')
+  return res.render('Index', { ...formatData(req), user })
 })
 
 app.get('/', async (req, res) => {
