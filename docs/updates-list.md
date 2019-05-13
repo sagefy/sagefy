@@ -13,6 +13,31 @@ title: Sagefy Updates
 
 This is a reverse chronological listing of updates on Sagefy's progress. I will try to do these biweekly.
 
+## UPDATE -- 2019 May 13
+
+Thanks for signing up for the Sagefy updates newsletter. I am sending updates biweekly to help track progress on Sagefy.
+
+### 2019 Apr 15 - 2019 May 13
+
+- Created SEO-friendly pages for cards, subjects, and users.
+- Definitely a good traffic increase since V1!
+
+## Upcoming Two Weeks: 2019 May 13 - 2019 May 26
+
+- I'm going to work on creating lots of new subjects (cardless for now) based on a list of academic subjects... and probably use Amazon Mechanical Turk to help write original content.
+- Current roadmap (not timeline specific)...
+  - Continue improving the test suite.
+  - Site search
+  - Talk pages
+  - History pages
+  - Edit subjects and cards, subject relationships
+  - Contributor management pages
+  - Notifications
+
+### Feedback
+
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
+
 ## UPDATE -- 2019 Apr 15
 
 Thanks for signing up for the Sagefy development updates newsletter. I will be sending updates biweekly to help track progress on Sagefy.
