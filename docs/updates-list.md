@@ -22,7 +22,7 @@ Thanks for signing up for the Sagefy updates newsletter. I am sending updates bi
 - Created SEO-friendly pages for cards, subjects, and users.
 - Definitely a good traffic increase since V1!
 
-## Upcoming Two Weeks: 2019 May 13 - 2019 May 26
+### Upcoming Two Weeks: 2019 May 13 - 2019 May 26
 
 - I'm going to work on creating lots of new subjects (cardless for now) based on a list of academic subjects... and probably use Amazon Mechanical Turk to help write original content.
 - Current roadmap (not timeline specific)...
