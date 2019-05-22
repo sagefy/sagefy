@@ -4,14 +4,20 @@
 
 **Learn anything, adapted for you.** _Free._
 
-- **Learn anything.** Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
-- **Adapted for you.** Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
+**Learn anything.** Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
 
-|                                                   1. Search for a subject                                                   |                                                    2. Find your subject                                                     |                                                   3. Choose the next step                                                   |                                                          4. Learn!                                                          |
-| :-------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: |
-| <img width="190" src="https://user-images.githubusercontent.com/1221423/55904606-186bb280-5b85-11e9-8c67-0d8baefefd2c.png"> | <img width="190" src="https://user-images.githubusercontent.com/1221423/55904604-186bb280-5b85-11e9-9fee-12eb71f753dd.png"> | <img width="190" src="https://user-images.githubusercontent.com/1221423/55904603-186bb280-5b85-11e9-95ff-cbcc3e924b17.png"> | <img width="190" src="https://user-images.githubusercontent.com/1221423/55904605-186bb280-5b85-11e9-97b0-0cab850c3056.png"> |
+**Adapted for you.** Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
 
-What's next?
+| 1. Search for a subject | 2. Find your subject | 3. Choose the next step | 4. Learn! |
+| :---------------------: | :------------------: | :---------------------: | :-------: |
+|         ![][s1]         |       ![][s2]        |         ![][s3]         |  ![][s4]  |
+
+[s1]: <img width="190" src="https://user-images.githubusercontent.com/1221423/55904606-186bb280-5b85-11e9-8c67-0d8baefefd2c.png">
+[s2]: <img width="190" src="https://user-images.githubusercontent.com/1221423/55904604-186bb280-5b85-11e9-9fee-12eb71f753dd.png">
+[s3]: <img width="190" src="https://user-images.githubusercontent.com/1221423/55904603-186bb280-5b85-11e9-95ff-cbcc3e924b17.png">
+[s4]: <img width="190" src="https://user-images.githubusercontent.com/1221423/55904605-186bb280-5b85-11e9-97b0-0cab850c3056.png">
+
+### What's next?
 
 - [Visit the site](https://sagefy.org).
 - For more information, [watch this 3 minute YouTube video](https://youtu.be/gFn4Q9tx7Qs) or [read the docs](https://docs.sagefy.org).
