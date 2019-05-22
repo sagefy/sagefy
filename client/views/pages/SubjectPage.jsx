@@ -120,7 +120,7 @@ export default function SubjectPage({
 
       <section>
         <h2>
-          Why learn <em>{subjectName}</em> with Sagefy?{' '}
+          Why learn <q>{subjectName}</q> with Sagefy?{' '}
           <img
             src="/astrolabe.svg"
             height="48"
@@ -130,13 +130,13 @@ export default function SubjectPage({
         </h2>
         <p>
           <em>
-            Learn <em>{subjectName}</em>, adapted for you. Free.
+            Learn <q>{subjectName}</q>, adapted for you. Free.
           </em>
         </p>
         <p>
           <Icon i="open" />{' '}
           <strong>
-            Learn <em>{subjectName}</em>.
+            Learn <q>{subjectName}</q>.
           </strong>{' '}
           Anyone can view, share, create, and edit content. Because anyone can
           contribute, you can learn anything you want.
