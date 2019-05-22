@@ -93,42 +93,40 @@ exports[`HomePage should render the home page 1`] = `
     </div>
   </section>
   <section>
-    <ul>
-      <li>
+    <p>
+      <Icon
+        i="open"
+        s="m"
+      />
+       
+      <strong>
+        Learn anything.
+      </strong>
+       Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
+    </p>
+    <p>
+      <Icon
+        i="adapt"
+        s="m"
+      />
+       
+      <strong>
+        Adapted for you.
+      </strong>
+       Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
+    </p>
+    <p>
+      <ExternalLink
+        href="https://youtu.be/gFn4Q9tx7Qs"
+      >
         <Icon
-          i="adapt"
+          i="video"
           s="m"
         />
-         
-        <strong>
-          Adaptive Learning.
-        </strong>
-         Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
-      </li>
-      <li>
-        <Icon
-          i="open"
-          s="m"
-        />
-         
-        <strong>
-          Open Content.
-        </strong>
-         Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
-      </li>
-      <li>
-        <ExternalLink
-          href="https://youtu.be/gFn4Q9tx7Qs"
-        >
-          <Icon
-            i="video"
-            s="m"
-          />
-           Watch the overview video
-        </ExternalLink>
-        .
-      </li>
-    </ul>
+         Watch the overview video
+      </ExternalLink>
+      .
+    </p>
   </section>
   <Footer
     role="sg_anonymous"
@@ -217,42 +215,40 @@ exports[`HomePage should render the logged in home page 1`] = `
     </div>
   </section>
   <section>
-    <ul>
-      <li>
+    <p>
+      <Icon
+        i="open"
+        s="m"
+      />
+       
+      <strong>
+        Learn anything.
+      </strong>
+       Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
+    </p>
+    <p>
+      <Icon
+        i="adapt"
+        s="m"
+      />
+       
+      <strong>
+        Adapted for you.
+      </strong>
+       Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
+    </p>
+    <p>
+      <ExternalLink
+        href="https://youtu.be/gFn4Q9tx7Qs"
+      >
         <Icon
-          i="adapt"
+          i="video"
           s="m"
         />
-         
-        <strong>
-          Adaptive Learning.
-        </strong>
-         Sagefy optimizes based on what you already know and what your goal is. Get the most out of your time and effort spent.
-      </li>
-      <li>
-        <Icon
-          i="open"
-          s="m"
-        />
-         
-        <strong>
-          Open Content.
-        </strong>
-         Anyone can view, share, create, and edit content. Because anyone can contribute, you can learn anything you want.
-      </li>
-      <li>
-        <ExternalLink
-          href="https://youtu.be/gFn4Q9tx7Qs"
-        >
-          <Icon
-            i="video"
-            s="m"
-          />
-           Watch the overview video
-        </ExternalLink>
-        .
-      </li>
-    </ul>
+         Watch the overview video
+      </ExternalLink>
+      .
+    </p>
   </section>
   <Footer
     role="sg_user"

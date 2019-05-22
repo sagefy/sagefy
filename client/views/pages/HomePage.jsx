@@ -84,24 +84,22 @@ export default function HomePage({ hash, role, subjects }) {
       </section>
 
       <section>
-        <ul>
-          <li>
-            <Icon i="adapt" /> <strong>Adaptive Learning.</strong> Sagefy
-            optimizes based on what you already know and what your goal is. Get
-            the most out of your time and effort spent.
-          </li>
-          <li>
-            <Icon i="open" /> <strong>Open Content.</strong> Anyone can view,
-            share, create, and edit content. Because anyone can contribute, you
-            can learn anything you want.
-          </li>
-          <li>
-            <ExternalLink href="https://youtu.be/gFn4Q9tx7Qs">
-              <Icon i="video" /> Watch the overview video
-            </ExternalLink>
-            .
-          </li>
-        </ul>
+        <p>
+          <Icon i="open" /> <strong>Learn anything.</strong> Anyone can view,
+          share, create, and edit content. Because anyone can contribute, you
+          can learn anything you want.
+        </p>
+        <p>
+          <Icon i="adapt" /> <strong>Adapted for you.</strong> Sagefy optimizes
+          based on what you already know and what your goal is. Get the most out
+          of your time and effort spent.
+        </p>
+        <p>
+          <ExternalLink href="https://youtu.be/gFn4Q9tx7Qs">
+            <Icon i="video" /> Watch the overview video
+          </ExternalLink>
+          .
+        </p>
       </section>
 
       <Footer role={role} />
