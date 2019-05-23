@@ -51,19 +51,7 @@ For each pull request:
 ## Styles
 
 - Mobile is the first and default styling. Use `@media (min-width...)` and never use `@media (max-width...)`.
-- General guidelines:
-  - Lowercase selectors.
-  - No duplicate properties.
-  - Empty line after blocks of properties.
-  - No empty rules.
-  - Use leading zeros.
-  - Merge selectors.
-  - Don't go more than 3 levels deep.
-  - Hyphen for names.
-  - Spell correctly.
-  - Use shorthands.
-  - Space after commas.
-  - Zero is unitless.
+- Explain the necessity of each additional styling.
 
 ## HTML
 
