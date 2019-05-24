@@ -1347,13 +1347,15 @@ CREATE FUNCTION sg_public.select_popular_subjects() RETURNS SETOF sg_public.subj
     LANGUAGE sql STABLE STRICT SECURITY DEFINER
     AS $$
   select *
-  from sg_public.subject
+  from sg_public.subject s
   order by (
     select count(*)
-    from sg_public.user_subject
-    where subject_id = entity_id
-  ) desc
+    from sg_public.user_subject us
+    where us.subject_id = s.entity_id
+    and us.user_id is not null
+  ) desc, random()
   limit 5;
+  -- This function should count all usubjs, not just the current users.
 $$;
 
 
@@ -3069,4 +3071,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190409203511'),
     ('20190411224126'),
     ('20190412211807'),
-    ('20190418165040');
+    ('20190418165040'),
+    ('20190524205800');
