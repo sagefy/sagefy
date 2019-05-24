@@ -1,4 +1,5 @@
 module.exports = function shorten(str, maxLen = 200, separator = ' ') {
+  if (str.length <= maxLen) return str
   // https://stackoverflow.com/a/5454303/1509526
   let s = str.replace(/\n+/g, ' ').substr(0, maxLen)
   s = s.substr(0, Math.min(s.length, s.lastIndexOf(separator)))
