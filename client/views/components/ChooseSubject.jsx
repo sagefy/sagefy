@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import ReactMarkdown from 'react-markdown'
 import Icon from './Icon'
+import shorten from '../../util/shorten'
 
 function Wark({ children, when }) {
   return (when && <mark>{children}</mark>) || children
@@ -25,7 +26,10 @@ export default function ChooseSubject({ subjects, level }) {
                 <Link to={`/next?${level}=${to58(entityId)}`}>{name}</Link>
               </Wark>
             </h3>
-            <ReactMarkdown source={body} disallowedTypes={['heading']} />
+            <ReactMarkdown
+              source={shorten(body)}
+              disallowedTypes={['heading']}
+            />
           </td>
         </tr>
       ))}
