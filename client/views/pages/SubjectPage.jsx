@@ -8,6 +8,7 @@ import Icon from '../components/Icon'
 import Footer from '../components/Footer'
 import ListOfSubjects from '../components/ListOfSubjects'
 import ListOfCards from '../components/ListOfCards'
+import shorten from '../../util/shorten'
 
 const subjectsType = arrayOf(
   shape({
@@ -43,8 +44,10 @@ export default function SubjectPage({
     <Layout
       hash={hash}
       page="SubjectPage"
-      title={subjectName}
-      description={subjectBody}
+      title={`Learn about ${subjectName}`}
+      description={`Learn about ${subjectName}, adapted and optimized for you. Learn for free, always. ${shorten(
+        subjectBody
+      )}`}
     >
       <header>
         <div className="m-yc">

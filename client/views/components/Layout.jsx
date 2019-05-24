@@ -12,6 +12,10 @@ export default function Layout({ page, title, description, hash, children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{title} - Sagefy</title>
         <meta name="description" content={description} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@sagefyorg" />
+        <meta name="twitter:title" content={`${title} - Sagefy`} />
+        <meta name="twitter:description" content={description} />
         <link rel="stylesheet" href={`/sagefy.min.css?${hash}`} />
       </head>
       <body>
