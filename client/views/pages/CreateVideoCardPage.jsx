@@ -71,7 +71,7 @@ export default function CreateVideoCardPage({
               size="15"
               id="data$video_id"
               name="data$video_id"
-              placeholder="ex: gFn4Q9tx7Qs"
+              placeholder="ex: Gi99QbiSuWs"
             />
             <br />
             <small>We recommend videos no longer than five minutes.</small>

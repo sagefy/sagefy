@@ -95,7 +95,7 @@ export default function HomePage({ hash, role, subjects }) {
           of your time and effort spent.
         </p>
         <p>
-          <ExternalLink href="https://youtu.be/gFn4Q9tx7Qs">
+          <ExternalLink href="https://youtu.be/Gi99QbiSuWs">
             <Icon i="video" /> Watch the overview video
           </ExternalLink>
           .

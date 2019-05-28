@@ -10,17 +10,17 @@
 
 | 1. Search for a subject | 2. Find your subject | 3. Choose the next step | 4. Learn! |
 | :---------------------: | :------------------: | :---------------------: | :-------: |
-|        ![x][s1]         |      ![x][s2]        |        ![x][s3]         |  ![x][s4] |
+|        ![x][s1]         |       ![x][s2]       |        ![x][s3]         | ![x][s4]  |
 
 [s1]: https://user-images.githubusercontent.com/1221423/55904606-186bb280-5b85-11e9-8c67-0d8baefefd2c.png
-[s2]: https://user-images.githubusercontent.com/1221423/55904604-186bb280-5b85-11e9-9fee-12eb71f753dd.png 
+[s2]: https://user-images.githubusercontent.com/1221423/55904604-186bb280-5b85-11e9-9fee-12eb71f753dd.png
 [s3]: https://user-images.githubusercontent.com/1221423/55904603-186bb280-5b85-11e9-95ff-cbcc3e924b17.png
 [s4]: https://user-images.githubusercontent.com/1221423/55904605-186bb280-5b85-11e9-97b0-0cab850c3056.png
 
 ### What's next?
 
 - [Visit the site](https://sagefy.org).
-- For more information, [watch this 3 minute YouTube video](https://youtu.be/gFn4Q9tx7Qs) or [read the docs](https://docs.sagefy.org).
+- For more information, [watch this 3 minute YouTube video](https://youtu.be/Gi99QbiSuWs) or [read the docs](https://docs.sagefy.org).
 - Want to help? [Check out our contributors' list.](https://docs.sagefy.org/want-to-help)
 - Sign up for [updates](https://sgfy.xyz/updates).
 - Share us on [Twitter](https://twitter.com/sagefyorg).

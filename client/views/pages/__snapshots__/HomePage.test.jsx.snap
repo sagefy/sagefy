@@ -117,7 +117,7 @@ exports[`HomePage should render the home page 1`] = `
     </p>
     <p>
       <ExternalLink
-        href="https://youtu.be/gFn4Q9tx7Qs"
+        href="https://youtu.be/Gi99QbiSuWs"
       >
         <Icon
           i="video"
@@ -239,7 +239,7 @@ exports[`HomePage should render the logged in home page 1`] = `
     </p>
     <p>
       <ExternalLink
-        href="https://youtu.be/gFn4Q9tx7Qs"
+        href="https://youtu.be/Gi99QbiSuWs"
       >
         <Icon
           i="video"
