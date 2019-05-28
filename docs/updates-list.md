@@ -13,6 +13,22 @@ title: Sagefy Updates
 
 This is a reverse chronological listing of updates on Sagefy's progress. I will try to do these biweekly.
 
+## UPDATE -- 2019 May 28
+
+Thanks for signing up for the Sagefy updates newsletter. I am sending updates biweekly to help track progress on Sagefy.
+
+### 2019 May 13 - 2019 May 27
+
+- I worked on creating lots of new subjects (1500+) based on the Library of Congress, using Amazon Mechanical Turk to help write original content. Some early signs show a significant traffic increase :)
+
+### Upcoming Two Weeks: 2019 May 28 - 2019 June 9
+
+- Either the test suite, site search, or talk pages... guess we'll see :)
+
+### Feedback
+
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
+
 ## UPDATE -- 2019 May 13
 
 Thanks for signing up for the Sagefy updates newsletter. I am sending updates biweekly to help track progress on Sagefy.
