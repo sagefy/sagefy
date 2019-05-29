@@ -5,8 +5,8 @@ title: Technology Stack
 
 ## Serving
 
-- [CloudFlare](https://www.cloudflare.com/)
-- [DigitalOcean](https://www.digitalocean.com/)
+- [CloudFlare](https://www.cloudflare.com/) §¶
+- [DigitalOcean](https://www.digitalocean.com/) §¶
 - [Docker Compose](https://docs.docker.com/compose/)
 - [Nginx](http://wiki.nginx.org/Main)
 
@@ -23,7 +23,7 @@ title: Technology Stack
 - [Node](https://nodejs.org/) & [npm](https://npmjs.org/)
 - [GraphQL](https://graphql.org/)
 - [Postgraphile](https://www.graphile.org/postgraphile/)
-- [SparkPost](https://sparkpost.com/)
+- [SparkPost](https://sparkpost.com/) §¶
 
 ## Databases
 
@@ -37,19 +37,23 @@ title: Technology Stack
 - [Joi](https://github.com/hapijs/joi)
 - [Eslint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
-- [CircleCI](https://circleci.com/)
+- [CircleCI](https://circleci.com/) §
 
 ## Logging, Monitoring, Reporting, Alerting, Analytics
 
-- [Freshping](https://www.freshworks.com/website-monitoring/)
+- [Freshping](https://www.freshworks.com/website-monitoring/) §
 
 ## Management
 
-- [GitHub](https://github.com/)
-- [Jekyll](http://jekyllrb.com/) on [Github Pages](https://pages.github.com/)
+- [GitHub](https://github.com/) §
+- [Jekyll](http://jekyllrb.com/)
+- on [Github Pages](https://pages.github.com/) §
 - [Markdown](https://daringfireball.net/projects/markdown/)
-- [Twitter](https://twitter.com/sagefyorg)
-- [Facebook](https://www.facebook.com/sagefy)
-- [Medium](http://stories.sagefy.org/)
-- [YouTube](https://www.youtube.com/channel/UCFCHo5F5Ai_z1fX8pn1NrLg)
-- [MailerLite](http://mailerlite.com/)
+- [Twitter](https://twitter.com/sagefyorg) §
+- [Facebook](https://www.facebook.com/sagefy) §
+- [Medium](http://stories.sagefy.org/) §
+- [YouTube](https://www.youtube.com/channel/UCFCHo5F5Ai_z1fX8pn1NrLg) §
+- [MailerLite](http://mailerlite.com/) §¶
+
+§ -- Cloud hosted services.
+¶ -- Has access to non-public Sagefy data.
