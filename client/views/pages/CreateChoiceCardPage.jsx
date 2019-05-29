@@ -35,14 +35,15 @@ export default function CreateChoiceCardPage({
         </p>
         <h1 className="d-ib">
           Make a new choice card <Icon i="card" s="h1" />
-        </h1>{' '}
-        <p className="d-ib">
-          <em>for the subject&hellip;</em>
-        </p>
-        <blockquote className="m-yc">
-          <h3>{subjectName}</h3>
+        </h1>
+        <details>
+          <summary>
+            <span>
+              <em>for the subject:</em> <h3 className="d-i">{subjectName}</h3>
+            </span>
+          </summary>
           <ReactMarkdown source={subjectBody} disallowedTypes={['heading']} />
-        </blockquote>
+        </details>
       </header>
       <section>
         <form method="POST">
