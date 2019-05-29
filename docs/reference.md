@@ -14,6 +14,7 @@ This document is a list of organized, curated links to support the development o
 - [The Distribution of Users’ Computer Skills: Worse Than You Think](https://www.nngroup.com/articles/computer-skill-levels/)
 - [The Rise and Decline of an Open Collaboration System:
   How Wikipedia's reaction to popularity is causing its decline](https://www-users.cs.umn.edu/~halfak/publications/The_Rise_and_Decline/halfaker13rise-preprint.pdf)
+- [Design for how people learn](https://www.amazon.com/Design-People-Learn-Voices-Matter/dp/0321768434)
 
 ## Learning Science
 
@@ -36,6 +37,12 @@ This document is a list of organized, curated links to support the development o
 - [Ed Tech Developer’s Guide](https://tech.ed.gov/files/2015/04/Developer-Toolkit.pdf)
 - [Kaplan Product Evaluation Checklist](http://kaplan.com/wp-content/uploads/2016/01/Kaplan-Way_Checklist_Summary_Sheet.pdf)
 - [Why American Students Haven't Gotten Better at Reading in 20 Years](https://www.theatlantic.com/amp/article/557915/?single_page=true)
+- [Peak](https://www.amazon.com/Peak-Secrets-New-Science-Expertise-ebook/dp/B011H56MKS)
+- [Pearson Guides](https://www.pearson.com/corporate/efficacy-and-research/teaching-learning-design-principles.html)
+- [10 Rules of Good Studying](http://www.math.toronto.edu/nhoell/10rules-of-studying.pdf)
+- [Deschooling Society](http://www.davidtinapple.com/illich/1970_deschooling.html)
+- [Look up from your screen](https://aeon.co/essays/children-learn-best-when-engaged-in-the-living-world-not-on-screens)
+- [A Pedagogical Analysis of Online Coding Tutorials](https://faculty.washington.edu/ajko/papers/Kim2017CodingTutorialEvaluation.pdf)
 
 ## Gamification
 
@@ -112,6 +119,8 @@ This document is a list of organized, curated links to support the development o
 - [Kwyk](https://www.kwyk.fr/)
 - [Synapse](https://brainstation.io/synapse-learning-platform)
 - [Expii](https://www.expii.com/)
+- [CK12](https://www.ck12.org/student/)
+- [IXL](https://www.ixl.com/)
 
 ### Flash card based
 
@@ -124,6 +133,8 @@ This document is a list of organized, curated links to support the development o
 
 - [Wikipedia](http://wikipedia.org)
 - [Quora](https://www.quora.com/)
+- [Wikicours](https://github.com/thomaskuntzz/wikicours)
+- [OWLTEH](http://owlteh.org/)
 
 ### MOOC
 
