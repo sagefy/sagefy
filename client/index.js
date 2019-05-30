@@ -160,8 +160,7 @@ app.get('/sitemap.txt', async (req, res) => {
   const users = get(gqlRes, 'data.allUsers.nodes', []).map(
     ({ id }) => `/users/${to58(id)}`
   )
-  const root =
-    process.env.NODE_ENV === 'production' ? 'https://sagefy.org' : 'localhost'
+  const root = 'https://sagefy.org'
   res.set('Content-Type', 'text/plain').send(
     ROOT_PAGES.concat(subjects)
       .concat(subjectTalk)
