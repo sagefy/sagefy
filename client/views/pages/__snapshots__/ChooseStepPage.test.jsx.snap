@@ -7,7 +7,7 @@ exports[`ChooseStepPage should render ChooseStepPage 1`] = `
   title="Choose"
 >
   <header
-    className="m-yc"
+    className="my-c"
   >
     <p>
       <em>

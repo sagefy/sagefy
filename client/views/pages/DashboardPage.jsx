@@ -10,11 +10,10 @@ import CardSubjectInfo from '../components/CardSubjectInfo'
 export default function DashboardPage({ role, subjects, name, hash }) {
   return (
     <Layout hash={hash} page="DashboardPage" title="Dashboard" description="-">
-      <section className="m-yc">
+      <section className="my-c">
         <p>
           <em>
-            Hi {name}, welcome back!{' '}
-            <img src="/astrolabe.svg" height="24" alt="astrolabe" />
+            Hi {name}, welcome back! <Icon i="sagefy" />
           </em>
         </p>
         {/* TODO copy should change based on state */}
@@ -29,7 +28,7 @@ export default function DashboardPage({ role, subjects, name, hash }) {
             Choose one of your subjects <Icon i="subject" s="h2" />
           </h2>
           <ChooseSubject subjects={subjects} level="goal" />
-          <div className="m-yc">
+          <div className="my-c">
             <h3>
               &hellip;or how about something else? <Icon i="search" s="h3" />
             </h3>

@@ -87,6 +87,7 @@ function formatData(req) {
     url: req.url,
     query: req.query,
     body: req.body,
+    params: req.params,
     role: getRole(req),
   }
 }
@@ -145,18 +146,29 @@ app.get('/sitemap.txt', async (req, res) => {
   const subjects = get(gqlRes, 'data.allSubjects.nodes', []).map(
     ({ entityId }) => `/subjects/${to58(entityId)}`
   )
+  const subjectTalk = get(gqlRes, 'data.allSubjects.nodes', []).map(
+    ({ entityId }) => `/subjects/${to58(entityId)}/talk`
+  )
   const cards = get(gqlRes, 'data.allCards.nodes', []).map(
     ({ entityId, kind }) =>
       `/${get(CARD_KIND_URL, kind)}-cards/${to58(entityId)}`
   )
+  const cardTalk = get(gqlRes, 'data.allCards.nodes', []).map(
+    ({ entityId, kind }) =>
+      `/${get(CARD_KIND_URL, kind)}-cards/${to58(entityId)}/talk`
+  )
   const users = get(gqlRes, 'data.allUsers.nodes', []).map(
     ({ id }) => `/users/${to58(id)}`
   )
+  const root =
+    process.env.NODE_ENV === 'production' ? 'https://sagefy.org' : 'localhost'
   res.set('Content-Type', 'text/plain').send(
     ROOT_PAGES.concat(subjects)
+      .concat(subjectTalk)
       .concat(cards)
+      .concat(cardTalk)
       .concat(users)
-      .map(u => `https://sagefy.org${u}`)
+      .map(u => `${root}${u}`)
       .join('\n')
   )
 }) // Add more public routes as they are available
@@ -452,6 +464,56 @@ app.get('/users/:userId', async (req, res) => {
   const user = get(gqlRes, 'data.userById')
   return res.render('Index', { ...formatData(req), user })
 })
+
+app.get('/subjects/:subjectId/talk', async (req, res) => {
+  const gqlRes = await GQL.contributeListPostsSubject(req, {
+    entityId: toU(req.params.subjectId),
+  })
+  const entity = get(gqlRes, 'data.subjectByEntityId')
+  const topics = get(gqlRes, 'data.allTopics.nodes')
+  return res.render('Index', { ...formatData(req), entity, topics })
+})
+
+app.get('/(:kind-)?cards/:cardId/talk', async (req, res) => {
+  const gqlRes = await GQL.contributeListPostsCard(req, {
+    entityId: toU(req.params.cardId),
+  })
+  const entity = get(gqlRes, 'data.cardByEntityId')
+  const topics = get(gqlRes, 'data.allTopics.nodes')
+  return res.render('Index', { ...formatData(req), entity, topics })
+})
+
+app.post(
+  ['/subjects/:subjectId/talk', '/(:kind-)?cards/:cardId/talk'],
+  async (req, res) => {
+    const gqlRes = await GQL.contributeNewTopic(req, req.body)
+    const gqlErrors = getGqlErrors(gqlRes)
+    if (Object.keys(gqlErrors).length) {
+      return res.redirect('')
+    }
+    const topicId = to58(get(gqlRes, 'data.createTopic.topic.id'))
+    return res.redirect(`?topic-id=${topicId}#topic-${topicId}`)
+  }
+)
+
+app.post(
+  [
+    '/subjects/:subjectId/talk/:topicId/post',
+    '/(:kind-)?cards/:cardId/talk/:topicId/post',
+  ],
+  async (req, res) => {
+    const gqlRes = await GQL.contributeNewPost(req, req.body)
+    const gqlErrors = getGqlErrors(gqlRes)
+    if (Object.keys(gqlErrors).length) {
+      return res.redirect(`..?topic-id=${req.params.topicId}`)
+    }
+    return res.redirect(
+      `..?topic-id=${req.params.topicId}#post-${to58(
+        get(gqlRes, 'data.createPost.post.id')
+      )}`
+    )
+  }
+)
 
 app.get('/', async (req, res) => {
   const gqlRes = await GQL.learnHome(req)

@@ -20,7 +20,7 @@ export default function ChooseSubject({ subjects, level }) {
               <Icon i="select" s="h2" title={name} />
             </Link>
           </td>
-          <td className="m-yc">
+          <td className="my-c">
             <h3>
               <Wark when={i === 0 && subjects.length > 1}>
                 <Link to={`/next?${level}=${to58(entityId)}`}>{name}</Link>

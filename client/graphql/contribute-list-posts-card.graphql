@@ -1,0 +1,32 @@
+query contributeListPostCard($entityId: UUID!) {
+  allTopics(condition: { entityId: $entityId }, orderBy: CREATED_DESC) {
+    nodes {
+      id
+      created
+      name
+      userId
+      sessionId
+      posts {
+        nodes {
+          id
+          created
+          modified
+          userId
+          userByUserId {
+            md5Email
+            name
+          }
+          sessionId
+          body
+        }
+      }
+    }
+  }
+
+  cardByEntityId(entityId: $entityId) {
+    entityId
+    name
+    kind
+    data
+  }
+}

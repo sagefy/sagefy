@@ -35,8 +35,34 @@ import {
   ChevronsLeft,
   ChevronsRight,
   User,
+  MessageSquare,
+  AlignLeft,
 } from 'react-feather'
 import get from 'lodash.get'
+
+function SagefyIcon({ size = 24 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      className="feather feather-sagefy"
+    >
+      <circle cx="12" cy="4" r="2" />
+      <circle cx="12" cy="14" r="8" />
+      <path d="M9.768 14.134l6.062-3.5M8.17 17.366l6.062-3.5" />
+      {/* SOURCE -- optimized with svgo
+        <g transform="rotate(-30 12 14)">
+          <line x1="10" x2="17" y1="13" y2="13" />
+          <line x1="7" x2="14" y1="15" y2="15" />
+        </g> */}
+    </svg>
+  )
+}
+
+SagefyIcon.propTypes = {
+  size: string.isRequired,
+}
 
 const MAP = {
   // pages
@@ -69,6 +95,9 @@ const MAP = {
   before: ChevronsLeft,
   after: ChevronsRight,
   user: User,
+  topic: MessageSquare,
+  post: AlignLeft,
+  sagefy: SagefyIcon,
 
   // actions
   select: ArrowRightCircle,

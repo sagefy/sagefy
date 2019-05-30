@@ -200,6 +200,24 @@ COMMENT ON TYPE sg_public.jwt_token IS 'Create a JWT with role, user_id, session
 
 
 --
+-- Name: post_kind; Type: TYPE; Schema: sg_public; Owner: -
+--
+
+CREATE TYPE sg_public.post_kind AS ENUM (
+    'post',
+    'proposal',
+    'vote'
+);
+
+
+--
+-- Name: TYPE post_kind; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TYPE sg_public.post_kind IS 'The three kinds of posts.';
+
+
+--
 -- Name: user_role; Type: TYPE; Schema: sg_public; Owner: -
 --
 
@@ -477,6 +495,45 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_private.update_modified_column() IS 'Whenever the row changes, update the `modified` column.';
+
+
+--
+-- Name: verify_post(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.verify_post() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+  declare
+    parent sg_public.post;
+  begin
+    if (new.parent_id) then
+      select * into parent
+      from sg_public.post
+      where id = new.parent_id;
+      if (parent.topic_id <> new.topic_id) then
+        raise exception 'A reply must belong to the same topic.'
+          using errcode = '76177573';
+      end if;
+      if (new.kind = 'vote' and parent.kind <> 'proposal') then
+        raise exception 'A vote may only reply to a proposal.'
+          using errcode = '8DF72C56';
+      end if;
+      if (new.kind = 'vote' and parent.user_id = new.user_id) then
+        raise exception 'A user cannot vote on their own proposal.'
+          using errcode = 'E47E0411';
+      end if;
+    end if;
+    return new;
+  end;
+$$;
+
+
+--
+-- Name: FUNCTION verify_post(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.verify_post() IS 'Verify valid data when creating or updating a post.';
 
 
 SET default_tablespace = '';
@@ -1790,6 +1847,207 @@ COMMENT ON FUNCTION sg_public.subject_parent_subjects(subject sg_public.subject)
 
 
 --
+-- Name: post; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.post (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    user_id uuid,
+    session_id uuid,
+    topic_id uuid NOT NULL,
+    kind sg_public.post_kind DEFAULT 'post'::sg_public.post_kind NOT NULL,
+    body text,
+    parent_id uuid,
+    response boolean,
+    CONSTRAINT post_check CHECK (((kind <> 'vote'::sg_public.post_kind) OR (user_id IS NOT NULL))),
+    CONSTRAINT post_check1 CHECK (((kind = 'vote'::sg_public.post_kind) OR (body IS NOT NULL))),
+    CONSTRAINT post_check2 CHECK (((kind <> 'vote'::sg_public.post_kind) OR (parent_id IS NOT NULL))),
+    CONSTRAINT post_check3 CHECK (((kind <> 'vote'::sg_public.post_kind) OR (response IS NOT NULL))),
+    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
+);
+
+
+--
+-- Name: TABLE post; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.post IS 'The posts on an entity''s talk page. Belongs to a topic.';
+
+
+--
+-- Name: COLUMN post.id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.id IS 'The ID of the post.';
+
+
+--
+-- Name: COLUMN post.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.created IS 'When the user created the post.';
+
+
+--
+-- Name: COLUMN post.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.modified IS 'When the post last changed.';
+
+
+--
+-- Name: COLUMN post.user_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.user_id IS 'The user who created the post.';
+
+
+--
+-- Name: COLUMN post.session_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.session_id IS 'The logged out user who created the post.';
+
+
+--
+-- Name: COLUMN post.topic_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.topic_id IS 'The topic the post belongs to.';
+
+
+--
+-- Name: COLUMN post.kind; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.kind IS 'The kind of post (post, proposal, vote).';
+
+
+--
+-- Name: COLUMN post.body; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.body IS 'The body or main content of the post.';
+
+
+--
+-- Name: COLUMN post.parent_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.parent_id IS 'If the post is a reply, which post it replies to.';
+
+
+--
+-- Name: COLUMN post.response; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.response IS 'If the post is a vote, yes/no on approving.';
+
+
+--
+-- Name: topic; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.topic (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    user_id uuid,
+    session_id uuid,
+    name text NOT NULL,
+    entity_id uuid NOT NULL,
+    entity_kind sg_public.entity_kind NOT NULL,
+    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
+);
+
+
+--
+-- Name: TABLE topic; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.topic IS 'The topics on an entity''s talk page.';
+
+
+--
+-- Name: COLUMN topic.id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.id IS 'The public ID of the topic.';
+
+
+--
+-- Name: COLUMN topic.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.created IS 'When the user created the topic.';
+
+
+--
+-- Name: COLUMN topic.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.modified IS 'When the user last modified the topic.';
+
+
+--
+-- Name: COLUMN topic.user_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.user_id IS 'The user who created the topic.';
+
+
+--
+-- Name: COLUMN topic.session_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.session_id IS 'The logged out person who created the topic.';
+
+
+--
+-- Name: COLUMN topic.name; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.name IS 'The name of the topic.';
+
+
+--
+-- Name: COLUMN topic.entity_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.entity_id IS 'The entity the topic belongs to.';
+
+
+--
+-- Name: COLUMN topic.entity_kind; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.entity_kind IS 'The kind of entity the topic belongs to.';
+
+
+--
+-- Name: topic_posts(sg_public.topic); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.topic_posts(sg_public.topic) RETURNS SETOF sg_public.post
+    LANGUAGE sql STABLE
+    AS $_$
+  select p.*
+  from sg_public.post p
+  where p.topic_id = $1.id
+  order by p.created desc;
+$_$;
+
+
+--
+-- Name: FUNCTION topic_posts(sg_public.topic); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.topic_posts(sg_public.topic) IS 'Returns the posts of the topic.';
+
+
+--
 -- Name: update_email(text); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
@@ -2135,6 +2393,62 @@ COMMENT ON COLUMN sg_public.entity_version.entity_kind IS 'The kind of entity th
 
 
 --
+-- Name: post_entity_version; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.post_entity_version (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    post_id uuid NOT NULL,
+    version_id uuid NOT NULL,
+    entity_kind sg_public.entity_kind NOT NULL
+);
+
+
+--
+-- Name: TABLE post_entity_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.post_entity_version IS 'A join table between a proposal (post) and its entity versions.';
+
+
+--
+-- Name: COLUMN post_entity_version.id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post_entity_version.id IS 'The relationship ID.';
+
+
+--
+-- Name: COLUMN post_entity_version.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post_entity_version.created IS 'When a user created this post.';
+
+
+--
+-- Name: COLUMN post_entity_version.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post_entity_version.modified IS 'When a user last modified this post.';
+
+
+--
+-- Name: COLUMN post_entity_version.post_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post_entity_version.post_id IS 'The post ID.';
+
+
+--
+-- Name: COLUMN post_entity_version.version_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post_entity_version.version_id IS 'The entity ID of the entity version.';
+
+
+--
 -- Name: subject_entity; Type: TABLE; Schema: sg_public; Owner: -
 --
 
@@ -2340,6 +2654,30 @@ ALTER TABLE ONLY sg_public.entity_version
 
 
 --
+-- Name: post_entity_version post_entity_version_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.post_entity_version
+    ADD CONSTRAINT post_entity_version_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: post_entity_version post_entity_version_post_id_version_id_key; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.post_entity_version
+    ADD CONSTRAINT post_entity_version_post_id_version_id_key UNIQUE (post_id, version_id);
+
+
+--
+-- Name: post post_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.post
+    ADD CONSTRAINT post_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: response response_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
 --
 
@@ -2393,6 +2731,14 @@ ALTER TABLE ONLY sg_public.subject_version_parent_child
 
 ALTER TABLE ONLY sg_public.subject_version
     ADD CONSTRAINT subject_version_pkey PRIMARY KEY (version_id);
+
+
+--
+-- Name: topic topic_pkey; Type: CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.topic
+    ADD CONSTRAINT topic_pkey PRIMARY KEY (id);
 
 
 --
@@ -2464,6 +2810,48 @@ CREATE INDEX card_version_user_id_idx ON sg_public.card_version USING btree (use
 
 
 --
+-- Name: post_created_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX post_created_idx ON sg_public.post USING btree (created);
+
+
+--
+-- Name: post_entity_version_version_id_entity_kind_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX post_entity_version_version_id_entity_kind_idx ON sg_public.post_entity_version USING btree (version_id, entity_kind);
+
+
+--
+-- Name: post_parent_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX post_parent_id_idx ON sg_public.post USING btree (parent_id);
+
+
+--
+-- Name: post_topic_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX post_topic_id_idx ON sg_public.post USING btree (topic_id);
+
+
+--
+-- Name: post_user_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX post_user_id_idx ON sg_public.post USING btree (user_id);
+
+
+--
+-- Name: post_vote_unique_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE UNIQUE INDEX post_vote_unique_idx ON sg_public.post USING btree (user_id, parent_id) WHERE (kind = 'vote'::sg_public.post_kind);
+
+
+--
 -- Name: response_card_id_idx; Type: INDEX; Schema: sg_public; Owner: -
 --
 
@@ -2531,6 +2919,34 @@ CREATE INDEX subject_version_previous_version_id_idx ON sg_public.subject_versio
 --
 
 CREATE INDEX subject_version_user_id_idx ON sg_public.subject_version USING btree (user_id);
+
+
+--
+-- Name: topic_created_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX topic_created_idx ON sg_public.topic USING btree (created);
+
+
+--
+-- Name: topic_entity_id_entity_kind_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX topic_entity_id_entity_kind_idx ON sg_public.topic USING btree (entity_id, entity_kind);
+
+
+--
+-- Name: topic_entity_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX topic_entity_id_idx ON sg_public.topic USING btree (entity_id);
+
+
+--
+-- Name: topic_user_id_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX topic_user_id_idx ON sg_public.topic USING btree (user_id);
 
 
 --
@@ -2611,6 +3027,34 @@ COMMENT ON TRIGGER insert_card_version_user_or_session ON sg_public.card_version
 
 
 --
+-- Name: post insert_post_user_id; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER insert_post_user_id BEFORE INSERT ON sg_public.post FOR EACH ROW EXECUTE PROCEDURE sg_private.insert_user_or_session();
+
+
+--
+-- Name: TRIGGER insert_post_user_id ON post; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER insert_post_user_id ON sg_public.post IS 'Whenever I make a new post, auto fill the `user_id` column';
+
+
+--
+-- Name: post insert_post_verify; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER insert_post_verify BEFORE INSERT ON sg_public.post FOR EACH ROW EXECUTE PROCEDURE sg_private.verify_post();
+
+
+--
+-- Name: TRIGGER insert_post_verify ON post; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER insert_post_verify ON sg_public.post IS 'Whenever I make a new post, check that the post is valid.';
+
+
+--
 -- Name: response insert_response_score; Type: TRIGGER; Schema: sg_public; Owner: -
 --
 
@@ -2667,6 +3111,20 @@ COMMENT ON TRIGGER insert_subject_version_user_or_session ON sg_public.subject_v
 
 
 --
+-- Name: topic insert_topic_user_id; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER insert_topic_user_id BEFORE INSERT ON sg_public.topic FOR EACH ROW EXECUTE PROCEDURE sg_private.insert_user_or_session();
+
+
+--
+-- Name: TRIGGER insert_topic_user_id ON topic; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER insert_topic_user_id ON sg_public.topic IS 'Whenever I make a new topic, auto fill the `user_id` column';
+
+
+--
 -- Name: user_subject insert_user_subject_user_or_session; Type: TRIGGER; Schema: sg_public; Owner: -
 --
 
@@ -2706,6 +3164,48 @@ CREATE TRIGGER update_card_version_modified BEFORE UPDATE ON sg_public.card_vers
 --
 
 COMMENT ON TRIGGER update_card_version_modified ON sg_public.card_version IS 'Whenever a card version changes, update the `modified` column.';
+
+
+--
+-- Name: post_entity_version update_post_entity_version_modified; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER update_post_entity_version_modified BEFORE UPDATE ON sg_public.post_entity_version FOR EACH ROW EXECUTE PROCEDURE sg_private.update_modified_column();
+
+
+--
+-- Name: TRIGGER update_post_entity_version_modified ON post_entity_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER update_post_entity_version_modified ON sg_public.post_entity_version IS 'Whenever a post entity version changes, update the `modified` column.';
+
+
+--
+-- Name: post update_post_modified; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER update_post_modified BEFORE UPDATE ON sg_public.post FOR EACH ROW EXECUTE PROCEDURE sg_private.update_modified_column();
+
+
+--
+-- Name: TRIGGER update_post_modified ON post; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER update_post_modified ON sg_public.post IS 'Whenever a post changes, update the `modified` column.';
+
+
+--
+-- Name: post update_post_verify; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER update_post_verify BEFORE UPDATE ON sg_public.post FOR EACH ROW EXECUTE PROCEDURE sg_private.verify_post();
+
+
+--
+-- Name: TRIGGER update_post_verify ON post; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER update_post_verify ON sg_public.post IS 'Whenever I make a new post, check that the post is valid.';
 
 
 --
@@ -2762,6 +3262,20 @@ CREATE TRIGGER update_subject_version_parent_child_modified BEFORE UPDATE ON sg_
 --
 
 COMMENT ON TRIGGER update_subject_version_parent_child_modified ON sg_public.subject_version_parent_child IS 'Whenever a subject version changes, update the `modified` column.';
+
+
+--
+-- Name: topic update_topic_modified; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER update_topic_modified BEFORE UPDATE ON sg_public.topic FOR EACH ROW EXECUTE PROCEDURE sg_private.update_modified_column();
+
+
+--
+-- Name: TRIGGER update_topic_modified ON topic; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER update_topic_modified ON sg_public.topic IS 'Whenever a topic changes, update the `modified` column.';
 
 
 --
@@ -2846,6 +3360,46 @@ ALTER TABLE ONLY sg_public.card_version
 
 ALTER TABLE ONLY sg_public.card_version
     ADD CONSTRAINT card_version_version_id_fkey FOREIGN KEY (version_id) REFERENCES sg_public.entity_version(version_id);
+
+
+--
+-- Name: post_entity_version post_entity_version_post_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.post_entity_version
+    ADD CONSTRAINT post_entity_version_post_id_fkey FOREIGN KEY (post_id) REFERENCES sg_public.post(id);
+
+
+--
+-- Name: post_entity_version post_entity_version_version_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.post_entity_version
+    ADD CONSTRAINT post_entity_version_version_id_fkey FOREIGN KEY (version_id, entity_kind) REFERENCES sg_public.entity_version(version_id, entity_kind);
+
+
+--
+-- Name: post post_parent_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.post
+    ADD CONSTRAINT post_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES sg_public.post(id);
+
+
+--
+-- Name: post post_topic_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.post
+    ADD CONSTRAINT post_topic_id_fkey FOREIGN KEY (topic_id) REFERENCES sg_public.topic(id);
+
+
+--
+-- Name: post post_user_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.post
+    ADD CONSTRAINT post_user_id_fkey FOREIGN KEY (user_id) REFERENCES sg_public."user"(id);
 
 
 --
@@ -2945,6 +3499,22 @@ ALTER TABLE ONLY sg_public.subject_version
 
 
 --
+-- Name: topic topic_entity_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.topic
+    ADD CONSTRAINT topic_entity_id_fkey FOREIGN KEY (entity_id, entity_kind) REFERENCES sg_public.entity(entity_id, entity_kind);
+
+
+--
+-- Name: topic topic_user_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE ONLY sg_public.topic
+    ADD CONSTRAINT topic_user_id_fkey FOREIGN KEY (user_id) REFERENCES sg_public."user"(id);
+
+
+--
 -- Name: user_subject user_subject_subject_id_fkey; Type: FK CONSTRAINT; Schema: sg_public; Owner: -
 --
 
@@ -2958,6 +3528,20 @@ ALTER TABLE ONLY sg_public.user_subject
 
 ALTER TABLE ONLY sg_public.user_subject
     ADD CONSTRAINT user_subject_user_id_fkey FOREIGN KEY (user_id) REFERENCES sg_public."user"(id) ON DELETE CASCADE;
+
+
+--
+-- Name: post delete_post_admin; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY delete_post_admin ON sg_public.post FOR DELETE TO sg_admin USING (true);
+
+
+--
+-- Name: topic delete_topic_admin; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY delete_topic_admin ON sg_public.topic FOR DELETE TO sg_admin USING (true);
 
 
 --
@@ -2982,10 +3566,24 @@ CREATE POLICY delete_user_subject ON sg_public.user_subject FOR DELETE TO sg_ano
 
 
 --
+-- Name: post insert_post; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY insert_post ON sg_public.post FOR INSERT WITH CHECK (true);
+
+
+--
 -- Name: response insert_response; Type: POLICY; Schema: sg_public; Owner: -
 --
 
 CREATE POLICY insert_response ON sg_public.response FOR INSERT TO sg_anonymous, sg_user, sg_admin WITH CHECK (true);
+
+
+--
+-- Name: topic insert_topic; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY insert_topic ON sg_public.topic FOR INSERT WITH CHECK (true);
 
 
 --
@@ -2996,16 +3594,36 @@ CREATE POLICY insert_user_subject ON sg_public.user_subject FOR INSERT TO sg_ano
 
 
 --
+-- Name: post; Type: ROW SECURITY; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE sg_public.post ENABLE ROW LEVEL SECURITY;
+
+--
 -- Name: response; Type: ROW SECURITY; Schema: sg_public; Owner: -
 --
 
 ALTER TABLE sg_public.response ENABLE ROW LEVEL SECURITY;
 
 --
+-- Name: post select_post; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY select_post ON sg_public.post FOR SELECT USING (true);
+
+
+--
 -- Name: response select_response; Type: POLICY; Schema: sg_public; Owner: -
 --
 
 CREATE POLICY select_response ON sg_public.response FOR SELECT TO sg_anonymous, sg_user, sg_admin USING (((user_id = (NULLIF(current_setting('jwt.claims.user_id'::text, true), ''::text))::uuid) OR (session_id = (NULLIF(current_setting('jwt.claims.session_id'::text, true), ''::text))::uuid)));
+
+
+--
+-- Name: topic select_topic; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY select_topic ON sg_public.topic FOR SELECT USING (true);
 
 
 --
@@ -3020,6 +3638,40 @@ CREATE POLICY select_user ON sg_public."user" FOR SELECT USING (true);
 --
 
 CREATE POLICY select_user_subject ON sg_public.user_subject FOR SELECT TO sg_anonymous, sg_user, sg_admin USING (((user_id = (NULLIF(current_setting('jwt.claims.user_id'::text, true), ''::text))::uuid) OR (session_id = (NULLIF(current_setting('jwt.claims.session_id'::text, true), ''::text))::uuid)));
+
+
+--
+-- Name: topic; Type: ROW SECURITY; Schema: sg_public; Owner: -
+--
+
+ALTER TABLE sg_public.topic ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: post update_post; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY update_post ON sg_public.post FOR UPDATE TO sg_user USING ((user_id = (NULLIF(current_setting('jwt.claims.user_id'::text, true), ''::text))::uuid));
+
+
+--
+-- Name: post update_post_admin; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY update_post_admin ON sg_public.post FOR UPDATE TO sg_admin USING (true);
+
+
+--
+-- Name: topic update_topic; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY update_topic ON sg_public.topic FOR UPDATE TO sg_user USING ((user_id = (NULLIF(current_setting('jwt.claims.user_id'::text, true), ''::text))::uuid));
+
+
+--
+-- Name: topic update_topic_admin; Type: POLICY; Schema: sg_public; Owner: -
+--
+
+CREATE POLICY update_topic_admin ON sg_public.topic FOR UPDATE TO sg_admin USING (true);
 
 
 --
@@ -3072,4 +3724,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190411224126'),
     ('20190412211807'),
     ('20190418165040'),
-    ('20190524205800');
+    ('20190524205800'),
+    ('20190529204020');

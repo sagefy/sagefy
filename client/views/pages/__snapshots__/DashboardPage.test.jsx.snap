@@ -7,17 +7,15 @@ exports[`DashboardPage should render the dashboard page 1`] = `
   title="Dashboard"
 >
   <section
-    className="m-yc"
+    className="my-c"
   >
     <p>
       <em>
         Hi 
-        , welcome back!
-         
-        <img
-          alt="astrolabe"
-          height="24"
-          src="/astrolabe.svg"
+        , welcome back! 
+        <Icon
+          i="sagefy"
+          s="m"
         />
       </em>
     </p>

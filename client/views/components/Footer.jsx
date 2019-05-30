@@ -8,10 +8,7 @@ export default function Footer({ role }) {
   return (
     <footer>
       <hr />
-      <Link to="/">
-        <img src="/astrolabe.svg" height="48" alt="astrolabe" />
-      </Link>
-      <small className="m-yc">
+      <small>
         {(role === 'sg_anonymous' && (
           <ul className="ls-i">
             <li>
@@ -47,6 +44,11 @@ export default function Footer({ role }) {
         )}
         <ul className="ls-i">
           <li>
+            <Link to="/">
+              <Icon i="home" s="s" /> Home
+            </Link>
+          </li>
+          <li>
             <ExternalLink href="https://docs.sagefy.org/">
               <Icon i="docs" s="s" /> Docs
             </ExternalLink>
@@ -72,7 +74,7 @@ export default function Footer({ role }) {
             </Link>
           </li>
         </ul>
-        &copy; Copyright {new Date().getFullYear()} Sagefy.
+        <p>&copy; Copyright {new Date().getFullYear()} Sagefy.</p>
       </small>
     </footer>
   )

@@ -9,6 +9,7 @@ import Icon from '../components/Icon'
 export default function ChoiceCardPage({
   hash,
   card: {
+    entityId: cardEntityId,
     name: cardName,
     data: { body, options },
     subject: { name: subjectName, entityId: subjectEntityId },
@@ -22,7 +23,7 @@ export default function ChoiceCardPage({
       description="-"
     >
       <header>
-        <div className="m-yc">
+        <div className="my-c">
           <p>
             Choice Card <Icon i="card" />
             <Icon i="choice" />
@@ -40,14 +41,18 @@ export default function ChoiceCardPage({
             <Icon i="select" /> Let&apos;s learn now
           </button>
         </form>
-        {/* TODO <small>
-    <ul class="ls-i ta-r">
-      <li><a href="/mocks/follows">👂🏿 Follow</a></li>
-      <li><a href="/mocks/talk">💬 Talk</a></li>
-      <li><a href="/mocks/history">🎢 History</a></li>
-      <li><a href="/mocks/update-card">🌳 Edit</a></li>
-    </ul>
-  </small> */}
+        <small>
+          <ul className="ls-i ta-r">
+            {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
+            <li>
+              <a href={`/choice-cards/${to58(cardEntityId)}/talk`}>
+                <Icon i="talk" s="s" /> Talk
+              </a>
+            </li>
+            {/* <li><a href="/mocks/history">🎢 History</a></li> */}
+            {/* <li><a href="/mocks/update-card">🌳 Edit</a></li> */}
+          </ul>
+        </small>
         {/* TODO stats */}
       </header>
 

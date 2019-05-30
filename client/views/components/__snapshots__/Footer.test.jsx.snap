@@ -3,19 +3,7 @@
 exports[`Footer component should render a footer 1`] = `
 <footer>
   <hr />
-  <Link
-    replace={false}
-    to="/"
-  >
-    <img
-      alt="astrolabe"
-      height="48"
-      src="/astrolabe.svg"
-    />
-  </Link>
-  <small
-    className="m-yc"
-  >
+  <small>
     <ul
       className="ls-i"
     >
@@ -59,6 +47,18 @@ exports[`Footer component should render a footer 1`] = `
     <ul
       className="ls-i"
     >
+      <li>
+        <Link
+          replace={false}
+          to="/"
+        >
+          <Icon
+            i="home"
+            s="s"
+          />
+           Home
+        </Link>
+      </li>
       <li>
         <ExternalLink
           href="https://docs.sagefy.org/"
@@ -117,9 +117,11 @@ exports[`Footer component should render a footer 1`] = `
         </Link>
       </li>
     </ul>
-    © Copyright 
-    2019
-     Sagefy.
+    <p>
+      © Copyright 
+      2019
+       Sagefy.
+    </p>
   </small>
 </footer>
 `;

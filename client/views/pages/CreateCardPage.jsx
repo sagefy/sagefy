@@ -19,7 +19,7 @@ export default function CreateCardPage({
       title={`Create Card for ${subjectName}`}
       description={`Help Sagefy grow by helping us make new cards for ${subjectName}`}
     >
-      <header className="m-yc">
+      <header className="my-c">
         <p>
           <em>
             Let&apos;s learn by teaching <Icon i="cheer" /> and&hellip;

@@ -43,7 +43,7 @@ Restart a service manually:
 
 Access Postgres REPL:
 
-    npm run db-repl
+    npm run dbrepl
 
 Run tests:
 

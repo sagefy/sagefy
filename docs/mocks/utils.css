@@ -67,11 +67,11 @@ iframe {
   margin-right: 0;
 }
 
-.m-yc > *:not(:first-child) {
+.my-c > *:not(:first-child) {
   margin-top: 0;
 }
 
-.m-yc > *:not(:last-child) {
+.my-c > *:not(:last-child) {
   margin-bottom: 0;
 }
 

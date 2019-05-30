@@ -27,7 +27,7 @@ export default function CreateChoiceCardPage({
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
-      <header className="m-yc">
+      <header className="my-c">
         <p>
           <em>
             Great, a choice card! <Icon i="choice" />

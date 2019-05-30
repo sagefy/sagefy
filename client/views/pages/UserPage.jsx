@@ -23,7 +23,7 @@ export default function UserPage({
       description={`Joined ${userCreated.slice(0, 10)}`}
     >
       <header>
-        <div className="m-yc">
+        <div className="my-c">
           <p>
             User <Icon i="user" />
           </p>
@@ -134,11 +134,11 @@ UserPage.propTypes = {
   <h2>What I'm learning 🏆</h2>
   <table>
     <tr>
-      <td class="ta-c m-yc">
+      <td class="ta-c my-c">
         <p><button>👍</button></p>
         <pre><small>12 fans</small></pre>
       </td>
-      <td class="m-yc">
+      <td class="my-c">
         <h3>
           <a href="/mocks/choose-next"
             >🎧 An Introduction to Electronic Music</a

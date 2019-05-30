@@ -25,7 +25,7 @@ export default function CreatePageCardPage({
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
-      <header className="m-yc">
+      <header className="my-c">
         <p>
           <em>
             Great, a page card! <Icon i="page" />

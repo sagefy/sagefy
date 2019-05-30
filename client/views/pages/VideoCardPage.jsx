@@ -9,6 +9,7 @@ import Icon from '../components/Icon'
 export default function VideoCardPage({
   hash,
   card: {
+    entityId: cardEntityId,
     name: cardName,
     data: { video_id },
     subject: { name: subjectName, entityId: subjectEntityId },
@@ -22,7 +23,7 @@ export default function VideoCardPage({
       description="-"
     >
       <header>
-        <div className="m-yc">
+        <div className="my-c">
           <p>
             Video Card <Icon i="card" />
             <Icon i="video" />
@@ -40,14 +41,18 @@ export default function VideoCardPage({
             <Icon i="select" /> Let&apos;s learn now
           </button>
         </form>
-        {/* TODO <small>
-    <ul class="ls-i ta-r">
-      <li><a href="/mocks/follows">👂🏿 Follow</a></li>
-      <li><a href="/mocks/talk">💬 Talk</a></li>
-      <li><a href="/mocks/history">🎢 History</a></li>
-      <li><a href="/mocks/update-card">🌳 Edit</a></li>
-    </ul>
-  </small> */}
+        <small>
+          <ul className="ls-i ta-r">
+            {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
+            <li>
+              <a href={`/video-cards/${to58(cardEntityId)}/talk`}>
+                <Icon i="talk" s="s" /> Talk
+              </a>
+            </li>
+            {/* <li><a href="/mocks/history">🎢 History</a></li> */}
+            {/* <li><a href="/mocks/update-card">🌳 Edit</a></li> */}
+          </ul>
+        </small>
         {/* TODO stats */}
       </header>
 

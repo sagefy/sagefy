@@ -74,7 +74,7 @@ export default function HomePage({ hash, role, subjects }) {
       ) : null}
 
       <section>
-        <div className="ta-c m-yc">
+        <div className="ta-c my-c">
           <img src="/astrolabe.svg" height="120" alt="astrolabe" />
           <h2>Sagefy</h2>
           <p>

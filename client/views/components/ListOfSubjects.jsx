@@ -23,7 +23,7 @@ export default function ListOfSubjects({ subjects, title, icon }) {
       </h2>
       <ul>
         {subjects.map(({ entityId, name, body }) => (
-          <li className="m-yc">
+          <li className="my-c">
             <h3>
               <Link to={`/subjects/${to58(entityId)}`}>{name}</Link>
             </h3>

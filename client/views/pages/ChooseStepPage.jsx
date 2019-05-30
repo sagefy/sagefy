@@ -8,7 +8,7 @@ import ChooseSubject from '../components/ChooseSubject'
 export default function ChooseNextPage({ hash, subjects, role }) {
   return (
     <Layout hash={hash} page="ChooseNextPage" title="Choose" description="-">
-      <header className="m-yc">
+      <header className="my-c">
         <p>
           <em>
             Let&apos;s keep it up! <Icon i="cheer" />

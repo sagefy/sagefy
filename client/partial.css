@@ -35,6 +35,11 @@ summary > *:first-child {
 
 /* Utility classes ************************************************************/
 
+/* text-align--left */
+.ta-l {
+  text-align: left;
+}
+
 /* text-align--center */
 .ta-c {
   text-align: center;
@@ -67,13 +72,19 @@ summary > *:first-child {
   margin-right: 0;
 }
 
-/* margin--y-collapse */
-.m-yc > *:not(:first-child) {
+/* margin-y--collapse */
+.my-c > *:not(:first-child) {
   margin-top: 0;
 }
 
-.m-yc > *:not(:last-child) {
+.my-c > *:not(:last-child) {
   margin-bottom: 0;
+}
+
+/* margin-x--auto */
+.mx-a {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* display--inline-block */

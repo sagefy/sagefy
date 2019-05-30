@@ -50,7 +50,7 @@ export default function SubjectPage({
       )}`}
     >
       <header>
-        <div className="m-yc">
+        <div className="my-c">
           <p>
             Subject <Icon i="subject" />
           </p>
@@ -63,14 +63,18 @@ export default function SubjectPage({
             <Icon i="select" /> Let&apos;s learn now
           </button>
         </form>
-        {/* TODO <small>
-          <ul class="ls-i ta-r">
-            <li><a href="/mocks/follows">👂🏿 Follow</a></li>
-            <li><a href="/mocks/talk">💬 Talk</a></li>
-            <li><a href="/mocks/history">🎢 History</a></li>
-            <li><a href="/mocks/update-subject">🌳 Edit</a></li>
+        <small>
+          <ul className="ls-i ta-r">
+            {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
+            <li>
+              <a href={`/subjects/${to58(subjectEntityId)}/talk`}>
+                <Icon i="talk" s="s" /> Talk
+              </a>
+            </li>
+            {/* <li><a href="/mocks/history">🎢 History</a></li> */}
+            {/* <li><a href="/mocks/update-subject">🌳 Edit</a></li> */}
           </ul>
-        </small> */}
+        </small>
         {/* TODO stats section */}
       </header>
       <ListOfSubjects
@@ -124,12 +128,7 @@ export default function SubjectPage({
       <section>
         <h2>
           Why learn about <q>{subjectName}</q> with Sagefy?{' '}
-          <img
-            src="/astrolabe.svg"
-            height="24"
-            alt="astrolabe"
-            className="va-m"
-          />
+          <Icon i="sagefy" s="h2" />
         </h2>
         <p>
           <em>

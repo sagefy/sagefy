@@ -25,7 +25,7 @@ export default function CreateVideoCardPage({
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
-      <header className="m-yc">
+      <header className="my-c">
         <p>
           <em>
             Great, a video card! <Icon i="video" />

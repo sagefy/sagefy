@@ -24,7 +24,7 @@ export default function CreateUnscoredEmbedCardPage({
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
-      <header className="m-yc">
+      <header className="my-c">
         <p>
           <em>
             Great, an embed card! <Icon i="embed" />
