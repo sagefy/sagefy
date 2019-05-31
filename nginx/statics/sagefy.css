@@ -762,42 +762,7 @@ mark {
   max-width: 40rem; /* 640px */
   padding: 1rem;
 }
-/*! Sagefy partial */
-
-/* Basic tag changes **********************************************************/
-
-/* A little more dramatic form inputs and buttons */
-input,
-textarea {
-  padding: calc(0.5rem - 1px) calc(1rem - 1px);
-}
-
-button,
-[type='submit'],
-[type='button'],
-[type='reset'] {
-  padding: 0.5rem 1.5rem;
-  border-radius: 1.5rem;
-}
-
-/* Pretty much every form is vertical so... */
-label {
-  display: block;
-}
-
-/* Tables are layout and data here,
-   progress should be the full page */
-table,
-progress {
-  width: 100%;
-}
-
-/* Make important summary elements stand out a little more */
-summary > *:first-child {
-  text-decoration: underline dotted;
-}
-
-/* Utility classes ************************************************************/
+/*! drab utils */
 
 /* text-align--left */
 .ta-l {
@@ -864,6 +829,40 @@ summary > *:first-child {
 /* width--100 */
 .w-100 {
   width: 100%;
+}
+/*! Sagefy partial */
+
+/* Basic tag changes **********************************************************/
+
+/* A little more dramatic form inputs and buttons */
+input,
+textarea {
+  padding: calc(0.5rem - 1px) calc(1rem - 1px);
+}
+
+button,
+[type='submit'],
+[type='button'],
+[type='reset'] {
+  padding: 0.5rem 1.5rem;
+  border-radius: 1.5rem;
+}
+
+/* Pretty much every form is vertical so... */
+label {
+  display: block;
+}
+
+/* Tables are layout and data here,
+   progress should be the full page */
+table,
+progress {
+  width: 100%;
+}
+
+/* Make important summary elements stand out a little more */
+summary > *:first-child {
+  text-decoration: underline dotted;
 }
 
 /* Elements *******************************************************************/
