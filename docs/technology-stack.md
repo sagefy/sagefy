@@ -51,7 +51,6 @@ title: Technology Stack
 - [Markdown](https://daringfireball.net/projects/markdown/)
 - [Twitter](https://twitter.com/sagefyorg) §
 - [Facebook](https://www.facebook.com/sagefy) §
-- [Medium](http://stories.sagefy.org/) §
 - [YouTube](https://www.youtube.com/channel/UCFCHo5F5Ai_z1fX8pn1NrLg) §
 - [MailerLite](http://mailerlite.com/) §¶
 

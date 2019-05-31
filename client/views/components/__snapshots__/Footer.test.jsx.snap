@@ -72,7 +72,7 @@ exports[`Footer component should render a footer 1`] = `
       </li>
       <li>
         <ExternalLink
-          href="https://stories.sagefy.org/"
+          href="https://docs.sagefy.org/stories"
         >
           <Icon
             i="stories"

@@ -25,7 +25,7 @@ Also, if you're interested, [sign up for updates](https://sgfy.xyz/updates).
 
 ## Outreach
 
-- Writing articles about Sagefy [on Medium](https://stories.sagefy.org)
+- [Writing articles about Sagefy](https://docs.sagefy.org/stories)
 - Proofreading and feedback
 - Writing and implementing user engagement emails
 - Getting quality links from other websites to Sagefy, such as social media or edtech.
@@ -54,7 +54,7 @@ Also, if you're interested, [sign up for updates](https://sgfy.xyz/updates).
 
 ## Math and Stats
 
-- At the end of [this article](https://stories.sagefy.org/the-mathematics-of-sagefy-66e8cd5c0300) is a **call to action** section with some of the things we need help with, such as:
+- At the end of [this article](https://docs.sagefy.org/stories/the-mathematics-of-sagefy) is a **call to action** section with some of the things we need help with, such as:
   - Improving current Bayesian Knowledge Tracing models, particularly with parameter estimation
   - Designing an implementing contributor rating system
   - Improving the card choosing mathematics
