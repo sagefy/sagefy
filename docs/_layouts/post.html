@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ page.title }} — Kevin Heis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://heiskr.com/drab.css/css/drab.min.css"
+    />
+    <style>
+      .ls-i {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .ls-i li {
+        display: inline-block;
+        margin-right: 2rem;
+      }
+
+      .ls-i li:last-child {
+        margin-right: 0;
+      }
+    </style>
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <main class="page">
+      <h1>{{ page.title }}</h1>
+      by Kevin Heis, <time>{{ page.date | date: "%Y %b %d" }}</time>
+      {{ content }}
+
+      <section>
+        <hr />
+        <h2>More stories</h2>
+        <ul>
+          {% for post in site.posts %}
+          <li>
+            <a href="{{ post.url }}">{{ post.title }}</a>
+            <time>{{ post.date | date: "%Y %b %d" }}</time>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <footer>
+        <hr />
+        <small>
+          <ul class="ls-i">
+            <li><a href="/stories">All stories</a></li>
+            <li>&copy; Copyright {{ 'now' | date: "%Y" }} Sagefy</li>
+          </ul>
+        </small>
+      </footer>
+    </main>
+  </body>
+</html>
