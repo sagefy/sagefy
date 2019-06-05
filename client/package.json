@@ -49,7 +49,7 @@
     "babel-jest": "^24.1.0",
     "clean-css": "^4.2.1",
     "clean-css-cli": "^4.2.1",
-    "jest": "^24.1.0",
+    "jest": "^24.8.0",
     "superagent": "^4.1.0",
     "supertest": "^3.4.2"
   },

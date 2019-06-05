@@ -32,7 +32,7 @@
     "@babel/preset-env": "^7.4.2",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.1.0",
-    "jest": "^24.6.0",
+    "jest": "^24.8.0",
     "joi": "^14.3.1",
     "js-yaml": "^3.13.0",
     "supertest": "^4.0.2"
