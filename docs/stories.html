@@ -7,7 +7,7 @@ title: Sagefy Stories
   {% for post in site.posts %}
   <li class="my-c">
     <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-    <p><small><em>by Kevin Heis<em> <time>{{ post.date | date: "%Y %b %d" }}</time></small></p>
+    <p><small><em>by Kevin Heis</em> <time>{{ post.date | date: "%Y %b %d" }}</time></small></p>
     <p>{{ post.description }}</p>
   </li>
   {% endfor %}
