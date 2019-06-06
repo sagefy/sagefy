@@ -5,6 +5,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -1401,18 +1402,19 @@ COMMENT ON FUNCTION sg_public.select_latest_response(subject_id uuid) IS 'Get th
 --
 
 CREATE FUNCTION sg_public.select_popular_subjects() RETURNS SETOF sg_public.subject
-    LANGUAGE sql STABLE STRICT SECURITY DEFINER
+    LANGUAGE sql STABLE
     AS $$
+  with most_popular as (
+    select s.*
+    from sg_public.subject s
+    order by sg_public.subject_user_count(s) desc
+    limit 20
+  )
   select *
-  from sg_public.subject s
-  order by (
-    select count(*)
-    from sg_public.user_subject us
-    where us.subject_id = s.entity_id
-    and us.user_id is not null
-  ) desc, random()
-  limit 5;
-  -- This function should count all usubjs, not just the current users.
+  from most_popular
+  where name not ilike '%what is sagefy?%'
+  order by random()
+  limit 4;
 $$;
 
 
@@ -1847,6 +1849,28 @@ COMMENT ON FUNCTION sg_public.subject_parent_subjects(subject sg_public.subject)
 
 
 --
+-- Name: subject_user_count(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_user_count(sg_public.subject) RETURNS bigint
+    LANGUAGE sql STABLE STRICT SECURITY DEFINER
+    AS $_$
+  select count(*)
+  from sg_public.user_subject us
+  where us.subject_id = $1.entity_id
+  and us.user_id is not null;
+  -- This function should count all usubjs, not just the current users.
+$_$;
+
+
+--
+-- Name: FUNCTION subject_user_count(sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_user_count(sg_public.subject) IS 'Count the number of logged in users learning the subject.';
+
+
+--
 -- Name: post; Type: TABLE; Schema: sg_public; Owner: -
 --
 
@@ -2232,6 +2256,27 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_public.user_subject_subject(us sg_public.user_subject) IS 'Gets the subject related to the user subject relation.';
+
+
+--
+-- Name: what_is_sagefy(); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.what_is_sagefy() RETURNS sg_public.subject
+    LANGUAGE sql STABLE
+    AS $$
+  select *
+  from sg_public.subject
+  where name ilike '%what is sagefy?%'
+  limit 1;
+$$;
+
+
+--
+-- Name: FUNCTION what_is_sagefy(); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.what_is_sagefy() IS 'Grab just the single "What is Sagefy?" subject, if it exists.';
 
 
 --
@@ -3725,4 +3770,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190412211807'),
     ('20190418165040'),
     ('20190524205800'),
-    ('20190529204020');
+    ('20190529204020'),
+    ('20190606175104');

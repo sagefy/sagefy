@@ -518,6 +518,8 @@ app.post(
 app.get('/', async (req, res) => {
   const gqlRes = await GQL.learnHome(req)
   const subjects = get(gqlRes, 'data.selectPopularSubjects.nodes')
+  const whatIs = get(gqlRes, 'data.whatIsSagefy')
+  if (whatIs) subjects.unshift(whatIs)
   return res.render('Index', { ...formatData(req), subjects })
 })
 
@@ -527,7 +529,6 @@ app.get('/', async (req, res) => {
 // GET /server-error
 // GET /terms
 // GET /contact
-// GET /
 // GET * (NotFound)
 app.get('*', handleRegular)
 

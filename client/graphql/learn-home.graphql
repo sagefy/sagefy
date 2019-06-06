@@ -6,4 +6,10 @@ query learnHome {
       body
     }
   }
+
+  whatIsSagefy {
+    entityId
+    name
+    body
+  }
 }
