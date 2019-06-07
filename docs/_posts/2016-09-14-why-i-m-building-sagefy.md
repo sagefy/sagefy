@@ -5,13 +5,11 @@ description: 'The greatest opportunity for technology is human learning. By elev
 date: '2016-09-14T21:48:41.411Z'
 ---
 
-## An open-content adaptive learning platform.
-
 ![Sagefy logo and homepage text](/images/why-1.png)
 
 I would like to share with you some things about a project I’ve been working on since early 2013.
 
-#### The challenge
+## The challenge
 
 **The greatest opportunity for technology is human learning.** By elevating ourselves, we can accelerate our progress and growth. I’m hoping [Sagefy](https://sagefy.org) shows a different way we can think about learning with technology.
 
@@ -21,7 +19,7 @@ Also, we want to make sure that the learner _isn’t restricted by topic_. Many 
 
 We have every reason to want every single person to pursue knowledge in the most time-and-effort efficient means possible. And we want to encourage each person to pursue their interests as deeply as possible.
 
-#### What Sagefy is
+## What Sagefy is
 
 [**Sagefy**](https://sagefy.org) **is an open-content adaptive learning system.**
 
@@ -49,7 +47,7 @@ _Sagefy is completely_ [_open-source_](https://github.com/heiskr/sagefy/) _and f
 
 The combination of _open-content_, _adaptive_, and _free_ positions Sagefy in a way no other learning technology is. This combination means Sagefy can reach a wide variety of learners, all while attempting to provide an in-depth and effective learning experience.
 
-#### How Sagefy works
+## How Sagefy works
 
 ![The three types of entities in Sagefy.](/images/why-4.png)
 
@@ -67,8 +65,6 @@ The combination of _open-content_, _adaptive_, and _free_ positions Sagefy in a 
 
 **Subject**. A subject is a collection of units and other subjects. Subjects are like classes or courses, anything from like a short workshop to an entire degree program. Examples could be, “measures of central tendency”, “descriptive statistics”, or “first statistics course”. A subject is the large size in the Sagefy system. A subject contains many units and other subjects.
 
----
-
 **_The learner’s experience._** For the learner, Sagefy is a simple, focused flow that allows for some choice in the process.
 
 1.  After signing up, the learner finds a subject the learner would like to learn.
@@ -78,8 +74,6 @@ The combination of _open-content_, _adaptive_, and _free_ positions Sagefy in a 
 5.  Finally, the learner continues to choose units and learn them until the overall learning goal is complete.
 
 ![Choosing the “An Introduction to Electronic Music — Foundation” subject.](/images/why-11.png)![The learner’s progress towards the subject, in the form of a tree of units.](/images/why-12.png)![The learner chooses a unit.](/images/why-13.png)![The learner engages with the content until the learner has learned the unit. Sagefy shows the learner’s progress in a bar across the bottom of the screen.](/images/why-14.png)
-
----
 
 **_The content creation process._** Most open-content sites advertise “anyone can edit.” And it’s a true statement. However, that doesn’t mean you should expect to go to Wikipedia, make changes on a popular page, and still see those changes still there even one minute later. There’s an implied process instead:
 
@@ -103,15 +97,11 @@ So to create a new unit, let’s say “describe the differences between mean, m
 
 Because Sagefy is an adaptive learning system, content creators get statistical indicators of how different content performs with real learners. Hopefully, these statistics will help us to improve content and experiment to find teaching opportunities.
 
----
-
 **_The adaptive learning process._** We know that [one-on-one learning](http://www.npr.org/sections/health-shots/2015/09/08/438592588/one-tutor-one-student-better-math-scores-less-fear) tends to have the highest effectiveness. Why? Because there’s an immediate feedback from the learner to the mentor. Does the learner already know the subject? Skip ahead. Missing something? Let’s back up. Bored? Let’s switch to something else. This interaction is easy to do one-on-one, but basically impossible when there’s multiple learners per mentor. Technology, however, makes this interaction widely scalable.
 
 If you’re interested in getting into specific of what I’ve built so far and planned, [I have that documented](https://github.com/heiskr/sagefy/wiki/Planning%3A-Sequencer). I’ve tried to come up with something simple, easy to calculate, and fast on a server, while also general enough to work for a wide variety of topics. I hope someone smarter than me comes along and finds a much better way to do it than I have, but what I have is enough to get started with showing the concept.
 
----
-
-#### Sagefy’s ideas
+## Sagefy’s ideas
 
 After spending a few years reading of reading books and articles on educational research, I’ve come to the conclusion there are seven main ideas that come up repeatedly:
 
@@ -122,8 +112,6 @@ After spending a few years reading of reading books and articles on educational 
 5.  Dive deep, going beyond rote memorization.
 6.  Connect the learning experience with real-life examples.
 7.  Get learners to learn together.
-
----
 
 ![“Do one thing at a time.” Sagefy tucks away other options behind a menu, so the learner can solely focus on the single task at the time.](/images/why-17.png)
 
@@ -147,9 +135,7 @@ After spending a few years reading of reading books and articles on educational 
 
 There’s not widespread dissent on any of these points, though there are some nuances. Despite the repetition of these points throughout the literature, many of our current learning systems fail to take full advantage of these ideas.
 
----
-
-#### What makes Sagefy different
+## What makes Sagefy different
 
 In this section, I’ll talk about some of the existing learning systems and how Sagefy would compare to them.
 
@@ -179,9 +165,7 @@ There’s a few examples of MOOC-like platforms that do things a little differen
 
 [**_Open content systems_**](https://en.wikipedia.org/wiki/Open_content)**_._** Current open content systems provide deep, high quality content on a variety of topics. However, they do not have adaptive qualities generally. The most common and largest example is [Wikipedia](https://www.wikipedia.org/).
 
----
-
-#### The backstory of Sagefy
+## The backstory of Sagefy
 
 Like most people, I considered the means of learning while attending school. As a technologist, I often considered how I would do things differently, or how to optimize the experience. For every wonderful, inspiring, enriching, and useful course I’ve taken over my life, there have been at least three or four that weren’t. During my time in graduate school, I also had the opportunity of getting to work on [educational websites for the University of Oregon](https://library.uoregon.edu/cmet).
 
@@ -209,14 +193,12 @@ I already knew how to build a web API and a web UI. So as I started [planning](h
 
 I realized after building the MVP that no one would understand what I built with no content. So the last few months, I’ve been building a small [course on Electronic Music,](https://sagefy.org/sets/CgDRJPfzJuTR916HdmosA3A8) the area of my masters. The first few units are live.
 
-#### The future of Sagefy
+## The future of Sagefy
 
 I realize, as much as anyone, that Sagefy _most likely won’t succeed_. I’m okay with that. There’s so many things that can go wrong, and more importantly, so many right things that may not happen. Lack of interest, difficulty gaining a user base, challenges with creating content, or improving the adaptive algorithms… there’s many challenges ahead. My biggest hope is that, even if Sagefy isn’t successful, that Sagefy may _inspire a conversation_ about learning in this technological era. Sagefy doesn’t have to be big or successful, but _some system_ does need to be successful. _The opportunity is too great to ignore._ For me, the best thing I can do is get some ideas out there about how to account for how people really learn in a learning system. Even if I fail, I can demonstrate that an alternative is both possible and realistic. Of course, if Sagefy does succeed, even better.
 
 **I hope that someday, Sagefy will become a place where anyone can come to learn anything, regardless of what they already know.** And then, be able to achieve their learning goal as quickly as possible. Whether its something small, or an entire degree program, Sagefy will have all the information available in a format realistic with how people learn. I realize some subjects we can only teach in person, but there’s so many subjects that _we could_ teach online that we don’t currently.
 
 I foresee a time too where some organizations, like schools, corporations, non-profits, and governments, would want to run their own instances of Sagefy for educational or training purposes. My current financial vision is Sagefy would be _donation supported_ for the public facing instance, and that support services would be available for private installations.
-
----
 
 If you’d like to know more about Sagefy, [visit today](https://sagefy.org).

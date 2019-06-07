@@ -5,7 +5,7 @@ description: 'In this article, I’m going to talk about my journey on building 
 date: '2017-03-25T01:26:26.715Z'
 ---
 
-## My experience so far building “An Introduction to Electronic Music”
+_My experience so far building “An Introduction to Electronic Music”_
 
 In this article, I’m going to talk about my journey on building out a course for Sagefy. That includes how I picked a topic, how I organized the course, and what I’ve learned so far. _The course is still very much in progress._
 
@@ -13,11 +13,11 @@ In this article, I’m going to talk about my journey on building out a course f
 
 ![An overview page for the Electronic Music course.](/images/build-1.png)
 
-### About Sagefy
+## About Sagefy
 
 I should start with what Sagefy is. [**Sagefy**]({% post_url 2016-09-14-why-i-m-building-sagefy %}) is my project I’ve been working on for a few years to bring together the **open-content** model, like a wiki, with **adaptive learning**. Adaptive learning is awesome; it’s where algorithms decide what to show the learner based on what the learner already knows. So as the learning goes on, the algorithms _optimize the learning experience so that you can learn more quickly and in a flow_. This avoids experiences that are too easy or too difficult. When you combine open-content with adaptive learning, the result is powerful. **Anyone, regardless of what they already know, can learn about anything quickly.**
 
-### Why Electronic Music?
+## Why Electronic Music?
 
 So I built Sagefy. The software is up and running. Okay, its far from perfect, and needs lots of feedback and love. But I’ve had difficulty drawing interest to Sagefy. And the reason is simple: its almost empty. Bit of a chicken-and-egg problem. _So the solution is to start getting some content in Sagefy!_
 
@@ -25,7 +25,7 @@ I figured, if I’m going to build out a course, I should pick something I know.
 
 Electronic music is a big topic, and like any other, once you get started there’s so much to learn! There’s the physics of sound, the technological ideas electronic musicians use, the specific tools, artistic practices, history, and more. That doesn’t include anything with how electronic music relates to other fields. Like western music theory, popular music, ethnomusicology, video, theatre, etc. It’s an _endless_ topic. **And I love it.**
 
-### How I Broke It Down
+## How I Broke It Down
 
 I’m a person too. At about 40 minutes into any meeting, and about 10 into a bad one… I often struggle to _focus_. I’m **limited** in how much I can learn in one sitting. And it takes repetition, practice, and thoughtful analysis before whatever I’m trying to learn _sinks_ in.
 
@@ -35,7 +35,7 @@ The other thing is that I needed two layers. There’s the overall course, but w
 
 If you’re wanting to see more in-depth of where I ended up, you can check out the [Intro to Electronic Music course page](https://sagefy.org/sets/CgDRJPfzJuTR916HdmosA3A8/landing).
 
-### What I’ve Struggled With & What I’ve Learned
+## What I’ve Struggled With & What I’ve Learned
 
 I’ve found a bit of a flow for myself. Once I had my units, the process per unit is:
 
@@ -59,14 +59,12 @@ Ensuring what I present is correct is a bit of a pang in the background. No leve
 
 The time commitment with building courses is more than I ever realized. I figured at a few hours a week I’d have it built out in a few weeks. It’s been about a year! And I’m about half way towards having a “first” finished product. Working full-time and having other responsibilities has made it challenging for sure to work on. More than anything, that’s been my biggest challenge for Sagefy as well as building out this course. I don’t have an answer, other than to accept that this is going to be a long journey. And I love every second I get to spend on it. Accepting how much work this all is, is the best for now.
 
-### Shout out!
+## Shout out!
 
 The only way to get Sagefy going is to recruit other people to take a chance and **start building out courses** too! So if you’ve ever imagined how you would teach your favorite topic, _maybe this article is calling to you_. I’m looking for few willing souls to build out some courses. _Any topic is welcome!_ Right now the platform supports videos and multiple choice questions. And it can be a few short videos and like some multiple choice questions per video.
 
 **If this sounds like a fun adventure to you, _shout me out on_** [**_Twitter_**](http://twitter.org/sagefyorg)**_._**
 
 Worst case scenario, you’ll end up with some great YouTube videos and a story to tell.
-
----
 
 If you’d like to know more about Sagefy, [visit today](https://sagefy.org).

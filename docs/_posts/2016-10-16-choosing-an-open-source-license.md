@@ -5,11 +5,11 @@ description: 'I have to start this article by saying I’m not a lawyer, and not
 date: '2016-10-16T18:18:46.879Z'
 ---
 
-## How I chose the Apache 2 license for Sagefy.
+_How I chose the Apache 2 license for Sagefy._
 
 I have to start this article by saying **I’m not a lawyer**, and nothing in this article is legal advice. If you are looking for a legal recommendation, ask an attorney.
 
-### Why Sagefy is open source
+## Why Sagefy is open source
 
 When I started [**Sagefy**](https://sagefy.org) back in April of 2013, I wanted to build a system where [**anyone can learn anything**]({% post_url 2016-09-14-why-i-m-building-sagefy %}). Where learning is accessible to every learner. Where the experience is completely _adapted_ to the learner’s goals and prior knowledge. Accelerating human learning is the best investment we can make.
 
@@ -17,7 +17,7 @@ I knew I wanted to go **open source**. Open source software has permanence, coll
 
 ![https://choosealicense.com](/images/choose-1.png)
 
-### The problem with picking a license
+## The problem with picking a license
 
 In short, the first decision is _if you want to develop your project in_ **_open source_**. For Sagefy, I wanted to go in the open source direction.
 
@@ -27,7 +27,7 @@ Once you’ve decided to go open source, the next decision is: **choosing a lice
 
 _I first chose AGPL3 for Sagefy._ I didn’t know much about the different licenses. I knew I was creating a web service, and AGPL3 covered this use case. I popped the license in, and didn’t think much about the issue for a few months.
 
-### Most popular licenses
+## Most popular licenses
 
 The first consideration in choosing a license is to **go with a popular license**. With a popular license, people know what the license means. People know what the restrictions are, and know how to interact with the project. With less common licenses, its more work for contributors to understand the rules. An uncommon license may deter contributors and adoption. Furthermore, popular licenses are popular for good reason: _the community vetted them_.
 
@@ -35,11 +35,11 @@ So which licenses are the most popular? It’s difficult to say because there’
 
 The next two most common are **GPL2** and **Apache 2**. Apache 2 is popular with corporations. Corporations see Apache 2 as a more formal version of the compatible MIT license. GPL2 has a history with Linux. Other popular licenses are **GPL3** and **BSD 3-clause**. _Unlicense_, _BSD 2-clause_, _LGPL3_, and _AGPL3_ round out the top. Each of those last four are about 1–2% of all licenses each.
 
-### Reviewing license options, conflicting values, impacts
+## Reviewing license options, conflicting values, impacts
 
 I further researched about setting up an open-source project. I realized I knew little about the differences between the licenses. So here’s my non-lawyer take on them. Please note I am **NOT A LAWYER**. _And this is not legal advice_. If you have questions, you should talk with an intellectual property attorney.
 
-#### **The permissive licenses: MIT, Apache 2, BSD 2-clause, BSD 3-clause, and Unlicense**
+### The permissive licenses: MIT, Apache 2, BSD 2-clause, BSD 3-clause, and Unlicense
 
 If I want a super permissive license or have no idea what I want, **I pick MIT**. If I am concerned about patents, contributor agreements, or trademarks, **I choose Apache 2**. Be aware if you pick Apache 2, other open source projects under GPL2 may be reluctant to use your project.
 
@@ -71,7 +71,7 @@ The [**BSD 2-clause**](https://opensource.org/licenses/BSD-2-Clause) is like the
 
 I can’t imagine there’s much of a practical difference between MIT and Unlicense. _Again, speaking as not-a-lawyer_.
 
-#### **The copyleft licenses: GPL2, GPL3, LGPL3, AGPL3**
+### The copyleft licenses: GPL2, GPL3, LGPL3, AGPL3
 
 The split here comes down to values. If you want anyone to use your software — a person, an organization, a business, whatever — then permissive licenses are the way to go. But, if you want derivatives _to stay completely in the realm of open source_, **GPL** may be the right way to go for you. If you choose a copyleft license, many companies will be _reluctant_ to use your software. _The essence of a copyleft license is derivative works must use the same license._
 
@@ -96,7 +96,7 @@ GitHub created the website [http://choosealicense.com/](http://choosealicense.co
 
 This article doesn’t describe all 78 open source licenses. But _maybe_ one of the other licenses is a better fit for your project. That’s up to you.
 
-### My Criteria
+## My Criteria
 
 I would start out a new project with the following criteria:
 
@@ -110,7 +110,7 @@ I would start out a new project with the following criteria:
 
 These would be my criteria. I’m not making a recommendation here. If you need a recommendation, then you need to speak with an attorney.
 
-### Chosen license: Apache 2.0
+## Chosen license: Apache 2.0
 
 I chose to change Sagefy from AGPL3 to Apache 2.0. I was the only contributor up to that point. I had no concern of getting other contributors to agree to the license change.
 
@@ -120,7 +120,7 @@ Getting more people to use your project means you’ll get contributions more qu
 
 That decision would have led me to MIT by default. For Sagefy, there’s _benefit_ to gaining the extra provisions from Apache 2.0. I have no real concern about GPL2 licensed software consuming Sagefy. _Not_ that I would have a problem with a GPL2 project using Sagefy, just I don’t see that scenario as a likely use case.
 
-### The future
+## The future
 
 Sagefy will most likely stay with Apache 2. If there were to make any change at this point, the most likely would be to the MIT license. I don’t know of any lawsuits with the MIT license specific to patents, contributor license agreements, or trademarks. Perhaps Apache 2 isn’t necessary. _Yet, as the questions remain open, that’s the environment we’re in_.
 
@@ -129,7 +129,5 @@ Sagefy will most likely stay with Apache 2. If there were to make any change at 
 When you’re first making an open source project, choosing a license can be _overwhelming_. Decide if copyleft is the right decision for your project. If you do want _copyleft_, you need to decide how strong you want the copyleft. If you don’t want copyleft, you can choose between: a _simple_ permissive license, or an _aware_ permissive license.
 
 _Any license you choose_, open source software is changing the world faster than anything else. **Come on in!**
-
----
 
 If you’d like to know more about Sagefy, [visit today](https://sagefy.org).

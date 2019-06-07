@@ -5,7 +5,7 @@ description: 'I’ll admit it: I’m a huge nerd. One of my favorite subjects is
 date: '2018-07-09T13:01:04.484Z'
 ---
 
-## Research-backed strategies for better learning
+_Research-backed strategies for better learning_
 
 I’ll admit it: _I’m a huge nerd_. One of my favorite subjects is **learning how to learn**. I’ve read and studied on learning science for many years. And I’ve built my own learning platform, [Sagefy](https://sagefy.org). That said, I’m no expert — enjoy this outsider’s take on the literature.
 
@@ -27,13 +27,13 @@ _If my background interests you:_ [**Sagefy**](https://sagefy.org) is the projec
 
 ![](/images/big-3.jpeg)
 
-### Idea 1: Do One Thing at a Time
+## Idea 1: Do One Thing at a Time
 
 **“**Do one thing at a time” is a long way to say: **_focus_**. Remove distractions. Drop unneeded interfaces. Silence background chatter. Don’t multitask: it doesn’t work. Only focus on one lesson of one subject at a time. When we focus, we get more out of the energy we put into learning.
 
 Attempting to learn three new ideas at the same time to solve one problem is going to slow you down. Instead, isolate and learn each idea, and then integrate the ideas to solve the problem.
 
-#### _1.1 Account for the limits of working memory._
+### _1.1 Account for the limits of working memory._
 
 Our brain has about [86 billion neurons](https://www.nature.com/scitable/blog/brain-metrics/are_there_really_as_many). Our long term memory [appears to be limitless](http://www.cs.colorado.edu/~mozer/Teaching/syllabi/7782/readings/Landauer1986.pdf). Our reality is that we cannot remember everything in our long-term memory at one time. What we remember in the current moment, we call **working memory**.
 
@@ -43,7 +43,7 @@ We learn by _connecting new information to previous known information_. (As we�
 
 In summary, **_be realistic_** about how much information you can put into your working memory. It’s less than you expect.
 
-#### _1.2 Do one activity at a time. Avoid multitasking._
+### _1.2 Do one activity at a time. Avoid multitasking._
 
 Humans are [**terrible at multitasking**](http://www.pnas.org/content/106/37/15583). One study by [Clark, Ayres and Sweller in 2005](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.476.4112&rep=rep1&type=pdf) asked learners to learn both spreadsheet software and related mathematics at the same time. The learners felt overwhelmed. Another [2001 study by Mayer and Chandler](https://www.researchgate.net/publication/48829040_When_Learning_Is_Just_a_Click_Away_Does_Simple_User_Interaction_Foster_Deeper_Understanding_of_Multimedia_Messages) found learners overwhelmed learning an entire interface at once. Learners were more successful learning the interface sequentially.
 
@@ -51,7 +51,7 @@ An entire field of study, [capacity theory](https://en.wikipedia.org/wiki/Capaci
 
 The gist is that trying to learn more than one thing at a time is counterproductive. Instead, it’s much better to try to **learn one thing at a time** instead of many things at once. Learn one thing, take a break, learn the next thing, take a break, and so on. If you’re feeling overwhelmed, break down what you’re learning into different steps. Then, bring it all together at the end.
 
-#### _1.3 Cut noise: distractions, extra choices, tangents, extra inputs…_
+### _1.3 Cut noise: distractions, extra choices, tangents, extra inputs…_
 
 A [1996 Mayer et al](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.454.4263&rep=rep1&type=pdf) study found summarizing a lesson, and reducing information, increased learning. A [1998 Harp and Mayer](https://pdfs.semanticscholar.org/cb1c/9c2bc3703eb49bf7a7f9d3550725671a4a26.pdf) study found that adding interesting bits of information reduced learning. A [2001 Mayer](http://visuallearningresearch.wiki.educ.msu.edu/file/view/Mayer,%20Heiser,%20%26%20Lonn%20%282001%29.pdf) study found increasing the amount of information in a lesson decreased retention. A [2006 Butcher study](https://www.researchgate.net/publication/220041451_Learning_from_text_with_diagrams_Promoting_mental_model_development_and_inference_generation_Journal_of_Educational_Psychology_98_182-197) found simple diagrams work better for learning than realistic diagrams. Finally, a [2007 Mason et al study](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1821121/) found wandering minds were not as capable on performing on tasks.
 
@@ -59,13 +59,13 @@ A [1996 Mayer et al](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.45
 
 ![](/images/big-4.jpeg)
 
-### Idea 2: Set & Adhere to Goals
+## Idea 2: Set & Adhere to Goals
 
 _Define small and achievable_ **_goals_**. Then as you learn, check against those goals. Setting specific goals gives the opportunity for frequent wins, which keeps you learning.
 
 If your goal is too large or ill-defined, you’ll have difficulty focusing and lose motivation. You’ll deal with the constant question, “what’s next?” and spend more time on figuring out what to do than actually learning. By setting small and achievable goals, you keep learning.
 
-#### 2.1 Define small and achievable goals.
+### 2.1 Define small and achievable goals.
 
 There are many goal frameworks such as [SMART](https://en.wikipedia.org/wiki/SMART_criteria). What the frameworks all seem to share is making goals that are both **_small_** and **_achievable_**.
 
@@ -73,13 +73,13 @@ Goals and learning are one of the most studied _relationships_ in educational sc
 
 You should start each learning session with a **small and specific goal**. For example, learning all of calculus is huge and not achievable in one session. Instead, set a goal of solving 20 practice problems for the derivative power rule. That _is_ both _small_ and _achievable_. Often, the more specific the goal, the more achievable the goal is. Losing motivation while learning is common. Setting small and achievable goals helps us to stay motivated. And setting goals helps us to also live up to _Idea 1: Do One Thing at a Time_ by helping us to determine our focus.
 
-#### 2.2 Set goals for both knowledge and skills.
+### 2.2 Set goals for both knowledge and skills.
 
 [Bloom’s 1956 taxonomy](https://en.wikipedia.org/wiki/Bloom%27s_taxonomy) defines six types of learning activities. **Knowledge, comprehension, application, analysis, synthesis, and evaluation**. (Also see [Krathwohl’s 2002 revision](https://www.depauw.edu/files/resources/krathwohl.pdf).) If we only set goals for knowledge, we miss the opportunity to develop the other parts. For example, a [1989 Chi et al study](https://www.researchgate.net/publication/222438655_Self-Explanations_How_Students_Study_and_Use_Examples_in_Learning_to_Solve_Problems) found that stronger learners explain what they’ve learned in their own words.
 
 One of the most common sayings is learning has no value unless you can **apply** what you’ve learned. So we need to make sure the goals we set go _beyond_ memorization of facts. Challenge yourself to relate data points to each other. Work on projects that apply the knowledge. Do comparison exercises. Spend time identifying patterns in the knowledge. Present arguments based on what you’ve learned. Going beyond knowledge is important. (We’ll revisit this aspect further in section 6.2.)
 
-#### 2.3 Habitually review your progress against your goals.
+### 2.3 Habitually review your progress against your goals.
 
 [Daniel Pink’s Drive](https://www.amazon.com/Drive-Surprising-Truth-About-Motivates/dp/1594484805) shows **_intrinsic motivation_** is more powerful than extrinsic motivation. Extrinsic motivation is reward and punishment. Pink identifies three main principles of intrinsic motivation. **Autonomy** (see Idea 5), **mastery** (see Idea 6), and **purpose** (see Idea 7). Checking our progress against our goals grows our sense of mastery. That in turn builds intrinsic motivation.
 
@@ -89,13 +89,13 @@ As you learn, create a way to **visualize** your progress against your goals. Th
 
 ![](/images/big-5.jpeg)
 
-### Idea 3: Adapt to Prior Knowledge
+## Idea 3: Adapt to Prior Knowledge
 
 The strongest predictor of how much we will learn is **_what we already know_**. _Prior knowledge_ is how much we know going into a learning experience. Adapt the learning experience to prior knowledge. When the learning activity pushes us to the right level of challenge, we make the most of our time learning.
 
 If the content is too easy, we get bored. If the content is too difficult, we get frustrated. Our understanding becomes vague. Either way, we lose motivation. By staying in the in-between zone, we get the most of our learning effort and keep with it for longer.
 
-#### 3.1 Assess prior knowledge first. Focus on areas of weakness.
+### 3.1 Assess prior knowledge first. Focus on areas of weakness.
 
 [Dochy, Segers, and Buehl in 1999](https://www.researchgate.net/publication/249797493_The_Relation_Between_Assessment_Practices_and_Outcomes_of_Studies_The_Case_of_Research_on_Prior_Knowledge) found _81%_ of the difference between learning rates in different learners is prior knowledge. In [Hattie’s massive ranking of learning factors](https://visible-learning.org/hattie-ranking-influences-effect-sizes-learning-achievement/), prior knowledge has an effect size of 0.94. Prior knowledge is also the underlying effect of two even stronger factors. Prior knowledge has the _largest_ impact on how much we learn.
 
@@ -103,7 +103,7 @@ If the content is too easy, we get bored. If the content is too difficult, we ge
 
 We often decide to pick a book or a course for a topic without considering what we already know first. Industrialized education unfortunately suggests all learners are starting from the same place. If you want to learn how to play piano without knowing how to read sheet music, you are in for a difficult journey. Instead, _find a means to_ **_assess_** _what you already know_— and what you need to work on — **before** you start learning. And, use assessment as you learn to identify areas of weakness and build up in those areas first.
 
-#### 3.2 Stay in the middle and adjust the challenge. Scaffold.
+### 3.2 Stay in the middle and adjust the challenge. Scaffold.
 
 ![“Flow” is a function of prior skill and challenge.](/images/big-6.png)
 
@@ -115,7 +115,7 @@ In Sagefy, I measure and update how strong the learner knows the material with e
 
 We want to avoid learning experiences that are _too easy_ or _too difficult_. Too easy, and we get bored and waste time and effort on things we already know. Too difficult, and we get frustrated and start to shut down. We want to **stay in the middle**. Sometimes that means breaking down what we are learning into smaller parts first. That might mean reviewing prerequisite knowledge. We can also scaffold ourselves. Start with simple applications of knowledge, and slowly increase the complexity.
 
-#### **3.3 Connect new information with existing knowledge.**
+### **3.3 Connect new information with existing knowledge.**
 
 In 1980, [Gick and Holyoak](http://reasoninglab.psych.ucla.edu/KH%20pdfs/Gick-Holyoak%281980%29Analogical%20Problem%20Solving.pdf) asked learners to make analogies connecting their prior knowledge to new knowledge. This improved recall. A [1991 study by Martin and Pressley](http://psycnet.apa.org/record/1991-17537-001) had students explain how what they already knew applies to new information. This had a dramatic impact on learning. A 1992 review of prior knowledge by [Pressley et al](http://www.hostos.cuny.edu/MTRJ/HTRT/Encouraging%20mindful%20use%20of%20prior%20knowledge.pdf) looks into the history of prior knowledge. The authors conclude _we learn by connecting new information with prior knowledge_. A [2004 chapter by Chance, DelMas, and Garfield](https://www.researchgate.net/publication/256096544_Reasoning_about_sampling_distributions) arrives at similar conclusions.
 
@@ -123,19 +123,19 @@ Before learning something new, _start_ by **reviewing** related information you 
 
 ![](/images/big-7.jpeg)
 
-### Idea 4: Build the Graph
+## Idea 4: Build the Graph
 
 Our memory system works by forming **_relationships_** between data. Mastery is the result of a _large, deeply-connected graph_. We link new information with information we already know. When we focus on organizational knowledge, as we learn we have mental places to put the knowledge.
 
 When we don’t know how experts organize the knowledge before we dig in, we don’t connect the knowledge. Learning becomes mechanical. By learning how to organize the information first, we can quickly _connect information_. We can use our prior knowledge more. And we get more out of each piece of the graph.
 
-#### 4.1 Learn how to organize the subject before getting specific.
+### 4.1 Learn how to organize the subject before getting specific.
 
 One heavily cited work in educational research is [DeGroot’s 1965 “Thought and Choice in Chess.”](https://www.scribd.com/document/149011474/De-Groot-Thought-and-Choice-in-Chess-1965-2nd-Ed-1978-241x2s-OCR-Chessbook) In this work, DeGroot shows the differences between beginner and expert chess players. [Chase and Simon’s 1973 study](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.601.2724&rep=rep1&type=pdf) expands on that work. In that study, beginner and expert chess players differ in **organizational knowledge**. A [1969 study by Bower et al](https://web.stanford.edu/~gbower/1969/hierarchical_retrieval_schemes.pdf) presented hierarchies of words to learners instead of unorganized lists. This elevated recall. In [Reif and Eylon’s 1984 study](https://www.researchgate.net/publication/232954018_Effects_of_Knowledge_Organization_on_Task_Performance) of a physics lesson, researchers presented organization first. This improved test performance. Another [Chi et al](https://pdfs.semanticscholar.org/16ef/4cc3a80ee7ba8f59e0a55b2ef134c31e18b3.pdf) study found similar conclusions.
 
 _Learn_ the subject’s **organization** _before_ you begin to learn something new. That could mean reviewing the Table of Contents in a book before reading it. Or reading the section headings before reading the full text. Review maps and diagrams of how to organize the information. This organizational task can help give structure to your learning plan. Organizational knowledge also helps you to connect appropriate prior knowledge (3.3). And set goals (2.1). And as you learn, you’ll know how the information relates to other areas within the subject.
 
-#### 4.2 Work top-down.
+### 4.2 Work top-down.
 
 [**_Top-down learning_**](https://en.wikipedia.org/wiki/Top-down_and_bottom-up_design) means learning the organization and main ideas _first_. Then dive into each of those solo. Get _deeper_ as you move further along. Bottom-up learning means learning each component in isolation, then combining the knowledge only at the end.
 
@@ -145,7 +145,7 @@ We know that the brain limits working memory (section 1.1). One strategy to deal
 
 As you learn, try to figure out what the **main idea** of the lesson is. Then, try to find ways to _tie_ back in each point with the main idea.
 
-#### 4.3 Test your organizational knowledge.
+### 4.3 Test your organizational knowledge.
 
 A [1977 Hinsley, Hayes, and Simon study](http://digitalcollections.library.cmu.edu/awweb/awarchive?type=file&item=33846) asked students to categorize algebra problems. When students had correct categories, they more often arrived at the correct answer. Having students practice _categorizing_ problems improved performance. A [Chi & VahLehn 1991](https://www.tandfonline.com/doi/abs/10.1207/s15327809jls0101_4) asked learners to explain and include organizational knowledge. The explanations with organizational knowledge were more effective.
 
@@ -153,13 +153,13 @@ As you learn, find ways to **_test_** _your organizational knowledge_. For examp
 
 ![](/images/big-8.jpeg)
 
-### Idea 5: Empower Choice
+## Idea 5: Empower Choice
 
 **Autonomy** is [one of the “three” major intrinsic motivators](https://en.wikipedia.org/wiki/Self-determination_theory). _Choice_ fuels autonomy. When we take ownership of our learning through choice, we are more motivated to stick with it. For example, choice can be choosing between one of three units to learn next. Or one of five different formats to learn the same lesson.
 
 If someone forces learning on us, we resent the requirement. Our focus becomes our resentment, not learning. Too many choices can break down our ability to learn too. We focus on making choices instead of learning. And most of us are terrible at making good choices when there are a vast number of options. Instead, the right amount of choice as we learn keeps us motivated and focused on learning.
 
-#### 5.1 Create a system that often allows for choices, in both content and format.
+### 5.1 Create a system that often allows for choices, in both content and format.
 
 Sheena Iyengar is a prominent researcher in the field of the psychology of choice. She is the author of [“The Art of Choosing.”](https://sheenaiyengar.com/the-art-of-choosing/) In the book, Iyengar accounts for our _fundamental desire_ for control. The sense of having control can lead to some irrational behavior. Choices can also be motivating as a form of _ownership_. In a 1989 chapter in “[Goal Concepts…,”](https://www.taylorfrancis.com/books/9781317510222/chapters/10.4324%2F9781315717517-8) Bandura finds goals we set _ourselves_ are stronger than goals _others_ set for us.
 
@@ -167,7 +167,7 @@ In [Schankenberg’s 1997 dissertation](https://files.eric.ed.gov/fulltext/ED408
 
 As you create a learning plan for yourself or others, think about ways to include **simple choices**. For example, you can choose one of three activities for the same information. Or it could be the format is the same, but you can choose which of four things you would like to learn next. Your learning plan for yourself might look more like a graph instead of a list. That way, given the day you can choose which part to work on next instead of feeling forced into the next step.
 
-#### 5.2 Cut unnecessary choices and reduce the number of options.
+### 5.2 Cut unnecessary choices and reduce the number of options.
 
 Choice can **overwhelm**. A [2000 study by Iyengar and Lepper](https://faculty.washington.edu/jdb/345/345%20Articles/Iyengar%20%26%20Lepper%20%282000%29.pdf) looked at the number of options per choice. A limited number of choices improved results and motivation.
 
@@ -175,7 +175,7 @@ Learner choice is likely the most controversial subject in educational research.
 
 Choice is powerful. Often _too_ powerful. We need to be careful to not overwhelm ourselves with too much choice. Again, the **purpose** of choice is to create a sense of _autonomy_ and control to drive motivation. The purpose of choice in learning is _not_ optimization.
 
-#### 5.3 Create a recommended default choice.
+### 5.3 Create a recommended default choice.
 
 A learner’s own **perception** of ability is often inaccurate. A [2010 Zabrucky review](https://ac.els-cdn.com/S1877042810002259/1-s2.0-S1877042810002259-main.pdf?_tid=ff23d126-3643-496b-a040-3104e9d0a5af&acdnat=1530473578_15dca9401cc5b87539bca00c4380d808) highlights this common result in research. [Jee, Wiley, and Griffin](https://pdfs.semanticscholar.org/eeb3/cf9f4c38107b976f379d1bbb549e48a853c5.pdf) found learner assessment of ability low for both novices and experts. In a [2004 study by Eva, Cunnington, Reiter, and Norman,](https://www.researchgate.net/publication/8395777_How_Can_I_Know_What_I_Don%27t_Know_Poor_Self_Assessment_in_a_Well-Defined_Domain) past performance predicts results more than learner predictions.
 
@@ -183,13 +183,13 @@ _Avoid_ putting yourself or another learner in a position to make a poor choice.
 
 ![](/images/big-9.jpeg)
 
-### Idea 6: Dive Deep
+## Idea 6: Dive Deep
 
 Rote memorization is not enough. We must **apply** knowledge to create results. When we learn not only _what_, but also _how_ and _why_, we empower ourselves to **use** the knowledge we gain. Asking the questions “how” and “why” deepens what we know.
 
 Rote memorization is boring. No one enjoys learning that way. We forget knowledge we learn by memorizing. Instead, we need to focus on _how_ the knowledge works and _why_ the knowledge is relevant. And these are separate goals than “the what”! Diving deep means learning is more interesting and we keep the knowledge for longer. Diving deep means we can apply what we learn and make a real _impact_.
 
-#### 6.1 Practice.
+### 6.1 Practice.
 
 Getting enough **practice** is important for skill development. That may sound obvious. But, in school we get this idea that we will learn something by only [hearing a teacher recite the information](https://www.washingtonpost.com/news/answer-sheet/wp/2014/10/24/teacher-spends-two-days-as-a-student-and-is-shocked-at-what-she-learned/?utm_term=.b765c5fc161a). We also have strong _misconceptions_ about how much practice we need.
 
@@ -197,13 +197,13 @@ One interesting idea here is the [Power Law of Practice](https://en.wikipedia.or
 
 You need to build more **practice** in your learning plan than you might guess.
 
-#### 6.2 Go beyond rote: explain, apply, analyze, and synthesize.
+### 6.2 Go beyond rote: explain, apply, analyze, and synthesize.
 
 As I mentioned in 2.2, [Bloom’s taxonomy](https://en.wikipedia.org/wiki/Bloom%27s_taxonomy) identified six core skills. Knowledge, comprehension, application, analysis, synthesis, and evaluation. [Craik and Lockhart’s 1972 memory framework](http://wixtedlab.ucsd.edu/publications/Psych%20218/Craik_Lockhart_1972.pdf) shows we need a variety of tasks to build applicable knowledge. A [1997 Schnieder and Shiffrin paper](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.470.2718&rep=rep1&type=pdf) looks at this as well. The authors find what makes fixed and flexible expertise different is the _variation_ of practice. [Koedinger & Anderson’s 1998](http://pact.cs.cmu.edu/pubs/Koedinger%20&%20Anderson%2098.pdf) paper shows learns with higher and performance when practicing a variety of tasks. We find similar messages in [McKeough, Lupart, & Marini’s 1995 “Teaching for transfer”](http://psycnet.apa.org/record/1995-98417-000).
 
 As you create and update your learning plan, make sure to include a **variety** of practice. Include exercises that need not only recognition or recall of information. Include exercises that have you to _explain, apply, analyze, and synthesize_ knowledge.
 
-#### 6.3 Build metacognition.
+### 6.3 Build metacognition.
 
 [**Metacognition**](https://en.wikipedia.org/wiki/Metacognition) — in context of learning — is the ability to evaluate your own learning strategies… and adapt your strategies as you go. Metacognition is a major topic in educational research. There’s way more than I will include in this article, but I’m going to touch on the basics.
 
@@ -220,7 +220,7 @@ As you are learning, every few hours or so, _ask yourself a few questions_:
 
 Ask these sorts of questions often. These questions improve your metacognitive ability. And lead you to stronger learning results.
 
-#### 6.4 Space your practice.
+### 6.4 Space your practice.
 
 One of the oldest studies in educational science is [Ebbinghaus, 1885](http://nwkpsych.rutgers.edu/~jose/courses/578_mem_learn/2012/readings/Ebbinghaus_1885.pdf). Ebbinghaus generalizes retention of knowledge to a curve. The _stronger_ the memory, the _longer_ we keep the memory. And the more spaced repetitions of the event, the stronger the memory. [Baddeley & Longman in a 1978](https://www.researchgate.net/publication/245319288_The_Influence_of_Length_and_Frequency_of_Training_Session_on_the_Rate_of_Learning_to_Type) found typists who spread out their practice had stronger outcomes. [Bahrick and Phelps found in 1987](https://www.gwern.net/docs/spacedrepetition/1987-bahrick.pdf) that Spanish learners who spread out their practice had much stronger retention. [Caple’s 1996 paper](https://files.eric.ed.gov/fulltext/ED427772.pdf) shows spaced practice improves learning and retention.
 
@@ -228,13 +228,13 @@ One of the oldest studies in educational science is [Ebbinghaus, 1885](http://nw
 
 ![](/images/big-10.jpeg)
 
-### Idea 7: Make It Real
+## Idea 7: Make It Real
 
 **Purpose** is another [major intrinsic motivator](https://en.wikipedia.org/wiki/Self-determination_theory). We need to know not only why the knowledge is important to the subject. We also need to know why the knowledge is important **to us**. Real-life connection and examples gives the knowledge purpose.
 
 When we remove knowledge from our experiences, we can’t see why we should learn. Instead, review “why should I care?” With this, we can keep our motivation going. And make it easier to apply the knowledge later.
 
-#### 7.1 Check your own reasons for learning.
+### 7.1 Check your own reasons for learning.
 
 Purpose is one of [Pink’s three intrinsic motivators](https://www.amazon.com/Drive-Surprising-Truth-About-Motivates/dp/1594484805). A [2004 Robbins et al study](http://Robbins) looks at learning goals. The study finds goals aligned with _intrinsic motivations_ improve of college outcomes. A [2004 Vansteenkiste et al study](https://selfdeterminationtheory.org/SDT/documents/2004_VansteenkisteSimonsLensSoenensMatosLacante_LessisMore.pdf) also says goals with underlying intrinsic motivation are stronger. A [2002 review of research by Eccles and Wigfield](http://outreach.mines.edu/cont_ed/Eng-Edu/eccles.pdf) comes to again similar conclusions.
 
@@ -242,7 +242,7 @@ Before you learn, _write_ down why you want to learn the subject. Focus on **_in
 
 As you learn, **remind** yourself of that goal every now and again. And make sure you _connect_ the day’s goal with the bigger picture. It’ll keep you motivated to stay learning!
 
-#### 7.2 Connect material with real-life problems.
+### 7.2 Connect material with real-life problems.
 
 **_Think: problem → solution._**
 
@@ -250,7 +250,7 @@ One early theory in learning science is [Dewey’s 1916 Democracy and Education]
 
 As you learn, try to **connect** what you are learning to something _real_ to you. An easy way to do this is to ask, “What problem does this solve?” The problem **_is_** the context.
 
-#### 7.3 Learn from examples. Use audio, images, video, and interactive.
+### 7.3 Learn from examples. Use audio, images, video, and interactive.
 
 Listening to lectures and reading textbooks is common. But we know from the research that an **example** is so much clearer. Examples can be in _visual, auditory, or interactive_ form. A [1985 Sweller and Cooper experiment](https://www.researchgate.net/publication/232947228_The_Use_of_Worked_Examples_as_a_Substitute_for_Problem_Solving_in_Learning_Algebra) looked at algebra student performance. The study found swapping some textual description with [worked examples](https://en.wikipedia.org/wiki/Worked-example_effect) is more effective. A [1996 Marcus et al study](http://einstein.pslc.cs.cmu.edu/research/wiki/images/e/e9/1996_Marcus.pdf) finds examples lead to stronger understanding of instructions than text alone. Even describing the visual aspects can lead to improved results, as found in a [1997 Kealy et al study](https://libres.uncg.edu/ir/uncg/f/W_Kealy_Concreteness_1997.pdf). A [1980 Clement study](http://Clement) found diagrams to be an effective way to combat misconceptions. A [1997 review by Robertson](http://Robertson) finds most learners imitate examples as an early strategy. Diagrams are powerful, as a [1987 Larkin and Simon review](https://pdfs.semanticscholar.org/b7bd/d9331ed1ecbc931ccaf50c091cd0bb8b71b7.pdf) finds. A [2000 review by Atkinson et al](https://ueeval.ucr.edu/teaching_practices_inventory/AtkinsonDerryRenklWortham_2000.pdf) provides guidelines for using examples in learning.
 
@@ -258,7 +258,7 @@ Include **examples** in a _variety_ of formats in your learning plan. If you get
 
 ![](/images/big-11.jpeg)
 
-### Idea 8: Learn Together
+## Idea 8: Learn Together
 
 When we learn with other people, we can accelerate both our own learning and others’ learning. We can _share ideas_. Challenge each other’s misunderstandings. And provide and gain feedback.
 
@@ -268,7 +268,7 @@ One our key learning drivers is _mimicking_ successful behaviors of others. In [
 
 [Not all peer learning and group learning is successful](https://cirt.gcu.edu/teaching3/tips/groupwork). We need to be careful in how we interact as we learn together to keep things positive and constructive.
 
-#### 8.1 Invite and offer feedback.
+### 8.1 Invite and offer feedback.
 
 **Feedback** is a powerful and heavily researched topic in educational science. Scientists studied the nuances of asking for and inviting feedback.
 
@@ -278,25 +278,25 @@ Feedback _isn’t automatic_. Unfortunately as humans we’re prone to the [byst
 
 In summary, we need to both **ask for** and **offer feedback**. Feedback should be timely. Feedback should be as tailored as possible. When you are learning, see if you can find someone who can offer you feedback as you learn. And you can learn as much by offering feedback to others too.
 
-#### 8.2 Be honest and forthcoming.
+### 8.2 Be honest and forthcoming.
 
 In [Ford’s 1992 “Motivating Humans”](https://www.amazon.com/Motivating-Humans-Emotions-Personal-Beliefs/dp/0803945299), Ford describes supportive and unsupportive environments. Learners have stronger outcomes in supportive environments. [Beck et al’s 1996 “Questioning the Author”](http://red6747.pbworks.com/f/Questioning+the+Author+Beck+1996.pdf) informed learners about teaching strategy. When learners knew of the strategy engagement increased. In a [2010 Ritchie and Thorkildsen study,](https://www.tandfonline.com/doi/abs/10.1080/00220671.1994.9944822) researchers compared learners who knew about the teaching strategy to those who didn’t. The researchers found when learners knew, the learners had higher performance.
 
 We learn better when we are _honest_ and _forthcoming_ with each other. When others are honest with us, our **trust** in them grows. We’re more willing to let down our shield and let in what they know.
 
-#### 8.3 Hold each other accountable.
+### 8.3 Hold each other accountable.
 
 A [2014 Russell study](https://scholarworks.bgsu.edu/cgi/viewcontent.cgi?article=1106&context=honorsprojects) found accountable peer groups performed stronger than self-accountability. [An article in Harvard Business Review by Grenny](https://hbr.org/2014/05/the-best-teams-hold-themselves-accountable) looked at teams that rely on peer accountability. …rather than accountability coming from leaders. The peer accountability teams have higher performance.
 
 When we hold each other **accountable** for learning, we’re more likely to stick with it and finish our goals. One strategy you can try is to find a [‘study buddy’](https://en.wikipedia.org/wiki/Accountability_partner) and have regular, recurring check-ups.
 
-#### 8.4 Build [consensus](https://en.wikipedia.org/wiki/Consensus_decision-making).
+### 8.4 Build [consensus](https://en.wikipedia.org/wiki/Consensus_decision-making).
 
 In a [2002 De Grave et al study](https://www.ncbi.nlm.nih.gov/pubmed/12510142), researchers viewed groups with members reporting “unequal participation” and “lack of cohesion.” Those groups did not deliver learning outcomes. A [2012 Walton et al study](https://www.researchgate.net/publication/51738975_Mere_Belonging_The_Power_of_Social_Connections) asked members to believe another group member shared the same birthday. This improved learning outcomes.
 
 We are social creatures, and we are social learners. When learning with others, **consensus** can drive learning results. The sense of belonging and alignment can help us to learn faster.
 
-### Wrap Up
+## Wrap Up
 
 I wrote this article from the perspective of the individual, independent learner. But these ideas apply to the classroom and to training as well!
 
@@ -306,9 +306,7 @@ _Update_: Wondering how to act on these ideas? Check out my “[Checklist” art
 
 **Thanks for reading!** Feedback on this article is welcome. I intend this article to be a living document. Did you find some new research to support or contradict one of these ideas? Or something could be clearer or more applicable? Let me know by writing a response!
 
----
-
-#### **Links for Further Reading**
+## Links for Further Reading
 
 - [How Learning Works: Seven Research-Based Principles](https://www.wiley.com/en-us/How+Learning+Works%3A+Seven+Research+Based+Principles+for+Smart+Teaching-p-9780470484104) by Ambrose, Bridges, DiPietro, Lovett, & Norman
 - [Building Expertise: Cognitive Methods for Training and Performance](https://www.amazon.com/Building-Expertise-Cognitive-Performance-Improvement/dp/0787988448) by Ruth Clark
@@ -318,7 +316,5 @@ _Update_: Wondering how to act on these ideas? Check out my “[Checklist” art
 - [Drive](https://www.amazon.com/Drive-Surprising-Truth-About-Motivates/dp/1594484805) by Pink
 - [Kaplan Checklist](http://kaplan.com/wp-content/uploads/2016/01/Kaplan-Way_Checklist_Summary_Sheet.pdf)
 - [Pearson Learning Design Principles](https://learningdesignprinciples.com/)
-
----
 
 If you’d like to know more about Sagefy, [visit today](https://sagefy.org).

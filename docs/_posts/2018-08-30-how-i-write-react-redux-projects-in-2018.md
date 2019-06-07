@@ -17,7 +17,7 @@ The **“in 2018”** part is relevant. Every few months there’s a shiny way o
 
 Please don’t use this guide to try to override a team consensus. I’ve never seen a project fail due to technical choices; but I’ve definitely seen a project fail when the team couldn’t work together.
 
-### Why React & Redux
+## Why React & Redux
 
 **Why use React?** There is a sea of options for web browser projects. A few of the key benefits of React:
 
@@ -43,7 +43,7 @@ There’s some other libraries I recommend using. You need `react-dom` for web p
 
 ![The React/Redux flow, from youtu.be/hiaqhI62zZs](/images/react-2.jpeg)
 
-### Overarching Principles
+## Overarching Principles
 
 There’s a few principles I’ve developed over the years working on these projects. These principles can help avoid problems. That said, there’s never an ‘always-right answer.’
 
@@ -61,7 +61,7 @@ There’s a few principles I’ve developed over the years working on these proj
 
 **Be consistent with names.** JavaScript defaults to camel-case names. Unless you have a good reason to, stick with camel-case as much as possible. You want the name of things to be as consistent as possible. The component, its styles, its filename, its CSS class name, its associated selectors… should all use the same name. It’s confusing when they don’t line up.
 
-### Configuring Local Development
+## Configuring Local Development
 
 Almost goes without saying to use **Git** for version control from day one.
 
@@ -113,7 +113,7 @@ There’s many **styling** tool options today. In recent years I’ve worked wit
 
 **Localization** isn’t a solved problem. The browser built-in `[window.Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)` can get you pretty far by itself.
 
-### Directory Structure
+## Directory Structure
 
 My **directory structure** will look something like this:
 
@@ -133,7 +133,7 @@ My **directory structure** will look something like this:
 - `helpers/`
 - `images/`
 
-### Root Files
+## Root Files
 
 Every project should have a [**README**](https://en.wikipedia.org/wiki/README). Your README serves two purposes: a) documentation for developers and b) marketing. I would suggest your README contains at a least…
 
@@ -256,7 +256,7 @@ If your needs start to expand on the server-side, I would recommend using the [E
 
 Cross-browser support has been easier the last few years, but there’s still [difficulty](https://kangax.github.io/compat-table/es6/) to know what features each browser is going to support. [**polyfill.io**](https://polyfill.io/v2/docs/) is an easy way to resolve that issue. You add one script tag to your HTML before your own scripts, and you’re done. Highly recommended.
 
-### State
+## State
 
 The **state** is the heart of your React/Redux project. If you master your Redux state, the rest of your application will flow from there. If you get it wrong, you’ll spend lots of time downstream trying to correct the issues.
 
@@ -380,7 +380,7 @@ Side note: I haven’t had any positive experiences with `[immutable.js](https:/
 
 _Update/Edit 2018 Oct 10:_ Check out [Redux Starter Kit](https://github.com/reduxjs/redux-starter-kit) and my [Redux Schemad](https://github.com/heiskr/redux-schemad).
 
-### Test Data
+## Test Data
 
 Having good **test data** is the most efficient way to speed up development time for almost any project. I can’t recommend it enough. You can use test data for fast local development. You’ll also have a much easier time writing unit tests.
 
@@ -399,7 +399,7 @@ I like to have an easy way to load up each of test state and render the _React t
 
 I like having at least one sample of each endpoint I will use in the project. These samples will make formatting service responses and the corresponding unit tests very easy. You could also use your sample service responses to validate the real services match your expected data format. I’ve seen some make mock services based on the sample service responses as well. Mock services are not necessary for most projects, but mock services are an option.
 
-### Services
+## Services
 
 There’s lots of ways to make **network requests**. For one, straight up `[XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)` might work for you. Otherwise, I’ve seen a growing consensus about the browser built-in, Promise-based `[window.fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)`. If you need to server-side rendering, you can find a package to get `fetch` to also run on the server. (On `[async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`[/](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`[await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`: Until there’s more browser support, it transpiles heavy… I wouldn’t use it in the browser yet.)
 
@@ -460,7 +460,7 @@ I’ve seen some use [Normalizr](https://github.com/paularmstrong/normalizr) to 
 
 Making service requests will likely be the _messiest_ part of your project. As long as you expect service calls to be a little messy, you’ll be much happier.
 
-### Redux Middleware
+## Redux Middleware
 
 So now you have a state tree, and you have service functions. But how do you know **when** to call your services? Or send analytics events?
 
@@ -517,7 +517,7 @@ I’ve seen both approaches — ‘listen then do’ and ‘do many’ —
 
 My own approach is to use my `[redux-listen](https://github.com/heiskr/redux-listen)` library. That said, it isn’t popular by any means. I find `redux-saga` heavy for most projects, and `redux-thunk` provides too little guidance. You can also easily write your own Redux middleware that makes sense for your project. I can’t make a general recommendation here, other than it depends on the project.
 
-### Selectors
+## Selectors
 
 ![](/images/react-4.png)
 
@@ -612,7 +612,7 @@ The “sometimes !” comment is that you want to name any boolean values posit
 
 I recommend grouping your selectors by route. So you’ll have a “base” file of selectors across routes. A selector file per route. And an “index” selector file that can combine selectors from the different routes.
 
-### Views: Pages, Containers, & Components
+## Views: Pages, Containers, & Components
 
 You’re now finally at the part of the application that uses React! If you’ve set up everything similarly so far, then this part is a breeze.
 
@@ -646,7 +646,7 @@ export default connect(mapStateToProps)(Route)
 
 I’ve been on projects that attempted to use form libraries with either only React or with both React and Redux. Unless your form is basic, I would recommend against using a specialized form library. Form libraries often add lots of overhead for little benefits. I would stick to how the authors of React suggest doing [**controlled component forms**](https://reactjs.org/docs/forms.html)**.** Wait to DRY up anything until you have a clear pattern of duplication.
 
-### Auxiliaries: Constants, Helpers, & Images
+## Auxiliaries: Constants, Helpers, & Images
 
 My projects have auxiliary directories in them: constants, helpers, and images. Sometimes there are more auxiliary directories too.
 
@@ -656,7 +656,7 @@ My projects have auxiliary directories in them: constants, helpers, and images. 
 
 For projects that need it, I’ll have a directory of **images**. Not much to say about images other than: _optimize your images_. You’ll get more performance improvement from optimizing images than anything else. Try using SVG, reducing the number of colors, and using [ImageOptim](https://imageoptim.com/mac). If you only have a small number of images that are vector-y, base64 encode them. This will save on the number of network requests. There’s plenty of articles about saving on size with images.
 
-### Tests
+## Tests
 
 I’ve used Jasmine, Mocha/Chai/Sinon, and Jest. There’s more similar than not. If you already have one, I wouldn’t switch. That said, for new projects I recommend **Jest**. It’s the easiest to set up and get started with, and has everything you need for unit testing built in.
 
@@ -740,7 +740,7 @@ You can do one of:
 
 I have a preference for 3. There’s twice as many files in each folder, but it’s easier to work with the files as you’re developing that way.
 
-### Wrap Up
+## Wrap Up
 
 I can’t cover everything needed to build a React/Redux project in one article. I’ve covered some of the patterns I’ve seen over the years. These are the ways I avoid the most common problems I’ve experienced. I haven’t covered to approach writing styles in this article. Or setting up the tooling required to support a production experience.
 
@@ -755,7 +755,5 @@ This would cut the need for many of the tools I mention in this article. When a 
 _To reiterate_: Take what’s relevant to you and ignore the rest. Every project has its exceptions. You might not need JS, or React/Redux! This article is for 2018. If you are reading this any later, the community will have likely already changed some of this.
 
 **Thanks for reading.** _Feedback is welcome!_
-
----
 
 You can visit my side project [**Sagefy**](https://sagefy.org/)**.**

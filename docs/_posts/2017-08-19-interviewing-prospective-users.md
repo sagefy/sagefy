@@ -5,7 +5,7 @@ description: 'Maybe you’re thinking about starting a new project. Or you have 
 date: '2017-08-19T02:05:10.579Z'
 ---
 
-## Starting a new project? Begin by interviewing prospective users.
+_Starting a new project? Begin by interviewing prospective users._
 
 _Originally published on_ [_IndieHackers_](https://www.indiehackers.com/@sagefy/5179a03d09)_._
 
@@ -13,15 +13,15 @@ Maybe you’re thinking about starting a new project. Or you have a project that
 
 ![](/images/interview-1.png)
 
-### **So what are user interviews?**
+## So what are user interviews?
 
 You’d interview 3 to 8 people for approximately 15 to 30 minutes each. Your goal is to discover who these people are, and what they need. You’ll find out their goals, the circumstances they face, and their motivations for their goals. Most important, you’ll discover their pain points. User interviews are the best way to _define_ problems that your prospective users face.
 
-### **Who am I?**
+## Who am I?
 
 I’m a software engineer in Portland, OR. I am also a designer and a user experience researcher. In addition to conducting research for my employers over the years, I’ve run several projects on the side. My most successful so far was a popular card sorting site. My current project, [Sagefy](https://sagefy.org), is an open-content adaptive learning platform. I’ve used user interviews extensively to help guide my projects. Even with Sagefy, I wish I had interviewed users sooner. I’m not an expert on the subject, but I will offer practical advice based on what I’ve learned about interviewing users. I’ve interviewed both real and prospective users.
 
-### **Why conduct user interviews?**
+## Why conduct user interviews?
 
 I have five great reasons.
 
@@ -37,7 +37,7 @@ A common problem founders have at the beginning of the project is everything fee
 
 My final major reason to interview users is it will help you start and build a (5) **network**. You will need people as you build your project to give you feedback. And you will need people in the industry to help promote your project. It doesn’t matter how small or how big you get, you will need feedback. In fact, many large corporations have teams of employees devoted to interviewing and researching users.
 
-### **How do I find people to interview?**
+## How do I find people to interview?
 
 First, you’ll need to figure out who you’d like to interview. You want to find people as close to your prospective audience as possible. Try to find different perspectives on the same process. For Sagefy, I’ve targeted post-secondary teachers, instructional designers for corporate training, and independent adult learners who have taken courses on other sites.
 
@@ -57,7 +57,7 @@ An email thread asking someone for an interview may look like:
 
 Now that you’ve gotten about 10 or so people on the schedule, you’ll want to prepare the questions.
 
-### **What questions should I ask?**
+## What questions should I ask?
 
 You’ll want to prepare some questions in advance. If it helps, create a checklist. Especially if you are new to interviewing users, your nerves will be higher and having a list will make the interview smoother. You’ll want to limit your number of questions. 5 to 10 is plenty.
 
@@ -102,7 +102,7 @@ At the end of the interview, you should ask the interviewee if they’d like to 
 
 And of course, always say thank you to the person. They’ve given up some of their time to help you. “Thank you” is a simple way to keep the connection going with the person.
 
-### **Tips**
+## Tips
 
 - It takes practice to get good at interviewing people — don’t be too hard on yourself at first. (I’m still getting better at it too!)
 - Focus on listening — don’t interrupt or try to change their mind. Don’t try to ‘teach’ who you’re interviewing.
@@ -115,10 +115,8 @@ And of course, always say thank you to the person. They’ve given up some of th
 - Take notes after the interview, not during. I find note taking to be very distracting when I’m trying to listen. As long as you take your notes right after, you won’t forget anything important. The larger point is you are looking for patterns in responses, and not just one person’s take.
 - Follow up with the person a few days later, thanking them for the interview. The person will be more likely to help you out later if you do.
 
-### **Wrap Up**
+## Wrap Up
 
 Don’t try to get it perfect your first try. The most important thing is just to get out there and start talking to people in your prospective audience. Everything in this article is just advice based on my own experience. You’ll find things that work better for you as you go. Stop ‘thinking about’ or ‘planning’ your project. Stop worrying about how you could theoretically make things better. Get out there and just talk to some people. Interviewing users is the best way to get started right.
-
----
 
 If you’d like to know more about Sagefy, [visit today](https://sagefy.org).
