@@ -13,6 +13,25 @@ title: Sagefy Updates
 
 This is a reverse chronological listing of updates on Sagefy's progress. I will try to do these biweekly.
 
+## UPDATE -- 2019 Jun 10
+
+Thanks for signing up for the Sagefy updates newsletter. I am sending updates biweekly to help track progress on Sagefy.
+
+### 2019 May 28 - 2019 Jun 9
+
+- Created talk pages; example: https://sagefy.org/subjects/W9UmrCsnrmgPvwp8mQRuoc/talk
+- Updated overview video; page: https://sagefy.org/video-cards/39pvnAFhmmzVc4FKCxiNok
+- Moved blog posts off Medium to https://docs.sagefy.org/stories
+
+### Upcoming Two Weeks: 2019 Jun 10 - 2019 Jun 23
+
+- I won't have much time for Sagefy work these two weeks, but I'm investigating how to add lots of new cards to the existing 2000+ subjects that are largely empty currently.
+- Edit subject pages is high on the development list, as is version history pages.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
+
 ## UPDATE -- 2019 May 28
 
 Thanks for signing up for the Sagefy updates newsletter. I am sending updates biweekly to help track progress on Sagefy.
