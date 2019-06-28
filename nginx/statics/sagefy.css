@@ -754,10 +754,9 @@ mark {
   }
 }
 
-/* 17. Finally, limit width on a high element so text is more readable.
-  (The only class!) ***********************************************************/
+/* 17. Finally, limit width on body so text is more readable. *****************/
 
-.page {
+body {
   margin: 0 auto;
   max-width: 40rem; /* 640px */
   padding: 1rem;

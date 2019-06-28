@@ -19,7 +19,7 @@ export default function Layout({ page, title, description, hash, children }) {
         <link rel="stylesheet" href={`/sagefy.min.css?${hash}`} />
       </head>
       <body>
-        <div id="top" className={`page ${page}`} role="document">
+        <div id="top" className={page} role="document">
           {children}
         </div>
       </body>
