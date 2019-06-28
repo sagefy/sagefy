@@ -2,6 +2,8 @@
 
 Thank you for contributing to Sagefy! This document covers basic guidelines for contributing to Sagefy.
 
+Not sure where to start our help out? We have some ideas in our [Want to Help](https://docs.sagefy.org/want-to-help) guide.
+
 ## Content
 
 Create and edit content through the discussion section within the Sagefy interface. You will want to get familiar with the [Data Structure](https://docs.sagefy.org/cards-subjects).
