@@ -384,16 +384,6 @@ var,
 
 /* 3. Apply more common `line-height` and use an `8px` vertical rhythm. *******/
 
-/*
-  1   : 16px
-  1.5 : 24px
-  2   : 32px
-  2.5 : 40px
-  3   : 48px
-  3.5 : 56px
-  4   : 64px
-*/
-
 body,
 input,
 textarea,
@@ -422,16 +412,17 @@ hr {
 
 h1 {
   font-size: 2rem; /* 32px */
-  line-height: 3rem; /* 48px */
+  line-height: 1.25; /* 40px */
 }
 
 h2 {
-  /* font-size 1.5, 24px */
-  line-height: 2.5rem; /* 40px */
+  /*  font-size: 1.5rem; 24px */
+  line-height: 1.3333; /* 32px */
 }
 
 h3 {
-  line-height: 2rem; /* 32px */
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.3333; /* 24px */
 }
 
 figure {
