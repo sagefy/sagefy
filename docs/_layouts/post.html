@@ -10,13 +10,18 @@
     />
     <link rel="icon" href="/favicon.ico" />
   </head>
-  <body>
+  <body vocab="http://schema.org/" typeof="Article">
     <header>
-      <h1>{{ page.title }}</h1>
-      <p>by Kevin Heis, <time>{{ page.date | date: "%Y %b %d" }}</time></p>
+      <h1 property="headline">{{ page.title }}</h1>
+      <p>
+        by <span property="author.name">Kevin Heis</span>,
+        <time property="datePublished">{{ page.date | date: "%Y %b %d" }}</time>
+      </p>
     </header>
 
-    {{ content }}
+    <div property="articleBody">
+      {{ content }}
+    </div>
 
     <section>
       <hr />

@@ -1,7 +1,14 @@
 import React from 'react'
-import { string, node } from 'prop-types'
+import { string, node, bool } from 'prop-types'
 
-export default function Layout({ page, title, description, hash, children }) {
+export default function Layout({
+  page,
+  title,
+  description,
+  hash,
+  children,
+  schema,
+}) {
   if (process.env.NODE_ENV === 'test') {
     return <div className={page}>{children}</div>
   }
@@ -18,7 +25,7 @@ export default function Layout({ page, title, description, hash, children }) {
         <meta name="twitter:description" content={description} />
         <link rel="stylesheet" href={`/sagefy.min.css?${hash}`} />
       </head>
-      <body>
+      <body vocab={schema && 'http://schema.org/'}>
         <div id="top" className={page} role="document">
           {children}
         </div>
@@ -33,4 +40,5 @@ Layout.propTypes = {
   page: string.isRequired,
   children: node.isRequired,
   hash: string.isRequired,
+  schema: bool.isRequired,
 }

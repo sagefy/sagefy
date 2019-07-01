@@ -48,15 +48,18 @@ export default function SubjectPage({
       description={`Learn about ${subjectName}, adapted and optimized for you. Learn for free, always. ${shorten(
         subjectBody
       )}`}
+      schema
     >
-      <header>
+      <header typeof="Course">
         <div className="my-c">
           <p>
             Subject <Icon i="subject" />
           </p>
-          <h1>{subjectName}</h1>
+          <h1 property="name">{subjectName}</h1>
         </div>
-        <ReactMarkdown source={subjectBody} disallowedTypes={['heading']} />
+        <div property="description">
+          <ReactMarkdown source={subjectBody} disallowedTypes={['heading']} />
+        </div>
         <form method="GET" action="/next">
           <input type="hidden" name="goal" value={to58(subjectEntityId)} />
           <button type="submit">
@@ -67,7 +70,10 @@ export default function SubjectPage({
           <ul className="ls-i ta-r">
             {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
             <li>
-              <a href={`/subjects/${to58(subjectEntityId)}/talk`}>
+              <a
+                href={`/subjects/${to58(subjectEntityId)}/talk`}
+                property="discussionUrl"
+              >
                 <Icon i="talk" s="s" /> Talk
               </a>
             </li>
@@ -99,6 +105,7 @@ export default function SubjectPage({
         subjects={beforeSubjects.nodes}
         title="Before this we recommend&hellip;"
         icon="before"
+        property="coursePrerequisites"
       />
       <ListOfSubjects
         subjects={afterSubjects.nodes}

@@ -14,10 +14,10 @@ const subjectsType = arrayOf(
   })
 )
 
-export default function ListOfSubjects({ subjects, title, icon }) {
+export default function ListOfSubjects({ subjects, title, property, icon }) {
   if (!subjects.length) return null
   return (
-    <section>
+    <section property={property}>
       <h2>
         {title} <Icon i={icon} s="h2" />
       </h2>
@@ -42,8 +42,10 @@ ListOfSubjects.propTypes = {
   subjects: subjectsType,
   title: string.isRequired,
   icon: string.isRequired,
+  property: string,
 }
 
 ListOfSubjects.defaultProps = {
   subjects: [],
+  property: null,
 }
