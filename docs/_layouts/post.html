@@ -10,20 +10,20 @@
     />
     <link rel="icon" href="/favicon.ico" />
   </head>
-  <body vocab="http://schema.org/" typeof="BlogPosting">
+  <body itemscope itemtype="http://schema.org/BlogPosting">
     <header>
-      <img src="{{ page.image }}" property="image" alt="headline" />
-      <h1 property="headline">{{ page.title }}</h1>
+      <img src="{{ page.image }}" itemprop="image" alt="headline" />
+      <h1 itemprop="headline">{{ page.title }}</h1>
       <p>
         by
-        <span property="author" typeof="Person"
-          ><span property="name">Kevin Heis</span></span
+        <span itemprop="author" itemscope itemtype="https://schema.org/Person"
+          ><span itemprop="name">Kevin Heis</span></span
         >,
-        <time property="datePublished">{{ page.date | date: "%Y-%m-%d" }}</time>
+        <time itemprop="datePublished">{{ page.date | date: "%Y-%m-%d" }}</time>
       </p>
     </header>
 
-    <div property="articleBody">
+    <div itemprop="articleBody">
       {{ content }}
     </div>
 
@@ -47,15 +47,18 @@
           <li><a href="/stories">All stories</a></li>
           <li>
             &copy; Copyright {{ 'now' | date: "%Y" }}
-            <span property="publisher" typeof="EducationalOrganization"
-              ><a href="https://sagefy.org" property="url"
+            <span
+              itemprop="publisher"
+              itemscope
+              itemtype="https://schema.org/EducationalOrganization"
+              ><a href="https://sagefy.org" itemprop="url"
                 ><img
                   src="https://sagefy.org/astrolabe.svg"
                   height="14"
                   alt="astrolabe"
-                  property="logo"
+                  itemprop="logo"
                 />
-                <span property="name">Sagefy</span></a
+                <span itemprop="name">Sagefy</span></a
               ></span
             >
           </li>

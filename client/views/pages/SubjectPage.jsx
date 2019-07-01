@@ -48,18 +48,16 @@ export default function SubjectPage({
       description={`Learn about ${subjectName}, adapted and optimized for you. Learn for free, always. ${shorten(
         subjectBody
       )}`}
-      schema
-      typeOf="Course"
     >
-      <div typeof="Course">
+      <div itemScope itemType="https://schema.org/Course">
         <header>
           <div className="my-c">
             <p>
               Subject <Icon i="subject" />
             </p>
-            <h1 property="name">{subjectName}</h1>
+            <h1 itemProp="name">{subjectName}</h1>
           </div>
-          <div property="description">
+          <div itemProp="description">
             <ReactMarkdown source={subjectBody} disallowedTypes={['heading']} />
           </div>
           <form method="GET" action="/next">
@@ -74,7 +72,7 @@ export default function SubjectPage({
               <li>
                 <a
                   href={`/subjects/${to58(subjectEntityId)}/talk`}
-                  property="discussionUrl"
+                  itemProp="discussionUrl"
                 >
                   <Icon i="talk" s="s" /> Talk
                 </a>
@@ -107,7 +105,7 @@ export default function SubjectPage({
           subjects={beforeSubjects.nodes}
           title="Before this we recommend&hellip;"
           icon="before"
-          property="coursePrerequisites"
+          itemProp="coursePrerequisites"
         />
         <ListOfSubjects
           subjects={afterSubjects.nodes}
@@ -134,11 +132,15 @@ export default function SubjectPage({
           </section>
         )}
 
-        <section property="provider" typeof="EducationalOrganization">
+        <section
+          itemProp="provider"
+          itemScope
+          itemType="https://schema.org/EducationalOrganization"
+        >
           <h2>
             Why learn about <q>{subjectName}</q> with{' '}
-            <a href="/" property="url">
-              <span property="name">Sagefy</span>
+            <a href="/" itemProp="url">
+              <span itemProp="name">Sagefy</span>
             </a>
             ? <Icon i="sagefy" s="h2" />
           </h2>
