@@ -134,7 +134,7 @@ export default function SubjectPage({
           </section>
         )}
 
-        <section property="provider" typeof="Organization">
+        <section property="provider" typeof="EducationalOrganization">
           <h2>
             Why learn about <q>{subjectName}</q> with{' '}
             <a href="/" property="url">
