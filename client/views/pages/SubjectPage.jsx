@@ -49,8 +49,9 @@ export default function SubjectPage({
         subjectBody
       )}`}
       schema
+      typeOf="Course"
     >
-      <header typeof="Course">
+      <header>
         <div className="my-c">
           <p>
             Subject <Icon i="subject" />
@@ -132,10 +133,13 @@ export default function SubjectPage({
         </section>
       )}
 
-      <section>
+      <section property="provider">
         <h2>
-          Why learn about <q>{subjectName}</q> with Sagefy?{' '}
-          <Icon i="sagefy" s="h2" />
+          Why learn about <q>{subjectName}</q> with{' '}
+          <a href="/" property="url">
+            <span property="name">Sagefy</span>
+          </a>
+          ? <Icon i="sagefy" s="h2" />
         </h2>
         <p>
           <em>
