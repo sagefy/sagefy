@@ -8,7 +8,6 @@ export default function Layout({
   hash,
   children,
   schema,
-  typeOf,
 }) {
   if (process.env.NODE_ENV === 'test') {
     return <div className={page}>{children}</div>
@@ -26,7 +25,7 @@ export default function Layout({
         <meta name="twitter:description" content={description} />
         <link rel="stylesheet" href={`/sagefy.min.css?${hash}`} />
       </head>
-      <body vocab={schema && 'http://schema.org/'} typeof={typeOf}>
+      <body vocab={schema && 'http://schema.org/'}>
         <div id="top" className={page} role="document">
           {children}
         </div>
@@ -42,9 +41,4 @@ Layout.propTypes = {
   children: node.isRequired,
   hash: string.isRequired,
   schema: bool.isRequired,
-  typeOf: string,
-}
-
-Layout.defaultProps = {
-  typeOf: null,
 }

@@ -51,115 +51,117 @@ export default function SubjectPage({
       schema
       typeOf="Course"
     >
-      <header>
-        <div className="my-c">
-          <p>
-            Subject <Icon i="subject" />
-          </p>
-          <h1 property="name">{subjectName}</h1>
-        </div>
-        <div property="description">
-          <ReactMarkdown source={subjectBody} disallowedTypes={['heading']} />
-        </div>
-        <form method="GET" action="/next">
-          <input type="hidden" name="goal" value={to58(subjectEntityId)} />
-          <button type="submit">
-            <Icon i="select" /> Let&apos;s learn now
-          </button>
-        </form>
-        <small>
-          <ul className="ls-i ta-r">
-            {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
-            <li>
-              <a
-                href={`/subjects/${to58(subjectEntityId)}/talk`}
-                property="discussionUrl"
-              >
-                <Icon i="talk" s="s" /> Talk
-              </a>
-            </li>
-            {/* <li><a href="/mocks/history">🎢 History</a></li> */}
-            {/* <li><a href="/mocks/update-subject">🌳 Edit</a></li> */}
-          </ul>
-        </small>
-        {/* TODO stats section */}
-      </header>
-      <ListOfSubjects
-        subjects={childSubjects.nodes}
-        title="What's inside?"
-        icon="child"
-      />
-      {subjectDetails && (
-        <section>
-          <h2>
-            More about &quot;{subjectName}&quot; <Icon s="h2" i="cheer" />
-          </h2>
-          <ReactMarkdown source={subjectDetails} />
-        </section>
-      )}
-      <ListOfSubjects
-        subjects={parentSubjects.nodes}
-        title="Want learn more? Try one of these&hellip;"
-        icon="parent"
-      />
-      <ListOfSubjects
-        subjects={beforeSubjects.nodes}
-        title="Before this we recommend&hellip;"
-        icon="before"
-        property="coursePrerequisites"
-      />
-      <ListOfSubjects
-        subjects={afterSubjects.nodes}
-        title="Learning this gets you ready for&hellip;"
-        icon="after"
-      />
-      {cardCount > 0 && (
-        <section>
-          <h2>
-            {cardCount} cards <Icon i="card" s="h2" /> in &quot;{subjectName}
-            &quot;
-          </h2>
-          <ul>
-            <ListOfCards cards={cards.nodes} kind="VIDEO" />
-            <ListOfCards cards={cards.nodes} kind="PAGE" />
-            <ListOfCards cards={cards.nodes} kind="CHOICE" />
-            <ListOfCards cards={cards.nodes} kind="UNSCORED_EMBED" />
-          </ul>
-          <p>
-            <Link to={`/create-card?subjectId=${to58(subjectEntityId)}`}>
-              <Icon i="card" /> Help us make some cards
-            </Link>
-          </p>
-        </section>
-      )}
+      <div typeof="Course">
+        <header>
+          <div className="my-c">
+            <p>
+              Subject <Icon i="subject" />
+            </p>
+            <h1 property="name">{subjectName}</h1>
+          </div>
+          <div property="description">
+            <ReactMarkdown source={subjectBody} disallowedTypes={['heading']} />
+          </div>
+          <form method="GET" action="/next">
+            <input type="hidden" name="goal" value={to58(subjectEntityId)} />
+            <button type="submit">
+              <Icon i="select" /> Let&apos;s learn now
+            </button>
+          </form>
+          <small>
+            <ul className="ls-i ta-r">
+              {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
+              <li>
+                <a
+                  href={`/subjects/${to58(subjectEntityId)}/talk`}
+                  property="discussionUrl"
+                >
+                  <Icon i="talk" s="s" /> Talk
+                </a>
+              </li>
+              {/* <li><a href="/mocks/history">🎢 History</a></li> */}
+              {/* <li><a href="/mocks/update-subject">🌳 Edit</a></li> */}
+            </ul>
+          </small>
+          {/* TODO stats section */}
+        </header>
+        <ListOfSubjects
+          subjects={childSubjects.nodes}
+          title="What's inside?"
+          icon="child"
+        />
+        {subjectDetails && (
+          <section>
+            <h2>
+              More about &quot;{subjectName}&quot; <Icon s="h2" i="cheer" />
+            </h2>
+            <ReactMarkdown source={subjectDetails} />
+          </section>
+        )}
+        <ListOfSubjects
+          subjects={parentSubjects.nodes}
+          title="Want learn more? Try one of these&hellip;"
+          icon="parent"
+        />
+        <ListOfSubjects
+          subjects={beforeSubjects.nodes}
+          title="Before this we recommend&hellip;"
+          icon="before"
+          property="coursePrerequisites"
+        />
+        <ListOfSubjects
+          subjects={afterSubjects.nodes}
+          title="Learning this gets you ready for&hellip;"
+          icon="after"
+        />
+        {cardCount > 0 && (
+          <section>
+            <h2>
+              {cardCount} cards <Icon i="card" s="h2" /> in &quot;{subjectName}
+              &quot;
+            </h2>
+            <ul>
+              <ListOfCards cards={cards.nodes} kind="VIDEO" />
+              <ListOfCards cards={cards.nodes} kind="PAGE" />
+              <ListOfCards cards={cards.nodes} kind="CHOICE" />
+              <ListOfCards cards={cards.nodes} kind="UNSCORED_EMBED" />
+            </ul>
+            <p>
+              <Link to={`/create-card?subjectId=${to58(subjectEntityId)}`}>
+                <Icon i="card" /> Help us make some cards
+              </Link>
+            </p>
+          </section>
+        )}
 
-      <section property="provider" typeof="Organization">
-        <h2>
-          Why learn about <q>{subjectName}</q> with{' '}
-          <a href="/" property="url">
-            <span property="name">Sagefy</span>
-          </a>
-          ? <Icon i="sagefy" s="h2" />
-        </h2>
-        <p>
-          <em>
-            Learn about <q>{subjectName}</q>, adapted for you. Free.
-          </em>
-        </p>
-        <p>
-          <Icon i="open" />{' '}
-          <strong>
-            Learn about <q>{subjectName}</q>.
-          </strong>{' '}
-          Anyone can view, share, create, and edit content. Because anyone can
-          contribute, you can learn anything you want.
-        </p>
-        <p>
-          <Icon i="adapt" /> <strong>Adapted for you.</strong> Sagefy optimizes
-          learning about <q>{subjectName}</q> based on what you already know.
-          Get the most out of your time and effort spent.
-        </p>
-      </section>
+        <section property="provider" typeof="Organization">
+          <h2>
+            Why learn about <q>{subjectName}</q> with{' '}
+            <a href="/" property="url">
+              <span property="name">Sagefy</span>
+            </a>
+            ? <Icon i="sagefy" s="h2" />
+          </h2>
+          <p>
+            <em>
+              Learn about <q>{subjectName}</q>, adapted for you. Free.
+            </em>
+          </p>
+          <p>
+            <Icon i="open" />{' '}
+            <strong>
+              Learn about <q>{subjectName}</q>.
+            </strong>{' '}
+            Anyone can view, share, create, and edit content. Because anyone can
+            contribute, you can learn anything you want.
+          </p>
+          <p>
+            <Icon i="adapt" /> <strong>Adapted for you.</strong> Sagefy
+            optimizes learning about <q>{subjectName}</q> based on what you
+            already know. Get the most out of your time and effort spent.
+          </p>
+        </section>
+      </div>
 
       <Footer role={role} />
     </Layout>
