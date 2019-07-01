@@ -3,6 +3,7 @@ layout: post
 title: 'Eight Big Ideas of Learning'
 description: 'I’ll admit it: I’m a huge nerd. One of my favorite subjects is learning how to learn. I’ve read and studied on learning science for many years. And I’ve built my own learning platform, Sagefy. That…'
 date: '2018-07-09T13:01:04.484Z'
+image: /images/big-1.png
 ---
 
 _Research-backed strategies for better learning_
@@ -10,8 +11,6 @@ _Research-backed strategies for better learning_
 I’ll admit it: _I’m a huge nerd_. One of my favorite subjects is **learning how to learn**. I’ve read and studied on learning science for many years. And I’ve built my own learning platform, [Sagefy](https://sagefy.org). That said, I’m no expert — enjoy this outsider’s take on the literature.
 
 **In this article, I’m going to sum up what I’ve learned about learning.** There’s an entire field of study devoted to the subject, so I can’t include everything. But these eight points epitomize the research. (If this article is too long for you, check out my [10 minute TL;DR version]({% post_url 2018-07-09-eight-big-ideas-of-learning--tl-dr-edition %}).)
-
-![](/images/big-1.png)
 
 **If you’re a learner too**, _this article is for you_. Maybe you’re a student, a teacher, or a lifelong learner like me. Education researchers usually write these from the perspective of a classroom teacher. I am writing from the perspective of an individual, independent learner. These ideas can apply to a classroom, online learning, and everyday life lessons. And come back and review these ideas every now and again… you might find a new perspective you didn’t expect. I always do.
 

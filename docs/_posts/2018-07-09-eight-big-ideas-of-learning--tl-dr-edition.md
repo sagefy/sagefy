@@ -3,6 +3,7 @@ layout: post
 title: 'Eight Big Ideas of Learning [TL;DR Edition]'
 description: 'One of my favorite subjects is learning how to learn. I’ve read and studied on learning science for many years. That said, I’m no expert — enjoy this outsider’s take on the literature. In this…'
 date: '2018-07-09T13:01:02.937Z'
+image: /images/eight-2.jpeg
 ---
 
 _Research-backed strategies for better learning_
@@ -14,8 +15,6 @@ This article is a summary of [another article]({% post_url 2018-07-09-eight-big-
 One of my favorite subjects is **learning how to learn**. I’ve read and studied on learning science for many years. That said, I’m no expert — enjoy this outsider’s take on the literature. In this article, I sum up what I’ve learned about learning in eight points. **If you’re a learner too**, _this article is for you_.
 
 _If my background interests you:_ [**Sagefy**](https://sagefy.org) is the project I’m building on these ideas.
-
-![](/images/eight-2.jpeg)
 
 ## Idea 1: Do One Thing at a Time
 

@@ -12,6 +12,7 @@
   </head>
   <body vocab="http://schema.org/" typeof="Article">
     <header>
+      <img src="{{ page.image }}" />
       <h1 property="headline">{{ page.title }}</h1>
       <p>
         by
@@ -48,12 +49,7 @@
             &copy; Copyright {{ 'now' | date: "%Y" }}
             <span property="publisher" typeof="EducationalOrganization"
               ><a href="https://sagefy.org" property="url"
-                ><img
-                  src="https://sagefy.org/astrolabe.svg"
-                  height="120"
-                  width="88.7671"
-                  property="logo"
-                /><span property="name">Sagefy</span></a
+                ><span property="name">Sagefy</span></a
               ></span
             >
           </li>

@@ -3,9 +3,8 @@ layout: post
 title: 'How I Write React/Redux Projects in 2018'
 description: 'I’ve been in JavaScript development for about thirteen years. I’ve been through Prototype.js, YUI, MooTools, jQuery, Backbone, Angular, and now React (and countless other libraries and tools). I’ve…'
 date: '2018-08-30T04:01:10.587Z'
+image: /images/react-1.jpeg
 ---
-
-![](/images/react-1.jpeg)
 
 I’ve been in JavaScript development for about thirteen years. I’ve been through [Prototype.js](http://prototypejs.org/), [YUI](https://yuilibrary.com/), [MooTools](https://mootools.net/), [jQuery](https://jquery.com/), [Backbone](http://backbonejs.org/), [Angular](https://angular.io/), and now [React](https://reactjs.org/) (and countless other libraries and tools). I’ve been mostly working on React/[Redux](https://redux.js.org/) browser projects for the last four years on a variety of projects.
 

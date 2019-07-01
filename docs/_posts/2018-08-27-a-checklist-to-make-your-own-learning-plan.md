@@ -3,6 +3,7 @@ layout: post
 title: 'A Checklist to Make Your Own Learning Plan'
 description: 'I published my Eight Big Ideas of Learning article (also full version) about a month ago. The article attracted broad interest. Several people asked me how to act on those ideas. If you’re an…'
 date: '2018-08-27T16:47:36.448Z'
+image: /images/chk-1.jpeg
 ---
 
 _A research-backed checklist to learn anything you want_
@@ -12,8 +13,6 @@ I published my [**Eight Big Ideas of Learning**]({% post_url 2018-07-09-eight-bi
 If you’re an independent learner like me, you’re **creating** your own **plan** and also **following** that plan. It’s easy to feel overwhelmed. Let’s make it easier. Here’s some **steps** you can follow to create and follow your own research-backed learning plan!
 
 _The numbers in brackets refer to the sections in the_ [_Ideas_]({% post_url 2018-07-09-eight-big-ideas-of-learning--tl-dr-edition %}) _article. Check that out if you need more clarification. You don’t need to do all of these things to learn effectively. Take what’s relevant and ignore the rest._
-
-![](/images/chk-1.jpeg)
 
 ## Before you start learning the subject
 

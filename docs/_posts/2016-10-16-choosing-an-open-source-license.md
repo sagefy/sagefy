@@ -3,6 +3,7 @@ layout: post
 title: 'Choosing an Open-Source License'
 description: 'I have to start this article by saying I’m not a lawyer, and nothing in this article is legal advice. If you are looking for a legal recommendation, ask an attorney. When I started Sagefy back in…'
 date: '2016-10-16T18:18:46.879Z'
+image: /images/choose-1.png
 ---
 
 _How I chose the Apache 2 license for Sagefy._
@@ -14,8 +15,6 @@ I have to start this article by saying **I’m not a lawyer**, and nothing in th
 When I started [**Sagefy**](https://sagefy.org) back in April of 2013, I wanted to build a system where [**anyone can learn anything**]({% post_url 2016-09-14-why-i-m-building-sagefy %}). Where learning is accessible to every learner. Where the experience is completely _adapted_ to the learner’s goals and prior knowledge. Accelerating human learning is the best investment we can make.
 
 I knew I wanted to go **open source**. Open source software has permanence, collaborative environment, and freedom from the profit motive. My passion for accelerating human learning needs the open source perspective. _Financial incentives overwhelm education._ The open source mindset and my objectives fit perfectly. I’m a true believer in the [power of open source software](http://www.catb.org/esr/writings/cathedral-bazaar/).
-
-![https://choosealicense.com](/images/choose-1.png)
 
 ## The problem with picking a license
 
