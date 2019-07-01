@@ -14,8 +14,11 @@
     <header>
       <h1 property="headline">{{ page.title }}</h1>
       <p>
-        by <span property="author.name">Kevin Heis</span>,
-        <time property="datePublished">{{ page.date | date: "%Y %b %d" }}</time>
+        by
+        <span property="author" typeof="Person"
+          ><span property="name">Kevin Heis</span></span
+        >,
+        <time property="datePublished">{{ page.date | date: "%Y-%m-%d" }}</time>
       </p>
     </header>
 
@@ -41,7 +44,14 @@
       <small>
         <ul class="ls-i">
           <li><a href="/stories">All stories</a></li>
-          <li>&copy; Copyright {{ 'now' | date: "%Y" }} Sagefy</li>
+          <li>
+            &copy; Copyright {{ 'now' | date: "%Y" }}
+            <span property="provider" typeof="EducationalOrganization"
+              ><a href="https://sagefy.org" property="url"
+                ><span property="name">Sagefy</span></a
+              ></span
+            >
+          </li>
         </ul>
       </small>
     </footer>
