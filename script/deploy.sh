@@ -1,5 +1,5 @@
-cd /var/sagefy
-./dbbu.sh
+#!/usr/bin/env bash
+/var/sagefy/script/dbbu.sh
 cd /var/sagefy
 git pull origin master
 npm install

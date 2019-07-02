@@ -5,7 +5,7 @@ title: Setup
 
 ## Local Development
 
-These instructions assume you are using Mac OS X. To set up a staging or production server, please follow `provision.sh` instead.
+These instructions assume you are using Mac OS X. To set up a staging or production server, please follow `script/provision.sh` instead.
 
 1.  Install tools
     1.  Install [Docker for Mac](https://www.docker.com/docker-mac).
@@ -57,9 +57,9 @@ Run tests:
 Back up database
 
     # ssh into the server
-    ./dbbu.sh
+    ./script/dbbu.sh
 
 Deploy
 
     # ssh into the server
-    ./deploy.sh
+    ./script/deploy.sh
