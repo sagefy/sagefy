@@ -3,6 +3,7 @@ layout: post
 title: 'The Mathematics of Sagefy'
 description: 'In this article, I’m going to talk about some of the mathematical models I’m using in Sagefy so far. I’m going to discuss some of the problems I’ve run into, and what problems are still ahead. I’m…'
 date: '2017-04-06T15:31:05.842Z'
+image: /images/math-1.png
 ---
 
 _How Sagefy adapts to you, and where it can go._

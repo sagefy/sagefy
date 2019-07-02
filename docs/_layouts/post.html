@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>{{ page.title }} — Kevin Heis</title>
+    <meta name="description" content="{{ page.description }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="stylesheet"
@@ -10,13 +11,30 @@
     />
     <link rel="icon" href="/favicon.ico" />
   </head>
-  <body>
-    <header>
-      <h1>{{ page.title }}</h1>
-      <p>by Kevin Heis, <time>{{ page.date | date: "%Y %b %d" }}</time></p>
+  <body itemscope itemtype="http://schema.org/BlogPosting">
+    <header class="my-c">
+      <h1 itemprop="headline">{{ page.title }}</h1>
+      <p>
+        by
+        <span itemprop="author" itemscope itemtype="https://schema.org/Person"
+          ><span itemprop="name">Kevin Heis</span></span
+        >,
+        <time itemprop="datePublished">{{ page.date | date: "%Y-%m-%d" }}</time>
+        <meta
+          itemprop="dateModified"
+          content="{{ page.date | date: '%Y-%m-%d' }}"
+        />
+        <meta itemprop="mainEntityOfPage" content="true" />
+      </p>
     </header>
+    
+    <section>
+      <img src="{{ page.image }}" itemprop="image" alt="headline" />
+    </section>
 
-    {{ content }}
+    <div itemprop="articleBody">
+      {{ content }}
+    </div>
 
     <section>
       <hr />
@@ -36,7 +54,31 @@
       <small>
         <ul class="ls-i">
           <li><a href="/stories">All stories</a></li>
-          <li>&copy; Copyright {{ 'now' | date: "%Y" }} Sagefy</li>
+          <li>
+            &copy; Copyright {{ 'now' | date: "%Y" }}
+            <span
+              itemprop="publisher"
+              itemscope
+              itemtype="https://schema.org/EducationalOrganization"
+              ><a href="https://sagefy.org" itemprop="url">
+                <span
+                  itemprop="logo"
+                  itemscope
+                  itemtype="https://schema.org/ImageObject"
+                >
+                  <img
+                    itemprop="url"
+                    src="https://sagefy.org/astrolabe.png"
+                    alt="astrolabe"
+                    height="14"
+                  />
+                  <meta itemprop="width" content="270" />
+                  <meta itemprop="height" content="365" />
+                </span>
+                <span itemprop="name">Sagefy</span></a
+              ></span
+            >
+          </li>
         </ul>
       </small>
     </footer>

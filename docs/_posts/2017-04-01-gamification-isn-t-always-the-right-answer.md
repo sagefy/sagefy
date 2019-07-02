@@ -3,13 +3,14 @@ layout: post
 title: 'Gamification Isn’t Always the Right Answer'
 description: 'Gamification seemed like a natural fit for Sagefy. The term had been around since about 2010. Gamification came to its current position in 2013. 2013 was around the same time I started working on…'
 date: '2017-04-01T19:52:10.385Z'
+image: /images/game-1.png
 ---
 
 _For Sagefy, a different strategy fits better._
 
 Gamification seemed like a natural fit for [Sagefy](https://sagefy.org). The term had been around since about 2010. Gamification came to its current position in 2013. 2013 was around the same time [I started working on Sagefy]({% post_url 2016-09-14-why-i-m-building-sagefy %}). I didn’t know much about gamification beyond the cliché of points, badges, and leaderboards. But I did know that many businesses and organizations invested in gamification. In particular, those related to learning ([Khan Academy](https://www.khanacademy.org/), [Duolingo](https://www.duolingo.com/)). I explored this through videos, articles, books, and courses. I realized people used gamification as a synonym for a more familiar phrase: **extrinsic motivation.**
 
-![The word “gamification” came into existence around 2010. “Gamification” reached the term’s current standing in 2013. [https://www.google.com/trends/explore?date=all&q=gamification](https://www.google.com/trends/explore?date=all&q=gamification)](/images/game-1.png)
+The word “gamification” came into existence around 2010. “Gamification” reached the term’s [current standing in 2013](https://www.google.com/trends/explore?date=all&q=gamification).
 
 ## What is Sagefy, and What is Gamification
 

@@ -3,6 +3,7 @@ layout: post
 title: 'Interviewing Prospective Users'
 description: 'Maybe you’re thinking about starting a new project. Or you have a project that’s not getting results. Or you’d like to improve an existing project. Interviewing users is the best place to start! With…'
 date: '2017-08-19T02:05:10.579Z'
+image: /images/interview-1.png
 ---
 
 _Starting a new project? Begin by interviewing prospective users._
@@ -10,8 +11,6 @@ _Starting a new project? Begin by interviewing prospective users._
 _Originally published on_ [_IndieHackers_](https://www.indiehackers.com/@sagefy/5179a03d09)_._
 
 Maybe you’re thinking about starting a new project. Or you have a project that’s not getting results. Or you’d like to improve an existing project. Interviewing users is the best place to start! With a few quick and easy small steps, you’ll get all the information you need to get started on your next adventure.
-
-![](/images/interview-1.png)
 
 ## So what are user interviews?
 
