@@ -54,28 +54,12 @@ Run tests:
     docker rm -f $(docker ps -a -q)
     docker rmi -f $(docker images -q)
 
-## Back up database
-
-Run:
+Back up database
 
     # ssh into the server
-    cd /var/sagefy/dbbu
-    today=`date '+%Y_%m_%d__%H_%M_%S'`
-    docker exec -it sagefy_postgres_1 pg_dump -U sagefy -a sagefy -p 2600 > "sagefy-$today.sql"
-    ls -al
-    b2 authorize_account xxx xxxxxxxx  # see password manager
-    b2 sync /var/sagefy/dbbu b2:sagefy-dbbu
+    ./dbbu.sh
 
-## Deploy
-
-How to deploy the latest master:
+Deploy
 
     # ssh into the server
-    # back up the database
-    cd /var/sagefy
-    git pull origin master
-    npm install
-    npm run dbmate up
-    # Was there any changes to .env?
-    # Any Dockerfile changes? Rebuild
-    docker-compose restart
+    ./deploy.sh
