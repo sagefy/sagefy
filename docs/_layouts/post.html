@@ -12,8 +12,7 @@
     <link rel="icon" href="/favicon.ico" />
   </head>
   <body itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <img src="{{ page.image }}" itemprop="image" alt="headline" />
+    <header class="my-c">
       <h1 itemprop="headline">{{ page.title }}</h1>
       <p>
         by
@@ -28,6 +27,10 @@
         <meta itemprop="mainEntityOfPage" content="true" />
       </p>
     </header>
+    
+    <section>
+      <img src="{{ page.image }}" itemprop="image" alt="headline" />
+    </section>
 
     <div itemprop="articleBody">
       {{ content }}
