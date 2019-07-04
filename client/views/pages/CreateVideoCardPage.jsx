@@ -47,7 +47,6 @@ export default function CreateVideoCardPage({
         <form method="POST">
           <input type="hidden" name="subjectId" value={subjectId} />
           <input type="hidden" name="kind" value="VIDEO" />
-          <input type="hidden" name="data.site" value="youtube" />
           <p>
             <label htmlFor="name">What should we call this new card?</label>
             <input
@@ -63,18 +62,41 @@ export default function CreateVideoCardPage({
           <FormErrorsField formErrors={gqlErrors} field="name" />
           <p>
             <label htmlFor="data$video_id">
-              What is the ID of the YouTube video?
+              What is the site and ID of the video?
             </label>
-            <code>https://youtube.com/watch?v=</code>{' '}
-            <input
-              type="text"
-              value={data$video_id}
-              size="15"
-              id="data$video_id"
-              name="data$video_id"
-              placeholder="ex: Gi99QbiSuWs"
-            />
-            <br />
+            <table>
+              <tr>
+                <td>
+                  <label>
+                    <input
+                      type="radio"
+                      name="data.site"
+                      value="youtube"
+                      defaultChecked
+                    />{' '}
+                    <code>https://youtube.com/watch?v=</code>
+                  </label>
+                </td>
+                <td rowSpan="2">
+                  <input
+                    type="text"
+                    value={data$video_id}
+                    size="15"
+                    id="data$video_id"
+                    name="data$video_id"
+                    placeholder="ex: Gi99QbiSuWs"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>
+                    <input type="radio" name="data.site" value="vimeo" />{' '}
+                    <code>https://vimeo.com/</code>
+                  </label>
+                </td>
+              </tr>
+            </table>
             <small>We recommend videos no longer than five minutes.</small>
           </p>
           <FormErrorsField formErrors={gqlErrors} field="data$video_id" />

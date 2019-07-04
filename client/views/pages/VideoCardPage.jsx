@@ -6,12 +6,19 @@ import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
+function getVideoUrl(site, video_id) {
+  if (site === 'youtube')
+    return `https://www.youtube.com/embed/${video_id}?autoplay=1&amp;modestbranding=1&amp;rel=0`
+  if (site === 'vimeo') return `https://player.vimeo.com/video/${video_id}`
+  return 'https://example.com'
+}
+
 export default function VideoCardPage({
   hash,
   card: {
     entityId: cardEntityId,
     name: cardName,
-    data: { video_id },
+    data: { site, video_id },
     subject: { name: subjectName, entityId: subjectEntityId },
   },
 }) {
@@ -58,7 +65,7 @@ export default function VideoCardPage({
 
       <section>
         <iframe
-          src={`https://www.youtube.com/embed/${video_id}?autoplay=1&amp;modestbranding=1&amp;rel=0`}
+          src={getVideoUrl(site, video_id)}
           width="600"
           height="400"
           allowFullScreen="true"

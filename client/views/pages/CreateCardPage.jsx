@@ -62,7 +62,7 @@ export default function CreateCardPage({
             <Link to={kindLink('video')}>
               <Icon i="video" /> Video
             </Link>{' '}
-            &ndash; A YouTube video.
+            &ndash; A YouTube or Vimeo video.
           </li>
           <li>
             <Link to={kindLink('unscored-embed')}>
