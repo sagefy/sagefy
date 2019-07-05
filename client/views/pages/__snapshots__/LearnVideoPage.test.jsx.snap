@@ -10,7 +10,7 @@ exports[`LearnVideoPage should render LearnVideoPage 1`] = `
     <iframe
       allowFullScreen="true"
       height="400"
-      src="https://www.youtube.com/embed/undefined?autoplay=1&amp;modestbranding=1&amp;rel=0"
+      src="https://example.com"
       width="600"
     />
   </section>
