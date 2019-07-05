@@ -13,6 +13,28 @@ title: Sagefy Updates
 
 This is a reverse chronological listing of updates on Sagefy's progress. I will try to do these biweekly.
 
+## UPDATE -- 2019 Jul 5
+
+Thanks for signing up for the Sagefy updates newsletter. I am sending updates biweekly to help track progress on Sagefy.
+
+### 2019 Jun 10 - 2019 Jul 7
+
+- A little off-cadence with this update :) I'm traveling soon so today's the day.
+- There's now about 15,000 new cards in Sagefy! I did some natural language processing to summarize and generate multiple choice questions, and there's videos from YouTube and Vimeo now as well. The quality is about 10% great, 70% good, 10% interesting, and 10% messy.
+- If you haven't seen it: https://twitter.com/sagefybyday <- A twitter bot that tweets a random Sagefy subject each day. Now even more fun with cards in the subjects :)
+- Improved backup and deploy scripts
+- Support for Vimeo videos
+- Added schema.org information to the subject pages -- hopefully for some better Google indexing
+
+### Upcoming Two Weeks: 2019 Jul 8 - 2019 Jul 21
+
+- Edit subject pages is high on the development list, so it'll be possible to clean up some of the NLP generated content.
+- ...as is version history pages.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
+
 ## UPDATE -- 2019 Jun 10
 
 Thanks for signing up for the Sagefy updates newsletter. I am sending updates biweekly to help track progress on Sagefy.
