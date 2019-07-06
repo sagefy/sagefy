@@ -461,7 +461,7 @@ app.get('/subjects/:subjectId', async (req, res) => {
     json: true,
   })
   const { farm, server, id, secret } = get(response, 'photos.photo[0]', {})
-  if (id) {
+  if (id && farm && server && secret) {
     subject.image = `https://farm${farm}.static.flickr.com/${server}/${id}_${secret}.jpg`
   }
   return res.render('Index', { ...formatData(req), subject })
