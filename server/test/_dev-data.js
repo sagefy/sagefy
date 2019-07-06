@@ -15,8 +15,8 @@ const TABLES = [
   'sg_public.subject_version_parent_child',
   'sg_public.card_entity',
   'sg_public.card_version',
-  // 'sg_public.user_subject',
-  // 'sg_public.response',
+  'sg_public.user_subject',
+  'sg_public.response',
 ]
 
 async function makeClient() {
@@ -107,15 +107,15 @@ async function newUserSubject(client, { subject_id }) {
 }
 
 async function newResponse(client, { card }) {
-  const response = (await client.query(`insert into sg_public.response
+  const correctResponse = Object.entries(card.data.options)
+    .filter(([, opt]) => opt.correct)
+    .map(([key]) => key)[0]
+  const response = (await client.query(
+    `insert into sg_public.response
     (card_id, response)
     values
-    ('${card.entity_id}', '${
-    Object.entries(card.data.options)
-      .filter(([, opt]) => opt.correct)
-      .map(([key]) => key)[0]
-  }');
-    `)).rows[0]
+    ('${card.entity_id}', '${correctResponse}');`
+  )).rows[0]
   return response
 }
 
