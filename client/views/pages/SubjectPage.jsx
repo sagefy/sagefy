@@ -38,6 +38,7 @@ export default function SubjectPage({
     parentSubjects,
     cardCount,
     cards,
+    image,
   },
 }) {
   return (
@@ -48,7 +49,7 @@ export default function SubjectPage({
       description={`Learn about ${subjectName}, adapted and optimized for you. Learn for free, always. ${shorten(
         subjectBody
       )}`}
-      image={`/subjects/${to58(subjectEntityId)}.jpg`}
+      image={image}
     >
       <div itemScope itemType="https://schema.org/Course">
         <header>
@@ -185,6 +186,7 @@ SubjectPage.propTypes = {
     parentSubjects: subjectsType,
     cardCount: number.isRequired,
     cards: cardsType,
+    image: string,
   }).isRequired,
 }
 

@@ -442,18 +442,17 @@ app.get('/next', async (req, res) => {
   )
 }) /* eslint-enable */
 
-app.get('/subjects/:subjectId.jpg', async (req, res) => {
-  // photos for the twitter feed
-  const { FLICKR_API_KEY } = process.env
+app.get('/subjects/:subjectId', async (req, res) => {
   const gqlRes = await GQL.dataGetSubject(req, {
     entityId: toU(req.params.subjectId),
   })
   const subject = get(gqlRes, 'data.subjectByEntityId')
+  // -- photos for the twitter feed
   const response = await request({
     uri: `https://www.flickr.com/services/rest`,
     qs: {
       method: 'flickr.photos.search',
-      api_key: FLICKR_API_KEY,
+      api_key: process.env.FLICKR_API_KEY,
       text: subject.name,
       per_page: 1,
       format: 'json',
@@ -462,16 +461,9 @@ app.get('/subjects/:subjectId.jpg', async (req, res) => {
     json: true,
   })
   const { farm, server, id, secret } = get(response, 'photos.photo[0]', {})
-  const imgUrl = `https://farm${farm}.static.flickr.com/${server}/${id}_${secret}.jpg`
-  const img = await request({ uri: imgUrl, encoding: null })
-  return res.set('Content-Type', 'image/jpeg').send(img)
-})
-
-app.get('/subjects/:subjectId', async (req, res) => {
-  const gqlRes = await GQL.dataGetSubject(req, {
-    entityId: toU(req.params.subjectId),
-  })
-  const subject = get(gqlRes, 'data.subjectByEntityId')
+  if (id) {
+    subject.image = `https://farm${farm}.static.flickr.com/${server}/${id}_${secret}.jpg`
+  }
   return res.render('Index', { ...formatData(req), subject })
 })
 
