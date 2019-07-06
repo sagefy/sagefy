@@ -3,6 +3,7 @@
 exports[`SettingsPage should render the SettingsPage 1`] = `
 <Layout
   description="-"
+  image={null}
   page="SettingsPage"
   title="Settings"
 >

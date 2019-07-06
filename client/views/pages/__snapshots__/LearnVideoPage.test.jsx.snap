@@ -3,6 +3,7 @@
 exports[`LearnVideoPage should render LearnVideoPage 1`] = `
 <Layout
   description="-"
+  image={null}
   page="LearnVideoPage"
   title="Learn"
 >

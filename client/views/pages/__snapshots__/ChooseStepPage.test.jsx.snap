@@ -3,6 +3,7 @@
 exports[`ChooseStepPage should render ChooseStepPage 1`] = `
 <Layout
   description="-"
+  image={null}
   page="ChooseNextPage"
   title="Choose"
 >

@@ -3,6 +3,7 @@
 exports[`ContactPage should render the contact page 1`] = `
 <Layout
   description="Need help? Contact Sagefy support."
+  image={null}
   page="ContactPage"
   title="Contact"
 >

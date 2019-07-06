@@ -3,6 +3,7 @@
 exports[`LearnUnscoredEmbedPage should render LearnUnscoredEmbedPage 1`] = `
 <Layout
   description="-"
+  image={null}
   page="LearnUnscoredEmbedPage"
   title="Learn"
 >

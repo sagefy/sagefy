@@ -3,6 +3,7 @@
 exports[`SignUpPage should render the sign up page 1`] = `
 <Layout
   description="Get access to the best learning content with your Sagefy account. Continue where you left off on your learning journey."
+  image={null}
   page="SignUpPage"
   title="Join Sagefy"
 >

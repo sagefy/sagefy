@@ -3,6 +3,7 @@
 exports[`TermsPage should render the terms page 1`] = `
 <Layout
   description="-"
+  image={null}
   page="TermsPage"
   title="Terms and Privacy"
 >

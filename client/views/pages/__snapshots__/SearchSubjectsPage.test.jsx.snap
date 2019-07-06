@@ -3,6 +3,7 @@
 exports[`SearchSubjectsPage should render the search subjects page 1`] = `
 <Layout
   description="Find the learning subject you are looking for. Anything you want to learn, Sagefy can help you."
+  image={null}
   page="SearchSubjectsPage"
   title="Search subjects"
 >

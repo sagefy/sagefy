@@ -3,6 +3,7 @@
 exports[`LogInPage should render the LogInPage 1`] = `
 <Layout
   description="Log in to Sagefy. Continue learning your subjects. And help us make new content to grow Sagefy."
+  image={null}
   page="LogInPage"
   title="Log In"
 >

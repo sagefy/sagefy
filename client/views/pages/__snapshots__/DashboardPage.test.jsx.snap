@@ -3,6 +3,7 @@
 exports[`DashboardPage should render the dashboard page 1`] = `
 <Layout
   description="-"
+  image={null}
   page="DashboardPage"
   title="Dashboard"
 >

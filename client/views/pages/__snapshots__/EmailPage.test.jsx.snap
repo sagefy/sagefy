@@ -3,6 +3,7 @@
 exports[`EmailPage should render the EmailPage 0 1`] = `
 <Layout
   description="Update your email address for your Sagefy account."
+  image={null}
   page="EmailPage"
   title="Change your email"
 >
@@ -105,6 +106,7 @@ exports[`EmailPage should render the EmailPage 0 1`] = `
 exports[`EmailPage should render the EmailPage 1 1`] = `
 <Layout
   description="Update your email address for your Sagefy account."
+  image={null}
   page="EmailPage"
   title="Change your email"
 >
@@ -165,6 +167,7 @@ exports[`EmailPage should render the EmailPage 1 1`] = `
 exports[`EmailPage should render the EmailPage 2 1`] = `
 <Layout
   description="Update your email address for your Sagefy account."
+  image={null}
   page="EmailPage"
   title="Change your email"
 >
