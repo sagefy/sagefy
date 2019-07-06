@@ -2,7 +2,6 @@
 const { Client } = require('pg')
 const fs = require('fs').promises
 const yaml = require('js-yaml')
-const get = require('lodash.get')
 const uuidv4 = require('uuid/v4')
 
 const TABLES = [
@@ -16,8 +15,8 @@ const TABLES = [
   'sg_public.subject_version_parent_child',
   'sg_public.card_entity',
   'sg_public.card_version',
-  // 'sg_public.user_subject',
-  // 'sg_public.response',
+  'sg_public.user_subject',
+  'sg_public.response',
 ]
 
 async function makeClient() {
@@ -31,37 +30,6 @@ async function cleanDatabase(client) {
   console.log('Truncating tables...')
   await client.query(`truncate ${TABLES.reverse().join(', ')} cascade;`)
   return client
-}
-
-async function makeUsers(client) {
-  console.log('Making users...')
-  // Ivy: anonymous
-  // Jasmine: new/learner
-  // Doris: established/contributor
-  // Esther: admin
-  function prep(result) {
-    return get(result, 'rows[0]')
-  }
-
-  const ivy = prep(
-    await client.query(`select * from sg_public.get_anonymous_token();`)
-  )
-  const jasmine = prep(
-    await client.query(
-      `select * from sg_public.sign_up('Jasmine', 'jasmine@example.com', 'example1');`
-    )
-  )
-  const doris = prep(
-    await client.query(
-      `select * from sg_public.sign_up('Doris', 'doris@example.com', 'example1');`
-    )
-  )
-  const esther = prep(
-    await client.query(
-      `select * from sg_public.sign_up('Esther', 'esther@example.com', 'example1');`
-    )
-  )
-  return { ivy, jasmine, doris, esther }
 }
 
 async function letsJwtIn(client, { role, user_id, session_id, uniq }) {
@@ -88,63 +56,126 @@ async function letsJwtOut(client) {
   `)
 }
 
+async function newAnon(client) {
+  return (await client.query(`select * from sg_public.get_anonymous_token();`))
+    .rows[0]
+}
+
+async function newUser(client, { name, email, password }) {
+  return (await client.query(`select * from sg_public.sign_up($1, $2, $3);`, [
+    name,
+    email,
+    password,
+  ])).rows[0]
+}
+
+async function newSubject(client, { name, body, parent, before }) {
+  return (await client.query(
+    `select * from sg_public.new_subject(
+      $1, -- language
+      $2, -- name
+      $3, -- tags
+      $4, -- body
+      $5, -- parent
+      $6  -- before
+    );`,
+    ['en', name, [], body, parent, before]
+  )).rows[0]
+}
+
+async function newCard(client, { name, subject_id, kind, data }) {
+  return (await client.query(
+    `select * from sg_public.new_card(
+      $1, -- language
+      $2, -- name
+      $3, -- tags
+      $4, -- subject_id
+      $5::sg_public.card_kind, -- kind
+      $6  -- data
+    )`,
+    ['en', name, [], subject_id, kind, JSON.stringify(data)]
+  )).rows[0]
+}
+
+async function newUserSubject(client, { subject_id }) {
+  return (await client.query(
+    `insert into sg_public.user_subject
+    (subject_id) values ($1)
+    returning *;`,
+    [subject_id]
+  )).rows[0]
+}
+
+async function newResponse(client, { card }) {
+  const correctResponse = Object.entries(card.data.options)
+    .filter(([, opt]) => opt.correct)
+    .map(([key]) => key)[0]
+  const response = (await client.query(
+    `insert into sg_public.response
+    (card_id, response)
+    values
+    ('${card.entity_id}', '${correctResponse}');`
+  )).rows[0]
+  return response
+}
+
+async function makeUsers(client) {
+  console.log('Making users...')
+  // Ivy: anonymous
+  // Jasmine: new/learner
+  // Doris: established/contributor
+  // Esther: admin
+  const ivy = await newAnon(client)
+  const jasmine = await newUser(client, {
+    name: 'Jasmine',
+    email: 'jasmine@example.com',
+    password: 'example1',
+  })
+  const doris = await newUser(client, {
+    name: 'Doris',
+    email: 'doris@example.com',
+    password: 'example1',
+  })
+  const esther = await newUser(client, {
+    name: 'Esther',
+    email: 'esther@example.com',
+    password: 'example1',
+  })
+  return { ivy, jasmine, doris, esther }
+}
+
 async function makeSubjects(client, { users }) {
   console.log('Creating subjects...')
   await letsJwtIn(client, users.doris)
-
   const subjects = {}
-
   const emusYaml = yaml.safeLoad(
     await fs.readFile('./sample-subject.yaml', 'utf8')
   )
   for (const [key, { name, body, parent, before }] of Object.entries(
     emusYaml.subjects
   )) {
-    subjects[key] = (await client.query(
-      `
-      select * from sg_public.new_subject(
-        $1, -- language
-        $2, -- name
-        $3, -- tags
-        $4, -- body
-        $5, -- parent
-        $6  -- before
-      );`,
-      [
-        'en',
-        name,
-        [],
-        body,
-        parent ? [subjects[parent].entity_id] : [],
-        before ? before.map(slug => subjects[slug].entity_id) : [],
-      ]
-    )).rows[0]
+    subjects[key] = await newSubject(client, {
+      name,
+      body,
+      parent: parent ? [subjects[parent].entity_id] : [],
+      before: before ? before.map(slug => subjects[slug].entity_id) : [],
+    })
   }
-
   const sugYaml = yaml.safeLoad(
     await fs.readFile('./sample-subjects.yaml', 'utf8')
   )
   for (const { name, body } of sugYaml) {
-    subjects[name] = (await client.query(
-      `
-      select * from sg_public.new_subject(
-        $1, -- language
-        $2, -- name
-        $3, -- tags
-        $4, -- body
-        $5, -- parent
-        $6  -- before
-      );`,
-      ['en', name, [], body, [], []]
-    )).rows[0]
+    subjects[name] = await newSubject(client, {
+      name,
+      body,
+      parent: [],
+      before: [],
+    })
   }
-
   await letsJwtOut(client)
-
   await client.query(
     `update sg_public.subject_version set status = 'accepted';`
   )
-
   return subjects
 }
 
@@ -153,221 +184,130 @@ async function makeCards(client, { users, subjects }) {
   const emusYaml = yaml.safeLoad(
     await fs.readFile('./sample-subject.yaml', 'utf8')
   )
-
   await letsJwtIn(client, users.doris)
-
   const cards = {
     video: {},
     unscoredEmbed: {},
     page: {},
     choice: {},
   }
-
-  for (const { subject, video_id } of emusYaml.cards.video) {
-    cards.video[subject] = (await client.query(
-      `
-        select * from sg_public.new_card(
-          $1, -- language
-          $2, -- name
-          $3, -- tags
-          $4, -- subject_id
-          $5::sg_public.card_kind, -- kind
-          $6  -- data
-        )
-      `,
-      [
-        'en',
-        `Video: ${subjects[subject].name}`,
-        [],
-        subjects[subject].entity_id,
-        'video',
-        JSON.stringify({ video_id, site: 'youtube' }),
-      ]
-    )).rows[0]
-  }
-
-  for (const { subject, name, url } of emusYaml.cards.unscored_embed) {
-    cards.unscoredEmbed[subject] = cards.unscoredEmbed[subject] || []
-    cards.unscoredEmbed[subject].push(
-      (await client.query(
-        `
-        select * from sg_public.new_card(
-          $1, -- language
-          $2, -- name
-          $3, -- tags
-          $4, -- subject_id
-          $5::sg_public.card_kind, -- kind
-          $6  -- data
-        )
-      `,
-        [
-          'en',
-          name,
-          [],
-          subjects[subject].entity_id,
-          'unscored_embed',
-          JSON.stringify({ url }),
-        ]
-      )).rows[0]
-    )
-  }
-
-  for (const { subject, name, body } of emusYaml.cards.page) {
-    cards.page[subject] = (await client.query(
-      `
-        select * from sg_public.new_card(
-          $1, -- language
-          $2, -- name
-          $3, -- tags
-          $4, -- subject_id
-          $5::sg_public.card_kind, -- kind
-          $6  -- data
-        )
-      `,
-      [
-        'en',
+  await Promise.all([
+    ...emusYaml.cards.video.map(async ({ subject, video_id }) => {
+      cards.video[subject] = await newCard(client, {
+        name: `Video: ${subjects[subject].name}`,
+        subject_id: subjects[subject].entity_id,
+        kind: 'video',
+        data: { video_id, site: 'youtube' },
+      })
+      return cards.video[subject]
+    }),
+    ...emusYaml.cards.unscored_embed.map(async ({ subject, name, url }) => {
+      const card = await newCard(client, {
         name,
-        [],
-        subjects[subject].entity_id,
-        'page',
-        JSON.stringify({ body }),
-      ]
-    )).rows[0]
-  }
-
-  for (const { subject, body, options } of emusYaml.cards.choice) {
-    cards.choice[subject] = cards.choice[subject] || []
-    cards.choice[subject].push(
-      (await client.query(
-        `
-        select * from sg_public.new_card(
-          $1, -- language
-          $2, -- name
-          $3, -- tags
-          $4, -- subject_id
-          $5::sg_public.card_kind, -- kind
-          $6  -- data
-        )
-      `,
-        [
-          'en',
+        subject_id: subjects[subject].entity_id,
+        kind: 'unscored_embed',
+        data: { url },
+      })
+      cards.unscoredEmbed[subject] = cards.unscoredEmbed[subject] || []
+      cards.unscoredEmbed[subject].push(card)
+      return card
+    }),
+    ...emusYaml.cards.page.map(async ({ subject, name, body }) => {
+      cards.page[subject] = await newCard(client, {
+        name,
+        subject_id: subjects[subject].entity_id,
+        kind: 'page',
+        data: { body },
+      })
+      return cards.page[subject]
+    }),
+    ...emusYaml.cards.choice.map(async ({ subject, body, options }) => {
+      const card = await newCard(client, {
+        name: body,
+        subject_id: subjects[subject].entity_id,
+        kind: 'choice',
+        data: {
           body,
-          [],
-          subjects[subject].entity_id,
-          'choice',
-          JSON.stringify({
-            body,
-            options: options.reduce((sum, { value, correct, feedback }) => {
-              sum[uuidv4()] = {
-                value,
-                feedback,
-                correct: correct === 'Y',
-              }
-              return sum
-            }, {}),
-            max_options_to_show: 4,
-          }),
-        ]
-      )).rows[0]
-    )
-  }
-
+          options: options.reduce((sum, { value, correct, feedback }) => {
+            sum[uuidv4()] = {
+              value,
+              feedback,
+              correct: correct === 'Y',
+            }
+            return sum
+          }, {}),
+          max_options_to_show: 4,
+        },
+      })
+      cards.choice[subject] = cards.choice[subject] || []
+      cards.choice[subject].push(card)
+      return card
+    }),
+  ])
   await letsJwtOut(client)
-
   await client.query(`update sg_public.card_version set status = 'accepted';`)
-
   return cards
 }
 
 async function makeUserSubjects(client, { users, subjects }) {
   console.log('Making user-subjects...')
   const userSubjects = {}
-
   await letsJwtIn(client, users.doris)
-  userSubjects.doris = (await client.query(
-    `
-    insert into sg_public.user_subject
-    (subject_id) values ($1)
-    returning *;
-  `,
-    [subjects.all.entity_id]
-  )).rows[0]
-
+  userSubjects.doris = await newUserSubject(client, {
+    subject_id: subjects.all.entity_id,
+  })
   await letsJwtIn(client, users.esther)
-  userSubjects.esther = (await client.query(
-    `
-    insert into sg_public.user_subject
-    (subject_id) values ($1)
-    returning *;
-  `,
-    [subjects.foundation.entity_id]
-  )).rows[0]
-
+  userSubjects.esther = await newUserSubject(client, {
+    subject_id: subjects.foundation.entity_id,
+  })
   await letsJwtOut(client)
-
   return userSubjects
 }
 
 async function makeResponses(client, { users, cards }) {
   console.log('Making responses...')
   await letsJwtIn(client, users.doris)
-
   const responses = {}
-
   const subjectsToHit = ['intro', 'params', 'human', 'digital', 'complex']
-
   for (const subj of subjectsToHit) {
     const card = cards.choice[subj][0]
-    responses[subj] = (await client.query(`
-      insert into sg_public.response
-      (card_id, response)
-      values
-      ('${card.entity_id}', '${
-      Object.entries(card.data.options)
-        .filter(([, opt]) => opt.correct)
-        .map(([key]) => key)[0]
-    }');
-    `)).rows[0]
+    responses[subj] = await newResponse(client, { card })
   }
-
   await letsJwtOut(client)
-
   await client.query(`
     update sg_public.response set learned = 0.999;
   `)
-
   return responses
 }
 
 async function generateDevData() {
-  console.log('Generating development data...')
-  const users = {}
-  const subjects = {}
-  const cards = {}
-  const userSubjects = {}
-  const responses = {}
-  const data = { users, subjects, cards, userSubjects, responses }
-
   if (process.env.NODE_ENV === 'production') {
-    return data
+    console.log('I will not run on production.')
+    return {}
   }
-
+  console.log('Generating development data...')
+  const data = {
+    users: {},
+    subjects: {},
+    cards: {},
+    userSubjects: {},
+    responses: {},
+  }
   const client = await makeClient()
   await cleanDatabase(client)
-  Object.assign(users, await makeUsers(client, data))
-  Object.assign(subjects, await makeSubjects(client, data))
-  Object.assign(cards, await makeCards(client, data))
-  Object.assign(userSubjects, await makeUserSubjects(client, data))
-  Object.assign(responses, await makeResponses(client, data))
+  Object.assign(data.users, await makeUsers(client, data))
+  Object.assign(data.subjects, await makeSubjects(client, data))
+  Object.assign(data.cards, await makeCards(client, data))
+  Object.assign(data.userSubjects, await makeUserSubjects(client, data))
+  Object.assign(data.responses, await makeResponses(client, data))
   await letsJwtOut(client)
-
   console.log('Finished generating development data.')
   return data
 }
 
 if (require.main === module) {
   generateDevData()
-    .catch(console.error) // eslint-disable-line
+    .catch(console.error)
     .finally(process.exit)
 }
 
