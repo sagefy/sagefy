@@ -1,7 +1,14 @@
 import React from 'react'
 import { string, node } from 'prop-types'
 
-export default function Layout({ page, title, description, hash, children }) {
+export default function Layout({
+  page,
+  title,
+  description,
+  image,
+  hash,
+  children,
+}) {
   if (process.env.NODE_ENV === 'test') {
     return <div className={page}>{children}</div>
   }
@@ -16,6 +23,7 @@ export default function Layout({ page, title, description, hash, children }) {
         <meta name="twitter:site" content="@sagefyorg" />
         <meta name="twitter:title" content={`${title} - Sagefy`} />
         <meta name="twitter:description" content={description} />
+        {image && <meta name="twitter:image" content={image} />}
         <link rel="stylesheet" href={`/sagefy.min.css?${hash}`} />
       </head>
       <body>
@@ -33,4 +41,9 @@ Layout.propTypes = {
   page: string.isRequired,
   children: node.isRequired,
   hash: string.isRequired,
+  image: string,
+}
+
+Layout.defaultProps = {
+  image: null,
 }

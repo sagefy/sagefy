@@ -48,6 +48,7 @@ export default function SubjectPage({
       description={`Learn about ${subjectName}, adapted and optimized for you. Learn for free, always. ${shorten(
         subjectBody
       )}`}
+      image={`/subjects/${to58(subjectEntityId)}.jpg`}
     >
       <div itemScope itemType="https://schema.org/Course">
         <header>

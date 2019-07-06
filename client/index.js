@@ -12,6 +12,7 @@ const {
   convertUuidToUuid58: to58,
 } = require('uuid58')
 const uuidv4 = require('uuid/v4')
+const request = require('request-promise-native')
 const GQL = require('./util/gql-queries')
 const getGqlErrors = require('./util/gql-errors')
 
@@ -440,6 +441,31 @@ app.get('/next', async (req, res) => {
     getRole(req) === 'sg_anonymous' ? '/search-subjects' : '/dashboard'
   )
 }) /* eslint-enable */
+
+app.get('/subjects/:subjectId.jpg', async (req, res) => {
+  // photos for the twitter feed
+  const { FLICKR_API_KEY } = process.env
+  const gqlRes = await GQL.dataGetSubject(req, {
+    entityId: toU(req.params.subjectId),
+  })
+  const subject = get(gqlRes, 'data.subjectByEntityId')
+  const response = await request({
+    uri: `https://www.flickr.com/services/rest`,
+    qs: {
+      method: 'flickr.photos.search',
+      api_key: FLICKR_API_KEY,
+      text: subject.name,
+      per_page: 1,
+      format: 'json',
+      nojsoncallback: 1,
+    },
+    json: true,
+  })
+  const { farm, server, id, secret } = get(response, 'photos.photo[0]', {})
+  const imgUrl = `https://farm${farm}.static.flickr.com/${server}/${id}_${secret}.jpg`
+  const img = await request({ uri: imgUrl, encoding: null })
+  return res.set('Content-Type', 'image/jpeg').send(img)
+})
 
 app.get('/subjects/:subjectId', async (req, res) => {
   const gqlRes = await GQL.dataGetSubject(req, {
