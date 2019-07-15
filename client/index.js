@@ -335,18 +335,13 @@ app.get('/dashboard', isUser, async (req, res) => {
     })
   )
   const name = get(gqlRes, 'data.getCurrentUser.name')
-  return res.render('DashboardPage', {
-    subjects,
-    name,
-  })
+  return res.render('DashboardPage', { subjects, name })
 })
 
 app.get('/search-subjects', async (req, res) => {
   const gqlRes = await GQL.learnSearchSubject(req, req.query)
   const subjects = get(gqlRes, 'data.searchSubjects.nodes')
-  return res.render('SearchSubjectsPage', {
-    subjects,
-  })
+  return res.render('SearchSubjectsPage', { subjects })
 })
 
 app.get('/create-subject', (req, res) => res.render('CreateSubjectPage'))
