@@ -188,45 +188,6 @@ comment on function sg_public.select_my_subjects()
 grant execute on function sg_public.select_my_subjects()
   to sg_user, sg_admin;
 
-create function sg_public.edit_subject(
-  entity_id uuid
-  name text,
-  tags text[],
-  body text,
-  members jsonb -- todo update
-)
-returns sg_public.subject_version as $$
-  with previous as (
-    select *
-    from sg_public.subject
-    where sg_public.subject.entity_id = entity_id
-    limit 1
-  ),
-  subject_version as (
-    insert into sg_public.subject_version
-    (entity_id, previous_id, name, tags, body)
-    values (entity_id, previous.version_id, name, tags, body)
-  )
-  insert into sg_public.subject_version_member
-  (version_id, entity_id, entity_kind)
-  select (subject_version.version_id,
-    json_array_elements(members) as (entity_id, entity_kind));
-$$ language 'plpgsql' volatile;
-comment on function sg_public.edit_subject(
-  uuid
-  text,
-  text[],
-  text,
-  jsonb
-) is 'Edit an existing subject.';
-grant execute on function sg_public.edit_subject(
-  uuid
-  text,
-  text[],
-  text,
-  jsonb
-) to sg_anonymous, sg_user, sg_admin;
-
 create function sg_public.edit_card(
   entity_id uuid,
   name text,

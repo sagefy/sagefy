@@ -346,13 +346,46 @@ app.post('/create-subject', async (req, res) => {
   return res.redirect('/dashboard')
 })
 
+app.get('/edit-subject/:subjectId', async (req, res) => {
+  const subjGqlRes = await GQL.contributeGetSubject(req, {
+    entityId: toU(req.params.subjectId),
+  })
+  const subject = get(subjGqlRes, 'data.subjectByEntityId')
+  if (!subject) return res.redirect('/server-error')
+  return res.render('EditSubjectPage', { subject })
+})
+
+app.post('/edit-subject/:subjectId', async (req, res) => {
+  const subjGqlRes = await GQL.contributeGetSubject(req, {
+    entityId: toU(req.params.subjectId),
+  })
+  const subject = get(subjGqlRes, 'data.subjectByEntityId')
+  if (!subject) return res.redirect('/server-error')
+  const editGqlRes = await GQL.contributeEditSubject(req, {
+    entityId: toU(req.body.entityId),
+    name: req.body.name,
+    body: req.body.body,
+    before: get(subject, 'beforeSubjects.nodes', []).map(
+      ({ entityId }) => entityId
+    ), // temporary
+    parent: get(subject, 'parentSubjects.nodes', []).map(
+      ({ entityId }) => entityId
+    ), // temporary
+  })
+  const gqlErrors = getGqlErrors(editGqlRes)
+  if (Object.keys(gqlErrors).length) {
+    return res.render('EditSubjectPage', { subject, gqlErrors })
+  }
+  return res.redirect(`/subjects/${req.params.subjectId}`)
+})
+
 app.get('/create(-:kind)?-card', async (req, res) => {
   if (!req.query.subjectId) res.redirect('/')
   const subjGqlRes = await GQL.contributeGetSubject(req, {
     entityId: toU(req.query.subjectId),
   })
   const subject = get(subjGqlRes, 'data.subjectByEntityId')
-  if (!subject) res.redirect('/server-error')
+  if (!subject) return res.redirect('/server-error')
   return res.render(
     `Create${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
     { subject }

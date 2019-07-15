@@ -2146,6 +2146,48 @@ COMMENT ON FUNCTION sg_public.update_password(new_password text) IS 'Update the 
 
 
 --
+-- Name: update_subject(uuid, text, text[], text, uuid[], uuid[]); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.update_subject(entity_id uuid, name text, tags text[], body text, parent uuid[], before uuid[]) RETURNS sg_public.subject_version
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+  declare
+    xprevious sg_public.subject;
+    xversion_id uuid;
+    xsubject_version sg_public.subject_version;
+  begin
+    select * into xprevious
+    from sg_public.subject_by_entity_id(entity_id);
+    if (xprevious is null) then
+      raise exception 'No previous version found.' using errcode = 'B7615F09';
+    end if;
+    xversion_id := uuid_generate_v4();
+    insert into sg_public.entity_version
+    (version_id, entity_kind) values (xversion_id, 'subject');
+    insert into sg_public.subject_version
+    (version_id, previous_version_id, entity_id, language, name, tags, body)
+    values (xversion_id, xprevious.version_id, entity_id, xprevious.language, name, tags, body)
+    returning * into xsubject_version;
+    insert into sg_public.subject_version_parent_child
+    (child_version_id, parent_entity_id)
+    select xversion_id, unnest(parent);
+    insert into sg_public.subject_version_before_after
+    (after_version_id, before_entity_id)
+    select xversion_id, unnest(before);
+    return xsubject_version;
+  end;
+$$;
+
+
+--
+-- Name: FUNCTION update_subject(entity_id uuid, name text, tags text[], body text, parent uuid[], before uuid[]); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.update_subject(entity_id uuid, name text, tags text[], body text, parent uuid[], before uuid[]) IS 'Update an existing subject.';
+
+
+--
 -- Name: user_md5_email(sg_public."user"); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
@@ -3771,4 +3813,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190418165040'),
     ('20190524205800'),
     ('20190529204020'),
-    ('20190606175104');
+    ('20190606175104'),
+    ('20190715015859');

@@ -37,6 +37,7 @@ import {
   User,
   MessageSquare,
   AlignLeft,
+  Edit,
 } from 'react-feather'
 import get from 'lodash.get'
 
@@ -104,6 +105,7 @@ const MAP = {
   check: CheckCircle,
   left: ArrowLeft,
   cheer: ThumbsUp,
+  edit: Edit,
 
   // page specific
   adapt: Share2, // home

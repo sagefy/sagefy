@@ -40,7 +40,7 @@
     "shuffle-seed": "^1.1.6",
     "timeago-react": "^2.0.1",
     "uuid": "^3.3.2",
-    "uuid58": "^1.0.0"
+    "uuid58": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

@@ -87,7 +87,11 @@ export default function SubjectPage({
                 </a>
               </li>
               {/* <li><a href="/mocks/history">🎢 History</a></li> */}
-              {/* <li><a href="/mocks/update-subject">🌳 Edit</a></li> */}
+              <li>
+                <a href={`/edit-subject/${to58(subjectEntityId)}`}>
+                  <Icon i="edit" s="s" /> Edit
+                </a>
+              </li>
             </ul>
           </small>
           {/* TODO stats section */}

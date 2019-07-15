@@ -3,5 +3,15 @@ query contributeGetSubject($entityId: UUID!) {
     entityId
     name
     body
+    beforeSubjects {
+      nodes {
+        entityId
+      }
+    }
+    parentSubjects {
+      nodes {
+        entityId
+      }
+    }
   }
 }
