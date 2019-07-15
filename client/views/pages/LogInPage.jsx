@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { shape, string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
@@ -29,14 +28,14 @@ export default function LogInPage({
 
         <p>
           Don&apos;t have an account?{' '}
-          <Link to={redirect ? `/sign-up?redirect=${redirect}` : '/sign-up'}>
+          <a href={redirect ? `/sign-up?redirect=${redirect}` : '/sign-up'}>
             <Icon i="signUp" /> Sign Up
-          </Link>
+          </a>
           .<br />
           Forgot your password?{' '}
-          <Link to="/password">
+          <a href="/password">
             <Icon i="password" /> Reset
-          </Link>
+          </a>
           .
         </p>
 

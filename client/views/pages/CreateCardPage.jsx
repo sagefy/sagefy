@@ -1,7 +1,6 @@
 import React from 'react'
 import { string, shape } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
-import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 
@@ -41,33 +40,33 @@ export default function CreateCardPage({
         <h2>What kind of card would you like to make?</h2>
         <ul className="ls-n">
           <li>
-            <Link to={kindLink('choice')}>
+            <a href={kindLink('choice')}>
               <Icon i="choice" /> Choice
-            </Link>{' '}
+            </a>{' '}
             &ndash; A multiple-choice question.{' '}
             <em>
               <small>(We need more of these!)</small>
             </em>
           </li>
           <li>
-            <Link to={kindLink('page')}>
+            <a href={kindLink('page')}>
               <Icon i="page" /> Page
-            </Link>{' '}
+            </a>{' '}
             &ndash; A written document to read, in Markdown format.{' '}
             <em>
               <small>(This one&apos;s the easiest.)</small>
             </em>
           </li>
           <li>
-            <Link to={kindLink('video')}>
+            <a href={kindLink('video')}>
               <Icon i="video" /> Video
-            </Link>{' '}
+            </a>{' '}
             &ndash; A YouTube or Vimeo video.
           </li>
           <li>
-            <Link to={kindLink('unscored-embed')}>
+            <a href={kindLink('unscored-embed')}>
               <Icon i="embed" /> Embed{' '}
-            </Link>{' '}
+            </a>{' '}
             &ndash; An <code>iframe</code> from any site. Does not score learner
             responses.
           </li>
@@ -79,9 +78,9 @@ export default function CreateCardPage({
           <p>
             <em>
               Advice: We recommend{' '}
-              <Link to={`/sign-up?return=/create-card?subjectId=${subjectId}`}>
+              <a href={`/sign-up?return=/create-card?subjectId=${subjectId}`}>
                 joining
-              </Link>{' '}
+              </a>{' '}
               before you create content,
               <br />
               so you can easily continue later!

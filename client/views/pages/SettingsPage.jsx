@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { shape, string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
@@ -17,15 +16,15 @@ export default function SettingsPage({ hash, gqlErrors, body: { id, name } }) {
           Update your settings <Icon i="settings" s="h1" />
         </h1>
         <p>
-          <Link to="/password">
+          <a href="/password">
             <Icon i="password" /> Change my password
-          </Link>
+          </a>
           .
           <br />
           or{' '}
-          <Link to="/email">
+          <a href="/email">
             <Icon i="email" /> Change my email
-          </Link>
+          </a>
           .
         </p>
         <form action="" method="POST">

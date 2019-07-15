@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { string } from 'prop-types'
 import Icon from './Icon'
 import ExternalLink from './ExternalLink'
@@ -12,41 +11,41 @@ export default function Footer({ role }) {
         {(role === 'sg_anonymous' && (
           <ul className="ls-i">
             <li>
-              <Link to="/log-in">
+              <a href="/log-in">
                 <Icon i="logIn" s="s" /> Log In
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/sign-up">
+              <a href="/sign-up">
                 <Icon i="signUp" s="s" /> Sign Up
-              </Link>
+              </a>
             </li>
           </ul>
         )) || (
           <ul className="ls-i">
             <li>
-              <Link to="/dashboard">
+              <a href="/dashboard">
                 <Icon i="dashboard" s="s" /> Dashboard
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/settings">
+              <a href="/settings">
                 <Icon i="settings" s="s" /> Settings
-              </Link>
+              </a>
             </li>
             <li>
-              <Link to="/log-out">
+              <a href="/log-out">
                 <Icon i="logOut" s="s" /> Log Out
-              </Link>
+              </a>
             </li>
             {/* TODO add notices/follows */}
           </ul>
         )}
         <ul className="ls-i">
           <li>
-            <Link to="/">
+            <a href="/">
               <Icon i="home" s="s" /> Home
-            </Link>
+            </a>
           </li>
           <li>
             <ExternalLink href="https://docs.sagefy.org/">
@@ -64,14 +63,14 @@ export default function Footer({ role }) {
             </ExternalLink>
           </li>
           <li>
-            <Link to="/contact">
+            <a href="/contact">
               <Icon i="contact" s="s" /> Contact
-            </Link>
+            </a>
           </li>
           <li>
-            <Link to="/terms">
+            <a href="/terms">
               <Icon i="terms" s="s" /> Privacy &amp; Terms
-            </Link>
+            </a>
           </li>
         </ul>
         <p>&copy; Copyright {new Date().getFullYear()} Sagefy.</p>

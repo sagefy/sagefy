@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { arrayOf, shape, string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
@@ -39,13 +38,13 @@ export default function ChooseNextPage({ hash, subjects, role }) {
           <small>
             <em>Or&hellip;</em> on second thought, let&apos;s go{' '}
             {role === 'sg_anonymous' ? (
-              <Link to="/">
+              <a href="/">
                 <Icon i="home" /> Home
-              </Link>
+              </a>
             ) : (
-              <Link to="/dashboard">
+              <a href="/dashboard">
                 to the <Icon i="dashboard" /> Dashboard
-              </Link>
+              </a>
             )}
             .
           </small>

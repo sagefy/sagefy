@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { string, shape, arrayOf } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import ReactMarkdown from 'react-markdown'
@@ -25,7 +24,7 @@ export default function ListOfSubjects({ subjects, title, itemProp, icon }) {
         {subjects.map(({ entityId, name, body }) => (
           <li className="my-c">
             <h3>
-              <Link to={`/subjects/${to58(entityId)}`}>{name}</Link>
+              <a href={`/subjects/${to58(entityId)}`}>{name}</a>
             </h3>
             <ReactMarkdown
               source={shorten(body)}

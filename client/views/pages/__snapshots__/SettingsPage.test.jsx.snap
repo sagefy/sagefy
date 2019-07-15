@@ -23,30 +23,28 @@ exports[`SettingsPage should render the SettingsPage 1`] = `
       />
     </h1>
     <p>
-      <Link
-        replace={false}
-        to="/password"
+      <a
+        href="/password"
       >
         <Icon
           i="password"
           s="m"
         />
          Change my password
-      </Link>
+      </a>
       .
       <br />
       or
        
-      <Link
-        replace={false}
-        to="/email"
+      <a
+        href="/email"
       >
         <Icon
           i="email"
           s="m"
         />
          Change my email
-      </Link>
+      </a>
       .
     </p>
     <form

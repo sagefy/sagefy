@@ -13,6 +13,7 @@ const {
 } = require('uuid58')
 const uuidv4 = require('uuid/v4')
 const request = require('request-promise-native')
+const CARD_KIND = require('./util/card-kind')
 const GQL = require('./util/gql-queries')
 const getGqlErrors = require('./util/gql-errors')
 
@@ -93,10 +94,6 @@ function formatData(req) {
   }
 }
 
-function handleRegular(req, res) {
-  return res.render('Index', formatData(req))
-}
-
 function clientizeKind(s) {
   return s.toLowerCase().replace(/_/g, '-')
 }
@@ -135,13 +132,6 @@ const ROOT_PAGES = [
   '/create-unscored-embed-card',
 ]
 
-const CARD_KIND_URL = {
-  CHOICE: 'choice',
-  VIDEO: 'video',
-  PAGE: 'page',
-  UNSCORED_EMBED: 'unscored-embed',
-}
-
 app.get('/sitemap.txt', async (req, res) => {
   const gqlRes = await GQL.dataSitemap(req)
   const subjects = get(gqlRes, 'data.allSubjects.nodes', []).map(
@@ -152,11 +142,11 @@ app.get('/sitemap.txt', async (req, res) => {
   )
   const cards = get(gqlRes, 'data.allCards.nodes', []).map(
     ({ entityId, kind }) =>
-      `/${get(CARD_KIND_URL, kind)}-cards/${to58(entityId)}`
+      `/${get(CARD_KIND, [kind, 'url'])}-cards/${to58(entityId)}`
   )
   const cardTalk = get(gqlRes, 'data.allCards.nodes', []).map(
     ({ entityId, kind }) =>
-      `/${get(CARD_KIND_URL, kind)}-cards/${to58(entityId)}/talk`
+      `/${get(CARD_KIND, [kind, 'url'])}-cards/${to58(entityId)}/talk`
   )
   const users = get(gqlRes, 'data.allUsers.nodes', []).map(
     ({ id }) => `/users/${to58(id)}`
@@ -184,7 +174,10 @@ app.get('/learn-:kind/:cardId', async (req, res) => {
     return res.redirect('/server-error')
   }
   const progress = get(gqlRes, 'data.selectSubjectLearned')
-  return res.render('Index', { ...formatData(req), card, progress })
+  return res.render(
+    `pages/Learn${get(CARD_KIND, [req.params.kind, 'page'])}Page`,
+    { ...formatData(req), card, progress }
+  )
 })
 
 app.post('/learn-choice/:cardId', async (req, res) => {
@@ -201,16 +194,22 @@ app.post('/learn-choice/:cardId', async (req, res) => {
     response: req.body.choice,
   })
   const progress = get(gqlRes2, 'data.createResponse.response.learned')
-  return res.render('Index', { ...formatData(req), card, progress })
+  return res.render('pages/LearnChoicePage', {
+    ...formatData(req),
+    card,
+    progress,
+  })
 })
 
-app.get('/sign-up', isAnonymous, handleRegular)
+app.get('/sign-up', isAnonymous, (req, res) =>
+  res.render('pages/SignUpPage', formatData(req))
+)
 
 app.post('/sign-up', isAnonymous, async (req, res) => {
   const gqlRes = await GQL.rootNewUser(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('Index', { ...formatData(req), gqlErrors })
+    return res.render('pages/SignUpPage', { ...formatData(req), gqlErrors })
   }
   return res
     .cookie(
@@ -224,13 +223,15 @@ app.post('/sign-up', isAnonymous, async (req, res) => {
     )
 })
 
-app.get('/log-in', isAnonymous, handleRegular)
+app.get('/log-in', isAnonymous, (req, res) =>
+  res.render('pages/LogInPage', formatData(req))
+)
 
 app.post('/log-in', isAnonymous, async (req, res) => {
   const gqlRes = await GQL.rootLogInUser(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('Index', { ...formatData(req), gqlErrors })
+    return res.render('pages/LogInPage', { ...formatData(req), gqlErrors })
   }
   return res
     .cookie(
@@ -246,7 +247,7 @@ app.post('/log-in', isAnonymous, async (req, res) => {
 
 app.get('/email', async (req, res) => {
   const state = getQueryState(req)
-  return res.render('Index', { ...formatData(req), state })
+  return res.render('pages/EmailPage', { ...formatData(req), state })
 })
 
 app.post('/email', async (req, res) => {
@@ -260,21 +261,29 @@ app.post('/email', async (req, res) => {
     )
     const gqlErrors = getGqlErrors(gqlRes)
     if (Object.keys(gqlErrors).length) {
-      return res.render('Index', { ...formatData(req), gqlErrors, state: 2 })
+      return res.render('pages/EmailPage', {
+        ...formatData(req),
+        gqlErrors,
+        state: 2,
+      })
     }
     return res.redirect('/log-in')
   }
   const gqlRes = await GQL.rootNewEmailToken(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('Index', { ...formatData(req), gqlErrors, state: 0 })
+    return res.render('pages/EmailPage', {
+      ...formatData(req),
+      gqlErrors,
+      state: 0,
+    })
   }
   return res.redirect('/email?state=1')
 })
 
 app.get('/password', async (req, res) => {
   const state = getQueryState(req)
-  return res.render('Index', { ...formatData(req), state })
+  return res.render('pages/PasswordPage', { ...formatData(req), state })
 })
 
 app.post('/password', async (req, res) => {
@@ -288,14 +297,22 @@ app.post('/password', async (req, res) => {
     )
     const gqlErrors = getGqlErrors(gqlRes)
     if (Object.keys(gqlErrors).length) {
-      return res.render('Index', { ...formatData(req), gqlErrors, state: 2 })
+      return res.render('pages/PasswordPage', {
+        ...formatData(req),
+        gqlErrors,
+        state: 2,
+      })
     }
     return res.redirect('/log-in')
   }
   const gqlRes = await GQL.rootNewPasswordToken(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('Index', { ...formatData(req), gqlErrors, state: 0 })
+    return res.render('pages/PasswordPage', {
+      ...formatData(req),
+      gqlErrors,
+      state: 0,
+    })
   }
   return res.redirect('/password?state=1')
 })
@@ -303,13 +320,13 @@ app.post('/password', async (req, res) => {
 app.get('/settings', isUser, async (req, res) => {
   const gqlRes = await GQL.rootGetCurrentUser(req)
   const body = get(gqlRes, 'data.getCurrentUser')
-  return res.render('Index', { ...formatData(req), body })
+  return res.render('pages/SettingsPage', { ...formatData(req), body })
 })
 
 app.post('/settings', isUser, async (req, res) => {
   const gqlRes = await GQL.rootEditUser(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
-  return res.render('Index', { ...formatData(req), gqlErrors })
+  return res.render('pages/SettingsPage', { ...formatData(req), gqlErrors })
 })
 
 app.get('/log-out', isUser, (req, res) =>
@@ -327,20 +344,34 @@ app.get('/dashboard', isUser, async (req, res) => {
     })
   )
   const name = get(gqlRes, 'data.getCurrentUser.name')
-  return res.render('Index', { ...formatData(req), subjects, name })
+  return res.render('pages/DashboardPage', {
+    ...formatData(req),
+    subjects,
+    name,
+  })
 })
 
 app.get('/search-subjects', async (req, res) => {
   const gqlRes = await GQL.learnSearchSubject(req, req.query)
   const subjects = get(gqlRes, 'data.searchSubjects.nodes')
-  return res.render('Index', { ...formatData(req), subjects })
+  return res.render('pages/SearchSubjectsPage', {
+    ...formatData(req),
+    subjects,
+  })
 })
+
+app.get('/create-subject', (req, res) =>
+  res.render('pages/CreateSubjectPage', formatData(req))
+)
 
 app.post('/create-subject', async (req, res) => {
   const gqlRes = await GQL.contributeNewSubject(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('Index', { ...formatData(req), gqlErrors })
+    return res.render('pages/CreateSubjectPage', {
+      ...formatData(req),
+      gqlErrors,
+    })
   }
   const role = getRole(req)
   const { entityId, name } = get(gqlRes, 'data.newSubject.subjectVersion', {})
@@ -358,7 +389,10 @@ app.get('/create(-:kind)?-card', async (req, res) => {
   })
   const subject = get(subjGqlRes, 'data.subjectByEntityId')
   if (!subject) res.redirect('/server-error')
-  return res.render('Index', { ...formatData(req), subject })
+  return res.render(
+    `pages/Create${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
+    { ...formatData(req), subject }
+  )
 })
 
 app.post('/create(-:kind)?-card', async (req, res) => {
@@ -384,7 +418,10 @@ app.post('/create(-:kind)?-card', async (req, res) => {
   const gqlRes = await GQL.contributeNewCard(req, values)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('Index', { ...formatData(req), gqlErrors })
+    return res.render(
+      `pages/Create${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
+      { ...formatData(req), gqlErrors }
+    )
   }
   // TODO redirect based on how we got to create-card
   return res.redirect(`/next?step=${req.cookies.step}`)
@@ -409,7 +446,7 @@ app.get('/choose-step', async (req, res) => {
   if (subjects.length === 1) {
     return res.redirect(`/next?step=${to58(subjects[0].entityId)}`)
   }
-  return res.render('Index', { ...formatData(req), subjects })
+  return res.render('pages/ChooseStepPage', { ...formatData(req), subjects })
 })
 
 /* eslint-disable max-statements */
@@ -464,7 +501,7 @@ app.get('/subjects/:subjectId', async (req, res) => {
   if (id && farm && server && secret) {
     subject.image = `https://farm${farm}.static.flickr.com/${server}/${id}_${secret}.jpg`
   }
-  return res.render('Index', { ...formatData(req), subject })
+  return res.render('pages/SubjectPage', { ...formatData(req), subject })
 })
 
 app.get('/(:kind-)?cards/:cardId', async (req, res) => {
@@ -472,7 +509,10 @@ app.get('/(:kind-)?cards/:cardId', async (req, res) => {
     cardId: toU(req.params.cardId),
   })
   const card = get(gqlRes, 'data.cardByEntityId')
-  return res.render('Index', { ...formatData(req), card })
+  return res.render(
+    `pages/${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
+    { ...formatData(req), card }
+  )
 })
 
 app.get('/users/:userId', async (req, res) => {
@@ -480,7 +520,7 @@ app.get('/users/:userId', async (req, res) => {
     userId: toU(req.params.userId),
   })
   const user = get(gqlRes, 'data.userById')
-  return res.render('Index', { ...formatData(req), user })
+  return res.render('pages/UserPage', { ...formatData(req), user })
 })
 
 app.get('/subjects/:subjectId/talk', async (req, res) => {
@@ -489,7 +529,7 @@ app.get('/subjects/:subjectId/talk', async (req, res) => {
   })
   const entity = get(gqlRes, 'data.subjectByEntityId')
   const topics = get(gqlRes, 'data.allTopics.nodes')
-  return res.render('Index', { ...formatData(req), entity, topics })
+  return res.render('pages/TalkPage', { ...formatData(req), entity, topics })
 })
 
 app.get('/(:kind-)?cards/:cardId/talk', async (req, res) => {
@@ -498,7 +538,7 @@ app.get('/(:kind-)?cards/:cardId/talk', async (req, res) => {
   })
   const entity = get(gqlRes, 'data.cardByEntityId')
   const topics = get(gqlRes, 'data.allTopics.nodes')
-  return res.render('Index', { ...formatData(req), entity, topics })
+  return res.render('pages/TalkPage', { ...formatData(req), entity, topics })
 })
 
 app.post(
@@ -533,22 +573,25 @@ app.post(
   }
 )
 
+app.get('/terms', (req, res) => res.render('pages/TermsPage', formatData(req)))
+
+app.get('/contact', (req, res) =>
+  res.render('pages/ContactPage', formatData(req))
+)
+
 app.get('/', async (req, res) => {
   const gqlRes = await GQL.learnHome(req)
   const subjects = get(gqlRes, 'data.selectPopularSubjects.nodes')
   const whatIs = get(gqlRes, 'data.whatIsSagefy')
   if (whatIs) subjects.unshift(whatIs)
-  return res.render('Index', { ...formatData(req), subjects })
+  return res.render('pages/HomePage', { ...formatData(req), subjects })
 })
 
-// For pages that don't have specific data requirements
-// and don't require being logged in or logged out:
-// GET /create-subject
-// GET /server-error
-// GET /terms
-// GET /contact
-// GET * (NotFound)
-app.get('*', handleRegular)
+app.get('/server-error', (req, res) =>
+  res.render('pages/ServerErrorPage', formatData(req))
+)
+
+app.get('*', (req, res) => res.render('pages/NotFoundPage', formatData(req)))
 
 // /////////////////////////////////////////////////////////////////////////////
 

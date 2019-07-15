@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { string, shape, arrayOf, number } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
@@ -135,9 +134,9 @@ export default function SubjectPage({
               <ListOfCards cards={cards.nodes} kind="UNSCORED_EMBED" />
             </ul>
             <p>
-              <Link to={`/create-card?subjectId=${to58(subjectEntityId)}`}>
+              <a href={`/create-card?subjectId=${to58(subjectEntityId)}`}>
                 <Icon i="card" /> Help us make some cards
-              </Link>
+              </a>
             </p>
           </section>
         )}

@@ -48,29 +48,27 @@ exports[`HomePage should render the home page 1`] = `
   >
     <p>
       <small>
-        <Link
-          replace={false}
-          to="/log-in"
+        <a
+          href="/log-in"
         >
           <Icon
             i="logIn"
             s="m"
           />
            Log In
-        </Link>
+        </a>
          
         or
          
-        <Link
-          replace={false}
-          to="/sign-up"
+        <a
+          href="/sign-up"
         >
           <Icon
             i="signUp"
             s="m"
           />
            Sign Up
-        </Link>
+        </a>
       </small>
     </p>
   </section>
@@ -183,9 +181,8 @@ exports[`HomePage should render the logged in home page 1`] = `
   >
     <p>
       <small>
-        <Link
-          replace={false}
-          to="/dashboard"
+        <a
+          href="/dashboard"
         >
           Go to 
           <Icon
@@ -193,7 +190,7 @@ exports[`HomePage should render the logged in home page 1`] = `
             s="m"
           />
            Dashboard
-        </Link>
+        </a>
       </small>
     </p>
   </section>

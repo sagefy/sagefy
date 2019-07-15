@@ -9,9 +9,8 @@ exports[`TermsPage should render the terms page 1`] = `
 >
   <header>
     <p>
-      <Link
-        replace={false}
-        to="/"
+      <a
+        href="/"
       >
         Go back 
         <Icon
@@ -19,7 +18,7 @@ exports[`TermsPage should render the terms page 1`] = `
           s="m"
         />
          home
-      </Link>
+      </a>
     </p>
     <h1>
       Terms & Privacy 

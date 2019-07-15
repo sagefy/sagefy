@@ -1,7 +1,6 @@
 import React from 'react'
 import { string, shape } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
-import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import ExternalLink from '../components/ExternalLink'
@@ -97,9 +96,9 @@ export default function CreatePageCardPage({
           <p>
             <em>
               Advice: We recommend{' '}
-              <Link to={`/sign-up?return=/create-card?subjectId=${subjectId}`}>
+              <a href={`/sign-up?return=/create-card?subjectId=${subjectId}`}>
                 joining
-              </Link>{' '}
+              </a>{' '}
               before you create content,
               <br />
               so you can easily continue later!

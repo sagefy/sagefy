@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { shape, string, instanceOf, arrayOf } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import ReactMarkdown from 'react-markdown'
@@ -21,12 +20,12 @@ function Post({ id, created, userId, userByUserId, sessionId, body }) {
       <td>
         <p>
           {userId ? (
-            <Link to={`/users/${to58(userId)}`}>
+            <a href={`/users/${to58(userId)}`}>
               <img
                 src={`https://www.gravatar.com/avatar/${md5Email}?d=mm&amp;s=80`}
                 alt="avatar"
               />
-            </Link>
+            </a>
           ) : (
             <img
               src={`https://www.gravatar.com/avatar/_?d=mm&amp;s=80`}
@@ -38,7 +37,7 @@ function Post({ id, created, userId, userByUserId, sessionId, body }) {
       <td>
         <p>
           {userId ? (
-            <Link to={`/users/${to58(userId)}`}>{userName}</Link>
+            <a href={`/users/${to58(userId)}`}>{userName}</a>
           ) : (
             <span>
               Ghost <code>{to58(sessionId).slice(0, 6)}</code>
@@ -171,15 +170,15 @@ export default function TalkPage({
           </p>
           <h1>
             Talk:{' '}
-            <Link
-              to={
+            <a
+              href={
                 cardKind
                   ? `/${clientizeKind(cardKind)}-cards/${to58(entityId)}`
                   : `/subjects/${to58(entityId)}`
               }
             >
               {entityName}
-            </Link>{' '}
+            </a>{' '}
             <Icon i="talk" s="h1" />
           </h1>
         </div>

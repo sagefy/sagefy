@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
@@ -14,9 +13,9 @@ export default function TermsPage({ hash }) {
     >
       <header>
         <p>
-          <Link to="/">
+          <a href="/">
             Go back <Icon i="home" /> home
-          </Link>
+          </a>
         </p>
         <h1>
           Terms &amp; Privacy <Icon i="terms" s="h1" />

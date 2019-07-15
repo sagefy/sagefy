@@ -25,30 +25,28 @@ exports[`LogInPage should render the LogInPage 1`] = `
     <p>
       Don't have an account?
        
-      <Link
-        replace={false}
-        to="/sign-up"
+      <a
+        href="/sign-up"
       >
         <Icon
           i="signUp"
           s="m"
         />
          Sign Up
-      </Link>
+      </a>
       .
       <br />
       Forgot your password?
        
-      <Link
-        replace={false}
-        to="/password"
+      <a
+        href="/password"
       >
         <Icon
           i="password"
           s="m"
         />
          Reset
-      </Link>
+      </a>
       .
     </p>
     <form

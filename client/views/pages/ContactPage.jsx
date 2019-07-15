@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
@@ -21,17 +20,17 @@ export default function ContactPage({ hash }) {
           <li>
             <strong>I have a problem with content.</strong>
             <br />
-            <Link to="/search">
+            <a href="/search">
               <Icon i="talk" /> Discuss it in the site
-            </Link>
+            </a>
             .
           </li>
           <li>
             <strong>I have an idea for content.</strong>
             <br />
-            <Link to="/create-subject">
+            <a href="/create-subject">
               <Icon i="subject" /> Create a new subject
-            </Link>
+            </a>
             .
           </li>
           <li>
@@ -60,9 +59,9 @@ export default function ContactPage({ hash }) {
           </li>
         </ul>
         <p>
-          <Link to="/">
+          <a href="/">
             Go back <Icon i="home" /> home
-          </Link>
+          </a>
         </p>
       </section>
     </Layout>

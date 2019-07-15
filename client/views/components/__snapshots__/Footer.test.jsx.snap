@@ -8,56 +8,52 @@ exports[`Footer component should render a footer 1`] = `
       className="ls-i"
     >
       <li>
-        <Link
-          replace={false}
-          to="/dashboard"
+        <a
+          href="/dashboard"
         >
           <Icon
             i="dashboard"
             s="s"
           />
            Dashboard
-        </Link>
+        </a>
       </li>
       <li>
-        <Link
-          replace={false}
-          to="/settings"
+        <a
+          href="/settings"
         >
           <Icon
             i="settings"
             s="s"
           />
            Settings
-        </Link>
+        </a>
       </li>
       <li>
-        <Link
-          replace={false}
-          to="/log-out"
+        <a
+          href="/log-out"
         >
           <Icon
             i="logOut"
             s="s"
           />
            Log Out
-        </Link>
+        </a>
       </li>
     </ul>
     <ul
       className="ls-i"
     >
       <li>
-        <Link
-          replace={false}
-          to="/"
+        <a
+          href="/"
         >
           <Icon
             i="home"
             s="s"
           />
            Home
-        </Link>
+        </a>
       </li>
       <li>
         <ExternalLink
@@ -93,28 +89,26 @@ exports[`Footer component should render a footer 1`] = `
         </ExternalLink>
       </li>
       <li>
-        <Link
-          replace={false}
-          to="/contact"
+        <a
+          href="/contact"
         >
           <Icon
             i="contact"
             s="s"
           />
            Contact
-        </Link>
+        </a>
       </li>
       <li>
-        <Link
-          replace={false}
-          to="/terms"
+        <a
+          href="/terms"
         >
           <Icon
             i="terms"
             s="s"
           />
            Privacy & Terms
-        </Link>
+        </a>
       </li>
     </ul>
     <p>

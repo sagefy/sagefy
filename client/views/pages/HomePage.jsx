@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { string, shape, arrayOf } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
@@ -42,13 +41,13 @@ export default function HomePage({ hash, role, subjects }) {
         <section className="ta-r">
           <p>
             <small>
-              <Link to="/log-in">
+              <a href="/log-in">
                 <Icon i="logIn" /> Log In
-              </Link>{' '}
+              </a>{' '}
               or{' '}
-              <Link to="/sign-up">
+              <a href="/sign-up">
                 <Icon i="signUp" /> Sign Up
-              </Link>
+              </a>
             </small>
           </p>
         </section>
@@ -56,9 +55,9 @@ export default function HomePage({ hash, role, subjects }) {
         <section className="ta-r">
           <p>
             <small>
-              <Link to="/dashboard">
+              <a href="/dashboard">
                 Go to <Icon i="dashboard" /> Dashboard
-              </Link>
+              </a>
             </small>
           </p>
         </section>

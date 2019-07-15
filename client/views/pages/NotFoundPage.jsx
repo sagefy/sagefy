@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
@@ -20,9 +19,9 @@ export default function NotFoundPage({ hash }) {
           <Icon i="error" /> 404 Not Found <Icon i="error" />{' '}
         </p>
         <p>
-          <Link to="/">
+          <a href="/">
             Go back <Icon i="home" /> home
-          </Link>
+          </a>
         </p>
       </section>
     </Layout>

@@ -42,9 +42,8 @@ exports[`ChooseStepPage should render ChooseStepPage 1`] = `
         </em>
          on second thought, let's go
          
-        <Link
-          replace={false}
-          to="/dashboard"
+        <a
+          href="/dashboard"
         >
           to the 
           <Icon
@@ -52,7 +51,7 @@ exports[`ChooseStepPage should render ChooseStepPage 1`] = `
             s="m"
           />
            Dashboard
-        </Link>
+        </a>
         .
       </small>
     </p>

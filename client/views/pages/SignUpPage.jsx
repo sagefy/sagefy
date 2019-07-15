@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { shape, string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
@@ -29,14 +28,14 @@ export default function SignUpPage({
 
         <p>
           Already have an account?{' '}
-          <Link to={redirect ? `/log-in?redirect=${redirect}` : '/log-in'}>
+          <a href={redirect ? `/log-in?redirect=${redirect}` : '/log-in'}>
             <Icon i="logIn" /> Log In
-          </Link>
+          </a>
           .<br />
           By signing up, you agree to our{' '}
-          <Link to="/terms">
+          <a href="/terms">
             <Icon i="terms" /> Terms of Service
-          </Link>
+          </a>
           .
         </p>
 

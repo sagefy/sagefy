@@ -21,16 +21,15 @@ exports[`ContactPage should render the contact page 1`] = `
           I have a problem with content.
         </strong>
         <br />
-        <Link
-          replace={false}
-          to="/search"
+        <a
+          href="/search"
         >
           <Icon
             i="talk"
             s="m"
           />
            Discuss it in the site
-        </Link>
+        </a>
         .
       </li>
       <li>
@@ -38,16 +37,15 @@ exports[`ContactPage should render the contact page 1`] = `
           I have an idea for content.
         </strong>
         <br />
-        <Link
-          replace={false}
-          to="/create-subject"
+        <a
+          href="/create-subject"
         >
           <Icon
             i="subject"
             s="m"
           />
            Create a new subject
-        </Link>
+        </a>
         .
       </li>
       <li>
@@ -100,9 +98,8 @@ exports[`ContactPage should render the contact page 1`] = `
       </li>
     </ul>
     <p>
-      <Link
-        replace={false}
-        to="/"
+      <a
+        href="/"
       >
         Go back 
         <Icon
@@ -110,7 +107,7 @@ exports[`ContactPage should render the contact page 1`] = `
           s="m"
         />
          home
-      </Link>
+      </a>
     </p>
   </section>
 </Layout>

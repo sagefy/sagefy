@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid, no-script-url */
 
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { string } from 'prop-types'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
@@ -22,9 +21,9 @@ export default function ServerErrorPage({ hash }) {
           <Icon i="error" /> 500 Server Error <Icon i="error" />{' '}
         </p>
         <p>
-          <Link to="/">
+          <a href="/">
             Go back <Icon i="home" /> home
-          </Link>{' '}
+          </a>{' '}
           &bull; You can also{' '}
           <a href="javascript:history.back()">
             <Icon i="left" /> go back

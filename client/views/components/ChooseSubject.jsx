@@ -1,6 +1,5 @@
 import React from 'react'
 import { arrayOf, shape, oneOf } from 'prop-types'
-import { Link } from 'react-router-dom'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import ReactMarkdown from 'react-markdown'
 import Icon from './Icon'
@@ -16,14 +15,14 @@ export default function ChooseSubject({ subjects, level }) {
       {subjects.map(({ entityId, name, body }, i) => (
         <tr key={`choose-subject-${entityId}`}>
           <td className="va-m ta-c">
-            <Link to={`/next?${level}=${to58(entityId)}`}>
+            <a href={`/next?${level}=${to58(entityId)}`}>
               <Icon i="select" s="h2" title={name} />
-            </Link>
+            </a>
           </td>
           <td className="my-c">
             <h3>
               <Wark when={i === 0 && subjects.length > 1}>
-                <Link to={`/next?${level}=${to58(entityId)}`}>{name}</Link>
+                <a href={`/next?${level}=${to58(entityId)}`}>{name}</a>
               </Wark>
             </h3>
             <ReactMarkdown

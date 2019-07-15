@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { shape, string } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from '../components/Layout'
@@ -39,7 +38,7 @@ export default function VideoCardPage({
         </div>
         <p>
           Belongs to subject{' '}
-          <Link to={`/subjects/${to58(subjectEntityId)}`}>{subjectName}</Link>
+          <a href={`/subjects/${to58(subjectEntityId)}`}>{subjectName}</a>
           {/* TODO breadcrumbs? */}
         </p>
         <form method="GET" action="/next">

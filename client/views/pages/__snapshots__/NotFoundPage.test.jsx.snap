@@ -28,9 +28,8 @@ exports[`NotFoundPage should render the not found page 1`] = `
        
     </p>
     <p>
-      <Link
-        replace={false}
-        to="/"
+      <a
+        href="/"
       >
         Go back 
         <Icon
@@ -38,7 +37,7 @@ exports[`NotFoundPage should render the not found page 1`] = `
           s="m"
         />
          home
-      </Link>
+      </a>
     </p>
   </section>
 </Layout>

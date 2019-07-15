@@ -1,6 +1,5 @@
 import React from 'react'
 import { string, shape, arrayOf } from 'prop-types'
-// import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 import Icon from '../components/Icon'
 import Footer from '../components/Footer'

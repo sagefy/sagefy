@@ -1,30 +1,9 @@
 import get from 'lodash.get'
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { string, shape, arrayOf } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Icon from './Icon'
-
-const CARD_KIND_NAME = {
-  CHOICE: 'Choice',
-  VIDEO: 'Video',
-  PAGE: 'Page',
-  UNSCORED_EMBED: 'Embed',
-}
-
-const CARD_KIND_ICON = {
-  CHOICE: 'choice',
-  VIDEO: 'video',
-  PAGE: 'page',
-  UNSCORED_EMBED: 'embed',
-}
-
-const CARD_KIND_URL = {
-  CHOICE: 'choice',
-  VIDEO: 'video',
-  PAGE: 'page',
-  UNSCORED_EMBED: 'unscored-embed',
-}
+import CARD_KIND from '../../util/card-kind'
 
 const cardsType = arrayOf(
   shape({
@@ -39,15 +18,17 @@ export default function ListOfCards({ cards, kind }) {
   return (
     <li>
       <h3>
-        {get(CARD_KIND_NAME, kind)}{' '}
-        <Icon i={get(CARD_KIND_ICON, kind)} s="h3" />
+        {get(CARD_KIND, [kind, 'name'])}{' '}
+        <Icon i={get(CARD_KIND, [kind, 'icon'])} s="h3" />
       </h3>
       <ul>
         {kCards.map(({ name, entityId }) => (
           <li>
-            <Link to={`/${get(CARD_KIND_URL, kind)}-cards/${to58(entityId)}`}>
+            <a
+              href={`/${get(CARD_KIND, [kind, 'url'])}-cards/${to58(entityId)}`}
+            >
               {name}
-            </Link>
+            </a>
           </li>
         ))}
       </ul>
