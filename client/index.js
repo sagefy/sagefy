@@ -194,10 +194,7 @@ app.post('/learn-choice/:cardId', async (req, res) => {
     response: req.body.choice,
   })
   const progress = get(gqlRes2, 'data.createResponse.response.learned')
-  return res.render('LearnChoicePage', {
-    card,
-    progress,
-  })
+  return res.render('LearnChoicePage', { card, progress })
 })
 
 app.get('/sign-up', isAnonymous, (req, res) => res.render('SignUpPage'))
@@ -256,20 +253,14 @@ app.post('/email', async (req, res) => {
     )
     const gqlErrors = getGqlErrors(gqlRes)
     if (Object.keys(gqlErrors).length) {
-      return res.render('EmailPage', {
-        gqlErrors,
-        state: 2,
-      })
+      return res.render('EmailPage', { gqlErrors, state: 2 })
     }
     return res.redirect('/log-in')
   }
   const gqlRes = await GQL.rootNewEmailToken(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('EmailPage', {
-      gqlErrors,
-      state: 0,
-    })
+    return res.render('EmailPage', { gqlErrors, state: 0 })
   }
   return res.redirect('/email?state=1')
 })
@@ -290,20 +281,14 @@ app.post('/password', async (req, res) => {
     )
     const gqlErrors = getGqlErrors(gqlRes)
     if (Object.keys(gqlErrors).length) {
-      return res.render('PasswordPage', {
-        gqlErrors,
-        state: 2,
-      })
+      return res.render('PasswordPage', { gqlErrors, state: 2 })
     }
     return res.redirect('/log-in')
   }
   const gqlRes = await GQL.rootNewPasswordToken(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('PasswordPage', {
-      gqlErrors,
-      state: 0,
-    })
+    return res.render('PasswordPage', { gqlErrors, state: 0 })
   }
   return res.redirect('/password?state=1')
 })
@@ -350,9 +335,7 @@ app.post('/create-subject', async (req, res) => {
   const gqlRes = await GQL.contributeNewSubject(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
   if (Object.keys(gqlErrors).length) {
-    return res.render('CreateSubjectPage', {
-      gqlErrors,
-    })
+    return res.render('CreateSubjectPage', { gqlErrors })
   }
   const role = getRole(req)
   const { entityId, name } = get(gqlRes, 'data.newSubject.subjectVersion', {})
