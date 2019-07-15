@@ -34,6 +34,7 @@ returns sg_public.subject_version as $$
     select xversion_id, unnest(before);
     return xsubject_version;
   end;
+$$ language plpgsql strict security definer;
 comment on function sg_public.update_subject(
   uuid,
   text,
