@@ -1,30 +1,38 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import { shape, string } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
 
-export default function UnscoredEmbedCardPage({
+function getVideoUrl(site, video_id) {
+  if (site === 'youtube')
+    return `https://www.youtube.com/embed/${video_id}?autoplay=1&amp;modestbranding=1&amp;rel=0`
+  if (site === 'vimeo') return `https://player.vimeo.com/video/${video_id}`
+  return 'https://example.com'
+}
+
+export default function VideoCardPage({
   hash,
   card: {
     entityId: cardEntityId,
     name: cardName,
-    data: { url },
+    data: { site, video_id },
     subject: { name: subjectName, entityId: subjectEntityId },
   },
 }) {
   return (
     <Layout
       hash={hash}
-      page="UnscoredEmbedCardPage"
+      page="VideoCardPage"
       title={`Card: ${cardName}`}
       description="-"
     >
       <header>
         <div className="my-c">
           <p>
-            Embed Card <Icon i="card" />
-            <Icon i="embed" />
+            Video Card <Icon i="card" />
+            <Icon i="video" />
           </p>
           <h1>{cardName}</h1>
         </div>
@@ -43,7 +51,7 @@ export default function UnscoredEmbedCardPage({
           <ul className="ls-i ta-r">
             {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
             <li>
-              <a href={`/embed-cards/${to58(cardEntityId)}/talk`}>
+              <a href={`/video-cards/${to58(cardEntityId)}/talk`}>
                 <Icon i="talk" s="s" /> Talk
               </a>
             </li>
@@ -55,13 +63,19 @@ export default function UnscoredEmbedCardPage({
       </header>
 
       <section>
-        <iframe src={url} width="600" height="400" title={cardName} />
+        <iframe
+          src={getVideoUrl(site, video_id)}
+          width="600"
+          height="400"
+          allowFullScreen="true"
+          title={cardName}
+        />
       </section>
     </Layout>
   )
 }
 
-UnscoredEmbedCardPage.propTypes = {
+VideoCardPage.propTypes = {
   hash: string.isRequired,
   card: shape({
     name: string.isRequired,

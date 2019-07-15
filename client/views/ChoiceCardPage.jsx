@@ -1,38 +1,31 @@
-/* eslint-disable camelcase */
 import React from 'react'
 import { shape, string } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
+import ReactMarkdown from 'react-markdown'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
 
-function getVideoUrl(site, video_id) {
-  if (site === 'youtube')
-    return `https://www.youtube.com/embed/${video_id}?autoplay=1&amp;modestbranding=1&amp;rel=0`
-  if (site === 'vimeo') return `https://player.vimeo.com/video/${video_id}`
-  return 'https://example.com'
-}
-
-export default function VideoCardPage({
+export default function ChoiceCardPage({
   hash,
   card: {
     entityId: cardEntityId,
     name: cardName,
-    data: { site, video_id },
+    data: { body, options },
     subject: { name: subjectName, entityId: subjectEntityId },
   },
 }) {
   return (
     <Layout
       hash={hash}
-      page="VideoCardPage"
+      page="ChoiceCardPage"
       title={`Card: ${cardName}`}
       description="-"
     >
       <header>
         <div className="my-c">
           <p>
-            Video Card <Icon i="card" />
-            <Icon i="video" />
+            Choice Card <Icon i="card" />
+            <Icon i="choice" />
           </p>
           <h1>{cardName}</h1>
         </div>
@@ -51,7 +44,7 @@ export default function VideoCardPage({
           <ul className="ls-i ta-r">
             {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
             <li>
-              <a href={`/video-cards/${to58(cardEntityId)}/talk`}>
+              <a href={`/choice-cards/${to58(cardEntityId)}/talk`}>
                 <Icon i="talk" s="s" /> Talk
               </a>
             </li>
@@ -63,19 +56,28 @@ export default function VideoCardPage({
       </header>
 
       <section>
-        <iframe
-          src={getVideoUrl(site, video_id)}
-          width="600"
-          height="400"
-          allowFullScreen="true"
-          title={cardName}
-        />
+        <div alt={cardName}>
+          <ReactMarkdown source={body} />
+        </div>
+        <ul>
+          {Object.entries(options).map(
+            ([key, { value, correct, feedback }]) => (
+              <li key={key}>
+                {value}
+                <br />
+                <mark className={correct ? 'good' : ''}>
+                  {correct ? <Icon i="check" /> : <Icon i="error" />} {feedback}
+                </mark>
+              </li>
+            )
+          )}
+        </ul>
       </section>
     </Layout>
   )
 }
 
-VideoCardPage.propTypes = {
+ChoiceCardPage.propTypes = {
   hash: string.isRequired,
   card: shape({
     name: string.isRequired,

@@ -1,9 +1,9 @@
 import React from 'react'
 import { shape, string, instanceOf, arrayOf } from 'prop-types'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
-import ListOfSubjects from '../components/ListOfSubjects'
-import ListOfCards from '../components/ListOfCards'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
+import ListOfSubjects from './components/ListOfSubjects'
+import ListOfCards from './components/ListOfCards'
 
 export default function UserPage({
   hash,

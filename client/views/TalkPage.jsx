@@ -3,11 +3,11 @@ import { shape, string, instanceOf, arrayOf } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import ReactMarkdown from 'react-markdown'
 import TimeAgo from 'timeago-react'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
-import FormErrorsTop from '../components/FormErrorsTop'
-import FormErrorsField from '../components/FormErrorsField'
-import Footer from '../components/Footer'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
+import FormErrorsTop from './components/FormErrorsTop'
+import FormErrorsField from './components/FormErrorsField'
+import Footer from './components/Footer'
 
 function clientizeKind(s) {
   return s.toLowerCase().replace(/_/g, '-')

@@ -3,11 +3,11 @@ import React from 'react'
 import { string, shape } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import get from 'lodash.get'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
-import ExternalLink from '../components/ExternalLink'
-import FormErrorsTop from '../components/FormErrorsTop'
-import FormErrorsField from '../components/FormErrorsField'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
+import ExternalLink from './components/ExternalLink'
+import FormErrorsTop from './components/FormErrorsTop'
+import FormErrorsField from './components/FormErrorsField'
 
 export default function CreateChoiceCardPage({
   hash,

@@ -1,8 +1,8 @@
 import React from 'react'
 import { string, shape } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
 
 export default function CreateCardPage({
   role,

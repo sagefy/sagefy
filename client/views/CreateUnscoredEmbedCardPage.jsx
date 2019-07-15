@@ -1,37 +1,36 @@
 import React from 'react'
 import { string, shape } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
-import ExternalLink from '../components/ExternalLink'
-import FormErrorsTop from '../components/FormErrorsTop'
-import FormErrorsField from '../components/FormErrorsField'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
+import FormErrorsTop from './components/FormErrorsTop'
+import FormErrorsField from './components/FormErrorsField'
 
-export default function CreatePageCardPage({
+export default function CreateUnscoredEmbedCardPage({
   hash,
   role,
   query: { subjectId },
   subject: { name: subjectName, body: subjectBody },
-  body: { name, data$body },
+  body: { name, data$url },
   gqlErrors,
 }) {
   return (
     <Layout
       hash={hash}
-      page="CreatePageCardPage"
-      title={`Create a choice page for ${subjectName}`}
-      description={`Help us build Sagefy by making a written document page card for ${subjectName}.`}
+      page="CreateUnscoredEmbedCardPage"
+      title={`Create an embed card for ${subjectName}`}
+      description={`Help us build Sagefy by making a embed card for ${subjectName}.`}
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
       <header className="my-c">
         <p>
           <em>
-            Great, a page card! <Icon i="page" />
+            Great, an embed card! <Icon i="embed" />
           </em>
         </p>
         <h1 className="d-ib">
-          Make a new page card <Icon i="card" s="h1" />
+          Make a new embed card <Icon i="card" s="h1" />
         </h1>
         <details>
           <summary>
@@ -45,47 +44,39 @@ export default function CreatePageCardPage({
       <section>
         <form method="POST">
           <input type="hidden" name="subjectId" value={subjectId} />
-          <input type="hidden" name="kind" value="PAGE" />
+          <input type="hidden" name="kind" value="UNSCORED_EMBED" />
           <p>
             <label htmlFor="name">What should we call this new card?</label>
             <input
               type="text"
               value={name}
-              placeholder="example: The parts of a guitar"
+              placeholder="example: Label the guitar parts"
               size="40"
               id="name"
               name="name"
               autoFocus
             />
-            <br />
-            <small>
-              This field will appear as an <code>h1</code>.
-            </small>
           </p>
           <FormErrorsField formErrors={gqlErrors} field="name" />
           <p>
-            <label htmlFor="data$body">Write your page</label>
-            <textarea
-              value={data$body}
-              placeholder="example: A guitar has six strings, a headstock, a nut, frets, a neck, a body, a bridge, a sound hole..."
-              id="data$body"
-              name="data$body"
-              className="w-100"
-              rows="8"
+            <label htmlFor="data$url">Where is the embed?</label>
+            <input
+              type="url"
+              value={data$url}
+              placeholder="example: https://sgfy.xyz/ampvol"
+              size="40"
+              id="data$url"
+              name="data$url"
             />
             <br />
             <small>
-              This field allows{' '}
-              <ExternalLink href="https://www.markdownguide.org/cheat-sheet">
-                Markdown
-              </ExternalLink>{' '}
-              format.
+              We include the embed as <code>600x400</code>.
             </small>
           </p>
-          <FormErrorsField formErrors={gqlErrors} field="data$body" />
+          <FormErrorsField formErrors={gqlErrors} field="data$url" />
           <p>
             <button type="submit">
-              <Icon i="page" /> Create Page Card
+              <Icon i="embed" /> Create Embed Card
             </button>
           </p>
         </form>
@@ -110,7 +101,7 @@ export default function CreatePageCardPage({
   )
 }
 
-CreatePageCardPage.propTypes = {
+CreateUnscoredEmbedCardPage.propTypes = {
   hash: string.isRequired,
   role: string,
   query: shape({
@@ -122,12 +113,12 @@ CreatePageCardPage.propTypes = {
   }).isRequired,
   body: shape({
     name: string,
-    data$body: string,
+    data$url: string,
   }),
   gqlErrors: shape({}),
 }
 
-CreatePageCardPage.defaultProps = {
+CreateUnscoredEmbedCardPage.defaultProps = {
   role: 'sg_anonymous',
   query: {
     subjectId: '',
@@ -136,7 +127,7 @@ CreatePageCardPage.defaultProps = {
   },
   body: {
     name: '',
-    data$body: '',
+    data$url: '',
   },
   gqlErrors: {},
 }

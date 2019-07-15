@@ -3,8 +3,8 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import { string, number, shape, objectOf, bool } from 'prop-types'
 import { shuffle } from 'shuffle-seed'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
 
 export default function LearnChoicePage({
   hash,

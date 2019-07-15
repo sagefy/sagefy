@@ -2,8 +2,8 @@
 
 import React from 'react'
 import { string, shape, number } from 'prop-types'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
 
 function getVideoUrl(site, video_id) {
   if (site === 'youtube')

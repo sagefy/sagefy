@@ -1,37 +1,37 @@
-/* eslint-disable camelcase */
 import React from 'react'
 import { string, shape } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
-import FormErrorsTop from '../components/FormErrorsTop'
-import FormErrorsField from '../components/FormErrorsField'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
+import ExternalLink from './components/ExternalLink'
+import FormErrorsTop from './components/FormErrorsTop'
+import FormErrorsField from './components/FormErrorsField'
 
-export default function CreateVideoCardPage({
+export default function CreatePageCardPage({
   hash,
   role,
   query: { subjectId },
   subject: { name: subjectName, body: subjectBody },
-  body: { name, data$video_id },
+  body: { name, data$body },
   gqlErrors,
 }) {
   return (
     <Layout
       hash={hash}
-      page="CreateVideoCardPage"
-      title={`Create a video card for ${subjectName}`}
-      description={`Help us build Sagefy by making a video card for ${subjectName}.`}
+      page="CreatePageCardPage"
+      title={`Create a choice page for ${subjectName}`}
+      description={`Help us build Sagefy by making a written document page card for ${subjectName}.`}
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
       <header className="my-c">
         <p>
           <em>
-            Great, a video card! <Icon i="video" />
+            Great, a page card! <Icon i="page" />
           </em>
         </p>
         <h1 className="d-ib">
-          Make a new video card <Icon i="card" s="h1" />
+          Make a new page card <Icon i="card" s="h1" />
         </h1>
         <details>
           <summary>
@@ -45,63 +45,47 @@ export default function CreateVideoCardPage({
       <section>
         <form method="POST">
           <input type="hidden" name="subjectId" value={subjectId} />
-          <input type="hidden" name="kind" value="VIDEO" />
+          <input type="hidden" name="kind" value="PAGE" />
           <p>
             <label htmlFor="name">What should we call this new card?</label>
             <input
               type="text"
               value={name}
-              placeholder="example: A clip on guitar anatomy"
+              placeholder="example: The parts of a guitar"
               size="40"
               id="name"
               name="name"
               autoFocus
             />
+            <br />
+            <small>
+              This field will appear as an <code>h1</code>.
+            </small>
           </p>
           <FormErrorsField formErrors={gqlErrors} field="name" />
           <p>
-            <label htmlFor="data$video_id">
-              What is the site and ID of the video?
-            </label>
-            <table>
-              <tr>
-                <td>
-                  <label>
-                    <input
-                      type="radio"
-                      name="data.site"
-                      value="youtube"
-                      defaultChecked
-                    />{' '}
-                    <code>https://youtube.com/watch?v=</code>
-                  </label>
-                </td>
-                <td rowSpan="2">
-                  <input
-                    type="text"
-                    value={data$video_id}
-                    size="15"
-                    id="data$video_id"
-                    name="data$video_id"
-                    placeholder="ex: Gi99QbiSuWs"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label>
-                    <input type="radio" name="data.site" value="vimeo" />{' '}
-                    <code>https://vimeo.com/</code>
-                  </label>
-                </td>
-              </tr>
-            </table>
-            <small>We recommend videos no longer than five minutes.</small>
+            <label htmlFor="data$body">Write your page</label>
+            <textarea
+              value={data$body}
+              placeholder="example: A guitar has six strings, a headstock, a nut, frets, a neck, a body, a bridge, a sound hole..."
+              id="data$body"
+              name="data$body"
+              className="w-100"
+              rows="8"
+            />
+            <br />
+            <small>
+              This field allows{' '}
+              <ExternalLink href="https://www.markdownguide.org/cheat-sheet">
+                Markdown
+              </ExternalLink>{' '}
+              format.
+            </small>
           </p>
-          <FormErrorsField formErrors={gqlErrors} field="data$video_id" />
+          <FormErrorsField formErrors={gqlErrors} field="data$body" />
           <p>
             <button type="submit">
-              <Icon i="video" /> Create Video Card
+              <Icon i="page" /> Create Page Card
             </button>
           </p>
         </form>
@@ -126,7 +110,7 @@ export default function CreateVideoCardPage({
   )
 }
 
-CreateVideoCardPage.propTypes = {
+CreatePageCardPage.propTypes = {
   hash: string.isRequired,
   role: string,
   query: shape({
@@ -138,12 +122,12 @@ CreateVideoCardPage.propTypes = {
   }).isRequired,
   body: shape({
     name: string,
-    data$video_id: string,
+    data$body: string,
   }),
   gqlErrors: shape({}),
 }
 
-CreateVideoCardPage.defaultProps = {
+CreatePageCardPage.defaultProps = {
   role: 'sg_anonymous',
   query: {
     subjectId: '',
@@ -152,7 +136,7 @@ CreateVideoCardPage.defaultProps = {
   },
   body: {
     name: '',
-    data$video_id: '',
+    data$body: '',
   },
   gqlErrors: {},
 }

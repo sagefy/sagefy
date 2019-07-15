@@ -1,8 +1,8 @@
 import React from 'react'
 import { string } from 'prop-types'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
-import ExternalLink from '../components/ExternalLink'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
+import ExternalLink from './components/ExternalLink'
 
 export default function ContactPage({ hash }) {
   return (

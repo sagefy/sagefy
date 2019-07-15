@@ -1,10 +1,10 @@
 import React from 'react'
 import { string, shape, arrayOf } from 'prop-types'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
-import Footer from '../components/Footer'
-import ExternalLink from '../components/ExternalLink'
-import ChooseSubject from '../components/ChooseSubject'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
+import Footer from './components/Footer'
+import ExternalLink from './components/ExternalLink'
+import ChooseSubject from './components/ChooseSubject'
 
 export default function HomePage({ hash, role, subjects }) {
   return (

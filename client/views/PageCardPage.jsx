@@ -2,8 +2,8 @@ import React from 'react'
 import { shape, string } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import ReactMarkdown from 'react-markdown'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
 
 export default function PageCardPage({
   hash,

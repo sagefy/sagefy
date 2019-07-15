@@ -1,10 +1,10 @@
 import React from 'react'
 import { string, shape, arrayOf } from 'prop-types'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
-import Footer from '../components/Footer'
-import ChooseSubject from '../components/ChooseSubject'
-import CardSubjectInfo from '../components/CardSubjectInfo'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
+import Footer from './components/Footer'
+import ChooseSubject from './components/ChooseSubject'
+import CardSubjectInfo from './components/CardSubjectInfo'
 
 export default function DashboardPage({ role, subjects, name, hash }) {
   return (

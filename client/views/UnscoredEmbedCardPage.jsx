@@ -1,31 +1,30 @@
 import React from 'react'
 import { shape, string } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
-import ReactMarkdown from 'react-markdown'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
 
-export default function ChoiceCardPage({
+export default function UnscoredEmbedCardPage({
   hash,
   card: {
     entityId: cardEntityId,
     name: cardName,
-    data: { body, options },
+    data: { url },
     subject: { name: subjectName, entityId: subjectEntityId },
   },
 }) {
   return (
     <Layout
       hash={hash}
-      page="ChoiceCardPage"
+      page="UnscoredEmbedCardPage"
       title={`Card: ${cardName}`}
       description="-"
     >
       <header>
         <div className="my-c">
           <p>
-            Choice Card <Icon i="card" />
-            <Icon i="choice" />
+            Embed Card <Icon i="card" />
+            <Icon i="embed" />
           </p>
           <h1>{cardName}</h1>
         </div>
@@ -44,7 +43,7 @@ export default function ChoiceCardPage({
           <ul className="ls-i ta-r">
             {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
             <li>
-              <a href={`/choice-cards/${to58(cardEntityId)}/talk`}>
+              <a href={`/embed-cards/${to58(cardEntityId)}/talk`}>
                 <Icon i="talk" s="s" /> Talk
               </a>
             </li>
@@ -56,28 +55,13 @@ export default function ChoiceCardPage({
       </header>
 
       <section>
-        <div alt={cardName}>
-          <ReactMarkdown source={body} />
-        </div>
-        <ul>
-          {Object.entries(options).map(
-            ([key, { value, correct, feedback }]) => (
-              <li key={key}>
-                {value}
-                <br />
-                <mark className={correct ? 'good' : ''}>
-                  {correct ? <Icon i="check" /> : <Icon i="error" />} {feedback}
-                </mark>
-              </li>
-            )
-          )}
-        </ul>
+        <iframe src={url} width="600" height="400" title={cardName} />
       </section>
     </Layout>
   )
 }
 
-ChoiceCardPage.propTypes = {
+UnscoredEmbedCardPage.propTypes = {
   hash: string.isRequired,
   card: shape({
     name: string.isRequired,

@@ -1,8 +1,8 @@
 import React from 'react'
 import { string, shape } from 'prop-types'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
-import CreateSubject from '../components/CreateSubject'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
+import CreateSubject from './components/CreateSubject'
 
 export default function CreateSubjectPage({
   hash,

@@ -1,8 +1,8 @@
 import React from 'react'
 import { arrayOf, shape, string } from 'prop-types'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
-import ChooseSubject from '../components/ChooseSubject'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
+import ChooseSubject from './components/ChooseSubject'
 
 export default function ChooseNextPage({ hash, subjects, role }) {
   return (

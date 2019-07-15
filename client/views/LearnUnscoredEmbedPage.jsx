@@ -1,7 +1,7 @@
 import React from 'react'
 import { number, string, shape } from 'prop-types'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
 
 export default function LearnUnscoredEmbedPage({
   hash,

@@ -1,9 +1,9 @@
 import React from 'react'
 import { shape, string } from 'prop-types'
-import Layout from '../components/Layout'
-import Icon from '../components/Icon'
-import FormErrorsTop from '../components/FormErrorsTop'
-import FormErrorsField from '../components/FormErrorsField'
+import Layout from './components/Layout'
+import Icon from './components/Icon'
+import FormErrorsTop from './components/FormErrorsTop'
+import FormErrorsField from './components/FormErrorsField'
 
 export default function SettingsPage({ hash, gqlErrors, body: { id, name } }) {
   return (
