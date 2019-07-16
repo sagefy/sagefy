@@ -137,16 +137,9 @@ app.get('/sitemap.txt', async (req, res) => {
   const subjects = get(gqlRes, 'data.allSubjects.nodes', []).map(
     ({ entityId }) => `/subjects/${to58(entityId)}`
   )
-  const subjectTalk = get(gqlRes, 'data.allSubjects.nodes', []).map(
-    ({ entityId }) => `/subjects/${to58(entityId)}/talk`
-  )
   const cards = get(gqlRes, 'data.allCards.nodes', []).map(
     ({ entityId, kind }) =>
       `/${get(CARD_KIND, [kind, 'url'])}-cards/${to58(entityId)}`
-  )
-  const cardTalk = get(gqlRes, 'data.allCards.nodes', []).map(
-    ({ entityId, kind }) =>
-      `/${get(CARD_KIND, [kind, 'url'])}-cards/${to58(entityId)}/talk`
   )
   const users = get(gqlRes, 'data.allUsers.nodes', []).map(
     ({ id }) => `/users/${to58(id)}`
@@ -155,9 +148,7 @@ app.get('/sitemap.txt', async (req, res) => {
     process.env.NODE_ENV === 'production' ? 'https://sagefy.org' : 'localhost'
   res.set('Content-Type', 'text/plain').send(
     ROOT_PAGES.concat(subjects)
-      .concat(subjectTalk)
       .concat(cards)
-      .concat(cardTalk)
       .concat(users)
       .map(u => `${root}${u}`)
       .join('\n')
@@ -346,7 +337,7 @@ app.post('/create-subject', async (req, res) => {
   return res.redirect('/dashboard')
 })
 
-app.get('/edit-subject/:subjectId', async (req, res) => {
+app.get('/subjects/:subjectId/edit', async (req, res) => {
   const subjGqlRes = await GQL.contributeGetSubject(req, {
     entityId: toU(req.params.subjectId),
   })
@@ -355,7 +346,7 @@ app.get('/edit-subject/:subjectId', async (req, res) => {
   return res.render('EditSubjectPage', { subject })
 })
 
-app.post('/edit-subject/:subjectId', async (req, res) => {
+app.post('/subjects/:subjectId/edit', async (req, res) => {
   const subjGqlRes = await GQL.contributeGetSubject(req, {
     entityId: toU(req.params.subjectId),
   })

@@ -67,7 +67,7 @@ export default function EditSubjectPage({
             <p>
               <em>
                 Advice: We recommend{' '}
-                <a href={`/sign-up?return=/edit-subject/${to58(entityId)}`}>
+                <a href={`/sign-up?return=/subjects/${to58(entityId)}/edit`}>
                   joining
                 </a>{' '}
                 before you edit content,

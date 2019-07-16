@@ -92,7 +92,7 @@ export default function SubjectPage({
                 </a>
               </li>
               <li>
-                <a href={`/edit-subject/${to58(subjectEntityId)}`}>
+                <a href={`/subjects/${to58(subjectEntityId)}/edit`}>
                   <Icon i="edit" s="s" /> Edit
                 </a>
               </li>
