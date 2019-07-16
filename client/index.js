@@ -155,6 +155,7 @@ app.get('/sitemap.txt', async (req, res) => {
   )
 }) // Add more public routes as they are available
 
+// TODO change to /:kind-cards/:cardId/learn
 app.get('/learn-:kind/:cardId', async (req, res) => {
   const gqlRes = await GQL.learnGetCard(req, {
     cardId: toU(req.params.cardId),
@@ -171,6 +172,7 @@ app.get('/learn-:kind/:cardId', async (req, res) => {
   })
 })
 
+// TODO change to /:kind-cards/:cardId/learn
 app.post('/learn-choice/:cardId', async (req, res) => {
   const gqlRes = await GQL.learnGetCard(req, {
     cardId: toU(req.params.cardId),
@@ -314,14 +316,17 @@ app.get('/dashboard', isUser, async (req, res) => {
   return res.render('DashboardPage', { subjects, name })
 })
 
+// TODO change to /subjects/search
 app.get('/search-subjects', async (req, res) => {
   const gqlRes = await GQL.learnSearchSubject(req, req.query)
   const subjects = get(gqlRes, 'data.searchSubjects.nodes')
   return res.render('SearchSubjectsPage', { subjects })
 })
 
+// TODO change to /subjects/create
 app.get('/create-subject', (req, res) => res.render('CreateSubjectPage'))
 
+// TODO change to /subjects/create
 app.post('/create-subject', async (req, res) => {
   const gqlRes = await GQL.contributeNewSubject(req, req.body)
   const gqlErrors = getGqlErrors(gqlRes)
@@ -370,6 +375,7 @@ app.post('/subjects/:subjectId/edit', async (req, res) => {
   return res.redirect(`/subjects/${req.params.subjectId}`)
 })
 
+// TODO change to /(:kind-)?cards/create
 app.get('/create(-:kind)?-card', async (req, res) => {
   if (!req.query.subjectId) res.redirect('/')
   const subjGqlRes = await GQL.contributeGetSubject(req, {
@@ -383,6 +389,7 @@ app.get('/create(-:kind)?-card', async (req, res) => {
   )
 })
 
+// TODO change to /(:kind-)?cards/create
 app.post('/create(-:kind)?-card', async (req, res) => {
   const values = convertBodyToVars(req.body)
   values.subjectId = toU(values.subjectId)
@@ -415,6 +422,7 @@ app.post('/create(-:kind)?-card', async (req, res) => {
   return res.redirect(`/next?step=${req.cookies.step}`)
 })
 
+// TODO update url?
 app.get('/choose-step', async (req, res) => {
   const role = getRole(req)
   const { goal } = req.cookies
