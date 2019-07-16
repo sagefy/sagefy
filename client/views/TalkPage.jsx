@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import { shape, string, instanceOf, arrayOf } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
@@ -165,8 +166,9 @@ export default function TalkPage({
       <header>
         <div className="my-c">
           <p>
-            {cardKind ? 'Card' : 'Subject'}{' '}
+            {cardKind ? 'Card' : 'Subject'} Talk{' '}
             <Icon i={cardKind ? 'card' : 'subject'} />
+            <Icon i="talk" />
           </p>
           <h1>
             Talk:{' '}
@@ -178,8 +180,7 @@ export default function TalkPage({
               }
             >
               {entityName}
-            </a>{' '}
-            <Icon i="talk" s="h1" />
+            </a>
           </h1>
         </div>
         <small>
@@ -188,8 +189,28 @@ export default function TalkPage({
             <li>
               <Icon i="talk" s="s" /> Talk
             </li>
-            {/* <li><a href="/mocks/history">🎢 History</a></li> */}
-            {/* <li><a href="/mocks/update-subject">🌳 Edit</a></li> */}
+            {!cardKind && (
+              <li>
+                <a
+                  href={`/${cardKind ? 'cards' : 'subjects'}/${to58(
+                    entityId
+                  )}/history`}
+                >
+                  <Icon i="history" s="s" /> History
+                </a>
+              </li>
+            )}
+            {!cardKind && (
+              <li>
+                <a
+                  href={`/edit-${cardKind ? 'card' : 'subject'}/${to58(
+                    entityId
+                  )}`}
+                >
+                  <Icon i="edit" s="s" /> Edit
+                </a>
+              </li>
+            )}
           </ul>
         </small>
       </header>

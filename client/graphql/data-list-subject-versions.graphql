@@ -1,0 +1,28 @@
+query dataListSubjectVersions($entityId: UUID!) {
+  subjectByEntityId(entityId: $entityId) {
+    entityId
+    name
+  }
+
+  allSubjectVersions(
+    condition: { entityId: $entityId }
+    orderBy: CREATED_DESC
+  ) {
+    nodes {
+      versionId
+      previousVersionId
+      created
+      userByUserId {
+        id
+        name
+      }
+      sessionId
+      status
+      name
+      body
+      details
+      # parent/child
+      # before/after
+    }
+  }
+}

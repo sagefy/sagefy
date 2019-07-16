@@ -501,6 +501,15 @@ app.get('/subjects/:subjectId', async (req, res) => {
   return res.render('SubjectPage', { subject })
 })
 
+app.get('/subjects/:subjectId/history', async (req, res) => {
+  const gqlRes = await GQL.dataListSubjectVersions(req, {
+    entityId: toU(req.params.subjectId),
+  })
+  const subject = get(gqlRes, 'data.subjectByEntityId')
+  const versions = get(gqlRes, 'data.allSubjectVersions.nodes')
+  return res.render('SubjectHistoryPage', { subject, versions })
+})
+
 app.get('/(:kind-)?cards/:cardId', async (req, res) => {
   const gqlRes = await GQL.dataGetCard(req, {
     cardId: toU(req.params.cardId),

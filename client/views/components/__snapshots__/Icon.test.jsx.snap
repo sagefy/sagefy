@@ -2,7 +2,7 @@
 
 exports[`Icon component should render an icon 1`] = `
 <i
-  className="Icon icon-home"
+  className="Icon"
 >
   <Home
     color="currentColor"
@@ -13,7 +13,7 @@ exports[`Icon component should render an icon 1`] = `
 
 exports[`Icon component should render an icon with default size 1`] = `
 <i
-  className="Icon icon-home"
+  className="Icon"
 >
   <Home
     color="currentColor"

@@ -2869,6 +2869,13 @@ ALTER TABLE ONLY sg_public.user_subject
 
 
 --
+-- Name: card_version_created_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX card_version_created_idx ON sg_public.card_version USING btree (created);
+
+
+--
 -- Name: card_version_entity_id_idx; Type: INDEX; Schema: sg_public; Owner: -
 --
 
@@ -2971,6 +2978,13 @@ CREATE INDEX subject_version_before_after_after_version_id_idx ON sg_public.subj
 --
 
 CREATE INDEX subject_version_before_after_before_entity_id_idx ON sg_public.subject_version_before_after USING btree (before_entity_id);
+
+
+--
+-- Name: subject_version_created_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX subject_version_created_idx ON sg_public.subject_version USING btree (created);
 
 
 --
@@ -3814,4 +3828,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190524205800'),
     ('20190529204020'),
     ('20190606175104'),
-    ('20190715015859');
+    ('20190715015859'),
+    ('20190716223347');

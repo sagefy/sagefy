@@ -86,7 +86,11 @@ export default function SubjectPage({
                   <Icon i="talk" s="s" /> Talk
                 </a>
               </li>
-              {/* <li><a href="/mocks/history">🎢 History</a></li> */}
+              <li>
+                <a href={`/subjects/${to58(subjectEntityId)}/history`}>
+                  <Icon i="history" s="s" /> History
+                </a>
+              </li>
               <li>
                 <a href={`/edit-subject/${to58(subjectEntityId)}`}>
                   <Icon i="edit" s="s" /> Edit

@@ -38,6 +38,7 @@ import {
   MessageSquare,
   AlignLeft,
   Edit,
+  Calendar,
 } from 'react-feather'
 import get from 'lodash.get'
 
@@ -106,6 +107,7 @@ const MAP = {
   left: ArrowLeft,
   cheer: ThumbsUp,
   edit: Edit,
+  history: Calendar,
 
   // page specific
   adapt: Share2, // home
@@ -125,7 +127,7 @@ const SIZES = {
 
 export default function Icon({ i, s = 'm', ...props }) {
   return (
-    <i className={`Icon icon-${i}`} {...props}>
+    <i className="Icon" {...props}>
       {React.createElement(get(MAP, i, Target), {
         size: get(SIZES, s),
         /* Set in CSS instead */
