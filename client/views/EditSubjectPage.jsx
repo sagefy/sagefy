@@ -70,7 +70,7 @@ export default function EditSubjectPage({
                 <a href={`/sign-up?return=/edit-subject/${to58(entityId)}`}>
                   joining
                 </a>{' '}
-                before you create content,
+                before you edit content,
                 <br />
                 so you can easily continue later!
               </em>
