@@ -43,11 +43,15 @@ export default function UnscoredEmbedCardPage({
           <ul className="ls-i ta-r">
             {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
             <li>
-              <a href={`/embed-cards/${to58(cardEntityId)}/talk`}>
+              <a href={`/unscored-embed-cards/${to58(cardEntityId)}/talk`}>
                 <Icon i="talk" s="s" /> Talk
               </a>
             </li>
-            {/* <li><a href="/mocks/history">🎢 History</a></li> */}
+            <li>
+              <a href={`/unscored-embed-cards/${to58(cardEntityId)}/history`}>
+                <Icon i="history" s="s" /> History
+              </a>
+            </li>
             {/* <li><a href="/mocks/update-card">🌳 Edit</a></li> */}
           </ul>
         </small>

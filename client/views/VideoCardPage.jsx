@@ -55,7 +55,11 @@ export default function VideoCardPage({
                 <Icon i="talk" s="s" /> Talk
               </a>
             </li>
-            {/* <li><a href="/mocks/history">🎢 History</a></li> */}
+            <li>
+              <a href={`/video-cards/${to58(cardEntityId)}/history`}>
+                <Icon i="history" s="s" /> History
+              </a>
+            </li>
             {/* <li><a href="/mocks/update-card">🌳 Edit</a></li> */}
           </ul>
         </small>

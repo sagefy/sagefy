@@ -520,6 +520,18 @@ app.get('/(:kind-)?cards/:cardId', async (req, res) => {
   )
 })
 
+app.get('/(:kind-)?cards/:cardId/history', async (req, res) => {
+  const gqlRes = await GQL.dataListCardVersions(req, {
+    entityId: toU(req.params.cardId),
+  })
+  const card = get(gqlRes, 'data.cardByEntityId')
+  const versions = get(gqlRes, 'data.allCardVersions.nodes')
+  return res.render(
+    `${get(CARD_KIND, [req.params.kind, 'page'], '')}CardHistoryPage`,
+    { card, versions }
+  )
+})
+
 app.get('/users/:userId', async (req, res) => {
   const gqlRes = await GQL.dataGetUser(req, {
     userId: toU(req.params.userId),

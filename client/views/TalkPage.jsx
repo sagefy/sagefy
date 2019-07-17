@@ -14,6 +14,8 @@ function clientizeKind(s) {
   return s.toLowerCase().replace(/_/g, '-')
 }
 
+/* TODO split this page by subject, each card kind, and then bring in components instead */
+
 function Post({ id, created, userId, userByUserId, sessionId, body }) {
   const { name: userName, md5Email } = userByUserId || {}
   return (
