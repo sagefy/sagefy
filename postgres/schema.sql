@@ -380,6 +380,7 @@ CREATE FUNCTION sg_private.score_response() RETURNS trigger
     AS $$
   declare
     card sg_public.card;
+    subject sg_public.subject;
     prior sg_public.response;
     prior_learned real;
     option jsonb;
@@ -412,7 +413,10 @@ CREATE FUNCTION sg_private.score_response() RETURNS trigger
     -- Score the response
     new.score := (option->>'correct')::boolean::int::real;
     -- Calculate p(learned)
-    prior_learned := (select sg_public.select_subject_learned(card.subject_id));
+    select s.* into subject
+    from sg_public.subject s
+    where entity_id = card.subject_id;
+    prior_learned := (select sg_public.subject_learned(subject));
     learned := (
       new.score * (
         (prior_learned * (1 - slip)) /
@@ -535,6 +539,24 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_private.verify_post() IS 'Verify valid data when creating or updating a post.';
+
+
+--
+-- Name: anonymous_token(); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.anonymous_token() RETURNS sg_public.jwt_token
+    LANGUAGE sql
+    AS $$
+  select ('sg_anonymous', null, uuid_generate_v4(), null)::sg_public.jwt_token;
+$$;
+
+
+--
+-- Name: FUNCTION anonymous_token(); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.anonymous_token() IS 'Create anonymous user token.';
 
 
 SET default_tablespace = '';
@@ -972,21 +994,216 @@ COMMENT ON FUNCTION sg_public.card_subject(card sg_public.card) IS 'Get the card
 
 
 --
--- Name: get_anonymous_token(); Type: FUNCTION; Schema: sg_public; Owner: -
+-- Name: choose_card(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_public.get_anonymous_token() RETURNS sg_public.jwt_token
-    LANGUAGE sql
+CREATE FUNCTION sg_public.choose_card(subject_id uuid) RETURNS sg_public.card
+    LANGUAGE plpgsql
+    AS $_$
+  declare
+    xsubject sg_public.subject;
+    xprior sg_public.response;
+    rand double precision;
+    kinds sg_public.card_kind[];
+  begin
+    select * into xsubject
+    from sg_public.subject
+    where entity_id = $1;
+    select * into xprior
+    from sg_public.subject_latest_response(xsubject);
+    rand := random();
+    if (random() < (0.5 + 0.5 * sg_public.subject_learned(xsubject))) then
+      kinds := array['choice'];
+    else
+      kinds := array['video', 'page', 'unscored_embed'];
+    end if;
+    select c.*
+    from sg_public.card c
+    where c.subject_id = $1
+      and c.kind = any(kinds)
+      and (xprior.card_id is null or c.entity_id <> xprior.card_id)
+      and rand < sg_public.subject_card_count(xsubject) / 10::real
+    order by random()
+    limit 1;
+  end;
+  -- Future version: When estimating parameters and the card kind is scored,
+  -- prefer 0.25 < correct < 0.75
+$_$;
+
+
+--
+-- Name: FUNCTION choose_card(subject_id uuid); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.choose_card(subject_id uuid) IS 'After I select a subject, search for a suitable card.';
+
+
+--
+-- Name: create_card(character varying, text, text[], uuid, sg_public.card_kind, jsonb); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.create_card(language character varying, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb) RETURNS sg_public.card_version
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
     AS $$
-  select ('sg_anonymous', null, uuid_generate_v4(), null)::sg_public.jwt_token;
+  declare
+    xentity_id uuid;
+    xversion_id uuid;
+    xcard_version sg_public.card_version;
+  begin
+    xentity_id := uuid_generate_v4();
+    xversion_id := uuid_generate_v4();
+    insert into sg_public.entity
+    (entity_id, entity_kind) values (xentity_id, 'card');
+    insert into sg_public.card_entity
+    (entity_id) values (xentity_id);
+    insert into sg_public.entity_version
+    (version_id, entity_kind) values (xversion_id, 'card');
+    insert into sg_public.card_version
+    (version_id, entity_id, language, name, tags, subject_id, kind, data)
+    values (xversion_id, xentity_id, language, name, tags, subject_id, kind, data)
+    returning * into xcard_version;
+    return xcard_version;
+  end;
 $$;
 
 
 --
--- Name: FUNCTION get_anonymous_token(); Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: FUNCTION create_card(language character varying, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb); Type: COMMENT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON FUNCTION sg_public.get_anonymous_token() IS 'Create anonymous user token.';
+COMMENT ON FUNCTION sg_public.create_card(language character varying, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb) IS 'Create a new card.';
+
+
+--
+-- Name: create_email_token(text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.create_email_token(email text) RETURNS void
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $_$
+  declare
+    xu sg_private.user;
+  begin
+    select * into xu
+    from sg_private.user
+    where sg_private.user.email = trim($1)
+    limit 1;
+    if (xu is null) then
+      raise exception 'No user found.' using errcode = '47C88D24';
+    end if;
+    perform pg_notify(
+      'send_email_token',
+      concat(xu.email, ' ', xu.user_id::text, ' ', xu.email)
+    );
+  end;
+$_$;
+
+
+--
+-- Name: FUNCTION create_email_token(email text); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.create_email_token(email text) IS 'Generate and email a token to update email.';
+
+
+--
+-- Name: create_password_token(text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.create_password_token(email text) RETURNS void
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $_$
+  declare
+    xu sg_private.user;
+  begin
+    select * into xu
+    from sg_private.user
+    where sg_private.user.email = trim($1)
+    limit 1;
+    if (xu is null) then
+      raise exception 'No user found.' using errcode = '3883C744';
+    end if;
+    perform pg_notify(
+      'send_password_token',
+      concat(xu.email, ' ', xu.user_id::text, ' ', xu.password)
+    );
+  end;
+$_$;
+
+
+--
+-- Name: FUNCTION create_password_token(email text); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.create_password_token(email text) IS 'Generate and email a token to update password.';
+
+
+--
+-- Name: create_subject(character varying, text, text[], text, uuid[], uuid[]); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.create_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]) RETURNS sg_public.subject_version
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+  declare
+    xentity_id uuid;
+    xversion_id uuid;
+    xsubject_version sg_public.subject_version;
+  begin
+    xentity_id := uuid_generate_v4();
+    xversion_id := uuid_generate_v4();
+    insert into sg_public.entity
+    (entity_id, entity_kind) values (xentity_id, 'subject');
+    insert into sg_public.subject_entity
+    (entity_id) values (xentity_id);
+    insert into sg_public.entity_version
+    (version_id, entity_kind) values (xversion_id, 'subject');
+    insert into sg_public.subject_version
+    (version_id, entity_id, language, name, tags, body)
+    values (xversion_id, xentity_id, language, name, tags, body)
+    returning * into xsubject_version;
+    insert into sg_public.subject_version_parent_child
+    (child_version_id, parent_entity_id)
+    select xversion_id, unnest(parent);
+    insert into sg_public.subject_version_before_after
+    (after_version_id, before_entity_id)
+    select xversion_id, unnest(before);
+    return xsubject_version;
+  end;
+$$;
+
+
+--
+-- Name: FUNCTION create_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.create_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]) IS 'Create a new subject.';
+
+
+--
+-- Name: create_user(text, text, text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.create_user(name text, email text, password text) RETURNS sg_public.jwt_token
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+declare
+  public_user sg_public.user;
+  private_user sg_private.user;
+begin
+  if (char_length(trim(password)) < 8) then
+    raise exception 'I need at least 8 characters for passwords.'
+      using errcode = '355CAC69';
+  end if;
+  insert into sg_public.user ("name")
+    values (name)
+    returning * into public_user;
+  insert into sg_private.user ("user_id", "email", "password")
+    values (public_user.id, email, crypt(trim(password), gen_salt('bf', 8)))
+    returning * into private_user;
+  return (private_user.role, public_user.id, null, null)::sg_public.jwt_token;
+end;
+$$;
 
 
 --
@@ -1045,10 +1262,10 @@ COMMENT ON COLUMN sg_public."user".view_subjects IS 'Public setting for if the u
 
 
 --
--- Name: get_current_user(); Type: FUNCTION; Schema: sg_public; Owner: -
+-- Name: current_user(); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_public.get_current_user() RETURNS sg_public."user"
+CREATE FUNCTION sg_public."current_user"() RETURNS sg_public."user"
     LANGUAGE sql STABLE
     AS $$
   select *
@@ -1058,10 +1275,10 @@ $$;
 
 
 --
--- Name: FUNCTION get_current_user(); Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: FUNCTION "current_user"(); Type: COMMENT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON FUNCTION sg_public.get_current_user() IS 'Get the current logged in user.';
+COMMENT ON FUNCTION sg_public."current_user"() IS 'Get the current logged in user.';
 
 
 --
@@ -1103,81 +1320,31 @@ COMMENT ON FUNCTION sg_public.log_in(name text, password text) IS 'Logs in a sin
 
 
 --
--- Name: new_card(character varying, text, text[], uuid, sg_public.card_kind, jsonb); Type: FUNCTION; Schema: sg_public; Owner: -
+-- Name: popular_subjects(); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_public.new_card(language character varying, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb) RETURNS sg_public.card_version
-    LANGUAGE plpgsql STRICT SECURITY DEFINER
+CREATE FUNCTION sg_public.popular_subjects() RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE
     AS $$
-  declare
-    xentity_id uuid;
-    xversion_id uuid;
-    xcard_version sg_public.card_version;
-  begin
-    xentity_id := uuid_generate_v4();
-    xversion_id := uuid_generate_v4();
-    insert into sg_public.entity
-    (entity_id, entity_kind) values (xentity_id, 'card');
-    insert into sg_public.card_entity
-    (entity_id) values (xentity_id);
-    insert into sg_public.entity_version
-    (version_id, entity_kind) values (xversion_id, 'card');
-    insert into sg_public.card_version
-    (version_id, entity_id, language, name, tags, subject_id, kind, data)
-    values (xversion_id, xentity_id, language, name, tags, subject_id, kind, data)
-    returning * into xcard_version;
-    return xcard_version;
-  end;
+  with most_popular as (
+    select s.*
+    from sg_public.subject s
+    order by sg_public.subject_user_count(s) desc
+    limit 20
+  )
+  select *
+  from most_popular
+  where name not ilike '%what is sagefy?%'
+  order by random()
+  limit 4;
 $$;
 
 
 --
--- Name: FUNCTION new_card(language character varying, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb); Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: FUNCTION popular_subjects(); Type: COMMENT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON FUNCTION sg_public.new_card(language character varying, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb) IS 'Create a new card.';
-
-
---
--- Name: new_subject(character varying, text, text[], text, uuid[], uuid[]); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.new_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]) RETURNS sg_public.subject_version
-    LANGUAGE plpgsql STRICT SECURITY DEFINER
-    AS $$
-  declare
-    xentity_id uuid;
-    xversion_id uuid;
-    xsubject_version sg_public.subject_version;
-  begin
-    xentity_id := uuid_generate_v4();
-    xversion_id := uuid_generate_v4();
-    insert into sg_public.entity
-    (entity_id, entity_kind) values (xentity_id, 'subject');
-    insert into sg_public.subject_entity
-    (entity_id) values (xentity_id);
-    insert into sg_public.entity_version
-    (version_id, entity_kind) values (xversion_id, 'subject');
-    insert into sg_public.subject_version
-    (version_id, entity_id, language, name, tags, body)
-    values (xversion_id, xentity_id, language, name, tags, body)
-    returning * into xsubject_version;
-    insert into sg_public.subject_version_parent_child
-    (child_version_id, parent_entity_id)
-    select xversion_id, unnest(parent);
-    insert into sg_public.subject_version_before_after
-    (after_version_id, before_entity_id)
-    select xversion_id, unnest(before);
-    return xsubject_version;
-  end;
-$$;
-
-
---
--- Name: FUNCTION new_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.new_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]) IS 'Create a new subject.';
+COMMENT ON FUNCTION sg_public.popular_subjects() IS 'Select the 5 most popular subjects.';
 
 
 --
@@ -1222,358 +1389,6 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_public.search_subjects(query text) IS 'Search subjects.';
-
-
---
--- Name: select_card_to_learn(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.select_card_to_learn(subject_id uuid) RETURNS sg_public.card
-    LANGUAGE sql
-    AS $_$
-  with prior as (select * from sg_public.select_latest_response($1)),
-  k (kinds) as (
-    select case
-      when random() < (0.5 + 0.5 * sg_public.select_subject_learned($1))
-      then array[
-        'choice'
-      ]::sg_public.card_kind[]
-      else array[
-        'video',
-        'page',
-        'unscored_embed'
-      ]::sg_public.card_kind[]
-    end
-  ),
-  xsubject as (select * from sg_public.subject where entity_id = $1),
-  r (rand) as (select random())
-  select c.*
-  from sg_public.card c, prior, k, xsubject, r
-  where c.subject_id = $1
-    and c.kind = any(k.kinds)
-    and (prior.card_id is null or c.entity_id <> prior.card_id)
-    and r.rand < sg_public.subject_card_count(xsubject) / 10::real
-  order by random()
-  limit 1;
-  -- Future version: When estimating parameters and the card kind is scored,
-  -- prefer 0.25 < correct < 0.75
-$_$;
-
-
---
--- Name: FUNCTION select_card_to_learn(subject_id uuid); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.select_card_to_learn(subject_id uuid) IS 'After I select a subject, search for a suitable card.';
-
-
---
--- Name: response; Type: TABLE; Schema: sg_public; Owner: -
---
-
-CREATE TABLE sg_public.response (
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    user_id uuid,
-    session_id uuid,
-    card_id uuid NOT NULL,
-    subject_id uuid NOT NULL,
-    response text NOT NULL,
-    score real NOT NULL,
-    learned real NOT NULL,
-    CONSTRAINT response_score_check CHECK (((score >= (0)::double precision) AND (score <= (1)::double precision))),
-    CONSTRAINT response_score_check1 CHECK (((score >= (0)::double precision) AND (score <= (1)::double precision))),
-    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
-);
-
-
---
--- Name: TABLE response; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON TABLE sg_public.response IS 'When a learner responds to a card, we record the result.';
-
-
---
--- Name: COLUMN response.id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.response.id IS 'The ID of the response.';
-
-
---
--- Name: COLUMN response.created; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.response.created IS 'When the user created the response.';
-
-
---
--- Name: COLUMN response.modified; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.response.modified IS 'When the system last modified the response.';
-
-
---
--- Name: COLUMN response.user_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.response.user_id IS 'The user the response belongs to.';
-
-
---
--- Name: COLUMN response.session_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.response.session_id IS 'If not user, the session_id the response belongs to.';
-
-
---
--- Name: COLUMN response.card_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.response.card_id IS 'The card (entity id) that the response belongs to.';
-
-
---
--- Name: COLUMN response.subject_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.response.subject_id IS 'The subject (entity id) that the response belongs to... at the time of the response';
-
-
---
--- Name: COLUMN response.response; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.response.response IS 'How the user responded.';
-
-
---
--- Name: COLUMN response.score; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.response.score IS 'The score, 0->1, of the response.';
-
-
---
--- Name: COLUMN response.learned; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.response.learned IS 'The estimated probability the learner has learned the subject, after this response.';
-
-
---
--- Name: CONSTRAINT user_or_session ON response; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON CONSTRAINT user_or_session ON sg_public.response IS 'Ensure only the user or session has data.';
-
-
---
--- Name: select_latest_response(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.select_latest_response(subject_id uuid) RETURNS sg_public.response
-    LANGUAGE sql STABLE
-    AS $_$
-  select r.*
-  from sg_public.response r
-  where r.subject_id = $1 and (
-    user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
-    or session_id = nullif(current_setting('jwt.claims.session_id', true), '')::uuid
-  )
-  order by r.created desc
-  limit 1;
-$_$;
-
-
---
--- Name: FUNCTION select_latest_response(subject_id uuid); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.select_latest_response(subject_id uuid) IS 'Get the latest response from the user on the given subject.';
-
-
---
--- Name: select_popular_subjects(); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.select_popular_subjects() RETURNS SETOF sg_public.subject
-    LANGUAGE sql STABLE
-    AS $$
-  with most_popular as (
-    select s.*
-    from sg_public.subject s
-    order by sg_public.subject_user_count(s) desc
-    limit 20
-  )
-  select *
-  from most_popular
-  where name not ilike '%what is sagefy?%'
-  order by random()
-  limit 4;
-$$;
-
-
---
--- Name: FUNCTION select_popular_subjects(); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.select_popular_subjects() IS 'Select the 5 most popular subjects.';
-
-
---
--- Name: select_subject_learned(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.select_subject_learned(subject_id uuid) RETURNS real
-    LANGUAGE sql STABLE
-    AS $_$
-  select case when learned is not null then learned else 0.4 end
-  from sg_public.select_latest_response($1);
-$_$;
-
-
---
--- Name: FUNCTION select_subject_learned(subject_id uuid); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.select_subject_learned(subject_id uuid) IS 'Get the latest learned value for the user on the given subject.';
-
-
---
--- Name: select_subject_to_learn(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.select_subject_to_learn(subject_id uuid) RETURNS SETOF sg_public.subject
-    LANGUAGE sql STABLE
-    AS $_$
-  with subject as (
-    select *
-    from sg_public.subject
-    where entity_id = $1
-    limit 1
-  ),
-  all_subjects as (
-    select a.*
-    from subject, sg_public.subject_all_child_subjects(subject) a
-    union
-    select * from subject
-  ),
-  e (all_subjects) as (select array(select entity_id from all_subjects))
-  select s.*
-  from all_subjects s, e
-  where
-    sg_public.subject_child_count(s) = 0
-    and sg_public.select_subject_learned(s.entity_id) < 0.99
-    and not sg_public.subject_has_needed_before(s, e.all_subjects)
-    -- TODO support "rewind"... going into out of goals befores
-    -- when performance is low.
-  order by
-    sg_public.subject_all_after_count(s) desc,
-    sg_public.subject_card_count(s) desc
-  limit 5;
-$_$;
-
-
---
--- Name: FUNCTION select_subject_to_learn(subject_id uuid); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.select_subject_to_learn(subject_id uuid) IS 'After I select a main subject, search for suitable child subjects.';
-
-
---
--- Name: send_email_token(text); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.send_email_token(email text) RETURNS void
-    LANGUAGE plpgsql STRICT SECURITY DEFINER
-    AS $_$
-  declare
-    xu sg_private.user;
-  begin
-    select * into xu
-    from sg_private.user
-    where sg_private.user.email = trim($1)
-    limit 1;
-    if (xu is null) then
-      raise exception 'No user found.' using errcode = '47C88D24';
-    end if;
-    perform pg_notify(
-      'send_email_token',
-      concat(xu.email, ' ', xu.user_id::text, ' ', xu.email)
-    );
-  end;
-$_$;
-
-
---
--- Name: FUNCTION send_email_token(email text); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.send_email_token(email text) IS 'Generate and email a token to update email.';
-
-
---
--- Name: send_password_token(text); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.send_password_token(email text) RETURNS void
-    LANGUAGE plpgsql STRICT SECURITY DEFINER
-    AS $_$
-  declare
-    xu sg_private.user;
-  begin
-    select * into xu
-    from sg_private.user
-    where sg_private.user.email = trim($1)
-    limit 1;
-    if (xu is null) then
-      raise exception 'No user found.' using errcode = '3883C744';
-    end if;
-    perform pg_notify(
-      'send_password_token',
-      concat(xu.email, ' ', xu.user_id::text, ' ', xu.password)
-    );
-  end;
-$_$;
-
-
---
--- Name: FUNCTION send_password_token(email text); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.send_password_token(email text) IS 'Generate and email a token to update password.';
-
-
---
--- Name: sign_up(text, text, text); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.sign_up(name text, email text, password text) RETURNS sg_public.jwt_token
-    LANGUAGE plpgsql STRICT SECURITY DEFINER
-    AS $$
-declare
-  public_user sg_public.user;
-  private_user sg_private.user;
-begin
-  if (char_length(trim(password)) < 8) then
-    raise exception 'I need at least 8 characters for passwords.'
-      using errcode = '355CAC69';
-  end if;
-  insert into sg_public.user ("name")
-    values (name)
-    returning * into public_user;
-  insert into sg_private.user ("user_id", "email", "password")
-    values (public_user.id, email, crypt(trim(password), gen_salt('bf', 8)))
-    returning * into private_user;
-  return (private_user.role, public_user.id, null, null)::sg_public.jwt_token;
-end;
-$$;
 
 
 --
@@ -1811,7 +1626,7 @@ CREATE FUNCTION sg_public.subject_has_needed_before(sg_public.subject, uuid[]) R
   select exists(
     select x.entity_id
     from sg_public.subject_before_subjects($1) x
-    where sg_public.select_subject_learned(x.entity_id) < 0.99
+    where sg_public.subject_learned(x) < 0.99
     and x.entity_id = any($2)
   );
 $_$;
@@ -1822,6 +1637,197 @@ $_$;
 --
 
 COMMENT ON FUNCTION sg_public.subject_has_needed_before(sg_public.subject, uuid[]) IS 'Does the learner/subject have a needed before?';
+
+
+--
+-- Name: response; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.response (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    user_id uuid,
+    session_id uuid,
+    card_id uuid NOT NULL,
+    subject_id uuid NOT NULL,
+    response text NOT NULL,
+    score real NOT NULL,
+    learned real NOT NULL,
+    CONSTRAINT response_score_check CHECK (((score >= (0)::double precision) AND (score <= (1)::double precision))),
+    CONSTRAINT response_score_check1 CHECK (((score >= (0)::double precision) AND (score <= (1)::double precision))),
+    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
+);
+
+
+--
+-- Name: TABLE response; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.response IS 'When a learner responds to a card, we record the result.';
+
+
+--
+-- Name: COLUMN response.id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.id IS 'The ID of the response.';
+
+
+--
+-- Name: COLUMN response.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.created IS 'When the user created the response.';
+
+
+--
+-- Name: COLUMN response.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.modified IS 'When the system last modified the response.';
+
+
+--
+-- Name: COLUMN response.user_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.user_id IS 'The user the response belongs to.';
+
+
+--
+-- Name: COLUMN response.session_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.session_id IS 'If not user, the session_id the response belongs to.';
+
+
+--
+-- Name: COLUMN response.card_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.card_id IS 'The card (entity id) that the response belongs to.';
+
+
+--
+-- Name: COLUMN response.subject_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.subject_id IS 'The subject (entity id) that the response belongs to... at the time of the response';
+
+
+--
+-- Name: COLUMN response.response; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.response IS 'How the user responded.';
+
+
+--
+-- Name: COLUMN response.score; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.score IS 'The score, 0->1, of the response.';
+
+
+--
+-- Name: COLUMN response.learned; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.response.learned IS 'The estimated probability the learner has learned the subject, after this response.';
+
+
+--
+-- Name: CONSTRAINT user_or_session ON response; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON CONSTRAINT user_or_session ON sg_public.response IS 'Ensure only the user or session has data.';
+
+
+--
+-- Name: subject_latest_response(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_latest_response(subject sg_public.subject) RETURNS sg_public.response
+    LANGUAGE sql STABLE
+    AS $_$
+  select r.*
+  from sg_public.response r
+  where r.subject_id = $1.entity_id and (
+    user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
+    or session_id = nullif(current_setting('jwt.claims.session_id', true), '')::uuid
+  )
+  order by r.created desc
+  limit 1;
+$_$;
+
+
+--
+-- Name: FUNCTION subject_latest_response(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_latest_response(subject sg_public.subject) IS 'Get the latest response from the user on the given subject.';
+
+
+--
+-- Name: subject_learned(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_learned(subject sg_public.subject) RETURNS real
+    LANGUAGE sql STABLE
+    AS $_$
+  select case when learned is not null then learned else 0.4 end
+  from sg_public.subject_latest_response($1);
+$_$;
+
+
+--
+-- Name: FUNCTION subject_learned(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_learned(subject sg_public.subject) IS 'Get the latest learned value for the user on the given subject.';
+
+
+--
+-- Name: subject_next_child_subjects(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_next_child_subjects(subject sg_public.subject) RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE
+    AS $_$
+  with subject as (
+    select *
+    from sg_public.subject
+    where entity_id = $1.entity_id
+    limit 1
+  ),
+  all_subjects as (
+    select a.*
+    from subject, sg_public.subject_all_child_subjects(subject) a
+    union
+    select * from subject
+  ),
+  e (all_subjects) as (select array(select entity_id from all_subjects))
+  select s.*
+  from all_subjects s, e
+  where
+    sg_public.subject_child_count(s) = 0
+    and sg_public.subject_learned(s) < 0.99
+    and not sg_public.subject_has_needed_before(s, e.all_subjects)
+    -- TODO support "rewind"... going into out of goals befores
+    -- when performance is low.
+  order by
+    sg_public.subject_all_after_count(s) desc,
+    sg_public.subject_card_count(s) desc
+  limit 5;
+$_$;
+
+
+--
+-- Name: FUNCTION subject_next_child_subjects(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_next_child_subjects(subject sg_public.subject) IS 'After I select a main subject, search for suitable child subjects.';
 
 
 --
@@ -1868,207 +1874,6 @@ $_$;
 --
 
 COMMENT ON FUNCTION sg_public.subject_user_count(sg_public.subject) IS 'Count the number of logged in users learning the subject.';
-
-
---
--- Name: post; Type: TABLE; Schema: sg_public; Owner: -
---
-
-CREATE TABLE sg_public.post (
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    user_id uuid,
-    session_id uuid,
-    topic_id uuid NOT NULL,
-    kind sg_public.post_kind DEFAULT 'post'::sg_public.post_kind NOT NULL,
-    body text,
-    parent_id uuid,
-    response boolean,
-    CONSTRAINT post_check CHECK (((kind <> 'vote'::sg_public.post_kind) OR (user_id IS NOT NULL))),
-    CONSTRAINT post_check1 CHECK (((kind = 'vote'::sg_public.post_kind) OR (body IS NOT NULL))),
-    CONSTRAINT post_check2 CHECK (((kind <> 'vote'::sg_public.post_kind) OR (parent_id IS NOT NULL))),
-    CONSTRAINT post_check3 CHECK (((kind <> 'vote'::sg_public.post_kind) OR (response IS NOT NULL))),
-    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
-);
-
-
---
--- Name: TABLE post; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON TABLE sg_public.post IS 'The posts on an entity''s talk page. Belongs to a topic.';
-
-
---
--- Name: COLUMN post.id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.post.id IS 'The ID of the post.';
-
-
---
--- Name: COLUMN post.created; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.post.created IS 'When the user created the post.';
-
-
---
--- Name: COLUMN post.modified; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.post.modified IS 'When the post last changed.';
-
-
---
--- Name: COLUMN post.user_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.post.user_id IS 'The user who created the post.';
-
-
---
--- Name: COLUMN post.session_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.post.session_id IS 'The logged out user who created the post.';
-
-
---
--- Name: COLUMN post.topic_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.post.topic_id IS 'The topic the post belongs to.';
-
-
---
--- Name: COLUMN post.kind; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.post.kind IS 'The kind of post (post, proposal, vote).';
-
-
---
--- Name: COLUMN post.body; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.post.body IS 'The body or main content of the post.';
-
-
---
--- Name: COLUMN post.parent_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.post.parent_id IS 'If the post is a reply, which post it replies to.';
-
-
---
--- Name: COLUMN post.response; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.post.response IS 'If the post is a vote, yes/no on approving.';
-
-
---
--- Name: topic; Type: TABLE; Schema: sg_public; Owner: -
---
-
-CREATE TABLE sg_public.topic (
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    user_id uuid,
-    session_id uuid,
-    name text NOT NULL,
-    entity_id uuid NOT NULL,
-    entity_kind sg_public.entity_kind NOT NULL,
-    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
-);
-
-
---
--- Name: TABLE topic; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON TABLE sg_public.topic IS 'The topics on an entity''s talk page.';
-
-
---
--- Name: COLUMN topic.id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.topic.id IS 'The public ID of the topic.';
-
-
---
--- Name: COLUMN topic.created; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.topic.created IS 'When the user created the topic.';
-
-
---
--- Name: COLUMN topic.modified; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.topic.modified IS 'When the user last modified the topic.';
-
-
---
--- Name: COLUMN topic.user_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.topic.user_id IS 'The user who created the topic.';
-
-
---
--- Name: COLUMN topic.session_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.topic.session_id IS 'The logged out person who created the topic.';
-
-
---
--- Name: COLUMN topic.name; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.topic.name IS 'The name of the topic.';
-
-
---
--- Name: COLUMN topic.entity_id; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.topic.entity_id IS 'The entity the topic belongs to.';
-
-
---
--- Name: COLUMN topic.entity_kind; Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON COLUMN sg_public.topic.entity_kind IS 'The kind of entity the topic belongs to.';
-
-
---
--- Name: topic_posts(sg_public.topic); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.topic_posts(sg_public.topic) RETURNS SETOF sg_public.post
-    LANGUAGE sql STABLE
-    AS $_$
-  select p.*
-  from sg_public.post p
-  where p.topic_id = $1.id
-  order by p.created desc;
-$_$;
-
-
---
--- Name: FUNCTION topic_posts(sg_public.topic); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.topic_posts(sg_public.topic) IS 'Returns the posts of the topic.';
 
 
 --
@@ -2480,6 +2285,106 @@ COMMENT ON COLUMN sg_public.entity_version.entity_kind IS 'The kind of entity th
 
 
 --
+-- Name: post; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.post (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    user_id uuid,
+    session_id uuid,
+    topic_id uuid NOT NULL,
+    kind sg_public.post_kind DEFAULT 'post'::sg_public.post_kind NOT NULL,
+    body text,
+    parent_id uuid,
+    response boolean,
+    CONSTRAINT post_check CHECK (((kind <> 'vote'::sg_public.post_kind) OR (user_id IS NOT NULL))),
+    CONSTRAINT post_check1 CHECK (((kind = 'vote'::sg_public.post_kind) OR (body IS NOT NULL))),
+    CONSTRAINT post_check2 CHECK (((kind <> 'vote'::sg_public.post_kind) OR (parent_id IS NOT NULL))),
+    CONSTRAINT post_check3 CHECK (((kind <> 'vote'::sg_public.post_kind) OR (response IS NOT NULL))),
+    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
+);
+
+
+--
+-- Name: TABLE post; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.post IS 'The posts on an entity''s talk page. Belongs to a topic.';
+
+
+--
+-- Name: COLUMN post.id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.id IS 'The ID of the post.';
+
+
+--
+-- Name: COLUMN post.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.created IS 'When the user created the post.';
+
+
+--
+-- Name: COLUMN post.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.modified IS 'When the post last changed.';
+
+
+--
+-- Name: COLUMN post.user_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.user_id IS 'The user who created the post.';
+
+
+--
+-- Name: COLUMN post.session_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.session_id IS 'The logged out user who created the post.';
+
+
+--
+-- Name: COLUMN post.topic_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.topic_id IS 'The topic the post belongs to.';
+
+
+--
+-- Name: COLUMN post.kind; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.kind IS 'The kind of post (post, proposal, vote).';
+
+
+--
+-- Name: COLUMN post.body; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.body IS 'The body or main content of the post.';
+
+
+--
+-- Name: COLUMN post.parent_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.parent_id IS 'If the post is a reply, which post it replies to.';
+
+
+--
+-- Name: COLUMN post.response; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.post.response IS 'If the post is a vote, yes/no on approving.';
+
+
+--
 -- Name: post_entity_version; Type: TABLE; Schema: sg_public; Owner: -
 --
 
@@ -2666,6 +2571,86 @@ COMMENT ON COLUMN sg_public.subject_version_parent_child.child_version_id IS 'Th
 --
 
 COMMENT ON COLUMN sg_public.subject_version_parent_child.parent_entity_id IS 'The entity ID of the parent subject.';
+
+
+--
+-- Name: topic; Type: TABLE; Schema: sg_public; Owner: -
+--
+
+CREATE TABLE sg_public.topic (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    user_id uuid,
+    session_id uuid,
+    name text NOT NULL,
+    entity_id uuid NOT NULL,
+    entity_kind sg_public.entity_kind NOT NULL,
+    CONSTRAINT user_or_session CHECK (((user_id IS NOT NULL) OR (session_id IS NOT NULL)))
+);
+
+
+--
+-- Name: TABLE topic; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TABLE sg_public.topic IS 'The topics on an entity''s talk page.';
+
+
+--
+-- Name: COLUMN topic.id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.id IS 'The public ID of the topic.';
+
+
+--
+-- Name: COLUMN topic.created; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.created IS 'When the user created the topic.';
+
+
+--
+-- Name: COLUMN topic.modified; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.modified IS 'When the user last modified the topic.';
+
+
+--
+-- Name: COLUMN topic.user_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.user_id IS 'The user who created the topic.';
+
+
+--
+-- Name: COLUMN topic.session_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.session_id IS 'The logged out person who created the topic.';
+
+
+--
+-- Name: COLUMN topic.name; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.name IS 'The name of the topic.';
+
+
+--
+-- Name: COLUMN topic.entity_id; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.entity_id IS 'The entity the topic belongs to.';
+
+
+--
+-- Name: COLUMN topic.entity_kind; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON COLUMN sg_public.topic.entity_kind IS 'The kind of entity the topic belongs to.';
 
 
 --
@@ -3829,4 +3814,6 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190529204020'),
     ('20190606175104'),
     ('20190715015859'),
-    ('20190716223347');
+    ('20190716223347'),
+    ('20190718184132'),
+    ('20190718190417');

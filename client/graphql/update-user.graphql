@@ -1,0 +1,10 @@
+mutation updateUser($id: UUID!, $name: String!) {
+  updateUserById(input: { id: $id, userPatch: { name: $name } }) {
+    user {
+      id
+      name
+    }
+  }
+}
+
+# viewSubjects is also an option

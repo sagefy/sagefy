@@ -1,0 +1,17 @@
+query getSubject($entityId: UUID!) {
+  subjectByEntityId(entityId: $entityId) {
+    entityId
+    name
+    body
+    beforeSubjects {
+      nodes {
+        entityId
+      }
+    }
+    parentSubjects {
+      nodes {
+        entityId
+      }
+    }
+  }
+}

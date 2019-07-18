@@ -1,0 +1,25 @@
+query getUser($userId: UUID!) {
+  userById(id: $userId) {
+    name
+    md5Email
+    created
+
+    subjectVersionsByUserId {
+      nodes {
+        versionId
+        entityId
+        name
+        body
+      }
+    }
+
+    cardVersionsByUserId {
+      nodes {
+        versionId
+        entityId
+        name
+        kind
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+mutation createTopic(
+  $name: String!
+  $entityId: UUID!
+  $entityKind: EntityKind!
+) {
+  createTopic(
+    input: {
+      topic: { name: $name, entityId: $entityId, entityKind: $entityKind }
+    }
+  ) {
+    topic {
+      id
+    }
+  }
+}

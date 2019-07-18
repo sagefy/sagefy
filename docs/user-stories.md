@@ -3,53 +3,58 @@ layout: docs
 title: User Stories
 ---
 
-This document serves as a list of major use cases for Sagefy's functionality. It can be used for checking progress or for validation. These stories should remain high level and not get into edge cases, scenarios, or details.
+This document serves as a list of major use cases for Sagefy's functionality. We can use the document to test and review functionality. This document does not cover every edge case.
 
-## Root Pages
+## Logged Out
 
-- (Log out if needed.)
-- I can view the home page.
-  - The home page has a list of popular subjects.
-  - The footer has sign up and log in links.
-  - If I click on a popular subject, it starts the learning experience.
-  - If I start a search, it takes me to the search subjects page.
-- I can view the terms page.
+- When I go to a messy URL, I get a 404.
+- When I don't have a JWT cookie, visiting a page creates one.
 - I can view the contact page.
-- If I go to a messy URL, I see the 404 page.
-- I can log in.
-  - The home page shows links to the dashboard and not sign up or log in.
-  - I get an error if I don't have the right password.
-- I can log out.
-- I can sign up.
-  - I get an error if the email or name isn't unique.
-  - I get a sign up email.
-- I can use the settings page to change my name.
-- I can change my password.
-  - I get an email notifying me my password changed.
-- I can change my email.
-  - I get an email notifying me my email changed.
+- I can view the terms page.
+- I can view the sitemap.
+- When I visit the home page, I see a list of popular subjects, the logged out footer, and I can search.
+- When I search subjects for "Music", I get results.
+- When I search subjects for a new term, I don't get results, but I get the option to create a subject.
+- When I create a subject on the search subjects page, it creates the subject and redirects me back to the search.
+- When I create a subject on the create subject page, ditto.
+- I can visit a subject page.
+- I can visit the subject talk page.
+- On the subject talk page, I can create a new topic.
+- On the subject talk page, I can create a new post.
+- I can view the subject history page.
+- I can edit the subject, and see the change on the subject history page. It maintains the parents and befores.
+- I visit a card page.
+- I can make a topic on the card talk page.
+- I can make a post on the card talk page.
+- I can view the card history page.
+- I can view a user page.
+- When I try to learn a subject with no cards, I'm taken to the create card page.
+- I can create a choice card.
+- I can create a video card.
+- I can create a page card.
+- I can create an unscored embed card.
+- When I choose to learn a subject with cards but no child subjects, I'm taken to learn those cards.
+- I can watch a video card.
+- I can read a page card.
+- I can play an embed card.
+- I can parse a choice card.
+- I can submit a response to a choice card.
+- When I reach a sufficient percentage, I complete the subject and go back to search.
+- :( When I choose to learn a subject with child subjects, I go to the choose step page.
+- :( When I reach a sufficient percentage, I go to the next subject.
 
-## Learning Experience
+## Logged In
 
-- I can search subjects from my dashboard.
-- I can make a new subject if I don't find one I like.
-- I can add a subject, and it shows up on my dashboard.
-- If I start a blank subject, it prompts me to make a new card.
-- I can view a video card.
-- I can view a page card.
-- I can view an embed card.
-- I can view a choice card.
-- I can submit an answer on a choice card... and I get feedback and `learned` updates.
-- When I have steps to choose from, then I get a list and can choose which step to work on.
-
-## Contributing Experience
-
-- I can create a new subject from the create subject page.
-- I can make a page card.
-- I can make a video card.
-- I can make an embed card.
-- I can make a choice card.
-
-## Data Experience
-
-TBD
+- I can sign up for a new account.
+- I can view my dashboard.
+- I can log out of my account.
+- When I try to sign up for a duplicate account, I see error messages.
+- I can log in to my account with the right password.
+- I get an error message if I try to log in with the wrong password.
+- I can add a subject to my dashboard.
+- When I visit the home page, I see the logged in footer.
+- When I create a subject on the search subjects page, it creates the subject and takes me to my dashboard.
+- When I create a subject on the create subject page, ditto.
+- I can change my name on the settings page.
+- I can change my password. I get an email my password changed.
+- I can change my email. I get an email my email changed.

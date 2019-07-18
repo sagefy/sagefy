@@ -23,7 +23,7 @@ export default function SearchSubjectsPage({
         <h1>
           What do you want to learn? <Icon i="search" s="h1" />
         </h1>
-        <form action="/search-subjects">
+        <form action="/subjects/search">
           <p>
             <input
               type="search"

@@ -1,0 +1,12 @@
+query getCardLearn($cardId: UUID!, $subjectId: UUID!) {
+  cardByEntityId(entityId: $cardId) {
+    entityId
+    name
+    kind
+    data
+  }
+
+  subjectByEntityId(entityId: $subjectId) {
+    learned
+  }
+}

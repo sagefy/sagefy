@@ -4,7 +4,9 @@ describe('gql-errors', () => {
   it('should format errors', () => {
     expect(
       getGqlErrors({
-        errors: [{ message: 'email_check' }],
+        response: {
+          errors: [{ message: 'email_check' }],
+        },
       })
     ).toMatchSnapshot()
   })

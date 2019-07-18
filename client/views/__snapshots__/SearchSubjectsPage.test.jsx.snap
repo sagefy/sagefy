@@ -18,7 +18,7 @@ exports[`SearchSubjectsPage should render the search subjects page 1`] = `
       />
     </h1>
     <form
-      action="/search-subjects"
+      action="/subjects/search"
     >
       <p>
         <input

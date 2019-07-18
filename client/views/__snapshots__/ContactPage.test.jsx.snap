@@ -38,7 +38,7 @@ exports[`ContactPage should render the contact page 1`] = `
         </strong>
         <br />
         <a
-          href="/create-subject"
+          href="/subjects/create"
         >
           <Icon
             i="subject"

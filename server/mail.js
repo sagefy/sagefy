@@ -29,7 +29,7 @@ ${FOOTER_TEXT}
 const PASSWORD_TOKEN_SUBJECT = 'Sagefy - Verification Request'
 const PASSWORD_TOKEN_TEXT = `
 To verify and update your account, please visit:
-https://sagefy.org/password?state=2&token={token}
+https://sagefy.org/password/edit?token={token}
 
 If you did not request a password change, please reply immediately.
 
@@ -38,7 +38,7 @@ ${FOOTER_TEXT}
 const EMAIL_TOKEN_SUBJECT = 'Sagefy - Verification Request'
 const EMAIL_TOKEN_TEXT = `
 To verify and update your account, please visit:
-https://sagefy.org/email?state=2&token={token}
+https://sagefy.org/email/edit?token={token}
 
 If you did not request an email change, please reply immediately.
 

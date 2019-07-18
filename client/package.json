@@ -4,8 +4,8 @@
   "description": "Sagefy. Learn anything, adapted for you. Free.",
   "main": "index.js",
   "scripts": {
-    "build-css": "cat node_modules/drab.css/css/drabutil.css partial.css > ../nginx/statics/sagefy.css",
-    "min-css": "cleancss -o ../nginx/statics/sagefy.min.css ../nginx/statics/sagefy.css",
+    "build-css": "cat node_modules/drab.css/css/drabutil.css partial.css > ../nginx/sagefy.css",
+    "min-css": "cleancss -o ../nginx/sagefy.min.css ../nginx/sagefy.css",
     "prepublish": "npm run build-css && npm run min-css",
     "test": "jest"
   },
@@ -26,6 +26,7 @@
     "express": "^4.16.4",
     "express-async-errors": "^3.1.1",
     "express-react-views": "^0.11.0",
+    "graphql-request": "^1.8.2",
     "jsonwebtoken": "^8.5.0",
     "lodash.frompairs": "^4.0.1",
     "lodash.get": "^4.4.2",

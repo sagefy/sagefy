@@ -1,0 +1,25 @@
+mutation updateSubject(
+  $entityId: UUID!
+  $name: String!
+  $body: String!
+  $parent: [UUID]!
+  $before: [UUID]!
+) {
+  updateSubject(
+    input: {
+      entityId: $entityId
+      name: $name
+      tags: []
+      body: $body
+      parent: $parent
+      before: $before
+    }
+  ) {
+    subjectVersion {
+      versionId
+      entityId
+      name
+      body
+    }
+  }
+}

@@ -87,7 +87,7 @@ export default function CreateUnscoredEmbedCardPage({
           <p>
             <em>
               Advice: We recommend{' '}
-              <a href={`/sign-up?return=/create-card?subjectId=${subjectId}`}>
+              <a href={`/sign-up?return=/cards/create?subjectId=${subjectId}`}>
                 joining
               </a>{' '}
               before you create content,

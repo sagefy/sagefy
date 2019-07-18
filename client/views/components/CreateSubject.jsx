@@ -11,7 +11,7 @@ export default function CreateSubject({
   gqlErrors,
 }) {
   return (
-    <form action="/create-subject" method="POST">
+    <form action="/subjects/create" method="POST">
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
 
@@ -52,7 +52,7 @@ export default function CreateSubject({
         <p>
           <em>
             Advice: We recommend{' '}
-            <a href="/sign-up?return=/create-subject">joining</a> before you
+            <a href="/sign-up?return=/subjects/create">joining</a> before you
             create content,
             <br />
             so you can easily continue later!

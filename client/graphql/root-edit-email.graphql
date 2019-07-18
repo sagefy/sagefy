@@ -1,5 +1,0 @@
-mutation rootEditEmail($newEmail: String!) {
-  updateEmail(input: { newEmail: $newEmail }) {
-    clientMutationId
-  }
-}

@@ -1,0 +1,22 @@
+query listCardVersions($entityId: UUID!) {
+  cardByEntityId(entityId: $entityId) {
+    entityId
+    name
+  }
+
+  allCardVersions(condition: { entityId: $entityId }, orderBy: CREATED_DESC) {
+    nodes {
+      created
+      userByUserId {
+        id
+        name
+      }
+      sessionId
+      status
+      name
+      data
+      subjectId
+      # TODO subject on card_version
+    }
+  }
+}

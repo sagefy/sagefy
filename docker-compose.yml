@@ -5,7 +5,7 @@ services:
     image: 'nginx:1.15-alpine'
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/statics:/nginx
+      - ./nginx:/nginx
     ports:
       - '80:80'
     links:

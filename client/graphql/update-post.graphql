@@ -1,0 +1,8 @@
+mutation updatePost($postId: UUID!, $body: String!) {
+  updatePostById(input: { id: $postId, postPatch: { body: $body } }) {
+    post {
+      id
+      body
+    }
+  }
+}

@@ -1,0 +1,5 @@
+mutation createEmailToken($email: String!) {
+  createEmailToken(input: { email: $email }) {
+    clientMutationId
+  }
+}

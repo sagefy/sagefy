@@ -28,7 +28,7 @@ export default function ContactPage({ hash }) {
           <li>
             <strong>I have an idea for content.</strong>
             <br />
-            <a href="/create-subject">
+            <a href="/subjects/create">
               <Icon i="subject" /> Create a new subject
             </a>
             .

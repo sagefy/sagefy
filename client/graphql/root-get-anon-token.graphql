@@ -1,5 +1,0 @@
-mutation rootGetAnonToken {
-  getAnonymousToken(input: {}) {
-    jwtToken
-  }
-}

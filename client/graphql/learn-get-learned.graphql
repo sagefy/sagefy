@@ -1,3 +1,0 @@
-query learnGetLearned($subjectId: UUID!) {
-  selectSubjectLearned(subjectId: $subjectId)
-}

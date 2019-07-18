@@ -1,5 +1,0 @@
-mutation rootSendEmailToken($email: String!) {
-  sendEmailToken(input: { email: $email }) {
-    clientMutationId
-  }
-}

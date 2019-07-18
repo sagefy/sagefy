@@ -10,7 +10,7 @@ export default function CreateCardPage({
   subject: { name: subjectName, body: subjectBody },
   hash,
 }) {
-  const kindLink = kind => `/create-${kind}-card?subjectId=${subjectId}`
+  const kindLink = kind => `/${kind}-cards/create?subjectId=${subjectId}`
   return (
     <Layout
       hash={hash}
@@ -78,7 +78,7 @@ export default function CreateCardPage({
           <p>
             <em>
               Advice: We recommend{' '}
-              <a href={`/sign-up?return=/create-card?subjectId=${subjectId}`}>
+              <a href={`/sign-up?return=/cards/create?subjectId=${subjectId}`}>
                 joining
               </a>{' '}
               before you create content,

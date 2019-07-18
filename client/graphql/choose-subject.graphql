@@ -1,0 +1,11 @@
+query chooseSubject($subjectId: UUID!) {
+  subjectByEntityId(entityId: $subjectId) {
+    nextChildSubjects {
+      nodes {
+        entityId
+        name
+        body
+      }
+    }
+  }
+}

@@ -18,7 +18,7 @@ exports[`HomePage should render the home page 1`] = `
       />
     </h1>
     <form
-      action="/search-subjects"
+      action="/subjects/search"
     >
       <p>
         <input
@@ -151,7 +151,7 @@ exports[`HomePage should render the logged in home page 1`] = `
       />
     </h1>
     <form
-      action="/search-subjects"
+      action="/subjects/search"
     >
       <p>
         <input

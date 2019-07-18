@@ -1,0 +1,50 @@
+query getSubjectPage($entityId: UUID!) {
+  subjectByEntityId(entityId: $entityId) {
+    entityId
+    name
+    body
+    details
+
+    childSubjects {
+      nodes {
+        entityId
+        name
+        body
+      }
+    }
+
+    parentSubjects {
+      nodes {
+        entityId
+        name
+        body
+      }
+    }
+
+    beforeSubjects {
+      nodes {
+        entityId
+        name
+        body
+      }
+    }
+
+    afterSubjects {
+      nodes {
+        entityId
+        name
+        body
+      }
+    }
+
+    cards {
+      nodes {
+        entityId
+        kind
+        name
+      }
+    }
+
+    cardCount
+  }
+}

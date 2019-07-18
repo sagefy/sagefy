@@ -39,8 +39,8 @@ npm-debug.log
 var
 sagefy_rsa.pub
 postgres-data
-nginx/statics/index.css
-nginx/statics/index.js
+nginx/index.css
+nginx/index.js
 dbbu
 IGN*
 test-data.json

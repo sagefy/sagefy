@@ -1,8 +1,0 @@
-mutation contributeEditTopic($topicId: UUID!, $name: String!) {
-  updateTopicById(input: { id: $topicId, topicPatch: { name: $name } }) {
-    topic {
-      id
-      name
-    }
-  }
-}

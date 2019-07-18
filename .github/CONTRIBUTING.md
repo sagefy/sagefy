@@ -31,6 +31,8 @@ For each pull request:
 - **Underscores**: Database names
 - **Camelcase**: JavaScript
 - **Dashes**: Filenames, URLs, CSS, HTML attributes
+- _Create, Edit, Delete_: URLs, Page names, Attributes, User copy
+- _Create, Update, Delete_: Postgres, GraphQL
 
 ## Database
 

@@ -39,7 +39,7 @@ exports[`DashboardPage should render the dashboard page 1`] = `
       />
     </h2>
     <form
-      action="/search-subjects"
+      action="/subjects/search"
     >
       <p>
         <input

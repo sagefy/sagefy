@@ -1,0 +1,9 @@
+query searchSubjects($q: String!) {
+  searchSubjects(query: $q) {
+    nodes {
+      entityId
+      name
+      body
+    }
+  }
+}

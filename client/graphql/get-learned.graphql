@@ -1,0 +1,5 @@
+query getLearned($subjectId: UUID!) {
+  subjectByEntityId(entityId: $subjectId) {
+    learned
+  }
+}

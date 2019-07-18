@@ -33,7 +33,7 @@ async function getLoginToken(name) {
   const response = await request(app)
     .post('/graphql')
     .send({
-      query: GQL.rootLogInUser,
+      query: GQL.logIn,
       variables: {
         name,
         password: 'example1',

@@ -1,9 +1,0 @@
-query learnSearchSubject($q: String!) {
-  searchSubjects(query: $q) {
-    nodes {
-      entityId
-      name
-      body
-    }
-  }
-}

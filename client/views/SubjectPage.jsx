@@ -142,7 +142,7 @@ export default function SubjectPage({
               <ListOfCards cards={cards.nodes} kind="UNSCORED_EMBED" />
             </ul>
             <p>
-              <a href={`/create-card?subjectId=${to58(subjectEntityId)}`}>
+              <a href={`/cards/create?subjectId=${to58(subjectEntityId)}`}>
                 <Icon i="card" /> Help us make some cards
               </a>
             </p>

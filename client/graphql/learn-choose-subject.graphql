@@ -1,9 +1,0 @@
-query learnChooseSubject($subjectId: UUID!) {
-  selectSubjectToLearn(subjectId: $subjectId) {
-    nodes {
-      entityId
-      name
-      body
-    }
-  }
-}

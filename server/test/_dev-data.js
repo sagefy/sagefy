@@ -57,21 +57,20 @@ async function letsJwtOut(client) {
 }
 
 async function newAnon(client) {
-  return (await client.query(`select * from sg_public.get_anonymous_token();`))
+  return (await client.query(`select * from sg_public.anonymous_token();`))
     .rows[0]
 }
 
 async function newUser(client, { name, email, password }) {
-  return (await client.query(`select * from sg_public.sign_up($1, $2, $3);`, [
-    name,
-    email,
-    password,
-  ])).rows[0]
+  return (await client.query(
+    `select * from sg_public.create_user($1, $2, $3);`,
+    [name, email, password]
+  )).rows[0]
 }
 
 async function newSubject(client, { name, body, parent, before }) {
   return (await client.query(
-    `select * from sg_public.new_subject(
+    `select * from sg_public.create_subject(
       $1, -- language
       $2, -- name
       $3, -- tags
@@ -85,7 +84,7 @@ async function newSubject(client, { name, body, parent, before }) {
 
 async function newCard(client, { name, subject_id, kind, data }) {
   return (await client.query(
-    `select * from sg_public.new_card(
+    `select * from sg_public.create_card(
       $1, -- language
       $2, -- name
       $3, -- tags

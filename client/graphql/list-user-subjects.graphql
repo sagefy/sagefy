@@ -1,0 +1,17 @@
+query listUserSubjects {
+  allUserSubjects {
+    nodes {
+      id
+      subject {
+        entityId
+        name
+        body
+      }
+    }
+  }
+
+  currentUser {
+    id
+    name
+  }
+}

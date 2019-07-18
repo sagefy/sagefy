@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`choose-subject Should not choose subjects with unmet befores 1`] = `
+Array [
+  "Oscillators",
+  "Hearing Curves",
+  "Spatialization",
+  "Modulation",
+  "Delay",
+]
+`;

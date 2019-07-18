@@ -17,8 +17,6 @@ const CARD_KIND = require('./util/card-kind')
 const GQL = require('./util/gql-queries')
 const getGqlErrors = require('./util/gql-errors')
 
-const hash = Date.now().toString(36)
-
 const JWT_COOKIE_NAME = 'jwt'
 const JWT_COOKIE_PARAMS = {
   maxAge: 1000 * 60 * 60 * 24, // 1 day in milliseconds
@@ -32,6 +30,8 @@ const LEARN_COOKIE_PARAMS = {
 
 require('express-async-errors')
 
+const hash = Date.now().toString(36)
+
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -43,26 +43,25 @@ app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
 
 async function ensureJwt(req, res, next) {
-  if (!get(req.cookies, JWT_COOKIE_NAME)) {
-    res.cookie(
-      JWT_COOKIE_NAME,
-      get(await GQL.rootGetAnonToken(req), 'data.getAnonymousToken.jwtToken'),
-      JWT_COOKIE_PARAMS
-    )
-  }
-  next()
+  if (get(req.cookies, JWT_COOKIE_NAME)) return next()
+  const gqlRes = await GQL.getAnonymousToken(req)
+  const jwtToken = get(gqlRes, 'anonymousToken.jwtToken')
+  res.cookie(JWT_COOKIE_NAME, jwtToken, JWT_COOKIE_PARAMS)
+  return next()
 }
 
 /* eslint-disable max-params */
 function handleError(err, req, res, next) {
   // See express-async-errors
-  if (err) res.redirect('/server-error')
+  if (err) res.render('ServerErrorPage')
   next(err)
 }
 /* eslint-enable */
 
 function getJwt(req) {
-  return jwt.decode(get(req.cookies, JWT_COOKIE_NAME))
+  const jwtCookie = get(req.cookies, JWT_COOKIE_NAME)
+  if (!jwtCookie) return {}
+  return jwt.decode(jwtCookie)
 }
 
 function getRole(req) {
@@ -93,14 +92,6 @@ function setResLocals(req, res, next) {
   return next()
 }
 
-function clientizeKind(s) {
-  return s.toLowerCase().replace(/_/g, '-')
-}
-
-function getQueryState(req) {
-  return parseInt(req.query.state, 10) || 0
-}
-
 function convertBodyToVars(body) {
   const values = {}
   Object.keys(body)
@@ -113,373 +104,39 @@ app.use(ensureJwt)
 app.use(handleError)
 app.use(setResLocals)
 
-// /////////////////////////////////////////////////////////////////////////////
+// SUBJECTS ////////////////////////////////////////////////////////////////////
 
-const ROOT_PAGES = [
-  '', // home
-  '/terms',
-  '/contact',
-  '/sign-up',
-  '/log-in',
-  '/email',
-  '/password',
-  '/search-subjects',
-  '/create-subject',
-  '/create-card',
-  '/create-video-card',
-  '/create-choice-card',
-  '/create-page-card',
-  '/create-unscored-embed-card',
-]
-
-app.get('/sitemap.txt', async (req, res) => {
-  const gqlRes = await GQL.dataSitemap(req)
-  const subjects = get(gqlRes, 'data.allSubjects.nodes', []).map(
-    ({ entityId }) => `/subjects/${to58(entityId)}`
-  )
-  const cards = get(gqlRes, 'data.allCards.nodes', []).map(
-    ({ entityId, kind }) =>
-      `/${get(CARD_KIND, [kind, 'url'])}-cards/${to58(entityId)}`
-  )
-  const users = get(gqlRes, 'data.allUsers.nodes', []).map(
-    ({ id }) => `/users/${to58(id)}`
-  )
-  const root =
-    process.env.NODE_ENV === 'production' ? 'https://sagefy.org' : 'localhost'
-  res.set('Content-Type', 'text/plain').send(
-    ROOT_PAGES.concat(subjects)
-      .concat(cards)
-      .concat(users)
-      .map(u => `${root}${u}`)
-      .join('\n')
-  )
-}) // Add more public routes as they are available
-
-// TODO change to /:kind-cards/:cardId/learn
-app.get('/learn-:kind/:cardId', async (req, res) => {
-  const gqlRes = await GQL.learnGetCard(req, {
-    cardId: toU(req.params.cardId),
-    subjectId: toU(req.cookies.step),
-  })
-  const card = get(gqlRes, 'data.cardByEntityId')
-  if (!card || clientizeKind(card.kind) !== req.params.kind) {
-    return res.redirect('/server-error')
-  }
-  const progress = get(gqlRes, 'data.selectSubjectLearned')
-  return res.render(`Learn${get(CARD_KIND, [req.params.kind, 'page'])}Page`, {
-    card,
-    progress,
-  })
-})
-
-// TODO change to /:kind-cards/:cardId/learn
-app.post('/learn-choice/:cardId', async (req, res) => {
-  const gqlRes = await GQL.learnGetCard(req, {
-    cardId: toU(req.params.cardId),
-    subjectId: toU(req.cookies.step),
-  })
-  const card = get(gqlRes, 'data.cardByEntityId')
-  if (!card || clientizeKind(card.kind) !== 'choice') {
-    return res.redirect('/server-error')
-  }
-  const gqlRes2 = await GQL.learnRespondCard(req, {
-    cardId: toU(req.params.cardId),
-    response: req.body.choice,
-  })
-  const progress = get(gqlRes2, 'data.createResponse.response.learned')
-  return res.render('LearnChoicePage', { card, progress })
-})
-
-app.get('/sign-up', isAnonymous, (req, res) => res.render('SignUpPage'))
-
-app.post('/sign-up', isAnonymous, async (req, res) => {
-  const gqlRes = await GQL.rootNewUser(req, req.body)
-  const gqlErrors = getGqlErrors(gqlRes)
-  if (Object.keys(gqlErrors).length) {
-    return res.render('SignUpPage', { gqlErrors })
-  }
-  return res
-    .cookie(
-      JWT_COOKIE_NAME,
-      get(gqlRes, 'data.signUp.jwtToken'),
-      JWT_COOKIE_PARAMS
-    )
-    .redirect(
-      (req.query.redirect && decodeURIComponent(req.query.redirect)) ||
-        '/dashboard'
-    )
-})
-
-app.get('/log-in', isAnonymous, (req, res) => res.render('LogInPage'))
-
-app.post('/log-in', isAnonymous, async (req, res) => {
-  const gqlRes = await GQL.rootLogInUser(req, req.body)
-  const gqlErrors = getGqlErrors(gqlRes)
-  if (Object.keys(gqlErrors).length) {
-    return res.render('LogInPage', { gqlErrors })
-  }
-  return res
-    .cookie(
-      JWT_COOKIE_NAME,
-      get(gqlRes, 'data.logIn.jwtToken'),
-      JWT_COOKIE_PARAMS
-    )
-    .redirect(
-      (req.query.redirect && decodeURIComponent(req.query.redirect)) ||
-        '/dashboard'
-    )
-})
-
-app.get('/email', async (req, res) => {
-  const state = getQueryState(req)
-  return res.render('EmailPage', { state })
-})
-
-app.post('/email', async (req, res) => {
-  // TODO split into two routes & pages
-  if (getQueryState(req) === 2) {
-    const gqlRes = await GQL.rootEditEmail(
-      {
-        cookies: { [JWT_COOKIE_NAME]: req.query.token },
-      },
-      req.body
-    )
-    const gqlErrors = getGqlErrors(gqlRes)
-    if (Object.keys(gqlErrors).length) {
-      return res.render('EmailPage', { gqlErrors, state: 2 })
-    }
-    return res.redirect('/log-in')
-  }
-  const gqlRes = await GQL.rootNewEmailToken(req, req.body)
-  const gqlErrors = getGqlErrors(gqlRes)
-  if (Object.keys(gqlErrors).length) {
-    return res.render('EmailPage', { gqlErrors, state: 0 })
-  }
-  return res.redirect('/email?state=1')
-})
-
-app.get('/password', async (req, res) => {
-  const state = getQueryState(req)
-  return res.render('PasswordPage', { state })
-})
-
-app.post('/password', async (req, res) => {
-  // TODO split into to routes & pages
-  if (getQueryState(req) === 2) {
-    const gqlRes = await GQL.rootEditPassword(
-      {
-        cookies: { [JWT_COOKIE_NAME]: req.query.token },
-      },
-      req.body
-    )
-    const gqlErrors = getGqlErrors(gqlRes)
-    if (Object.keys(gqlErrors).length) {
-      return res.render('PasswordPage', { gqlErrors, state: 2 })
-    }
-    return res.redirect('/log-in')
-  }
-  const gqlRes = await GQL.rootNewPasswordToken(req, req.body)
-  const gqlErrors = getGqlErrors(gqlRes)
-  if (Object.keys(gqlErrors).length) {
-    return res.render('PasswordPage', { gqlErrors, state: 0 })
-  }
-  return res.redirect('/password?state=1')
-})
-
-app.get('/settings', isUser, async (req, res) => {
-  const gqlRes = await GQL.rootGetCurrentUser(req)
-  const body = get(gqlRes, 'data.getCurrentUser')
-  return res.render('SettingsPage', { body })
-})
-
-app.post('/settings', isUser, async (req, res) => {
-  const gqlRes = await GQL.rootEditUser(req, req.body)
-  const gqlErrors = getGqlErrors(gqlRes)
-  return res.render('SettingsPage', { gqlErrors })
-})
-
-app.get('/log-out', isUser, (req, res) =>
-  res.clearCookie(JWT_COOKIE_NAME).redirect('/')
-)
-
-app.get('/dashboard', isUser, async (req, res) => {
-  const gqlRes = await GQL.learnListUsubj(req)
-  const subjects = get(gqlRes, 'data.allUserSubjects.nodes', []).map(
-    ({ id, subject: { entityId, name, body } }) => ({
-      id,
-      entityId,
-      name,
-      body,
-    })
-  )
-  const name = get(gqlRes, 'data.getCurrentUser.name')
-  return res.render('DashboardPage', { subjects, name })
-})
-
-// TODO change to /subjects/search
-app.get('/search-subjects', async (req, res) => {
-  const gqlRes = await GQL.learnSearchSubject(req, req.query)
-  const subjects = get(gqlRes, 'data.searchSubjects.nodes')
+app.get('/subjects/search', async (req, res) => {
+  if (!req.query.q) return res.render('SearchSubjectsPage')
+  const gqlRes = await GQL.searchSubjects(req, req.query)
+  const subjects = get(gqlRes, 'searchSubjects.nodes')
   return res.render('SearchSubjectsPage', { subjects })
 })
 
-// TODO change to /subjects/create
-app.get('/create-subject', (req, res) => res.render('CreateSubjectPage'))
+app.get('/subjects/create', (req, res) => res.render('CreateSubjectPage'))
 
-// TODO change to /subjects/create
-app.post('/create-subject', async (req, res) => {
-  const gqlRes = await GQL.contributeNewSubject(req, req.body)
-  const gqlErrors = getGqlErrors(gqlRes)
-  if (Object.keys(gqlErrors).length) {
+app.post('/subjects/create', async (req, res) => {
+  let gqlRes
+  try {
+    gqlRes = await GQL.createSubject(req, req.body)
+  } catch (e) {
+    const gqlErrors = getGqlErrors(e)
     return res.render('CreateSubjectPage', { gqlErrors })
   }
   const role = getRole(req)
-  const { entityId, name } = get(gqlRes, 'data.newSubject.subjectVersion', {})
+  const { entityId, name } = get(gqlRes, 'createSubject.subjectVersion', {})
   if (role === 'sg_anonymous') {
-    return res.redirect(`/search-subjects?q=${name}`)
+    return res.redirect(`/subjects/search?q=${name}`)
   }
-  await GQL.learnNewUsubj(req, { subjectId: entityId })
+  await GQL.createUserSubject(req, { subjectId: entityId })
   return res.redirect('/dashboard')
 })
 
-app.get('/subjects/:subjectId/edit', async (req, res) => {
-  const subjGqlRes = await GQL.contributeGetSubject(req, {
-    entityId: toU(req.params.subjectId),
-  })
-  const subject = get(subjGqlRes, 'data.subjectByEntityId')
-  if (!subject) return res.redirect('/server-error')
-  return res.render('EditSubjectPage', { subject })
-})
-
-app.post('/subjects/:subjectId/edit', async (req, res) => {
-  const subjGqlRes = await GQL.contributeGetSubject(req, {
-    entityId: toU(req.params.subjectId),
-  })
-  const subject = get(subjGqlRes, 'data.subjectByEntityId')
-  if (!subject) return res.redirect('/server-error')
-  const editGqlRes = await GQL.contributeEditSubject(req, {
-    entityId: toU(req.body.entityId),
-    name: req.body.name,
-    body: req.body.body,
-    before: get(subject, 'beforeSubjects.nodes', []).map(
-      ({ entityId }) => entityId
-    ), // temporary
-    parent: get(subject, 'parentSubjects.nodes', []).map(
-      ({ entityId }) => entityId
-    ), // temporary
-  })
-  const gqlErrors = getGqlErrors(editGqlRes)
-  if (Object.keys(gqlErrors).length) {
-    return res.render('EditSubjectPage', { subject, gqlErrors })
-  }
-  return res.redirect(`/subjects/${req.params.subjectId}`)
-})
-
-// TODO change to /(:kind-)?cards/create
-app.get('/create(-:kind)?-card', async (req, res) => {
-  if (!req.query.subjectId) res.redirect('/')
-  const subjGqlRes = await GQL.contributeGetSubject(req, {
-    entityId: toU(req.query.subjectId),
-  })
-  const subject = get(subjGqlRes, 'data.subjectByEntityId')
-  if (!subject) return res.redirect('/server-error')
-  return res.render(
-    `Create${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
-    { subject }
-  )
-})
-
-// TODO change to /(:kind-)?cards/create
-app.post('/create(-:kind)?-card', async (req, res) => {
-  const values = convertBodyToVars(req.body)
-  values.subjectId = toU(values.subjectId)
-  if (req.body.kind === 'CHOICE') {
-    values.data.body = values.name
-    values.data.max_options_to_show = parseInt(
-      values.data.max_options_to_show,
-      10
-    )
-    values.data.options = fromPairs(
-      [0, 1, 2, 3].map(i => [
-        uuidv4(),
-        {
-          ...get(values.data.options, i),
-          correct: values.data.correct === i.toString(),
-        },
-      ])
-    )
-    delete values.data.correct
-  }
-  const gqlRes = await GQL.contributeNewCard(req, values)
-  const gqlErrors = getGqlErrors(gqlRes)
-  if (Object.keys(gqlErrors).length) {
-    return res.render(
-      `Create${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
-      { gqlErrors }
-    )
-  }
-  // TODO redirect based on how we got to create-card
-  return res.redirect(`/next?step=${req.cookies.step}`)
-})
-
-// TODO update url?
-app.get('/choose-step', async (req, res) => {
-  const role = getRole(req)
-  const { goal } = req.cookies
-  if (!goal)
-    return res.redirect(
-      role === 'sg_anonymous' ? '/search-subjects' : '/dashboard'
-    )
-  const subjects = get(
-    await GQL.learnChooseSubject(req, { subjectId: toU(goal) }),
-    'data.selectSubjectToLearn.nodes'
-  )
-  if (!subjects || !subjects.length) {
-    return res.redirect(
-      role === 'sg_anonymous' ? '/search-subjects' : '/dashboard'
-    )
-  }
-  if (subjects.length === 1) {
-    return res.redirect(`/next?step=${to58(subjects[0].entityId)}`)
-  }
-  return res.render('ChooseStepPage', { subjects })
-})
-
-/* eslint-disable max-statements */
-app.get('/next', async (req, res) => {
-  let { goal, step } = req.cookies
-  if (req.query.goal) {
-    ;({ goal } = req.query)
-    res.cookie('goal', goal, LEARN_COOKIE_PARAMS).clearCookie('step')
-    step = null
-    await GQL.learnNewUsubj(req, { subjectId: toU(goal) })
-  }
-  if (req.query.step) {
-    ;({ step } = req.query)
-    res.cookie('step', step, LEARN_COOKIE_PARAMS)
-  }
-  if (step) {
-    const gqlRes = await GQL.learnGetLearned(req, { subjectId: toU(step) })
-    if (get(gqlRes, 'data.selectSubjectLearned') >= 0.99) {
-      return res.clearCookie('step').redirect('/choose-step')
-    }
-    const gqlRes2 = await GQL.learnChooseCard(req, { subjectId: toU(step) })
-    const card = get(gqlRes2, 'data.selectCardToLearn.card')
-    if (!card) return res.redirect(`/create-card?subjectId=${step}`)
-    const { kind, entityId } = card
-    return res.redirect(`/learn-${clientizeKind(kind)}/${to58(entityId)}`)
-  }
-  if (goal) return res.redirect('/choose-step')
-  return res.redirect(
-    getRole(req) === 'sg_anonymous' ? '/search-subjects' : '/dashboard'
-  )
-}) /* eslint-enable */
-
 app.get('/subjects/:subjectId', async (req, res) => {
-  const gqlRes = await GQL.dataGetSubject(req, {
+  const gqlRes = await GQL.getSubjectPage(req, {
     entityId: toU(req.params.subjectId),
   })
-  const subject = get(gqlRes, 'data.subjectByEntityId')
+  const subject = get(gqlRes, 'subjectByEntityId')
   // -- photos for the twitter feed
   const response = await request({
     uri: `https://www.flickr.com/services/rest`,
@@ -500,20 +157,111 @@ app.get('/subjects/:subjectId', async (req, res) => {
   return res.render('SubjectPage', { subject })
 })
 
-app.get('/subjects/:subjectId/history', async (req, res) => {
-  const gqlRes = await GQL.dataListSubjectVersions(req, {
+app.get('/subjects/:subjectId/talk', async (req, res) => {
+  const gqlRes = await GQL.listSubjectPosts(req, {
     entityId: toU(req.params.subjectId),
   })
-  const subject = get(gqlRes, 'data.subjectByEntityId')
-  const versions = get(gqlRes, 'data.allSubjectVersions.nodes')
+  const entity = get(gqlRes, 'subjectByEntityId')
+  const topics = get(gqlRes, 'allTopics.nodes')
+  return res.render('SubjectTalkPage', { entity, topics })
+})
+
+app.get('/subjects/:subjectId/history', async (req, res) => {
+  const gqlRes = await GQL.listSubjectVersions(req, {
+    entityId: toU(req.params.subjectId),
+  })
+  const subject = get(gqlRes, 'subjectByEntityId')
+  const versions = get(gqlRes, 'allSubjectVersions.nodes')
   return res.render('SubjectHistoryPage', { subject, versions })
 })
 
+app.get('/subjects/:subjectId/edit', async (req, res, next) => {
+  const subjGqlRes = await GQL.getSubject(req, {
+    entityId: toU(req.params.subjectId),
+  })
+  const subject = get(subjGqlRes, 'subjectByEntityId')
+  if (!subject) next()
+  return res.render('EditSubjectPage', { subject })
+})
+
+app.post('/subjects/:subjectId/edit', async (req, res, next) => {
+  const subjGqlRes = await GQL.getSubject(req, {
+    entityId: toU(req.params.subjectId),
+  })
+  const subject = get(subjGqlRes, 'subjectByEntityId')
+  if (!subject) next()
+  try {
+    await GQL.updateSubject(req, {
+      entityId: toU(req.body.entityId),
+      name: req.body.name,
+      body: req.body.body,
+      before: get(subject, 'beforeSubjects.nodes', []).map(
+        ({ entityId }) => entityId
+      ), // temporary
+      parent: get(subject, 'parentSubjects.nodes', []).map(
+        ({ entityId }) => entityId
+      ), // temporary
+    })
+    return res.redirect(`/subjects/${req.params.subjectId}`)
+  } catch (e) {
+    const gqlErrors = getGqlErrors(e)
+    return res.render('EditSubjectPage', { subject, gqlErrors })
+  }
+})
+
+// CARDS ///////////////////////////////////////////////////////////////////////
+
+app.get('/(:kind-)?cards/create', async (req, res, next) => {
+  if (!req.query.subjectId) res.redirect('/')
+  const subjGqlRes = await GQL.getSubject(req, {
+    entityId: toU(req.query.subjectId),
+  })
+  const subject = get(subjGqlRes, 'subjectByEntityId')
+  if (!subject) return next()
+  return res.render(
+    `Create${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
+    { subject }
+  )
+})
+
+app.post('/(:kind-)?cards/create', async (req, res) => {
+  const values = convertBodyToVars(req.body)
+  values.subjectId = toU(values.subjectId)
+  if (req.body.kind === 'CHOICE') {
+    values.data.body = values.name
+    values.data.max_options_to_show = parseInt(
+      values.data.max_options_to_show,
+      10
+    )
+    values.data.options = fromPairs(
+      [0, 1, 2, 3].map(i => [
+        uuidv4(),
+        {
+          ...get(values.data.options, i),
+          correct: values.data.correct === i.toString(),
+        },
+      ])
+    )
+    delete values.data.correct
+  }
+  try {
+    await GQL.createCard(req, values)
+    // TODO redirect based on how we got here
+    return res.redirect(`/next?step=${req.cookies.step}`)
+  } catch (e) {
+    const gqlErrors = getGqlErrors(e)
+    return res.render(
+      `Create${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
+      { gqlErrors }
+    )
+  }
+})
+
 app.get('/(:kind-)?cards/:cardId', async (req, res) => {
-  const gqlRes = await GQL.dataGetCard(req, {
+  const gqlRes = await GQL.getCard(req, {
     cardId: toU(req.params.cardId),
   })
-  const card = get(gqlRes, 'data.cardByEntityId')
+  const card = get(gqlRes, 'cardByEntityId')
   return res.render(
     `${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
     { card }
@@ -521,53 +269,72 @@ app.get('/(:kind-)?cards/:cardId', async (req, res) => {
 })
 
 app.get('/(:kind-)?cards/:cardId/history', async (req, res) => {
-  const gqlRes = await GQL.dataListCardVersions(req, {
+  const gqlRes = await GQL.listCardVersions(req, {
     entityId: toU(req.params.cardId),
   })
-  const card = get(gqlRes, 'data.cardByEntityId')
-  const versions = get(gqlRes, 'data.allCardVersions.nodes')
+  const card = get(gqlRes, 'cardByEntityId')
+  const versions = get(gqlRes, 'allCardVersions.nodes')
   return res.render(
     `${get(CARD_KIND, [req.params.kind, 'page'], '')}CardHistoryPage`,
     { card, versions }
   )
 })
 
-app.get('/users/:userId', async (req, res) => {
-  const gqlRes = await GQL.dataGetUser(req, {
-    userId: toU(req.params.userId),
-  })
-  const user = get(gqlRes, 'data.userById')
-  return res.render('UserPage', { user })
-})
-
-app.get('/subjects/:subjectId/talk', async (req, res) => {
-  const gqlRes = await GQL.contributeListPostsSubject(req, {
-    entityId: toU(req.params.subjectId),
-  })
-  const entity = get(gqlRes, 'data.subjectByEntityId')
-  const topics = get(gqlRes, 'data.allTopics.nodes')
-  return res.render('TalkPage', { entity, topics })
-})
-
 app.get('/(:kind-)?cards/:cardId/talk', async (req, res) => {
-  const gqlRes = await GQL.contributeListPostsCard(req, {
+  const gqlRes = await GQL.listCardPosts(req, {
     entityId: toU(req.params.cardId),
   })
-  const entity = get(gqlRes, 'data.cardByEntityId')
-  const topics = get(gqlRes, 'data.allTopics.nodes')
-  return res.render('TalkPage', { entity, topics })
+  const entity = get(gqlRes, 'cardByEntityId')
+  const topics = get(gqlRes, 'allTopics.nodes')
+  return res.render(`${get(CARD_KIND, [entity.kind, 'page'])}CardTalkPage`, {
+    entity,
+    topics,
+  })
+})
+
+app.get('/:kind-cards/:cardId/learn', async (req, res, next) => {
+  const gqlRes = await GQL.getCardLearn(req, {
+    cardId: toU(req.params.cardId),
+    subjectId: toU(req.cookies.step),
+  })
+  const card = get(gqlRes, 'cardByEntityId')
+  if (!card || get(CARD_KIND, [card.kind, 'url']) !== req.params.kind) {
+    return next()
+  }
+  const progress = get(gqlRes, 'subjectByEntityId.learned')
+  return res.render(`Learn${get(CARD_KIND, [req.params.kind, 'page'])}Page`, {
+    card,
+    progress,
+  })
+})
+
+app.post('/choice-cards/:cardId/learn', async (req, res, next) => {
+  const gqlRes = await GQL.getCardLearn(req, {
+    cardId: toU(req.params.cardId),
+    subjectId: toU(req.cookies.step),
+  })
+  const card = get(gqlRes, 'cardByEntityId')
+  if (!card || get(CARD_KIND, [card.kind, 'url']) !== 'choice') {
+    return next()
+  }
+  const gqlRes2 = await GQL.createResponse(req, {
+    cardId: toU(req.params.cardId),
+    response: req.body.choice,
+  })
+  const progress = get(gqlRes2, 'createResponse.response.learned')
+  return res.render('LearnChoicePage', { card, progress })
 })
 
 app.post(
   ['/subjects/:subjectId/talk', '/(:kind-)?cards/:cardId/talk'],
   async (req, res) => {
-    const gqlRes = await GQL.contributeNewTopic(req, req.body)
-    const gqlErrors = getGqlErrors(gqlRes)
-    if (Object.keys(gqlErrors).length) {
+    try {
+      const gqlRes = await GQL.createTopic(req, req.body)
+      const topicId = to58(get(gqlRes, 'createTopic.topic.id'))
+      return res.redirect(`?topic-id=${topicId}#topic-${topicId}`)
+    } catch (e) {
       return res.redirect('')
     }
-    const topicId = to58(get(gqlRes, 'data.createTopic.topic.id'))
-    return res.redirect(`?topic-id=${topicId}#topic-${topicId}`)
   }
 )
 
@@ -577,32 +344,271 @@ app.post(
     '/(:kind-)?cards/:cardId/talk/:topicId/post',
   ],
   async (req, res) => {
-    const gqlRes = await GQL.contributeNewPost(req, req.body)
-    const gqlErrors = getGqlErrors(gqlRes)
-    if (Object.keys(gqlErrors).length) {
+    try {
+      const gqlRes = await GQL.createPost(req, req.body)
+      return res.redirect(
+        `..?topic-id=${req.params.topicId}#post-${to58(
+          get(gqlRes, 'createPost.post.id')
+        )}`
+      )
+    } catch (e) {
       return res.redirect(`..?topic-id=${req.params.topicId}`)
     }
-    return res.redirect(
-      `..?topic-id=${req.params.topicId}#post-${to58(
-        get(gqlRes, 'data.createPost.post.id')
-      )}`
-    )
   }
 )
+
+// LOGGED-IN ///////////////////////////////////////////////////////////////////
+
+app.get('/settings', isUser, async (req, res) => {
+  const gqlRes = await GQL.getCurrentUser(req)
+  const body = get(gqlRes, 'currentUser')
+  return res.render('SettingsPage', { body })
+})
+
+app.post('/settings', isUser, async (req, res) => {
+  try {
+    await GQL.updateUser(req, req.body)
+    return res.redirect('/settings')
+  } catch (e) {
+    const gqlErrors = getGqlErrors(e)
+    return res.render('SettingsPage', { gqlErrors })
+  }
+})
+
+app.get('/dashboard', isUser, async (req, res) => {
+  const gqlRes = await GQL.listUserSubjects(req)
+  const subjects = get(gqlRes, 'allUserSubjects.nodes', []).map(
+    ({ id, subject: { entityId, name, body } }) => ({
+      id,
+      entityId,
+      name,
+      body,
+    })
+  )
+  const name = get(gqlRes, 'currentUser.name')
+  return res.render('DashboardPage', { subjects, name })
+})
+
+// LOGGED-OUT //////////////////////////////////////////////////////////////////
+
+app.get('/steps/choose', async (req, res) => {
+  const role = getRole(req)
+  const { goal } = req.cookies
+  if (!goal) {
+    const redirUrl = role === 'sg_anonymous' ? '/subjects/search' : '/dashboard'
+    return res.redirect(redirUrl)
+  }
+  const subjects = get(
+    await GQL.chooseSubject(req, { subjectId: toU(goal) }),
+    'subjectByEntityId.nextChildSubjects.nodes'
+  )
+  if (!subjects || !subjects.length) {
+    const redirUrl = role === 'sg_anonymous' ? '/subjects/search' : '/dashboard'
+    return res.redirect(redirUrl)
+  }
+  if (subjects.length === 1) {
+    return res.redirect(`/next?step=${to58(subjects[0].entityId)}`)
+  }
+  return res.render('ChooseStepPage', { subjects })
+})
+
+/* eslint-disable max-statements */
+app.get('/next', async (req, res) => {
+  let { goal, step } = req.cookies
+  if (req.query.goal) {
+    ;({ goal } = req.query)
+    res.cookie('goal', goal, LEARN_COOKIE_PARAMS).clearCookie('step')
+    step = null
+    try {
+      await GQL.createUserSubject(req, { subjectId: toU(goal) })
+    } catch (e) {
+      ;(() => {})() // if it already exists, skip it.
+    }
+  }
+  if (req.query.step) {
+    ;({ step } = req.query)
+    res.cookie('step', step, LEARN_COOKIE_PARAMS)
+  }
+  if (step) {
+    const gqlRes = await GQL.getLearned(req, { subjectId: toU(step) })
+    if (get(gqlRes, 'subjectByEntityId.learned') >= 0.99) {
+      return res.clearCookie('step').redirect('/steps/choose')
+    }
+    const gqlRes2 = await GQL.chooseCard(req, { subjectId: toU(step) })
+    const card = get(gqlRes2, 'chooseCard.card')
+    if (!card) return res.redirect(`/cards/create?subjectId=${step}`)
+    const { kind, entityId } = card
+    return res.redirect(
+      `/${get(CARD_KIND, [kind, 'url'])}-cards/${to58(entityId)}/learn`
+    )
+  }
+  if (goal) return res.redirect('/steps/choose')
+  return res.redirect(
+    getRole(req) === 'sg_anonymous' ? '/subjects/search' : '/dashboard'
+  )
+}) /* eslint-enable */
+
+app.get('/users/:userId', async (req, res) => {
+  const gqlRes = await GQL.getUser(req, {
+    userId: toU(req.params.userId),
+  })
+  const user = get(gqlRes, 'userById')
+  return res.render('UserPage', { user })
+})
+
+app.get('/sign-up', isAnonymous, (req, res) => res.render('SignUpPage'))
+
+app.post('/sign-up', isAnonymous, async (req, res) => {
+  try {
+    const gqlRes = await GQL.createUser(req, req.body)
+    const jwtToken = get(gqlRes, 'createUser.jwtToken')
+    return res
+      .cookie(JWT_COOKIE_NAME, jwtToken, JWT_COOKIE_PARAMS)
+      .redirect(
+        (req.query.redirect && decodeURIComponent(req.query.redirect)) ||
+          '/dashboard'
+      )
+  } catch (e) {
+    const gqlErrors = getGqlErrors(e)
+    return res.render('SignUpPage', { gqlErrors })
+  }
+})
+
+app.get('/log-in', isAnonymous, (req, res) => res.render('LogInPage'))
+
+app.post('/log-in', isAnonymous, async (req, res) => {
+  try {
+    const gqlRes = await GQL.logIn(req, req.body)
+    const jwtToken = get(gqlRes, 'logIn.jwtToken')
+    const redirUrl =
+      (req.query.redirect && decodeURIComponent(req.query.redirect)) ||
+      '/dashboard'
+    return res
+      .cookie(JWT_COOKIE_NAME, jwtToken, JWT_COOKIE_PARAMS)
+      .redirect(redirUrl)
+  } catch (e) {
+    const gqlErrors = getGqlErrors(e)
+    return res.render('LogInPage', { gqlErrors })
+  }
+})
+
+app.get('/log-out', isUser, (req, res) =>
+  res.clearCookie(JWT_COOKIE_NAME).redirect('/')
+)
+
+app.get('/email', async (req, res) => res.render('EmailAskPage'))
+
+app.post('/email', async (req, res) => {
+  try {
+    await GQL.createEmailToken(req, req.body)
+    return res.redirect('/email/check')
+  } catch (e) {
+    const gqlErrors = getGqlErrors(e)
+    return res.render('EmailAskPage', { gqlErrors })
+  }
+})
+
+app.get('/email/check', async (req, res) => res.render('EmailCheckPage'))
+
+app.get('/email/edit', async (req, res) => res.render('EmailEditPage'))
+
+app.post('/email/edit', async (req, res) => {
+  try {
+    await GQL.updateEmail(
+      {
+        cookies: { [JWT_COOKIE_NAME]: req.query.token },
+      },
+      req.body
+    )
+    return res.redirect('/log-in')
+  } catch (e) {
+    const gqlErrors = getGqlErrors(e)
+    return res.render('EmailEditPage', { gqlErrors })
+  }
+})
+
+app.get('/password', async (req, res) => res.render('PasswordAskPage'))
+
+app.post('/password', async (req, res) => {
+  try {
+    await GQL.createPasswordToken(req, req.body)
+    return res.redirect('/password/check')
+  } catch (e) {
+    const gqlErrors = getGqlErrors(e)
+    return res.render('PasswordAskPage', { gqlErrors })
+  }
+})
+
+app.get('/password/check', async (req, res) => res.render('PasswordCheckPage'))
+
+app.get('/password/edit', async (req, res) => res.render('PasswordEditPage'))
+
+app.post('/password/edit', async (req, res) => {
+  try {
+    await GQL.updatePassword(
+      {
+        cookies: { [JWT_COOKIE_NAME]: req.query.token },
+      },
+      req.body
+    )
+    return res.redirect('/log-in')
+  } catch (e) {
+    const gqlErrors = getGqlErrors(e)
+    return res.render('PasswordEditPage', { gqlErrors })
+  }
+})
+
+const ROOT_PAGES = [
+  '', // home
+  '/terms',
+  '/contact',
+  '/sign-up',
+  '/log-in',
+  '/email',
+  '/password',
+  '/subjects/search',
+  '/subjects/create',
+  '/cards/create',
+  '/video-cards/create',
+  '/choice-cards/create',
+  '/page-cards/create',
+  '/unscored-embed-cards/create',
+]
+
+app.get('/sitemap.txt', async (req, res) => {
+  const gqlRes = await GQL.getSitemap(req)
+  const subjects = get(gqlRes, 'allSubjects.nodes', []).map(
+    ({ entityId }) => `/subjects/${to58(entityId)}`
+  )
+  const cards = get(gqlRes, 'allCards.nodes', []).map(
+    ({ entityId, kind }) =>
+      `/${get(CARD_KIND, [kind, 'url'])}-cards/${to58(entityId)}`
+  )
+  const users = get(gqlRes, 'allUsers.nodes', []).map(
+    ({ id }) => `/users/${to58(id)}`
+  )
+  const root =
+    process.env.NODE_ENV === 'production' ? 'https://sagefy.org' : 'localhost'
+  res.set('Content-Type', 'text/plain').send(
+    ROOT_PAGES.concat(subjects)
+      .concat(cards)
+      .concat(users)
+      .map(u => `${root}${u}`)
+      .join('\n')
+  )
+}) // Add more public routes as they are available
 
 app.get('/terms', (req, res) => res.render('TermsPage'))
 
 app.get('/contact', (req, res) => res.render('ContactPage'))
 
 app.get('/', async (req, res) => {
-  const gqlRes = await GQL.learnHome(req)
-  const subjects = get(gqlRes, 'data.selectPopularSubjects.nodes')
-  const whatIs = get(gqlRes, 'data.whatIsSagefy')
+  const gqlRes = await GQL.getHome(req)
+  const subjects = get(gqlRes, 'popularSubjects.nodes')
+  const whatIs = get(gqlRes, 'whatIsSagefy')
   if (whatIs) subjects.unshift(whatIs)
   return res.render('HomePage', { subjects })
 })
-
-app.get('/server-error', (req, res) => res.render('ServerErrorPage'))
 
 app.get('*', (req, res) => res.render('NotFoundPage'))
 

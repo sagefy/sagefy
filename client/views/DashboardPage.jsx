@@ -31,7 +31,7 @@ export default function DashboardPage({ role, subjects, name, hash }) {
             <h3>
               &hellip;or how about something else? <Icon i="search" s="h3" />
             </h3>
-            <form action="/search-subjects">
+            <form action="/subjects/search">
               <input
                 type="search"
                 size="40"
@@ -50,7 +50,7 @@ export default function DashboardPage({ role, subjects, name, hash }) {
             Let&apos;s get you some subjects! <Icon i="search" s="h2" />
           </h2>
           {/* TODO If the user has no subjects, then also list popular subjects here */}
-          <form action="/search-subjects">
+          <form action="/subjects/search">
             <p>
               <input
                 type="search"
@@ -125,13 +125,13 @@ DashboardPage.defaultProps = {
     <summary><h3 className="d-ib">Add some cards 🃏</h3></summary>
     <ul>
       <li>
-        <a href="/create-card"
+        <a href="/cards/create"
           >Add cards to 🎧 <em>An Introduction to Electronic Music</em></a
         >
         <small>(0 cards)</small>
       </li>
       <li>
-        <a href="/create-card"
+        <a href="/cards/create"
           >Add cards to 🎸 <em>Let's Play Classical Guitar</em></a
         >
         <small>(10 cards)</small>
@@ -147,7 +147,7 @@ DashboardPage.defaultProps = {
       </h3></summary
     >
 
-    <form action="/mocks/create-subject">
+    <form action="/mocks/subjects/create">
       <p>
         <label for="name">What should we call this new subject?</label>
         <input

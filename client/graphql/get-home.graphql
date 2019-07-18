@@ -1,0 +1,15 @@
+query getHome {
+  popularSubjects {
+    nodes {
+      entityId
+      name
+      body
+    }
+  }
+
+  whatIsSagefy {
+    entityId
+    name
+    body
+  }
+}

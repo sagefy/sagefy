@@ -1,0 +1,14 @@
+query getCard($cardId: UUID!) {
+  cardByEntityId(entityId: $cardId) {
+    entityId
+    name
+    kind
+    data
+
+    subject {
+      entityId
+      name
+      body
+    }
+  }
+}

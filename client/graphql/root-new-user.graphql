@@ -1,5 +1,0 @@
-mutation rootNewUser($name: String!, $email: String!, $password: String!) {
-  signUp(input: { name: $name, email: $email, password: $password }) {
-    jwtToken
-  }
-}

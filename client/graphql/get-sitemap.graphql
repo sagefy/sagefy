@@ -1,0 +1,20 @@
+query getSitemap {
+  allSubjects {
+    nodes {
+      entityId
+    }
+  }
+
+  allCards {
+    nodes {
+      entityId
+      kind
+    }
+  }
+
+  allUsers {
+    nodes {
+      id
+    }
+  }
+}
