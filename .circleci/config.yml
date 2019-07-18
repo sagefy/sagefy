@@ -18,5 +18,5 @@ jobs:
             ./dbmate wait && ./dbmate -d "./postgres/migrations" -s "./postgres/schema.sql" up
           environment:
             DATABASE_URL: postgres://sagefy@localhost:2600/sagefy?sslmode=disable
-      - run: npm install
+      - run: npm run ci:all
       - run: npm test

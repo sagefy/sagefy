@@ -6,6 +6,7 @@
   "scripts": {
     "precommit": "pretty-quick --staged",
     "postinstall": "(cd ./server && npm install) && (cd ./client && npm install)",
+    "ci:all": "npm ci && (cd ./server && npm ci) && (cd ./client && npm ci)",
     "lint": "eslint --ext .jsx,.js .",
     "test": "npm run lint",
     "posttest": "(cd server && npm run test) && (cd client && npm run test)",

@@ -2,7 +2,7 @@
 /var/sagefy/script/dbbu.sh
 cd /var/sagefy
 git pull origin master
-npm install
+npm run ci:all
 npm run dbmate up
 docker-compose restart
 echo "Was there any changes to .env?"
