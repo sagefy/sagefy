@@ -16,7 +16,9 @@ const success = Joi.object({
       kind: Joi.string().required(),
       data: Joi.object(),
     }),
-    selectSubjectLearned: Joi.number().required(),
+    subjectByEntityId: Joi.object({
+      learned: Joi.number().required(),
+    }),
   }),
 })
 

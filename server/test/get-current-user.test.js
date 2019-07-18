@@ -8,7 +8,7 @@ const {
 
 const success = Joi.object({
   data: Joi.object({
-    getCurrentUser: Joi.object({
+    currentUser: Joi.object({
       id: Joi.string()
         .guid()
         .required(),
@@ -19,7 +19,7 @@ const success = Joi.object({
 
 const fail = Joi.object({
   data: Joi.object({
-    getCurrentUser: Joi.valid(null).required(),
+    currentUser: Joi.valid(null).required(),
   }),
 })
 

@@ -7,7 +7,7 @@ const {
 
 const success = Joi.object({
   data: Joi.object({
-    sendPasswordToken: Joi.object({
+    createPasswordToken: Joi.object({
       clientMutationId: Joi.valid(null).required(),
     }),
   }),
@@ -16,7 +16,7 @@ const success = Joi.object({
 const fail = Joi.object({
   errors: Joi.array().min(1),
   data: Joi.object({
-    sendPasswordToken: Joi.valid(null).required(),
+    createPasswordToken: Joi.valid(null).required(),
   }),
 })
 

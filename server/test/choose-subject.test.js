@@ -48,7 +48,9 @@ describe('choose-subject', () => {
           })
         )
         expect(
-          body.data.chooseSubject.nodes.map(({ name }) => name)
+          body.data.subjectByEntityId.nextChildSubjects.nodes.map(
+            ({ name }) => name
+          )
         ).toMatchSnapshot()
       })
   })

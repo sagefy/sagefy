@@ -18,7 +18,7 @@ describe('get-anonymous-token', () => {
           body,
           Joi.object({
             data: Joi.object({
-              getAnonymousToken: Joi.object({
+              anonymousToken: Joi.object({
                 jwtToken: Joi.string().required(),
               }),
             }),

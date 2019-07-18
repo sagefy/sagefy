@@ -8,7 +8,7 @@ const {
 
 const success = Joi.object({
   data: Joi.object({
-    signUp: Joi.object({
+    createUser: Joi.object({
       jwtToken: Joi.string().required(),
     }),
   }),
@@ -17,7 +17,7 @@ const success = Joi.object({
 const fail = Joi.object({
   errors: Joi.array().min(1),
   data: Joi.object({
-    signUp: Joi.valid(null).required(),
+    createUser: Joi.valid(null).required(),
   }),
 })
 
