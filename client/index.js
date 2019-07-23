@@ -16,6 +16,7 @@ const request = require('request-promise-native')
 const CARD_KIND = require('./util/card-kind')
 const GQL = require('./util/gql-queries')
 const getGqlErrors = require('./util/gql-errors')
+const isUuid = require('./util/is-uuid')
 
 const JWT_COOKIE_NAME = 'jwt'
 const JWT_COOKIE_PARAMS = {
@@ -53,8 +54,8 @@ async function ensureJwt(req, res, next) {
 /* eslint-disable max-params */
 function handleError(err, req, res, next) {
   // See express-async-errors
-  if (err) res.render('ServerErrorPage')
-  next(err)
+  if (err) return res.status(500).render('ServerErrorPage')
+  return next(err)
 }
 /* eslint-enable */
 
@@ -132,10 +133,10 @@ app.post('/subjects/create', async (req, res) => {
   return res.redirect('/dashboard')
 })
 
-app.get('/subjects/:subjectId', async (req, res) => {
-  const gqlRes = await GQL.getSubjectPage(req, {
-    entityId: toU(req.params.subjectId),
-  })
+app.get('/subjects/:subjectId', async (req, res, next) => {
+  const entityId = toU(req.params.subjectId)
+  if (!isUuid(entityId)) return next()
+  const gqlRes = await GQL.getSubjectPage(req, { entityId })
   const subject = get(gqlRes, 'subjectByEntityId')
   // -- photos for the twitter feed
   const response = await request({
@@ -448,10 +449,10 @@ app.get('/next', async (req, res) => {
   )
 }) /* eslint-enable */
 
-app.get('/users/:userId', async (req, res) => {
-  const gqlRes = await GQL.getUser(req, {
-    userId: toU(req.params.userId),
-  })
+app.get('/users/:userId', async (req, res, next) => {
+  const userId = toU(req.params.userId)
+  if (!isUuid(userId)) return next()
+  const gqlRes = await GQL.getUser(req, { userId })
   const user = get(gqlRes, 'userById')
   return res.render('UserPage', { user })
 })
@@ -610,7 +611,7 @@ app.get('/', async (req, res) => {
   return res.render('HomePage', { subjects })
 })
 
-app.get('*', (req, res) => res.render('NotFoundPage'))
+app.get('*', (req, res) => res.status(404).render('NotFoundPage'))
 
 // /////////////////////////////////////////////////////////////////////////////
 
