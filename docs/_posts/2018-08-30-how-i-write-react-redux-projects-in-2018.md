@@ -38,7 +38,7 @@ Many other options exist for state managment, [MobX](https://mobx.js.org/) likel
 
 Tiny projects are better off only using React’s component state on the highest component in the tree. You can switch to Redux or another system later.
 
-There’s some other libraries I recommend using. You need `react-dom` for web projects if you are using React. `[react-redux](https://github.com/reduxjs/react-redux)` is a tiny library that gives a little more guidance on how to integrate React and Redux together. For projects that have more than one route, `[react-router](https://reacttraining.com/react-router/)` with `react-router-dom` is the most popular option. They aren’t perfect, and have changed a great deal in a short time. That said, they’ve come to a good pattern for routing.
+There’s some other libraries I recommend using. You need `react-dom` for web projects if you are using React. [`react-redux`](https://github.com/reduxjs/react-redux) is a tiny library that gives a little more guidance on how to integrate React and Redux together. For projects that have more than one route, [`react-router`](https://reacttraining.com/react-router/) with `react-router-dom` is the most popular option. They aren’t perfect, and have changed a great deal in a short time. That said, they’ve come to a good pattern for routing.
 
 ![The React/Redux flow, from youtu.be/hiaqhI62zZs](/images/react-2.jpeg)
 
@@ -64,9 +64,9 @@ There’s a few principles I’ve developed over the years working on these proj
 
 Almost goes without saying to use **Git** for version control from day one.
 
-I would start with `[**create-react-app**](https://github.com/facebook/create-react-app)`. Unless you have no company boilerplate or other configuration you need to start with. The authors of CRA work on React as well. CRA is an easy way to get started. And there’s an easy opt-out mechanism if your project needs it later. Having seen many boilerplate systems over the years, CRA is the nicest I’ve seen. `[next.js](https://github.com/zeit/next.js/)` might make sense for your project too. If you aren’t using a boilerplate, you’ll need to install and configure [Babel](https://babeljs.io/) and [Webpack](https://webpack.js.org/) yourself.
+I would start with [`**create-react-app**`](https://github.com/facebook/create-react-app). Unless you have no company boilerplate or other configuration you need to start with. The authors of CRA work on React as well. CRA is an easy way to get started. And there’s an easy opt-out mechanism if your project needs it later. Having seen many boilerplate systems over the years, CRA is the nicest I’ve seen. [`next.js`](https://github.com/zeit/next.js/) might make sense for your project too. If you aren’t using a boilerplate, you’ll need to install and configure [Babel](https://babeljs.io/) and [Webpack](https://webpack.js.org/) yourself.
 
-Other than a quick demo project, I would recommend using `[**eslint**](https://eslint.org/)`. The static analysis tools that come with `eslint` rival most statically typed languages. I usually opt for the [AirBnB ruleset ](https://www.npmjs.com/package/eslint-config-airbnb)— full for React projects, base otherwise. And I also add in the `[prettier](https://prettier.io/)` exceptions. There’s other configurations out there too that might work better for your project.
+Other than a quick demo project, I would recommend using [`**eslint**`](https://eslint.org/). The static analysis tools that come with `eslint` rival most statically typed languages. I usually opt for the [AirBnB ruleset ](https://www.npmjs.com/package/eslint-config-airbnb)— full for React projects, base otherwise. And I also add in the [`prettier`](https://prettier.io/) exceptions. There’s other configurations out there too that might work better for your project.
 
 ```
 {
@@ -94,7 +94,7 @@ singleQuote: true
 trailingComma: es5
 ```
 
-Even if you aren’t using React/Redux, I would recommend using `[**lodash.get**](https://www.npmjs.com/package/lodash.get)`**.** Heavily. Branch coverage in JavaScript can become a real problem. Having to write and test every possible branch will make your tests much more brittle. JavaScript usually operates in an environment where almost anything can happen. There are rarely any guarantees. `lodash.get` is one of the tools to help deal with that reality.
+Even if you aren’t using React/Redux, I would recommend using [`**lodash.get**`](https://www.npmjs.com/package/lodash.get)**.** Heavily. Branch coverage in JavaScript can become a real problem. Having to write and test every possible branch will make your tests much more brittle. JavaScript usually operates in an environment where almost anything can happen. There are rarely any guarantees. `lodash.get` is one of the tools to help deal with that reality.
 
 ```
 // before lodash.get
@@ -108,9 +108,9 @@ const userEmail = state &&
 const userEmail = get(state, ['users', userId, 'email'], '')
 ```
 
-There’s many **styling** tool options today. In recent years I’ve worked with `[sass](https://sass-lang.com/)`, `[stylus](http://stylus-lang.com/)`, and `[glamor](https://github.com/threepointone/glamor)` the most. Every project has different requirements here so I can’t make a general recommendation. If you are starting a new project, I would drop in `[normalize.css](https://necolas.github.io/normalize.css/)` and then have a single CSS file. You can change to something else when the file becomes too large. You could also look at a full CSS system like [tachyons](https://tachyons.io/) or [Bootstrap](https://getbootstrap.com/) if your project doesn’t have too specific design requirements.
+There’s many **styling** tool options today. In recent years I’ve worked with [`sass`](https://sass-lang.com/), [`stylus`](http://stylus-lang.com/), and [`glamor`](https://github.com/threepointone/glamor) the most. Every project has different requirements here so I can’t make a general recommendation. If you are starting a new project, I would drop in [`normalize.css`](https://necolas.github.io/normalize.css/) and then have a single CSS file. You can change to something else when the file becomes too large. You could also look at a full CSS system like [tachyons](https://tachyons.io/) or [Bootstrap](https://getbootstrap.com/) if your project doesn’t have too specific design requirements.
 
-**Localization** isn’t a solved problem. The browser built-in `[window.Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)` can get you pretty far by itself.
+**Localization** isn’t a solved problem. The browser built-in [`window.Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) can get you pretty far by itself.
 
 ## Directory Structure
 
@@ -144,7 +144,7 @@ Every project should have a [**README**](https://en.wikipedia.org/wiki/README). 
 - A list of the directories in the project, and what their intended purpose is.
 - A list of top level `npm`/`yarn` commands and what they do.
 
-Your boilerplate may or may not include a `[**package.json**](https://docs.npmjs.com/files/package.json)` for you to use. The JS community used to do Grunt and then later Gulp. But now there seems to be a consensus to use the `scripts` section of `package.json.` You'll have development, build, and test commands. `package.json` now also serves as your home for tooling configuration. I could write a whole article about only this one file, so for this article that’s all I’m going to say about `package.json`.
+Your boilerplate may or may not include a [`**package.json**`](https://docs.npmjs.com/files/package.json) for you to use. The JS community used to do Grunt and then later Gulp. But now there seems to be a consensus to use the `scripts` section of `package.json.` You'll have development, build, and test commands. `package.json` now also serves as your home for tooling configuration. I could write a whole article about only this one file, so for this article that’s all I’m going to say about `package.json`.
 
 ```
 {
@@ -172,7 +172,7 @@ If your project is client side only — has no [SEO](https://en.wikipedia.or
 
 - Creating your Redux store,
 - Integrating your Redux middleware, and
-- Binding your store to React with `[Provider](https://github.com/reduxjs/react-redux/blob/master/docs/api.md#provider-store)` from `react-redux`, and
+- Binding your store to React with [`Provider`](https://github.com/reduxjs/react-redux/blob/master/docs/api.md#provider-store) from `react-redux`, and
 - Binding ReactDOM to your actual DOM.
 
 If you are using React Router, then [BrowserRouter](https://reacttraining.com/react-router/web/api/BrowserRouter) will be in this file.
@@ -201,7 +201,7 @@ Your `**server.js**` file will need to
 - You’ll need to make any necessary service calls here to generate your Redux state.
 - If you are using React Router, then [StaticRouter](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/StaticRouter.md) will be in this file.
 - You’ll also need your base HTML markup.
-- Then you’ll put the finished state and initial React HTML,— rendered with `[react-dom/server](https://reactjs.org/docs/react-dom-server.html)` — into your HTML template.
+- Then you’ll put the finished state and initial React HTML,— rendered with [`react-dom/server`](https://reactjs.org/docs/react-dom-server.html) — into your HTML template.
 
 For actually handling requests, I would recommend [Express](https://expressjs.com/). **Express** is easy to use and well supported, and perfect for this sort of situation.
 
@@ -325,7 +325,7 @@ function createDefaultState(schema) {
 }
 ```
 
-For writing your [**reducers**](https://redux.js.org/basics/reducers), there’s been a growing consensus around the [duck pattern](https://github.com/erikras/ducks-modular-redux) and [Flux Standard Actions](https://github.com/redux-utilities/flux-standard-action). I would recommend using those. And your top level reducer can be Redux’s `[combineReducers](https://redux.js.org/api/combinereducers)`.
+For writing your [**reducers**](https://redux.js.org/basics/reducers), there’s been a growing consensus around the [duck pattern](https://github.com/erikras/ducks-modular-redux) and [Flux Standard Actions](https://github.com/redux-utilities/flux-standard-action). I would recommend using those. And your top level reducer can be Redux’s [`combineReducers`](https://redux.js.org/api/combinereducers).
 
 I’ve worked on projects where every field and collection had its own unique set of actions. I’ve also worked on projects where the same set of actions were available on each field and collection, and all worked the same way. The **consistent** approach is easier to work with. For each of my “global”, flat fields, I will have two actions: _set_ and _reset._ The set can work with any value, and _reset_ will return the value back to the default. For my collections, I have seven action types: _add one_, _add many_, _update one_, _update many_, _remove one_, _remove many_, _reset_. And across collections, these all work exactly the same way. I like to have exactly those seven, so I always know what each collection can do without looking up my reducer.
 
@@ -375,7 +375,7 @@ dispatch(setUserId('abcd1234'))
 
 If you choose to have consistent actions, you will see the vast **boilerplate** that Redux generates. I would wait a bit until the pattern is completely clear before trying to DRY it up, and even then a little at a time.
 
-Side note: I haven’t had any positive experiences with `[immutable.js](https://facebook.github.io/immutable-js/)`. Keeping mental track of plain versus immutable data was hard for a single contributor. And impossible for a team. If you’re thinking about that approach, `[immer](https://github.com/mweststrate/immer)` seems a bit more reasonable.
+Side note: I haven’t had any positive experiences with [`immutable.js`](https://facebook.github.io/immutable-js/). Keeping mental track of plain versus immutable data was hard for a single contributor. And impossible for a team. If you’re thinking about that approach, [`immer`](https://github.com/mweststrate/immer) seems a bit more reasonable.
 
 _Update/Edit 2018 Oct 10:_ Check out [Redux Starter Kit](https://github.com/reduxjs/redux-starter-kit) and my [Redux Schemad](https://github.com/heiskr/redux-schemad).
 
@@ -400,7 +400,7 @@ I like having at least one sample of each endpoint I will use in the project. Th
 
 ## Services
 
-There’s lots of ways to make **network requests**. For one, straight up `[XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)` might work for you. Otherwise, I’ve seen a growing consensus about the browser built-in, Promise-based `[window.fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)`. If you need to server-side rendering, you can find a package to get `fetch` to also run on the server. (On `[async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`[/](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`[await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)`: Until there’s more browser support, it transpiles heavy… I wouldn’t use it in the browser yet.)
+There’s lots of ways to make **network requests**. For one, straight up [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) might work for you. Otherwise, I’ve seen a growing consensus about the browser built-in, Promise-based [`window.fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API). If you need to server-side rendering, you can find a package to get `fetch` to also run on the server. (On [`async`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)[/](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)[`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function): Until there’s more browser support, it transpiles heavy… I wouldn’t use it in the browser yet.)
 
 In my services directory, I would have either one file per family of endpoints (`GET`/`POST`/`PUT`/`DELETE`). Or I would do one file per endpoint, if there is one than one service with several endpoints.
 
@@ -477,7 +477,7 @@ If you’re not in one of these three categories, I would stick to Redux and Red
 
 So how do we write Redux middleware? Sometimes the direct approach is best. Redux’s authors chose middleware to use the [currying](https://en.wikipedia.org/wiki/Currying) pattern, so I recommend being familiar with currying.
 
-There’s two primary ways to think about cascading state changes. One way is to listen to actions as we dispatch them, and call functions that match. `[redux-saga](https://redux-saga.js.org/)`, a popular library, falls into this category.
+There’s two primary ways to think about cascading state changes. One way is to listen to actions as we dispatch them, and call functions that match. [`redux-saga`](https://redux-saga.js.org/), a popular library, falls into this category.
 
 ```
 const serviceMiddleware = store => next => action => {
@@ -506,7 +506,7 @@ dispatch((dispatch, getState) => {
 })
 ```
 
-Lots of projects are using `[redux-thunk](https://github.com/reduxjs/redux-thunk)`. When you dispatch a function instead of a plain object, the middleware calls the function. The function has access to store methods `getState` and `dispatch`. The access is what `redux-thunk` provides. Otherwise, it provides no guidance on how to make these state changes. For a single contributor, this is fine. For a team, this may be problematic.
+Lots of projects are using [`redux-thunk`](https://github.com/reduxjs/redux-thunk). When you dispatch a function instead of a plain object, the middleware calls the function. The function has access to store methods `getState` and `dispatch`. The access is what `redux-thunk` provides. Otherwise, it provides no guidance on how to make these state changes. For a single contributor, this is fine. For a team, this may be problematic.
 
 I’ve seen both approaches — ‘listen then do’ and ‘do many’ — work. I have a preference for the “listen then do” approach. My reasons are:
 
@@ -514,7 +514,7 @@ I’ve seen both approaches — ‘listen then do’ and ‘do many’ —
 - You end up with lots of little, easy to **test** functions instead of big functions that are harder to test.
 - It’s easier to keep your state changes in one place. As a result, its easier to see the **flow** of changes.
 
-My own approach is to use my `[redux-listen](https://github.com/heiskr/redux-listen)` library. That said, it isn’t popular by any means. I find `redux-saga` heavy for most projects, and `redux-thunk` provides too little guidance. You can also easily write your own Redux middleware that makes sense for your project. I can’t make a general recommendation here, other than it depends on the project.
+My own approach is to use my [`redux-listen`](https://github.com/heiskr/redux-listen) library. That said, it isn’t popular by any means. I find `redux-saga` heavy for most projects, and `redux-thunk` provides too little guidance. You can also easily write your own Redux middleware that makes sense for your project. I can’t make a general recommendation here, other than it depends on the project.
 
 ## Selectors
 
@@ -539,7 +539,7 @@ function Messages(state) {
 }
 ```
 
-Soon though, the view has so much formatting and logic its hard to read or reason about. The next step is to use `[connect](https://redux.js.org/basics/usagewithreact)` from `react-redux` and have a `mapStateToProps` function. `mapStateToProps` takes the full state and returns an object that will be the props for the view. You can move your data reformatting into `mapStateToProps`. Now you have an easy-to-read view and a separate formatting function.
+Soon though, the view has so much formatting and logic its hard to read or reason about. The next step is to use [`connect`](https://redux.js.org/basics/usagewithreact) from `react-redux` and have a `mapStateToProps` function. `mapStateToProps` takes the full state and returns an object that will be the props for the view. You can move your data reformatting into `mapStateToProps`. Now you have an easy-to-read view and a separate formatting function.
 
 ```
 function Messages({ messages }) {
@@ -593,7 +593,7 @@ function mapStateToProps(state) {
 }
 ```
 
-If you want, you can use the `[reselect](https://github.com/reduxjs/reselect)` library to help compose selectors together. You don’t have to use this library, but I recommend at minimum reading its README to grasp the pattern. Once you have lots of selectors, the library will be more useful to you.
+If you want, you can use the [`reselect`](https://github.com/reduxjs/reselect) library to help compose selectors together. You don’t have to use this library, but I recommend at minimum reading its README to grasp the pattern. Once you have lots of selectors, the library will be more useful to you.
 
 Here’s the list of things you want to take out of your view and put in either `mapStateToProps` or a selector:
 
@@ -639,7 +639,7 @@ export default connect(mapStateToProps)(Route)
 <Route path="/messages" component={Route} />
 ```
 
-`react-redux` will come into play on containers and routes. You want to use `connect` and `mapStateToProps` to connect your state to your view. That keeps that stuff out of the view function itself. `[mapDispatchToProps](https://github.com/reduxjs/react-redux/blob/master/docs/api.md)` will help you bind your action creators to your store. In some places, I’ve also had to create a `mapPropsToProps` to keep my selectors, logic, and formatting out the view.
+`react-redux` will come into play on containers and routes. You want to use `connect` and `mapStateToProps` to connect your state to your view. That keeps that stuff out of the view function itself. [`mapDispatchToProps`](https://github.com/reduxjs/react-redux/blob/master/docs/api.md) will help you bind your action creators to your store. In some places, I’ve also had to create a `mapPropsToProps` to keep my selectors, logic, and formatting out the view.
 
 [**JSX**](https://reactjs.org/docs/introducing-jsx.html) is the most controversial part of React. I would recommend using JSX. I don’t love the mixture of HTML and JS. It’s always felt weird to me, even years later. But most other projects are going to use JSX. And the tooling around JSX is spectacular. You get quite a bit for low effort by using JSX. I wish the authors of React chose a straight up JavaScript way to handle templating. But that decision is in the past now.
 
