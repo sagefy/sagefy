@@ -188,41 +188,6 @@ comment on function sg_public.select_my_subjects()
 grant execute on function sg_public.select_my_subjects()
   to sg_user, sg_admin;
 
-create function sg_public.edit_card(
-  entity_id uuid,
-  name text,
-  tags text[],
-  subject_id uuid,
-  kind text
-  data jsonb
-)
-returns sg_public.card_version as $$
-  with previous as (
-    select *
-    from sg_public.card
-    where sg_public.card.entity_id = entity_id
-    limit 1
-  )
-  insert into sg_public.card_version
-  (entity_id, previous_id, name, tags, subject_id, kind, data)
-  values (entity_id, previous.version_id, name, tags, subject_id, kind, data);
-$$ language 'plpgsql' volatile;
-comment on function sg_public.edit_card(
-  uuid,
-  text,
-  text[],
-  uuid,
-  text
-  jsonb
-) is 'Edit an existing card.';
-grant execute on function sg_public.edit_card(
-  uuid,
-  text,
-  text[],
-  uuid,
-  text
-  jsonb
-) to sg_anonymous, sg_user, sg_admin;
 
 -- Update & delete card and subject: admin.
 grant update, delete on table sg_public.subject_version to sg_admin;

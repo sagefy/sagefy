@@ -52,7 +52,11 @@ export default function UnscoredEmbedCardPage({
                 <Icon i="history" s="s" /> History
               </a>
             </li>
-            {/* <li><a href="/mocks/update-card">🌳 Edit</a></li> */}
+            <li>
+              <a href={`/unscored-embed-cards/${to58(cardEntityId)}/edit`}>
+                <Icon i="edit" s="s" /> Edit
+              </a>
+            </li>
           </ul>
         </small>
         {/* TODO stats */}

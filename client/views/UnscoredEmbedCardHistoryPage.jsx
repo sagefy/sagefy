@@ -44,6 +44,11 @@ export default function UnscoredEmbedCardHistoryPage({
             <li>
               <Icon i="history" s="s" /> History
             </li>
+            <li>
+              <a href={`/unscored-embed-cards/${to58(cardEntityId)}/edit`}>
+                <Icon i="edit" s="s" /> Edit
+              </a>
+            </li>
           </ul>
         </small>
       </header>

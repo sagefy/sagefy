@@ -212,6 +212,24 @@ app.post('/subjects/:subjectId/edit', async (req, res, next) => {
 
 // CARDS ///////////////////////////////////////////////////////////////////////
 
+function transformValuesForChoice(values) {
+  /* eslint-disable camelcase */
+  const { name } = values
+  const { max_options_to_show, options, correct } = values.data
+  const data = {
+    body: name,
+    max_options_to_show: parseInt(max_options_to_show, 10),
+    options: fromPairs(
+      Object.keys(options).map(i => [
+        isUuid(i) ? i : uuidv4(),
+        { ...get(options, i), correct: correct === i.toString() },
+      ])
+    ),
+  }
+  return { ...values, data }
+  /* eslint-enable */
+}
+
 app.get('/(:kind-)?cards/create', async (req, res, next) => {
   if (!req.query.subjectId) res.redirect('/')
   const subjGqlRes = await GQL.getSubject(req, {
@@ -226,24 +244,10 @@ app.get('/(:kind-)?cards/create', async (req, res, next) => {
 })
 
 app.post('/(:kind-)?cards/create', async (req, res) => {
-  const values = convertBodyToVars(req.body)
+  let values = convertBodyToVars(req.body)
   values.subjectId = toU(values.subjectId)
   if (req.body.kind === 'CHOICE') {
-    values.data.body = values.name
-    values.data.max_options_to_show = parseInt(
-      values.data.max_options_to_show,
-      10
-    )
-    values.data.options = fromPairs(
-      [0, 1, 2, 3].map(i => [
-        uuidv4(),
-        {
-          ...get(values.data.options, i),
-          correct: values.data.correct === i.toString(),
-        },
-      ])
-    )
-    delete values.data.correct
+    values = transformValuesForChoice(values)
   }
   try {
     await GQL.createCard(req, values)
@@ -291,6 +295,46 @@ app.get('/(:kind-)?cards/:cardId/talk', async (req, res) => {
     entity,
     topics,
   })
+})
+
+app.get('/(:kind-)?cards/:cardId/edit', async (req, res) => {
+  const gqlRes = await GQL.getCard(req, {
+    cardId: toU(req.params.cardId),
+  })
+  const card = get(gqlRes, 'cardByEntityId')
+  const subject = get(card, 'subject')
+  return res.render(
+    `${get(CARD_KIND, [req.params.kind, 'page'], '')}CardEditPage`,
+    { card, subject }
+  )
+})
+
+app.post('/(:kind-)?cards/:cardId/edit', async (req, res) => {
+  const cardId = toU(req.params.cardId)
+  let values = convertBodyToVars(req.body)
+  values.subjectId = toU(values.subjectId)
+  values.entityId = cardId
+  if (req.body.kind === 'CHOICE') {
+    values = transformValuesForChoice(values)
+  }
+  try {
+    await GQL.updateCard(req, values)
+    return res.redirect(`/${req.params.kind}-cards/${req.params.cardId}`)
+  } catch (e) {
+    const gqlErrors = getGqlErrors(e)
+    const gqlRes = await GQL.getCard(req, { cardId })
+    const card = get(gqlRes, 'cardByEntityId')
+    const subject = get(card, 'subject')
+    return res.render(
+      `${get(CARD_KIND, [req.params.kind, 'page'], '')}CardEditPage`,
+      {
+        gqlErrors,
+        card,
+        subject,
+        body: { ...req.body, options: values.options },
+      }
+    )
+  }
 })
 
 app.get('/:kind-cards/:cardId/learn', async (req, res, next) => {

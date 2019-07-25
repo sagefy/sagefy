@@ -60,7 +60,11 @@ export default function VideoCardPage({
                 <Icon i="history" s="s" /> History
               </a>
             </li>
-            {/* <li><a href="/mocks/update-card">🌳 Edit</a></li> */}
+            <li>
+              <a href={`/video-cards/${to58(cardEntityId)}/edit`}>
+                <Icon i="edit" s="s" /> Edit
+              </a>
+            </li>
           </ul>
         </small>
         {/* TODO stats */}

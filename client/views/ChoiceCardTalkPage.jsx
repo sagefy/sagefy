@@ -43,6 +43,12 @@ export default function TalkPage({
                 <Icon i="history" s="s" /> History
               </a>
             </li>
+
+            <li>
+              <a href={`/choice-cards/${to58(entityId)}/edit`}>
+                <Icon i="edit" s="s" /> Edit
+              </a>
+            </li>
           </ul>
         </small>
       </header>

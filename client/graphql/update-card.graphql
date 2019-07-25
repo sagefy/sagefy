@@ -1,0 +1,26 @@
+mutation updateCard(
+  $entityId: UUID!
+  $name: String!
+  $subjectId: UUID!
+  $kind: CardKind!
+  $data: JSON!
+) {
+  updateCard(
+    input: {
+      entityId: $entityId
+      name: $name
+      tags: []
+      subjectId: $subjectId
+      kind: $kind
+      data: $data
+    }
+  ) {
+    cardVersion {
+      versionId
+      entityId
+      name
+      kind
+      data
+    }
+  }
+}

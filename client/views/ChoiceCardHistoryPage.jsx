@@ -43,6 +43,11 @@ export default function ChoiceCardHistoryPage({
             <li>
               <Icon i="history" s="s" /> History
             </li>
+            <li>
+              <a href={`/choice-cards/${to58(cardEntityId)}/edit`}>
+                <Icon i="edit" s="s" /> Edit
+              </a>
+            </li>
           </ul>
         </small>
       </header>

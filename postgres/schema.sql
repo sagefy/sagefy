@@ -1003,28 +1003,28 @@ CREATE FUNCTION sg_public.choose_card(subject_id uuid) RETURNS sg_public.card
   declare
     xsubject sg_public.subject;
     xprior sg_public.response;
-    rand double precision;
     kinds sg_public.card_kind[];
+    xcard sg_public.card;
   begin
     select * into xsubject
     from sg_public.subject
     where entity_id = $1;
     select * into xprior
     from sg_public.subject_latest_response(xsubject);
-    rand := random();
     if (random() < (0.5 + 0.5 * sg_public.subject_learned(xsubject))) then
       kinds := array['choice'];
     else
       kinds := array['video', 'page', 'unscored_embed'];
     end if;
-    select c.*
+    select c.* into xcard
     from sg_public.card c
     where c.subject_id = $1
       and c.kind = any(kinds)
       and (xprior.card_id is null or c.entity_id <> xprior.card_id)
-      and rand < sg_public.subject_card_count(xsubject) / 10::real
+      and random() < sg_public.subject_card_count(xsubject) / 10::real
     order by random()
     limit 1;
+    return xcard;
   end;
   -- Future version: When estimating parameters and the card kind is scored,
   -- prefer 0.25 < correct < 0.75
@@ -1874,6 +1874,42 @@ $_$;
 --
 
 COMMENT ON FUNCTION sg_public.subject_user_count(sg_public.subject) IS 'Count the number of logged in users learning the subject.';
+
+
+--
+-- Name: update_card(uuid, text, text[], uuid, text, jsonb); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.update_card(entity_id uuid, name text, tags text[], subject_id uuid, kind text, data jsonb) RETURNS sg_public.card_version
+    LANGUAGE plpgsql STRICT SECURITY DEFINER
+    AS $$
+  declare
+    xprevious sg_public.card;
+    xversion_id uuid;
+    xcard_version sg_public.card_version;
+  begin
+    select * into xprevious
+    from sg_public.card_by_entity_id(entity_id);
+    if (xprevious is null) then
+      raise exception 'No previous version found.' using errcode = 'CF018471';
+    end if;
+    xversion_id := uuid_generate_v4();
+    insert into sg_public.entity_version
+    (version_id, entity_kind) values (xversion_id, 'card');
+    insert into sg_public.card_version
+    (entity_id, previous_id, name, tags, subject_id, kind, data)
+    values (entity_id, xprevious.version_id, name, tags, subject_id, kind, data)
+    returning * into xcard_version;
+    return xcard_version;
+  end;
+$$;
+
+
+--
+-- Name: FUNCTION update_card(entity_id uuid, name text, tags text[], subject_id uuid, kind text, data jsonb); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.update_card(entity_id uuid, name text, tags text[], subject_id uuid, kind text, data jsonb) IS 'Update an existing card.';
 
 
 --
@@ -3816,4 +3852,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190715015859'),
     ('20190716223347'),
     ('20190718184132'),
-    ('20190718190417');
+    ('20190718190417'),
+    ('20190724165943');

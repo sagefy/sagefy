@@ -60,6 +60,7 @@ const KNOWN_ERRORS = [
 const DEFAULT_FIELD = 'all'
 
 module.exports = function getGqlErrors(e) {
+  console.error(e)
   return get(e, 'response.errors', [])
     .map(({ message }) => {
       const found = KNOWN_ERRORS.find(({ key }) => message.indexOf(key) > -1)

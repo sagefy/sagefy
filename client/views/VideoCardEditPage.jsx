@@ -2,36 +2,41 @@
 import React from 'react'
 import { string, shape } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
+import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
 import FormErrorsTop from './components/FormErrorsTop'
 import FormErrorsField from './components/FormErrorsField'
 
-export default function CreateVideoCardPage({
+export default function VideoCardEditPage({
   hash,
   role,
-  query: { subjectId },
-  subject: { name: subjectName, body: subjectBody },
-  body: { name, data$video_id },
+  subject: { entityId: subjectId, name: subjectName, body: subjectBody },
+  card: {
+    entityId: cardId,
+    name: prevName,
+    data: { video_id: prevVideoId, site: prevSite },
+  },
+  body: { name: bodyName, data$video_id: bodyVideoId, data$site: bodySite },
   gqlErrors,
 }) {
   return (
     <Layout
       hash={hash}
-      page="CreateVideoCardPage"
-      title={`Create a video card for ${subjectName}`}
-      description={`Help us build Sagefy by making a video card for ${subjectName}.`}
+      page="VideoCardEditPage"
+      title={`Edit a video card for ${subjectName}`}
+      description={`Help us build Sagefy by updating a video card for ${subjectName}.`}
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
       <header className="my-c">
         <p>
           <em>
-            Great, a video card! <Icon i="video" />
+            Ready for change? <Icon i="video" />
           </em>
         </p>
         <h1 className="d-ib">
-          Make a new video card <Icon i="card" s="h1" />
+          Edit a video card <Icon i="card" s="h1" />
         </h1>
         <details>
           <summary>
@@ -44,13 +49,13 @@ export default function CreateVideoCardPage({
       </header>
       <section>
         <form method="POST">
-          <input type="hidden" name="subjectId" value={subjectId} />
+          <input type="hidden" name="subjectId" value={to58(subjectId)} />
           <input type="hidden" name="kind" value="VIDEO" />
           <p>
-            <label htmlFor="name">What should we call this new card?</label>
+            <label htmlFor="name">What should we call this card?</label>
             <input
               type="text"
-              value={name}
+              value={bodyName || prevName}
               placeholder="example: A clip on guitar anatomy"
               size="40"
               id="name"
@@ -71,7 +76,7 @@ export default function CreateVideoCardPage({
                       type="radio"
                       name="data$site"
                       value="youtube"
-                      defaultChecked
+                      checked={(bodySite || prevSite) === 'youtube'}
                     />{' '}
                     <code>https://youtube.com/watch?v=</code>
                   </label>
@@ -79,7 +84,7 @@ export default function CreateVideoCardPage({
                 <td rowSpan="2">
                   <input
                     type="text"
-                    value={data$video_id}
+                    value={bodyVideoId || prevVideoId}
                     size="15"
                     id="data$video_id"
                     name="data$video_id"
@@ -90,7 +95,12 @@ export default function CreateVideoCardPage({
               <tr>
                 <td>
                   <label>
-                    <input type="radio" name="data$site" value="vimeo" />{' '}
+                    <input
+                      type="radio"
+                      name="data$site"
+                      value="vimeo"
+                      checked={(bodySite || prevSite) === 'vimeo'}
+                    />{' '}
                     <code>https://vimeo.com/</code>
                   </label>
                 </td>
@@ -101,7 +111,7 @@ export default function CreateVideoCardPage({
           <FormErrorsField formErrors={gqlErrors} field="data$video_id" />
           <p>
             <button type="submit">
-              <Icon i="video" /> Create Video Card
+              <Icon i="video" /> Edit Video Card
             </button>
           </p>
         </form>
@@ -112,10 +122,10 @@ export default function CreateVideoCardPage({
           <p>
             <em>
               Advice: We recommend{' '}
-              <a href={`/sign-up?return=/cards/create?subjectId=${subjectId}`}>
+              <a href={`/sign-up?return=/video-cards/${to58(cardId)}/edit`}>
                 joining
               </a>{' '}
-              before you create content,
+              before you edit content,
               <br />
               so you can easily continue later!
             </em>
@@ -126,33 +136,36 @@ export default function CreateVideoCardPage({
   )
 }
 
-CreateVideoCardPage.propTypes = {
+VideoCardEditPage.propTypes = {
   hash: string.isRequired,
   role: string,
-  query: shape({
-    subjectId: string,
-  }),
   subject: shape({
+    entityId: string.isRequired,
     name: string.isRequired,
     body: string.isRequired,
+  }).isRequired,
+  card: shape({
+    entityId: string.isRequired,
+    name: string.isRequired,
+    data: shape({
+      video_id: string.isRequired,
+      site: string.isRequired,
+    }).isRequired,
   }).isRequired,
   body: shape({
     name: string,
     data$video_id: string,
+    data$site: string,
   }),
   gqlErrors: shape({}),
 }
 
-CreateVideoCardPage.defaultProps = {
+VideoCardEditPage.defaultProps = {
   role: 'sg_anonymous',
-  query: {
-    subjectId: '',
-    kind: '',
-    name: '',
-  },
   body: {
     name: '',
     data$video_id: '',
+    data$site: '',
   },
   gqlErrors: {},
 }

@@ -31,6 +31,7 @@
     "lodash.frompairs": "^4.0.1",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
+    "lodash.topairs": "^4.3.0",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
