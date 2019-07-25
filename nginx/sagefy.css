@@ -596,11 +596,12 @@ summary {
 /* 13. Soften the shape of big boxy elements. *********************************/
 
 code,
+pre,
 samp,
 kbd,
 mark {
-  padding: 0.25rem;
-  margin: -0.25rem;
+  padding: 0.125rem;
+  margin: -0.125rem;
 }
 
 img,
