@@ -1,3 +1,4 @@
+/*
 ---
 layout: mocks
 title: Search
@@ -115,3 +116,5 @@ title: Search
     </form>
   </details>
 </section>
+
+*/

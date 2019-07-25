@@ -1,3 +1,4 @@
+/*
 ---
 layout: mocks
 title: Notices
@@ -38,3 +39,5 @@ title: Notices
     </ul>
   </small>
 </section>
+
+*/
