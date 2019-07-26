@@ -2,6 +2,11 @@ const { createTransport } = require('nodemailer')
 const { Client } = require('pg')
 const jwt = require('jsonwebtoken')
 
+const ROOT =
+  process.env.NODE_ENV === 'production'
+    ? 'https://sagefy.org'
+    : 'http://localhost'
+
 const SENDER = 'support@sagefy.org'
 
 const FOOTER_TEXT = `
@@ -29,7 +34,7 @@ ${FOOTER_TEXT}
 const PASSWORD_TOKEN_SUBJECT = 'Sagefy - Verification Request'
 const PASSWORD_TOKEN_TEXT = `
 To verify and update your account, please visit:
-https://sagefy.org/password/edit?token={token}
+{ROOT}/password/edit?token={token}
 
 If you did not request a password change, please reply immediately.
 
@@ -38,7 +43,7 @@ ${FOOTER_TEXT}
 const EMAIL_TOKEN_SUBJECT = 'Sagefy - Verification Request'
 const EMAIL_TOKEN_TEXT = `
 To verify and update your account, please visit:
-https://sagefy.org/email/edit?token={token}
+{ROOT}/email/edit?token={token}
 
 If you did not request an email change, please reply immediately.
 
@@ -109,7 +114,10 @@ async function listenToNotification(msg) {
     return sendMail({
       to,
       subject: PASSWORD_TOKEN_SUBJECT,
-      body: PASSWORD_TOKEN_TEXT.replace('{token}', token),
+      body: PASSWORD_TOKEN_TEXT.replace('{token}', token).replace(
+        '{ROOT}',
+        ROOT
+      ),
     })
   }
   if (msg.channel === 'send_email_token') {
@@ -121,7 +129,7 @@ async function listenToNotification(msg) {
     return sendMail({
       to,
       subject: EMAIL_TOKEN_SUBJECT,
-      body: EMAIL_TOKEN_TEXT.replace('{token}', token),
+      body: EMAIL_TOKEN_TEXT.replace('{token}', token).replace('{ROOT}', ROOT),
     })
   }
   if (msg.channel === 'update_email') {

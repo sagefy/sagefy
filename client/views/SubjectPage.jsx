@@ -31,6 +31,7 @@ export default function SubjectPage({
     name: subjectName,
     body: subjectBody,
     details: subjectDetails,
+    slug: subjectSlug,
     childSubjects,
     beforeSubjects,
     afterSubjects,
@@ -49,6 +50,7 @@ export default function SubjectPage({
         subjectBody
       )}`}
       image={image}
+      canonical={`/subjects/${subjectSlug}-${to58(subjectEntityId)}`}
     >
       <div itemScope itemType="https://schema.org/Course">
         <header>

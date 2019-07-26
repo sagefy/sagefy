@@ -133,7 +133,7 @@ app.post('/subjects/create', async (req, res) => {
   return res.redirect('/dashboard')
 })
 
-app.get('/subjects/:subjectId', async (req, res, next) => {
+app.get('/subjects/(*-)?:subjectId', async (req, res, next) => {
   const entityId = toU(req.params.subjectId)
   if (!isUuid(entityId)) return next()
   const gqlRes = await GQL.getSubjectPage(req, { entityId })
@@ -623,7 +623,7 @@ const ROOT_PAGES = [
 app.get('/sitemap.txt', async (req, res) => {
   const gqlRes = await GQL.getSitemap(req)
   const subjects = get(gqlRes, 'allSubjects.nodes', []).map(
-    ({ entityId }) => `/subjects/${to58(entityId)}`
+    ({ entityId, slug }) => `/subjects/${slug}-${to58(entityId)}`
   )
   const cards = get(gqlRes, 'allCards.nodes', []).map(
     ({ entityId, kind }) =>

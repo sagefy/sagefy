@@ -4,6 +4,7 @@ query getSubjectPage($entityId: UUID!) {
     name
     body
     details
+    slug
 
     childSubjects {
       nodes {

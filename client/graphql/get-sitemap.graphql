@@ -2,6 +2,7 @@ query getSitemap {
   allSubjects {
     nodes {
       entityId
+      slug
     }
   }
 

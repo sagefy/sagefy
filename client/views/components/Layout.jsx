@@ -1,6 +1,11 @@
 import React from 'react'
 import { string, node } from 'prop-types'
 
+const ROOT =
+  process.env.NODE_ENV === 'production'
+    ? 'https://sagefy.org'
+    : 'http://localhost'
+
 export default function Layout({
   page,
   title,
@@ -8,6 +13,7 @@ export default function Layout({
   image,
   hash,
   children,
+  canonical,
 }) {
   if (process.env.NODE_ENV === 'test') {
     return <div className={page}>{children}</div>
@@ -24,6 +30,7 @@ export default function Layout({
         <meta name="twitter:title" content={`${title} - Sagefy`} />
         <meta name="twitter:description" content={description} />
         {image && <meta name="twitter:image" content={image} />}
+        {canonical && <link rel="canonical" href={`${ROOT}${canonical}`} />}
         <link rel="stylesheet" href={`/sagefy.min.css?${hash}`} />
       </head>
       <body>
@@ -42,8 +49,10 @@ Layout.propTypes = {
   children: node.isRequired,
   hash: string.isRequired,
   image: string,
+  canonical: string,
 }
 
 Layout.defaultProps = {
   image: null,
+  canonical: null,
 }
