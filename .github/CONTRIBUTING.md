@@ -4,6 +4,8 @@ Thank you for contributing to Sagefy! This document covers basic guidelines for 
 
 Not sure where to start our help out? We have some ideas in our [Want to Help](https://docs.sagefy.org/want-to-help) guide.
 
+To start up your local development environment, please read our [Setup](https://docs.sagefy.org/setup) doc.
+
 ## Content
 
 Create and edit content through the discussion section within the Sagefy interface. You will want to get familiar with the [Data Structure](https://docs.sagefy.org/cards-subjects).
