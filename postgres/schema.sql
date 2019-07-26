@@ -237,6 +237,49 @@ COMMENT ON TYPE sg_public.user_role IS 'User role options.';
 
 
 --
+-- Name: slugify(text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.slugify(value text) RETURNS text
+    LANGUAGE sql IMMUTABLE STRICT
+    AS $_$
+  -- from https://www.kdobson.net/2019/ultimate-postgresql-slug-function/
+  -- removes accents (diacritic signs) from a given string --
+  WITH "unaccented" AS (
+    SELECT unaccent("value") AS "value"
+  ),
+  -- lowercases the string
+  "lowercase" AS (
+    SELECT lower("value") AS "value"
+    FROM "unaccented"
+  ),
+  -- remove single and double quotes
+  "removed_quotes" AS (
+    SELECT regexp_replace("value", '[''"]+', '', 'gi') AS "value"
+    FROM "lowercase"
+  ),
+  -- replaces anything that's not a letter, number, hyphen('-'), or underscore('_') with a hyphen('-')
+  "hyphenated" AS (
+    SELECT regexp_replace("value", '[^a-z0-9\\-_]+', '-', 'gi') AS "value"
+    FROM "removed_quotes"
+  ),
+  -- trims hyphens('-') if they exist on the head or tail of the string
+  "trimmed" AS (
+    SELECT regexp_replace(regexp_replace("value", '\-+$', ''), '^\-', '') AS "value"
+    FROM "hyphenated"
+  )
+  SELECT "value" FROM "trimmed";
+$_$;
+
+
+--
+-- Name: FUNCTION slugify(value text); Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON FUNCTION public.slugify(value text) IS 'Given a string, turn it into a URL slug.';
+
+
+--
 -- Name: insert_card_version_status(); Type: FUNCTION; Schema: sg_private; Owner: -
 --
 
@@ -1855,6 +1898,24 @@ COMMENT ON FUNCTION sg_public.subject_parent_subjects(subject sg_public.subject)
 
 
 --
+-- Name: subject_slug(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subject_slug(subject sg_public.subject) RETURNS text
+    LANGUAGE sql STABLE
+    AS $$
+  select slugify(subject.name);
+$$;
+
+
+--
+-- Name: FUNCTION subject_slug(subject sg_public.subject); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subject_slug(subject sg_public.subject) IS 'The subject''s name as a slug, for URLs.';
+
+
+--
 -- Name: subject_user_count(sg_public.subject); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
@@ -1877,10 +1938,10 @@ COMMENT ON FUNCTION sg_public.subject_user_count(sg_public.subject) IS 'Count th
 
 
 --
--- Name: update_card(uuid, text, text[], uuid, text, jsonb); Type: FUNCTION; Schema: sg_public; Owner: -
+-- Name: update_card(uuid, text, text[], uuid, sg_public.card_kind, jsonb); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_public.update_card(entity_id uuid, name text, tags text[], subject_id uuid, kind text, data jsonb) RETURNS sg_public.card_version
+CREATE FUNCTION sg_public.update_card(entity_id uuid, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb) RETURNS sg_public.card_version
     LANGUAGE plpgsql STRICT SECURITY DEFINER
     AS $$
   declare
@@ -1897,8 +1958,8 @@ CREATE FUNCTION sg_public.update_card(entity_id uuid, name text, tags text[], su
     insert into sg_public.entity_version
     (version_id, entity_kind) values (xversion_id, 'card');
     insert into sg_public.card_version
-    (entity_id, previous_id, name, tags, subject_id, kind, data)
-    values (entity_id, xprevious.version_id, name, tags, subject_id, kind, data)
+    (version_id, entity_id, language, previous_id, name, tags, subject_id, kind, data)
+    values (xversion_id, entity_id, 'en', xprevious.version_id, name, tags, subject_id, kind, data)
     returning * into xcard_version;
     return xcard_version;
   end;
@@ -1906,10 +1967,10 @@ $$;
 
 
 --
--- Name: FUNCTION update_card(entity_id uuid, name text, tags text[], subject_id uuid, kind text, data jsonb); Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: FUNCTION update_card(entity_id uuid, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb); Type: COMMENT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON FUNCTION sg_public.update_card(entity_id uuid, name text, tags text[], subject_id uuid, kind text, data jsonb) IS 'Update an existing card.';
+COMMENT ON FUNCTION sg_public.update_card(entity_id uuid, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb) IS 'Update an existing card.';
 
 
 --
@@ -3853,4 +3914,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190716223347'),
     ('20190718184132'),
     ('20190718190417'),
-    ('20190724165943');
+    ('20190724165943'),
+    ('20190726171316');
