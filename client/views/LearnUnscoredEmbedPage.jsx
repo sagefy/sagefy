@@ -1,5 +1,6 @@
 import React from 'react'
 import { number, string, shape } from 'prop-types'
+import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
 
@@ -7,6 +8,7 @@ export default function LearnUnscoredEmbedPage({
   hash,
   progress,
   card: {
+    entityId,
     name,
     data: { url },
   },
@@ -17,6 +19,7 @@ export default function LearnUnscoredEmbedPage({
       page="LearnUnscoredEmbedPage"
       title="Learn"
       description="-"
+      canonical={`/unscored-embed-cards/${to58(entityId)}`}
     >
       {progress && (
         <section>

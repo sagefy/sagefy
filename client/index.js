@@ -443,10 +443,9 @@ app.get('/steps/choose', async (req, res) => {
     const redirUrl = role === 'sg_anonymous' ? '/subjects/search' : '/dashboard'
     return res.redirect(redirUrl)
   }
-  const subjects = get(
-    await GQL.chooseSubject(req, { subjectId: toU(goal) }),
-    'subjectByEntityId.nextChildSubjects.nodes'
-  )
+  const gqlRes = await GQL.chooseSubject(req, { subjectId: toU(goal) })
+  const subject = get(gqlRes, 'subjectByEntityId')
+  const subjects = get(gqlRes, 'subjectByEntityId.nextChildSubjects.nodes')
   if (!subjects || !subjects.length) {
     const redirUrl = role === 'sg_anonymous' ? '/subjects/search' : '/dashboard'
     return res.redirect(redirUrl)
@@ -454,7 +453,7 @@ app.get('/steps/choose', async (req, res) => {
   if (subjects.length === 1) {
     return res.redirect(`/next?step=${to58(subjects[0].entityId)}`)
   }
-  return res.render('ChooseStepPage', { subjects })
+  return res.render('ChooseStepPage', { subject, subjects })
 })
 
 /* eslint-disable max-statements */
@@ -613,11 +612,6 @@ const ROOT_PAGES = [
   '/password',
   '/subjects/search',
   '/subjects/create',
-  '/cards/create',
-  '/video-cards/create',
-  '/choice-cards/create',
-  '/page-cards/create',
-  '/unscored-embed-cards/create',
 ]
 
 app.get('/sitemap.txt', async (req, res) => {

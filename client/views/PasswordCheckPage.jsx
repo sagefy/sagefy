@@ -10,6 +10,7 @@ export default function PasswordPage({ hash }) {
       page="PasswordPage"
       title="Change your password"
       description="Update your Sagefy account password. Log back into your account and get learning again today."
+      canonical="/password"
     >
       <section>
         <h1>

@@ -25,6 +25,7 @@ export default function UnscoredEmbedCardEditPage({
       page="UnscoredEmbedCardEditPage"
       title={`Edit an embed card for ${subjectName}`}
       description={`Help us build Sagefy by updating a embed card for ${subjectName}.`}
+      canonical={`/unscored-embed-cards/${to58(cardId)}`}
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />

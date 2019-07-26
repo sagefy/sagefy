@@ -26,6 +26,7 @@ export default function VideoCardEditPage({
       page="VideoCardEditPage"
       title={`Edit a video card for ${subjectName}`}
       description={`Help us build Sagefy by updating a video card for ${subjectName}.`}
+      canonical={`/video-cards/${to58(cardId)}`}
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />

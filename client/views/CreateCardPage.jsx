@@ -17,6 +17,7 @@ export default function CreateCardPage({
       page="CreateCardPage"
       title={`Create Card for ${subjectName}`}
       description={`Help Sagefy grow by helping us make new cards for ${subjectName}`}
+      canonical={`/subjects/${subjectId}`}
     >
       <header className="my-c">
         <p>

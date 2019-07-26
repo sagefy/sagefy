@@ -3,6 +3,7 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import { string, number, shape, objectOf, bool } from 'prop-types'
 import { shuffle } from 'shuffle-seed'
+import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
 
@@ -10,6 +11,7 @@ export default function LearnChoicePage({
   hash,
   progress,
   card: {
+    entityId,
     name,
     data: { body, max_options_to_show, options },
   },
@@ -23,7 +25,13 @@ export default function LearnChoicePage({
     max_options_to_show
   )
   return (
-    <Layout hash={hash} page="LearnChoicePage" title="Learn" description="-">
+    <Layout
+      hash={hash}
+      page="LearnChoicePage"
+      title="Learn"
+      description="-"
+      canonical={`/choice-cards/${to58(entityId)}`}
+    >
       {progress && (
         <section>
           <progress value={progress} />

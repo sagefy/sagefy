@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { string, shape, number } from 'prop-types'
+import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
 
@@ -16,12 +17,19 @@ export default function LearnVideoPage({
   hash,
   progress,
   card: {
+    entityId,
     name,
     data: { site, video_id },
   },
 }) {
   return (
-    <Layout hash={hash} page="LearnVideoPage" title="Learn" description="-">
+    <Layout
+      hash={hash}
+      page="LearnVideoPage"
+      title="Learn"
+      description="-"
+      canonical={`/video-cards/${to58(entityId)}`}
+    >
       {progress && (
         <section>
           <progress value={progress} />

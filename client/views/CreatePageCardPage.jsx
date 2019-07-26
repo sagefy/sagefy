@@ -21,6 +21,7 @@ export default function CreatePageCardPage({
       page="CreatePageCardPage"
       title={`Create a choice page for ${subjectName}`}
       description={`Help us build Sagefy by making a written document page card for ${subjectName}.`}
+      canonical={`/subjects/${subjectId}`}
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />

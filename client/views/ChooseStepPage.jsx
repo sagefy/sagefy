@@ -1,12 +1,24 @@
 import React from 'react'
 import { arrayOf, shape, string } from 'prop-types'
+import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
 import ChooseSubject from './components/ChooseSubject'
 
-export default function ChooseNextPage({ hash, subjects, role }) {
+export default function ChooseNextPage({
+  hash,
+  subject: { entityId: subjectId },
+  subjects,
+  role,
+}) {
   return (
-    <Layout hash={hash} page="ChooseNextPage" title="Choose" description="-">
+    <Layout
+      hash={hash}
+      page="ChooseNextPage"
+      title="Choose"
+      description="-"
+      canonical={`/subjects/${to58(subjectId)}`}
+    >
       <header className="my-c">
         <p>
           <em>
@@ -63,5 +75,8 @@ ChooseNextPage.propTypes = {
       body: string.isRequired,
     })
   ).isRequired,
+  subject: shape({
+    entityId: string.isRequired,
+  }).isRequired,
   role: string.isRequired,
 }

@@ -26,6 +26,7 @@ export default function PageCardEditPage({
       page="PageCardEditPage"
       title={`Edit a choice page for ${subjectName}`}
       description={`Help us build Sagefy by updating a written document page card for ${subjectName}.`}
+      canonical={`/page-cards/${to58(cardId)}`}
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />

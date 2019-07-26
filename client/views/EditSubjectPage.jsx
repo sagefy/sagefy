@@ -19,6 +19,7 @@ export default function EditSubjectPage({
       page="EditSubjectPage"
       title="Edit subject"
       description="Help Sagefy grow by editing an existing subject! Anyone can edit a subject, no account required."
+      canonical={`/subjects/${to58(entityId)}`}
     >
       <section>
         <h1>

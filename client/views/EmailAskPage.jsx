@@ -12,6 +12,7 @@ export default function EmailPage({ gqlErrors, hash }) {
       page="EmailPage"
       title="Change your email"
       description="Update your email address for your Sagefy account."
+      canonical="/email"
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />

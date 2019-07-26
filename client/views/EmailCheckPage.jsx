@@ -10,6 +10,7 @@ export default function EmailPage({ hash }) {
       page="EmailPage"
       title="Change your email"
       description="Update your email address for your Sagefy account."
+      canonical="/email"
     >
       <section>
         <h1>

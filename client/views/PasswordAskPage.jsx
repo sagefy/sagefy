@@ -12,6 +12,7 @@ export default function PasswordPage({ gqlErrors, hash }) {
       page="PasswordPage"
       title="Change your password"
       description="Update your Sagefy account password. Log back into your account and get learning again today."
+      canonical="/password"
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />

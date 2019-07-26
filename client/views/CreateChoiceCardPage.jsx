@@ -23,6 +23,7 @@ export default function CreateChoiceCardPage({
       page="CreateChoiceCardPage"
       title={`Create a choice card for ${subjectName}`}
       description={`Help us build Sagefy by making a multiple choice card for ${subjectName}.`}
+      canonical={`/subjects/${subjectId}`}
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />

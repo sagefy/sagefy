@@ -29,6 +29,7 @@ export default function ChoiceCardEditPage({
       page="ChoiceCardEditPage"
       title={`Edit a choice card for ${subjectName}`}
       description={`Help us build Sagefy by updating a multiple choice card for ${subjectName}.`}
+      canonical={`/choice-cards/${to58(cardId)}`}
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />

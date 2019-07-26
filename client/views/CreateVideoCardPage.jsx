@@ -21,6 +21,7 @@ export default function CreateVideoCardPage({
       page="CreateVideoCardPage"
       title={`Create a video card for ${subjectName}`}
       description={`Help us build Sagefy by making a video card for ${subjectName}.`}
+      canonical={`/subjects/${subjectId}`}
     >
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
