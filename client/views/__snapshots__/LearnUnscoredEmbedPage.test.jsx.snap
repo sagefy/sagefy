@@ -2,6 +2,7 @@
 
 exports[`LearnUnscoredEmbedPage should render LearnUnscoredEmbedPage 1`] = `
 <Layout
+  canonical="/unscored-embed-cards/undefined"
   description="-"
   image={null}
   page="LearnUnscoredEmbedPage"

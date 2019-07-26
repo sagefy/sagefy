@@ -2,6 +2,7 @@
 
 exports[`LearnPagePage should render LearnPagePage 1`] = `
 <Layout
+  canonical="/page-cards/undefined"
   description="-"
   image={null}
   page="LearnPagePage"

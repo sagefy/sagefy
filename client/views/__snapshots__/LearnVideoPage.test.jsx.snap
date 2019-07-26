@@ -2,6 +2,7 @@
 
 exports[`LearnVideoPage should render LearnVideoPage 1`] = `
 <Layout
+  canonical="/video-cards/undefined"
   description="-"
   image={null}
   page="LearnVideoPage"

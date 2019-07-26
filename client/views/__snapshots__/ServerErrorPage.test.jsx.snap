@@ -2,6 +2,7 @@
 
 exports[`ServerErrorPage should render the ServerErrorPage 1`] = `
 <Layout
+  canonical={null}
   description="-"
   image={null}
   page="ServerErrorPage"

@@ -2,6 +2,7 @@
 
 exports[`TermsPage should render the terms page 1`] = `
 <Layout
+  canonical={null}
   description="-"
   image={null}
   page="TermsPage"

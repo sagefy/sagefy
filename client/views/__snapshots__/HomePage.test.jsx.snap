@@ -2,6 +2,7 @@
 
 exports[`HomePage should render the home page 1`] = `
 <Layout
+  canonical={null}
   description="What do you want to learn? Learn for free, always. Any subject you want. And Sagefy saves you time and effort by adapting to what you know and where you want to go."
   image={null}
   page="HomePage"
@@ -135,6 +136,7 @@ exports[`HomePage should render the home page 1`] = `
 
 exports[`HomePage should render the logged in home page 1`] = `
 <Layout
+  canonical={null}
   description="What do you want to learn? Learn for free, always. Any subject you want. And Sagefy saves you time and effort by adapting to what you know and where you want to go."
   image={null}
   page="HomePage"

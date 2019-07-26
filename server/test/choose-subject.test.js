@@ -30,6 +30,9 @@ describe('choose-subject', () => {
           Joi.object({
             data: Joi.object({
               subjectByEntityId: Joi.object({
+                entityId: Joi.string()
+                  .guid()
+                  .required(),
                 nextChildSubjects: Joi.object({
                   nodes: Joi.array()
                     .items(

@@ -2,6 +2,7 @@
 
 exports[`NotFoundPage should render the not found page 1`] = `
 <Layout
+  canonical={null}
   description="Sagefy did not find that page."
   image={null}
   page="NotFoundPage"

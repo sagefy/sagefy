@@ -2,6 +2,7 @@
 
 exports[`LearnChoicePage should render LearnChoicePage 1`] = `
 <Layout
+  canonical="/choice-cards/undefined"
   description="-"
   image={null}
   page="LearnChoicePage"
