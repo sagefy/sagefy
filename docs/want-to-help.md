@@ -34,6 +34,8 @@ Also, if you're interested, [sign up for updates](https://sgfy.xyz/updates).
 
 ## Platform (Technical)
 
+To start up your local development environment, please read our [Setup](https://docs.sagefy.org/setup) doc.
+
 - [Feedback](https://sgfy.xyz/issues) on the system so far
 - Testing and [filing bugs](https://sgfy.xyz/issues)
 - Contributing ideas to our [board](https://sgfy.xyz/issues)
@@ -53,6 +55,8 @@ Also, if you're interested, [sign up for updates](https://sgfy.xyz/updates).
 - Localization
 
 ## Math and Stats
+
+To start up your local development environment, please read our [Setup](https://docs.sagefy.org/setup) doc.
 
 - At the end of [this article](https://docs.sagefy.org/stories/the-mathematics-of-sagefy) is a **call to action** section with some of the things we need help with, such as:
   - Improving current Bayesian Knowledge Tracing models, particularly with parameter estimation
