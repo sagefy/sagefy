@@ -436,6 +436,13 @@ app.get('/dashboard', isUser, async (req, res) => {
 
 // LOGGED-OUT //////////////////////////////////////////////////////////////////
 
+app.get('/search', async (req, res) => {
+  if (!req.query.q) return res.render('SearchPage')
+  const gqlRes = await GQL.searchEntities(req, req.query)
+  const results = get(gqlRes, 'searchEntities.nodes')
+  return res.render('SearchPage', { results })
+})
+
 app.get('/steps/choose', async (req, res) => {
   const role = getRole(req)
   const { goal } = req.cookies
@@ -610,6 +617,7 @@ const ROOT_PAGES = [
   '/log-in',
   '/email',
   '/password',
+  '/search',
   '/subjects/search',
   '/subjects/create',
 ]

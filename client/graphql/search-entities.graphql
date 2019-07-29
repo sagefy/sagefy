@@ -1,0 +1,11 @@
+query searchEntities($q: String!) {
+  searchEntities(query: $q) {
+    nodes {
+      entityId
+      name
+      body
+      kind
+      subkind
+    }
+  }
+}
