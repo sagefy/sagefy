@@ -127,37 +127,6 @@ comment on trigger insert_subject_version_before_after_cycle
   on sg_public.subject_version
   is 'Ensure subject before/after relations don''t form a cycle.';
 
-create function sg_public.search_cards(query text)
-returns setof sg_public.card as $$
-  select
-    *,
-    to_tsvector('english', unaccent(name)) ||
-    to_tsvector('english', unaccent(tags)) ||
-    to_tsvector('english', unaccent(data)) as document,
-    ts_rank(document, websearch_to_tsquery('english', unaccent(query))) as rank
-  from sg_public.card
-  where document @@ websearch_to_tsquery('english', unaccent(query))
-  order by rank desc;
-$$ language sql;
-comment on function sg_public.search_cards(text)
-  is 'Search cards.';
-grant execute on function sg_public.search_card(text)
-  to sg_anonymous, sg_user, sg_admin;
-
-create function sg_public.search_entities(query text)
-returns setof (entity_id, name, body, kind) as $$
-  select entity_id, name, body, 'subject' as kind
-  from sg_public.search_subjects(query)
-  union all
-  select entity_id, name, data as body, 'card' as kind
-  from sg_public.search_cards(query)
-  order by rank desc;
-$$ language sql;
-comment on function sg_public.search_entities(text)
-  is 'Search subject and cards.';
-grant execute on function sg_public.search_entity(text)
-  to sg_anonymous, sg_user, sg_admin;
-
 create function sg_public.select_my_cards()
 returns setof sg_public.card as $$
   select *
