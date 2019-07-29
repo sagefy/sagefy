@@ -21,9 +21,9 @@
 
 - [Visit the site](https://sagefy.org).
 - For more information, [watch this 3 minute YouTube video](https://youtu.be/Gi99QbiSuWs) or [read the docs](https://docs.sagefy.org).
-- Want to help? [Check out our contributors' list.](https://docs.sagefy.org/want-to-help)
+- Want to help? [Check out our "Want to Help?" doc.](https://docs.sagefy.org/want-to-help)
 - Sign up for [updates](https://sgfy.xyz/updates).
-- Share us on [Twitter](https://twitter.com/sagefyorg).
+- Reach out to us on [Twitter](https://twitter.com/sagefyorg).
 
 [![CircleCI](https://circleci.com/gh/sagefy/sagefy/tree/master.svg?style=svg)](https://circleci.com/gh/sagefy/sagefy/tree/master)
 [<img src="https://i.imgur.com/M5xPVWm.png" height="20">](https://www.browserstack.com)
