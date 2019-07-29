@@ -219,6 +219,26 @@ COMMENT ON TYPE sg_public.post_kind IS 'The three kinds of posts.';
 
 
 --
+-- Name: search_result; Type: TYPE; Schema: sg_public; Owner: -
+--
+
+CREATE TYPE sg_public.search_result AS (
+	entity_id uuid,
+	kind text,
+	subkind text,
+	name text,
+	body jsonb
+);
+
+
+--
+-- Name: TYPE search_result; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TYPE sg_public.search_result IS 'The format of a search result entry.';
+
+
+--
 -- Name: user_role; Type: TYPE; Schema: sg_public; Owner: -
 --
 
@@ -1388,6 +1408,82 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_public.popular_subjects() IS 'Select the 5 most popular subjects.';
+
+
+--
+-- Name: search_cards(text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.search_cards(query text) RETURNS SETOF sg_public.card
+    LANGUAGE sql STABLE
+    AS $$
+  with documents as (
+    select
+      entity_id,
+      to_tsvector('english', unaccent(name)) ||
+      to_tsvector('english', unaccent(array_to_string(tags, ' '))) ||
+      to_tsvector('english', unaccent(data::text)) as document
+    from sg_public.card
+  ),
+  ranking as (
+    select
+      c.entity_id as entity_id,
+      ts_rank(d.document, websearch_to_tsquery('english', unaccent(query))) as rank
+    from
+      sg_public.card c,
+      documents d
+    where
+      d.document @@ websearch_to_tsquery('english', unaccent(query))
+      and c.entity_id = d.entity_id
+    order by rank desc
+  )
+  select c.*
+  from
+    ranking r,
+    sg_public.card c
+  where
+    c.entity_id = r.entity_id
+  order by r.rank desc;
+$$;
+
+
+--
+-- Name: FUNCTION search_cards(query text); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.search_cards(query text) IS 'Search cards.';
+
+
+--
+-- Name: search_entities(text); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.search_entities(query text) RETURNS SETOF sg_public.search_result
+    LANGUAGE sql STABLE
+    AS $$
+  select
+    s.entity_id as entity_id,
+    'subject' as kind,
+    'subject' as subkind,
+    s.name as name,
+    to_jsonb(s.body) as body
+  from sg_public.search_subjects(query) s
+  union all
+  select
+    c.entity_id as entity_id,
+    'card' as kind,
+    c.kind::text as subkind,
+    c.name as name,
+    c.data as body
+  from sg_public.search_cards(query) c;
+$$;
+
+
+--
+-- Name: FUNCTION search_entities(query text); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.search_entities(query text) IS 'Search subjects and cards.';
 
 
 --
@@ -3915,4 +4011,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190718184132'),
     ('20190718190417'),
     ('20190724165943'),
-    ('20190726171316');
+    ('20190726171316'),
+    ('20190729222214');
