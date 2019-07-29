@@ -68,11 +68,11 @@ ${FOOTER_TEXT}
 
 const transport = createTransport(
   {
-    host: 'smtp.sparkpostmail.com',
+    host: 'smtp.mailgun.org',
     port: 587,
     // secure: true,
     auth: {
-      user: 'SMTP_Injection',
+      user: SENDER,
       pass: process.env.MAIL_PASS,
     },
   },

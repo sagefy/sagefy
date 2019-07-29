@@ -23,7 +23,7 @@ title: Technology Stack
 - [Node](https://nodejs.org/) & [npm](https://npmjs.org/)
 - [GraphQL](https://graphql.org/)
 - [Postgraphile](https://www.graphile.org/postgraphile/)
-- [SparkPost](https://sparkpost.com/) §¶
+- [Mailgun](https://mailgun.com/) §¶
 
 ## Databases
 
