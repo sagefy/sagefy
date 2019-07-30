@@ -56,6 +56,17 @@ exports[`Footer component should render a footer 1`] = `
         </a>
       </li>
       <li>
+        <a
+          href="/search"
+        >
+          <Icon
+            i="search"
+            s="s"
+          />
+           Search
+        </a>
+      </li>
+      <li>
         <ExternalLink
           href="https://docs.sagefy.org/"
         >
@@ -88,16 +99,14 @@ exports[`Footer component should render a footer 1`] = `
            Updates
         </ExternalLink>
       </li>
+    </ul>
+    <ul
+      className="ls-i"
+    >
       <li>
-        <a
-          href="/contact"
-        >
-          <Icon
-            i="contact"
-            s="s"
-          />
-           Contact
-        </a>
+        © Copyright 
+        2019
+         Sagefy.
       </li>
       <li>
         <a
@@ -110,12 +119,18 @@ exports[`Footer component should render a footer 1`] = `
            Privacy & Terms
         </a>
       </li>
+      <li>
+        <a
+          href="/contact"
+        >
+          <Icon
+            i="contact"
+            s="s"
+          />
+           Contact
+        </a>
+      </li>
     </ul>
-    <p>
-      © Copyright 
-      2019
-       Sagefy.
-    </p>
   </small>
 </footer>
 `;
