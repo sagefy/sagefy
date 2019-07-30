@@ -82,7 +82,7 @@ export default function SubjectCompletePage({
           </li>
           {role === 'sg_anonymous' ? (
             <li>
-              <a href="/search/subjects">
+              <a href="/subjects/search">
                 Find your next subject <Icon i="search" />
               </a>
             </li>
