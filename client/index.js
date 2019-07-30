@@ -430,8 +430,10 @@ app.get('/dashboard', isUser, async (req, res) => {
       body,
     })
   )
+  const mySubjects = get(gqlRes, 'subjectsByCurrentUser.nodes')
+  const myCards = get(gqlRes, 'cardsByCurrentUser.nodes')
   const name = get(gqlRes, 'currentUser.name')
-  return res.render('DashboardPage', { subjects, name })
+  return res.render('DashboardPage', { name, subjects, mySubjects, myCards })
 })
 
 // LOGGED-OUT //////////////////////////////////////////////////////////////////

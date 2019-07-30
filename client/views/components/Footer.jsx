@@ -48,6 +48,11 @@ export default function Footer({ role }) {
             </a>
           </li>
           <li>
+            <a href="/search">
+              <Icon i="search" s="s" /> Search
+            </a>
+          </li>
+          <li>
             <ExternalLink href="https://docs.sagefy.org/">
               <Icon i="docs" s="s" /> Docs
             </ExternalLink>
@@ -62,18 +67,20 @@ export default function Footer({ role }) {
               <Icon i="updates" s="s" /> Updates
             </ExternalLink>
           </li>
-          <li>
-            <a href="/contact">
-              <Icon i="contact" s="s" /> Contact
-            </a>
-          </li>
+        </ul>
+        <ul className="ls-i">
+          <li>&copy; Copyright {new Date().getFullYear()} Sagefy.</li>
           <li>
             <a href="/terms">
               <Icon i="terms" s="s" /> Privacy &amp; Terms
             </a>
           </li>
+          <li>
+            <a href="/contact">
+              <Icon i="contact" s="s" /> Contact
+            </a>
+          </li>
         </ul>
-        <p>&copy; Copyright {new Date().getFullYear()} Sagefy.</p>
       </small>
     </footer>
   )

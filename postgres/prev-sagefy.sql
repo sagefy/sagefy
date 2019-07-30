@@ -127,35 +127,7 @@ comment on trigger insert_subject_version_before_after_cycle
   on sg_public.subject_version
   is 'Ensure subject before/after relations don''t form a cycle.';
 
-create function sg_public.select_my_cards()
-returns setof sg_public.card as $$
-  select *
-  from sg_public.card
-  where entity_id in (
-    select entity_id
-    from sg_public.card_version
-    where user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
-  );
-$$ language sql stable;
-comment on function sg_public.select_my_cards()
-  is 'Select cards I created or worked on.';
-grant execute on function sg_public.select_my_cards()
-  to sg_user, sg_admin;
 
-create function sg_public.select_my_subjects()
-returns setof sg_public.subject as $$
-  select *
-  from sg_public.subject
-  where entity_id in (
-    select entity_id
-    from sg_public.subject_version
-    where user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
-  );
-$$ language sql stable;
-comment on function sg_public.select_my_subjects()
-  is 'Select subjects I created or worked on.';
-grant execute on function sg_public.select_my_subjects()
-  to sg_user, sg_admin;
 
 
 -- Update & delete card and subject: admin.

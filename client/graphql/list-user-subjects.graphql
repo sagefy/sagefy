@@ -14,4 +14,23 @@ query listUserSubjects {
     id
     name
   }
+
+  cardsByCurrentUser {
+    nodes {
+      entityId
+      name
+      kind
+      data
+    }
+  }
+
+  subjectsByCurrentUser {
+    nodes {
+      entityId
+      name
+      body
+      cardCount
+      childCount
+    }
+  }
 }
