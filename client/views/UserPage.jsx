@@ -61,7 +61,7 @@ export default function UserPage({
         <section>
           <hr />
           <h2>
-            How I helped build Sagefy <Icon i="cheer" s="h2" />
+            How I helped build Sagefy <Icon i="build" s="h2" />
           </h2>
           <hr />
         </section>

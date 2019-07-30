@@ -68,7 +68,7 @@ exports[`DashboardPage should render the dashboard page 1`] = `
     <h2>
       Help us build Sagefy 
       <Icon
-        i="cheer"
+        i="build"
         s="h2"
       />
     </h2>

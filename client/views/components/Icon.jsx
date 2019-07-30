@@ -39,6 +39,10 @@ import {
   AlignLeft,
   Edit,
   Calendar,
+  Facebook,
+  Twitter,
+  Linkedin,
+  Heart,
 } from 'react-feather'
 import get from 'lodash.get'
 
@@ -108,6 +112,7 @@ const MAP = {
   cheer: ThumbsUp,
   edit: Edit,
   history: Calendar,
+  build: Heart,
 
   // page specific
   adapt: Share2, // home
@@ -115,6 +120,9 @@ const MAP = {
   github: GitHub, // contact
   inbox: Inbox, // password, email
   popular: Users, // home
+  facebook: Facebook, // subject complete
+  twitter: Twitter, // subject complete
+  linkedin: Linkedin, // subject complete
 }
 
 const SIZES = {

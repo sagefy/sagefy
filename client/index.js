@@ -210,6 +210,15 @@ app.post('/subjects/:subjectId/edit', async (req, res, next) => {
   }
 })
 
+app.get('/subjects/:subjectId/complete', async (req, res, next) => {
+  const subjGqlRes = await GQL.getSubject(req, {
+    entityId: toU(req.params.subjectId),
+  })
+  const subject = get(subjGqlRes, 'subjectByEntityId')
+  if (!subject) next()
+  return res.render('SubjectCompletePage', { subject })
+})
+
 // CARDS ///////////////////////////////////////////////////////////////////////
 
 function transformValuesForChoice(values) {
@@ -456,8 +465,7 @@ app.get('/steps/choose', async (req, res) => {
   const subject = get(gqlRes, 'subjectByEntityId')
   const subjects = get(gqlRes, 'subjectByEntityId.nextChildSubjects.nodes')
   if (!subjects || !subjects.length) {
-    const redirUrl = role === 'sg_anonymous' ? '/subjects/search' : '/dashboard'
-    return res.redirect(redirUrl)
+    return res.redirect(`/subjects/${goal}/complete`)
   }
   if (subjects.length === 1) {
     return res.redirect(`/next?step=${to58(subjects[0].entityId)}`)

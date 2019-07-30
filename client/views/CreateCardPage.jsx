@@ -22,7 +22,7 @@ export default function CreateCardPage({
       <header className="my-c">
         <p>
           <em>
-            Let&apos;s learn by teaching <Icon i="cheer" /> and&hellip;
+            Let&apos;s learn by teaching <Icon i="build" /> and&hellip;
           </em>
         </p>
         <h1 className="d-ib">

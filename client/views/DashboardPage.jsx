@@ -104,7 +104,7 @@ export default function DashboardPage({
 
       <section>
         <h2>
-          Help us build Sagefy <Icon i="cheer" s="h2" />
+          Help us build Sagefy <Icon i="build" s="h2" />
         </h2>
 
         {!!mySubjects.length && (
