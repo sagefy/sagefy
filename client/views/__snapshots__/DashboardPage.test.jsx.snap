@@ -64,7 +64,71 @@ exports[`DashboardPage should render the dashboard page 1`] = `
       </p>
     </form>
   </section>
-  <CardSubjectInfo />
+  <section>
+    <h2>
+      Help us build Sagefy 
+      <Icon
+        i="cheer"
+        s="h2"
+      />
+    </h2>
+    <details>
+      <summary>
+        <h3
+          className="d-ib"
+        >
+          You can make a new subject 
+          <Icon
+            i="subject"
+            s="h3"
+          />
+        </h3>
+      </summary>
+      <CreateSubject
+        body={
+          Object {
+            "body": "",
+            "name": "",
+          }
+        }
+        gqlErrors={Object {}}
+        name=""
+      />
+    </details>
+    <details>
+      <summary>
+        <h3
+          className="d-ib"
+        >
+          …or find something else 
+          <Icon
+            i="search"
+            s="h3"
+          />
+        </h3>
+      </summary>
+      <form
+        action="/search"
+      >
+        <input
+          name="q"
+          placeholder="example: Music"
+          size="40"
+          type="search"
+        />
+        <button
+          type="submit"
+        >
+          <Icon
+            i="search"
+            s="m"
+          />
+           Search
+        </button>
+      </form>
+    </details>
+    <CardSubjectInfo />
+  </section>
   <Footer
     role="sg_anonymous"
   />
