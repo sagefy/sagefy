@@ -1057,6 +1057,30 @@ COMMENT ON FUNCTION sg_public.card_subject(card sg_public.card) IS 'Get the card
 
 
 --
+-- Name: cards_by_current_user(); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.cards_by_current_user() RETURNS SETOF sg_public.card
+    LANGUAGE sql STABLE
+    AS $$
+  select *
+  from sg_public.card
+  where entity_id in (
+    select entity_id
+    from sg_public.card_version
+    where user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
+  );
+$$;
+
+
+--
+-- Name: FUNCTION cards_by_current_user(); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.cards_by_current_user() IS 'Select cards I created or worked on.';
+
+
+--
 -- Name: choose_card(uuid); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
@@ -2031,6 +2055,30 @@ $_$;
 --
 
 COMMENT ON FUNCTION sg_public.subject_user_count(sg_public.subject) IS 'Count the number of logged in users learning the subject.';
+
+
+--
+-- Name: subjects_by_current_user(); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.subjects_by_current_user() RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE
+    AS $$
+  select *
+  from sg_public.subject
+  where entity_id in (
+    select entity_id
+    from sg_public.subject_version
+    where user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid
+  );
+$$;
+
+
+--
+-- Name: FUNCTION subjects_by_current_user(); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.subjects_by_current_user() IS 'Select subjects I created or worked on.';
 
 
 --
@@ -3054,6 +3102,13 @@ CREATE INDEX card_version_created_idx ON sg_public.card_version USING btree (cre
 
 
 --
+-- Name: card_version_distinct_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX card_version_distinct_idx ON sg_public.card_version USING btree (entity_id, created DESC) WHERE (status = 'accepted'::sg_public.entity_status);
+
+
+--
 -- Name: card_version_entity_id_idx; Type: INDEX; Schema: sg_public; Owner: -
 --
 
@@ -3163,6 +3218,13 @@ CREATE INDEX subject_version_before_after_before_entity_id_idx ON sg_public.subj
 --
 
 CREATE INDEX subject_version_created_idx ON sg_public.subject_version USING btree (created);
+
+
+--
+-- Name: subject_version_distinct_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX subject_version_distinct_idx ON sg_public.subject_version USING btree (entity_id, created DESC) WHERE (status = 'accepted'::sg_public.entity_status);
 
 
 --
@@ -4012,4 +4074,6 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190718190417'),
     ('20190724165943'),
     ('20190726171316'),
-    ('20190729222214');
+    ('20190729222214'),
+    ('20190730184403'),
+    ('20190731013731');
