@@ -300,6 +300,40 @@ COMMENT ON FUNCTION public.slugify(value text) IS 'Given a string, turn it into 
 
 
 --
+-- Name: text_array_to_text(text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.text_array_to_text(arr text[]) RETURNS text
+    LANGUAGE sql IMMUTABLE
+    AS $$
+  select array_to_string(arr, ' ');
+$$;
+
+
+--
+-- Name: FUNCTION text_array_to_text(arr text[]); Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON FUNCTION public.text_array_to_text(arr text[]) IS 'Convert an array of text to a single text.';
+
+
+--
+-- Name: text_concat_ws(text, text[]); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.text_concat_ws(text, VARIADIC text[]) RETURNS text
+    LANGUAGE internal IMMUTABLE
+    AS $$text_concat_ws$$;
+
+
+--
+-- Name: FUNCTION text_concat_ws(text, VARIADIC text[]); Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON FUNCTION public.text_concat_ws(text, VARIADIC text[]) IS 'Concat a list of plain text to a single text.';
+
+
+--
 -- Name: insert_card_version_status(); Type: FUNCTION; Schema: sg_private; Owner: -
 --
 
@@ -1444,29 +1478,24 @@ CREATE FUNCTION sg_public.search_cards(query text) RETURNS SETOF sg_public.card
   with documents as (
     select
       entity_id,
-      to_tsvector('english', unaccent(name)) ||
-      to_tsvector('english', unaccent(array_to_string(tags, ' '))) ||
-      to_tsvector('english', unaccent(data::text)) as document
+      to_tsvector('english_unaccent', text_concat_ws(' ',
+        name, text_array_to_text(tags), data::text
+      )) as document
     from sg_public.card
   ),
   ranking as (
     select
       c.entity_id as entity_id,
-      ts_rank(d.document, websearch_to_tsquery('english', unaccent(query))) as rank
-    from
-      sg_public.card c,
-      documents d
+      ts_rank(d.document, websearch_to_tsquery('english_unaccent', query)) as rank
+    from sg_public.card c, documents d
     where
-      d.document @@ websearch_to_tsquery('english', unaccent(query))
+      d.document @@ websearch_to_tsquery('english_unaccent', query)
       and c.entity_id = d.entity_id
     order by rank desc
   )
   select c.*
-  from
-    ranking r,
-    sg_public.card c
-  where
-    c.entity_id = r.entity_id
+  from ranking r, sg_public.card c
+  where c.entity_id = r.entity_id
   order by r.rank desc;
 $$;
 
@@ -1520,29 +1549,24 @@ CREATE FUNCTION sg_public.search_subjects(query text) RETURNS SETOF sg_public.su
   with documents as (
     select
       entity_id,
-      to_tsvector('english', unaccent(name)) ||
-      to_tsvector('english', unaccent(array_to_string(tags, ' '))) ||
-      to_tsvector('english', unaccent(body)) as document
+      to_tsvector('english_unaccent', text_concat_ws(' ',
+        name, text_array_to_text(tags), body
+      )) as document
     from sg_public.subject
   ),
   ranking as (
     select
       s.entity_id as entity_id,
-      ts_rank(d.document, websearch_to_tsquery('english', unaccent(query))) as rank
-    from
-      sg_public.subject s,
-      documents d
+      ts_rank(d.document, websearch_to_tsquery('english_unaccent', query)) as rank
+    from sg_public.subject s, documents d
     where
-      d.document @@ websearch_to_tsquery('english', unaccent(query))
+      d.document @@ websearch_to_tsquery('english_unaccent', query)
       and s.entity_id = d.entity_id
     order by rank desc
   )
   select s.*
-  from
-    ranking r,
-    sg_public.subject s
-  where
-    s.entity_id = r.entity_id
+  from ranking r, sg_public.subject s
+  where s.entity_id = r.entity_id
   order by r.rank desc;
 $$;
 
@@ -2365,6 +2389,71 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_public.what_is_sagefy() IS 'Grab just the single "What is Sagefy?" subject, if it exists.';
+
+
+--
+-- Name: english_unaccent; Type: TEXT SEARCH CONFIGURATION; Schema: public; Owner: -
+--
+
+CREATE TEXT SEARCH CONFIGURATION public.english_unaccent (
+    PARSER = pg_catalog."default" );
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR asciiword WITH english_stem;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR word WITH public.unaccent, english_stem;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR numword WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR email WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR url WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR host WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR sfloat WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR version WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR hword_numpart WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR hword_part WITH public.unaccent, english_stem;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR hword_asciipart WITH english_stem;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR numhword WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR asciihword WITH english_stem;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR hword WITH public.unaccent, english_stem;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR url_path WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR file WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR "float" WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR "int" WITH simple;
+
+ALTER TEXT SEARCH CONFIGURATION public.english_unaccent
+    ADD MAPPING FOR uint WITH simple;
 
 
 --
@@ -3197,6 +3286,20 @@ CREATE INDEX response_subject_id_idx ON sg_public.response USING btree (subject_
 --
 
 CREATE INDEX response_user_id_idx ON sg_public.response USING btree (user_id);
+
+
+--
+-- Name: search_card_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX search_card_idx ON sg_public.card_version USING gin (to_tsvector('public.english_unaccent'::regconfig, public.text_concat_ws(' '::text, VARIADIC ARRAY[name, public.text_array_to_text(tags), (data)::text])));
+
+
+--
+-- Name: search_subject_idx; Type: INDEX; Schema: sg_public; Owner: -
+--
+
+CREATE INDEX search_subject_idx ON sg_public.subject_version USING gin (to_tsvector('public.english_unaccent'::regconfig, public.text_concat_ws(' '::text, VARIADIC ARRAY[name, public.text_array_to_text(tags), body])));
 
 
 --
@@ -4076,4 +4179,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190726171316'),
     ('20190729222214'),
     ('20190730184403'),
-    ('20190731013731');
+    ('20190731013731'),
+    ('20190803024055');
