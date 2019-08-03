@@ -1485,9 +1485,12 @@ CREATE FUNCTION sg_public.search_cards(query text) RETURNS SETOF sg_public.card
         )),
         websearch_to_tsquery('english_unaccent', query)
       ) as rank
-    from sg_public.card
+    from sg_public.card_version
+    where to_tsvector('english_unaccent', text_concat_ws(' ',
+      name, text_array_to_text(tags), data::text
+    )) @@ websearch_to_tsquery('english_unaccent', query)
   ) r
-  where r.rank > 0 and c.entity_id = r.entity_id
+  where c.entity_id = r.entity_id
   order by r.rank desc;
 $$;
 
@@ -1548,9 +1551,12 @@ CREATE FUNCTION sg_public.search_subjects(query text) RETURNS SETOF sg_public.su
         )),
         websearch_to_tsquery('english_unaccent', query)
       ) as rank
-    from sg_public.subject
+    from sg_public.subject_version
+    where to_tsvector('english_unaccent', text_concat_ws(' ',
+      name, text_array_to_text(tags), body
+    )) @@ websearch_to_tsquery('english_unaccent', query)
   ) r
-  where r.rank > 0 and s.entity_id = r.entity_id
+  where s.entity_id = r.entity_id
   order by r.rank desc;
 $$;
 
@@ -4165,4 +4171,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190730184403'),
     ('20190731013731'),
     ('20190803024055'),
-    ('20190803033630');
+    ('20190803033630'),
+    ('20190803044152');
