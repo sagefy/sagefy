@@ -1475,8 +1475,9 @@ COMMENT ON FUNCTION sg_public.popular_subjects() IS 'Select the 5 most popular s
 CREATE FUNCTION sg_public.search_cards(query text) RETURNS SETOF sg_public.card
     LANGUAGE sql STABLE
     AS $$
-  select c.*
-  from sg_public.card c, (
+  -- If you see this in the future... NB the `to_tsvector` calls are indexed.
+  -- if this part changes, you need to replace the index too.
+  with r as (
     select
       distinct on (entity_id) entity_id,
       ts_rank(
@@ -1489,7 +1490,9 @@ CREATE FUNCTION sg_public.search_cards(query text) RETURNS SETOF sg_public.card
     where to_tsvector('english_unaccent', text_concat_ws(' ',
       name, text_array_to_text(tags), data::text
     )) @@ websearch_to_tsquery('english_unaccent', query)
-  ) r
+  )
+  select c.*
+  from sg_public.card c, r
   where c.entity_id = r.entity_id
   order by r.rank desc;
 $$;
@@ -1541,8 +1544,9 @@ COMMENT ON FUNCTION sg_public.search_entities(query text) IS 'Search subjects an
 CREATE FUNCTION sg_public.search_subjects(query text) RETURNS SETOF sg_public.subject
     LANGUAGE sql STABLE
     AS $$
-  select s.*
-  from sg_public.subject s, (
+  -- If you see this in the future... NB the `to_tsvector` calls are indexed.
+  -- if this part changes, you need to replace the index too.
+  with r as (
     select
       distinct on (entity_id) entity_id,
       ts_rank(
@@ -1555,7 +1559,9 @@ CREATE FUNCTION sg_public.search_subjects(query text) RETURNS SETOF sg_public.su
     where to_tsvector('english_unaccent', text_concat_ws(' ',
       name, text_array_to_text(tags), body
     )) @@ websearch_to_tsquery('english_unaccent', query)
-  ) r
+  )
+  select s.*
+  from sg_public.subject s, r
   where s.entity_id = r.entity_id
   order by r.rank desc;
 $$;
