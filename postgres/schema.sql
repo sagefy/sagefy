@@ -1490,6 +1490,7 @@ CREATE FUNCTION sg_public.search_cards(query text) RETURNS SETOF sg_public.card
     where to_tsvector('english_unaccent', text_concat_ws(' ',
       name, text_array_to_text(tags), data::text
     )) @@ websearch_to_tsquery('english_unaccent', query)
+    order by entity_id, rank
   )
   select c.*
   from sg_public.card c, r
@@ -1559,6 +1560,7 @@ CREATE FUNCTION sg_public.search_subjects(query text) RETURNS SETOF sg_public.su
     where to_tsvector('english_unaccent', text_concat_ws(' ',
       name, text_array_to_text(tags), body
     )) @@ websearch_to_tsquery('english_unaccent', query)
+    order by entity_id, rank
   )
   select s.*
   from sg_public.subject s, r

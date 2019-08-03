@@ -17,6 +17,7 @@ returns setof sg_public.subject as $$
     where to_tsvector('english_unaccent', text_concat_ws(' ',
       name, text_array_to_text(tags), body
     )) @@ websearch_to_tsquery('english_unaccent', query)
+    order by entity_id, rank
   )
   select s.*
   from sg_public.subject s, r
@@ -41,6 +42,7 @@ returns setof sg_public.card as $$
     where to_tsvector('english_unaccent', text_concat_ws(' ',
       name, text_array_to_text(tags), data::text
     )) @@ websearch_to_tsquery('english_unaccent', query)
+    order by entity_id, rank
   )
   select c.*
   from sg_public.card c, r
