@@ -1475,27 +1475,19 @@ COMMENT ON FUNCTION sg_public.popular_subjects() IS 'Select the 5 most popular s
 CREATE FUNCTION sg_public.search_cards(query text) RETURNS SETOF sg_public.card
     LANGUAGE sql STABLE
     AS $$
-  with documents as (
+  select c.*
+  from sg_public.card c, (
     select
       entity_id,
-      to_tsvector('english_unaccent', text_concat_ws(' ',
-        name, text_array_to_text(tags), data::text
-      )) as document
+      ts_rank(
+        to_tsvector('english_unaccent', text_concat_ws(' ',
+          name, text_array_to_text(tags), data::text
+        )),
+        websearch_to_tsquery('english_unaccent', query)
+      ) as rank
     from sg_public.card
-  ),
-  ranking as (
-    select
-      c.entity_id as entity_id,
-      ts_rank(d.document, websearch_to_tsquery('english_unaccent', query)) as rank
-    from sg_public.card c, documents d
-    where
-      d.document @@ websearch_to_tsquery('english_unaccent', query)
-      and c.entity_id = d.entity_id
-    order by rank desc
-  )
-  select c.*
-  from ranking r, sg_public.card c
-  where c.entity_id = r.entity_id
+  ) r
+  where r.rank > 0 and c.entity_id = r.entity_id
   order by r.rank desc;
 $$;
 
@@ -1546,27 +1538,19 @@ COMMENT ON FUNCTION sg_public.search_entities(query text) IS 'Search subjects an
 CREATE FUNCTION sg_public.search_subjects(query text) RETURNS SETOF sg_public.subject
     LANGUAGE sql STABLE
     AS $$
-  with documents as (
+  select s.*
+  from sg_public.subject s, (
     select
       entity_id,
-      to_tsvector('english_unaccent', text_concat_ws(' ',
-        name, text_array_to_text(tags), body
-      )) as document
+      ts_rank(
+        to_tsvector('english_unaccent', text_concat_ws(' ',
+          name, text_array_to_text(tags), body
+        )),
+        websearch_to_tsquery('english_unaccent', query)
+      ) as rank
     from sg_public.subject
-  ),
-  ranking as (
-    select
-      s.entity_id as entity_id,
-      ts_rank(d.document, websearch_to_tsquery('english_unaccent', query)) as rank
-    from sg_public.subject s, documents d
-    where
-      d.document @@ websearch_to_tsquery('english_unaccent', query)
-      and s.entity_id = d.entity_id
-    order by rank desc
-  )
-  select s.*
-  from ranking r, sg_public.subject s
-  where s.entity_id = r.entity_id
+  ) r
+  where r.rank > 0 and s.entity_id = r.entity_id
   order by r.rank desc;
 $$;
 
@@ -4180,4 +4164,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190729222214'),
     ('20190730184403'),
     ('20190731013731'),
-    ('20190803024055');
+    ('20190803024055'),
+    ('20190803033630');
