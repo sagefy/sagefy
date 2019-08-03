@@ -1478,7 +1478,7 @@ CREATE FUNCTION sg_public.search_cards(query text) RETURNS SETOF sg_public.card
   select c.*
   from sg_public.card c, (
     select
-      entity_id,
+      distinct on (entity_id) entity_id,
       ts_rank(
         to_tsvector('english_unaccent', text_concat_ws(' ',
           name, text_array_to_text(tags), data::text
@@ -1544,7 +1544,7 @@ CREATE FUNCTION sg_public.search_subjects(query text) RETURNS SETOF sg_public.su
   select s.*
   from sg_public.subject s, (
     select
-      entity_id,
+      distinct on (entity_id) entity_id,
       ts_rank(
         to_tsvector('english_unaccent', text_concat_ws(' ',
           name, text_array_to_text(tags), body
