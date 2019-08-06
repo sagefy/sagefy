@@ -51,8 +51,8 @@ export default function SearchSubjectsPage({
         </section>
       ) : null}
 
-      {q && (
-        <section>
+      {q ? (
+        <section className="my-c">
           <p>
             <em>
               Not seeing what you want? <Icon i="error" />
@@ -64,13 +64,25 @@ export default function SearchSubjectsPage({
                 You can suggest a new subject <Icon i="subject" s="h2" />
               </h2>
             </summary>
-
             <CreateSubject role={role} name={q} />
           </details>
         </section>
+      ) : (
+        <section>
+          <h2>
+            Searching on Sagefy <Icon i="search" s="h2" />
+          </h2>
+          <p>
+            If you&apos;re wanting to learn a new subject, enter your goal in
+            the box above!
+          </p>
+          <p>
+            Are you wanting to see everything Sagefy has on a topic? Found
+            something that needs an edit? Do you want to make some new cards?{' '}
+            <a href="/search">Search everything instead.</a>
+          </p>
+        </section>
       )}
-
-      {/* TODO when !q, show popular subjects here */}
 
       <Footer role={role} />
     </Layout>

@@ -43,6 +43,26 @@ exports[`SearchSubjectsPage should render the search subjects page 1`] = `
       </p>
     </form>
   </section>
+  <section>
+    <h2>
+      Searching on Sagefy 
+      <Icon
+        i="search"
+        s="h2"
+      />
+    </h2>
+    <p>
+      If you're wanting to learn a new subject, enter your goal in the box above!
+    </p>
+    <p>
+      Are you wanting to see everything Sagefy has on a topic? Found something that needs an edit? Do you want to make some new cards? 
+      <a
+        href="/search"
+      >
+        Search everything instead.
+      </a>
+    </p>
+  </section>
   <Footer
     role="sg_anonymous"
   />

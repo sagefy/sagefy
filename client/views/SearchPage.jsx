@@ -96,8 +96,8 @@ export default function SearchPage({ role, query: { q }, results, hash }) {
         </section>
       ) : null}
 
-      {q && (
-        <section>
+      {q ? (
+        <section className="my-c">
           <p>
             <em>
               Not seeing what you want? <Icon i="error" />
@@ -109,9 +109,24 @@ export default function SearchPage({ role, query: { q }, results, hash }) {
                 You can suggest a new subject <Icon i="subject" s="h2" />
               </h2>
             </summary>
-
             <CreateSubject role={role} name={q} />
           </details>
+        </section>
+      ) : (
+        <section>
+          <h2>
+            Searching on Sagefy <Icon i="search" s="h2" />
+          </h2>
+          <p>
+            If you&apos;re wanting to learn a new subject,{' '}
+            <a href="/subjects/search">search just subjects instead</a>.
+          </p>
+          <p>
+            On this page, you can search for cards and subjects across Sagefy.
+            Wanting to see everything Sagefy has on a topic? Found something
+            that needs an edit? Do you want to make some new cards? You&apos;re
+            in the right place.
+          </p>
         </section>
       )}
 
