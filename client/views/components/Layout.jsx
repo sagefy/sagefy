@@ -25,12 +25,20 @@ export default function Layout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{title} - Sagefy</title>
         <meta name="description" content={description} />
+        {canonical && <link rel="canonical" href={`${ROOT}${canonical}`} />}
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@sagefyorg" />
         <meta name="twitter:title" content={`${title} - Sagefy`} />
         <meta name="twitter:description" content={description} />
         {image && <meta name="twitter:image" content={image} />}
-        {canonical && <link rel="canonical" href={`${ROOT}${canonical}`} />}
+        <meta property="og:title" content={`${title} - Sagefy`} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+        {canonical && (
+          <meta property="og:url" content={`${ROOT}${canonical}`} />
+        )}
+        {image && <meta property="og:image" content={image} />}
+        <meta property="og:site_name" content="Sagefy" />
         <link rel="stylesheet" href={`/sagefy.min.css?${hash}`} />
       </head>
       <body>
