@@ -55,7 +55,8 @@ exports[`SearchSubjectsPage should render the search subjects page 1`] = `
       If you're wanting to learn a new subject, enter your goal in the box above!
     </p>
     <p>
-      Are you wanting to see everything Sagefy has on a topic? Found something that needs an edit? Do you want to make some new cards? 
+      Are you wanting to see everything Sagefy has on a topic? Found something that needs an edit? Do you want to make some new cards?
+       
       <a
         href="/search"
       >
