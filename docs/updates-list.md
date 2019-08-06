@@ -13,6 +13,34 @@ title: Sagefy Updates
 
 This is a reverse chronological listing of updates on Sagefy's progress. I will try to do these biweekly.
 
+
+
+## UPDATE -- 2019 Aug 5
+
+Thanks for signing up for the Sagefy updates newsletter. I am sending updates biweekly to help track progress on Sagefy.
+
+### 2019 Jul 22 - 2019 Aug 4
+
+- I wrote a new blog post on the V2 Sagefy changes. https://docs.sagefy.org/stories/a-new-sagefy
+- You can now edit cards. Example: https://sagefy.org/page-cards/26QmnfkxMTBQxVmHvb7aH3/edit
+- You can now search the entire site. https://sagefy.org/search
+- The logged in dashboard now provides helpful links to your contributions.
+- When you complete a subject, you now get a celebratory page. Example: https://sagefy.org/subjects/95DCsixeoP7sxtmQp7481/complete
+- Subjects now support "slugs" for SEO. Example: https://sagefy.org/subjects/dynamoelectric-machinery-2KvydQ7jqNsUBxBJetAbM8
+- Old subject and user pages now correctly 404.
+- Switched from Sparkpost to Mailgun for transactional email. Sparkpost is soon changing the maximum free emails from 25000 a month to 500 a month.
+
+### Upcoming Two Weeks: 2019 Aug 5 - 2019 Aug 18
+
+- I'm going to observe the impacts of the most recent changes, and continue to look for search engine and social media opportunities.
+- I may plan the next round of usability testing and feedback for the site to identify the highest priority opportunities to pursue.
+
+### Feedback
+
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
+
+
+
 ## UPDATE -- 2019 Jul 22
 
 Thanks for signing up for the Sagefy updates newsletter. I am sending updates biweekly to help track progress on Sagefy.
