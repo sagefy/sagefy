@@ -20,10 +20,10 @@ I've been working on Sagefy [since April 2013]({% post_url 2016-09-14-why-i-m-bu
 
 | A 2017 image of the homepage. | A 2018 image of the choose unit page. |
 | :---------------------------: | :-----------------------------------: |
-|           ![x][s1]            |               ![x][s2]                |
+|           ![x][u1]            |               ![x][u2]                |
 
-[s1]: https://user-images.githubusercontent.com/1221423/62233948-7c0d2c00-b37e-11e9-84eb-bfcb6dced7c5.png
-[s2]: https://user-images.githubusercontent.com/1221423/62233951-7c0d2c00-b37e-11e9-9d5f-88c5a87f05cc.png
+[u1]: https://user-images.githubusercontent.com/1221423/62233948-7c0d2c00-b37e-11e9-84eb-bfcb6dced7c5.png
+[u2]: https://user-images.githubusercontent.com/1221423/62233951-7c0d2c00-b37e-11e9-9d5f-88c5a87f05cc.png
 
 Sagefy in October 2018 had lots of features. It was quite capable. Despite being operational for a few years, there was litle human traffic to the site each day. There was about one account sign up per day. And in this version, as users needed accounts for most parts of the site, sign ups were a decent indicator of use. Which is to say, not much use at all.
 
