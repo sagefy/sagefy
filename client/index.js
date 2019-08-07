@@ -164,7 +164,7 @@ app.get('/subjects/:subjectId/talk', async (req, res) => {
   })
   const entity = get(gqlRes, 'subjectByEntityId')
   const topics = get(gqlRes, 'allTopics.nodes')
-  return res.render('SubjectTalkPage', { entity, topics })
+  return res.render('TalkSubjectPage', { entity, topics })
 })
 
 app.get('/subjects/:subjectId/history', async (req, res) => {
@@ -173,7 +173,7 @@ app.get('/subjects/:subjectId/history', async (req, res) => {
   })
   const subject = get(gqlRes, 'subjectByEntityId')
   const versions = get(gqlRes, 'allSubjectVersions.nodes')
-  return res.render('SubjectHistoryPage', { subject, versions })
+  return res.render('ViewHistorySubjectPage', { subject, versions })
 })
 
 app.get('/subjects/:subjectId/edit', async (req, res, next) => {
@@ -216,7 +216,7 @@ app.get('/subjects/:subjectId/complete', async (req, res, next) => {
   })
   const subject = get(subjGqlRes, 'subjectByEntityId')
   if (!subject) next()
-  return res.render('SubjectCompletePage', { subject })
+  return res.render('CompleteSubjectPage', { subject })
 })
 
 // CARDS ///////////////////////////////////////////////////////////////////////
@@ -289,7 +289,7 @@ app.get('/(:kind-)?cards/:cardId/history', async (req, res) => {
   const card = get(gqlRes, 'cardByEntityId')
   const versions = get(gqlRes, 'allCardVersions.nodes')
   return res.render(
-    `${get(CARD_KIND, [req.params.kind, 'page'], '')}CardHistoryPage`,
+    `ViewHistory${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
     { card, versions }
   )
 })
@@ -300,7 +300,7 @@ app.get('/(:kind-)?cards/:cardId/talk', async (req, res) => {
   })
   const entity = get(gqlRes, 'cardByEntityId')
   const topics = get(gqlRes, 'allTopics.nodes')
-  return res.render(`${get(CARD_KIND, [entity.kind, 'page'])}CardTalkPage`, {
+  return res.render(`Talk${get(CARD_KIND, [entity.kind, 'page'])}CardPage`, {
     entity,
     topics,
   })
@@ -313,7 +313,7 @@ app.get('/(:kind-)?cards/:cardId/edit', async (req, res) => {
   const card = get(gqlRes, 'cardByEntityId')
   const subject = get(card, 'subject')
   return res.render(
-    `${get(CARD_KIND, [req.params.kind, 'page'], '')}CardEditPage`,
+    `Edit${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
     { card, subject }
   )
 })
@@ -335,7 +335,7 @@ app.post('/(:kind-)?cards/:cardId/edit', async (req, res) => {
     const card = get(gqlRes, 'cardByEntityId')
     const subject = get(card, 'subject')
     return res.render(
-      `${get(CARD_KIND, [req.params.kind, 'page'], '')}CardEditPage`,
+      `Edit${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
       {
         gqlErrors,
         card,
@@ -356,10 +356,13 @@ app.get('/:kind-cards/:cardId/learn', async (req, res, next) => {
     return next()
   }
   const progress = get(gqlRes, 'subjectByEntityId.learned')
-  return res.render(`Learn${get(CARD_KIND, [req.params.kind, 'page'])}Page`, {
-    card,
-    progress,
-  })
+  return res.render(
+    `Learn${get(CARD_KIND, [req.params.kind, 'page'])}CardPage`,
+    {
+      card,
+      progress,
+    }
+  )
 })
 
 app.post('/choice-cards/:cardId/learn', async (req, res, next) => {
@@ -376,7 +379,7 @@ app.post('/choice-cards/:cardId/learn', async (req, res, next) => {
     response: req.body.choice,
   })
   const progress = get(gqlRes2, 'createResponse.response.learned')
-  return res.render('LearnChoicePage', { card, progress })
+  return res.render('LearnChoiceCardPage', { card, progress })
 })
 
 app.post(
@@ -557,7 +560,7 @@ app.get('/log-out', isUser, (req, res) =>
   res.clearCookie(JWT_COOKIE_NAME).redirect('/')
 )
 
-app.get('/email', async (req, res) => res.render('EmailAskPage'))
+app.get('/email', async (req, res) => res.render('AskEmailPage'))
 
 app.post('/email', async (req, res) => {
   try {
@@ -569,9 +572,9 @@ app.post('/email', async (req, res) => {
   }
 })
 
-app.get('/email/check', async (req, res) => res.render('EmailCheckPage'))
+app.get('/email/check', async (req, res) => res.render('CheckEmailPage'))
 
-app.get('/email/edit', async (req, res) => res.render('EmailEditPage'))
+app.get('/email/edit', async (req, res) => res.render('EditEmailPage'))
 
 app.post('/email/edit', async (req, res) => {
   try {
@@ -584,11 +587,11 @@ app.post('/email/edit', async (req, res) => {
     return res.redirect('/log-in')
   } catch (e) {
     const gqlErrors = getGqlErrors(e)
-    return res.render('EmailEditPage', { gqlErrors })
+    return res.render('EditEmailPage', { gqlErrors })
   }
 })
 
-app.get('/password', async (req, res) => res.render('PasswordAskPage'))
+app.get('/password', async (req, res) => res.render('AskPasswordPage'))
 
 app.post('/password', async (req, res) => {
   try {
@@ -596,13 +599,13 @@ app.post('/password', async (req, res) => {
     return res.redirect('/password/check')
   } catch (e) {
     const gqlErrors = getGqlErrors(e)
-    return res.render('PasswordAskPage', { gqlErrors })
+    return res.render('AskPasswordPage', { gqlErrors })
   }
 })
 
-app.get('/password/check', async (req, res) => res.render('PasswordCheckPage'))
+app.get('/password/check', async (req, res) => res.render('CheckPasswordPage'))
 
-app.get('/password/edit', async (req, res) => res.render('PasswordEditPage'))
+app.get('/password/edit', async (req, res) => res.render('EditPasswordPage'))
 
 app.post('/password/edit', async (req, res) => {
   try {
@@ -615,7 +618,7 @@ app.post('/password/edit', async (req, res) => {
     return res.redirect('/log-in')
   } catch (e) {
     const gqlErrors = getGqlErrors(e)
-    return res.render('PasswordEditPage', { gqlErrors })
+    return res.render('EditPasswordPage', { gqlErrors })
   }
 })
 
