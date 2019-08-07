@@ -43,6 +43,7 @@ import {
   Twitter,
   Linkedin,
   Heart,
+  Star,
 } from 'react-feather'
 import get from 'lodash.get'
 
@@ -123,6 +124,7 @@ const MAP = {
   facebook: Facebook, // subject complete
   twitter: Twitter, // subject complete
   linkedin: Linkedin, // subject complete
+  star: Star, // subject complete
 }
 
 const SIZES = {
