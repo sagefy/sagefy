@@ -4,6 +4,7 @@ import Layout from './components/Layout'
 import Icon from './components/Icon'
 import FormErrorsTop from './components/FormErrorsTop'
 import FormErrorsField from './components/FormErrorsField'
+import Wizard from './components/Wizard'
 
 export default function EditEmailPage({ gqlErrors, hash }) {
   return (
@@ -21,25 +22,15 @@ export default function EditEmailPage({ gqlErrors, hash }) {
         <h1>
           Change your email <Icon i="email" s="h1" />
         </h1>
-        <ol>
-          {[
+
+        <Wizard
+          steps={[
             { name: 'Enter your current email', icon: 'email' },
             { name: 'Check your inbox', icon: 'inbox' },
             { name: 'Change your email', icon: 'email' },
-          ].map(({ name, icon }, index) => (
-            <li key={`EmailPage-steps-${name}`}>
-              {index === 2 ? (
-                <strong>
-                  {name} <Icon i={icon} />
-                </strong>
-              ) : (
-                <span>
-                  {name} <Icon i={icon} />
-                </span>
-              )}
-            </li>
-          ))}
-        </ol>
+          ]}
+          currentIndex={2}
+        />
 
         <form action="" method="POST">
           <p>

@@ -4,6 +4,7 @@ import Layout from './components/Layout'
 import Icon from './components/Icon'
 import FormErrorsTop from './components/FormErrorsTop'
 import FormErrorsField from './components/FormErrorsField'
+import Wizard from './components/Wizard'
 
 export default function AskPasswordPage({ gqlErrors, hash }) {
   return (
@@ -22,25 +23,14 @@ export default function AskPasswordPage({ gqlErrors, hash }) {
           Change your password <Icon i="password" s="h1" />
         </h1>
 
-        <ol>
-          {[
+        <Wizard
+          steps={[
             { name: 'Enter your email', icon: 'email' },
             { name: 'Check your inbox', icon: 'inbox' },
             { name: 'Change your password', icon: 'password' },
-          ].map(({ name, icon }, index) => (
-            <li key={`PasswordPage-steps-${name}`}>
-              {index === 0 ? (
-                <strong>
-                  {name} <Icon i={icon} />
-                </strong>
-              ) : (
-                <span>
-                  {name} <Icon i={icon} />
-                </span>
-              )}
-            </li>
-          ))}
-        </ol>
+          ]}
+          currentIndex={0}
+        />
 
         <form action="" method="POST">
           <p>
