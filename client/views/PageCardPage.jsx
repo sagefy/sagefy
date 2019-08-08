@@ -4,6 +4,7 @@ import { convertUuidToUuid58 as to58 } from 'uuid58'
 import ReactMarkdown from 'react-markdown'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
+import Menu from './components/Menu'
 
 export default function PageCardPage({
   hash,
@@ -40,27 +41,27 @@ export default function PageCardPage({
             <Icon i="select" /> Let&apos;s learn now
           </button>
         </form>
-        <small>
-          <ul className="ls-i ta-r">
-            {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
-            <li>
-              <a href={`/page-cards/${to58(cardEntityId)}/talk`}>
-                <Icon i="talk" s="s" /> Talk
-              </a>
-            </li>
-            <li>
-              <a href={`/page-cards/${to58(cardEntityId)}/history`}>
-                <Icon i="history" s="s" /> History
-              </a>
-            </li>
-            <li>
-              <a href={`/page-cards/${to58(cardEntityId)}/edit`}>
-                <Icon i="edit" s="s" /> Edit
-              </a>
-            </li>
-            {/* <li><a href="/mocks/update-card">🌳 Edit</a></li> */}
-          </ul>
-        </small>
+
+        <Menu
+          items={[
+            {
+              href: `/page-cards/${to58(cardEntityId)}/talk`,
+              icon: 'talk',
+              name: 'Talk',
+            },
+            {
+              href: `/page-cards/${to58(cardEntityId)}/history`,
+              icon: 'history',
+              name: 'History',
+            },
+            {
+              href: `/page-cards/${to58(cardEntityId)}/edit`,
+              icon: 'edit',
+              name: 'Edit',
+            },
+          ]}
+        />
+
         {/* TODO stats */}
       </header>
 

@@ -6,6 +6,7 @@ import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
 import Footer from './components/Footer'
+import Menu from './components/Menu'
 
 export default function ViewHistorySubjectPage({
   hash,
@@ -31,24 +32,28 @@ export default function ViewHistorySubjectPage({
             <a href={`/subjects/${to58(subjectEntityId)}`}>{subjectName}</a>
           </h1>
         </div>
-        <small>
-          <ul className="ls-i ta-r">
-            {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
-            <li>
-              <a href={`/subjects/${to58(subjectEntityId)}/talk`}>
-                <Icon i="talk" s="s" /> Talk
-              </a>
-            </li>
-            <li>
-              <Icon i="history" s="s" /> History
-            </li>
-            <li>
-              <a href={`/subjects/${to58(subjectEntityId)}/edit`}>
-                <Icon i="edit" s="s" /> Edit
-              </a>
-            </li>
-          </ul>
-        </small>
+
+        <Menu
+          items={[
+            {
+              href: `/subjects/${to58(subjectEntityId)}/talk`,
+              icon: 'talk',
+              name: 'Talk',
+              itemProp: 'discussionUrl',
+            },
+            {
+              href: `/subjects/${to58(subjectEntityId)}/history`,
+              icon: 'history',
+              name: 'History',
+            },
+            {
+              href: `/subjects/${to58(subjectEntityId)}/edit`,
+              icon: 'edit',
+              name: 'Edit',
+            },
+          ]}
+          current="History"
+        />
         {/* TODO stats section */}
       </header>
 

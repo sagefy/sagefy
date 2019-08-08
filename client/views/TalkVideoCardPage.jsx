@@ -8,6 +8,7 @@ import FormErrorsTop from './components/FormErrorsTop'
 import FormErrorsField from './components/FormErrorsField'
 import Footer from './components/Footer'
 import Topic from './components/Topic'
+import Menu from './components/Menu'
 
 export default function TalkVideoCardPage({
   hash,
@@ -31,26 +32,27 @@ export default function TalkVideoCardPage({
             Talk: <a href={`/video-cards/${to58(entityId)}`}>{entityName}</a>
           </h1>
         </div>
-        <small>
-          <ul className="ls-i ta-r">
-            {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
-            <li>
-              <Icon i="talk" s="s" /> Talk
-            </li>
 
-            <li>
-              <a href={`/video-cards/${to58(entityId)}/history`}>
-                <Icon i="history" s="s" /> History
-              </a>
-            </li>
-
-            <li>
-              <a href={`/video-cards/${to58(entityId)}/edit`}>
-                <Icon i="edit" s="s" /> Edit
-              </a>
-            </li>
-          </ul>
-        </small>
+        <Menu
+          items={[
+            {
+              href: `/video-cards/${to58(entityId)}/talk`,
+              icon: 'talk',
+              name: 'Talk',
+            },
+            {
+              href: `/video-cards/${to58(entityId)}/history`,
+              icon: 'history',
+              name: 'History',
+            },
+            {
+              href: `/video-cards/${to58(entityId)}/edit`,
+              icon: 'edit',
+              name: 'Edit',
+            },
+          ]}
+          current="Talk"
+        />
       </header>
 
       <section>

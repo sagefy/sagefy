@@ -3,6 +3,7 @@ import { shape, string } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
+import Menu from './components/Menu'
 
 export default function UnscoredEmbedCardPage({
   hash,
@@ -39,26 +40,26 @@ export default function UnscoredEmbedCardPage({
             <Icon i="select" /> Let&apos;s learn now
           </button>
         </form>
-        <small>
-          <ul className="ls-i ta-r">
-            {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
-            <li>
-              <a href={`/unscored-embed-cards/${to58(cardEntityId)}/talk`}>
-                <Icon i="talk" s="s" /> Talk
-              </a>
-            </li>
-            <li>
-              <a href={`/unscored-embed-cards/${to58(cardEntityId)}/history`}>
-                <Icon i="history" s="s" /> History
-              </a>
-            </li>
-            <li>
-              <a href={`/unscored-embed-cards/${to58(cardEntityId)}/edit`}>
-                <Icon i="edit" s="s" /> Edit
-              </a>
-            </li>
-          </ul>
-        </small>
+
+        <Menu
+          items={[
+            {
+              href: `/unscored-embed-cards/${to58(cardEntityId)}/talk`,
+              icon: 'talk',
+              name: 'Talk',
+            },
+            {
+              href: `/unscored-embed-cards/${to58(cardEntityId)}/history`,
+              icon: 'history',
+              name: 'History',
+            },
+            {
+              href: `/unscored-embed-cards/${to58(cardEntityId)}/edit`,
+              icon: 'edit',
+              name: 'Edit',
+            },
+          ]}
+        />
         {/* TODO stats */}
       </header>
 

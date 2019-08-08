@@ -7,6 +7,7 @@ import Icon from './components/Icon'
 import Footer from './components/Footer'
 import ListOfSubjects from './components/ListOfSubjects'
 import ListOfCards from './components/ListOfCards'
+import Menu from './components/Menu'
 import shorten from '../util/shorten'
 
 const subjectsType = arrayOf(
@@ -77,29 +78,28 @@ export default function SubjectPage({
               <Icon i="select" /> Let&apos;s learn now
             </button>
           </form>
-          <small>
-            <ul className="ls-i ta-r">
-              {/* <li><a href="/mocks/follows">👂🏿 Follow</a></li> */}
-              <li>
-                <a
-                  href={`/subjects/${to58(subjectEntityId)}/talk`}
-                  itemProp="discussionUrl"
-                >
-                  <Icon i="talk" s="s" /> Talk
-                </a>
-              </li>
-              <li>
-                <a href={`/subjects/${to58(subjectEntityId)}/history`}>
-                  <Icon i="history" s="s" /> History
-                </a>
-              </li>
-              <li>
-                <a href={`/subjects/${to58(subjectEntityId)}/edit`}>
-                  <Icon i="edit" s="s" /> Edit
-                </a>
-              </li>
-            </ul>
-          </small>
+
+          <Menu
+            items={[
+              {
+                href: `/subjects/${to58(subjectEntityId)}/talk`,
+                icon: 'talk',
+                name: 'Talk',
+                itemProp: 'discussionUrl',
+              },
+              {
+                href: `/subjects/${to58(subjectEntityId)}/history`,
+                icon: 'history',
+                name: 'History',
+              },
+              {
+                href: `/subjects/${to58(subjectEntityId)}/edit`,
+                icon: 'edit',
+                name: 'Edit',
+              },
+            ]}
+          />
+
           {/* TODO stats section */}
         </header>
         <ListOfSubjects

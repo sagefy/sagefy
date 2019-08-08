@@ -2,7 +2,7 @@ import React from 'react'
 import { arrayOf, shape, string, number } from 'prop-types'
 import Icon from './Icon'
 
-function Wizard({ steps, currentIndex }) {
+export default function Wizard({ steps, currentIndex }) {
   return (
     <ol className="Wizard">
       {steps.map(({ name, icon }, index) => (
