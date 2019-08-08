@@ -18,7 +18,7 @@ export default function Topic({
 }) {
   const selected = query['topic-id'] === to58(id)
   return (
-    <li id={`topic-${to58(id)}`}>
+    <li className="Topic" id={`topic-${to58(id)}`}>
       <details open={selected}>
         <summary>
           <h3 className="d-ib">{name}</h3> {/* if author, edit name */}

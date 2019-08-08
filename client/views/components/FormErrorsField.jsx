@@ -6,7 +6,7 @@ import Icon from './Icon'
 export default function FormErrorsField({ formErrors, field }) {
   if (!get(formErrors, field)) return null
   return (
-    <ul className="FormErrors ls-n">
+    <ul className="FormErrorsField ls-n">
       {get(formErrors, field).map(message => (
         <li key={`FormErrorsField-${field}-${message}`}>
           <mark>

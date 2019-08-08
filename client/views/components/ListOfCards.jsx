@@ -16,7 +16,7 @@ export default function ListOfCards({ cards, kind }) {
   const kCards = cards.filter(({ kind: xkind }) => xkind === kind)
   if (!kCards.length) return null
   return (
-    <li>
+    <li className="ListOfCards">
       <h3>
         {get(CARD_KIND, [kind, 'name'])}{' '}
         <Icon i={get(CARD_KIND, [kind, 'icon'])} s="h3" />

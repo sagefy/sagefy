@@ -14,7 +14,7 @@ export default function Post({
 }) {
   const { name: userName, md5Email } = userByUserId || {}
   return (
-    <tr id={`post-${to58(id)}`}>
+    <tr className="Post" id={`post-${to58(id)}`}>
       <td>
         <p>
           {userId ? (

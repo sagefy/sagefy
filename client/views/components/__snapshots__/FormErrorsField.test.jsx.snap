@@ -2,7 +2,7 @@
 
 exports[`FormErrorsField component should render a FormErrorsField data 1`] = `
 <ul
-  className="FormErrors ls-n"
+  className="FormErrorsField ls-n"
 >
   <li>
     <mark>

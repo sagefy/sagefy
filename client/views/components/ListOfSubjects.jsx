@@ -16,7 +16,7 @@ const subjectsType = arrayOf(
 export default function ListOfSubjects({ subjects, title, itemProp, icon }) {
   if (!subjects.length) return null
   return (
-    <section itemProp={itemProp}>
+    <section className="ListOfSubjects" itemProp={itemProp}>
       <h2>
         {title} <Icon i={icon} s="h2" />
       </h2>

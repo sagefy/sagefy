@@ -4,7 +4,7 @@ import Icon from './Icon'
 
 function Wizard({ steps, currentIndex }) {
   return (
-    <ol>
+    <ol className="Wizard">
       {steps.map(({ name, icon }, index) => (
         <li key={`Wizard-steps-${name}`}>
           {index === currentIndex ? (

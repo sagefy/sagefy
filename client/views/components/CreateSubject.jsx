@@ -11,7 +11,7 @@ export default function CreateSubject({
   gqlErrors,
 }) {
   return (
-    <form action="/subjects/create" method="POST">
+    <form className="CreateSubject" action="/subjects/create" method="POST">
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
 
