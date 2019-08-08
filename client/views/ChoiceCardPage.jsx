@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
 import Menu from './components/Menu'
+import getMenuItems from '../util/get-menu-items'
 
 export default function ChoiceCardPage({
   hash,
@@ -41,25 +42,7 @@ export default function ChoiceCardPage({
             <Icon i="select" /> Let&apos;s learn now
           </button>
         </form>
-        <Menu
-          items={[
-            {
-              href: `/choice-cards/${to58(cardEntityId)}/talk`,
-              icon: 'talk',
-              name: 'Talk',
-            },
-            {
-              href: `/choice-cards/${to58(cardEntityId)}/history`,
-              icon: 'history',
-              name: 'History',
-            },
-            {
-              href: `/choice-cards/${to58(cardEntityId)}/edit`,
-              icon: 'edit',
-              name: 'Edit',
-            },
-          ]}
-        />
+        <Menu items={getMenuItems('choice-cards', to58(cardEntityId))} />
         {/* TODO stats */}
       </header>
 

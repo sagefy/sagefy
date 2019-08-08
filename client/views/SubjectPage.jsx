@@ -9,6 +9,7 @@ import ListOfSubjects from './components/ListOfSubjects'
 import ListOfCards from './components/ListOfCards'
 import Menu from './components/Menu'
 import shorten from '../util/shorten'
+import getMenuItems from '../util/get-menu-items'
 
 const subjectsType = arrayOf(
   shape({
@@ -79,26 +80,7 @@ export default function SubjectPage({
             </button>
           </form>
 
-          <Menu
-            items={[
-              {
-                href: `/subjects/${to58(subjectEntityId)}/talk`,
-                icon: 'talk',
-                name: 'Talk',
-                itemProp: 'discussionUrl',
-              },
-              {
-                href: `/subjects/${to58(subjectEntityId)}/history`,
-                icon: 'history',
-                name: 'History',
-              },
-              {
-                href: `/subjects/${to58(subjectEntityId)}/edit`,
-                icon: 'edit',
-                name: 'Edit',
-              },
-            ]}
-          />
+          <Menu items={getMenuItems('subjects', to58(subjectEntityId))} />
 
           {/* TODO stats section */}
         </header>

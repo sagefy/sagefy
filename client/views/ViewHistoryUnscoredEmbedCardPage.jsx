@@ -6,6 +6,7 @@ import Layout from './components/Layout'
 import Icon from './components/Icon'
 import Footer from './components/Footer'
 import Menu from './components/Menu'
+import getMenuItems from '../util/get-menu-items'
 
 export default function ViewHistoryUnscoredEmbedCardPage({
   hash,
@@ -36,23 +37,7 @@ export default function ViewHistoryUnscoredEmbedCardPage({
         </div>
 
         <Menu
-          items={[
-            {
-              href: `/unscored-embed-cards/${to58(cardEntityId)}/talk`,
-              icon: 'talk',
-              name: 'Talk',
-            },
-            {
-              href: `/unscored-embed-cards/${to58(cardEntityId)}/history`,
-              icon: 'history',
-              name: 'History',
-            },
-            {
-              href: `/unscored-embed-cards/${to58(cardEntityId)}/edit`,
-              icon: 'edit',
-              name: 'Edit',
-            },
-          ]}
+          items={getMenuItems('unscored-embed-cards', to58(cardEntityId))}
           current="History"
         />
       </header>

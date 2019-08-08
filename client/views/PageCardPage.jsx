@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
 import Menu from './components/Menu'
+import getMenuItems from '../util/get-menu-items'
 
 export default function PageCardPage({
   hash,
@@ -42,25 +43,7 @@ export default function PageCardPage({
           </button>
         </form>
 
-        <Menu
-          items={[
-            {
-              href: `/page-cards/${to58(cardEntityId)}/talk`,
-              icon: 'talk',
-              name: 'Talk',
-            },
-            {
-              href: `/page-cards/${to58(cardEntityId)}/history`,
-              icon: 'history',
-              name: 'History',
-            },
-            {
-              href: `/page-cards/${to58(cardEntityId)}/edit`,
-              icon: 'edit',
-              name: 'Edit',
-            },
-          ]}
-        />
+        <Menu items={getMenuItems('page-cards', to58(cardEntityId))} />
 
         {/* TODO stats */}
       </header>

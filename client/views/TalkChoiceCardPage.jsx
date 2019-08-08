@@ -9,6 +9,7 @@ import FormErrorsField from './components/FormErrorsField'
 import Footer from './components/Footer'
 import Topic from './components/Topic'
 import Menu from './components/Menu'
+import getMenuItems from '../util/get-menu-items'
 
 export default function TalkChoiceCardPage({
   hash,
@@ -33,23 +34,7 @@ export default function TalkChoiceCardPage({
           </h1>
         </div>
         <Menu
-          items={[
-            {
-              href: `/choice-cards/${to58(entityId)}/talk`,
-              icon: 'talk',
-              name: 'Talk',
-            },
-            {
-              href: `/choice-cards/${to58(entityId)}/history`,
-              icon: 'history',
-              name: 'History',
-            },
-            {
-              href: `/choice-cards/${to58(entityId)}/edit`,
-              icon: 'edit',
-              name: 'Edit',
-            },
-          ]}
+          items={getMenuItems('choice-cards', to58(entityId))}
           current="Talk"
         />
       </header>

@@ -9,6 +9,7 @@ import FormErrorsField from './components/FormErrorsField'
 import Footer from './components/Footer'
 import Topic from './components/Topic'
 import Menu from './components/Menu'
+import getMenuItems from '../util/get-menu-items'
 
 export default function TalkSubjectPage({
   hash,
@@ -32,27 +33,7 @@ export default function TalkSubjectPage({
           </h1>
         </div>
 
-        <Menu
-          items={[
-            {
-              href: `/subjects/${to58(entityId)}/talk`,
-              icon: 'talk',
-              name: 'Talk',
-              itemProp: 'discussionUrl',
-            },
-            {
-              href: `/subjects/${to58(entityId)}/history`,
-              icon: 'history',
-              name: 'History',
-            },
-            {
-              href: `/subjects/${to58(entityId)}/edit`,
-              icon: 'edit',
-              name: 'Edit',
-            },
-          ]}
-          current="Talk"
-        />
+        <Menu items={getMenuItems('subjects', to58(entityId))} current="Talk" />
       </header>
 
       <section>

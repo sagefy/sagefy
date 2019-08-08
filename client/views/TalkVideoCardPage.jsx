@@ -9,6 +9,7 @@ import FormErrorsField from './components/FormErrorsField'
 import Footer from './components/Footer'
 import Topic from './components/Topic'
 import Menu from './components/Menu'
+import getMenuItems from '../util/get-menu-items'
 
 export default function TalkVideoCardPage({
   hash,
@@ -34,23 +35,7 @@ export default function TalkVideoCardPage({
         </div>
 
         <Menu
-          items={[
-            {
-              href: `/video-cards/${to58(entityId)}/talk`,
-              icon: 'talk',
-              name: 'Talk',
-            },
-            {
-              href: `/video-cards/${to58(entityId)}/history`,
-              icon: 'history',
-              name: 'History',
-            },
-            {
-              href: `/video-cards/${to58(entityId)}/edit`,
-              icon: 'edit',
-              name: 'Edit',
-            },
-          ]}
+          items={getMenuItems('video-cards', to58(entityId))}
           current="Talk"
         />
       </header>

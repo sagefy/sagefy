@@ -5,6 +5,7 @@ import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
 import Menu from './components/Menu'
+import getMenuItems from '../util/get-menu-items'
 
 function getVideoUrl(site, video_id) {
   if (site === 'youtube')
@@ -49,25 +50,7 @@ export default function VideoCardPage({
           </button>
         </form>
 
-        <Menu
-          items={[
-            {
-              href: `/video-cards/${to58(cardEntityId)}/talk`,
-              icon: 'talk',
-              name: 'Talk',
-            },
-            {
-              href: `/video-cards/${to58(cardEntityId)}/history`,
-              icon: 'history',
-              name: 'History',
-            },
-            {
-              href: `/video-cards/${to58(cardEntityId)}/edit`,
-              icon: 'edit',
-              name: 'Edit',
-            },
-          ]}
-        />
+        <Menu items={getMenuItems('video-cards', to58(cardEntityId))} />
         {/* TODO stats */}
       </header>
 

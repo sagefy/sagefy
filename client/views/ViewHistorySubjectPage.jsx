@@ -7,6 +7,7 @@ import Layout from './components/Layout'
 import Icon from './components/Icon'
 import Footer from './components/Footer'
 import Menu from './components/Menu'
+import getMenuItems from '../util/get-menu-items'
 
 export default function ViewHistorySubjectPage({
   hash,
@@ -34,24 +35,7 @@ export default function ViewHistorySubjectPage({
         </div>
 
         <Menu
-          items={[
-            {
-              href: `/subjects/${to58(subjectEntityId)}/talk`,
-              icon: 'talk',
-              name: 'Talk',
-              itemProp: 'discussionUrl',
-            },
-            {
-              href: `/subjects/${to58(subjectEntityId)}/history`,
-              icon: 'history',
-              name: 'History',
-            },
-            {
-              href: `/subjects/${to58(subjectEntityId)}/edit`,
-              icon: 'edit',
-              name: 'Edit',
-            },
-          ]}
+          items={getMenuItems('subjects', to58(subjectEntityId))}
           current="History"
         />
         {/* TODO stats section */}

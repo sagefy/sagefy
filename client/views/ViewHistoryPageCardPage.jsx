@@ -7,6 +7,7 @@ import Layout from './components/Layout'
 import Icon from './components/Icon'
 import Footer from './components/Footer'
 import Menu from './components/Menu'
+import getMenuItems from '../util/get-menu-items'
 
 export default function ViewHistoryPageCardPage({
   hash,
@@ -35,23 +36,7 @@ export default function ViewHistoryPageCardPage({
         </div>
 
         <Menu
-          items={[
-            {
-              href: `/page-cards/${to58(cardEntityId)}/talk`,
-              icon: 'talk',
-              name: 'Talk',
-            },
-            {
-              href: `/page-cards/${to58(cardEntityId)}/history`,
-              icon: 'history',
-              name: 'History',
-            },
-            {
-              href: `/page-cards/${to58(cardEntityId)}/edit`,
-              icon: 'edit',
-              name: 'Edit',
-            },
-          ]}
+          items={getMenuItems('page-cards', to58(cardEntityId))}
           current="History"
         />
       </header>
