@@ -6,6 +6,7 @@ import Layout from './components/Layout'
 import Icon from './components/Icon'
 import FormErrorsTop from './components/FormErrorsTop'
 import FormErrorsField from './components/FormErrorsField'
+import Advice from './components/Advice'
 
 export default function EditUnscoredEmbedCardPage({
   hash,
@@ -88,25 +89,10 @@ export default function EditUnscoredEmbedCardPage({
         </form>
       </section>
 
-      {role === 'sg_anonymous' && (
-        <section>
-          <p>
-            <em>
-              Advice: We recommend{' '}
-              <a
-                href={`/sign-up?return=/unscored-embed-cards/${to58(
-                  cardId
-                )}/edit`}
-              >
-                joining
-              </a>{' '}
-              before you edit content,
-              <br />
-              so you can easily continue later!
-            </em>
-          </p>
-        </section>
-      )}
+      <Advice
+        returnUrl={`/unscored-embed-cards/${to58(cardId)}/edit`}
+        role={role}
+      />
     </Layout>
   )
 }

@@ -6,6 +6,7 @@ import Layout from './components/Layout'
 import Icon from './components/Icon'
 import FormErrorsTop from './components/FormErrorsTop'
 import FormErrorsField from './components/FormErrorsField'
+import Advice from './components/Advice'
 
 export default function CreateVideoCardPage({
   hash,
@@ -108,21 +109,7 @@ export default function CreateVideoCardPage({
         </form>
       </section>
 
-      {role === 'sg_anonymous' && (
-        <section>
-          <p>
-            <em>
-              Advice: We recommend{' '}
-              <a href={`/sign-up?return=/cards/create?subjectId=${subjectId}`}>
-                joining
-              </a>{' '}
-              before you create content,
-              <br />
-              so you can easily continue later!
-            </em>
-          </p>
-        </section>
-      )}
+      <Advice returnUrl={`/cards/create?subjectId=${subjectId}`} role={role} />
     </Layout>
   )
 }

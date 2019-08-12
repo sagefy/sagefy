@@ -9,6 +9,7 @@ import Icon from './components/Icon'
 import ExternalLink from './components/ExternalLink'
 import FormErrorsTop from './components/FormErrorsTop'
 import FormErrorsField from './components/FormErrorsField'
+import Advice from './components/Advice'
 
 export default function EditChoiceCardPage({
   hash,
@@ -136,21 +137,7 @@ export default function EditChoiceCardPage({
         </form>
       </section>
 
-      {role === 'sg_anonymous' && (
-        <section>
-          <p>
-            <em>
-              Advice: We recommend{' '}
-              <a href={`/sign-up?return=/choice-cards/${to58(cardId)}/edit`}>
-                joining
-              </a>{' '}
-              before you edit content,
-              <br />
-              so you can easily continue later!
-            </em>
-          </p>
-        </section>
-      )}
+      <Advice returnUrl={`/choice-cards/${to58(cardId)}/edit`} role={role} />
     </Layout>
   )
 }

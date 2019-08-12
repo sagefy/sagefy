@@ -3,6 +3,7 @@ import { string, shape } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
+import Advice from './components/Advice'
 
 export default function CreateCardPage({
   role,
@@ -74,21 +75,7 @@ export default function CreateCardPage({
         </ul>
       </section>
 
-      {role === 'sg_anonymous' && (
-        <section>
-          <p>
-            <em>
-              Advice: We recommend{' '}
-              <a href={`/sign-up?return=/cards/create?subjectId=${subjectId}`}>
-                joining
-              </a>{' '}
-              before you create content,
-              <br />
-              so you can easily continue later!
-            </em>
-          </p>
-        </section>
-      )}
+      <Advice returnUrl={`/cards/create?subjectId=${subjectId}`} role={role} />
     </Layout>
   )
 }

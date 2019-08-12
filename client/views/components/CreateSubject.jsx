@@ -3,6 +3,7 @@ import { string, shape } from 'prop-types'
 import Icon from './Icon'
 import FormErrorsTop from './FormErrorsTop'
 import FormErrorsField from './FormErrorsField'
+import Advice from './Advice'
 
 export default function CreateSubject({
   name: inputName,
@@ -48,17 +49,7 @@ export default function CreateSubject({
         </button>
       </p>
 
-      {role === 'sg_anonymous' && (
-        <p>
-          <em>
-            Advice: We recommend{' '}
-            <a href="/sign-up?return=/subjects/create">joining</a> before you
-            create content,
-            <br />
-            so you can easily continue later!
-          </em>
-        </p>
-      )}
+      <Advice returnUrl="/subjects/create" role={role} />
     </form>
   )
 }

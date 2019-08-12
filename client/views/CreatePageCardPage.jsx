@@ -6,6 +6,7 @@ import Icon from './components/Icon'
 import ExternalLink from './components/ExternalLink'
 import FormErrorsTop from './components/FormErrorsTop'
 import FormErrorsField from './components/FormErrorsField'
+import Advice from './components/Advice'
 
 export default function CreatePageCardPage({
   hash,
@@ -92,21 +93,7 @@ export default function CreatePageCardPage({
         </form>
       </section>
 
-      {role === 'sg_anonymous' && (
-        <section>
-          <p>
-            <em>
-              Advice: We recommend{' '}
-              <a href={`/sign-up?return=/cards/create?subjectId=${subjectId}`}>
-                joining
-              </a>{' '}
-              before you create content,
-              <br />
-              so you can easily continue later!
-            </em>
-          </p>
-        </section>
-      )}
+      <Advice returnUrl={`/cards/create?subjectId=${subjectId}`} role={role} />
     </Layout>
   )
 }
