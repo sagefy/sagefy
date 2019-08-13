@@ -3,7 +3,7 @@ layout: post
 title: 'A New Sagefy'
 description: 'What Sagefy is, where it was, and why and how I changed Sagefy.'
 date: '2019-07-31T18:25:33.914Z'
-image: https://user-images.githubusercontent.com/1221423/55904606-186bb280-5b85-11e9-8c67-0d8baefefd2c.png
+image: /images/new-1.jpg
 ---
 
 _What Sagefy is, where it was, and why and how I changed Sagefy_
