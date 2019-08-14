@@ -2,12 +2,12 @@ import React from 'react'
 import { string, shape } from 'prop-types'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
-import CreateSubject from './components/CreateSubject'
+import SubjectForm from './components/SubjectForm'
 
 export default function CreateSubjectPage({
   hash,
   role,
-  body: { name, body } = {},
+  body = {},
   gqlErrors,
 }) {
   return (
@@ -21,12 +21,7 @@ export default function CreateSubjectPage({
         <h1>
           Let&apos;s make a new subject! <Icon i="subject" s="h1" />
         </h1>
-        <CreateSubject
-          role={role}
-          name={name}
-          body={body}
-          gqlErrors={gqlErrors}
-        />
+        <SubjectForm role={role} form={body} gqlErrors={gqlErrors} />
       </section>
     </Layout>
   )

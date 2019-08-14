@@ -7,7 +7,7 @@ import Icon from './components/Icon'
 import Footer from './components/Footer'
 import ChooseSubject from './components/ChooseSubject'
 import CardSubjectInfo from './components/CardSubjectInfo'
-import CreateSubject from './components/CreateSubject'
+import SubjectForm from './components/SubjectForm'
 import CARD_KIND from '../util/card-kind'
 
 export default function DashboardPage({
@@ -135,7 +135,7 @@ export default function DashboardPage({
               You can make a new subject <Icon i="subject" s="h3" />
             </h3>
           </summary>
-          <CreateSubject role={role} />
+          <SubjectForm role={role} />
         </details>
 
         {!!mySubjects.length && (

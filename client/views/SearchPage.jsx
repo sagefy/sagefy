@@ -7,7 +7,7 @@ import shorten from '../util/shorten'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
 import Footer from './components/Footer'
-import CreateSubject from './components/CreateSubject'
+import SubjectForm from './components/SubjectForm'
 import CARD_KIND from '../util/card-kind'
 
 export default function SearchPage({ role, query: { q }, results, hash }) {
@@ -109,7 +109,7 @@ export default function SearchPage({ role, query: { q }, results, hash }) {
                 You can suggest a new subject <Icon i="subject" s="h2" />
               </h2>
             </summary>
-            <CreateSubject role={role} name={q} />
+            <SubjectForm role={role} preset={{ name: q }} />
           </details>
         </section>
       ) : (

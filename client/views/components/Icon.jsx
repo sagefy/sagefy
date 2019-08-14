@@ -44,6 +44,7 @@ import {
   Linkedin,
   Heart,
   Star,
+  PlusCircle,
 } from 'react-feather'
 import get from 'lodash.get'
 
@@ -111,6 +112,7 @@ const MAP = {
   check: CheckCircle,
   left: ArrowLeft,
   cheer: ThumbsUp,
+  create: PlusCircle,
   edit: Edit,
   history: Calendar,
   build: Heart,

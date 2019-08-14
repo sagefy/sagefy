@@ -124,13 +124,9 @@ app.post('/subjects/create', async (req, res) => {
     const gqlErrors = getGqlErrors(e)
     return res.render('CreateSubjectPage', { gqlErrors })
   }
-  const role = getRole(req)
-  const { entityId, name } = get(gqlRes, 'createSubject.subjectVersion', {})
-  if (role === 'sg_anonymous') {
-    return res.redirect(`/subjects/search?q=${name}`)
-  }
+  const { entityId } = get(gqlRes, 'createSubject.subjectVersion', {})
   await GQL.createUserSubject(req, { subjectId: entityId })
-  return res.redirect('/dashboard')
+  return res.redirect(`/subjects/${to58(entityId)}`)
 })
 
 app.get('/((subjects|learn-about))/(*-)?:subjectId', async (req, res, next) => {

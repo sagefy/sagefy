@@ -1,31 +1,44 @@
 import React from 'react'
 import { string, shape } from 'prop-types'
+import get from 'lodash.get'
+import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Icon from './Icon'
 import FormErrorsTop from './FormErrorsTop'
 import FormErrorsField from './FormErrorsField'
 import Advice from './Advice'
 
-export default function CreateSubject({
-  name: inputName,
-  body: { name, body },
+function findFirstValue(objs, field) {
+  return objs.map(obj => get(obj, field)).find(Boolean)
+}
+
+export default function SubjectForm({
+  form = {},
+  preset = {},
+  url = '/subjects/create',
   role,
   gqlErrors,
 }) {
+  const MODE = url.endsWith('edit') ? 'edit' : 'create'
   return (
-    <form className="CreateSubject" action="/subjects/create" method="POST">
+    <form className="SubjectForm" action={url} method="POST">
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
+
+      {MODE === 'edit' && (
+        <input type="hidden" name="entityId" value={to58(preset.entityId)} />
+      )}
 
       <p>
         <label htmlFor="name">What should we call this new subject?</label>
         <input
           type="text"
-          value={name || inputName}
+          value={findFirstValue([form, preset], 'name')}
           placeholder="example: Introduction to Classical Guitar"
           size="40"
           id="name"
           name="name"
           autoFocus
+          required
         />
       </p>
       <FormErrorsField formErrors={gqlErrors} field="name" />
@@ -38,37 +51,48 @@ export default function CreateSubject({
           rows="4"
           id="body"
           name="body"
-          value={body}
+          value={findFirstValue([form, preset], 'body')}
+          required
         />
       </p>
       <FormErrorsField formErrors={gqlErrors} field="body" />
 
       <p>
         <button type="submit">
-          <Icon i="search" /> Create Subject
+          <Icon i={MODE} />{' '}
+          {MODE === 'edit' ? 'Edit Subject' : 'Create Subject'}
         </button>
       </p>
 
-      <Advice returnUrl="/subjects/create" role={role} />
+      <Advice returnUrl={url} role={role} />
     </form>
   )
 }
 
-CreateSubject.propTypes = {
-  name: string,
-  body: shape({
+SubjectForm.propTypes = {
+  form: shape({
     name: string,
     body: string,
   }),
-  role: string.isRequired,
+  preset: shape({
+    name: string,
+    body: string,
+  }),
+  url: string,
+  role: string,
   gqlErrors: shape({}),
 }
 
-CreateSubject.defaultProps = {
-  name: '',
-  body: {
+SubjectForm.defaultProps = {
+  form: {
     name: '',
     body: '',
   },
+  preset: {
+    name: '',
+    body: '',
+  },
+  url: '/subjects/create',
+  role: 'sg_anonymous',
   gqlErrors: {},
 }

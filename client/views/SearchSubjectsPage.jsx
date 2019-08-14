@@ -4,7 +4,7 @@ import Layout from './components/Layout'
 import Icon from './components/Icon'
 import Footer from './components/Footer'
 import ChooseSubject from './components/ChooseSubject'
-import CreateSubject from './components/CreateSubject'
+import SubjectForm from './components/SubjectForm'
 
 export default function SearchSubjectsPage({
   role,
@@ -64,7 +64,7 @@ export default function SearchSubjectsPage({
                 You can suggest a new subject <Icon i="subject" s="h2" />
               </h2>
             </summary>
-            <CreateSubject role={role} name={q} />
+            <SubjectForm role={role} preset={{ name: q }} />
           </details>
         </section>
       ) : (
