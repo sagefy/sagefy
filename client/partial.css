@@ -1,10 +1,9 @@
 /*! Sagefy partial */
 
-/* Basic tag changes **********************************************************/
-
-/* A little more dramatic form inputs and buttons */
+/* A little more dramatic form inputs and buttons. */
 input,
-textarea {
+textarea,
+select {
   padding: calc(0.5rem - 1px) calc(1rem - 1px);
 }
 
@@ -22,28 +21,26 @@ label {
 }
 
 /* Tables are layout and data here,
-   progress should be the full page */
+   progress should be the full page. */
 table,
 progress {
   width: 100%;
 }
 
-/* Make important summary elements stand out a little more */
+/* Make important summary elements stand out a little more. */
 summary > *:first-child {
   text-decoration: underline dotted;
 }
 
-/* Elements *******************************************************************/
-
 /* The icons look "too high up",
-   and icons should be lighter to not outweigh text */
+   and icons should be lighter to not outweigh text. */
 .Icon {
   bottom: -2px;
   position: relative;
   opacity: 0.7;
 }
 
-/* This cuts down on the HTML length considerably */
+/* This cuts down on the HTML length considerably. */
 .Icon svg {
   fill: none;
   stroke: currentColor;
@@ -52,7 +49,7 @@ summary > *:first-child {
   stroke-linejoin: round;
 }
 
-/* Users probably won't expect yellow for a correct answer */
+/* Users probably won't expect yellow for a correct answer. */
 mark.good {
   background: #c6ffc6; /* 128-100-95 */
 }
@@ -63,8 +60,22 @@ mark.good {
   }
 }
 
-/* Just for pretty */
+/* Adding shadows for decoration. */
 iframe,
 .LearnPagePage img {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+button,
+[type='submit'],
+[type='button'] {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+[type='reset'] {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+:disabled {
+  box-shadow: none;
 }

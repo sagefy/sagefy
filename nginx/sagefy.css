@@ -351,20 +351,62 @@ template {
 }
 /*! drab.css v0 | Apache-2.0 License | github.com/heiskr/drab.css */
 
-/* 1. Apply `border-box` sizing to all elements. ******************************/
+/* Colors from http://www.hsluv.org/ */
+
+:root {
+  --s4: #ffffff; /* 250, 30,100 */
+  --s3: #f8f9fb; /* 250, 30, 98 */
+  --s2: #eff1f5; /* 250, 30, 95 */
+  --s1: #bec7d8; /* 250, 30, 80 */
+  --s0: #2a313d; /* 250, 30, 20 */
+  --i1: #a8c8ff; /* 250,100, 80 */
+  --i0: #006dbc; /* 250,100, 45 */
+  --b0: #d80005; /*  12,100, 45 */
+  --h0: #fff489; /*  80,100, 95 */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --s4: #171c24; /* 250, 30, 10 */
+    --s3: #202631; /* 250, 30, 15 */
+    --s2: #2a313d; /* 250, 30, 20 */
+    --s1: #52606f; /* 250, 30, 40 */
+    --s0: #eff1f5; /* 250, 30, 95 */
+    --i1: #0060a7; /* 250,100, 40 */
+    --i0: #0094fc; /* 250,100, 60 */
+    --b0: #ff5354; /*  12,100, 60 */
+    --h0: #4d4800; /*  80,100, 30 */
+  }
+}
+
+/* A1. Apply `border-box` sizing to all. */
+/* A9. Use the same border color everywhere. */
 
 * {
   box-sizing: border-box;
+  border: 0 solid var(--s1);
 }
 
-/* 2. Apply system fonts. *****************************************************/
+/* A2. Apply system font to all. */
+/* A5. Standardize line-height and font-size. */
+/* A8. Lighten text color slightly. */
 
-body,
+html,
 input,
 textarea,
+select,
 button {
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* The font family comes from Bootstrap 4. */
+  /* Public Sans first to support cross-os branding when user installed. */
+  font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Noto Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5; /* 24px */
+  color: var(--s0);
+  background: var(--s4);
 }
+
+/* A3. Apply system monospace font to matching. */
 
 pre,
 code,
@@ -378,36 +420,47 @@ var,
 [type='week'],
 [type='datetime'],
 [type='datetime-local'] {
-  font-family: 'SFMono-Regular', Menlo, Consolas, Inconsolata, 'Liberation Mono',
+  /* This font family comes from Bootstrap 4. */
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     monospace;
 }
 
-/* 3. Apply more common `line-height` and use an `8px` vertical rhythm. *******/
+/* A4. Limit width on body so text is easier to read. */
 
-body,
-input,
-textarea,
-button {
-  /* font-size 1, 16px */
-  line-height: 1.5; /* 24px */
+body {
+  margin: 0 auto;
+  max-width: 40rem; /* 640px */
+  padding: 1rem; /* 16px */
 }
 
-input,
-textarea,
-button,
-h5,
-h6 {
-  font-size: 1rem;
+/* A6. Standardize focus states. */
+
+:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px var(--i1);
 }
+
+/* A7. Round corners. */
+
+*:not(svg):not(th),
+progress::-webkit-progress-value {
+  border-radius: 0.25rem;
+}
+
+/* Separate, otherwise breaks Safari and Chrome */
+progress::-moz-progress-bar {
+  border-radius: 0.25rem;
+}
+
+/* B1. Adjust headers for 8px rhythm. */
 
 h1,
 h2,
 h3,
 h4,
 h5,
-h6,
-hr {
-  margin: 1rem 0;
+h6 {
+  margin: 1rem 0; /* 16px */
 }
 
 h1 {
@@ -415,40 +468,114 @@ h1 {
   line-height: 1.25; /* 40px */
 }
 
-h2 {
-  /*  font-size: 1.5rem; 24px */
+h2,
+h3 {
+  /*  font-size: 1.5 => 24px */
   line-height: 1.3333; /* 32px */
 }
 
 h3 {
   font-size: 1.125rem; /* 18px */
-  line-height: 1.3333; /* 24px */
+  /* line-height: 1.3333 => 24px */
 }
+
+h5,
+h6 {
+  font-size: 1rem; /* 16px */
+}
+
+/* B2. Tighten left on lists. */
+
+ul,
+ol {
+  padding-left: 1.5rem;
+}
+
+dd {
+  margin-left: 1.5rem;
+}
+
+/* B3. Add a left border to blockquote. */
+/* B4. Adjust blockquote margin for 8px rhythm. */
+
+blockquote {
+  /* I'm switching to padding-left here
+     to be able to apply a left border later. */
+  padding-left: calc(1.5rem - 1px);
+  margin-left: 0;
+  border-left-width: 1px;
+}
+
+/* B5. Adjust figure margins for 8px rhythm. */
 
 figure {
   margin: 1rem 2rem;
 }
 
-blockquote {
-  padding-left: 1.5rem;
-  margin-left: 0;
-}
+/* B6. Constrain image and iframe to width to body. */
+/* F1. Constrain form to body width. */
 
-legend {
-  padding: 0.25rem 0.5rem;
-}
-
+img,
+iframe,
 input,
-textarea {
-  padding: calc(0.25rem - 1px) calc(0.5rem - 1px);
-}
-
+textarea,
 button,
 [type='submit'],
 [type='button'],
 [type='reset'] {
-  padding: 0.25rem 1rem;
+  max-width: 100%;
 }
+
+/* B7. Update progres height to 8px rhythm. */
+
+progress {
+  height: 0.5rem;
+}
+
+/* B8. Adjust hr margin for 8px rhythm. */
+hr {
+  border-bottom-width: 1px;
+  margin: 1rem 0 calc(1rem - 1px);
+  /* We do border-bottom because the border-style default here is beveled,
+     and the top is darkened as a result. */
+}
+
+/* B9. Make summary look easier to click. ****/
+
+summary {
+  cursor: pointer;
+}
+
+/* B10. Increase whitespace around header, section, and footer. */
+
+header,
+section,
+footer {
+  margin: 4rem 0;
+}
+
+/* B11. Update progress colors. */
+
+progress::-webkit-progress-value {
+  background: var(--i1);
+}
+
+/* Separate, otherwise breaks Safari/Chrome */
+progress::-moz-progress-bar {
+  background: var(--i1);
+}
+
+/* T4. Add color to separate thead and tfoot. */
+/* B11. Update progress colors. */
+
+thead,
+tfoot,
+progress,
+progress::-webkit-progress-bar {
+  background: var(--s2);
+}
+
+/* I1. Update small and monospace font size for 8px rhythm. */
 
 small,
 pre,
@@ -467,61 +594,84 @@ var,
   line-height: 1.7142; /* 24px */
 }
 
-progress {
-  height: 0.5rem;
+/* I2. Make strikethroughs more obvious. */
+
+del,
+s,
+time {
+  opacity: 0.7;
 }
 
-/* 4. Constrain elements to width. ********************************************/
+/* I3. Adjust link color, removing visited color. */
 
-img,
-iframe,
+a {
+  color: var(--i0);
+}
+
+/* I4. Update mark colors. */
+
+mark {
+  color: var(--s0);
+  background: var(--h0);
+}
+
+/* F2. Remove shadow on iOS. */
+
+input:not([type='checkbox']):not([type='radio']):not([type='range']),
+textarea {
+  -webkit-appearance: none;
+}
+
+/* F3. Lighten disabled. */
+
+:disabled,
+::placeholder {
+  opacity: 0.5;
+}
+
+/* F4. Use the same border-width on form. */
+
+fieldset,
+input:not([type='button']):not([type='submit']):not([type='reset']),
+textarea,
+select {
+  border-width: 1px;
+}
+
+/* F5. Add a little padding to input and button. */
+
 input,
 textarea,
+select {
+  /* We need to account for the border width. */
+  padding: calc(0.25rem - 1px) calc(0.5rem - 1px);
+}
+
 button,
 [type='submit'],
 [type='button'],
 [type='reset'] {
-  max-width: 100%;
+  padding: 0.25rem 1rem;
 }
 
-/* 5. Use consistent border sizes and styles. *********************************/
+/* F6. Update button colors. **/
 
-fieldset,
-input,
-textarea {
-  border: 1px solid;
-}
-
-iframe,
 button,
-[type='button'],
-[type='submit'],
-[type='reset'],
-progress,
-hr {
-  border: 0;
+[type='button'] {
+  background: var(--i1);
 }
 
-hr {
-  border-top: 1px solid;
+[type='submit'] {
+  color: var(--s4);
+  background: var(--i0);
 }
 
-blockquote {
-  border-left: 1px solid;
+[type='reset'] {
+  color: var(--b0);
+  background: var(--s2);
 }
 
-/* 6. Tighten left on list like elements. *************************************/
-
-ul,
-ol {
-  padding-left: 1.5rem;
-}
-
-dd {
-  margin-left: 1.5rem;
-}
-
-/* 7. Apply more common spacing on `table`s. **********************************/
+/* T1. Use padding not border-spacing on tables. */
 
 table {
   border-spacing: 0;
@@ -539,222 +689,21 @@ th:first-child {
 }
 
 td:last-child,
-td:first-child {
+th:last-child {
   padding-right: 1rem;
 }
 
+/* T2. Align everything left in table cells by default. */
+
 th {
   text-align: left;
-  vertical-align: bottom;
 }
 
-td {
-  vertical-align: top;
-}
+/* T3. Add zebra-striping to tables. */
 
-/* 8. Add spacing to sectional elements. **************************************/
-
-header,
-section,
-footer {
-  margin: 4rem 0;
-}
-
-/* 9. Style buttons to look more like web buttons. ****************************/
-
-button,
-[type='submit'],
-[type='button'] {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-[type='reset'] {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-/* 10. Change the look of caption text. ***************************************/
-
-caption,
-figcaption {
-  font-style: italic;
-}
-
-/* 11. Make strikethroughs more obvious. **************************************/
-
-del,
-s,
-time {
-  opacity: 0.7;
-}
-
-/* 12. More clickable summary. ************************************************/
-
-summary {
-  cursor: pointer;
-}
-
-/* 13. Soften the shape of big boxy elements. *********************************/
-
-code,
-pre,
-samp,
-kbd,
-mark {
-  padding: 0.125rem;
-  margin: -0.125rem;
-}
-
-img,
-iframe,
-input,
-textarea,
-button,
-[type='submit'],
-[type='button'],
-[type='reset'],
-fieldset,
-pre,
-code,
-samp,
-kbd,
-mark,
-progress,
-progress::-webkit-progress-bar,
-progress::-webkit-progress-value {
-  border-radius: 0.25rem;
-}
-
-/* Separate, otherwise breaks Safari and Chrome */
-progress::-moz-progress-bar {
-  border-radius: 0.25rem;
-}
-
-/* 14. Lighten inactive elements. *********************************************/
-
-:disabled,
-::placeholder {
-  opacity: 0.5;
-}
-
-:disabled {
-  box-shadow: none;
-}
-
-/* 15. Remove shadow on iOS. **************************************************/
-
-input:not([type='checkbox']):not([type='radio']):not([type='range']),
-textarea {
-  -webkit-appearance: none;
-}
-
-/* 16. Use more common, consistent, and attractive colors. ********************/
-
-body,
-input,
-textarea,
-button,
-mark {
-  color: var(--s0);
-  background: var(--s4);
-}
-
-pre,
-code,
-samp,
-kbd,
 tr:nth-child(even) {
   background: var(--s3);
 }
-
-thead,
-tfoot,
-progress,
-progress::-webkit-progress-bar {
-  background: var(--s2);
-}
-
-hr,
-blockquote,
-fieldset,
-input,
-textarea {
-  border-color: var(--s1);
-}
-
-a {
-  color: var(--i0);
-}
-
-:focus {
-  outline: 0;
-  box-shadow: 0 0 0 2px var(--i1);
-}
-
-button,
-[type='button'] {
-  background: var(--i1);
-}
-
-[type='submit'] {
-  color: var(--s4);
-  background: var(--i0);
-}
-
-[type='reset'] {
-  color: var(--b0);
-  background: var(--s2);
-}
-
-progress::-webkit-progress-value {
-  background: var(--i1);
-}
-
-/* Separate, otherwise breaks Safari/Chrome */
-progress::-moz-progress-bar {
-  background: var(--i1);
-}
-
-mark {
-  background: var(--h0);
-}
-
-/* Colors from http://www.hsluv.org/ */
-
-:root {
-  --s4: #ffffff; /* 250- 30-100 */
-  --s3: #f8f9fb; /* 250- 30- 98 */
-  --s2: #eff1f5; /* 250- 30- 95 */
-  --s1: #bec7d8; /* 250- 30- 80 */
-  --s0: #2a313d; /* 250- 30- 20 */
-  --i1: #a8c8ff; /* 250-100- 80 */
-  --i0: #006dbc; /* 250-100- 45 */
-  --b0: #d80005; /*  12-100- 45 */
-  --h0: #fff489; /*  80-100- 95 */
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --s4: #171c24; /* 250- 30- 10 */
-    --s3: #202631; /* 250- 30- 15 */
-    --s2: #2a313d; /* 250- 30- 20 */
-    --s1: #52606f; /* 250- 30- 40 */
-    --s0: #eff1f5; /* 250- 30- 95 */
-    --i1: #0060a7; /* 250-100- 40 */
-    --i0: #0094fc; /* 250-100- 60 */
-    --b0: #ff5354; /*  12-100- 60 */
-    --h0: #4d4800; /*  80-100- 30 */
-  }
-}
-
-/* 17. Finally, limit width on body so text is more readable. *****************/
-
-body {
-  margin: 0 auto;
-  max-width: 40rem; /* 640px */
-  padding: 1rem;
-}
-/*! drab utils */
-
 /* text-align--left */
 .ta-l {
   text-align: left;
@@ -823,11 +772,10 @@ body {
 }
 /*! Sagefy partial */
 
-/* Basic tag changes **********************************************************/
-
-/* A little more dramatic form inputs and buttons */
+/* A little more dramatic form inputs and buttons. */
 input,
-textarea {
+textarea,
+select {
   padding: calc(0.5rem - 1px) calc(1rem - 1px);
 }
 
@@ -845,28 +793,26 @@ label {
 }
 
 /* Tables are layout and data here,
-   progress should be the full page */
+   progress should be the full page. */
 table,
 progress {
   width: 100%;
 }
 
-/* Make important summary elements stand out a little more */
+/* Make important summary elements stand out a little more. */
 summary > *:first-child {
   text-decoration: underline dotted;
 }
 
-/* Elements *******************************************************************/
-
 /* The icons look "too high up",
-   and icons should be lighter to not outweigh text */
+   and icons should be lighter to not outweigh text. */
 .Icon {
   bottom: -2px;
   position: relative;
   opacity: 0.7;
 }
 
-/* This cuts down on the HTML length considerably */
+/* This cuts down on the HTML length considerably. */
 .Icon svg {
   fill: none;
   stroke: currentColor;
@@ -875,7 +821,7 @@ summary > *:first-child {
   stroke-linejoin: round;
 }
 
-/* Users probably won't expect yellow for a correct answer */
+/* Users probably won't expect yellow for a correct answer. */
 mark.good {
   background: #c6ffc6; /* 128-100-95 */
 }
@@ -886,8 +832,22 @@ mark.good {
   }
 }
 
-/* Just for pretty */
+/* Adding shadows for decoration. */
 iframe,
 .LearnPagePage img {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+button,
+[type='submit'],
+[type='button'] {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+[type='reset'] {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+:disabled {
+  box-shadow: none;
 }
