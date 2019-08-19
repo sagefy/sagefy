@@ -2,7 +2,6 @@
 layout: post
 title: 'A Checklist to Make Your Own Learning Plan'
 description: 'A research-backed checklist to learn anything you want.'
-date: '2018-08-27T16:47:36.448Z'
 image: /images/chk-1.jpeg
 ---
 

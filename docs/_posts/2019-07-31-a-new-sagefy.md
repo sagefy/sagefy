@@ -2,7 +2,6 @@
 layout: post
 title: 'A New Sagefy'
 description: 'What Sagefy is, where it was, and why and how I changed Sagefy.'
-date: '2019-07-31T18:25:33.914Z'
 image: /images/new-1.jpg
 ---
 

@@ -2,7 +2,6 @@
 layout: post
 title: 'What do you want to learn?'
 description: 'Why and how I built a community page for anyone to share what they want to learn.'
-date: '2017-07-29T03:05:00.517Z'
 image: /images/what-1.png
 ---
 

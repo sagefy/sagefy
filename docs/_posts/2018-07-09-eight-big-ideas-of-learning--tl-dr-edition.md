@@ -2,7 +2,6 @@
 layout: post
 title: 'Eight Big Ideas of Learning [TL;DR Edition]'
 description: 'Research-backed strategies for better learning. The short version.'
-date: '2018-07-09T13:01:02.937Z'
 image: /images/eight-1.png
 ---
 

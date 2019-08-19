@@ -2,7 +2,6 @@
 layout: post
 title: 'Building a Course for Sagefy'
 description: 'My experience so far building “An Introduction to Electronic Music”.'
-date: '2017-03-25T01:26:26.715Z'
 image: /images/build-1.png
 ---
 

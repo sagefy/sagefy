@@ -2,7 +2,6 @@
 layout: post
 title: 'How I Write React/Redux Projects in 2018'
 description: 'This article documents the strategies I use when building browser projects in React/Redux.'
-date: '2018-08-30T04:01:10.587Z'
 image: /images/react-1.jpeg
 ---
 

@@ -2,7 +2,6 @@
 layout: post
 title: 'Interviewing Prospective Users'
 description: 'Starting a new project? Begin by interviewing prospective users.'
-date: '2017-08-19T02:05:10.579Z'
 image: /images/interview-1.png
 ---
 

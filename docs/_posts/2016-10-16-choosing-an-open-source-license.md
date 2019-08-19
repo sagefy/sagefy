@@ -2,7 +2,6 @@
 layout: post
 title: 'Choosing an Open-Source License'
 description: 'How I chose the Apache 2 license for Sagefy.'
-date: '2016-10-16T18:18:46.879Z'
 image: /images/choose-1.png
 ---
 

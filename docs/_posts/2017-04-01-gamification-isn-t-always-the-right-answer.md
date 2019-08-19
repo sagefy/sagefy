@@ -2,7 +2,6 @@
 layout: post
 title: 'Gamification Isn’t Always the Right Answer'
 description: 'For Sagefy, a different strategy fits better.'
-date: '2017-04-01T19:52:10.385Z'
 image: /images/game-1.png
 ---
 
