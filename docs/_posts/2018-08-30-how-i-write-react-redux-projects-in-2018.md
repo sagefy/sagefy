@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 'How I Write React/Redux Projects in 2018'
-description: 'I’ve been in JavaScript development for about thirteen years. I’ve been through Prototype.js, YUI, MooTools, jQuery, Backbone, Angular, and now React (and countless other libraries and tools). I’ve…'
+description: 'This article documents the strategies I use when building browser projects in React/Redux.'
 date: '2018-08-30T04:01:10.587Z'
 image: /images/react-1.jpeg
 ---

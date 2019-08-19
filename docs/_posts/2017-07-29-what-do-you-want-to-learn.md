@@ -1,12 +1,10 @@
 ---
 layout: post
 title: 'What do you want to learn?'
-description: 'The Suggest page on Sagefy allows you to suggest new free online learning subjects. And you can up-vote subjects that interest you. And you don’t need to sign up for an account! Why use the Suggest…'
+description: 'Why and how I built a community page for anyone to share what they want to learn.'
 date: '2017-07-29T03:05:00.517Z'
 image: /images/what-1.png
 ---
-
-_Why and how I built a community page for anyone to share what they want to learn._
 
 **The Suggest page on** [**Sagefy**](https://sagefy.org/) **allows you to suggest new free online learning subjects.** And you can up-vote subjects that interest you. And you _don’t_ need to sign up for an account! Why use the Suggest page? Maybe you can’t find something you’re looking for. Maybe you’re thinking about building something but want to see what the interest level is first. Or you’re looking for a different approach to something that already exists.
 

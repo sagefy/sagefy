@@ -1,12 +1,10 @@
 ---
 layout: post
 title: 'Building a Course for Sagefy'
-description: 'In this article, I’m going to talk about my journey on building out a course for Sagefy. That includes how I picked a topic, how I organized the course, and what I’ve learned so far. The course is…'
+description: 'My experience so far building “An Introduction to Electronic Music”.'
 date: '2017-03-25T01:26:26.715Z'
 image: /images/build-1.png
 ---
-
-_My experience so far building “An Introduction to Electronic Music”_
 
 In this article, I’m going to talk about my journey on building out a course for Sagefy. That includes how I picked a topic, how I organized the course, and what I’ve learned so far. _The course is still very much in progress._
 

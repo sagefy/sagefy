@@ -1,12 +1,10 @@
 ---
 layout: post
 title: 'Eight Big Ideas of Learning [TL;DR Edition]'
-description: 'One of my favorite subjects is learning how to learn. I’ve read and studied on learning science for many years. That said, I’m no expert — enjoy this outsider’s take on the literature. In this…'
+description: 'Research-backed strategies for better learning. The short version.'
 date: '2018-07-09T13:01:02.937Z'
 image: /images/eight-1.png
 ---
-
-_Research-backed strategies for better learning_
 
 This article is a summary of [another article]({% post_url 2018-07-09-eight-big-ideas-of-learning %}) I wrote. Check it out if you want more details!
 

@@ -6,8 +6,6 @@ date: '2019-07-31T18:25:33.914Z'
 image: /images/new-1.jpg
 ---
 
-_What Sagefy is, where it was, and why and how I changed Sagefy_
-
 In this post, I'm going to talk about what Sagefy is. Where Sagefy was in October last year. And why and how I changed Sagefy in the time since. I wanted to share how this big change went down. And document the changes for my future self.
 
 ## What is Sagefy

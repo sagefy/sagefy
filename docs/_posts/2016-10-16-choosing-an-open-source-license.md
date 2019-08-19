@@ -1,12 +1,10 @@
 ---
 layout: post
 title: 'Choosing an Open-Source License'
-description: 'I have to start this article by saying I’m not a lawyer, and nothing in this article is legal advice. If you are looking for a legal recommendation, ask an attorney. When I started Sagefy back in…'
+description: 'How I chose the Apache 2 license for Sagefy.'
 date: '2016-10-16T18:18:46.879Z'
 image: /images/choose-1.png
 ---
-
-_How I chose the Apache 2 license for Sagefy._
 
 I have to start this article by saying **I’m not a lawyer**, and nothing in this article is legal advice. If you are looking for a legal recommendation, ask an attorney.
 

@@ -1,12 +1,10 @@
 ---
 layout: post
 title: 'A Checklist to Make Your Own Learning Plan'
-description: 'I published my Eight Big Ideas of Learning article (also full version) about a month ago. The article attracted broad interest. Several people asked me how to act on those ideas. If you’re an…'
+description: 'A research-backed checklist to learn anything you want.'
 date: '2018-08-27T16:47:36.448Z'
 image: /images/chk-1.jpeg
 ---
-
-_A research-backed checklist to learn anything you want_
 
 I published my [**Eight Big Ideas of Learning**]({% post_url 2018-07-09-eight-big-ideas-of-learning--tl-dr-edition %}) article (also [full version]({% post_url 2018-07-09-eight-big-ideas-of-learning %})) about a month ago. The article attracted broad interest. Several people asked me how to act on those ideas.
 
