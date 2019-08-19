@@ -16,16 +16,23 @@
       <h1 itemprop="headline">{{ page.title }}</h1>
       <p itemprop="description"><em>{{ page.description }}</em></p>
       <p>
-        by
-        <span itemprop="author" itemscope itemtype="https://schema.org/Person"
-          ><span itemprop="name">Kevin Heis</span></span
-        >,
-        <time itemprop="datePublished">{{ page.date | date: "%Y-%m-%d" }}</time>
-        <meta
-          itemprop="dateModified"
-          content="{{ page.date | date: '%Y-%m-%d' }}"
-        />
-        <meta itemprop="mainEntityOfPage" content="true" />
+        <small>
+          by
+          <span itemprop="author" itemscope itemtype="https://schema.org/Person"
+            ><span itemprop="name">Kevin Heis</span></span
+          >
+          &bull;
+          <time
+            itemprop="datePublished"
+            datetime="{{ page.date | date: '%Y-%m-%d' }}"
+            >{{ page.date | date: "%Y %b %d" }}</time
+          >
+          <meta
+            itemprop="dateModified"
+            content="{{ page.date | date: '%Y-%m-%d' }}"
+          />
+          <meta itemprop="mainEntityOfPage" content="true" />
+        </small>
       </p>
     </header>
 
@@ -44,7 +51,7 @@
         {% for post in site.posts %}
         <li>
           <a href="{{ post.url }}">{{ post.title }}</a>
-          <time>{{ post.date | date: "%Y %b %d" }}</time>
+          <small><time>{{ post.date | date: "%Y %b %d" }}</time></small>
         </li>
         {% endfor %}
       </ul>
