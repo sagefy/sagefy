@@ -3,7 +3,6 @@ layout: post
 title: 'How to build an adaptive learning system'
 description: 'The four elements of adaptive learning systems.'
 image: /images/adaptive-1.jpg
-published: false
 ---
 
 In this article, I'll go over what adaptive learning systems are. I cover some background on why adaptive learning systems have the structure they do. I'll introduce a few adaptive learning systems. Then, I talk about the four elements. And how you can architect an adaptive learning system. We'll wrap up with evaluating the pros and cons of adaptive learning.
@@ -14,8 +13,8 @@ An adaptive learning system is software where algorithms optimize the content to
 
 In a traditional e-learning course, you will linearly follow the path an instructor creates. You watch videos, read articles, take quizzes, and practice interactive modules in a predetermined ordered. An adaptive learning system will contain the same types of materials. But the order will change for each learner. The system decides which content to show the learner based on two things:
 
-- If the learner's **goal** is only a subset of the overall content, the system can limit the content.
-- The **prior knowledge** also comes into play. If the system determines the current path is too easy, the system can accelerate to more challenging material. If the system finds out the current path is too difficult, the system may intervene and review prerequisite content, reduce the challenge, and slow down the pace.
+- If the learner's **goal** is only a subset of the content, the system can limit the content.
+- The **prior knowledge** also comes into play. If the system determines the current path is too easy, the system can speed up to more challenging material. If the system finds out the current path is too difficult, the system may... intervene and review prerequisite content, reduce the challenge, or slow down the pace.
 
 Some related topics include intelligent tutors, adaptive testing, psychometrics, personalized learning, and smart teaching. Many of these topics share algorithms and structures with adaptive learning systems.
 
@@ -23,7 +22,7 @@ Some related topics include intelligent tutors, adaptive testing, psychometrics,
 
 ## Knowledge is a graph: neuroscience
 
-I'm going to start with a little background. This will create context for why adaptive learning systems have the four elements below. The point for all of this is _knowledge is a graph_.
+I'm going to start with a little background. This will create context for why adaptive learning systems have the four elements below. The point for this is _knowledge is a graph_.
 
 The human brain has 86 billion neurons. Every neuron has dendrites, a soma, and an axon.
 
@@ -33,17 +32,17 @@ The human brain has 86 billion neurons. Every neuron has dendrites, a soma, and 
 - The **soma** is the _throughput_. The soma -- which contains the cell nucleus -- routes the input from the dendrites.
 - The **axon** is the _output_. The axon transmits an action potential -- an electrical signal -- to the axon terminals. A myelin sheath covers the axon to protect the signal. The axon terminals release neurotranmitters into the synapse.
 
-As your brain receives and processes information, that information will correspond with a neural pathway in your brain. Your brain with _myelinate_ that pathway -- strengthen the myelin around the axon to support electrical signals. Because of the strengthened myelin, this path will be more likely to fire in the future. In other words, you learn.
+Information your brain receives and processes corresponds with a neural pathway. Your brain with _myelinate_ that pathway -- strengthen the myelin around the axon to support electrical signals. Because of the strengthened myelin, this path will be more likely to fire in the future. In other words, you learn.
 
 Even in the smallest scale, our brain is a massive graph of connected neurons. We learn and optimize by making some paths more likely to connect than other paths.
 
 ## Knowledge is a graph: learning science
 
-The strongest predictor of how we perform in a learning environment is our prior knowledge -- what we already know before we start the learning experience. A notable psychology paper -- 1999 Dochy, Segers, and Buehl -- found prior knowledge accounts for about 81% of the learning outcome differences between different learners. Reviewing prior knowledge before showing new information can have a dramatic impact on learning outcomes. And connecting new knowledge to prior knowledge while teaching can have a big impact too. (See [Eight Ideas]({% post_url 2018-07-09-eight-big-ideas-of-learning %}) for sources.)
+The strongest predictor of how we perform in a learning environment is our prior knowledge. What we already know before we start the learning experience. A notable psychology paper -- 1999 Dochy, Segers, and Buehl -- found prior knowledge is 81% of outcome differences between learners. Reviewing prior knowledge before showing new information impacts learning outcomes. And connecting new knowledge to prior knowledge while teaching can have a big impact too. (See [Eight Ideas]({% post_url 2018-07-09-eight-big-ideas-of-learning %}) for sources.)
 
-Perhaps the most famous psychology paper is 1956 "The Magical Number Seven, Plus or Minus Two: Some Limits on Our Capacity for Processing Information" by George Miller. The paper suggests that humans have a limited working memory. Miller found for simple numbers, a human could work with about seven items at once. Later researchers found for more complex information, that limit is closer to four.
+The most famous psychology paper is 1956 "The Magical Number Seven, Plus or Minus Two" by George Miller. The paper suggests that humans have a limited working memory. Miller found for simple numbers, a human could work with about seven items at once. Later researchers found for more complex information, that limit is closer to four.
 
-Some psychologists suggest of these "four slots", for us to learn, at least one or two must be prior knowledge. How much prior knowledge we can "load up" into one of the four slots depends on the strength of the connections in the graph. When we have both prior knowledge and new knowledge in our working memory, we associate the information and strengthen the connection between the two. Trying to learn new information without connecting to prior knowledge limits the strength of the memory.
+Some psychologists suggest of these "four slots", for us to learn, at least one or two must be prior knowledge. How much prior knowledge we can "load up" into one of the four slots depends on the strength of the connections in the graph. When we have both prior knowledge and new knowledge in our working memory, we associate the information. And we strengthen the connection between the two. Trying to learn new information without connecting to prior knowledge limits the strength of the memory.
 
 In short, we learn by connecting prior knowledge to new information. And those connections form a large, endless graph of knowledge.
 
@@ -64,7 +63,7 @@ This section is more context, but optional. I'm not writing an thorough article 
 
 ## The four elements
 
-Nearly all adaptive learning systems today have these four elements. The terms change slightly and so do their scope. But you will almost always find all four elements.
+Most adaptive learning systems today have these four elements. The terms change and so do their scope. But you will almost always find all four elements.
 
 These elements are:
 
@@ -79,7 +78,7 @@ Let's go into each element.
 
 ### The expert — the big graph of everything
 
-The expert model is a large, connected graph of everything you want the learners to know. As the name suggests, you have an expert on the topic -- or experts on topics -- create the model. This model is mostly static. The expert model only changes when the scope of learning outcomes change. Or when problems and opportunities to refine the adaptive learning system arises. Most of the work of the expert model is at the beginning of building a new learning experience. The adaptive learning system will access the expert model regularly to compare the learner's current state with the expert model. The system will also access the expert model to determine which learning experience to focus on next.
+The expert model is a large, connected graph of everything you want the learners to know. As the name suggests, you have an expert on the topic -- or experts on topics -- create the model. This model is static. The expert model only changes when the scope of learning outcomes change. Or when problems and opportunities to refine the adaptive learning system arises. Most of the work of the expert model is at the beginning of building a new learning experience. The adaptive learning system will access the expert model to compare the learner's current state with the expert model. The system will also access the expert model to determine which learning experience to focus on next.
 
 Usually, a team of experts will define the scope of learning outcomes. Each node in the expert model should have the following attributes:
 
@@ -108,21 +107,21 @@ There's many algorithms for updating the learner model. Knowledge spaces suggest
 - How likely does this activity categorize the learner as skilled or unskilled?
 - How difficult will this item be for this particular learner?
 
-For both item response theory and Bayesian knowledge tracing, you'll need a means to estimate these parameters. This is one of the most rapidly developing areas in adaptive learning systems, so I can't make any specific recommendations yet. There's also some researchers working on models trained with classic machine learning such as neural networks with varying degrees of success.
+For both item response theory and Bayesian knowledge tracing, you'll need a means to estimate these parameters. This is one of the most rapidly developing areas in adaptive learning systems, so I can't make any specific recommendations yet. There's also researchers creating models with classic machine learning, such as neural networks.
 
 ![](/images/adaptive-5.jpg)
 
 ### The tutor — what to show when
 
-The tutor chooses which order to select the activities the learner will engage. After each update to the learner model, the tutor will update the path it will take to optimize for that learner. The goal of the tutor is to get the learner to a fully complete expert graph in the smallest amount of time. Some systems allow learners to focus only on some areas while ignoring the rest. Just as the learner model is unique per learner, so too is the paths the tutor will take. While the expert and learner elements are mostly data with some algorithms, the tutor is mostly algorithms.
+The tutor chooses which order to select the activities the learner will engage. After each update to the learner model, the tutor will update the path it will take to optimize for that learner. The goal of the tutor is to get the learner to a complete expert graph in the smallest amount of time. Some systems allow learners to focus only on some areas while ignoring the rest. As the learner model is unique per learner, so too is the paths the tutor will take. While the expert and learner elements are data with some algorithms, the tutor is algorithms with some data.
 
-The tutor may decide both which skills to focus on and which activities to have the learner perform. For the skills to focus on, the tutor will often choose skills with the largest impact on the overall graph. This often means focusing on more elementary skills before more advanced skills. For activities:
+The tutor may decide both which skills to focus on and which activities to have the learner perform. For the skills to focus on, the tutor will often choose skills with the largest impact on the larger graph. This often means focusing on more elementary skills before more advanced skills. For activities:
 
 - The tutor will try to choose the most relevant activities to the learner
 - The tutor will choose activities that are challenging, but not too difficult for the learner.
 - The tutor will try to choose activities in a way that reduce the total time towards mastery.
 
-In simple adaptive learning systems, the tutor may choose activities within a skill at random. In item response theory based systems, the tutors generally emphasize choosing activities that are challenging. In Bayesian knowledge tracing models the market has many different types of path routing algorithms. Researchers have focused more on the expert and learner elements, so we don't know what produces the best learning outcomes for the tutor element.
+Simple adaptive learning tutors may choose activities within a skill at random. Item response theory based tutors emphasize choosing activities that are challenging. In Bayesian knowledge tracing models the market has many different tutor algorithms. Researchers have focused more on the expert and learner elements. So we don't know what produces the best learning outcomes for the tutor element.
 
 ![](/images/adaptive-6.jpg)
 
@@ -135,7 +134,7 @@ In some systems, learners may ask for and receive hints. When to offer hints and
 There's also some other questions like:
 
 - Do you display the expert graph to the learner?
-- Do you display their progress overall? How?
+- Do you display their progress on all skills? How?
 - Do you display their progress on specific skills? How?
 - Does the learner get choices in learning content? Or does the system decide everything?
 
@@ -147,11 +146,11 @@ Depending on the needs of the system, some of these items may impact learning ou
 
 As these systems come from academia, we have a significant amount of data and history with each system.
 
-An established finding in educational research is one-on-one human-to-human tutoring has the strongest learning outcomes. So far, no computerized adaptive learning system has outperformed human one-on-one tutoring.
+Human individual tutoring has the strongest learning outcomes. This is a common finding in educational research. So far, no computerized adaptive learning system has outperformed human one-on-one tutoring.
 
 Researchers have investigated classroom learning alone, computerized adaptive learning alone, as well as combined classroom and adaptive learning. A [2016 paper "Effectiveness of Intelligent Tutoring Systems"](https://www.researchgate.net/publication/277636218_Effectiveness_of_Intelligent_Tutoring_Systems_A_Meta-Analytic_Review) provides a meta analysis of these studies. Adaptive learning systems usually outperform traditional classroom learning. Combined with classroom learning, adaptive learning systems create a positive effect, but there are some limitations.
 
-Adaptive systems do particularly well with instant feedback and ensuring skill mastery. However, investigators note some areas for improvement:
+Adaptive systems do particularly well with instant feedback and ensuring skill mastery. Investigators note some areas for improvement:
 
 - The cost of developing content for these systems is high.
 - These systems often can't contextualize learning the way a human can.
