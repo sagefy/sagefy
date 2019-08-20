@@ -79,25 +79,67 @@ Let's go into each element.
 
 ### The expert — the big graph of everything
 
-TBD
+The expert model is a large, connected graph of everything you want the learners to know. As the name suggests, you have an expert on the topic -- or experts on topics -- create the model. This model is mostly static. The expert model only changes when the scope of learning outcomes change. Or when problems and opportunities to refine the adaptive learning system arises. Most of the work of the expert model is at the beginning of building a new learning experience. The adaptive learning system will access the expert model regularly to compare the learner's current state with the expert model. The system will also access the expert model to determine which learning experience to focus on next.
+
+Usually, a team of experts will define the scope of learning outcomes. Each node in the expert model should have the following attributes:
+
+- A name
+- A short description, which indicates which skills are under test and what is outside the scope
+- A list of prerequisite nodes -- these form the "edges" of the graph. These prerequisites cannot form a "cycle" -- a loop of nodes.
+
+Expert models perform better when each node is small and narrowly defined. For example, each skill in Bloom's taxonomy -- recognition, understanding, application, analysis, synthesis, and evaluation -- could each be its own node in the expert model. The combination of two underlying skills should also be a separate node.
+
+There is an endless number of formats you could use to create an expert model, such as XML, JSON, CSV, or YAML. It can help to be able to display the expert model graphically for review.
+
+Some systems will automatically generate an expert model by querying experts in a series of questions, like a wizard. Others will cluster existing learning content, using algorithms like k-means clustering. You may want to review the [wikipedia article on Knowledge spaces](https://en.wikipedia.org/wiki/Knowledge_space) for a more mathematical description.
 
 ![](/images/adaptive-4.jpg)
 
 ### The learner — where you are versus where you want to be
 
-TBD
+The learner element is a model of the learner's current state of ability. So for each given node in the expert graph, the learner model has a probability associated with it: 1-99%. The system updates this graph every time the learner performs an activity. If a learner answers a question correctly, the probability increases. If the learner answers incorrectly, the probability decreases. Each learner has their own learner model. So each time there's a new learner in the system, there's a new learner model. Later, the tutor will use the learner model to decide how to order the learning content.
+
+There's many algorithms for updating the learner model. Knowledge spaces suggest that as a learner develops a skill, the probabilities for related skills should also adjust. Some adaptive learning systems use simple heuristic models for updating skill probabilities. In item response theory, the probability updates along a sigmoid curve. In Bayesian knowledge tracing, this curve has a more conservative shape. Each model tends to account for these factors:
+
+- Before the learner does anything, what do we estimate the probability to be?
+- How likely is a learner to guess the right answer if they don't know the skill?
+- How likely is a learner to slip up even if they know the skill?
+- How likely is the learner to have "learned" the skill after seeing the item?
+- How likely does this activity categorize the learner as skilled or unskilled?
+- How difficult will this item be for this particular learner?
+
+For both item response theory and Bayesian knowledge tracing, you'll need a means to estimate these parameters. This is one of the most rapidly developing areas in adaptive learning systems, so I can't make any specific recommendations yet. There's also some researchers working on models trained with classic machine learning such as neural networks with varying degrees of success.
 
 ![](/images/adaptive-5.jpg)
 
 ### The tutor — what to show when
 
-TBD
+The tutor chooses which order to select the activities the learner will engage. After each update to the learner model, the tutor will update the path it will take to optimize for that learner. The goal of the tutor is to get the learner to a fully complete expert graph in the smallest amount of time. Some systems allow learners to focus only on some areas while ignoring the rest. Just as the learner model is unique per learner, so too is the paths the tutor will take. While the expert and learner elements are mostly data with some algorithms, the tutor is mostly algorithms.
+
+The tutor may decide both which skills to focus on and which activities to have the learner perform. For the skills to focus on, the tutor will often choose skills with the largest impact on the overall graph. This often means focusing on more elementary skills before more advanced skills. For activities:
+
+- The tutor will try to choose the most relevant activities to the learner
+- The tutor will choose activities that are challenging, but not too difficult for the learner.
+- The tutor will try to choose activities in a way that reduce the total time towards mastery.
+
+In simple adaptive learning systems, the tutor may choose activities within a skill at random. In item response theory based systems, the tutors generally emphasize choosing activities that are challenging. In Bayesian knowledge tracing models the market has many different types of path routing algorithms. Researchers have focused more on the expert and learner elements, so we don't know what produces the best learning outcomes for the tutor element.
 
 ![](/images/adaptive-6.jpg)
 
 ### The interface — how to show it
 
-TBD
+Some adaptive learning systems will change the user interface. As the learner is less familiar with a skill, the interface would reduce and focus more on the task at hand. As learner ability grows, more of the full interface comes together. Some call this process "scaffolding".
+
+In some systems, learners may ask for and receive hints. When to offer hints and the depth of those hints can adjust based on learner ability.
+
+There's also some other questions like:
+
+- Do you display the expert graph to the learner?
+- Do you display their progress overall? How?
+- Do you display their progress on specific skills? How?
+- Does the learner get choices in learning content? Or does the system decide everything?
+
+Depending on the needs of the system, some of these items may impact learning outcomes.
 
 ![](/images/adaptive-7.jpg)
 
