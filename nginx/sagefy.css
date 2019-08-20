@@ -398,10 +398,8 @@ select,
 button {
   /* The font family comes from Bootstrap 4. */
   /* Public Sans first to support cross-os branding when user installed. */
-  font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  font: 16px/1.5 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Noto Sans', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5; /* 24px */
   color: var(--s0);
   background: var(--s4);
 }
@@ -421,8 +419,9 @@ var,
 [type='datetime'],
 [type='datetime-local'] {
   /* This font family comes from Bootstrap 4. */
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    monospace;
+  /* 14px / 24px */
+  font: 0.875rem/1.7142 SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', monospace;
 }
 
 /* A4. Limit width on body so text is easier to read. */
@@ -575,21 +574,9 @@ progress::-webkit-progress-bar {
   background: var(--s2);
 }
 
-/* I1. Update small and monospace font size for 8px rhythm. */
+/* I1. Update small for 8px rhythm. */
 
-small,
-pre,
-code,
-samp,
-kbd,
-var,
-[type='tel'],
-[type='number'],
-[type='date'],
-[type='month'],
-[type='week'],
-[type='datetime'],
-[type='datetime-local'] {
+small {
   font-size: 0.875rem; /* 14px */
   line-height: 1.7142; /* 24px */
 }
