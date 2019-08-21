@@ -125,7 +125,7 @@ app.post('/subjects/create', async (req, res) => {
     return res.render('CreateSubjectPage', { gqlErrors })
   }
   const { entityId } = get(gqlRes, 'createSubject.subjectVersion', {})
-  await GQL.createUserSubject(req, { subjectId: entityId })
+  await GQL.createUserSubject(req, { subjectId: entityId }) // TODO move to postgres
   return res.redirect(`/subjects/${to58(entityId)}`)
 })
 
@@ -135,6 +135,7 @@ app.get('/((subjects|learn-about))/(*-)?:subjectId', async (req, res, next) => {
   const gqlRes = await GQL.getSubjectPage(req, { entityId })
   const subject = get(gqlRes, 'subjectByEntityId')
   // -- photos for the twitter feed
+  // TODO lets store these in the database and make them editable
   const response = await request({
     uri: `https://www.flickr.com/services/rest`,
     qs: {
@@ -454,6 +455,7 @@ app.get('/search', async (req, res) => {
 })
 
 app.get('/steps/choose', async (req, res) => {
+  // TODO is it possible to move this logic to postgres?
   const role = getRole(req)
   const { goal } = req.cookies
   if (!goal) {
@@ -474,6 +476,7 @@ app.get('/steps/choose', async (req, res) => {
 
 /* eslint-disable max-statements */
 app.get('/next', async (req, res) => {
+  // TODO is it possible to move this logic to postgres?
   let { goal, step } = req.cookies
   if (req.query.goal) {
     ;({ goal } = req.query)
