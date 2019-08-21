@@ -538,6 +538,35 @@ COMMENT ON FUNCTION sg_private.score_response() IS 'After I respond to a card, s
 
 
 --
+-- Name: subject_unique_name(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.subject_unique_name() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+declare
+  xprev sg_public.subject_version;
+begin
+  select s.* into xprev
+  from sg_public.subject s
+  where slugify(s.name) = slugify(new.name)
+  and s.entity_id <> new.entity_id;
+  if (found) then
+    raise exception 'Subject name in use.' using errcode = '5E310F2E';
+  end if;
+  return new;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION subject_unique_name(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.subject_unique_name() IS 'Ensure new subject versions have a unique name.';
+
+
+--
 -- Name: trim_user_email(); Type: FUNCTION; Schema: sg_private; Owner: -
 --
 
@@ -3525,6 +3554,20 @@ COMMENT ON TRIGGER insert_response_user_or_session ON sg_public.response IS 'Whe
 
 
 --
+-- Name: subject_version insert_subject_version_name; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER insert_subject_version_name BEFORE INSERT ON sg_public.subject_version FOR EACH ROW EXECUTE PROCEDURE sg_private.subject_unique_name();
+
+
+--
+-- Name: TRIGGER insert_subject_version_name ON subject_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER insert_subject_version_name ON sg_public.subject_version IS 'Ensure new subject versions have a unique name.';
+
+
+--
 -- Name: subject_version insert_subject_version_status; Type: TRIGGER; Schema: sg_public; Owner: -
 --
 
@@ -4180,4 +4223,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190731013731'),
     ('20190803024055'),
     ('20190803033630'),
-    ('20190803044152');
+    ('20190803044152'),
+    ('20190821170318');
