@@ -25,7 +25,7 @@ Also, if you're interested, [sign up for updates](https://sgfy.xyz/updates).
 
 ## Outreach
 
-- [Writing articles about Sagefy](https://docs.sagefy.org/stories)
+- [Writing articles about Sagefy](https://heiskr.com/stories)
 - Proofreading and feedback
 - Writing and implementing user engagement emails
 - Getting quality links from other websites to Sagefy, such as social media or edtech.
@@ -58,7 +58,7 @@ To start up your local development environment, please read our [Setup](https://
 
 To start up your local development environment, please read our [Setup](https://docs.sagefy.org/setup) doc.
 
-- At the end of [this article](https://docs.sagefy.org/stories/the-mathematics-of-sagefy) is a **call to action** section with some of the things we need help with, such as:
+- At the end of [this article](https://heiskr.com/stories/the-mathematics-of-sagefy) is a **call to action** section with some of the things we need help with, such as:
   - Improving current Bayesian Knowledge Tracing models, particularly with parameter estimation
   - Designing an implementing contributor rating system
   - Improving the card choosing mathematics

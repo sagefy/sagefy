@@ -58,7 +58,7 @@ export default function Footer({ role }) {
             </ExternalLink>
           </li>
           <li>
-            <ExternalLink href="https://docs.sagefy.org/stories">
+            <ExternalLink href="https://heiskr.com/stories">
               <Icon i="stories" s="s" /> Stories
             </ExternalLink>
           </li>
