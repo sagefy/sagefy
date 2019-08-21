@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: default
 title: How to Build a Course in Sagefy
 ---
 
