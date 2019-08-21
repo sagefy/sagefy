@@ -100,6 +100,7 @@ async function newUserSubject(client, { subject_id }) {
   return (await client.query(
     `insert into sg_public.user_subject
     (subject_id) values ($1)
+    on conflict do nothing
     returning *;`,
     [subject_id]
   )).rows[0]
