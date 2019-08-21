@@ -125,7 +125,6 @@ app.post('/subjects/create', async (req, res) => {
     return res.render('CreateSubjectPage', { gqlErrors })
   }
   const { entityId } = get(gqlRes, 'createSubject.subjectVersion', {})
-  await GQL.createUserSubject(req, { subjectId: entityId }) // TODO move to postgres
   return res.redirect(`/subjects/${to58(entityId)}`)
 })
 
