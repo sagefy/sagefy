@@ -462,53 +462,36 @@ app.get('/steps/choose', async (req, res) => {
     return res.redirect(redirUrl)
   }
   const gqlRes = await GQL.chooseSubject(req, { subjectId: toU(goal) })
+    subjectId: toU(req.params.subjectId),
+  })
   const subject = get(gqlRes, 'subjectByEntityId')
   const subjects = get(gqlRes, 'subjectByEntityId.nextChildSubjects.nodes')
-  if (!subjects || !subjects.length) {
-    return res.redirect(`/subjects/${goal}/complete`)
-  }
-  if (subjects.length === 1) {
-    return res.redirect(`/next?step=${to58(subjects[0].entityId)}`)
-  }
   return res.render('ChooseStepPage', { subject, subjects })
 })
 
-/* eslint-disable max-statements */
 app.get('/next', async (req, res) => {
-  // TODO is it possible to move this logic to postgres?
-  let { goal, step } = req.cookies
-  if (req.query.goal) {
-    ;({ goal } = req.query)
-    res.cookie('goal', goal, LEARN_COOKIE_PARAMS).clearCookie('step')
-    step = null
-    try {
-      await GQL.createUserSubject(req, { subjectId: toU(goal) })
-    } catch (e) {
-      ;(() => {})() // if it already exists, skip it.
-    }
+  // ?goal => query.goal, undefined
+  // ?step => cookie.goal, query.step
+  // ?____ => cookie.goal, cookie.step
+  const gqlRes = await GQL.next(req, {
+    goal: toU(req.query.goal || req.cookies.goal),
+    step: req.query.goal ? undefined : toU(req.query.step || req.cookies.step),
+  })
+  const { next, step, goal, kind, card } = get(gqlRes, 'next.json')
+  res.cookie('goal', to58(goal), LEARN_COOKIE_PARAMS)
+  if (step) res.cookie('step', to58(step), LEARN_COOKIE_PARAMS)
+  else res.clearCookie('step')
+  const kindUrl = get(CARD_KIND, [kind, 'url'])
+  const urlMap = {
+    create_card: `/cards/create?subjectId=${to58(step)}`,
+    learn_card: `/${kindUrl}-cards/${to58(card)}/learn`,
+    complete_subject: `/subjects/${to58(goal)}/complete`,
+    choose_step: `/subjects/${to58(goal)}/steps`,
   }
-  if (req.query.step) {
-    ;({ step } = req.query)
-    res.cookie('step', step, LEARN_COOKIE_PARAMS)
-  }
-  if (step) {
-    const gqlRes = await GQL.getLearned(req, { subjectId: toU(step) })
-    if (get(gqlRes, 'subjectByEntityId.learned') >= 0.99) {
-      return res.clearCookie('step').redirect('/steps/choose')
-    }
-    const gqlRes2 = await GQL.chooseCard(req, { subjectId: toU(step) })
-    const card = get(gqlRes2, 'chooseCard.card')
-    if (!card) return res.redirect(`/cards/create?subjectId=${step}`)
-    const { kind, entityId } = card
-    return res.redirect(
-      `/${get(CARD_KIND, [kind, 'url'])}-cards/${to58(entityId)}/learn`
-    )
-  }
-  if (goal) return res.redirect('/steps/choose')
-  return res.redirect(
-    getRole(req) === 'sg_anonymous' ? '/subjects/search' : '/dashboard'
-  )
-}) /* eslint-enable */
+  const role = getRole(req)
+  const defaultUrl = role === 'sg_anonymous' ? '/subjects/search' : '/dashboard'
+  return res.redirect(get(urlMap, next, defaultUrl))
+})
 
 app.get('/users/:userId', async (req, res, next) => {
   const userId = toU(req.params.userId)

@@ -1,0 +1,5 @@
+mutation next($goal: UUID!, $step: UUID) {
+  next(input: { goalEntityId: $goal, stepEntityId: $step }) {
+    json
+  }
+}

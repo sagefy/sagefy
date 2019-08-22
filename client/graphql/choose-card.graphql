@@ -1,8 +1,0 @@
-mutation chooseCard($subjectId: UUID!) {
-  chooseCard(input: { subjectId: $subjectId }) {
-    card {
-      entityId
-      kind
-    }
-  }
-}

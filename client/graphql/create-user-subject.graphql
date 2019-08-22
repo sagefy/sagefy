@@ -1,9 +1,0 @@
-mutation createUserSubject($subjectId: UUID!) {
-  createUserSubject(input: { userSubject: { subjectId: $subjectId } }) {
-    userSubject {
-      userId
-      sessionId
-      subjectId
-    }
-  }
-}
