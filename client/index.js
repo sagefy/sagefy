@@ -366,10 +366,7 @@ app.get('/:kind-cards/:cardId/learn', async (req, res, next) => {
   const progress = get(gqlRes, 'subjectByEntityId.learned')
   return res.render(
     `Learn${get(CARD_KIND, [req.params.kind, 'page'])}CardPage`,
-    {
-      card,
-      progress,
-    }
+    { card, progress }
   )
 })
 
@@ -481,16 +478,16 @@ app.get('/next', async (req, res) => {
     goal: toU(req.query.goal || req.cookies.goal),
     step: req.query.goal ? undefined : toU(req.query.step || req.cookies.step),
   })
-  const { next, step, goal, kind, card } = get(gqlRes, 'next.json')
+  const { next, step, goal, kind, card } = get(gqlRes, 'next.nextPage')
   res.cookie('goal', to58(goal), LEARN_COOKIE_PARAMS)
   if (step) res.cookie('step', to58(step), LEARN_COOKIE_PARAMS)
   else res.clearCookie('step')
   const kindUrl = get(CARD_KIND, [kind, 'url'])
   const urlMap = {
-    create_card: `/cards/create?subjectId=${to58(step)}`,
-    learn_card: `/${kindUrl}-cards/${to58(card)}/learn`,
-    complete_subject: `/subjects/${to58(goal)}/complete`,
-    choose_step: `/subjects/${to58(goal)}/steps`,
+    CREATE_CARD: `/cards/create?subjectId=${to58(step)}`,
+    LEARN_CARD: `/${kindUrl}-cards/${to58(card)}/learn`,
+    COMPLETE_SUBJECT: `/subjects/${to58(goal)}/complete`,
+    CHOOSE_STEP: `/subjects/${to58(goal)}/steps`,
   }
   return res.redirect(get(urlMap, next, defaultUrl))
 })
@@ -561,12 +558,8 @@ app.get('/email/edit', async (req, res) => res.render('EditEmailPage'))
 
 app.post('/email/edit', async (req, res) => {
   try {
-    await GQL.updateEmail(
-      {
-        cookies: { [JWT_COOKIE_NAME]: req.query.token },
-      },
-      req.body
-    )
+    const cookies = { [JWT_COOKIE_NAME]: req.query.token }
+    await GQL.updateEmail({ cookies }, req.body)
     return res.redirect('/log-in')
   } catch (e) {
     const gqlErrors = getGqlErrors(e)
@@ -592,12 +585,8 @@ app.get('/password/edit', async (req, res) => res.render('EditPasswordPage'))
 
 app.post('/password/edit', async (req, res) => {
   try {
-    await GQL.updatePassword(
-      {
-        cookies: { [JWT_COOKIE_NAME]: req.query.token },
-      },
-      req.body
-    )
+    const cookies = { [JWT_COOKIE_NAME]: req.query.token }
+    await GQL.updatePassword({ cookies }, req.body)
     return res.redirect('/log-in')
   } catch (e) {
     const gqlErrors = getGqlErrors(e)

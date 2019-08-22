@@ -201,6 +201,45 @@ COMMENT ON TYPE sg_public.jwt_token IS 'Create a JWT with role, user_id, session
 
 
 --
+-- Name: next_option; Type: TYPE; Schema: sg_public; Owner: -
+--
+
+CREATE TYPE sg_public.next_option AS ENUM (
+    'complete_subject',
+    'choose_step',
+    'create_card',
+    'learn_card'
+);
+
+
+--
+-- Name: TYPE next_option; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TYPE sg_public.next_option IS 'List of next page options.';
+
+
+--
+-- Name: next_page; Type: TYPE; Schema: sg_public; Owner: -
+--
+
+CREATE TYPE sg_public.next_page AS (
+	goal uuid,
+	step uuid,
+	next sg_public.next_option,
+	kind sg_public.card_kind,
+	card uuid
+);
+
+
+--
+-- Name: TYPE next_page; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TYPE sg_public.next_page IS 'Describes the next page to go to in the experience.';
+
+
+--
 -- Name: post_kind; Type: TYPE; Schema: sg_public; Owner: -
 --
 
@@ -535,6 +574,29 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_private.score_response() IS 'After I respond to a card, score the result and update model.';
+
+
+--
+-- Name: subject_auto_user_subject(); Type: FUNCTION; Schema: sg_private; Owner: -
+--
+
+CREATE FUNCTION sg_private.subject_auto_user_subject() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+begin
+  insert into sg_public.user_subject (subject_id)
+  values (new.entity_id)
+  on conflict do nothing;
+  return new;
+end;
+$$;
+
+
+--
+-- Name: FUNCTION subject_auto_user_subject(); Type: COMMENT; Schema: sg_private; Owner: -
+--
+
+COMMENT ON FUNCTION sg_private.subject_auto_user_subject() IS 'Whenever I make a new subject version, add me as a learner.';
 
 
 --
@@ -1467,6 +1529,94 @@ $_$;
 --
 
 COMMENT ON FUNCTION sg_public.log_in(name text, password text) IS 'Logs in a single user.';
+
+
+--
+-- Name: next(uuid, uuid); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.next(goal_entity_id uuid, step_entity_id uuid DEFAULT NULL::uuid) RETURNS sg_public.next_page
+    LANGUAGE plpgsql
+    AS $$
+  declare
+    xgoal sg_public.subject;
+    xstep sg_public.subject;
+    xcard sg_public.card;
+    xnext uuid[];
+  begin
+    -- First we'll validate the goal by selecting it
+    select s.* into xgoal
+    from sg_public.subject s
+    where s.entity_id = goal_entity_id;
+    -- Select the step if it exists
+    select s.* into xstep
+    from sg_public.subject s
+    where s.entity_id = step_entity_id;
+    -- Always attempt to add the goal to user_subject
+    insert into sg_public.user_subject (subject_id)
+    values (xgoal.entity_id)
+    on conflict do nothing;
+    -- If there's no step, or p(learned >= 0.99)..
+    -- -- Nota bene: `row(...) is not null` behaves unexpectedly! Beware!
+    if (xstep is null or sg_public.subject_learned(xstep) >= 0.99) then
+      -- We need to choose the next step...
+      xnext := array(
+        select entity_id
+        from sg_public.subject_next_child_subjects(xgoal)
+      );
+      -- If there's no next step, then we are done
+      if (array_length(xnext, 1) is null) then
+        return (
+          xgoal.entity_id,
+          null,
+          'complete_subject'::sg_public.next_option,
+          null,
+          null
+        )::sg_public.next_page;
+      end if;
+      -- If there's exactly one step level, choose it automatically
+      if (array_length(xnext, 1) = 1) then
+        return sg_public.next(xgoal.entity_id, xnext[1]);
+      end if;
+      -- Otherwise, let the learner choose the next step
+      return (
+        xgoal.entity_id,
+        null,
+        'choose_step'::sg_public.next_option,
+        null,
+        null
+      )::sg_public.next_page;
+    end if;
+    -- If there's a step, and p(learned) < 0.99...
+    select * into xcard
+    from sg_public.choose_card(xstep.entity_id);
+    -- Create a card if there isn't one
+    if (xcard is null) then
+      return (
+        xgoal.entity_id,
+        xstep.entity_id,
+        'create_card'::sg_public.next_option,
+        null,
+        null
+      )::sg_public.next_page;
+    end if;
+    -- Learn a card
+    return (
+      xgoal.entity_id,
+      xstep.entity_id,
+      'learn_card'::sg_public.next_option,
+      xcard.kind,
+      xcard.entity_id
+    )::sg_public.next_page;
+  end;
+$$;
+
+
+--
+-- Name: FUNCTION next(goal_entity_id uuid, step_entity_id uuid); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.next(goal_entity_id uuid, step_entity_id uuid) IS 'Determine the next thing to do.';
 
 
 --
@@ -3554,6 +3704,20 @@ COMMENT ON TRIGGER insert_response_user_or_session ON sg_public.response IS 'Whe
 
 
 --
+-- Name: subject_version insert_subject_version_auto_user_subject; Type: TRIGGER; Schema: sg_public; Owner: -
+--
+
+CREATE TRIGGER insert_subject_version_auto_user_subject AFTER INSERT ON sg_public.subject_version FOR EACH ROW EXECUTE PROCEDURE sg_private.subject_auto_user_subject();
+
+
+--
+-- Name: TRIGGER insert_subject_version_auto_user_subject ON subject_version; Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON TRIGGER insert_subject_version_auto_user_subject ON sg_public.subject_version IS 'Whenever I make a new subject version, add me as a learner.';
+
+
+--
 -- Name: subject_version insert_subject_version_name; Type: TRIGGER; Schema: sg_public; Owner: -
 --
 
@@ -4224,4 +4388,7 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190803024055'),
     ('20190803033630'),
     ('20190803044152'),
-    ('20190821170318');
+    ('20190821170318'),
+    ('20190821230739'),
+    ('20190821233703'),
+    ('20190822150444');
