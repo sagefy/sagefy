@@ -469,6 +469,11 @@ app.get('/subjects/:subjectId/steps', async (req, res) => {
 })
 
 app.get('/next', async (req, res) => {
+  const role = getRole(req)
+  const defaultUrl = role === 'sg_anonymous' ? '/subjects/search' : '/dashboard'
+  if (!req.query.goal && !req.cookies.goal) {
+    return res.redirect(defaultUrl)
+  }
   // ?goal => query.goal, undefined
   // ?step => cookie.goal, query.step
   // ?____ => cookie.goal, cookie.step
@@ -487,8 +492,6 @@ app.get('/next', async (req, res) => {
     complete_subject: `/subjects/${to58(goal)}/complete`,
     choose_step: `/subjects/${to58(goal)}/steps`,
   }
-  const role = getRole(req)
-  const defaultUrl = role === 'sg_anonymous' ? '/subjects/search' : '/dashboard'
   return res.redirect(get(urlMap, next, defaultUrl))
 })
 
