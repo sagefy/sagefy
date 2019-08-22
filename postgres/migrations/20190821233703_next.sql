@@ -75,12 +75,16 @@ grant execute on function sg_public.next(uuid, uuid)
   to sg_anonymous, sg_user, sg_admin;
 
 -- More on the row is not null issue...
--- select row(null, null) is null; -> t
--- select row(null, 1000) is null; -> f
--- select row(1000, 1000) is null; -> f
--- select row(null, null) is not null; -> f
--- select row(null, 1000) is not null; -> f
--- select row(1000, 1000) is not null; -> t
+-- select row(null, null) is null; --> t
+-- select row(null, null) is not null; --> f
+-- select row(1000, 1000) is null; --> f
+-- select row(1000, 1000) is not null; --> t
+-- select row(null, 1000) is null; --> f
+-- select row(null, 1000) is not null; --> f
+-- select not row(null, 1000) is null; --> t
+-- In order words, is null and is not null are not inverse operations!
+-- For rows, is null checks if all the values are null,
+-- while is not null checks if if any value is null.
 
 -- migrate:down
 
