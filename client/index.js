@@ -370,6 +370,9 @@ app.post('/choice-cards/:cardId/learn', async (req, res, next) => {
   if (!card || get(CARD_KIND, [card.kind, 'url']) !== 'choice') {
     return next()
   }
+  if (!req.body.choice) {
+    return res.redirect(`/choice-cards/${req.params.cardId}/learn`)
+  }
   const gqlRes2 = await GQL.createResponse(req, {
     cardId: toU(req.params.cardId),
     response: req.body.choice,
