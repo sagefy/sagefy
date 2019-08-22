@@ -343,6 +343,9 @@ app.post('/(:kind-)?cards/:cardId/edit', async (req, res) => {
 })
 
 app.get('/:kind-cards/:cardId/learn', async (req, res, next) => {
+  if (!req.cookies.step) {
+    return res.redirect('/next')
+  }
   const gqlRes = await GQL.getCardLearn(req, {
     cardId: toU(req.params.cardId),
     subjectId: toU(req.cookies.step),
