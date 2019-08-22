@@ -453,15 +453,8 @@ app.get('/search', async (req, res) => {
   return res.render('SearchPage', { results })
 })
 
-app.get('/steps/choose', async (req, res) => {
-  // TODO is it possible to move this logic to postgres?
-  const role = getRole(req)
-  const { goal } = req.cookies
-  if (!goal) {
-    const redirUrl = role === 'sg_anonymous' ? '/subjects/search' : '/dashboard'
-    return res.redirect(redirUrl)
-  }
-  const gqlRes = await GQL.chooseSubject(req, { subjectId: toU(goal) })
+app.get('/subjects/:subjectId/steps', async (req, res) => {
+  const gqlRes = await GQL.chooseSubject(req, {
     subjectId: toU(req.params.subjectId),
   })
   const subject = get(gqlRes, 'subjectByEntityId')
