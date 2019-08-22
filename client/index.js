@@ -206,6 +206,15 @@ app.post('/subjects/:subjectId/edit', async (req, res, next) => {
   }
 })
 
+app.get('/subjects/:subjectId/steps', async (req, res) => {
+  const gqlRes = await GQL.chooseSubject(req, {
+    subjectId: toU(req.params.subjectId),
+  })
+  const subject = get(gqlRes, 'subjectByEntityId')
+  const subjects = get(gqlRes, 'subjectByEntityId.nextChildSubjects.nodes')
+  return res.render('ChooseStepPage', { subject, subjects })
+})
+
 app.get('/subjects/:subjectId/complete', async (req, res, next) => {
   const subjGqlRes = await GQL.getSubject(req, {
     entityId: toU(req.params.subjectId),
@@ -457,15 +466,6 @@ app.get('/search', async (req, res) => {
   const gqlRes = await GQL.searchEntities(req, req.query)
   const results = get(gqlRes, 'searchEntities.nodes')
   return res.render('SearchPage', { results })
-})
-
-app.get('/subjects/:subjectId/steps', async (req, res) => {
-  const gqlRes = await GQL.chooseSubject(req, {
-    subjectId: toU(req.params.subjectId),
-  })
-  const subject = get(gqlRes, 'subjectByEntityId')
-  const subjects = get(gqlRes, 'subjectByEntityId.nextChildSubjects.nodes')
-  return res.render('ChooseStepPage', { subject, subjects })
 })
 
 app.get('/next', async (req, res) => {
