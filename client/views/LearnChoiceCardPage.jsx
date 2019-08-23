@@ -29,7 +29,6 @@ export default function LearnChoiceCardPage({
       hash={hash}
       page="LearnChoiceCardPage"
       title="Learn"
-      description="-"
       canonical={`/choice-cards/${to58(entityId)}`}
     >
       {progress && (

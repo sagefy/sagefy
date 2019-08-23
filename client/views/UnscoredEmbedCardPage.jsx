@@ -20,7 +20,7 @@ export default function UnscoredEmbedCardPage({
       hash={hash}
       page="UnscoredEmbedCardPage"
       title={`Card: ${cardName}`}
-      description="-"
+      canonical={`/unscored-embed-cards/${to58(cardEntityId)}`}
     >
       <header>
         <div className="my-c">

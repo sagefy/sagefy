@@ -21,12 +21,7 @@ export default function TalkUnscoredEmbedCardPage({
   topics,
 }) {
   return (
-    <Layout
-      hash={hash}
-      page="TalkUnscoredEmbedCardPage"
-      title="Talk"
-      description="-"
-    >
+    <Layout hash={hash} page="TalkUnscoredEmbedCardPage" title="Talk">
       <header>
         <div className="my-c">
           <p>

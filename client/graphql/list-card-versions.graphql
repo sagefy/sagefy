@@ -2,6 +2,7 @@ query listCardVersions($entityId: UUID!) {
   cardByEntityId(entityId: $entityId) {
     entityId
     name
+    kind
   }
 
   allCardVersions(condition: { entityId: $entityId }, orderBy: CREATED_DESC) {

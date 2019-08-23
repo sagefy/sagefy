@@ -19,7 +19,7 @@ export default function DashboardPage({
   myCards,
 }) {
   return (
-    <Layout hash={hash} page="DashboardPage" title="Dashboard" description="-">
+    <Layout hash={hash} page="DashboardPage" title="Dashboard">
       <section className="my-c">
         <p>
           <em>

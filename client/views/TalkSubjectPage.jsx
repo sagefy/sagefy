@@ -21,7 +21,7 @@ export default function TalkSubjectPage({
   topics,
 }) {
   return (
-    <Layout hash={hash} page="TalkSubjectPage" title="Talk" description="-">
+    <Layout hash={hash} page="TalkSubjectPage" title="Talk">
       <header>
         <div className="my-c">
           <p>

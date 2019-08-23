@@ -19,7 +19,6 @@ export default function LearnPageCardPage({
       hash={hash}
       page="LearnPageCardPage"
       title="Learn"
-      description="-"
       canonical={`/page-cards/${to58(entityId)}`}
     >
       {progress && (

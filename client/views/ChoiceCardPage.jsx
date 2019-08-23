@@ -21,7 +21,7 @@ export default function ChoiceCardPage({
       hash={hash}
       page="ChoiceCardPage"
       title={`Card: ${cardName}`}
-      description="-"
+      canonical={`/choice-cards/${to58(cardEntityId)}`}
     >
       <header>
         <div className="my-c">

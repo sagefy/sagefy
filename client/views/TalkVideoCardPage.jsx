@@ -21,7 +21,7 @@ export default function TalkVideoCardPage({
   topics,
 }) {
   return (
-    <Layout hash={hash} page="TalkVideoCardPage" title="Talk" description="-">
+    <Layout hash={hash} page="TalkVideoCardPage" title="Talk">
       <header>
         <div className="my-c">
           <p>

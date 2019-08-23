@@ -7,7 +7,7 @@ import FormErrorsField from './components/FormErrorsField'
 
 export default function SettingsPage({ hash, gqlErrors, body: { id, name } }) {
   return (
-    <Layout hash={hash} page="SettingsPage" title="Settings" description="-">
+    <Layout hash={hash} page="SettingsPage" title="Settings">
       <FormErrorsTop formErrors={gqlErrors} />
       <FormErrorsField formErrors={gqlErrors} field="all" />
 

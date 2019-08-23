@@ -18,7 +18,6 @@ export default function LearnUnscoredEmbedCardPage({
       hash={hash}
       page="LearnUnscoredEmbedCardPage"
       title="Learn"
-      description="-"
       canonical={`/unscored-embed-cards/${to58(entityId)}`}
     >
       {progress && (

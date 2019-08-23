@@ -28,7 +28,7 @@ export default function VideoCardPage({
       hash={hash}
       page="VideoCardPage"
       title={`Card: ${cardName}`}
-      description="-"
+      canonical={`/video-cards/${to58(cardEntityId)}`}
     >
       <header>
         <div className="my-c">

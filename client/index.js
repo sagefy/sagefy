@@ -199,7 +199,7 @@ app.post('/subjects/:subjectId/edit', async (req, res, next) => {
         ({ entityId }) => entityId
       ), // temporary
     })
-    return res.redirect(`/subjects/${req.params.subjectId}`)
+    return res.redirect(`/subjects/${req.params.subjectId}`) // todo use return from updateSubject forid
   } catch (e) {
     const gqlErrors = getGqlErrors(e)
     return res.render('EditSubjectPage', { subject, gqlErrors })
@@ -281,10 +281,9 @@ app.get('/(:kind-)?cards/:cardId', async (req, res) => {
     cardId: toU(req.params.cardId),
   })
   const card = get(gqlRes, 'cardByEntityId')
-  return res.render(
-    `${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
-    { card }
-  )
+  return res.render(`${get(CARD_KIND, [card.kind, 'page'], '')}CardPage`, {
+    card,
+  })
 })
 
 app.get('/(:kind-)?cards/:cardId/history', async (req, res) => {
@@ -294,7 +293,7 @@ app.get('/(:kind-)?cards/:cardId/history', async (req, res) => {
   const card = get(gqlRes, 'cardByEntityId')
   const versions = get(gqlRes, 'allCardVersions.nodes')
   return res.render(
-    `ViewHistory${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
+    `ViewHistory${get(CARD_KIND, [card.kind, 'page'], '')}CardPage`,
     { card, versions }
   )
 })
@@ -317,10 +316,10 @@ app.get('/(:kind-)?cards/:cardId/edit', async (req, res) => {
   })
   const card = get(gqlRes, 'cardByEntityId')
   const subject = get(card, 'subject')
-  return res.render(
-    `Edit${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
-    { card, subject }
-  )
+  return res.render(`Edit${get(CARD_KIND, [card.kind, 'page'], '')}CardPage`, {
+    card,
+    subject,
+  })
 })
 
 app.post('/(:kind-)?cards/:cardId/edit', async (req, res) => {
@@ -333,14 +332,14 @@ app.post('/(:kind-)?cards/:cardId/edit', async (req, res) => {
   }
   try {
     await GQL.updateCard(req, values)
-    return res.redirect(`/${req.params.kind}-cards/${req.params.cardId}`)
+    return res.redirect(`/${req.params.kind}-cards/${req.params.cardId}`) // todo use return from updateCard for values
   } catch (e) {
     const gqlErrors = getGqlErrors(e)
     const gqlRes = await GQL.getCard(req, { cardId })
     const card = get(gqlRes, 'cardByEntityId')
     const subject = get(card, 'subject')
     return res.render(
-      `Edit${get(CARD_KIND, [req.params.kind, 'page'], '')}CardPage`,
+      `Edit${get(CARD_KIND, [card.kind, 'page'], '')}CardPage`,
       {
         gqlErrors,
         card,
@@ -351,7 +350,7 @@ app.post('/(:kind-)?cards/:cardId/edit', async (req, res) => {
   }
 })
 
-app.get('/:kind-cards/:cardId/learn', async (req, res, next) => {
+app.get('/(:kind-)?cards/:cardId/learn', async (req, res, next) => {
   if (!req.cookies.step) {
     return res.redirect('/next')
   }
@@ -360,30 +359,28 @@ app.get('/:kind-cards/:cardId/learn', async (req, res, next) => {
     subjectId: toU(req.cookies.step),
   })
   const card = get(gqlRes, 'cardByEntityId')
-  if (!card || get(CARD_KIND, [card.kind, 'url']) !== req.params.kind) {
-    return next()
-  }
+  if (!card) return next()
   const progress = get(gqlRes, 'subjectByEntityId.learned')
-  return res.render(
-    `Learn${get(CARD_KIND, [req.params.kind, 'page'])}CardPage`,
-    { card, progress }
-  )
+  return res.render(`Learn${get(CARD_KIND, [card.kind, 'page'])}CardPage`, {
+    card,
+    progress,
+  })
 })
 
-app.post('/choice-cards/:cardId/learn', async (req, res, next) => {
+app.post('/((choice-))?cards/:cardId/learn', async (req, res, next) => {
+  if (!req.body.choice) {
+    return res.redirect(`/choice-cards/${req.params.cardId}/learn`)
+  }
   const gqlRes = await GQL.getCardLearn(req, {
     cardId: toU(req.params.cardId),
     subjectId: toU(req.cookies.step),
   })
   const card = get(gqlRes, 'cardByEntityId')
-  if (!card || get(CARD_KIND, [card.kind, 'url']) !== 'choice') {
+  if (!card || card.kind !== 'CHOICE') {
     return next()
   }
-  if (!req.body.choice) {
-    return res.redirect(`/choice-cards/${req.params.cardId}/learn`)
-  }
   const gqlRes2 = await GQL.createResponse(req, {
-    cardId: toU(req.params.cardId),
+    cardId: card.entityId,
     response: req.body.choice,
   })
   const progress = get(gqlRes2, 'createResponse.response.learned')
@@ -506,12 +503,12 @@ app.post('/sign-up', isAnonymous, async (req, res) => {
   try {
     const gqlRes = await GQL.createUser(req, req.body)
     const jwtToken = get(gqlRes, 'createUser.jwtToken')
+    const redirectUrl =
+      (req.query.redirect && decodeURIComponent(req.query.redirect)) ||
+      '/dashboard'
     return res
       .cookie(JWT_COOKIE_NAME, jwtToken, JWT_COOKIE_PARAMS)
-      .redirect(
-        (req.query.redirect && decodeURIComponent(req.query.redirect)) ||
-          '/dashboard'
-      )
+      .redirect(redirectUrl)
   } catch (e) {
     const gqlErrors = getGqlErrors(e)
     return res.render('SignUpPage', { gqlErrors })
@@ -524,12 +521,12 @@ app.post('/log-in', isAnonymous, async (req, res) => {
   try {
     const gqlRes = await GQL.logIn(req, req.body)
     const jwtToken = get(gqlRes, 'logIn.jwtToken')
-    const redirUrl =
+    const redirectUrl =
       (req.query.redirect && decodeURIComponent(req.query.redirect)) ||
       '/dashboard'
     return res
       .cookie(JWT_COOKIE_NAME, jwtToken, JWT_COOKIE_PARAMS)
-      .redirect(redirUrl)
+      .redirect(redirectUrl)
   } catch (e) {
     const gqlErrors = getGqlErrors(e)
     return res.render('LogInPage', { gqlErrors })

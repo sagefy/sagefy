@@ -27,7 +27,6 @@ export default function LearnVideoCardPage({
       hash={hash}
       page="LearnVideoCardPage"
       title="Learn"
-      description="-"
       canonical={`/video-cards/${to58(entityId)}`}
     >
       {progress && (

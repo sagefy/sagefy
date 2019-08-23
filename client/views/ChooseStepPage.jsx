@@ -16,7 +16,6 @@ export default function ChooseNextPage({
       hash={hash}
       page="ChooseNextPage"
       title="Choose"
-      description="-"
       canonical={`/subjects/${to58(subjectId)}`}
     >
       <header className="my-c">

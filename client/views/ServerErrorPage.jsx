@@ -7,12 +7,7 @@ import Icon from './components/Icon'
 
 export default function ServerErrorPage({ hash }) {
   return (
-    <Layout
-      hash={hash}
-      page="ServerErrorPage"
-      title="Server error"
-      description="-"
-    >
+    <Layout hash={hash} page="ServerErrorPage" title="Server error">
       <section>
         <h1>
           I couldn&apos;t make that happen <Icon i="error" s="h1" />

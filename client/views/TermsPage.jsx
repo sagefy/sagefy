@@ -5,13 +5,8 @@ import Icon from './components/Icon'
 
 export default function TermsPage({ hash }) {
   return (
-    <Layout
-      hash={hash}
-      page="TermsPage"
-      title="Terms and Privacy"
-      description="-"
-    >
-      <header>
+    <Layout hash={hash} page="TermsPage" title="Terms and Privacy">
+      <header className="my-c">
         <p>
           <a href="/">
             Go back <Icon i="home" /> home

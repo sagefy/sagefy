@@ -21,7 +21,7 @@ export default function PageCardPage({
       hash={hash}
       page="PageCardPage"
       title={`Card: ${cardName}`}
-      description="-"
+      canonical={`/page-cards/${to58(cardEntityId)}`}
     >
       <header>
         <div className="my-c">
