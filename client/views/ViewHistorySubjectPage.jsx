@@ -21,6 +21,7 @@ export default function ViewHistorySubjectPage({
       page="ViewHistorySubjectPage"
       title={`History of "${subjectName}"`}
       description={`View the editing history of the Sagefy subject "${subjectName}".`}
+      canonical={`/subjects/${to58(subjectEntityId)}`}
     >
       <header>
         <div className="my-c">

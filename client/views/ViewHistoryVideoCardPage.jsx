@@ -28,6 +28,7 @@ export default function ViewHistoryVideoCardPage({
       page="ViewHistoryVideoCardPage"
       title={`History of video card: ${cardName}`}
       description={`View the edit history of the Sagefy card "${cardName}.`}
+      canonical={`/cards/${to58(cardEntityId)}`}
     >
       <header>
         <div className="my-c">
