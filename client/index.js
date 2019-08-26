@@ -591,6 +591,20 @@ app.post('/password/edit', async (req, res) => {
   }
 })
 
+app.get('/statistics', (req, res) => res.render('StatisticsPage'))
+
+app.get('/terms', (req, res) => res.render('TermsPage'))
+
+app.get('/contact', (req, res) => res.render('ContactPage'))
+
+app.get('/', async (req, res) => {
+  const gqlRes = await GQL.getHome(req)
+  const subjects = get(gqlRes, 'popularSubjects.nodes')
+  const whatIs = get(gqlRes, 'whatIsSagefy')
+  if (whatIs) subjects.unshift(whatIs)
+  return res.render('HomePage', { subjects })
+})
+
 const ROOT_PAGES = [
   '', // home
   '/terms',
@@ -602,6 +616,7 @@ const ROOT_PAGES = [
   '/search',
   '/subjects/search',
   '/subjects/create',
+  '/statistics',
 ]
 
 app.get('/sitemap.txt', async (req, res) => {
@@ -626,18 +641,6 @@ app.get('/sitemap.txt', async (req, res) => {
       .join('\n')
   )
 }) // Add more public routes as they are available
-
-app.get('/terms', (req, res) => res.render('TermsPage'))
-
-app.get('/contact', (req, res) => res.render('ContactPage'))
-
-app.get('/', async (req, res) => {
-  const gqlRes = await GQL.getHome(req)
-  const subjects = get(gqlRes, 'popularSubjects.nodes')
-  const whatIs = get(gqlRes, 'whatIsSagefy')
-  if (whatIs) subjects.unshift(whatIs)
-  return res.render('HomePage', { subjects })
-})
 
 app.get('*', (req, res) => res.status(404).render('NotFoundPage'))
 
