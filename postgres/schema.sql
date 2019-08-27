@@ -1648,6 +1648,215 @@ COMMENT ON FUNCTION sg_public.popular_subjects() IS 'Select the 5 most popular s
 
 
 --
+-- Name: recent_card_count(integer); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.recent_card_count(days integer) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $$
+  select count(*)
+  from sg_public.card_version
+  where created > current_date - days
+  and previous_id is null
+  and status = 'accepted';
+$$;
+
+
+--
+-- Name: FUNCTION recent_card_count(days integer); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.recent_card_count(days integer) IS 'Count the number of new cards in the last X days.';
+
+
+--
+-- Name: recent_card_update_count(integer); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.recent_card_update_count(days integer) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $$
+  select count(*)
+  from sg_public.card_version
+  where created > current_date - days
+  and previous_id is not null
+  and status = 'accepted';
+$$;
+
+
+--
+-- Name: FUNCTION recent_card_update_count(days integer); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.recent_card_update_count(days integer) IS 'Count the number of card updates in the last X days.';
+
+
+--
+-- Name: recent_popular_subjects(integer); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.recent_popular_subjects(days integer) RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE STRICT SECURITY DEFINER
+    AS $$
+  with counts as (
+    select subject_id, count(*)
+    from sg_public.user_subject us
+    group by subject_id
+  )
+  select s.*
+  from sg_public.subject s, counts
+  where s.entity_id = counts.subject_id
+  order by count;
+  -- This function should count all usubjs, not just the current users.
+$$;
+
+
+--
+-- Name: recent_post_count(integer); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.recent_post_count(days integer) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $$
+  select count(*)
+  from sg_public.post
+  where created > current_date - days;
+$$;
+
+
+--
+-- Name: FUNCTION recent_post_count(days integer); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.recent_post_count(days integer) IS 'Count the number of new posts in the last X days.';
+
+
+--
+-- Name: recent_response_count(integer, real); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.recent_response_count(days integer, min real DEFAULT 0) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $$
+  select count(*)
+  from sg_public.response
+  where created > current_date - days
+  and learned >= min;
+$$;
+
+
+--
+-- Name: FUNCTION recent_response_count(days integer, min real); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.recent_response_count(days integer, min real) IS 'Count the number of new user subjects in the last X days.';
+
+
+--
+-- Name: recent_subject_count(integer); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.recent_subject_count(days integer) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $$
+  select count(*)
+  from sg_public.subject_version
+  where created > current_date - days
+  and previous_version_id is null
+  and status = 'accepted';
+$$;
+
+
+--
+-- Name: FUNCTION recent_subject_count(days integer); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.recent_subject_count(days integer) IS 'Count the number of new subjects in the last X days.';
+
+
+--
+-- Name: recent_subject_update_count(integer); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.recent_subject_update_count(days integer) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $$
+  select count(*)
+  from sg_public.subject_version
+  where created > current_date - days
+  and previous_version_id is not null
+  and status = 'accepted';
+$$;
+
+
+--
+-- Name: FUNCTION recent_subject_update_count(days integer); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.recent_subject_update_count(days integer) IS 'Count the number of subject updates in the last X days.';
+
+
+--
+-- Name: recent_topic_count(integer); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.recent_topic_count(days integer) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $$
+  select count(*)
+  from sg_public.topic
+  where created > current_date - days;
+$$;
+
+
+--
+-- Name: FUNCTION recent_topic_count(days integer); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.recent_topic_count(days integer) IS 'Count the number of new topics in the last X days.';
+
+
+--
+-- Name: recent_user_count(integer); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.recent_user_count(days integer) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $$
+  select count(*)
+  from sg_public.user
+  where created > current_date - days;
+$$;
+
+
+--
+-- Name: FUNCTION recent_user_count(days integer); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.recent_user_count(days integer) IS 'Count the number of new users in the last X days.';
+
+
+--
+-- Name: recent_user_subject_count(integer); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.recent_user_subject_count(days integer) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $$
+  select count(*)
+  from sg_public.user_subject
+  where created > current_date - days;
+$$;
+
+
+--
+-- Name: FUNCTION recent_user_subject_count(days integer); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.recent_user_subject_count(days integer) IS 'Count the number of new user subjects in the last X days.';
+
+
+--
 -- Name: search_cards(text); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
@@ -4391,4 +4600,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190821170318'),
     ('20190821230739'),
     ('20190821233703'),
-    ('20190822150444');
+    ('20190822150444'),
+    ('20190827204526');

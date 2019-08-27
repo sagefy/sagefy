@@ -591,7 +591,10 @@ app.post('/password/edit', async (req, res) => {
   }
 })
 
-app.get('/statistics', (req, res) => res.render('StatisticsPage'))
+app.get('/statistics', async (req, res) => {
+  const statistics = await GQL.listStatistics(req)
+  return res.render('StatisticsPage', { statistics })
+})
 
 app.get('/terms', (req, res) => res.render('TermsPage'))
 

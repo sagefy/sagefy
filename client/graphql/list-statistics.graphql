@@ -1,0 +1,42 @@
+query listStatistics {
+  userSubject7: recentUserSubjectCount(days: 7)
+  userSubject28: recentUserSubjectCount(days: 28)
+  userSubject364: recentUserSubjectCount(days: 364)
+  response7: recentResponseCount(days: 7, min: 0)
+  response28: recentResponseCount(days: 28, min: 0)
+  response364: recentResponseCount(days: 364, min: 0)
+  responsex7: recentResponseCount(days: 7, min: 0.9)
+  responsex28: recentResponseCount(days: 28, min: 0.9)
+  responsex364: recentResponseCount(days: 364, min: 0.9)
+  responsez7: recentResponseCount(days: 7, min: 0.99)
+  responsez28: recentResponseCount(days: 28, min: 0.99)
+  responsez364: recentResponseCount(days: 364, min: 0.99)
+  subject7: recentSubjectCount(days: 7)
+  subject28: recentSubjectCount(days: 28)
+  subject364: recentSubjectCount(days: 364)
+  subjectUpdate7: recentSubjectUpdateCount(days: 7)
+  subjectUpdate28: recentSubjectUpdateCount(days: 28)
+  subjectUpdate364: recentSubjectUpdateCount(days: 364)
+  card7: recentCardCount(days: 7)
+  card28: recentCardCount(days: 28)
+  card364: recentCardCount(days: 364)
+  cardUpdate7: recentCardUpdateCount(days: 7)
+  cardUpdate28: recentCardUpdateCount(days: 28)
+  cardUpdate364: recentCardUpdateCount(days: 364)
+  post7: recentPostCount(days: 7)
+  post28: recentPostCount(days: 28)
+  post364: recentPostCount(days: 364)
+  topic7: recentTopicCount(days: 7)
+  topic28: recentTopicCount(days: 28)
+  topic364: recentTopicCount(days: 364)
+  user7: recentUserCount(days: 7)
+  user28: recentUserCount(days: 28)
+  user364: recentUserCount(days: 364)
+
+  recentPopularSubjects(days: 7, first: 10) {
+    nodes {
+      entityId
+      name
+    }
+  }
+}
