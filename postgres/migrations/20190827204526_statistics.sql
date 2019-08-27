@@ -129,7 +129,7 @@ returns setof sg_public.subject as $$
   select s.*
   from sg_public.subject s, counts
   where s.entity_id = counts.subject_id
-  order by count;
+  order by count desc;
   -- This function should count all usubjs, not just the current users.
 $$ language sql stable strict security definer;
 comment on function sg_public.recent_popular_subjects(int)
