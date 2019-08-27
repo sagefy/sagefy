@@ -53,7 +53,7 @@ export default function StatisticsPage({ hash, statistics }) {
               <tr key={name}>
                 <td>{name}</td>
                 <td>
-                  <code>{get(statistics, `${field}7`)}</code>
+                  <code>{(get(statistics, `${field}7`) / 7).toFixed(2)}</code>
                 </td>
                 <td>
                   <code>{(get(statistics, `${field}28`) / 28).toFixed(2)}</code>
