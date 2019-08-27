@@ -6,7 +6,8 @@ returns bigint as $$
   select count(*)
   from sg_public.user_subject
   where created > current_date - days;
-$$ language sql stable;
+  -- This function should count all usubjs, not just the current users.
+$$ language sql stable strict security definer;
 comment on function sg_public.recent_user_subject_count(int)
   is 'Count the number of new user subjects in the last X days.';
 grant execute on function sg_public.recent_user_subject_count(int)
@@ -20,7 +21,8 @@ returns bigint as $$
   from sg_public.response
   where created > current_date - days
   and learned >= min;
-$$ language sql stable;
+  -- This function should count all usubjs, not just the current users.
+$$ language sql stable strict security definer;
 comment on function sg_public.recent_response_count(int, real)
   is 'Count the number of new user subjects in the last X days.';
 grant execute on function sg_public.recent_response_count(int, real)
