@@ -18,6 +18,8 @@ const success = Joi.object({
     }),
     subjectByEntityId: Joi.object({
       learned: Joi.number().required(),
+      name: Joi.string().required(),
+      entityId: Joi.string().required(),
     }),
   }),
 })
