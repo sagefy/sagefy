@@ -331,8 +331,12 @@ app.post('/(:kind-)?cards/:cardId/edit', async (req, res) => {
     values = transformValuesForChoice(values)
   }
   try {
-    await GQL.updateCard(req, values)
-    return res.redirect(`/${req.params.kind}-cards/${req.params.cardId}`) // todo use return from updateCard for values
+    const gqlRes = await GQL.updateCard(req, values)
+    const card = get(gqlRes, 'updateCard.cardVersion')
+    const redirectUrl = req.query.redirect
+      ? decodeURIComponent(req.query.redirect)
+      : `/${get(CARD_KIND, [card.kind, 'url'])}-cards/${to58(card.entityId)}`
+    return res.redirect(redirectUrl)
   } catch (e) {
     const gqlErrors = getGqlErrors(e)
     const gqlRes = await GQL.getCard(req, { cardId })
@@ -360,10 +364,12 @@ app.get('/(:kind-)?cards/:cardId/learn', async (req, res, next) => {
   })
   const card = get(gqlRes, 'cardByEntityId')
   if (!card) return next()
-  const progress = get(gqlRes, 'subjectByEntityId.learned')
+  const subject = get(gqlRes, 'subjectByEntityId')
+  const learned = get(gqlRes, 'subjectByEntityId.learned')
   return res.render(`Learn${get(CARD_KIND, [card.kind, 'page'])}CardPage`, {
     card,
-    progress,
+    subject,
+    learned,
   })
 })
 
@@ -383,8 +389,9 @@ app.post('/((choice-))?cards/:cardId/learn', async (req, res, next) => {
     cardId: card.entityId,
     response: req.body.choice,
   })
-  const progress = get(gqlRes2, 'createResponse.response.learned')
-  return res.render('LearnChoiceCardPage', { card, progress })
+  const learned = get(gqlRes2, 'createResponse.response.learned')
+  const subject = get(gqlRes, 'subjectByEntityId')
+  return res.render('LearnChoiceCardPage', { card, subject, learned })
 })
 
 app.post(

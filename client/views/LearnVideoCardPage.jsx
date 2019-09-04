@@ -5,6 +5,7 @@ import { string, shape, number } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
+import TempHelp from './components/TempHelp'
 
 function getVideoUrl(site, video_id) {
   if (site === 'youtube')
@@ -15,12 +16,13 @@ function getVideoUrl(site, video_id) {
 
 export default function LearnVideoCardPage({
   hash,
-  progress,
+  learned,
   card: {
     entityId,
     name,
     data: { site, video_id },
   },
+  subject: { entityId: subjectId, name: subjectName },
 }) {
   return (
     <Layout
@@ -29,11 +31,12 @@ export default function LearnVideoCardPage({
       title="Learn"
       canonical={`/video-cards/${to58(entityId)}`}
     >
-      {progress && (
+      {learned && (
         <section>
-          <progress value={progress} />
+          <progress value={learned} />
         </section>
       )}
+
       <section>
         <iframe
           src={getVideoUrl(site, video_id)}
@@ -43,6 +46,7 @@ export default function LearnVideoCardPage({
           title={name}
         />
       </section>
+
       <section>
         <form action="/next">
           <button type="submit">
@@ -50,21 +54,27 @@ export default function LearnVideoCardPage({
           </button>
         </form>
       </section>
+
+      <TempHelp name={subjectName} subjectId={subjectId} cardId={entityId} />
     </Layout>
   )
 }
 
 LearnVideoCardPage.propTypes = {
   hash: string.isRequired,
-  progress: number,
+  learned: number,
   card: shape({
     name: string.isRequired,
     data: shape({
       video_id: string.isRequired,
     }).isRequired,
   }).isRequired,
+  subject: shape({
+    name: string.isRequired,
+    entityId: string.isRequired,
+  }).isRequired,
 }
 
 LearnVideoCardPage.defaultProps = {
-  progress: null,
+  learned: null,
 }

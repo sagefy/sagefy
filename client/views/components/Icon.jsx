@@ -45,6 +45,7 @@ import {
   Heart,
   Star,
   PlusCircle,
+  HelpCircle,
 } from 'react-feather'
 import get from 'lodash.get'
 
@@ -127,6 +128,7 @@ const MAP = {
   twitter: Twitter, // subject complete
   linkedin: Linkedin, // subject complete
   star: Star, // subject complete
+  help: HelpCircle, // card learn
 }
 
 const SIZES = {

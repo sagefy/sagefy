@@ -6,15 +6,17 @@ import { shuffle } from 'shuffle-seed'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
+import TempHelp from './components/TempHelp'
 
 export default function LearnChoiceCardPage({
   hash,
-  progress,
+  learned,
   card: {
     entityId,
     name,
     data: { body, max_options_to_show, options },
   },
+  subject: { entityId: subjectId, name: subjectName },
   body: {
     choice,
     seed = process.env.NODE_ENV === 'test' ? '_' : Date.now().toString(36),
@@ -31,9 +33,9 @@ export default function LearnChoiceCardPage({
       title="Learn"
       canonical={`/choice-cards/${to58(entityId)}`}
     >
-      {progress && (
+      {learned && (
         <section>
-          <progress value={progress} />
+          <progress value={learned} />
         </section>
       )}
 
@@ -81,13 +83,15 @@ export default function LearnChoiceCardPage({
           )}
         </section>
       </form>
+
+      <TempHelp name={subjectName} subjectId={subjectId} cardId={entityId} />
     </Layout>
   )
 }
 
 LearnChoiceCardPage.propTypes = {
   hash: string.isRequired,
-  progress: number,
+  learned: number,
   card: shape({
     name: string.isRequired,
     data: shape({
@@ -102,6 +106,10 @@ LearnChoiceCardPage.propTypes = {
       ),
     }).isRequired,
   }).isRequired,
+  subject: shape({
+    name: string.isRequired,
+    entityId: string.isRequired,
+  }).isRequired,
   body: shape({
     choice: string,
     seed: string,
@@ -109,7 +117,7 @@ LearnChoiceCardPage.propTypes = {
 }
 
 LearnChoiceCardPage.defaultProps = {
-  progress: null,
+  learned: null,
   body: {
     choice: null,
     seed: undefined,

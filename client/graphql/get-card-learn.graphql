@@ -8,5 +8,7 @@ query getCardLearn($cardId: UUID!, $subjectId: UUID!) {
 
   subjectByEntityId(entityId: $subjectId) {
     learned
+    name
+    entityId
   }
 }

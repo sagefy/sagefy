@@ -3,15 +3,17 @@ import { number, string, shape } from 'prop-types'
 import { convertUuidToUuid58 as to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
+import TempHelp from './components/TempHelp'
 
 export default function LearnUnscoredEmbedCardPage({
   hash,
-  progress,
+  learned,
   card: {
     entityId,
     name,
     data: { url },
   },
+  subject: { entityId: subjectId, name: subjectName },
 }) {
   return (
     <Layout
@@ -20,9 +22,9 @@ export default function LearnUnscoredEmbedCardPage({
       title="Learn"
       canonical={`/unscored-embed-cards/${to58(entityId)}`}
     >
-      {progress && (
+      {learned && (
         <section>
-          <progress value={progress} />
+          <progress value={learned} />
         </section>
       )}
 
@@ -37,21 +39,27 @@ export default function LearnUnscoredEmbedCardPage({
           </button>
         </form>
       </section>
+
+      <TempHelp name={subjectName} subjectId={subjectId} cardId={entityId} />
     </Layout>
   )
 }
 
 LearnUnscoredEmbedCardPage.propTypes = {
   hash: string.isRequired,
-  progress: number,
+  learned: number,
   card: shape({
     name: string.isRequired,
     data: shape({
       url: string.isRequired,
     }).isRequired,
   }).isRequired,
+  subject: shape({
+    name: string.isRequired,
+    entityId: string.isRequired,
+  }).isRequired,
 }
 
 LearnUnscoredEmbedCardPage.defaultProps = {
-  progress: null,
+  learned: null,
 }
