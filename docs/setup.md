@@ -19,7 +19,7 @@ These instructions assume you are using Mac OS X. To set up a staging or product
     1. `docker-compose up`
 4.  Get some data
     1.  Create database schemas: `npm run dbmate up`
-    2.  Create dev data: `npm run dev-data`
+    2.  Create dev data: `npm run gendata`
 5.  Verify
     1.  In your browser, visit `http://localhost:2601/graphiql`, there should be a Graphiql window.
     2.  In your browser, visit `http://localhost/`, the home page should be working.

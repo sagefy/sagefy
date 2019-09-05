@@ -9,7 +9,7 @@ async function setup() {
   const { pool } = require('../index')
   pool.on('error', console.error)
   // We'll generate our dev/test data first...
-  const data = await require('./_dev-data')()
+  const data = await require('./_gendata')()
   // As bizarre as this is, this is the only way to
   // pass along data from the setup phase to the test phase.
   await fs.writeFile('test-data.json', JSON.stringify(data), 'utf8')

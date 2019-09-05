@@ -4,7 +4,7 @@
   "description": "Sagefy. Learn anything, adapted for you. Free.",
   "main": "index.js",
   "scripts": {
-    "dev-data": "env $(grep -v '^#' ../.env | xargs) node ./test/_dev-data.js",
+    "gendata": "env $(grep -v '^#' ../.env | xargs) node ./test/_gendata.js",
     "test": "env $(grep -v '^#' ../.env.test | xargs) jest --detectOpenHandles --forceExit --runInBand",
     "test:update": "env $(grep -v '^#' ../.env.test | xargs) jest --detectOpenHandles --forceExit --runInBand -u"
   },

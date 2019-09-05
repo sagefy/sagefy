@@ -9,7 +9,7 @@
     "lint": "eslint --ext .jsx,.js .",
     "test": "npm run lint",
     "posttest": "(cd server && npm run test) && (cd client && npm run test)",
-    "dev-data": "(cd server && npm run dev-data)",
+    "gendata": "(cd server && npm run gendata)",
     "dbmate": "dbmate -d \"./postgres/migrations\" -s \"./postgres/schema.sql\"",
     "dbrepl": "docker exec -it sagefy_postgres_1 psql -U sagefy -p 2600",
     "prettier": "prettier --write \"**/*.*\""
