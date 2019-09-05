@@ -1706,7 +1706,7 @@ CREATE FUNCTION sg_public.recent_popular_subjects(days integer) RETURNS SETOF sg
   select s.*
   from sg_public.subject s, counts
   where s.entity_id = counts.subject_id
-  order by count;
+  order by count desc;
   -- This function should count all usubjs, not just the current users.
 $$;
 
@@ -1736,12 +1736,13 @@ COMMENT ON FUNCTION sg_public.recent_post_count(days integer) IS 'Count the numb
 --
 
 CREATE FUNCTION sg_public.recent_response_count(days integer, min real DEFAULT 0) RETURNS bigint
-    LANGUAGE sql STABLE
+    LANGUAGE sql STABLE STRICT SECURITY DEFINER
     AS $$
   select count(*)
   from sg_public.response
   where created > current_date - days
   and learned >= min;
+  -- This function should count all usubjs, not just the current users.
 $$;
 
 
@@ -1841,11 +1842,12 @@ COMMENT ON FUNCTION sg_public.recent_user_count(days integer) IS 'Count the numb
 --
 
 CREATE FUNCTION sg_public.recent_user_subject_count(days integer) RETURNS bigint
-    LANGUAGE sql STABLE
+    LANGUAGE sql STABLE STRICT SECURITY DEFINER
     AS $$
   select count(*)
   from sg_public.user_subject
   where created > current_date - days;
+  -- This function should count all usubjs, not just the current users.
 $$;
 
 
