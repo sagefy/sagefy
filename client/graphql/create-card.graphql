@@ -8,7 +8,6 @@ mutation createCard(
     input: {
       language: "en"
       name: $name
-      tags: []
       subjectId: $subjectId
       kind: $kind
       data: $data

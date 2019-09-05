@@ -1,13 +1,6 @@
 mutation createSubject($name: String!, $body: String!) {
   createSubject(
-    input: {
-      language: "en"
-      name: $name
-      body: $body
-      before: []
-      parent: []
-      tags: []
-    }
+    input: { language: "en", name: $name, body: $body, before: [], parent: [] }
   ) {
     subjectVersion {
       versionId

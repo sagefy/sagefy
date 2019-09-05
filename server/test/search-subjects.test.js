@@ -11,7 +11,7 @@ describe('search-subject', () => {
     expect(true).toBe(false)
   })
 
-  it.skip('Look in entity_id, name, tags, and body', () => {
+  it.skip('Look in entity_id, name, and body', () => {
     expect(true).toBe(false)
   })
 

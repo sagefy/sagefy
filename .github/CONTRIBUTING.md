@@ -47,7 +47,6 @@ For each pull request:
 - Use `name` for title, name, or subject.
 - Use `body` for body, message, description.
 - Use `kind` for kind or type.
-- When the number of kinds is unknown, use `tags` instead.
 - Use third normal form unless there's no query requirement.
 
 ## JavaScript

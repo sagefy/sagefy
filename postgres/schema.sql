@@ -1251,10 +1251,10 @@ COMMENT ON FUNCTION sg_public.choose_card(subject_id uuid) IS 'After I select a 
 
 
 --
--- Name: create_card(character varying, text, text[], uuid, sg_public.card_kind, jsonb); Type: FUNCTION; Schema: sg_public; Owner: -
+-- Name: create_card(character varying, text, uuid, sg_public.card_kind, jsonb); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_public.create_card(language character varying, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb) RETURNS sg_public.card_version
+CREATE FUNCTION sg_public.create_card(language character varying, name text, subject_id uuid, kind sg_public.card_kind, data jsonb) RETURNS sg_public.card_version
     LANGUAGE plpgsql STRICT SECURITY DEFINER
     AS $$
   declare
@@ -1271,8 +1271,8 @@ CREATE FUNCTION sg_public.create_card(language character varying, name text, tag
     insert into sg_public.entity_version
     (version_id, entity_kind) values (xversion_id, 'card');
     insert into sg_public.card_version
-    (version_id, entity_id, language, name, tags, subject_id, kind, data)
-    values (xversion_id, xentity_id, language, name, tags, subject_id, kind, data)
+    (version_id, entity_id, language, name, subject_id, kind, data)
+    values (xversion_id, xentity_id, language, name, subject_id, kind, data)
     returning * into xcard_version;
     return xcard_version;
   end;
@@ -1280,10 +1280,10 @@ $$;
 
 
 --
--- Name: FUNCTION create_card(language character varying, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb); Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: FUNCTION create_card(language character varying, name text, subject_id uuid, kind sg_public.card_kind, data jsonb); Type: COMMENT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON FUNCTION sg_public.create_card(language character varying, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb) IS 'Create a new card.';
+COMMENT ON FUNCTION sg_public.create_card(language character varying, name text, subject_id uuid, kind sg_public.card_kind, data jsonb) IS 'Create a new card.';
 
 
 --
@@ -1351,10 +1351,10 @@ COMMENT ON FUNCTION sg_public.create_password_token(email text) IS 'Generate and
 
 
 --
--- Name: create_subject(character varying, text, text[], text, uuid[], uuid[]); Type: FUNCTION; Schema: sg_public; Owner: -
+-- Name: create_subject(character varying, text, text, uuid[], uuid[]); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_public.create_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]) RETURNS sg_public.subject_version
+CREATE FUNCTION sg_public.create_subject(language character varying, name text, body text, parent uuid[], before uuid[]) RETURNS sg_public.subject_version
     LANGUAGE plpgsql STRICT SECURITY DEFINER
     AS $$
   declare
@@ -1371,8 +1371,8 @@ CREATE FUNCTION sg_public.create_subject(language character varying, name text, 
     insert into sg_public.entity_version
     (version_id, entity_kind) values (xversion_id, 'subject');
     insert into sg_public.subject_version
-    (version_id, entity_id, language, name, tags, body)
-    values (xversion_id, xentity_id, language, name, tags, body)
+    (version_id, entity_id, language, name, body)
+    values (xversion_id, xentity_id, language, name, body)
     returning * into xsubject_version;
     insert into sg_public.subject_version_parent_child
     (child_version_id, parent_entity_id)
@@ -1386,10 +1386,10 @@ $$;
 
 
 --
--- Name: FUNCTION create_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]); Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: FUNCTION create_subject(language character varying, name text, body text, parent uuid[], before uuid[]); Type: COMMENT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON FUNCTION sg_public.create_subject(language character varying, name text, tags text[], body text, parent uuid[], before uuid[]) IS 'Create a new subject.';
+COMMENT ON FUNCTION sg_public.create_subject(language character varying, name text, body text, parent uuid[], before uuid[]) IS 'Create a new subject.';
 
 
 --
@@ -1871,15 +1871,12 @@ CREATE FUNCTION sg_public.search_cards(query text) RETURNS SETOF sg_public.card
     select
       distinct on (entity_id) entity_id,
       ts_rank(
-        to_tsvector('english_unaccent', text_concat_ws(' ',
-          name, text_array_to_text(tags), data::text
-        )),
+        to_tsvector('english_unaccent', text_concat_ws(' ', name, data::text)),
         websearch_to_tsquery('english_unaccent', query)
       ) as rank
     from sg_public.card_version
-    where to_tsvector('english_unaccent', text_concat_ws(' ',
-      name, text_array_to_text(tags), data::text
-    )) @@ websearch_to_tsquery('english_unaccent', query)
+    where to_tsvector('english_unaccent', text_concat_ws(' ', name, data::text))
+      @@ websearch_to_tsquery('english_unaccent', query)
     order by entity_id, rank
   )
   select c.*
@@ -1941,15 +1938,12 @@ CREATE FUNCTION sg_public.search_subjects(query text) RETURNS SETOF sg_public.su
     select
       distinct on (entity_id) entity_id,
       ts_rank(
-        to_tsvector('english_unaccent', text_concat_ws(' ',
-          name, text_array_to_text(tags), body
-        )),
+        to_tsvector('english_unaccent', text_concat_ws(' ', name, body)),
         websearch_to_tsquery('english_unaccent', query)
       ) as rank
     from sg_public.subject_version
-    where to_tsvector('english_unaccent', text_concat_ws(' ',
-      name, text_array_to_text(tags), body
-    )) @@ websearch_to_tsquery('english_unaccent', query)
+    where to_tsvector('english_unaccent', text_concat_ws(' ', name, body))
+      @@ websearch_to_tsquery('english_unaccent', query)
     order by entity_id, rank
   )
   select s.*
@@ -2494,10 +2488,10 @@ COMMENT ON FUNCTION sg_public.subjects_by_current_user() IS 'Select subjects I c
 
 
 --
--- Name: update_card(uuid, text, text[], uuid, sg_public.card_kind, jsonb); Type: FUNCTION; Schema: sg_public; Owner: -
+-- Name: update_card(uuid, text, uuid, sg_public.card_kind, jsonb); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_public.update_card(entity_id uuid, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb) RETURNS sg_public.card_version
+CREATE FUNCTION sg_public.update_card(entity_id uuid, name text, subject_id uuid, kind sg_public.card_kind, data jsonb) RETURNS sg_public.card_version
     LANGUAGE plpgsql STRICT SECURITY DEFINER
     AS $$
   declare
@@ -2514,8 +2508,8 @@ CREATE FUNCTION sg_public.update_card(entity_id uuid, name text, tags text[], su
     insert into sg_public.entity_version
     (version_id, entity_kind) values (xversion_id, 'card');
     insert into sg_public.card_version
-    (version_id, entity_id, language, previous_id, name, tags, subject_id, kind, data)
-    values (xversion_id, entity_id, 'en', xprevious.version_id, name, tags, subject_id, kind, data)
+    (version_id, entity_id, language, previous_id, name, subject_id, kind, data)
+    values (xversion_id, entity_id, 'en', xprevious.version_id, name, subject_id, kind, data)
     returning * into xcard_version;
     return xcard_version;
   end;
@@ -2523,10 +2517,10 @@ $$;
 
 
 --
--- Name: FUNCTION update_card(entity_id uuid, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb); Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: FUNCTION update_card(entity_id uuid, name text, subject_id uuid, kind sg_public.card_kind, data jsonb); Type: COMMENT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON FUNCTION sg_public.update_card(entity_id uuid, name text, tags text[], subject_id uuid, kind sg_public.card_kind, data jsonb) IS 'Update an existing card.';
+COMMENT ON FUNCTION sg_public.update_card(entity_id uuid, name text, subject_id uuid, kind sg_public.card_kind, data jsonb) IS 'Update an existing card.';
 
 
 --
@@ -2604,10 +2598,10 @@ COMMENT ON FUNCTION sg_public.update_password(new_password text) IS 'Update the 
 
 
 --
--- Name: update_subject(uuid, text, text[], text, uuid[], uuid[]); Type: FUNCTION; Schema: sg_public; Owner: -
+-- Name: update_subject(uuid, text, text, uuid[], uuid[]); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
-CREATE FUNCTION sg_public.update_subject(entity_id uuid, name text, tags text[], body text, parent uuid[], before uuid[]) RETURNS sg_public.subject_version
+CREATE FUNCTION sg_public.update_subject(entity_id uuid, name text, body text, parent uuid[], before uuid[]) RETURNS sg_public.subject_version
     LANGUAGE plpgsql STRICT SECURITY DEFINER
     AS $$
   declare
@@ -2624,8 +2618,8 @@ CREATE FUNCTION sg_public.update_subject(entity_id uuid, name text, tags text[],
     insert into sg_public.entity_version
     (version_id, entity_kind) values (xversion_id, 'subject');
     insert into sg_public.subject_version
-    (version_id, previous_version_id, entity_id, language, name, tags, body)
-    values (xversion_id, xprevious.version_id, entity_id, xprevious.language, name, tags, body)
+    (version_id, previous_version_id, entity_id, language, name, body)
+    values (xversion_id, xprevious.version_id, entity_id, xprevious.language, name, body)
     returning * into xsubject_version;
     insert into sg_public.subject_version_parent_child
     (child_version_id, parent_entity_id)
@@ -2639,10 +2633,10 @@ $$;
 
 
 --
--- Name: FUNCTION update_subject(entity_id uuid, name text, tags text[], body text, parent uuid[], before uuid[]); Type: COMMENT; Schema: sg_public; Owner: -
+-- Name: FUNCTION update_subject(entity_id uuid, name text, body text, parent uuid[], before uuid[]); Type: COMMENT; Schema: sg_public; Owner: -
 --
 
-COMMENT ON FUNCTION sg_public.update_subject(entity_id uuid, name text, tags text[], body text, parent uuid[], before uuid[]) IS 'Update an existing subject.';
+COMMENT ON FUNCTION sg_public.update_subject(entity_id uuid, name text, body text, parent uuid[], before uuid[]) IS 'Update an existing subject.';
 
 
 --
@@ -3680,14 +3674,14 @@ CREATE INDEX response_user_id_idx ON sg_public.response USING btree (user_id);
 -- Name: search_card_idx; Type: INDEX; Schema: sg_public; Owner: -
 --
 
-CREATE INDEX search_card_idx ON sg_public.card_version USING gin (to_tsvector('public.english_unaccent'::regconfig, public.text_concat_ws(' '::text, VARIADIC ARRAY[name, public.text_array_to_text(tags), (data)::text])));
+CREATE INDEX search_card_idx ON sg_public.card_version USING gin (to_tsvector('public.english_unaccent'::regconfig, public.text_concat_ws(' '::text, VARIADIC ARRAY[name, (data)::text])));
 
 
 --
 -- Name: search_subject_idx; Type: INDEX; Schema: sg_public; Owner: -
 --
 
-CREATE INDEX search_subject_idx ON sg_public.subject_version USING gin (to_tsvector('public.english_unaccent'::regconfig, public.text_concat_ws(' '::text, VARIADIC ARRAY[name, public.text_array_to_text(tags), body])));
+CREATE INDEX search_subject_idx ON sg_public.subject_version USING gin (to_tsvector('public.english_unaccent'::regconfig, public.text_concat_ws(' '::text, VARIADIC ARRAY[name, body])));
 
 
 --
@@ -4603,4 +4597,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190821230739'),
     ('20190821233703'),
     ('20190822150444'),
-    ('20190827204526');
+    ('20190827204526'),
+    ('20190905163017');

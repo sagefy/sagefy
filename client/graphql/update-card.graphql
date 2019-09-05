@@ -9,7 +9,6 @@ mutation updateCard(
     input: {
       entityId: $entityId
       name: $name
-      tags: []
       subjectId: $subjectId
       kind: $kind
       data: $data

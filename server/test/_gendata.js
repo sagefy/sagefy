@@ -73,12 +73,11 @@ async function newSubject(client, { name, body, parent, before }) {
     `select * from sg_public.create_subject(
       $1, -- language
       $2, -- name
-      $3, -- tags
-      $4, -- body
-      $5, -- parent
-      $6  -- before
+      $3, -- body
+      $4, -- parent
+      $5  -- before
     );`,
-    ['en', name, [], body, parent, before]
+    ['en', name, body, parent, before]
   )).rows[0]
 }
 
@@ -87,12 +86,11 @@ async function newCard(client, { name, subject_id, kind, data }) {
     `select * from sg_public.create_card(
       $1, -- language
       $2, -- name
-      $3, -- tags
-      $4, -- subject_id
-      $5::sg_public.card_kind, -- kind
-      $6  -- data
+      $3, -- subject_id
+      $4::sg_public.card_kind, -- kind
+      $5  -- data
     )`,
-    ['en', name, [], subject_id, kind, JSON.stringify(data)]
+    ['en', name, subject_id, kind, JSON.stringify(data)]
   )).rows[0]
 }
 
