@@ -42,8 +42,7 @@ const SKIPLIST = [
 ]
 
 export default function TempHelp({ name, cardId, subjectId }) {
-  if (SKIPLIST.includes(to58(subjectId)) || !name || !cardId)
-    return <React.Fragment />
+  if (SKIPLIST.includes(to58(subjectId)) || !name || !cardId) return <></>
   return (
     <section>
       <hr />
