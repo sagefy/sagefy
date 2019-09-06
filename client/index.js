@@ -7,10 +7,7 @@ const jwt = require('jsonwebtoken')
 const get = require('lodash.get')
 const set = require('lodash.set')
 const fromPairs = require('lodash.frompairs')
-const {
-  convertUuid58ToUuid: toU,
-  convertUuidToUuid58: to58,
-} = require('uuid58')
+const { toU, to58 } = require('uuid58')
 const uuidv4 = require('uuid/v4')
 const request = require('request-promise-native')
 const CARD_KIND = require('./util/card-kind')

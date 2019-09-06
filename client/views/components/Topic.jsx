@@ -1,7 +1,7 @@
 import React from 'react'
 import TimeAgo from 'timeago-react'
 import { shape, string, instanceOf } from 'prop-types'
-import { convertUuidToUuid58 as to58 } from 'uuid58'
+import { to58 } from 'uuid58'
 import Post from './Post'
 import Icon from './Icon'
 import FormErrorsTop from './FormErrorsTop'

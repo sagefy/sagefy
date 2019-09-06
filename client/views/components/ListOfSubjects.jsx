@@ -1,6 +1,6 @@
 import React from 'react'
 import { string, shape, arrayOf } from 'prop-types'
-import { convertUuidToUuid58 as to58 } from 'uuid58'
+import { to58 } from 'uuid58'
 import ReactMarkdown from 'react-markdown'
 import Icon from './Icon'
 import shorten from '../../util/shorten'

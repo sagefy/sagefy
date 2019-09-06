@@ -1,7 +1,7 @@
 import get from 'lodash.get'
 import React from 'react'
 import { string, shape, arrayOf } from 'prop-types'
-import { convertUuidToUuid58 as to58 } from 'uuid58'
+import { to58 } from 'uuid58'
 import Icon from './Icon'
 import CARD_KIND from '../../util/card-kind'
 

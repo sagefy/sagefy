@@ -2,7 +2,7 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import TimeAgo from 'timeago-react'
 import { shape, string, instanceOf } from 'prop-types'
-import { convertUuidToUuid58 as to58 } from 'uuid58'
+import { to58 } from 'uuid58'
 
 export default function Post({
   id,

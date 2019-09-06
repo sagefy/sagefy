@@ -1,7 +1,7 @@
 import React from 'react'
 import { string, shape, arrayOf, number } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
-import { convertUuidToUuid58 as to58 } from 'uuid58'
+import { to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
 import Footer from './components/Footer'

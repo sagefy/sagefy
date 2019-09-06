@@ -1,7 +1,7 @@
 import React from 'react'
 import { string, shape, arrayOf } from 'prop-types'
 import get from 'lodash.get'
-import { convertUuidToUuid58 as to58 } from 'uuid58'
+import { to58 } from 'uuid58'
 import ReactMarkdown from 'react-markdown'
 import shorten from '../util/shorten'
 import Layout from './components/Layout'

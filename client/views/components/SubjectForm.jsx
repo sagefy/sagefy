@@ -1,7 +1,7 @@
 import React from 'react'
 import { string, shape } from 'prop-types'
 import get from 'lodash.get'
-import { convertUuidToUuid58 as to58 } from 'uuid58'
+import { to58 } from 'uuid58'
 import Icon from './Icon'
 import FormErrorsTop from './FormErrorsTop'
 import FormErrorsField from './FormErrorsField'

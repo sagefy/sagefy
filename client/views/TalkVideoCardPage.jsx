@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 import React from 'react'
 import { shape, string, arrayOf } from 'prop-types'
-import { convertUuidToUuid58 as to58 } from 'uuid58'
+import { to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
 import FormErrorsTop from './components/FormErrorsTop'
