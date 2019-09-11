@@ -4,6 +4,7 @@ import Layout from './components/Layout'
 import Icon from './components/Icon'
 import FormErrorsTop from './components/FormErrorsTop'
 import FormErrorsField from './components/FormErrorsField'
+import ExternalLink from './components/ExternalLink'
 
 export default function SignUpPage({
   hash,
@@ -81,6 +82,14 @@ export default function SignUpPage({
               required
               pattern=".{8,}"
             />
+            <br />
+            <small>
+              Please{' '}
+              <ExternalLink href="https://heiskr.com/useapasswordmanager/">
+                use a password manager
+              </ExternalLink>
+              .
+            </small>
           </p>
           <FormErrorsField formErrors={gqlErrors} field="password" />
           <p>
