@@ -89,6 +89,7 @@ const MAP = {
   password: Key,
   email: Mail,
   dashboard: Map,
+  about: HelpCircle,
 
   // models
   talk: MessageCircle,

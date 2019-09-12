@@ -604,6 +604,8 @@ app.get('/terms', (req, res) => res.render('TermsPage'))
 
 app.get('/contact', (req, res) => res.render('ContactPage'))
 
+app.get('/about', (req, res) => res.render('AboutPage'))
+
 app.get('/', async (req, res) => {
   const gqlRes = await GQL.getHome(req)
   const subjects = get(gqlRes, 'popularSubjects.nodes')
@@ -616,6 +618,7 @@ const ROOT_PAGES = [
   '', // home
   '/terms',
   '/contact',
+  '/about',
   '/sign-up',
   '/log-in',
   '/email',
