@@ -85,7 +85,7 @@ export default function CreateVideoCardPage({
                     size="15"
                     id="data$video_id"
                     name="data$video_id"
-                    placeholder="ex: Gi99QbiSuWs"
+                    placeholder="ex: h9LD7GKtEa0"
                   />
                 </td>
               </tr>

@@ -20,7 +20,7 @@
 ### What's next?
 
 - [Visit the site](https://sagefy.org).
-- For more information, [watch this 3 minute YouTube video](https://youtu.be/Gi99QbiSuWs) or [read the docs](https://docs.sagefy.org).
+- For more information, [watch this 3 minute YouTube video](https://youtu.be/h9LD7GKtEa0) or [read the docs](https://docs.sagefy.org).
 - Want to help? [Check out our "Want to Help?" doc.](https://docs.sagefy.org/want-to-help)
 - Sign up for [updates](https://sgfy.xyz/updates).
 - Reach out to us on [Twitter](https://twitter.com/sagefyorg).
