@@ -13,6 +13,29 @@ title: Sagefy Updates
 
 This is a reverse chronological listing of updates on Sagefy's progress. I will try to do these biweekly.
 
+
+## UPDATE -- 2019 Sep 16
+
+Thanks for signing up for the Sagefy updates newsletter. I am sending updates biweekly to help track progress on Sagefy.
+
+### 2019 Aug 5 - 2019 Sep 15
+
+- New blog post on adaptive learning: https://heiskr.com/stories/adaptive-learning
+- Updated overview video: https://youtu.be/h9LD7GKtEa0
+- Added some text to cards that were computer-made: https://imgur.com/adTChr2
+- Created a statistics page: https://sagefy.org/statistics
+- SEO tweaks
+- Bug fixes
+
+### Upcoming Two Weeks: 2019 Sep 16 - 2019 Sep 29
+
+- Focus on outreach tasks
+
+### Feedback
+
+Feel free to reply to this address! You can also go to https://sgfy.xyz/issues and add feedback or ideas there.
+
+
 ## UPDATE -- 2019 Aug 5
 
 Thanks for signing up for the Sagefy updates newsletter. I am sending updates biweekly to help track progress on Sagefy.
