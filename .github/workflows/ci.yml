@@ -1,0 +1,33 @@
+name: Sagefy test suite
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: heiskr/circleci-postgres-alpine-json-schema
+        ports: 
+          - 2600
+        env:
+          POSTGRES_USER: sagefy
+          POSTGRES_DB: sagefy
+          POSTGRES_PORT: 2600
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.16.3
+    - name: Run migrations
+      run: |
+        curl -fsSL -o dbmate https://github.com/amacneil/dbmate/releases/download/v1.4.1/dbmate-linux-amd64
+        chmod +x dbmate
+        ./dbmate wait && ./dbmate -d "./postgres/migrations" -s "./postgres/schema.sql" up
+      env:
+        DATABASE_URL: postgres://sagefy@localhost:2600/sagefy?sslmode=disable
+    - name: npm install, build, and test
+      run: |
+        npm install
+        npm test
+      env:
+        CI: true
