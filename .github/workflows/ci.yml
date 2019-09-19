@@ -7,10 +7,11 @@ jobs:
       postgres:
         image: heiskr/circleci-postgres-alpine-json-schema
         ports: 
-          - 5432:2600
+          - 2600
         env:
           POSTGRES_USER: sagefy
           POSTGRES_DB: sagefy
+        options: -p 2600 --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5  
     steps:
     - uses: actions/checkout@v1
     - name: Use Node.js
