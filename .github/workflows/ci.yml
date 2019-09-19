@@ -11,7 +11,7 @@ jobs:
         env:
           POSTGRES_USER: sagefy
           POSTGRES_DB: sagefy
-          POSTGRES_PORT: 2600
+        options: -p 2600
     steps:
     - uses: actions/checkout@v1
     - name: Use Node.js
