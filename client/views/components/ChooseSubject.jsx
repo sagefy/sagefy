@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import Icon from './Icon'
 import shorten from '../../util/shorten'
 
-const LINE_BREAKS = /\n/g
+const LINE_BREAKS = /\r?\n/gm
 
 function Wark({ children, when }) {
   return (when && <mark>{children}</mark>) || children
