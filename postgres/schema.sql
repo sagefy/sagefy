@@ -2476,7 +2476,7 @@ CREATE FUNCTION sg_public.trending_subjects() RETURNS SETOF sg_public.subject
     select ps.*
     from sg_public.recent_popular_subjects(7) ps, first
     where ps.entity_id != first.entity_id
-    limit 20
+    limit 50
   ), trending as (
     select *
     from rps
