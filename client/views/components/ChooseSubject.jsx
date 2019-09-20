@@ -5,6 +5,8 @@ import ReactMarkdown from 'react-markdown'
 import Icon from './Icon'
 import shorten from '../../util/shorten'
 
+const LINE_BREAKS = /\n/g
+
 function Wark({ children, when }) {
   return (when && <mark>{children}</mark>) || children
 }
@@ -43,7 +45,11 @@ export default function ChooseSubject({ subjects, level }) {
                 </a>
               </Wark>
             </h3>
-            <meta itemProp="description" content={body} />
+            {/* these are in the middle to not impact margins */}
+            <meta
+              itemProp="description"
+              content={body.replace(LINE_BREAKS, ' ')}
+            />
             <meta
               itemProp="url"
               content={`https://sagefy.org/subjects/${to58(entityId)}`}
