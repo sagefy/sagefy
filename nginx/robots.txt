@@ -1,4 +1,5 @@
 # robotstxt.org/
 
 User-agent: *
+Disallow: /next
 Sitemap: https://sagefy.org/sitemap.txt

@@ -36,12 +36,15 @@ export default function AboutPage({ hash }) {
         </p>
         <p>
           First time here? Learn what Sagefy is by using it!{' '}
-          <a href="/next?goal=W9UmrCsnrmgPvwp8mQRuoc" rel="nofollow">
+          <a href="/next?goal=W9UmrCsnrmgPvwp8mQRuoc">
             This 3-5 minute subject
           </a>{' '}
           will introduce you to Sagefy. You will learn what Sagefy is, how it
           works, and how to learn and contribute.
         </p>
+      </section>
+      <section>
+        <h2>Our mission is to remove all barriers to learning.</h2>
       </section>
       <section>
         <h2>The 8 Ideas</h2>

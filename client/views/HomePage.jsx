@@ -72,14 +72,24 @@ export default function HomePage({ hash, role, subjects }) {
         </section>
       ) : null}
 
-      <section>
-        <div className="ta-c my-c">
-          <img src="/astrolabe.svg" height="120" alt="astrolabe" />
-          <h2>Sagefy</h2>
-          <p>
-            <em>Learn anything, adapted for you. Free.</em>
-          </p>
-        </div>
+      <section
+        id="AB9F828B"
+        itemScope
+        itemType="https://schema.org/EducationalOrganization"
+        itemProp="provider"
+        className="ta-c my-c"
+      >
+        <img
+          src="/astrolabe.svg"
+          height="120"
+          alt="astrolabe"
+          itemProp="logo"
+        />
+        <h2 itemProp="name">Sagefy</h2>
+        <p itemProp="slogan">
+          <em>Learn anything, adapted for you. Free.</em>
+        </p>
+        <meta itemProp="url" content="https://sagefy.org" />
       </section>
 
       <section>

@@ -11,22 +11,44 @@ function Wark({ children, when }) {
 
 export default function ChooseSubject({ subjects, level }) {
   return (
-    <table className="ChooseSubject">
+    <table
+      className="ChooseSubject"
+      itemScope
+      itemType="http://schema.org/ItemList"
+    >
       {subjects.map(({ entityId, name, body }, i) => (
-        <tr key={`choose-subject-${entityId}`}>
+        <tr
+          key={`choose-subject-${entityId}`}
+          itemProp="itemListElement"
+          itemScope
+          itemType="https://schema.org/Course"
+          itemRef="AB9F828B"
+        >
           <td className="va-m ta-c">
-            <a href={`/next?${level}=${to58(entityId)}`} rel="nofollow">
+            <a
+              href={`/next?${level}=${to58(entityId)}`}
+              alt={`/subjects/${to58(entityId)}`}
+            >
               <Icon i="select" s="h2" title={name} />
             </a>
           </td>
           <td className="my-c">
-            <h3>
+            <h3 itemProp="name">
               <Wark when={i === 0 && subjects.length > 1}>
-                <a href={`/next?${level}=${to58(entityId)}`} rel="nofollow">
+                <a
+                  href={`/next?${level}=${to58(entityId)}`}
+                  alt={`/subjects/${to58(entityId)}`}
+                >
                   {name}
                 </a>
               </Wark>
             </h3>
+            <meta itemProp="description" content={body} />
+            <meta
+              itemProp="url"
+              content={`https://sagefy.org/subjects/${to58(entityId)}`}
+            />
+            <meta itemProp="position" content={i + 1} />
             <ReactMarkdown
               source={shorten(body)}
               disallowedTypes={['heading']}
