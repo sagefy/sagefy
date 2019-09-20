@@ -10,7 +10,7 @@ export default function AboutPage({ hash }) {
       hash={hash}
       page="AboutPage"
       title="About"
-      description="What is Sagefy? Learn about Sagefy, where you can learn anything adapted for you."
+      description="What is Sagefy? Learn about Sagefy, where you can learn anything adapted for you. Our adaptive learning platform is free for everyone."
     >
       <header className="my-c">
         <a href="/">

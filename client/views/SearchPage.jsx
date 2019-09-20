@@ -16,7 +16,7 @@ export default function SearchPage({ role, query: { q }, results, hash }) {
       hash={hash}
       page="SearchPage"
       title="Search all of Sagefy"
-      description="Find what you are looking for. Anything you want to learn, Sagefy can help you."
+      description="Find what you are looking to learn. Anything you want to learn, Sagefy can help you."
     >
       <section className="ta-c">
         <h1>

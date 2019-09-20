@@ -10,7 +10,7 @@ export default function ContactPage({ hash }) {
       hash={hash}
       page="ContactPage"
       title="Contact"
-      description="Need help? Contact Sagefy support."
+      description="Need help? Find out the best way to contact Sagefy."
     >
       <section>
         <h1>

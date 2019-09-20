@@ -48,8 +48,9 @@ export default function SubjectPage({
       hash={hash}
       page="SubjectPage"
       title={`Learn about ${subjectName}`}
-      description={`Learn about ${subjectName}, adapted and optimized for you. Learn for free, always. ${shorten(
-        subjectBody
+      description={`Learn about ${subjectName}, adapted for you. Free, always. ${shorten(
+        subjectBody,
+        100
       )}`}
       image={image}
       canonical={`/learn-about/${subjectSlug}-${to58(subjectEntityId)}`}
