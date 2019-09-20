@@ -12,7 +12,7 @@ export default function HomePage({ hash, role, subjects }) {
       hash={hash}
       page="HomePage"
       title="Learn anything, adapted for you. Free."
-      description="Sagefy is the only free and open adaptive learning site. We have over 1600 subjects ready for you. Our mission is to remove all barriers to learning."
+      description="Sagefy is the only free and open adaptive learning site. Over 1600 subjects are ready for you to learn. Our mission is to remove all barriers to learning."
     >
       <section className="ta-c">
         <h1>
