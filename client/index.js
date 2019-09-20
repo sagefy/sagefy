@@ -608,9 +608,7 @@ app.get('/about', (req, res) => res.render('AboutPage'))
 
 app.get('/', async (req, res) => {
   const gqlRes = await GQL.getHome(req)
-  const subjects = get(gqlRes, 'popularSubjects.nodes')
-  const whatIs = get(gqlRes, 'whatIsSagefy')
-  if (whatIs) subjects.unshift(whatIs)
+  const subjects = get(gqlRes, 'trendingSubjects.nodes')
   return res.render('HomePage', { subjects })
 })
 

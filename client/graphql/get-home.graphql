@@ -1,15 +1,9 @@
 query getHome {
-  popularSubjects {
+  trendingSubjects(first: 5) {
     nodes {
       entityId
       name
       body
     }
-  }
-
-  whatIsSagefy {
-    entityId
-    name
-    body
   }
 }

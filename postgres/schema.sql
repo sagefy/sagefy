@@ -1620,34 +1620,6 @@ COMMENT ON FUNCTION sg_public.next(goal_entity_id uuid, step_entity_id uuid) IS 
 
 
 --
--- Name: popular_subjects(); Type: FUNCTION; Schema: sg_public; Owner: -
---
-
-CREATE FUNCTION sg_public.popular_subjects() RETURNS SETOF sg_public.subject
-    LANGUAGE sql STABLE
-    AS $$
-  with most_popular as (
-    select s.*
-    from sg_public.subject s
-    order by sg_public.subject_user_count(s) desc
-    limit 20
-  )
-  select *
-  from most_popular
-  where name not ilike '%what is sagefy?%'
-  order by random()
-  limit 4;
-$$;
-
-
---
--- Name: FUNCTION popular_subjects(); Type: COMMENT; Schema: sg_public; Owner: -
---
-
-COMMENT ON FUNCTION sg_public.popular_subjects() IS 'Select the 5 most popular subjects.';
-
-
---
 -- Name: recent_card_count(integer); Type: FUNCTION; Schema: sg_public; Owner: -
 --
 
@@ -1701,12 +1673,14 @@ CREATE FUNCTION sg_public.recent_popular_subjects(days integer) RETURNS SETOF sg
   with counts as (
     select subject_id, count(*)
     from sg_public.user_subject us
+    where us.created > current_date - days
     group by subject_id
   )
   select s.*
-  from sg_public.subject s, counts
-  where s.entity_id = counts.subject_id
-  order by count desc;
+  from sg_public.subject s
+  left join counts
+  on s.entity_id = counts.subject_id
+  order by count desc nulls last;
   -- This function should count all usubjs, not just the current users.
 $$;
 
@@ -2485,6 +2459,40 @@ $$;
 --
 
 COMMENT ON FUNCTION sg_public.subjects_by_current_user() IS 'Select subjects I created or worked on.';
+
+
+--
+-- Name: trending_subjects(); Type: FUNCTION; Schema: sg_public; Owner: -
+--
+
+CREATE FUNCTION sg_public.trending_subjects() RETURNS SETOF sg_public.subject
+    LANGUAGE sql STABLE
+    AS $$
+  with first as (
+    select *
+    from sg_public.what_is_sagefy()
+    where entity_id is not null
+  ), rps as (
+    select ps.*
+    from sg_public.recent_popular_subjects(7) ps, first
+    where ps.entity_id != first.entity_id
+    limit 20
+  ), trending as (
+    select *
+    from rps
+    order by random()
+  )
+  select * from first
+  union all
+  select * from trending;
+$$;
+
+
+--
+-- Name: FUNCTION trending_subjects(); Type: COMMENT; Schema: sg_public; Owner: -
+--
+
+COMMENT ON FUNCTION sg_public.trending_subjects() IS 'Select trending subjects over the last 7 days. Always starts with "What is Sagefy?" if it exists.';
 
 
 --
@@ -4598,4 +4606,5 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20190821233703'),
     ('20190822150444'),
     ('20190827204526'),
-    ('20190905163017');
+    ('20190905163017'),
+    ('20190920181416');
