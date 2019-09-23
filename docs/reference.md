@@ -121,6 +121,7 @@ This document is a list of organized, curated links to support the development o
 - [Expii](https://www.expii.com/)
 - [CK12](https://www.ck12.org/student/)
 - [IXL](https://www.ixl.com/)
+- [Wikpedia list of spaced repetition software](https://en.wikipedia.org/wiki/Spaced_repetition#List_of_spaced_repetition_software_programs)
 
 ### Flash card based
 
