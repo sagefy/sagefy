@@ -57,6 +57,8 @@ export default function Footer({ role }) {
               <Icon i="docs" s="s" /> Docs
             </ExternalLink>
           </li>
+        </ul>
+        <ul className="ls-i">
           <li>
             <ExternalLink href="https://heiskr.com/stories">
               <Icon i="stories" s="s" /> Stories
@@ -65,6 +67,11 @@ export default function Footer({ role }) {
           <li>
             <ExternalLink href="https://sgfy.xyz/updates">
               <Icon i="updates" s="s" /> Updates
+            </ExternalLink>
+          </li>
+          <li>
+            <ExternalLink href="https://twitter.com/sagefyorg">
+              <Icon i="twitter" s="s" /> Twitter
             </ExternalLink>
           </li>
         </ul>
