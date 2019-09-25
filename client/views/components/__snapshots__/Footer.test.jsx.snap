@@ -77,6 +77,10 @@ exports[`Footer component should render a footer 1`] = `
            Docs
         </ExternalLink>
       </li>
+    </ul>
+    <ul
+      className="ls-i"
+    >
       <li>
         <ExternalLink
           href="https://heiskr.com/stories"
@@ -97,6 +101,17 @@ exports[`Footer component should render a footer 1`] = `
             s="s"
           />
            Updates
+        </ExternalLink>
+      </li>
+      <li>
+        <ExternalLink
+          href="https://twitter.com/sagefyorg"
+        >
+          <Icon
+            i="twitter"
+            s="s"
+          />
+           Twitter
         </ExternalLink>
       </li>
     </ul>
