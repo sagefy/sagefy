@@ -7,7 +7,7 @@ title: Brand and outreach guidelines and copy
 - **URL**: <https://sagefy.org/>
 - **Logo**:
   - <img src="https://raw.githubusercontent.com/sagefy/sagefy/master/nginx/astrolabe-white-square.png" width="100" style="vertical-align:top" />
-  - See <https://github.com/sagefy/sagefy/tree/master/nginx> for other logo renderings.
+  - See for [other logo renderings](https://github.com/sagefy/sagefy/tree/master/nginx).
 - **Tag**: Learn anything, adapted for you. Free.
 - **Description**:
 
@@ -23,7 +23,7 @@ title: Brand and outreach guidelines and copy
 - **Tags**: Education, Educational Service, Edtech, Online Education, Music Education, Open Source
 - **Founding**: April 1, 2013
 - **Overview video**: <https://youtu.be/h9LD7GKtEa0>
-- **Example**: <https://sagefy.org/subjects/EU7YbwNsNzChujKZ1tt2Nx>
+- **Example**: [An Introduction to Electronic Music](https://sagefy.org/subjects/EU7YbwNsNzChujKZ1tt2Nx)
 - **Social**:
   - <https://twitter.com/sagefyorg>
   - <https://stories.sagefy.org/>
