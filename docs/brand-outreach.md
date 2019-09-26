@@ -5,7 +5,8 @@ title: Brand and outreach guidelines and copy
 
 - **Name**: Sagefy
 - **URL**: https://sagefy.org/
-- **Logo**: ![](https://raw.githubusercontent.com/sagefy/sagefy/master/nginx/astrolabe-white-square.png)
+- **Logo**: <img src="https://raw.githubusercontent.com/sagefy/sagefy/master/nginx/astrolabe-white-square.png" width="100" />
+  See https://github.com/sagefy/sagefy/tree/master/nginx for other logo renderings.
 - **Tag**: Learn anything, adapted for you. Free.
 - **Description**:
 
@@ -17,6 +18,7 @@ title: Brand and outreach guidelines and copy
 
   For more information, watch this [3 minute YouTube video](https://youtu.be/h9LD7GKtEa0).
 
+- **Mission**: Sagefy's mission is to remove all barriers to learning.
 - **Tags**: Education, Educational Service, Edtech, Online Education, Music Education, Open Source
 - **Founding**: April 1, 2013
 - **Overview video**: https://youtu.be/h9LD7GKtEa0
@@ -27,3 +29,7 @@ title: Brand and outreach guidelines and copy
   - https://www.producthunt.com/posts/sagefy
   - https://www.crunchbase.com/organization/sagefy
   - https://github.com/sagefy/sagefy
+- **Personality**: Simple, plain, casual, honest, active
+- **Colors**: See https://github.com/heiskr/drab.css/blob/master/css/drab.partial.css#L5-L15
+- **Typography**: [Public sans](https://public-sans.digital.gov/), or [system-ui](https://css-tricks.com/snippets/css/system-font-stack/). Use system monospace fonts (see Bootstrap).
+- **Images**: Prefer flat, clean, vector style.
