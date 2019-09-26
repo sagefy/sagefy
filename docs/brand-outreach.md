@@ -4,9 +4,10 @@ title: Brand and outreach guidelines and copy
 ---
 
 - **Name**: Sagefy
-- **URL**: https://sagefy.org/
-- **Logo**: <img src="https://raw.githubusercontent.com/sagefy/sagefy/master/nginx/astrolabe-white-square.png" width="100" />
-  See https://github.com/sagefy/sagefy/tree/master/nginx for other logo renderings.
+- **URL**: <https://sagefy.org/>
+- **Logo**:
+  - <img src="https://raw.githubusercontent.com/sagefy/sagefy/master/nginx/astrolabe-white-square.png" width="100" style="vertical-align:top" />
+  - See <https://github.com/sagefy/sagefy/tree/master/nginx> for other logo renderings.
 - **Tag**: Learn anything, adapted for you. Free.
 - **Description**:
 
@@ -21,15 +22,15 @@ title: Brand and outreach guidelines and copy
 - **Mission**: Sagefy's mission is to remove all barriers to learning.
 - **Tags**: Education, Educational Service, Edtech, Online Education, Music Education, Open Source
 - **Founding**: April 1, 2013
-- **Overview video**: https://youtu.be/h9LD7GKtEa0
-- **Example**: https://sagefy.org/subjects/EU7YbwNsNzChujKZ1tt2Nx
+- **Overview video**: <https://youtu.be/h9LD7GKtEa0>
+- **Example**: <https://sagefy.org/subjects/EU7YbwNsNzChujKZ1tt2Nx>
 - **Social**:
-  - https://twitter.com/sagefyorg
-  - https://stories.sagefy.org/
-  - https://www.producthunt.com/posts/sagefy
-  - https://www.crunchbase.com/organization/sagefy
-  - https://github.com/sagefy/sagefy
+  - <https://twitter.com/sagefyorg>
+  - <https://stories.sagefy.org/>
+  - <https://www.producthunt.com/posts/sagefy>
+  - <https://www.crunchbase.com/organization/sagefy>
+  - <https://github.com/sagefy/sagefy>
 - **Personality**: Simple, plain, casual, honest, active
-- **Colors**: See https://github.com/heiskr/drab.css/blob/master/css/drab.partial.css#L5-L15
-- **Typography**: [Public sans](https://public-sans.digital.gov/), or [system-ui](https://css-tricks.com/snippets/css/system-font-stack/). Use system monospace fonts (see Bootstrap).
+- **Colors**: See [drab.css](https://github.com/heiskr/drab.css/blob/master/css/drab.partial.css#L5-L15)
+- **Typography**: [Public sans](https://public-sans.digital.gov/), or [system-ui](https://github.com/twbs/bootstrap/blob/b1f49092877c83bf2007cc363fc5c6925cc0dc8c/scss/_variables.scss#L287). Use [system monospace fonts](https://github.com/twbs/bootstrap/blob/b1f49092877c83bf2007cc363fc5c6925cc0dc8c/scss/_variables.scss#L288).
 - **Images**: Prefer flat, clean, vector style.
