@@ -40,8 +40,8 @@ This document serves as a list of major use cases for Sagefy's functionality. We
 - I can parse a choice card.
 - I can submit a response to a choice card.
 - When I reach a sufficient percentage, I complete the subject and go back to search.
-- :( When I choose to learn a subject with child subjects, I go to the choose step page.
-- :( When I reach a sufficient percentage, I go to the next subject.
+- When I choose to learn a subject with child subjects, I go to the choose step page.
+- When I reach a sufficient percentage, I go to the next subject.
 
 ## Logged In
 
