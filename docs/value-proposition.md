@@ -114,9 +114,9 @@ There's many options already, see "describe the problem".
 
 ### Revenue
 
-TBD
+[See finanical models](/financial-models)
 
----
+## Mission and opportunities
 
 ### Mission
 
@@ -161,3 +161,35 @@ Sagefy’s mission is to remove all barriers to learning.
   - Revenue (donations, contracts)
   - Staffing
   - Leadership and management
+
+## Job to be done
+
+_“Job” is shorthand for what an individual really seeks to accomplish in a given circumstance. The circumstances are more important than customer characteristics, product attributes, new technologies, or trends._
+
+_What is the job to be done?_
+
+I want to learn more about how to make electronic music, because:
+
+1. I'm new to it, I like the music, and want to figure out how to make it myself.
+1. I've been doing it for awhile as a hobby, but I feel like I don't know what all the knobs do and options are.
+1. I'm a musician or artist in another area wanting to expand my mediums.
+
+_What experiences will help customers make the progress they’re seeking in a given circumstance?_
+
+1. I'm totally new, and I'm not really sure where to start. I want to know an outline of what I should learn, and how to approach it. I don't know if this is for me, so I don't want to pay a bunch of money.
+1. I know what the tools are, but I don't have a full understanding of the ideas behind them. I want to see how the concepts relate to the tools that I already know. I might not mind spending some money, but I don't want to get more technical than what I need.
+1. I want to jump right in to making something as soon as possible. I want to see how electronic music can relate my primary medium. I don't want to spend money on this. I don't want to invest a ton of time upfront either.
+
+_Jobs are never simply about function—they have powerful social and emotional dimensions._
+
+_What obstacles must be removed?_
+
+1. Breaking through the initial "can I really do this?" feeling. Just getting started.
+1. I'm nervous about the conceptual part. I don't want to be "put in my place" and I don't want to feel like I'm starting from nothing. I don't want to get too mathy/technical either.
+1. I just want to get to making stuff as soon as possible. I just want some basic information but then I want to get right into making stuff without a lot of ceremony.
+
+_What are the social, emotional, and functional dimensions of the job?_
+
+1. Just getting started, breaking through procrastination. Maybe have like a 3-5 minute quick introduction that's engaging/fun? Go over an outline. Ease into it.
+1. Be clear about adaptive features and content difficulty level. Relate to real and familiar tools. Interactive examples that are similar to common tools. Allow skip ahead.
+1. Allow an option to let users get through some basics and then get more tool featured. Show how the concepts relate to free/cheap tools available.
