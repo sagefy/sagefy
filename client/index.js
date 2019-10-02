@@ -99,11 +99,18 @@ function convertBodyToVars(body) {
 }
 
 function setSecurityHeaders(req, res, next) {
-  res.setHeader('Content-Security-Policy', "default-src 'self'")
-  res.setHeader(
-    'Referrer-Policy',
-    'origin-when-cross-origin, strict-origin-when-cross-origin'
-  )
+  res.set({
+    'Content-Security-Policy': "default-src 'self'",
+    'Referrer-Policy':
+      'origin-when-cross-origin, strict-origin-when-cross-origin',
+    'X-Frame-Options': 'SAMEORIGIN',
+    'X-Content-Type-Options': 'nosniff',
+  })
+  if (process.env.NODE_ENV === 'production')
+    res.setHeader(
+      'Strict-Transport-Security',
+      'max-age=31536000; includeSubDomains'
+    )
   return next()
 }
 
