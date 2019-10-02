@@ -101,7 +101,7 @@ function convertBodyToVars(body) {
 function setSecurityHeaders(req, res, next) {
   res.set({
     'Content-Security-Policy':
-      "default-src 'self' https://www.youtube.com https://player.vimeo.com https://raw.githubusercontent.com https://farm*.static.flickr.com",
+      "default-src 'self' *.sagefy.org *.youtube.com *.vimeo.com *.githubusercontent.com *.flickr.com",
     'Referrer-Policy':
       'origin-when-cross-origin, strict-origin-when-cross-origin',
     'X-Frame-Options': 'SAMEORIGIN',
