@@ -19,11 +19,7 @@ export default function ServerErrorPage({ hash }) {
           <a href="/">
             Go back <Icon i="home" /> home
           </a>{' '}
-          &bull; You can also{' '}
-          <a href="javascript:history.back()">
-            <Icon i="left" /> go back
-          </a>{' '}
-          and retry.
+          &bull; You can also <Icon i="left" /> go back and retry.
         </p>
       </section>
     </Layout>

@@ -98,6 +98,16 @@ function convertBodyToVars(body) {
   return values
 }
 
+function setSecurityHeaders(req, res, next) {
+  res.setHeader('Content-Security-Policy', "default-src 'self'")
+  res.setHeader(
+    'Referrer-Policy',
+    'origin-when-cross-origin, strict-origin-when-cross-origin'
+  )
+  return next()
+}
+
+app.use(setSecurityHeaders)
 app.use(ensureJwt)
 app.use(handleError)
 app.use(setResLocals)
