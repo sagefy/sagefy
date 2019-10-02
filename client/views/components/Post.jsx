@@ -47,7 +47,7 @@ export default function Post({
         </p>
         <ReactMarkdown source={body} />
         {/* <small>
-              <ul className="ls-i ta-r" style="margin-bottom:1rem">
+              <ul className="ls-i ta-r">
                 <li>
                   <a href="#">↩️ Reply</a
                   >{/*-- if own, edit -/}

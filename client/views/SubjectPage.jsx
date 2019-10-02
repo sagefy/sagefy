@@ -63,14 +63,7 @@ export default function SubjectPage({
             </p>
             <h1 itemProp="name">{subjectName}</h1>
           </div>
-          {image && (
-            <img
-              src={image}
-              style={{ maxHeight: 16 * 10, width: '100%', objectFit: 'cover' }}
-              itemProp="image"
-              alt="flickr"
-            />
-          )}
+          {image && <img src={image} itemProp="image" alt="flickr" />}
           <div itemProp="description">
             <ReactMarkdown source={subjectBody} disallowedTypes={['heading']} />
           </div>

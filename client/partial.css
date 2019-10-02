@@ -79,3 +79,10 @@ button,
 :disabled {
   box-shadow: none;
 }
+
+/* Resize subject page header images */
+.SubjectPage header img {
+  max-height: 10rem;
+  width: 100%;
+  object-fit: 'cover';
+}
