@@ -1,4 +1,4 @@
-FROM postgres:11-alpine
+FROM postgres:12-alpine
 
 RUN apk add postgresql-contrib
 RUN apk add git
