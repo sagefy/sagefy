@@ -15,8 +15,10 @@ These instructions assume you are using Mac OS X. To set up a staging or product
 2.  Grab the code
     1.  Clone the repository: `git clone https://github.com/sagefy/sagefy.git`
     2.  Enter the directory: `cd sagefy`
+    3.  Set up node modules: `npm install`
 3.  Start it up
-    1. `docker-compose up`
+    1. Configure your environment. `cp .env.example .env`
+    2. `docker-compose up`
 4.  Get some data
     1.  Create database schemas: `npm run dbmate up`
     2.  Create dev data: `npm run gendata`
