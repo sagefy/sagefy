@@ -76,27 +76,15 @@ This document is a list of organized, curated links to support the development o
 
 ## Server Development
 
-- [Hypertext Application Language](http://stateless.co/hal_specification.html)
-- [RAML](http://raml.org/index.html)
 - [Knewton Tech Blog](http://www.knewton.com/tech/blog/)
-- [Best Practices for Designing a Pragmatic RESTful API](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api) by Vinay Sahni
-- [Implementing a RESTful Web API with Python & Flask](http://blog.luisrei.com/articles/flaskrest.html) by Luis Rei
 - [The Twelve-Factor App](http://12factor.net/)
-- [The TDD process with Functional and Unit Tests](http://chimera.labs.oreilly.com/books/1234000000754/ch06.html#_implementing_the_new_design_using_tdd) from Test-Driven Web Development with Python
 - Wikipedia's Database Schema
   - [Diagram](http://upload.wikimedia.org/wikipedia/commons/thumb/4/42/MediaWiki_1.20_%2844edaa2%29_database_schema.svg/2500px-MediaWiki_1.20_%2844edaa2%29_database_schema.svg.png)
   - [Revision](http://www.mediawiki.org/wiki/Manual:Revision_table)
   - [Page](http://www.mediawiki.org/wiki/Manual:Page_table)
   - [Text](http://www.mediawiki.org/wiki/Manual:Text_table)
-- [Writing RESTful Web Services With Flask](https://speakerdeck.com/miguelgrinberg/writing-restful-web-services-with-flask-pycon-2014) – PyCon 2014 by Miguel Grinberg
 - [The Security Checklist](https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist.md)
 - [Internet Scale Services Checklist](https://gist.github.com/acolyer/95ef23802803cb8b4eb5)
-
-## Web Client development
-
-- [W3C CSS2 documentation](http://www.w3.org/TR/CSS2/cover.html#minitoc)
-- [Responsive Elements](http://kumailht.com/responsive-elements/)
-- [Pattern Lab](http://pattern-lab.info/)
 
 ## Marketing
 
