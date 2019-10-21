@@ -17,7 +17,7 @@ This is a reverse chronological listing of updates on Sagefy's progress. I will 
 
 Thanks for signing up for the Sagefy updates newsletter. I am sending updates biweekly to help track progress on Sagefy.
 
-### 2019 Aug 5 - 2019 Sep 15
+### 2019 Sept 16 - 2019 Oct 20
 
 - SEO updates
 - Documentation updates
@@ -26,7 +26,7 @@ Thanks for signing up for the Sagefy updates newsletter. I am sending updates bi
 - Start on technical architecture doc
 - Update social channel graphics and copy
 
-### Upcoming Two Weeks: 2019 Sep 16 - 2019 Sep 29
+### Upcoming Two Weeks: 2019 Oct 21 - 2019 Nov 3
 
 - Complete technical architecture doc
 - Continue to work on outreach
