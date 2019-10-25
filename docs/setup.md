@@ -7,6 +7,8 @@ title: Setup
 
 These instructions assume you are using Mac OS X. To set up a staging or production server, please follow `script/provision.sh` instead.
 
+Found an issue? Feel free to suggest edits!
+
 1.  Install tools
     1.  Install [Docker for Mac](https://www.docker.com/docker-mac).
     2.  Install [Homebrew](https://brew.sh/).
