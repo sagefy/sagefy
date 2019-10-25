@@ -5,7 +5,7 @@ title: Want to Help?
 
 Interested in contributing to Sagefy? Here's some areas we could use some help. This is only a list of ideas... we welcome any help!
 
-If you'd like to reach out, feel free to hit us up on [Twitter](https://twitter.com/sagefyorg) or [send an email](mailto:support@sagefy.org).
+If you'd like to reach out, feel free to hit us up on [Twitter](https://twitter.com/sagefyorg) or [send an email](mailto:support@sagefy.org). When you're ready for the next step, check out [Contributing](https://github.com/sagefy/sagefy/blob/master/.github/CONTRIBUTING.md).
 
 Also, if you're interested, [sign up for updates](https://sgfy.xyz/updates).
 
