@@ -5,6 +5,8 @@ title: Technical Architecture
 
 This document covers Sagefy's technical architecture. This includes system diagrams, definitions, tools, and high-level decisions. This document does not cover information already in [Setup](/setup), [Technology Stack](/technology-stack), [User Stories](/user-stories) or [Cards & Subjects](/cards-subjects). This document is for new technical contributors and reference.
 
+This document is draft-quality currently. Feel free to suggest edits and improvements!
+
 ## System diagram
 
 <!--
