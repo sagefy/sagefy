@@ -13,44 +13,34 @@ Also, if you're interested, [sign up for updates](https://sgfy.xyz/updates).
 
 - Building any content of your choosing.
   - This is by far the most important item on the list!
-  - [Read this doc](http://docs.sagefy.org/how-to-build-a-course-in-sagefy) and reach out! More than happy to help organize and get content into the system.
-  - We've very interested in topics outside of mathematics, computer science, and foreign languages (though those are good too)! Arts, history, natural sciences, social sciences, and more are all welcome!
+  - Read this doc _TBD_ and reach out! I am more than happy to help organize and get content into the system.
+  - We've very interested in topics outside of mathematics, computer science, and foreign languages -- though those are good too! Arts, history, natural sciences, social sciences, and more are all welcome!
 - Helping us to mass pull content from a high-quality content source.
   - Researching different options available.
   - Working with sources on copyright issues and technical porting.
-- Supporting the existing electronic music content with:
+- Supporting the existing content with:
   - Feedback on the current content.
   - Additional interactive examples in JavaScript
   - Additional content on the artistic study of electronic music, history, tools, and projects.
 
 ## Outreach
 
-- [Writing articles about Sagefy](https://heiskr.com/stories)
-- Proofreading and feedback
+- Writing articles about Sagefy
+- Proofreading and feedback social media
 - Writing and implementing user engagement emails
 - Getting quality links from other websites to Sagefy, such as social media or edtech.
 - Coming up with new outreach ideas!
 - Creating documentation and tutorial videos.
 
-## Platform (Technical)
+## Code
 
 To start up your local development environment, please read our [Setup](https://docs.sagefy.org/setup) doc.
 
-- [Feedback](https://sgfy.xyz/issues) on the system so far
-- Testing and [filing bugs](https://sgfy.xyz/issues)
-- Contributing ideas to our [board](https://sgfy.xyz/issues)
-- Learn how to [set up](http://docs.sagefy.org/setup) a local development environment
-- Unit tests for the browser experience
-- Increasing API tests to 99% coverage
-- Building new features and fixing bugs, such as:
-  - Revamped 'suggest subjects' page
-  - Improving the editing and creating content experience...
-  - Creating additional types of cards (learning activities)
-  - ... and lots of little bugs! (Some of which are very easy)
-  - [Reach out](mailto:support@sagefy.org) if you are interested!
+- Feedback, testing, filing bugs, and adding ideas on our [Issues](https://sgfy.xyz/issues)
+- Unit tests for both client and server
+- Building new features and fixing bugs, find one on [Issues](https://sgfy.xyz/issues) or make your own!
 - Improving security and privacy
 - Improving DevOps, deployments, scaling, and pipelines
-- Splitting up API endpoints to have smaller domains.
 - Accessibility
 - Localization
 
@@ -69,6 +59,6 @@ To start up your local development environment, please read our [Setup](https://
 ## Financial and Legal
 
 - Creating non-profit legal structure to accept financial assistance
-- Creating business models for self-sustaining without putting up learning bheind a paywall
+- Creating business models for self-sustaining without putting up learning behind a paywall
 - Seeking grants
 - Legal review
