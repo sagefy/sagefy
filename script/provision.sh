@@ -100,7 +100,7 @@ nano .env
 # sudo apt-get -y update
 # sudo apt-get -y install software-properties-common
 # sudo apt-get -y install python-software-properties python g++ make
-# curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 # sudo apt-get install -y nodejs
 
 # Spin it all up
