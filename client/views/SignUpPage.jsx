@@ -85,7 +85,7 @@ export default function SignUpPage({
             <br />
             <small>
               Please{' '}
-              <ExternalLink href="https://heiskr.com/useapasswordmanager/">
+              <ExternalLink href="https://heiskr.com/use-a-password-manager/">
                 use a password manager
               </ExternalLink>
               .

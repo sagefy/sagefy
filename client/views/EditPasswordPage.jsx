@@ -48,7 +48,7 @@ export default function EditPasswordPage({ gqlErrors, hash }) {
             <br />
             <small>
               Please{' '}
-              <ExternalLink href="https://heiskr.com/useapasswordmanager/">
+              <ExternalLink href="https://heiskr.com/use-a-password-manager/">
                 use a password manager
               </ExternalLink>
               .
