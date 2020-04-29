@@ -12,7 +12,6 @@ export default function LearnUnscoredEmbedCardPage({
     name,
     data: { url },
   },
-  subject: { entityId: subjectId, name: subjectName },
 }) {
   return (
     <Layout
@@ -50,10 +49,6 @@ LearnUnscoredEmbedCardPage.propTypes = {
     data: shape({
       url: string.isRequired,
     }).isRequired,
-  }).isRequired,
-  subject: shape({
-    name: string.isRequired,
-    entityId: string.isRequired,
   }).isRequired,
 }
 

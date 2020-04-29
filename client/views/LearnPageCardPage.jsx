@@ -13,7 +13,6 @@ export default function LearnPageCardPage({
     name,
     data: { body },
   },
-  subject: { entityId: subjectId, name: subjectName },
 }) {
   return (
     <Layout
@@ -52,10 +51,6 @@ LearnPageCardPage.propTypes = {
     data: shape({
       body: string.isRequired,
     }).isRequired,
-  }).isRequired,
-  subject: shape({
-    name: string.isRequired,
-    entityId: string.isRequired,
   }).isRequired,
 }
 

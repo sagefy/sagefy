@@ -21,7 +21,6 @@ export default function LearnVideoCardPage({
     name,
     data: { site, video_id },
   },
-  subject: { entityId: subjectId, name: subjectName },
 }) {
   return (
     <Layout
@@ -65,10 +64,6 @@ LearnVideoCardPage.propTypes = {
     data: shape({
       video_id: string.isRequired,
     }).isRequired,
-  }).isRequired,
-  subject: shape({
-    name: string.isRequired,
-    entityId: string.isRequired,
   }).isRequired,
 }
 

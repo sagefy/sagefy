@@ -15,7 +15,6 @@ export default function LearnChoiceCardPage({
     name,
     data: { body, max_options_to_show, options },
   },
-  subject: { entityId: subjectId, name: subjectName },
   body: {
     choice,
     seed = process.env.NODE_ENV === 'test' ? '_' : Date.now().toString(36),
@@ -102,10 +101,6 @@ LearnChoiceCardPage.propTypes = {
         })
       ),
     }).isRequired,
-  }).isRequired,
-  subject: shape({
-    name: string.isRequired,
-    entityId: string.isRequired,
   }).isRequired,
   body: shape({
     choice: string,
