@@ -3,7 +3,6 @@ import { number, string, shape } from 'prop-types'
 import { to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
-import TempHelp from './components/TempHelp'
 
 export default function LearnUnscoredEmbedCardPage({
   hash,
@@ -39,8 +38,6 @@ export default function LearnUnscoredEmbedCardPage({
           </button>
         </form>
       </section>
-
-      <TempHelp name={subjectName} subjectId={subjectId} cardId={entityId} />
     </Layout>
   )
 }

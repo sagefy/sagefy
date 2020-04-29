@@ -6,7 +6,6 @@ import { shuffle } from 'shuffle-seed'
 import { to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
-import TempHelp from './components/TempHelp'
 
 export default function LearnChoiceCardPage({
   hash,
@@ -83,8 +82,6 @@ export default function LearnChoiceCardPage({
           )}
         </section>
       </form>
-
-      <TempHelp name={subjectName} subjectId={subjectId} cardId={entityId} />
     </Layout>
   )
 }

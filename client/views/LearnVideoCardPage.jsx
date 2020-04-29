@@ -5,7 +5,6 @@ import { string, shape, number } from 'prop-types'
 import { to58 } from 'uuid58'
 import Layout from './components/Layout'
 import Icon from './components/Icon'
-import TempHelp from './components/TempHelp'
 
 function getVideoUrl(site, video_id) {
   if (site === 'youtube')
@@ -54,8 +53,6 @@ export default function LearnVideoCardPage({
           </button>
         </form>
       </section>
-
-      <TempHelp name={subjectName} subjectId={subjectId} cardId={entityId} />
     </Layout>
   )
 }
