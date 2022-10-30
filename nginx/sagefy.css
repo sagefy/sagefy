@@ -1,125 +1,42 @@
 /*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
-
-/*
-Document
-========
-*/
-
-/**
-Use a better box model (opinionated).
-*/
-
 *,
-::before,
-::after {
+:after,
+:before {
   box-sizing: border-box;
 }
-
-/**
-Use a more readable tab size (opinionated).
-*/
-
 html {
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.15;
   -moz-tab-size: 4;
   tab-size: 4;
 }
-
-/**
-1. Correct the line height in all browsers.
-2. Prevent adjustments of font size after orientation changes in iOS.
-*/
-
-html {
-  line-height: 1.15; /* 1 */
-  -webkit-text-size-adjust: 100%; /* 2 */
-}
-
-/*
-Sections
-========
-*/
-
-/**
-Remove the margin in all browsers.
-*/
-
 body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
   margin: 0;
 }
-
-/**
-Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
-*/
-
-body {
-  font-family: system-ui, -apple-system,
-    /* Firefox supports this but not yet `system-ui` */ 'Segoe UI', Roboto,
-    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-}
-
-/*
-Grouping content
-================
-*/
-
-/**
-1. Add the correct height in Firefox.
-2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
-*/
-
 hr {
-  height: 0; /* 1 */
-  color: inherit; /* 2 */
+  color: inherit;
+  height: 0;
 }
-
-/*
-Text-level semantics
-====================
-*/
-
-/**
-Add the correct text decoration in Chrome, Edge, and Safari.
-*/
-
 abbr[title] {
   text-decoration: underline dotted;
 }
-
-/**
-Add the correct font weight in Edge and Safari.
-*/
-
 b,
 strong {
   font-weight: bolder;
 }
-
-/**
-1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
-2. Correct the odd 'em' font sizing in all browsers.
-*/
-
 code,
 kbd,
-samp,
-pre {
-  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo,
-    monospace; /* 1 */
-  font-size: 1em; /* 2 */
+pre,
+samp {
+  font-family: ui-monospace, SFMono-Regular, Consolas, Liberation Mono, Menlo,
+    monospace;
+  font-size: 1em;
 }
-
-/**
-Add the correct font size in all browsers.
-*/
-
 small {
   font-size: 80%;
 }
-
-/**
-Prevent 'sub' and 'sup' elements from affecting the line height in all browsers.
-*/
-
 sub,
 sup {
   font-size: 75%;
@@ -127,555 +44,322 @@ sup {
   position: relative;
   vertical-align: baseline;
 }
-
 sub {
   bottom: -0.25em;
 }
-
 sup {
   top: -0.5em;
 }
-
-/*
-Tabular data
-============
-*/
-
-/**
-1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
-2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
-*/
-
 table {
-  text-indent: 0; /* 1 */
-  border-color: inherit; /* 2 */
+  border-color: inherit;
+  text-indent: 0;
 }
-
-/*
-Forms
-=====
-*/
-
-/**
-1. Change the font styles in all browsers.
-2. Remove the margin in Firefox and Safari.
-*/
-
 button,
 input,
 optgroup,
 select,
 textarea {
-  font-family: inherit; /* 1 */
-  font-size: 100%; /* 1 */
-  line-height: 1.15; /* 1 */
-  margin: 0; /* 2 */
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
 }
-
-/**
-Remove the inheritance of text transform in Edge and Firefox.
-1. Remove the inheritance of text transform in Firefox.
-*/
-
 button,
 select {
-  /* 1 */
   text-transform: none;
 }
-
-/**
-Correct the inability to style clickable types in iOS and Safari.
-*/
-
-button,
 [type='button'],
 [type='reset'],
-[type='submit'] {
+[type='submit'],
+button {
   -webkit-appearance: button;
 }
-
-/**
-Remove the inner border and padding in Firefox.
-*/
-
 ::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
-
-/**
-Restore the focus styles unset by the previous rule.
-*/
-
 :-moz-focusring {
   outline: 1px dotted ButtonText;
 }
-
-/**
-Remove the additional ':invalid' styles in Firefox.
-See: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737
-*/
-
 :-moz-ui-invalid {
   box-shadow: none;
 }
-
-/**
-Remove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.
-*/
-
 legend {
   padding: 0;
 }
-
-/**
-Add the correct vertical alignment in Chrome and Firefox.
-*/
-
 progress {
   vertical-align: baseline;
 }
-
-/**
-Correct the cursor style of increment and decrement buttons in Safari.
-*/
-
 ::-webkit-inner-spin-button,
 ::-webkit-outer-spin-button {
   height: auto;
 }
-
-/**
-1. Correct the odd appearance in Chrome and Safari.
-2. Correct the outline style in Safari.
-*/
-
 [type='search'] {
-  -webkit-appearance: textfield; /* 1 */
-  outline-offset: -2px; /* 2 */
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
 }
-
-/**
-Remove the inner padding in Chrome and Safari on macOS.
-*/
-
 ::-webkit-search-decoration {
   -webkit-appearance: none;
 }
-
-/**
-1. Correct the inability to style clickable types in iOS and Safari.
-2. Change font properties to 'inherit' in Safari.
-*/
-
 ::-webkit-file-upload-button {
-  -webkit-appearance: button; /* 1 */
-  font: inherit; /* 2 */
+  -webkit-appearance: button;
+  font: inherit;
 }
-
-/*
-Interactive
-===========
-*/
-
-/*
-Add the correct display in Chrome and Safari.
-*/
-
 summary {
   display: list-item;
 }
 /*! drab.css v0 | Apache-2.0 License | github.com/heiskr/drab.css */
-
 :root {
-  --color: oklch(30% 0.007 260);
-  --background: oklch(100% 0.007 260);
-  --area: oklch(98% 0.007 260);
-  --border: oklch(80% 0.007 260);
-  --active: oklch(50% 0.15 260);
-  --active-background: oklch(80% 0.15 260);
-  --bad: oklch(60% 0.2 30);
-  --mark: oklch(95% 0.1 100);
+  --color: #2c2e31;
+  --background: #fff;
+  --area: #f6f9fd;
+  --border: #bbbec2;
+  --active: #2a5fb7;
+  --active-background: #8fbeff;
+  --bad: #de3e2d;
+  --mark: #fef1a1;
 }
-
 @media (prefers-color-scheme: dark) {
   :root {
-    --color: oklch(90% 0.007 260);
-    --background: oklch(15% 0.007 260);
-    --area: oklch(20% 0.007 260);
-    --border: oklch(45% 0.007 260);
-    --active: oklch(60% 0.15 260);
-    --active-background: oklch(40% 0.15 260);
-    --bad: oklch(60% 0.2 30);
-    --mark: oklch(30% 0.02 100);
+    --color: #dbdee3;
+    --background: #090b0e;
+    --area: #141619;
+    --border: #535559;
+    --active: #477ed8;
+    --active-background: #0b4196;
+    --bad: #de3e2d;
+    --mark: #302e23;
   }
 }
-
-/* A6. Use the same border color everywhere. */
-
 * {
   border: 0 solid var(--border);
 }
-
-/* A2. Standardize line-height and font-size. */
-/* A5. Lighten text color slightly. */
-
+button,
 html,
 input,
-textarea,
 select,
-button {
+textarea {
+  background: var(--background);
+  color: var(--color);
   font-size: 16px;
   line-height: 1.5;
-  color: var(--color);
-  background: var(--background);
 }
-
-pre,
 code,
-samp,
-kbd {
-  /* 14px / 24px */
+kbd,
+pre,
+samp {
   font-size: 0.875rem;
   line-height: 1.7142;
 }
-
-/* A1. Limit width on body so text is easier to read. */
-
 body {
   margin: 0 auto;
-  max-width: 40rem; /* 640px */
-  padding: 1rem; /* 16px */
+  max-width: 40rem;
+  padding: 1rem;
 }
-
-/* A3. Standardize focus states. */
-
 :focus {
-  outline: 0;
   box-shadow: 0 0 0 2px var(--active-background);
+  outline: 0;
 }
-
-/* A4. Round corners. */
-
-*:not(svg):not(th):not(td),
+:not(svg):not(th):not(td),
 progress::-webkit-progress-value {
   border-radius: 0.25rem;
 }
-
-/* B1. Adjust headers for 8px rhythm. */
-
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  margin: 1rem 0; /* 16px */
+  margin: 1rem 0;
 }
-
 h1 {
-  font-size: 2rem; /* 32px */
-  line-height: 1.25; /* 40px */
+  font-size: 2rem;
+  line-height: 1.25;
 }
-
 h2,
 h3 {
-  /*  font-size: 1.5 => 24px */
-  line-height: 1.3333; /* 32px */
+  line-height: 1.3333;
 }
-
 h3 {
-  font-size: 1.125rem; /* 18px */
-  /* line-height: 1.3333 => 24px */
+  font-size: 1.125rem;
 }
-
 h5,
 h6 {
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
 }
-
-/* B2. Tighten left on lists. */
-
-ul,
-ol {
+ol,
+ul {
   padding-left: 1.5rem;
 }
-
 dd {
   margin-left: 1.5rem;
 }
-
-/* B3. Add a left border to blockquote. */
-/* B4. Adjust blockquote margin for 8px rhythm. */
-
 blockquote {
-  /* I'm switching to padding-left here
-     to be able to apply a left border later. */
-  padding-left: calc(1.5rem - 1px);
-  margin-left: 0;
   border-left-width: 1px;
+  margin-left: 0;
+  padding-left: calc(1.5rem - 1px);
 }
-
-/* B5. Adjust figure margins for 8px rhythm. */
-
 figure {
   margin: 1rem 2rem;
 }
-
-/* B6. Constrain image and iframe to width to body. */
-/* F1. Constrain form to body width. */
-
-img,
-iframe,
-input,
-textarea,
-button,
-[type='submit'],
 [type='button'],
-[type='reset'] {
+[type='reset'],
+[type='submit'],
+button,
+iframe,
+img,
+input,
+textarea {
   max-width: 100%;
 }
-
-/* B7. Update progres height to 8px rhythm. */
-
 progress {
   height: 0.5rem;
 }
-
-/* B8. Adjust hr margin for 8px rhythm. */
 hr {
   border-bottom-width: 1px;
   margin: 1rem 0 calc(1rem - 1px);
-  /* We do border-bottom because the border-style default here is beveled,
-     and the top is darkened as a result. */
 }
-
-/* B9. Make summary look easier to click. ****/
-
 summary {
   cursor: pointer;
 }
-
-/* B10. Increase whitespace around header, section, and footer. */
-
+footer,
 header,
-section,
-footer {
+section {
   margin: 4rem 0;
 }
-
-/* B11. Update progress colors. */
-
 progress::-webkit-progress-value {
   background: var(--active-background);
 }
-
-/* Separate, otherwise breaks Safari/Chrome */
 progress::-moz-progress-bar {
   background: var(--active-background);
 }
-
-/* T4. Add color to separate thead and tfoot. */
-/* B11. Update progress colors. */
-
-thead,
-tfoot,
 progress,
-progress::-webkit-progress-bar {
+progress::-webkit-progress-bar,
+tfoot,
+thead {
   background: var(--area);
 }
-
-/* I1. Update small for 8px rhythm. */
-
 small {
-  font-size: 0.875rem; /* 14px */
-  line-height: 1.7142; /* 24px */
+  font-size: 0.875rem;
+  line-height: 1.7142;
 }
-
-/* I2. Make strikethroughs more obvious. */
-
 del,
 s,
 time {
   opacity: 0.7;
 }
-
-/* I3. Adjust link color, removing visited color. */
-
 a {
   color: var(--active);
 }
-
-/* I4. Update mark colors. */
-
 mark {
-  color: var(--color);
   background: var(--mark);
+  color: var(--color);
 }
-
-/* F2. Remove shadow on iOS. */
-
 input:not([type='checkbox']):not([type='radio']):not([type='range']),
 textarea {
   -webkit-appearance: none;
   appearance: none;
 }
-
-/* F3. Lighten disabled. */
-
-:disabled,
-::placeholder {
+::placeholder,
+:disabled {
   opacity: 0.5;
 }
-
-/* F4. Use the same border-width on form. */
-
 fieldset,
 input:not([type='button']):not([type='submit']):not([type='reset']),
-textarea,
-select {
+select,
+textarea {
   border-width: 1px;
 }
-
-/* F5. Add a little padding to input and button. */
-
 input,
-textarea,
-select {
-  /* We need to account for the border width. */
+select,
+textarea {
   padding: calc(0.25rem - 1px) calc(0.5rem - 1px);
 }
-
-button,
-[type='submit'],
 [type='button'],
-[type='reset'] {
+[type='reset'],
+[type='submit'],
+button {
   padding: 0.25rem 1rem;
 }
-
-/* F6. Update button colors. **/
-
-button,
-[type='button'] {
+[type='button'],
+button {
   background: var(--active-background);
 }
-
 [type='submit'] {
-  color: var(--background);
   background: var(--active);
+  color: var(--background);
 }
-
 [type='reset'] {
-  color: var(--bad);
   background: var(--area);
+  color: var(--bad);
 }
-
-/* F7. Block-level labels. */
-
 label {
   display: block;
 }
-
-/* T1. Use padding not border-spacing on tables. */
-
 table {
   border-spacing: 0;
 }
-
 td,
 th {
   padding: 0 0.5rem;
 }
-
-/* This way, the sides and space between cells is the same. */
 td:first-child,
 th:first-child {
   padding-left: 1rem;
 }
-
 td:last-child,
 th:last-child {
   padding-right: 1rem;
 }
-
-/* T2. Align everything left in table cells by default. */
-
 th {
   text-align: left;
 }
-
-/* T3. Add horizontal rules to tables. */
-
 tr:not(:last-child) td {
   border-bottom-width: 1px;
 }
-/* text-align--left */
 .ta-l {
   text-align: left;
 }
-
-/* text-align--center */
 .ta-c {
   text-align: center;
 }
-
-/* text-align--right */
 .ta-r {
   text-align: right;
 }
-
-/* vertical-align--middle */
 .va-m {
   vertical-align: middle;
 }
-
-/* list-style--none */
-/* list-style--inline */
-.ls-n,
-.ls-i {
+.ls-i,
+.ls-n {
   list-style: none;
   padding-left: 0;
 }
-
 .ls-i li {
   display: inline-block;
   margin-right: 2rem;
 }
-
 .ls-i li:last-child {
   margin-right: 0;
 }
-
-/* margin-y--collapse */
-.my-c > *:not(:first-child) {
+.my-c > :not(:first-child) {
   margin-top: 0;
 }
-
-.my-c > *:not(:last-child) {
+.my-c > :not(:last-child) {
   margin-bottom: 0;
 }
-
-/* margin-x--auto */
 .mx-a {
   margin-left: auto;
   margin-right: auto;
 }
-
-/* display--inline-block */
 .d-ib {
   display: inline-block;
 }
-
-/* display--inline */
 .d-i {
   display: inline;
 }
-
-/* width--100 */
 .w-100 {
   width: 100%;
-}
-/*! Sagefy partial */
+} /*! Sagefy partial */
 
 /* A little more dramatic form inputs and buttons. */
 input,
@@ -690,11 +374,6 @@ button,
 [type='reset'] {
   padding: 0.5rem 1.5rem;
   border-radius: 1.5rem;
-}
-
-/* Pretty much every form is vertical so... */
-label {
-  display: block;
 }
 
 /* Tables are layout and data here,
@@ -728,12 +407,12 @@ summary > *:first-child {
 
 /* Users probably won't expect yellow for a correct answer. */
 mark.good {
-  background: #c6ffc6; /* 128-100-95 */
+  background: rgb(218.56, 248.03, 218.37); /* oklch(95% 0.05 145) */
 }
 
 @media (prefers-color-scheme: dark) {
   mark.good {
-    background: #005302; /* 128-100-30 */
+    background: rgb(28.88, 52.4, 29.73); /* oklch(30% 0.05 145) */
   }
 }
 

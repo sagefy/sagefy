@@ -15,11 +15,6 @@ button,
   border-radius: 1.5rem;
 }
 
-/* Pretty much every form is vertical so... */
-label {
-  display: block;
-}
-
 /* Tables are layout and data here,
    progress should be the full page. */
 table,
@@ -51,12 +46,12 @@ summary > *:first-child {
 
 /* Users probably won't expect yellow for a correct answer. */
 mark.good {
-  background: #c6ffc6; /* 128-100-95 */
+  background: rgb(218.56, 248.03, 218.37); /* oklch(95% 0.05 145) */
 }
 
 @media (prefers-color-scheme: dark) {
   mark.good {
-    background: #005302; /* 128-100-30 */
+    background: rgb(28.88, 52.4, 29.73); /* oklch(30% 0.05 145) */
   }
 }
 
