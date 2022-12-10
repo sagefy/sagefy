@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/sagefy/sagefy#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "lodash.frompairs": "^4.0.1",
     "lodash.get": "^4.4.2",
