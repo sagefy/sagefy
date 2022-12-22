@@ -27,7 +27,7 @@
     "express-async-errors": "^3.1.1",
     "express-react-views": "^0.11.0",
     "graphql-request": "^1.8.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash.frompairs": "^4.0.1",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
