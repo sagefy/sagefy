@@ -25,7 +25,6 @@
 - Sign up for [updates](https://sgfy.xyz/updates).
 - Follow us on [Twitter](https://twitter.com/sagefyorg).
 
-[![CircleCI](https://circleci.com/gh/sagefy/sagefy/tree/master.svg?style=svg)](https://circleci.com/gh/sagefy/sagefy/tree/master)
 [<img src="https://i.imgur.com/M5xPVWm.png" height="20">](https://www.browserstack.com)
 
 All contents in this project are licensed under [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0).
