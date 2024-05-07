@@ -47,12 +47,12 @@ export default function Post({
         </p>
         <ReactMarkdown source={body} />
         {/* <small>
-              <ul className="ls-i ta-r">
-                <li>
+              <ul className="ls-n pl-0 ta-r">
+                <li className="d-ib mr-2r">
                   <a href="#">↩️ Reply</a
                   >{/*-- if own, edit -/}
                 </li>
-                <li><a href="#">🥢 Share</a></li>
+                <li className="d-ib mr-2r"><a href="#">🥢 Share</a></li>
               </ul>
             </small> */}
       </td>

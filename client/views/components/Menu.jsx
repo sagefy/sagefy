@@ -5,9 +5,9 @@ import Icon from './Icon'
 export default function Menu({ items, current }) {
   return (
     <small className="Menu ta-r">
-      <ul className="ls-i">
+      <ul className="ls-n pl-0">
         {items.map(({ href, icon, name, ...props }) => (
-          <li key={`Menu-items-${name}`}>
+          <li className="d-ib mr-2r" key={`Menu-items-${name}`}>
             {current === name ? (
               <span {...props}>
                 <Icon i={icon} s="s" /> {name}

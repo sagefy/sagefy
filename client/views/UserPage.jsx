@@ -46,7 +46,7 @@ export default function UserPage({
           </tr>
         </table>
         {/* <small>
-    <ul class="ls-i ta-r">
+    <ul class="ls-n pl-0 ta-r">
       <li><a href="/mocks/follows">👂🏿 Follow</a></li>
       <li><a href="/mocks/talk">💬 Talk</a></li>
       <li><a href="/mocks/settings">🛠 Settings</a></li>
@@ -57,7 +57,7 @@ export default function UserPage({
       </header>
 
       {subjectVersionsByUserId.nodes.length ||
-      cardVersionsByUserId.nodes.length ? (
+        cardVersionsByUserId.nodes.length ? (
         <section>
           <hr />
           <h2>

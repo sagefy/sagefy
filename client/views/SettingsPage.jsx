@@ -48,7 +48,7 @@ export default function SettingsPage({ hash, gqlErrors, body: { id, name } }) {
     </p>
     <div>
       <label for="settings.email_frequency">Email Frequency</label>
-      <ul class="ls-i">
+      <ul class="ls-n pl-0">
         <li><label><input type="radio" value="immediate" name="settings.email_frequency" checked> Immediate</label></li>
         <li><label><input type="radio" value="daily" name="settings.email_frequency"> Daily</label></li>
         <li><label><input type="radio" value="weekly" name="settings.email_frequency"> Weekly</label></li>

@@ -52,8 +52,8 @@ title: Follows
 <section>
   <hr />
   <small>
-    <ul class="ls-i ta-r">
-      <li><a href="/mocks/dashboard">🏡 Dashboard</a></li>
+    <ul class="ls-n pl-0 ta-r">
+      <li class="d-ib mr-2r"><a href="/mocks/dashboard">🏡 Dashboard</a></li>
       <li><a href="/mocks/notices">🔔 Notices</a></li>
       <li><a href="/mocks/follows">👂🏿 Follows</a></li>
       <li><a href="/mocks/settings">🛠 Settings</a></li>
