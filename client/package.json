@@ -4,7 +4,7 @@
   "description": "Sagefy. Learn anything, adapted for you. Free.",
   "main": "index.js",
   "scripts": {
-    "build-css": "cat node_modules/drab.css/css/drabutil.min.css partial.css > ../nginx/sagefy.css",
+    "build-css": "cat partial.css > ../nginx/sagefy.css",
     "min-css": "cleancss -o ../nginx/sagefy.min.css ../nginx/sagefy.css",
     "prepublish": "npm run build-css && npm run min-css",
     "test": "jest"

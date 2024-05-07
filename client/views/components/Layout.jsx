@@ -43,6 +43,8 @@ export default function Layout({
         )}
         {image && <meta property="og:image" content={image} />}
         <meta property="og:site_name" content="Sagefy" />
+        <link rel="stylesheet" href="https://unpkg.com/drab.css/css/drab.min.css" />
+        <link rel="stylesheet" href="https://unpkg.com/drabutil.css/css/drabutil.css" />
         <link rel="stylesheet" href={`/sagefy.min.css?${hash}`} />
       </head>
       <body>
