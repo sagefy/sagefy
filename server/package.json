@@ -19,23 +19,23 @@
   },
   "homepage": "https://github.com/sagefy/sagefy#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.19.2",
     "jsonwebtoken": "^8.5.1",
     "lodash.frompairs": "^4.0.1",
     "lodash.get": "^4.4.2",
-    "nodemailer": "^6.4.6",
+    "nodemailer": "^6.9.13",
     "pg": "^7.18.2",
-    "postgraphile": "^4.6.0",
+    "postgraphile": "^4.13.0",
     "uuid": "^3.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
-    "@babel/preset-react": "^7.9.4",
+    "@babel/core": "^7.24.5",
+    "@babel/preset-env": "^7.24.5",
+    "@babel/preset-react": "^7.24.1",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
     "joi": "^14.3.1",
-    "js-yaml": "^3.13.1",
+    "js-yaml": "^3.14.1",
     "supertest": "^4.0.2"
   },
   "jest": {
