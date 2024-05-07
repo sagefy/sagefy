@@ -49,7 +49,6 @@ title: Technology Stack
 - [Jekyll](http://jekyllrb.com/)
 - on [Github Pages](https://pages.github.com/) §
 - [Markdown](https://daringfireball.net/projects/markdown/)
-- [Twitter](https://twitter.com/sagefyorg) §
 - [Facebook](https://www.facebook.com/sagefy) §
 - [YouTube](https://www.youtube.com/channel/UCFCHo5F5Ai_z1fX8pn1NrLg) §
 - [MailerLite](http://mailerlite.com/) §¶

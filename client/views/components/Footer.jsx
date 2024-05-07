@@ -22,25 +22,25 @@ export default function Footer({ role }) {
             </li>
           </ul>
         )) || (
-          <ul className="ls-i">
-            <li>
-              <a href="/dashboard">
-                <Icon i="dashboard" s="s" /> Dashboard
-              </a>
-            </li>
-            <li>
-              <a href="/settings">
-                <Icon i="settings" s="s" /> Settings
-              </a>
-            </li>
-            <li>
-              <a href="/log-out">
-                <Icon i="logOut" s="s" /> Log Out
-              </a>
-            </li>
-            {/* TODO add notices/follows */}
-          </ul>
-        )}
+            <ul className="ls-i">
+              <li>
+                <a href="/dashboard">
+                  <Icon i="dashboard" s="s" /> Dashboard
+                </a>
+              </li>
+              <li>
+                <a href="/settings">
+                  <Icon i="settings" s="s" /> Settings
+                </a>
+              </li>
+              <li>
+                <a href="/log-out">
+                  <Icon i="logOut" s="s" /> Log Out
+                </a>
+              </li>
+              {/* TODO add notices/follows */}
+            </ul>
+          )}
         <ul className="ls-i">
           <li>
             <a href="/">
@@ -67,11 +67,6 @@ export default function Footer({ role }) {
           <li>
             <ExternalLink href="https://sgfy.xyz/updates">
               <Icon i="updates" s="s" /> Updates
-            </ExternalLink>
-          </li>
-          <li>
-            <ExternalLink href="https://twitter.com/sagefyorg">
-              <Icon i="twitter" s="s" /> Twitter
             </ExternalLink>
           </li>
         </ul>

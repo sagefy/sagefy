@@ -103,23 +103,12 @@ exports[`Footer component should render a footer 1`] = `
            Updates
         </ExternalLink>
       </li>
-      <li>
-        <ExternalLink
-          href="https://twitter.com/sagefyorg"
-        >
-          <Icon
-            i="twitter"
-            s="s"
-          />
-           Twitter
-        </ExternalLink>
-      </li>
     </ul>
     <ul
       className="ls-i"
     >
       <li>
-        © Copyright 
+        © Copyright
         2020
          Sagefy.
       </li>

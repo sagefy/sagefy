@@ -23,7 +23,6 @@
 - Watch this [3 minute YouTube video](https://youtu.be/h9LD7GKtEa0).
 - Check out [Want to Help?](https://docs.sagefy.org/want-to-help) and [Contributing](https://github.com/sagefy/sagefy/blob/master/.github/CONTRIBUTING.md).
 - Sign up for [updates](https://sgfy.xyz/updates).
-- Follow us on [Twitter](https://twitter.com/sagefyorg).
 
 [<img src="https://i.imgur.com/M5xPVWm.png" height="20">](https://www.browserstack.com)
 

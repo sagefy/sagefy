@@ -25,7 +25,6 @@ title: Brand and outreach guidelines and copy
 - **Overview video**: <https://youtu.be/h9LD7GKtEa0>
 - **Example**: [An Introduction to Electronic Music](https://sagefy.org/subjects/EU7YbwNsNzChujKZ1tt2Nx)
 - **Social**:
-  - <https://twitter.com/sagefyorg>
   - <https://stories.sagefy.org/>
   - <https://www.producthunt.com/posts/sagefy>
   - <https://www.crunchbase.com/organization/sagefy>
