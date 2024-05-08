@@ -35,7 +35,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-feather": "^2.0.10",
-    "react-markdown": "^4.3.1",
+    "react-markdown": "^9.0.1",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",
     "shuffle-seed": "^1.1.6",
